@@ -77,10 +77,17 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
           // Reset the bar when a new file becomes the active download target so the
           // first sub's instant 100% doesn't peg it for the rest of the job.
           const isFileBoundary = event.statusKey === STATUS_KEY.downloadingMedia || event.statusKey === STATUS_KEY.fetchingSubtitles;
+          // Postprocess phases (audio extract, video convert, embed metadata, move
+          // files) emit no `[download] N%` lines, so the progress throttle in
+          // DownloadEventBridge frequently drops the final 100% event and leaves
+          // the bar at 99.x. Snap to 100 once postprocess starts — the data
+          // download is finished by definition.
+          const isPostProcessPhase = event.statusKey === STATUS_KEY.extractingAudio || event.statusKey === STATUS_KEY.convertingVideo || event.statusKey === STATUS_KEY.embeddingMetadata || event.statusKey === STATUS_KEY.movingFiles;
           updateQueueItem(set, item.id, {
             lastStatus: { key: event.statusKey, params: event.params },
             ...(isPhaseTransition ? { progressDetail: null } : {}),
-            ...(isFileBoundary ? { progressPercent: 0 } : {})
+            ...(isFileBoundary ? { progressPercent: 0 } : {}),
+            ...(isPostProcessPhase ? { progressPercent: 100 } : {})
           });
         }
       });

@@ -389,7 +389,8 @@ const uz = {
       ageRestricted: "Bu video yosh cheklovli va tizimga kirgan hisob bo'lmasdan yuklab bo'lmaydi.",
       unavailable: "Bu video mavjud emas — u shaxsiy, o'chirilgan yoki mintaqa bilan cheklangan bo'lishi mumkin.",
       geoBlocked: 'Bu video sizning mintaqangizda mavjud emas.',
-      outOfDiskSpace: "Disk xotirasi yetarli emas. Bo'sh joy ajrating va qayta urinib ko'ring."
+      outOfDiskSpace: "Disk xotirasi yetarli emas. Bo'sh joy ajrating va qayta urinib ko'ring.",
+      unsupportedUrl: "Bu video URL manzilga o'xshamaydi. YouTube video, Short yoki pleylist havolasini joylashtiring."
     }
   },
   presets: {

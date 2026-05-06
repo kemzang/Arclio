@@ -1,7 +1,7 @@
 import { DEFAULTS } from '@shared/constants';
 import { DEFAULT_AUDIO_BITRATE } from '@shared/schemas';
-import type { AppSettings, FormatOption, PlaylistEntry, PlaylistPreset, Preset, SubtitleMap, WizardTransition } from '@shared/types';
-import { cleanYoutubeUrl, forcePlaylistOnly, forceVideoOnly, isMixedVideoPlaylistUrl, isPlaylistUrl } from '@shared/url';
+import type { AppError, AppSettings, FormatOption, PlaylistEntry, PlaylistPreset, Preset, SubtitleMap, WizardTransition } from '@shared/types';
+import { cleanYoutubeUrl, forcePlaylistOnly, forceVideoOnly, isMixedVideoPlaylistUrl, isPlaylistUrl, isSingleVideoUrl } from '@shared/url';
 import type { AppState, AudioSelection, GetState, SetState, WizardMode, WizardSlice, WizardStep } from './types';
 import { presetProducesMedia, presetProducesVideo } from '@shared/presetTraits';
 import { STEPS, shouldSkip, type VisibleStep } from '../components/wizard/stepNavigation';
@@ -270,6 +270,25 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
 
       if (isPlaylistUrl(cleaned)) {
         await runPlaylistProbe(cleaned, set, get);
+        return;
+      }
+
+      if (!isSingleVideoUrl(cleaned)) {
+        const error: AppError = {
+          code: 'validation',
+          message: 'Unsupported URL',
+          recoverable: false,
+          localizedKey: 'unsupportedUrl'
+        };
+        const fromStep = get().wizardStep;
+        set({
+          wizardUrl: cleaned,
+          wizardStep: 'error',
+          formatsLoading: false,
+          wizardError: error,
+          wizardErrorOrigin: 'formats'
+        });
+        logStep('submitUrl', fromStep, 'error', pickWizardSnapshot(get()));
         return;
       }
 

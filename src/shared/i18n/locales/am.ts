@@ -389,7 +389,8 @@ const am = {
       ageRestricted: 'ይህ ቪዲዮ ዕድሜ-ተገደቧል ያለ የገቡ መለያ ሊዳውንሎድ አይችልም።',
       unavailable: 'ይህ ቪዲዮ አይገኝም — ምናልባት የግል፣ ተሰርዟል ወይም ክልል-ተዘግቷል።',
       geoBlocked: 'ይህ ቪዲዮ በክልልዎ አይገኝም።',
-      outOfDiskSpace: 'በቂ ዲስክ ቦታ የለም። ቦታ ፍቱ እና እንደገና ሞክሩ።'
+      outOfDiskSpace: 'በቂ ዲስክ ቦታ የለም። ቦታ ፍቱ እና እንደገና ሞክሩ።',
+      unsupportedUrl: 'ይህ እንደ ቪዲዮ URL አይመስልም። YouTube ቪዲዮ፣ Short፣ ወይም የዝርዝር አገናኝ ለጥፍ።'
     }
   },
   presets: {

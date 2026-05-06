@@ -15,6 +15,14 @@ const logger = log.scope('warmup');
 // per binary before the failure surfaces and the repair UI takes over.
 const PER_BINARY_BUDGET_MS = 90_000;
 
+// `got` fires `downloadProgress` per network chunk — hundreds of events per
+// second on a fast pipe. Without throttling, the IPC fire-hose plus per-event
+// Zustand replacement plus React re-render queue overwhelms the renderer, and
+// the splash bar visibly lags real progress for tens of seconds after the
+// download has actually finished. 100 ms is imperceptible to the eye and
+// reduces event volume by ~3 orders of magnitude.
+const DOWNLOAD_PROGRESS_THROTTLE_MS = 100;
+
 interface WarmupServiceDeps {
   binaryManager: BinaryManager;
   tokenService: TokenService;
@@ -66,9 +74,54 @@ export class WarmupService {
   private async executeRun(userSignal: AbortSignal): Promise<Result<WarmUpOutput>> {
     const { binaryManager, tokenService, window, onResolved } = this.deps;
 
-    const emit = (event: WarmupProgressEvent): void => {
+    const sendNow = (event: WarmupProgressEvent): void => {
       if (!window || window.isDestroyed()) return;
       window.webContents.send(IPC_CHANNELS.warmupProgress, event);
+    };
+
+    interface Slot {
+      pending: WarmupProgressEvent | null;
+      timer: NodeJS.Timeout | null;
+    }
+    const slots = new Map<DependencyId, Slot>();
+    const slotFor = (id: DependencyId): Slot => {
+      const existing = slots.get(id);
+      if (existing) return existing;
+      const slot: Slot = { pending: null, timer: null };
+      slots.set(id, slot);
+      return slot;
+    };
+    const flush = (slot: Slot): void => {
+      if (slot.timer) {
+        clearTimeout(slot.timer);
+        slot.timer = null;
+      }
+      if (slot.pending) {
+        const ev = slot.pending;
+        slot.pending = null;
+        sendNow(ev);
+      }
+    };
+    const flushAll = (): void => {
+      for (const slot of slots.values()) flush(slot);
+    };
+
+    const emit = (event: WarmupProgressEvent): void => {
+      const slot = slotFor(event.binary);
+      if (event.phase === 'downloading') {
+        slot.pending = event;
+        slot.timer ??= setTimeout(() => {
+          slot.timer = null;
+          const ev = slot.pending;
+          slot.pending = null;
+          if (ev) sendNow(ev);
+        }, DOWNLOAD_PROGRESS_THROTTLE_MS);
+        return;
+      }
+      // Phase transition — flush any buffered downloading event so the bar
+      // reaches its final captured value, then send this transition.
+      flush(slot);
+      sendNow(event);
     };
 
     // Per-binary budget combined with user-initiated cancel. AbortSignal.any
@@ -83,6 +136,7 @@ export class WarmupService {
         logger.warn('Token warmup failed', { error: err instanceof Error ? err.message : String(err) });
       })
     ]);
+    flushAll();
 
     const dependencies: Record<DependencyId, DependencyDiagnostic> = {
       'yt-dlp': ytDlpDiag,

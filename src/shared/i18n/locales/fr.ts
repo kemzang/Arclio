@@ -389,7 +389,8 @@ const fr = {
       ageRestricted: 'Cette vidéo est limitée par âge et ne peut pas être téléchargée sans compte connecté.',
       unavailable: "Cette vidéo n'est pas disponible — elle est peut-être privée, supprimée ou restreinte par région.",
       geoBlocked: "Cette vidéo n'est pas disponible dans ta région.",
-      outOfDiskSpace: "Espace disque insuffisant. Libère de l'espace et réessaie."
+      outOfDiskSpace: "Espace disque insuffisant. Libère de l'espace et réessaie.",
+      unsupportedUrl: 'Ça ne ressemble pas à une URL de vidéo. Colle un lien vers une vidéo YouTube, un Short ou une playlist.'
     }
   },
   presets: {

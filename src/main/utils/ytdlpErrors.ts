@@ -1,10 +1,14 @@
 import type { YtdlpErrorKey } from '@shared/i18n/types';
 
-export type StderrSignal = YtdlpErrorKey;
+// Subset of YtdlpErrorKey that yt-dlp can emit on stderr. Client-side
+// validation keys (e.g. `unsupportedUrl`, raised before yt-dlp ever runs)
+// are excluded so this stays a closed record over real stderr signals.
+export type StderrSignal = Exclude<YtdlpErrorKey, 'unsupportedUrl'>;
 
-// Adding a YtdlpErrorKey makes this Record fail to compile until the new key
-// has a regex pattern — the link to the enum is enforced by the type system.
-const ERROR_PATTERNS: Record<YtdlpErrorKey, RegExp> = {
+// Adding a stderr-emitting YtdlpErrorKey makes this Record fail to compile
+// until the new key has a regex pattern — the link to the enum is enforced
+// by the type system.
+const ERROR_PATTERNS: Record<StderrSignal, RegExp> = {
   // yt-dlp's actual stderr uses U+2019 (right single quotation mark), not ASCII '.
   // Tolerate both so the regex matches real-world output.
   botBlock: /sign in to confirm you[’']re not a bot/i,
@@ -18,7 +22,7 @@ const ERROR_PATTERNS: Record<YtdlpErrorKey, RegExp> = {
 
 // Iteration order is the declaration order of the keys above; in practice
 // patterns don't overlap, but if they ever do, this order defines precedence.
-const PATTERN_ENTRIES = Object.entries(ERROR_PATTERNS) as [YtdlpErrorKey, RegExp][];
+const PATTERN_ENTRIES = Object.entries(ERROR_PATTERNS) as [StderrSignal, RegExp][];
 
 export function extractLastError(stderr: string): string | null {
   const matches = stderr.match(/ERROR:.*$/gm);

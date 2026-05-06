@@ -389,7 +389,8 @@ const de = {
       ageRestricted: 'Dieses Video ist altersbeschränkt und kann ohne angemeldetes Konto nicht heruntergeladen werden.',
       unavailable: 'Dieses Video ist nicht verfügbar — möglicherweise privat, gelöscht oder regional gesperrt.',
       geoBlocked: 'Dieses Video ist in deiner Region nicht verfügbar.',
-      outOfDiskSpace: 'Nicht genug Speicherplatz. Gib Speicher frei und versuche es erneut.'
+      outOfDiskSpace: 'Nicht genug Speicherplatz. Gib Speicher frei und versuche es erneut.',
+      unsupportedUrl: 'Das sieht nicht wie eine Video-URL aus. Füge einen YouTube-Video-, Short- oder Playlist-Link ein.'
     }
   },
   presets: {

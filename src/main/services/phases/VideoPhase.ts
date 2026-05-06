@@ -80,7 +80,11 @@ export function VideoPhase(embed: boolean): Phase {
           if (attempt === 2) return;
           ctx.emitStatus('token', attempt === 0 ? STATUS_KEY.mintingToken : STATUS_KEY.remintingToken);
         },
-        onSpawn: (proc) => ctx.attachYtDlpProcess(proc, STATUS_KEY.downloadingMedia),
+        // Don't preemptively emit downloadingMedia on spawn — yt-dlp spends
+        // a few seconds on extractor work and thumbnail conversion first.
+        // The first `[download] Destination:` line in consumeProgress emits
+        // the accurate status when the actual data download begins.
+        onSpawn: (proc) => ctx.attachYtDlpProcess(proc),
         onStdout: (text) => ctx.safeConsume(text),
         onStderr: (text) => ctx.safeConsume(text)
       });

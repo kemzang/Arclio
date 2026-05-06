@@ -388,7 +388,8 @@ const en = {
       ageRestricted: 'This video is age-restricted and cannot be downloaded without a signed-in account.',
       unavailable: 'This video is unavailable — it may be private, deleted, or region-locked.',
       geoBlocked: 'This video is not available in your region.',
-      outOfDiskSpace: 'Not enough disk space. Free up space and retry.'
+      outOfDiskSpace: 'Not enough disk space. Free up space and retry.',
+      unsupportedUrl: "That doesn't look like a video URL. Paste a YouTube video, Short, or playlist link."
     }
   },
   presets: {

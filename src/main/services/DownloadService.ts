@@ -1,7 +1,7 @@
 import { EventEmitter } from 'node:events';
 import { randomUUID } from 'node:crypto';
-import { readdir, unlink, rm } from 'node:fs/promises';
-import { join } from 'node:path';
+import { readdir, unlink, rm, rmdir } from 'node:fs/promises';
+import { join, dirname } from 'node:path';
 import { trackMain, downloadDurationBucket, sizeBucket } from '@main/services/analytics';
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import log from 'electron-log/main';
@@ -378,6 +378,17 @@ export class DownloadService extends EventEmitter {
       logger.info('cleanupTempDir — removed', { tempDir });
     } catch {
       logger.warn('cleanupTempDir — failed to remove', { tempDir });
+      return;
+    }
+    const parent = dirname(tempDir);
+    try {
+      await rmdir(parent);
+      logger.info('cleanupTempDir — removed parent', { parent });
+    } catch (err) {
+      const code = (err as NodeJS.ErrnoException).code;
+      if (code !== 'ENOTEMPTY' && code !== 'ENOENT' && code !== 'EPERM') {
+        logger.warn('cleanupTempDir — parent rmdir failed', { parent, code });
+      }
     }
   }
 
@@ -450,7 +461,11 @@ export class DownloadService extends EventEmitter {
 
   private emitPostProcStatus(active: ActiveDownload, line: string): boolean {
     let key: 'extractingAudio' | 'convertingVideo' | 'embeddingMetadata' | 'movingFiles' | null = null;
-    if (line.startsWith('[ExtractAudio]') || line.startsWith('Deleting original file')) key = 'extractingAudio';
+    // `[ExtractAudio]` is the reliable signal for audio extraction. Don't match
+    // `Deleting original file` — yt-dlp also emits that for the thumbnail
+    // converter (webp→jpg) before any audio work starts, which would falsely
+    // mark extractingAudio as emitted and suppress the real signal later.
+    if (line.startsWith('[ExtractAudio]')) key = 'extractingAudio';
     else if (line.startsWith('[VideoConvertor]') || line.startsWith('[VideoRemuxer]')) key = 'convertingVideo';
     else if (line.startsWith('[EmbedThumbnail]') || line.startsWith('[Metadata]') || line.startsWith('[FixupM4a]') || line.startsWith('[FixupM3u8]')) key = 'embeddingMetadata';
     else if (line.startsWith('[MoveFiles]')) key = 'movingFiles';

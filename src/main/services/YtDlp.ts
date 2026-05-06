@@ -112,6 +112,11 @@ function buildPotExtractorArgs(token: string, visitorData: string): string {
 
 type RetryStrategy = { kind: 'pot'; reMint: boolean } | { kind: 'fallback' };
 
+// Probes (--dump-json) should never legitimately take this long. Without a
+// timeout, a stalled yt-dlp run (e.g. extractor giving up but not exiting)
+// would freeze the wizard's "Fetching format" spinner indefinitely.
+const PROBE_TIMEOUT_MS = 60_000;
+
 interface InvokeOptions {
   url: string;
   ytDlpPath: string;
@@ -121,6 +126,7 @@ interface InvokeOptions {
   tokenService: TokenService;
   cookiesPath?: string;
   proxyUrl?: string;
+  timeoutMs?: number;
   signal?: YtDlpSignal;
 }
 
@@ -157,6 +163,35 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
     const proc = spawnYtDlp(opts.ytDlpPath, args, opts.ffmpegPath);
     let stdout = '';
     let stderr = '';
+    let settled = false;
+
+    const finish = (result: YtDlpResult): void => {
+      if (settled) return;
+      settled = true;
+      if (timer) clearTimeout(timer);
+      resolve(result);
+    };
+
+    // Force-kill if the process exceeds opts.timeoutMs. SIGKILL on win32 is
+    // implemented by node as TerminateProcess — the close event still fires,
+    // which the `settled` guard absorbs as a no-op.
+    const timer = opts.timeoutMs
+      ? setTimeout(() => {
+          try {
+            proc.kill('SIGKILL');
+          } catch {
+            /* already exited */
+          }
+          finish({
+            kind: 'exit-error',
+            exitCode: -1,
+            signal: null,
+            rawError: 'Probe timed out',
+            stdout,
+            stderr
+          });
+        }, opts.timeoutMs)
+      : null;
 
     opts.signal?.onSpawn?.(proc);
 
@@ -172,11 +207,11 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
       opts.signal?.onStderr?.(text);
     });
 
-    proc.on('error', (error) => resolve({ kind: 'spawn-error', error, stdout, stderr }));
+    proc.on('error', (error) => finish({ kind: 'spawn-error', error, stdout, stderr }));
 
     proc.on('close', (code) => {
       if (code === 0) {
-        resolve({
+        finish({
           kind: 'success',
           stdout,
           stderr,
@@ -184,7 +219,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
         });
         return;
       }
-      resolve({
+      finish({
         kind: 'exit-error',
         exitCode: code ?? -1,
         signal: classifyStderr(stderr),
@@ -245,7 +280,12 @@ function buildSubtitleArgs(req: Extract<YtDlpRequest, { kind: 'subtitle' }>): st
 }
 
 function buildVideoArgs(req: Extract<YtDlpRequest, { kind: 'video' | 'video+embed' }>): string[] {
+  const skipDownload = req.kind === 'video' && req.skipDownload === true;
   const args: string[] = ['--progress', '--no-playlist'];
+  // Resume from any .part file left by a prior interrupted run (network drop,
+  // hard kill, etc.). Cancel paths explicitly call cleanupPartFiles() so a
+  // user-cancelled download starts fresh.
+  if (!skipDownload) args.push('--continue');
 
   const forcesMkv = req.kind === 'video+embed' && req.subtitleLanguages.length > 0;
   // Audio-only conversion is mutually exclusive with subtitle embedding (no
@@ -285,7 +325,6 @@ function buildVideoArgs(req: Extract<YtDlpRequest, { kind: 'video' | 'video+embe
   if (req.writeDescription) args.push('--write-description');
   if (req.writeThumbnail) args.push('--write-thumbnail');
 
-  const skipDownload = req.kind === 'video' && req.skipDownload === true;
   if (skipDownload) {
     args.push('--skip-download');
   } else if (audioConvert) {
@@ -361,6 +400,7 @@ export class YtDlp {
     const cookiesPath = resolveCookiesPath(settings);
     const proxyUrl = nonEmpty(settings.common?.proxyUrl?.trim());
     const { args, subtitleFormat } = buildArgs(req);
+    const isProbe = req.kind === 'probe' || req.kind === 'playlist-probe';
     const result = await invokeWithRetry({
       url: req.url,
       ytDlpPath: this._ytDlpPath!,
@@ -370,6 +410,7 @@ export class YtDlp {
       tokenService: this.tokenService,
       cookiesPath,
       proxyUrl,
+      timeoutMs: isProbe ? PROBE_TIMEOUT_MS : undefined,
       signal
     });
     if (result.kind === 'success' && subtitleFormat) {

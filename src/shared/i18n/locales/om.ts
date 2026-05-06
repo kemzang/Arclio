@@ -388,7 +388,8 @@ const om = {
       ageRestricted: "Viidiyoon kun umuriin-daangeffamee seensa malee buufachuu hin danda'u.",
       unavailable: "Viidiyoon kun hin argamu — dhuunfaa, haqame, ykn naannoo-cufaa ta'uu mala.",
       geoBlocked: 'Viidiyoon kun naanno kee keessatti hin argamu.',
-      outOfDiskSpace: "Bakki disikii gahaa hin jiru. Bakka duwwaa godhi achiin irra deebi'i."
+      outOfDiskSpace: "Bakki disikii gahaa hin jiru. Bakka duwwaa godhi achiin irra deebi'i.",
+      unsupportedUrl: 'Kunis URL viidiyoo fakkaata miti. YouTube viidiyoo, Short, ykn playlist liinkii maxxansi.'
     }
   },
   presets: {

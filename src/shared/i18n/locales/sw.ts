@@ -388,7 +388,8 @@ const sw = {
       ageRestricted: 'Video hii ina kikwazo cha umri na haiwezi kupakuliwa bila akaunti iliyoingia.',
       unavailable: 'Video hii haipatikani — inaweza kuwa ya kibinafsi, imefutwa, au imezuiwa kwa mkoa.',
       geoBlocked: 'Video hii haipatikani katika eneo lako.',
-      outOfDiskSpace: 'Nafasi ya diski haitoshi. Futa nafasi na ujaribu tena.'
+      outOfDiskSpace: 'Nafasi ya diski haitoshi. Futa nafasi na ujaribu tena.',
+      unsupportedUrl: 'Hii haionekani kama URL ya video. Bandika kiungo cha video ya YouTube, Short, au playlist.'
     }
   },
   presets: {

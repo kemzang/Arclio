@@ -389,7 +389,8 @@ const zh = {
       ageRestricted: '该视频有年龄限制,未登录账号无法下载。',
       unavailable: '该视频不可用 — 可能是私有、已删除或受地区限制。',
       geoBlocked: '该视频在你所在的地区不可用。',
-      outOfDiskSpace: '磁盘空间不足。请清理空间后重试。'
+      outOfDiskSpace: '磁盘空间不足。请清理空间后重试。',
+      unsupportedUrl: '这看起来不像视频链接。请粘贴 YouTube 视频、Short 或播放列表的链接。'
     }
   },
   presets: {

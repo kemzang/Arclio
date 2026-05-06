@@ -69,6 +69,21 @@ function tryParseYoutube(url: string): URL | null {
   return parsed;
 }
 
+export function isSingleVideoUrl(url: string): boolean {
+  const parsed = tryParseYoutube(url);
+  if (!parsed) return false;
+  const host = parsed.hostname.toLowerCase();
+  if (host === 'youtu.be') {
+    return parsed.pathname.length > 1 && parsed.pathname !== '/';
+  }
+  const path = parsed.pathname;
+  if (path === '/watch' && parsed.searchParams.get('v')) return true;
+  if (path.startsWith('/shorts/') && path.length > '/shorts/'.length) return true;
+  if (path.startsWith('/embed/') && path.length > '/embed/'.length) return true;
+  if (path.startsWith('/live/') && path.length > '/live/'.length) return true;
+  return false;
+}
+
 export function isPlaylistUrl(url: string): boolean {
   const parsed = tryParseYoutube(url);
   if (!parsed) return false;

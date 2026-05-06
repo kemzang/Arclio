@@ -110,9 +110,13 @@ describe('classifyStderr', () => {
 });
 
 describe('YtdlpErrorKey ↔ classifyStderr contract', () => {
-  // All enum values must be reachable by classifyStderr — guards against
-  // adding a key without wiring its regex pattern.
-  it('classifyStderr returns every YtdlpErrorKey for at least one input', () => {
+  // Every stderr-emitting key must be reachable by classifyStderr — guards
+  // against adding a key without wiring its regex pattern. Client-side keys
+  // (e.g. `unsupportedUrl`, raised before yt-dlp ever runs) are excluded
+  // because yt-dlp never produces them on stderr.
+  const NON_STDERR_KEYS = new Set(['unsupportedUrl']);
+
+  it('classifyStderr returns every stderr-emitting YtdlpErrorKey for at least one input', () => {
     const fixtures: Record<string, string> = {
       botBlock: "Sign in to confirm you're not a bot",
       ipBlock: 'Your IP is likely being blocked by Youtube',
@@ -123,6 +127,7 @@ describe('YtdlpErrorKey ↔ classifyStderr contract', () => {
       outOfDiskSpace: 'No space left on device'
     };
     for (const key of YTDLP_ERROR_KEYS) {
+      if (NON_STDERR_KEYS.has(key)) continue;
       expect(fixtures[key], `no fixture for ${key}`).toBeDefined();
       expect(classifyStderr(fixtures[key])).toBe(key);
     }

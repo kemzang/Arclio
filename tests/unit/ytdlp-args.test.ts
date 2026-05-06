@@ -172,6 +172,16 @@ describe('YtDlp — video args', () => {
     expect(args).not.toContain('-f');
   });
 
+  it('kind=video → --continue present (resume any leftover .part)', async () => {
+    await makeYtDlp().run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR });
+    expect(getArgs()).toContain('--continue');
+  });
+
+  it('kind=video with skipDownload=true → no --continue (nothing to resume)', async () => {
+    await makeYtDlp().run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR, skipDownload: true });
+    expect(getArgs()).not.toContain('--continue');
+  });
+
   it('output template contains outputDir, url is last', async () => {
     await makeYtDlp().run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR });
     const args = getArgs();
@@ -287,6 +297,16 @@ describe('YtDlp — audio convert args', () => {
 });
 
 describe('YtDlp — video+embed args', () => {
+  it('--continue present', async () => {
+    await makeYtDlp().run({
+      kind: 'video+embed',
+      url: URL,
+      outputDir: OUTPUT_DIR,
+      subtitleLanguages: ['en']
+    });
+    expect(getArgs()).toContain('--continue');
+  });
+
   it('with subs → embed subtitle flags and EMBED_CONTAINER_EXT', async () => {
     await makeYtDlp().run({
       kind: 'video+embed',

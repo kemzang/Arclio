@@ -61,7 +61,7 @@ export type UiTheme = z.infer<typeof uiThemeSchema>;
 export const queueItemStatusSchema = z.enum(['pending', 'downloading', 'paused', 'done', 'error', 'cancelled']);
 export type QueueItemStatus = z.infer<typeof queueItemStatusSchema>;
 
-export const ytdlpErrorKeySchema = z.enum(['botBlock', 'ipBlock', 'rateLimit', 'ageRestricted', 'unavailable', 'geoBlocked', 'outOfDiskSpace']);
+export const ytdlpErrorKeySchema = z.enum(['botBlock', 'ipBlock', 'rateLimit', 'ageRestricted', 'unavailable', 'geoBlocked', 'outOfDiskSpace', 'unsupportedUrl']);
 export type YtdlpErrorKey = z.infer<typeof ytdlpErrorKeySchema>;
 export const YTDLP_ERROR_KEYS = ytdlpErrorKeySchema.options;
 

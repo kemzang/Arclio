@@ -389,7 +389,8 @@ const vi = {
       ageRestricted: 'Video này bị giới hạn độ tuổi và không thể tải xuống nếu không có tài khoản đã đăng nhập.',
       unavailable: 'Video này không khả dụng — có thể là riêng tư, đã bị xóa hoặc bị chặn theo khu vực.',
       geoBlocked: 'Video này không có sẵn ở khu vực của bạn.',
-      outOfDiskSpace: 'Không đủ dung lượng đĩa. Hãy giải phóng dung lượng rồi thử lại.'
+      outOfDiskSpace: 'Không đủ dung lượng đĩa. Hãy giải phóng dung lượng rồi thử lại.',
+      unsupportedUrl: 'Đây không giống như URL video. Hãy dán liên kết video YouTube, Short hoặc danh sách phát.'
     }
   },
   presets: {

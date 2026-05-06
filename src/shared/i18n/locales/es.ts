@@ -388,7 +388,8 @@ const es = {
       ageRestricted: 'Este vídeo tiene restricción de edad y no se puede descargar sin una cuenta iniciada.',
       unavailable: 'Este vídeo no está disponible — puede ser privado, eliminado o estar restringido por región.',
       geoBlocked: 'Este vídeo no está disponible en tu región.',
-      outOfDiskSpace: 'No hay suficiente espacio en disco. Libera espacio e inténtalo de nuevo.'
+      outOfDiskSpace: 'No hay suficiente espacio en disco. Libera espacio e inténtalo de nuevo.',
+      unsupportedUrl: 'Eso no parece una URL de vídeo. Pega un enlace a un vídeo de YouTube, un Short o una playlist.'
     }
   },
   presets: {

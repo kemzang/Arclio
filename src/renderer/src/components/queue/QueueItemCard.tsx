@@ -58,6 +58,9 @@ export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
   const phaseStatusKey = item.lastStatus?.key;
   const phaseIcon = phaseStatusKey ? PHASE_ICON[phaseStatusKey] : null;
   const isSleeping = phaseStatusKey === 'sleepingBetweenRequests';
+  // Postprocess phases emit no progress lines — bar would freeze at 100 with
+  // no motion. Pulse the wrapper so the user sees the job is still working.
+  const isPostProcessing = phaseStatusKey === 'extractingAudio' || phaseStatusKey === 'convertingVideo' || phaseStatusKey === 'embeddingMetadata' || phaseStatusKey === 'movingFiles';
 
   const detailText = item.progressDetail ?? formatStatus(item.lastStatus);
   const errorText = formatLocalizedError(item.error) || t('queue.item.defaultError');
@@ -92,7 +95,7 @@ export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
 
         {isActive && (
           <div className="flex flex-col gap-0.5 mt-0.5" data-testid="queue-progress">
-            <div className={status === 'paused' ? 'opacity-50' : isSleeping ? '' : 'progress-glow'}>
+            <div className={cn(status === 'paused' ? 'opacity-50' : isSleeping ? '' : 'progress-glow', isPostProcessing && 'animate-pulse')}>
               <Progress value={item.progressPercent} className="[&_[data-slot=progress-track]]:h-[2px]" />
             </div>
             <span className={cn('inline-flex items-center gap-1 font-mono text-[12px]', status === 'paused' || isSleeping ? 'text-[var(--color-status-paused)]' : 'text-[var(--brand)]')} data-testid="queue-progress-label">
