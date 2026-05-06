@@ -139,6 +139,15 @@ Khi YouTube cập nhật hệ thống phát hiện bot, hầu hết các công c
 
 **Khuyến nghị:** sử dụng NSIS installer để có tự động cập nhật và khởi động nhanh hơn. Dùng portable `.exe` nếu bạn muốn không cần cài đặt, không ghi registry.
 
+**Cảnh báo Windows SmartScreen**
+
+Khi khởi động lần đầu, bạn có thể thấy **"Windows protected your PC"** hoặc **"Unknown publisher."** Điều này áp dụng cho cả `Arroxy-Setup-*.exe` và `Arroxy-Portable-*.exe`. Arroxy là phần mềm miễn phí và mã nguồn mở, các bản build trên Windows không được ký mã bằng chứng chỉ có phí, đó là lý do SmartScreen gắn cờ chúng. Điều này **không** tự động có nghĩa là Arroxy không an toàn. Để tiếp tục:
+
+1. Nhấp **More info**.
+2. Nhấp **Run anyway**.
+
+> Chỉ tải Arroxy từ trang GitHub Releases chính thức. Nếu bạn tải file từ trang web khác hoặc ai đó gửi cho bạn, hãy xóa nó và tải bản sao mới từ nguồn chính thức. Mã nguồn là công khai, vì vậy bạn có thể tự kiểm tra hoặc tự build Arroxy nếu muốn.
+
 </details>
 
 <details>
@@ -336,6 +345,65 @@ bun run dist:win     # biên dịch chéo Windows portable exe
 > yt-dlp và ffmpeg không được đóng gói sẵn — chúng được tải từ GitHub khi khởi động lần đầu và lưu vào thư mục dữ liệu ứng dụng của bạn.
 
 </details>
+
+---
+
+## <a id="troubleshooting"></a>Troubleshooting
+
+### App won't open / no window appears
+
+The Arroxy process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
+
+**1. Check the log.** It records startup, GPU info, and any crash. Path:
+
+| Platform | Path                                              |
+| -------- | ------------------------------------------------- |
+| Windows  | `%APPDATA%\Arroxy\logs\main.log`                  |
+| macOS    | `~/Library/Logs/Arroxy/main.log`                  |
+| Linux    | `~/.config/Arroxy/logs/main.log`                  |
+
+**2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
+
+```bash
+# Windows (Portable) — PowerShell, run from the folder containing the exe
+.\Arroxy-Portable-<version>.exe --disable-gpu
+
+# Windows (Portable) — Command Prompt (cmd.exe), from the same folder
+Arroxy-Portable-<version>.exe --disable-gpu
+
+# Windows (Installed) — works in both PowerShell and cmd.exe
+"%LOCALAPPDATA%\Programs\Arroxy\Arroxy.exe" --disable-gpu
+
+# macOS
+/Applications/Arroxy.app/Contents/MacOS/Arroxy --disable-gpu
+
+# Linux (AppImage)
+./Arroxy-*.AppImage --disable-gpu
+```
+
+If that works, the GPU/driver is the cause. Make the change permanent (next step).
+
+**3. Persist the flag via `argv.json`.** Create the file at:
+
+| Platform | Path                                          |
+| -------- | --------------------------------------------- |
+| Windows  | `%APPDATA%\Arroxy\argv.json`                  |
+| macOS    | `~/Library/Application Support/Arroxy/argv.json` |
+| Linux    | `~/.config/Arroxy/argv.json`                  |
+
+With contents:
+
+```json
+{ "disable-hardware-acceleration": true }
+```
+
+Arroxy reads this before opening any window, so it works even when the window never appeared.
+
+**4. Other flags worth trying** (combine if needed): `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
+
+**5. Stale window position.** If the window may be opening off-screen (multi-monitor change since last run), delete `<userData>\window-state.json` and relaunch.
+
+**6. Still stuck?** Open an issue with: OS version, the contents of `main.log`, and any output from running with `--enable-logging --v=1`.
 
 ---
 

@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>首次启动帮助</summary>
+          <div class="first-launch-body">首次启动时，Windows SmartScreen 可能显示 <em>«Windows protected your PC»</em> 或 <em>«Unknown publisher»</em> —— Arroxy 是免费开源软件，Windows 版本未使用付费证书签名。这适用于 <code>Arroxy-Setup-*.exe</code> 和 <code>Arroxy-Portable-*.exe</code>，<strong>不</strong>代表 Arroxy 不安全。点击 <strong>More info</strong>，再点击 <strong>Run anyway</strong>。请仅从官方 GitHub Releases 页面下载 Arroxy —— 源代码公开，您可以自行审查或编译。</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>首次启动帮助</summary>
           <div class="first-launch-body">macOS 在首次启动时会显示<em>未识别的开发者</em>警告 —— Arroxy 尚未进行代码签名。<strong>右键单击应用图标 → 打开</strong>，然后在对话框中点击<strong>打开</strong>。仅需一次。</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

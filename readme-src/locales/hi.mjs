@@ -179,6 +179,13 @@ export const hi = {
   dl_win_r5_portable: "❌ बस फ़ाइल डिलीट कर दें",
   dl_win_rec:
     "**सिफ़ारिश:** ऑटो-अपडेट और तेज़ स्टार्टअप के लिए NSIS इंस्टॉलर इस्तेमाल करें। बिना इंस्टॉल और बिना रजिस्ट्री विकल्प के लिए पोर्टेबल `.exe` लें।",
+  dl_win_smartscreen_h4: "Windows SmartScreen चेतावनी",
+  dl_win_smartscreen_intro:
+    "पहले लॉन्च पर आप **\"Windows protected your PC\"** या **\"Unknown publisher.\"** देख सकते हैं। यह `Arroxy-Setup-*.exe` और `Arroxy-Portable-*.exe` दोनों पर लागू होता है। Arroxy मुफ़्त और ओपन-सोर्स है और Windows बिल्ड पेड सर्टिफ़िकेट से कोड-साइन नहीं हैं, इसीलिए SmartScreen फ़्लैग करता है। इसका **अपने आप** यह मतलब नहीं कि Arroxy असुरक्षित है। जारी रखने के लिए:",
+  dl_win_smartscreen_step1: "**More info** क्लिक करें।",
+  dl_win_smartscreen_step2: "**Run anyway** क्लिक करें।",
+  dl_win_smartscreen_official:
+    "Arroxy केवल आधिकारिक GitHub Releases पेज से डाउनलोड करें। अगर फ़ाइल किसी दूसरी वेबसाइट से मिली हो या किसी ने भेजी हो, तो उसे डिलीट करें और आधिकारिक स्रोत से नई कॉपी डाउनलोड करें। सोर्स कोड सार्वजनिक है, इसलिए आप चाहें तो ख़ुद जाँच सकते हैं या Arroxy ख़ुद बना सकते हैं।",
   dl_macos_h3: "macOS पर पहली बार लॉन्च",
   dl_macos_warning:
     "Arroxy अभी कोड-साइन्ड नहीं है, इसलिए पहले लॉन्च पर macOS Gatekeeper चेतावनी देगा। यह अपेक्षित है — यह नुकसान का संकेत नहीं है।",

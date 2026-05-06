@@ -141,6 +141,15 @@ YouTube が bot 検出を更新すると、多くのツールはブラウザの 
 
 **おすすめ：** 自動アップデートと高速起動には NSIS インストーラを使用。インストール不要・レジストリ非変更のオプションにはポータブル `.exe` を使用。
 
+**Windows SmartScreen の警告**
+
+初回起動時に **«Windows protected your PC»** または **«Unknown publisher»** が表示されることがあります。これは `Arroxy-Setup-*.exe` と `Arroxy-Portable-*.exe` の両方に該当します。Arroxy は無料のオープンソースソフトウェアであり、Windows ビルドには有料の証明書によるコード署名がないため、SmartScreen がフラグを立てます。これは Arroxy が危険であることを**自動的に**意味するわけではありません。続行するには：
+
+1. **More info** をクリック。
+2. **Run anyway** をクリック。
+
+> Arroxy は必ず公式の GitHub Releases ページからダウンロードしてください。他のウェブサイトから入手したファイルや、誰かから送られてきたファイルは削除し、公式ソースから新しいコピーをダウンロードしてください。ソースコードは公開されているため、ご自身で確認したり、Arroxy をビルドしたりすることも可能です。
+
 </details>
 
 <details>
@@ -338,6 +347,65 @@ bun run dist:win     # Windows ポータブル exe のクロスコンパイル
 > yt-dlp と ffmpeg はバンドルされていません — 初回起動時に公式 GitHub releases から取得され、アプリデータフォルダにキャッシュされます。
 
 </details>
+
+---
+
+## <a id="troubleshooting"></a>Troubleshooting
+
+### App won't open / no window appears
+
+The Arroxy process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
+
+**1. Check the log.** It records startup, GPU info, and any crash. Path:
+
+| Platform | Path                                              |
+| -------- | ------------------------------------------------- |
+| Windows  | `%APPDATA%\Arroxy\logs\main.log`                  |
+| macOS    | `~/Library/Logs/Arroxy/main.log`                  |
+| Linux    | `~/.config/Arroxy/logs/main.log`                  |
+
+**2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
+
+```bash
+# Windows (Portable) — PowerShell, run from the folder containing the exe
+.\Arroxy-Portable-<version>.exe --disable-gpu
+
+# Windows (Portable) — Command Prompt (cmd.exe), from the same folder
+Arroxy-Portable-<version>.exe --disable-gpu
+
+# Windows (Installed) — works in both PowerShell and cmd.exe
+"%LOCALAPPDATA%\Programs\Arroxy\Arroxy.exe" --disable-gpu
+
+# macOS
+/Applications/Arroxy.app/Contents/MacOS/Arroxy --disable-gpu
+
+# Linux (AppImage)
+./Arroxy-*.AppImage --disable-gpu
+```
+
+If that works, the GPU/driver is the cause. Make the change permanent (next step).
+
+**3. Persist the flag via `argv.json`.** Create the file at:
+
+| Platform | Path                                          |
+| -------- | --------------------------------------------- |
+| Windows  | `%APPDATA%\Arroxy\argv.json`                  |
+| macOS    | `~/Library/Application Support/Arroxy/argv.json` |
+| Linux    | `~/.config/Arroxy/argv.json`                  |
+
+With contents:
+
+```json
+{ "disable-hardware-acceleration": true }
+```
+
+Arroxy reads this before opening any window, so it works even when the window never appeared.
+
+**4. Other flags worth trying** (combine if needed): `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
+
+**5. Stale window position.** If the window may be opening off-screen (multi-monitor change since last run), delete `<userData>\window-state.json` and relaunch.
+
+**6. Still stuck?** Open an issue with: OS version, the contents of `main.log`, and any output from running with `--enable-logging --v=1`.
 
 ---
 

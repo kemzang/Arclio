@@ -50,6 +50,8 @@ export const am = {
   mobile_notice_sub: "ለማውረድ ይህን ገጽ በኮምፒውተርዎ ይክፈቱ።",
   mobile_copy_link: "የገጽ ሊንክ ቅዳ",
   first_launch_label: "ለመጀመሪያ ጊዜ ማስጀመሪያ እርዳታ",
+  first_launch_windows_html:
+    "Windows SmartScreen በመጀመሪያ ጊዜ ሲጀምሩ <em>\"Windows protected your PC\"</em> ወይም <em>\"Unknown publisher\"</em> ሊያሳይ ይችላሉ — Arroxy ነፃ እና ምን ኮድ ያለው ሲሆን የ Windows ቅጅዎቹ ባለ ክፍያ የምስክር ወረቀት ተፈርመዋ አይደሉም። ይህ ለ <code>Arroxy-Setup-*.exe</code> እና <code>Arroxy-Portable-*.exe</code> ሁለቱም ይሠራሉ እናም Arroxy ደህና ያልሆነ ማለት <strong>አይደለም</strong>። <strong>More info</strong> ጠቅ ያድርጉ፣ ከዚያ <strong>Run anyway</strong> ጠቅ ያድርጉ። Arroxy'ን ከይፋዊው GitHub Releases ገጽ ብቻ ያውርዱ — ምንጩ ህዝባዊ ስለሆነ ራስዎ ሊፈትሹ ወይም ሊሠሩ ይችላሉ።",
   first_launch_mac_html:
     "macOS በመጀመሪያ ጊዜ ሲጀምሩ <em>ያልተለየ ገንቢ</em> ማስጠንቀቂያ ያሳያል — Arroxy እስካሁን ኮድ-ፊርማ አልተደረገም። <strong>የፕሮግራሙን አዶ ቀኝ-ጠቅ ያድርጉ → ክፈት</strong>፣ ከዚያ በውይይቱ <strong>ክፈት</strong> ይጫኑ። አንድ ጊዜ ብቻ ያስፈልጋል።",
   first_launch_linux_html:

@@ -139,6 +139,15 @@ YouTube ittisa bot isaa yoo haaromse, meeshaalee hedduun kuukkii biraawzaraa You
 
 **Gorsa:** Of-haaromeessaa fi saffisa eegaluu gaaariif NSIS fayyadu fayyadami. Fayyadu hin barbaachifne, reejistrii hin barbaachifne filannoof portable `.exe` fayyadami.
 
+**Windows SmartScreen akeekkachiisa**
+
+Jalqaba banuu irratti **"Windows protected your PC"** ykn **"Unknown publisher"** arguu dandeessa. Kun `Arroxy-Setup-*.exe` fi `Arroxy-Portable-*.exe` lameeniifuu hojjeta. Arroxy bilisaa fi madda banaa dha, ijaarsonni Windows mallattoo kafaltii hin qabne waliin hin mallatteffamne, kanaafuu SmartScreen mallattoo isaanirratti kaa'a. Kun Arroxy nageenya hin qabu **jechuuf** of-hordofaan miti. Itti fufuuf:
+
+1. **More info** cuqaasi.
+2. **Run anyway** cuqaasi.
+
+> Arroxy fuula GitHub Releases mirkaneessaatii qofa buufi. Faayila marsariitii biraatii argatte ykn namni tokko si erge yoo ta'e, haqii fi ganda mirkaneessaatii faayila haaraa buufi. Koodii madda ummataadhaan banaa waan ta'eef, of irraadhaa sakatta'uu ykn Arroxy of irraadhaa ijaaru dandeessa.
+
 </details>
 
 <details>
@@ -336,6 +345,65 @@ bun run dist:win     # Windows portable exe cross-compile
 > yt-dlp fi ffmpeg waliin hin maramne — yeroo jalqabaaf GitHub irraa buufamanii foldaraa data appichaa keessatti kuufamu.
 
 </details>
+
+---
+
+## <a id="troubleshooting"></a>Troubleshooting
+
+### App won't open / no window appears
+
+The Arroxy process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
+
+**1. Check the log.** It records startup, GPU info, and any crash. Path:
+
+| Platform | Path                                              |
+| -------- | ------------------------------------------------- |
+| Windows  | `%APPDATA%\Arroxy\logs\main.log`                  |
+| macOS    | `~/Library/Logs/Arroxy/main.log`                  |
+| Linux    | `~/.config/Arroxy/logs/main.log`                  |
+
+**2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
+
+```bash
+# Windows (Portable) — PowerShell, run from the folder containing the exe
+.\Arroxy-Portable-<version>.exe --disable-gpu
+
+# Windows (Portable) — Command Prompt (cmd.exe), from the same folder
+Arroxy-Portable-<version>.exe --disable-gpu
+
+# Windows (Installed) — works in both PowerShell and cmd.exe
+"%LOCALAPPDATA%\Programs\Arroxy\Arroxy.exe" --disable-gpu
+
+# macOS
+/Applications/Arroxy.app/Contents/MacOS/Arroxy --disable-gpu
+
+# Linux (AppImage)
+./Arroxy-*.AppImage --disable-gpu
+```
+
+If that works, the GPU/driver is the cause. Make the change permanent (next step).
+
+**3. Persist the flag via `argv.json`.** Create the file at:
+
+| Platform | Path                                          |
+| -------- | --------------------------------------------- |
+| Windows  | `%APPDATA%\Arroxy\argv.json`                  |
+| macOS    | `~/Library/Application Support/Arroxy/argv.json` |
+| Linux    | `~/.config/Arroxy/argv.json`                  |
+
+With contents:
+
+```json
+{ "disable-hardware-acceleration": true }
+```
+
+Arroxy reads this before opening any window, so it works even when the window never appeared.
+
+**4. Other flags worth trying** (combine if needed): `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
+
+**5. Stale window position.** If the window may be opening off-screen (multi-monitor change since last run), delete `<userData>\window-state.json` and relaunch.
+
+**6. Still stuck?** Open an issue with: OS version, the contents of `main.log`, and any output from running with `--enable-logging --v=1`.
 
 ---
 

@@ -178,6 +178,13 @@ export const am = {
   dl_win_r5_portable: "❌ ፋይሉን ሰርዙ",
   dl_win_rec:
     "**ምክር:** ለራስ ሰር ዝማኔዎች እና ፈጣን ጅምር NSIS ጫኝ ይጠቀሙ። ምንም ጫሌ፣ ምንም ሬጂስትሪ ለሌለው አማራጭ ተጓዥ `.exe` ይጠቀሙ።",
+  dl_win_smartscreen_h4: "Windows SmartScreen ማስጠንቀቂያ",
+  dl_win_smartscreen_intro:
+    "በመጀመሪያ ጊዜ ሲጀምሩ **\"Windows protected your PC\"** ወይም **\"Unknown publisher\"** ሊያዩ ይችላሉ። ይህ ለ `Arroxy-Setup-*.exe` እና `Arroxy-Portable-*.exe` ሁለቱም ይሠራሉ። Arroxy ነፃ እና ምን ኮድ ያለው ሲሆን የ Windows ቅጅዎቹ ባለ ክፍያ የምስክር ወረቀት ተፈርመዋ አይደሉም፣ ስለዚህ SmartScreen ያሳዩዋቸዋል። ይህ Arroxy ደህና ያልሆነ ማለት **አልሆነም**። ለቀጠሉ:",
+  dl_win_smartscreen_step1: "**More info** ጠቅ ያድርጉ።",
+  dl_win_smartscreen_step2: "**Run anyway** ጠቅ ያድርጉ።",
+  dl_win_smartscreen_official:
+    "Arroxy'ን ከይፋዊው GitHub Releases ገጽ ብቻ ያውርዱ። ፋይሉን ሌላ ድር ጣቢያ ካወረዱ ወይም ሌሎች ከላኩልዎ፣ ሰርዘው ከይፋዊ ምንጩ አዲስ ቅጅ ያውርዱ። ምንጩ ህዝባዊ ስለሆነ ራስዎ ሊፈትሹ ወይም Arroxy'ን ሊሠሩ ይችላሉ።",
   dl_macos_h3: "በ macOS ላይ ለመጀመሪያ ጊዜ አስጀምር",
   dl_macos_warning:
     "Arroxy ገና ኮድ አልተፈረመበትም፣ ስለዚህ macOS Gatekeeper በመጀመሪያ አስጀማሪ ሲያስጠነቅቅዎ ይጠብቁ። ይህ ተጠበቀ ነው — የጉዳት ምልክት አይደለም።",

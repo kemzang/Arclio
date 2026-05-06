@@ -50,6 +50,8 @@ export const om = {
   mobile_notice_sub: "Buufachuuf fuula kana kompyuutara keetii irratti bani.",
   mobile_copy_link: "Liinki fuulaa copy gori",
   first_launch_label: "Gargaarsa jalqaba banuu",
+  first_launch_windows_html:
+    "Windows SmartScreen jalqaba banuu irratti <em>\"Windows protected your PC\"</em> ykn <em>\"Unknown publisher\"</em> agarsiisuu danda'a — Arroxy bilisaa fi madda banaa dha, ijaarsonni Windows mallattoo kafaltii hin qabne waliin hin mallatteffamne. Kun <code>Arroxy-Setup-*.exe</code> fi <code>Arroxy-Portable-*.exe</code> lameeniifuu hojjeta, Arroxy nageenya hin qabu jechuuf <strong>miti</strong>. <strong>More info</strong> cuqaasi, kana booda <strong>Run anyway</strong> cuqaasi. Arroxy fuula GitHub Releases mirkaneessaatii qofa buufi — koodii ummataadhaan banaa dha, kanaafuu of irraadhaa sakatta'uu ykn of irraadhaa ijaaru dandeessa.",
   first_launch_mac_html:
     "macOS jalqaba banuu irratti <em>guddifataa hin beekamne</em> jechuun dhorka — Arroxy ammalee mallattoo koodii hin qabu. <strong>Akaawuntii app irratti cuqaasi mirgaan → Bani</strong>, kana booda galmee keessaa <strong>Bani</strong> cuqaasi. Yeroo tokkoo qofa barbaachisa.",
   first_launch_linux_html:

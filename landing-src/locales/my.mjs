@@ -50,6 +50,8 @@ export const my = {
   mobile_notice_sub: "ဒေါင်းလုဒ်လုပ်ရန် သင့်ကွန်ပျူတာတွင် ဤစာမျက်နှာကို ဖွင့်ပါ။",
   mobile_copy_link: "စာမျက်နှာ လင့်ကူးပါ",
   first_launch_label: "ပထမဆုံး ဖွင့်ခြင်း အကူအညီ",
+  first_launch_windows_html:
+    "ပထမဆုံး ဖွင့်သောအခါ Windows SmartScreen သည် <em>\"Windows protected your PC\"</em> သို့မဟုတ် <em>\"Unknown publisher\"</em> ဟု ပြနိုင်သည် — Arroxy သည် အခမဲ့ open-source ဖြစ်ပြီး Windows builds များကို ငွေပေးချေ certificate ဖြင့် sign မလုပ်ထားပါ။ ၎င်းသည် <code>Arroxy-Setup-*.exe</code> နှင့် <code>Arroxy-Portable-*.exe</code> နှစ်မျိုးစလုံးအတွက် သက်ဆိုင်ပြီး Arroxy မဘေးကင်းကြောင်း <strong>မဆိုလိုပါ</strong>။ <strong>More info</strong> ကို နှိပ်ပြီး <strong>Run anyway</strong> ကို နှိပ်ပါ။ Arroxy ကို တရားဝင် GitHub Releases စာမျက်နှာမှသာ ဒေါင်းလုဒ်ဆွဲပါ — source code ကို public တင်ထားသောကြောင့် သင်ကိုယ်တိုင် စစ်ဆေးနိုင်သည် သို့မဟုတ် build လုပ်နိုင်သည်။",
   first_launch_mac_html:
     "macOS သည် ပထမဆုံး ဖွင့်ချိန်တွင် <em>မသိသော developer</em> သတိပေးချက် ပြသသည် — Arroxy သည် code-signed မဟုတ်သေးပါ။ <strong>App icon ကို right-click → Open</strong> နှိပ်ပြီး dialog တွင် <strong>Open</strong> ကို နှိပ်ပါ။ တစ်ကြိမ်သာ လိုအပ်သည်။",
   first_launch_linux_html:

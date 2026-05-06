@@ -50,6 +50,8 @@ export const sw = {
   mobile_notice_sub: "Tembelea ukurasa huu kwenye kompyuta yako kupakua.",
   mobile_copy_link: "Nakili kiungo cha ukurasa",
   first_launch_label: "Msaada wa uzinduzi wa kwanza",
+  first_launch_windows_html:
+    "Windows SmartScreen inaweza kuonyesha <em>\"Windows protected your PC\"</em> au <em>\"Unknown publisher\"</em> wakati wa uzinduzi wa kwanza — Arroxy ni bure na chanzo wazi, na ujenzi wa Windows haujasainiwa kwa cheti cha malipo. Hii inatumika kwa <code>Arroxy-Setup-*.exe</code> na <code>Arroxy-Portable-*.exe</code> na <strong>haimaanishi</strong> kwamba Arroxy si salama. Bonyeza <strong>More info</strong>, kisha <strong>Run anyway</strong>. Pakua Arroxy tu kutoka ukurasa rasmi wa GitHub Releases — msimbo wa chanzo ni wa umma, hivyo unaweza kuukagua au kuujenga mwenyewe.",
   first_launch_mac_html:
     "macOS inaonyesha onyo la <em>msanidi asiyejulikana</em> wakati wa uzinduzi wa kwanza — Arroxy bado haijakosainiwa na msimbo. <strong>Bonyeza kulia ikoni ya programu → Fungua</strong>, kisha bonyeza <strong>Fungua</strong> kwenye kisanduku cha mazungumzo. Inahitajika mara moja tu.",
   first_launch_linux_html:

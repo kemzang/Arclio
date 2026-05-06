@@ -179,6 +179,13 @@ export const zh = {
   dl_win_r5_portable: "❌ 删除文件即可",
   dl_win_rec:
     "**建议：** 使用 NSIS 安装版以获得自动更新和更快的启动速度。使用便携版 `.exe` 实现免安装、不写注册表。",
+  dl_win_smartscreen_h4: "Windows SmartScreen 警告",
+  dl_win_smartscreen_intro:
+    "首次启动时，您可能会看到 **«Windows protected your PC»** 或 **«Unknown publisher»**。这适用于 `Arroxy-Setup-*.exe` 和 `Arroxy-Portable-*.exe`。Arroxy 是免费开源软件，Windows 版本未使用付费证书签名，这正是 SmartScreen 标记它们的原因。这**不**代表 Arroxy 自动就是不安全的。要继续操作：",
+  dl_win_smartscreen_step1: "点击 **More info**。",
+  dl_win_smartscreen_step2: "点击 **Run anyway**。",
+  dl_win_smartscreen_official:
+    "请仅从官方 GitHub Releases 页面下载 Arroxy。如果您从其他网站获取了该文件，或有人发送给您，请删除它并从官方来源重新下载。源代码是公开的，如果您愿意，可以自行审查或编译 Arroxy。",
   dl_macos_h3: "macOS 首次启动",
   dl_macos_warning:
     "Arroxy 尚未代码签名，因此 macOS Gatekeeper 会在首次启动时发出警告。这是预期行为 — 并不表示文件损坏。",

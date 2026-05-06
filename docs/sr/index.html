@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>Помоћ при првом покретању</summary>
+          <div class="first-launch-body">Windows SmartScreen може приказати <em>«Windows protected your PC»</em> или <em>«Unknown publisher»</em> при prvom покретању — Arroxy је бесплатан и отвореног кода, а Windows верзије нису потписане плаћеним сертификатом. Ово се односи на <code>Arroxy-Setup-*.exe</code> и <code>Arroxy-Portable-*.exe</code> и <strong>не</strong> значи да је Arroxy несигуран. Кликните <strong>More info</strong>, затим <strong>Run anyway</strong>. Преузимајте Arroxy искључиво са званичне GitHub Releases странице — изворни код је јаван, тако да га можете сами прегледати или компајлирати.</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>Помоћ при првом покретању</summary>
           <div class="first-launch-body">macOS при првом покретању приказује упозорење о <em>непознатом програмеру</em> — Arroxy још увек није потписан. <strong>Десни клик на икону апликације → Отвори</strong>, затим кликните <strong>Отвори</strong> у дијалогу. Потребно само једном.</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

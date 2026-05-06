@@ -178,6 +178,13 @@ export const uz = {
   dl_win_r5_portable: "❌ faylni o'chirish",
   dl_win_rec:
     "**Tavsiya:** avtomatik yangilanishlar va tezroq ishga tushish uchun NSIS o'rnatuvchisidan foydalaning. O'rnatishsiz, reyestrg'a ta'sir qilmaydigan variant uchun portable `.exe` dan foydalaning.",
+  dl_win_smartscreen_h4: "Windows SmartScreen ogohlantirishи",
+  dl_win_smartscreen_intro:
+    "Birinchi ishga tushirishda **\"Windows protected your PC\"** yoki **\"Unknown publisher\"** xabarini ko'rishingiz mumkin. Bu `Arroxy-Setup-*.exe` va `Arroxy-Portable-*.exe` ikkisiga ham tegishli. Arroxy bepul va ochiq manbali dastur bo'lib, Windows qurilmalari pulli sertifikat bilan imzolanmagan, shuning uchun SmartScreen ularni belgilaydi. Bu Arroxy xavfli ekanligini **avtomatik ravishda** anglatmaydi. Davom etish uchun:",
+  dl_win_smartscreen_step1: "**More info** tugmasini bosing.",
+  dl_win_smartscreen_step2: "**Run anyway** tugmasini bosing.",
+  dl_win_smartscreen_official:
+    "Arroxy'ni faqat rasmiy GitHub Releases sahifasidan yuklab oling. Agar faylni boshqa saytdan olgan bo'lsangiz yoki kimdir sizga yuborgan bo'lsa, uni o'chirib, rasmiy manbadan yangi nusxa yuklab oling. Manba kodi ommaviy, shuning uchun xohlasangiz o'zingiz tekshirishingiz yoki Arroxy'ni mustaqil qurishingiz mumkin.",
   dl_macos_h3: "macOS da birinchi ishga tushirish",
   dl_macos_warning:
     "Arroxy hali kod imzosiga ega emas, shuning uchun macOS Gatekeeper birinchi ishga tushirishda ogohlantirish ko'rsatadi. Bu kutilgan holat — bu shikastlanish belgisi emas.",

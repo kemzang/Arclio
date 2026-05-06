@@ -50,6 +50,8 @@ export const uk = {
   mobile_notice_sub: "Відкрийте цю сторінку на комп'ютері, щоб завантажити.",
   mobile_copy_link: "Скопіювати посилання",
   first_launch_label: "Допомога при першому запуску",
+  first_launch_windows_html:
+    "Windows SmartScreen може показати <em>«Windows protected your PC»</em> або <em>«Unknown publisher»</em> при першому запуску — Arroxy є безкоштовним і відкритим, а Windows-збірки не підписані платним сертифікатом. Це стосується як <code>Arroxy-Setup-*.exe</code>, так і <code>Arroxy-Portable-*.exe</code>, і <strong>не</strong> означає, що Arroxy небезпечний. Натисніть <strong>More info</strong>, потім <strong>Run anyway</strong>. Завантажуйте Arroxy лише з офіційної сторінки GitHub Releases — вихідний код відкритий, тому ви можете перевірити або зібрати його самостійно.",
   first_launch_mac_html:
     "macOS показує попередження про <em>невизначеного розробника</em> при першому запуску — Arroxy ще не підписаний. <strong>Правий клік по значку застосунку → Відкрити</strong>, потім натисніть <strong>Відкрити</strong> у діалозі. Лише один раз.",
   first_launch_linux_html:

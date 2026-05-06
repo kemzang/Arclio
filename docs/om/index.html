@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>Gargaarsa jalqaba banuu</summary>
+          <div class="first-launch-body">Windows SmartScreen jalqaba banuu irratti <em>"Windows protected your PC"</em> ykn <em>"Unknown publisher"</em> agarsiisuu danda'a — Arroxy bilisaa fi madda banaa dha, ijaarsonni Windows mallattoo kafaltii hin qabne waliin hin mallatteffamne. Kun <code>Arroxy-Setup-*.exe</code> fi <code>Arroxy-Portable-*.exe</code> lameeniifuu hojjeta, Arroxy nageenya hin qabu jechuuf <strong>miti</strong>. <strong>More info</strong> cuqaasi, kana booda <strong>Run anyway</strong> cuqaasi. Arroxy fuula GitHub Releases mirkaneessaatii qofa buufi — koodii ummataadhaan banaa dha, kanaafuu of irraadhaa sakatta'uu ykn of irraadhaa ijaaru dandeessa.</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>Gargaarsa jalqaba banuu</summary>
           <div class="first-launch-body">macOS jalqaba banuu irratti <em>guddifataa hin beekamne</em> jechuun dhorka — Arroxy ammalee mallattoo koodii hin qabu. <strong>Akaawuntii app irratti cuqaasi mirgaan → Bani</strong>, kana booda galmee keessaa <strong>Bani</strong> cuqaasi. Yeroo tokkoo qofa barbaachisa.</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

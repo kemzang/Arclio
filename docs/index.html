@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>First-time launch help</summary>
+          <div class="first-launch-body">Windows SmartScreen may show <em>“Windows protected your PC”</em> or <em>“Unknown publisher”</em> on first launch — Arroxy is free and open-source and the Windows builds aren't signed with a paid certificate. This applies to both <code>Arroxy-Setup-*.exe</code> and <code>Arroxy-Portable-*.exe</code> and does <strong>not</strong> mean Arroxy is unsafe. Click <strong>More info</strong>, then <strong>Run anyway</strong>. Only download Arroxy from the official GitHub Releases page — the source is public, so you can inspect or build it yourself.</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>First-time launch help</summary>
           <div class="first-launch-body">macOS shows an <em>unidentified developer</em> warning on first launch — Arroxy isn't yet code-signed. <strong>Right-click the app icon → Open</strong>, then click <strong>Open</strong> in the dialog. Only needed once.</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

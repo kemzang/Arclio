@@ -178,6 +178,13 @@ export const ps = {
   dl_win_r5_portable: "❌ فایل حذف کړئ",
   dl_win_rec:
     "**سپارښتنه:** د اتوماتیک تازه کولو او ګړندي پیل لپاره د NSIS نصب کوونکی وکاروئ. د بې نصبه، بې ریجسټرۍ اختیار لپاره پورټیبل `.exe` وکاروئ.",
+  dl_win_smartscreen_h4: "Windows SmartScreen خبرداری",
+  dl_win_smartscreen_intro:
+    "د لومړي پیلولو پر مهال ممکن وګورئ **\"Windows protected your PC\"** یا **\"Unknown publisher.\"** دا د دواړو `Arroxy-Setup-*.exe` او `Arroxy-Portable-*.exe` پر لور پلي کیږي. Arroxy وړیا او خلاصه سرچینه ده او د Windows جوړونې د پیسو ورکولو سند سره کوډ لاسلیک شوي نه دي، له همدې امله SmartScreen یې بیرغ کوي. دا **اوتومات** معنی نه لري چې Arroxy خطرناک ده. د دوام لپاره:",
+  dl_win_smartscreen_step1: "**More info** کلیک کړئ.",
+  dl_win_smartscreen_step2: "**Run anyway** کلیک کړئ.",
+  dl_win_smartscreen_official:
+    "یوازې د رسمي GitHub Releases پاڼې نه Arroxy ډاونلوډ کړئ. که چیرې تاسو فایل د بل ویب پاڼې نه ترلاسه کولو وي یا چا درته لیږلی وي، هغه حذف کړئ او د رسمي سرچینې نه نوي نسخه ډاونلوډ کړئ. سرچینه کوډ عامه ده، نو که چیرې غواړئ کولی شئ پخپله یې وڅیړئ یا Arroxy جوړ کړئ.",
   dl_macos_h3: "د macOS پر لومړي پیل",
   dl_macos_warning:
     "Arroxy لاهم کوډ نه دی لاسلیک شوی، نو macOS Gatekeeper به تاسو ته د لومړي پیل پر مهال خبرداری درکوي. دا متوقع دی — دا د زیان نښه نه ده.",

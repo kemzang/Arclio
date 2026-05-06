@@ -178,6 +178,13 @@ export const vi = {
   dl_win_r5_portable: "❌ xóa file là xong",
   dl_win_rec:
     "**Khuyến nghị:** sử dụng NSIS installer để có tự động cập nhật và khởi động nhanh hơn. Dùng portable `.exe` nếu bạn muốn không cần cài đặt, không ghi registry.",
+  dl_win_smartscreen_h4: "Cảnh báo Windows SmartScreen",
+  dl_win_smartscreen_intro:
+    "Khi khởi động lần đầu, bạn có thể thấy **\"Windows protected your PC\"** hoặc **\"Unknown publisher.\"** Điều này áp dụng cho cả `Arroxy-Setup-*.exe` và `Arroxy-Portable-*.exe`. Arroxy là phần mềm miễn phí và mã nguồn mở, các bản build trên Windows không được ký mã bằng chứng chỉ có phí, đó là lý do SmartScreen gắn cờ chúng. Điều này **không** tự động có nghĩa là Arroxy không an toàn. Để tiếp tục:",
+  dl_win_smartscreen_step1: "Nhấp **More info**.",
+  dl_win_smartscreen_step2: "Nhấp **Run anyway**.",
+  dl_win_smartscreen_official:
+    "Chỉ tải Arroxy từ trang GitHub Releases chính thức. Nếu bạn tải file từ trang web khác hoặc ai đó gửi cho bạn, hãy xóa nó và tải bản sao mới từ nguồn chính thức. Mã nguồn là công khai, vì vậy bạn có thể tự kiểm tra hoặc tự build Arroxy nếu muốn.",
   dl_macos_h3: "Lần đầu khởi động trên macOS",
   dl_macos_warning:
     "Arroxy chưa được ký mã, nên macOS Gatekeeper sẽ cảnh báo khi khởi động lần đầu. Đây là điều bình thường — không phải dấu hiệu file bị hỏng.",

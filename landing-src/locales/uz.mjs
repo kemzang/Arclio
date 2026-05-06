@@ -50,6 +50,8 @@ export const uz = {
   mobile_notice_sub: "Yuklab olish uchun ushbu sahifani kompyuteringizda oching.",
   mobile_copy_link: "Sahifa havolasini nusxalash",
   first_launch_label: "Birinchi ishga tushirishda yordam",
+  first_launch_windows_html:
+    "Windows SmartScreen birinchi ishga tushirishda <em>\"Windows protected your PC\"</em> yoki <em>\"Unknown publisher\"</em> xabarini ko'rsatishi mumkin — Arroxy bepul va ochiq manbali dastur bo'lib, Windows qurilmalari pulli sertifikat bilan imzolanmagan. Bu <code>Arroxy-Setup-*.exe</code> va <code>Arroxy-Portable-*.exe</code> ikkisiga ham tegishli va Arroxy xavfli ekanligini <strong>anglatmaydi</strong>. <strong>More info</strong> tugmasini bosing, so'ng <strong>Run anyway</strong> tugmasini bosing. Arroxy'ni faqat rasmiy GitHub Releases sahifasidan yuklab oling — manba kodi ochiq, shuning uchun o'zingiz tekshirishingiz yoki qurishingiz mumkin.",
   first_launch_mac_html:
     "macOS birinchi ishga tushirishda <em>noma'lum ishlab chiquvchi</em> ogohlantirishini ko'rsatadi — Arroxy hali kod imzolanmagan. <strong>Ilova belgisini o'ng tugma bilan bosing → Ochish</strong>, so'ng muloqot oynasida <strong>Ochish</strong> tugmasini bosing. Faqat bir marta kerak.",
   first_launch_linux_html:

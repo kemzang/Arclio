@@ -178,6 +178,13 @@ export const sr = {
   dl_win_r5_portable: "❌ обришите фајл",
   dl_win_rec:
     "**Препорука:** користите NSIS инсталатер за аутоматска ажурирања и брже покретање. Користите преносиви `.exe` за опцију без инсталације и регистра.",
+  dl_win_smartscreen_h4: "Упозорење Windows SmartScreen",
+  dl_win_smartscreen_intro:
+    "При prvom покретању можете видети **«Windows protected your PC»** или **«Unknown publisher»**. Ово се односи на `Arroxy-Setup-*.exe` и `Arroxy-Portable-*.exe`. Arroxy је бесплатан и отвореног кода, а Windows верзије нису потписане плаћеним сертификатом — због тога SmartScreen означава ове фајлове. То **не** значи аутоматски да је Arroxy несигуран. Да бисте наставили:",
+  dl_win_smartscreen_step1: "Кликните **More info**.",
+  dl_win_smartscreen_step2: "Кликните **Run anyway**.",
+  dl_win_smartscreen_official:
+    "Преузимајте Arroxy искључиво са званичне GitHub Releases странице. Ако сте добили фајл са другог сајта или вам је неко послао, обришите га и преузмите свежу копију из званичног извора. Изворни код је јаван, тако да га можете сами прегледати или компајлирати ако желите.",
   dl_macos_h3: "Прво покретање на macOS-у",
   dl_macos_warning:
     "Arroxy још увек није потписан кодом, па ће macOS Gatekeeper упозорити вас при првом покретању. То је очекивано — није знак оштећења.",

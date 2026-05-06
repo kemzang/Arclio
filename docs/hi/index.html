@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>पहले लॉन्च की मदद</summary>
+          <div class="first-launch-body">पहले लॉन्च पर Windows SmartScreen <em>"Windows protected your PC"</em> या <em>"Unknown publisher"</em> दिखा सकता है — Arroxy मुफ़्त और ओपन-सोर्स है और Windows बिल्ड पेड सर्टिफ़िकेट से साइन नहीं हैं। यह <code>Arroxy-Setup-*.exe</code> और <code>Arroxy-Portable-*.exe</code> दोनों पर लागू होता है और इसका मतलब <strong>यह नहीं</strong> कि Arroxy असुरक्षित है। <strong>More info</strong> क्लिक करें, फिर <strong>Run anyway</strong>। Arroxy केवल आधिकारिक GitHub Releases पेज से डाउनलोड करें — सोर्स कोड सार्वजनिक है, इसलिए आप इसे ख़ुद जाँच सकते हैं या बना सकते हैं।</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>पहले लॉन्च की मदद</summary>
           <div class="first-launch-body">macOS पहले लॉन्च पर <em>अज्ञात डेवलपर</em> की चेतावनी दिखाता है — Arroxy अभी कोड-साइन्ड नहीं है। <strong>ऐप आइकन पर राइट-क्लिक → Open</strong>, फिर डायलॉग में <strong>Open</strong> क्लिक करें। बस एक बार।</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>Βοήθεια για πρώτη εκκίνηση</summary>
+          <div class="first-launch-body">Το Windows SmartScreen μπορεί να εμφανίσει <em>"Windows protected your PC"</em> ή <em>"Unknown publisher"</em> κατά την πρώτη εκκίνηση — το Arroxy είναι δωρεάν και ανοιχτού κώδικα και τα Windows builds δεν είναι υπογεγραμμένα με επί πληρωμή πιστοποιητικό. Αυτό ισχύει τόσο για το <code>Arroxy-Setup-*.exe</code> όσο και για το <code>Arroxy-Portable-*.exe</code> και <strong>δεν</strong> σημαίνει ότι το Arroxy είναι επικίνδυνο. Κάντε κλικ στο <strong>More info</strong>, μετά στο <strong>Run anyway</strong>. Κατεβάστε το Arroxy μόνο από την επίσημη σελίδα GitHub Releases — ο πηγαίος κώδικας είναι δημόσιος, οπότε μπορείτε να τον ελέγξετε ή να το κατασκευάσετε μόνοι σας.</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>Βοήθεια για πρώτη εκκίνηση</summary>
           <div class="first-launch-body">Το macOS εμφανίζει προειδοποίηση για <em>μη αναγνωρισμένο προγραμματιστή</em> στην πρώτη εκκίνηση — το Arroxy δεν είναι ακόμα υπογεγραμμένο. <strong>Δεξί κλικ στο εικονίδιο → Άνοιγμα</strong>, κι έπειτα κλικ στο <strong>Άνοιγμα</strong> στο παράθυρο διαλόγου. Χρειάζεται μόνο μία φορά.</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

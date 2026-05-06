@@ -50,6 +50,8 @@ export const sr = {
   mobile_notice_sub: "Посетите ову страницу на рачунару да бисте преузели.",
   mobile_copy_link: "Копирај линк странице",
   first_launch_label: "Помоћ при првом покретању",
+  first_launch_windows_html:
+    "Windows SmartScreen може приказати <em>«Windows protected your PC»</em> или <em>«Unknown publisher»</em> при prvom покретању — Arroxy је бесплатан и отвореног кода, а Windows верзије нису потписане плаћеним сертификатом. Ово се односи на <code>Arroxy-Setup-*.exe</code> и <code>Arroxy-Portable-*.exe</code> и <strong>не</strong> значи да је Arroxy несигуран. Кликните <strong>More info</strong>, затим <strong>Run anyway</strong>. Преузимајте Arroxy искључиво са званичне GitHub Releases странице — изворни код је јаван, тако да га можете сами прегледати или компајлирати.",
   first_launch_mac_html:
     "macOS при првом покретању приказује упозорење о <em>непознатом програмеру</em> — Arroxy још увек није потписан. <strong>Десни клик на икону апликације → Отвори</strong>, затим кликните <strong>Отвори</strong> у дијалогу. Потребно само једном.",
   first_launch_linux_html:

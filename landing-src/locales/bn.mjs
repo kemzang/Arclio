@@ -50,6 +50,8 @@ export const bn = {
   mobile_notice_sub: "ডাউনলোড করতে আপনার কম্পিউটারে এই পৃষ্ঠাটি দেখুন।",
   mobile_copy_link: "পেজ লিঙ্ক কপি করুন",
   first_launch_label: "প্রথমবার চালু করার সহায়তা",
+  first_launch_windows_html:
+    "প্রথম চালুতে Windows SmartScreen <em>\"Windows protected your PC\"</em> বা <em>\"Unknown publisher\"</em> দেখাতে পারে — Arroxy বিনামূল্যে এবং ওপেন-সোর্স, এবং Windows বিল্ডগুলো পেইড সার্টিফিকেট দিয়ে সাইন করা নয়। এটি <code>Arroxy-Setup-*.exe</code> এবং <code>Arroxy-Portable-*.exe</code> উভয়ের ক্ষেত্রে প্রযোজ্য এবং এর অর্থ <strong>এই নয়</strong> যে Arroxy অনিরাপদ। <strong>More info</strong> ক্লিক করুন, তারপর <strong>Run anyway</strong>। শুধুমাত্র অফিশিয়াল GitHub Releases পেজ থেকে Arroxy ডাউনলোড করুন — সোর্স কোড পাবলিক, তাই আপনি নিজে পরীক্ষা করতে বা বিল্ড করতে পারবেন।",
   first_launch_mac_html:
     "প্রথম চালুতে macOS একটি <em>অপরিচিত ডেভেলপার</em> সতর্কতা দেখায় — Arroxy এখনো কোড-সাইন করা নয়। <strong>অ্যাপ আইকনে ডান-ক্লিক করুন → Open</strong>, তারপর ডায়ালগে <strong>Open</strong> ক্লিক করুন। শুধুমাত্র একবার দরকার।",
   first_launch_linux_html:

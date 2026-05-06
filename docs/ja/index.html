@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>初回起動のヘルプ</summary>
+          <div class="first-launch-body">初回起動時、Windows SmartScreen が <em>«Windows protected your PC»</em> または <em>«Unknown publisher»</em> を表示することがあります — Arroxy は無料のオープンソースソフトウェアであり、Windows ビルドには有料の証明書によるコード署名がありません。これは <code>Arroxy-Setup-*.exe</code> と <code>Arroxy-Portable-*.exe</code> の両方に該当し、Arroxy が危険であることを意味<strong>しません</strong>。<strong>More info</strong> をクリックし、続いて <strong>Run anyway</strong> をクリックしてください。Arroxy は必ず公式の GitHub Releases ページからダウンロードしてください — ソースコードは公開されているため、ご自身で確認またはビルドすることも可能です。</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>初回起動のヘルプ</summary>
           <div class="first-launch-body">macOS は初回起動時に <em>開発元未確認</em> の警告を表示します — Arroxy はまだ署名されていません。<strong>アプリアイコンを右クリック → 開く</strong>、ダイアログで <strong>開く</strong> をクリック。最初の一度だけです。</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

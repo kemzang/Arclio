@@ -178,6 +178,13 @@ export const om = {
   dl_win_r5_portable: "❌ faayila haquu",
   dl_win_rec:
     "**Gorsa:** Of-haaromeessaa fi saffisa eegaluu gaaariif NSIS fayyadu fayyadami. Fayyadu hin barbaachifne, reejistrii hin barbaachifne filannoof portable `.exe` fayyadami.",
+  dl_win_smartscreen_h4: "Windows SmartScreen akeekkachiisa",
+  dl_win_smartscreen_intro:
+    "Jalqaba banuu irratti **\"Windows protected your PC\"** ykn **\"Unknown publisher\"** arguu dandeessa. Kun `Arroxy-Setup-*.exe` fi `Arroxy-Portable-*.exe` lameeniifuu hojjeta. Arroxy bilisaa fi madda banaa dha, ijaarsonni Windows mallattoo kafaltii hin qabne waliin hin mallatteffamne, kanaafuu SmartScreen mallattoo isaanirratti kaa'a. Kun Arroxy nageenya hin qabu **jechuuf** of-hordofaan miti. Itti fufuuf:",
+  dl_win_smartscreen_step1: "**More info** cuqaasi.",
+  dl_win_smartscreen_step2: "**Run anyway** cuqaasi.",
+  dl_win_smartscreen_official:
+    "Arroxy fuula GitHub Releases mirkaneessaatii qofa buufi. Faayila marsariitii biraatii argatte ykn namni tokko si erge yoo ta'e, haqii fi ganda mirkaneessaatii faayila haaraa buufi. Koodii madda ummataadhaan banaa waan ta'eef, of irraadhaa sakatta'uu ykn Arroxy of irraadhaa ijaaru dandeessa.",
   dl_macos_h3: "macOS irratti yeroo jalqabaa eegaluu",
   dl_macos_warning:
     "Arroxy ammallee mallattoo hin qabdu, kanaaf macOS Gatekeeper yeroo jalqabaa si akeeka. Kun eegamu — midhaan agarsiisu miti.",

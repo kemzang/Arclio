@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>د لومړي پیلولو مرسته</summary>
+          <div class="first-launch-body">Windows SmartScreen ممکن د لومړي پیلولو پر مهال <em>"Windows protected your PC"</em> یا <em>"Unknown publisher"</em> وښیي — Arroxy وړیا او خلاصه سرچینه ده او د Windows جوړونې د پیسو ورکولو سند سره لاسلیک شوي نه دي. دا د دواړو <code>Arroxy-Setup-*.exe</code> او <code>Arroxy-Portable-*.exe</code> لپاره پلي کیږي او دا <strong>نه</strong> معنی لري چې Arroxy خطرناک ده. <strong>More info</strong> کلیک کړئ، بیا <strong>Run anyway</strong>. یوازې د رسمي GitHub Releases پاڼې نه Arroxy ډاونلوډ کړئ — سرچینه عامه ده، نو تاسو کولی شئ پخپله یې وڅیړئ یا جوړ کړئ.</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>د لومړي پیلولو مرسته</summary>
           <div class="first-launch-body">macOS د لومړي پیلولو پر مهال د <em>ناپیژندلي پراختیاکار</em> خبرداری ښیي — Arroxy لاهم کوډ لاسلیک شوی نه دی. <strong>د اپ آیکون باندې ښي کلیک → پرانیزئ</strong>، بیا د ډیالوګ کې <strong>پرانیزئ</strong> کلیک کړئ. یوازې یو ځل اړین دی.</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

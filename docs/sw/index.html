@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>Msaada wa uzinduzi wa kwanza</summary>
+          <div class="first-launch-body">Windows SmartScreen inaweza kuonyesha <em>"Windows protected your PC"</em> au <em>"Unknown publisher"</em> wakati wa uzinduzi wa kwanza — Arroxy ni bure na chanzo wazi, na ujenzi wa Windows haujasainiwa kwa cheti cha malipo. Hii inatumika kwa <code>Arroxy-Setup-*.exe</code> na <code>Arroxy-Portable-*.exe</code> na <strong>haimaanishi</strong> kwamba Arroxy si salama. Bonyeza <strong>More info</strong>, kisha <strong>Run anyway</strong>. Pakua Arroxy tu kutoka ukurasa rasmi wa GitHub Releases — msimbo wa chanzo ni wa umma, hivyo unaweza kuukagua au kuujenga mwenyewe.</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>Msaada wa uzinduzi wa kwanza</summary>
           <div class="first-launch-body">macOS inaonyesha onyo la <em>msanidi asiyejulikana</em> wakati wa uzinduzi wa kwanza — Arroxy bado haijakosainiwa na msimbo. <strong>Bonyeza kulia ikoni ya programu → Fungua</strong>, kisha bonyeza <strong>Fungua</strong> kwenye kisanduku cha mazungumzo. Inahitajika mara moja tu.</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

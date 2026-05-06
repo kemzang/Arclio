@@ -50,6 +50,8 @@ export const ps = {
   mobile_notice_sub: "ډاونلوډ کولو لپاره دا پاڼه د خپل کمپیوټر کې پرانیزئ.",
   mobile_copy_link: "د پاڼې لینک کاپي کړئ",
   first_launch_label: "د لومړي پیلولو مرسته",
+  first_launch_windows_html:
+    "Windows SmartScreen ممکن د لومړي پیلولو پر مهال <em>\"Windows protected your PC\"</em> یا <em>\"Unknown publisher\"</em> وښیي — Arroxy وړیا او خلاصه سرچینه ده او د Windows جوړونې د پیسو ورکولو سند سره لاسلیک شوي نه دي. دا د دواړو <code>Arroxy-Setup-*.exe</code> او <code>Arroxy-Portable-*.exe</code> لپاره پلي کیږي او دا <strong>نه</strong> معنی لري چې Arroxy خطرناک ده. <strong>More info</strong> کلیک کړئ، بیا <strong>Run anyway</strong>. یوازې د رسمي GitHub Releases پاڼې نه Arroxy ډاونلوډ کړئ — سرچینه عامه ده، نو تاسو کولی شئ پخپله یې وڅیړئ یا جوړ کړئ.",
   first_launch_mac_html:
     "macOS د لومړي پیلولو پر مهال د <em>ناپیژندلي پراختیاکار</em> خبرداری ښیي — Arroxy لاهم کوډ لاسلیک شوی نه دی. <strong>د اپ آیکون باندې ښي کلیک → پرانیزئ</strong>، بیا د ډیالوګ کې <strong>پرانیزئ</strong> کلیک کړئ. یوازې یو ځل اړین دی.",
   first_launch_linux_html:

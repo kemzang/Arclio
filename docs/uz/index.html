@@ -815,6 +815,10 @@
           <div class="picker-assets" id="picker-assets-mac" style="display:none"></div>
           <div class="picker-assets" id="picker-assets-linux" style="display:none"></div>
         </div>
+        <details class="first-launch-help" id="first-launch-windows" style="display:none">
+          <summary>Birinchi ishga tushirishda yordam</summary>
+          <div class="first-launch-body">Windows SmartScreen birinchi ishga tushirishda <em>"Windows protected your PC"</em> yoki <em>"Unknown publisher"</em> xabarini ko'rsatishi mumkin — Arroxy bepul va ochiq manbali dastur bo'lib, Windows qurilmalari pulli sertifikat bilan imzolanmagan. Bu <code>Arroxy-Setup-*.exe</code> va <code>Arroxy-Portable-*.exe</code> ikkisiga ham tegishli va Arroxy xavfli ekanligini <strong>anglatmaydi</strong>. <strong>More info</strong> tugmasini bosing, so'ng <strong>Run anyway</strong> tugmasini bosing. Arroxy'ni faqat rasmiy GitHub Releases sahifasidan yuklab oling — manba kodi ochiq, shuning uchun o'zingiz tekshirishingiz yoki qurishingiz mumkin.</div>
+        </details>
         <details class="first-launch-help" id="first-launch-mac" style="display:none">
           <summary>Birinchi ishga tushirishda yordam</summary>
           <div class="first-launch-body">macOS birinchi ishga tushirishda <em>noma'lum ishlab chiquvchi</em> ogohlantirishini ko'rsatadi — Arroxy hali kod imzolanmagan. <strong>Ilova belgisini o'ng tugma bilan bosing → Ochish</strong>, so'ng muloqot oynasida <strong>Ochish</strong> tugmasini bosing. Faqat bir marta kerak.</div>
@@ -1242,7 +1246,10 @@
         }
 
         function showFirstLaunchHelp() {
-          if (os === 'mac') {
+          if (os === 'windows') {
+            const el = document.getElementById('first-launch-windows');
+            if (el) el.style.display = 'block';
+          } else if (os === 'mac') {
             const el = document.getElementById('first-launch-mac');
             if (el) el.style.display = 'block';
           } else if (os === 'linux') {

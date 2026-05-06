@@ -178,6 +178,13 @@ export const sw = {
   dl_win_r5_portable: "❌ futa faili",
   dl_win_rec:
     "**Pendekezo:** tumia kisanidi cha NSIS kwa masasisho ya kiotomatiki na uzinduzi wa haraka. Tumia `.exe` inayobebeka kwa chaguo lisilo na usanidi na bila usajili.",
+  dl_win_smartscreen_h4: "Onyo la Windows SmartScreen",
+  dl_win_smartscreen_intro:
+    "Wakati wa uzinduzi wa kwanza unaweza kuona **\"Windows protected your PC\"** au **\"Unknown publisher.\"** Hii inatumika kwa `Arroxy-Setup-*.exe` na `Arroxy-Portable-*.exe`. Arroxy ni bure na chanzo wazi, na ujenzi wa Windows haujasainiwa kwa cheti cha malipo, ndiyo maana SmartScreen huipiga bendera. Hii **haimaanishi** kiotomatiki kwamba Arroxy si salama. Ili kuendelea:",
+  dl_win_smartscreen_step1: "Bonyeza **More info**.",
+  dl_win_smartscreen_step2: "Bonyeza **Run anyway**.",
+  dl_win_smartscreen_official:
+    "Pakua Arroxy tu kutoka ukurasa rasmi wa GitHub Releases. Ukipata faili kutoka tovuti nyingine au mtu akikutumia, ifute na upakue nakala mpya kutoka chanzo rasmi. Msimbo wa chanzo ni wa umma, hivyo unaweza kuukagua au kuijenga Arroxy mwenyewe ukitaka.",
   dl_macos_h3: "Uzinduzi wa kwanza kwenye macOS",
   dl_macos_warning:
     "Arroxy bado haijakaguliwa kwa msimbo, kwa hivyo macOS Gatekeeper itakuonya wakati wa uzinduzi wa kwanza. Hii inatarajiwa — si ishara ya uharibifu.",
