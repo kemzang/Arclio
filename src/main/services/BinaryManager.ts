@@ -21,9 +21,19 @@ interface ResolveOptions {
   overrides?: BinaryOverrides;
   onStatus?: StatusReporter;
   onProgress?: ProgressEmitter;
+  signal?: AbortSignal;
 }
 
 const PROBE_TIMEOUT_MS = 10_000;
+
+function isAbortError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  return err.name === 'AbortError' || (err as { code?: string }).code === 'ABORT_ERR';
+}
+
+function abortFailure(message: string): DependencyFailure {
+  return { kind: 'timeout', message, osCode: 'CANCELLED' };
+}
 
 function probeArgs(id: DependencyId): string[] {
   if (id === 'ffmpeg' || id === 'ffprobe') return ['-version'];
@@ -39,7 +49,7 @@ function classifyProbeError(err: NodeJS.ErrnoException, stderr?: string): Depend
   if (code === 'ENOENT') return { kind: 'spawn_failed', message: msg, osCode: code };
   if (code === 'EACCES' || code === 'EPERM') return { kind: 'permission_denied', message: msg, osCode: code };
   const blob = `${msg} ${stderr ?? ''}`;
-  if (process.platform === 'win32' && /SmartScreen|Defender|virus|threat|0x800704EC|0x80070424|operation did not complete successfully/i.test(blob)) {
+  if (process.platform === 'win32' && /SmartScreen|Defender|virus|threat|0x800704EC|0x80070424/i.test(blob)) {
     return { kind: 'blocked_or_quarantined', message: msg, osCode: code };
   }
   if (process.platform === 'win32' && (code === 'UNKNOWN' || errno === -4094)) {
@@ -48,13 +58,18 @@ function classifyProbeError(err: NodeJS.ErrnoException, stderr?: string): Depend
   return { kind: 'bad_exit_code', message: msg, osCode: code };
 }
 
-async function probeBinary(filePath: string, args: string[], timeoutMs: number = PROBE_TIMEOUT_MS): Promise<{ ok: true; output: string } | { ok: false; failure: DependencyFailure }> {
+async function probeBinary(filePath: string, args: string[], timeoutMs: number = PROBE_TIMEOUT_MS, signal?: AbortSignal): Promise<{ ok: true; output: string } | { ok: false; failure: DependencyFailure }> {
+  if (signal?.aborted) return { ok: false, failure: abortFailure('Cancelled before probe') };
   return new Promise((resolve) => {
     let settled = false;
-    const child = execFile(filePath, args, { timeout: timeoutMs, windowsHide: true, maxBuffer: 1024 * 1024 }, (err, stdout, stderr) => {
+    const child = execFile(filePath, args, { timeout: timeoutMs, windowsHide: true, maxBuffer: 1024 * 1024, signal }, (err, stdout, stderr) => {
       if (settled) return;
       settled = true;
       if (err) {
+        if (isAbortError(err)) {
+          resolve({ ok: false, failure: abortFailure('Probe cancelled') });
+          return;
+        }
         resolve({ ok: false, failure: classifyProbeError(err as NodeJS.ErrnoException, stderr) });
         return;
       }
@@ -68,6 +83,10 @@ async function probeBinary(filePath: string, args: string[], timeoutMs: number =
     child.once('error', (err) => {
       if (settled) return;
       settled = true;
+      if (isAbortError(err)) {
+        resolve({ ok: false, failure: abortFailure('Probe cancelled') });
+        return;
+      }
       resolve({ ok: false, failure: classifyProbeError(err) });
     });
   });
@@ -75,11 +94,11 @@ async function probeBinary(filePath: string, args: string[], timeoutMs: number =
 
 // Discover binaries on PATH. On Windows uses `where.exe`; on POSIX uses `which`.
 // Returns absolute paths in PATH order. Empty array on failure.
-async function whereOnPath(name: string): Promise<string[]> {
+async function whereOnPath(name: string, signal?: AbortSignal): Promise<string[]> {
   try {
     const tool = process.platform === 'win32' ? 'where' : 'which';
     const args = process.platform === 'win32' ? [name] : ['-a', name];
-    const { stdout } = await execFileAsync(tool, args, { windowsHide: true });
+    const { stdout } = await execFileAsync(tool, args, { windowsHide: true, signal });
     return stdout
       .split(/\r?\n/)
       .map((line) => line.trim())
@@ -189,8 +208,23 @@ const HTTP_TIMEOUT = {
   request: 600_000
 };
 
-async function downloadText(url: string): Promise<string> {
-  const res = await got(url, { headers: HTTP_HEADERS, retry: HTTP_RETRY, timeout: HTTP_TIMEOUT, followRedirect: true });
+async function downloadText(url: string, signal?: AbortSignal): Promise<string> {
+  const req = got(url, { headers: HTTP_HEADERS, retry: HTTP_RETRY, timeout: HTTP_TIMEOUT, followRedirect: true });
+  if (signal) {
+    if (signal.aborted) {
+      req.cancel();
+      throw new Error('Cancelled');
+    }
+    const onAbort = (): void => req.cancel();
+    signal.addEventListener('abort', onAbort, { once: true });
+    try {
+      const res = await req;
+      return res.body;
+    } finally {
+      signal.removeEventListener('abort', onAbort);
+    }
+  }
+  const res = await req;
   return res.body;
 }
 
@@ -217,7 +251,8 @@ function resolvePartialResponseMode(startByte: number, statusCode: number | unde
 // Range-resume: if `${destination}.part` exists from a previous interrupted
 // attempt, resume via `Range: bytes=<size>-`. If the server responds 200
 // (no range support) instead of 206, truncate and start fresh.
-async function downloadFile(url: string, destination: string, onProgress?: DownloadProgressCallback, allowPartialRetry = true): Promise<void> {
+async function downloadFile(url: string, destination: string, onProgress?: DownloadProgressCallback, allowPartialRetry = true, signal?: AbortSignal): Promise<void> {
+  if (signal?.aborted) throw new Error('Cancelled');
   await fsPromises.mkdir(path.dirname(destination), { recursive: true });
 
   const partPath = `${destination}.part`;
@@ -233,6 +268,13 @@ async function downloadFile(url: string, destination: string, onProgress?: Downl
   if (startByte > 0) headers.range = `bytes=${startByte}-`;
 
   const stream = got.stream(url, { headers, retry: HTTP_RETRY, timeout: HTTP_TIMEOUT, followRedirect: true });
+  const onAbort = (): void => {
+    stream.destroy(new Error('Cancelled'));
+  };
+  if (signal) {
+    if (signal.aborted) onAbort();
+    else signal.addEventListener('abort', onAbort, { once: true });
+  }
 
   try {
     await new Promise<void>((resolve, reject) => {
@@ -269,9 +311,12 @@ async function downloadFile(url: string, destination: string, onProgress?: Downl
         startByte
       });
       await fsPromises.rm(partPath, { force: true });
-      return downloadFile(url, destination, onProgress, false);
+      if (signal) signal.removeEventListener('abort', onAbort);
+      return downloadFile(url, destination, onProgress, false, signal);
     }
     throw err;
+  } finally {
+    if (signal) signal.removeEventListener('abort', onAbort);
   }
 
   await fsPromises.rename(partPath, destination);
@@ -435,6 +480,7 @@ interface EnsureBinaryConfig {
   onDownloadProgress?: DownloadProgressCallback;
   requiredChecksum?: boolean;
   isUpToDate?: () => Promise<boolean>;
+  signal?: AbortSignal;
 }
 
 export class BinaryManager {
@@ -494,19 +540,21 @@ export class BinaryManager {
   // 'done' progress event. On failure records the failure on the last
   // attempt and emits a 'failed' progress event. The resolve chain decides
   // whether to fall through to the next attempt.
-  private async probeAndAccept(id: DependencyId, source: DependencySource, candidatePath: string, attempts: DependencyAttempt[], onProgress?: ProgressEmitter): Promise<DependencyDiagnostic | null> {
+  private async probeAndAccept(id: DependencyId, source: DependencySource, candidatePath: string, attempts: DependencyAttempt[], onProgress?: ProgressEmitter, signal?: AbortSignal): Promise<DependencyDiagnostic | null> {
     onProgress?.({ binary: id, phase: 'probing', source });
-    const probe = await probeBinary(candidatePath, probeArgs(id));
+    const probe = await probeBinary(candidatePath, probeArgs(id), PROBE_TIMEOUT_MS, signal);
     if (probe.ok) {
       attempts.push(makeAttempt(source));
       this.resolved[id] = candidatePath;
       onProgress?.({ binary: id, phase: 'done', source });
       const diag = runnableDiagnostic(id, source, candidatePath, attempts, probe.output);
       this.lastDiagnostics[id] = diag;
+      logger.info(`${id} probe ok`, { source, path: candidatePath, version: probe.output.split('\n')[0] });
       return diag;
     }
     attempts.push(makeAttempt(source, probe.failure));
     onProgress?.({ binary: id, phase: 'failed', source, failureKind: probe.failure.kind });
+    logger.warn(`${id} probe failed`, { source, path: candidatePath, failureKind: probe.failure.kind, message: probe.failure.message });
     return null;
   }
 
@@ -515,18 +563,19 @@ export class BinaryManager {
     const attempts: DependencyAttempt[] = [];
     const overrides = opts.overrides ?? this.overridesProvider();
     const onProgress = opts.onProgress;
+    const signal = opts.signal;
     onProgress?.({ binary: id, phase: 'starting' });
 
     if (overrides?.ytDlp) {
       const source: DependencySource = { kind: 'manualOverride', path: overrides.ytDlp };
-      const diag = await this.probeAndAccept(id, source, overrides.ytDlp, attempts, onProgress);
+      const diag = await this.probeAndAccept(id, source, overrides.ytDlp, attempts, onProgress, signal);
       if (diag) return diag;
     }
 
     const envPath = process.env.ARROXY_YT_DLP_PATH;
     if (envPath) {
       const source: DependencySource = { kind: 'envOverride', path: envPath, envVar: 'ARROXY_YT_DLP_PATH' };
-      const diag = await this.probeAndAccept(id, source, envPath, attempts, onProgress);
+      const diag = await this.probeAndAccept(id, source, envPath, attempts, onProgress, signal);
       if (diag) return diag;
     }
 
@@ -542,15 +591,16 @@ export class BinaryManager {
           name: 'yt-dlp',
           destinationPath: nightlyPath,
           downloadUrl: nightlyUrl,
-          expectedSha256: async () => parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpNightly.download}/SHA2-256SUMS`), assetName),
+          expectedSha256: async () => parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpNightly.download}/SHA2-256SUMS`, signal), assetName),
           onStatus: opts.onStatus,
           onDownloadProgress: makeDownloadProgress(id, source, onProgress),
           requiredChecksum: true,
-          isUpToDate: () => this.isYtDlpUpToDate(nightlyPath, BINARY_SOURCES.ytDlpNightly.api)
+          isUpToDate: () => this.isYtDlpUpToDate(nightlyPath, BINARY_SOURCES.ytDlpNightly.api, signal),
+          signal
         })
       );
       if (downloadOk) {
-        const diag = await this.probeAndAccept(id, source, nightlyPath, attempts, onProgress);
+        const diag = await this.probeAndAccept(id, source, nightlyPath, attempts, onProgress, signal);
         if (diag) return diag;
       }
     }
@@ -566,28 +616,29 @@ export class BinaryManager {
           name: 'yt-dlp',
           destinationPath: stablePath,
           downloadUrl: stableUrl,
-          expectedSha256: async () => parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpStable.download}/SHA2-256SUMS`), assetName),
+          expectedSha256: async () => parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpStable.download}/SHA2-256SUMS`, signal), assetName),
           onStatus: opts.onStatus,
           onDownloadProgress: makeDownloadProgress(id, source, onProgress),
           requiredChecksum: true,
-          isUpToDate: () => this.isYtDlpUpToDate(stablePath, BINARY_SOURCES.ytDlpStable.api)
+          isUpToDate: () => this.isYtDlpUpToDate(stablePath, BINARY_SOURCES.ytDlpStable.api, signal),
+          signal
         })
       );
       if (downloadOk) {
-        const diag = await this.probeAndAccept(id, source, stablePath, attempts, onProgress);
+        const diag = await this.probeAndAccept(id, source, stablePath, attempts, onProgress, signal);
         if (diag) return diag;
       }
     }
 
-    // System PATH (Windows-only this iteration)
-    if (process.platform === 'win32') {
-      onProgress?.({ binary: id, phase: 'fallback' });
-      const candidates = await whereOnPath('yt-dlp.exe');
-      for (const candidate of candidates) {
-        const source: DependencySource = { kind: 'systemPath', path: candidate };
-        const diag = await this.probeAndAccept(id, source, candidate, attempts, onProgress);
-        if (diag) return diag;
-      }
+    // System PATH — last resort. Picks up brew/pipx/distro-package installs
+    // when managed download is unreachable (firewalled, rate-limited, etc.).
+    onProgress?.({ binary: id, phase: 'fallback' });
+    const pathBinaryName = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
+    const candidates = await whereOnPath(pathBinaryName, signal);
+    for (const candidate of candidates) {
+      const source: DependencySource = { kind: 'systemPath', path: candidate };
+      const diag = await this.probeAndAccept(id, source, candidate, attempts, onProgress, signal);
+      if (diag) return diag;
     }
 
     const diag = failedDiagnostic(id, attempts);
@@ -650,18 +701,19 @@ export class BinaryManager {
   private async resolveFFmpegPairWin(opts: ResolveOptions): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic }> {
     const overrides = opts.overrides ?? this.overridesProvider();
     const onProgress = opts.onProgress;
+    const signal = opts.signal;
     const ffmpegAttempts: DependencyAttempt[] = [];
     const ffprobeAttempts: DependencyAttempt[] = [];
     onProgress?.({ binary: 'ffmpeg', phase: 'starting' });
     onProgress?.({ binary: 'ffprobe', phase: 'starting' });
 
     // Manual overrides — pair only succeeds if both probe-pass.
-    const manualPair = await this.tryPairOverride(overrides?.ffmpeg, overrides?.ffprobe, 'manualOverride', undefined, ffmpegAttempts, ffprobeAttempts, onProgress);
+    const manualPair = await this.tryPairOverride(overrides?.ffmpeg, overrides?.ffprobe, 'manualOverride', undefined, ffmpegAttempts, ffprobeAttempts, onProgress, signal);
     if (manualPair) return manualPair;
 
     const envFfmpeg = process.env.ARROXY_FFMPEG_PATH;
     const envFfprobe = process.env.ARROXY_FFPROBE_PATH;
-    const envPair = await this.tryPairOverride(envFfmpeg, envFfprobe, 'envOverride', { ffmpeg: 'ARROXY_FFMPEG_PATH', ffprobe: 'ARROXY_FFPROBE_PATH' }, ffmpegAttempts, ffprobeAttempts, onProgress);
+    const envPair = await this.tryPairOverride(envFfmpeg, envFfprobe, 'envOverride', { ffmpeg: 'ARROXY_FFMPEG_PATH', ffprobe: 'ARROXY_FFPROBE_PATH' }, ffmpegAttempts, ffprobeAttempts, onProgress, signal);
     if (envPair) return envPair;
 
     // Managed Gyan essentials ZIP — contains bin/ffmpeg.exe + bin/ffprobe.exe.
@@ -685,13 +737,14 @@ export class BinaryManager {
             ],
             expectedSha256: () => Promise.resolve(null),
             onStatus: opts.onStatus,
-            onDownloadProgress: makeDownloadProgress('ffmpeg', managedSource, onProgress)
+            onDownloadProgress: makeDownloadProgress('ffmpeg', managedSource, onProgress),
+            signal
           })
         );
 
     if (downloadOk) {
-      const ffmpegDiag = await this.probeAndAccept('ffmpeg', managedSource, ffmpegPath, ffmpegAttempts, onProgress);
-      const ffprobeDiag = await this.probeAndAccept('ffprobe', managedSource, ffprobePath, ffprobeAttempts, onProgress);
+      const ffmpegDiag = await this.probeAndAccept('ffmpeg', managedSource, ffmpegPath, ffmpegAttempts, onProgress, signal);
+      const ffprobeDiag = await this.probeAndAccept('ffprobe', managedSource, ffprobePath, ffprobeAttempts, onProgress, signal);
       if (ffmpegDiag && ffprobeDiag) return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
     } else {
       // Mirror the failure on ffprobe so the diagnostic surfaces it too.
@@ -702,17 +755,17 @@ export class BinaryManager {
     // System PATH pair: both binaries must come from the same directory.
     onProgress?.({ binary: 'ffmpeg', phase: 'fallback' });
     onProgress?.({ binary: 'ffprobe', phase: 'fallback' });
-    const ffmpegCandidates = await whereOnPath('ffmpeg.exe');
-    const probeCandidates = new Set((await whereOnPath('ffprobe.exe')).map((p) => path.dirname(p).toLowerCase()));
+    const ffmpegCandidates = await whereOnPath('ffmpeg.exe', signal);
+    const probeCandidates = new Set((await whereOnPath('ffprobe.exe', signal)).map((p) => path.dirname(p).toLowerCase()));
     for (const ffmpegCandidate of ffmpegCandidates) {
       const dir = path.dirname(ffmpegCandidate);
       if (!probeCandidates.has(dir.toLowerCase())) continue;
       const probeCandidate = path.join(dir, 'ffprobe.exe');
       const ffmpegSource: DependencySource = { kind: 'systemPath', path: ffmpegCandidate };
       const probeSource: DependencySource = { kind: 'systemPath', path: probeCandidate };
-      const ffmpegDiag = await this.probeAndAccept('ffmpeg', ffmpegSource, ffmpegCandidate, ffmpegAttempts, onProgress);
+      const ffmpegDiag = await this.probeAndAccept('ffmpeg', ffmpegSource, ffmpegCandidate, ffmpegAttempts, onProgress, signal);
       if (!ffmpegDiag) continue;
-      const ffprobeDiag = await this.probeAndAccept('ffprobe', probeSource, probeCandidate, ffprobeAttempts, onProgress);
+      const ffprobeDiag = await this.probeAndAccept('ffprobe', probeSource, probeCandidate, ffprobeAttempts, onProgress, signal);
       if (ffprobeDiag) return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
       // ffmpeg succeeded but ffprobe didn't — the pair is incomplete; drop ffmpeg too.
       delete this.resolved.ffmpeg;
@@ -728,7 +781,7 @@ export class BinaryManager {
   // Pair-override helper for manual + env paths. Both halves must be set and
   // both must probe. Half-set is treated as an explicit pair_incomplete failure
   // on whichever side is missing, then the chain advances.
-  private async tryPairOverride(ffmpegPath: string | undefined, ffprobePath: string | undefined, kind: 'manualOverride' | 'envOverride', envVars: { ffmpeg: string; ffprobe: string } | undefined, ffmpegAttempts: DependencyAttempt[], ffprobeAttempts: DependencyAttempt[], onProgress: ProgressEmitter | undefined): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic } | null> {
+  private async tryPairOverride(ffmpegPath: string | undefined, ffprobePath: string | undefined, kind: 'manualOverride' | 'envOverride', envVars: { ffmpeg: string; ffprobe: string } | undefined, ffmpegAttempts: DependencyAttempt[], ffprobeAttempts: DependencyAttempt[], onProgress: ProgressEmitter | undefined, signal?: AbortSignal): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic } | null> {
     if (!ffmpegPath && !ffprobePath) return null;
     const buildSource = (which: 'ffmpeg' | 'ffprobe', filePath: string): DependencySource => {
       if (kind === 'envOverride' && envVars) return { kind: 'envOverride', path: filePath, envVar: envVars[which] };
@@ -752,8 +805,8 @@ export class BinaryManager {
 
     const ffmpegSource = buildSource('ffmpeg', ffmpegPath);
     const ffprobeSource = buildSource('ffprobe', ffprobePath);
-    const ffmpegDiag = await this.probeAndAccept('ffmpeg', ffmpegSource, ffmpegPath, ffmpegAttempts, onProgress);
-    const ffprobeDiag = await this.probeAndAccept('ffprobe', ffprobeSource, ffprobePath, ffprobeAttempts, onProgress);
+    const ffmpegDiag = await this.probeAndAccept('ffmpeg', ffmpegSource, ffmpegPath, ffmpegAttempts, onProgress, signal);
+    const ffprobeDiag = await this.probeAndAccept('ffprobe', ffprobeSource, ffprobePath, ffprobeAttempts, onProgress, signal);
     if (ffmpegDiag && ffprobeDiag) return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
     if (ffmpegDiag && !ffprobeDiag) delete this.resolved.ffmpeg;
     if (!ffmpegDiag && ffprobeDiag) delete this.resolved.ffprobe;
@@ -765,6 +818,7 @@ export class BinaryManager {
   private async resolveFFmpegPairUnix(opts: ResolveOptions): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic }> {
     const onProgress = opts.onProgress;
     const overrides = opts.overrides ?? this.overridesProvider();
+    const signal = opts.signal;
 
     const ffmpegDiag = await this.resolveSingleBinary(
       'ffmpeg',
@@ -784,7 +838,7 @@ export class BinaryManager {
             downloadUrl: url,
             expectedSha256: async () => {
               try {
-                const checksumText = await downloadText(checksumUrl);
+                const checksumText = await downloadText(checksumUrl, signal);
                 const firstToken = checksumText.trim().split(/\s+/)[0];
                 return /^[a-fA-F0-9]{64}$/.test(firstToken) ? firstToken.toLowerCase() : null;
               } catch {
@@ -793,7 +847,8 @@ export class BinaryManager {
             },
             onStatus: opts.onStatus,
             onDownloadProgress: makeDownloadProgress('ffmpeg', source, onProgress),
-            requiredChecksum: false
+            requiredChecksum: false,
+            signal
           })
         );
         return downloadOk ? targetPath : null;
@@ -826,7 +881,8 @@ export class BinaryManager {
               destinationPath: targetPath,
               expectedSha256: () => Promise.resolve(null),
               onStatus: opts.onStatus,
-              onDownloadProgress: makeDownloadProgress('ffprobe', source, onProgress)
+              onDownloadProgress: makeDownloadProgress('ffprobe', source, onProgress),
+              signal
             });
           }
           return this.ensureTarXzBinary({
@@ -836,7 +892,8 @@ export class BinaryManager {
             innerExecutableName: ffprobeExecutableName(),
             destinationPath: targetPath,
             onStatus: opts.onStatus,
-            onDownloadProgress: makeDownloadProgress('ffprobe', source, onProgress)
+            onDownloadProgress: makeDownloadProgress('ffprobe', source, onProgress),
+            signal
           });
         });
         return downloadOk ? targetPath : null;
@@ -853,23 +910,24 @@ export class BinaryManager {
   private async resolveSingleBinary(id: DependencyId, manualPath: string | undefined, envPath: string | undefined, envVar: string, doManaged: (source: DependencySource, attempts: DependencyAttempt[]) => Promise<string | null>, managedSource: DependencySource, opts: ResolveOptions): Promise<DependencyDiagnostic> {
     const attempts: DependencyAttempt[] = [];
     const onProgress = opts.onProgress;
+    const signal = opts.signal;
     onProgress?.({ binary: id, phase: 'starting' });
 
     if (manualPath) {
       const source: DependencySource = { kind: 'manualOverride', path: manualPath };
-      const diag = await this.probeAndAccept(id, source, manualPath, attempts, onProgress);
+      const diag = await this.probeAndAccept(id, source, manualPath, attempts, onProgress, signal);
       if (diag) return diag;
     }
 
     if (envPath) {
       const source: DependencySource = { kind: 'envOverride', path: envPath, envVar };
-      const diag = await this.probeAndAccept(id, source, envPath, attempts, onProgress);
+      const diag = await this.probeAndAccept(id, source, envPath, attempts, onProgress, signal);
       if (diag) return diag;
     }
 
     const managedPath = await doManaged(managedSource, attempts);
     if (managedPath) {
-      const diag = await this.probeAndAccept(id, managedSource, managedPath, attempts, onProgress);
+      const diag = await this.probeAndAccept(id, managedSource, managedPath, attempts, onProgress, signal);
       if (diag) return diag;
     }
 
@@ -896,8 +954,8 @@ export class BinaryManager {
   // extractor for. We shell out to system `tar` (always present on Linux/
   // macOS, ships with Win10 1803+ but we use zip on Windows). xz support
   // in `tar` is provided by xz-utils, also ubiquitous on modern distros.
-  private async ensureTarXzBinary(config: { name: string; downloadUrl: string; archiveFileName: string; innerExecutableName: string; destinationPath: string; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback }): Promise<void> {
-    const { destinationPath, name, onStatus, onDownloadProgress } = config;
+  private async ensureTarXzBinary(config: { name: string; downloadUrl: string; archiveFileName: string; innerExecutableName: string; destinationPath: string; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback; signal?: AbortSignal }): Promise<void> {
+    const { destinationPath, name, onStatus, onDownloadProgress, signal } = config;
 
     const existing = this.inProgress.get(destinationPath);
     if (existing) return existing;
@@ -913,11 +971,11 @@ export class BinaryManager {
           destinationPath
         });
 
-        await downloadFile(config.downloadUrl, archivePath, onDownloadProgress);
+        await downloadFile(config.downloadUrl, archivePath, onDownloadProgress, true, signal);
 
         const extractDir = path.join(tempDir, 'unpacked');
         await fsPromises.mkdir(extractDir, { recursive: true });
-        await execFileAsync('tar', ['-xJf', archivePath, '-C', extractDir]);
+        await execFileAsync('tar', ['-xJf', archivePath, '-C', extractDir], { signal });
 
         const innerPath = await this.findExecutableInTree(extractDir, config.innerExecutableName);
         if (!innerPath) {
@@ -950,6 +1008,7 @@ export class BinaryManager {
     const id: DependencyId = 'deno';
     const overrides = opts.overrides ?? this.overridesProvider();
     const onProgress = opts.onProgress;
+    const signal = opts.signal;
 
     const assetName = denoAssetName();
     if (!assetName) {
@@ -977,9 +1036,10 @@ export class BinaryManager {
             innerExecutableName: denoExecutableName(),
             destinationPath: targetPath,
             onDownloadProgress: makeDownloadProgress(id, source, onProgress),
+            signal,
             expectedSha256: async () => {
               try {
-                const checksumText = await downloadText(checksumUrl);
+                const checksumText = await downloadText(checksumUrl, signal);
                 return (
                   parseShaLine(checksumText, assetName) ??
                   (() => {
@@ -1008,8 +1068,8 @@ export class BinaryManager {
     return diag.resolvedPath;
   }
 
-  private async ensureZippedBinary(config: { name: string; downloadUrl: string; zipFileName: string; innerExecutableName: string; destinationPath: string; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback }): Promise<void> {
-    const { destinationPath, name, onStatus, onDownloadProgress } = config;
+  private async ensureZippedBinary(config: { name: string; downloadUrl: string; zipFileName: string; innerExecutableName: string; destinationPath: string; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback; signal?: AbortSignal }): Promise<void> {
+    const { destinationPath, name, onStatus, onDownloadProgress, signal } = config;
 
     const existing = this.inProgress.get(destinationPath);
     if (existing) return existing;
@@ -1025,7 +1085,7 @@ export class BinaryManager {
           destinationPath
         });
 
-        await downloadFile(config.downloadUrl, zipPath, onDownloadProgress);
+        await downloadFile(config.downloadUrl, zipPath, onDownloadProgress, true, signal);
 
         const expected = await config.expectedSha256();
         if (expected) {
@@ -1066,8 +1126,8 @@ export class BinaryManager {
   // Variant of ensureZippedBinary that extracts multiple members from a single
   // archive into distinct destinations. Used for the Windows ffmpeg+ffprobe
   // pair so both binaries come from the exact same Gyan build.
-  private async ensureZippedBinaryMulti(config: { name: string; downloadUrl: string; zipFileName: string; members: { innerName: string; destinationPath: string }[]; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback }): Promise<void> {
-    const { name, members, onStatus, onDownloadProgress } = config;
+  private async ensureZippedBinaryMulti(config: { name: string; downloadUrl: string; zipFileName: string; members: { innerName: string; destinationPath: string }[]; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback; signal?: AbortSignal }): Promise<void> {
+    const { name, members, onStatus, onDownloadProgress, signal } = config;
     const lockKey = members[0]?.destinationPath ?? name;
 
     const existing = this.inProgress.get(lockKey);
@@ -1081,7 +1141,7 @@ export class BinaryManager {
         onStatus?.('downloadingBinary', { name });
         logger.info(`Downloading ${name}`, { downloadUrl: config.downloadUrl });
 
-        await downloadFile(config.downloadUrl, zipPath, onDownloadProgress);
+        await downloadFile(config.downloadUrl, zipPath, onDownloadProgress, true, signal);
 
         const expected = await config.expectedSha256();
         if (expected) {
@@ -1156,10 +1216,12 @@ export class BinaryManager {
   private async downloadBinary(config: EnsureBinaryConfig): Promise<void> {
     const maxAttempts = 3;
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      if (config.signal?.aborted) throw new Error('Cancelled');
       try {
         await this.attemptDownload(config);
         return;
       } catch (err) {
+        if (config.signal?.aborted) throw err;
         const isChecksumError = err instanceof Error && err.message.toLowerCase().includes('checksum');
         if (isChecksumError || attempt === maxAttempts) throw err;
         const delay = attempt === 1 ? this.retryDelays[0] : this.retryDelays[1];
@@ -1173,13 +1235,13 @@ export class BinaryManager {
   }
 
   private async attemptDownload(config: EnsureBinaryConfig): Promise<void> {
-    const { destinationPath, name, downloadUrl, expectedSha256, onStatus, onDownloadProgress, requiredChecksum = false } = config;
+    const { destinationPath, name, downloadUrl, expectedSha256, onStatus, onDownloadProgress, requiredChecksum = false, signal } = config;
 
     const tempPath = `${destinationPath}.tmp`;
     onStatus?.('downloadingBinary', { name });
     logger.info(`Downloading ${name}`, { downloadUrl, destinationPath });
 
-    await downloadFile(downloadUrl, tempPath, onDownloadProgress);
+    await downloadFile(downloadUrl, tempPath, onDownloadProgress, true, signal);
 
     if (expectedSha256) {
       const expected = await expectedSha256();
@@ -1207,8 +1269,8 @@ export class BinaryManager {
     }
   }
 
-  private async isYtDlpUpToDate(binaryPath: string, releaseApiUrl: string): Promise<boolean> {
-    const [local, remote] = await Promise.all([this.getLocalYtDlpVersion(binaryPath), this.getRemoteYtDlpVersion(releaseApiUrl)]);
+  private async isYtDlpUpToDate(binaryPath: string, releaseApiUrl: string, signal?: AbortSignal): Promise<boolean> {
+    const [local, remote] = await Promise.all([this.getLocalYtDlpVersion(binaryPath, signal), this.getRemoteYtDlpVersion(releaseApiUrl, signal)]);
     if (!local) return false;
     if (!remote) {
       logger.warn('Could not fetch yt-dlp remote version, skipping update check');
@@ -1222,18 +1284,18 @@ export class BinaryManager {
     return true;
   }
 
-  private async getLocalYtDlpVersion(binaryPath: string): Promise<string | null> {
+  private async getLocalYtDlpVersion(binaryPath: string, signal?: AbortSignal): Promise<string | null> {
     try {
-      const { stdout } = await execFileAsync(binaryPath, ['--version']);
+      const { stdout } = await execFileAsync(binaryPath, ['--version'], { signal });
       return stdout.trim();
     } catch {
       return null;
     }
   }
 
-  private async getRemoteYtDlpVersion(releaseApiUrl: string): Promise<string | null> {
+  private async getRemoteYtDlpVersion(releaseApiUrl: string, signal?: AbortSignal): Promise<string | null> {
     try {
-      const json = await downloadText(releaseApiUrl);
+      const json = await downloadText(releaseApiUrl, signal);
       const parsed = JSON.parse(json) as { tag_name?: string };
       return parsed.tag_name ?? null;
     } catch {
@@ -1261,5 +1323,7 @@ export const binaryInternals = {
   denoAssetName,
   denoAssetTarget,
   denoExecutableName,
-  sha256ForFile
+  sha256ForFile,
+  classifyProbeError,
+  whereOnPath
 };

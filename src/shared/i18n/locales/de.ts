@@ -25,7 +25,37 @@ const de = {
     greeting: 'Hey, schön dich wiederzusehen!',
     warmup: 'Arroxy wärmt sich auf…',
     downloading: '{{binary}} wird heruntergeladen…',
-    warning: 'Einrichtung unvollständig — einige Funktionen funktionieren möglicherweise nicht'
+    warning: 'Einrichtung unvollständig — einige Funktionen funktionieren möglicherweise nicht',
+    warmupFailedNoDiag: 'Einrichtung fehlgeschlagen. Öffne das Einrichtungsprotokoll für Details.'
+  },
+  repair: {
+    title: 'Einrichtung braucht deine Hilfe',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'Konnte nicht überprüft werden.',
+      downloadFailed: 'Download fehlgeschlagen. Überprüfe deine Internetverbindung und versuche es erneut.',
+      extractFailed: 'Archivextraktion fehlgeschlagen. Der Download könnte beschädigt sein — erneut versuchen.',
+      hashFailed: 'Prüfsumme der heruntergeladenen Datei stimmt nicht überein. Download wiederholen.',
+      spawnFailed: 'Die Datei fehlt oder konnte nicht gestartet werden. Wähle eine funktionierende Kopie.',
+      permissionDenied: 'Das System verweigerte die Ausführung der Datei. Wähle eine vertrauenswürdige Kopie oder versuche es als Administrator.',
+      blockedOrQuarantined: 'Windows hat die Datei blockiert (SmartScreen / Defender). Wähle eine installierte Kopie oder füge den Laufzeitordner zur Ausnahmeliste hinzu.',
+      badExitCode: 'Die Binärdatei hat auf --version nicht reagiert. Sie könnte beschädigt oder ein falscher Build sein.',
+      timeout: 'Die Versionsabfrage hat das Zeitlimit überschritten. Die Datei könnte hängen — erneut versuchen.',
+      pairIncomplete: 'ffmpeg und ffprobe müssen beide als zusammengehöriges Paar gesetzt sein.'
+    },
+    actions: {
+      chooseExecutable: 'Ausführbare Datei wählen',
+      resetToDefault: 'Auf Standard zurücksetzen',
+      retrySetup: 'Einrichtung wiederholen',
+      cancel: 'Abbrechen',
+      openDependencyFolder: 'Abhängigkeitsordner öffnen',
+      viewSetupLog: 'Einrichtungsprotokoll anzeigen'
+    }
   },
   theme: {
     light: 'Heller Modus',

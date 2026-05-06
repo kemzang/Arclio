@@ -6,6 +6,7 @@ import { nextMonotonicPercent, ProgressFormatter } from './progress';
 import { progressFormatters, saveQueue, updateQueueItem } from './queueSlice';
 import type { JobScheduler } from './jobScheduler';
 import type { GetState, SetState, SystemSlice } from './types';
+import { notify } from '../lib/notify';
 
 let unbindStatus: (() => void) | null = null;
 let unbindProgress: (() => void) | null = null;
@@ -169,15 +170,28 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       set({ initialized: true, initializing: false, warmupRunning: false, warmupDiagnostics, warmupBlocking });
     },
 
+    cancelWarmup: async () => {
+      try {
+        await window.appApi.app.cancelWarmup();
+      } catch (err) {
+        notify.warmupFailed('cancel threw', err);
+      }
+    },
+
     repairWarmup: async () => {
       if (get().warmupRunning) return;
       set({ warmupRunning: true });
-      const result = await window.appApi.app.warmUp({ force: true });
-      if (result.ok) {
-        set({ warmupRunning: false, warmupDiagnostics: result.data.dependencies, warmupBlocking: result.data.blockingFailures });
-      } else {
+      try {
+        const result = await window.appApi.app.warmUp({ force: true });
+        if (result.ok) {
+          set({ warmupDiagnostics: result.data.dependencies, warmupBlocking: result.data.blockingFailures });
+        } else {
+          notify.warmupFailed('repair failed', result.error);
+        }
+      } catch (err) {
+        notify.warmupFailed('repair threw', err);
+      } finally {
         set({ warmupRunning: false });
-        console.error('[warmup] repair failed', result.error);
       }
     },
 
@@ -185,22 +199,30 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       const patch = makeBinaryOverridePatch(id, path);
       const result = await window.appApi.settings.update(patch);
       if (!result.ok) {
-        console.error('[settings] binaryOverrides save failed', result.error);
+        notify.settingsSaveFailed('binaryOverrides', result.error);
         return;
       }
       set({ settings: result.data });
-      await get().repairWarmup();
+      try {
+        await get().repairWarmup();
+      } catch (err) {
+        notify.warmupFailed('post-override repair threw', err);
+      }
     },
 
     clearBinaryOverride: async (id) => {
       const patch = makeBinaryOverridePatch(id, undefined);
       const result = await window.appApi.settings.update(patch);
       if (!result.ok) {
-        console.error('[settings] binaryOverrides clear failed', result.error);
+        notify.settingsSaveFailed('binaryOverrides clear', result.error);
         return;
       }
       set({ settings: result.data });
-      await get().repairWarmup();
+      try {
+        await get().repairWarmup();
+      } catch (err) {
+        notify.warmupFailed('post-clear repair threw', err);
+      }
     },
 
     openBinariesDir: async () => {
@@ -217,7 +239,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       document.documentElement.dir = isRtl(lang) ? 'rtl' : 'ltr';
       void i18next.changeLanguage(lang);
       void window.appApi.settings.update({ common: { language: lang } }).then((result) => {
-        if (!result.ok) console.error('[settings] language save failed', result.error);
+        if (!result.ok) notify.settingsSaveFailed('language', result.error);
       });
       void window.appApi.app.setLanguage(lang);
     },
@@ -227,7 +249,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       if (current) set({ settings: { ...current, common: { ...current.common, cookiesPath: path } } });
       const result = await window.appApi.settings.update({ common: { cookiesPath: path } });
       if (!result.ok) {
-        console.error('[settings] cookiesPath save failed', result.error);
+        notify.settingsSaveFailed('cookiesPath', result.error);
         return;
       }
       set({ settings: result.data });
@@ -238,7 +260,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       if (current) set({ settings: { ...current, common: { ...current.common, cookiesEnabled: enabled } } });
       const result = await window.appApi.settings.update({ common: { cookiesEnabled: enabled } });
       if (!result.ok) {
-        console.error('[settings] cookiesEnabled save failed', result.error);
+        notify.settingsSaveFailed('cookiesEnabled', result.error);
         return;
       }
       set({ settings: result.data });
@@ -249,7 +271,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       if (current) set({ settings: { ...current, common: { ...current.common, proxyUrl: url } } });
       const result = await window.appApi.settings.update({ common: { proxyUrl: url } });
       if (!result.ok) {
-        console.error('[settings] proxyUrl save failed', result.error);
+        notify.settingsSaveFailed('proxyUrl', result.error);
         return;
       }
       set({ settings: result.data });
@@ -260,7 +282,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       if (current) set({ settings: { ...current, common: { ...current.common, clipboardWatchEnabled: enabled } } });
       const result = await window.appApi.settings.update({ common: { clipboardWatchEnabled: enabled } });
       if (!result.ok) {
-        console.error('[settings] clipboardWatchEnabled save failed', result.error);
+        notify.settingsSaveFailed('clipboardWatchEnabled', result.error);
         return;
       }
       set({ settings: result.data });
@@ -271,7 +293,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       if (current) set({ settings: { ...current, common: { ...current.common, closeBehavior: value } } });
       const result = await window.appApi.settings.update({ common: { closeBehavior: value } });
       if (!result.ok) {
-        console.error('[settings] closeBehavior save failed', result.error);
+        notify.settingsSaveFailed('closeBehavior', result.error);
         return;
       }
       set({ settings: result.data });
@@ -282,7 +304,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       if (current) set({ settings: { ...current, common: { ...current.common, analyticsEnabled: enabled } } });
       const result = await window.appApi.settings.update({ common: { analyticsEnabled: enabled } });
       if (!result.ok) {
-        console.error('[settings] analyticsEnabled save failed', result.error);
+        notify.settingsSaveFailed('analyticsEnabled', result.error);
         return;
       }
       set({ settings: result.data });

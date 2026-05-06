@@ -25,7 +25,37 @@ const ps = {
     greeting: 'سلام، ښه راغلاست!',
     warmup: 'Arroxy چمتو کیږي…',
     downloading: '{{binary}} ډاونلوډ کیږي…',
-    warning: 'نصب ناپوره دی — ځینې ځانګړتیاوې ممکن کار ونکړي'
+    warning: 'نصب ناپوره دی — ځینې ځانګړتیاوې ممکن کار ونکړي',
+    warmupFailedNoDiag: 'نصب ناکام شو. د توضیحاتو لپاره د نصب لاګ خلاص کړئ.'
+  },
+  repair: {
+    title: 'نصب ستاسو مرستې ته اړتیا لري',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'تصدیق نه شو.',
+      downloadFailed: 'ډاونلوډ ناکام شو. خپله د انټرنیټ اتصال وګورئ او بیا هڅه وکړئ.',
+      extractFailed: 'د آرشیف استخراج ناکام شو. ډاونلوډ ممکن خرابه وي — بیا هڅه وکړئ.',
+      hashFailed: 'د ډاونلوډ شوي فایل checksum سره نه سمیږي. ډاونلوډ بیا وکړئ.',
+      spawnFailed: 'فایل ورک دی یا نه شي پیل کیدی. یو کاري کاپي غوره کړئ.',
+      permissionDenied: 'سیسټم د فایل چلولو نه انکار وکړ. یو کاپي چې باور پرې لرئ غوره کړئ یا د ادمین په توګه بیا هڅه وکړئ.',
+      blockedOrQuarantined: 'Windows فایل بنده کړه (SmartScreen / Defender). یو نصب شوی کاپي غوره کړئ یا د runtime فولډر whitelist کړئ.',
+      badExitCode: 'د binary نه --version ته ځواب ونه ورکاوه. ممکن خرابه وي یا غلط جوړښت وي.',
+      timeout: 'د نسخې پلټنه وخت پای شو. فایل ممکن ودریدلی وي — بیا هڅه وکړئ.',
+      pairIncomplete: 'ffmpeg او ffprobe دواړه باید د یوه جوړه برخه وي.'
+    },
+    actions: {
+      chooseExecutable: 'د اجرا وړ فایل غوره کړئ',
+      resetToDefault: 'ډیفالټ ته بیرته شئ',
+      retrySetup: 'نصب بیا وکړئ',
+      cancel: 'لغوه کړئ',
+      openDependencyFolder: 'د dependency فولډر خلاص کړئ',
+      viewSetupLog: 'د نصب لاګ وګورئ'
+    }
   },
   theme: {
     light: 'رڼا حالت',

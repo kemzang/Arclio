@@ -114,6 +114,7 @@ export interface UiSlice {
   uiTheme: UiTheme;
   drawerOpen: boolean;
   showQueueTip: boolean;
+  interJobSleepEndsAt: number | null;
 
   setDrawerOpen: (open: boolean) => void;
   dismissQueueTip: () => void;
@@ -133,6 +134,7 @@ export interface SystemSlice {
   commonPaths: AppSettings['common']['commonPaths'];
   initialize: () => Promise<void>;
   repairWarmup: () => Promise<void>;
+  cancelWarmup: () => Promise<void>;
   setBinaryOverride: (id: DependencyId, path: string) => Promise<void>;
   clearBinaryOverride: (id: DependencyId) => Promise<void>;
   openBinariesDir: () => Promise<void>;

@@ -25,7 +25,37 @@ const ar = {
     greeting: 'مرحباً، أهلاً بعودتك!',
     warmup: 'Arroxy يستعد…',
     downloading: 'جارٍ تنزيل {{binary}}…',
-    warning: 'الإعداد غير مكتمل — قد لا تعمل بعض الميزات'
+    warning: 'الإعداد غير مكتمل — قد لا تعمل بعض الميزات',
+    warmupFailedNoDiag: 'فشل الإعداد. افتح سجل الإعداد للاطلاع على التفاصيل.'
+  },
+  repair: {
+    title: 'الإعداد يحتاج مساعدتك',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'تعذّر التحقق.',
+      downloadFailed: 'فشل التنزيل. تحقق من اتصالك بالإنترنت وأعد المحاولة.',
+      extractFailed: 'فشل استخراج الأرشيف. قد يكون التنزيل تالفاً — أعد المحاولة.',
+      hashFailed: 'عدم تطابق المجموع الاختباري للملف المنزَّل. أعد التنزيل.',
+      spawnFailed: 'الملف مفقود أو تعذّر تشغيله. اختر نسخة صالحة للعمل.',
+      permissionDenied: 'رفض النظام تشغيل الملف. اختر نسخة موثوقة أو أعد المحاولة كمسؤول.',
+      blockedOrQuarantined: 'حظر Windows الملف (SmartScreen / Defender). اختر نسخة مثبّتة أو أضف مجلد وقت التشغيل إلى القائمة البيضاء.',
+      badExitCode: 'لم يستجب الملف الثنائي لـ --version. قد يكون تالفاً أو إصدار خاطئ.',
+      timeout: 'انتهت مهلة فحص الإصدار. قد يكون الملف متوقفاً — أعد المحاولة.',
+      pairIncomplete: 'يجب إعداد ffmpeg و ffprobe معاً كزوج متطابق.'
+    },
+    actions: {
+      chooseExecutable: 'اختر الملف القابل للتنفيذ',
+      resetToDefault: 'إعادة إلى الافتراضي',
+      retrySetup: 'إعادة محاولة الإعداد',
+      cancel: 'إلغاء',
+      openDependencyFolder: 'فتح مجلد التبعيات',
+      viewSetupLog: 'عرض سجل الإعداد'
+    }
   },
   theme: {
     light: 'الوضع الفاتح',

@@ -1,4 +1,4 @@
-import { useState, useEffect, type JSX } from 'react';
+import { useState, useEffect, useMemo, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import mainImg from '../../assets/Main.png';
 import type { DependencyDiagnostic, DependencyId, WarmupProgressEvent } from '@shared/types';
@@ -27,18 +27,21 @@ export function SplashScreen({ initialized, warmupBlocking, warmupDiagnostics, w
     return () => clearTimeout(timer);
   }, []);
 
+  const { activeEntry, totalDownloaded, totalBytes, percent } = useMemo(() => {
+    const entries = Object.values(warmupProgress ?? {}).filter((e): e is WarmupProgressEvent => e !== undefined);
+    const activeEntry = entries.find((e) => e.phase === 'downloading') ?? entries.find((e) => e.phase === 'extracting');
+    const totalDownloaded = entries.reduce((sum, e) => sum + (e.bytesDownloaded ?? 0), 0);
+    const totalBytes = entries.reduce((sum, e) => sum + (e.totalBytes ?? 0), 0);
+    const percent = totalBytes > 0 ? Math.min(100, (totalDownloaded / totalBytes) * 100) : null;
+    return { activeEntry, totalDownloaded, totalBytes, percent };
+  }, [warmupProgress]);
+
   if (gone) return null;
 
   // Splash stays mounted as the repair container while any blocking dep is
   // not runnable. Without blocking failures we fade out as before.
   const blocked = warmupBlocking.length > 0;
   const fading = initialized && minPassed && !blocked;
-
-  const entries = Object.values(warmupProgress ?? {}).filter((e): e is WarmupProgressEvent => e !== undefined);
-  const activeEntry = entries.find((e) => e.phase === 'downloading') ?? entries.find((e) => e.phase === 'extracting');
-  const totalDownloaded = entries.reduce((sum, e) => sum + (e.bytesDownloaded ?? 0), 0);
-  const totalBytes = entries.reduce((sum, e) => sum + (e.totalBytes ?? 0), 0);
-  const percent = totalBytes > 0 ? Math.min(100, (totalDownloaded / totalBytes) * 100) : null;
 
   const showProgress = !blocked && (activeEntry != null || (percent !== null && percent < 100));
 
@@ -72,6 +75,7 @@ export function SplashScreen({ initialized, warmupBlocking, warmupDiagnostics, w
           !blocked && <p className="splash-name">{t('splash.warmup')}</p>
         )}
         {blocked && warmupDiagnostics && <RepairPanel diagnostics={warmupDiagnostics} blocking={warmupBlocking} />}
+        {blocked && !warmupDiagnostics && <p className="splash-name">{t('splash.warmupFailedNoDiag')}</p>}
       </div>
     </div>
   );

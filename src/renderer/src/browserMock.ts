@@ -136,12 +136,15 @@ if (!('appApi' in window)) {
               attempts: []
             }
           };
-          const result: WarmUpOutput = { completed: false, dependencies: blocked, blockingFailures: ['yt-dlp'] };
+          const result: WarmUpOutput = { completed: false, dependencies: blocked, blockingFailures: ['yt-dlp'], cancelled: false };
           return { ok: true, data: result };
         }
 
-        const result: WarmUpOutput = { completed: true, dependencies: allRunnable, blockingFailures: [] };
+        const result: WarmUpOutput = { completed: true, dependencies: allRunnable, blockingFailures: [], cancelled: false };
         return { ok: true, data: result };
+      },
+      cancelWarmup: async () => {
+        /* no-op in browser */
       },
       setLanguage: async () => {
         /* no-op in browser */

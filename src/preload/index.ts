@@ -8,6 +8,7 @@ import type { ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, War
 const api: AppApi = {
   app: {
     warmUp: (input) => ipcRenderer.invoke(IPC_CHANNELS.appWarmUp, input ?? {}),
+    cancelWarmup: () => ipcRenderer.invoke(IPC_CHANNELS.appCancelWarmup),
     setLanguage: (language) => ipcRenderer.invoke(IPC_CHANNELS.appSetLanguage, language)
   },
   window: {

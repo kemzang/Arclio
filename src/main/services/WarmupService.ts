@@ -9,6 +9,12 @@ import type { TokenService } from './TokenService';
 
 const logger = log.scope('warmup');
 
+// Cap any single binary resolve at this. Unbounded `got` retries on a slow
+// CDN can otherwise hang the splash for ~30 minutes — the user has no out
+// without a Cancel button. With Cancel + this cap, worst-case wait is ~90s
+// per binary before the failure surfaces and the repair UI takes over.
+const PER_BINARY_BUDGET_MS = 90_000;
+
 interface WarmupServiceDeps {
   binaryManager: BinaryManager;
   tokenService: TokenService;
@@ -19,6 +25,7 @@ interface WarmupServiceDeps {
 export class WarmupService {
   private currentRun: Promise<Result<WarmUpOutput>> | null = null;
   private lastResult: Result<WarmUpOutput> | null = null;
+  private currentController: AbortController | null = null;
 
   constructor(private readonly deps: WarmupServiceDeps) {}
 
@@ -26,12 +33,21 @@ export class WarmupService {
     return this.lastResult;
   }
 
+  cancel(): void {
+    this.currentController?.abort();
+  }
+
   run(opts?: { force?: boolean }): Promise<Result<WarmUpOutput>> {
     if (this.currentRun && !opts?.force) return this.currentRun;
     if (opts?.force) {
       this.deps.binaryManager.invalidateResolved();
+      // A force-run while another is in flight cancels the in-flight one so
+      // its diagnostics aren't overwritten mid-completion by the new run.
+      this.currentController?.abort();
     }
-    const promise = this.executeRun();
+    const controller = new AbortController();
+    this.currentController = controller;
+    const promise = this.executeRun(controller.signal);
     this.currentRun = promise;
     promise
       .then((result) => {
@@ -42,11 +58,12 @@ export class WarmupService {
       })
       .finally(() => {
         if (this.currentRun === promise) this.currentRun = null;
+        if (this.currentController === controller) this.currentController = null;
       });
     return promise;
   }
 
-  private async executeRun(): Promise<Result<WarmUpOutput>> {
+  private async executeRun(userSignal: AbortSignal): Promise<Result<WarmUpOutput>> {
     const { binaryManager, tokenService, window, onResolved } = this.deps;
 
     const emit = (event: WarmupProgressEvent): void => {
@@ -54,12 +71,14 @@ export class WarmupService {
       window.webContents.send(IPC_CHANNELS.warmupProgress, event);
     };
 
-    const resolveOptions = { onProgress: emit };
+    // Per-binary budget combined with user-initiated cancel. AbortSignal.any
+    // resolves with whichever fires first.
+    const budgetSignal = (): AbortSignal => AbortSignal.any([userSignal, AbortSignal.timeout(PER_BINARY_BUDGET_MS)]);
 
     const [ytDlpDiag, ffmpegPair, denoDiag] = await Promise.all([
-      binaryManager.resolveYtDlp(resolveOptions),
-      binaryManager.resolveFFmpegPair(resolveOptions),
-      binaryManager.resolveDeno(resolveOptions),
+      binaryManager.resolveYtDlp({ onProgress: emit, signal: budgetSignal() }),
+      binaryManager.resolveFFmpegPair({ onProgress: emit, signal: budgetSignal() }),
+      binaryManager.resolveDeno({ onProgress: emit, signal: budgetSignal() }),
       tokenService.warmUp().catch((err) => {
         logger.warn('Token warmup failed', { error: err instanceof Error ? err.message : String(err) });
       })
@@ -73,8 +92,11 @@ export class WarmupService {
     };
 
     const blockingFailures = BLOCKING_DEPENDENCY_IDS.filter((id) => dependencies[id].state !== 'runnable');
+    const cancelled = userSignal.aborted;
 
-    if (blockingFailures.length > 0) {
+    if (cancelled) {
+      logger.info('Warmup cancelled', { blockingFailures });
+    } else if (blockingFailures.length > 0) {
       logger.warn('Warmup completed with blocking failures', { blockingFailures });
     } else {
       logger.info('Warmup completed');
@@ -84,8 +106,8 @@ export class WarmupService {
 
     // Acknowledge full DEPENDENCY_IDS list to keep linter / future maintainers
     // honest if a new dep id is added without updating the result map.
-    const completed = blockingFailures.length === 0;
-    const result: WarmUpOutput = { completed, dependencies, blockingFailures: [...blockingFailures] };
+    const completed = !cancelled && blockingFailures.length === 0;
+    const result: WarmUpOutput = { completed, dependencies, blockingFailures: [...blockingFailures], cancelled };
     void DEPENDENCY_IDS;
     return ok(result);
   }

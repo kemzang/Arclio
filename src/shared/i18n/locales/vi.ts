@@ -25,7 +25,37 @@ const vi = {
     greeting: 'Xin chào, chào mừng bạn quay lại!',
     warmup: 'Arroxy đang khởi động…',
     downloading: 'Đang tải xuống {{binary}}…',
-    warning: 'Thiết lập chưa hoàn tất — một số tính năng có thể không hoạt động'
+    warning: 'Thiết lập chưa hoàn tất — một số tính năng có thể không hoạt động',
+    warmupFailedNoDiag: 'Thiết lập thất bại. Mở nhật ký thiết lập để xem chi tiết.'
+  },
+  repair: {
+    title: 'Thiết lập cần sự giúp đỡ của bạn',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'Không thể xác minh.',
+      downloadFailed: 'Tải xuống thất bại. Kiểm tra kết nối internet và thử lại.',
+      extractFailed: 'Giải nén tệp thất bại. Tệp tải xuống có thể bị hỏng — thử lại.',
+      hashFailed: 'Tổng kiểm tra của tệp tải xuống không khớp. Hãy tải xuống lại.',
+      spawnFailed: 'Tệp bị thiếu hoặc không thể khởi chạy. Hãy chọn một bản sao hoạt động được.',
+      permissionDenied: 'Hệ thống từ chối chạy tệp. Hãy chọn bản sao bạn tin tưởng hoặc thử lại với quyền admin.',
+      blockedOrQuarantined: 'Windows đã chặn tệp (SmartScreen / Defender). Hãy chọn bản sao đã cài đặt hoặc thêm thư mục runtime vào danh sách cho phép.',
+      badExitCode: 'Tệp nhị phân không phản hồi --version. Tệp có thể bị hỏng hoặc sai phiên bản.',
+      timeout: 'Kiểm tra phiên bản hết thời gian. Tệp có thể bị treo — thử lại.',
+      pairIncomplete: 'ffmpeg và ffprobe phải được thiết lập cùng nhau như một cặp khớp.'
+    },
+    actions: {
+      chooseExecutable: 'Chọn tệp thực thi',
+      resetToDefault: 'Đặt lại về mặc định',
+      retrySetup: 'Thử thiết lập lại',
+      cancel: 'Hủy',
+      openDependencyFolder: 'Mở thư mục phụ thuộc',
+      viewSetupLog: 'Xem nhật ký thiết lập'
+    }
   },
   theme: {
     light: 'Chế độ sáng',

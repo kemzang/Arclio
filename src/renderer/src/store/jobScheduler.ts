@@ -1,7 +1,6 @@
-import { useSyncExternalStore } from 'react';
 import { QUEUE_STATUS } from '@shared/schemas';
 import { isHeld } from '@shared/queueItem';
-import type { GetState } from './types';
+import type { GetState, SetState } from './types';
 
 const NEXT_JOB_DELAY_MS = 3000;
 
@@ -11,20 +10,6 @@ export interface JobScheduler {
   notifyJobFinished(): void;
   notifyItemAdded(): Promise<void>;
   reset(): void;
-  getSleepEndsAt(): number | null;
-  subscribe(cb: () => void): () => void;
-}
-
-let _scheduler: JobScheduler | null = null;
-function getScheduler(): JobScheduler {
-  if (!_scheduler) throw new Error('JobScheduler not initialized');
-  return _scheduler;
-}
-export function useSchedulerSleepEndsAt(): number | null {
-  return useSyncExternalStore(
-    (cb) => getScheduler().subscribe(cb),
-    () => getScheduler().getSleepEndsAt()
-  );
 }
 
 function pickNextPending(get: GetState): string | null {
@@ -32,14 +17,13 @@ function pickNextPending(get: GetState): string | null {
   return next?.id ?? null;
 }
 
-export function createJobScheduler(get: GetState): JobScheduler {
+export function createJobScheduler(set: SetState, get: GetState): JobScheduler {
   let state: SchedulerState = { kind: 'idle' };
   let timer: ReturnType<typeof setTimeout> | null = null;
-  const listeners = new Set<() => void>();
 
   function transition(next: SchedulerState): void {
     state = next;
-    listeners.forEach((cb) => cb());
+    set({ interJobSleepEndsAt: next.kind === 'sleeping' ? next.until : null });
   }
 
   function clearTimer(): void {
@@ -88,7 +72,7 @@ export function createJobScheduler(get: GetState): JobScheduler {
     scheduleAfterFinish();
   }
 
-  const scheduler: JobScheduler = {
+  return {
     notifyJobFinished(): void {
       scheduleAfterFinish();
     },
@@ -99,15 +83,6 @@ export function createJobScheduler(get: GetState): JobScheduler {
     reset(): void {
       clearTimer();
       transition({ kind: 'idle' });
-    },
-    getSleepEndsAt(): number | null {
-      return state.kind === 'sleeping' ? state.until : null;
-    },
-    subscribe(cb: () => void): () => void {
-      listeners.add(cb);
-      return () => listeners.delete(cb);
     }
   };
-  _scheduler = scheduler;
-  return scheduler;
 }

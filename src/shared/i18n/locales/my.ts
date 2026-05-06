@@ -25,7 +25,37 @@ const my = {
     greeting: 'ဟေး၊ ကြိုဆိုပါသည်!',
     warmup: 'Arroxy ပြင်ဆင်နေသည်…',
     downloading: '{{binary}} ဒေါင်းလုဒ်လုပ်နေသည်…',
-    warning: 'တပ်ဆင်မှုမပြည့်စုံသေးပါ — အချို့လုပ်ဆောင်ချက်များ အလုပ်မလုပ်နိုင်ပါ'
+    warning: 'တပ်ဆင်မှုမပြည့်စုံသေးပါ — အချို့လုပ်ဆောင်ချက်များ အလုပ်မလုပ်နိုင်ပါ',
+    warmupFailedNoDiag: 'တပ်ဆင်မှုမအောင်မြင်ပါ။ အသေးစိတ်ကြည့်ရန် setup log ဖွင့်ပါ။'
+  },
+  repair: {
+    title: 'တပ်ဆင်မှုတွင် သင့်အကူအညီလိုပါသည်',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'အတည်မပြုနိုင်ပါ။',
+      downloadFailed: 'ဒေါင်းလုဒ်မအောင်မြင်ပါ။ အင်တာနက်ချိတ်ဆက်မှုစစ်ဆေးပြီး ထပ်ကြိုးစားပါ။',
+      extractFailed: 'Archive ဖြေထုတ်မှုမအောင်မြင်ပါ။ ဒေါင်းလုဒ်ပျက်စီးနေနိုင်သည် — ထပ်ကြိုးစားပါ။',
+      hashFailed: 'ဒေါင်းလုဒ်ဖိုင်၏ checksum မကိုက်ညီပါ။ ဒေါင်းလုဒ်ထပ်ကြိုးစားပါ။',
+      spawnFailed: 'ဖိုင်မရှိပါ သို့မဟုတ် မဖွင့်နိုင်ပါ။ အလုပ်လုပ်သောကော်ပီတစ်ခုရွေးပါ။',
+      permissionDenied: 'စနစ်မှ ဖိုင်မဖွင့်ပေးပါ။ ယုံကြည်ရသောကော်ပီရွေးပါ သို့မဟုတ် admin အဖြစ် ထပ်ကြိုးစားပါ။',
+      blockedOrQuarantined: 'Windows မှ ဖိုင်ပိတ်ဆို့သည် (SmartScreen / Defender)။ တပ်ဆင်ထားသောကော်ပီရွေးပါ သို့မဟုတ် runtime ဖိုဒါကို ခွင့်ပြုချက်ထည့်ပါ။',
+      badExitCode: 'Binary မှ --version ကိုမတုံ့ပြန်ပါ။ ပျက်စီးနေသော သို့မဟုတ် မှားသောဗားရှင်းဖြစ်နိုင်သည်။',
+      timeout: 'ဗားရှင်းစစ်ဆေးမှု time out ဖြစ်ပြီ။ ဖိုင်ရပ်နေနိုင်သည် — ထပ်ကြိုးစားပါ။',
+      pairIncomplete: 'ffmpeg နှင့် ffprobe နှစ်ခုလုံးကို တွဲဖက်အဖြစ် သတ်မှတ်ရမည်။'
+    },
+    actions: {
+      chooseExecutable: 'Executable ရွေးမည်',
+      resetToDefault: 'မူလသို့ပြန်ထားမည်',
+      retrySetup: 'Setup ထပ်ကြိုးစားမည်',
+      cancel: 'ပယ်ဖျက်မည်',
+      openDependencyFolder: 'Dependency ဖိုဒါဖွင့်မည်',
+      viewSetupLog: 'Setup log ကြည့်မည်'
+    }
   },
   theme: {
     light: 'အလင်းမုဒ်',

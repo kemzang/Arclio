@@ -25,7 +25,37 @@ const en = {
     greeting: 'Hey, welcome back!',
     warmup: 'Arroxy is warming up…',
     downloading: 'Downloading {{binary}}…',
-    warning: 'Setup incomplete — some features may not work'
+    warning: 'Setup incomplete — some features may not work',
+    warmupFailedNoDiag: 'Setup failed. Open the setup log for details.'
+  },
+  repair: {
+    title: 'Setup needs your help',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'Could not be verified.',
+      downloadFailed: 'Download failed. Check your internet connection and retry.',
+      extractFailed: 'Archive extraction failed. The download may be corrupt — retry.',
+      hashFailed: 'Checksum mismatch on the downloaded file. Retry the download.',
+      spawnFailed: 'The file is missing or could not be launched. Pick a working copy.',
+      permissionDenied: 'The system refused to run the file. Pick a copy you trust or retry as admin.',
+      blockedOrQuarantined: 'Windows blocked the file (SmartScreen / Defender). Pick an installed copy or whitelist the runtime folder.',
+      badExitCode: 'The binary did not respond to --version. It may be corrupt or the wrong build.',
+      timeout: 'The version probe timed out. The file may be hung — retry.',
+      pairIncomplete: 'ffmpeg and ffprobe must both be set as a matched pair.'
+    },
+    actions: {
+      chooseExecutable: 'Choose executable',
+      resetToDefault: 'Reset to default',
+      retrySetup: 'Retry setup',
+      cancel: 'Cancel',
+      openDependencyFolder: 'Open dependency folder',
+      viewSetupLog: 'View setup log'
+    }
   },
   theme: {
     light: 'Light mode',

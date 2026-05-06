@@ -7,7 +7,7 @@ import { createJobScheduler } from './jobScheduler';
 import type { AppState } from './types';
 
 export const useAppStore = create<AppState>()((set, get) => {
-  const scheduler = createJobScheduler(get);
+  const scheduler = createJobScheduler(set, get);
   return {
     ...createSystemSlice(set, get, scheduler),
     ...createUiSlice(set, get),

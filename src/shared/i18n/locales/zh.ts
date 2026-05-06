@@ -25,7 +25,37 @@ const zh = {
     greeting: '嘿,欢迎回来!',
     warmup: 'Arroxy 正在启动…',
     downloading: '正在下载 {{binary}}…',
-    warning: '初始化未完成 — 部分功能可能无法使用'
+    warning: '初始化未完成 — 部分功能可能无法使用',
+    warmupFailedNoDiag: '初始化失败。打开设置日志查看详情。'
+  },
+  repair: {
+    title: '初始化需要你的帮助',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: '无法验证。',
+      downloadFailed: '下载失败。请检查网络连接后重试。',
+      extractFailed: '解压缩失败。下载文件可能已损坏——请重试。',
+      hashFailed: '下载文件的校验和不匹配。请重新下载。',
+      spawnFailed: '文件缺失或无法启动。请选择一个可用的副本。',
+      permissionDenied: '系统拒绝运行该文件。请选择你信任的副本，或以管理员身份重试。',
+      blockedOrQuarantined: 'Windows 阻止了该文件（SmartScreen / Defender）。请选择已安装的副本或将运行时文件夹加入白名单。',
+      badExitCode: '该二进制文件未响应 --version。可能已损坏或版本不匹配。',
+      timeout: '版本检测超时。该文件可能卡住了——请重试。',
+      pairIncomplete: 'ffmpeg 和 ffprobe 必须作为配对一起设置。'
+    },
+    actions: {
+      chooseExecutable: '选择可执行文件',
+      resetToDefault: '恢复默认',
+      retrySetup: '重试初始化',
+      cancel: '取消',
+      openDependencyFolder: '打开依赖文件夹',
+      viewSetupLog: '查看设置日志'
+    }
   },
   theme: {
     light: '浅色模式',

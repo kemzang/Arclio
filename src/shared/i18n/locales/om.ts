@@ -25,7 +25,37 @@ const om = {
     greeting: 'Baga nagaan deebitee!',
     warmup: "Arroxy qophaa'aa jira…",
     downloading: '{{binary}} buufatamaa jira…',
-    warning: "Qindaa'inni hin xumuramne — feetii tokko tokko hojjechuu dhiisuu dandanda'u"
+    warning: "Qindaa'inni hin xumuramne — feetii tokko tokko hojjechuu dhiisuu dandanda'u",
+    warmupFailedNoDiag: "Qindaa'inni hin milkoofne. Bal'ina argachuuf galmee qindaa'inaa bani."
+  },
+  repair: {
+    title: "Qindaa'inni gargaarsa kee gaafata",
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: "Mirkaneeffachuu hin danda'amne.",
+      downloadFailed: "Buufachuun hin milkoofne. Walqunnamtii interneetii kee ilaalii achiin irra deebi'i.",
+      extractFailed: "Baasuu arkaayivii hin milkoofne. Buufanni miidhaa qabaachuu danda'a — irra deebi'i.",
+      hashFailed: "Faayilii buufamame irratti walsimuun checksum hin milkoofne. Buufaa irra deebi'i.",
+      spawnFailed: "Faayiliin hin argamne ykn jalqabuu hin danda'amne. Kopii hojjetu filadhu.",
+      permissionDenied: "Sirnichi faayilii hojjechuuf dide. Amantaa qabdu kopii filadhu ykn akka admin irra deebi'i.",
+      blockedOrQuarantined: "Windowsiin faayilii dhorkate (SmartScreen / Defender). Kopii fe'ame filadhu ykn foldarii runtime irratti whitelist godhi.",
+      badExitCode: "Faayiliin binaryii --version irratti deebii hin kenneef. Miidhaa qabaachuu ykn build dogoggoraa ta'uu danda'a.",
+      timeout: "Madaalliin version yeroo darbe. Faayilichii hin deebiin jiraachuu danda'a — irra deebi'i.",
+      pairIncomplete: "ffmpeg fi ffprobe lachuu waloon pair ta'ee qindaa'uu qabu."
+    },
+    actions: {
+      chooseExecutable: 'Faayilii hojjetu filadhu',
+      resetToDefault: "Durtii irra deebi'i",
+      retrySetup: "Qindaa'inaa irra deebi'i yaali",
+      cancel: 'Haqdhaabi',
+      openDependencyFolder: 'Foldarii hirmaannaa bani',
+      viewSetupLog: "Galmee qindaa'inaa ilaali"
+    }
   },
   theme: {
     light: 'Haala iftoomaa',

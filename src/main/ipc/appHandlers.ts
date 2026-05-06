@@ -18,6 +18,10 @@ export function registerAppHandlers(deps: AppHandlerDeps): void {
     return warmupService.run({ force });
   });
 
+  handleRaw(IPC_CHANNELS.appCancelWarmup, () => {
+    warmupService.cancel();
+  });
+
   handleRaw(IPC_CHANNELS.appSetLanguage, (_, payload: unknown) => {
     const parsed = supportedLangSchema.safeParse(payload);
     if (parsed.success) {

@@ -25,7 +25,37 @@ const ja = {
     greeting: 'やあ、おかえり!',
     warmup: 'Arroxyを起動中…',
     downloading: '{{binary}} をダウンロード中…',
-    warning: 'セットアップが未完了 — 一部の機能が動作しない可能性があります'
+    warning: 'セットアップが未完了 — 一部の機能が動作しない可能性があります',
+    warmupFailedNoDiag: 'セットアップに失敗しました。セットアップログを開いて詳細を確認してください。'
+  },
+  repair: {
+    title: 'セットアップにサポートが必要です',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: '確認できませんでした。',
+      downloadFailed: 'ダウンロードに失敗しました。インターネット接続を確認して再試行してください。',
+      extractFailed: 'アーカイブの展開に失敗しました。ダウンロードが破損している可能性があります — 再試行してください。',
+      hashFailed: 'ダウンロードしたファイルのチェックサムが一致しません。再ダウンロードしてください。',
+      spawnFailed: 'ファイルが見つからないか起動できませんでした。正常なコピーを選択してください。',
+      permissionDenied: 'システムがファイルの実行を拒否しました。信頼できるコピーを選択するか、管理者として再試行してください。',
+      blockedOrQuarantined: 'Windowsがファイルをブロックしました (SmartScreen / Defender)。インストール済みのコピーを選択するか、runtimeフォルダーを許可リストに追加してください。',
+      badExitCode: 'バイナリが --version に応答しませんでした。破損しているか、誤ったビルドの可能性があります。',
+      timeout: 'バージョン確認がタイムアウトしました。ファイルがハングしている可能性があります — 再試行してください。',
+      pairIncomplete: 'ffmpeg と ffprobe は両方ともペアとして設定する必要があります。'
+    },
+    actions: {
+      chooseExecutable: '実行ファイルを選択',
+      resetToDefault: 'デフォルトにリセット',
+      retrySetup: 'セットアップを再試行',
+      cancel: 'キャンセル',
+      openDependencyFolder: '依存関係フォルダーを開く',
+      viewSetupLog: 'セットアップログを表示'
+    }
   },
   theme: {
     light: 'ライトモード',

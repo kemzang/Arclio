@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { ChevronDown, Hourglass, Inbox, Pause, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore, formatStatus } from '../../store/useAppStore';
-import { useSchedulerSleepEndsAt } from '../../store/jobScheduler';
 import { QueueItemCard } from '../queue/QueueItemCard';
 import { QueueTipNudge } from '../queue/QueueTipNudge';
 import { Badge } from '../ui/badge';
@@ -19,7 +18,7 @@ export function SmartDrawer(): JSX.Element {
   const clearCompleted = useAppStore((s) => s.clearCompleted);
   const pauseAll = useAppStore((s) => s.pauseAll);
   const cancelAll = useAppStore((s) => s.cancelAll);
-  const interJobSleepEndsAt = useSchedulerSleepEndsAt();
+  const interJobSleepEndsAt = useAppStore((s) => s.interJobSleepEndsAt);
 
   // Tick every 250ms while sleep window active so the countdown ticks down
   // without re-rendering the whole drawer at 60fps.

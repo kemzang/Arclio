@@ -25,7 +25,37 @@ const es = {
     greeting: '¡Hey, bienvenido de vuelta!',
     warmup: 'Arroxy se está preparando…',
     downloading: 'Descargando {{binary}}…',
-    warning: 'Configuración incompleta — algunas funciones podrían no funcionar'
+    warning: 'Configuración incompleta — algunas funciones podrían no funcionar',
+    warmupFailedNoDiag: 'Error en la configuración. Abre el registro de configuración para más detalles.'
+  },
+  repair: {
+    title: 'La configuración necesita tu ayuda',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'No se pudo verificar.',
+      downloadFailed: 'La descarga falló. Comprueba tu conexión a internet e inténtalo de nuevo.',
+      extractFailed: 'Error al extraer el archivo. La descarga puede estar dañada — reinténtalo.',
+      hashFailed: 'El checksum del archivo descargado no coincide. Vuelve a intentar la descarga.',
+      spawnFailed: 'El archivo no existe o no se pudo ejecutar. Elige una copia que funcione.',
+      permissionDenied: 'El sistema no pudo ejecutar el archivo. Elige una copia de confianza o reinténtalo como administrador.',
+      blockedOrQuarantined: 'Windows bloqueó el archivo (SmartScreen / Defender). Elige una copia instalada o añade la carpeta de runtime a las excepciones.',
+      badExitCode: 'El binario no respondió a --version. Puede estar dañado o ser la versión incorrecta.',
+      timeout: 'La comprobación de versión agotó el tiempo de espera. El archivo puede estar bloqueado — reinténtalo.',
+      pairIncomplete: 'ffmpeg y ffprobe deben configurarse juntos como pareja.'
+    },
+    actions: {
+      chooseExecutable: 'Elegir ejecutable',
+      resetToDefault: 'Restablecer predeterminado',
+      retrySetup: 'Reintentar configuración',
+      cancel: 'Cancelar',
+      openDependencyFolder: 'Abrir carpeta de dependencias',
+      viewSetupLog: 'Ver registro de configuración'
+    }
   },
   theme: {
     light: 'Modo claro',

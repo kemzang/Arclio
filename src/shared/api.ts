@@ -19,6 +19,7 @@ export interface WindowApi {
 export interface AppApi {
   app: {
     warmUp(input?: { force?: boolean }): Promise<Result<WarmUpOutput>>;
+    cancelWarmup(): Promise<void>;
     setLanguage(language: SupportedLang): Promise<void>;
   };
   window: WindowApi;

@@ -9,7 +9,8 @@ const mockOpenExternal = vi.fn().mockResolvedValue(ok({ opened: true }));
 
 const mockAppApi = {
   app: {
-    warmUp: vi.fn().mockResolvedValue(ok({ completed: true, dependencies: {}, blockingFailures: [] })),
+    warmUp: vi.fn().mockResolvedValue(ok({ completed: true, dependencies: {}, blockingFailures: [], cancelled: false })),
+    cancelWarmup: vi.fn().mockResolvedValue(undefined),
     setLanguage: vi.fn().mockResolvedValue(undefined)
   },
   window: {

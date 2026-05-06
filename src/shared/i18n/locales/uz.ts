@@ -25,7 +25,37 @@ const uz = {
     greeting: 'Xush kelibsiz, qayta keldingiz!',
     warmup: 'Arroxy ishga tayyorlanmoqda…',
     downloading: '{{binary}} yuklanmoqda…',
-    warning: "Sozlash yakunlanmagan — ba'zi funksiyalar ishlamasligi mumkin"
+    warning: "Sozlash yakunlanmagan — ba'zi funksiyalar ishlamasligi mumkin",
+    warmupFailedNoDiag: 'Sozlash muvaffaqiyatsiz yakunlandi. Tafsilotlar uchun sozlash jurnalini oching.'
+  },
+  repair: {
+    title: 'Sozlash sizning yordamingizga muhtoj',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: "Tekshirib bo'lmadi.",
+      downloadFailed: "Yuklash muvaffaqiyatsiz. Internet ulanishingizni tekshiring va qayta urinib ko'ring.",
+      extractFailed: "Arxivni ochish muvaffaqiyatsiz. Yuklama buzilgan bo'lishi mumkin — qayta urinib ko'ring.",
+      hashFailed: 'Yuklangan faylning nazorat summasi mos kelmadi. Yuklamani qaytadan boshlang.',
+      spawnFailed: "Fayl topilmadi yoki ishga tushirib bo'lmadi. Ishlaydigan nusxani tanlang.",
+      permissionDenied: "Tizim faylni ishga tushirishdan bosh tortdi. Ishonchli nusxani tanlang yoki administrator sifatida qayta urinib ko'ring.",
+      blockedOrQuarantined: "Windows fayli blokladi (SmartScreen / Defender). O'rnatilgan nusxani tanlang yoki ishlash vaqti papkasini oq ro'yxatga qo'shing.",
+      badExitCode: "Ikkilik fayl --version ga javob bermadi. U buzilgan yoki noto'g'ri qurilma uchun bo'lishi mumkin.",
+      timeout: "Versiya tekshiruvi vaqti tugadi. Fayl muammoga uchragan bo'lishi mumkin — qayta urinib ko'ring.",
+      pairIncomplete: 'ffmpeg va ffprobe ikkalasi ham juft sifatida birgalikda sozlanishi kerak.'
+    },
+    actions: {
+      chooseExecutable: 'Bajariladigan faylni tanlash',
+      resetToDefault: 'Standartga qaytarish',
+      retrySetup: 'Sozlashni qayta boshlash',
+      cancel: 'Bekor qilish',
+      openDependencyFolder: 'Qaramlik papkasini ochish',
+      viewSetupLog: "Sozlash jurnalini ko'rish"
+    }
   },
   theme: {
     light: "Yorug' rejim",

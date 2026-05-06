@@ -1,5 +1,6 @@
 export const IPC_CHANNELS = {
   appWarmUp: 'app:warmUp',
+  appCancelWarmup: 'app:cancelWarmup',
   downloadsStart: 'downloads:start',
   downloadsCancel: 'downloads:cancel',
   downloadsPause: 'downloads:pause',

@@ -25,7 +25,37 @@ const sw = {
     greeting: 'Hujambo, karibu tena!',
     warmup: 'Arroxy inajipanga…',
     downloading: 'Inapakua {{binary}}…',
-    warning: 'Usanidi haukukamilika — baadhi ya vipengele vinaweza visifanye kazi'
+    warning: 'Usanidi haukukamilika — baadhi ya vipengele vinaweza visifanye kazi',
+    warmupFailedNoDiag: 'Usanidi umeshindwa. Fungua kumbukumbu ya usanidi kwa maelezo zaidi.'
+  },
+  repair: {
+    title: 'Usanidi unahitaji msaada wako',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'Haikuweza kuthibitishwa.',
+      downloadFailed: 'Upakuaji umeshindwa. Angalia muunganisho wako wa intaneti na ujaribu tena.',
+      extractFailed: 'Ufunguzi wa kumbukumbu umeshindwa. Upakuaji unaweza kuwa umeharibiwa — jaribu tena.',
+      hashFailed: 'Checksum ya faili iliyopakuliwa haifanani. Pakua upya faili.',
+      spawnFailed: 'Faili haipo au haiwezi kuzinduliwa. Chagua nakala inayofanya kazi.',
+      permissionDenied: 'Mfumo ulikataa kuendesha faili. Chagua nakala unayoiamini au jaribu tena kama msimamizi.',
+      blockedOrQuarantined: 'Windows ilizuia faili (SmartScreen / Defender). Chagua nakala iliyosakinishwa au weka saraka ya runtime kwenye orodha nyeupe.',
+      badExitCode: 'Binary haikujibu --version. Inaweza kuwa imeharibiwa au muundo mbaya.',
+      timeout: 'Uchunguzi wa toleo ulichukua muda mrefu. Faili inaweza kuwa imesimama — jaribu tena.',
+      pairIncomplete: 'ffmpeg na ffprobe lazima ziwekwe zote kwa pamoja kama jozi inayolingana.'
+    },
+    actions: {
+      chooseExecutable: 'Chagua faili inayotekelezwa',
+      resetToDefault: 'Rejesha chaguo-msingi',
+      retrySetup: 'Jaribu usanidi tena',
+      cancel: 'Ghairi',
+      openDependencyFolder: 'Fungua saraka ya utegemezi',
+      viewSetupLog: 'Angalia kumbukumbu ya usanidi'
+    }
   },
   theme: {
     light: 'Hali ya mwanga',

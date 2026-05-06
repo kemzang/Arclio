@@ -72,7 +72,8 @@ export function registerFileHandlers(mainWindow: BrowserWindow, binaryManager: B
 
   handleRaw(IPC_CHANNELS.dialogChooseExecutable, async (_, payload: unknown) => {
     try {
-      const binary = isDependencyId(payload) ? payload : null;
+      if (!isDependencyId(payload)) return toIpcFailure('Invalid dependency id');
+      const binary = payload;
       const filters =
         process.platform === 'win32'
           ? [
@@ -83,7 +84,7 @@ export function registerFileHandlers(mainWindow: BrowserWindow, binaryManager: B
       const result = await dialog.showOpenDialog(mainWindow, {
         properties: ['openFile'],
         filters,
-        title: binary ? `Select ${binary} executable` : 'Select executable'
+        title: `Select ${binary} executable`
       });
       return ok({ path: result.canceled ? null : (result.filePaths[0] ?? null) });
     } catch (error) {

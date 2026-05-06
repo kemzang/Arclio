@@ -25,7 +25,37 @@ const am = {
     greeting: 'እንኳን ደህና መጡ!',
     warmup: 'Arroxy እየሞቀ ነው…',
     downloading: '{{binary}} እየወረደ ነው…',
-    warning: 'ማዋቀር አልተጠናቀቀም — አንዳንድ ባህሪያት ላይሰሩ ይችላሉ'
+    warning: 'ማዋቀር አልተጠናቀቀም — አንዳንድ ባህሪያት ላይሰሩ ይችላሉ',
+    warmupFailedNoDiag: 'ማዋቀር አልተሳካም። ዝርዝሮችን ለማየት የማዋቀሪያ ምዝግብ ፋይሉን ይክፈቱ።'
+  },
+  repair: {
+    title: 'ማዋቀሩ እርዳታዎን ይፈልጋል',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'ማረጋገጥ አልተቻለም።',
+      downloadFailed: 'ማውረድ ወድቋል። የኢንተርኔት ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።',
+      extractFailed: 'የማህደር ቅኝት ወድቋል። ዳውንሎዱ ሊበላሽ ይችላል — እንደገና ይሞክሩ።',
+      hashFailed: 'በዳውንሎዱ ፋይል ላይ ቼክሰም አለመዛቸጥ። ዳውንሎዱን እንደገና ይሞክሩ።',
+      spawnFailed: 'ፋይሉ የለም ወይም ሊጀመር አልቻለም። ሚሰራ ቅጂ ይምረጡ።',
+      permissionDenied: 'ስርዓቱ ፋይሉን ለማስኬድ ፈቃደኛ አልሆነም። የሚያምኑበት ቅጂ ይምረጡ ወይም እንደ አስተዳዳሪ እንደገና ይሞክሩ።',
+      blockedOrQuarantined: 'Windows ፋይሉን ዘጋው (SmartScreen / Defender)። የተጫነ ቅጂ ይምረጡ ወይም የሩጫ ጊዜ አቃፊውን ያሳምኑ።',
+      badExitCode: 'ሁለዮሽ ፋይሉ ለ --version ምላሽ አልሰጠም። ሊበላሽ ወይም ያሳሳተ ግንባታ ሊሆን ይችላል።',
+      timeout: 'የስሪት ምርምሩ ጊዜ አለፈ። ፋይሉ ቀዘቀዘ ሊሆን ይችላል — እንደገና ይሞክሩ።',
+      pairIncomplete: 'ffmpeg እና ffprobe ሁለቱም እንደ ተጣመሩ ጥንድ መቀናጀት አለባቸው።'
+    },
+    actions: {
+      chooseExecutable: 'ፈፃሚ ፋይል ምረጥ',
+      resetToDefault: 'ወደ ነባሪ መልስ',
+      retrySetup: 'ማዋቀሩን እንደገና ሞክር',
+      cancel: 'ሰርዝ',
+      openDependencyFolder: 'የጥገኝነት አቃፊ ክፈት',
+      viewSetupLog: 'የማዋቀሪያ ምዝግብ ፋይል ተመልከት'
+    }
   },
   theme: {
     light: 'ብርሃን ሁነታ',

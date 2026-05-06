@@ -25,7 +25,37 @@ const fr = {
     greeting: 'Salut, content de te revoir !',
     warmup: 'Arroxy se prépare…',
     downloading: 'Téléchargement de {{binary}}…',
-    warning: 'Configuration incomplète — certaines fonctions pourraient ne pas marcher'
+    warning: 'Configuration incomplète — certaines fonctions pourraient ne pas marcher',
+    warmupFailedNoDiag: 'Échec de la configuration. Ouvre le journal de configuration pour plus de détails.'
+  },
+  repair: {
+    title: 'La configuration nécessite votre aide',
+    deps: {
+      ytDlp: 'yt-dlp',
+      ffmpeg: 'FFmpeg',
+      ffprobe: 'FFprobe',
+      deno: 'Deno'
+    },
+    hints: {
+      unknown: 'Impossible de vérifier.',
+      downloadFailed: 'Le téléchargement a échoué. Vérifie ta connexion internet et réessaie.',
+      extractFailed: "L'extraction de l'archive a échoué. Le téléchargement est peut-être corrompu — réessaie.",
+      hashFailed: 'Le checksum du fichier téléchargé ne correspond pas. Relance le téléchargement.',
+      spawnFailed: 'Le fichier est introuvable ou ne peut pas être lancé. Choisis une copie fonctionnelle.',
+      permissionDenied: "Le système a refusé d'exécuter le fichier. Choisis une copie de confiance ou réessaie en tant qu'administrateur.",
+      blockedOrQuarantined: 'Windows a bloqué le fichier (SmartScreen / Defender). Choisis une copie installée ou autorise le dossier du runtime.',
+      badExitCode: "Le binaire n'a pas répondu à --version. Il est peut-être corrompu ou correspond à la mauvaise version.",
+      timeout: 'La vérification de version a expiré. Le fichier est peut-être bloqué — réessaie.',
+      pairIncomplete: 'ffmpeg et ffprobe doivent tous les deux être définis comme une paire assortie.'
+    },
+    actions: {
+      chooseExecutable: 'Choisir un exécutable',
+      resetToDefault: 'Réinitialiser par défaut',
+      retrySetup: 'Relancer la configuration',
+      cancel: 'Annuler',
+      openDependencyFolder: 'Ouvrir le dossier des dépendances',
+      viewSetupLog: 'Voir le journal de configuration'
+    }
   },
   theme: {
     light: 'Mode clair',

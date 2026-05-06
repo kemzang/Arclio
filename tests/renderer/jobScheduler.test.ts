@@ -30,7 +30,7 @@ describe('JobScheduler', () => {
         queue: store.getState().queue.map((item) => (item.id === itemId ? makeItem({ ...item, status: 'downloading', downloadJobId: `job-${itemId}` }) : item))
       } as never);
     });
-    scheduler = createJobScheduler(store.getState);
+    scheduler = createJobScheduler(store.setState, store.getState);
   });
 
   afterEach(() => {
@@ -41,7 +41,7 @@ describe('JobScheduler', () => {
     store.setState({ queue: [makeItem({ id: 'a', status: 'pending' })] } as never);
     await scheduler.notifyItemAdded();
     expect(startSpy).toHaveBeenCalledWith('a');
-    expect(scheduler.getSleepEndsAt()).toBeNull();
+    expect(store.getState().interJobSleepEndsAt).toBeNull();
   });
 
   it('notifyItemAdded is a no-op while another item is already downloading', async () => {
@@ -57,18 +57,18 @@ describe('JobScheduler', () => {
       queue: [makeItem({ id: 'b', status: 'pending' })]
     } as never);
     scheduler.notifyJobFinished();
-    expect(scheduler.getSleepEndsAt()).toBeGreaterThan(Date.now());
+    expect(store.getState().interJobSleepEndsAt).toBeGreaterThan(Date.now());
     expect(startSpy).not.toHaveBeenCalled();
 
     await vi.advanceTimersByTimeAsync(3100);
     expect(startSpy).toHaveBeenCalledWith('b');
-    expect(scheduler.getSleepEndsAt()).toBeNull();
+    expect(store.getState().interJobSleepEndsAt).toBeNull();
   });
 
   it('notifyJobFinished with no pending → idle, no sleep window', () => {
     store.setState({ queue: [makeItem({ id: 'a', status: 'done' })] } as never);
     scheduler.notifyJobFinished();
-    expect(scheduler.getSleepEndsAt()).toBeNull();
+    expect(store.getState().interJobSleepEndsAt).toBeNull();
   });
 
   it('scheduled start failure enters the sleep window and retries the next pending item', async () => {
@@ -92,7 +92,7 @@ describe('JobScheduler', () => {
     await scheduler.notifyItemAdded();
 
     expect(startSpy).toHaveBeenCalledWith('a');
-    expect(scheduler.getSleepEndsAt()).toBeGreaterThan(Date.now());
+    expect(store.getState().interJobSleepEndsAt).toBeGreaterThan(Date.now());
 
     await vi.advanceTimersByTimeAsync(3100);
 
@@ -110,10 +110,10 @@ describe('JobScheduler', () => {
   it('reset() clears the sleep timer mid-window', async () => {
     store.setState({ queue: [makeItem({ id: 'b', status: 'pending' })] } as never);
     scheduler.notifyJobFinished();
-    expect(scheduler.getSleepEndsAt()).not.toBeNull();
+    expect(store.getState().interJobSleepEndsAt).not.toBeNull();
 
     scheduler.reset();
-    expect(scheduler.getSleepEndsAt()).toBeNull();
+    expect(store.getState().interJobSleepEndsAt).toBeNull();
 
     await vi.advanceTimersByTimeAsync(3100);
     expect(startSpy).not.toHaveBeenCalled();

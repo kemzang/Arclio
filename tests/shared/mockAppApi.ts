@@ -15,7 +15,7 @@ function runnableDeps(): Record<DependencyId, DependencyDiagnostic> {
   return { 'yt-dlp': make('yt-dlp'), ffmpeg: make('ffmpeg'), ffprobe: make('ffprobe'), deno: make('deno') };
 }
 
-const defaultWarmUp: WarmUpOutput = { completed: true, dependencies: runnableDeps(), blockingFailures: [] };
+const defaultWarmUp: WarmUpOutput = { completed: true, dependencies: runnableDeps(), blockingFailures: [], cancelled: false };
 
 function buildMockSettings(overrides: Partial<AppSettings> = {}): AppSettings {
   return {
@@ -33,6 +33,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
   return {
     app: {
       warmUp: vi.fn().mockResolvedValue(ok(defaultWarmUp)),
+      cancelWarmup: vi.fn().mockResolvedValue(undefined),
       setLanguage: vi.fn().mockResolvedValue(undefined)
     },
     window: {
