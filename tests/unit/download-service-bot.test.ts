@@ -16,7 +16,7 @@ vi.mock('@main/utils/process', async (importOriginal) => {
 import { spawnYtDlp } from '@main/utils/process';
 
 beforeEach(() => {
-  vi.clearAllMocks();
+  vi.resetAllMocks();
 });
 
 function makeFakeProcess(exitCode: number, stderr = '', stdout = '') {
@@ -67,7 +67,7 @@ describe('DownloadService — extractor args', () => {
     const { service } = makeService({ token: 'TOK', visitorData: 'VD' });
 
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
-    await new Promise((r) => setTimeout(r, 50));
+    await vi.waitFor(() => expect(vi.mocked(spawnYtDlp)).toHaveBeenCalled());
 
     const args: string[] = vi.mocked(spawnYtDlp).mock.calls[0][1];
     const extractorArgsIdx = args.indexOf('--extractor-args');
@@ -82,7 +82,7 @@ describe('DownloadService — extractor args', () => {
     const { service } = makeService({ token: 'TOK', visitorData: '' });
 
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
-    await new Promise((r) => setTimeout(r, 50));
+    await vi.waitFor(() => expect(vi.mocked(spawnYtDlp)).toHaveBeenCalled());
 
     const args: string[] = vi.mocked(spawnYtDlp).mock.calls[0][1];
     const extractorArgsIdx = args.indexOf('--extractor-args');
@@ -106,7 +106,7 @@ describe('DownloadService — error surfacing', () => {
     service.on('status', (ev) => statusEvents.push({ statusKey: ev.statusKey, error: ev.error }));
 
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
-    await new Promise((r) => setTimeout(r, 100));
+    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce());
 
     const errorStatus = statusEvents.find((e) => e.error);
     expect(errorStatus?.error?.rawMessage).toBe(stderrMsg.trim());
@@ -127,7 +127,8 @@ describe('DownloadService — bot-block retry', () => {
     tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'old-token', visitorData: 'old-visitor' }).mockResolvedValueOnce({ token: 'new-token', visitorData: 'new-visitor' });
 
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
-    await new Promise((r) => setTimeout(r, 150));
+    await vi.waitFor(() => expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(2));
+    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce());
 
     expect(tokenService.invalidateCache).toHaveBeenCalledOnce();
     expect(tokenService.mintTokenForUrl).toHaveBeenCalledTimes(2);
@@ -153,7 +154,8 @@ describe('DownloadService — bot-block retry', () => {
     const { service, tokenService, recentJobsStore } = makeService();
 
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
-    await new Promise((r) => setTimeout(r, 200));
+    await vi.waitFor(() => expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(3));
+    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce());
 
     expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(3);
     expect(tokenService.invalidateCache).toHaveBeenCalledOnce();
@@ -174,7 +176,8 @@ describe('DownloadService — bot-block retry', () => {
     const { service, tokenService, recentJobsStore } = makeService();
 
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
-    await new Promise((r) => setTimeout(r, 100));
+    await vi.waitFor(() => expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(1));
+    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce());
 
     expect(tokenService.invalidateCache).not.toHaveBeenCalled();
     expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(1);
