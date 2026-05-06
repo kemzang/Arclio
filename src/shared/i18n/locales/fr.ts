@@ -102,10 +102,10 @@ const fr = {
       continue: 'Continuer'
     },
     mixedPrompt: {
-      title: 'Vidéo unique ou Playlist entière ?',
-      body: "Cette URL fait partie d'une Playlist. Que souhaitez-vous télécharger ?",
-      singleVideo: 'Juste cette vidéo',
-      wholePlaylist: 'Toute la Playlist'
+      title: 'Ce lien contient une Playlist',
+      body: "Seulement la vidéo sur laquelle tu as cliqué, ou tu préfères choisir dans la Playlist ? Tu pourras sélectionner des vidéos précises ou une plage à l'étape suivante.",
+      singleVideo: 'Juste celle-ci',
+      pickFromPlaylist: 'Choisir dans la Playlist'
     },
 
     url: {

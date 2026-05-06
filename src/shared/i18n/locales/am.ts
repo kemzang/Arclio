@@ -102,10 +102,10 @@ const am = {
       continue: 'ቀጥል'
     },
     mixedPrompt: {
-      title: 'አንድ ቪዲዮ ወይስ ሙሉ Playlist?',
-      body: 'ይህ URL የ Playlist አካል ነው። ምን ማውረድ ይፈልጋሉ?',
-      singleVideo: 'ይህን ቪዲዮ ብቻ',
-      wholePlaylist: 'ሙሉ Playlist'
+      title: 'ይህ ሊንክ Playlist አለው',
+      body: 'የጠቀሱትን ቪዲዮ ብቻ ይፈልጋሉ፣ ወይስ ከ Playlist ይምረጣሉ? በቀጣዩ ደረጃ የተወሰኑ ቪዲዮዎችን ወይም ክልል ይምረጣሉ።',
+      singleVideo: 'ይህን ብቻ',
+      pickFromPlaylist: 'ከ Playlist ምረጥ'
     },
 
     url: {

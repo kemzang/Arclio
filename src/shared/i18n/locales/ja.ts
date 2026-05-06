@@ -102,10 +102,10 @@ const ja = {
       continue: '続行'
     },
     mixedPrompt: {
-      title: '単体動画または Playlist 全体?',
-      body: 'このURLはPlaylistの一部です。何をダウンロードしますか?',
-      singleVideo: 'この動画のみ',
-      wholePlaylist: 'Playlist 全体'
+      title: 'このリンクは Playlist に含まれています',
+      body: 'クリックした動画だけをダウンロードしますか？それとも Playlist から選びますか？次のステップで特定の動画や範囲を選択できます。',
+      singleVideo: 'この1本だけ',
+      pickFromPlaylist: 'Playlist から選ぶ'
     },
 
     url: {

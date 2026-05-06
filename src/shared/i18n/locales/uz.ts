@@ -102,10 +102,10 @@ const uz = {
       continue: 'Davom etish'
     },
     mixedPrompt: {
-      title: 'Bitta video yoki butun Playlist?',
-      body: 'Bu URL Playlist ning bir qismi. Nimani yuklamoqchisiz?',
-      singleVideo: 'Faqat shu video',
-      wholePlaylist: 'Butun Playlist'
+      title: 'Bu havola Playlist ga tegishli',
+      body: 'Faqat bosilgan videoni olasizmi yoki Playlist dan tanlaysizmi? Keyingi qadamda aniq videolar yoki diapazon tanlanadi.',
+      singleVideo: 'Faqat shu birini',
+      pickFromPlaylist: 'Playlist dan tanlash'
     },
 
     url: {

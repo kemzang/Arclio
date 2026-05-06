@@ -102,10 +102,10 @@ const zh = {
       continue: '继续'
     },
     mixedPrompt: {
-      title: '单个视频还是整个 Playlist？',
-      body: '此 URL 属于一个 Playlist。您想下载什么？',
-      singleVideo: '仅此视频',
-      wholePlaylist: '整个 Playlist'
+      title: '此链接包含 Playlist',
+      body: '只想下载你点击的那个视频，还是从 Playlist 中挑选？下一步可以选择特定视频或指定范围。',
+      singleVideo: '就这一个',
+      pickFromPlaylist: '从 Playlist 中挑选'
     },
 
     url: {

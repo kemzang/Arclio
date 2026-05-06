@@ -102,10 +102,10 @@ const en = {
       durationUnknown: 'live'
     },
     mixedPrompt: {
-      title: 'Single video or whole playlist?',
-      body: 'This URL is part of a playlist. What do you want to download?',
-      singleVideo: 'Just this video',
-      wholePlaylist: 'Whole playlist'
+      title: 'This link has a playlist',
+      body: "Want only the video you clicked, or pick from the playlist? You'll choose specific videos or a range next.",
+      singleVideo: 'Just this one',
+      pickFromPlaylist: 'Pick from playlist'
     },
     url: {
       heading: 'YouTube URL',

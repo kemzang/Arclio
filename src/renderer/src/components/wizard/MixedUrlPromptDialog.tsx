@@ -21,7 +21,7 @@ export function MixedUrlPromptDialog(): JSX.Element {
             {t('wizard.mixedPrompt.singleVideo')}
           </Button>
           <Button ref={playlistButtonRef} type="button" variant="outline" onClick={() => void dismissMixedPrompt('playlist')}>
-            {t('wizard.mixedPrompt.wholePlaylist')}
+            {t('wizard.mixedPrompt.pickFromPlaylist')}
           </Button>
         </DialogFooter>
       </DialogContent>

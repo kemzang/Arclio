@@ -102,10 +102,10 @@ const ps = {
       continue: 'دوام ورکړه'
     },
     mixedPrompt: {
-      title: 'یو ویډیو که ټول Playlist؟',
-      body: 'دا URL د یو Playlist برخه ده. تاسو څه ډاونلوډ کول غواړئ؟',
-      singleVideo: 'یوازې دا ویډیو',
-      wholePlaylist: 'ټول Playlist'
+      title: 'دا لینک یو Playlist لري',
+      body: 'یوازې هغه ویډیو چې کلیک مو کاوه، که د Playlist نه غوره کول غواړئ؟ بعد به ځانګړي ویډیوګانې یا سلسله غوره کړئ.',
+      singleVideo: 'یوازې دا یو',
+      pickFromPlaylist: 'له Playlist نه غوره کړئ'
     },
 
     url: {

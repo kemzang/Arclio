@@ -102,10 +102,10 @@ const el = {
       continue: 'Συνέχεια'
     },
     mixedPrompt: {
-      title: 'Μεμονωμένο βίντεο ή ολόκληρη playlist;',
-      body: 'Αυτό το URL ανήκει σε playlist. Τι θέλεις να κατεβάσεις;',
-      singleVideo: 'Μόνο αυτό το βίντεο',
-      wholePlaylist: 'Ολόκληρη την playlist'
+      title: 'Αυτός ο σύνδεσμος έχει playlist',
+      body: 'Θέλεις μόνο το βίντεο που έκανες κλικ, ή να επιλέξεις από την playlist; Θα διαλέξεις συγκεκριμένα βίντεο ή εύρος στη συνέχεια.',
+      singleVideo: 'Μόνο αυτό',
+      pickFromPlaylist: 'Επιλογή από την playlist'
     },
 
     url: {

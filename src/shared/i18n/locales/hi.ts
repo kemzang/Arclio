@@ -102,10 +102,10 @@ const hi = {
       continue: 'जारी रखें'
     },
     mixedPrompt: {
-      title: 'एकल वीडियो या पूरी Playlist?',
-      body: 'यह URL किसी Playlist का हिस्सा है। आप क्या डाउनलोड करना चाहते हैं?',
-      singleVideo: 'सिर्फ़ यह वीडियो',
-      wholePlaylist: 'पूरी Playlist'
+      title: 'इस लिंक में एक Playlist है',
+      body: 'सिर्फ़ वही वीडियो चाहिए जिस पर क्लिक किया था, या Playlist में से चुनना है? आगे आप विशेष वीडियो या रेंज चुन सकते हैं।',
+      singleVideo: 'बस यही एक',
+      pickFromPlaylist: 'Playlist में से चुनें'
     },
 
     url: {

@@ -102,10 +102,10 @@ const ru = {
       continue: 'Продолжить'
     },
     mixedPrompt: {
-      title: 'Одно видео или весь Playlist?',
-      body: 'Этот URL является частью Playlist. Что ты хочешь скачать?',
-      singleVideo: 'Только это видео',
-      wholePlaylist: 'Весь Playlist'
+      title: 'Эта ссылка — часть Playlist',
+      body: 'Хочешь скачать только то видео, на которое нажал, или выбрать из Playlist? Дальше сможешь указать конкретные видео или диапазон.',
+      singleVideo: 'Только это одно',
+      pickFromPlaylist: 'Выбрать из Playlist'
     },
 
     url: {

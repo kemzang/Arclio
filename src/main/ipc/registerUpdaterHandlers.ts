@@ -54,7 +54,7 @@ export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
       pendingInstall({ ok: true });
       pendingInstall = null;
     }
-    autoUpdater.quitAndInstall(true, true);
+    autoUpdater.quitAndInstall(false, true);
   });
 
   autoUpdater.on('error', (err) => {

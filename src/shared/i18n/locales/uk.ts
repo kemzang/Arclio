@@ -102,10 +102,10 @@ const uk = {
       continue: 'Продовжити'
     },
     mixedPrompt: {
-      title: 'Одне відео чи весь Playlist?',
-      body: 'Це посилання є частиною Playlist. Що ти хочеш завантажити?',
-      singleVideo: 'Тільки це відео',
-      wholePlaylist: 'Весь Playlist'
+      title: 'Це посилання з Playlist',
+      body: 'Хочеш завантажити лише те відео, на яке натиснув, чи вибрати з Playlist? Далі зможеш вказати конкретні відео або діапазон.',
+      singleVideo: 'Лише це одне',
+      pickFromPlaylist: 'Вибрати з Playlist'
     },
 
     url: {

@@ -102,10 +102,10 @@ const es = {
       continue: 'Continuar'
     },
     mixedPrompt: {
-      title: '¿Un solo video o toda la Playlist?',
-      body: 'Esta URL forma parte de una Playlist. ¿Qué quieres descargar?',
-      singleVideo: 'Solo este video',
-      wholePlaylist: 'Toda la Playlist'
+      title: 'Este enlace tiene una Playlist',
+      body: '¿Solo el video en el que hiciste clic o prefieres elegir de la Playlist? En el siguiente paso podrás seleccionar videos concretos o un rango.',
+      singleVideo: 'Solo este',
+      pickFromPlaylist: 'Elegir de la Playlist'
     },
     url: {
       heading: 'URL de YouTube',

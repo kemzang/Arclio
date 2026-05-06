@@ -102,10 +102,10 @@ const sw = {
       continue: 'Endelea'
     },
     mixedPrompt: {
-      title: 'Video moja au Playlist nzima?',
-      body: 'URL hii ni sehemu ya Playlist. Unataka kupakua nini?',
-      singleVideo: 'Video hii tu',
-      wholePlaylist: 'Playlist nzima'
+      title: 'Kiungo hiki kina Playlist',
+      body: 'Unataka video uliyobofya tu, au uchague kutoka Playlist? Hatua inayofuata utachagua video maalum au anuwai.',
+      singleVideo: 'Hii tu',
+      pickFromPlaylist: 'Chagua kutoka Playlist'
     },
     url: {
       heading: 'YouTube URL',

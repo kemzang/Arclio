@@ -102,10 +102,10 @@ const vi = {
       continue: 'Tiếp tục'
     },
     mixedPrompt: {
-      title: 'Một video hay toàn bộ Playlist?',
-      body: 'URL này là một phần của Playlist. Bạn muốn tải xuống gì?',
-      singleVideo: 'Chỉ video này',
-      wholePlaylist: 'Toàn bộ Playlist'
+      title: 'Liên kết này có Playlist',
+      body: 'Bạn chỉ muốn video đã chọn, hay muốn chọn từ Playlist? Bạn sẽ chọn các video cụ thể hoặc một đoạn ở bước tiếp theo.',
+      singleVideo: 'Chỉ cái này thôi',
+      pickFromPlaylist: 'Chọn từ Playlist'
     },
 
     url: {

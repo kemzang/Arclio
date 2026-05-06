@@ -102,10 +102,10 @@ const bn = {
       continue: 'চালিয়ে যান'
     },
     mixedPrompt: {
-      title: 'একটি ভিডিও নাকি পুরো Playlist?',
-      body: 'এই URL একটি Playlist-এর অংশ। আপনি কী ডাউনলোড করতে চান?',
-      singleVideo: 'শুধু এই ভিডিও',
-      wholePlaylist: 'পুরো Playlist'
+      title: 'এই লিংকে একটি Playlist আছে',
+      body: 'শুধু যে ভিডিওতে ক্লিক করেছিলেন সেটি চান, নাকি Playlist থেকে বেছে নিতে চান? পরে নির্দিষ্ট ভিডিও বা রেঞ্জ বেছে নেবেন।',
+      singleVideo: 'শুধু এটি',
+      pickFromPlaylist: 'Playlist থেকে বেছে নিন'
     },
 
     url: {

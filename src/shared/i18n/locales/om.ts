@@ -102,10 +102,10 @@ const om = {
       continue: 'Itti fufi'
     },
     mixedPrompt: {
-      title: 'Viidiyoo tokko moo playlist guutuu?',
-      body: 'URL kun playlist keessa jira. Maal buufachuu barbaadda?',
-      singleVideo: 'Viidiyoo kana qofa',
-      wholePlaylist: 'Playlist guutuu'
+      title: 'Liinkin kun Playlist qaba',
+      body: 'Viidiyoo tokko kana filadda, moo Playlist keessaa barbaadda? Viidiyoowwan addaddaa yookaan kutaa filattu itti aanu.',
+      singleVideo: 'Kana qofa',
+      pickFromPlaylist: 'Playlist keessaa filadhu'
     },
     url: {
       heading: 'YouTube URL',
