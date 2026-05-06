@@ -24,6 +24,7 @@ const zh = {
   splash: {
     greeting: '嘿,欢迎回来!',
     warmup: 'Arroxy 正在启动…',
+    downloading: '正在下载 {{binary}}…',
     warning: '初始化未完成 — 部分功能可能无法使用'
   },
   theme: {
@@ -37,6 +38,8 @@ const zh = {
   wizard: {
     steps: {
       url: '链接',
+      playlistItems: 'Playlist',
+      playlistPresets: '画质',
       formats: '格式',
       subtitles: '字幕',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const zh = {
       folder: '保存',
       confirm: '确认'
     },
+    playlist: {
+      heading: 'Playlist 视频',
+      itemCount_one: '{{count}} 个视频',
+      itemCount_other: '{{count}} 个视频',
+      selectAll: '全选',
+      selectNone: '取消全选',
+      rangeFrom: '从',
+      rangeTo: '到',
+      rangeApply: '应用范围',
+      selectedCount_one: '已选 {{count}} 个',
+      selectedCount_other: '已选 {{count}} 个',
+      noSelection: '请至少选择一个视频以继续',
+      loadingItems: '正在获取 Playlist…',
+      thumbnailAlt: '视频缩略图',
+      continue: '继续',
+      durationUnknown: '直播'
+    },
+    playlistPresets: {
+      heading: '选择批量下载画质',
+      subhead: '每个视频独立匹配所选画质档位——混合内容的播放列表也能正常处理，无意外。',
+      itemCount_one: '{{count}} 项',
+      itemCount_other: '{{count}} 项',
+      continue: '继续'
+    },
+    mixedPrompt: {
+      title: '单个视频还是整个 Playlist？',
+      body: '此 URL 属于一个 Playlist。您想下载什么？',
+      singleVideo: '仅此视频',
+      wholePlaylist: '整个 Playlist'
+    },
+
     url: {
       heading: 'YouTube 链接',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const zh = {
       addToQueue: '+ 队列',
       addToQueueTooltip: '其他下载完成后开始 — 享受全部带宽',
       pullIt: '开始下载! ↓',
-      pullItTooltip: '立即开始 — 与其他活动下载并行运行'
+      pullItTooltip: '立即开始 — 与其他活动下载并行运行',
+      playlistBatch_one: '{{count}} 个视频 · {{title}}',
+      playlistBatch_other: '{{count}} 个视频 · {{title}}',
+      labelPlaylist: '播放列表',
+      labelPreset: '预设',
+      labelItems: '项目',
+      itemsValue_one: '{{total}} 个视频中的 {{count}} 个',
+      itemsValue_other: '{{total}} 个视频中的 {{count}} 个'
     },
     error: {
       icon: '错误'
@@ -242,6 +283,10 @@ const zh = {
     activeCount: '正在下载 {{count}} 项 · {{percent}}%',
     clear: '清空',
     clearTitle: '清除已完成的下载',
+    pauseAll: '全部暂停',
+    pauseAllTitle: '暂停所有正在进行的下载',
+    cancelAll: '全部取消',
+    cancelAllTitle: '取消所有正在进行和等待中的下载',
     tip: '你的下载已在下方队列 — 随时打开查看进度。',
     item: {
       doneAt: '{{time}} 完成',
@@ -249,10 +294,13 @@ const zh = {
       defaultError: '下载失败',
       openUrl: '打开链接',
       pause: '暂停',
+      hold: '搁置',
       resume: '继续',
       cancel: '取消',
       remove: '移除'
-    }
+    },
+    interJobSleep_one: '下一个下载将在 {{count}} 秒后开始',
+    interJobSleep_other: '下一个下载将在 {{count}} 秒后开始'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const zh = {
       label: '仅字幕',
       desc: '无视频无音频，仅字幕'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: '最佳画质', desc: '每项最高分辨率 + 最佳音频' },
+    'video-2160p': { label: '最高 4K', desc: '上限 2160p，每项自动降级' },
+    'video-1440p': { label: '最高 1440p', desc: '上限 2K，每项自动降级' },
+    'video-1080p': { label: '最高 1080p', desc: '每项上限，自动降级' },
+    'video-720p': { label: '最高 720p', desc: '文件较小，兼容性好' },
+    'video-480p': { label: '最高 480p', desc: '低流量' },
+    'video-360p': { label: '最高 360p', desc: '最小视频' },
+    'audio-best': { label: 'Audio (best)', desc: '原生最佳音频，无需重新编码' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: '转换为 MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: '仅音频',

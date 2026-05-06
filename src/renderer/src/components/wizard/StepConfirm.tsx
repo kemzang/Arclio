@@ -12,7 +12,8 @@ import loveImg from '../../assets/Love.png';
 
 export function StepConfirm(): JSX.Element {
   const { t, i18n } = useTranslation();
-  const { wizardTitle, wizardThumbnail, wizardDuration, wizardOutputDir, selectedVideoFormatId, audioSelection, activePreset, wizardFormats, wizardSubtitleLanguages, wizardSubtitleMode, wizardSubtitleFormat, wizardSubtitles, wizardAutomaticCaptions, wizardSubtitleSkipped, commonPaths, wizardSubfolderEnabled, wizardSubfolderName, addToQueue, addAndDownloadImmediately, back } = useAppStore();
+  const { wizardTitle, wizardThumbnail, wizardDuration, wizardOutputDir, selectedVideoFormatId, audioSelection, activePreset, wizardFormats, wizardSubtitleLanguages, wizardSubtitleMode, wizardSubtitleFormat, wizardSubtitles, wizardAutomaticCaptions, wizardSubtitleSkipped, commonPaths, wizardSubfolderEnabled, wizardSubfolderName, addToQueue, addAndDownloadImmediately, back, playlistItems, selectedPlaylistItemIds, selectedPlaylistPreset, playlistTitle, wizardMode } = useAppStore();
+  const inPlaylist = wizardMode === 'playlist';
 
   const effectiveSubtitleLanguages = wizardSubtitleSkipped ? [] : wizardSubtitleLanguages;
 
@@ -36,19 +37,29 @@ export function StepConfirm(): JSX.Element {
     return `${langList} · ${formatPart}${modeLabel}`;
   })();
 
-  const summaryRows: { key: string; label: string; value: string }[] = [
-    { key: 'video', label: t('wizard.confirm.labelVideo'), value: videoSummary },
-    { key: 'audio', label: t('wizard.confirm.labelAudio'), value: audioLabel },
-    { key: 'subtitles', label: t('wizard.confirm.labelSubtitles'), value: subtitlesValue },
-    { key: 'saveTo', label: t('wizard.confirm.labelSaveTo'), value: shortPath },
-    { key: 'size', label: t('wizard.confirm.labelSize'), value: estimatedSize }
-  ];
+  const presetLabelStr = selectedPlaylistPreset ? t(`playlistPresets.${selectedPlaylistPreset}.label` as const) : '';
+  const itemsValue = t('wizard.confirm.itemsValue', { count: selectedPlaylistItemIds.length, total: String(playlistItems.length) });
 
-  const hasNothingSelected = selectedVideoFormatId === '' && audioSelection.kind === 'none' && effectiveSubtitleLanguages.length === 0;
+  const summaryRows: { key: string; label: string; value: string }[] = inPlaylist
+    ? [
+        { key: 'playlist', label: t('wizard.confirm.labelPlaylist'), value: playlistTitle || '—' },
+        { key: 'preset', label: t('wizard.confirm.labelPreset'), value: presetLabelStr || '—' },
+        { key: 'items', label: t('wizard.confirm.labelItems'), value: itemsValue },
+        { key: 'saveTo', label: t('wizard.confirm.labelSaveTo'), value: shortPath }
+      ]
+    : [
+        { key: 'video', label: t('wizard.confirm.labelVideo'), value: videoSummary },
+        { key: 'audio', label: t('wizard.confirm.labelAudio'), value: audioLabel },
+        { key: 'subtitles', label: t('wizard.confirm.labelSubtitles'), value: subtitlesValue },
+        { key: 'saveTo', label: t('wizard.confirm.labelSaveTo'), value: shortPath },
+        { key: 'size', label: t('wizard.confirm.labelSize'), value: estimatedSize }
+      ];
+
+  const hasNothingSelected = inPlaylist ? !selectedPlaylistPreset || selectedPlaylistItemIds.length === 0 : selectedVideoFormatId === '' && audioSelection.kind === 'none' && effectiveSubtitleLanguages.length === 0;
 
   return (
     <div className="wizard-step flex flex-col gap-4" data-testid="step-confirm">
-      <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={selectedVideoFormatId !== '' ? videoResolution : undefined} />
+      {!inPlaylist && <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={selectedVideoFormatId !== '' ? videoResolution : undefined} />}
 
       {/* Mascot banner */}
       <div className="flex items-center gap-4 p-4 rounded-lg border border-[hsla(220,100%,56%,0.15)] bg-[var(--brand-dim)] shrink-0">

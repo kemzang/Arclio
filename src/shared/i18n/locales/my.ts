@@ -24,6 +24,7 @@ const my = {
   splash: {
     greeting: 'ဟေး၊ ကြိုဆိုပါသည်!',
     warmup: 'Arroxy ပြင်ဆင်နေသည်…',
+    downloading: '{{binary}} ဒေါင်းလုဒ်လုပ်နေသည်…',
     warning: 'တပ်ဆင်မှုမပြည့်စုံသေးပါ — အချို့လုပ်ဆောင်ချက်များ အလုပ်မလုပ်နိုင်ပါ'
   },
   theme: {
@@ -37,6 +38,8 @@ const my = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'အရည်အသွေး',
       formats: 'ဖော်မတ်',
       subtitles: 'စာတန်းထိုး',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const my = {
       folder: 'သိမ်းမည်',
       confirm: 'အတည်ပြုမည်'
     },
+    playlist: {
+      heading: 'Playlist အကြောင်းအရာများ',
+      itemCount_one: '{{count}} ဗီဒီယို',
+      itemCount_other: '{{count}} ဗီဒီယိုများ',
+      selectAll: 'အားလုံးရွေးမည်',
+      selectNone: 'အားလုံးဖြုတ်မည်',
+      rangeFrom: 'မှ',
+      rangeTo: 'သို့',
+      rangeApply: 'အပိုင်းအခြားသတ်မှတ်မည်',
+      selectedCount_one: '{{count}} ခုရွေးထားသည်',
+      selectedCount_other: '{{count}} ခုရွေးထားသည်',
+      noSelection: 'ဆက်လက်ရန် ဗီဒီယိုတစ်ခုအနည်းဆုံးရွေးပါ',
+      loadingItems: 'Playlist ရယူနေသည်…',
+      thumbnailAlt: 'ဗီဒီယို thumbnail',
+      continue: 'ဆက်လက်သွားမည်',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'Batch အတွက် အရည်အသွေးရွေးပါ',
+      subhead: 'ဗီဒီယိုတစ်ခုချင်းစီသည် ရွေးချယ်ထားသော tier အတိုင်း သီးခြားဖြေရှင်းသည် — မတူညီသော playlist များ အဆင်မပြေမှုမရှိဘဲ အလုပ်လုပ်သည်။',
+      itemCount_one: '{{count}} ခု',
+      itemCount_other: '{{count}} ခု',
+      continue: 'ဆက်လက်သွားမည်'
+    },
+    mixedPrompt: {
+      title: 'ဗီဒီယိုတစ်ခုသာ ဒေါင်းလုဒ်မည်လော၊ Playlist တစ်ခုလုံး ဒေါင်းလုဒ်မည်လော?',
+      body: 'ဤ URL သည် Playlist တစ်ခု၏ အစိတ်အပိုင်းဖြစ်သည်။ မည်သည်ကို ဒေါင်းလုဒ်ချင်သနည်း?',
+      singleVideo: 'ဤဗီဒီယိုသာ',
+      wholePlaylist: 'Playlist တစ်ခုလုံး'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const my = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'အခြားဒေါင်းလုဒ်များပြီးဆုံးလျှင်စတင်မည် — အပြည့်အဝ bandwidth ရမည်',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'ချက်ချင်းစတင်မည် — အခြားဒေါင်းလုဒ်များနှင့်အတူ အပြိုင်လုပ်မည်'
+      pullItTooltip: 'ချက်ချင်းစတင်မည် — အခြားဒေါင်းလုဒ်များနှင့်အတူ အပြိုင်လုပ်မည်',
+      playlistBatch_one: '{{count}} ဗီဒီယို · {{title}}',
+      playlistBatch_other: '{{count}} ဗီဒီယိုများ · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'Preset',
+      labelItems: 'အကြောင်းအရာ',
+      itemsValue_one: '{{total}} ခုမှ {{count}} ဗီဒီယို',
+      itemsValue_other: '{{total}} ခုမှ {{count}} ဗီဒီယိုများ'
     },
     error: {
       icon: 'အမှား'
@@ -242,6 +283,10 @@ const my = {
     activeCount: '{{count}} ဒေါင်းလုဒ်လုပ်နေသည် · {{percent}}%',
     clear: 'ရှင်းလင်းမည်',
     clearTitle: 'ပြီးဆုံးသောဒေါင်းလုဒ်များ ရှင်းလင်းမည်',
+    pauseAll: 'အားလုံး ခေတ္တရပ်မည်',
+    pauseAllTitle: 'လုပ်ဆောင်နေသောဒေါင်းလုဒ်အားလုံး ခေတ္တရပ်မည်',
+    cancelAll: 'အားလုံး ဖျက်သိမ်းမည်',
+    cancelAllTitle: 'လုပ်ဆောင်နေသောနှင့် ဆိုင်းငံ့ထားသောဒေါင်းလုဒ်အားလုံး ဖျက်သိမ်းမည်',
     tip: 'သင့်ဒေါင်းလုဒ်ကို queue ထည့်ပြီးပြီ — တိုးတက်မှုကြည့်ရှုရန် ဖွင့်နိုင်သည်။',
     item: {
       doneAt: '{{time}} တွင်ပြီးဆုံး',
@@ -249,10 +294,13 @@ const my = {
       defaultError: 'ဒေါင်းလုဒ်မအောင်မြင်ပါ',
       openUrl: 'URL ဖွင့်မည်',
       pause: 'ခေတ္တရပ်မည်',
+      hold: 'ဆိုင်းငံ့မည်',
       resume: 'ဆက်လုပ်မည်',
       cancel: 'ပယ်ဖျက်မည်',
       remove: 'ဖျက်မည်'
-    }
+    },
+    interJobSleep_one: 'နောက်ဒေါင်းလုဒ် {{count}}s တွင်စမည်',
+    interJobSleep_other: 'နောက်ဒေါင်းလုဒ် {{count}}s တွင်စမည်'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const my = {
       label: 'စာတန်းထိုးသာ',
       desc: 'ဗီဒီယိုမပါ၊ အသံမပါ၊ စာတန်းထိုးသာ'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'အကောင်းဆုံးအရည်အသွေး', desc: 'တစ်ခုချင်းစီ အမြင့်ဆုံး ဗီဒီယို + အသံ' },
+    'video-2160p': { label: '4K အထိ', desc: '2160p ကန့်သတ်ထား၊ တစ်ခုချင်းစီ နိမ့်သောဘက်သို့ fallback' },
+    'video-1440p': { label: '1440p အထိ', desc: '2K ကန့်သတ်ထား၊ တစ်ခုချင်းစီ နိမ့်သောဘက်သို့ fallback' },
+    'video-1080p': { label: '1080p အထိ', desc: 'တစ်ခုချင်းစီ ကန့်သတ်ထား၊ နိမ့်သောဘက်သို့ fallback' },
+    'video-720p': { label: '720p အထိ', desc: 'ဖိုင်သေး၊ ကျယ်ပြန့်သော ကိုက်ညီမှု' },
+    'video-480p': { label: '480p အထိ', desc: 'Bandwidth နည်း' },
+    'video-360p': { label: '360p အထိ', desc: 'အသေးဆုံးဗီဒီယို' },
+    'audio-best': { label: 'Audio (အကောင်းဆုံး)', desc: 'မူလ အကောင်းဆုံးအသံ၊ ပြန်encode မလုပ်' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps သို့ ပြောင်းမည်' }
   },
   formatLabel: {
     audioOnly: 'အသံသာ',

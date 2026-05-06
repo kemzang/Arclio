@@ -10,8 +10,8 @@ import './styles.css';
 async function bootstrap(): Promise<void> {
   let lang = pickLanguage(navigator.language);
   const result = await window.appApi.settings.get();
-  if (result.ok && result.data.language) {
-    lang = pickLanguage(result.data.language);
+  if (result.ok && result.data.common.language) {
+    lang = pickLanguage(result.data.common.language);
   }
   initI18n(lang);
   document.documentElement.lang = lang;

@@ -3,6 +3,22 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { DownloadService } from '@main/services/DownloadService';
 import { YtDlp } from '@main/services/YtDlp';
 import type { StatusEvent } from '@shared/types';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+import type { SponsorBlockCategory } from '@shared/schemas';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
+
+function makeJob(sb: SponsorBlockOptions, subtitleLanguages?: string[]): PreparedJob {
+  if (subtitleLanguages?.length) {
+    return { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF, subtitles: { languages: subtitleLanguages, mode: 'sidecar', format: 'srt', writeAuto: false } };
+  }
+  return { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF };
+}
+
+function makeSubtitleOnlyJob(_sb: SponsorBlockOptions): PreparedJob {
+  return { kind: 'subtitle-only', source: 'youtube', subtitles: { languages: ['en'], mode: 'sidecar', format: 'srt', writeAuto: false } };
+}
 
 vi.mock('@main/utils/process', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@main/utils/process')>();
@@ -72,9 +88,7 @@ describe('SponsorBlock — yt-dlp arg injection', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      sponsorBlockMode: 'mark',
-      sponsorBlockCategories: ['sponsor', 'selfpromo']
+      job: makeJob({ mode: 'mark', categories: ['sponsor', 'selfpromo'] })
     });
     await done;
 
@@ -91,9 +105,7 @@ describe('SponsorBlock — yt-dlp arg injection', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      sponsorBlockMode: 'remove',
-      sponsorBlockCategories: ['sponsor', 'intro', 'outro']
+      job: makeJob({ mode: 'remove', categories: ['sponsor', 'intro', 'outro'] })
     });
     await done;
 
@@ -110,9 +122,7 @@ describe('SponsorBlock — yt-dlp arg injection', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      sponsorBlockMode: 'off',
-      sponsorBlockCategories: ['sponsor']
+      job: makeJob(SB_OFF)
     });
     await done;
 
@@ -128,9 +138,7 @@ describe('SponsorBlock — yt-dlp arg injection', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      sponsorBlockMode: 'mark',
-      sponsorBlockCategories: []
+      job: makeJob({ mode: 'mark', categories: [] as unknown as SponsorBlockCategory[] })
     });
     await done;
 
@@ -145,7 +153,7 @@ describe('SponsorBlock — yt-dlp arg injection', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251'
+      job: makeJob(SB_OFF)
     });
     await done;
 
@@ -161,10 +169,7 @@ describe('SponsorBlock — yt-dlp arg injection', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      sponsorBlockMode: 'remove',
-      sponsorBlockCategories: ['sponsor']
+      job: makeJob({ mode: 'remove', categories: ['sponsor'] }, ['en'])
     });
     await done;
 
@@ -181,9 +186,7 @@ describe('SponsorBlock — yt-dlp arg injection', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      subtitleLanguages: ['en'],
-      sponsorBlockMode: 'mark',
-      sponsorBlockCategories: ['sponsor']
+      job: makeSubtitleOnlyJob({ mode: 'mark', categories: ['sponsor'] })
     });
     await done;
 

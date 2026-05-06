@@ -47,6 +47,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
           thumbnail: ''
         })
       ),
+      getPlaylistItems: vi.fn().mockResolvedValue(ok({ playlistId: 'PLtest', playlistTitle: 'Test Playlist', entries: [] })),
       start: vi.fn().mockResolvedValue(
         ok({
           job: {
@@ -81,7 +82,8 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
     events: {
       onStatus: vi.fn().mockReturnValue(() => undefined),
       onProgress: vi.fn().mockReturnValue(() => undefined),
-      onClipboardUrl: vi.fn().mockReturnValue(() => undefined)
+      onClipboardUrl: vi.fn().mockReturnValue(() => undefined),
+      onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
       save: vi.fn().mockResolvedValue(ok({ saved: true as const })),

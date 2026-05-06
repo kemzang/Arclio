@@ -24,6 +24,7 @@ const ps = {
   splash: {
     greeting: 'سلام، ښه راغلاست!',
     warmup: 'Arroxy چمتو کیږي…',
+    downloading: '{{binary}} ډاونلوډ کیږي…',
     warning: 'نصب ناپوره دی — ځینې ځانګړتیاوې ممکن کار ونکړي'
   },
   theme: {
@@ -37,6 +38,8 @@ const ps = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'کیفیت',
       formats: 'بڼه',
       subtitles: 'ژباړلیکونه',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const ps = {
       folder: 'خوندي کړه',
       confirm: 'تایید کړه'
     },
+    playlist: {
+      heading: 'د Playlist توکي',
+      itemCount_one: '{{count}} ویډیو',
+      itemCount_other: '{{count}} ویډیوګانې',
+      selectAll: 'ټول غوره کړئ',
+      selectNone: 'هیڅ غوره مه کوئ',
+      rangeFrom: 'له',
+      rangeTo: 'تر',
+      rangeApply: 'سلسله پلي کړئ',
+      selectedCount_one: '{{count}} غوره شوی',
+      selectedCount_other: '{{count}} غوره شوي',
+      noSelection: 'دوام کولو لپاره لږترلږه یو ویډیو غوره کړئ',
+      loadingItems: 'Playlist ترلاسه کیږي…',
+      thumbnailAlt: 'د ویډیو تھمبنیل',
+      continue: 'دوام ورکړه',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'د بیچ لپاره کیفیت وټاکئ',
+      subhead: 'هر ویډیو خپلواکه د غوره شوي کچې سره حل کوي — مخلوط Playlist ونه بیا پرته له مشکل کار کوي.',
+      itemCount_one: '{{count}} توکی',
+      itemCount_other: '{{count}} توکي',
+      continue: 'دوام ورکړه'
+    },
+    mixedPrompt: {
+      title: 'یو ویډیو که ټول Playlist؟',
+      body: 'دا URL د یو Playlist برخه ده. تاسو څه ډاونلوډ کول غواړئ؟',
+      singleVideo: 'یوازې دا ویډیو',
+      wholePlaylist: 'ټول Playlist'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const ps = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'کله چې نور ډاونلوډونه پای ته ورسیږي پیل کیږي — بشپړ بینډوډت ترلاسه کوي',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'سمدلاسه پیل کیږي — د نورو فعالو ډاونلوډونو سره یوځای چلیږي'
+      pullItTooltip: 'سمدلاسه پیل کیږي — د نورو فعالو ډاونلوډونو سره یوځای چلیږي',
+      playlistBatch_one: '{{count}} ویډیو · {{title}}',
+      playlistBatch_other: '{{count}} ویډیوګانې · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'Preset',
+      labelItems: 'توکي',
+      itemsValue_one: '{{count}} له {{total}} ویډیو',
+      itemsValue_other: '{{count}} له {{total}} ویډیوګانې'
     },
     error: {
       icon: 'تیروتنه'
@@ -242,6 +283,10 @@ const ps = {
     activeCount: '{{count}} ډاونلوډیږي · {{percent}}%',
     clear: 'پاکول',
     clearTitle: 'بشپړ شوي ډاونلوډونه پاکول',
+    pauseAll: 'ټول ودروئ',
+    pauseAllTitle: 'ټول فعال ډاونلوډونه ودروئ',
+    cancelAll: 'ټول لغوه کړئ',
+    cancelAllTitle: 'ټول فعال او انتظار کې ډاونلوډونه لغوه کړئ',
     tip: 'ستاسو ډاونلوډ لاندې کتار شوی — پرمختګ تعقیبولو لپاره هر وخت پرانیستلی شئ.',
     item: {
       doneAt: '{{time}} بشپړ شو',
@@ -249,10 +294,13 @@ const ps = {
       defaultError: 'ډاونلوډ ناکام شو',
       openUrl: 'URL پرانیستل',
       pause: 'درول',
+      hold: 'ودرول',
       resume: 'دوام',
       cancel: 'لغوه کول',
       remove: 'لیرې کول'
-    }
+    },
+    interJobSleep_one: 'راتلونکی ډاونلوډ {{count}} ثانیو کې پیل کیږي',
+    interJobSleep_other: 'راتلونکی ډاونلوډ {{count}} ثانیو کې پیل کیږي'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const ps = {
       label: 'یوازې ژباړلیکونه',
       desc: 'ویډیو نشته، غږ نشته، یوازې ژباړلیکونه'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'غوره کیفیت', desc: 'د هر توکي لپاره لوړه ریزولوشن + غږ' },
+    'video-2160p': { label: '4K پورې', desc: '2160p ته محدود، د هر توکي لپاره ټیټ ته ورګرځي' },
+    'video-1440p': { label: '1440p پورې', desc: '2K ته محدود، د هر توکي لپاره ټیټ ته ورګرځي' },
+    'video-1080p': { label: '1080p پورې', desc: 'د هر توکي لپاره محدود، ټیټ ته ورګرځي' },
+    'video-720p': { label: '720p پورې', desc: 'کوچني فایلونه، پراخه مطابقت' },
+    'video-480p': { label: '480p پورې', desc: 'ټیټ پراخه کارول' },
+    'video-360p': { label: '360p پورې', desc: 'تر ټولو کوچنۍ ویډیو' },
+    'audio-best': { label: 'Audio (غوره)', desc: 'اصلي غوره غږ، بیا نه کوډول کیږي' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps ته بدلول' }
   },
   formatLabel: {
     audioOnly: 'یوازې غږ',

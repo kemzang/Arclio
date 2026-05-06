@@ -32,7 +32,8 @@ describe('Queue store — phase status transitions', () => {
           return () => undefined;
         }),
         onProgress: vi.fn().mockReturnValue(() => undefined),
-        onClipboardUrl: vi.fn().mockReturnValue(() => undefined)
+        onClipboardUrl: vi.fn().mockReturnValue(() => undefined),
+        onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
       },
       queue: {
         save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),

@@ -24,6 +24,7 @@ const uz = {
   splash: {
     greeting: 'Xush kelibsiz, qayta keldingiz!',
     warmup: 'Arroxy ishga tayyorlanmoqda…',
+    downloading: '{{binary}} yuklanmoqda…',
     warning: "Sozlash yakunlanmagan — ba'zi funksiyalar ishlamasligi mumkin"
   },
   theme: {
@@ -37,6 +38,8 @@ const uz = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Sifat',
       formats: 'Format',
       subtitles: 'Subtitrlar',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const uz = {
       folder: 'Saqlash',
       confirm: 'Tasdiqlash'
     },
+    playlist: {
+      heading: 'Playlist elementlari',
+      itemCount_one: '{{count}} ta video',
+      itemCount_other: '{{count}} ta video',
+      selectAll: 'Hammasini tanlash',
+      selectNone: 'Hammasini bekor qilish',
+      rangeFrom: 'Dan',
+      rangeTo: 'Gacha',
+      rangeApply: 'Diapazonni qoʻllash',
+      selectedCount_one: '{{count}} ta tanlangan',
+      selectedCount_other: '{{count}} ta tanlangan',
+      noSelection: 'Davom etish uchun kamida bitta videoni tanlang',
+      loadingItems: 'Playlist yuklanmoqda…',
+      thumbnailAlt: 'Video muqovasi',
+      continue: 'Davom etish',
+      durationUnknown: 'jonli'
+    },
+    playlistPresets: {
+      heading: 'Paket uchun sifatni tanlang',
+      subhead: 'Har bir video tanlangan darajani mustaqil ravishda hal qiladi — turli xil playlistlar muammosiz ishlaydi.',
+      itemCount_one: '{{count}} ta element',
+      itemCount_other: '{{count}} ta element',
+      continue: 'Davom etish'
+    },
+    mixedPrompt: {
+      title: 'Bitta video yoki butun Playlist?',
+      body: 'Bu URL Playlist ning bir qismi. Nimani yuklamoqchisiz?',
+      singleVideo: 'Faqat shu video',
+      wholePlaylist: 'Butun Playlist'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const uz = {
       addToQueue: '+ Queue',
       addToQueueTooltip: "Boshqa yuklamalar tugaganda boshlanadi — to'liq tarmoq kengligini oladi",
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'Darhol boshlanadi — boshqa faol yuklamalar bilan parallel ishlaydi'
+      pullItTooltip: 'Darhol boshlanadi — boshqa faol yuklamalar bilan parallel ishlaydi',
+      playlistBatch_one: '{{count}} ta video · {{title}}',
+      playlistBatch_other: '{{count}} ta video · {{title}}',
+      labelPlaylist: 'Pleylist',
+      labelPreset: 'Sozlama',
+      labelItems: 'Elementlar',
+      itemsValue_one: '{{total}} ta videoning {{count}} tasi',
+      itemsValue_other: '{{total}} ta videoning {{count}} tasi'
     },
     error: {
       icon: 'Xato'
@@ -242,6 +283,10 @@ const uz = {
     activeCount: '{{count}} ta yuklanmoqda · {{percent}}%',
     clear: 'Tozalash',
     clearTitle: 'Tugallangan yuklamalarni tozalash',
+    pauseAll: "Hammasini to'xtatib turish",
+    pauseAllTitle: "Barcha faol yuklamalarni to'xtatib turish",
+    cancelAll: 'Hammasini bekor qilish',
+    cancelAllTitle: 'Barcha faol va kutayotgan yuklamalarni bekor qilish',
     tip: 'Yuklamangiz quyida navbatda — jarayonni kuzatish uchun istalgan vaqt oching.',
     item: {
       doneAt: '{{time}} da tugallandi',
@@ -249,10 +294,13 @@ const uz = {
       defaultError: 'Yuklama muvaffaqiyatsiz',
       openUrl: 'URLni ochish',
       pause: "To'xtatish",
+      hold: 'Ushlab tur',
       resume: 'Davom ettirish',
       cancel: 'Bekor qilish',
       remove: "O'chirish"
-    }
+    },
+    interJobSleep_one: 'Keyingi yuklama {{count}} soniyada boshlanadi',
+    interJobSleep_other: 'Keyingi yuklama {{count}} soniyada boshlanadi'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const uz = {
       label: 'Faqat subtitrlar',
       desc: "Video yo'q, audio yo'q, faqat subtitrlar"
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Eng yuqori sifat', desc: 'Har bir element uchun eng yuqori video + audio' },
+    'video-2160p': { label: '4K gacha', desc: '2160p bilan cheklangan, har bir element uchun pastroqqa tushadi' },
+    'video-1440p': { label: '1440p gacha', desc: '2K bilan cheklangan, har bir element uchun pastroqqa tushadi' },
+    'video-1080p': { label: '1080p gacha', desc: 'Har bir element uchun cheklangan, pastroqqa tushadi' },
+    'video-720p': { label: '720p gacha', desc: 'Kichikroq fayllar, keng muvofiqlik' },
+    'video-480p': { label: '480p gacha', desc: 'Past tarmoq kengligi' },
+    'video-360p': { label: '360p gacha', desc: 'Eng kichik video' },
+    'audio-best': { label: 'Audio (eng yaxshi)', desc: 'Mahalliy eng yaxshi audio, qayta kodlashsiz' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps ga konvertatsiya qilish' }
   },
   formatLabel: {
     audioOnly: 'Faqat audio',

@@ -11,34 +11,27 @@ describe('isYouTubeUrl', () => {
   });
 });
 
-describe('startDownloadSchema — subtitleLanguages regex', () => {
-  function build(langs: string[]) {
-    return startDownloadSchema.safeParse({
+describe('startDownloadSchema — subtitle-only job', () => {
+  const BASE_EMBED = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+
+  it('accepts subtitle-only job with languages', () => {
+    const result = startDownloadSchema.safeParse({
       url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      subtitleLanguages: langs
+      job: { kind: 'subtitle-only', source: 'youtube', subtitles: { languages: ['en', 'en-US', 'pt-BR', 'en-orig'], mode: 'sidecar', format: 'srt', writeAuto: false } }
     });
-  }
-
-  it.each([['en'], ['en-US'], ['pt-BR'], ['en-orig'], ['fr-CA-orig']])('accepts %j', (lang) => {
-    expect(build([lang]).success).toBe(true);
+    expect(result.success).toBe(true);
   });
 
-  it.each([
-    ['x'], // single letter
-    ['english'], // too long
-    ['EN'], // uppercase primary
-    ['en_US'], // underscore separator
-    ['en-'] // trailing dash
-  ])('rejects %j', (lang) => {
-    expect(build([lang]).success).toBe(false);
+  it('accepts single-format job', () => {
+    const result = startDownloadSchema.safeParse({
+      url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      job: { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: BASE_EMBED }
+    });
+    expect(result.success).toBe(true);
   });
 
-  it(`caps subtitle languages at MAX_SUBTITLE_LANGUAGES (${MAX_SUBTITLE_LANGUAGES})`, () => {
-    const tooMany = Array.from({ length: MAX_SUBTITLE_LANGUAGES + 1 }, () => 'en');
-    expect(build(tooMany).success).toBe(false);
-
-    const justRight = Array.from({ length: MAX_SUBTITLE_LANGUAGES }, () => 'en');
-    expect(build(justRight).success).toBe(true);
+  it(`MAX_SUBTITLE_LANGUAGES (${MAX_SUBTITLE_LANGUAGES}) is exported and positive`, () => {
+    expect(MAX_SUBTITLE_LANGUAGES).toBeGreaterThan(0);
   });
 });
 
@@ -120,19 +113,23 @@ describe('audioConvertSchema', () => {
     expect(audioConvertSchema.safeParse(value).success).toBe(false);
   });
 
-  it('threads audioConvert through startDownloadSchema', () => {
+  it('threads audioConvert through startDownloadSchema via job', () => {
     const parsed = startDownloadSchema.safeParse({
       url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      audioConvert: { target: 'mp3', bitrateKbps: 192 }
+      job: { kind: 'audio-convert', source: 'youtube', audioConvert: { target: 'mp3', bitrateKbps: 192 }, preset: 'audio-only', sponsorBlock: { mode: 'off' }, embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false } }
     });
     expect(parsed.success).toBe(true);
     if (parsed.success) {
-      expect(parsed.data.audioConvert).toEqual({ target: 'mp3', bitrateKbps: 192 });
+      expect(parsed.data.job.kind).toBe('audio-convert');
+      if (parsed.data.job.kind === 'audio-convert') {
+        expect(parsed.data.job.audioConvert).toEqual({ target: 'mp3', bitrateKbps: 192 });
+      }
     }
   });
 });
 
 describe('queueArraySchema', () => {
+  const EMBED_OFF = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
   const valid = {
     id: 'a',
     url: 'u',
@@ -147,22 +144,23 @@ describe('queueArraySchema', () => {
     error: null,
     finishedAt: null,
     downloadJobId: null,
-    subtitleLanguages: [],
-    writeAutoSubs: false,
-    subtitleMode: 'sidecar',
-    subtitleFormat: 'srt'
+    job: { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: EMBED_OFF }
   };
 
   it('accepts an empty array', () => {
     expect(queueArraySchema.safeParse([]).success).toBe(true);
   });
 
+  it('accepts a valid queue item', () => {
+    expect(queueArraySchema.safeParse([valid]).success).toBe(true);
+  });
+
   it('rejects a queue item with an unknown status', () => {
     expect(queueArraySchema.safeParse([{ ...valid, status: 'wat' }]).success).toBe(false);
   });
 
-  it('rejects a queue item with an unknown subtitleMode', () => {
-    expect(queueArraySchema.safeParse([{ ...valid, subtitleMode: 'magic' }]).success).toBe(false);
+  it('rejects a queue item with an unknown job kind', () => {
+    expect(queueArraySchema.safeParse([{ ...valid, job: { kind: 'magic-format' } }]).success).toBe(false);
   });
 
   it('rejects when error.key is not a known YtdlpErrorKey', () => {

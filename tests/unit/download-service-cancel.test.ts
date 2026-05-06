@@ -6,6 +6,11 @@ vi.mock('@main/utils/process');
 import { spawnYtDlp } from '@main/utils/process';
 import { DownloadService } from '@main/services/DownloadService';
 import { YtDlp } from '@main/services/YtDlp';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
+const DEFAULT_JOB: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
 
 class FakeProcess extends EventEmitter {
   stdout = new EventEmitter();
@@ -45,7 +50,7 @@ describe('pendingCancelCount', () => {
 
     const svc = new DownloadService(stubs.ytDlp, stubs.recentJobsStore as never);
 
-    await svc.start({ url: URL, outputDir: '/tmp' });
+    await svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB });
     expect(svc.activeCount).toBe(1);
     expect(svc.pendingCancelCount).toBe(1);
 
@@ -66,7 +71,7 @@ describe('pendingCancelCount', () => {
 
     const svc = new DownloadService(stubs.ytDlp, stubs.recentJobsStore as never);
 
-    const [r1] = await Promise.all([svc.start({ url: URL, outputDir: '/tmp' }), svc.start({ url: URL, outputDir: '/tmp' })]);
+    const [r1] = await Promise.all([svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB }), svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB })]);
 
     expect(svc.pendingCancelCount).toBe(2);
 
@@ -91,7 +96,7 @@ describe('process group kill on POSIX', () => {
 
     const svc = new DownloadService(stubs.ytDlp, stubs.recentJobsStore as never);
 
-    const result = await svc.start({ url: URL, outputDir: '/tmp' });
+    const result = await svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB });
     expect(result.ok).toBe(true);
     if (!result.ok) return;
 
@@ -118,7 +123,7 @@ describe('pre-spawn cancel emits status event', () => {
     const statuses: { stage: string; statusKey: string }[] = [];
     svc.on('status', (ev) => statuses.push({ stage: ev.stage, statusKey: ev.statusKey }));
 
-    const startPromise = svc.start({ url: URL, outputDir: '/tmp' });
+    const startPromise = svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB });
 
     // Cancel while binary setup is pending
     await svc.cancel();
@@ -145,7 +150,7 @@ describe('pre-spawn cancel emits status event', () => {
     const statuses: { stage: string; statusKey: string }[] = [];
     svc.on('status', (ev) => statuses.push({ stage: ev.stage, statusKey: ev.statusKey }));
 
-    const startPromise = svc.start({ url: URL, outputDir: '/tmp' });
+    const startPromise = svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB });
 
     // Binary setup resolves immediately, now cancel during token mint
     await Promise.resolve(); // flush microtasks for binary setup

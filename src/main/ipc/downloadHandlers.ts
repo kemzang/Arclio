@@ -1,29 +1,33 @@
 import log from 'electron-log/main';
 import { IPC_CHANNELS } from '@shared/ipc';
-import { cancelDownloadSchema, getFormatsSchema, pauseResumeSchema, resumeSchema, startDownloadSchema } from '@shared/schemas';
+import { cancelDownloadSchema, getFormatsSchema, getPlaylistItemsSchema, pauseResumeSchema, resumeSchema, startDownloadSchema } from '@shared/schemas';
 import type { DownloadService } from '@main/services/DownloadService';
 import type { FormatProbeService } from '@main/services/FormatProbeService';
+import type { PlaylistProbeService } from '@main/services/PlaylistProbeService';
 import type { SettingsStore } from '@main/stores/SettingsStore';
 import { handle } from './utils';
 
 interface DownloadHandlerDeps {
   downloadService: DownloadService;
   formatProbeService: FormatProbeService;
+  playlistProbeService: PlaylistProbeService;
   settingsStore: SettingsStore;
 }
 
 export function registerDownloadHandlers(deps: DownloadHandlerDeps): void {
-  const { downloadService, formatProbeService, settingsStore } = deps;
+  const { downloadService, formatProbeService, playlistProbeService, settingsStore } = deps;
 
   handle(IPC_CHANNELS.downloadsGetFormats, getFormatsSchema, ({ url }) => formatProbeService.getFormats(url));
 
+  handle(IPC_CHANNELS.downloadsGetPlaylistItems, getPlaylistItemsSchema, ({ url }) => playlistProbeService.getPlaylistItems(url));
+
   handle(IPC_CHANNELS.downloadsStart, startDownloadSchema, async (data) => {
     const settings = await settingsStore.get();
-    const outputDir = data.outputDir ?? settings.defaultOutputDir;
+    const outputDir = data.outputDir ?? settings.common.defaultOutputDir;
     return downloadService.start({
       ...data,
       outputDir,
-      cookiesEnabled: settings.cookiesEnabled ?? false
+      cookiesEnabled: settings.common.cookiesEnabled ?? false
     });
   });
 

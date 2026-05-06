@@ -15,11 +15,15 @@ function resetStore(overrides: Partial<ReturnType<typeof useAppStore.getState>> 
     initialized: true,
     initializing: false,
     settings: {
-      defaultOutputDir: '/tmp',
-      rememberLastOutputDir: false,
-      clipboardWatchEnabled: true,
-      cookiesEnabled: false,
-      cookiesPath: ''
+      common: {
+        defaultOutputDir: '/tmp',
+        rememberLastOutputDir: false,
+        clipboardWatchEnabled: true,
+        cookiesEnabled: false,
+        cookiesPath: ''
+      },
+      single: {},
+      playlist: {}
     },
     wizardStep: 'url',
     formatsLoading: false,
@@ -125,7 +129,7 @@ describe('wizard clipboard confirm dialog', () => {
 
     fireEvent.click(screen.getByTestId('clipboard-confirm-disable'));
 
-    expect(updateSpy).toHaveBeenCalledWith(expect.objectContaining({ clipboardWatchEnabled: false }));
+    expect(updateSpy).toHaveBeenCalledWith(expect.objectContaining({ common: expect.objectContaining({ clipboardWatchEnabled: false }) }));
     expect(useAppStore.getState().wizardUrl).toBe('');
     expect(screen.queryByTestId('clipboard-confirm-dialog')).not.toBeInTheDocument();
   });

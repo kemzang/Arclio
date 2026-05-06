@@ -1,9 +1,10 @@
 import { DEFAULTS } from '@shared/constants';
 import { DEFAULT_AUDIO_BITRATE } from '@shared/schemas';
-import type { AppSettings, FormatOption, Preset, SubtitleMap, WizardTransition } from '@shared/types';
-import { cleanYoutubeUrl } from '@shared/url';
-import type { AppState, AudioSelection, GetState, SetState, WizardSlice, WizardStep } from './types';
+import type { AppSettings, FormatOption, PlaylistEntry, PlaylistPreset, Preset, SubtitleMap, WizardTransition } from '@shared/types';
+import { cleanYoutubeUrl, forcePlaylistOnly, forceVideoOnly, isMixedVideoPlaylistUrl, isPlaylistUrl } from '@shared/url';
+import type { AppState, AudioSelection, GetState, SetState, WizardMode, WizardSlice, WizardStep } from './types';
 import { presetProducesMedia, presetProducesVideo } from '@shared/presetTraits';
+import { STEPS, shouldSkip, type VisibleStep } from '../components/wizard/stepNavigation';
 
 function pickWizardSnapshot(state: AppState): Record<string, unknown> {
   return {
@@ -82,11 +83,12 @@ function restoreFormatSelection(formats: FormatOption[], settings: AppSettings |
   const grouped = groupedNonAudioFormats(formats);
   const audioFormats = formats.filter((f) => f.isAudioOnly);
   const bestAudio = audioFormats[0]?.formatId ?? null;
+  const single = settings?.single;
 
-  if (settings?.lastPreset) return { ...applyPreset(settings.lastPreset, formats), preset: settings.lastPreset };
-  if (settings?.lastVideoResolution === 'audio-only') return { videoFormatId: '', audioSelection: nativeAudio(bestAudio), preset: 'audio-only' };
-  if (settings?.lastVideoResolution) {
-    const match = grouped.find((g) => g.resolution === settings.lastVideoResolution);
+  if (single?.lastPreset) return { ...applyPreset(single.lastPreset, formats), preset: single.lastPreset };
+  if (single?.lastVideoResolution === 'audio-only') return { videoFormatId: '', audioSelection: nativeAudio(bestAudio), preset: 'audio-only' };
+  if (single?.lastVideoResolution) {
+    const match = grouped.find((g) => g.resolution === single.lastVideoResolution);
     if (match) return { videoFormatId: match.formatId, audioSelection: nativeAudio(bestAudio), preset: null };
   }
   return { ...applyPreset('best-quality', formats), preset: 'best-quality' };
@@ -94,15 +96,25 @@ function restoreFormatSelection(formats: FormatOption[], settings: AppSettings |
 
 function restoreSubtitleSelection(subtitles: SubtitleMap | undefined, automaticCaptions: SubtitleMap | undefined, settings: AppSettings | null): { languages: string[] } {
   const available = new Set([...Object.keys(subtitles ?? {}), ...Object.keys(automaticCaptions ?? {})]);
-  const languages = (settings?.lastSubtitleLanguages ?? []).filter((l) => available.has(l));
+  const languages = (settings?.single?.lastSubtitleLanguages ?? []).filter((l) => available.has(l));
   return { languages };
 }
 
-export type VisibleStep = Exclude<WizardStep, 'error'>;
-export const STEPS: VisibleStep[] = ['url', 'formats', 'subtitles', 'sponsorblock', 'output', 'folder', 'confirm'];
+function restoreCommonWizardPrefs(settings: AppSettings | null): Pick<AppState, 'wizardSponsorBlockMode' | 'wizardSponsorBlockCategories' | 'wizardEmbedChapters' | 'wizardEmbedMetadata' | 'wizardEmbedThumbnail' | 'wizardWriteDescription' | 'wizardWriteThumbnail'> {
+  return {
+    wizardSponsorBlockMode: settings?.common?.lastSponsorBlockMode ?? DEFAULTS.sponsorBlockMode,
+    wizardSponsorBlockCategories: settings?.common?.lastSponsorBlockCategories ?? [...DEFAULTS.sponsorBlockCategories],
+    wizardEmbedChapters: settings?.common?.embedChapters ?? DEFAULTS.embedChapters,
+    wizardEmbedMetadata: settings?.common?.embedMetadata ?? DEFAULTS.embedMetadata,
+    wizardEmbedThumbnail: settings?.common?.embedThumbnail ?? DEFAULTS.embedThumbnail,
+    wizardWriteDescription: settings?.common?.writeDescription ?? DEFAULTS.writeDescription,
+    wizardWriteThumbnail: settings?.common?.writeThumbnail ?? DEFAULTS.writeThumbnail
+  };
+}
 
 const RESET_STATE = {
   wizardStep: 'url' as WizardStep,
+  wizardMode: 'single' as WizardMode,
   wizardUrl: '',
   wizardTitle: '',
   wizardThumbnail: '',
@@ -125,8 +137,91 @@ const RESET_STATE = {
   wizardWriteDescription: DEFAULTS.writeDescription,
   wizardWriteThumbnail: DEFAULTS.writeThumbnail,
   wizardSubfolderEnabled: false,
-  wizardSubfolderName: ''
+  wizardSubfolderName: '',
+  playlistItems: [] as PlaylistEntry[],
+  selectedPlaylistItemIds: [] as string[],
+  playlistTitle: '',
+  playlistId: '',
+  playlistProbeLoading: false,
+  mixedUrlPromptOpen: false,
+  mixedUrlPending: null as string | null,
+  selectedPlaylistPreset: null as PlaylistPreset | null
 } as const;
+
+async function runFormatProbe(url: string, set: SetState, get: GetState): Promise<void> {
+  const result = await window.appApi.downloads.getFormats({ url });
+  if (!result.ok) {
+    set({ wizardStep: 'error', formatsLoading: false, wizardError: result.error, wizardErrorOrigin: 'formats' });
+    return;
+  }
+  const { formats, title, thumbnail, duration, subtitles = {}, automaticCaptions = {} } = result.data;
+  const settings = get().settings;
+  const { videoFormatId, audioSelection, preset } = restoreFormatSelection(formats, settings);
+  const { languages: subtitleLanguages } = restoreSubtitleSelection(subtitles, automaticCaptions, settings);
+  set({
+    wizardFormats: formats,
+    wizardTitle: title,
+    wizardThumbnail: thumbnail,
+    wizardDuration: duration,
+    selectedVideoFormatId: videoFormatId,
+    audioSelection,
+    activePreset: preset,
+    wizardSubtitles: subtitles,
+    wizardAutomaticCaptions: automaticCaptions,
+    wizardSubtitleLanguages: subtitleLanguages,
+    wizardSubtitleSkipped: false,
+    wizardSubtitleMode: settings?.single?.lastSubtitleMode ?? DEFAULTS.subtitleMode,
+    wizardSubtitleFormat: settings?.single?.lastSubtitleFormat ?? DEFAULTS.subtitleFormat,
+    ...restoreCommonWizardPrefs(settings),
+    wizardSubfolderEnabled: settings?.single?.lastSubfolderEnabled ?? false,
+    wizardSubfolderName: settings?.single?.lastSubfolder ?? '',
+    formatsLoading: false
+  });
+}
+
+async function runSingleVideoProbe(url: string, set: SetState, get: GetState): Promise<void> {
+  const fromStep = get().wizardStep;
+  set({
+    wizardUrl: url,
+    wizardStep: 'formats',
+    wizardMode: 'single',
+    formatsLoading: true,
+    wizardError: null,
+    playlistItems: [],
+    selectedPlaylistItemIds: [],
+    playlistTitle: '',
+    playlistId: ''
+  });
+  logStep('submitUrl', fromStep, 'formats', pickWizardSnapshot(get()));
+  await runFormatProbe(url, set, get);
+}
+
+async function runPlaylistProbe(url: string, set: SetState, get: GetState): Promise<void> {
+  const fromStep = get().wizardStep;
+  set({ wizardUrl: url, wizardStep: 'playlistItems', wizardMode: 'playlist', playlistProbeLoading: true, wizardError: null });
+  logStep('submitUrl', fromStep, 'playlistItems', pickWizardSnapshot(get()));
+
+  const result = await window.appApi.downloads.getPlaylistItems({ url });
+  if (!result.ok) {
+    set({ wizardStep: 'error', playlistProbeLoading: false, wizardError: result.error, wizardErrorOrigin: 'formats' });
+    return;
+  }
+  const { entries, playlistTitle, playlistId } = result.data;
+  const settings = get().settings;
+  set({
+    playlistItems: entries,
+    selectedPlaylistItemIds: entries.map((e) => e.id),
+    playlistTitle,
+    playlistId,
+    playlistProbeLoading: false,
+    ...restoreCommonWizardPrefs(settings),
+    // Restore mode-scoped prefs: playlist preset + playlist subfolder are
+    // persisted under their own keys so they survive single-mode runs in between.
+    selectedPlaylistPreset: settings?.playlist?.lastPlaylistPreset ?? null,
+    wizardSubfolderEnabled: settings?.playlist?.lastPlaylistSubfolderEnabled ?? false,
+    wizardSubfolderName: settings?.playlist?.lastPlaylistSubfolder ?? ''
+  });
+}
 
 export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
   return {
@@ -140,74 +235,82 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
     setWizardUrl: (url) => set({ wizardUrl: url }),
 
     submitUrl: async () => {
-      const url = cleanYoutubeUrl(get().wizardUrl.trim());
-      if (!url) return;
-      const fromStep = get().wizardStep;
-      set({ wizardUrl: url, wizardStep: 'formats', formatsLoading: true, wizardError: null });
-      logStep('submitUrl', fromStep, 'formats', pickWizardSnapshot(get()));
+      const cleaned = cleanYoutubeUrl(get().wizardUrl.trim());
+      if (!cleaned) return;
 
-      const result = await window.appApi.downloads.getFormats({ url });
-      if (!result.ok) {
-        set({
-          wizardStep: 'error',
-          formatsLoading: false,
-          wizardError: result.error,
-          wizardErrorOrigin: 'formats'
-        });
+      if (isMixedVideoPlaylistUrl(cleaned)) {
+        set({ wizardUrl: cleaned, mixedUrlPromptOpen: true, mixedUrlPending: cleaned, wizardError: null });
         return;
       }
 
-      const { formats, title, thumbnail, duration, subtitles = {}, automaticCaptions = {} } = result.data;
-      const settings = get().settings;
-      const { videoFormatId, audioSelection, preset } = restoreFormatSelection(formats, settings);
-      const { languages: subtitleLanguages } = restoreSubtitleSelection(subtitles, automaticCaptions, settings);
+      if (isPlaylistUrl(cleaned)) {
+        await runPlaylistProbe(cleaned, set, get);
+        return;
+      }
 
-      set({
-        wizardFormats: formats,
-        wizardTitle: title,
-        wizardThumbnail: thumbnail,
-        wizardDuration: duration,
-        selectedVideoFormatId: videoFormatId,
-        audioSelection,
-        activePreset: preset,
-        wizardSubtitles: subtitles,
-        wizardAutomaticCaptions: automaticCaptions,
-        wizardSubtitleLanguages: subtitleLanguages,
-        wizardSubtitleSkipped: false,
-        wizardSubtitleMode: settings?.lastSubtitleMode ?? DEFAULTS.subtitleMode,
-        wizardSubtitleFormat: settings?.lastSubtitleFormat ?? DEFAULTS.subtitleFormat,
-        wizardSponsorBlockMode: settings?.lastSponsorBlockMode ?? DEFAULTS.sponsorBlockMode,
-        wizardSponsorBlockCategories: settings?.lastSponsorBlockCategories ?? [...DEFAULTS.sponsorBlockCategories],
-        wizardEmbedChapters: settings?.embedChapters ?? DEFAULTS.embedChapters,
-        wizardEmbedMetadata: settings?.embedMetadata ?? DEFAULTS.embedMetadata,
-        wizardEmbedThumbnail: settings?.embedThumbnail ?? DEFAULTS.embedThumbnail,
-        wizardWriteDescription: settings?.writeDescription ?? DEFAULTS.writeDescription,
-        wizardWriteThumbnail: settings?.writeThumbnail ?? DEFAULTS.writeThumbnail,
-        wizardSubfolderEnabled: settings?.lastSubfolderEnabled ?? false,
-        wizardSubfolderName: settings?.lastSubfolder ?? '',
-        formatsLoading: false
-      });
+      await runSingleVideoProbe(cleaned, set, get);
     },
 
+    dismissMixedPrompt: async (choice) => {
+      const pending = get().mixedUrlPending;
+      set({ mixedUrlPromptOpen: false, mixedUrlPending: null });
+      if (!pending) return;
+      const url = choice === 'video' ? forceVideoOnly(pending) : forcePlaylistOnly(pending);
+      set({ wizardUrl: url });
+      if (choice === 'video') {
+        await runSingleVideoProbe(url, set, get);
+      } else {
+        await runPlaylistProbe(url, set, get);
+      }
+    },
+
+    setPlaylistItemSelected: (id, checked) =>
+      set((state) => ({
+        selectedPlaylistItemIds: checked ? (state.selectedPlaylistItemIds.includes(id) ? state.selectedPlaylistItemIds : [...state.selectedPlaylistItemIds, id]) : state.selectedPlaylistItemIds.filter((x) => x !== id)
+      })),
+
+    selectAllPlaylistItems: () => set((state) => ({ selectedPlaylistItemIds: state.playlistItems.map((e) => e.id) })),
+
+    selectNonePlaylistItems: () => set({ selectedPlaylistItemIds: [] }),
+
+    selectPlaylistRange: (from, to) =>
+      set((state) => {
+        const lo = Math.min(from, to);
+        const hi = Math.max(from, to);
+        const ids = state.playlistItems.filter((e) => e.playlistIndex >= lo && e.playlistIndex <= hi).map((e) => e.id);
+        return { selectedPlaylistItemIds: ids };
+      }),
+
+    confirmPlaylistSelection: () => {
+      const { selectedPlaylistItemIds, wizardStep } = get();
+      if (selectedPlaylistItemIds.length === 0) return;
+      set({ wizardStep: 'playlistPresets', wizardError: null });
+      logStep('advance', wizardStep, 'playlistPresets', pickWizardSnapshot(get()));
+    },
+
+    setPlaylistPreset: (p) => set({ selectedPlaylistPreset: p, wizardSubtitleSkipped: false }),
+
     advance: () => {
-      const { wizardStep, activePreset } = get();
+      const { wizardStep, activePreset, wizardMode, selectedPlaylistPreset } = get();
       const i = STEPS.indexOf(wizardStep as VisibleStep);
       if (i < 0 || i >= STEPS.length - 1) return;
       let nextIdx = i + 1;
-      if (STEPS[nextIdx] === 'sponsorblock' && activePreset && !presetProducesVideo(activePreset)) nextIdx++;
-      if (STEPS[nextIdx] === 'output' && activePreset && !presetProducesMedia(activePreset)) nextIdx++;
+      while (nextIdx < STEPS.length - 1 && shouldSkip(STEPS[nextIdx], { activePreset, wizardMode, selectedPlaylistPreset })) {
+        nextIdx++;
+      }
       const target = STEPS[nextIdx] ?? STEPS[STEPS.length - 1];
       set({ wizardStep: target });
       logStep('advance', wizardStep, target, pickWizardSnapshot(get()));
     },
 
     back: () => {
-      const { wizardStep, activePreset } = get();
+      const { wizardStep, activePreset, wizardMode, selectedPlaylistPreset } = get();
       const i = STEPS.indexOf(wizardStep as VisibleStep);
       if (i <= 0) return;
       let prevIdx = i - 1;
-      if (STEPS[prevIdx] === 'output' && activePreset && !presetProducesMedia(activePreset)) prevIdx--;
-      if (STEPS[prevIdx] === 'sponsorblock' && activePreset && !presetProducesVideo(activePreset)) prevIdx--;
+      while (prevIdx > 0 && shouldSkip(STEPS[prevIdx], { activePreset, wizardMode, selectedPlaylistPreset })) {
+        prevIdx--;
+      }
       const target = STEPS[prevIdx] ?? STEPS[0];
       set({ wizardStep: target, ...(target === 'subtitles' && { wizardSubtitleSkipped: false }) });
       logStep('back', wizardStep, target, pickWizardSnapshot(get()));
@@ -230,7 +333,7 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
 
     setWizardOutputDir: async (dir, persist = true) => {
       set({ wizardOutputDir: dir });
-      if (persist) await window.appApi.settings.update({ defaultOutputDir: dir });
+      if (persist) await window.appApi.settings.update({ common: { defaultOutputDir: dir } });
     },
 
     // Invariant: (video !== '') && (audio.kind === 'convert-lossy' | 'convert-lossless') is invalid —
@@ -286,7 +389,7 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
       const result = await window.appApi.dialog.chooseFolder();
       if (!result.ok || !result.data.path) return;
       set({ wizardOutputDir: result.data.path });
-      await window.appApi.settings.update({ defaultOutputDir: result.data.path });
+      await window.appApi.settings.update({ common: { defaultOutputDir: result.data.path } });
     },
 
     setWizardSubfolderEnabled: (enabled) => set({ wizardSubfolderEnabled: enabled }),

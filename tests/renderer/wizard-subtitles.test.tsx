@@ -4,6 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { useAppStore } from '@renderer/store/useAppStore';
 import type { GetFormatsOutput, StatusEvent } from '@shared/types';
 import { ok } from '../shared/fixtures';
+import { buildAppSettings } from '../shared/settingsFixtures';
 import { StepSubtitles } from '@renderer/components/wizard/StepSubtitles';
 import { StepConfirm } from '@renderer/components/wizard/StepConfirm';
 import { StepFormatSelect } from '@renderer/components/wizard/StepFormatSelect';
@@ -63,8 +64,8 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}, getFormat
       pause: vi.fn().mockResolvedValue(ok({ paused: true }))
     },
     settings: {
-      get: vi.fn().mockResolvedValue(ok({ defaultOutputDir: '/tmp', rememberLastOutputDir: false, ...settingsOverrides })),
-      update: vi.fn().mockResolvedValue(ok({ defaultOutputDir: '/tmp', rememberLastOutputDir: false, ...settingsOverrides }))
+      get: vi.fn().mockResolvedValue(ok(buildAppSettings(settingsOverrides))),
+      update: vi.fn().mockResolvedValue(ok(buildAppSettings(settingsOverrides)))
     },
     shell: { openFolder: vi.fn(), openExternal: vi.fn() },
     logs: { openDir: vi.fn() },
@@ -72,7 +73,8 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}, getFormat
     events: {
       onStatus: vi.fn().mockImplementation((_cb: (event: StatusEvent) => void) => () => undefined),
       onProgress: vi.fn().mockReturnValue(() => undefined),
-      onClipboardUrl: vi.fn().mockReturnValue(() => undefined)
+      onClipboardUrl: vi.fn().mockReturnValue(() => undefined),
+      onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
       save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),
@@ -150,8 +152,8 @@ describe('Subtitle-only preset', () => {
     await useAppStore.getState().addToQueue();
 
     const item = useAppStore.getState().queue[0];
-    expect(item.formatId).toBeUndefined();
-    expect(item.subtitleLanguages).toEqual(['en']);
+    expect(item.job.kind).toBe('subtitle-only');
+    expect(item.job.kind === 'subtitle-only' ? item.job.subtitles.languages : []).toEqual(['en']);
   });
 
   it('downloads.start receives undefined formatId and the chosen subtitleLanguages', async () => {
@@ -167,8 +169,8 @@ describe('Subtitle-only preset', () => {
 
     expect(api.downloads.start).toHaveBeenCalledOnce();
     const call = api.downloads.start.mock.calls[0][0];
-    expect(call.formatId).toBeUndefined();
-    expect(call.subtitleLanguages).toEqual(['en']);
+    expect(call.job.kind).toBe('subtitle-only');
+    expect(call.job.kind === 'subtitle-only' ? call.job.subtitles.languages : []).toEqual(['en']);
   });
 });
 
@@ -278,8 +280,8 @@ describe('Wizard subtitle step — store behavior', () => {
 
     const queue = useAppStore.getState().queue;
     expect(queue).toHaveLength(1);
-    expect(queue[0].subtitleLanguages).toEqual(['en', 'es']);
-    expect(queue[0].writeAutoSubs).toBe(false);
+    expect(queue[0].job.subtitles?.languages).toEqual(['en', 'es']);
+    expect(queue[0].job.subtitles?.writeAuto).toBe(false);
   });
 
   it('buildQueueItem derives writeAutoSubs: true when a selected lang is auto-only', async () => {
@@ -304,7 +306,7 @@ describe('Wizard subtitle step — store behavior', () => {
     await useAppStore.getState().addToQueue();
 
     const queue = useAppStore.getState().queue;
-    expect(queue[0].writeAutoSubs).toBe(true);
+    expect(queue[0].job.subtitles?.writeAuto).toBe(true);
   });
 
   it('startItemDownload forwards subtitle fields to downloads.start', async () => {
@@ -329,8 +331,8 @@ describe('Wizard subtitle step — store behavior', () => {
     await useAppStore.getState().addAndDownloadImmediately();
 
     const startCall = vi.mocked(window.appApi.downloads.start).mock.calls[0][0];
-    expect(startCall.subtitleLanguages).toEqual(['en']);
-    expect(startCall.writeAutoSubs).toBe(false);
+    expect(startCall.job.subtitles?.languages).toEqual(['en']);
+    expect(startCall.job.subtitles?.writeAuto).toBe(false);
   });
 
   it('persistFormatPrefs saves subtitle language prefs to settings', async () => {
@@ -363,14 +365,14 @@ describe('Wizard subtitle step — store behavior', () => {
 
     const updateCalls = updateMock.mock.calls;
     const subtitleUpdateCall = updateCalls.find((args: unknown[]) => {
-      const patch = args[0] as Record<string, unknown>;
-      return 'lastSubtitleLanguages' in patch;
+      const patch = args[0] as { single?: Record<string, unknown> };
+      return !!patch.single && 'lastSubtitleLanguages' in patch.single;
     });
     expect(subtitleUpdateCall).toBeDefined();
     expect(subtitleUpdateCall![0]).toMatchObject({
-      lastSubtitleLanguages: ['en', 'es']
+      single: { lastSubtitleLanguages: ['en', 'es'] }
     });
-    expect(subtitleUpdateCall![0]).not.toHaveProperty('lastWriteAutoSubs');
+    expect((subtitleUpdateCall![0] as { single?: Record<string, unknown> }).single).not.toHaveProperty('lastWriteAutoSubs');
   });
 
   it('wizardSubtitleMode defaults to sidecar and wizardSubtitleFormat to srt', () => {
@@ -412,8 +414,8 @@ describe('Wizard subtitle step — store behavior', () => {
     await useAppStore.getState().addToQueue();
 
     const item = useAppStore.getState().queue[0];
-    expect(item.subtitleMode).toBe('subfolder');
-    expect(item.subtitleFormat).toBe('vtt');
+    expect(item.job.subtitles?.mode).toBe('subfolder');
+    expect(item.job.subtitles?.format).toBe('vtt');
   });
 
   it('startItemDownload forwards subtitleMode and subtitleFormat to downloads.start', async () => {
@@ -440,8 +442,8 @@ describe('Wizard subtitle step — store behavior', () => {
     await useAppStore.getState().addAndDownloadImmediately();
 
     const startCall = vi.mocked(window.appApi.downloads.start).mock.calls[0][0];
-    expect(startCall.subtitleMode).toBe('embed');
-    expect(startCall.subtitleFormat).toBe('ass');
+    expect(startCall.job.subtitles?.mode).toBe('embed');
+    expect(startCall.job.subtitles?.format).toBe('ass');
   });
 
   it('persistFormatPrefs saves lastSubtitleMode and lastSubtitleFormat', async () => {
@@ -476,13 +478,12 @@ describe('Wizard subtitle step — store behavior', () => {
 
     const updateCalls = updateMock.mock.calls;
     const subtitleCall = updateCalls.find((args: unknown[]) => {
-      const patch = args[0] as Record<string, unknown>;
-      return 'lastSubtitleLanguages' in patch;
+      const patch = args[0] as { single?: Record<string, unknown> };
+      return !!patch.single && 'lastSubtitleLanguages' in patch.single;
     });
     expect(subtitleCall).toBeDefined();
     expect(subtitleCall![0]).toMatchObject({
-      lastSubtitleMode: 'subfolder',
-      lastSubtitleFormat: 'vtt'
+      single: { lastSubtitleMode: 'subfolder', lastSubtitleFormat: 'vtt' }
     });
   });
 

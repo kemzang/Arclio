@@ -24,6 +24,7 @@ const om = {
   splash: {
     greeting: 'Baga nagaan deebitee!',
     warmup: "Arroxy qophaa'aa jira…",
+    downloading: '{{binary}} buufatamaa jira…',
     warning: "Qindaa'inni hin xumuramne — feetii tokko tokko hojjechuu dhiisuu dandanda'u"
   },
   theme: {
@@ -37,12 +38,44 @@ const om = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Qulqullina',
       formats: 'Foormaatii',
       subtitles: 'Axxiinni',
       sponsorblock: 'SponsorBlock',
       output: "Ba'uu",
       folder: 'Kuusi',
       confirm: 'Mirkaneessi'
+    },
+    playlist: {
+      heading: 'Wantoota Playlist',
+      itemCount_one: '{{count}} viidiyoo',
+      itemCount_other: '{{count}} viidiyoowwan',
+      selectAll: 'Hunda filadhu',
+      selectNone: 'Tokkollee hin filin',
+      rangeFrom: 'Irraa',
+      rangeTo: 'Gara',
+      rangeApply: 'Daangaa hojiirra oolchi',
+      selectedCount_one: '{{count}} filatame',
+      selectedCount_other: '{{count}} filataman',
+      noSelection: 'Itti fufuuf viidiyoo tokko yoo xiqqaate filadhu',
+      loadingItems: 'Playlist fidaa jira…',
+      thumbnailAlt: 'Thumbnail viidiyoo',
+      continue: 'Itti fufi',
+      durationUnknown: 'kallattii'
+    },
+    playlistPresets: {
+      heading: 'Kutaa gurmuu barbaadi',
+      subhead: 'Viidiyoon hundi sadarkaa filatame ofumaan qorata — playlist garagaraa sodaa malee hojjeta.',
+      itemCount_one: '{{count}} wanta',
+      itemCount_other: '{{count}} wantota',
+      continue: 'Itti fufi'
+    },
+    mixedPrompt: {
+      title: 'Viidiyoo tokko moo playlist guutuu?',
+      body: 'URL kun playlist keessa jira. Maal buufachuu barbaadda?',
+      singleVideo: 'Viidiyoo kana qofa',
+      wholePlaylist: 'Playlist guutuu'
     },
     url: {
       heading: 'YouTube URL',
@@ -224,7 +257,14 @@ const om = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Daawniloodoonni biroo xumuramu booda jalqaba — bandwidth guutuu argata',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'Immediately jalqaba — daawniloodoonni biroo waliin hojjeta'
+      pullItTooltip: 'Immediately jalqaba — daawniloodoonni biroo waliin hojjeta',
+      playlistBatch_one: '{{count}} viidiyoo · {{title}}',
+      playlistBatch_other: '{{count}} viidiyoowwan · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'Preset',
+      labelItems: 'Wantota',
+      itemsValue_one: '{{count}} fi {{total}} keessaa viidiyoo',
+      itemsValue_other: '{{count}} fi {{total}} keessaa viidiyoowwan'
     },
     error: {
       icon: 'Dogoggora'
@@ -242,6 +282,10 @@ const om = {
     activeCount: '{{count}} buufamaa jira · {{percent}}%',
     clear: 'Qulqulleessi',
     clearTitle: 'Daawniloodoonni xumuraman haquu',
+    pauseAll: 'Hunda gidduu dhabi',
+    pauseAllTitle: 'Daawniloodoonni hunda qabsoo jiran gidduu dhabi',
+    cancelAll: 'Hunda addaan kuti',
+    cancelAllTitle: 'Daawniloodoonni hunda qabsoo jiran fi eegaa jiran addaan kuti',
     tip: 'Daawniloodiin kee tartiiba asii gaditti jira — yeroo kamiyyuu bani irratti hordofi.',
     item: {
       doneAt: 'Xumurame {{time}}',
@@ -249,10 +293,13 @@ const om = {
       defaultError: 'Daawniloodii kufe',
       openUrl: 'URL bani',
       pause: 'Dhaabi',
+      hold: 'Eegi',
       resume: 'Itti fufi',
       cancel: 'Haqi',
       remove: 'Balleessi'
-    }
+    },
+    interJobSleep_one: 'Daawniloodiin ittaanu sekoondii {{count}} booda jalqaba',
+    interJobSleep_other: 'Daawniloodiin ittaanu sekoondii {{count}} booda jalqaba'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +364,17 @@ const om = {
       label: 'Axxiinni qofa',
       desc: 'Viidiyoo hin jiru, sagalee hin jiru, axxiinni qofa'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: "Qulqullina ol'aanaa", desc: 'Viidiyoo fi sagalee ol aanaa hunda wanta hundaaf' },
+    'video-2160p': { label: 'Hanga 4K', desc: "Hanga 2160p, gadi aanaatti deebi'a wanta hundaaf" },
+    'video-1440p': { label: 'Hanga 1440p', desc: "Hanga 2K, gadi aanaatti deebi'a wanta hundaaf" },
+    'video-1080p': { label: 'Hanga 1080p', desc: "Wanta hundaaf daangeffame, gadi aanaatti deebi'a" },
+    'video-720p': { label: 'Hanga 720p', desc: "Faayilii xiqqaa, walii galteen bal'aa" },
+    'video-480p': { label: 'Hanga 480p', desc: 'Intarneetii gadi aanaa' },
+    'video-360p': { label: 'Hanga 360p', desc: 'Viidiyoo xiqqaa' },
+    'audio-best': { label: 'Audio (caalmaa)', desc: 'Sagalee caalmaa uumamaa, irra deebi hojii hin qabu' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps tti jijjiiri' }
   },
   formatLabel: {
     audioOnly: 'Sagalee qofa',

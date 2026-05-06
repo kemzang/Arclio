@@ -1,9 +1,15 @@
-import type { LocalizedError, QueueItem, StartDownloadInput } from '@shared/types';
+import type { LocalizedError, PlaylistEntry, QueueItem, StartDownloadInput } from '@shared/types';
 import { QUEUE_STATUS } from '@shared/schemas';
 import { ProgressFormatter } from './progress';
 import { buildAudioConvertPayload, buildFormatId, buildFormatLabel, generateId, resolveVideoResolution } from './helpers';
 import { effectiveOutputDir } from '@renderer/lib/path';
+import { joinSubfolder, safeFolderName } from '@shared/subfolder';
+import { prepareJob } from '@shared/prepareJob';
+import type { EmbedOptions, SubtitleOptions } from '@shared/preparedJob';
+import { isHeld } from '@shared/queueItem';
+import i18next from 'i18next';
 import type { GetState, SetState, QueueSlice } from './types';
+import type { JobScheduler } from './jobScheduler';
 
 export const progressFormatters = new Map<string, ProgressFormatter>();
 
@@ -17,14 +23,6 @@ function maybeShowQueueTip(set: SetState): void {
   if (!localStorage.getItem('arroxy_seen_queue_tip')) {
     localStorage.setItem('arroxy_seen_queue_tip', '1');
     set({ drawerOpen: true, showQueueTip: true });
-  }
-}
-
-export async function maybeStartNext(get: GetState): Promise<void> {
-  if (get().queue.some((i) => i.status === QUEUE_STATUS.downloading)) return;
-  const next = get().queue.find((i) => i.status === QUEUE_STATUS.pending);
-  if (next) {
-    await get().startItemDownload(next.id);
   }
 }
 
@@ -51,14 +49,34 @@ function buildQueueItem(get: GetState): QueueItem | null {
   const audioConvert = buildAudioConvertPayload(audioSelection);
   const formatLabel = buildFormatLabel(selectedVideoFormatId, videoResolution, audioSelection, audioFormats, activePreset);
 
-  // Convert downloads have unknown final size (post-encoding); only sum
-  // selected stream sizes for the native paths where they're meaningful.
   const nativeAudioId = audioSelection.kind === 'native' ? audioSelection.formatId : null;
   const selectedIds = [selectedVideoFormatId, nativeAudioId].filter(Boolean) as string[];
   const selectedSizes = selectedIds.map((id) => wizardFormats.find((f) => f.formatId === id)?.filesize);
   const expectedBytes = !audioConvert && selectedIds.length > 0 && selectedSizes.every((s): s is number => s !== undefined) ? selectedSizes.reduce((a, b) => a + b, 0) : undefined;
 
   const subtitleLanguages = state.wizardSubtitleSkipped ? [] : state.wizardSubtitleLanguages;
+  const writeAutoSubs = subtitleLanguages.some((l) => !!state.wizardAutomaticCaptions[l] && !state.wizardSubtitles[l]);
+  const subtitles: SubtitleOptions | undefined = subtitleLanguages.length > 0 ? { languages: subtitleLanguages, mode: state.wizardSubtitleMode, format: state.wizardSubtitleFormat, writeAuto: writeAutoSubs } : undefined;
+  const embed: EmbedOptions = {
+    chapters: state.wizardEmbedChapters,
+    metadata: state.wizardEmbedMetadata,
+    thumbnail: state.wizardEmbedThumbnail,
+    description: state.wizardWriteDescription,
+    thumbnailSidecar: state.wizardWriteThumbnail
+  };
+
+  const job = prepareJob({
+    mode: 'single',
+    source: 'youtube',
+    formatId,
+    audioConvert,
+    activePreset,
+    expectedBytes,
+    subtitles,
+    sponsorBlockMode: state.wizardSponsorBlockMode,
+    sponsorBlockCategories: state.wizardSponsorBlockCategories,
+    embed
+  });
 
   return {
     id: generateId(),
@@ -66,9 +84,7 @@ function buildQueueItem(get: GetState): QueueItem | null {
     title: wizardTitle || wizardUrl,
     thumbnail: wizardThumbnail,
     outputDir,
-    formatId,
     formatLabel,
-    preset: activePreset ?? 'custom',
     status: QUEUE_STATUS.pending,
     progressPercent: 0,
     progressDetail: null,
@@ -76,58 +92,104 @@ function buildQueueItem(get: GetState): QueueItem | null {
     error: null,
     finishedAt: null,
     downloadJobId: null,
-    subtitleLanguages,
-    writeAutoSubs: subtitleLanguages.some((l) => !!state.wizardAutomaticCaptions[l] && !state.wizardSubtitles[l]),
-    subtitleMode: state.wizardSubtitleMode,
-    subtitleFormat: state.wizardSubtitleFormat,
+    job
+  };
+}
+
+function padPlaylistIndex(index: number, maxIndex: number): string {
+  const width = Math.max(2, String(maxIndex).length);
+  return String(index).padStart(width, '0');
+}
+
+function buildPlaylistQueueItem(entry: PlaylistEntry, get: GetState, playlistGroupId: string): QueueItem {
+  const state = get();
+  const { wizardOutputDir, wizardSubfolderEnabled, wizardSubfolderName, selectedPlaylistPreset } = state;
+  if (!selectedPlaylistPreset) throw new Error('playlist preset missing');
+
+  const baseDir = wizardSubfolderEnabled && wizardSubfolderName ? joinSubfolder(wizardOutputDir, wizardSubfolderName) : joinSubfolder(wizardOutputDir, safeFolderName(state.playlistTitle || 'Playlist'));
+
+  const formatLabel = i18next.t(`playlistPresets.${selectedPlaylistPreset}.label` as const);
+  const maxPlaylistIndex = state.playlistItems.reduce((max, item) => Math.max(max, item.playlistIndex), 0);
+  const outputTemplate = `${padPlaylistIndex(entry.playlistIndex, maxPlaylistIndex)} - %(title)s.%(ext)s`;
+
+  const embed: EmbedOptions = {
+    chapters: state.wizardEmbedChapters,
+    metadata: state.wizardEmbedMetadata,
+    thumbnail: state.wizardEmbedThumbnail,
+    description: state.wizardWriteDescription,
+    thumbnailSidecar: state.wizardWriteThumbnail
+  };
+
+  const job = prepareJob({
+    mode: 'playlist',
+    source: 'youtube',
+    playlistPreset: selectedPlaylistPreset,
+    outputTemplate,
     sponsorBlockMode: state.wizardSponsorBlockMode,
-    sponsorBlockCategories: [...state.wizardSponsorBlockCategories],
-    embedChapters: state.wizardEmbedChapters,
-    embedMetadata: state.wizardEmbedMetadata,
-    embedThumbnail: state.wizardEmbedThumbnail,
-    writeDescription: state.wizardWriteDescription,
-    writeThumbnail: state.wizardWriteThumbnail,
-    audioConvert,
-    expectedBytes
+    sponsorBlockCategories: state.wizardSponsorBlockCategories,
+    embed
+  });
+
+  return {
+    id: generateId(),
+    url: entry.url,
+    title: entry.title || entry.url,
+    thumbnail: entry.thumbnail,
+    outputDir: baseDir,
+    formatLabel,
+    status: QUEUE_STATUS.pending,
+    progressPercent: 0,
+    progressDetail: null,
+    lastStatus: null,
+    error: null,
+    finishedAt: null,
+    downloadJobId: null,
+    playlistGroupId,
+    job
   };
 }
 
 function buildStartInput(item: QueueItem): StartDownloadInput {
-  const hasSubs = item.subtitleLanguages.length > 0;
   return {
     url: item.url,
     outputDir: item.outputDir,
-    formatId: item.formatId,
-    preset: item.preset,
-    subtitleLanguages: hasSubs ? item.subtitleLanguages : undefined,
-    writeAutoSubs: hasSubs ? item.writeAutoSubs : undefined,
-    subtitleMode: item.subtitleMode,
-    subtitleFormat: item.subtitleFormat,
-    ...(item.sponsorBlockMode !== 'off' && item.sponsorBlockCategories.length > 0
-      ? {
-          sponsorBlockMode: item.sponsorBlockMode,
-          sponsorBlockCategories: item.sponsorBlockCategories
-        }
-      : {}),
-    embedChapters: item.embedChapters,
-    embedMetadata: item.embedMetadata,
-    embedThumbnail: item.embedThumbnail,
-    writeDescription: item.writeDescription,
-    writeThumbnail: item.writeThumbnail,
-    audioConvert: item.audioConvert,
-    expectedBytes: item.expectedBytes
+    job: item.job
   };
 }
 
 async function persistFormatPrefs(set: SetState, get: GetState): Promise<void> {
-  const { selectedVideoFormatId, activePreset, wizardFormats, wizardSubtitleLanguages, settings } = get();
+  const { selectedVideoFormatId, activePreset, wizardFormats, wizardSubtitleLanguages, settings, wizardMode, selectedPlaylistPreset } = get();
   if (!settings) return;
+  const inPlaylist = wizardMode === 'playlist';
+
+  const common = {
+    lastSponsorBlockMode: get().wizardSponsorBlockMode,
+    lastSponsorBlockCategories: get().wizardSponsorBlockCategories,
+    embedChapters: get().wizardEmbedChapters,
+    embedMetadata: get().wizardEmbedMetadata,
+    embedThumbnail: get().wizardEmbedThumbnail,
+    writeDescription: get().wizardWriteDescription,
+    writeThumbnail: get().wizardWriteThumbnail
+  };
+
+  // Mode-scoped persistence: playlist settings live under their own slot so a
+  // playlist run doesn't clobber single-mode preset/subfolder, and vice versa.
+  if (inPlaylist) {
+    const playlist = {
+      ...(selectedPlaylistPreset ? { lastPlaylistPreset: selectedPlaylistPreset } : {}),
+      lastPlaylistSubfolderEnabled: get().wizardSubfolderEnabled,
+      lastPlaylistSubfolder: get().wizardSubfolderName.trim()
+    };
+    const result = await window.appApi.settings.update({ common, playlist });
+    if (result.ok) set({ settings: result.data });
+    return;
+  }
 
   const videoResolution = resolveVideoResolution(selectedVideoFormatId, wizardFormats, 'audio-only');
 
   // Only persist subtitle prefs when the user actually picked languages this run —
   // otherwise an empty selection (or a Skip Subs click) would wipe the saved list.
-  const patch = {
+  const single = {
     lastVideoResolution: videoResolution,
     lastPreset: activePreset,
     ...(wizardSubtitleLanguages.length > 0
@@ -137,27 +199,33 @@ async function persistFormatPrefs(set: SetState, get: GetState): Promise<void> {
           lastSubtitleFormat: get().wizardSubtitleFormat
         }
       : {}),
-    lastSponsorBlockMode: get().wizardSponsorBlockMode,
-    lastSponsorBlockCategories: get().wizardSponsorBlockCategories,
     lastSubfolderEnabled: get().wizardSubfolderEnabled,
-    lastSubfolder: get().wizardSubfolderName.trim(),
-    embedChapters: get().wizardEmbedChapters,
-    embedMetadata: get().wizardEmbedMetadata,
-    embedThumbnail: get().wizardEmbedThumbnail,
-    writeDescription: get().wizardWriteDescription,
-    writeThumbnail: get().wizardWriteThumbnail
+    lastSubfolder: get().wizardSubfolderName.trim()
   };
-  const result = await window.appApi.settings.update(patch);
+  const result = await window.appApi.settings.update({ common, single });
   if (result.ok) {
     set({ settings: result.data });
   }
 }
 
-export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
+export function createQueueSlice(set: SetState, get: GetState, scheduler: JobScheduler): QueueSlice {
   return {
     queue: [],
 
     addToQueue: async () => {
+      const { playlistItems, selectedPlaylistItemIds } = get();
+      if (get().wizardMode === 'playlist') {
+        const groupId = generateId();
+        const selected = playlistItems.filter((e) => selectedPlaylistItemIds.includes(e.id));
+        const items = selected.map((e) => buildPlaylistQueueItem(e, get, groupId));
+        set((state) => ({ queue: [...state.queue, ...items] }));
+        maybeShowQueueTip(set);
+        saveQueue(get);
+        await persistFormatPrefs(set, get);
+        get().reset();
+        await scheduler.notifyItemAdded();
+        return;
+      }
       const item = buildQueueItem(get);
       if (!item) return;
       set((state) => ({ queue: [...state.queue, item] }));
@@ -165,10 +233,29 @@ export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
       saveQueue(get);
       await persistFormatPrefs(set, get);
       get().reset();
-      await maybeStartNext(get);
+      await scheduler.notifyItemAdded();
     },
 
     addAndDownloadImmediately: async () => {
+      const { playlistItems, selectedPlaylistItemIds } = get();
+      if (get().wizardMode === 'playlist') {
+        const groupId = generateId();
+        const selected = playlistItems.filter((e) => selectedPlaylistItemIds.includes(e.id));
+        const items = selected.map((e) => buildPlaylistQueueItem(e, get, groupId));
+        set((state) => ({ queue: [...state.queue, ...items] }));
+        maybeShowQueueTip(set);
+        saveQueue(get);
+        await persistFormatPrefs(set, get);
+        get().reset();
+        const firstItem = items[0];
+        if (!firstItem) return;
+        await get().startItemDownload(firstItem.id);
+        const startedItem = get().queue.find((item) => item.id === firstItem.id);
+        if (startedItem?.status !== QUEUE_STATUS.downloading) {
+          await scheduler.notifyItemAdded();
+        }
+        return;
+      }
       const item = buildQueueItem(get);
       if (!item) return;
       set((state) => ({ queue: [...state.queue, item] }));
@@ -206,16 +293,32 @@ export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
     cancelItemDownload: async (itemId) => {
       const item = get().queue.find((i) => i.id === itemId);
       if (!item || (item.status !== QUEUE_STATUS.downloading && item.status !== QUEUE_STATUS.paused)) return;
+      if (item.status === QUEUE_STATUS.downloading && !item.downloadJobId) return;
 
-      await window.appApi.downloads.cancel({ jobId: item.downloadJobId ?? undefined });
+      // Held items never spawned a main-process job — skip the IPC.
+      if (!isHeld(item)) {
+        await window.appApi.downloads.cancel({ jobId: item.downloadJobId ?? undefined });
+      }
       updateQueueItem(set, itemId, { status: QUEUE_STATUS.cancelled, downloadJobId: null });
       saveQueue(get);
-      void maybeStartNext(get);
+      scheduler.notifyJobFinished();
     },
 
     pauseItemDownload: async (itemId) => {
       const item = get().queue.find((i) => i.id === itemId);
-      if (item?.status !== QUEUE_STATUS.downloading) return;
+      if (!item) return;
+
+      // Hold: pending → paused without IPC. Lets users keep an item in the
+      // queue but skip it until they resume — paused items aren't picked by
+      // maybeStartNext (which only finds `pending`).
+      if (item.status === QUEUE_STATUS.pending) {
+        updateQueueItem(set, itemId, { status: QUEUE_STATUS.paused });
+        saveQueue(get);
+        return;
+      }
+
+      if (item.status !== QUEUE_STATUS.downloading) return;
+      if (!item.downloadJobId) return;
 
       const result = await window.appApi.downloads.pause({
         jobId: item.downloadJobId ?? undefined
@@ -229,6 +332,16 @@ export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
     resumeItemDownload: async (itemId) => {
       const item = get().queue.find((i) => i.id === itemId);
       if (item?.status !== QUEUE_STATUS.paused) return;
+
+      // Held (paused without jobId): just put it back in the queue and let
+      // the scheduler pick it. No fresh spawn from here — it's not the active
+      // job.
+      if (!item.downloadJobId) {
+        updateQueueItem(set, itemId, { status: QUEUE_STATUS.pending, error: null });
+        saveQueue(get);
+        await scheduler.notifyItemAdded();
+        return;
+      }
 
       updateQueueItem(set, itemId, { status: QUEUE_STATUS.downloading, error: null });
       saveQueue(get);
@@ -270,7 +383,12 @@ export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
 
     removeQueueItem: (itemId) => {
       const item = get().queue.find((i) => i.id === itemId);
-      if (item?.status === QUEUE_STATUS.downloading || item?.status === QUEUE_STATUS.paused) return;
+      // Held items have no in-flight job — let users remove them like any
+      // other queue-only entry. Real paused jobs (with downloadJobId) need a
+      // cancel first, so block their removal here.
+      if (!item) return;
+      if (item.status === QUEUE_STATUS.downloading) return;
+      if (item.status === QUEUE_STATUS.paused && !isHeld(item)) return;
       set((state) => ({ queue: state.queue.filter((i) => i.id !== itemId) }));
       saveQueue(get);
     },
@@ -286,7 +404,7 @@ export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
         downloadJobId: null
       });
       saveQueue(get);
-      await maybeStartNext(get);
+      await scheduler.notifyItemAdded();
     },
 
     clearCompleted: () => {
@@ -294,6 +412,24 @@ export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
         queue: state.queue.filter((i) => i.status !== QUEUE_STATUS.done && i.status !== QUEUE_STATUS.cancelled)
       }));
       saveQueue(get);
+    },
+
+    pauseAll: async () => {
+      const downloading = get().queue.filter((i) => i.status === QUEUE_STATUS.downloading);
+      for (const item of downloading) {
+        await get().pauseItemDownload(item.id);
+      }
+    },
+
+    cancelAll: async () => {
+      // Single bulk IPC for active/paused jobs in main; renderer marks state.
+      await window.appApi.downloads.cancel({});
+      set((state) => ({
+        queue: state.queue.map((i) => (i.status === QUEUE_STATUS.downloading || i.status === QUEUE_STATUS.paused || i.status === QUEUE_STATUS.pending ? { ...i, status: QUEUE_STATUS.cancelled, downloadJobId: null } : i))
+      }));
+      saveQueue(get);
+      // Wipe any pending sleep — nothing left to schedule.
+      scheduler.reset();
     },
 
     openItemFolder: async (itemId) => {

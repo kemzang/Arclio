@@ -1,0 +1,87 @@
+import { playlistPresetSpec } from './playlistPresets';
+import type { EmbedOptions, JobSource, PreparedJob, SponsorBlockOptions, SubtitleOptions } from './preparedJob';
+import type { AudioConvert, PlaylistPreset, Preset, SponsorBlockCategory, SponsorBlockMode } from './schemas';
+
+// Pure builder. Lives in `src/shared/` (not renderer) so future QueueStore
+// migrations in main can synthesize jobs without a renderer dependency.
+//
+// The renderer's queueSlice constructs `PrepareJobInput` from wizard state
+// (single mode) or playlist entry context (playlist mode) and hands the DTO
+// here. Keeping the builder DTO-shaped lets unit tests cover every kind in
+// isolation without spinning up the zustand store.
+export interface PrepareJobInput {
+  mode: 'single' | 'playlist';
+  source: JobSource;
+  // single-mode inputs (set when mode === 'single')
+  formatId?: string;
+  audioConvert?: AudioConvert;
+  activePreset?: Preset | null;
+  expectedBytes?: number;
+  // playlist-mode inputs (set when mode === 'playlist')
+  playlistPreset?: PlaylistPreset | null;
+  outputTemplate?: string;
+  // shared
+  subtitles?: SubtitleOptions;
+  sponsorBlockMode: SponsorBlockMode;
+  sponsorBlockCategories: SponsorBlockCategory[];
+  embed: EmbedOptions;
+}
+
+export function prepareJob(input: PrepareJobInput): PreparedJob {
+  const sponsorBlock = toSponsorBlockOptions(input.sponsorBlockMode, input.sponsorBlockCategories);
+  const subtitles = input.subtitles && input.subtitles.languages.length > 0 ? input.subtitles : undefined;
+
+  if (input.mode === 'playlist') {
+    if (!input.playlistPreset) throw new Error('prepareJob: playlist mode requires playlistPreset');
+    if (!input.outputTemplate) throw new Error('prepareJob: playlist mode requires outputTemplate');
+    const spec = playlistPresetSpec(input.playlistPreset);
+    return {
+      kind: 'playlist-preset',
+      source: input.source,
+      preset: input.playlistPreset,
+      formatSelector: spec.formatSelector,
+      audioConvert: spec.audioConvert,
+      outputTemplate: input.outputTemplate,
+      subtitles,
+      sponsorBlock,
+      embed: input.embed
+    };
+  }
+
+  const hasMedia = !!input.formatId || !!input.audioConvert || (!!input.activePreset && input.activePreset !== 'subtitle-only');
+  const hasSubs = !!subtitles;
+
+  if (input.activePreset === 'subtitle-only' || (!hasMedia && hasSubs)) {
+    if (!subtitles) throw new Error('prepareJob: subtitle-only requires non-empty subtitle languages');
+    return { kind: 'subtitle-only', source: input.source, subtitles };
+  }
+
+  if (input.audioConvert) {
+    return {
+      kind: 'audio-convert',
+      source: input.source,
+      audioConvert: input.audioConvert,
+      preset: input.activePreset ?? 'custom',
+      subtitles,
+      sponsorBlock,
+      embed: input.embed
+    };
+  }
+
+  if (!input.formatId) throw new Error('prepareJob: single-format requires formatId');
+  return {
+    kind: 'single-format',
+    source: input.source,
+    formatId: input.formatId,
+    preset: input.activePreset ?? 'custom',
+    subtitles,
+    sponsorBlock,
+    embed: input.embed,
+    expectedBytes: input.expectedBytes
+  };
+}
+
+function toSponsorBlockOptions(mode: SponsorBlockMode, categories: SponsorBlockCategory[]): SponsorBlockOptions {
+  if (mode === 'off' || categories.length === 0) return { mode: 'off' };
+  return { mode, categories: [...categories] };
+}

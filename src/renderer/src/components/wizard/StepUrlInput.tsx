@@ -24,10 +24,10 @@ export function StepUrlInput(): JSX.Element {
   const hasActiveDownloads = queue.some((i) => i.status === 'downloading');
   const [pendingClipboardUrl, setPendingClipboardUrl] = useState<string | null>(null);
 
-  const cookiesPath = settings?.cookiesPath ?? '';
-  const cookiesEnabled = settings?.cookiesEnabled ?? false;
-  const proxyUrl = settings?.proxyUrl ?? '';
-  const commonPaths = settings?.commonPaths;
+  const cookiesPath = settings?.common?.cookiesPath ?? '';
+  const cookiesEnabled = settings?.common?.cookiesEnabled ?? false;
+  const proxyUrl = settings?.common?.proxyUrl ?? '';
+  const commonPaths = settings?.common?.commonPaths;
   const showMissingFileWarning = cookiesEnabled && !cookiesPath.trim();
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export function StepUrlInput(): JSX.Element {
               <span className="text-[13px] font-medium text-foreground">{t('wizard.url.clipboard.toggle')}</span>
               <span className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.clipboard.toggleDescription')}</span>
             </div>
-            <Switch checked={settings?.clipboardWatchEnabled ?? false} onCheckedChange={(checked) => void setClipboardWatchEnabled(checked)} aria-label={t('wizard.url.clipboard.toggle')} data-testid="clipboard-watch-toggle" />
+            <Switch checked={settings?.common?.clipboardWatchEnabled ?? false} onCheckedChange={(checked) => void setClipboardWatchEnabled(checked)} aria-label={t('wizard.url.clipboard.toggle')} data-testid="clipboard-watch-toggle" />
           </div>
 
           <div className="flex items-center justify-between gap-3">
@@ -177,7 +177,7 @@ export function StepUrlInput(): JSX.Element {
                 <span className="text-[13px] font-medium text-foreground">{t('wizard.url.closeToTray.toggle')}</span>
                 <span className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.closeToTray.toggleDescription')}</span>
               </div>
-              <Switch checked={settings?.closeBehavior === 'tray'} onCheckedChange={(checked) => void setCloseBehavior(checked ? 'tray' : 'quit')} aria-label={t('wizard.url.closeToTray.toggle')} data-testid="close-to-tray-toggle" />
+              <Switch checked={settings?.common?.closeBehavior === 'tray'} onCheckedChange={(checked) => void setCloseBehavior(checked ? 'tray' : 'quit')} aria-label={t('wizard.url.closeToTray.toggle')} data-testid="close-to-tray-toggle" />
             </div>
           )}
 
@@ -186,7 +186,7 @@ export function StepUrlInput(): JSX.Element {
               <span className="text-[13px] font-medium text-foreground">{t('wizard.url.analytics.toggle')}</span>
               <span className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.analytics.toggleDescription')}</span>
             </div>
-            <Switch checked={settings?.analyticsEnabled ?? true} onCheckedChange={(checked) => void setAnalyticsEnabled(checked)} aria-label={t('wizard.url.analytics.toggle')} data-testid="analytics-toggle" />
+            <Switch checked={settings?.common?.analyticsEnabled ?? true} onCheckedChange={(checked) => void setAnalyticsEnabled(checked)} aria-label={t('wizard.url.analytics.toggle')} data-testid="analytics-toggle" />
           </div>
 
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">

@@ -45,7 +45,7 @@ function makeYtDlp(
     ensureDeno: vi.fn().mockResolvedValue(denoPath),
     ensureFFprobe: vi.fn().mockResolvedValue(null)
   };
-  const settingsStore = { get: vi.fn().mockResolvedValue(opts.settings ?? {}) };
+  const settingsStore = { get: vi.fn().mockResolvedValue({ common: opts.settings ?? {}, single: {}, playlist: {} }) };
   return new YtDlp(binaryManager as never, tokenService as never, settingsStore as never);
 }
 
@@ -68,6 +68,65 @@ describe('YtDlp — probe args', () => {
   });
 });
 
+describe('YtDlp — playlist-probe args', () => {
+  it('--dump-json --flat-playlist --yes-playlist, NO --no-playlist', async () => {
+    await makeYtDlp().run({ kind: 'playlist-probe', url: URL });
+    const args = getArgs();
+    expect(args).toContain('--dump-json');
+    expect(args).toContain('--flat-playlist');
+    expect(args).toContain('--yes-playlist');
+    expect(args).not.toContain('--no-playlist');
+    expect(args[args.length - 1]).toBe(URL);
+  });
+});
+
+describe('YtDlp — outputTemplate', () => {
+  it('video kind: outputTemplate replaces default %(title)s.%(ext)s', async () => {
+    await makeYtDlp().run({
+      kind: 'video',
+      url: URL,
+      outputDir: OUTPUT_DIR,
+      outputTemplate: '01 - %(title)s.%(ext)s'
+    });
+    const args = getArgs();
+    const oArg = args[args.indexOf('-o') + 1];
+    expect(oArg).toBe(`${OUTPUT_DIR}/01 - %(title)s.%(ext)s`);
+  });
+
+  it('subtitle kind: outputTemplate honored', async () => {
+    await makeYtDlp().run({
+      kind: 'subtitle',
+      url: URL,
+      outputDir: OUTPUT_DIR,
+      subtitleLanguages: ['en'],
+      subtitleFormat: 'srt',
+      outputTemplate: '07 - %(title)s.%(ext)s'
+    });
+    const args = getArgs();
+    const oArg = args[args.indexOf('-o') + 1];
+    expect(oArg).toBe(`${OUTPUT_DIR}/07 - %(title)s.%(ext)s`);
+  });
+
+  it('video kind: tempDir + outputTemplate keeps -o template-only', async () => {
+    await makeYtDlp().run({
+      kind: 'video',
+      url: URL,
+      outputDir: OUTPUT_DIR,
+      tempDir: '/tmp/dl',
+      outputTemplate: '02 - %(title)s.%(ext)s'
+    });
+    const args = getArgs();
+    expect(args[args.indexOf('-o') + 1]).toBe('02 - %(title)s.%(ext)s');
+    expect(args).toContain('--paths');
+  });
+
+  it('video kind: omitting outputTemplate keeps default %(title)s.%(ext)s', async () => {
+    await makeYtDlp().run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR });
+    const args = getArgs();
+    expect(args[args.indexOf('-o') + 1]).toBe(`${OUTPUT_DIR}/%(title)s.%(ext)s`);
+  });
+});
+
 describe('YtDlp — video args', () => {
   it('no formatId → no -f, includes --no-write-subs --no-write-auto-subs', async () => {
     await makeYtDlp().run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR });
@@ -83,6 +142,34 @@ describe('YtDlp — video args', () => {
     const fIdx = args.indexOf('-f');
     expect(fIdx).toBeGreaterThan(-1);
     expect(args[fIdx + 1]).toBe('bv+ba');
+  });
+
+  it('with formatSelector → -f <selector>, formatId ignored', async () => {
+    await makeYtDlp().run({
+      kind: 'video',
+      url: URL,
+      outputDir: OUTPUT_DIR,
+      formatId: '137',
+      formatSelector: 'bestvideo[height<=1080]+bestaudio/best[height<=1080]'
+    });
+    const args = getArgs();
+    const fIdx = args.indexOf('-f');
+    expect(fIdx).toBeGreaterThan(-1);
+    expect(args[fIdx + 1]).toBe('bestvideo[height<=1080]+bestaudio/best[height<=1080]');
+    expect(args).not.toContain('137');
+  });
+
+  it('skipDownload → --skip-download present, no -f', async () => {
+    await makeYtDlp().run({
+      kind: 'video',
+      url: URL,
+      outputDir: OUTPUT_DIR,
+      formatSelector: 'bestaudio/best',
+      skipDownload: true
+    });
+    const args = getArgs();
+    expect(args).toContain('--skip-download');
+    expect(args).not.toContain('-f');
   });
 
   it('output template contains outputDir, url is last', async () => {

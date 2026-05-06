@@ -11,6 +11,10 @@ export const presetSchema = z.enum(['best-quality', 'balanced', 'small-file', 'a
 export type Preset = z.infer<typeof presetSchema>;
 export const PRESETS = presetSchema.options;
 
+export const playlistPresetSchema = z.enum(['video-best', 'video-2160p', 'video-1440p', 'video-1080p', 'video-720p', 'video-480p', 'video-360p', 'audio-best', 'audio-mp3']);
+export type PlaylistPreset = z.infer<typeof playlistPresetSchema>;
+export const PLAYLIST_PRESETS = playlistPresetSchema.options;
+
 export const subtitleModeSchema = z.enum(['sidecar', 'embed', 'subfolder']);
 export type SubtitleMode = z.infer<typeof subtitleModeSchema>;
 export const SUBTITLE_MODES = subtitleModeSchema.options;
@@ -130,33 +134,78 @@ export const getFormatsSchema = z.object({
   url: youtubeUrlSchema
 });
 
-// Accepts BCP-47-ish language codes plus yt-dlp/YouTube extensions: the
-// `-orig` suffix used for the source-language auto-caption track, and the
-// multi-segment auto-translation codes YouTube emits (e.g.
-// `en-en-nP7-2PuUl7o`, `zh-Hans-en-nP7-2PuUl7o`). Examples: `en`, `en-US`,
-// `pt-BR`, `zh-Hans`, `en-orig`, `en-en-nP7-2PuUl7o`.
-// eslint-disable-next-line security/detect-unsafe-regex -- bounded: explicit length limits and segment count
-const subtitleLangRegex = /^[a-z]{2,3}(-[A-Za-z0-9]{1,32}){0,4}$/;
+export const getPlaylistItemsSchema = z.object({
+  url: youtubeUrlSchema
+});
+
+// PreparedJob discriminated-union schema. Type aliases live in
+// `./preparedJob`; the runtime validator lives here so callers that already
+// import from `@shared/schemas` get one source of truth and the import graph
+// stays acyclic.
+const jobSourceSchema = z.enum(['youtube', 'generic']);
+
+const subtitleOptionsSchema = z.object({
+  languages: z.array(z.string()),
+  mode: subtitleModeSchema,
+  format: subtitleFormatSchema,
+  writeAuto: z.boolean()
+});
+
+const sponsorBlockOptionsSchema = z.discriminatedUnion('mode', [z.object({ mode: z.literal('off') }), z.object({ mode: z.enum(['mark', 'remove']), categories: z.array(sponsorBlockCategorySchema) })]);
+
+const embedOptionsSchema = z.object({
+  chapters: z.boolean(),
+  metadata: z.boolean(),
+  thumbnail: z.boolean(),
+  description: z.boolean(),
+  thumbnailSidecar: z.boolean()
+});
+
+const presetOrCustomSchema = z.union([presetSchema, z.literal('custom')]);
+
+export const preparedJobSchema = z.discriminatedUnion('kind', [
+  z.object({
+    kind: z.literal('single-format'),
+    source: jobSourceSchema,
+    formatId: z.string().min(1),
+    preset: presetOrCustomSchema,
+    subtitles: subtitleOptionsSchema.optional(),
+    sponsorBlock: sponsorBlockOptionsSchema,
+    embed: embedOptionsSchema,
+    expectedBytes: z.number().positive().optional()
+  }),
+  z.object({
+    kind: z.literal('audio-convert'),
+    source: jobSourceSchema,
+    audioConvert: audioConvertSchema,
+    preset: presetOrCustomSchema,
+    subtitles: subtitleOptionsSchema.optional(),
+    sponsorBlock: sponsorBlockOptionsSchema,
+    embed: embedOptionsSchema
+  }),
+  z.object({
+    kind: z.literal('playlist-preset'),
+    source: jobSourceSchema,
+    preset: playlistPresetSchema,
+    formatSelector: z.string().min(1).optional(),
+    audioConvert: audioConvertSchema.optional(),
+    outputTemplate: z.string().min(1),
+    subtitles: subtitleOptionsSchema.optional(),
+    sponsorBlock: sponsorBlockOptionsSchema,
+    embed: embedOptionsSchema
+  }),
+  z.object({
+    kind: z.literal('subtitle-only'),
+    source: jobSourceSchema,
+    subtitles: subtitleOptionsSchema
+  })
+]);
 
 export const startDownloadSchema = z.object({
   url: youtubeUrlSchema,
   outputDir: z.string().min(1).optional(),
-  formatId: z.string().min(1).optional(),
-  preset: z.union([presetSchema, z.literal('custom')]).optional(),
   cookiesEnabled: z.boolean().optional(),
-  subtitleLanguages: z.array(z.string().regex(subtitleLangRegex, 'Invalid subtitle language code')).max(MAX_SUBTITLE_LANGUAGES).optional(),
-  writeAutoSubs: z.boolean().optional(),
-  subtitleMode: subtitleModeSchema.optional(),
-  subtitleFormat: subtitleFormatSchema.optional(),
-  sponsorBlockMode: sponsorBlockModeSchema.optional(),
-  sponsorBlockCategories: z.array(sponsorBlockCategorySchema).max(7).optional(),
-  embedChapters: z.boolean().optional(),
-  embedMetadata: z.boolean().optional(),
-  embedThumbnail: z.boolean().optional(),
-  writeDescription: z.boolean().optional(),
-  writeThumbnail: z.boolean().optional(),
-  audioConvert: audioConvertSchema.optional(),
-  expectedBytes: z.number().positive().optional()
+  job: preparedJobSchema
 });
 
 export const cancelDownloadSchema = z.object({
@@ -176,27 +225,17 @@ export const analyticsTrackSchema = z.object({
   props: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional()
 });
 
-export const updateSettingsSchema = z.object({
+const subfolderNameSchema = z
+  .string()
+  .max(SUBFOLDER_NAME_MAX)
+  .refine((s) => s === '' || isValidSubfolder(s), { message: 'Invalid subfolder name' });
+
+const commonSettingsPatchSchema = z.object({
   defaultOutputDir: z.string().min(1).optional(),
   rememberLastOutputDir: z.boolean().optional(),
-  lastVideoResolution: z.string().optional(),
-  lastPreset: presetSchema.nullable().optional(),
   uiZoom: z.number().min(ZOOM_MIN).max(ZOOM_MAX).optional(),
   uiTheme: uiThemeSchema.optional(),
   language: supportedLangSchema.optional(),
-  lastSubtitleLanguages: z.array(z.string()).optional(),
-  lastSubtitleMode: subtitleModeSchema.optional(),
-  lastSubtitleFormat: subtitleFormatSchema.optional(),
-  lastSponsorBlockMode: sponsorBlockModeSchema.optional(),
-  lastSponsorBlockCategories: z.array(sponsorBlockCategorySchema).optional(),
-  lastSubfolderEnabled: z.boolean().optional(),
-  lastSubfolder: z
-    .string()
-    .max(SUBFOLDER_NAME_MAX)
-    .refine((s) => s === '' || isValidSubfolder(s), {
-      message: 'Invalid subfolder name'
-    })
-    .optional(),
   cookiesPath: z.string().optional(),
   cookiesEnabled: z.boolean().optional(),
   proxyUrl: z.string().optional(),
@@ -207,9 +246,33 @@ export const updateSettingsSchema = z.object({
   embedThumbnail: z.boolean().optional(),
   writeDescription: z.boolean().optional(),
   writeThumbnail: z.boolean().optional(),
+  lastSponsorBlockMode: sponsorBlockModeSchema.optional(),
+  lastSponsorBlockCategories: z.array(sponsorBlockCategorySchema).optional(),
   analyticsEnabled: z.boolean().optional(),
   firstRunCompleted: z.boolean().optional(),
   drawerOpen: z.boolean().optional()
+});
+
+const singlePrefsPatchSchema = z.object({
+  lastPreset: presetSchema.nullable().optional(),
+  lastVideoResolution: z.string().optional(),
+  lastSubtitleLanguages: z.array(z.string()).optional(),
+  lastSubtitleMode: subtitleModeSchema.optional(),
+  lastSubtitleFormat: subtitleFormatSchema.optional(),
+  lastSubfolderEnabled: z.boolean().optional(),
+  lastSubfolder: subfolderNameSchema.optional()
+});
+
+const playlistPrefsPatchSchema = z.object({
+  lastPlaylistPreset: playlistPresetSchema.optional(),
+  lastPlaylistSubfolderEnabled: z.boolean().optional(),
+  lastPlaylistSubfolder: subfolderNameSchema.optional()
+});
+
+export const updateSettingsSchema = z.object({
+  common: commonSettingsPatchSchema.optional(),
+  single: singlePrefsPatchSchema.optional(),
+  playlist: playlistPrefsPatchSchema.optional()
 });
 
 // Queue item schema — used by both queueSave IPC handler and queueStore.load
@@ -230,9 +293,7 @@ export const queueItemSchema = z.object({
   title: z.string(),
   thumbnail: z.string(),
   outputDir: z.string(),
-  formatId: z.string().optional(),
   formatLabel: z.string(),
-  preset: z.union([presetSchema, z.literal('custom')]).optional(),
   status: queueItemStatusSchema,
   progressPercent: z.number(),
   progressDetail: z.string().nullable(),
@@ -240,19 +301,8 @@ export const queueItemSchema = z.object({
   error: localizedErrorSchema.nullable(),
   finishedAt: z.string().nullable(),
   downloadJobId: z.string().nullable(),
-  subtitleLanguages: z.array(z.string()),
-  writeAutoSubs: z.boolean(),
-  subtitleMode: subtitleModeSchema,
-  subtitleFormat: subtitleFormatSchema,
-  sponsorBlockMode: sponsorBlockModeSchema,
-  sponsorBlockCategories: z.array(sponsorBlockCategorySchema),
-  embedChapters: z.boolean(),
-  embedMetadata: z.boolean(),
-  embedThumbnail: z.boolean(),
-  writeDescription: z.boolean(),
-  writeThumbnail: z.boolean(),
-  audioConvert: audioConvertSchema.optional(),
-  expectedBytes: z.number().positive().optional()
+  playlistGroupId: z.string().min(1).optional(),
+  job: preparedJobSchema
 });
 
 export const queueArraySchema = z.array(queueItemSchema);

@@ -24,6 +24,7 @@ const am = {
   splash: {
     greeting: 'እንኳን ደህና መጡ!',
     warmup: 'Arroxy እየሞቀ ነው…',
+    downloading: '{{binary}} እየወረደ ነው…',
     warning: 'ማዋቀር አልተጠናቀቀም — አንዳንድ ባህሪያት ላይሰሩ ይችላሉ'
   },
   theme: {
@@ -37,6 +38,8 @@ const am = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'ጥራት',
       formats: 'ቅርጸት',
       subtitles: 'ንዑስ ርዕሶች',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const am = {
       folder: 'አስቀምጥ',
       confirm: 'አረጋግጥ'
     },
+    playlist: {
+      heading: 'የ Playlist ቪዲዮዎች',
+      itemCount_one: '{{count}} ቪዲዮ',
+      itemCount_other: '{{count}} ቪዲዮዎች',
+      selectAll: 'ሁሉ ምረጥ',
+      selectNone: 'ምንም አትምረጥ',
+      rangeFrom: 'ከ',
+      rangeTo: 'እስከ',
+      rangeApply: 'ክልል ተጠቀም',
+      selectedCount_one: '{{count}} ተመርጧል',
+      selectedCount_other: '{{count}} ተመርጠዋል',
+      noSelection: 'ለመቀጠል ቢያንስ አንድ ቪዲዮ ምረጥ',
+      loadingItems: 'Playlist እየጫኑ…',
+      thumbnailAlt: 'የቪዲዮ ድንክ ምስል',
+      continue: 'ቀጥል',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'ለቡድኑ ጥራት ይምረጡ',
+      subhead: 'እያንዳንዱ ቪዲዮ የተመረጠውን ደረጃ ራሱን ችሎ ይፈታል — የተለያዩ playlists ያለ ችግር ይሰራሉ።',
+      itemCount_one: '{{count}} ንጥል',
+      itemCount_other: '{{count}} ንጥሎች',
+      continue: 'ቀጥል'
+    },
+    mixedPrompt: {
+      title: 'አንድ ቪዲዮ ወይስ ሙሉ Playlist?',
+      body: 'ይህ URL የ Playlist አካል ነው። ምን ማውረድ ይፈልጋሉ?',
+      singleVideo: 'ይህን ቪዲዮ ብቻ',
+      wholePlaylist: 'ሙሉ Playlist'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const am = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'ሌሎች ዳውንሎዶች ሲጠናቀቁ ይጀምራል — ሙሉ ባንድዊድዝ ያገኛል',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'ወዲያው ይጀምራል — ከሌሎች ዳውንሎዶች ጋር ይሰራል'
+      pullItTooltip: 'ወዲያው ይጀምራል — ከሌሎች ዳውንሎዶች ጋር ይሰራል',
+      playlistBatch_one: '{{count}} ቪዲዮ · {{title}}',
+      playlistBatch_other: '{{count}} ቪዲዮዎች · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'ቅድመ-ቅንብር',
+      labelItems: 'ቁጥር',
+      itemsValue_one: '{{count}} ከ {{total}} ቪዲዮ',
+      itemsValue_other: '{{count}} ከ {{total}} ቪዲዮዎች'
     },
     error: {
       icon: 'ስህተት'
@@ -242,6 +283,10 @@ const am = {
     activeCount: '{{count}} እያወረዱ · {{percent}}%',
     clear: 'አጽዳ',
     clearTitle: 'የተጠናቀቁ ዳውንሎዶችን አጽዳ',
+    pauseAll: 'ሁሉንም አቁም',
+    pauseAllTitle: 'ሁሉንም ንቁ ዳውንሎዶችን አቁም',
+    cancelAll: 'ሁሉንም ሰርዝ',
+    cancelAllTitle: 'ሁሉንም ንቁ እና በመጠባበቅ ላይ ያሉ ዳውንሎዶችን ሰርዝ',
     tip: 'ዳውንሎድዎ ከዚህ በታች ሰልፎ ነው — ሂደቱን ለመከታተል ማንኛውም ጊዜ ክፈት።',
     item: {
       doneAt: 'ተጠናቅቋል {{time}}',
@@ -249,10 +294,13 @@ const am = {
       defaultError: 'ዳውንሎድ ወድቋል',
       openUrl: 'URL ክፈት',
       pause: 'አቋርጥ',
+      hold: 'አቆይ',
       resume: 'ቀጥል',
       cancel: 'ሰርዝ',
       remove: 'አስወግድ'
-    }
+    },
+    interJobSleep_one: 'ቀጣዩ ዳውንሎድ በ{{count}} ሰከንድ ይጀምራል',
+    interJobSleep_other: 'ቀጣዩ ዳውንሎድ በ{{count}} ሰከንዶች ይጀምራል'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const am = {
       label: 'ንዑስ ርዕሶች ብቻ',
       desc: 'ቪዲዮ የለም፣ ድምጽ የለም፣ ንዑስ ርዕሶች ብቻ'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'ምርጥ ጥራት', desc: 'ለእያንዳንዱ ንጥል ከፍተኛ ቪዲዮ + ድምጽ' },
+    'video-2160p': { label: '4K ድረስ', desc: '2160p ተወስኗል፣ ለእያንዳንዱ ንጥል ዝቅ ይላል' },
+    'video-1440p': { label: '1440p ድረስ', desc: '2K ተወስኗል፣ ለእያንዳንዱ ንጥል ዝቅ ይላል' },
+    'video-1080p': { label: '1080p ድረስ', desc: 'ለእያንዳንዱ ንጥል ተወስኗል፣ ዝቅ ይላል' },
+    'video-720p': { label: '720p ድረስ', desc: 'ትናንሽ ፋይሎች፣ ሰፊ ተኳሃኝነት' },
+    'video-480p': { label: '480p ድረስ', desc: 'ዝቅተኛ ባንድዊድዝ' },
+    'video-360p': { label: '360p ድረስ', desc: 'ትንሹ ቪዲዮ' },
+    'audio-best': { label: 'Audio (ምርጥ)', desc: 'ተፈጥሯዊ ምርጥ ድምጽ፣ ዳግም ኢንኮድ የለም' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'ወደ MP3 192 kbps ቀይር' }
   },
   formatLabel: {
     audioOnly: 'ድምጽ ብቻ',

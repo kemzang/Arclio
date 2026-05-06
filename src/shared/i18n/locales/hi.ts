@@ -24,6 +24,7 @@ const hi = {
   splash: {
     greeting: 'अरे, फिर से स्वागत है!',
     warmup: 'Arroxy तैयार हो रहा है…',
+    downloading: '{{binary}} डाउनलोड हो रहा है…',
     warning: 'सेटअप अधूरा है — कुछ सुविधाएँ काम नहीं कर सकतीं'
   },
   theme: {
@@ -37,6 +38,8 @@ const hi = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'गुणवत्ता',
       formats: 'फ़ॉर्मेट',
       subtitles: 'उपशीर्षक',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const hi = {
       folder: 'सेव करें',
       confirm: 'पुष्टि करें'
     },
+    playlist: {
+      heading: 'Playlist आइटम',
+      itemCount_one: '{{count}} वीडियो',
+      itemCount_other: '{{count}} वीडियो',
+      selectAll: 'सभी चुनें',
+      selectNone: 'कोई नहीं चुनें',
+      rangeFrom: 'से',
+      rangeTo: 'तक',
+      rangeApply: 'रेंज लागू करें',
+      selectedCount_one: '{{count}} चुना गया',
+      selectedCount_other: '{{count}} चुने गए',
+      noSelection: 'जारी रखने के लिए कम से कम एक वीडियो चुनें',
+      loadingItems: 'Playlist लाया जा रहा है…',
+      thumbnailAlt: 'वीडियो थंबनेल',
+      continue: 'जारी रखें',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'बैच के लिए गुणवत्ता चुनें',
+      subhead: 'हर वीडियो चुनी गई श्रेणी के अनुसार स्वतंत्र रूप से रेज़ॉल्व होता है — मिश्रित Playlist बिना किसी परेशानी के काम करती है।',
+      itemCount_one: '{{count}} आइटम',
+      itemCount_other: '{{count}} आइटम',
+      continue: 'जारी रखें'
+    },
+    mixedPrompt: {
+      title: 'एकल वीडियो या पूरी Playlist?',
+      body: 'यह URL किसी Playlist का हिस्सा है। आप क्या डाउनलोड करना चाहते हैं?',
+      singleVideo: 'सिर्फ़ यह वीडियो',
+      wholePlaylist: 'पूरी Playlist'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const hi = {
       addToQueue: '+ क़तार',
       addToQueueTooltip: 'दूसरी डाउनलोड पूरी होने पर शुरू होगा — पूरी बैंडविड्थ मिलेगी',
       pullIt: 'खींच लो! ↓',
-      pullItTooltip: 'तुरंत शुरू — बाक़ी सक्रिय डाउनलोड के साथ-साथ चलेगा'
+      pullItTooltip: 'तुरंत शुरू — बाक़ी सक्रिय डाउनलोड के साथ-साथ चलेगा',
+      playlistBatch_one: '{{count}} वीडियो · {{title}}',
+      playlistBatch_other: '{{count}} वीडियो · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'प्रीसेट',
+      labelItems: 'आइटम',
+      itemsValue_one: '{{total}} में से {{count}} वीडियो',
+      itemsValue_other: '{{total}} में से {{count}} वीडियो'
     },
     error: {
       icon: 'त्रुटि'
@@ -242,6 +283,10 @@ const hi = {
     activeCount: '{{count}} डाउनलोड हो रहे · {{percent}}%',
     clear: 'साफ़ करें',
     clearTitle: 'पूरी हुई डाउनलोड हटाएँ',
+    pauseAll: 'सब रोकें',
+    pauseAllTitle: 'सभी सक्रिय डाउनलोड रोकें',
+    cancelAll: 'सब रद्द करें',
+    cancelAllTitle: 'सभी सक्रिय और प्रतीक्षारत डाउनलोड रद्द करें',
     tip: 'आपकी डाउनलोड नीचे क़तार में है — कभी भी खोलकर प्रगति देख सकते हैं।',
     item: {
       doneAt: '{{time}} पर पूरा',
@@ -249,10 +294,13 @@ const hi = {
       defaultError: 'डाउनलोड विफल',
       openUrl: 'URL खोलें',
       pause: 'रोकें',
+      hold: 'होल्ड',
       resume: 'फिर से शुरू',
       cancel: 'रद्द करें',
       remove: 'हटाएँ'
-    }
+    },
+    interJobSleep_one: 'अगली डाउनलोड {{count}}s में शुरू होगी',
+    interJobSleep_other: 'अगली डाउनलोड {{count}}s में शुरू होगी'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const hi = {
       label: 'केवल उपशीर्षक',
       desc: 'न वीडियो न ऑडियो, केवल उपशीर्षक'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'बेहतरीन गुणवत्ता', desc: 'प्रति आइटम सर्वोच्च वीडियो + ऑडियो' },
+    'video-2160p': { label: '4K तक', desc: '2160p तक सीमित, प्रति आइटम कम पर फ़ॉलबैक' },
+    'video-1440p': { label: '1440p तक', desc: '2K तक सीमित, प्रति आइटम कम पर फ़ॉलबैक' },
+    'video-1080p': { label: '1080p तक', desc: 'प्रति आइटम सीमित, कम पर फ़ॉलबैक' },
+    'video-720p': { label: '720p तक', desc: 'छोटी फ़ाइलें, व्यापक संगतता' },
+    'video-480p': { label: '480p तक', desc: 'कम बैंडविड्थ' },
+    'video-360p': { label: '360p तक', desc: 'सबसे छोटा वीडियो' },
+    'audio-best': { label: 'Audio (बेहतरीन)', desc: 'नेटिव सर्वश्रेष्ठ ऑडियो, पुनः एन्कोड नहीं' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps में कनवर्ट करें' }
   },
   formatLabel: {
     audioOnly: 'सिर्फ़ ऑडियो',

@@ -24,6 +24,7 @@ const uk = {
   splash: {
     greeting: 'Привіт, з поверненням!',
     warmup: 'Arroxy розігрівається…',
+    downloading: 'Завантаження {{binary}}…',
     warning: 'Налаштування не завершено — деякі функції можуть не працювати'
   },
   theme: {
@@ -37,6 +38,8 @@ const uk = {
   wizard: {
     steps: {
       url: 'Посилання',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Якість',
       formats: 'Формат',
       subtitles: 'Субтитри',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const uk = {
       folder: 'Зберегти',
       confirm: 'Підтвердити'
     },
+    playlist: {
+      heading: 'Елементи Playlist',
+      itemCount_one: '{{count}} відео',
+      itemCount_other: '{{count}} відео',
+      selectAll: 'Вибрати всі',
+      selectNone: 'Зняти вибір',
+      rangeFrom: 'Від',
+      rangeTo: 'До',
+      rangeApply: 'Застосувати діапазон',
+      selectedCount_one: '{{count}} вибрано',
+      selectedCount_other: '{{count}} вибрано',
+      noSelection: 'Вибери хоча б одне відео, щоб продовжити',
+      loadingItems: 'Завантаження Playlist…',
+      thumbnailAlt: 'Мініатюра відео',
+      continue: 'Продовжити',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'Вибери якість для пакетного завантаження',
+      subhead: 'Кожне відео самостійно підбирає відповідний рівень якості — неоднорідні плейлисти працюють без сюрпризів.',
+      itemCount_one: '{{count}} елемент',
+      itemCount_other: '{{count}} елементів',
+      continue: 'Продовжити'
+    },
+    mixedPrompt: {
+      title: 'Одне відео чи весь Playlist?',
+      body: 'Це посилання є частиною Playlist. Що ти хочеш завантажити?',
+      singleVideo: 'Тільки це відео',
+      wholePlaylist: 'Весь Playlist'
+    },
+
     url: {
       heading: 'Посилання YouTube',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const uk = {
       addToQueue: '+ У чергу',
       addToQueueTooltip: 'Запуститься, коли завершаться інші завантаження — на повній швидкості',
       pullIt: 'Качаємо! ↓',
-      pullItTooltip: 'Запускається миттєво — паралельно з іншими активними завантаженнями'
+      pullItTooltip: 'Запускається миттєво — паралельно з іншими активними завантаженнями',
+      playlistBatch_one: '{{count}} відео · {{title}}',
+      playlistBatch_other: '{{count}} відео · {{title}}',
+      labelPlaylist: 'Плейлист',
+      labelPreset: 'Пресет',
+      labelItems: 'Елементи',
+      itemsValue_one: '{{count}} з {{total}} відео',
+      itemsValue_other: '{{count}} з {{total}} відео'
     },
     error: {
       icon: 'Помилка'
@@ -242,6 +283,10 @@ const uk = {
     activeCount: '{{count}} завантажуються · {{percent}}%',
     clear: 'Очистити',
     clearTitle: 'Очистити завершені завантаження',
+    pauseAll: 'Призупинити всі',
+    pauseAllTitle: 'Призупинити всі активні завантаження',
+    cancelAll: 'Скасувати всі',
+    cancelAllTitle: 'Скасувати всі активні та очікувані завантаження',
     tip: 'Твоє завантаження в черзі нижче — відкрий її будь-коли, щоб стежити за прогресом.',
     item: {
       doneAt: 'Готово о {{time}}',
@@ -249,10 +294,13 @@ const uk = {
       defaultError: 'Не вдалося завантажити',
       openUrl: 'Відкрити посилання',
       pause: 'Пауза',
+      hold: 'Утримати',
       resume: 'Продовжити',
       cancel: 'Скасувати',
       remove: 'Видалити'
-    }
+    },
+    interJobSleep_one: 'Наступне завантаження розпочнеться через {{count}}с',
+    interJobSleep_other: 'Наступне завантаження розпочнеться через {{count}}с'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const uk = {
       label: 'Тільки субтитри',
       desc: 'Без відео та аудіо, лише субтитри'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Найкраща якість', desc: 'Максимальна роздільна здатність + найкраще аудіо на кожен елемент' },
+    'video-2160p': { label: 'До 4K', desc: 'Обмежено до 2160p, з відкатом нижче для кожного елемента' },
+    'video-1440p': { label: 'До 1440p', desc: 'Обмежено до 2K, з відкатом нижче для кожного елемента' },
+    'video-1080p': { label: 'До 1080p', desc: 'Обмежено для кожного елемента, з відкатом нижче' },
+    'video-720p': { label: 'До 720p', desc: 'Менший розмір файлу, широка сумісність' },
+    'video-480p': { label: 'До 480p', desc: 'Низький трафік' },
+    'video-360p': { label: 'До 360p', desc: 'Найменше відео' },
+    'audio-best': { label: 'Audio (best)', desc: 'Найкраще нативне аудіо без перекодування' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'Конвертувати в MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: 'Тільки аудіо',

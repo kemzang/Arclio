@@ -2,6 +2,11 @@ import { EventEmitter } from 'node:events';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { DownloadService } from '@main/services/DownloadService';
 import { YtDlp } from '@main/services/YtDlp';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
+const DEFAULT_JOB: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
 
 vi.mock('@main/utils/process', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@main/utils/process')>();
@@ -61,7 +66,7 @@ describe('DownloadService — extractor args', () => {
   it('uses web.gvs context and passes visitor_data in extractor-args', async () => {
     const { service } = makeService({ token: 'TOK', visitorData: 'VD' });
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
     await new Promise((r) => setTimeout(r, 50));
 
     const args: string[] = vi.mocked(spawnYtDlp).mock.calls[0][1];
@@ -76,7 +81,7 @@ describe('DownloadService — extractor args', () => {
   it('omits visitor_data when empty string', async () => {
     const { service } = makeService({ token: 'TOK', visitorData: '' });
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
     await new Promise((r) => setTimeout(r, 50));
 
     const args: string[] = vi.mocked(spawnYtDlp).mock.calls[0][1];
@@ -100,7 +105,7 @@ describe('DownloadService — error surfacing', () => {
     }[] = [];
     service.on('status', (ev) => statusEvents.push({ statusKey: ev.statusKey, error: ev.error }));
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
     await new Promise((r) => setTimeout(r, 100));
 
     const errorStatus = statusEvents.find((e) => e.error);
@@ -121,7 +126,7 @@ describe('DownloadService — bot-block retry', () => {
     const { service, tokenService, recentJobsStore } = makeService();
     tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'old-token', visitorData: 'old-visitor' }).mockResolvedValueOnce({ token: 'new-token', visitorData: 'new-visitor' });
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
     await new Promise((r) => setTimeout(r, 150));
 
     expect(tokenService.invalidateCache).toHaveBeenCalledOnce();
@@ -147,7 +152,7 @@ describe('DownloadService — bot-block retry', () => {
 
     const { service, tokenService, recentJobsStore } = makeService();
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
     await new Promise((r) => setTimeout(r, 200));
 
     expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(3);
@@ -168,7 +173,7 @@ describe('DownloadService — bot-block retry', () => {
 
     const { service, tokenService, recentJobsStore } = makeService();
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
     await new Promise((r) => setTimeout(r, 100));
 
     expect(tokenService.invalidateCache).not.toHaveBeenCalled();

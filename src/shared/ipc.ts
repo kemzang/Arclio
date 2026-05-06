@@ -5,6 +5,7 @@ export const IPC_CHANNELS = {
   downloadsPause: 'downloads:pause',
   downloadsResume: 'downloads:resume',
   downloadsGetFormats: 'downloads:getFormats',
+  downloadsGetPlaylistItems: 'downloads:getPlaylistItems',
   chooseFolder: 'dialog:chooseFolder',
   chooseFile: 'dialog:chooseFile',
   settingsGet: 'settings:get',
@@ -26,5 +27,6 @@ export const IPC_CHANNELS = {
   updaterInstall: 'updater:install',
   eventsClipboardUrl: 'events:clipboardUrl',
   analyticsTrack: 'analytics:track',
-  diagnosticsLogWizardStep: 'diagnostics:logWizardStep'
+  diagnosticsLogWizardStep: 'diagnostics:logWizardStep',
+  warmupProgress: 'warmup:progress'
 } as const;

@@ -1,8 +1,9 @@
 import type { JSX } from 'react';
-import { useMemo } from 'react';
-import { ChevronDown, Inbox, Trash2 } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { ChevronDown, Hourglass, Inbox, Pause, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore, formatStatus } from '../../store/useAppStore';
+import { useSchedulerSleepEndsAt } from '../../store/jobScheduler';
 import { QueueItemCard } from '../queue/QueueItemCard';
 import { QueueTipNudge } from '../queue/QueueTipNudge';
 import { Badge } from '../ui/badge';
@@ -16,12 +17,36 @@ export function SmartDrawer(): JSX.Element {
   const showQueueTip = useAppStore((s) => s.showQueueTip);
   const dismissQueueTip = useAppStore((s) => s.dismissQueueTip);
   const clearCompleted = useAppStore((s) => s.clearCompleted);
+  const pauseAll = useAppStore((s) => s.pauseAll);
+  const cancelAll = useAppStore((s) => s.cancelAll);
+  const interJobSleepEndsAt = useSchedulerSleepEndsAt();
 
-  const reversedQueue = useMemo(() => [...queue].reverse(), [queue]);
+  // Tick every 250ms while sleep window active so the countdown ticks down
+  // without re-rendering the whole drawer at 60fps.
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!interJobSleepEndsAt) return;
+    const id = setInterval(() => setNow(Date.now()), 250);
+    return () => clearInterval(id);
+  }, [interJobSleepEndsAt]);
+  const sleepRemainingSec = interJobSleepEndsAt ? Math.max(0, Math.ceil((interJobSleepEndsAt - now) / 1000)) : 0;
+  const showSleepBanner = !!interJobSleepEndsAt && sleepRemainingSec > 0;
+
+  const orderedQueue = useMemo(() => {
+    const finished = (s: string): boolean => s === 'done' || s === 'cancelled';
+    const active = queue.filter((i) => !finished(i.status));
+    const done = queue.filter((i) => finished(i.status));
+    return [...active, ...done];
+  }, [queue]);
+  // First pending item: the one the scheduler will pick when the inter-job
+  // sleep window elapses. Surface the countdown on its card.
+  const nextPendingId = useMemo(() => orderedQueue.find((i) => i.status === 'pending')?.id ?? null, [orderedQueue]);
   const activeItems = useMemo(() => queue.filter((i) => i.status === 'downloading'), [queue]);
   const activeCount = activeItems.length;
   const totalCount = queue.length;
   const hasCompleted = useMemo(() => queue.some((i) => i.status === 'done' || i.status === 'cancelled'), [queue]);
+  const hasDownloading = activeCount > 0;
+  const hasInFlight = useMemo(() => queue.some((i) => i.status === 'downloading' || i.status === 'paused' || i.status === 'pending'), [queue]);
 
   const aggregatePercent = useMemo(() => (activeItems.length === 0 ? 0 : activeItems.reduce((sum, i) => sum + i.progressPercent, 0) / activeItems.length), [activeItems]);
   const headerProgress = activeCount === 1 ? activeItems[0].progressPercent : aggregatePercent;
@@ -60,6 +85,36 @@ export function SmartDrawer(): JSX.Element {
           )}
         </div>
         <div className="flex items-center gap-1.5">
+          {hasDownloading && (
+            <button
+              type="button"
+              data-testid="btn-pause-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                void pauseAll();
+              }}
+              className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-0.5 rounded hover:bg-accent"
+              title={t('queue.pauseAllTitle')}
+            >
+              <Pause size={10} />
+              {t('queue.pauseAll')}
+            </button>
+          )}
+          {hasInFlight && (
+            <button
+              type="button"
+              data-testid="btn-cancel-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                void cancelAll();
+              }}
+              className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-0.5 rounded hover:bg-accent"
+              title={t('queue.cancelAllTitle')}
+            >
+              <X size={10} />
+              {t('queue.cancelAll')}
+            </button>
+          )}
           {hasCompleted && (
             <button
               type="button"
@@ -95,7 +150,13 @@ export function SmartDrawer(): JSX.Element {
       </button>
 
       <div className="drawer-body" style={{ maxHeight: drawerOpen ? '16rem' : '0px' }} data-testid="drawer-body">
-        <ScrollArea className="max-h-64">
+        {showSleepBanner && (
+          <div className="px-4 py-1.5 text-[11px] font-mono text-[var(--color-status-paused)] bg-[var(--color-status-paused-glow)]/10 border-b border-border flex items-center gap-1.5" data-testid="inter-job-sleep-banner">
+            <Hourglass size={11} className="animate-pulse shrink-0" />
+            <span>{t('queue.interJobSleep', { count: sleepRemainingSec })}</span>
+          </div>
+        )}
+        <ScrollArea className="h-64">
           <ul className="px-3 pt-2 pb-3 flex flex-col gap-1.5">
             {queue.length === 0 ? (
               <li className="flex items-center gap-2 text-xs text-muted-foreground py-3">
@@ -103,7 +164,7 @@ export function SmartDrawer(): JSX.Element {
                 <span>{t('queue.empty')}</span>
               </li>
             ) : (
-              reversedQueue.map((item) => <QueueItemCard key={item.id} item={item} />)
+              orderedQueue.map((item) => <QueueItemCard key={item.id} item={item} sleepRemainingSec={item.id === nextPendingId && showSleepBanner ? sleepRemainingSec : undefined} />)
             )}
           </ul>
         </ScrollArea>

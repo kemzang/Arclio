@@ -29,6 +29,7 @@ function redactProxy(url: string | undefined): string | null {
 
 export type YtDlpRequest =
   | { kind: 'probe'; url: string }
+  | { kind: 'playlist-probe'; url: string }
   | {
       kind: 'subtitle';
       url: string;
@@ -37,6 +38,7 @@ export type YtDlpRequest =
       subtitleMode?: SubtitleMode;
       subtitleFormat: SubtitleFormat;
       writeAutoSubs?: boolean;
+      outputTemplate?: string;
     }
   | {
       kind: 'video';
@@ -44,6 +46,8 @@ export type YtDlpRequest =
       outputDir: string;
       tempDir?: string;
       formatId?: string;
+      formatSelector?: string;
+      skipDownload?: boolean;
       audioConvert?: AudioConvert;
       sponsorBlock?: { mode: Exclude<SponsorBlockMode, 'off'>; categories: SponsorBlockCategory[] };
       embedChapters?: boolean;
@@ -51,6 +55,7 @@ export type YtDlpRequest =
       embedThumbnail?: boolean;
       writeDescription?: boolean;
       writeThumbnail?: boolean;
+      outputTemplate?: string;
     }
   | {
       kind: 'video+embed';
@@ -58,6 +63,8 @@ export type YtDlpRequest =
       outputDir: string;
       tempDir?: string;
       formatId?: string;
+      formatSelector?: string;
+      audioConvert?: AudioConvert;
       subtitleLanguages: string[];
       writeAutoSubs?: boolean;
       sponsorBlock?: { mode: Exclude<SponsorBlockMode, 'off'>; categories: SponsorBlockCategory[] };
@@ -66,6 +73,7 @@ export type YtDlpRequest =
       embedThumbnail?: boolean;
       writeDescription?: boolean;
       writeThumbnail?: boolean;
+      outputTemplate?: string;
     };
 
 export interface YtDlpSignal {
@@ -232,7 +240,8 @@ function effectiveSubtitleFormat(req: { writeAutoSubs?: boolean; subtitleFormat:
 function buildSubtitleArgs(req: Extract<YtDlpRequest, { kind: 'subtitle' }>): string[] {
   const subOutputDir = req.subtitleMode === 'subfolder' ? `${req.outputDir}/subtitles` : req.outputDir;
   const fmt = effectiveSubtitleFormat(req);
-  return ['--skip-download', '--no-playlist', '--write-subs', '--sub-langs', req.subtitleLanguages.join(','), ...(req.writeAutoSubs ? ['--write-auto-subs'] : []), '--sleep-subtitles', '3', '--sub-format', `${fmt}/best`, '--convert-subs', fmt, '-o', `${subOutputDir}/%(title)s.%(ext)s`, req.url];
+  const template = req.outputTemplate ?? '%(title)s.%(ext)s';
+  return ['--skip-download', '--no-playlist', '--write-subs', '--sub-langs', req.subtitleLanguages.join(','), ...(req.writeAutoSubs ? ['--write-auto-subs'] : []), '--sleep-subtitles', '3', '--sub-format', `${fmt}/best`, '--convert-subs', fmt, '-o', `${subOutputDir}/${template}`, req.url];
 }
 
 function buildVideoArgs(req: Extract<YtDlpRequest, { kind: 'video' | 'video+embed' }>): string[] {
@@ -276,20 +285,26 @@ function buildVideoArgs(req: Extract<YtDlpRequest, { kind: 'video' | 'video+embe
   if (req.writeDescription) args.push('--write-description');
   if (req.writeThumbnail) args.push('--write-thumbnail');
 
-  if (audioConvert) {
+  const skipDownload = req.kind === 'video' && req.skipDownload === true;
+  if (skipDownload) {
+    args.push('--skip-download');
+  } else if (audioConvert) {
     // Override format to bestaudio: -x is mutually exclusive with video+audio
     // merging, and the audio post-processor needs an audio-only source.
     args.push('-f', 'bestaudio/best', '-x', '--audio-format', audioConvert.target);
     if (audioConvert.target !== 'wav') {
       args.push('--audio-quality', `${audioConvert.bitrateKbps}K`);
     }
+  } else if (req.formatSelector) {
+    args.push('-f', req.formatSelector);
   } else if (req.formatId) {
     args.push('-f', req.formatId);
   }
+  const template = req.outputTemplate ?? '%(title)s.%(ext)s';
   if (req.tempDir) {
-    args.push('--paths', `home:${req.outputDir}`, '--paths', `temp:${req.tempDir}`, '-o', '%(title)s.%(ext)s');
+    args.push('--paths', `home:${req.outputDir}`, '--paths', `temp:${req.tempDir}`, '-o', template);
   } else {
-    args.push('-o', `${req.outputDir}/%(title)s.%(ext)s`);
+    args.push('-o', `${req.outputDir}/${template}`);
   }
   args.push(req.url);
   return args;
@@ -299,6 +314,11 @@ export function buildArgs(req: YtDlpRequest): { args: string[]; subtitleFormat?:
   switch (req.kind) {
     case 'probe':
       return { args: ['--dump-json', '--no-playlist', req.url] };
+    case 'playlist-probe':
+      // --flat-playlist returns NDJSON of entries; --no-playlist would defeat
+      // enumeration entirely. --yes-playlist makes the intent explicit so
+      // mixed video+playlist URLs always expand here.
+      return { args: ['--dump-json', '--flat-playlist', '--yes-playlist', req.url] };
     case 'subtitle':
       return { args: buildSubtitleArgs(req), subtitleFormat: effectiveSubtitleFormat(req) };
     case 'video':
@@ -339,7 +359,7 @@ export class YtDlp {
     if (!this._ytDlpPath) await this.prepare();
     const settings = await this.settingsStore.get();
     const cookiesPath = resolveCookiesPath(settings);
-    const proxyUrl = nonEmpty(settings.proxyUrl?.trim());
+    const proxyUrl = nonEmpty(settings.common?.proxyUrl?.trim());
     const { args, subtitleFormat } = buildArgs(req);
     const result = await invokeWithRetry({
       url: req.url,

@@ -57,3 +57,71 @@ export function cleanYoutubeUrl(url: string): string {
 
   return parsed.toString();
 }
+
+function tryParseYoutube(url: string): URL | null {
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return null;
+  }
+  if (!isYoutubeHost(parsed.hostname.toLowerCase())) return null;
+  return parsed;
+}
+
+export function isPlaylistUrl(url: string): boolean {
+  const parsed = tryParseYoutube(url);
+  if (!parsed) return false;
+  const list = parsed.searchParams.get('list');
+  if (!list) return false;
+  return !parsed.searchParams.get('v');
+}
+
+export function isMixedVideoPlaylistUrl(url: string): boolean {
+  const parsed = tryParseYoutube(url);
+  if (!parsed) return false;
+  return Boolean(parsed.searchParams.get('v')) && Boolean(parsed.searchParams.get('list'));
+}
+
+export function extractPlaylistId(url: string): string | null {
+  const parsed = tryParseYoutube(url);
+  if (!parsed) return null;
+  return parsed.searchParams.get('list');
+}
+
+function rebuildWithoutParam(url: string, param: 'v' | 'list'): string {
+  const cleaned = cleanYoutubeUrl(url);
+  let parsed: URL;
+  try {
+    parsed = new URL(cleaned);
+  } catch {
+    return cleaned;
+  }
+  if (!isYoutubeHost(parsed.hostname.toLowerCase())) return cleaned;
+  if (!parsed.searchParams.has(param)) return cleaned;
+  parsed.searchParams.delete(param);
+  return parsed.toString();
+}
+
+export function forceVideoOnly(url: string): string {
+  return rebuildWithoutParam(url, 'list');
+}
+
+export function forcePlaylistOnly(url: string): string {
+  // Strip v= so /watch becomes /playlist semantically. yt-dlp accepts
+  // /watch?list=X without v= as a playlist URL.
+  const stripped = rebuildWithoutParam(url, 'v');
+  let parsed: URL;
+  try {
+    parsed = new URL(stripped);
+  } catch {
+    return stripped;
+  }
+  if (!isYoutubeHost(parsed.hostname.toLowerCase())) return stripped;
+  // Normalize to canonical /playlist?list=... so yt-dlp's flat-playlist probe
+  // treats it unambiguously as a playlist resource, not a watch page.
+  if (parsed.pathname === '/watch' && parsed.searchParams.get('list')) {
+    parsed.pathname = '/playlist';
+  }
+  return parsed.toString();
+}

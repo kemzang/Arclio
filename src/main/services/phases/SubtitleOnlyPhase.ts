@@ -8,16 +8,23 @@ export const SubtitleOnlyPhase: Phase = {
   async run(ctx: PhaseContext): Promise<PhaseOutcome> {
     const { active, ytDlp } = ctx;
     const { job, input } = active;
+    const preparedJob = input.job;
+
+    if (preparedJob.kind !== 'subtitle-only') {
+      throw new Error('invariant: SubtitleOnlyPhase reached with non-subtitle-only job');
+    }
+
+    const { subtitles } = preparedJob;
 
     const result = await ytDlp.run(
       {
         kind: 'subtitle',
         url: input.url,
         outputDir: input.outputDir!,
-        subtitleLanguages: input.subtitleLanguages ?? [],
-        subtitleMode: input.subtitleMode,
-        subtitleFormat: input.subtitleFormat ?? DEFAULTS.subtitleFormat,
-        writeAutoSubs: input.writeAutoSubs
+        subtitleLanguages: subtitles.languages,
+        subtitleMode: subtitles.mode,
+        subtitleFormat: subtitles.format ?? DEFAULTS.subtitleFormat,
+        writeAutoSubs: subtitles.writeAuto
       },
       {
         onAttempt: (attempt) => {
@@ -39,7 +46,7 @@ export const SubtitleOnlyPhase: Phase = {
 
     if (result.usedExtractorFallback) active.usedExtractorFallback = true;
 
-    if (input.writeAutoSubs) {
+    if (subtitles.writeAuto) {
       await dedupeSubtitleFiles(active.subtitlePaths, job.id, () => active.cancelRequested);
     }
 

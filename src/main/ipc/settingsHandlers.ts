@@ -17,7 +17,7 @@ export function registerSettingsHandlers(deps: SettingsHandlerDeps): void {
   handleRaw(IPC_CHANNELS.settingsGet, async () => {
     try {
       const settings = await settingsStore.get();
-      return ok({ ...settings, commonPaths: buildCommonPaths() });
+      return ok({ ...settings, common: { ...settings.common, commonPaths: buildCommonPaths() } });
     } catch (error) {
       return toUnknownFailure(error);
     }
@@ -25,9 +25,9 @@ export function registerSettingsHandlers(deps: SettingsHandlerDeps): void {
 
   handle(IPC_CHANNELS.settingsUpdate, updateSettingsSchema, async (data) => {
     const updated = await settingsStore.update(data);
-    clipboardWatcher.setEnabled(updated.clipboardWatchEnabled);
-    if (data.analyticsEnabled !== undefined) {
-      setAnalyticsEnabled(updated.analyticsEnabled ?? true);
+    clipboardWatcher.setEnabled(updated.common.clipboardWatchEnabled);
+    if (data.common?.analyticsEnabled !== undefined) {
+      setAnalyticsEnabled(updated.common.analyticsEnabled ?? true);
     }
     return ok(updated);
   });

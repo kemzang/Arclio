@@ -31,6 +31,26 @@ function makeFakeProcess(exitCode: number, stderr = '') {
 }
 
 import type { StatusEvent, StatusKey } from '@shared/types';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+import type { SubtitleMode, SubtitleFormat } from '@shared/schemas';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
+
+function makeJob(opts: { formatId?: string; subtitles?: { languages: string[]; writeAuto?: boolean; mode?: SubtitleMode; format?: SubtitleFormat } } = {}): PreparedJob {
+  if (!opts.formatId && opts.subtitles) {
+    return { kind: 'subtitle-only', source: 'youtube', subtitles: { languages: opts.subtitles.languages, mode: opts.subtitles.mode ?? 'sidecar', format: opts.subtitles.format ?? 'srt', writeAuto: opts.subtitles.writeAuto ?? false } };
+  }
+  return {
+    kind: 'single-format',
+    source: 'youtube',
+    formatId: opts.formatId ?? '137+251',
+    preset: 'custom',
+    sponsorBlock: SB_OFF,
+    embed: EMBED_OFF,
+    subtitles: opts.subtitles ? { languages: opts.subtitles.languages, mode: opts.subtitles.mode ?? 'sidecar', format: opts.subtitles.format ?? 'srt', writeAuto: opts.subtitles.writeAuto ?? false } : undefined
+  };
+}
 
 function captureStatuses(service: { on: (e: 'status', cb: (e: StatusEvent) => void) => void }): StatusEvent[] {
   const events: StatusEvent[] = [];
@@ -77,9 +97,7 @@ describe('DownloadService — split video/subtitle invocations', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en', 'es'],
-      writeAutoSubs: true
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en', 'es'], writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -97,8 +115,7 @@ describe('DownloadService — split video/subtitle invocations', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en']
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'] } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -115,9 +132,7 @@ describe('DownloadService — split video/subtitle invocations', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en-orig'],
-      writeAutoSubs: true
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en-orig'], writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -130,9 +145,7 @@ describe('DownloadService — split video/subtitle invocations', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      writeAutoSubs: false
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], writeAuto: false } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -145,8 +158,7 @@ describe('DownloadService — split video/subtitle invocations', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en']
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'] } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -157,7 +169,7 @@ describe('DownloadService — split video/subtitle invocations', () => {
 
   it('only phase 1 runs when no subtitles are requested', async () => {
     const { service } = makeService();
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     expect(vi.mocked(spawnYtDlp).mock.calls).toHaveLength(1);
@@ -168,9 +180,7 @@ describe('DownloadService — split video/subtitle invocations', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: [],
-      writeAutoSubs: true
+      job: makeJob({ formatId: '137+251' })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -179,7 +189,7 @@ describe('DownloadService — split video/subtitle invocations', () => {
 
   it('phase 1 always includes -f and -o', async () => {
     const { service } = makeService();
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', formatId: '137+251' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     const args = callArgs(0);
@@ -196,8 +206,7 @@ describe('DownloadService — split video/subtitle invocations', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en']
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'] } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -212,7 +221,7 @@ describe('DownloadService — subtitle-only (no formatId)', () => {
 
   it('runs only the subtitle invocation (no media phase) when formatId is undefined and subs are requested', async () => {
     const { service } = makeService();
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', subtitleLanguages: ['en'] });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ subtitles: { languages: ['en'] } }) });
     await new Promise((r) => setTimeout(r, 80));
 
     expect(vi.mocked(spawnYtDlp).mock.calls).toHaveLength(1);
@@ -229,7 +238,7 @@ describe('DownloadService — subtitle-only (no formatId)', () => {
     const { service } = makeService();
     const events = captureStatuses(service);
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', subtitleLanguages: ['en'] });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ subtitles: { languages: ['en'] } }) });
     await new Promise((r) => setTimeout(r, 80));
 
     const keys = statusKeys(events);
@@ -243,7 +252,7 @@ describe('DownloadService — subtitle-only (no formatId)', () => {
     const { service, recentJobsStore } = makeService();
     const events = captureStatuses(service);
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', subtitleLanguages: ['en'] });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ subtitles: { languages: ['en'] } }) });
     await new Promise((r) => setTimeout(r, 80));
 
     expect(recentJobsStore.push).toHaveBeenCalledOnce();
@@ -257,9 +266,7 @@ describe('DownloadService — subtitle-only (no formatId)', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/downloads',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'subfolder',
-      subtitleFormat: 'ass'
+      job: makeJob({ subtitles: { languages: ['en'], mode: 'subfolder', format: 'ass' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -275,8 +282,7 @@ describe('DownloadService — subtitle-only (no formatId)', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed'
+      job: makeJob({ subtitles: { languages: ['en'], mode: 'embed' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -292,8 +298,7 @@ describe('DownloadService — subtitle-only (no formatId)', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      subtitleLanguages: ['en-orig'],
-      writeAutoSubs: true
+      job: makeJob({ subtitles: { languages: ['en-orig'], writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -305,7 +310,7 @@ describe('DownloadService — subtitle-only (no formatId)', () => {
     const { service } = makeService();
     const events = captureStatuses(service);
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', subtitleLanguages: ['en'] });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ subtitles: { languages: ['en'] } }) });
     await new Promise((r) => setTimeout(r, 80));
 
     const final = events[events.length - 1];
@@ -324,9 +329,7 @@ describe('DownloadService — embed mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'embed' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -340,9 +343,7 @@ describe('DownloadService — embed mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'embed' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -354,10 +355,7 @@ describe('DownloadService — embed mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en-orig'],
-      subtitleMode: 'embed',
-      writeAutoSubs: true
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en-orig'], mode: 'embed', writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -375,10 +373,7 @@ describe('DownloadService — embed mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en-orig'],
-      subtitleMode: 'embed',
-      writeAutoSubs: true
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en-orig'], mode: 'embed', writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -395,9 +390,7 @@ describe('DownloadService — embed mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'embed' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -413,9 +406,7 @@ describe('DownloadService — embed mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'embed' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -429,9 +420,7 @@ describe('DownloadService — embed mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'embed' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -444,9 +433,7 @@ describe('DownloadService — embed mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'embed' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -460,9 +447,7 @@ describe('DownloadService — embed mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'sidecar'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'sidecar' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -481,8 +466,7 @@ describe('DownloadService — sidecar format', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en']
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'] } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -497,9 +481,7 @@ describe('DownloadService — sidecar format', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleFormat: 'vtt'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], format: 'vtt' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -513,9 +495,7 @@ describe('DownloadService — sidecar format', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleFormat: 'ass'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], format: 'ass' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -535,10 +515,7 @@ describe('DownloadService — auto-caption format forcing', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en-orig'],
-      writeAutoSubs: true,
-      subtitleFormat: 'ass'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en-orig'], writeAuto: true, format: 'ass' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -552,10 +529,7 @@ describe('DownloadService — auto-caption format forcing', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en-orig'],
-      writeAutoSubs: true,
-      subtitleFormat: 'vtt'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en-orig'], writeAuto: true, format: 'vtt' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -568,10 +542,7 @@ describe('DownloadService — auto-caption format forcing', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      writeAutoSubs: false,
-      subtitleFormat: 'ass'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], writeAuto: false, format: 'ass' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -590,9 +561,7 @@ describe('DownloadService — subfolder mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/downloads',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'subfolder'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'subfolder' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -606,10 +575,7 @@ describe('DownloadService — subfolder mode', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/downloads',
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'subfolder',
-      subtitleFormat: 'ass'
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'subfolder', format: 'ass' } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -631,8 +597,7 @@ describe('DownloadService — status events', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en']
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'] } })
     });
     await new Promise((r) => setTimeout(r, 100));
 
@@ -655,8 +620,7 @@ describe('DownloadService — status events', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en']
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'] } })
     });
     await new Promise((r) => setTimeout(r, 100));
 
@@ -679,8 +643,7 @@ describe('DownloadService — status events', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en']
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'] } })
     });
     await new Promise((r) => setTimeout(r, 100));
 
@@ -694,7 +657,7 @@ describe('DownloadService — status events', () => {
     const { service } = makeService();
     const events = captureStatuses(service);
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     const sleepEvent = events.find((e) => e.statusKey === 'sleepingBetweenRequests');
@@ -708,7 +671,7 @@ describe('DownloadService — status events', () => {
     const { service } = makeService();
     const events = captureStatuses(service);
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     const sleepEvent = events.find((e) => e.statusKey === 'sleepingBetweenRequests');
@@ -721,7 +684,7 @@ describe('DownloadService — status events', () => {
     const { service } = makeService();
     const events = captureStatuses(service);
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     expect(statusKeys(events)).toContain('mergingFormats');
@@ -734,8 +697,7 @@ describe('DownloadService — status events', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: '/tmp',
-      formatId: '137+251',
-      subtitleLanguages: ['en']
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'] } })
     });
     await new Promise((r) => setTimeout(r, 100));
 
@@ -751,7 +713,7 @@ describe('DownloadService — status events', () => {
     const { service } = makeService();
     const events = captureStatuses(service);
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     expect(statusKeys(events)).not.toContain('fetchingSubtitles');
@@ -768,7 +730,7 @@ describe('DownloadService — per-file phase tracking via Destination lines', ()
     const { service } = makeService();
     const events = captureStatuses(service);
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     expect(statusKeys(events)).toContain('fetchingSubtitles');
@@ -779,7 +741,7 @@ describe('DownloadService — per-file phase tracking via Destination lines', ()
     const { service } = makeService();
     const events = captureStatuses(service);
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     // First downloadingMedia is emitted at spawn; we need at least one MORE
@@ -796,7 +758,7 @@ describe('DownloadService — per-file phase tracking via Destination lines', ()
     const progressEvents: { percent?: number }[] = [];
     service.on('progress', (e: { percent?: number }) => progressEvents.push(e));
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     const downloadLineEvent = progressEvents.find((e) => typeof (e as { line?: string }).line === 'string' && (e as { line: string }).line.startsWith('[download] 100%'));
@@ -812,7 +774,7 @@ describe('DownloadService — per-file phase tracking via Destination lines', ()
     const progressEvents: { percent?: number; line: string }[] = [];
     service.on('progress', (e: { percent?: number; line: string }) => progressEvents.push(e));
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     const pctLine = progressEvents.find((e) => e.line.includes('42.0%'));
@@ -828,7 +790,7 @@ describe('DownloadService — per-file phase tracking via Destination lines', ()
     const progressEvents: { percent?: number; line: string }[] = [];
     service.on('progress', (e: { percent?: number; line: string }) => progressEvents.push(e));
 
-    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp' });
+    await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
     const subPercent = progressEvents.find((e) => e.line.includes('79.56KiB'));
@@ -872,9 +834,7 @@ describe('DownloadService — auto-caption dedupe (post-process)', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: workDir,
-      subtitleLanguages: ['en'],
-      subtitleFormat: 'srt',
-      writeAutoSubs: true
+      job: makeJob({ subtitles: { languages: ['en'], format: 'srt', writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -892,9 +852,7 @@ describe('DownloadService — auto-caption dedupe (post-process)', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: workDir,
-      subtitleLanguages: ['en'],
-      subtitleFormat: 'srt',
-      writeAutoSubs: false
+      job: makeJob({ subtitles: { languages: ['en'], format: 'srt', writeAuto: false } })
     });
     await new Promise((r) => setTimeout(r, 80));
 
@@ -971,11 +929,7 @@ describe('DownloadService — sidecar mux after Merger + MoveFiles (regression)'
     await service.start({
       url: YOUTUBE_URL,
       outputDir: workDir,
-      formatId: '330+251',
-      subtitleLanguages: ['en-orig'],
-      subtitleMode: 'embed',
-      subtitleFormat: 'srt',
-      writeAutoSubs: true
+      job: makeJob({ formatId: '330+251', subtitles: { languages: ['en-orig'], mode: 'embed', format: 'srt', writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 150));
 
@@ -1033,11 +987,7 @@ describe('DownloadService — sidecar mux after Merger + MoveFiles (regression)'
     await service.start({
       url: YOUTUBE_URL,
       outputDir: workDir,
-      formatId: '330+251',
-      subtitleLanguages: ['en-orig'],
-      subtitleMode: 'embed',
-      subtitleFormat: 'srt',
-      writeAutoSubs: true
+      job: makeJob({ formatId: '330+251', subtitles: { languages: ['en-orig'], mode: 'embed', format: 'srt', writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 150));
 
@@ -1105,11 +1055,7 @@ describe('DownloadService — embed+auto muxing (post-dedupe)', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: workDir,
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed',
-      subtitleFormat: 'srt',
-      writeAutoSubs: true
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'embed', format: 'srt', writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 150));
 
@@ -1150,11 +1096,7 @@ describe('DownloadService — embed+auto muxing (post-dedupe)', () => {
     await service.start({
       url: YOUTUBE_URL,
       outputDir: workDir,
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed',
-      subtitleFormat: 'srt',
-      writeAutoSubs: true
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'embed', format: 'srt', writeAuto: true } })
     });
     await new Promise((r) => setTimeout(r, 150));
 
@@ -1194,11 +1136,7 @@ describe('DownloadService — embed+auto muxing (post-dedupe)', () => {
     const startResult = await service.start({
       url: YOUTUBE_URL,
       outputDir: workDir,
-      formatId: '137+251',
-      subtitleLanguages: ['en'],
-      subtitleMode: 'embed',
-      subtitleFormat: 'srt',
-      writeAutoSubs: true
+      job: makeJob({ formatId: '137+251', subtitles: { languages: ['en'], mode: 'embed', format: 'srt', writeAuto: true } })
     });
     const jobId = (startResult as { ok: true; data: { job: { id: string } } }).data.job.id;
 

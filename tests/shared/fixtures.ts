@@ -1,8 +1,20 @@
 import type { DownloadJob, QueueItem } from '@shared/types';
-import { DEFAULTS } from '@shared/constants';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
 import { queueItemSchema } from '@shared/schemas';
 
 export { ok } from '@shared/result';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
+
+const DEFAULT_JOB: PreparedJob = {
+  kind: 'single-format',
+  source: 'youtube',
+  formatId: '137+251',
+  preset: 'custom',
+  sponsorBlock: SB_OFF,
+  embed: EMBED_OFF
+};
 
 export function makeItem(overrides: Partial<QueueItem> & Pick<QueueItem, 'id' | 'status'>): QueueItem {
   const candidate = {
@@ -10,7 +22,6 @@ export function makeItem(overrides: Partial<QueueItem> & Pick<QueueItem, 'id' | 
     title: overrides.id,
     thumbnail: '',
     outputDir: '/tmp',
-    formatId: undefined,
     formatLabel: 'Best',
     progressPercent: 0,
     progressDetail: null,
@@ -18,17 +29,7 @@ export function makeItem(overrides: Partial<QueueItem> & Pick<QueueItem, 'id' | 
     error: null,
     finishedAt: null,
     downloadJobId: null,
-    subtitleLanguages: [],
-    writeAutoSubs: false,
-    subtitleMode: DEFAULTS.subtitleMode,
-    subtitleFormat: DEFAULTS.subtitleFormat,
-    sponsorBlockMode: DEFAULTS.sponsorBlockMode,
-    sponsorBlockCategories: DEFAULTS.sponsorBlockCategories,
-    embedChapters: DEFAULTS.embedChapters,
-    embedMetadata: DEFAULTS.embedMetadata,
-    embedThumbnail: DEFAULTS.embedThumbnail,
-    writeDescription: DEFAULTS.writeDescription,
-    writeThumbnail: DEFAULTS.writeThumbnail,
+    job: DEFAULT_JOB,
     ...overrides
   };
   // Schema-validate so a future field added to QueueItem cannot silently slip

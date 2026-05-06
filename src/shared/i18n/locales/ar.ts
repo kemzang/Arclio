@@ -24,6 +24,7 @@ const ar = {
   splash: {
     greeting: 'مرحباً، أهلاً بعودتك!',
     warmup: 'Arroxy يستعد…',
+    downloading: 'جارٍ تنزيل {{binary}}…',
     warning: 'الإعداد غير مكتمل — قد لا تعمل بعض الميزات'
   },
   theme: {
@@ -37,6 +38,8 @@ const ar = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'الجودة',
       formats: 'الصيغة',
       subtitles: 'الترجمات',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const ar = {
       folder: 'حفظ',
       confirm: 'تأكيد'
     },
+    playlist: {
+      heading: 'عناصر القائمة',
+      itemCount_one: '{{count}} فيديو',
+      itemCount_other: '{{count}} مقاطع فيديو',
+      selectAll: 'تحديد الكل',
+      selectNone: 'إلغاء تحديد الكل',
+      rangeFrom: 'من',
+      rangeTo: 'إلى',
+      rangeApply: 'تطبيق النطاق',
+      selectedCount_one: '{{count}} محدد',
+      selectedCount_other: '{{count}} محددة',
+      noSelection: 'حدد فيديو واحداً على الأقل للمتابعة',
+      loadingItems: 'جارٍ جلب القائمة…',
+      thumbnailAlt: 'صورة مصغرة للفيديو',
+      continue: 'متابعة',
+      durationUnknown: 'مباشر'
+    },
+    playlistPresets: {
+      heading: 'اختر الجودة للدفعة',
+      subhead: 'يحل كل فيديو المستوى المختار بشكل مستقل — قوائم التشغيل غير المتجانسة تعمل بدون مفاجآت.',
+      itemCount_one: '{{count}} عنصر',
+      itemCount_other: '{{count}} عناصر',
+      continue: 'متابعة'
+    },
+    mixedPrompt: {
+      title: 'فيديو واحد أم القائمة كاملة؟',
+      body: 'هذا الرابط جزء من قائمة تشغيل. ماذا تريد تنزيل؟',
+      singleVideo: 'هذا الفيديو فقط',
+      wholePlaylist: 'القائمة كاملة'
+    },
+
     url: {
       heading: 'رابط YouTube',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const ar = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'يبدأ عند انتهاء التنزيلات الأخرى — يحصل على كامل عرض النطاق',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'يبدأ فوراً — يعمل جنباً إلى جنب مع التنزيلات النشطة الأخرى'
+      pullItTooltip: 'يبدأ فوراً — يعمل جنباً إلى جنب مع التنزيلات النشطة الأخرى',
+      playlistBatch_one: '{{count}} فيديو · {{title}}',
+      playlistBatch_other: '{{count}} مقاطع فيديو · {{title}}',
+      labelPlaylist: 'قائمة التشغيل',
+      labelPreset: 'الإعداد المسبق',
+      labelItems: 'العناصر',
+      itemsValue_one: '{{count}} من {{total}} فيديو',
+      itemsValue_other: '{{count}} من {{total}} مقاطع فيديو'
     },
     error: {
       icon: 'خطأ'
@@ -242,6 +283,10 @@ const ar = {
     activeCount: '{{count}} جارٍ التنزيل · {{percent}}%',
     clear: 'مسح',
     clearTitle: 'مسح التنزيلات المكتملة',
+    pauseAll: 'إيقاف الكل مؤقتاً',
+    pauseAllTitle: 'إيقاف جميع التنزيلات النشطة مؤقتاً',
+    cancelAll: 'إلغاء الكل',
+    cancelAllTitle: 'إلغاء جميع التنزيلات النشطة والمعلقة',
     tip: 'تنزيلك في قائمة الانتظار أدناه — افتح في أي وقت لمتابعة التقدم.',
     item: {
       doneAt: 'اكتمل {{time}}',
@@ -249,10 +294,13 @@ const ar = {
       defaultError: 'فشل التنزيل',
       openUrl: 'فتح الرابط',
       pause: 'إيقاف مؤقت',
+      hold: 'تأجيل',
       resume: 'استئناف',
       cancel: 'إلغاء',
       remove: 'إزالة'
-    }
+    },
+    interJobSleep_one: 'التنزيل التالي يبدأ خلال {{count}} ثانية',
+    interJobSleep_other: 'التنزيل التالي يبدأ خلال {{count}} ثوانٍ'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const ar = {
       label: 'ترجمات فقط',
       desc: 'بدون فيديو، بدون صوت، ترجمات فقط'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'أفضل جودة', desc: 'أعلى فيديو + صوت متاح لكل عنصر' },
+    'video-2160p': { label: 'حتى 4K', desc: 'محدود بـ 2160p، ينخفض لكل عنصر' },
+    'video-1440p': { label: 'حتى 1440p', desc: 'محدود بـ 2K، ينخفض لكل عنصر' },
+    'video-1080p': { label: 'حتى 1080p', desc: 'محدود لكل عنصر، ينخفض إلى أدنى' },
+    'video-720p': { label: 'حتى 720p', desc: 'ملفات أصغر، توافق واسع' },
+    'video-480p': { label: 'حتى 480p', desc: 'نطاق ترددي منخفض' },
+    'video-360p': { label: 'حتى 360p', desc: 'أصغر فيديو' },
+    'audio-best': { label: 'Audio (الأفضل)', desc: 'أفضل صوت أصلي، بدون إعادة ترميز' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'تحويل إلى MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: 'صوت فقط',

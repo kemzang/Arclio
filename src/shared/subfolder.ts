@@ -34,6 +34,19 @@ export function joinSubfolder(base: string, sub: string): string {
   return trimmed + sep + sub;
 }
 
+// Sanitize a playlist title for use as a folder name. Strips or replaces
+// characters that are illegal on Windows/macOS/Linux and trims whitespace.
+export function safeFolderName(title: string): string {
+  return (
+    title
+      .replace(/[<>:"/\\|?*\x00-\x1F]/g, '_') // eslint-disable-line no-control-regex
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/[. ]+$/, '') // no trailing dots or spaces (Windows)
+      .slice(0, SUBFOLDER_NAME_MAX) || 'Playlist'
+  );
+}
+
 export function effectiveOutputDir(base: string, enabled: boolean, subfolder: string): string {
   const t = subfolder.trim();
   if (!enabled || !t || !isValidSubfolder(t)) return base;

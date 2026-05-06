@@ -81,12 +81,13 @@ export class DownloadService extends EventEmitter {
       return fail(createAppError('validation', 'outputDir is required'));
     }
     const now = nowIso();
+    const preparedJob = input.job;
+    const expectedBytes = preparedJob.kind === 'single-format' ? preparedJob.expectedBytes : undefined;
     const job: DownloadJob = {
       id: randomUUID(),
       url: input.url,
       outputDir: input.outputDir,
-      formatId: input.formatId,
-      expectedBytes: input.expectedBytes,
+      expectedBytes,
       status: 'running',
       createdAt: now,
       updatedAt: now
@@ -102,16 +103,20 @@ export class DownloadService extends EventEmitter {
     logger.info('Download job created', {
       jobId: job.id,
       url: job.url,
-      formatId: job.formatId,
-      outputDir: job.outputDir
+      outputDir: job.outputDir,
+      kind: preparedJob.kind
     });
+    const hasSubs = preparedJob.kind !== 'subtitle-only' ? Boolean(preparedJob.subtitles?.languages.length) : true;
+    const hasSponsorBlock = preparedJob.kind !== 'subtitle-only' && preparedJob.sponsorBlock.mode !== 'off';
+    const embedMetadata = preparedJob.kind !== 'subtitle-only' && preparedJob.embed.metadata;
+    const embedThumbnail = preparedJob.kind !== 'subtitle-only' && preparedJob.embed.thumbnail;
     trackMain('download_started', {
-      preset: input.preset ?? 'custom',
-      has_subtitles: Boolean(input.subtitleLanguages?.length),
-      has_sponsorblock: Boolean(input.sponsorBlockMode && input.sponsorBlockMode !== 'off'),
+      preset: preparedJob.kind,
+      has_subtitles: hasSubs,
+      has_sponsorblock: hasSponsorBlock,
       cookies_enabled: Boolean(input.cookiesEnabled),
-      embed_metadata: Boolean(input.embedMetadata),
-      embed_thumbnail: Boolean(input.embedThumbnail)
+      embed_metadata: embedMetadata,
+      embed_thumbnail: embedThumbnail
     });
     return this.runJob(active);
   }

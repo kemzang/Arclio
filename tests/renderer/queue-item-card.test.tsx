@@ -3,6 +3,16 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { QueueItemCard } from '@renderer/components/queue/QueueItemCard';
 import { useAppStore } from '@renderer/store/useAppStore';
 import type { QueueItem, QueueItemStatus } from '@shared/types';
+import type { PreparedJob } from '@shared/preparedJob';
+
+const DEFAULT_JOB: PreparedJob = {
+  kind: 'single-format',
+  source: 'youtube',
+  formatId: '22',
+  preset: 'custom',
+  sponsorBlock: { mode: 'off' },
+  embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false }
+};
 
 function makeItem(overrides: Partial<QueueItem> = {}): QueueItem {
   return {
@@ -11,7 +21,6 @@ function makeItem(overrides: Partial<QueueItem> = {}): QueueItem {
     title: 'Test Video',
     thumbnail: 'https://example.com/t.jpg',
     outputDir: '/tmp',
-    formatId: '22',
     formatLabel: '720p · mp4',
     status: 'pending',
     progressPercent: 0,
@@ -20,17 +29,7 @@ function makeItem(overrides: Partial<QueueItem> = {}): QueueItem {
     error: null,
     finishedAt: null,
     downloadJobId: null,
-    subtitleLanguages: [],
-    writeAutoSubs: false,
-    subtitleMode: 'sidecar',
-    subtitleFormat: 'srt',
-    sponsorBlockMode: 'off',
-    sponsorBlockCategories: [],
-    embedChapters: false,
-    embedMetadata: false,
-    embedThumbnail: false,
-    writeDescription: false,
-    writeThumbnail: false,
+    job: DEFAULT_JOB,
     ...overrides
   };
 }
@@ -76,6 +75,7 @@ describe('QueueItemCard — progress display', () => {
       <QueueItemCard
         item={makeItem({
           status: 'downloading',
+          downloadJobId: 'job-1',
           progressPercent: 42.5,
           progressDetail: '1.2 MiB/s'
         })}
@@ -86,9 +86,14 @@ describe('QueueItemCard — progress display', () => {
     expect(screen.getByTestId('queue-progress-label')).toHaveTextContent('1.2 MiB/s');
   });
 
-  it('shows "Paused" suffix when paused', () => {
-    render(<QueueItemCard item={makeItem({ status: 'paused', progressPercent: 50 })} />);
+  it('shows "Paused" suffix when paused (real paused job, has jobId)', () => {
+    render(<QueueItemCard item={makeItem({ status: 'paused', progressPercent: 50, downloadJobId: 'job-1' })} />);
     expect(screen.getByTestId('queue-progress-label')).toHaveTextContent('Paused');
+  });
+
+  it('omits progress block for held item (paused without jobId)', () => {
+    render(<QueueItemCard item={makeItem({ status: 'paused', progressPercent: 0, downloadJobId: null })} />);
+    expect(screen.queryByTestId('queue-progress')).not.toBeInTheDocument();
   });
 
   it('omits progress block when pending', () => {
@@ -130,10 +135,17 @@ describe('QueueItemCard — action buttons', () => {
   });
 
   it('downloading → shows Pause + Cancel; pause fires pauseItemDownload', () => {
-    render(<QueueItemCard item={makeItem({ status: 'downloading' })} />);
+    render(<QueueItemCard item={makeItem({ status: 'downloading', downloadJobId: 'job-1' })} />);
     fireEvent.click(screen.getByTestId('btn-pause'));
     expect(actions.pauseItemDownload).toHaveBeenCalledWith('q1');
     expect(screen.getByTestId('btn-cancel')).toBeInTheDocument();
+  });
+
+  it('downloading without a job id hides pause/cancel/remove controls', () => {
+    render(<QueueItemCard item={makeItem({ status: 'downloading', downloadJobId: null })} />);
+    expect(screen.queryByTestId('btn-pause')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('btn-cancel')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('btn-remove')).not.toBeInTheDocument();
   });
 
   it('paused → shows Resume; click fires resumeItemDownload', () => {
@@ -167,7 +179,7 @@ describe('QueueItemCard — action buttons', () => {
   });
 
   it('downloading → Cancel button fires cancelItemDownload (not removeQueueItem)', () => {
-    render(<QueueItemCard item={makeItem({ status: 'downloading' })} />);
+    render(<QueueItemCard item={makeItem({ status: 'downloading', downloadJobId: 'job-1' })} />);
     fireEvent.click(screen.getByTestId('btn-cancel'));
     expect(actions.cancelItemDownload).toHaveBeenCalledWith('q1');
     expect(actions.removeQueueItem).not.toHaveBeenCalled();
@@ -185,6 +197,7 @@ describe('QueueItemCard — phase indicators', () => {
       <QueueItemCard
         item={makeItem({
           status: 'downloading',
+          downloadJobId: 'job-1',
           progressPercent: 5,
           lastStatus: { key: statusKey as never, params: {} }
         })}
@@ -198,6 +211,7 @@ describe('QueueItemCard — phase indicators', () => {
       <QueueItemCard
         item={makeItem({
           status: 'downloading',
+          downloadJobId: 'job-1',
           progressPercent: 50,
           lastStatus: { key: 'sleepingBetweenRequests', params: { seconds: 5 } }
         })}
@@ -212,6 +226,7 @@ describe('QueueItemCard — phase indicators', () => {
       <QueueItemCard
         item={makeItem({
           status: 'downloading',
+          downloadJobId: 'job-1',
           progressPercent: 50,
           lastStatus: { key: 'downloadingMedia', params: {} }
         })}
@@ -256,6 +271,7 @@ describe('QueueItemCard — subtitlesFailed warning', () => {
       <QueueItemCard
         item={makeItem({
           status: 'downloading',
+          downloadJobId: 'job-1',
           lastStatus: { key: 'subtitlesFailed', params: {} }
         })}
       />

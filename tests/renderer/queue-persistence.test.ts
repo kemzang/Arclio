@@ -28,7 +28,7 @@ describe('Queue persistence — store behavior', () => {
         resume: vi.fn().mockResolvedValue(ok({ resumed: false }))
       },
       settings: {
-        get: vi.fn().mockResolvedValue(ok({ defaultOutputDir: '/tmp', rememberLastOutputDir: false })),
+        get: vi.fn().mockResolvedValue(ok({ common: { defaultOutputDir: '/tmp', rememberLastOutputDir: false, clipboardWatchEnabled: false }, single: {}, playlist: {} })),
         update: vi.fn().mockResolvedValue(ok({}))
       },
       shell: { openFolder: vi.fn(), openExternal: vi.fn() },
@@ -40,7 +40,8 @@ describe('Queue persistence — store behavior', () => {
           return () => undefined;
         }),
         onProgress: vi.fn().mockReturnValue(() => undefined),
-        onClipboardUrl: vi.fn().mockReturnValue(() => undefined)
+        onClipboardUrl: vi.fn().mockReturnValue(() => undefined),
+        onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
       },
       queue: { save: saveMock, load: loadMock },
       diagnostics: { logWizardStep: vi.fn() }
@@ -86,7 +87,7 @@ describe('Queue persistence — store behavior', () => {
 
     it('restores drawerOpen=true from settings when queue is non-empty', async () => {
       const api = buildMockApi([makeItem({ id: 'x', status: 'pending' })]);
-      api.settings.get = vi.fn().mockResolvedValue(ok({ defaultOutputDir: '/tmp', rememberLastOutputDir: false, drawerOpen: true }));
+      api.settings.get = vi.fn().mockResolvedValue(ok({ common: { defaultOutputDir: '/tmp', rememberLastOutputDir: false, clipboardWatchEnabled: false, drawerOpen: true }, single: {}, playlist: {} }));
       window.appApi = api as never;
 
       await useAppStore.getState().initialize();
@@ -162,9 +163,9 @@ describe('Queue persistence — store behavior', () => {
         wizardOutputDir: '/tmp',
         wizardStep: 'confirm',
         settings: {
-          defaultOutputDir: '/tmp',
-          rememberLastOutputDir: false,
-          clipboardWatchEnabled: false
+          common: { defaultOutputDir: '/tmp', rememberLastOutputDir: false, clipboardWatchEnabled: false },
+          single: {},
+          playlist: {}
         }
       });
 
@@ -204,6 +205,34 @@ describe('Queue persistence — store behavior', () => {
 
       expect(saveMock).toHaveBeenCalled();
       expect(useAppStore.getState().queue[0].status).toBe('paused');
+    });
+
+    it('does not send item-scoped cancel IPC until a downloading item has a real job id', async () => {
+      const cancelMock = vi.fn().mockResolvedValue(ok({ cancelled: true }));
+      (window.appApi as unknown as { downloads: { cancel: typeof cancelMock } }).downloads.cancel = cancelMock;
+
+      useAppStore.setState({
+        queue: [makeItem({ id: 'warming-up', status: 'downloading', downloadJobId: null })]
+      });
+
+      await useAppStore.getState().cancelItemDownload('warming-up');
+
+      expect(cancelMock).not.toHaveBeenCalled();
+      expect(useAppStore.getState().queue[0].status).toBe('downloading');
+    });
+
+    it('does not send item-scoped pause IPC until a downloading item has a real job id', async () => {
+      const pauseMock = vi.fn().mockResolvedValue(ok({ paused: true }));
+      (window.appApi as unknown as { downloads: { pause: typeof pauseMock } }).downloads.pause = pauseMock;
+
+      useAppStore.setState({
+        queue: [makeItem({ id: 'warming-up', status: 'downloading', downloadJobId: null })]
+      });
+
+      await useAppStore.getState().pauseItemDownload('warming-up');
+
+      expect(pauseMock).not.toHaveBeenCalled();
+      expect(useAppStore.getState().queue[0].status).toBe('downloading');
     });
 
     it('calls save when retryQueueItem() resets a failed item', async () => {

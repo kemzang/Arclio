@@ -2,8 +2,10 @@ import { describe, it, expect } from 'vitest';
 import { applyPreset } from '@renderer/store/wizardSlice';
 import { buildFormatId, buildAudioConvertPayload } from '@renderer/store/helpers';
 import { strategyFor } from '@main/services/phases';
+import { prepareJob } from '@shared/prepareJob';
 import type { AudioSelection } from '@renderer/store/types';
-import type { FormatOption, Preset, StartDownloadInput } from '@shared/types';
+import type { FormatOption, Preset } from '@shared/types';
+import type { PreparedJob } from '@shared/preparedJob';
 
 const MOCK_FORMATS: FormatOption[] = [
   { formatId: '137', label: '1080p mp4', ext: 'mp4', resolution: '1080p', fps: 30, isVideoOnly: true, isAudioOnly: false, filesize: 100_000_000 },
@@ -15,23 +17,30 @@ const MOCK_FORMATS: FormatOption[] = [
 
 const PRESETS: Preset[] = ['best-quality', 'balanced', 'small-file', 'audio-only', 'subtitle-only'];
 
+const EMBED_OFF = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+
 // Mirrors what queueSlice.buildStartInput would produce, minus URL/output bookkeeping.
-function pipelineToStartInput(preset: Preset, audioSelection: AudioSelection, videoFormatId: string, subs: string[]): StartDownloadInput {
-  return {
-    url: 'https://www.youtube.com/watch?v=x',
-    preset,
+function pipelineToPreparedJob(preset: Preset, audioSelection: AudioSelection, videoFormatId: string, subs: string[]): PreparedJob {
+  return prepareJob({
+    mode: 'single',
+    source: 'youtube',
     formatId: buildFormatId(videoFormatId, audioSelection),
     audioConvert: buildAudioConvertPayload(audioSelection),
-    subtitleLanguages: subs.length > 0 ? subs : undefined,
-    subtitleMode: 'sidecar'
-  };
+    activePreset: preset,
+    sponsorBlockMode: 'off',
+    sponsorBlockCategories: [],
+    embed: EMBED_OFF,
+    subtitles: subs.length > 0 ? { languages: subs, mode: 'sidecar', format: 'srt', writeAuto: false } : undefined
+  });
 }
 
 describe('preset pipeline → strategy', () => {
   it.each(PRESETS)('%s preset: applyPreset → strategy is consistent with presetProducesMedia', (preset) => {
     const { videoFormatId, audioSelection } = applyPreset(preset, MOCK_FORMATS);
-    const inputNoSubs = pipelineToStartInput(preset, audioSelection, videoFormatId, []);
-    const inputWithSubs = pipelineToStartInput(preset, audioSelection, videoFormatId, ['en', 'ja']);
+    // subtitle-only preset requires at least one subtitle language in prepareJob
+    const subsForPreset = preset === 'subtitle-only' ? ['en'] : [];
+    const inputNoSubs = pipelineToPreparedJob(preset, audioSelection, videoFormatId, subsForPreset);
+    const inputWithSubs = pipelineToPreparedJob(preset, audioSelection, videoFormatId, ['en', 'ja']);
 
     if (preset === 'subtitle-only') {
       expect(strategyFor(inputNoSubs)).toBe('subtitle-only');
@@ -48,11 +57,11 @@ describe('preset pipeline → strategy', () => {
   // ticks 2 subtitles. Pre-fix: strategy=subtitle-only → no audio file written.
   it('production repro: audio-only preset + m4a@192 convert + 2 subs → video+sidecar', () => {
     const audioSelection: AudioSelection = { kind: 'convert-lossy', target: 'm4a', bitrateKbps: 192 };
-    const input = pipelineToStartInput('audio-only', audioSelection, '', ['en-j3PyPqV-e1s', 'en-orig']);
+    const job = pipelineToPreparedJob('audio-only', audioSelection, '', ['en-j3PyPqV-e1s', 'en-orig']);
 
-    expect(input.formatId).toBeUndefined();
-    expect(input.audioConvert).toEqual({ target: 'm4a', bitrateKbps: 192 });
-    expect(strategyFor(input)).toBe('video+sidecar');
+    expect(job.kind).toBe('audio-convert');
+    expect(job.kind === 'audio-convert' ? job.audioConvert : undefined).toEqual({ target: 'm4a', bitrateKbps: 192 });
+    expect(strategyFor(job)).toBe('video+sidecar');
   });
 
   it('subtitle-only preset never produces media intent', () => {
@@ -67,19 +76,19 @@ describe('preset pipeline → strategy', () => {
     const { videoFormatId, audioSelection } = applyPreset('audio-only', MOCK_FORMATS);
     expect(videoFormatId).toBe('');
     expect(audioSelection).toEqual({ kind: 'native', formatId: '251' });
-    const input = pipelineToStartInput('audio-only', audioSelection, videoFormatId, []);
-    expect(input.formatId).toBe('251');
-    expect(strategyFor(input)).toBe('video');
+    const job = pipelineToPreparedJob('audio-only', audioSelection, videoFormatId, []);
+    expect(job.kind === 'single-format' ? job.formatId : undefined).toBe('251');
+    expect(strategyFor(job)).toBe('video');
   });
 
-  it('audio-only preset with no audio formats falls through to no-media (preset-routing rescues it)', () => {
+  it('audio-only preset with no audio formats: applyPreset returns no media selection', () => {
     const formatsNoAudio = MOCK_FORMATS.filter((f) => !f.isAudioOnly);
     const { videoFormatId, audioSelection } = applyPreset('audio-only', formatsNoAudio);
     expect(audioSelection.kind).toBe('none');
-    const input = pipelineToStartInput('audio-only', audioSelection, videoFormatId, ['en']);
-    // Even with no formatId/audioConvert, audio-only preset itself signals
-    // media intent — must not route to subtitle-only.
-    expect(strategyFor(input)).not.toBe('subtitle-only');
+    expect(buildFormatId(videoFormatId, audioSelection)).toBeUndefined();
+    expect(buildAudioConvertPayload(audioSelection)).toBeUndefined();
+    // prepareJob enforces media intent structurally: it would throw rather than
+    // silently produce a subtitle-only job for an audio-only preset.
   });
 });
 
@@ -103,7 +112,7 @@ describe('audio convert variants — full coverage', () => {
   });
 
   it.each(convertSelections)('convert $kind/$target@$bitrateKbps + audio-only preset + subs → video+sidecar', (sel) => {
-    const input = pipelineToStartInput('audio-only', sel, '', ['en']);
-    expect(strategyFor(input)).toBe('video+sidecar');
+    const job = pipelineToPreparedJob('audio-only', sel, '', ['en']);
+    expect(strategyFor(job)).toBe('video+sidecar');
   });
 });

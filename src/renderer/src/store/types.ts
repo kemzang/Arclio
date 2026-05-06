@@ -1,6 +1,11 @@
 import type { StoreApi } from 'zustand';
-import type { AppError, AppSettings, AudioBitrate, AudioConvertTarget, FormatOption, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
-export type WizardStep = 'url' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
+import type { AppError, AppSettings, AudioBitrate, AudioConvertTarget, FormatOption, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
+export type WizardStep = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
+
+// Explicit mode tag so consumers don't re-derive intent from
+// `playlistItems.length > 0`. `single` = format-probe flow; `playlist` =
+// flat-probe + preset flow. Set on probe entry, cleared on reset.
+export type WizardMode = 'single' | 'playlist';
 
 // Discriminated union for the renderer's audio-column selection. Three modes:
 //   none    — no audio (video-only download)
@@ -16,6 +21,7 @@ export type GetState = StoreApi<AppState>['getState'];
 
 export interface WizardSlice {
   wizardStep: WizardStep;
+  wizardMode: WizardMode;
   formatsLoading: boolean;
   wizardUrl: string;
   wizardTitle: string;
@@ -48,9 +54,26 @@ export interface WizardSlice {
   wizardEmbedThumbnail: boolean;
   wizardWriteDescription: boolean;
   wizardWriteThumbnail: boolean;
+  // Playlist mode — populated when the URL probe routes through
+  // getPlaylistItems instead of getFormats.
+  playlistItems: PlaylistEntry[];
+  selectedPlaylistItemIds: string[];
+  playlistTitle: string;
+  playlistId: string;
+  playlistProbeLoading: boolean;
+  mixedUrlPromptOpen: boolean;
+  mixedUrlPending: string | null;
+  selectedPlaylistPreset: PlaylistPreset | null;
 
   setWizardUrl: (url: string) => void;
   submitUrl: () => Promise<void>;
+  dismissMixedPrompt: (choice: 'video' | 'playlist') => Promise<void>;
+  setPlaylistItemSelected: (id: string, checked: boolean) => void;
+  selectAllPlaylistItems: () => void;
+  selectNonePlaylistItems: () => void;
+  selectPlaylistRange: (from: number, to: number) => void;
+  confirmPlaylistSelection: () => void;
+  setPlaylistPreset: (p: PlaylistPreset) => void;
   advance: () => void;
   back: () => void;
   reset: () => void;
@@ -87,6 +110,8 @@ export interface QueueSlice {
   removeQueueItem: (itemId: string) => void;
   retryQueueItem: (itemId: string) => Promise<void>;
   clearCompleted: () => void;
+  pauseAll: () => Promise<void>;
+  cancelAll: () => Promise<void>;
   openItemFolder: (itemId: string) => Promise<void>;
   openItemUrl: (itemId: string) => void;
 }
@@ -107,9 +132,10 @@ export interface SystemSlice {
   initialized: boolean;
   initializing: boolean;
   warmupFailures: string[];
+  warmupProgress: Record<string, import('@shared/types').WarmupProgressEvent> | null;
   settings: AppSettings | null;
   language: SupportedLang;
-  commonPaths: AppSettings['commonPaths'];
+  commonPaths: AppSettings['common']['commonPaths'];
   initialize: () => Promise<void>;
   openLogs: () => Promise<void>;
   setLanguage: (lang: SupportedLang) => void;

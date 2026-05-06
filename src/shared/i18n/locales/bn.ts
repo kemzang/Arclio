@@ -24,6 +24,7 @@ const bn = {
   splash: {
     greeting: 'স্বাগতম, আবার এলেন!',
     warmup: 'Arroxy প্রস্তুত হচ্ছে…',
+    downloading: '{{binary}} ডাউনলোড হচ্ছে…',
     warning: 'সেটআপ অসম্পূর্ণ — কিছু ফিচার কাজ নাও করতে পারে'
   },
   theme: {
@@ -37,6 +38,8 @@ const bn = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'মান',
       formats: 'ফরম্যাট',
       subtitles: 'সাবটাইটেল',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const bn = {
       folder: 'সেভ',
       confirm: 'নিশ্চিত করুন'
     },
+    playlist: {
+      heading: 'Playlist আইটেম',
+      itemCount_one: '{{count}}টি ভিডিও',
+      itemCount_other: '{{count}}টি ভিডিও',
+      selectAll: 'সব নির্বাচন করুন',
+      selectNone: 'কোনোটি নির্বাচন করবেন না',
+      rangeFrom: 'থেকে',
+      rangeTo: 'পর্যন্ত',
+      rangeApply: 'রেঞ্জ প্রয়োগ করুন',
+      selectedCount_one: '{{count}}টি নির্বাচিত',
+      selectedCount_other: '{{count}}টি নির্বাচিত',
+      noSelection: 'চালিয়ে যেতে কমপক্ষে একটি ভিডিও নির্বাচন করুন',
+      loadingItems: 'Playlist আনা হচ্ছে…',
+      thumbnailAlt: 'ভিডিও থাম্বনেইল',
+      continue: 'চালিয়ে যান',
+      durationUnknown: 'লাইভ'
+    },
+    playlistPresets: {
+      heading: 'ব্যাচের জন্য মান বেছে নিন',
+      subhead: 'প্রতিটি ভিডিও স্বাধীনভাবে বেছে নেওয়া স্তর অনুযায়ী রেজোলিউশন করে — বৈচিত্র্যময় playlist অবাক করা ছাড়াই কাজ করে।',
+      itemCount_one: '{{count}}টি আইটেম',
+      itemCount_other: '{{count}}টি আইটেম',
+      continue: 'চালিয়ে যান'
+    },
+    mixedPrompt: {
+      title: 'একটি ভিডিও নাকি পুরো Playlist?',
+      body: 'এই URL একটি Playlist-এর অংশ। আপনি কী ডাউনলোড করতে চান?',
+      singleVideo: 'শুধু এই ভিডিও',
+      wholePlaylist: 'পুরো Playlist'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const bn = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'অন্য ডাউনলোড শেষ হলে শুরু হবে — পুরো ব্যান্ডউইথ পাবে',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'এখনই শুরু হবে — অন্য সক্রিয় ডাউনলোডের সাথে চলবে'
+      pullItTooltip: 'এখনই শুরু হবে — অন্য সক্রিয় ডাউনলোডের সাথে চলবে',
+      playlistBatch_one: '{{count}}টি ভিডিও · {{title}}',
+      playlistBatch_other: '{{count}}টি ভিডিও · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'প্রিসেট',
+      labelItems: 'আইটেম',
+      itemsValue_one: '{{total}}-এর মধ্যে {{count}}টি ভিডিও',
+      itemsValue_other: '{{total}}-এর মধ্যে {{count}}টি ভিডিও'
     },
     error: {
       icon: 'ত্রুটি'
@@ -242,6 +283,10 @@ const bn = {
     activeCount: '{{count}}টি ডাউনলোড হচ্ছে · {{percent}}%',
     clear: 'মুছুন',
     clearTitle: 'সম্পন্ন ডাউনলোড মুছুন',
+    pauseAll: 'সব বিরাম করুন',
+    pauseAllTitle: 'সব সক্রিয় ডাউনলোড বিরাম করুন',
+    cancelAll: 'সব বাতিল করুন',
+    cancelAllTitle: 'সব সক্রিয় ও অপেক্ষমাণ ডাউনলোড বাতিল করুন',
     tip: 'আপনার ডাউনলোড নিচে কিউ করা হয়েছে — যেকোনো সময় খুলে অগ্রগতি দেখুন।',
     item: {
       doneAt: '{{time}} সম্পন্ন',
@@ -249,10 +294,13 @@ const bn = {
       defaultError: 'ডাউনলোড ব্যর্থ',
       openUrl: 'URL খুলুন',
       pause: 'বিরতি',
+      hold: 'মুলতুবি',
       resume: 'চালিয়ে যান',
       cancel: 'বাতিল',
       remove: 'সরান'
-    }
+    },
+    interJobSleep_one: 'পরবর্তী ডাউনলোড {{count}} সেকেন্ডে শুরু হবে',
+    interJobSleep_other: 'পরবর্তী ডাউনলোড {{count}} সেকেন্ডে শুরু হবে'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const bn = {
       label: 'শুধু সাবটাইটেল',
       desc: 'ভিডিও নেই, অডিও নেই, শুধু সাবটাইটেল'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'সর্বোচ্চ মান', desc: 'প্রতিটি আইটেমে সর্বোচ্চ ভিডিও + অডিও' },
+    'video-2160p': { label: '4K পর্যন্ত', desc: '2160p সীমাবদ্ধ, প্রতি আইটেমে নিম্নে ফলব্যাক' },
+    'video-1440p': { label: '1440p পর্যন্ত', desc: '2K সীমাবদ্ধ, প্রতি আইটেমে নিম্নে ফলব্যাক' },
+    'video-1080p': { label: '1080p পর্যন্ত', desc: 'প্রতি আইটেমে সীমাবদ্ধ, নিম্নে ফলব্যাক' },
+    'video-720p': { label: '720p পর্যন্ত', desc: 'ছোট ফাইল, ব্যাপক সামঞ্জস্যতা' },
+    'video-480p': { label: '480p পর্যন্ত', desc: 'কম ব্যান্ডউইথ' },
+    'video-360p': { label: '360p পর্যন্ত', desc: 'সবচেয়ে ছোট ভিডিও' },
+    'audio-best': { label: 'Audio (সেরা)', desc: 'নেটিভ সেরা অডিও, রি-এনকোড নেই' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps-এ কনভার্ট করুন' }
   },
   formatLabel: {
     audioOnly: 'শুধু অডিও',

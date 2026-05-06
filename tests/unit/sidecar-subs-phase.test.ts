@@ -3,6 +3,10 @@ import { SidecarSubsPhase } from '@main/services/phases/SidecarSubsPhase';
 import { STATUS_KEY } from '@shared/schemas';
 import type { PhaseContext, ActiveDownload } from '@main/services/phases/types';
 import type { DownloadJob, StartDownloadInput } from '@shared/types';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
 import type { YtDlpResult } from '@main/services/YtDlp';
 
 vi.mock('@main/services/subtitlePostProcess', () => ({
@@ -26,14 +30,20 @@ function makeJob(): DownloadJob {
   };
 }
 
+const BASE_JOB: PreparedJob = {
+  kind: 'single-format',
+  source: 'youtube',
+  formatId: 'bv+ba',
+  preset: 'custom',
+  sponsorBlock: SB_OFF,
+  embed: EMBED_OFF,
+  subtitles: { languages: ['en'], mode: 'sidecar', format: 'srt', writeAuto: false }
+};
+
 const BASE_INPUT: StartDownloadInput = {
   url: 'https://www.youtube.com/watch?v=test',
   outputDir: '/tmp',
-  formatId: 'bv+ba',
-  subtitleLanguages: ['en'],
-  subtitleMode: 'sidecar',
-  writeAutoSubs: false,
-  subtitleFormat: 'srt'
+  job: BASE_JOB
 };
 
 function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
@@ -114,7 +124,7 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
   it('writeAutoSubs=false → dedupeSubtitleFiles not called', async () => {
     await SidecarSubsPhase(false).run(
       makeCtx(SUCCESS, {
-        input: { ...BASE_INPUT, writeAutoSubs: false }
+        input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: { ...BASE_JOB.subtitles!, writeAuto: false } } }
       })
     );
     expect(dedupeSubtitleFiles).not.toHaveBeenCalled();
@@ -123,7 +133,7 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
   it('writeAutoSubs=true → dedupeSubtitleFiles called with subtitlePaths', async () => {
     const paths = ['/tmp/video.en.srt'];
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, writeAutoSubs: true },
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: { ...BASE_JOB.subtitles!, writeAuto: true } } },
       subtitlePaths: paths
     });
     await SidecarSubsPhase(false).run(ctx);
@@ -134,7 +144,7 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
 
   it('dedupeSubtitleFiles shouldAbort reflects cancelRequested', async () => {
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, writeAutoSubs: true },
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: { ...BASE_JOB.subtitles!, writeAuto: true } } },
       subtitlePaths: ['/tmp/video.en.srt']
     });
     await SidecarSubsPhase(false).run(ctx);

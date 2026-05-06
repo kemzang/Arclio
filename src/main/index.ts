@@ -1,4 +1,6 @@
 import path from 'node:path';
+import fs from 'node:fs';
+import os from 'node:os';
 import { app, BrowserWindow, dialog } from 'electron';
 import log from 'electron-log/main';
 import { IPC_CHANNELS } from '@shared/ipc';
@@ -12,6 +14,7 @@ import { detectInstallChannel } from '@main/installChannel';
 import { BinaryManager } from '@main/services/BinaryManager';
 import { DownloadService } from '@main/services/DownloadService';
 import { FormatProbeService } from '@main/services/FormatProbeService';
+import { PlaylistProbeService } from '@main/services/PlaylistProbeService';
 import { TokenService } from '@main/services/TokenService';
 import { YtDlp } from '@main/services/YtDlp';
 import { RecentJobsStore } from '@main/stores/RecentJobsStore';
@@ -27,10 +30,48 @@ import windowStateKeeper from 'electron-window-state';
 
 log.initialize();
 
+// Catch fatal main-process errors that would otherwise crash silently before
+// any window appears — without these, pre-ready bugs leave no diagnostic trail.
+process.on('uncaughtException', (err) => {
+  log.error('uncaughtException', err);
+});
+process.on('unhandledRejection', (reason) => {
+  log.error('unhandledRejection', reason);
+});
+
+// Log platform identity at top-level (NOT inside whenReady) so a pre-ready
+// hang still produces a log line we can read in bug reports.
+log.info('boot', {
+  platform: process.platform,
+  arch: process.arch,
+  release: os.release(),
+  electron: process.versions.electron,
+  chrome: process.versions.chrome,
+  node: process.versions.node,
+  argv: process.argv.slice(1)
+});
+
 const isMockBackend = process.env.MOCK_BACKEND === '1';
 
 if (process.env.ELECTRON_USER_DATA) {
   app.setPath('userData', process.env.ELECTRON_USER_DATA);
+}
+
+// Pre-flight runtime args. Lets users recover from GPU/driver hangs that prevent
+// the window from ever appearing — they edit argv.json by hand, no UI needed.
+// Mirrors VS Code's `argv.json` pattern.
+try {
+  const argvPath = path.join(app.getPath('userData'), 'argv.json');
+  if (fs.existsSync(argvPath)) {
+    const raw = fs.readFileSync(argvPath, 'utf8');
+    const cfg = JSON.parse(raw) as { 'disable-hardware-acceleration'?: boolean };
+    if (cfg['disable-hardware-acceleration']) {
+      app.disableHardwareAcceleration();
+      log.info('argv.json applied', { 'disable-hardware-acceleration': true });
+    }
+  }
+} catch (err) {
+  log.warn('argv.json read failed', err);
 }
 
 const hasSingleInstanceLock = app.requestSingleInstanceLock();
@@ -88,11 +129,16 @@ if (hasSingleInstanceLock) {
     const userDataPath = app.getPath('userData');
     log.transports.file.resolvePathFn = () => path.join(userDataPath, 'logs', 'main.log');
     log.info('Session started');
+    log.info('gpu features', app.getGPUFeatureStatus());
+    void app
+      .getGPUInfo('basic')
+      .then((info) => log.info('gpu info', info))
+      .catch((err: unknown) => log.warn('gpu info failed', err));
 
     const settingsStore = new SettingsStore(userDataPath, defaultAppSettings(app.getPath('downloads')));
     const initialSettings = await settingsStore.get();
     const languageRef: { current: ReturnType<typeof pickLanguage> } = {
-      current: pickLanguage(initialSettings.language ?? app.getLocale())
+      current: pickLanguage(initialSettings.common.language ?? app.getLocale())
     };
     const recentJobsStore = new RecentJobsStore(userDataPath);
     const queueStore = new QueueStore(userDataPath);
@@ -102,6 +148,7 @@ if (hasSingleInstanceLock) {
     const ytDlp = new YtDlp(binaryManager, tokenService, settingsStore);
     const downloadService = new DownloadService(ytDlp, recentJobsStore, isMockBackend);
     const formatProbeService = new FormatProbeService(ytDlp, isMockBackend);
+    const playlistProbeService = new PlaylistProbeService(ytDlp, isMockBackend);
 
     // Headless smoke mode — exercises PoT scrape + 3-attempt ladder against
     // real YouTube using production services, then exits. No window created.
@@ -119,10 +166,10 @@ if (hasSingleInstanceLock) {
     }
 
     // Enable analytics now that we know it's a real (non-smoke) session.
-    setAnalyticsEnabled(initialSettings.analyticsEnabled ?? true);
-    const isFirstRun = !initialSettings.firstRunCompleted;
+    setAnalyticsEnabled(initialSettings.common.analyticsEnabled ?? true);
+    const isFirstRun = !initialSettings.common.firstRunCompleted;
     if (isFirstRun) {
-      await settingsStore.update({ firstRunCompleted: true });
+      await settingsStore.update({ common: { firstRunCompleted: true } });
     }
     const arch: string = process.arch === 'arm64' ? 'arm64' : 'x64';
     trackMain('app_started', {
@@ -192,7 +239,7 @@ if (hasSingleInstanceLock) {
       // Tray mode: intercept every close; decide async based on persisted behavior
       event.preventDefault();
       void settingsStore.get().then(async (settings) => {
-        const closeBehavior = settings.closeBehavior ?? 'ask';
+        const closeBehavior = settings.common.closeBehavior ?? 'ask';
 
         if (closeBehavior === 'tray') {
           mainWindow.hide();
@@ -224,7 +271,7 @@ if (hasSingleInstanceLock) {
         });
         const choice = response === 0 ? 'tray' : 'quit';
         if (checkboxChecked) {
-          await settingsStore.update({ closeBehavior: choice });
+          await settingsStore.update({ common: { closeBehavior: choice } });
         }
         trackMain('tray_close_chosen', { choice, remember: checkboxChecked });
         if (choice === 'tray') {
@@ -236,13 +283,14 @@ if (hasSingleInstanceLock) {
     });
 
     const clipboardWatcher = new ClipboardWatcher(watcherWindowFromBrowserWindow(mainWindow));
-    clipboardWatcher.setEnabled(initialSettings.clipboardWatchEnabled);
+    clipboardWatcher.setEnabled(initialSettings.common.clipboardWatchEnabled);
 
     registerIpcHandlers({
       mainWindow,
       binaryManager,
       downloadService,
       formatProbeService,
+      playlistProbeService,
       settingsStore,
       queueStore,
       tokenService,

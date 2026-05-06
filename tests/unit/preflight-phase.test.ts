@@ -2,6 +2,11 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { PreflightPhase } from '@main/services/phases/PreflightPhase';
 import type { PhaseContext, ActiveDownload } from '@main/services/phases/types';
 import type { DownloadJob, StartDownloadInput } from '@shared/types';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
+const DEFAULT_JOB: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
 
 vi.mock('@main/utils/diskSpace', () => ({
   checkDiskSpace: vi.fn()
@@ -14,7 +19,7 @@ beforeEach(() => {
 });
 
 function makeCtx(outputDir = '/output'): PhaseContext {
-  const input: StartDownloadInput = { url: 'https://www.youtube.com/watch?v=test', outputDir };
+  const input: StartDownloadInput = { url: 'https://www.youtube.com/watch?v=test', outputDir, job: DEFAULT_JOB };
   const job: DownloadJob = {
     id: 'test-job-id',
     url: 'https://www.youtube.com/watch?v=test',

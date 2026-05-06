@@ -16,9 +16,9 @@ describe('Queue parallel/sequential download behavior', () => {
       initialized: false,
       initializing: false,
       settings: {
-        defaultOutputDir: '/tmp',
-        rememberLastOutputDir: false,
-        clipboardWatchEnabled: false
+        common: { defaultOutputDir: '/tmp', rememberLastOutputDir: false, clipboardWatchEnabled: false },
+        single: {},
+        playlist: {}
       },
       wizardStep: 'url',
       formatsLoading: false,
@@ -46,7 +46,7 @@ describe('Queue parallel/sequential download behavior', () => {
         getFormats: vi.fn()
       },
       settings: {
-        get: vi.fn().mockResolvedValue(ok({ defaultOutputDir: '/tmp', rememberLastOutputDir: false })),
+        get: vi.fn().mockResolvedValue(ok({ common: { defaultOutputDir: '/tmp', rememberLastOutputDir: false, clipboardWatchEnabled: false }, single: {}, playlist: {} })),
         update: vi.fn().mockResolvedValue(ok({}))
       },
       shell: { openFolder: vi.fn(), openExternal: vi.fn() },
@@ -58,7 +58,8 @@ describe('Queue parallel/sequential download behavior', () => {
           return () => undefined;
         }),
         onProgress: vi.fn().mockReturnValue(() => undefined),
-        onClipboardUrl: vi.fn().mockReturnValue(() => undefined)
+        onClipboardUrl: vi.fn().mockReturnValue(() => undefined),
+        onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
       },
       queue: {
         save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),
@@ -131,35 +132,75 @@ describe('Queue parallel/sequential download behavior', () => {
     expect(startMock).toHaveBeenCalledWith(expect.objectContaining({ url: 'https://youtube.com/watch?v=item-2' }));
   });
 
-  it('when a download completes, only ONE pending item starts (sequential queue)', async () => {
-    await useAppStore.getState().initialize();
-
+  it('playlist "Add + Download Now" starts the first selected item immediately even while another is downloading', async () => {
     useAppStore.setState({
       queue: [
         makeItem({
           id: 'item-1',
           status: 'downloading',
           downloadJobId: 'job-1',
-          progressPercent: 100
-        }),
-        makeItem({ id: 'item-2', status: 'pending' }),
-        makeItem({ id: 'item-3', status: 'pending' })
-      ]
+          progressPercent: 30
+        })
+      ],
+      wizardMode: 'playlist',
+      playlistItems: [
+        { id: 'p1', url: 'https://youtube.com/watch?v=p1', title: 'P1', thumbnail: '', playlistIndex: 1 },
+        { id: 'p2', url: 'https://youtube.com/watch?v=p2', title: 'P2', thumbnail: '', playlistIndex: 2 }
+      ],
+      selectedPlaylistItemIds: ['p1', 'p2'],
+      selectedPlaylistPreset: 'video-1080p',
+      playlistTitle: 'Playlist',
+      wizardOutputDir: '/tmp',
+      wizardStep: 'confirm',
+      initialized: true
     });
 
     startMock.mockResolvedValue(ok({ job: makeJob('job-2') }));
 
-    capturedOnStatus!({
-      jobId: 'job-1',
-      stage: 'done',
-      statusKey: 'complete',
-      at: new Date().toISOString()
-    });
+    await useAppStore.getState().addAndDownloadImmediately();
 
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(startMock).toHaveBeenCalledOnce();
+    expect(startMock).toHaveBeenCalledWith(expect.objectContaining({ url: 'https://youtube.com/watch?v=p1' }));
+    const queue = useAppStore.getState().queue;
+    expect(queue.find((item) => item.url === 'https://youtube.com/watch?v=p1')?.status).toBe('downloading');
+    expect(queue.find((item) => item.url === 'https://youtube.com/watch?v=p2')?.status).toBe('pending');
+  });
 
-    // Sequential: only item-2 (the first pending) should start, not item-3
-    expect(startMock).toHaveBeenCalledTimes(1);
-    expect(startMock).toHaveBeenCalledWith(expect.objectContaining({ url: 'https://youtube.com/watch?v=item-2' }));
+  it('when a download completes, only ONE pending item starts (sequential queue)', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    try {
+      await useAppStore.getState().initialize();
+
+      useAppStore.setState({
+        queue: [
+          makeItem({
+            id: 'item-1',
+            status: 'downloading',
+            downloadJobId: 'job-1',
+            progressPercent: 100
+          }),
+          makeItem({ id: 'item-2', status: 'pending' }),
+          makeItem({ id: 'item-3', status: 'pending' })
+        ]
+      });
+
+      startMock.mockResolvedValue(ok({ job: makeJob('job-2') }));
+
+      capturedOnStatus!({
+        jobId: 'job-1',
+        stage: 'done',
+        statusKey: 'complete',
+        at: new Date().toISOString()
+      });
+
+      // Inter-job sleep is 3000ms; advance past it so the JobScheduler timer fires.
+      await vi.advanceTimersByTimeAsync(3100);
+
+      // Sequential: only item-2 (the first pending) should start, not item-3
+      expect(startMock).toHaveBeenCalledTimes(1);
+      expect(startMock).toHaveBeenCalledWith(expect.objectContaining({ url: 'https://youtube.com/watch?v=item-2' }));
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

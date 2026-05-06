@@ -21,6 +21,7 @@ const mockAppApi = {
   },
   downloads: {
     getFormats: vi.fn().mockResolvedValue(ok({ formats: [], title: '', thumbnail: '' })),
+    getPlaylistItems: vi.fn().mockResolvedValue(ok({ playlistId: '', playlistTitle: '', entries: [] })),
     start: vi.fn(),
     cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
     pause: vi.fn().mockResolvedValue(ok({ paused: true })),
@@ -42,7 +43,8 @@ const mockAppApi = {
   events: {
     onStatus: vi.fn().mockReturnValue(() => undefined),
     onProgress: vi.fn().mockReturnValue(() => undefined),
-    onClipboardUrl: vi.fn().mockReturnValue(() => undefined)
+    onClipboardUrl: vi.fn().mockReturnValue(() => undefined),
+    onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
   },
   queue: {
     save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),

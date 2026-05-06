@@ -1,14 +1,17 @@
 import type { LocalizedError } from './i18n/types';
+import type { PreparedJob } from './preparedJob';
+
+export type { PreparedJob } from './preparedJob';
 
 // Re-export the enum types whose canonical definition lives in `schemas.ts`
 // (where they're z.enum schemas). Importing from `@shared/types` continues to
 // work for callers that don't care about the schema vs type distinction.
-export type { Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert } from './schemas';
+export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert } from './schemas';
 
 export type { StatusKey } from './schemas';
 export type { LocalizedError, YtdlpErrorKey } from './i18n/types';
 
-import type { Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey, AudioConvert } from './schemas';
+import type { Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey } from './schemas';
 
 export type AppErrorCode = 'validation' | 'token' | 'binary' | 'download' | 'ipc' | 'unknown';
 
@@ -20,11 +23,11 @@ export interface AppError {
   localizedKey?: import('./schemas').YtdlpErrorKey;
 }
 
-export interface AppSettings {
+// Mode-independent prefs and infrastructure config. Anything that applies
+// regardless of single-vs-playlist flow lives here.
+export interface CommonSettings {
   defaultOutputDir: string;
   rememberLastOutputDir: boolean;
-  lastVideoResolution?: string;
-  lastPreset?: Preset | null;
   uiZoom?: number;
   uiTheme?: UiTheme;
   language?: SupportedLang;
@@ -37,13 +40,6 @@ export interface AppSettings {
     pictures: string | null;
     home: string | null;
   };
-  lastSubtitleLanguages?: string[];
-  lastSubtitleMode?: SubtitleMode;
-  lastSubtitleFormat?: SubtitleFormat;
-  lastSponsorBlockMode?: SponsorBlockMode;
-  lastSponsorBlockCategories?: SponsorBlockCategory[];
-  lastSubfolderEnabled?: boolean;
-  lastSubfolder?: string;
   cookiesPath?: string;
   cookiesEnabled?: boolean;
   proxyUrl?: string;
@@ -54,9 +50,36 @@ export interface AppSettings {
   embedThumbnail?: boolean;
   writeDescription?: boolean;
   writeThumbnail?: boolean;
+  lastSponsorBlockMode?: SponsorBlockMode;
+  lastSponsorBlockCategories?: SponsorBlockCategory[];
   analyticsEnabled?: boolean;
   firstRunCompleted?: boolean;
   drawerOpen?: boolean;
+}
+
+// Single-video flow prefs. Restored when the user enters the format-probe path.
+export interface SinglePrefs {
+  lastPreset?: Preset | null;
+  lastVideoResolution?: string;
+  lastSubtitleLanguages?: string[];
+  lastSubtitleMode?: SubtitleMode;
+  lastSubtitleFormat?: SubtitleFormat;
+  lastSubfolderEnabled?: boolean;
+  lastSubfolder?: string;
+}
+
+// Playlist flow prefs. Kept separate so a playlist run doesn't clobber the
+// single-mode preset/subfolder, and vice versa.
+export interface PlaylistPrefs {
+  lastPlaylistPreset?: import('./schemas').PlaylistPreset;
+  lastPlaylistSubfolderEnabled?: boolean;
+  lastPlaylistSubfolder?: string;
+}
+
+export interface AppSettings {
+  common: CommonSettings;
+  single: SinglePrefs;
+  playlist: PlaylistPrefs;
 }
 
 export interface SubtitleTrack {
@@ -113,9 +136,7 @@ export interface QueueItem {
   title: string;
   thumbnail: string;
   outputDir: string;
-  formatId?: string;
   formatLabel: string;
-  preset?: Preset | 'custom';
   status: import('./schemas').QueueItemStatus;
   progressPercent: number;
   progressDetail: string | null;
@@ -123,19 +144,27 @@ export interface QueueItem {
   error: LocalizedError | null;
   finishedAt: string | null;
   downloadJobId: string | null;
-  subtitleLanguages: string[];
-  writeAutoSubs: boolean;
-  subtitleMode: SubtitleMode;
-  subtitleFormat: SubtitleFormat;
-  sponsorBlockMode: SponsorBlockMode;
-  sponsorBlockCategories: SponsorBlockCategory[];
-  embedChapters: boolean;
-  embedMetadata: boolean;
-  embedThumbnail: boolean;
-  writeDescription: boolean;
-  writeThumbnail: boolean;
-  audioConvert?: AudioConvert;
-  expectedBytes?: number;
+  playlistGroupId?: string;
+  job: PreparedJob;
+}
+
+export interface PlaylistEntry {
+  id: string;
+  url: string;
+  title: string;
+  thumbnail: string;
+  duration?: number;
+  playlistIndex: number;
+}
+
+export interface GetPlaylistItemsInput {
+  url: string;
+}
+
+export interface GetPlaylistItemsOutput {
+  playlistId: string;
+  playlistTitle: string;
+  entries: PlaylistEntry[];
 }
 
 export type DownloadStage = 'setup' | 'token' | 'download' | 'done' | 'error';
@@ -161,6 +190,13 @@ export interface WarmUpOutput {
   failures: string[];
 }
 
+export interface WarmupProgressEvent {
+  binary: string;
+  phase: 'downloading' | 'extracting' | 'done' | 'skipped';
+  bytesDownloaded: number;
+  totalBytes: number | undefined;
+}
+
 export interface CommonPaths {
   downloads: string | null;
   videos: string | null;
@@ -174,22 +210,8 @@ export interface CommonPaths {
 export interface StartDownloadInput {
   url: string;
   outputDir?: string;
-  formatId?: string;
-  preset?: Preset | 'custom';
   cookiesEnabled?: boolean;
-  subtitleLanguages?: string[];
-  writeAutoSubs?: boolean;
-  subtitleMode?: SubtitleMode;
-  subtitleFormat?: SubtitleFormat;
-  sponsorBlockMode?: SponsorBlockMode;
-  sponsorBlockCategories?: SponsorBlockCategory[];
-  embedChapters?: boolean;
-  embedMetadata?: boolean;
-  embedThumbnail?: boolean;
-  writeDescription?: boolean;
-  writeThumbnail?: boolean;
-  audioConvert?: AudioConvert;
-  expectedBytes?: number;
+  job: PreparedJob;
 }
 
 export interface StartDownloadOutput {
@@ -237,7 +259,7 @@ export interface UpdateAvailablePayload {
 
 export type UpdateInstallResult = { ok: true } | { ok: false; error: string };
 
-export type WizardStepName = 'url' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
+export type WizardStepName = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
 
 export type WizardTransition = 'submitUrl' | 'advance' | 'back' | 'skipSubtitles' | 'retry' | 'reset';
 

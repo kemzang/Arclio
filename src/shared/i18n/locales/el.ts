@@ -24,6 +24,7 @@ const el = {
   splash: {
     greeting: 'Καλώς ήρθες πάλι!',
     warmup: 'Το Arroxy ξεκινά…',
+    downloading: 'Λήψη {{binary}}…',
     warning: 'Η ρύθμιση δεν ολοκληρώθηκε — ορισμένες λειτουργίες μπορεί να μην λειτουργούν'
   },
   theme: {
@@ -37,6 +38,8 @@ const el = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Ποιότητα',
       formats: 'Μορφή',
       subtitles: 'Υπότιτλοι',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const el = {
       folder: 'Αποθήκευση',
       confirm: 'Επιβεβαίωση'
     },
+    playlist: {
+      heading: 'Στοιχεία playlist',
+      itemCount_one: '{{count}} βίντεο',
+      itemCount_other: '{{count}} βίντεο',
+      selectAll: 'Επιλογή όλων',
+      selectNone: 'Αποεπιλογή όλων',
+      rangeFrom: 'Από',
+      rangeTo: 'Έως',
+      rangeApply: 'Εφαρμογή εύρους',
+      selectedCount_one: '{{count}} επιλεγμένο',
+      selectedCount_other: '{{count}} επιλεγμένα',
+      noSelection: 'Επέλεξε τουλάχιστον ένα βίντεο για να συνεχίσεις',
+      loadingItems: 'Φόρτωση playlist…',
+      thumbnailAlt: 'Μικρογραφία βίντεο',
+      continue: 'Συνέχεια',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'Επιλογή ποιότητας για την ομαδική λήψη',
+      subhead: 'Κάθε βίντεο επιλύει το επιλεγμένο επίπεδο ανεξάρτητα — οι ανομοιογενείς playlist λειτουργούν χωρίς εκπλήξεις.',
+      itemCount_one: '{{count}} στοιχείο',
+      itemCount_other: '{{count}} στοιχεία',
+      continue: 'Συνέχεια'
+    },
+    mixedPrompt: {
+      title: 'Μεμονωμένο βίντεο ή ολόκληρη playlist;',
+      body: 'Αυτό το URL ανήκει σε playlist. Τι θέλεις να κατεβάσεις;',
+      singleVideo: 'Μόνο αυτό το βίντεο',
+      wholePlaylist: 'Ολόκληρη την playlist'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const el = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Ξεκινά όταν ολοκληρωθούν άλλες λήψεις — αποκτά πλήρες εύρος ζώνης',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'Ξεκινά αμέσως — εκτελείται παράλληλα με άλλες ενεργές λήψεις'
+      pullItTooltip: 'Ξεκινά αμέσως — εκτελείται παράλληλα με άλλες ενεργές λήψεις',
+      playlistBatch_one: '{{count}} βίντεο · {{title}}',
+      playlistBatch_other: '{{count}} βίντεο · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'Προεπιλογή',
+      labelItems: 'Στοιχεία',
+      itemsValue_one: '{{count}} από {{total}} βίντεο',
+      itemsValue_other: '{{count}} από {{total}} βίντεο'
     },
     error: {
       icon: 'Σφάλμα'
@@ -242,6 +283,10 @@ const el = {
     activeCount: '{{count}} σε λήψη · {{percent}}%',
     clear: 'Εκκαθάριση',
     clearTitle: 'Εκκαθάριση ολοκληρωμένων λήψεων',
+    pauseAll: 'Παύση όλων',
+    pauseAllTitle: 'Παύση όλων των ενεργών λήψεων',
+    cancelAll: 'Ακύρωση όλων',
+    cancelAllTitle: 'Ακύρωση όλων των ενεργών και εκκρεμών λήψεων',
     tip: 'Η λήψη σου βρίσκεται στην ουρά παρακάτω — άνοιξέ την οποιαδήποτε στιγμή για παρακολούθηση προόδου.',
     item: {
       doneAt: 'Ολοκληρώθηκε {{time}}',
@@ -249,10 +294,13 @@ const el = {
       defaultError: 'Αποτυχία λήψης',
       openUrl: 'Άνοιγμα URL',
       pause: 'Παύση',
+      hold: 'Αναμονή',
       resume: 'Συνέχεια',
       cancel: 'Ακύρωση',
       remove: 'Κατάργηση'
-    }
+    },
+    interJobSleep_one: 'Η επόμενη λήψη ξεκινά σε {{count}}δ',
+    interJobSleep_other: 'Η επόμενη λήψη ξεκινά σε {{count}}δ'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const el = {
       label: 'Μόνο υπότιτλοι',
       desc: 'Χωρίς βίντεο, χωρίς ήχο, μόνο υπότιτλοι'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Καλύτερη ποιότητα', desc: 'Υψηλότερο διαθέσιμο βίντεο + ήχος ανά στοιχείο' },
+    'video-2160p': { label: 'Έως 4K', desc: 'Όριο 2160p, υποβάθμιση ανά στοιχείο' },
+    'video-1440p': { label: 'Έως 1440p', desc: 'Όριο 2K, υποβάθμιση ανά στοιχείο' },
+    'video-1080p': { label: 'Έως 1080p', desc: 'Όριο ανά στοιχείο, υποβάθμιση σε χαμηλότερο' },
+    'video-720p': { label: 'Έως 720p', desc: 'Μικρότερα αρχεία, ευρεία συμβατότητα' },
+    'video-480p': { label: 'Έως 480p', desc: 'Χαμηλό εύρος ζώνης' },
+    'video-360p': { label: 'Έως 360p', desc: 'Μικρότερο βίντεο' },
+    'audio-best': { label: 'Audio (καλύτερος)', desc: 'Εγγενής καλύτερος ήχος, χωρίς επανακωδικοποίηση' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'Μετατροπή σε MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: 'Μόνο ήχος',

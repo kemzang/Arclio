@@ -24,6 +24,7 @@ const ur = {
   splash: {
     greeting: 'ارے، خوش آمدید!',
     warmup: 'Arroxy تیار ہو رہا ہے…',
+    downloading: '{{binary}} ڈاؤن لوڈ ہو رہا ہے…',
     warning: 'سیٹ اپ مکمل نہیں — کچھ فیچرز کام نہ کریں'
   },
   theme: {
@@ -37,6 +38,8 @@ const ur = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'معیار',
       formats: 'فارمیٹ',
       subtitles: 'سب ٹائٹلز',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const ur = {
       folder: 'محفوظ کریں',
       confirm: 'تصدیق'
     },
+    playlist: {
+      heading: 'Playlist آئٹمز',
+      itemCount_one: '{{count}} ویڈیو',
+      itemCount_other: '{{count}} ویڈیوز',
+      selectAll: 'سب منتخب کریں',
+      selectNone: 'کوئی نہیں منتخب کریں',
+      rangeFrom: 'سے',
+      rangeTo: 'تک',
+      rangeApply: 'رینج لگائیں',
+      selectedCount_one: '{{count}} منتخب',
+      selectedCount_other: '{{count}} منتخب',
+      noSelection: 'جاری رکھنے کے لیے کم از کم ایک ویڈیو منتخب کریں',
+      loadingItems: 'Playlist لائی جا رہی ہے…',
+      thumbnailAlt: 'ویڈیو تھمب نیل',
+      continue: 'جاری رکھیں',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'بیچ کے لیے کوالٹی منتخب کریں',
+      subhead: 'ہر ویڈیو منتخب درجے کو آزادانہ طور پر حل کرتی ہے — مختلف قسم کی playlists بغیر کسی پریشانی کے کام کرتی ہیں۔',
+      itemCount_one: '{{count}} آئٹم',
+      itemCount_other: '{{count}} آئٹمز',
+      continue: 'جاری رکھیں'
+    },
+    mixedPrompt: {
+      title: 'ایک ویڈیو یا پوری Playlist؟',
+      body: 'یہ URL کسی Playlist کا حصہ ہے۔ آپ کیا ڈاؤن لوڈ کرنا چاہتے ہیں؟',
+      singleVideo: 'صرف یہ ویڈیو',
+      wholePlaylist: 'پوری Playlist'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const ur = {
       addToQueue: '+ قطار',
       addToQueueTooltip: 'دوسرے ڈاؤن لوڈز ختم ہونے پر شروع ہو گا — مکمل بینڈوڈتھ ملے گی',
       pullIt: 'لے آؤ! ↓',
-      pullItTooltip: 'فوراً شروع ہو گا — دوسرے ایکٹو ڈاؤن لوڈز کے ساتھ چلے گا'
+      pullItTooltip: 'فوراً شروع ہو گا — دوسرے ایکٹو ڈاؤن لوڈز کے ساتھ چلے گا',
+      playlistBatch_one: '{{count}} ویڈیو · {{title}}',
+      playlistBatch_other: '{{count}} ویڈیوز · {{title}}',
+      labelPlaylist: 'پلے لسٹ',
+      labelPreset: 'پریسیٹ',
+      labelItems: 'آئٹمز',
+      itemsValue_one: '{{total}} میں سے {{count}} ویڈیو',
+      itemsValue_other: '{{total}} میں سے {{count}} ویڈیوز'
     },
     error: {
       icon: 'خرابی'
@@ -242,6 +283,10 @@ const ur = {
     activeCount: '{{count}} ڈاؤن لوڈ ہو رہے ہیں · {{percent}}%',
     clear: 'صاف کریں',
     clearTitle: 'مکمل ڈاؤن لوڈز صاف کریں',
+    pauseAll: 'سب کو روکیں',
+    pauseAllTitle: 'تمام فعال ڈاؤن لوڈز کو عارضی طور پر روکیں',
+    cancelAll: 'سب کو منسوخ کریں',
+    cancelAllTitle: 'تمام فعال اور زیر التواء ڈاؤن لوڈز منسوخ کریں',
     tip: 'آپ کا ڈاؤن لوڈ نیچے قطار میں ہے — پیش رفت دیکھنے کے لیے کبھی بھی کھولیں۔',
     item: {
       doneAt: 'مکمل {{time}}',
@@ -249,10 +294,13 @@ const ur = {
       defaultError: 'ڈاؤن لوڈ ناکام',
       openUrl: 'URL کھولیں',
       pause: 'روکیں',
+      hold: 'روکیں',
       resume: 'دوبارہ شروع کریں',
       cancel: 'منسوخ کریں',
       remove: 'ہٹائیں'
-    }
+    },
+    interJobSleep_one: 'اگلا ڈاؤن لوڈ {{count}} سیکنڈ میں شروع ہوگا',
+    interJobSleep_other: 'اگلا ڈاؤن لوڈ {{count}} سیکنڈ میں شروع ہوگا'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const ur = {
       label: 'صرف سب ٹائٹلز',
       desc: 'کوئی ویڈیو نہیں، کوئی آڈیو نہیں، صرف سب ٹائٹلز'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'بہترین کوالٹی', desc: 'ہر آئٹم کے لیے دستیاب سب سے زیادہ ویڈیو + آڈیو' },
+    'video-2160p': { label: '4K تک', desc: '2160p تک محدود، ہر آئٹم کے لیے کم پر جاتا ہے' },
+    'video-1440p': { label: '1440p تک', desc: '2K تک محدود، ہر آئٹم کے لیے کم پر جاتا ہے' },
+    'video-1080p': { label: '1080p تک', desc: 'ہر آئٹم کے لیے محدود، کم پر جاتا ہے' },
+    'video-720p': { label: '720p تک', desc: 'چھوٹی فائلیں، وسیع مطابقت' },
+    'video-480p': { label: '480p تک', desc: 'کم بینڈوتھ' },
+    'video-360p': { label: '360p تک', desc: 'سب سے چھوٹی ویڈیو' },
+    'audio-best': { label: 'Audio (بہترین)', desc: 'اصل بہترین آڈیو، دوبارہ انکوڈ نہیں' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps میں کنورٹ کریں' }
   },
   formatLabel: {
     audioOnly: 'صرف آڈیو',

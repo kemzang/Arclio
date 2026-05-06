@@ -2,6 +2,7 @@ import type { JSX, ReactNode } from 'react';
 import { AlertTriangle, Captions, Download, ExternalLink, FolderOpen, Hourglass, Layers, Pause, Play, RotateCcw, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { QueueItem, QueueItemStatus, StatusKey } from '@shared/types';
+import { isHeld } from '@shared/queueItem';
 import { useAppStore, formatStatus, formatLocalizedError } from '../../store/useAppStore';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -19,6 +20,9 @@ const PHASE_ICON: Partial<Record<StatusKey, ReactNode>> = {
 
 interface Props {
   item: QueueItem;
+  // When set + the item is pending, render a "starts in Ns" hint so the user
+  // knows which item is on deck during the inter-job sleep window.
+  sleepRemainingSec?: number;
 }
 
 const STATUS_BORDER: Record<QueueItemStatus, string> = {
@@ -34,12 +38,17 @@ const STATUS_BORDER: Record<QueueItemStatus, string> = {
 // since both convey "completed but not perfect".
 const SUBS_FAILED_BORDER = 'border-l-2 border-l-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)]';
 
-export function QueueItemCard({ item }: Props): JSX.Element {
+export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
   const { t, i18n } = useTranslation();
   const { startItemDownload, cancelItemDownload, pauseItemDownload, resumeItemDownload, removeQueueItem, retryQueueItem, openItemFolder, openItemUrl } = useAppStore();
 
   const { status } = item;
-  const isActive = status === 'downloading' || status === 'paused';
+  const held = isHeld(item);
+  const hasActiveJob = item.downloadJobId !== null;
+  const isStarting = status === 'downloading' && !hasActiveJob;
+  // Held items (paused-from-pending) never spawned a job → no progress bar,
+  // no Cancel button. They behave like queue-only entries.
+  const isActive = (status === 'downloading' && hasActiveJob) || (status === 'paused' && !held);
   const subsFailed = status === 'done' && item.lastStatus?.key === 'subtitlesFailed';
 
   const phaseStatusKey = item.lastStatus?.key;
@@ -67,6 +76,12 @@ export function QueueItemCard({ item }: Props): JSX.Element {
               {t('queue.item.doneAt', {
                 time: new Date(item.finishedAt).toLocaleTimeString(i18n.language)
               })}
+            </span>
+          )}
+          {status === 'pending' && sleepRemainingSec !== undefined && sleepRemainingSec > 0 && (
+            <span className="text-[var(--color-status-paused)] inline-flex items-center gap-1" data-testid="queue-item-sleep-hint">
+              <Hourglass size={11} className="animate-pulse" />
+              {t('queue.interJobSleep', { count: sleepRemainingSec })}
             </span>
           )}
         </p>
@@ -103,12 +118,15 @@ export function QueueItemCard({ item }: Props): JSX.Element {
         <TooltipIconButton icon={<ExternalLink size={12} />} label={t('queue.item.openUrl')} data-testid="btn-open-url" className="w-7 h-7 text-muted-foreground hover:text-foreground/80" onClick={() => openItemUrl(item.id)} />
 
         {status === 'pending' && (
-          <Button variant="ghost" size="icon" type="button" onClick={() => void startItemDownload(item.id)} data-testid="btn-start-download" className="w-7 h-7">
-            <Play size={12} />
-          </Button>
+          <>
+            <Button variant="ghost" size="icon" type="button" onClick={() => void startItemDownload(item.id)} data-testid="btn-start-download" className="w-7 h-7">
+              <Play size={12} />
+            </Button>
+            <TooltipIconButton icon={<Pause size={12} />} label={t('queue.item.hold')} data-testid="btn-hold" className="w-7 h-7" onClick={() => void pauseItemDownload(item.id)} />
+          </>
         )}
 
-        {status === 'downloading' && <TooltipIconButton icon={<Pause size={12} />} label={t('queue.item.pause')} data-testid="btn-pause" className="w-7 h-7" onClick={() => void pauseItemDownload(item.id)} />}
+        {status === 'downloading' && hasActiveJob && <TooltipIconButton icon={<Pause size={12} />} label={t('queue.item.pause')} data-testid="btn-pause" className="w-7 h-7" onClick={() => void pauseItemDownload(item.id)} />}
 
         {status === 'paused' && <TooltipIconButton icon={<Play size={12} />} label={t('queue.item.resume')} data-testid="btn-resume" className="w-7 h-7" onClick={() => void resumeItemDownload(item.id)} />}
 
@@ -124,7 +142,9 @@ export function QueueItemCard({ item }: Props): JSX.Element {
           </Button>
         )}
 
-        {isActive ? <TooltipIconButton icon={<X size={12} />} label={t('queue.item.cancel')} data-testid="btn-cancel" className="w-7 h-7 text-muted-foreground hover:text-[var(--color-status-error)]" onClick={() => void cancelItemDownload(item.id)} /> : <TooltipIconButton icon={<X size={12} />} label={t('queue.item.remove')} data-testid="btn-remove" className="w-7 h-7 text-muted-foreground hover:text-[var(--color-status-error)]" onClick={() => removeQueueItem(item.id)} />}
+        {isActive && <TooltipIconButton icon={<X size={12} />} label={t('queue.item.cancel')} data-testid="btn-cancel" className="w-7 h-7 text-muted-foreground hover:text-[var(--color-status-error)]" onClick={() => void cancelItemDownload(item.id)} />}
+
+        {!isActive && !isStarting && <TooltipIconButton icon={<X size={12} />} label={t('queue.item.remove')} data-testid="btn-remove" className="w-7 h-7 text-muted-foreground hover:text-[var(--color-status-error)]" onClick={() => removeQueueItem(item.id)} />}
       </div>
     </li>
   );

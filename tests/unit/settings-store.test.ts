@@ -6,34 +6,32 @@ import { RecentJobsStore } from '@main/stores/RecentJobsStore';
 import { SettingsStore } from '@main/stores/SettingsStore';
 
 describe('settings and recent stores', () => {
+  const baseDefaults = {
+    common: { defaultOutputDir: '/tmp', rememberLastOutputDir: true, clipboardWatchEnabled: false },
+    single: {},
+    playlist: {}
+  };
+
   it('persists settings updates', async () => {
     const userData = await fs.mkdtemp(path.join(os.tmpdir(), 'settings-store-'));
-    const store = new SettingsStore(userData, {
-      defaultOutputDir: '/tmp',
-      rememberLastOutputDir: true,
-      clipboardWatchEnabled: false
-    });
+    const store = new SettingsStore(userData, baseDefaults);
 
-    const updated = await store.update({ defaultOutputDir: '/home/test/downloads' });
-    expect(updated.defaultOutputDir).toBe('/home/test/downloads');
+    const updated = await store.update({ common: { defaultOutputDir: '/home/test/downloads' } });
+    expect(updated.common.defaultOutputDir).toBe('/home/test/downloads');
 
     const readBack = await store.get();
-    expect(readBack.defaultOutputDir).toBe('/home/test/downloads');
+    expect(readBack.common.defaultOutputDir).toBe('/home/test/downloads');
   });
 
   it('persists subtitle language preferences', async () => {
     const userData = await fs.mkdtemp(path.join(os.tmpdir(), 'settings-store-subs-'));
-    const store = new SettingsStore(userData, {
-      defaultOutputDir: '/tmp',
-      rememberLastOutputDir: true,
-      clipboardWatchEnabled: false
-    });
+    const store = new SettingsStore(userData, baseDefaults);
 
-    const updated = await store.update({ lastSubtitleLanguages: ['en', 'es'] });
-    expect(updated.lastSubtitleLanguages).toEqual(['en', 'es']);
+    const updated = await store.update({ single: { lastSubtitleLanguages: ['en', 'es'] } });
+    expect(updated.single.lastSubtitleLanguages).toEqual(['en', 'es']);
 
     const readBack = await store.get();
-    expect(readBack.lastSubtitleLanguages).toEqual(['en', 'es']);
+    expect(readBack.single.lastSubtitleLanguages).toEqual(['en', 'es']);
   });
 
   it('keeps recent jobs bounded and sorted', async () => {
@@ -92,14 +90,47 @@ describe('settings and recent stores', () => {
   it('returns defaults when settings.json is corrupted', async () => {
     const userData = await fs.mkdtemp(path.join(os.tmpdir(), 'settings-store-corrupt-'));
     await fs.writeFile(path.join(userData, 'settings.json'), 'not valid json', 'utf-8');
-    const store = new SettingsStore(userData, {
-      defaultOutputDir: '/tmp',
-      rememberLastOutputDir: true,
-      clipboardWatchEnabled: false
-    });
+    const store = new SettingsStore(userData, baseDefaults);
 
     const settings = await store.get();
-    expect(settings.defaultOutputDir).toBe('/tmp');
+    expect(settings.common.defaultOutputDir).toBe('/tmp');
+  });
+
+  it('migrates legacy flat shape to nested on first read', async () => {
+    const userData = await fs.mkdtemp(path.join(os.tmpdir(), 'settings-store-migrate-'));
+    // Pre-seed disk with the legacy flat shape (versions <= 0.0.x).
+    await fs.writeFile(
+      path.join(userData, 'settings.json'),
+      JSON.stringify({
+        defaultOutputDir: '/legacy/dir',
+        rememberLastOutputDir: false,
+        clipboardWatchEnabled: true,
+        lastPreset: 'best-quality',
+        lastSubfolder: 'old-subfolder',
+        lastPlaylistPreset: 'video-1080p',
+        lastPlaylistSubfolderEnabled: true,
+        cookiesEnabled: true
+      }),
+      'utf-8'
+    );
+
+    const store = new SettingsStore(userData, baseDefaults);
+    const settings = await store.get();
+
+    expect(settings.common.defaultOutputDir).toBe('/legacy/dir');
+    expect(settings.common.cookiesEnabled).toBe(true);
+    expect(settings.single.lastPreset).toBe('best-quality');
+    expect(settings.single.lastSubfolder).toBe('old-subfolder');
+    expect(settings.playlist.lastPlaylistPreset).toBe('video-1080p');
+    expect(settings.playlist.lastPlaylistSubfolderEnabled).toBe(true);
+
+    // After migration the file holds only the nested shape — flat keys gone.
+    const persisted = JSON.parse(await fs.readFile(path.join(userData, 'settings.json'), 'utf-8'));
+    expect(persisted).not.toHaveProperty('lastPreset');
+    expect(persisted).not.toHaveProperty('defaultOutputDir');
+    expect(persisted.common).toBeDefined();
+    expect(persisted.single).toBeDefined();
+    expect(persisted.playlist).toBeDefined();
   });
 
   it('returns empty list when recent-jobs.json is corrupted', async () => {

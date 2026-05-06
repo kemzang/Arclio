@@ -2,6 +2,16 @@ import { describe, expect, it, vi } from 'vitest';
 import { DownloadService } from '@main/services/DownloadService';
 import { YtDlp } from '@main/services/YtDlp';
 import type { DownloadJob } from '@shared/types';
+import type { PreparedJob } from '@shared/preparedJob';
+
+const DEFAULT_JOB: PreparedJob = {
+  kind: 'single-format',
+  source: 'youtube',
+  formatId: '22',
+  preset: 'custom',
+  sponsorBlock: { mode: 'off' },
+  embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false }
+};
 
 function makeService() {
   const binaryManager = {
@@ -29,7 +39,7 @@ describe('DownloadService (mock mode)', () => {
     const result = await service.start({
       url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       outputDir: '/tmp',
-      formatId: ''
+      job: DEFAULT_JOB
     });
 
     expect(result.ok).toBe(true);
@@ -47,7 +57,8 @@ describe('DownloadService (mock mode)', () => {
 
     const startResult = await service.start({
       url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      outputDir: '/tmp/downloads'
+      outputDir: '/tmp/downloads',
+      job: DEFAULT_JOB
     });
     expect(startResult.ok).toBe(true);
 
@@ -60,7 +71,7 @@ describe('DownloadService (mock mode)', () => {
   it('allows two downloads to start concurrently', async () => {
     const { service, recentJobsStore } = makeService();
 
-    const [r1, r2] = await Promise.all([service.start({ url: 'https://youtube.com/watch?v=1', outputDir: '/tmp' }), service.start({ url: 'https://youtube.com/watch?v=2', outputDir: '/tmp' })]);
+    const [r1, r2] = await Promise.all([service.start({ url: 'https://youtube.com/watch?v=1', outputDir: '/tmp', job: DEFAULT_JOB }), service.start({ url: 'https://youtube.com/watch?v=2', outputDir: '/tmp', job: DEFAULT_JOB })]);
 
     expect(r1.ok).toBe(true);
     expect(r2.ok).toBe(true);
@@ -72,7 +83,7 @@ describe('DownloadService (mock mode)', () => {
   it('cancel(jobId) cancels only the specified job, not others', async () => {
     const { service, recentJobsStore } = makeService();
 
-    const [r1, r2] = await Promise.all([service.start({ url: 'https://youtube.com/watch?v=1', outputDir: '/tmp' }), service.start({ url: 'https://youtube.com/watch?v=2', outputDir: '/tmp' })]);
+    const [r1, r2] = await Promise.all([service.start({ url: 'https://youtube.com/watch?v=1', outputDir: '/tmp', job: DEFAULT_JOB }), service.start({ url: 'https://youtube.com/watch?v=2', outputDir: '/tmp', job: DEFAULT_JOB })]);
 
     expect(r1.ok).toBe(true);
     expect(r2.ok).toBe(true);
@@ -94,7 +105,8 @@ describe('DownloadService (mock mode)', () => {
 
     const startResult = await service.start({
       url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      outputDir: '/tmp'
+      outputDir: '/tmp',
+      job: DEFAULT_JOB
     });
     expect(startResult.ok).toBe(true);
     const jobId = startResult.ok ? startResult.data.job.id : '';
@@ -140,7 +152,8 @@ describe('DownloadService (mock mode)', () => {
 
     const startResult = await service.start({
       url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      outputDir: '/tmp'
+      outputDir: '/tmp',
+      job: DEFAULT_JOB
     });
     const jobId = startResult.ok ? startResult.data.job.id : '';
     await service.pause(jobId);

@@ -24,6 +24,7 @@ const en = {
   splash: {
     greeting: 'Hey, welcome back!',
     warmup: 'Arroxy is warming up…',
+    downloading: 'Downloading {{binary}}…',
     warning: 'Setup incomplete — some features may not work'
   },
   theme: {
@@ -37,12 +38,44 @@ const en = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Quality',
       formats: 'Format',
       subtitles: 'Subtitles',
       sponsorblock: 'SponsorBlock',
       output: 'Output',
       folder: 'Save',
       confirm: 'Confirm'
+    },
+    playlistPresets: {
+      heading: 'Pick quality for the batch',
+      subhead: 'Each video resolves the chosen tier independently — heterogeneous playlists work without surprises.',
+      itemCount_one: '{{count}} item',
+      itemCount_other: '{{count}} items',
+      continue: 'Continue'
+    },
+    playlist: {
+      heading: 'Playlist items',
+      itemCount_one: '{{count}} video',
+      itemCount_other: '{{count}} videos',
+      selectAll: 'Select all',
+      selectNone: 'Select none',
+      rangeFrom: 'From',
+      rangeTo: 'To',
+      rangeApply: 'Apply range',
+      selectedCount_one: '{{count}} selected',
+      selectedCount_other: '{{count}} selected',
+      noSelection: 'Select at least one video to continue',
+      loadingItems: 'Fetching playlist…',
+      thumbnailAlt: 'Video thumbnail',
+      continue: 'Continue',
+      durationUnknown: 'live'
+    },
+    mixedPrompt: {
+      title: 'Single video or whole playlist?',
+      body: 'This URL is part of a playlist. What do you want to download?',
+      singleVideo: 'Just this video',
+      wholePlaylist: 'Whole playlist'
     },
     url: {
       heading: 'YouTube URL',
@@ -224,7 +257,14 @@ const en = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Starts when other downloads finish — gets full bandwidth',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'Starts immediately — runs alongside other active downloads'
+      pullItTooltip: 'Starts immediately — runs alongside other active downloads',
+      playlistBatch_one: '{{count}} video · {{title}}',
+      playlistBatch_other: '{{count}} videos · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'Preset',
+      labelItems: 'Items',
+      itemsValue_one: '{{count}} of {{total}} video',
+      itemsValue_other: '{{count}} of {{total}} videos'
     },
     error: {
       icon: 'Error'
@@ -242,6 +282,10 @@ const en = {
     activeCount: '{{count}} downloading · {{percent}}%',
     clear: 'Clear',
     clearTitle: 'Clear completed downloads',
+    pauseAll: 'Pause all',
+    pauseAllTitle: 'Pause all active downloads',
+    cancelAll: 'Cancel all',
+    cancelAllTitle: 'Cancel all active and pending downloads',
     tip: 'Your download is queued below — open anytime to track progress.',
     item: {
       doneAt: 'Done {{time}}',
@@ -249,10 +293,13 @@ const en = {
       defaultError: 'Download failed',
       openUrl: 'Open URL',
       pause: 'Pause',
+      hold: 'Hold',
       resume: 'Resume',
       cancel: 'Cancel',
       remove: 'Remove'
-    }
+    },
+    interJobSleep_one: 'Next download starts in {{count}}s',
+    interJobSleep_other: 'Next download starts in {{count}}s'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +364,17 @@ const en = {
       label: 'Subtitles only',
       desc: 'No video, no audio, only subtitles'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Best quality', desc: 'Highest available video + audio per item' },
+    'video-2160p': { label: 'Up to 4K', desc: 'Capped at 2160p, falls back to lower per item' },
+    'video-1440p': { label: 'Up to 1440p', desc: 'Capped at 2K, falls back to lower per item' },
+    'video-1080p': { label: 'Up to 1080p', desc: 'Capped per item, falls back to lower' },
+    'video-720p': { label: 'Up to 720p', desc: 'Smaller files, broad compatibility' },
+    'video-480p': { label: 'Up to 480p', desc: 'Low bandwidth' },
+    'video-360p': { label: 'Up to 360p', desc: 'Smallest video' },
+    'audio-best': { label: 'Audio (best)', desc: 'Native best audio, no re-encode' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'Convert to MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: 'Audio only',

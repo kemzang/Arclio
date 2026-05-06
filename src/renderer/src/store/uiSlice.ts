@@ -11,7 +11,7 @@ export function createUiSlice(set: SetState, _get: GetState): UiSlice {
 
     setDrawerOpen: (open) => {
       set({ drawerOpen: open });
-      void window.appApi.settings.update({ drawerOpen: open }).then((result) => {
+      void window.appApi.settings.update({ common: { drawerOpen: open } }).then((result) => {
         if (!result.ok) console.error('[settings] drawerOpen save failed', result.error);
       });
     },
@@ -21,14 +21,14 @@ export function createUiSlice(set: SetState, _get: GetState): UiSlice {
       const stepInverse = 1 / ZOOM_STEP;
       const clamped = Math.round(Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, zoom)) * stepInverse) / stepInverse;
       set({ uiZoom: clamped });
-      void window.appApi.settings.update({ uiZoom: clamped }).then((result) => {
+      void window.appApi.settings.update({ common: { uiZoom: clamped } }).then((result) => {
         if (!result.ok) console.error('[settings] uiZoom save failed', result.error);
       });
     },
 
     setUiTheme: (theme) => {
       set({ uiTheme: theme });
-      void window.appApi.settings.update({ uiTheme: theme }).then((result) => {
+      void window.appApi.settings.update({ common: { uiTheme: theme } }).then((result) => {
         if (!result.ok) console.error('[settings] uiTheme save failed', result.error);
       });
     }

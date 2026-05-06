@@ -24,6 +24,7 @@ const sr = {
   splash: {
     greeting: 'Добродошао/ла назад!',
     warmup: 'Arroxy се покреће…',
+    downloading: 'Преузимање {{binary}}…',
     warning: 'Подешавање није завршено — неке функције можда неће радити'
   },
   theme: {
@@ -37,6 +38,8 @@ const sr = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Квалитет',
       formats: 'Формат',
       subtitles: 'Титлови',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const sr = {
       folder: 'Сачувај',
       confirm: 'Потврди'
     },
+    playlist: {
+      heading: 'Ставке плејлисте',
+      itemCount_one: '{{count}} видео',
+      itemCount_other: '{{count}} видеа',
+      selectAll: 'Изабери све',
+      selectNone: 'Поништи избор',
+      rangeFrom: 'Од',
+      rangeTo: 'До',
+      rangeApply: 'Примени опсег',
+      selectedCount_one: '{{count}} изабрано',
+      selectedCount_other: '{{count}} изабрано',
+      noSelection: 'Изабери барем један видео да би наставио/ла',
+      loadingItems: 'Преузимање плејлисте…',
+      thumbnailAlt: 'Сличица видеа',
+      continue: 'Настави',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'Изабери квалитет за групно преузимање',
+      subhead: 'Свaki видео самостално проналази одговарајући ниво квалитета — хетерогене плејлисте раде без изненађења.',
+      itemCount_one: '{{count}} ставка',
+      itemCount_other: '{{count}} ставки',
+      continue: 'Настави'
+    },
+    mixedPrompt: {
+      title: 'Један видео или цела плејлиста?',
+      body: 'Овај URL је део плејлисте. Шта желиш да преузмеш?',
+      singleVideo: 'Само овај видео',
+      wholePlaylist: 'Цела плејлиста'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const sr = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Покреће се када друга преузимања заврше — добија пун пропусни опсег',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'Покреће се одмах — ради упоредо са другим активним преузимањима'
+      pullItTooltip: 'Покреће се одмах — ради упоредо са другим активним преузимањима',
+      playlistBatch_one: '{{count}} видео · {{title}}',
+      playlistBatch_other: '{{count}} видеа · {{title}}',
+      labelPlaylist: 'Плејлиста',
+      labelPreset: 'Поставка',
+      labelItems: 'Ставке',
+      itemsValue_one: '{{count}} од {{total}} видеа',
+      itemsValue_other: '{{count}} од {{total}} видеа'
     },
     error: {
       icon: 'Грешка'
@@ -242,6 +283,10 @@ const sr = {
     activeCount: '{{count}} преузима · {{percent}}%',
     clear: 'Обриши',
     clearTitle: 'Обриши завршена преузимања',
+    pauseAll: 'Паузирај све',
+    pauseAllTitle: 'Паузирај сва активна преузимања',
+    cancelAll: 'Откажи све',
+    cancelAllTitle: 'Откажи сва активна и чекајућа преузимања',
     tip: 'Твоје преузимање је у реду испод — отвори у свако доба да пратиш напредак.',
     item: {
       doneAt: 'Завршено {{time}}',
@@ -249,10 +294,13 @@ const sr = {
       defaultError: 'Преузимање није успело',
       openUrl: 'Отвори URL',
       pause: 'Паузирај',
+      hold: 'Задржи',
       resume: 'Настави',
       cancel: 'Откажи',
       remove: 'Уклони'
-    }
+    },
+    interJobSleep_one: 'Следеће преузимање почиње за {{count}}с',
+    interJobSleep_other: 'Следеће преузимање почиње за {{count}}с'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const sr = {
       label: 'Само титлови',
       desc: 'Без видеа, без звука, само титлови'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Најбољи квалитет', desc: 'Највиша резолуција + најбољи звук по ставки' },
+    'video-2160p': { label: 'До 4K', desc: 'Ограничено на 2160p, пада на ниже по ставки' },
+    'video-1440p': { label: 'До 1440p', desc: 'Ограничено на 2K, пада на ниже по ставки' },
+    'video-1080p': { label: 'До 1080p', desc: 'Ограничено по ставки, пада на ниже' },
+    'video-720p': { label: 'До 720p', desc: 'Мање датотеке, широка компатибилност' },
+    'video-480p': { label: 'До 480p', desc: 'Мали пропусни опсег' },
+    'video-360p': { label: 'До 360p', desc: 'Најмање видео' },
+    'audio-best': { label: 'Audio (best)', desc: 'Нативни најбољи звук, без поновног кодирања' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'Конвертуј у MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: 'Само звук',

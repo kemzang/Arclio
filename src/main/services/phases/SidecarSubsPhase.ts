@@ -25,11 +25,14 @@ async function runEmbedMux(ctx: PhaseContext): Promise<void> {
 
   ctx.emitStatus('download', STATUS_KEY.mergingFormats);
 
+  const preparedJob = input.job;
+  const subtitleLanguages = preparedJob.kind !== 'subtitle-only' ? (preparedJob.subtitles?.languages ?? []) : [];
+
   const result = await muxSubtitlesIntoVideo({
     ffmpegPath,
     videoPath: active.mediaPath,
     subtitlePaths: active.subtitlePaths,
-    requestedLangs: input.subtitleLanguages ?? [],
+    requestedLangs: subtitleLanguages,
     onSpawn: (proc) => {
       active.ffmpegProcess = proc;
       if (active.cancelRequested) proc.kill('SIGKILL');
@@ -47,6 +50,16 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
     async run(ctx: PhaseContext): Promise<PhaseOutcome> {
       const { active, ytDlp } = ctx;
       const { job, input } = active;
+      const preparedJob = input.job;
+
+      if (preparedJob.kind === 'subtitle-only') {
+        throw new Error('invariant: SidecarSubsPhase reached with subtitle-only job');
+      }
+
+      const subs = preparedJob.subtitles;
+      if (!subs) {
+        throw new Error('invariant: SidecarSubsPhase reached with no subtitles in job');
+      }
 
       ctx.emitStatus('download', STATUS_KEY.fetchingSubtitles);
 
@@ -55,10 +68,10 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
           kind: 'subtitle',
           url: input.url,
           outputDir: input.outputDir!,
-          subtitleLanguages: input.subtitleLanguages ?? [],
-          subtitleMode: input.subtitleMode,
-          subtitleFormat: input.subtitleFormat ?? DEFAULTS.subtitleFormat,
-          writeAutoSubs: input.writeAutoSubs
+          subtitleLanguages: subs.languages,
+          subtitleMode: subs.mode,
+          subtitleFormat: subs.format ?? DEFAULTS.subtitleFormat,
+          writeAutoSubs: subs.writeAuto
         },
         {
           onSpawn: (proc) => ctx.attachYtDlpProcess(proc),
@@ -78,7 +91,7 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
 
       if (subResult.usedExtractorFallback) active.usedExtractorFallback = true;
 
-      if (input.writeAutoSubs) {
+      if (subs.writeAuto) {
         await dedupeSubtitleFiles(active.subtitlePaths, job.id, () => active.cancelRequested);
       }
 

@@ -3,7 +3,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 declare const __APP_VERSION__: string;
 import { IPC_CHANNELS } from '@shared/ipc';
 import type { AppApi } from '@shared/api';
-import type { ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload } from '@shared/types';
+import type { ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmupProgressEvent } from '@shared/types';
 
 const api: AppApi = {
   app: {
@@ -25,6 +25,7 @@ const api: AppApi = {
   },
   downloads: {
     getFormats: (input) => ipcRenderer.invoke(IPC_CHANNELS.downloadsGetFormats, input),
+    getPlaylistItems: (input) => ipcRenderer.invoke(IPC_CHANNELS.downloadsGetPlaylistItems, input),
     start: (input) => ipcRenderer.invoke(IPC_CHANNELS.downloadsStart, input),
     cancel: (input = {}) => ipcRenderer.invoke(IPC_CHANNELS.downloadsCancel, input),
     pause: (input = {}) => ipcRenderer.invoke(IPC_CHANNELS.downloadsPause, input),
@@ -65,6 +66,13 @@ const api: AppApi = {
       ipcRenderer.on(IPC_CHANNELS.eventsClipboardUrl, wrapped);
       return () => {
         ipcRenderer.removeListener(IPC_CHANNELS.eventsClipboardUrl, wrapped);
+      };
+    },
+    onWarmupProgress: (listener) => {
+      const wrapped = (_: Electron.IpcRendererEvent, event: WarmupProgressEvent): void => listener(event);
+      ipcRenderer.on(IPC_CHANNELS.warmupProgress, wrapped);
+      return () => {
+        ipcRenderer.removeListener(IPC_CHANNELS.warmupProgress, wrapped);
       };
     }
   },

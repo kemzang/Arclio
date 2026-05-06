@@ -225,6 +225,26 @@
   color: var(--color-status-paused);
   margin-top: 4px;
 }
+.splash-progress {
+  width: 160px;
+  height: 3px;
+  border-radius: 9999px;
+  background: var(--muted);
+  overflow: hidden;
+  margin-top: 6px;
+}
+.splash-progress-bar {
+  height: 100%;
+  border-radius: 9999px;
+  background: var(--foreground);
+  transition: width 0.3s ease;
+}
+.splash-bytes {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
 
 /* ── SmartDrawer height transition ────────────────────── */
 .drawer-body {

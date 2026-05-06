@@ -24,6 +24,7 @@ const fr = {
   splash: {
     greeting: 'Salut, content de te revoir !',
     warmup: 'Arroxy se prépare…',
+    downloading: 'Téléchargement de {{binary}}…',
     warning: 'Configuration incomplète — certaines fonctions pourraient ne pas marcher'
   },
   theme: {
@@ -37,6 +38,8 @@ const fr = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Qualité',
       formats: 'Format',
       subtitles: 'Sous-titres',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const fr = {
       folder: 'Enregistrer',
       confirm: 'Confirmer'
     },
+    playlist: {
+      heading: 'Éléments de la Playlist',
+      itemCount_one: '{{count}} vidéo',
+      itemCount_other: '{{count}} vidéos',
+      selectAll: 'Tout sélectionner',
+      selectNone: 'Tout désélectionner',
+      rangeFrom: 'De',
+      rangeTo: 'À',
+      rangeApply: 'Appliquer la plage',
+      selectedCount_one: '{{count}} sélectionnée',
+      selectedCount_other: '{{count}} sélectionnées',
+      noSelection: 'Sélectionnez au moins une vidéo pour continuer',
+      loadingItems: 'Récupération de la Playlist…',
+      thumbnailAlt: 'Miniature de la vidéo',
+      continue: 'Continuer',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'Choisir la qualité pour le lot',
+      subhead: 'Chaque vidéo résout le niveau choisi indépendamment — les playlists hétérogènes fonctionnent sans surprise.',
+      itemCount_one: '{{count}} élément',
+      itemCount_other: '{{count}} éléments',
+      continue: 'Continuer'
+    },
+    mixedPrompt: {
+      title: 'Vidéo unique ou Playlist entière ?',
+      body: "Cette URL fait partie d'une Playlist. Que souhaitez-vous télécharger ?",
+      singleVideo: 'Juste cette vidéo',
+      wholePlaylist: 'Toute la Playlist'
+    },
+
     url: {
       heading: 'URL YouTube',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const fr = {
       addToQueue: '+ File',
       addToQueueTooltip: 'Démarre quand les autres téléchargements terminent — bande passante complète',
       pullIt: 'Récupère-le ! ↓',
-      pullItTooltip: 'Démarre tout de suite — en parallèle des autres téléchargements actifs'
+      pullItTooltip: 'Démarre tout de suite — en parallèle des autres téléchargements actifs',
+      playlistBatch_one: '{{count}} vidéo · {{title}}',
+      playlistBatch_other: '{{count}} vidéos · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'Qualité',
+      labelItems: 'Éléments',
+      itemsValue_one: '{{count}} sur {{total}} vidéo',
+      itemsValue_other: '{{count}} sur {{total}} vidéos'
     },
     error: {
       icon: 'Erreur'
@@ -242,6 +283,10 @@ const fr = {
     activeCount: '{{count}} en cours · {{percent}}%',
     clear: 'Effacer',
     clearTitle: 'Effacer les téléchargements terminés',
+    pauseAll: 'Tout mettre en pause',
+    pauseAllTitle: 'Mettre en pause tous les téléchargements actifs',
+    cancelAll: 'Tout annuler',
+    cancelAllTitle: 'Annuler tous les téléchargements actifs et en attente',
     tip: 'Ton téléchargement est en file ci-dessous — ouvre-la quand tu veux pour suivre la progression.',
     item: {
       doneAt: 'Terminé {{time}}',
@@ -249,10 +294,13 @@ const fr = {
       defaultError: 'Échec du téléchargement',
       openUrl: "Ouvrir l'URL",
       pause: 'Pause',
+      hold: 'En attente',
       resume: 'Reprendre',
       cancel: 'Annuler',
       remove: 'Supprimer'
-    }
+    },
+    interJobSleep_one: 'Prochain téléchargement dans {{count}}s',
+    interJobSleep_other: 'Prochain téléchargement dans {{count}}s'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const fr = {
       label: 'Sous-titres uniquement',
       desc: "Pas de vidéo ni d'audio, juste les sous-titres"
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Meilleure qualité', desc: 'Meilleure vidéo + audio disponibles par élément' },
+    'video-2160p': { label: "Jusqu'à 4K", desc: 'Plafonné à 2160p, repli vers le bas par élément' },
+    'video-1440p': { label: "Jusqu'à 1440p", desc: 'Plafonné à 2K, repli vers le bas par élément' },
+    'video-1080p': { label: "Jusqu'à 1080p", desc: 'Plafonné par élément, repli vers le bas' },
+    'video-720p': { label: "Jusqu'à 720p", desc: 'Fichiers plus légers, large compatibilité' },
+    'video-480p': { label: "Jusqu'à 480p", desc: 'Faible bande passante' },
+    'video-360p': { label: "Jusqu'à 360p", desc: 'Vidéo la plus légère' },
+    'audio-best': { label: 'Audio (meilleur)', desc: 'Meilleur audio natif, sans ré-encodage' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'Convertir en MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: 'Audio seul',

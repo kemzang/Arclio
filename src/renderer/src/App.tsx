@@ -26,7 +26,7 @@ function buildDebugInfo(): string {
 
 export function App(): JSX.Element {
   const { t } = useTranslation();
-  const { initialized, initialize, openLogs, uiZoom, setUiZoom, uiTheme, warmupFailures } = useAppStore();
+  const { initialized, initialize, openLogs, uiZoom, setUiZoom, uiTheme, warmupFailures, warmupProgress } = useAppStore();
   const update = useUpdateChannel();
   const [debugCopied, setDebugCopied] = useState(false);
   const [showNudge, setShowNudge] = useState(false);
@@ -124,7 +124,7 @@ export function App(): JSX.Element {
           </div>
         </footer>
 
-        <SplashScreen initialized={initialized} warmupFailures={warmupFailures} />
+        <SplashScreen initialized={initialized} warmupFailures={warmupFailures} warmupProgress={warmupProgress} />
       </div>
     </TooltipProvider>
   );

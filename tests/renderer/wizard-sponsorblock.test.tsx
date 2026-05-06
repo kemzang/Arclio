@@ -4,6 +4,7 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import { useAppStore } from '@renderer/store/useAppStore';
 import type { GetFormatsOutput, StatusEvent } from '@shared/types';
 import { ok } from '../shared/fixtures';
+import { buildAppSettings } from '../shared/settingsFixtures';
 import { DEFAULTS } from '@shared/constants';
 
 const YOUTUBE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
@@ -61,8 +62,8 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
       pause: vi.fn().mockResolvedValue(ok({ paused: true }))
     },
     settings: {
-      get: vi.fn().mockResolvedValue(ok({ defaultOutputDir: '/tmp', rememberLastOutputDir: false, ...settingsOverrides })),
-      update: vi.fn().mockResolvedValue(ok({ defaultOutputDir: '/tmp', rememberLastOutputDir: false, ...settingsOverrides }))
+      get: vi.fn().mockResolvedValue(ok(buildAppSettings(settingsOverrides))),
+      update: vi.fn().mockResolvedValue(ok(buildAppSettings(settingsOverrides)))
     },
     shell: { openFolder: vi.fn(), openExternal: vi.fn() },
     logs: { openDir: vi.fn() },
@@ -70,7 +71,8 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
     events: {
       onStatus: vi.fn().mockImplementation((_cb: (event: StatusEvent) => void) => () => undefined),
       onProgress: vi.fn().mockReturnValue(() => undefined),
-      onClipboardUrl: vi.fn().mockReturnValue(() => undefined)
+      onClipboardUrl: vi.fn().mockReturnValue(() => undefined),
+      onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
       save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),
@@ -209,8 +211,10 @@ describe('SponsorBlock wizard slice — queue serialization', () => {
 
     const queue = useAppStore.getState().queue;
     expect(queue).toHaveLength(1);
-    expect(queue[0].sponsorBlockMode).toBe('remove');
-    expect(queue[0].sponsorBlockCategories).toEqual(['sponsor', 'outro']);
+    const job = queue[0].job;
+    const sb = 'sponsorBlock' in job ? job.sponsorBlock : null;
+    expect(sb?.mode).toBe('remove');
+    expect(sb && 'categories' in sb ? sb.categories : []).toEqual(['sponsor', 'outro']);
   });
 
   it('addToQueue persists lastSponsorBlockMode and lastSponsorBlockCategories to settings', async () => {
@@ -228,8 +232,10 @@ describe('SponsorBlock wizard slice — queue serialization', () => {
 
     const updateCall = api.settings.update.mock.calls.at(-1)?.[0];
     expect(updateCall).toMatchObject({
-      lastSponsorBlockMode: 'mark',
-      lastSponsorBlockCategories: ['intro']
+      common: {
+        lastSponsorBlockMode: 'mark',
+        lastSponsorBlockCategories: ['intro']
+      }
     });
   });
 });
@@ -252,10 +258,10 @@ describe('SponsorBlock wizard slice — download invocation', () => {
     });
 
     const startCall = api.downloads.start.mock.calls[0]?.[0];
-    expect(startCall).toMatchObject({
-      sponsorBlockMode: 'remove',
-      sponsorBlockCategories: ['sponsor', 'selfpromo']
-    });
+    const startJob = startCall?.job;
+    const startSb = startJob && 'sponsorBlock' in startJob ? startJob.sponsorBlock : null;
+    expect(startSb?.mode).toBe('remove');
+    expect(startSb && 'categories' in startSb ? startSb.categories : []).toEqual(['sponsor', 'selfpromo']);
   });
 
   it('startItemDownload omits sponsorBlock fields when mode is off', async () => {
@@ -272,8 +278,9 @@ describe('SponsorBlock wizard slice — download invocation', () => {
     });
 
     const startCall = api.downloads.start.mock.calls[0]?.[0];
-    expect(startCall.sponsorBlockMode).toBeUndefined();
-    expect(startCall.sponsorBlockCategories).toBeUndefined();
+    const startJob = startCall?.job;
+    const startSb = startJob && 'sponsorBlock' in startJob ? startJob.sponsorBlock : null;
+    expect(startSb?.mode).toBe('off');
   });
 });
 

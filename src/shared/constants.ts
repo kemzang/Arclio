@@ -35,10 +35,14 @@ export const DEFAULTS: {
 // every caller to supply or ignore it explicitly.
 export function defaultAppSettings(downloadsDir: string): AppSettings {
   return {
-    defaultOutputDir: downloadsDir,
-    rememberLastOutputDir: true,
-    clipboardWatchEnabled: true,
-    analyticsEnabled: true
+    common: {
+      defaultOutputDir: downloadsDir,
+      rememberLastOutputDir: true,
+      clipboardWatchEnabled: true,
+      analyticsEnabled: true
+    },
+    single: {},
+    playlist: {}
   };
 }
 

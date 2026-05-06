@@ -21,48 +21,58 @@ export function VideoPhase(embed: boolean): Phase {
     async run(ctx: PhaseContext): Promise<PhaseOutcome> {
       const { active, ytDlp } = ctx;
       const { input, job } = active;
+      const preparedJob = input.job;
+
+      if (preparedJob.kind === 'subtitle-only') {
+        throw new Error('invariant: VideoPhase reached with subtitle-only job');
+      }
 
       const tempDir = await setupTempDir(job.outputDir, job.id);
       if (tempDir) active.tempDir = tempDir;
 
-      const sbConfig =
-        input.sponsorBlockMode && input.sponsorBlockMode !== 'off' && input.sponsorBlockCategories?.length
-          ? {
-              mode: input.sponsorBlockMode,
-              categories: input.sponsorBlockCategories
-            }
-          : undefined;
+      const sbConfig = preparedJob.sponsorBlock.mode !== 'off' ? { mode: preparedJob.sponsorBlock.mode, categories: preparedJob.sponsorBlock.categories } : undefined;
+
+      const formatId = preparedJob.kind === 'single-format' ? preparedJob.formatId : undefined;
+      const formatSelector = preparedJob.kind === 'playlist-preset' ? preparedJob.formatSelector : undefined;
+      const audioConvert = preparedJob.kind === 'audio-convert' ? preparedJob.audioConvert : preparedJob.kind === 'playlist-preset' ? preparedJob.audioConvert : undefined;
+      const outputTemplate = preparedJob.kind === 'playlist-preset' ? preparedJob.outputTemplate : undefined;
+      const { embed: embedOpts } = preparedJob;
 
       const req: YtDlpRequest =
-        embed && (input.subtitleLanguages?.length ?? 0) > 0
+        embed && (preparedJob.subtitles?.languages.length ?? 0) > 0
           ? {
               kind: 'video+embed',
               url: input.url,
-              outputDir: input.outputDir!,
+              outputDir: job.outputDir,
               tempDir,
-              formatId: input.formatId,
-              subtitleLanguages: input.subtitleLanguages!,
-              writeAutoSubs: input.writeAutoSubs,
+              formatId,
+              formatSelector,
+              audioConvert,
+              subtitleLanguages: preparedJob.subtitles!.languages,
+              writeAutoSubs: preparedJob.subtitles!.writeAuto,
               sponsorBlock: sbConfig,
-              embedChapters: input.embedChapters,
-              embedMetadata: input.embedMetadata,
-              embedThumbnail: input.embedThumbnail,
-              writeDescription: input.writeDescription,
-              writeThumbnail: input.writeThumbnail
+              embedChapters: embedOpts.chapters,
+              embedMetadata: embedOpts.metadata,
+              embedThumbnail: embedOpts.thumbnail,
+              writeDescription: embedOpts.description,
+              writeThumbnail: embedOpts.thumbnailSidecar,
+              outputTemplate
             }
           : {
               kind: 'video',
               url: input.url,
-              outputDir: input.outputDir!,
+              outputDir: job.outputDir,
               tempDir,
-              formatId: input.formatId,
-              audioConvert: input.audioConvert,
+              formatId,
+              formatSelector,
+              audioConvert,
               sponsorBlock: sbConfig,
-              embedChapters: input.embedChapters,
-              embedMetadata: input.embedMetadata,
-              embedThumbnail: input.embedThumbnail,
-              writeDescription: input.writeDescription,
-              writeThumbnail: input.writeThumbnail
+              embedChapters: embedOpts.chapters,
+              embedMetadata: embedOpts.metadata,
+              embedThumbnail: embedOpts.thumbnail,
+              writeDescription: embedOpts.description,
+              writeThumbnail: embedOpts.thumbnailSidecar,
+              outputTemplate
             };
 
       const result = await ytDlp.run(req, {

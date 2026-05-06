@@ -3,6 +3,11 @@ import { PhaseExecutor } from '@main/services/phases/PhaseExecutor';
 import { STATUS_KEY } from '@shared/schemas';
 import type { Phase, PhaseContext, PhaseOutcome, ActiveDownload } from '@main/services/phases/types';
 import type { DownloadJob, LocalizedError, StartDownloadInput } from '@shared/types';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
+const DEFAULT_JOB: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
 
 function makeJob(id = 'job-1'): DownloadJob {
   return {
@@ -18,7 +23,8 @@ function makeJob(id = 'job-1'): DownloadJob {
 function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
   const input: StartDownloadInput = {
     url: 'https://www.youtube.com/watch?v=test',
-    outputDir: '/tmp'
+    outputDir: '/tmp',
+    job: DEFAULT_JOB
   };
   return {
     job: makeJob(),

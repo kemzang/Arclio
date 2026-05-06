@@ -1,30 +1,23 @@
-import { useEffect, useRef, useState, type JSX } from 'react';
+import { useEffect, useMemo, useRef, useState, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '../../store/useAppStore';
-import { STEPS } from '../../store/wizardSlice';
-import { presetProducesMedia, presetProducesVideo } from '@shared/presetTraits';
-import { StepUrlInput } from '../wizard/StepUrlInput';
-import { StepFormatSelect } from '../wizard/StepFormatSelect';
-import { StepFolderConfirm } from '../wizard/StepFolderConfirm';
-import { StepConfirm } from '../wizard/StepConfirm';
-import { StepSubtitles } from '../wizard/StepSubtitles';
-import { StepSponsorBlock } from '../wizard/StepSponsorBlock';
-import { StepOutput } from '../wizard/StepOutput';
+import { STEP_REGISTRY } from '../wizard/stepRegistry';
+import { STEPS, shouldSkip } from '../wizard/stepNavigation';
 import { StepError } from '../wizard/StepError';
+import { MixedUrlPromptDialog } from '../wizard/MixedUrlPromptDialog';
 import { cn } from '@renderer/lib/utils';
 
 export function WizardPanel(): JSX.Element {
   const { t } = useTranslation();
   const wizardStep = useAppStore((s) => s.wizardStep);
   const activePreset = useAppStore((s) => s.activePreset);
+  const wizardMode = useAppStore((s) => s.wizardMode);
+  const selectedPlaylistPreset = useAppStore((s) => s.selectedPlaylistPreset);
 
-  const visibleSteps = STEPS.filter((step) => {
-    if (step === 'sponsorblock' && activePreset && !presetProducesVideo(activePreset)) return false;
-    if (step === 'output' && activePreset && !presetProducesMedia(activePreset)) return false;
-    return true;
-  });
+  const visibleSteps = useMemo(() => STEPS.filter((step) => !shouldSkip(step, { activePreset, wizardMode, selectedPlaylistPreset })), [activePreset, wizardMode, selectedPlaylistPreset]);
 
   const activeIndex = visibleSteps.indexOf(wizardStep as (typeof STEPS)[number]);
+  const activeDescriptor = STEP_REGISTRY.find((d) => d.id === wizardStep);
 
   const prevIndexRef = useRef(activeIndex);
   const [isBackward, setIsBackward] = useState(false);
@@ -44,7 +37,7 @@ export function WizardPanel(): JSX.Element {
             return (
               <div key={stepKey} className="flex items-center flex-1 last:flex-none">
                 <div className="flex flex-col items-center gap-1">
-                  <div className={cn('rounded-full flex items-center justify-center text-[12px] font-bold border transition-all duration-300', isActive && 'w-7 h-7 border-[var(--brand)] bg-[var(--brand-dim)] text-[var(--brand)]', isDone && 'w-6 h-6 border-transparent bg-[var(--brand)] text-white', !isActive && !isDone && 'w-6 h-6 border-[var(--border-strong)] bg-transparent text-[var(--text-subtle)]')} style={isActive ? { boxShadow: '0 0 0 3px var(--brand-dim), 0 0 12px var(--brand-glow)' } : isDone ? { boxShadow: '0 0 6px var(--brand-glow)' } : undefined}>
+                  <div className={cn('w-6 h-6 rounded-full flex items-center justify-center text-[12px] font-bold border transition-all duration-300', isActive && 'border-[var(--brand)] bg-[var(--brand-dim)] text-[var(--brand)]', isDone && 'border-transparent bg-[var(--brand)] text-white', !isActive && !isDone && 'border-[var(--border-strong)] bg-transparent text-[var(--text-subtle)]')} style={isActive ? { boxShadow: '0 0 0 3px var(--brand-dim), 0 0 12px var(--brand-glow)' } : isDone ? { boxShadow: '0 0 6px var(--brand-glow)' } : undefined}>
                     {isDone ? '✓' : i + 1}
                   </div>
                   <span className={cn('text-[11px] font-semibold uppercase tracking-[0.07em]', isActive && 'text-[var(--brand)]', (isDone || (!isActive && !isDone)) && 'text-[var(--text-subtle)]')}>{t(`wizard.steps.${stepKey}` as const)}</span>
@@ -56,14 +49,8 @@ export function WizardPanel(): JSX.Element {
         </div>
       )}
 
-      {wizardStep === 'url' && <StepUrlInput />}
-      {wizardStep === 'formats' && <StepFormatSelect />}
-      {wizardStep === 'subtitles' && <StepSubtitles />}
-      {wizardStep === 'sponsorblock' && <StepSponsorBlock />}
-      {wizardStep === 'output' && <StepOutput />}
-      {wizardStep === 'folder' && <StepFolderConfirm />}
-      {wizardStep === 'confirm' && <StepConfirm />}
-      {wizardStep === 'error' && <StepError />}
+      {wizardStep === 'error' ? <StepError /> : activeDescriptor?.render()}
+      <MixedUrlPromptDialog />
     </section>
   );
 }

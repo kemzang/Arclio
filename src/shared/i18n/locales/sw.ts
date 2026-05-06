@@ -24,6 +24,7 @@ const sw = {
   splash: {
     greeting: 'Hujambo, karibu tena!',
     warmup: 'Arroxy inajipanga…',
+    downloading: 'Inapakua {{binary}}…',
     warning: 'Usanidi haukukamilika — baadhi ya vipengele vinaweza visifanye kazi'
   },
   theme: {
@@ -37,12 +38,44 @@ const sw = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Ubora',
       formats: 'Umbizo',
       subtitles: 'Manukuu',
       sponsorblock: 'SponsorBlock',
       output: 'Matokeo',
       folder: 'Hifadhi',
       confirm: 'Thibitisha'
+    },
+    playlist: {
+      heading: 'Vipande vya Playlist',
+      itemCount_one: '{{count}} video',
+      itemCount_other: '{{count}} video',
+      selectAll: 'Chagua yote',
+      selectNone: 'Futa uchaguzi wote',
+      rangeFrom: 'Kutoka',
+      rangeTo: 'Hadi',
+      rangeApply: 'Tumia masafa',
+      selectedCount_one: '{{count}} imechaguliwa',
+      selectedCount_other: '{{count}} zimechaguliwa',
+      noSelection: 'Chagua angalau video moja ili kuendelea',
+      loadingItems: 'Inapata Playlist…',
+      thumbnailAlt: 'Picha ndogo ya video',
+      continue: 'Endelea',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'Chagua ubora wa kundi',
+      subhead: 'Kila video inatatua kiwango kilichochaguliwa kwa kujitegemea — playlists tofauti hufanya kazi bila mshangao.',
+      itemCount_one: '{{count}} kipande',
+      itemCount_other: '{{count}} vipande',
+      continue: 'Endelea'
+    },
+    mixedPrompt: {
+      title: 'Video moja au Playlist nzima?',
+      body: 'URL hii ni sehemu ya Playlist. Unataka kupakua nini?',
+      singleVideo: 'Video hii tu',
+      wholePlaylist: 'Playlist nzima'
     },
     url: {
       heading: 'YouTube URL',
@@ -224,7 +257,14 @@ const sw = {
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Inaanza vipakuzi vingine vikishamaliza — inapata upanuzi kamili',
       pullIt: 'Pull it! ↓',
-      pullItTooltip: 'Inaanza mara moja — inafanya kazi pamoja na vipakuzi vingine vinavyofanya kazi'
+      pullItTooltip: 'Inaanza mara moja — inafanya kazi pamoja na vipakuzi vingine vinavyofanya kazi',
+      playlistBatch_one: '{{count}} video · {{title}}',
+      playlistBatch_other: '{{count}} video · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'Mpangilio',
+      labelItems: 'Vipande',
+      itemsValue_one: '{{count}} kati ya {{total}} video',
+      itemsValue_other: '{{count}} kati ya {{total}} video'
     },
     error: {
       icon: 'Hitilafu'
@@ -242,6 +282,10 @@ const sw = {
     activeCount: '{{count}} inapakua · {{percent}}%',
     clear: 'Futa',
     clearTitle: 'Futa vipakuzi vilivyokamilika',
+    pauseAll: 'Simamisha vyote',
+    pauseAllTitle: 'Simamisha vipakuzi vyote vinavyoendelea',
+    cancelAll: 'Ghairi vyote',
+    cancelAllTitle: 'Ghairi vipakuzi vyote vinavyoendelea na vinavyosubiri',
     tip: 'Kipakuliwa chako kimewekwa kwenye foleni hapa chini — fungua wakati wowote kufuatilia maendeleo.',
     item: {
       doneAt: 'Imekamilika {{time}}',
@@ -249,10 +293,13 @@ const sw = {
       defaultError: 'Upakuaji umeshindwa',
       openUrl: 'Fungua URL',
       pause: 'Simamisha',
+      hold: 'Simama',
       resume: 'Endelea',
       cancel: 'Ghairi',
       remove: 'Ondoa'
-    }
+    },
+    interJobSleep_one: 'Upakuaji unaofuata unaanza baada ya sekunde {{count}}',
+    interJobSleep_other: 'Upakuaji unaofuata unaanza baada ya sekunde {{count}}'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +364,17 @@ const sw = {
       label: 'Manukuu peke yake',
       desc: 'Hakuna video, hakuna sauti, manukuu peke yake'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Ubora bora', desc: 'Video + sauti bora zaidi inayopatikana kwa kila kipande' },
+    'video-2160p': { label: 'Hadi 4K', desc: 'Imewekewa kikomo cha 2160p, inashuka chini kwa kila kipande' },
+    'video-1440p': { label: 'Hadi 1440p', desc: 'Imewekewa kikomo cha 2K, inashuka chini kwa kila kipande' },
+    'video-1080p': { label: 'Hadi 1080p', desc: 'Imewekewa kikomo kwa kila kipande, inashuka chini' },
+    'video-720p': { label: 'Hadi 720p', desc: 'Faili ndogo, utangamano mpana' },
+    'video-480p': { label: 'Hadi 480p', desc: 'Upana mdogo wa bendi' },
+    'video-360p': { label: 'Hadi 360p', desc: 'Video ndogo zaidi' },
+    'audio-best': { label: 'Audio (bora)', desc: 'Sauti bora ya asili, bila kurekodi upya' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'Badilisha kuwa MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: 'Sauti peke yake',

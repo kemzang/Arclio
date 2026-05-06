@@ -1,19 +1,21 @@
-import type { QueueItem, SubtitleFormat, SubtitleMode } from '@shared/types';
+import type { AppSettings, QueueItem, SubtitleFormat, SubtitleMode } from '@shared/types';
 import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas';
 import { DEFAULTS } from '@shared/constants';
 import { i18next, pickLanguage, isRtl } from '@shared/i18n';
 import { nextMonotonicPercent, ProgressFormatter } from './progress';
-import { progressFormatters, maybeStartNext, saveQueue, updateQueueItem } from './queueSlice';
+import { progressFormatters, saveQueue, updateQueueItem } from './queueSlice';
+import type { JobScheduler } from './jobScheduler';
 import type { GetState, SetState, SystemSlice } from './types';
 
 let unbindStatus: (() => void) | null = null;
 let unbindProgress: (() => void) | null = null;
 
-export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
+export function createSystemSlice(set: SetState, get: GetState, scheduler: JobScheduler): SystemSlice {
   return {
     initialized: false,
     initializing: false,
     warmupFailures: [],
+    warmupProgress: null,
     settings: null,
     language: pickLanguage(navigator.language),
     commonPaths: undefined,
@@ -25,6 +27,7 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
       // Detach any prior bindings (defense for a future re-init flow).
       unbindStatus?.();
       unbindProgress?.();
+      scheduler.reset();
 
       unbindStatus = window.appApi.events.onStatus((event) => {
         const item = get().queue.find((i) => i.downloadJobId === event.jobId);
@@ -40,7 +43,7 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
             lastStatus: { key: event.statusKey, params: event.params }
           });
           saveQueue(get);
-          void maybeStartNext(get);
+          scheduler.notifyJobFinished();
         } else if (event.stage === 'error') {
           progressFormatters.delete(event.jobId);
           updateQueueItem(set, item.id, {
@@ -50,7 +53,7 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
             downloadJobId: null
           });
           saveQueue(get);
-          void maybeStartNext(get);
+          scheduler.notifyJobFinished();
         } else {
           // Phase transitions (merge, fetch subs, sleep) supersede stale download-speed
           // progress detail — clear it so the phase status text becomes visible.
@@ -83,6 +86,12 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
         });
       });
 
+      const unbindWarmupProgress = window.appApi.events.onWarmupProgress((event) => {
+        set((state) => ({
+          warmupProgress: { ...(state.warmupProgress ?? {}), [event.binary]: event }
+        }));
+      });
+
       const settingsPromise = window.appApi.settings.get();
       const warmUpPromise = window.appApi.app.warmUp();
       const queuePromise = window.appApi.queue.load();
@@ -95,9 +104,10 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
       }
 
       if (settingsResult.ok) {
-        const zoom = settingsResult.data.uiZoom ?? DEFAULTS.uiZoom;
-        const theme = settingsResult.data.uiTheme ?? DEFAULTS.uiTheme;
-        const persistedLang = settingsResult.data.language;
+        const common = settingsResult.data.common ?? ({} as AppSettings['common']);
+        const zoom = common.uiZoom ?? DEFAULTS.uiZoom;
+        const theme = common.uiTheme ?? DEFAULTS.uiTheme;
+        const persistedLang = common.language;
         const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.classList.toggle('dark', isDark);
         const nextLanguage = persistedLang ?? get().language;
@@ -107,8 +117,8 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
         void window.appApi.app.setLanguage(nextLanguage);
         set({
           settings: settingsResult.data,
-          wizardOutputDir: settingsResult.data.defaultOutputDir,
-          commonPaths: settingsResult.data.commonPaths,
+          wizardOutputDir: common.defaultOutputDir,
+          commonPaths: common.commonPaths,
           uiZoom: zoom,
           uiTheme: theme,
           language: nextLanguage
@@ -131,12 +141,13 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
           subtitleMode: item.subtitleMode ?? DEFAULTS.subtitleMode,
           subtitleFormat: item.subtitleFormat ?? DEFAULTS.subtitleFormat
         }));
-        const restoredDrawerOpen = settingsResult.ok ? (settingsResult.data.drawerOpen ?? false) : false;
+        const restoredDrawerOpen = settingsResult.ok ? (settingsResult.data.common?.drawerOpen ?? false) : false;
         set({ queue: migratedQueue, drawerOpen: restoredDrawerOpen });
-        await maybeStartNext(get);
+        await scheduler.notifyItemAdded();
       }
 
       set({ initialized: true, initializing: false, warmupFailures });
+      unbindWarmupProgress();
     },
 
     openLogs: async () => {
@@ -148,7 +159,7 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
       document.documentElement.lang = lang;
       document.documentElement.dir = isRtl(lang) ? 'rtl' : 'ltr';
       void i18next.changeLanguage(lang);
-      void window.appApi.settings.update({ language: lang }).then((result) => {
+      void window.appApi.settings.update({ common: { language: lang } }).then((result) => {
         if (!result.ok) console.error('[settings] language save failed', result.error);
       });
       void window.appApi.app.setLanguage(lang);
@@ -156,8 +167,8 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 
     setCookiesPath: async (path) => {
       const current = get().settings;
-      if (current) set({ settings: { ...current, cookiesPath: path } });
-      const result = await window.appApi.settings.update({ cookiesPath: path });
+      if (current) set({ settings: { ...current, common: { ...current.common, cookiesPath: path } } });
+      const result = await window.appApi.settings.update({ common: { cookiesPath: path } });
       if (!result.ok) {
         console.error('[settings] cookiesPath save failed', result.error);
         return;
@@ -167,8 +178,8 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 
     setCookiesEnabled: async (enabled) => {
       const current = get().settings;
-      if (current) set({ settings: { ...current, cookiesEnabled: enabled } });
-      const result = await window.appApi.settings.update({ cookiesEnabled: enabled });
+      if (current) set({ settings: { ...current, common: { ...current.common, cookiesEnabled: enabled } } });
+      const result = await window.appApi.settings.update({ common: { cookiesEnabled: enabled } });
       if (!result.ok) {
         console.error('[settings] cookiesEnabled save failed', result.error);
         return;
@@ -178,8 +189,8 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 
     setProxyUrl: async (url) => {
       const current = get().settings;
-      if (current) set({ settings: { ...current, proxyUrl: url } });
-      const result = await window.appApi.settings.update({ proxyUrl: url });
+      if (current) set({ settings: { ...current, common: { ...current.common, proxyUrl: url } } });
+      const result = await window.appApi.settings.update({ common: { proxyUrl: url } });
       if (!result.ok) {
         console.error('[settings] proxyUrl save failed', result.error);
         return;
@@ -189,8 +200,8 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 
     setClipboardWatchEnabled: async (enabled) => {
       const current = get().settings;
-      if (current) set({ settings: { ...current, clipboardWatchEnabled: enabled } });
-      const result = await window.appApi.settings.update({ clipboardWatchEnabled: enabled });
+      if (current) set({ settings: { ...current, common: { ...current.common, clipboardWatchEnabled: enabled } } });
+      const result = await window.appApi.settings.update({ common: { clipboardWatchEnabled: enabled } });
       if (!result.ok) {
         console.error('[settings] clipboardWatchEnabled save failed', result.error);
         return;
@@ -200,8 +211,8 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 
     setCloseBehavior: async (value) => {
       const current = get().settings;
-      if (current) set({ settings: { ...current, closeBehavior: value } });
-      const result = await window.appApi.settings.update({ closeBehavior: value });
+      if (current) set({ settings: { ...current, common: { ...current.common, closeBehavior: value } } });
+      const result = await window.appApi.settings.update({ common: { closeBehavior: value } });
       if (!result.ok) {
         console.error('[settings] closeBehavior save failed', result.error);
         return;
@@ -211,8 +222,8 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 
     setAnalyticsEnabled: async (enabled) => {
       const current = get().settings;
-      if (current) set({ settings: { ...current, analyticsEnabled: enabled } });
-      const result = await window.appApi.settings.update({ analyticsEnabled: enabled });
+      if (current) set({ settings: { ...current, common: { ...current.common, analyticsEnabled: enabled } } });
+      const result = await window.appApi.settings.update({ common: { analyticsEnabled: enabled } });
       if (!result.ok) {
         console.error('[settings] analyticsEnabled save failed', result.error);
         return;

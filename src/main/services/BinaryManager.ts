@@ -2,12 +2,11 @@ import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import fs, { constants as fsConstants } from 'node:fs';
 import fsPromises from 'node:fs/promises';
-import https from 'node:https';
 import os from 'node:os';
 import path from 'node:path';
-import { pipeline } from 'node:stream/promises';
 import { promisify } from 'node:util';
 import extractZip from 'extract-zip';
+import got, { type Method } from 'got';
 import log from 'electron-log/main';
 
 const execFileAsync = promisify(execFile);
@@ -17,11 +16,21 @@ import type { StatusKey } from '@shared/types';
 const logger = log.scope('binary');
 
 type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | number>) => void;
+type DownloadProgressCallback = (downloaded: number, total: number | undefined) => void;
+type PartialResponseMode = 'fresh' | 'append' | 'discard-and-retry';
+
+class RestartFreshDownloadError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'RestartFreshDownloadError';
+  }
+}
 
 function binaryPhase(err: unknown): string {
   const msg = err instanceof Error ? err.message.toLowerCase() : '';
   if (msg.includes('checksum')) return 'verify';
   if (msg.includes('archive') || msg.includes('did not contain') || msg.includes('extract')) return 'extract';
+  if (msg.includes('timed out') || msg.includes('timeout')) return 'timeout';
   return 'download';
 }
 
@@ -43,76 +52,116 @@ function parseShaLine(content: string, fileName: string): string | null {
   return null;
 }
 
-function resolveRedirect(baseUrl: string, next: string): string {
-  if (/^https?:\/\//i.test(next)) return next;
-  return new URL(next, baseUrl).toString();
-}
-
-const HTTP_TIMEOUT_MS = 30_000;
+// Network plumbing handled by `got`: per-phase timeouts (DNS/TCP/TLS/header/idle/total),
+// jittered exponential backoff, automatic redirect handling with retry on transient
+// HTTP errors (408/429/5xx) and network errors (ECONNRESET/ETIMEDOUT/EAI_AGAIN/...).
+// Replaces the bespoke https.get plumbing which had a single 30s blunt-instrument
+// inactivity timer and no internal retry — this fragility was the root cause of
+// `binary_setup_failed` events on slow/lossy user connections (esp. ffprobe + deno).
+const HTTP_HEADERS: Record<string, string> = { 'user-agent': 'arroxy/1.0' };
+const HTTP_RETRY = {
+  limit: 5,
+  methods: ['GET'] as Method[],
+  statusCodes: [408, 413, 429, 500, 502, 503, 504],
+  errorCodes: ['ETIMEDOUT', 'ECONNRESET', 'EADDRINUSE', 'ECONNREFUSED', 'EPIPE', 'ENOTFOUND', 'ENETUNREACH', 'EAI_AGAIN'],
+  calculateDelay: ({ computedValue }: { computedValue: number }): number => (computedValue === 0 ? 0 : Math.min(60_000, computedValue) + Math.floor(Math.random() * 500))
+};
+const HTTP_TIMEOUT = {
+  lookup: 5_000,
+  connect: 10_000,
+  secureConnect: 10_000,
+  socket: 60_000,
+  response: 30_000,
+  send: 60_000,
+  request: 600_000
+};
 
 async function downloadText(url: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const request = (targetUrl: string): void => {
-      const req = https
-        .get(targetUrl, { headers: { 'User-Agent': 'arroxy/1.0' } }, (res) => {
-          if (res.statusCode && [301, 302, 307, 308].includes(res.statusCode) && res.headers.location) {
-            request(resolveRedirect(targetUrl, res.headers.location));
-            return;
-          }
-
-          if (res.statusCode !== 200) {
-            reject(new Error(`HTTP ${res.statusCode ?? 'unknown'} while downloading text`));
-            return;
-          }
-
-          let output = '';
-          res.setEncoding('utf-8');
-          res.on('data', (chunk) => {
-            output += chunk;
-          });
-          res.on('end', () => resolve(output));
-          res.on('error', reject);
-        })
-        .on('error', reject);
-      req.setTimeout(HTTP_TIMEOUT_MS, () => {
-        req.destroy(new Error(`HTTP request timed out after ${HTTP_TIMEOUT_MS}ms`));
-      });
-    };
-
-    request(url);
-  });
+  const res = await got(url, { headers: HTTP_HEADERS, retry: HTTP_RETRY, timeout: HTTP_TIMEOUT, followRedirect: true });
+  return res.body;
 }
 
-async function downloadFile(url: string, destination: string): Promise<void> {
+function parseContentRangeStart(header: string | string[] | undefined): number | null {
+  const value = Array.isArray(header) ? header[0] : header;
+  if (!value) return null;
+  const match = /^bytes\s+(\d+)-\d+\/(?:\d+|\*)$/i.exec(value.trim());
+  return match ? Number(match[1]) : null;
+}
+
+function resolvePartialResponseMode(startByte: number, statusCode: number | undefined, contentRange: string | string[] | undefined): PartialResponseMode {
+  if (startByte === 0) return 'fresh';
+  if (statusCode === 416) return 'discard-and-retry';
+  if (statusCode !== 206) return 'fresh';
+
+  const resumedFrom = parseContentRangeStart(contentRange);
+  if (resumedFrom !== null && resumedFrom !== startByte) {
+    return 'discard-and-retry';
+  }
+
+  return 'append';
+}
+
+// Range-resume: if `${destination}.part` exists from a previous interrupted
+// attempt, resume via `Range: bytes=<size>-`. If the server responds 200
+// (no range support) instead of 206, truncate and start fresh.
+async function downloadFile(url: string, destination: string, onProgress?: DownloadProgressCallback, allowPartialRetry = true): Promise<void> {
   await fsPromises.mkdir(path.dirname(destination), { recursive: true });
 
-  await new Promise<void>((resolve, reject) => {
-    const request = (targetUrl: string): void => {
-      const req = https
-        .get(targetUrl, { headers: { 'User-Agent': 'arroxy/1.0' } }, (res) => {
-          if (res.statusCode && [301, 302, 307, 308].includes(res.statusCode) && res.headers.location) {
-            request(resolveRedirect(targetUrl, res.headers.location));
-            return;
-          }
+  const partPath = `${destination}.part`;
+  let startByte = 0;
+  try {
+    const stat = await fsPromises.stat(partPath);
+    if (stat.isFile() && stat.size > 0) startByte = stat.size;
+  } catch {
+    // no partial file
+  }
 
-          if (res.statusCode !== 200) {
-            reject(new Error(`HTTP ${res.statusCode ?? 'unknown'} while downloading binary`));
-            return;
-          }
+  const headers: Record<string, string> = { ...HTTP_HEADERS };
+  if (startByte > 0) headers.range = `bytes=${startByte}-`;
 
-          const out = fs.createWriteStream(destination);
-          pipeline(res, out).then(resolve, (error: unknown) => {
-            reject(error instanceof Error ? error : new Error(String(error)));
-          });
-        })
-        .on('error', reject);
-      req.setTimeout(HTTP_TIMEOUT_MS, () => {
-        req.destroy(new Error(`HTTP request timed out after ${HTTP_TIMEOUT_MS}ms`));
+  const stream = got.stream(url, { headers, retry: HTTP_RETRY, timeout: HTTP_TIMEOUT, followRedirect: true });
+
+  try {
+    await new Promise<void>((resolve, reject) => {
+      let out: fs.WriteStream | null = null;
+      let settled = false;
+      const finish = (err?: Error): void => {
+        if (settled) return;
+        settled = true;
+        if (err) reject(err);
+        else resolve();
+      };
+
+      stream.once('response', (res: { statusCode?: number; headers: Record<string, string | string[] | undefined> }) => {
+        const mode = resolvePartialResponseMode(startByte, res.statusCode, res.headers['content-range']);
+        if (mode === 'discard-and-retry') {
+          stream.destroy(new RestartFreshDownloadError(`Discarding stale partial for ${path.basename(destination)}`));
+          return;
+        }
+
+        out = fs.createWriteStream(partPath, { flags: mode === 'append' ? 'a' : 'w' });
+        out.on('error', finish);
+        stream.pipe(out);
+        out.on('finish', () => finish());
       });
-    };
+      stream.on('downloadProgress', ({ transferred, total }: { transferred: number; total: number }) => {
+        onProgress?.(startByte + transferred, total > 0 ? startByte + total : undefined);
+      });
+      stream.once('error', (err: Error) => finish(err));
+    });
+  } catch (err) {
+    if (allowPartialRetry && err instanceof RestartFreshDownloadError) {
+      logger.warn('Stale partial detected, retrying binary download from byte 0', {
+        destination,
+        startByte
+      });
+      await fsPromises.rm(partPath, { force: true });
+      return downloadFile(url, destination, onProgress, false);
+    }
+    throw err;
+  }
 
-    request(url);
-  });
+  await fsPromises.rename(partPath, destination);
 }
 
 async function sha256ForFile(filePath: string): Promise<string> {
@@ -159,11 +208,14 @@ const DENO_ASSETS: Record<AssetPlatform, Record<AssetArch, string | null>> = {
 //   contain bin/ffprobe(.exe). Linux is .tar.xz (extracted via system tar).
 // - macOS: evermeet.cx — ships ffprobe as a standalone .zip; the
 //   /getrelease/ffprobe/zip endpoint redirects to the latest version.
-type FfprobeArchive = { source: 'btbn'; archive: string; format: 'zip' | 'tar.xz' } | { source: 'evermeet'; format: 'zip' };
+type FfprobeArchive = { source: 'btbn'; archive: string; format: 'zip' | 'tar.xz' } | { source: 'gyan'; archive: string; format: 'zip' } | { source: 'evermeet'; format: 'zip' };
 
 const FFPROBE_ASSETS: Record<AssetPlatform, Record<AssetArch, FfprobeArchive | null>> = {
   win32: {
-    x64: { source: 'btbn', archive: 'ffmpeg-master-latest-win64-gpl.zip', format: 'zip' },
+    // gyan.dev "essentials" build: ~30 MB ffprobe.exe vs ~197 MB for BtbN GPL
+    // (which statically links every codec/filter we don't use). Smaller transfer
+    // = lower stall risk during warmup, less disk usage per user.
+    x64: { source: 'gyan', archive: 'ffmpeg-release-essentials.zip', format: 'zip' },
     arm64: null
   },
   linux: {
@@ -185,6 +237,9 @@ function ffprobeAsset(): FfprobeArchive | null {
 function ffprobeDownloadUrl(asset: FfprobeArchive): string {
   if (asset.source === 'btbn') {
     return `https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/${asset.archive}`;
+  }
+  if (asset.source === 'gyan') {
+    return `https://www.gyan.dev/ffmpeg/builds/${asset.archive}`;
   }
   return 'https://evermeet.cx/ffmpeg/getrelease/ffprobe/zip';
 }
@@ -233,6 +288,7 @@ interface EnsureBinaryConfig {
   downloadUrl: string;
   expectedSha256?: () => Promise<string | null>;
   onStatus?: StatusReporter;
+  onDownloadProgress?: DownloadProgressCallback;
   requiredChecksum?: boolean;
   isUpToDate?: () => Promise<boolean>;
 }
@@ -265,7 +321,7 @@ export class BinaryManager {
     return process.env.ARROXY_FFPROBE_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe');
   }
 
-  async ensureYtDlp(onStatus?: StatusReporter): Promise<string> {
+  async ensureYtDlp(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string> {
     const override = process.env.ARROXY_YT_DLP_PATH;
     if (override && (await this.isUsableBinary(override))) {
       logger.info('Using pre-installed yt-dlp', { path: override });
@@ -287,6 +343,7 @@ export class BinaryManager {
         downloadUrl: `https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download/${assetName}`,
         expectedSha256,
         onStatus,
+        onDownloadProgress,
         requiredChecksum: true,
         isUpToDate: () => this.isYtDlpUpToDate(targetPath)
       });
@@ -306,7 +363,7 @@ export class BinaryManager {
   // spawnYtDlp's existing PATH injection finds both with one PATH entry.
   // Returns null if the platform/arch has no upstream build; the caller
   // tolerates this (ffprobe is only needed by certain post-processors).
-  async ensureFFprobe(onStatus?: StatusReporter): Promise<string | null> {
+  async ensureFFprobe(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string | null> {
     const override = process.env.ARROXY_FFPROBE_PATH;
     if (override && (await this.isUsableBinary(override))) {
       logger.info('Using pre-installed ffprobe', { path: override });
@@ -333,7 +390,7 @@ export class BinaryManager {
         await this.ensureZippedBinary({
           name: 'ffprobe',
           downloadUrl,
-          zipFileName: asset.source === 'btbn' ? asset.archive : 'ffprobe.zip',
+          zipFileName: asset.source === 'evermeet' ? 'ffprobe.zip' : asset.archive,
           innerExecutableName: innerName,
           destinationPath: targetPath,
           // BtbN and evermeet.cx don't publish per-asset SHA256s on a stable
@@ -341,7 +398,8 @@ export class BinaryManager {
           // signed JSON metadata). Skipping checksum is consistent with how
           // ffmpeg's checksum is treated as best-effort.
           expectedSha256: () => Promise.resolve(null),
-          onStatus
+          onStatus,
+          onDownloadProgress
         });
       } else {
         await this.ensureTarXzBinary({
@@ -350,7 +408,8 @@ export class BinaryManager {
           archiveFileName: (asset as { archive: string }).archive,
           innerExecutableName: innerName,
           destinationPath: targetPath,
-          onStatus
+          onStatus,
+          onDownloadProgress
         });
       }
     } catch (err) {
@@ -368,8 +427,8 @@ export class BinaryManager {
   // extractor for. We shell out to system `tar` (always present on Linux/
   // macOS, ships with Win10 1803+ but we use zip on Windows). xz support
   // in `tar` is provided by xz-utils, also ubiquitous on modern distros.
-  private async ensureTarXzBinary(config: { name: string; downloadUrl: string; archiveFileName: string; innerExecutableName: string; destinationPath: string; onStatus?: StatusReporter }): Promise<void> {
-    const { destinationPath, name, onStatus } = config;
+  private async ensureTarXzBinary(config: { name: string; downloadUrl: string; archiveFileName: string; innerExecutableName: string; destinationPath: string; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback }): Promise<void> {
+    const { destinationPath, name, onStatus, onDownloadProgress } = config;
 
     const existing = this.inProgress.get(destinationPath);
     if (existing) return existing;
@@ -385,7 +444,7 @@ export class BinaryManager {
           destinationPath
         });
 
-        await downloadFile(config.downloadUrl, archivePath);
+        await downloadFile(config.downloadUrl, archivePath, onDownloadProgress);
 
         const extractDir = path.join(tempDir, 'unpacked');
         await fsPromises.mkdir(extractDir, { recursive: true });
@@ -418,7 +477,7 @@ export class BinaryManager {
   //   - download/extraction failed for any reason.
   // The caller (YtDlp) treats null as "skip --js-runtimes" rather than failing
   // the download. Bot-block fallbacks still cover us.
-  async ensureDeno(onStatus?: StatusReporter): Promise<string | null> {
+  async ensureDeno(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string | null> {
     const override = process.env.ARROXY_DENO_PATH;
     if (override && (await this.isUsableBinary(override))) {
       logger.info('Using pre-installed deno', { path: override });
@@ -447,6 +506,7 @@ export class BinaryManager {
         zipFileName: assetName,
         innerExecutableName: denoExecutableName(),
         destinationPath: targetPath,
+        onDownloadProgress,
         expectedSha256: async () => {
           try {
             const checksumText = await downloadText(checksumUrl);
@@ -473,7 +533,7 @@ export class BinaryManager {
     }
   }
 
-  async ensureFFmpeg(onStatus?: StatusReporter): Promise<string | null> {
+  async ensureFFmpeg(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string | null> {
     const override = process.env.ARROXY_FFMPEG_PATH;
     if (override && (await this.isUsableBinary(override))) {
       logger.info('Using pre-installed ffmpeg', { path: override });
@@ -504,6 +564,7 @@ export class BinaryManager {
         downloadUrl: `https://github.com/eugeneware/ffmpeg-static/releases/download/b6.0/${assetName}`,
         expectedSha256,
         onStatus,
+        onDownloadProgress,
         requiredChecksum: false
       });
     } catch (err) {
@@ -514,8 +575,8 @@ export class BinaryManager {
     return targetPath;
   }
 
-  private async ensureZippedBinary(config: { name: string; downloadUrl: string; zipFileName: string; innerExecutableName: string; destinationPath: string; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter }): Promise<void> {
-    const { destinationPath, name, onStatus } = config;
+  private async ensureZippedBinary(config: { name: string; downloadUrl: string; zipFileName: string; innerExecutableName: string; destinationPath: string; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback }): Promise<void> {
+    const { destinationPath, name, onStatus, onDownloadProgress } = config;
 
     const existing = this.inProgress.get(destinationPath);
     if (existing) return existing;
@@ -531,7 +592,7 @@ export class BinaryManager {
           destinationPath
         });
 
-        await downloadFile(config.downloadUrl, zipPath);
+        await downloadFile(config.downloadUrl, zipPath, onDownloadProgress);
 
         const expected = await config.expectedSha256();
         if (expected) {
@@ -625,13 +686,13 @@ export class BinaryManager {
   }
 
   private async attemptDownload(config: EnsureBinaryConfig): Promise<void> {
-    const { destinationPath, name, downloadUrl, expectedSha256, onStatus, requiredChecksum = false } = config;
+    const { destinationPath, name, downloadUrl, expectedSha256, onStatus, onDownloadProgress, requiredChecksum = false } = config;
 
     const tempPath = `${destinationPath}.tmp`;
     onStatus?.('downloadingBinary', { name });
     logger.info(`Downloading ${name}`, { downloadUrl, destinationPath });
 
-    await downloadFile(downloadUrl, tempPath);
+    await downloadFile(downloadUrl, tempPath, onDownloadProgress);
 
     if (expectedSha256) {
       const expected = await expectedSha256();
@@ -706,6 +767,8 @@ export class BinaryManager {
 
 export const binaryInternals = {
   parseShaLine,
+  parseContentRangeStart,
+  resolvePartialResponseMode,
   ytDlpAssetName,
   ffmpegAssetName,
   denoAssetName,

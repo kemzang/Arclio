@@ -4,7 +4,11 @@ import { VideoPhase } from '@main/services/phases/VideoPhase';
 import { STATUS_KEY } from '@shared/schemas';
 import type { PhaseContext, ActiveDownload } from '@main/services/phases/types';
 import type { DownloadJob, StartDownloadInput } from '@shared/types';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
 import type { YtDlpResult } from '@main/services/YtDlp';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
 
 function makeJob(): DownloadJob {
   return {
@@ -17,14 +21,20 @@ function makeJob(): DownloadJob {
   };
 }
 
+const BASE_JOB: PreparedJob = {
+  kind: 'single-format',
+  source: 'youtube',
+  formatId: 'bv+ba',
+  preset: 'custom',
+  sponsorBlock: SB_OFF,
+  embed: EMBED_OFF,
+  subtitles: { languages: ['en', 'ja'], mode: 'embed', format: 'vtt', writeAuto: false }
+};
+
 const BASE_INPUT: StartDownloadInput = {
   url: 'https://www.youtube.com/watch?v=test',
   outputDir: '/tmp',
-  formatId: 'bv+ba',
-  subtitleLanguages: ['en', 'ja'],
-  subtitleMode: 'embed',
-  writeAutoSubs: false,
-  subtitleFormat: 'vtt'
+  job: BASE_JOB
 };
 
 function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
@@ -121,7 +131,7 @@ describe('VideoPhase(embed=true)', () => {
 
   it('embed=true but no subtitleLanguages → falls back to video kind', async () => {
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, subtitleLanguages: undefined }
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: undefined } }
     });
     await VideoPhase(true).run(ctx);
     const [req] = ctx.runMock.mock.calls[0];
@@ -130,18 +140,39 @@ describe('VideoPhase(embed=true)', () => {
 
   it('embed=true with empty subtitleLanguages → falls back to video kind', async () => {
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, subtitleLanguages: [] }
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: undefined } }
     });
     await VideoPhase(true).run(ctx);
     const [req] = ctx.runMock.mock.calls[0];
     expect(req.kind).toBe('video');
+  });
+
+  it('audio-convert jobs keep audioConvert when subtitles are embedded', async () => {
+    const ctx = makeCtx(SUCCESS, {
+      input: {
+        ...BASE_INPUT,
+        job: {
+          kind: 'audio-convert',
+          source: 'youtube',
+          audioConvert: { target: 'mp3', bitrateKbps: 192 },
+          preset: 'audio-only',
+          sponsorBlock: SB_OFF,
+          embed: EMBED_OFF,
+          subtitles: { languages: ['en'], mode: 'embed', format: 'vtt', writeAuto: false }
+        }
+      }
+    });
+    await VideoPhase(true).run(ctx);
+    const [req] = ctx.runMock.mock.calls[0];
+    expect(req.kind).toBe('video+embed');
+    expect(req.audioConvert).toEqual({ target: 'mp3', bitrateKbps: 192 });
   });
 });
 
 describe('VideoPhase — sidecar field propagation', () => {
   it('writeDescription propagates to YtDlpRequest (video kind)', async () => {
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, subtitleLanguages: [], writeDescription: true }
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: undefined, embed: { ...EMBED_OFF, description: true } } }
     });
     await VideoPhase(false).run(ctx);
     const [req] = ctx.runMock.mock.calls[0];
@@ -150,7 +181,7 @@ describe('VideoPhase — sidecar field propagation', () => {
 
   it('writeThumbnail propagates to YtDlpRequest (video kind)', async () => {
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, subtitleLanguages: [], writeThumbnail: true }
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: undefined, embed: { ...EMBED_OFF, thumbnailSidecar: true } } }
     });
     await VideoPhase(false).run(ctx);
     const [req] = ctx.runMock.mock.calls[0];
@@ -159,7 +190,7 @@ describe('VideoPhase — sidecar field propagation', () => {
 
   it('writeDescription propagates to YtDlpRequest (video+embed kind)', async () => {
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, writeDescription: true }
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, embed: { ...EMBED_OFF, description: true } } }
     });
     await VideoPhase(true).run(ctx);
     const [req] = ctx.runMock.mock.calls[0];
@@ -168,7 +199,7 @@ describe('VideoPhase — sidecar field propagation', () => {
 
   it('writeThumbnail propagates to YtDlpRequest (video+embed kind)', async () => {
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, writeThumbnail: true }
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, embed: { ...EMBED_OFF, thumbnailSidecar: true } } }
     });
     await VideoPhase(true).run(ctx);
     const [req] = ctx.runMock.mock.calls[0];

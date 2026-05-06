@@ -24,6 +24,7 @@ const de = {
   splash: {
     greeting: 'Hey, schön dich wiederzusehen!',
     warmup: 'Arroxy wärmt sich auf…',
+    downloading: '{{binary}} wird heruntergeladen…',
     warning: 'Einrichtung unvollständig — einige Funktionen funktionieren möglicherweise nicht'
   },
   theme: {
@@ -37,6 +38,8 @@ const de = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Qualität',
       formats: 'Format',
       subtitles: 'Untertitel',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const de = {
       folder: 'Speichern',
       confirm: 'Bestätigen'
     },
+    playlist: {
+      heading: 'Playlist-Elemente',
+      itemCount_one: '{{count}} video',
+      itemCount_other: '{{count}} videos',
+      selectAll: 'Alle auswählen',
+      selectNone: 'Keine auswählen',
+      rangeFrom: 'Von',
+      rangeTo: 'Bis',
+      rangeApply: 'Bereich übernehmen',
+      selectedCount_one: '{{count}} ausgewählt',
+      selectedCount_other: '{{count}} ausgewählt',
+      noSelection: 'Wähle mindestens ein Video aus, um fortzufahren',
+      loadingItems: 'Playlist wird geladen…',
+      thumbnailAlt: 'Video-Vorschaubild',
+      continue: 'Weiter',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'Qualität für den Stapel wählen',
+      subhead: 'Jedes Video löst die gewählte Stufe unabhängig auf — heterogene Playlists funktionieren ohne Überraschungen.',
+      itemCount_one: '{{count}} Element',
+      itemCount_other: '{{count}} Elemente',
+      continue: 'Weiter'
+    },
+    mixedPrompt: {
+      title: 'Einzelnes Video oder ganze Playlist?',
+      body: 'Diese URL ist Teil einer Playlist. Was möchtest du herunterladen?',
+      singleVideo: 'Nur dieses Video',
+      wholePlaylist: 'Ganze Playlist'
+    },
+
     url: {
       heading: 'YouTube-URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const de = {
       addToQueue: '+ Warteschlange',
       addToQueueTooltip: 'Startet, wenn andere Downloads fertig sind — volle Bandbreite',
       pullIt: "Hol's rein! ↓",
-      pullItTooltip: 'Startet sofort — läuft parallel zu anderen aktiven Downloads'
+      pullItTooltip: 'Startet sofort — läuft parallel zu anderen aktiven Downloads',
+      playlistBatch_one: '{{count}} Video · {{title}}',
+      playlistBatch_other: '{{count}} Videos · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'Voreinstellung',
+      labelItems: 'Elemente',
+      itemsValue_one: '{{count}} von {{total}} Video',
+      itemsValue_other: '{{count}} von {{total}} Videos'
     },
     error: {
       icon: 'Fehler'
@@ -242,6 +283,10 @@ const de = {
     activeCount: '{{count}} werden geladen · {{percent}}%',
     clear: 'Leeren',
     clearTitle: 'Abgeschlossene Downloads entfernen',
+    pauseAll: 'Alle pausieren',
+    pauseAllTitle: 'Alle aktiven Downloads pausieren',
+    cancelAll: 'Alle abbrechen',
+    cancelAllTitle: 'Alle aktiven und ausstehenden Downloads abbrechen',
     tip: 'Dein Download ist unten in der Warteschlange — öffne sie jederzeit, um den Fortschritt zu verfolgen.',
     item: {
       doneAt: 'Fertig {{time}}',
@@ -249,10 +294,13 @@ const de = {
       defaultError: 'Download fehlgeschlagen',
       openUrl: 'URL öffnen',
       pause: 'Pause',
+      hold: 'Zurückhalten',
       resume: 'Fortsetzen',
       cancel: 'Abbrechen',
       remove: 'Entfernen'
-    }
+    },
+    interJobSleep_one: 'Nächster Download startet in {{count}}s',
+    interJobSleep_other: 'Nächster Download startet in {{count}}s'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const de = {
       label: 'Nur Untertitel',
       desc: 'Kein Video, kein Audio, nur Untertitel'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Beste Qualität', desc: 'Höchste verfügbare Auflösung + Audio je Element' },
+    'video-2160p': { label: 'Bis zu 4K', desc: 'Begrenzt auf 2160p, fällt je Element auf niedrigere zurück' },
+    'video-1440p': { label: 'Bis zu 1440p', desc: 'Begrenzt auf 2K, fällt je Element auf niedrigere zurück' },
+    'video-1080p': { label: 'Bis zu 1080p', desc: 'Je Element begrenzt, fällt auf niedrigere zurück' },
+    'video-720p': { label: 'Bis zu 720p', desc: 'Kleinere Dateien, breite Kompatibilität' },
+    'video-480p': { label: 'Bis zu 480p', desc: 'Geringe Bandbreite' },
+    'video-360p': { label: 'Bis zu 360p', desc: 'Kleinstes Video' },
+    'audio-best': { label: 'Audio (beste)', desc: 'Nativ bestes Audio, ohne Neu-Enkodierung' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'In MP3 192 kbps umwandeln' }
   },
   formatLabel: {
     audioOnly: 'Nur Audio',

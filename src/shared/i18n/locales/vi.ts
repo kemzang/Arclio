@@ -24,6 +24,7 @@ const vi = {
   splash: {
     greeting: 'Xin chào, chào mừng bạn quay lại!',
     warmup: 'Arroxy đang khởi động…',
+    downloading: 'Đang tải xuống {{binary}}…',
     warning: 'Thiết lập chưa hoàn tất — một số tính năng có thể không hoạt động'
   },
   theme: {
@@ -37,6 +38,8 @@ const vi = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Chất lượng',
       formats: 'Định dạng',
       subtitles: 'Phụ đề',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const vi = {
       folder: 'Lưu',
       confirm: 'Xác nhận'
     },
+    playlist: {
+      heading: 'Các mục Playlist',
+      itemCount_one: '{{count}} video',
+      itemCount_other: '{{count}} video',
+      selectAll: 'Chọn tất cả',
+      selectNone: 'Bỏ chọn tất cả',
+      rangeFrom: 'Từ',
+      rangeTo: 'Đến',
+      rangeApply: 'Áp dụng phạm vi',
+      selectedCount_one: '{{count}} đã chọn',
+      selectedCount_other: '{{count}} đã chọn',
+      noSelection: 'Chọn ít nhất một video để tiếp tục',
+      loadingItems: 'Đang tải Playlist…',
+      thumbnailAlt: 'Hình thu nhỏ video',
+      continue: 'Tiếp tục',
+      durationUnknown: 'live'
+    },
+    playlistPresets: {
+      heading: 'Chọn chất lượng cho lô',
+      subhead: 'Mỗi video tự xử lý cấp độ đã chọn một cách độc lập — danh sách phát không đồng nhất hoạt động mượt mà.',
+      itemCount_one: '{{count}} mục',
+      itemCount_other: '{{count}} mục',
+      continue: 'Tiếp tục'
+    },
+    mixedPrompt: {
+      title: 'Một video hay toàn bộ Playlist?',
+      body: 'URL này là một phần của Playlist. Bạn muốn tải xuống gì?',
+      singleVideo: 'Chỉ video này',
+      wholePlaylist: 'Toàn bộ Playlist'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const vi = {
       addToQueue: '+ Hàng đợi',
       addToQueueTooltip: 'Bắt đầu khi các tải xuống khác hoàn tất — sử dụng toàn bộ băng thông',
       pullIt: 'Tải về! ↓',
-      pullItTooltip: 'Bắt đầu ngay lập tức — chạy song song với các tải xuống đang hoạt động'
+      pullItTooltip: 'Bắt đầu ngay lập tức — chạy song song với các tải xuống đang hoạt động',
+      playlistBatch_one: '{{count}} video · {{title}}',
+      playlistBatch_other: '{{count}} video · {{title}}',
+      labelPlaylist: 'Danh sách phát',
+      labelPreset: 'Cài đặt sẵn',
+      labelItems: 'Mục',
+      itemsValue_one: '{{count}} trong {{total}} video',
+      itemsValue_other: '{{count}} trong {{total}} video'
     },
     error: {
       icon: 'Lỗi'
@@ -242,6 +283,10 @@ const vi = {
     activeCount: '{{count}} đang tải · {{percent}}%',
     clear: 'Xóa',
     clearTitle: 'Xóa các tải xuống đã hoàn tất',
+    pauseAll: 'Tạm dừng tất cả',
+    pauseAllTitle: 'Tạm dừng tất cả các tải xuống đang hoạt động',
+    cancelAll: 'Hủy tất cả',
+    cancelAllTitle: 'Hủy tất cả các tải xuống đang hoạt động và đang chờ',
     tip: 'Tải xuống của bạn đang trong hàng đợi bên dưới — mở bất cứ lúc nào để theo dõi tiến trình.',
     item: {
       doneAt: 'Hoàn tất {{time}}',
@@ -249,10 +294,13 @@ const vi = {
       defaultError: 'Tải xuống thất bại',
       openUrl: 'Mở URL',
       pause: 'Tạm dừng',
+      hold: 'Giữ',
       resume: 'Tiếp tục',
       cancel: 'Hủy',
       remove: 'Xóa'
-    }
+    },
+    interJobSleep_one: 'Lượt tải tiếp bắt đầu sau {{count}}s',
+    interJobSleep_other: 'Lượt tải tiếp bắt đầu sau {{count}}s'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const vi = {
       label: 'Chỉ phụ đề',
       desc: 'Không có video, không có âm thanh, chỉ phụ đề'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Chất lượng tốt nhất', desc: 'Video + âm thanh cao nhất hiện có cho mỗi mục' },
+    'video-2160p': { label: 'Đến 4K', desc: 'Giới hạn ở 2160p, chuyển sang thấp hơn theo từng mục' },
+    'video-1440p': { label: 'Đến 1440p', desc: 'Giới hạn ở 2K, chuyển sang thấp hơn theo từng mục' },
+    'video-1080p': { label: 'Đến 1080p', desc: 'Giới hạn theo từng mục, chuyển sang thấp hơn' },
+    'video-720p': { label: 'Đến 720p', desc: 'Tệp nhỏ hơn, tương thích rộng' },
+    'video-480p': { label: 'Đến 480p', desc: 'Băng thông thấp' },
+    'video-360p': { label: 'Đến 360p', desc: 'Video nhỏ nhất' },
+    'audio-best': { label: 'Audio (tốt nhất)', desc: 'Âm thanh gốc tốt nhất, không mã hóa lại' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'Chuyển đổi sang MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: 'Chỉ âm thanh',

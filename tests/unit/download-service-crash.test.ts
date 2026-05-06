@@ -10,6 +10,11 @@ vi.mock('@main/utils/process');
 import { spawnYtDlp } from '@main/utils/process';
 import { DownloadService } from '@main/services/DownloadService';
 import { YtDlp } from '@main/services/YtDlp';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
+const DEFAULT_JOB: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: 'x', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
 
 class FakeProcess extends EventEmitter {
   stdout = new EventEmitter();
@@ -54,7 +59,7 @@ describe('DownloadService stdout/stderr crash safety', () => {
     });
 
     // start() registers handlers synchronously in spawnProcess, then returns
-    await svc.start({ url: 'https://youtube.com/watch?v=test', outputDir: '/tmp', formatId: 'x' });
+    await svc.start({ url: 'https://youtube.com/watch?v=test', outputDir: '/tmp', job: DEFAULT_JOB });
 
     expect(() => {
       fakeProc.stdout.emit('data', Buffer.from('[download] 50% of 10MiB'));
@@ -71,7 +76,7 @@ describe('DownloadService stdout/stderr crash safety', () => {
       throw new Error('disk full');
     });
 
-    await svc.start({ url: 'https://youtube.com/watch?v=test', outputDir: '/tmp', formatId: 'x' });
+    await svc.start({ url: 'https://youtube.com/watch?v=test', outputDir: '/tmp', job: DEFAULT_JOB });
 
     expect(() => {
       fakeProc.stderr.emit('data', Buffer.from('ERROR: some yt-dlp error line'));
@@ -91,7 +96,7 @@ describe('DownloadService stdout/stderr crash safety', () => {
     const result = await svc.start({
       url: 'https://youtube.com/watch?v=test',
       outputDir: '/tmp',
-      formatId: 'x'
+      job: DEFAULT_JOB
     });
     expect(result.ok).toBe(true);
     expect(svc.activeCount).toBe(1);

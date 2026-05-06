@@ -1,13 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { phasesFor } from '@main/services/phases';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
 import type { StartDownloadInput } from '@shared/types';
 
 const URL = 'https://www.youtube.com/watch?v=test';
 const FORMAT_ID = 'bv+ba';
 const LANGS = ['en', 'ja'];
+const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
+const SB_OFF: SponsorBlockOptions = { mode: 'off' };
 
-function input(overrides: Partial<StartDownloadInput> = {}): StartDownloadInput {
-  return { url: URL, outputDir: '/tmp', ...overrides };
+function input(job: PreparedJob): StartDownloadInput {
+  return { url: URL, outputDir: '/tmp', job };
 }
 
 // phasesFor always prepends a PreflightPhase, so counts below include it.
@@ -15,21 +18,24 @@ function input(overrides: Partial<StartDownloadInput> = {}): StartDownloadInput 
 
 describe('phasesFor — strategy selection', () => {
   it('no formatId + langs → preflight + subtitle-only', () => {
-    const phases = phasesFor(input({ subtitleLanguages: LANGS }));
+    const job: PreparedJob = { kind: 'subtitle-only', source: 'youtube', subtitles: { languages: LANGS, mode: 'sidecar', format: 'srt', writeAuto: false } };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(2);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('subtitle-only');
   });
 
   it('formatId + no langs → preflight + video (single VideoPhase embed=false)', () => {
-    const phases = phasesFor(input({ formatId: FORMAT_ID }));
+    const job: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: FORMAT_ID, preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(2);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('video');
   });
 
   it('formatId + langs + mode=sidecar → preflight + video + sidecar-subs', () => {
-    const phases = phasesFor(input({ formatId: FORMAT_ID, subtitleLanguages: LANGS, subtitleMode: 'sidecar' }));
+    const job: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: FORMAT_ID, preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF, subtitles: { languages: LANGS, mode: 'sidecar', format: 'srt', writeAuto: false } };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(3);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('video');
@@ -37,28 +43,16 @@ describe('phasesFor — strategy selection', () => {
   });
 
   it('formatId + langs + mode=embed + writeAutoSubs=false → preflight + video+embed', () => {
-    const phases = phasesFor(
-      input({
-        formatId: FORMAT_ID,
-        subtitleLanguages: LANGS,
-        subtitleMode: 'embed',
-        writeAutoSubs: false
-      })
-    );
+    const job: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: FORMAT_ID, preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF, subtitles: { languages: LANGS, mode: 'embed', format: 'vtt', writeAuto: false } };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(2);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('video+embed');
   });
 
   it('formatId + langs + mode=embed + writeAutoSubs=true → preflight + video + sidecar-subs', () => {
-    const phases = phasesFor(
-      input({
-        formatId: FORMAT_ID,
-        subtitleLanguages: LANGS,
-        subtitleMode: 'embed',
-        writeAutoSubs: true
-      })
-    );
+    const job: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: FORMAT_ID, preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF, subtitles: { languages: LANGS, mode: 'embed', format: 'vtt', writeAuto: true } };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(3);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('video');
@@ -66,41 +60,40 @@ describe('phasesFor — strategy selection', () => {
   });
 
   it('empty subtitleLanguages → preflight + video (treated as no-subs regardless of mode)', () => {
-    const phases = phasesFor(input({ formatId: FORMAT_ID, subtitleLanguages: [], subtitleMode: 'embed' }));
+    const job: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: FORMAT_ID, preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(2);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('video');
   });
 
   it('mode=embed but no langs → preflight + video (mode is moot when nothing to embed)', () => {
-    const phases = phasesFor(input({ formatId: FORMAT_ID, subtitleMode: 'embed' }));
+    const job: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: FORMAT_ID, preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(2);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('video');
   });
 
   it('no formatId + no langs → preflight + video (subtitle-only needs langs)', () => {
-    const phases = phasesFor(input({}));
+    const job: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: 'bv+ba', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(2);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('video');
   });
 
   it('no formatId + empty langs → preflight + video (empty langs is same as no langs)', () => {
-    const phases = phasesFor(input({ subtitleLanguages: [] }));
+    const job: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: 'bv+ba', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(2);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('video');
   });
 
   it('formatId + langs + mode=subfolder → preflight + video + sidecar-subs', () => {
-    const phases = phasesFor(
-      input({
-        formatId: FORMAT_ID,
-        subtitleLanguages: LANGS,
-        subtitleMode: 'subfolder'
-      })
-    );
+    const job: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: FORMAT_ID, preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF, subtitles: { languages: LANGS, mode: 'subfolder', format: 'srt', writeAuto: false } };
+    const phases = phasesFor(input(job));
     expect(phases).toHaveLength(3);
     expect(phases[0].kind).toBe('preflight');
     expect(phases[1].kind).toBe('video');

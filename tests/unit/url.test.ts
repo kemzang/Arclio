@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseVideoId, cleanYoutubeUrl } from '@shared/url';
+import { parseVideoId, cleanYoutubeUrl, isPlaylistUrl, isMixedVideoPlaylistUrl, extractPlaylistId, forceVideoOnly, forcePlaylistOnly } from '@shared/url';
 
 describe('parseVideoId', () => {
   it('extracts ID from youtube.com URL', () => {
@@ -60,5 +60,85 @@ describe('cleanYoutubeUrl', () => {
   it('skips cleaning the youtube.com/signin exception path', () => {
     const signin = 'https://accounts.youtube.com/signin?si=needed&service=youtube';
     expect(cleanYoutubeUrl(signin)).toBe(signin);
+  });
+});
+
+describe('isPlaylistUrl', () => {
+  it('returns true for pure playlist URLs', () => {
+    expect(isPlaylistUrl('https://www.youtube.com/playlist?list=PLabc123')).toBe(true);
+  });
+
+  it('returns false when v= is also present', () => {
+    expect(isPlaylistUrl('https://www.youtube.com/watch?v=abc&list=PLabc123')).toBe(false);
+  });
+
+  it('returns false for plain video URLs', () => {
+    expect(isPlaylistUrl('https://www.youtube.com/watch?v=abc')).toBe(false);
+    expect(isPlaylistUrl('https://youtu.be/abc')).toBe(false);
+  });
+
+  it('returns false for non-YouTube hosts', () => {
+    expect(isPlaylistUrl('https://vimeo.com/playlist?list=xyz')).toBe(false);
+  });
+
+  it('returns false for unparseable input', () => {
+    expect(isPlaylistUrl('not a url')).toBe(false);
+  });
+});
+
+describe('isMixedVideoPlaylistUrl', () => {
+  it('returns true when both v= and list= present', () => {
+    expect(isMixedVideoPlaylistUrl('https://www.youtube.com/watch?v=abc&list=PLabc')).toBe(true);
+  });
+
+  it('returns false for pure playlist URLs', () => {
+    expect(isMixedVideoPlaylistUrl('https://www.youtube.com/playlist?list=PLabc')).toBe(false);
+  });
+
+  it('returns false for plain video URLs', () => {
+    expect(isMixedVideoPlaylistUrl('https://www.youtube.com/watch?v=abc')).toBe(false);
+  });
+});
+
+describe('extractPlaylistId', () => {
+  it('returns the list= value', () => {
+    expect(extractPlaylistId('https://www.youtube.com/playlist?list=PLabc123')).toBe('PLabc123');
+    expect(extractPlaylistId('https://www.youtube.com/watch?v=x&list=PLxyz')).toBe('PLxyz');
+  });
+
+  it('returns null when list= absent', () => {
+    expect(extractPlaylistId('https://www.youtube.com/watch?v=abc')).toBeNull();
+  });
+
+  it('returns null for non-YouTube URLs', () => {
+    expect(extractPlaylistId('https://vimeo.com/?list=foo')).toBeNull();
+  });
+});
+
+describe('forceVideoOnly', () => {
+  it('strips list= from a watch URL', () => {
+    expect(forceVideoOnly('https://www.youtube.com/watch?v=abc&list=PLxyz')).toBe('https://www.youtube.com/watch?v=abc');
+  });
+
+  it('runs cleanYoutubeUrl first to strip tracking', () => {
+    expect(forceVideoOnly('https://www.youtube.com/watch?v=abc&list=PLxyz&si=tracking')).toBe('https://www.youtube.com/watch?v=abc');
+  });
+
+  it('passes URLs without list= through unchanged', () => {
+    expect(forceVideoOnly('https://www.youtube.com/watch?v=abc')).toBe('https://www.youtube.com/watch?v=abc');
+  });
+});
+
+describe('forcePlaylistOnly', () => {
+  it('strips v= and rewrites /watch to /playlist', () => {
+    expect(forcePlaylistOnly('https://www.youtube.com/watch?v=abc&list=PLxyz')).toBe('https://www.youtube.com/playlist?list=PLxyz');
+  });
+
+  it('passes /playlist URLs through unchanged', () => {
+    expect(forcePlaylistOnly('https://www.youtube.com/playlist?list=PLxyz')).toBe('https://www.youtube.com/playlist?list=PLxyz');
+  });
+
+  it('strips tracking via cleanYoutubeUrl', () => {
+    expect(forcePlaylistOnly('https://www.youtube.com/watch?v=abc&list=PLxyz&si=track')).toBe('https://www.youtube.com/playlist?list=PLxyz');
   });
 });

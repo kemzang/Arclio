@@ -3,6 +3,7 @@ import { SubtitleOnlyPhase } from '@main/services/phases/SubtitleOnlyPhase';
 import { STATUS_KEY } from '@shared/schemas';
 import type { PhaseContext, ActiveDownload } from '@main/services/phases/types';
 import type { DownloadJob, StartDownloadInput } from '@shared/types';
+import type { PreparedJob } from '@shared/preparedJob';
 import type { YtDlpResult } from '@main/services/YtDlp';
 
 vi.mock('@main/services/subtitlePostProcess', () => ({
@@ -26,13 +27,13 @@ function makeJob(): DownloadJob {
   };
 }
 
+const BASE_SUBS = { languages: ['en'], mode: 'sidecar' as const, format: 'srt' as const, writeAuto: false };
+const BASE_JOB: PreparedJob = { kind: 'subtitle-only', source: 'youtube', subtitles: BASE_SUBS };
+
 const BASE_INPUT: StartDownloadInput = {
   url: 'https://www.youtube.com/watch?v=test',
   outputDir: '/tmp',
-  subtitleLanguages: ['en'],
-  subtitleMode: 'sidecar',
-  writeAutoSubs: false,
-  subtitleFormat: 'srt'
+  job: BASE_JOB
 };
 
 function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
@@ -108,7 +109,7 @@ describe('SubtitleOnlyPhase', () => {
   it('writeAutoSubs=false → dedupeSubtitleFiles not called', async () => {
     await SubtitleOnlyPhase.run(
       makeCtx(SUCCESS, {
-        input: { ...BASE_INPUT, writeAutoSubs: false }
+        input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: { ...BASE_SUBS, writeAuto: false } } }
       })
     );
     expect(dedupeSubtitleFiles).not.toHaveBeenCalled();
@@ -117,7 +118,7 @@ describe('SubtitleOnlyPhase', () => {
   it('writeAutoSubs=true → dedupeSubtitleFiles called after success', async () => {
     const paths = ['/tmp/video.en.srt'];
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, writeAutoSubs: true },
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: { ...BASE_SUBS, writeAuto: true } } },
       subtitlePaths: paths
     });
     await SubtitleOnlyPhase.run(ctx);
@@ -128,7 +129,7 @@ describe('SubtitleOnlyPhase', () => {
 
   it('dedupeSubtitleFiles shouldAbort reflects cancelRequested', async () => {
     const ctx = makeCtx(SUCCESS, {
-      input: { ...BASE_INPUT, writeAutoSubs: true }
+      input: { ...BASE_INPUT, job: { ...BASE_JOB, subtitles: { ...BASE_SUBS, writeAuto: true } } }
     });
     await SubtitleOnlyPhase.run(ctx);
 

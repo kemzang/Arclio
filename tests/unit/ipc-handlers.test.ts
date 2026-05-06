@@ -64,6 +64,7 @@ function makeDeps() {
     mainWindow: mainWindow as never,
     downloadService: downloadService as never,
     formatProbeService: { probe: vi.fn() } as never,
+    playlistProbeService: { getPlaylistItems: vi.fn() } as never,
     settingsStore: settingsStore as never,
     queueStore: queueStore as never,
     binaryManager: {
@@ -251,17 +252,7 @@ describe('registerIpcHandlers', () => {
         error: null,
         finishedAt: null,
         downloadJobId: null,
-        subtitleLanguages: [],
-        writeAutoSubs: false,
-        subtitleMode: 'sidecar',
-        subtitleFormat: 'srt',
-        sponsorBlockMode: 'off',
-        sponsorBlockCategories: [],
-        embedChapters: true,
-        embedMetadata: true,
-        embedThumbnail: true,
-        writeDescription: false,
-        writeThumbnail: false
+        job: { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false } }
       };
       const result = (await handler(null, [validItem])) as { ok: boolean };
       expect(result.ok).toBe(true);

@@ -24,6 +24,7 @@ const ja = {
   splash: {
     greeting: 'やあ、おかえり!',
     warmup: 'Arroxyを起動中…',
+    downloading: '{{binary}} をダウンロード中…',
     warning: 'セットアップが未完了 — 一部の機能が動作しない可能性があります'
   },
   theme: {
@@ -37,6 +38,8 @@ const ja = {
   wizard: {
     steps: {
       url: 'URL',
+      playlistItems: 'Playlist',
+      playlistPresets: '画質',
       formats: '形式',
       subtitles: '字幕',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const ja = {
       folder: '保存先',
       confirm: '確認'
     },
+    playlist: {
+      heading: 'Playlist アイテム',
+      itemCount_one: '{{count}} 本の動画',
+      itemCount_other: '{{count}} 本の動画',
+      selectAll: 'すべて選択',
+      selectNone: 'すべて解除',
+      rangeFrom: '開始',
+      rangeTo: '終了',
+      rangeApply: '範囲を適用',
+      selectedCount_one: '{{count}} 件選択中',
+      selectedCount_other: '{{count}} 件選択中',
+      noSelection: '続行するには少なくとも1本の動画を選択してください',
+      loadingItems: 'Playlist を取得中…',
+      thumbnailAlt: '動画サムネイル',
+      continue: '続行',
+      durationUnknown: 'ライブ'
+    },
+    playlistPresets: {
+      heading: 'バッチの画質を選択',
+      subhead: '各動画が選択した画質ティアを独立して解決します — 異なる動画が混在するPlaylistも問題なく処理できます。',
+      itemCount_one: '{{count}} 件',
+      itemCount_other: '{{count}} 件',
+      continue: '続行'
+    },
+    mixedPrompt: {
+      title: '単体動画または Playlist 全体?',
+      body: 'このURLはPlaylistの一部です。何をダウンロードしますか?',
+      singleVideo: 'この動画のみ',
+      wholePlaylist: 'Playlist 全体'
+    },
+
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const ja = {
       addToQueue: '+ キュー',
       addToQueueTooltip: '他のダウンロードが終わってから開始 — 帯域幅をフル活用',
       pullIt: '取得! ↓',
-      pullItTooltip: 'すぐ開始 — 他のアクティブなダウンロードと並行実行'
+      pullItTooltip: 'すぐ開始 — 他のアクティブなダウンロードと並行実行',
+      playlistBatch_one: '{{count}} 本 · {{title}}',
+      playlistBatch_other: '{{count}} 本 · {{title}}',
+      labelPlaylist: 'Playlist',
+      labelPreset: 'プリセット',
+      labelItems: '件数',
+      itemsValue_one: '全{{total}}本中{{count}}本',
+      itemsValue_other: '全{{total}}本中{{count}}本'
     },
     error: {
       icon: 'エラー'
@@ -242,6 +283,10 @@ const ja = {
     activeCount: '{{count}} 件ダウンロード中 · {{percent}}%',
     clear: 'クリア',
     clearTitle: '完了したダウンロードをクリア',
+    pauseAll: 'すべて一時停止',
+    pauseAllTitle: 'すべてのアクティブなダウンロードを一時停止',
+    cancelAll: 'すべてキャンセル',
+    cancelAllTitle: 'すべてのアクティブおよび保留中のダウンロードをキャンセル',
     tip: 'ダウンロードは下のキューに入りました — いつでも開いて進捗を確認できます。',
     item: {
       doneAt: '{{time}} 完了',
@@ -249,10 +294,13 @@ const ja = {
       defaultError: 'ダウンロード失敗',
       openUrl: 'URLを開く',
       pause: '一時停止',
+      hold: '保留',
       resume: '再開',
       cancel: 'キャンセル',
       remove: '削除'
-    }
+    },
+    interJobSleep_one: '次のダウンロードは{{count}}秒後に開始',
+    interJobSleep_other: '次のダウンロードは{{count}}秒後に開始'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const ja = {
       label: '字幕のみ',
       desc: '動画・音声なし、字幕のみ'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: '最高画質', desc: '各アイテムで最高解像度 + 最高音質' },
+    'video-2160p': { label: '最大 4K', desc: '2160p上限、各アイテムで自動フォールバック' },
+    'video-1440p': { label: '最大 1440p', desc: '2K上限、各アイテムで自動フォールバック' },
+    'video-1080p': { label: '最大 1080p', desc: '各アイテムで上限設定、自動フォールバック' },
+    'video-720p': { label: '最大 720p', desc: 'ファイルサイズ小、互換性良好' },
+    'video-480p': { label: '最大 480p', desc: '低帯域幅' },
+    'video-360p': { label: '最大 360p', desc: '最小動画' },
+    'audio-best': { label: 'Audio (best)', desc: 'ネイティブ最高音質、再エンコードなし' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps に変換' }
   },
   formatLabel: {
     audioOnly: '音声のみ',

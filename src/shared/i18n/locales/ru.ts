@@ -24,6 +24,7 @@ const ru = {
   splash: {
     greeting: 'Привет, с возвращением!',
     warmup: 'Arroxy запускается…',
+    downloading: 'Загрузка {{binary}}…',
     warning: 'Настройка не завершена — некоторые функции могут не работать'
   },
   theme: {
@@ -37,6 +38,8 @@ const ru = {
   wizard: {
     steps: {
       url: 'Ссылка',
+      playlistItems: 'Playlist',
+      playlistPresets: 'Качество',
       formats: 'Формат',
       subtitles: 'Субтитры',
       sponsorblock: 'SponsorBlock',
@@ -44,6 +47,37 @@ const ru = {
       folder: 'Сохранить',
       confirm: 'Подтвердить'
     },
+    playlist: {
+      heading: 'Элементы Playlist',
+      itemCount_one: '{{count}} видео',
+      itemCount_other: '{{count}} видео',
+      selectAll: 'Выбрать все',
+      selectNone: 'Снять выбор',
+      rangeFrom: 'С',
+      rangeTo: 'По',
+      rangeApply: 'Применить диапазон',
+      selectedCount_one: '{{count}} выбрано',
+      selectedCount_other: '{{count}} выбрано',
+      noSelection: 'Выбери хотя бы одно видео, чтобы продолжить',
+      loadingItems: 'Загрузка Playlist…',
+      thumbnailAlt: 'Превью видео',
+      continue: 'Продолжить',
+      durationUnknown: 'прямой эфир'
+    },
+    playlistPresets: {
+      heading: 'Выбери качество для пакетной загрузки',
+      subhead: 'Каждое видео независимо подбирает подходящий уровень качества — неоднородные плейлисты работают без сюрпризов.',
+      itemCount_one: '{{count}} элемент',
+      itemCount_other: '{{count}} элементов',
+      continue: 'Продолжить'
+    },
+    mixedPrompt: {
+      title: 'Одно видео или весь Playlist?',
+      body: 'Этот URL является частью Playlist. Что ты хочешь скачать?',
+      singleVideo: 'Только это видео',
+      wholePlaylist: 'Весь Playlist'
+    },
+
     url: {
       heading: 'Ссылка YouTube',
       placeholder: 'https://www.youtube.com/watch?v=...',
@@ -224,7 +258,14 @@ const ru = {
       addToQueue: '+ В очередь',
       addToQueueTooltip: 'Стартует, когда завершатся другие загрузки — на полной скорости',
       pullIt: 'Качаем! ↓',
-      pullItTooltip: 'Запускается сразу — параллельно с другими активными загрузками'
+      pullItTooltip: 'Запускается сразу — параллельно с другими активными загрузками',
+      playlistBatch_one: '{{count}} видео · {{title}}',
+      playlistBatch_other: '{{count}} видео · {{title}}',
+      labelPlaylist: 'Плейлист',
+      labelPreset: 'Пресет',
+      labelItems: 'Видео',
+      itemsValue_one: '{{count}} из {{total}} видео',
+      itemsValue_other: '{{count}} из {{total}} видео'
     },
     error: {
       icon: 'Ошибка'
@@ -242,6 +283,10 @@ const ru = {
     activeCount: '{{count}} загружается · {{percent}}%',
     clear: 'Очистить',
     clearTitle: 'Очистить завершённые загрузки',
+    pauseAll: 'Приостановить все',
+    pauseAllTitle: 'Приостановить все активные загрузки',
+    cancelAll: 'Отменить все',
+    cancelAllTitle: 'Отменить все активные и ожидающие загрузки',
     tip: 'Твоя загрузка в очереди ниже — открой её в любой момент, чтобы следить за прогрессом.',
     item: {
       doneAt: 'Готово в {{time}}',
@@ -249,10 +294,13 @@ const ru = {
       defaultError: 'Не удалось загрузить',
       openUrl: 'Открыть ссылку',
       pause: 'Пауза',
+      hold: 'Отложить',
       resume: 'Продолжить',
       cancel: 'Отменить',
       remove: 'Удалить'
-    }
+    },
+    interJobSleep_one: 'Следующая загрузка начнётся через {{count}}с',
+    interJobSleep_other: 'Следующая загрузка начнётся через {{count}}с'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -317,6 +365,17 @@ const ru = {
       label: 'Только субтитры',
       desc: 'Без видео и аудио, только субтитры'
     }
+  },
+  playlistPresets: {
+    'video-best': { label: 'Лучшее качество', desc: 'Максимальное разрешение + лучшее аудио на каждый элемент' },
+    'video-2160p': { label: 'До 4K', desc: 'Ограничено 2160p, с откатом ниже для каждого элемента' },
+    'video-1440p': { label: 'До 1440p', desc: 'Ограничено 2K, с откатом ниже для каждого элемента' },
+    'video-1080p': { label: 'До 1080p', desc: 'Ограничено для каждого элемента, с откатом ниже' },
+    'video-720p': { label: 'До 720p', desc: 'Меньший размер файла, широкая совместимость' },
+    'video-480p': { label: 'До 480p', desc: 'Низкий трафик' },
+    'video-360p': { label: 'До 360p', desc: 'Минимальное видео' },
+    'audio-best': { label: 'Audio (best)', desc: 'Лучшее нативное аудио без перекодирования' },
+    'audio-mp3': { label: 'Audio (MP3)', desc: 'Конвертировать в MP3 192 kbps' }
   },
   formatLabel: {
     audioOnly: 'Только аудио',

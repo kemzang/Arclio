@@ -1,5 +1,5 @@
 import type { AppApi } from '@shared/api';
-import type { AppSettings, ProgressEvent, StatusEvent, UpdateAvailablePayload } from '@shared/types';
+import type { AppSettings, ProgressEvent, StatusEvent, UpdateAvailablePayload, WarmupProgressEvent } from '@shared/types';
 import { isYouTubeUrl } from '@shared/schemas';
 import { defaultAppSettings } from '@shared/constants';
 
@@ -7,28 +7,33 @@ if (!('appApi' in window)) {
   const statusListeners = new Set<(e: StatusEvent) => void>();
   const progressListeners = new Set<(e: ProgressEvent) => void>();
   const updateListeners = new Set<(info: UpdateAvailablePayload) => void>();
+  const warmupProgressListeners = new Set<(e: WarmupProgressEvent) => void>();
 
   setTimeout(() => {
     // Flip installChannel to 'scoop' / 'homebrew' / 'winget' to preview those banner states
     updateListeners.forEach((l) => l({ version: '1.2.0', currentVersion: '0.0.1', installChannel: 'direct' }));
   }, 3_000);
 
+  const baseSettings = defaultAppSettings('/home/user/Downloads');
   let settings: AppSettings = {
-    ...defaultAppSettings('/home/user/Downloads'),
-    language: 'en',
-    cookiesPath: undefined,
-    cookiesEnabled: false,
-    embedChapters: true,
-    embedMetadata: true,
-    embedThumbnail: false,
-    commonPaths: {
-      downloads: '/home/user/Downloads',
-      videos: '/home/user/Videos',
-      desktop: '/home/user/Desktop',
-      music: '/home/user/Music',
-      documents: '/home/user/Documents',
-      pictures: '/home/user/Pictures',
-      home: '/home/user'
+    ...baseSettings,
+    common: {
+      ...baseSettings.common,
+      language: 'en',
+      cookiesPath: undefined,
+      cookiesEnabled: false,
+      embedChapters: true,
+      embedMetadata: true,
+      embedThumbnail: false,
+      commonPaths: {
+        downloads: '/home/user/Downloads',
+        videos: '/home/user/Videos',
+        desktop: '/home/user/Desktop',
+        music: '/home/user/Music',
+        documents: '/home/user/Documents',
+        pictures: '/home/user/Pictures',
+        home: '/home/user'
+      }
     }
   };
 
@@ -91,7 +96,20 @@ if (!('appApi' in window)) {
   const mock: AppApi = {
     app: {
       warmUp: async () => {
-        await delay(900);
+        const binaries: { name: string; size: number }[] = [
+          { name: 'yt-dlp', size: 12 * 1024 * 1024 },
+          { name: 'ffmpeg', size: 80 * 1024 * 1024 },
+          { name: 'ffprobe', size: 30 * 1024 * 1024 },
+          { name: 'deno', size: 95 * 1024 * 1024 }
+        ];
+        for (const { name, size } of binaries) {
+          const steps = 10;
+          for (let i = 1; i <= steps; i++) {
+            await delay(120);
+            warmupProgressListeners.forEach((l) => l({ binary: name, phase: 'downloading', bytesDownloaded: Math.round((size / steps) * i), totalBytes: size }));
+          }
+          warmupProgressListeners.forEach((l) => l({ binary: name, phase: 'done', bytesDownloaded: size, totalBytes: size }));
+        }
         return { ok: true, data: { completed: true, failures: [] } };
       },
       setLanguage: async () => {
@@ -267,6 +285,29 @@ if (!('appApi' in window)) {
         };
       },
 
+      getPlaylistItems: async (input) => {
+        await delay(1200);
+        if (!isYouTubeUrl(input.url)) {
+          return { ok: false, error: { code: 'validation', message: 'Not a valid YouTube URL', recoverable: true } } as const;
+        }
+        const entries = Array.from({ length: 12 }, (_, i) => ({
+          id: `mock${i + 1}`,
+          url: `https://www.youtube.com/watch?v=mock${i + 1}`,
+          title: `Mock playlist item ${i + 1} — ${i % 3 === 0 ? 'a longer title that should ellipsize gracefully when the row is narrow' : 'short title'}`,
+          thumbnail: i % 5 === 0 ? '' : 'https://i.ytimg.com/vi/jfKfPfyJRdk/mqdefault.jpg',
+          duration: 90 + i * 47,
+          playlistIndex: i + 1
+        }));
+        return {
+          ok: true,
+          data: {
+            playlistId: 'PLmock_browser',
+            playlistTitle: 'Mock Browser Playlist',
+            entries
+          }
+        } as const;
+      },
+
       start: (input) => {
         const id = jobId();
         const shouldError = input.url.toLowerCase().includes('error');
@@ -277,8 +318,7 @@ if (!('appApi' in window)) {
             job: {
               id,
               url: input.url,
-              outputDir: input.outputDir ?? settings.defaultOutputDir,
-              formatId: input.formatId,
+              outputDir: input.outputDir ?? settings.common.defaultOutputDir,
               status: 'running',
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString()
@@ -300,7 +340,11 @@ if (!('appApi' in window)) {
         return { ok: true, data: { ...settings } };
       },
       update: (patch) => {
-        settings = { ...settings, ...patch };
+        settings = {
+          common: { ...settings.common, ...(patch.common ?? {}) },
+          single: { ...settings.single, ...(patch.single ?? {}) },
+          playlist: { ...settings.playlist, ...(patch.playlist ?? {}) }
+        };
         return Promise.resolve({ ok: true, data: { ...settings } } as const);
       }
     },
@@ -345,7 +389,11 @@ if (!('appApi' in window)) {
         progressListeners.add(listener);
         return () => progressListeners.delete(listener);
       },
-      onClipboardUrl: () => () => undefined
+      onClipboardUrl: () => () => undefined,
+      onWarmupProgress: (listener) => {
+        warmupProgressListeners.add(listener);
+        return () => warmupProgressListeners.delete(listener);
+      }
     },
 
     queue: {
