@@ -17,6 +17,10 @@ type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | nu
 type DownloadProgressCallback = (downloaded: number, total: number | undefined) => void;
 type ProgressEmitter = (event: WarmupProgressEvent) => void;
 
+type RemoteVersionLookup = { tag: string; reason: null } | { tag: null; reason: string };
+
+type YtDlpVersionCheck = { state: 'up-to-date'; local: string } | { state: 'outdated'; local: string; remote: string } | { state: 'unknown'; local: string; reason: string } | { state: 'unusable' };
+
 interface ResolveOptions {
   overrides?: BinaryOverrides;
   onStatus?: StatusReporter;
@@ -228,6 +232,20 @@ async function downloadText(url: string, signal?: AbortSignal): Promise<string> 
   return res.body;
 }
 
+function stringifyHeader(header: string | string[] | undefined): string | null {
+  if (!header) return null;
+  return Array.isArray(header) ? (header[0] ?? null) : header;
+}
+
+const RELEASE_TAG_LOCATION = /\/releases\/tag\/([^/?#]+)/;
+
+function parseTagFromLocation(location: string | string[] | undefined): string | null {
+  const value = stringifyHeader(location);
+  if (!value) return null;
+  const match = RELEASE_TAG_LOCATION.exec(value);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 function parseContentRangeStart(header: string | string[] | undefined): number | null {
   const value = Array.isArray(header) ? header[0] : header;
   if (!value) return null;
@@ -338,11 +356,11 @@ async function sha256ForFile(filePath: string): Promise<string> {
 const BINARY_SOURCES = {
   ytDlpNightly: {
     download: 'https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download',
-    api: 'https://api.github.com/repos/yt-dlp/yt-dlp-nightly-builds/releases/latest'
+    latest: 'https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest'
   },
   ytDlpStable: {
     download: 'https://github.com/yt-dlp/yt-dlp/releases/latest/download',
-    api: 'https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest'
+    latest: 'https://github.com/yt-dlp/yt-dlp/releases/latest'
   },
   deno: {
     download: 'https://github.com/denoland/deno/releases/latest/download'
@@ -595,7 +613,7 @@ export class BinaryManager {
           onStatus: opts.onStatus,
           onDownloadProgress: makeDownloadProgress(id, source, onProgress),
           requiredChecksum: true,
-          isUpToDate: () => this.isYtDlpUpToDate(nightlyPath, BINARY_SOURCES.ytDlpNightly.api, signal),
+          isUpToDate: () => this.isYtDlpUpToDate(nightlyPath, BINARY_SOURCES.ytDlpNightly.latest, signal),
           signal
         })
       );
@@ -620,7 +638,7 @@ export class BinaryManager {
           onStatus: opts.onStatus,
           onDownloadProgress: makeDownloadProgress(id, source, onProgress),
           requiredChecksum: true,
-          isUpToDate: () => this.isYtDlpUpToDate(stablePath, BINARY_SOURCES.ytDlpStable.api, signal),
+          isUpToDate: () => this.isYtDlpUpToDate(stablePath, BINARY_SOURCES.ytDlpStable.latest, signal),
           signal
         })
       );
@@ -1269,19 +1287,30 @@ export class BinaryManager {
     }
   }
 
-  private async isYtDlpUpToDate(binaryPath: string, releaseApiUrl: string, signal?: AbortSignal): Promise<boolean> {
-    const [local, remote] = await Promise.all([this.getLocalYtDlpVersion(binaryPath, signal), this.getRemoteYtDlpVersion(releaseApiUrl, signal)]);
-    if (!local) return false;
-    if (!remote) {
-      logger.warn('Could not fetch yt-dlp remote version, skipping update check');
-      return true;
+  private async isYtDlpUpToDate(binaryPath: string, releaseLatestUrl: string, signal?: AbortSignal): Promise<boolean> {
+    const result = await this.checkYtDlpVersion(binaryPath, releaseLatestUrl, signal);
+    switch (result.state) {
+      case 'up-to-date':
+        logger.info('yt-dlp is up to date', { version: result.local });
+        return true;
+      case 'outdated':
+        logger.info('yt-dlp update available', { local: result.local, remote: result.remote });
+        return false;
+      case 'unknown':
+        logger.warn('yt-dlp version check unknown, keeping existing binary', { reason: result.reason });
+        return true;
+      case 'unusable':
+        logger.warn('yt-dlp local binary unusable, will re-download');
+        return false;
     }
-    if (local !== remote) {
-      logger.info('yt-dlp update available', { local, remote });
-      return false;
-    }
-    logger.info('yt-dlp is up to date', { version: local });
-    return true;
+  }
+
+  private async checkYtDlpVersion(binaryPath: string, releaseLatestUrl: string, signal?: AbortSignal): Promise<YtDlpVersionCheck> {
+    const [local, remote] = await Promise.all([this.getLocalYtDlpVersion(binaryPath, signal), this.getRemoteYtDlpVersion(releaseLatestUrl, signal)]);
+    if (!local) return { state: 'unusable' };
+    if (remote.tag === null) return { state: 'unknown', local, reason: remote.reason };
+    if (local !== remote.tag) return { state: 'outdated', local, remote: remote.tag };
+    return { state: 'up-to-date', local };
   }
 
   private async getLocalYtDlpVersion(binaryPath: string, signal?: AbortSignal): Promise<string | null> {
@@ -1293,13 +1322,38 @@ export class BinaryManager {
     }
   }
 
-  private async getRemoteYtDlpVersion(releaseApiUrl: string, signal?: AbortSignal): Promise<string | null> {
+  private async getRemoteYtDlpVersion(releaseLatestUrl: string, signal?: AbortSignal): Promise<RemoteVersionLookup> {
+    const req = got(releaseLatestUrl, {
+      method: 'GET',
+      headers: HTTP_HEADERS,
+      retry: HTTP_RETRY,
+      timeout: HTTP_TIMEOUT,
+      followRedirect: false,
+      throwHttpErrors: false
+    });
+
+    const onAbort = signal ? (): void => req.cancel() : null;
+    if (signal) {
+      if (signal.aborted) {
+        req.cancel();
+        return { tag: null, reason: 'cancelled' };
+      }
+      signal.addEventListener('abort', onAbort!, { once: true });
+    }
+
     try {
-      const json = await downloadText(releaseApiUrl, signal);
-      const parsed = JSON.parse(json) as { tag_name?: string };
-      return parsed.tag_name ?? null;
-    } catch {
-      return null;
+      const res = await req;
+      const tag = parseTagFromLocation(res.headers.location);
+      if (tag) return { tag, reason: null };
+      const reason = `no tag in redirect (status=${res.statusCode}, location=${stringifyHeader(res.headers.location) ?? 'none'})`;
+      logger.warn('yt-dlp remote version fetch returned no tag', { url: releaseLatestUrl, statusCode: res.statusCode });
+      return { tag: null, reason };
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : String(err);
+      logger.warn('yt-dlp remote version fetch failed', { url: releaseLatestUrl, err: reason });
+      return { tag: null, reason };
+    } finally {
+      if (signal && onAbort) signal.removeEventListener('abort', onAbort);
     }
   }
 

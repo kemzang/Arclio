@@ -87,7 +87,7 @@ describe('BinaryManager download retry', () => {
     if (process.platform !== 'win32') await fs.chmod(binaryPath, 0o755);
 
     spyOnPrivate(mgr, 'getLocalYtDlpVersion').mockResolvedValue('2025.01.15');
-    spyOnPrivate(mgr, 'getRemoteYtDlpVersion').mockResolvedValue('2025.01.15');
+    spyOnPrivate(mgr, 'getRemoteYtDlpVersion').mockResolvedValue({ tag: '2025.01.15', reason: null });
 
     const spy = spyOnPrivate(mgr, 'attemptDownload');
     await mgr.ensureYtDlp();
@@ -104,7 +104,7 @@ describe('BinaryManager download retry', () => {
     if (process.platform !== 'win32') await fs.chmod(binaryPath, 0o755);
 
     spyOnPrivate(mgr, 'getLocalYtDlpVersion').mockResolvedValue('2024.11.01');
-    spyOnPrivate(mgr, 'getRemoteYtDlpVersion').mockResolvedValue('2025.01.15');
+    spyOnPrivate(mgr, 'getRemoteYtDlpVersion').mockResolvedValue({ tag: '2025.01.15', reason: null });
 
     const spy = spyOnPrivate(mgr, 'attemptDownload').mockResolvedValue(undefined);
     await mgr.ensureYtDlp();
@@ -121,7 +121,7 @@ describe('BinaryManager download retry', () => {
     if (process.platform !== 'win32') await fs.chmod(binaryPath, 0o755);
 
     spyOnPrivate(mgr, 'getLocalYtDlpVersion').mockResolvedValue(null);
-    spyOnPrivate(mgr, 'getRemoteYtDlpVersion').mockResolvedValue('2025.01.15');
+    spyOnPrivate(mgr, 'getRemoteYtDlpVersion').mockResolvedValue({ tag: '2025.01.15', reason: null });
 
     const spy = spyOnPrivate(mgr, 'attemptDownload').mockResolvedValue(undefined);
     await mgr.ensureYtDlp();
@@ -138,7 +138,7 @@ describe('BinaryManager download retry', () => {
     if (process.platform !== 'win32') await fs.chmod(binaryPath, 0o755);
 
     spyOnPrivate(mgr, 'getLocalYtDlpVersion').mockResolvedValue('2025.01.15');
-    spyOnPrivate(mgr, 'getRemoteYtDlpVersion').mockResolvedValue(null);
+    spyOnPrivate(mgr, 'getRemoteYtDlpVersion').mockResolvedValue({ tag: null, reason: 'rate_limited' });
 
     const spy = spyOnPrivate(mgr, 'attemptDownload');
     await mgr.ensureYtDlp();
