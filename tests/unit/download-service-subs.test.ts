@@ -690,7 +690,14 @@ describe('DownloadService — status events', () => {
     expect(statusKeys(events)).toContain('mergingFormats');
   });
 
-  it('emits downloadingMedia at phase 1 spawn and fetchingSubtitles at phase 2 spawn', async () => {
+  it('emits downloadingMedia at phase 1 (via Destination line) and fetchingSubtitles at phase 2', async () => {
+    let call = 0;
+    vi.mocked(spawnYtDlp).mockImplementation(() => {
+      const stderr = call === 0 ? '[download] Destination: /tmp/video.f137.mp4\n' : '';
+      call++;
+      return makeFakeProcess(0, stderr) as never;
+    });
+
     const { service } = makeService();
     const events = captureStatuses(service);
 
@@ -744,10 +751,9 @@ describe('DownloadService — per-file phase tracking via Destination lines', ()
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: makeJob({ formatId: '137+251' }) });
     await new Promise((r) => setTimeout(r, 80));
 
-    // First downloadingMedia is emitted at spawn; we need at least one MORE
-    // emitted when the media Destination line is parsed (resets the bar).
+    // downloadingMedia is emitted when the media Destination line is parsed.
     const mediaEvents = events.filter((e) => e.statusKey === 'downloadingMedia');
-    expect(mediaEvents.length).toBeGreaterThanOrEqual(2);
+    expect(mediaEvents.length).toBeGreaterThanOrEqual(1);
   });
 
   it('suppresses percent in progress events while a subtitle file is the active Destination', async () => {

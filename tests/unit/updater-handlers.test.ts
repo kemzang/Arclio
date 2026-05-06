@@ -193,7 +193,7 @@ describe('registerUpdaterHandlers', () => {
 
     handlers['update-downloaded']!();
 
-    expect(autoUpdater.quitAndInstall).toHaveBeenCalledWith(true, true);
+    expect(autoUpdater.quitAndInstall).toHaveBeenCalledWith(false, true);
   });
 
   it('logs errors silently when error fires', () => {

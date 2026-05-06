@@ -307,7 +307,7 @@ describe('VideoPhase — signal callbacks', () => {
     expect(vi.mocked(ctx.emitStatus)).not.toHaveBeenCalled();
   });
 
-  it('onSpawn → calls attachYtDlpProcess with proc and downloadingMedia', async () => {
+  it('onSpawn → calls attachYtDlpProcess with proc (no preemptive status)', async () => {
     const fakeProc = new EventEmitter();
     const runMock = vi.fn().mockImplementation(async (_req, signal) => {
       signal?.onSpawn?.(fakeProc as never);
@@ -328,7 +328,7 @@ describe('VideoPhase — signal callbacks', () => {
 
     await VideoPhase(false).run(ctx);
 
-    expect(ctx.attachYtDlpProcess).toHaveBeenCalledWith(fakeProc, STATUS_KEY.downloadingMedia);
+    expect(ctx.attachYtDlpProcess).toHaveBeenCalledWith(fakeProc);
   });
 
   it('onStdout/onStderr → calls safeConsume', async () => {
