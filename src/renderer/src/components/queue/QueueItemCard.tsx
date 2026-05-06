@@ -1,5 +1,5 @@
 import type { JSX, ReactNode } from 'react';
-import { AlertTriangle, Captions, Download, ExternalLink, FolderOpen, Hourglass, Layers, Pause, Play, RotateCcw, X } from 'lucide-react';
+import { AlertTriangle, Captions, Download, ExternalLink, Film, FolderInput, FolderOpen, Hourglass, Layers, Music, Pause, Play, RotateCcw, Tags, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { QueueItem, QueueItemStatus, StatusKey } from '@shared/types';
 import { isHeld } from '@shared/queueItem';
@@ -13,6 +13,10 @@ import { cn } from '@renderer/lib/utils';
 const PHASE_ICON: Partial<Record<StatusKey, ReactNode>> = {
   downloadingMedia: <Download size={11} />,
   mergingFormats: <Layers size={11} />,
+  extractingAudio: <Music size={11} className="animate-pulse" />,
+  convertingVideo: <Film size={11} className="animate-pulse" />,
+  embeddingMetadata: <Tags size={11} className="animate-pulse" />,
+  movingFiles: <FolderInput size={11} className="animate-pulse" />,
   fetchingSubtitles: <Captions size={11} />,
   sleepingBetweenRequests: <Hourglass size={11} className="animate-pulse" />,
   subtitlesFailed: <AlertTriangle size={11} />

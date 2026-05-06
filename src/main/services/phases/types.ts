@@ -15,6 +15,7 @@ export interface ActiveDownload {
   mediaPath?: string;
   usedExtractorFallback?: boolean;
   tempDir?: string;
+  postProcEmitted?: Partial<Record<'extractingAudio' | 'convertingVideo' | 'embeddingMetadata' | 'movingFiles', true>>;
 }
 
 export interface PausedDownload {

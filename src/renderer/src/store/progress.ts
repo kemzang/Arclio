@@ -46,14 +46,9 @@ export class ProgressFormatter {
   private lastDetail: string | null = null;
 
   update(line: string): string | null {
-    if (/^\[(Merger|ffmpeg|VideoRemuxer|ExtractAudio|VideoConvertor|EmbedThumbnail)\]/.test(line)) {
-      this.lastDetail = 'Merging…';
-      return 'Merging…';
-    }
-
     const ffmpegMatch = /time=(\d{2}:\d{2}:\d{2}).*?speed=\s*(\S+x)/.exec(line);
     if (ffmpegMatch) {
-      this.lastDetail = `Merging… ${ffmpegMatch[2]} · ${ffmpegMatch[1]}`;
+      this.lastDetail = `${ffmpegMatch[2]} · ${ffmpegMatch[1]}`;
       return this.lastDetail;
     }
 

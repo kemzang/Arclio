@@ -421,7 +421,6 @@ export class DownloadService extends EventEmitter {
       const moveMatch = /^\[MoveFiles\] Moving file "([^"]+)" to "([^"]+)"$/.exec(line);
       if (moveMatch && active.mediaPath === moveMatch[1]) {
         active.mediaPath = moveMatch[2];
-        continue;
       }
 
       // eslint-disable-next-line security/detect-unsafe-regex -- bounded: \d+ is constrained by yt-dlp output line length
@@ -437,6 +436,8 @@ export class DownloadService extends EventEmitter {
         continue;
       }
 
+      if (this.emitPostProcStatus(active, line)) continue;
+
       const event: ProgressEvent = {
         jobId,
         line,
@@ -445,6 +446,20 @@ export class DownloadService extends EventEmitter {
       };
       this.emit('progress', event);
     }
+  }
+
+  private emitPostProcStatus(active: ActiveDownload, line: string): boolean {
+    let key: 'extractingAudio' | 'convertingVideo' | 'embeddingMetadata' | 'movingFiles' | null = null;
+    if (line.startsWith('[ExtractAudio]') || line.startsWith('Deleting original file')) key = 'extractingAudio';
+    else if (line.startsWith('[VideoConvertor]') || line.startsWith('[VideoRemuxer]')) key = 'convertingVideo';
+    else if (line.startsWith('[EmbedThumbnail]') || line.startsWith('[Metadata]') || line.startsWith('[FixupM4a]') || line.startsWith('[FixupM3u8]')) key = 'embeddingMetadata';
+    else if (line.startsWith('[MoveFiles]')) key = 'movingFiles';
+    if (!key) return false;
+    const emitted = (active.postProcEmitted ??= {});
+    if (emitted[key]) return true;
+    emitted[key] = true;
+    this.emitStatus(active.job.id, 'download', STATUS_KEY[key]);
+    return true;
   }
 
   private emitStatus(jobId: string, stage: StatusEvent['stage'], statusKey: StatusKey, params?: Record<string, string | number>, error?: LocalizedError): void {
