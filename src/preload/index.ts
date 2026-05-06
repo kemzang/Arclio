@@ -7,7 +7,7 @@ import type { ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, War
 
 const api: AppApi = {
   app: {
-    warmUp: () => ipcRenderer.invoke(IPC_CHANNELS.appWarmUp),
+    warmUp: (input) => ipcRenderer.invoke(IPC_CHANNELS.appWarmUp, input ?? {}),
     setLanguage: (language) => ipcRenderer.invoke(IPC_CHANNELS.appSetLanguage, language)
   },
   window: {
@@ -37,14 +37,16 @@ const api: AppApi = {
   },
   shell: {
     openFolder: (targetPath) => ipcRenderer.invoke(IPC_CHANNELS.shellOpenFolder, targetPath),
-    openExternal: (url) => ipcRenderer.invoke(IPC_CHANNELS.shellOpenExternal, url)
+    openExternal: (url) => ipcRenderer.invoke(IPC_CHANNELS.shellOpenExternal, url),
+    openBinariesDir: () => ipcRenderer.invoke(IPC_CHANNELS.shellOpenBinariesDir)
   },
   logs: {
     openDir: () => ipcRenderer.invoke(IPC_CHANNELS.logsOpenDir)
   },
   dialog: {
     chooseFolder: () => ipcRenderer.invoke(IPC_CHANNELS.chooseFolder),
-    chooseFile: () => ipcRenderer.invoke(IPC_CHANNELS.chooseFile)
+    chooseFile: () => ipcRenderer.invoke(IPC_CHANNELS.chooseFile),
+    chooseExecutable: (binary) => ipcRenderer.invoke(IPC_CHANNELS.dialogChooseExecutable, binary)
   },
   events: {
     onStatus: (listener) => {

@@ -1,69 +1,92 @@
 import type { BrowserWindow } from 'electron';
 import log from 'electron-log/main';
 
-const logger = log.scope('warmup');
 import { ok, type Result } from '@shared/result';
 import { IPC_CHANNELS } from '@shared/ipc';
-import type { WarmUpOutput, WarmupProgressEvent } from '@shared/types';
+import { BLOCKING_DEPENDENCY_IDS, DEPENDENCY_IDS, type DependencyDiagnostic, type DependencyId, type WarmUpOutput, type WarmupProgressEvent } from '@shared/types';
 import type { BinaryManager } from './BinaryManager';
 import type { TokenService } from './TokenService';
+
+const logger = log.scope('warmup');
 
 interface WarmupServiceDeps {
   binaryManager: BinaryManager;
   tokenService: TokenService;
   window?: BrowserWindow;
+  onResolved?: () => void;
 }
 
 export class WarmupService {
-  private warmUpPromise: Promise<Result<WarmUpOutput>> | null = null;
+  private currentRun: Promise<Result<WarmUpOutput>> | null = null;
+  private lastResult: Result<WarmUpOutput> | null = null;
 
   constructor(private readonly deps: WarmupServiceDeps) {}
 
-  run(): Promise<Result<WarmUpOutput>> {
-    const { binaryManager, tokenService, window } = this.deps;
+  getLastResult(): Result<WarmUpOutput> | null {
+    return this.lastResult;
+  }
 
-    function emit(event: WarmupProgressEvent): void {
+  run(opts?: { force?: boolean }): Promise<Result<WarmUpOutput>> {
+    if (this.currentRun && !opts?.force) return this.currentRun;
+    if (opts?.force) {
+      this.deps.binaryManager.invalidateResolved();
+    }
+    const promise = this.executeRun();
+    this.currentRun = promise;
+    promise
+      .then((result) => {
+        this.lastResult = result;
+      })
+      .catch(() => {
+        /* lastResult stays as previous; currentRun cleared below */
+      })
+      .finally(() => {
+        if (this.currentRun === promise) this.currentRun = null;
+      });
+    return promise;
+  }
+
+  private async executeRun(): Promise<Result<WarmUpOutput>> {
+    const { binaryManager, tokenService, window, onResolved } = this.deps;
+
+    const emit = (event: WarmupProgressEvent): void => {
       if (!window || window.isDestroyed()) return;
       window.webContents.send(IPC_CHANNELS.warmupProgress, event);
+    };
+
+    const resolveOptions = { onProgress: emit };
+
+    const [ytDlpDiag, ffmpegPair, denoDiag] = await Promise.all([
+      binaryManager.resolveYtDlp(resolveOptions),
+      binaryManager.resolveFFmpegPair(resolveOptions),
+      binaryManager.resolveDeno(resolveOptions),
+      tokenService.warmUp().catch((err) => {
+        logger.warn('Token warmup failed', { error: err instanceof Error ? err.message : String(err) });
+      })
+    ]);
+
+    const dependencies: Record<DependencyId, DependencyDiagnostic> = {
+      'yt-dlp': ytDlpDiag,
+      ffmpeg: ffmpegPair.ffmpeg,
+      ffprobe: ffmpegPair.ffprobe,
+      deno: denoDiag
+    };
+
+    const blockingFailures = BLOCKING_DEPENDENCY_IDS.filter((id) => dependencies[id].state !== 'runnable');
+
+    if (blockingFailures.length > 0) {
+      logger.warn('Warmup completed with blocking failures', { blockingFailures });
+    } else {
+      logger.info('Warmup completed');
     }
 
-    function progressFor(binary: string) {
-      return (downloaded: number, total: number | undefined): void => {
-        emit({ binary, phase: 'downloading', bytesDownloaded: downloaded, totalBytes: total });
-      };
-    }
+    onResolved?.();
 
-    this.warmUpPromise ??= (async (): Promise<Result<WarmUpOutput>> => {
-      const fast = Promise.allSettled([binaryManager.ensureYtDlp(undefined, progressFor('yt-dlp')).finally(() => emit({ binary: 'yt-dlp', phase: 'done', bytesDownloaded: 0, totalBytes: undefined })), binaryManager.ensureFFmpeg(undefined, progressFor('ffmpeg')).finally(() => emit({ binary: 'ffmpeg', phase: 'done', bytesDownloaded: 0, totalBytes: undefined })), tokenService.warmUp()]);
-
-      const zips = (async (): Promise<PromiseSettledResult<unknown>[]> => {
-        const results: PromiseSettledResult<unknown>[] = [];
-        for (const [binary, task] of [['ffprobe', () => binaryManager.ensureFFprobe(undefined, progressFor('ffprobe'))] as const, ['deno', () => binaryManager.ensureDeno(undefined, progressFor('deno'))] as const]) {
-          try {
-            results.push({ status: 'fulfilled', value: await task() });
-            emit({ binary, phase: 'done', bytesDownloaded: 0, totalBytes: undefined });
-          } catch (err) {
-            results.push({ status: 'rejected', reason: err });
-          }
-        }
-        return results;
-      })();
-
-      const [fastResults, zipResults] = await Promise.all([fast, zips]);
-      const failures = [...fastResults, ...zipResults].flatMap((result) => {
-        if (result.status === 'fulfilled') return [];
-        return result.reason instanceof Error ? [result.reason.message] : [String(result.reason)];
-      });
-
-      if (failures.length > 0) {
-        logger.warn('Warmup completed with failures', { failures });
-      } else {
-        logger.info('Warmup completed');
-      }
-
-      return ok({ completed: true, failures });
-    })();
-
-    return this.warmUpPromise;
+    // Acknowledge full DEPENDENCY_IDS list to keep linter / future maintainers
+    // honest if a new dep id is added without updating the result map.
+    const completed = blockingFailures.length === 0;
+    const result: WarmUpOutput = { completed, dependencies, blockingFailures: [...blockingFailures] };
+    void DEPENDENCY_IDS;
+    return ok(result);
   }
 }

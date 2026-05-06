@@ -1,8 +1,21 @@
 import { vi } from 'vitest';
 import type { AppApi } from '@shared/api';
-import type { AppSettings } from '@shared/types';
+import type { AppSettings, DependencyDiagnostic, DependencyId, WarmUpOutput } from '@shared/types';
 import { defaultAppSettings } from '@shared/constants';
 import { ok } from '@shared/result';
+
+function runnableDeps(): Record<DependencyId, DependencyDiagnostic> {
+  const make = (id: DependencyId): DependencyDiagnostic => ({
+    id,
+    state: 'runnable',
+    source: { kind: 'managed', channel: 'default', url: 'mock' },
+    resolvedPath: `/mock/${id}`,
+    attempts: []
+  });
+  return { 'yt-dlp': make('yt-dlp'), ffmpeg: make('ffmpeg'), ffprobe: make('ffprobe'), deno: make('deno') };
+}
+
+const defaultWarmUp: WarmUpOutput = { completed: true, dependencies: runnableDeps(), blockingFailures: [] };
 
 function buildMockSettings(overrides: Partial<AppSettings> = {}): AppSettings {
   return {
@@ -19,7 +32,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
   const settings = buildMockSettings(options.settings);
   return {
     app: {
-      warmUp: vi.fn().mockResolvedValue(ok({ completed: true, failures: [] })),
+      warmUp: vi.fn().mockResolvedValue(ok(defaultWarmUp)),
       setLanguage: vi.fn().mockResolvedValue(undefined)
     },
     window: {
@@ -70,14 +83,16 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
     },
     shell: {
       openFolder: vi.fn().mockResolvedValue(ok({ opened: true })),
-      openExternal: vi.fn().mockResolvedValue(ok({ opened: true }))
+      openExternal: vi.fn().mockResolvedValue(ok({ opened: true })),
+      openBinariesDir: vi.fn().mockResolvedValue(ok({ opened: true }))
     },
     logs: {
       openDir: vi.fn().mockResolvedValue(ok({ opened: true }))
     },
     dialog: {
       chooseFolder: vi.fn().mockResolvedValue(ok({ path: '/tmp' })),
-      chooseFile: vi.fn().mockResolvedValue(ok({ path: null }))
+      chooseFile: vi.fn().mockResolvedValue(ok({ path: null })),
+      chooseExecutable: vi.fn().mockResolvedValue(ok({ path: null }))
     },
     events: {
       onStatus: vi.fn().mockReturnValue(() => undefined),

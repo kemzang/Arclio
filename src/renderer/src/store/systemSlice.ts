@@ -1,4 +1,4 @@
-import type { AppSettings, QueueItem, SubtitleFormat, SubtitleMode } from '@shared/types';
+import type { AppSettings, DependencyId, QueueItem, SubtitleFormat, SubtitleMode } from '@shared/types';
 import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas';
 import { DEFAULTS } from '@shared/constants';
 import { i18next, pickLanguage, isRtl } from '@shared/i18n';
@@ -9,12 +9,26 @@ import type { GetState, SetState, SystemSlice } from './types';
 
 let unbindStatus: (() => void) | null = null;
 let unbindProgress: (() => void) | null = null;
+let unbindWarmupProgress: (() => void) | null = null;
+
+const OVERRIDE_KEY: Record<DependencyId, 'ytDlp' | 'ffmpeg' | 'ffprobe' | 'deno'> = {
+  'yt-dlp': 'ytDlp',
+  ffmpeg: 'ffmpeg',
+  ffprobe: 'ffprobe',
+  deno: 'deno'
+};
+
+function makeBinaryOverridePatch(id: DependencyId, path: string | undefined): { common: { binaryOverrides: Record<string, string | undefined> } } {
+  return { common: { binaryOverrides: { [OVERRIDE_KEY[id]]: path } } };
+}
 
 export function createSystemSlice(set: SetState, get: GetState, scheduler: JobScheduler): SystemSlice {
   return {
     initialized: false,
     initializing: false,
-    warmupFailures: [],
+    warmupDiagnostics: null,
+    warmupBlocking: [],
+    warmupRunning: false,
     warmupProgress: null,
     settings: null,
     language: pickLanguage(navigator.language),
@@ -86,12 +100,17 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
         });
       });
 
-      const unbindWarmupProgress = window.appApi.events.onWarmupProgress((event) => {
+      // The warmup-progress listener stays bound for the lifetime of the
+      // process — repair flows trigger another warmup run without re-entering
+      // initialize, so we can't unbind it here like the original did.
+      unbindWarmupProgress?.();
+      unbindWarmupProgress = window.appApi.events.onWarmupProgress((event) => {
         set((state) => ({
           warmupProgress: { ...(state.warmupProgress ?? {}), [event.binary]: event }
         }));
       });
 
+      set({ warmupRunning: true });
       const settingsPromise = window.appApi.settings.get();
       const warmUpPromise = window.appApi.app.warmUp();
       const queuePromise = window.appApi.queue.load();
@@ -125,7 +144,8 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
         });
       }
 
-      const warmupFailures = warmUpResult.ok ? warmUpResult.data.failures : [];
+      const warmupDiagnostics = warmUpResult.ok ? warmUpResult.data.dependencies : null;
+      const warmupBlocking = warmUpResult.ok ? warmUpResult.data.blockingFailures : [];
 
       if (savedQueue.length > 0) {
         type StoredItem = (typeof savedQueue)[number] & {
@@ -146,8 +166,45 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
         await scheduler.notifyItemAdded();
       }
 
-      set({ initialized: true, initializing: false, warmupFailures });
-      unbindWarmupProgress();
+      set({ initialized: true, initializing: false, warmupRunning: false, warmupDiagnostics, warmupBlocking });
+    },
+
+    repairWarmup: async () => {
+      if (get().warmupRunning) return;
+      set({ warmupRunning: true });
+      const result = await window.appApi.app.warmUp({ force: true });
+      if (result.ok) {
+        set({ warmupRunning: false, warmupDiagnostics: result.data.dependencies, warmupBlocking: result.data.blockingFailures });
+      } else {
+        set({ warmupRunning: false });
+        console.error('[warmup] repair failed', result.error);
+      }
+    },
+
+    setBinaryOverride: async (id, path) => {
+      const patch = makeBinaryOverridePatch(id, path);
+      const result = await window.appApi.settings.update(patch);
+      if (!result.ok) {
+        console.error('[settings] binaryOverrides save failed', result.error);
+        return;
+      }
+      set({ settings: result.data });
+      await get().repairWarmup();
+    },
+
+    clearBinaryOverride: async (id) => {
+      const patch = makeBinaryOverridePatch(id, undefined);
+      const result = await window.appApi.settings.update(patch);
+      if (!result.ok) {
+        console.error('[settings] binaryOverrides clear failed', result.error);
+        return;
+      }
+      set({ settings: result.data });
+      await get().repairWarmup();
+    },
+
+    openBinariesDir: async () => {
+      await window.appApi.shell.openBinariesDir();
     },
 
     openLogs: async () => {

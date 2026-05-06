@@ -250,7 +250,16 @@ const commonSettingsPatchSchema = z.object({
   lastSponsorBlockCategories: z.array(sponsorBlockCategorySchema).optional(),
   analyticsEnabled: z.boolean().optional(),
   firstRunCompleted: z.boolean().optional(),
-  drawerOpen: z.boolean().optional()
+  drawerOpen: z.boolean().optional(),
+  binaryOverrides: z
+    .object({
+      ytDlp: z.string().min(1).optional(),
+      ffmpeg: z.string().min(1).optional(),
+      ffprobe: z.string().min(1).optional(),
+      deno: z.string().min(1).optional()
+    })
+    .partial()
+    .optional()
 });
 
 const singlePrefsPatchSchema = z.object({

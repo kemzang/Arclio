@@ -28,5 +28,7 @@ export const IPC_CHANNELS = {
   eventsClipboardUrl: 'events:clipboardUrl',
   analyticsTrack: 'analytics:track',
   diagnosticsLogWizardStep: 'diagnostics:logWizardStep',
-  warmupProgress: 'warmup:progress'
+  warmupProgress: 'warmup:progress',
+  dialogChooseExecutable: 'dialog:chooseExecutable',
+  shellOpenBinariesDir: 'shell:openBinariesDir'
 } as const;

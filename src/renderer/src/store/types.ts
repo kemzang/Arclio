@@ -1,5 +1,5 @@
 import type { StoreApi } from 'zustand';
-import type { AppError, AppSettings, AudioBitrate, AudioConvertTarget, FormatOption, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
+import type { AppError, AppSettings, AudioBitrate, AudioConvertTarget, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
 export type WizardStep = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
 
 // Explicit mode tag so consumers don't re-derive intent from
@@ -131,12 +131,18 @@ export interface UiSlice {
 export interface SystemSlice {
   initialized: boolean;
   initializing: boolean;
-  warmupFailures: string[];
-  warmupProgress: Record<string, import('@shared/types').WarmupProgressEvent> | null;
+  warmupDiagnostics: Record<DependencyId, DependencyDiagnostic> | null;
+  warmupBlocking: DependencyId[];
+  warmupRunning: boolean;
+  warmupProgress: Partial<Record<DependencyId, import('@shared/types').WarmupProgressEvent>> | null;
   settings: AppSettings | null;
   language: SupportedLang;
   commonPaths: AppSettings['common']['commonPaths'];
   initialize: () => Promise<void>;
+  repairWarmup: () => Promise<void>;
+  setBinaryOverride: (id: DependencyId, path: string) => Promise<void>;
+  clearBinaryOverride: (id: DependencyId) => Promise<void>;
+  openBinariesDir: () => Promise<void>;
   openLogs: () => Promise<void>;
   setLanguage: (lang: SupportedLang) => void;
   setCookiesPath: (path: string) => Promise<void>;

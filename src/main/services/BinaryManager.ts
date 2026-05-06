@@ -11,12 +11,124 @@ import log from 'electron-log/main';
 
 const execFileAsync = promisify(execFile);
 import { trackMain } from '@main/services/analytics';
-import type { StatusKey } from '@shared/types';
-
-const logger = log.scope('binary');
+import type { BinaryOverrides, DependencyAttempt, DependencyDiagnostic, DependencyFailure, DependencyFailureKind, DependencyId, DependencySource, StatusKey, WarmupProgressEvent } from '@shared/types';
 
 type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | number>) => void;
 type DownloadProgressCallback = (downloaded: number, total: number | undefined) => void;
+type ProgressEmitter = (event: WarmupProgressEvent) => void;
+
+interface ResolveOptions {
+  overrides?: BinaryOverrides;
+  onStatus?: StatusReporter;
+  onProgress?: ProgressEmitter;
+}
+
+const PROBE_TIMEOUT_MS = 10_000;
+
+function probeArgs(id: DependencyId): string[] {
+  if (id === 'ffmpeg' || id === 'ffprobe') return ['-version'];
+  return ['--version'];
+}
+
+function classifyProbeError(err: NodeJS.ErrnoException, stderr?: string): DependencyFailure {
+  const code = err.code;
+  const msg = err.message ?? String(err);
+  const errno = (err as { errno?: number }).errno;
+  const killed = (err as { killed?: boolean }).killed;
+  if (killed || code === 'ETIMEDOUT') return { kind: 'timeout', message: msg, osCode: code };
+  if (code === 'ENOENT') return { kind: 'spawn_failed', message: msg, osCode: code };
+  if (code === 'EACCES' || code === 'EPERM') return { kind: 'permission_denied', message: msg, osCode: code };
+  const blob = `${msg} ${stderr ?? ''}`;
+  if (process.platform === 'win32' && /SmartScreen|Defender|virus|threat|0x800704EC|0x80070424|operation did not complete successfully/i.test(blob)) {
+    return { kind: 'blocked_or_quarantined', message: msg, osCode: code };
+  }
+  if (process.platform === 'win32' && (code === 'UNKNOWN' || errno === -4094)) {
+    return { kind: 'blocked_or_quarantined', message: msg, osCode: code };
+  }
+  return { kind: 'bad_exit_code', message: msg, osCode: code };
+}
+
+async function probeBinary(filePath: string, args: string[], timeoutMs: number = PROBE_TIMEOUT_MS): Promise<{ ok: true; output: string } | { ok: false; failure: DependencyFailure }> {
+  return new Promise((resolve) => {
+    let settled = false;
+    const child = execFile(filePath, args, { timeout: timeoutMs, windowsHide: true, maxBuffer: 1024 * 1024 }, (err, stdout, stderr) => {
+      if (settled) return;
+      settled = true;
+      if (err) {
+        resolve({ ok: false, failure: classifyProbeError(err as NodeJS.ErrnoException, stderr) });
+        return;
+      }
+      const output = (stdout || stderr || '').trim();
+      if (!output) {
+        resolve({ ok: false, failure: { kind: 'bad_exit_code', message: 'Empty version output' } });
+        return;
+      }
+      resolve({ ok: true, output });
+    });
+    child.once('error', (err) => {
+      if (settled) return;
+      settled = true;
+      resolve({ ok: false, failure: classifyProbeError(err) });
+    });
+  });
+}
+
+// Discover binaries on PATH. On Windows uses `where.exe`; on POSIX uses `which`.
+// Returns absolute paths in PATH order. Empty array on failure.
+async function whereOnPath(name: string): Promise<string[]> {
+  try {
+    const tool = process.platform === 'win32' ? 'where' : 'which';
+    const args = process.platform === 'win32' ? [name] : ['-a', name];
+    const { stdout } = await execFileAsync(tool, args, { windowsHide: true });
+    return stdout
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+  } catch {
+    return [];
+  }
+}
+
+function errorMessage(err: unknown): string {
+  return err instanceof Error ? err.message : String(err);
+}
+
+function makeAttempt(source: DependencySource, failure?: DependencyFailure): DependencyAttempt {
+  return failure ? { source, failure } : { source };
+}
+
+function runnableDiagnostic(id: DependencyId, source: DependencySource, resolvedPath: string, attempts: DependencyAttempt[], versionOutput?: string): DependencyDiagnostic {
+  return { id, state: 'runnable', source, resolvedPath, versionOutput, attempts };
+}
+
+function failedDiagnostic(id: DependencyId, attempts: DependencyAttempt[]): DependencyDiagnostic {
+  const last = attempts.length > 0 ? attempts[attempts.length - 1] : undefined;
+  return {
+    id,
+    state: 'failed',
+    source: last?.source ?? null,
+    resolvedPath: null,
+    failure: last?.failure,
+    attempts
+  };
+}
+
+function classifyDownloadError(err: unknown): DependencyFailureKind {
+  const msg = err instanceof Error ? err.message.toLowerCase() : '';
+  if (msg.includes('checksum')) return 'hash_failed';
+  if (msg.includes('archive') || msg.includes('did not contain') || msg.includes('extract')) return 'extract_failed';
+  return 'download_failed';
+}
+
+function makeDownloadProgress(id: DependencyId, source: DependencySource, onProgress: ProgressEmitter | undefined): DownloadProgressCallback | undefined {
+  if (!onProgress) return undefined;
+  return (downloaded, total): void => {
+    onProgress({ binary: id, phase: 'downloading', bytesDownloaded: downloaded, totalBytes: total, source });
+  };
+}
+
+const logger = log.scope('binary');
+
 type PartialResponseMode = 'fresh' | 'append' | 'discard-and-retry';
 
 class RestartFreshDownloadError extends Error {
@@ -26,12 +138,13 @@ class RestartFreshDownloadError extends Error {
   }
 }
 
-function binaryPhase(err: unknown): string {
-  const msg = err instanceof Error ? err.message.toLowerCase() : '';
-  if (msg.includes('checksum')) return 'verify';
-  if (msg.includes('archive') || msg.includes('did not contain') || msg.includes('extract')) return 'extract';
-  if (msg.includes('timed out') || msg.includes('timeout')) return 'timeout';
-  return 'download';
+function wrapDownloadProgressEmitter(cb: DownloadProgressCallback | undefined): ProgressEmitter | undefined {
+  if (!cb) return undefined;
+  return (event): void => {
+    if (event.phase === 'downloading' && typeof event.bytesDownloaded === 'number') {
+      cb(event.bytesDownloaded, event.totalBytes);
+    }
+  };
 }
 
 function parseShaLine(content: string, fileName: string): string | null {
@@ -174,6 +287,41 @@ async function sha256ForFile(filePath: string): Promise<string> {
   });
 }
 
+// One place for every upstream URL/host the bootstrap touches. Keep this
+// block as the single grep target — every code path that downloads a binary
+// or hits a release index reads from here.
+const BINARY_SOURCES = {
+  ytDlpNightly: {
+    download: 'https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download',
+    api: 'https://api.github.com/repos/yt-dlp/yt-dlp-nightly-builds/releases/latest'
+  },
+  ytDlpStable: {
+    download: 'https://github.com/yt-dlp/yt-dlp/releases/latest/download',
+    api: 'https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest'
+  },
+  deno: {
+    download: 'https://github.com/denoland/deno/releases/latest/download'
+  },
+  ffmpegStatic: {
+    // eugeneware/ffmpeg-static, pinned to b6.0 (last tag with full platform
+    // matrix). Used on Linux/macOS as the single ffmpeg binary.
+    download: 'https://github.com/eugeneware/ffmpeg-static/releases/download/b6.0'
+  },
+  ffmpegBtbn: {
+    // BtbN — Linux ffprobe (tar.xz, contains bin/ffprobe).
+    download: 'https://github.com/BtbN/FFmpeg-Builds/releases/download/latest'
+  },
+  ffmpegGyan: {
+    // gyan.dev — Win ffmpeg + ffprobe pair (essentials ZIP, ~30 MB).
+    download: 'https://www.gyan.dev/ffmpeg/builds',
+    essentialsArchive: 'ffmpeg-release-essentials.zip'
+  },
+  ffmpegEvermeet: {
+    // evermeet.cx — macOS ffprobe (.zip, redirects to latest).
+    ffprobeZip: 'https://evermeet.cx/ffmpeg/getrelease/ffprobe/zip'
+  }
+} as const;
+
 type AssetPlatform = 'win32' | 'darwin' | 'linux';
 type AssetArch = 'arm64' | 'x64';
 
@@ -235,13 +383,9 @@ function ffprobeAsset(): FfprobeArchive | null {
 }
 
 function ffprobeDownloadUrl(asset: FfprobeArchive): string {
-  if (asset.source === 'btbn') {
-    return `https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/${asset.archive}`;
-  }
-  if (asset.source === 'gyan') {
-    return `https://www.gyan.dev/ffmpeg/builds/${asset.archive}`;
-  }
-  return 'https://evermeet.cx/ffmpeg/getrelease/ffprobe/zip';
+  if (asset.source === 'btbn') return `${BINARY_SOURCES.ffmpegBtbn.download}/${asset.archive}`;
+  if (asset.source === 'gyan') return `${BINARY_SOURCES.ffmpegGyan.download}/${asset.archive}`;
+  return BINARY_SOURCES.ffmpegEvermeet.ffprobeZip;
 }
 
 function ffprobeExecutableName(): string {
@@ -300,59 +444,191 @@ export class BinaryManager {
 
   private readonly inProgress = new Map<string, Promise<void>>();
 
-  constructor(userDataPath: string, retryDelays: [number, number] = [2000, 8000]) {
+  private readonly overridesProvider: () => BinaryOverrides | undefined;
+
+  private resolved: Partial<Record<DependencyId, string>> = {};
+
+  private lastDiagnostics: Partial<Record<DependencyId, DependencyDiagnostic>> = {};
+
+  constructor(userDataPath: string, options?: { retryDelays?: [number, number]; overridesProvider?: () => BinaryOverrides | undefined }) {
     this.cacheDir = path.join(userDataPath, 'runtime-cache', 'binaries');
-    this.retryDelays = retryDelays;
+    this.retryDelays = options?.retryDelays ?? [2000, 8000];
+    this.overridesProvider = options?.overridesProvider ?? ((): BinaryOverrides | undefined => undefined);
+  }
+
+  getRuntimeCacheDir(): string {
+    return this.cacheDir;
+  }
+
+  getResolvedPath(id: DependencyId): string | null {
+    return this.resolved[id] ?? null;
+  }
+
+  getLastDiagnostic(id: DependencyId): DependencyDiagnostic | null {
+    return this.lastDiagnostics[id] ?? null;
+  }
+
+  invalidateResolved(): void {
+    this.resolved = {};
+    this.lastDiagnostics = {};
   }
 
   getYtDlpPath(): string {
-    return process.env.ARROXY_YT_DLP_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp');
+    return this.resolved['yt-dlp'] ?? process.env.ARROXY_YT_DLP_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp');
   }
 
   getFfmpegPath(): string {
-    return process.env.ARROXY_FFMPEG_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg');
+    return this.resolved.ffmpeg ?? process.env.ARROXY_FFMPEG_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg');
   }
 
   getDenoPath(): string {
-    return process.env.ARROXY_DENO_PATH ?? path.join(this.cacheDir, denoExecutableName());
+    return this.resolved.deno ?? process.env.ARROXY_DENO_PATH ?? path.join(this.cacheDir, denoExecutableName());
   }
 
   getFfprobePath(): string {
-    return process.env.ARROXY_FFPROBE_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe');
+    return this.resolved.ffprobe ?? process.env.ARROXY_FFPROBE_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe');
   }
 
-  async ensureYtDlp(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string> {
-    const override = process.env.ARROXY_YT_DLP_PATH;
-    if (override && (await this.isUsableBinary(override))) {
-      logger.info('Using pre-installed yt-dlp', { path: override });
-      return override;
+  // Probe-and-record helper used by every resolve chain. Runs the binary's
+  // version probe; on success records the path in `resolved` and emits a
+  // 'done' progress event. On failure records the failure on the last
+  // attempt and emits a 'failed' progress event. The resolve chain decides
+  // whether to fall through to the next attempt.
+  private async probeAndAccept(id: DependencyId, source: DependencySource, candidatePath: string, attempts: DependencyAttempt[], onProgress?: ProgressEmitter): Promise<DependencyDiagnostic | null> {
+    onProgress?.({ binary: id, phase: 'probing', source });
+    const probe = await probeBinary(candidatePath, probeArgs(id));
+    if (probe.ok) {
+      attempts.push(makeAttempt(source));
+      this.resolved[id] = candidatePath;
+      onProgress?.({ binary: id, phase: 'done', source });
+      const diag = runnableDiagnostic(id, source, candidatePath, attempts, probe.output);
+      this.lastDiagnostics[id] = diag;
+      return diag;
+    }
+    attempts.push(makeAttempt(source, probe.failure));
+    onProgress?.({ binary: id, phase: 'failed', source, failureKind: probe.failure.kind });
+    return null;
+  }
+
+  async resolveYtDlp(opts: ResolveOptions = {}): Promise<DependencyDiagnostic> {
+    const id: DependencyId = 'yt-dlp';
+    const attempts: DependencyAttempt[] = [];
+    const overrides = opts.overrides ?? this.overridesProvider();
+    const onProgress = opts.onProgress;
+    onProgress?.({ binary: id, phase: 'starting' });
+
+    if (overrides?.ytDlp) {
+      const source: DependencySource = { kind: 'manualOverride', path: overrides.ytDlp };
+      const diag = await this.probeAndAccept(id, source, overrides.ytDlp, attempts, onProgress);
+      if (diag) return diag;
+    }
+
+    const envPath = process.env.ARROXY_YT_DLP_PATH;
+    if (envPath) {
+      const source: DependencySource = { kind: 'envOverride', path: envPath, envVar: 'ARROXY_YT_DLP_PATH' };
+      const diag = await this.probeAndAccept(id, source, envPath, attempts, onProgress);
+      if (diag) return diag;
     }
 
     const assetName = ytDlpAssetName();
-    const expectedSha256 = async (): Promise<string | null> => {
-      const sumsUrl = 'https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download/SHA2-256SUMS';
-      const sumsFile = await downloadText(sumsUrl);
-      return parseShaLine(sumsFile, assetName);
-    };
 
-    const targetPath = this.getYtDlpPath();
-    try {
-      await this.ensureBinary({
-        name: 'yt-dlp',
-        destinationPath: targetPath,
-        downloadUrl: `https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download/${assetName}`,
-        expectedSha256,
-        onStatus,
-        onDownloadProgress,
-        requiredChecksum: true,
-        isUpToDate: () => this.isYtDlpUpToDate(targetPath)
-      });
-    } catch (err) {
-      trackMain('binary_setup_failed', { binary: 'ytdlp', phase: binaryPhase(err) });
-      throw err;
+    // Managed nightly
+    const nightlyPath = path.join(this.cacheDir, process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp');
+    const nightlyUrl = `${BINARY_SOURCES.ytDlpNightly.download}/${assetName}`;
+    {
+      const source: DependencySource = { kind: 'managed', channel: 'nightly', url: nightlyUrl };
+      const downloadOk = await this.tryManagedDownload(id, attempts, source, onProgress, () =>
+        this.ensureBinary({
+          name: 'yt-dlp',
+          destinationPath: nightlyPath,
+          downloadUrl: nightlyUrl,
+          expectedSha256: async () => parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpNightly.download}/SHA2-256SUMS`), assetName),
+          onStatus: opts.onStatus,
+          onDownloadProgress: makeDownloadProgress(id, source, onProgress),
+          requiredChecksum: true,
+          isUpToDate: () => this.isYtDlpUpToDate(nightlyPath, BINARY_SOURCES.ytDlpNightly.api)
+        })
+      );
+      if (downloadOk) {
+        const diag = await this.probeAndAccept(id, source, nightlyPath, attempts, onProgress);
+        if (diag) return diag;
+      }
     }
 
-    return targetPath;
+    // Managed stable
+    onProgress?.({ binary: id, phase: 'fallback' });
+    const stablePath = path.join(this.cacheDir, process.platform === 'win32' ? 'yt-dlp-stable.exe' : 'yt-dlp-stable');
+    const stableUrl = `${BINARY_SOURCES.ytDlpStable.download}/${assetName}`;
+    {
+      const source: DependencySource = { kind: 'managed', channel: 'stable', url: stableUrl };
+      const downloadOk = await this.tryManagedDownload(id, attempts, source, onProgress, () =>
+        this.ensureBinary({
+          name: 'yt-dlp',
+          destinationPath: stablePath,
+          downloadUrl: stableUrl,
+          expectedSha256: async () => parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpStable.download}/SHA2-256SUMS`), assetName),
+          onStatus: opts.onStatus,
+          onDownloadProgress: makeDownloadProgress(id, source, onProgress),
+          requiredChecksum: true,
+          isUpToDate: () => this.isYtDlpUpToDate(stablePath, BINARY_SOURCES.ytDlpStable.api)
+        })
+      );
+      if (downloadOk) {
+        const diag = await this.probeAndAccept(id, source, stablePath, attempts, onProgress);
+        if (diag) return diag;
+      }
+    }
+
+    // System PATH (Windows-only this iteration)
+    if (process.platform === 'win32') {
+      onProgress?.({ binary: id, phase: 'fallback' });
+      const candidates = await whereOnPath('yt-dlp.exe');
+      for (const candidate of candidates) {
+        const source: DependencySource = { kind: 'systemPath', path: candidate };
+        const diag = await this.probeAndAccept(id, source, candidate, attempts, onProgress);
+        if (diag) return diag;
+      }
+    }
+
+    const diag = failedDiagnostic(id, attempts);
+    this.lastDiagnostics[id] = diag;
+    return diag;
+  }
+
+  // Wraps a managed-download attempt, recording download/extract/hash failures
+  // as attempts on the chain. Returns true if the file is on disk after the
+  // call (probe still has to run separately).
+  private async tryManagedDownload(id: DependencyId, attempts: DependencyAttempt[], source: DependencySource, onProgress: ProgressEmitter | undefined, run: () => Promise<void>): Promise<boolean> {
+    onProgress?.({ binary: id, phase: 'downloading', source });
+    try {
+      await run();
+      onProgress?.({ binary: id, phase: 'extracting', source });
+      return true;
+    } catch (err) {
+      const failure: DependencyFailure = { kind: classifyDownloadError(err), message: errorMessage(err) };
+      attempts.push(makeAttempt(source, failure));
+      onProgress?.({ binary: id, phase: 'failed', source, failureKind: failure.kind });
+      const tracked = id === 'yt-dlp' ? 'ytdlp' : id;
+      trackMain('binary_setup_failed', { binary: tracked, phase: failure.kind });
+      logger.warn(`${id} managed download failed`, { source, error: failure.message });
+      return false;
+    }
+  }
+
+  async ensureYtDlp(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string> {
+    if (this.resolved['yt-dlp']) return this.resolved['yt-dlp'];
+    const onProgress: ProgressEmitter | undefined = onDownloadProgress
+      ? (event): void => {
+          if (event.phase === 'downloading' && typeof event.bytesDownloaded === 'number') {
+            onDownloadProgress(event.bytesDownloaded, event.totalBytes);
+          }
+        }
+      : undefined;
+    const diag = await this.resolveYtDlp({ onStatus, onProgress });
+    if (diag.state !== 'runnable' || !diag.resolvedPath) {
+      throw new Error(diag.failure?.message ?? 'yt-dlp could not be resolved');
+    }
+    return diag.resolvedPath;
   }
 
   // ffprobe is required by yt-dlp's post-processing (chapter modification,
@@ -363,64 +639,257 @@ export class BinaryManager {
   // spawnYtDlp's existing PATH injection finds both with one PATH entry.
   // Returns null if the platform/arch has no upstream build; the caller
   // tolerates this (ffprobe is only needed by certain post-processors).
-  async ensureFFprobe(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string | null> {
-    const override = process.env.ARROXY_FFPROBE_PATH;
-    if (override && (await this.isUsableBinary(override))) {
-      logger.info('Using pre-installed ffprobe', { path: override });
-      return override;
+  // FFmpeg and ffprobe must be a matched pair: yt-dlp post-processors expect
+  // both side-by-side on PATH, and version skew between them tends to break
+  // codec/container handling. On Windows we pull a single Gyan archive that
+  // bundles both; on Linux/macOS we resolve each from its current upstream.
+  async resolveFFmpegPair(opts: ResolveOptions = {}): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic }> {
+    return process.platform === 'win32' ? this.resolveFFmpegPairWin(opts) : this.resolveFFmpegPairUnix(opts);
+  }
+
+  private async resolveFFmpegPairWin(opts: ResolveOptions): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic }> {
+    const overrides = opts.overrides ?? this.overridesProvider();
+    const onProgress = opts.onProgress;
+    const ffmpegAttempts: DependencyAttempt[] = [];
+    const ffprobeAttempts: DependencyAttempt[] = [];
+    onProgress?.({ binary: 'ffmpeg', phase: 'starting' });
+    onProgress?.({ binary: 'ffprobe', phase: 'starting' });
+
+    // Manual overrides — pair only succeeds if both probe-pass.
+    const manualPair = await this.tryPairOverride(overrides?.ffmpeg, overrides?.ffprobe, 'manualOverride', undefined, ffmpegAttempts, ffprobeAttempts, onProgress);
+    if (manualPair) return manualPair;
+
+    const envFfmpeg = process.env.ARROXY_FFMPEG_PATH;
+    const envFfprobe = process.env.ARROXY_FFPROBE_PATH;
+    const envPair = await this.tryPairOverride(envFfmpeg, envFfprobe, 'envOverride', { ffmpeg: 'ARROXY_FFMPEG_PATH', ffprobe: 'ARROXY_FFPROBE_PATH' }, ffmpegAttempts, ffprobeAttempts, onProgress);
+    if (envPair) return envPair;
+
+    // Managed Gyan essentials ZIP — contains bin/ffmpeg.exe + bin/ffprobe.exe.
+    const pairDir = path.join(this.cacheDir, 'ffmpeg-pair');
+    const ffmpegPath = path.join(pairDir, 'ffmpeg.exe');
+    const ffprobePath = path.join(pairDir, 'ffprobe.exe');
+    const archiveUrl = `${BINARY_SOURCES.ffmpegGyan.download}/${BINARY_SOURCES.ffmpegGyan.essentialsArchive}`;
+    const managedSource: DependencySource = { kind: 'managed', channel: 'default', url: archiveUrl };
+
+    const pairAlreadyExists = (await this.isUsableBinary(ffmpegPath)) && (await this.isUsableBinary(ffprobePath));
+    const downloadOk = pairAlreadyExists
+      ? true
+      : await this.tryManagedDownload('ffmpeg', ffmpegAttempts, managedSource, onProgress, () =>
+          this.ensureZippedBinaryMulti({
+            name: 'ffmpeg-pair',
+            downloadUrl: archiveUrl,
+            zipFileName: 'ffmpeg-release-essentials.zip',
+            members: [
+              { innerName: 'ffmpeg.exe', destinationPath: ffmpegPath },
+              { innerName: 'ffprobe.exe', destinationPath: ffprobePath }
+            ],
+            expectedSha256: () => Promise.resolve(null),
+            onStatus: opts.onStatus,
+            onDownloadProgress: makeDownloadProgress('ffmpeg', managedSource, onProgress)
+          })
+        );
+
+    if (downloadOk) {
+      const ffmpegDiag = await this.probeAndAccept('ffmpeg', managedSource, ffmpegPath, ffmpegAttempts, onProgress);
+      const ffprobeDiag = await this.probeAndAccept('ffprobe', managedSource, ffprobePath, ffprobeAttempts, onProgress);
+      if (ffmpegDiag && ffprobeDiag) return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
+    } else {
+      // Mirror the failure on ffprobe so the diagnostic surfaces it too.
+      const last = ffmpegAttempts[ffmpegAttempts.length - 1];
+      if (last?.failure) ffprobeAttempts.push(makeAttempt(managedSource, last.failure));
     }
 
-    const asset = ffprobeAsset();
-    if (!asset) {
-      logger.warn('No ffprobe build for this platform/arch, postprocessing may fail');
-      return null;
+    // System PATH pair: both binaries must come from the same directory.
+    onProgress?.({ binary: 'ffmpeg', phase: 'fallback' });
+    onProgress?.({ binary: 'ffprobe', phase: 'fallback' });
+    const ffmpegCandidates = await whereOnPath('ffmpeg.exe');
+    const probeCandidates = new Set((await whereOnPath('ffprobe.exe')).map((p) => path.dirname(p).toLowerCase()));
+    for (const ffmpegCandidate of ffmpegCandidates) {
+      const dir = path.dirname(ffmpegCandidate);
+      if (!probeCandidates.has(dir.toLowerCase())) continue;
+      const probeCandidate = path.join(dir, 'ffprobe.exe');
+      const ffmpegSource: DependencySource = { kind: 'systemPath', path: ffmpegCandidate };
+      const probeSource: DependencySource = { kind: 'systemPath', path: probeCandidate };
+      const ffmpegDiag = await this.probeAndAccept('ffmpeg', ffmpegSource, ffmpegCandidate, ffmpegAttempts, onProgress);
+      if (!ffmpegDiag) continue;
+      const ffprobeDiag = await this.probeAndAccept('ffprobe', probeSource, probeCandidate, ffprobeAttempts, onProgress);
+      if (ffprobeDiag) return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
+      // ffmpeg succeeded but ffprobe didn't — the pair is incomplete; drop ffmpeg too.
+      delete this.resolved.ffmpeg;
     }
 
-    const targetPath = this.getFfprobePath();
-    if (await this.isUsableBinary(targetPath)) {
-      logger.info('ffprobe binary already exists', { destinationPath: targetPath });
-      return targetPath;
-    }
+    const ffmpegDiag = failedDiagnostic('ffmpeg', ffmpegAttempts);
+    const ffprobeDiag = failedDiagnostic('ffprobe', ffprobeAttempts);
+    this.lastDiagnostics.ffmpeg = ffmpegDiag;
+    this.lastDiagnostics.ffprobe = ffprobeDiag;
+    return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
+  }
 
-    const downloadUrl = ffprobeDownloadUrl(asset);
-    const innerName = ffprobeExecutableName();
+  // Pair-override helper for manual + env paths. Both halves must be set and
+  // both must probe. Half-set is treated as an explicit pair_incomplete failure
+  // on whichever side is missing, then the chain advances.
+  private async tryPairOverride(ffmpegPath: string | undefined, ffprobePath: string | undefined, kind: 'manualOverride' | 'envOverride', envVars: { ffmpeg: string; ffprobe: string } | undefined, ffmpegAttempts: DependencyAttempt[], ffprobeAttempts: DependencyAttempt[], onProgress: ProgressEmitter | undefined): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic } | null> {
+    if (!ffmpegPath && !ffprobePath) return null;
+    const buildSource = (which: 'ffmpeg' | 'ffprobe', filePath: string): DependencySource => {
+      if (kind === 'envOverride' && envVars) return { kind: 'envOverride', path: filePath, envVar: envVars[which] };
+      return { kind: 'manualOverride', path: filePath };
+    };
 
-    try {
-      if (asset.format === 'zip') {
-        await this.ensureZippedBinary({
-          name: 'ffprobe',
-          downloadUrl,
-          zipFileName: asset.source === 'evermeet' ? 'ffprobe.zip' : asset.archive,
-          innerExecutableName: innerName,
-          destinationPath: targetPath,
-          // BtbN and evermeet.cx don't publish per-asset SHA256s on a stable
-          // URL alongside the artifact (BtbN signs with PGP; evermeet uses
-          // signed JSON metadata). Skipping checksum is consistent with how
-          // ffmpeg's checksum is treated as best-effort.
-          expectedSha256: () => Promise.resolve(null),
-          onStatus,
-          onDownloadProgress
-        });
-      } else {
-        await this.ensureTarXzBinary({
-          name: 'ffprobe',
-          downloadUrl,
-          archiveFileName: (asset as { archive: string }).archive,
-          innerExecutableName: innerName,
-          destinationPath: targetPath,
-          onStatus,
-          onDownloadProgress
-        });
+    if (!ffmpegPath || !ffprobePath) {
+      const missing: DependencyFailure = { kind: 'pair_incomplete', message: 'ffmpeg and ffprobe overrides must both be set' };
+      if (ffmpegPath) {
+        const source = buildSource('ffmpeg', ffmpegPath);
+        ffmpegAttempts.push(makeAttempt(source, missing));
+        onProgress?.({ binary: 'ffmpeg', phase: 'failed', source, failureKind: missing.kind });
       }
-    } catch (err) {
-      trackMain('binary_setup_failed', { binary: 'ffprobe', phase: binaryPhase(err) });
-      logger.warn('Failed to bundle ffprobe, postprocessing may fail', {
-        error: err instanceof Error ? err.message : String(err)
-      });
+      if (ffprobePath) {
+        const source = buildSource('ffprobe', ffprobePath);
+        ffprobeAttempts.push(makeAttempt(source, missing));
+        onProgress?.({ binary: 'ffprobe', phase: 'failed', source, failureKind: missing.kind });
+      }
       return null;
     }
 
-    return targetPath;
+    const ffmpegSource = buildSource('ffmpeg', ffmpegPath);
+    const ffprobeSource = buildSource('ffprobe', ffprobePath);
+    const ffmpegDiag = await this.probeAndAccept('ffmpeg', ffmpegSource, ffmpegPath, ffmpegAttempts, onProgress);
+    const ffprobeDiag = await this.probeAndAccept('ffprobe', ffprobeSource, ffprobePath, ffprobeAttempts, onProgress);
+    if (ffmpegDiag && ffprobeDiag) return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
+    if (ffmpegDiag && !ffprobeDiag) delete this.resolved.ffmpeg;
+    if (!ffmpegDiag && ffprobeDiag) delete this.resolved.ffprobe;
+    return null;
+  }
+
+  // Non-Windows: keep the existing per-binary upstreams (eugeneware ffmpeg,
+  // BtbN/evermeet/Gyan ffprobe) but gate each on a runnable probe.
+  private async resolveFFmpegPairUnix(opts: ResolveOptions): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic }> {
+    const onProgress = opts.onProgress;
+    const overrides = opts.overrides ?? this.overridesProvider();
+
+    const ffmpegDiag = await this.resolveSingleBinary(
+      'ffmpeg',
+      overrides?.ffmpeg,
+      process.env.ARROXY_FFMPEG_PATH,
+      'ARROXY_FFMPEG_PATH',
+      async (source, attempts) => {
+        const assetName = ffmpegAssetName();
+        if (!assetName) return null;
+        const targetPath = path.join(this.cacheDir, 'ffmpeg');
+        const url = `${BINARY_SOURCES.ffmpegStatic.download}/${assetName}`;
+        const checksumUrl = `${url}.sha256`;
+        const downloadOk = await this.tryManagedDownload('ffmpeg', attempts, source, onProgress, () =>
+          this.ensureBinary({
+            name: 'ffmpeg',
+            destinationPath: targetPath,
+            downloadUrl: url,
+            expectedSha256: async () => {
+              try {
+                const checksumText = await downloadText(checksumUrl);
+                const firstToken = checksumText.trim().split(/\s+/)[0];
+                return /^[a-fA-F0-9]{64}$/.test(firstToken) ? firstToken.toLowerCase() : null;
+              } catch {
+                return null;
+              }
+            },
+            onStatus: opts.onStatus,
+            onDownloadProgress: makeDownloadProgress('ffmpeg', source, onProgress),
+            requiredChecksum: false
+          })
+        );
+        return downloadOk ? targetPath : null;
+      },
+      { kind: 'managed', channel: 'default', url: BINARY_SOURCES.ffmpegStatic.download },
+      opts
+    );
+
+    const ffprobeDiag = await this.resolveSingleBinary(
+      'ffprobe',
+      overrides?.ffprobe,
+      process.env.ARROXY_FFPROBE_PATH,
+      'ARROXY_FFPROBE_PATH',
+      async (source, attempts) => {
+        const asset = ffprobeAsset();
+        if (!asset) return null;
+        const targetPath = path.join(this.cacheDir, ffprobeExecutableName());
+        // Skip the network round-trip if the file already exists. ensureBinary
+        // does this for the simple-download path; ensureZippedBinary/TarXzBinary
+        // do not, so we mirror it here.
+        if (await this.isUsableBinary(targetPath)) return targetPath;
+        const url = ffprobeDownloadUrl(asset);
+        const downloadOk = await this.tryManagedDownload('ffprobe', attempts, source, onProgress, () => {
+          if (asset.format === 'zip') {
+            return this.ensureZippedBinary({
+              name: 'ffprobe',
+              downloadUrl: url,
+              zipFileName: asset.source === 'evermeet' ? 'ffprobe.zip' : asset.archive,
+              innerExecutableName: ffprobeExecutableName(),
+              destinationPath: targetPath,
+              expectedSha256: () => Promise.resolve(null),
+              onStatus: opts.onStatus,
+              onDownloadProgress: makeDownloadProgress('ffprobe', source, onProgress)
+            });
+          }
+          return this.ensureTarXzBinary({
+            name: 'ffprobe',
+            downloadUrl: url,
+            archiveFileName: asset.archive,
+            innerExecutableName: ffprobeExecutableName(),
+            destinationPath: targetPath,
+            onStatus: opts.onStatus,
+            onDownloadProgress: makeDownloadProgress('ffprobe', source, onProgress)
+          });
+        });
+        return downloadOk ? targetPath : null;
+      },
+      { kind: 'managed', channel: 'default', url: 'ffprobe-managed' },
+      opts
+    );
+
+    return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
+  }
+
+  // Single-binary resolve helper: manual override → env override → managed
+  // download. Used by resolveDeno and the non-Windows ffmpeg/ffprobe paths.
+  private async resolveSingleBinary(id: DependencyId, manualPath: string | undefined, envPath: string | undefined, envVar: string, doManaged: (source: DependencySource, attempts: DependencyAttempt[]) => Promise<string | null>, managedSource: DependencySource, opts: ResolveOptions): Promise<DependencyDiagnostic> {
+    const attempts: DependencyAttempt[] = [];
+    const onProgress = opts.onProgress;
+    onProgress?.({ binary: id, phase: 'starting' });
+
+    if (manualPath) {
+      const source: DependencySource = { kind: 'manualOverride', path: manualPath };
+      const diag = await this.probeAndAccept(id, source, manualPath, attempts, onProgress);
+      if (diag) return diag;
+    }
+
+    if (envPath) {
+      const source: DependencySource = { kind: 'envOverride', path: envPath, envVar };
+      const diag = await this.probeAndAccept(id, source, envPath, attempts, onProgress);
+      if (diag) return diag;
+    }
+
+    const managedPath = await doManaged(managedSource, attempts);
+    if (managedPath) {
+      const diag = await this.probeAndAccept(id, managedSource, managedPath, attempts, onProgress);
+      if (diag) return diag;
+    }
+
+    const diag = failedDiagnostic(id, attempts);
+    this.lastDiagnostics[id] = diag;
+    return diag;
+  }
+
+  async ensureFFmpeg(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string | null> {
+    if (this.resolved.ffmpeg) return this.resolved.ffmpeg;
+    const onProgress = wrapDownloadProgressEmitter(onDownloadProgress);
+    const pair = await this.resolveFFmpegPair({ onStatus, onProgress });
+    return pair.ffmpeg.resolvedPath;
+  }
+
+  async ensureFFprobe(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string | null> {
+    if (this.resolved.ffprobe) return this.resolved.ffprobe;
+    const onProgress = wrapDownloadProgressEmitter(onDownloadProgress);
+    const pair = await this.resolveFFmpegPair({ onStatus, onProgress });
+    return pair.ffprobe.resolvedPath;
   }
 
   // Linux BtbN ffmpeg builds ship as .tar.xz, which Node has no built-in
@@ -477,102 +946,66 @@ export class BinaryManager {
   //   - download/extraction failed for any reason.
   // The caller (YtDlp) treats null as "skip --js-runtimes" rather than failing
   // the download. Bot-block fallbacks still cover us.
-  async ensureDeno(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string | null> {
-    const override = process.env.ARROXY_DENO_PATH;
-    if (override && (await this.isUsableBinary(override))) {
-      logger.info('Using pre-installed deno', { path: override });
-      return override;
-    }
+  async resolveDeno(opts: ResolveOptions = {}): Promise<DependencyDiagnostic> {
+    const id: DependencyId = 'deno';
+    const overrides = opts.overrides ?? this.overridesProvider();
+    const onProgress = opts.onProgress;
 
     const assetName = denoAssetName();
     if (!assetName) {
-      logger.info('No deno build for this platform/arch, skipping');
-      return null;
+      const diag: DependencyDiagnostic = { id, state: 'failed', source: null, resolvedPath: null, attempts: [], failure: { kind: 'spawn_failed', message: 'No deno build for this platform/arch' } };
+      this.lastDiagnostics[id] = diag;
+      onProgress?.({ binary: id, phase: 'skipped' });
+      return diag;
     }
 
-    const targetPath = this.getDenoPath();
-    if (await this.isUsableBinary(targetPath)) {
-      logger.info('deno binary already exists', { destinationPath: targetPath });
-      return targetPath;
-    }
-
-    const downloadUrl = `https://github.com/denoland/deno/releases/latest/download/${assetName}`;
-    const checksumUrl = `${downloadUrl}.sha256sum`;
-
-    try {
-      await this.ensureZippedBinary({
-        name: 'deno',
-        downloadUrl,
-        zipFileName: assetName,
-        innerExecutableName: denoExecutableName(),
-        destinationPath: targetPath,
-        onDownloadProgress,
-        expectedSha256: async () => {
-          try {
-            const checksumText = await downloadText(checksumUrl);
-            return (
-              parseShaLine(checksumText, assetName) ??
-              (() => {
-                const firstToken = checksumText.trim().split(/\s+/)[0];
-                return /^[a-fA-F0-9]{64}$/.test(firstToken) ? firstToken.toLowerCase() : null;
-              })()
-            );
-          } catch {
-            return null;
-          }
-        },
-        onStatus
-      });
-      return targetPath;
-    } catch (err) {
-      trackMain('binary_setup_failed', { binary: 'deno', phase: binaryPhase(err) });
-      logger.warn('Failed to bundle deno, continuing without JS runtime', {
-        error: err instanceof Error ? err.message : String(err)
-      });
-      return null;
-    }
+    return this.resolveSingleBinary(
+      id,
+      overrides?.deno,
+      process.env.ARROXY_DENO_PATH,
+      'ARROXY_DENO_PATH',
+      async (source, attempts) => {
+        const targetPath = path.join(this.cacheDir, denoExecutableName());
+        if (await this.isUsableBinary(targetPath)) return targetPath;
+        const downloadUrl = `${BINARY_SOURCES.deno.download}/${assetName}`;
+        const checksumUrl = `${downloadUrl}.sha256sum`;
+        const downloadOk = await this.tryManagedDownload(id, attempts, source, onProgress, () =>
+          this.ensureZippedBinary({
+            name: 'deno',
+            downloadUrl,
+            zipFileName: assetName,
+            innerExecutableName: denoExecutableName(),
+            destinationPath: targetPath,
+            onDownloadProgress: makeDownloadProgress(id, source, onProgress),
+            expectedSha256: async () => {
+              try {
+                const checksumText = await downloadText(checksumUrl);
+                return (
+                  parseShaLine(checksumText, assetName) ??
+                  (() => {
+                    const firstToken = checksumText.trim().split(/\s+/)[0];
+                    return /^[a-fA-F0-9]{64}$/.test(firstToken) ? firstToken.toLowerCase() : null;
+                  })()
+                );
+              } catch {
+                return null;
+              }
+            },
+            onStatus: opts.onStatus
+          })
+        );
+        return downloadOk ? targetPath : null;
+      },
+      { kind: 'managed', channel: 'default', url: `${BINARY_SOURCES.deno.download}/${assetName}` },
+      opts
+    );
   }
 
-  async ensureFFmpeg(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string | null> {
-    const override = process.env.ARROXY_FFMPEG_PATH;
-    if (override && (await this.isUsableBinary(override))) {
-      logger.info('Using pre-installed ffmpeg', { path: override });
-      return override;
-    }
-
-    const assetName = ffmpegAssetName();
-    if (!assetName) return null;
-
-    const targetPath = this.getFfmpegPath();
-    const checksumUrl = `https://github.com/eugeneware/ffmpeg-static/releases/download/b6.0/${assetName}.sha256`;
-
-    const expectedSha256 = async (): Promise<string | null> => {
-      try {
-        const checksumText = await downloadText(checksumUrl);
-        const firstToken = checksumText.trim().split(/\s+/)[0];
-        if (/^[a-fA-F0-9]{64}$/.test(firstToken)) return firstToken.toLowerCase();
-        return null;
-      } catch {
-        return null;
-      }
-    };
-
-    try {
-      await this.ensureBinary({
-        name: 'ffmpeg',
-        destinationPath: targetPath,
-        downloadUrl: `https://github.com/eugeneware/ffmpeg-static/releases/download/b6.0/${assetName}`,
-        expectedSha256,
-        onStatus,
-        onDownloadProgress,
-        requiredChecksum: false
-      });
-    } catch (err) {
-      trackMain('binary_setup_failed', { binary: 'ffmpeg', phase: binaryPhase(err) });
-      throw err;
-    }
-
-    return targetPath;
+  async ensureDeno(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string | null> {
+    if (this.resolved.deno) return this.resolved.deno;
+    const onProgress = wrapDownloadProgressEmitter(onDownloadProgress);
+    const diag = await this.resolveDeno({ onStatus, onProgress });
+    return diag.resolvedPath;
   }
 
   private async ensureZippedBinary(config: { name: string; downloadUrl: string; zipFileName: string; innerExecutableName: string; destinationPath: string; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback }): Promise<void> {
@@ -627,6 +1060,60 @@ export class BinaryManager {
     });
 
     this.inProgress.set(destinationPath, promise);
+    return promise;
+  }
+
+  // Variant of ensureZippedBinary that extracts multiple members from a single
+  // archive into distinct destinations. Used for the Windows ffmpeg+ffprobe
+  // pair so both binaries come from the exact same Gyan build.
+  private async ensureZippedBinaryMulti(config: { name: string; downloadUrl: string; zipFileName: string; members: { innerName: string; destinationPath: string }[]; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback }): Promise<void> {
+    const { name, members, onStatus, onDownloadProgress } = config;
+    const lockKey = members[0]?.destinationPath ?? name;
+
+    const existing = this.inProgress.get(lockKey);
+    if (existing) return existing;
+
+    const promise = (async (): Promise<void> => {
+      const tempDir = await fsPromises.mkdtemp(path.join(os.tmpdir(), `arroxy-${name}-`));
+      const zipPath = path.join(tempDir, config.zipFileName);
+
+      try {
+        onStatus?.('downloadingBinary', { name });
+        logger.info(`Downloading ${name}`, { downloadUrl: config.downloadUrl });
+
+        await downloadFile(config.downloadUrl, zipPath, onDownloadProgress);
+
+        const expected = await config.expectedSha256();
+        if (expected) {
+          const actual = await sha256ForFile(zipPath);
+          if (actual !== expected) {
+            throw new Error(`${name} checksum mismatch. Expected ${expected.slice(0, 8)}..., got ${actual.slice(0, 8)}...`);
+          }
+        }
+
+        const extractDir = path.join(tempDir, 'unpacked');
+        await fsPromises.mkdir(extractDir, { recursive: true });
+        await extractZip(zipPath, { dir: extractDir });
+
+        for (const member of members) {
+          const innerPath = await this.findExecutableInTree(extractDir, member.innerName);
+          if (!innerPath) {
+            throw new Error(`${name} archive did not contain ${member.innerName}`);
+          }
+          await fsPromises.mkdir(path.dirname(member.destinationPath), { recursive: true });
+          await fsPromises.copyFile(innerPath, member.destinationPath);
+          if (process.platform !== 'win32') {
+            await fsPromises.chmod(member.destinationPath, 0o755);
+          }
+        }
+      } finally {
+        await fsPromises.rm(tempDir, { recursive: true, force: true });
+      }
+    })().finally(() => {
+      this.inProgress.delete(lockKey);
+    });
+
+    this.inProgress.set(lockKey, promise);
     return promise;
   }
 
@@ -720,8 +1207,8 @@ export class BinaryManager {
     }
   }
 
-  private async isYtDlpUpToDate(binaryPath: string): Promise<boolean> {
-    const [local, remote] = await Promise.all([this.getLocalYtDlpVersion(binaryPath), this.getRemoteYtDlpVersion()]);
+  private async isYtDlpUpToDate(binaryPath: string, releaseApiUrl: string): Promise<boolean> {
+    const [local, remote] = await Promise.all([this.getLocalYtDlpVersion(binaryPath), this.getRemoteYtDlpVersion(releaseApiUrl)]);
     if (!local) return false;
     if (!remote) {
       logger.warn('Could not fetch yt-dlp remote version, skipping update check');
@@ -744,9 +1231,9 @@ export class BinaryManager {
     }
   }
 
-  private async getRemoteYtDlpVersion(): Promise<string | null> {
+  private async getRemoteYtDlpVersion(releaseApiUrl: string): Promise<string | null> {
     try {
-      const json = await downloadText('https://api.github.com/repos/yt-dlp/yt-dlp-nightly-builds/releases/latest');
+      const json = await downloadText(releaseApiUrl);
       const parsed = JSON.parse(json) as { tag_name?: string };
       return parsed.tag_name ?? null;
     } catch {

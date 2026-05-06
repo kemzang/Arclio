@@ -40,7 +40,7 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
   registerWindowHandlers(mainWindow);
   registerDownloadHandlers({ downloadService, formatProbeService, playlistProbeService, settingsStore });
   registerSettingsHandlers({ settingsStore, clipboardWatcher });
-  registerFileHandlers(mainWindow);
+  registerFileHandlers(mainWindow, binaryManager);
   registerQueueHandlers(queueStore);
   registerAnalyticsHandlers();
   registerDiagnosticsHandlers();

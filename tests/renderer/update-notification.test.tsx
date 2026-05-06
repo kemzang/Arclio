@@ -17,7 +17,7 @@ function makeApi(
 ) {
   return {
     app: {
-      warmUp: vi.fn().mockResolvedValue(ok({ completed: true, failures: [] })),
+      warmUp: vi.fn().mockResolvedValue(ok({ completed: true, dependencies: {}, blockingFailures: [] })),
       setLanguage: vi.fn().mockResolvedValue(undefined)
     },
     window: {
@@ -46,7 +46,8 @@ function makeApi(
     events: {
       onStatus: vi.fn().mockReturnValue(() => undefined),
       onProgress: vi.fn().mockReturnValue(() => undefined),
-      onClipboardUrl: vi.fn().mockReturnValue(() => undefined)
+      onClipboardUrl: vi.fn().mockReturnValue(() => undefined),
+      onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
       save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),

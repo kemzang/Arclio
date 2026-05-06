@@ -133,6 +133,31 @@ describe('settings and recent stores', () => {
     expect(persisted.playlist).toBeDefined();
   });
 
+  it('merges binaryOverrides patches by key — partial patch leaves siblings intact', async () => {
+    const userData = await fs.mkdtemp(path.join(os.tmpdir(), 'settings-binary-overrides-'));
+    const store = new SettingsStore(userData, baseDefaults);
+
+    await store.update({ common: { binaryOverrides: { ytDlp: '/usr/local/bin/yt-dlp', ffmpeg: '/usr/local/bin/ffmpeg' } } });
+    let read = await store.get();
+    expect(read.common.binaryOverrides).toEqual({ ytDlp: '/usr/local/bin/yt-dlp', ffmpeg: '/usr/local/bin/ffmpeg' });
+
+    // Patching only ffprobe must not wipe ytDlp + ffmpeg.
+    await store.update({ common: { binaryOverrides: { ffprobe: '/usr/local/bin/ffprobe' } } });
+    read = await store.get();
+    expect(read.common.binaryOverrides).toEqual({
+      ytDlp: '/usr/local/bin/yt-dlp',
+      ffmpeg: '/usr/local/bin/ffmpeg',
+      ffprobe: '/usr/local/bin/ffprobe'
+    });
+
+    // Setting one to undefined clears it but leaves others intact.
+    await store.update({ common: { binaryOverrides: { ytDlp: undefined } } });
+    read = await store.get();
+    expect(read.common.binaryOverrides?.ytDlp).toBeUndefined();
+    expect(read.common.binaryOverrides?.ffmpeg).toBe('/usr/local/bin/ffmpeg');
+    expect(read.common.binaryOverrides?.ffprobe).toBe('/usr/local/bin/ffprobe');
+  });
+
   it('returns empty list when recent-jobs.json is corrupted', async () => {
     const userData = await fs.mkdtemp(path.join(os.tmpdir(), 'recent-jobs-corrupt-'));
     await fs.writeFile(path.join(userData, 'recent-jobs.json'), 'not valid json', 'utf-8');

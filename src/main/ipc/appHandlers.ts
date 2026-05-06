@@ -13,7 +13,10 @@ interface AppHandlerDeps {
 export function registerAppHandlers(deps: AppHandlerDeps): void {
   const { warmupService, languageRef } = deps;
 
-  handleRaw(IPC_CHANNELS.appWarmUp, () => warmupService.run());
+  handleRaw(IPC_CHANNELS.appWarmUp, (_, payload: unknown) => {
+    const force = typeof payload === 'object' && payload !== null && (payload as { force?: unknown }).force === true;
+    return warmupService.run({ force });
+  });
 
   handleRaw(IPC_CHANNELS.appSetLanguage, (_, payload: unknown) => {
     const parsed = supportedLangSchema.safeParse(payload);

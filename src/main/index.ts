@@ -142,7 +142,9 @@ if (hasSingleInstanceLock) {
     };
     const recentJobsStore = new RecentJobsStore(userDataPath);
     const queueStore = new QueueStore(userDataPath);
-    const binaryManager = new BinaryManager(userDataPath);
+    const binaryManager = new BinaryManager(userDataPath, {
+      overridesProvider: () => settingsStore.getSync().common.binaryOverrides
+    });
     const tokenProvider = isMockBackend ? new MockTokenProvider() : new HiddenWindowTokenProvider();
     const tokenService = new TokenService(tokenProvider);
     const ytDlp = new YtDlp(binaryManager, tokenService, settingsStore);

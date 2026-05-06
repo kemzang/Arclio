@@ -1,6 +1,6 @@
 import type { Result } from './result';
 import type { SupportedLang } from './i18n/types';
-import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DownloadJob, GetFormatsInput, GetFormatsOutput, GetPlaylistItemsInput, GetPlaylistItemsOutput, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProgressEvent, QueueItem, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types';
+import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, GetFormatsInput, GetFormatsOutput, GetPlaylistItemsInput, GetPlaylistItemsOutput, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProgressEvent, QueueItem, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types';
 
 export interface SettingsPatch {
   common?: Partial<CommonSettings>;
@@ -18,7 +18,7 @@ export interface WindowApi {
 
 export interface AppApi {
   app: {
-    warmUp(): Promise<Result<WarmUpOutput>>;
+    warmUp(input?: { force?: boolean }): Promise<Result<WarmUpOutput>>;
     setLanguage(language: SupportedLang): Promise<void>;
   };
   window: WindowApi;
@@ -37,6 +37,7 @@ export interface AppApi {
   shell: {
     openFolder(path?: string): Promise<Result<{ opened: boolean }>>;
     openExternal(url: string): Promise<Result<{ opened: boolean }>>;
+    openBinariesDir(): Promise<Result<{ opened: boolean }>>;
   };
   logs: {
     openDir(): Promise<Result<{ opened: boolean }>>;
@@ -44,6 +45,7 @@ export interface AppApi {
   dialog: {
     chooseFolder(): Promise<Result<{ path: string | null }>>;
     chooseFile(): Promise<Result<{ path: string | null }>>;
+    chooseExecutable(binary: DependencyId): Promise<Result<{ path: string | null }>>;
   };
   events: {
     onStatus(listener: (event: StatusEvent) => void): () => void;

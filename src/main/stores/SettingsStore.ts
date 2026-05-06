@@ -33,9 +33,18 @@ function migrateFlatToNested(raw: Record<string, unknown>, defaults: AppSettings
   return { common, single, playlist };
 }
 
+function mergeCommon(base: CommonSettings, patch: Partial<CommonSettings> | undefined): CommonSettings {
+  if (!patch) return base;
+  // binaryOverrides is the one nested object inside common — patch fields must
+  // merge by key instead of replacing the whole map. Without this, setting a
+  // single binary path would wipe the others.
+  const binaryOverrides = patch.binaryOverrides ? { ...(base.binaryOverrides ?? {}), ...patch.binaryOverrides } : base.binaryOverrides;
+  return { ...base, ...patch, binaryOverrides };
+}
+
 function deepMerge(base: AppSettings, patch: SettingsPatch): AppSettings {
   return {
-    common: { ...base.common, ...(patch.common ?? {}) },
+    common: mergeCommon(base.common, patch.common),
     single: { ...base.single, ...(patch.single ?? {}) },
     playlist: { ...base.playlist, ...(patch.playlist ?? {}) }
   };
@@ -64,6 +73,14 @@ export class SettingsStore {
   }
 
   async get(): Promise<AppSettings> {
+    return this.store.store;
+  }
+
+  // Sync read for callers (BinaryManager overridesProvider) that run during
+  // chains where awaiting would force every probe path to become async-leaky.
+  // Returns the same data as get(); exists only because the async signature
+  // would create plumbing churn for no benefit.
+  getSync(): AppSettings {
     return this.store.store;
   }
 

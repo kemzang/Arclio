@@ -1,12 +1,14 @@
 import { useState, useEffect, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import mainImg from '../../assets/Main.png';
-import type { WarmupProgressEvent } from '@shared/types';
+import type { DependencyDiagnostic, DependencyId, WarmupProgressEvent } from '@shared/types';
+import { RepairPanel } from './RepairPanel';
 
 interface Props {
   initialized: boolean;
-  warmupFailures: string[];
-  warmupProgress: Record<string, WarmupProgressEvent> | null;
+  warmupBlocking: DependencyId[];
+  warmupDiagnostics: Record<DependencyId, DependencyDiagnostic> | null;
+  warmupProgress: Partial<Record<DependencyId, WarmupProgressEvent>> | null;
 }
 
 const MIN_MS = 3000;
@@ -16,7 +18,7 @@ function formatBytes(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function SplashScreen({ initialized, warmupFailures, warmupProgress }: Props): JSX.Element | null {
+export function SplashScreen({ initialized, warmupBlocking, warmupDiagnostics, warmupProgress }: Props): JSX.Element | null {
   const { t } = useTranslation();
   const [minPassed, setMinPassed] = useState(false);
   const [gone, setGone] = useState(false);
@@ -27,15 +29,18 @@ export function SplashScreen({ initialized, warmupFailures, warmupProgress }: Pr
 
   if (gone) return null;
 
-  const fading = initialized && minPassed;
+  // Splash stays mounted as the repair container while any blocking dep is
+  // not runnable. Without blocking failures we fade out as before.
+  const blocked = warmupBlocking.length > 0;
+  const fading = initialized && minPassed && !blocked;
 
-  const entries = Object.values(warmupProgress ?? {});
+  const entries = Object.values(warmupProgress ?? {}).filter((e): e is WarmupProgressEvent => e !== undefined);
   const activeEntry = entries.find((e) => e.phase === 'downloading') ?? entries.find((e) => e.phase === 'extracting');
-  const totalDownloaded = entries.reduce((sum, e) => sum + e.bytesDownloaded, 0);
+  const totalDownloaded = entries.reduce((sum, e) => sum + (e.bytesDownloaded ?? 0), 0);
   const totalBytes = entries.reduce((sum, e) => sum + (e.totalBytes ?? 0), 0);
   const percent = totalBytes > 0 ? Math.min(100, (totalDownloaded / totalBytes) * 100) : null;
 
-  const showProgress = activeEntry != null || (percent !== null && percent < 100);
+  const showProgress = !blocked && (activeEntry != null || (percent !== null && percent < 100));
 
   return (
     <div
@@ -44,7 +49,7 @@ export function SplashScreen({ initialized, warmupFailures, warmupProgress }: Pr
       onTransitionEnd={() => {
         if (fading) setGone(true);
       }}
-      aria-hidden
+      aria-hidden={!blocked}
     >
       <img src={mainImg} alt="" className="splash-mascot" />
       <div className="splash-text">
@@ -64,9 +69,9 @@ export function SplashScreen({ initialized, warmupFailures, warmupProgress }: Pr
             )}
           </>
         ) : (
-          <p className="splash-name">{t('splash.warmup')}</p>
+          !blocked && <p className="splash-name">{t('splash.warmup')}</p>
         )}
-        {initialized && warmupFailures.length > 0 && <p className="splash-warning">{t('splash.warning')}</p>}
+        {blocked && warmupDiagnostics && <RepairPanel diagnostics={warmupDiagnostics} blocking={warmupBlocking} />}
       </div>
     </div>
   );

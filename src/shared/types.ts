@@ -55,6 +55,14 @@ export interface CommonSettings {
   analyticsEnabled?: boolean;
   firstRunCompleted?: boolean;
   drawerOpen?: boolean;
+  binaryOverrides?: BinaryOverrides;
+}
+
+export interface BinaryOverrides {
+  ytDlp?: string;
+  ffmpeg?: string;
+  ffprobe?: string;
+  deno?: string;
 }
 
 // Single-video flow prefs. Restored when the user enters the format-probe path.
@@ -185,16 +193,53 @@ export interface ProgressEvent {
   percent?: number;
 }
 
-export interface WarmUpOutput {
-  completed: boolean;
-  failures: string[];
+export const DEPENDENCY_IDS = ['yt-dlp', 'ffmpeg', 'ffprobe', 'deno'] as const;
+export type DependencyId = (typeof DEPENDENCY_IDS)[number];
+
+export const BLOCKING_DEPENDENCY_IDS: readonly DependencyId[] = ['yt-dlp', 'ffmpeg', 'ffprobe'] as const;
+
+export type DependencySource = { kind: 'manualOverride'; path: string } | { kind: 'envOverride'; path: string; envVar: string } | { kind: 'managed'; channel: 'nightly' | 'stable' | 'default'; url: string } | { kind: 'systemPath'; path: string };
+
+export type DependencyFailureKind = 'download_failed' | 'extract_failed' | 'hash_failed' | 'spawn_failed' | 'permission_denied' | 'blocked_or_quarantined' | 'bad_exit_code' | 'timeout' | 'pair_incomplete';
+
+export type DependencyState = 'missing' | 'downloaded' | 'verified' | 'runnable' | 'failed';
+
+export interface DependencyFailure {
+  kind: DependencyFailureKind;
+  message: string;
+  osCode?: string;
 }
 
+export interface DependencyAttempt {
+  source: DependencySource;
+  failure?: DependencyFailure;
+}
+
+export interface DependencyDiagnostic {
+  id: DependencyId;
+  state: DependencyState;
+  source: DependencySource | null;
+  resolvedPath: string | null;
+  versionOutput?: string;
+  failure?: DependencyFailure;
+  attempts: DependencyAttempt[];
+}
+
+export interface WarmUpOutput {
+  completed: boolean;
+  dependencies: Record<DependencyId, DependencyDiagnostic>;
+  blockingFailures: DependencyId[];
+}
+
+export type WarmupPhase = 'starting' | 'downloading' | 'extracting' | 'probing' | 'fallback' | 'done' | 'failed' | 'skipped';
+
 export interface WarmupProgressEvent {
-  binary: string;
-  phase: 'downloading' | 'extracting' | 'done' | 'skipped';
-  bytesDownloaded: number;
-  totalBytes: number | undefined;
+  binary: DependencyId;
+  phase: WarmupPhase;
+  bytesDownloaded?: number;
+  totalBytes?: number;
+  source?: DependencySource;
+  failureKind?: DependencyFailureKind;
 }
 
 export interface CommonPaths {

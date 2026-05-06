@@ -1,5 +1,5 @@
 import type { AppApi } from '@shared/api';
-import type { AppSettings, ProgressEvent, StatusEvent, UpdateAvailablePayload, WarmupProgressEvent } from '@shared/types';
+import type { AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent } from '@shared/types';
 import { isYouTubeUrl } from '@shared/schemas';
 import { defaultAppSettings } from '@shared/constants';
 
@@ -8,6 +8,7 @@ if (!('appApi' in window)) {
   const progressListeners = new Set<(e: ProgressEvent) => void>();
   const updateListeners = new Set<(info: UpdateAvailablePayload) => void>();
   const warmupProgressListeners = new Set<(e: WarmupProgressEvent) => void>();
+  let warmupCallCount = 0;
 
   setTimeout(() => {
     // Flip installChannel to 'scoop' / 'homebrew' / 'winget' to preview those banner states
@@ -95,8 +96,8 @@ if (!('appApi' in window)) {
 
   const mock: AppApi = {
     app: {
-      warmUp: async () => {
-        const binaries: { name: string; size: number }[] = [
+      warmUp: async (input) => {
+        const binaries: { name: DependencyId; size: number }[] = [
           { name: 'yt-dlp', size: 12 * 1024 * 1024 },
           { name: 'ffmpeg', size: 80 * 1024 * 1024 },
           { name: 'ffprobe', size: 30 * 1024 * 1024 },
@@ -110,7 +111,37 @@ if (!('appApi' in window)) {
           }
           warmupProgressListeners.forEach((l) => l({ binary: name, phase: 'done', bytesDownloaded: size, totalBytes: size }));
         }
-        return { ok: true, data: { completed: true, failures: [] } };
+
+        // First call simulates a quarantined yt-dlp so the renderer's
+        // RepairPanel is exercised in dev. force=true (called by repair flow)
+        // returns a clean success.
+        warmupCallCount += 1;
+        const force = input?.force === true;
+        const allRunnable: Record<DependencyId, DependencyDiagnostic> = {
+          'yt-dlp': { id: 'yt-dlp', state: 'runnable', source: { kind: 'managed', channel: 'nightly', url: 'mock' }, resolvedPath: '/mock/yt-dlp', attempts: [] },
+          ffmpeg: { id: 'ffmpeg', state: 'runnable', source: { kind: 'managed', channel: 'default', url: 'mock' }, resolvedPath: '/mock/ffmpeg', attempts: [] },
+          ffprobe: { id: 'ffprobe', state: 'runnable', source: { kind: 'managed', channel: 'default', url: 'mock' }, resolvedPath: '/mock/ffprobe', attempts: [] },
+          deno: { id: 'deno', state: 'runnable', source: { kind: 'managed', channel: 'default', url: 'mock' }, resolvedPath: '/mock/deno', attempts: [] }
+        };
+
+        if (!force && warmupCallCount === 1) {
+          const blocked: Record<DependencyId, DependencyDiagnostic> = {
+            ...allRunnable,
+            'yt-dlp': {
+              id: 'yt-dlp',
+              state: 'failed',
+              source: { kind: 'managed', channel: 'nightly', url: 'mock' },
+              resolvedPath: null,
+              failure: { kind: 'blocked_or_quarantined', message: 'SmartScreen blocked the download' },
+              attempts: []
+            }
+          };
+          const result: WarmUpOutput = { completed: false, dependencies: blocked, blockingFailures: ['yt-dlp'] };
+          return { ok: true, data: result };
+        }
+
+        const result: WarmUpOutput = { completed: true, dependencies: allRunnable, blockingFailures: [] };
+        return { ok: true, data: result };
       },
       setLanguage: async () => {
         /* no-op in browser */
@@ -357,6 +388,10 @@ if (!('appApi' in window)) {
       openExternal: (url) => {
         window.open(url, '_blank', 'noopener');
         return Promise.resolve({ ok: true, data: { opened: true } } as const);
+      },
+      openBinariesDir: () => {
+        console.log('[mock] openBinariesDir');
+        return Promise.resolve({ ok: true, data: { opened: true } } as const);
       }
     },
 
@@ -377,6 +412,10 @@ if (!('appApi' in window)) {
       chooseFile: async () => {
         await delay(200);
         return { ok: true, data: { path: '/home/user/youtube-cookies.txt' } };
+      },
+      chooseExecutable: async (binary) => {
+        await delay(200);
+        return { ok: true, data: { path: `/usr/local/bin/${binary}` } };
       }
     },
 

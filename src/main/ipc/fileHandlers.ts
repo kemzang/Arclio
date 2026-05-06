@@ -3,9 +3,11 @@ import { app, dialog, shell, type BrowserWindow } from 'electron';
 import log from 'electron-log/main';
 import { IPC_CHANNELS } from '@shared/ipc';
 import { ok } from '@shared/result';
+import { DEPENDENCY_IDS, type DependencyId } from '@shared/types';
+import type { BinaryManager } from '@main/services/BinaryManager';
 import { handleRaw, toIpcFailure, toUnknownFailure } from './utils';
 
-export function registerFileHandlers(mainWindow: BrowserWindow): void {
+export function registerFileHandlers(mainWindow: BrowserWindow, binaryManager: BinaryManager): void {
   handleRaw(IPC_CHANNELS.chooseFolder, async () => {
     try {
       const result = await dialog.showOpenDialog(mainWindow, {
@@ -67,4 +69,40 @@ export function registerFileHandlers(mainWindow: BrowserWindow): void {
       return toUnknownFailure(error);
     }
   });
+
+  handleRaw(IPC_CHANNELS.dialogChooseExecutable, async (_, payload: unknown) => {
+    try {
+      const binary = isDependencyId(payload) ? payload : null;
+      const filters =
+        process.platform === 'win32'
+          ? [
+              { name: 'Executables', extensions: ['exe'] },
+              { name: 'All files', extensions: ['*'] }
+            ]
+          : [{ name: 'All files', extensions: ['*'] }];
+      const result = await dialog.showOpenDialog(mainWindow, {
+        properties: ['openFile'],
+        filters,
+        title: binary ? `Select ${binary} executable` : 'Select executable'
+      });
+      return ok({ path: result.canceled ? null : (result.filePaths[0] ?? null) });
+    } catch (error) {
+      return toUnknownFailure(error);
+    }
+  });
+
+  handleRaw(IPC_CHANNELS.shellOpenBinariesDir, async () => {
+    try {
+      const target = binaryManager.getRuntimeCacheDir();
+      const response = await shell.openPath(target);
+      if (response) return toIpcFailure(response);
+      return ok({ opened: true });
+    } catch (error) {
+      return toUnknownFailure(error);
+    }
+  });
+}
+
+function isDependencyId(value: unknown): value is DependencyId {
+  return typeof value === 'string' && (DEPENDENCY_IDS as readonly string[]).includes(value);
 }

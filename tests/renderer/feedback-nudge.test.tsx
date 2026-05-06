@@ -9,7 +9,7 @@ const mockOpenExternal = vi.fn().mockResolvedValue(ok({ opened: true }));
 
 const mockAppApi = {
   app: {
-    warmUp: vi.fn().mockResolvedValue(ok({ completed: true, failures: [] })),
+    warmUp: vi.fn().mockResolvedValue(ok({ completed: true, dependencies: {}, blockingFailures: [] })),
     setLanguage: vi.fn().mockResolvedValue(undefined)
   },
   window: {
@@ -33,12 +33,14 @@ const mockAppApi = {
   },
   shell: {
     openFolder: vi.fn().mockResolvedValue(ok({ opened: true })),
-    openExternal: mockOpenExternal
+    openExternal: mockOpenExternal,
+    openBinariesDir: vi.fn().mockResolvedValue(ok({ opened: true }))
   },
   logs: { openDir: vi.fn().mockResolvedValue(ok({ opened: true })) },
   dialog: {
     chooseFolder: vi.fn().mockResolvedValue(ok({ path: '/tmp' })),
-    chooseFile: vi.fn().mockResolvedValue(ok({ path: null }))
+    chooseFile: vi.fn().mockResolvedValue(ok({ path: null })),
+    chooseExecutable: vi.fn().mockResolvedValue(ok({ path: null }))
   },
   events: {
     onStatus: vi.fn().mockReturnValue(() => undefined),
