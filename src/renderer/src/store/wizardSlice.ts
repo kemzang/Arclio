@@ -79,19 +79,44 @@ export function applyPreset(preset: Preset, formats: FormatOption[]): { videoFor
   return { videoFormatId: grouped[grouped.length - 1]?.formatId ?? '', audioSelection: nativeAudio(worstAudio) };
 }
 
-function restoreFormatSelection(formats: FormatOption[], settings: AppSettings | null): { videoFormatId: string; audioSelection: AudioSelection; preset: Preset | null } {
+// Persisted audio selection is stored verbatim. Convert/none kinds carry no
+// per-video identifiers and revive directly. For native, the YouTube formatId
+// can change between videos, so fall back: exact id → same ext → bestAudio.
+// Returns null when nothing is persisted; caller uses its default in that case.
+function reviveAudio(persisted: AudioSelection | undefined, formats: FormatOption[]): AudioSelection | null {
+  if (!persisted) return null;
+  if (persisted.kind !== 'native') return persisted;
+
+  const audioFormats = formats.filter((f) => f.isAudioOnly);
+  if (audioFormats.length === 0) return { kind: 'none' };
+  if (audioFormats.some((f) => f.formatId === persisted.formatId)) return persisted;
+
+  // The persisted formatId came from an earlier probe and isn't in this list.
+  // Without that earlier probe we can't recover its ext, so just pick the best
+  // native audio for the current video.
+  return nativeAudio(audioFormats[0].formatId);
+}
+
+export function restoreFormatSelection(formats: FormatOption[], settings: AppSettings | null): { videoFormatId: string; audioSelection: AudioSelection; preset: Preset | null } {
   const grouped = groupedNonAudioFormats(formats);
   const audioFormats = formats.filter((f) => f.isAudioOnly);
   const bestAudio = audioFormats[0]?.formatId ?? null;
   const single = settings?.single;
+  const revived = reviveAudio(single?.lastAudioSelection, formats);
 
-  if (single?.lastPreset) return { ...applyPreset(single.lastPreset, formats), preset: single.lastPreset };
-  if (single?.lastVideoResolution === 'audio-only') return { videoFormatId: '', audioSelection: nativeAudio(bestAudio), preset: 'audio-only' };
+  if (single?.lastPreset) {
+    const base = applyPreset(single.lastPreset, formats);
+    return { ...base, audioSelection: revived ?? base.audioSelection, preset: single.lastPreset };
+  }
+  if (single?.lastVideoResolution === 'audio-only') {
+    return { videoFormatId: '', audioSelection: revived ?? nativeAudio(bestAudio), preset: 'audio-only' };
+  }
   if (single?.lastVideoResolution) {
     const match = grouped.find((g) => g.resolution === single.lastVideoResolution);
-    if (match) return { videoFormatId: match.formatId, audioSelection: nativeAudio(bestAudio), preset: null };
+    if (match) return { videoFormatId: match.formatId, audioSelection: revived ?? nativeAudio(bestAudio), preset: null };
   }
-  return { ...applyPreset('best-quality', formats), preset: 'best-quality' };
+  const base = applyPreset('best-quality', formats);
+  return { ...base, audioSelection: revived ?? base.audioSelection, preset: 'best-quality' };
 }
 
 function restoreSubtitleSelection(subtitles: SubtitleMap | undefined, automaticCaptions: SubtitleMap | undefined, settings: AppSettings | null): { languages: string[] } {

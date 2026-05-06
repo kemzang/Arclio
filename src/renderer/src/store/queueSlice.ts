@@ -158,7 +158,7 @@ function buildStartInput(item: QueueItem): StartDownloadInput {
 }
 
 async function persistFormatPrefs(set: SetState, get: GetState): Promise<void> {
-  const { selectedVideoFormatId, activePreset, wizardFormats, wizardSubtitleLanguages, settings, wizardMode, selectedPlaylistPreset } = get();
+  const { selectedVideoFormatId, activePreset, audioSelection, wizardFormats, wizardSubtitleLanguages, settings, wizardMode, selectedPlaylistPreset } = get();
   if (!settings) return;
   const inPlaylist = wizardMode === 'playlist';
 
@@ -192,6 +192,7 @@ async function persistFormatPrefs(set: SetState, get: GetState): Promise<void> {
   const single = {
     lastVideoResolution: videoResolution,
     lastPreset: activePreset,
+    lastAudioSelection: audioSelection,
     ...(wizardSubtitleLanguages.length > 0
       ? {
           lastSubtitleLanguages: wizardSubtitleLanguages,

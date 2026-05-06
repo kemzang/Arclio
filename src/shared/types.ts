@@ -6,12 +6,12 @@ export type { PreparedJob } from './preparedJob';
 // Re-export the enum types whose canonical definition lives in `schemas.ts`
 // (where they're z.enum schemas). Importing from `@shared/types` continues to
 // work for callers that don't care about the schema vs type distinction.
-export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert } from './schemas';
+export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection } from './schemas';
 
 export type { StatusKey } from './schemas';
 export type { LocalizedError, YtdlpErrorKey } from './i18n/types';
 
-import type { Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey } from './schemas';
+import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey } from './schemas';
 
 export type AppErrorCode = 'validation' | 'token' | 'binary' | 'download' | 'ipc' | 'unknown';
 
@@ -69,6 +69,7 @@ export interface BinaryOverrides {
 export interface SinglePrefs {
   lastPreset?: Preset | null;
   lastVideoResolution?: string;
+  lastAudioSelection?: AudioSelection;
   lastSubtitleLanguages?: string[];
   lastSubtitleMode?: SubtitleMode;
   lastSubtitleFormat?: SubtitleFormat;

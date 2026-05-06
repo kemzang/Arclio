@@ -45,6 +45,12 @@ export const DEFAULT_AUDIO_BITRATE: AudioBitrate = 192;
 export const audioConvertSchema = z.discriminatedUnion('target', [z.object({ target: z.literal('wav') }), z.object({ target: z.enum(LOSSY_TARGET_VALUES), bitrateKbps: audioBitrateSchema })]);
 export type AudioConvert = z.infer<typeof audioConvertSchema>;
 
+// Renderer's audio-column selection. Three convert kinds + native + none.
+// Defined here (not in renderer/store/types.ts) because it's persisted in
+// `SinglePrefs.lastAudioSelection`, so the IPC patch schema needs to validate it.
+export const audioSelectionSchema = z.discriminatedUnion('kind', [z.object({ kind: z.literal('none') }), z.object({ kind: z.literal('native'), formatId: z.string().min(1) }), z.object({ kind: z.literal('convert-lossless'), target: z.literal('wav') }), z.object({ kind: z.literal('convert-lossy'), target: z.enum(LOSSY_TARGET_VALUES), bitrateKbps: audioBitrateSchema })]);
+export type AudioSelection = z.infer<typeof audioSelectionSchema>;
+
 export const supportedLangSchema = z.enum(['om', 'de', 'en', 'es', 'fr', 'sw', 'uz', 'vi', 'am', 'ar', 'ur', 'ps', 'bn', 'hi', 'my', 'el', 'ru', 'sr', 'uk', 'zh', 'ja']);
 export type SupportedLang = z.infer<typeof supportedLangSchema>;
 export const SUPPORTED_LANGS = supportedLangSchema.options;
@@ -265,6 +271,7 @@ const commonSettingsPatchSchema = z.object({
 const singlePrefsPatchSchema = z.object({
   lastPreset: presetSchema.nullable().optional(),
   lastVideoResolution: z.string().optional(),
+  lastAudioSelection: audioSelectionSchema.optional(),
   lastSubtitleLanguages: z.array(z.string()).optional(),
   lastSubtitleMode: subtitleModeSchema.optional(),
   lastSubtitleFormat: subtitleFormatSchema.optional(),

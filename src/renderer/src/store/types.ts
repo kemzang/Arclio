@@ -1,20 +1,13 @@
 import type { StoreApi } from 'zustand';
-import type { AppError, AppSettings, AudioBitrate, AudioConvertTarget, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
+import type { AppError, AppSettings, AudioBitrate, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
+import type { AudioSelection } from '@shared/schemas';
+export type { AudioSelection };
 export type WizardStep = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
 
 // Explicit mode tag so consumers don't re-derive intent from
 // `playlistItems.length > 0`. `single` = format-probe flow; `playlist` =
 // flat-probe + preset flow. Set on probe entry, cleared on reset.
 export type WizardMode = 'single' | 'playlist';
-
-// Discriminated union for the renderer's audio-column selection. Three modes:
-//   none    — no audio (video-only download)
-//   native  — pick a YouTube audio stream as-is (existing behavior)
-//   convert — let yt-dlp re-encode/remux to a target codec; main process
-//             translates this to -x --audio-format X (--audio-quality NK).
-// The IPC payload is derived at queue-build time: convert sends `audioConvert`
-// + `formatId=undefined`; native sends `formatId` composed with the video pick.
-export type AudioSelection = { kind: 'none' } | { kind: 'native'; formatId: string } | { kind: 'convert-lossless'; target: 'wav' } | { kind: 'convert-lossy'; target: Exclude<AudioConvertTarget, 'wav'>; bitrateKbps: AudioBitrate };
 
 export type SetState = StoreApi<AppState>['setState'];
 export type GetState = StoreApi<AppState>['getState'];
