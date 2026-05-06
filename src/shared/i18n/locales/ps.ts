@@ -81,8 +81,22 @@ const ps = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'youtube.com او youtu.be لینکونه ملاتړ کیږي',
       fetchFormats: 'بڼې ترلاسه کړه',
+      features: {
+        heading: 'Arroxy څه ډاونلوډ کولی شي',
+        video: {
+          title: 'ویډیوګانې',
+          desc: 'تر 4K پورې هر ریزولوشن غوره کړئ'
+        },
+        playlist: {
+          title: 'Playlistونه',
+          desc: 'له Playlist نه ډیر توکي غوره کړئ'
+        },
+        audio: {
+          title: 'غږ',
+          desc: 'اصلي سټریم یا MP3/M4A بدلول'
+        }
+      },
       mascotIdle: 'یو YouTube لینک (ویډیو یا Short) راکړئ — بیا "بڼې ترلاسه کړه" کلیک وکړئ او زه کار پیل کوم ✨',
       mascotBusy: 'شاتهپرده ډاونلوډ کیږي… زه کولی شم له ډیرو کارونو سره معامله وکړم 😎',
       advanced: 'پرمختللي',

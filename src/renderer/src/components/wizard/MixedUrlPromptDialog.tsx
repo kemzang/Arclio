@@ -20,7 +20,7 @@ export function MixedUrlPromptDialog(): JSX.Element {
           <Button type="button" variant="outline" onClick={() => void dismissMixedPrompt('video')}>
             {t('wizard.mixedPrompt.singleVideo')}
           </Button>
-          <Button ref={playlistButtonRef} type="button" onClick={() => void dismissMixedPrompt('playlist')}>
+          <Button ref={playlistButtonRef} type="button" variant="outline" onClick={() => void dismissMixedPrompt('playlist')}>
             {t('wizard.mixedPrompt.wholePlaylist')}
           </Button>
         </DialogFooter>

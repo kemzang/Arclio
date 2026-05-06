@@ -81,8 +81,22 @@ const uz = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: "youtube.com va youtu.be havolalarini qo'llab-quvvatlaydi",
       fetchFormats: 'Formatlarni olish',
+      features: {
+        heading: 'Arroxy nima yuklab olishi mumkin',
+        video: {
+          title: 'Videolar',
+          desc: '4K gacha istalgan sifatni tanlang'
+        },
+        playlist: {
+          title: 'Pleylistlar',
+          desc: 'Pleylistdan bir nechta elementni tanlang'
+        },
+        audio: {
+          title: 'Audio',
+          desc: 'Asl oqim yoki MP3/M4A konvertatsiya'
+        }
+      },
       mascotIdle: 'Menga YouTube havolasini yuboring (video yoki Short) — keyin "Formatlarni olish" tugmasini bosing, ishga tushaman ✨',
       mascotBusy: "Fonda yuklanmoqda… Men bir vaqtda ko'p ish qila olaman 😎",
       advanced: 'Kengaytirilgan',

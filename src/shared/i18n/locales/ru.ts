@@ -81,8 +81,22 @@ const ru = {
     url: {
       heading: 'Ссылка YouTube',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Поддерживаются ссылки youtube.com и youtu.be',
       fetchFormats: 'Получить форматы',
+      features: {
+        heading: 'Что умеет скачивать Arroxy',
+        video: {
+          title: 'Видео',
+          desc: 'Любое разрешение вплоть до 4K'
+        },
+        playlist: {
+          title: 'Плейлисты',
+          desc: 'Мультивыбор элементов плейлиста'
+        },
+        audio: {
+          title: 'Аудио',
+          desc: 'Оригинальный поток или конвертация в MP3/M4A'
+        }
+      },
       mascotIdle: 'Кинь мне ссылку YouTube (видео или Shorts) — нажми «Получить форматы», и я возьмусь за дело ✨',
       mascotBusy: 'Качаю в фоне… могу делать несколько дел сразу 😎',
       advanced: 'Дополнительно',

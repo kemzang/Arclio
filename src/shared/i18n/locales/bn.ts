@@ -81,8 +81,22 @@ const bn = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'youtube.com এবং youtu.be লিংক সমর্থিত',
       fetchFormats: 'ফরম্যাট আনুন',
+      features: {
+        heading: 'Arroxy যা নামাতে পারে',
+        video: {
+          title: 'ভিডিও',
+          desc: '4K পর্যন্ত যেকোনো রেজোলিউশন বেছে নিন'
+        },
+        playlist: {
+          title: 'Playlist',
+          desc: 'Playlist থেকে একাধিক আইটেম নির্বাচন করুন'
+        },
+        audio: {
+          title: 'অডিও',
+          desc: 'মূল স্ট্রিম বা MP3/M4A রূপান্তর'
+        }
+      },
       mascotIdle: 'একটি YouTube লিংক দিন (ভিডিও বা Short) — তারপর "ফরম্যাট আনুন" ক্লিক করুন, আমি কাজ শুরু করব ✨',
       mascotBusy: 'ব্যাকগ্রাউন্ডে ডাউনলোড হচ্ছে… আমি একসাথে অনেক কাজ করতে পারি 😎',
       advanced: 'উন্নত',

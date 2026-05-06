@@ -81,8 +81,22 @@ const sr = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Подржава youtube.com и youtu.be линкове',
       fetchFormats: 'Учитај формате',
+      features: {
+        heading: 'Шта Arroxy може да преузме',
+        video: {
+          title: 'Видеа',
+          desc: 'Изабери резолуцију до 4K'
+        },
+        playlist: {
+          title: 'Плејлисте',
+          desc: 'Вишеструки избор ставки плејлисте'
+        },
+        audio: {
+          title: 'Звук',
+          desc: 'Оригинални стрим или конверзија у MP3/M4A'
+        }
+      },
       mascotIdle: 'Убаци YouTube линк (видео или Short) — па кликни „Учитај формате" и крећемо ✨',
       mascotBusy: 'Преузимање у позадини… Умем да радим више ствари одједном 😎',
       advanced: 'Напредно',

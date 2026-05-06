@@ -81,8 +81,22 @@ const vi = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Hỗ trợ liên kết youtube.com và youtu.be',
       fetchFormats: 'Tải định dạng',
+      features: {
+        heading: 'Arroxy có thể tải gì',
+        video: {
+          title: 'Video',
+          desc: 'Chọn độ phân giải bất kỳ lên đến 4K'
+        },
+        playlist: {
+          title: 'Danh sách phát',
+          desc: 'Chọn nhiều mục từ một playlist'
+        },
+        audio: {
+          title: 'Âm thanh',
+          desc: 'Luồng gốc hoặc chuyển đổi MP3/M4A'
+        }
+      },
       mascotIdle: 'Dán cho tôi một liên kết YouTube (video hoặc YouTube Shorts) — rồi nhấn "Tải định dạng" và tôi sẽ bắt tay vào việc ✨',
       mascotBusy: 'Đang tải xuống trong nền… Tôi có thể làm nhiều việc cùng lúc 😎',
       advanced: 'Nâng cao',

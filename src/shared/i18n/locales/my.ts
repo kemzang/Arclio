@@ -81,8 +81,22 @@ const my = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'youtube.com နှင့် youtu.be လင့်ခ်များကို ထောက်ပံ့သည်',
       fetchFormats: 'ဖော်မတ်များရယူမည်',
+      features: {
+        heading: 'Arroxy ဆွဲထုတ်နိုင်သည်',
+        video: {
+          title: 'ဗီဒီယို',
+          desc: '4K အထိ မည်သည့် resolution မဆို ရွေးနိုင်'
+        },
+        playlist: {
+          title: 'Playlist',
+          desc: 'Playlist မှ အကြောင်းအရာများ များစွာ ရွေးနိုင်'
+        },
+        audio: {
+          title: 'အသံ',
+          desc: 'မူရင်း stream သို့မဟုတ် MP3/M4A ပြောင်းနိုင်'
+        }
+      },
       mascotIdle: 'YouTube လင့်ခ်တစ်ခု (ဗီဒီယို သို့ Short) ထည့်ပြီး "ဖော်မတ်များရယူမည်" နှိပ်ပါ — ကျွန်ုပ်စတင်ပြီပဲ ✨',
       mascotBusy: 'နောက်ခံတွင် ဒေါင်းလုဒ်လုပ်နေသည်… ကျွန်ုပ် တစ်ချိန်တည်းလုပ်နိုင်သည် 😎',
       advanced: 'အဆင့်မြင့်',

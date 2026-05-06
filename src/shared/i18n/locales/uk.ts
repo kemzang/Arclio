@@ -81,8 +81,22 @@ const uk = {
     url: {
       heading: 'Посилання YouTube',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Підтримуються посилання youtube.com і youtu.be',
       fetchFormats: 'Отримати формати',
+      features: {
+        heading: 'Що Arroxy вміє завантажувати',
+        video: {
+          title: 'Відео',
+          desc: 'Будь-яка роздільна здатність до 4K'
+        },
+        playlist: {
+          title: 'Плейлисти',
+          desc: 'Мультивибір елементів плейлиста'
+        },
+        audio: {
+          title: 'Аудіо',
+          desc: 'Оригінальний потік або конвертація в MP3/M4A'
+        }
+      },
       mascotIdle: 'Кинь мені посилання YouTube (відео або Shorts) — натисни «Отримати формати» і я візьмусь за справу ✨',
       mascotBusy: 'Завантажую у фоні… можу робити кілька справ одночасно 😎',
       advanced: 'Додатково',

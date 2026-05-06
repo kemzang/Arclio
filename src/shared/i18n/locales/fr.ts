@@ -81,8 +81,22 @@ const fr = {
     url: {
       heading: 'URL YouTube',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Compatible avec les liens youtube.com et youtu.be',
       fetchFormats: 'Récupérer les formats',
+      features: {
+        heading: "Ce qu'Arroxy peut récupérer",
+        video: {
+          title: 'Vidéos',
+          desc: "Choisis n'importe quelle résolution jusqu'à 4K"
+        },
+        playlist: {
+          title: 'Playlists',
+          desc: "Sélectionne plusieurs éléments d'une playlist"
+        },
+        audio: {
+          title: 'Audio',
+          desc: 'Flux original ou convertir en MP3/M4A'
+        }
+      },
       mascotIdle: "Lance-moi un lien YouTube (vidéo ou Short) — clique sur « Récupérer les formats » et je m'occupe du reste ✨",
       mascotBusy: 'Téléchargement en arrière-plan… je peux faire plusieurs choses à la fois 😎',
       advanced: 'Avancé',

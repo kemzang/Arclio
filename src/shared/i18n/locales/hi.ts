@@ -81,8 +81,22 @@ const hi = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'youtube.com और youtu.be लिंक समर्थित',
       fetchFormats: 'फ़ॉर्मेट लाएँ',
+      features: {
+        heading: 'Arroxy क्या डाउनलोड कर सकता है',
+        video: {
+          title: 'वीडियो',
+          desc: '4K तक कोई भी रिज़ॉल्यूशन चुनें'
+        },
+        playlist: {
+          title: 'Playlist',
+          desc: 'Playlist से कई आइटम चुनें'
+        },
+        audio: {
+          title: 'ऑडियो',
+          desc: 'मूल स्ट्रीम या MP3/M4A कनवर्शन'
+        }
+      },
       mascotIdle: 'मुझे YouTube का लिंक भेजो (वीडियो या Short) — फिर "फ़ॉर्मेट लाएँ" दबाओ और मैं काम पर लग जाऊँगा ✨',
       mascotBusy: 'पीछे चुपचाप डाउनलोड कर रहा हूँ… मैं एक साथ कई काम कर सकता हूँ 😎',
       advanced: 'उन्नत',

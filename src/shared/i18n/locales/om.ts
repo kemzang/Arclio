@@ -80,8 +80,22 @@ const om = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Liinkii youtube.com fi youtu.be ni deeggara',
       fetchFormats: 'Foormaatii fidi',
+      features: {
+        heading: "Arroxy maal buufachuu danda'a",
+        video: {
+          title: 'Viidiyoowwan',
+          desc: 'Hanga 4K firiimii barbaadde filadhu'
+        },
+        playlist: {
+          title: 'Playlists',
+          desc: 'Wantota playlist irraa filadhu'
+        },
+        audio: {
+          title: 'Sagalee',
+          desc: 'Tarreessa uumamaa ykn MP3/M4A jijjiiri'
+        }
+      },
       mascotIdle: 'Liinkii YouTube naaf ergi (viidiyoo ykn Short) — achiin "Foormaatii fidi" cuqaasi ✨',
       mascotBusy: 'Duubaan buusaa jira… rakkoo guguddaa hojjechuuf dandeessa 😎',
       advanced: 'Ammayyaa',

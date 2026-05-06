@@ -80,8 +80,22 @@ const sw = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Inasaidia viungo vya youtube.com na youtu.be',
       fetchFormats: 'Pata maumbo',
+      features: {
+        heading: 'Arroxy inaweza kupakua nini',
+        video: {
+          title: 'Video',
+          desc: 'Chagua azimio lolote hadi 4K'
+        },
+        playlist: {
+          title: 'Playlists',
+          desc: 'Chagua vipande vingi kutoka playlist'
+        },
+        audio: {
+          title: 'Sauti',
+          desc: 'Mkondo wa asili au badilisha MP3/M4A'
+        }
+      },
       mascotIdle: 'Nipe kiungo cha YouTube (video au Short) — kisha bonyeza "Pata maumbo" nami nitaanza kazi ✨',
       mascotBusy: 'Inapakua nyuma ya pazia… Ninaweza kufanya mambo mengi kwa wakati mmoja 😎',
       advanced: 'Hali ya juu',

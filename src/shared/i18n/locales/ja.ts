@@ -81,8 +81,22 @@ const ja = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'youtube.com と youtu.be のリンクに対応',
       fetchFormats: '形式を取得',
+      features: {
+        heading: 'Arroxyで取得できるもの',
+        video: {
+          title: '動画',
+          desc: '4Kまで好きな解像度を選べる'
+        },
+        playlist: {
+          title: 'プレイリスト',
+          desc: 'プレイリストから複数選択'
+        },
+        audio: {
+          title: '音声',
+          desc: 'オリジナルストリームまたはMP3/M4A変換'
+        }
+      },
       mascotIdle: 'YouTubeのリンクを貼ってね (動画でもShortsでもOK) — 「形式を取得」を押せばすぐ取りかかるよ ✨',
       mascotBusy: 'バックグラウンドでダウンロード中… マルチタスクは得意なんだ 😎',
       advanced: '詳細設定',

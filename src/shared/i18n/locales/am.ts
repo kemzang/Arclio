@@ -81,8 +81,22 @@ const am = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'youtube.com እና youtu.be አገናኞችን ይደግፋል',
       fetchFormats: 'ቅርጸቶችን ጫን',
+      features: {
+        heading: 'Arroxy ምን ሊያወርድ ይችላል',
+        video: {
+          title: 'ቪዲዮዎች',
+          desc: 'እስከ 4K ማንኛውም ጥራት ምረጥ'
+        },
+        playlist: {
+          title: 'Playlists',
+          desc: 'ከ playlist ብዙ ቪዲዮዎች ምረጥ'
+        },
+        audio: {
+          title: 'ድምጽ',
+          desc: 'ዋናው ዥረት ወይም MP3/M4A ቀይር'
+        }
+      },
       mascotIdle: 'YouTube አገናኝ ጣል (ቪዲዮ ወይም Short) — ከዚያ "ቅርጸቶችን ጫን" ጠቅ አድርግ ✨',
       mascotBusy: 'በዳራ ዳውንሎድ እያደረጉ ነው… ብዙ ስራ አሰራ 😎',
       advanced: 'ከፍተኛ',

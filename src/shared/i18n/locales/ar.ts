@@ -81,8 +81,22 @@ const ar = {
     url: {
       heading: 'رابط YouTube',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'يدعم روابط youtube.com وyoutu.be',
       fetchFormats: 'جلب الصيغ',
+      features: {
+        heading: 'ما الذي يستطيع Arroxy سحبه',
+        video: {
+          title: 'مقاطع فيديو',
+          desc: 'اختر أي دقة حتى 4K'
+        },
+        playlist: {
+          title: 'قوائم التشغيل',
+          desc: 'اختر عناصر متعددة من قائمة'
+        },
+        audio: {
+          title: 'صوت',
+          desc: 'المقطع الأصلي أو تحويل MP3/M4A'
+        }
+      },
       mascotIdle: 'أرسل لي رابط YouTube (فيديو أو Short) — ثم اضغط "جلب الصيغ" وسأبدأ العمل ✨',
       mascotBusy: 'جارٍ التنزيل في الخلفية… أستطيع تعدد المهام 😎',
       advanced: 'متقدم',

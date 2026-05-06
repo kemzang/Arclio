@@ -81,8 +81,22 @@ const el = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Υποστηρίζει συνδέσμους youtube.com και youtu.be',
       fetchFormats: 'Φόρτωση μορφών',
+      features: {
+        heading: 'Τι μπορεί να κατεβάσει το Arroxy',
+        video: {
+          title: 'Βίντεο',
+          desc: 'Επέλεξε οποιαδήποτε ανάλυση έως 4K'
+        },
+        playlist: {
+          title: 'Playlist',
+          desc: 'Πολλαπλή επιλογή στοιχείων playlist'
+        },
+        audio: {
+          title: 'Ήχος',
+          desc: 'Πρωτότυπη ροή ή μετατροπή MP3/M4A'
+        }
+      },
       mascotIdle: 'Ρίξε μου έναν σύνδεσμο YouTube (βίντεο ή Short) — μετά πάτα «Φόρτωση μορφών» ✨',
       mascotBusy: 'Λήψη στο παρασκήνιο… Ξέρω να κάνω πολλά μαζί 😎',
       advanced: 'Για προχωρημένους',

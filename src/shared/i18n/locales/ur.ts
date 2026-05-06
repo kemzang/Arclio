@@ -81,8 +81,22 @@ const ur = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'youtube.com اور youtu.be لنکس سپورٹڈ ہیں',
       fetchFormats: 'فارمیٹس لائیں',
+      features: {
+        heading: 'Arroxy کیا لا سکتا ہے',
+        video: {
+          title: 'ویڈیوز',
+          desc: '4K تک کوئی بھی ریزولوشن منتخب کریں'
+        },
+        playlist: {
+          title: 'پلے لسٹس',
+          desc: 'پلے لسٹ سے متعدد آئٹمز منتخب کریں'
+        },
+        audio: {
+          title: 'آڈیو',
+          desc: 'اصل سٹریم یا MP3/M4A کنورژن'
+        }
+      },
       mascotIdle: 'مجھے YouTube کا لنک دیں (ویڈیو یا Short) — پھر "فارمیٹس لائیں" دبائیں اور میں کام شروع کر دوں گا ✨',
       mascotBusy: 'بیک گراؤنڈ میں ڈاؤن لوڈ ہو رہا ہے… میں ملٹی ٹاسک کر سکتا ہوں 😎',
       advanced: 'ایڈوانسڈ',

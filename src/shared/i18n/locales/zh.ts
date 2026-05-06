@@ -81,8 +81,22 @@ const zh = {
     url: {
       heading: 'YouTube 链接',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: '支持 youtube.com 和 youtu.be 链接',
       fetchFormats: '获取格式',
+      features: {
+        heading: 'Arroxy 能下载什么',
+        video: {
+          title: '视频',
+          desc: '可选任意分辨率，最高 4K'
+        },
+        playlist: {
+          title: '播放列表',
+          desc: '多选播放列表中的视频'
+        },
+        audio: {
+          title: '音频',
+          desc: '原始流或转换为 MP3/M4A'
+        }
+      },
       mascotIdle: '丢一个 YouTube 链接给我(视频或 Shorts 都行)— 点「获取格式」我就开始干活 ✨',
       mascotBusy: '正在后台下载… 我可以同时处理多个任务 😎',
       advanced: '高级',

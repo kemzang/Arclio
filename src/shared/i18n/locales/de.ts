@@ -81,8 +81,22 @@ const de = {
     url: {
       heading: 'YouTube-URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Unterstützt youtube.com- und youtu.be-Links',
       fetchFormats: 'Formate abrufen',
+      features: {
+        heading: 'Was Arroxy laden kann',
+        video: {
+          title: 'Videos',
+          desc: 'Beliebige Auflösung bis zu 4K'
+        },
+        playlist: {
+          title: 'Playlists',
+          desc: 'Mehrere Elemente einer Playlist wählen'
+        },
+        audio: {
+          title: 'Audio',
+          desc: 'Originalstream oder MP3/M4A konvertieren'
+        }
+      },
       mascotIdle: 'Wirf mir einen YouTube-Link rüber (Video oder Short) — klick dann auf „Formate abrufen" und ich leg los ✨',
       mascotBusy: 'Lade im Hintergrund… ich kann mehrere Dinge gleichzeitig 😎',
       advanced: 'Erweitert',

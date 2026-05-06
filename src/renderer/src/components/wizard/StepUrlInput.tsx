@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { ArrowRight, AlertTriangle, X } from 'lucide-react';
+import { ArrowRight, AlertTriangle, X, Video, ListVideo, Music } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '../../store/useAppStore';
 import { track } from '@renderer/lib/analytics';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Switch } from '../ui/switch';
+import { Item, ItemGroup, ItemMedia, ItemContent, ItemTitle, ItemDescription } from '../ui/item';
 import { MascotBubble } from '../shared/MascotBubble';
 import { ClipboardConfirmDialog } from '../shared/ClipboardConfirmDialog';
 import { formatHomeRelativePath } from '@renderer/lib/utils';
@@ -112,7 +113,39 @@ export function StepUrlInput(): JSX.Element {
             {t('wizard.url.fetchFormats')} <ArrowRight size={16} className="rtl:rotate-180" />
           </Button>
         </div>
-        <p className="text-[12px] text-[var(--text-subtle)]">{t('wizard.url.hint')}</p>
+      </div>
+
+      <div className="flex flex-col gap-2" data-testid="features">
+        <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.url.features.heading')}</p>
+        <ItemGroup className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+          <Item variant="muted" className="items-start">
+            <ItemMedia variant="icon">
+              <Video />
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>{t('wizard.url.features.video.title')}</ItemTitle>
+              <ItemDescription>{t('wizard.url.features.video.desc')}</ItemDescription>
+            </ItemContent>
+          </Item>
+          <Item variant="muted" className="items-start">
+            <ItemMedia variant="icon">
+              <ListVideo />
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>{t('wizard.url.features.playlist.title')}</ItemTitle>
+              <ItemDescription>{t('wizard.url.features.playlist.desc')}</ItemDescription>
+            </ItemContent>
+          </Item>
+          <Item variant="muted" className="items-start">
+            <ItemMedia variant="icon">
+              <Music />
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>{t('wizard.url.features.audio.title')}</ItemTitle>
+              <ItemDescription>{t('wizard.url.features.audio.desc')}</ItemDescription>
+            </ItemContent>
+          </Item>
+        </ItemGroup>
       </div>
 
       <details className="group rounded-md border border-[var(--border-strong)] bg-card/40" data-testid="advanced-section">

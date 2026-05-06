@@ -80,8 +80,22 @@ const en = {
     url: {
       heading: 'YouTube URL',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Supports youtube.com and youtu.be links',
       fetchFormats: 'Fetch formats',
+      features: {
+        heading: 'What Arroxy can pull',
+        video: {
+          title: 'Videos',
+          desc: 'Pick any resolution up to 4K'
+        },
+        playlist: {
+          title: 'Playlists',
+          desc: 'Multi-select items from a playlist'
+        },
+        audio: {
+          title: 'Audio',
+          desc: 'Original stream or MP3/M4A convert'
+        }
+      },
       mascotIdle: 'Drop me a YouTube link (video or Short) — then hit "Fetch formats" and I\'ll get to work ✨',
       mascotBusy: 'Downloading in the background… I can multitask 😎',
       advanced: 'Advanced',

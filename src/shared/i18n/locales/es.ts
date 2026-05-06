@@ -80,8 +80,22 @@ const es = {
     url: {
       heading: 'URL de YouTube',
       placeholder: 'https://www.youtube.com/watch?v=...',
-      hint: 'Compatible con enlaces youtube.com y youtu.be',
       fetchFormats: 'Obtener formatos',
+      features: {
+        heading: 'Qué puede bajar Arroxy',
+        video: {
+          title: 'Vídeos',
+          desc: 'Elige cualquier resolución hasta 4K'
+        },
+        playlist: {
+          title: 'Playlists',
+          desc: 'Selecciona varios elementos de una playlist'
+        },
+        audio: {
+          title: 'Audio',
+          desc: 'Stream original o convertir a MP3/M4A'
+        }
+      },
       mascotIdle: 'Pásame un enlace de YouTube (vídeo o Short) — luego pulsa "Obtener formatos" y me pongo manos a la obra ✨',
       mascotBusy: 'Descargando en segundo plano… puedo hacer varias cosas a la vez 😎',
       advanced: 'Avanzado',
