@@ -68,8 +68,8 @@ export const en = {
   f3_p: "Queue as many videos as you want. The download panel tracks progress for each in parallel.",
   f4_h: "Auto-updates",
   f4_p: "Arroxy keeps yt-dlp and ffmpeg fresh under the hood — works through every YouTube change.",
-  f5_h: "9 languages",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — auto-detects yours.",
+  f5_h: "21 languages",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — auto-detects yours.",
   f6_h: "Cross-platform",
   f6_p: "Native builds for Windows, macOS, and Linux — installer, portable, DMG, or AppImage.",
   f7_h: "Subtitles, your way",
@@ -141,7 +141,7 @@ export const en = {
   faq_a2: "Yes. MIT licensed. No premium tier, no feature gating.",
   faq_q3: "What languages is Arroxy available in?",
   faq_a3:
-    "Nine, out of the box: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), and हिन्दी (Hindi). Arroxy auto-detects your operating system's language on first launch and you can switch at any time from the language picker in the toolbar. Translations live as plain TypeScript objects in src/shared/i18n/locales/ — open a PR on GitHub to contribute.",
+    "Twenty-one, out of the box: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), and Српски (Serbian). Arroxy auto-detects your operating system's language on first launch and you can switch at any time from the language picker in the toolbar. Translations live as plain TypeScript objects in src/shared/i18n/locales/ — open a PR on GitHub to contribute.",
   faq_q4: "Do I need to install anything?",
   faq_a4:
     "No. yt-dlp and ffmpeg are downloaded automatically on first launch from their official GitHub releases and cached on your machine. After that, no extra setup is needed.",

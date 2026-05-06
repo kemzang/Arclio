@@ -39,6 +39,7 @@ function makeStubs(binaryOverrides: Partial<{ ensureYtDlp: () => Promise<string>
 const URL = 'https://www.youtube.com/watch?v=test';
 
 afterEach(() => {
+  vi.resetAllMocks();
   vi.restoreAllMocks();
 });
 

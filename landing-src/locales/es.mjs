@@ -68,8 +68,8 @@ export const es = {
   f3_p: "Pon en cola tantos videos como quieras. El panel de descargas muestra el progreso de cada uno en paralelo.",
   f4_h: "Actualizaciones automáticas",
   f4_p: "Arroxy mantiene yt-dlp y ffmpeg al día — funciona con cada cambio de YouTube.",
-  f5_h: "9 idiomas",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — detecta el tuyo automáticamente.",
+  f5_h: "21 idiomas",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — detecta el tuyo automáticamente.",
   f6_h: "Multiplataforma",
   f6_p: "Compilaciones nativas para Windows, macOS y Linux — instalador, portátil, DMG o AppImage.",
   f7_h: "Subtítulos a tu manera",
@@ -141,7 +141,7 @@ export const es = {
   faq_a2: "Sí. Licencia MIT. Sin nivel premium, sin funciones bloqueadas.",
   faq_q3: "¿En qué idiomas está disponible Arroxy?",
   faq_a3:
-    "En nueve, listos para usar: English, Español, Deutsch (alemán), Français (francés), 日本語 (japonés), 中文 (chino), Русский (ruso), Українська (ucraniano) y हिन्दी (hindi). Arroxy detecta el idioma de tu sistema operativo en el primer arranque y puedes cambiarlo en cualquier momento desde el selector de idioma en la barra de herramientas. Las traducciones viven como objetos TypeScript planos en src/shared/i18n/locales/ — abre un PR en GitHub para contribuir.",
+    "Veintiuno, listos para usar: English, Español, Deutsch (alemán), Français (francés), 日本語 (japonés), 中文 (chino), Русский (ruso), Українська (ucraniano), हिन्दी (hindi), Afaan Oromoo, Kiswahili, O'zbekcha (uzbeko), Tiếng Việt (vietnamita), አማርኛ (amhárico), العربية (árabe), اردو (urdu), پښتو (pastún), বাংলা (bengalí), မြန်မာဘာသာ (birmano), Ελληνικά (griego) y Српски (serbio). Arroxy detecta el idioma de tu sistema operativo en el primer arranque y puedes cambiarlo en cualquier momento desde el selector de idioma en la barra de herramientas. Las traducciones viven como objetos TypeScript planos en src/shared/i18n/locales/ — abre un PR en GitHub para contribuir.",
   faq_q4: "¿Necesito instalar algo?",
   faq_a4:
     "No. yt-dlp y ffmpeg se descargan automáticamente en el primer arranque desde sus releases oficiales en GitHub y se guardan en caché en tu máquina. Después de eso, no se necesita configuración adicional.",

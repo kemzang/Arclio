@@ -68,8 +68,8 @@ export const de = {
   f3_p: "Reihe so viele Videos in die Warteschlange ein, wie du willst. Das Download-Panel verfolgt jeden Fortschritt parallel.",
   f4_h: "Auto-Updates",
   f4_p: "Arroxy hält yt-dlp und ffmpeg im Hintergrund aktuell — funktioniert nach jeder YouTube-Änderung.",
-  f5_h: "9 Sprachen",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — erkennt deine automatisch.",
+  f5_h: "21 Sprachen",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — erkennt deine automatisch.",
   f6_h: "Plattformübergreifend",
   f6_p: "Native Builds für Windows, macOS und Linux — Installer, Portable, DMG oder AppImage.",
   f7_h: "Untertitel, wie du willst",
@@ -142,7 +142,7 @@ export const de = {
     "Ja. MIT-Lizenz. Keine Premium-Stufe, keine versteckten Funktionsbarrieren.",
   faq_q3: "In welchen Sprachen ist Arroxy verfügbar?",
   faq_a3:
-    "Neun, direkt out of the box: English, Español (Spanisch), Deutsch, Français (Französisch), 日本語 (Japanisch), 中文 (Chinesisch), Русский (Russisch), Українська (Ukrainisch) und हिन्दी (Hindi). Arroxy erkennt deine Betriebssystem-Sprache beim ersten Start und du kannst jederzeit über die Sprachauswahl in der Symbolleiste wechseln. Übersetzungen liegen als einfache TypeScript-Objekte in src/shared/i18n/locales/ — öffne einen PR auf GitHub, um beizutragen.",
+    "Einundzwanzig, direkt out of the box: English, Español (Spanisch), Deutsch, Français (Französisch), 日本語 (Japanisch), 中文 (Chinesisch), Русский (Russisch), Українська (Ukrainisch), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Usbekisch), Tiếng Việt (Vietnamesisch), አማርኛ (Amharisch), العربية (Arabisch), اردو (Urdu), پښتو (Paschto), বাংলা (Bengalisch), မြန်မာဘာသာ (Birmanisch), Ελληνικά (Griechisch) und Српски (Serbisch). Arroxy erkennt deine Betriebssystem-Sprache beim ersten Start und du kannst jederzeit über die Sprachauswahl in der Symbolleiste wechseln. Übersetzungen liegen als einfache TypeScript-Objekte in src/shared/i18n/locales/ — öffne einen PR auf GitHub, um beizutragen.",
   faq_q4: "Muss ich etwas installieren?",
   faq_a4:
     "Nein. yt-dlp und ffmpeg werden beim ersten Start automatisch von ihren offiziellen GitHub-Releases heruntergeladen und auf deinem Rechner gecacht. Danach ist keine weitere Einrichtung nötig.",

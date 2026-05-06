@@ -68,8 +68,8 @@ export const uz = {
   f3_p: "Xohlagan miqdordagi videolarni navbatga qo'ying. Yuklab olish paneli har birining jarayonini parallel kuzatib boradi.",
   f4_h: "Avtomatik yangilanishlar",
   f4_p: "Arroxy yt-dlp va ffmpeg'ni har doim yangilab turadi — YouTube'ning har bir o'zgarishi bilan ishlaydi.",
-  f5_h: "9 til",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — tilingizni avtomatik aniqlaydi.",
+  f5_h: "21 til",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — tilingizni avtomatik aniqlaydi.",
   f6_h: "Ko'p platformali",
   f6_p: "Windows, macOS va Linux uchun mahalliy yig'malar — o'rnatuvchi, portativ, DMG yoki AppImage.",
   f7_h: "Subtitrlar, o'zingizcha",
@@ -141,7 +141,7 @@ export const uz = {
   faq_a2: "Ha. MIT litsenziyasi. Premium daraja yo'q, imkoniyatlar cheklanmagan.",
   faq_q3: "Arroxy qanday tillarda mavjud?",
   faq_a3:
-    "To'qqizta, darhol tayyor: English, Español (ispan), Deutsch (nemis), Français (frantsuz), 日本語 (yapon), 中文 (xitoy), Русский (rus), Українська (ukrain) va हिन्दी (hind). Arroxy birinchi ishga tushirishda operatsion tizimingiz tilini avtomatik aniqlaydi va siz istalgan vaqtda asboblar panelindagi til tanlagichidan o'zgartirishingiz mumkin. Tarjimalar src/shared/i18n/locales/ ichidagi oddiy TypeScript obyektlari sifatida saqlanadi — hissa qo'shish uchun GitHub'da PR oching.",
+    "Yigirma bir, darhol tayyor: English, Español (ispan), Deutsch (nemis), Français (frantsuz), 日本語 (yapon), 中文 (xitoy), Русский (rus), Українська (ukrain), हिन्दी (hind), Afaan Oromoo, Kiswahili, O'zbekcha (o'zbek), Tiếng Việt (vyetnam), አማርኛ (amxar), العربية (arab), اردو (urdu), پښتو (pushtu), বাংলা (bengal), မြန်မာဘာသာ (birma), Ελληνικά (grek) va Српски (serb). Arroxy birinchi ishga tushirishda operatsion tizimingiz tilini avtomatik aniqlaydi va siz istalgan vaqtda asboblar panelindagi til tanlagichidan o'zgartirishingiz mumkin. Tarjimalar src/shared/i18n/locales/ ichidagi oddiy TypeScript obyektlari sifatida saqlanadi — hissa qo'shish uchun GitHub'da PR oching.",
   faq_q4: "Biror narsa o'rnatishim kerakmi?",
   faq_a4:
     "Yo'q. yt-dlp va ffmpeg birinchi ishga tushirishda rasmiy GitHub relizlaridan avtomatik yuklab olinadi va kompyuteringizda keshlanadi. Undan keyin qo'shimcha sozlash shart emas.",

@@ -68,8 +68,8 @@ export const om = {
   f3_p: "Viidiyoo barbaaddu hunda toora itti naqii. Paanaaliin buufachuu hundi tokkoon tokkoon isaanii adeemsa mul'isa.",
   f4_h: "Haaromsa ofii",
   f4_p: "Arroxy yt-dlp fi ffmpeg haaromsa jalaa — jijjiirama YouTube hundaaf hojjeta.",
-  f5_h: "Afaan 9",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — kan kee ofii isaa argata.",
+  f5_h: "Afaan 21",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — kan kee ofii isaa argata.",
   f6_h: "Platform hedduu",
   f6_p: "Ijaarsi asaasaa Windows, macOS, fi Linux dhaaf — diriirfataa, portable, DMG, ykn AppImage.",
   f7_h: "Caaltuu, akka fedhetti",
@@ -141,7 +141,7 @@ export const om = {
   faq_a2: "Eeyyee. Hayyama MIT. Sadarkaa premium hin jiru, amaloota eegame hin jiru.",
   faq_q3: "Arroxy afaan meeqa keessatti argama?",
   faq_a3:
-    "Sagal, yeroo jalqabaatii: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), fi हिन्दी (Hindi). Arroxy afaan mana-hojii kee sirna hojjetaa irratti yeroo jalqabaatti ofumaa argata, yeroo kamiiyyuu toolbar irraa filataa afaan jijjiiruu dandeessa. Hiikaaleen objiektii TypeScript duwwaa akka src/shared/i18n/locales/ keessa jiran — gargaaruf GitHub irratti PR bani.",
+    "Digdamatokkoo, yeroo jalqabaatii: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), fi Српски (Serbian). Arroxy afaan mana-hojii kee sirna hojjetaa irratti yeroo jalqabaatti ofumaa argata, yeroo kamiiyyuu toolbar irraa filataa afaan jijjiiruu dandeessa. Hiikaaleen objiektii TypeScript duwwaa akka src/shared/i18n/locales/ keessa jiran — gargaaruf GitHub irratti PR bani.",
   faq_q4: "Wanta diriirsu barbaadaa?",
   faq_a4:
     "Lakki. yt-dlp fi ffmpeg jalqaba banuu irratti GitHub releases isaanitii ofumaan buufamu, meeshaa kee irratti kuufamu. Kana booda, qindaa'ina dabalataa barbaachisaa miti.",

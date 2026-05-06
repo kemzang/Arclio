@@ -68,8 +68,8 @@ export const my = {
   f3_p: "ဗီဒီယိုများကို ကြိုက်သလောက် queue ထည့်ပါ။ ဒေါင်းလုဒ် panel သည် တပြိုင်နက် တစ်ခုစီ၏ တိုးတက်မှုကို ခြေရာခံသည်။",
   f4_h: "အလိုအလျောက် အပ်ဒိတ်",
   f4_p: "Arroxy သည် yt-dlp နှင့် ffmpeg ကို နောက်ကွယ်မှ နောက်ဆုံးထားသည် — YouTube ပြောင်းလဲမှုတိုင်းတွင် အလုပ်လုပ်သည်။",
-  f5_h: "ဘာသာစကား ၉ မျိုး",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — သင့်ဘာသာစကားကို အလိုအလျောက် ရှာဖွေသည်။",
+  f5_h: "ဘာသာစကား ၂၁ မျိုး",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — သင့်ဘာသာစကားကို အလိုအလျောက် ရှာဖွေသည်။",
   f6_h: "Cross-platform",
   f6_p: "Windows, macOS နှင့် Linux အတွက် native build များ — installer, portable, DMG သို့မဟုတ် AppImage။",
   f7_h: "Subtitle များ သင်ကြိုက်သလို",
@@ -141,7 +141,7 @@ export const my = {
   faq_a2: "ဟုတ်ကဲ့။ MIT လိုင်စင်။ premium tier မရှိ၊ feature ကန့်သတ်မှု မရှိ။",
   faq_q3: "Arroxy ကို မည်သည့် ဘာသာစကားများဖြင့် ရနိုင်သနည်း?",
   faq_a3:
-    "ကိုးမျိုး၊ အသင့်ပါ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), နှင့် हिन्दी (Hindi)။ Arroxy သည် ပထမဆုံး ဖွင့်ချိန်တွင် သင့် operating system ၏ ဘာသာစကားကို အလိုအလျောက် ရှာဖွေပြီး toolbar ရှိ ဘာသာစကားရွေးချယ်မှုမှ မည်သည့်အချိန်မဆို ပြောင်းနိုင်သည်။ Locale ဖိုင်များသည် src/shared/i18n/locales/ တွင် plain TypeScript object များဖြစ်သည် — ပါဝင်ကူညီရန် GitHub တွင် PR တင်ပါ။",
+    "နှစ်ဆယ့်တစ်မျိုး၊ အသင့်ပါ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ, Ελληνικά (Greek), နှင့် Српски (Serbian)။ Arroxy သည် ပထမဆုံး ဖွင့်ချိန်တွင် သင့် operating system ၏ ဘာသာစကားကို အလိုအလျောက် ရှာဖွေပြီး toolbar ရှိ ဘာသာစကားရွေးချယ်မှုမှ မည်သည့်အချိန်မဆို ပြောင်းနိုင်သည်။ Locale ဖိုင်များသည် src/shared/i18n/locales/ တွင် plain TypeScript object များဖြစ်သည် — ပါဝင်ကူညီရန် GitHub တွင် PR တင်ပါ။",
   faq_q4: "ဘာတစ်ခုခု တပ်ဆင်ရန် လိုအပ်သလား?",
   faq_a4:
     "မလိုပါ။ yt-dlp နှင့် ffmpeg တို့သည် ပထမဆုံး ဖွင့်ချိန်တွင် ၎င်းတို့၏ တရားဝင် GitHub releases မှ အလိုအလျောက် ဒေါင်းလုဒ်လုပ်ပြီး သင့်စက်တွင် cache လုပ်သည်။ ထို့နောက် နောက်ထပ် setup မလိုအပ်ပါ။",

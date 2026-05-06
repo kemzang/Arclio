@@ -68,8 +68,8 @@ export const sw = {
   f3_p: "Weka foleni video nyingi unavyotaka. Paneli ya upakuaji inafuatilia maendeleo ya kila moja kwa sambamba.",
   f4_h: "Masasisho ya kiotomatiki",
   f4_p: "Arroxy inaweka yt-dlp na ffmpeg safi chini ya kofia — inafanya kazi kupitia kila mabadiliko ya YouTube.",
-  f5_h: "Lugha 9",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — hugundua yako kiotomatiki.",
+  f5_h: "Lugha 21",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — hugundua yako kiotomatiki.",
   f6_h: "Majukwaa mengi",
   f6_p: "Miundo asilia kwa Windows, macOS, na Linux — kisakinishi, portable, DMG, au AppImage.",
   f7_h: "Manukuu, kwa njia yako",
@@ -141,7 +141,7 @@ export const sw = {
   faq_a2: "Ndiyo. Leseni ya MIT. Hakuna ngazi ya malipo, hakuna kizuizi cha vipengele.",
   faq_q3: "Arroxy inapatikana katika lugha zipi?",
   faq_a3:
-    "Tisa, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kijerumani), Français (Kifaransa), 日本語 (Kijapani), 中文 (Kichina), Русский (Kirusi), Українська (Kiukraini), na हिन्दी (Kihindi). Arroxy hugundua lugha ya mfumo wako wa uendeshaji wakati wa uzinduzi wa kwanza na unaweza kubadili wakati wowote kutoka kichaguo cha lugha kwenye upau wa zana. Tafsiri zinaishi kama vitu vya TypeScript vya kawaida katika src/shared/i18n/locales/ — fungua PR kwenye GitHub kuchangia.",
+    "Ishirini na moja, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kijerumani), Français (Kifaransa), 日本語 (Kijapani), 中文 (Kichina), Русский (Kirusi), Українська (Kiukraini), हिन्दी (Kihindi), Afaan Oromoo, Kiswahili, O'zbekcha (Kiuzbeki), Tiếng Việt (Kivietinamu), አማርኛ (Kiamhara), العربية (Kiarabu), اردو (Kiurdu), پښتو (Kipashto), বাংলা (Kibengali), မြန်မာဘာသာ (Kiburma), Ελληνικά (Kigiriki), na Српски (Kiserbia). Arroxy hugundua lugha ya mfumo wako wa uendeshaji wakati wa uzinduzi wa kwanza na unaweza kubadili wakati wowote kutoka kichaguo cha lugha kwenye upau wa zana. Tafsiri zinaishi kama vitu vya TypeScript vya kawaida katika src/shared/i18n/locales/ — fungua PR kwenye GitHub kuchangia.",
   faq_q4: "Je, ninahitaji kusakinisha chochote?",
   faq_a4:
     "Hapana. yt-dlp na ffmpeg zinapakuliwa kiotomatiki wakati wa uzinduzi wa kwanza kutoka matoleo yao rasmi ya GitHub na kuhifadhiwa kwenye kompyuta yako. Baada ya hapo, hakuna usanidi wa ziada unaohitajika.",

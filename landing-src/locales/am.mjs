@@ -68,8 +68,8 @@ export const am = {
   f3_p: "የፈለጉትን ያህል ቪዲዮ ያስቀምጡ። የማውረጃ ፓኔሉ እያንዳንዱን ሂደት በትይዩ ይከታተላል።",
   f4_h: "ራስ-ሰር ዝማኔዎች",
   f4_p: "Arroxy yt-dlp እና ffmpeg ከጀርባ ትኩስ ያደርጋቸዋል — ለእያንዳንዱ የ YouTube ለውጥ ይሰራል።",
-  f5_h: "9 ቋንቋዎች",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — ቋንቋዎን ራስ-ሰር ያወቃል።",
+  f5_h: "21 ቋንቋዎች",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — ቋንቋዎን ራስ-ሰር ያወቃል።",
   f6_h: "ብዙ-መድረክ",
   f6_p: "ለ Windows፣ macOS እና Linux ተፈጥሯዊ ግንባታዎች — installer፣ portable፣ DMG ወይም AppImage።",
   f7_h: "የጽሑፍ ርዕሶች፣ እንደፈለጉ",
@@ -141,7 +141,7 @@ export const am = {
   faq_a2: "አዎ። MIT ፍቃድ። ምንም premium ደረጃ የለም፣ ምንም ባህሪ መዝጊያ የለም።",
   faq_q3: "Arroxy በምን ቋንቋዎች ይገኛል?",
   faq_a3:
-    "ዘጠኝ፣ ከሳጥን ውጭ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian) እና हिन्दी (Hindi)። Arroxy በመጀመሪያ ጊዜ ሲጀምሩ የስርዓተ ምOS ቋንቋዎን ራስ-ሰር ያወቃል፣ ከመሳሪያ አሞሌ የቋንቋ ምርጫ ማንኛውም ጊዜ መቀየር ይችላሉ። ትርጉሞች ከ src/shared/i18n/locales/ ውስጥ ቀላል TypeScript ዕቃዎች ናቸው — ለማዋጮ GitHub ላይ PR ይክፈቱ።",
+    "ሃያ አንድ፣ ከሳጥን ውጭ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek) እና Српски (Serbian)። Arroxy በመጀመሪያ ጊዜ ሲጀምሩ የስርዓተ ምOS ቋንቋዎን ራስ-ሰር ያወቃል፣ ከመሳሪያ አሞሌ የቋንቋ ምርጫ ማንኛውም ጊዜ መቀየር ይችላሉ። ትርጉሞች ከ src/shared/i18n/locales/ ውስጥ ቀላል TypeScript ዕቃዎች ናቸው — ለማዋጮ GitHub ላይ PR ይክፈቱ።",
   faq_q4: "ምንም ነገር መጫን አለብኝ?",
   faq_a4:
     "አይደለም። yt-dlp እና ffmpeg በመጀመሪያ ጊዜ ከይፋዊ GitHub releases ራስ-ሰር ይወርዳሉ፣ በማሽንዎ ላይ ይቀመጣሉ። ከዚያ ምንም ተጨማሪ ማዋቀር አያስፈልግም።",

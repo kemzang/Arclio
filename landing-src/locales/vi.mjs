@@ -68,8 +68,8 @@ export const vi = {
   f3_p: "Thêm bao nhiêu video vào hàng đợi tùy ý. Bảng tải xuống theo dõi tiến trình từng video song song.",
   f4_h: "Tự động cập nhật",
   f4_p: "Arroxy tự động giữ yt-dlp và ffmpeg luôn mới — hoạt động qua mọi thay đổi của YouTube.",
-  f5_h: "9 ngôn ngữ",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — tự động nhận diện ngôn ngữ của bạn.",
+  f5_h: "21 ngôn ngữ",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — tự động nhận diện ngôn ngữ của bạn.",
   f6_h: "Đa nền tảng",
   f6_p: "Bản dựng gốc cho Windows, macOS và Linux — trình cài đặt, portable, DMG hoặc AppImage.",
   f7_h: "Phụ đề theo ý bạn",
@@ -141,7 +141,7 @@ export const vi = {
   faq_a2: "Có. Giấy phép MIT. Không có gói cao cấp, không có tính năng bị khóa.",
   faq_q3: "Arroxy có sẵn bằng những ngôn ngữ nào?",
   faq_a3:
-    "Chín ngôn ngữ, có sẵn ngay khi cài đặt: English, Español (Tây Ban Nha), Deutsch (Đức), Français (Pháp), 日本語 (Nhật), 中文 (Trung Quốc), Русский (Nga), Українська (Ukraine) và हिन्दी (Hindi). Arroxy tự động phát hiện ngôn ngữ hệ điều hành của bạn khi khởi động lần đầu và bạn có thể chuyển đổi bất cứ lúc nào từ bộ chọn ngôn ngữ trên thanh công cụ. Các bản dịch được lưu dưới dạng đối tượng TypeScript thuần trong src/shared/i18n/locales/ — mở PR trên GitHub để đóng góp.",
+    "Hai mươi mốt ngôn ngữ, có sẵn ngay khi cài đặt: English, Español (Tây Ban Nha), Deutsch (Đức), Français (Pháp), 日本語 (Nhật), 中文 (Trung Quốc), Русский (Nga), Українська (Ukraine), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Việt Nam), አማርኛ (Amharic), العربية (Ả Rập), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Miến Điện), Ελληνικά (Hy Lạp) và Српски (Serbia). Arroxy tự động phát hiện ngôn ngữ hệ điều hành của bạn khi khởi động lần đầu và bạn có thể chuyển đổi bất cứ lúc nào từ bộ chọn ngôn ngữ trên thanh công cụ. Các bản dịch được lưu dưới dạng đối tượng TypeScript thuần trong src/shared/i18n/locales/ — mở PR trên GitHub để đóng góp.",
   faq_q4: "Tôi có cần cài đặt thêm gì không?",
   faq_a4:
     "Không. yt-dlp và ffmpeg được tải xuống tự động khi khởi động lần đầu từ các bản phát hành chính thức trên GitHub và được lưu vào bộ nhớ đệm trên máy của bạn. Sau đó, không cần thiết lập thêm gì.",

@@ -68,8 +68,8 @@ export const zh = {
   f3_p: "想排多少视频就排多少。下载面板并行显示每个任务的进度。",
   f4_h: "自动更新",
   f4_p: "Arroxy 在后台保持 yt-dlp 与 ffmpeg 最新 — 应对 YouTube 的每一次变化。",
-  f5_h: "9 种语言",
-  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी — 自动检测你的语言。",
+  f5_h: "21 种语言",
+  f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — 自动检测你的语言。",
   f6_h: "跨平台",
   f6_p: "Windows、macOS、Linux 原生构建 — 安装包、便携版、DMG 或 AppImage。",
   f7_h: "字幕，随你所愿",
@@ -141,7 +141,7 @@ export const zh = {
   faq_a2: "真的。MIT 许可证。没有付费版、没有功能门槛。",
   faq_q3: "Arroxy 支持哪些语言？",
   faq_a3:
-    "开箱即用支持九种：English、Español（西班牙语）、Deutsch（德语）、Français（法语）、日本語（日语）、中文、Русский（俄语）、Українська（乌克兰语）、हिन्दी（印地语）。Arroxy 在首次启动时自动检测系统语言，随时可在工具栏的语言选择器中切换。翻译以纯 TypeScript 对象的形式存放在 src/shared/i18n/locales/ — 在 GitHub 上发个 PR 即可贡献。",
+    "开箱即用支持二十一种：English、Español（西班牙语）、Deutsch（德语）、Français（法语）、日本語（日语）、中文、Русский（俄语）、Українська（乌克兰语）、हिन्दी（印地语）、Afaan Oromoo、Kiswahili、O'zbekcha（乌兹别克语）、Tiếng Việt（越南语）、አማርኛ（阿姆哈拉语）、العربية（阿拉伯语）、اردو（乌尔都语）、پښتو（普什图语）、বাংলা（孟加拉语）、မြန်မာဘာသာ（缅甸语）、Ελληνικά（希腊语）和 Српски（塞尔维亚语）。Arroxy 在首次启动时自动检测系统语言，随时可在工具栏的语言选择器中切换。翻译以纯 TypeScript 对象的形式存放在 src/shared/i18n/locales/ — 在 GitHub 上发个 PR 即可贡献。",
   faq_q4: "需要装别的东西吗？",
   faq_a4:
     "不需要。yt-dlp 和 ffmpeg 在首次启动时从它们的官方 GitHub releases 自动下载并缓存到本地。之后无需任何额外配置。",
