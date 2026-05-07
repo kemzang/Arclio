@@ -53,6 +53,28 @@ function mapOperatingSystem(platform: NodeJS.Platform): string {
   return platform;
 }
 
+// Build a browser-like User-Agent. OpenPanel's ingest classifies events as
+// client vs. server purely from the request's User-Agent header (parsed via
+// UAParser): a generic Node fetch UA matches its server-event regex, so the
+// server skips sessionId/deviceId/os/browser. Sending a Chrome-shaped UA makes
+// it parse correctly and mint a session.
+function buildBrowserishUserAgent(info?: DeviceInfo): string {
+  const chromeVersion = process.versions.chrome ?? '124.0.0.0';
+  const platform = info?.platform ?? process.platform;
+  const arch = info?.architecture ?? process.arch;
+  let osPart: string;
+  if (platform === 'win32') {
+    osPart = 'Windows NT 10.0; Win64; x64';
+  } else if (platform === 'darwin') {
+    osPart = 'Macintosh; Intel Mac OS X 10_15_7';
+  } else {
+    const linuxArch = arch === 'arm64' ? 'aarch64' : 'x86_64';
+    osPart = `X11; Linux ${linuxArch}`;
+  }
+  const appVer = info?.appVersion ?? '0.0.0';
+  return `Mozilla/5.0 (${osPart}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36 Arroxy/${appVer}`;
+}
+
 function buildDefaultPayload(info: DeviceInfo): Record<string, string> {
   const segs = info.systemVersion.split('.');
   const major = segs[0] ?? '';
@@ -95,15 +117,16 @@ export function setupAnalytics(clientId: string | undefined, clientSecret: strin
   _op = new OpenPanel({
     clientId,
     clientSecret,
-    // Identify as a web/app SDK so the OpenPanel server mints deviceId +
-    // sessionId. The default `node` sdk name is treated as backend ingest —
-    // server returns empty deviceId/sessionId and events arrive un-sessioned.
     sdk: 'web',
     sdkVersion: '1.3.1',
     // Runtime gate via filter — `disabled` queues instead of dropping, which
     // isn't what we want when the user opts out.
     filter: () => _on
   });
+  // Override the request User-Agent so OpenPanel ingest classifies events as
+  // client (mints sessionId/deviceId, parses os/browser). See
+  // buildBrowserishUserAgent for the why.
+  _op.api.addHeader('user-agent', buildBrowserishUserAgent(deviceInfo));
   if (deviceInfo) {
     const payload = buildDefaultPayload(deviceInfo);
     _op.setGlobalProperties(payload);
