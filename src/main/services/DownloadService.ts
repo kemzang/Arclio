@@ -114,7 +114,7 @@ export class DownloadService extends EventEmitter {
       preset: preparedJob.kind,
       has_subtitles: hasSubs,
       has_sponsorblock: hasSponsorBlock,
-      cookies_enabled: Boolean(input.cookiesEnabled),
+      cookies_mode: input.cookiesMode ?? 'off',
       embed_metadata: embedMetadata,
       embed_thumbnail: embedThumbnail
     });

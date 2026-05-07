@@ -59,7 +59,7 @@ describe('cookies flag injection', () => {
   });
 
   it('passes --cookies <path> when toggle is on and path is set', async () => {
-    const { service } = makeService({ cookiesEnabled: true, cookiesPath: '/home/u/cookies.txt' });
+    const { service } = makeService({ cookiesMode: 'file', cookiesPath: '/home/u/cookies.txt' });
 
     await service.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB });
     await vi.waitFor(() => expect(vi.mocked(spawnYtDlp)).toHaveBeenCalled());
@@ -73,7 +73,7 @@ describe('cookies flag injection', () => {
   });
 
   it('omits --cookies when toggle is off, even if path is set', async () => {
-    const { service } = makeService({ cookiesEnabled: false, cookiesPath: '/home/u/cookies.txt' });
+    const { service } = makeService({ cookiesMode: 'off', cookiesPath: '/home/u/cookies.txt' });
 
     await service.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB });
     await vi.waitFor(() => expect(vi.mocked(spawnYtDlp)).toHaveBeenCalled());
@@ -83,7 +83,7 @@ describe('cookies flag injection', () => {
   });
 
   it('omits --cookies when toggle is on but path is empty/whitespace', async () => {
-    const { service } = makeService({ cookiesEnabled: true, cookiesPath: '   ' });
+    const { service } = makeService({ cookiesMode: 'file', cookiesPath: '   ' });
 
     await service.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB });
     await vi.waitFor(() => expect(vi.mocked(spawnYtDlp)).toHaveBeenCalled());

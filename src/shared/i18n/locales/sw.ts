@@ -143,7 +143,10 @@ const sw = {
         }
       },
       cookies: {
-        toggle: 'Tumia faili ya vidakuzi',
+        sourceLabel: 'Chanzo cha vidakuzi',
+        sourceOff: 'Zima',
+        sourceFile: 'Faili',
+        sourceBrowser: 'Kivinjari',
         toggleDescription: 'Husaidia na video zilizozuiwa kwa umri, za wanachama peke yao, na za akaunti ya kibinafsi.',
         risk: 'Hatari: cookies.txt ina vikao vyote vilivyoingia kwa kivinjari hicho — weka siri.',
         fileLabel: 'Faili ya vidakuzi',
@@ -152,6 +155,10 @@ const sw = {
         placeholder: 'Hakuna faili iliyochaguliwa',
         helpLink: 'Ninasafirisha vidakuzi vipi?',
         enabledButNoFile: 'Chagua faili kutumia vidakuzi',
+        browserLabel: 'Kivinjari',
+        browserPlaceholder: 'Chagua kivinjari…',
+        browserHelp: 'Inasoma vidakuzi moja kwa moja kutoka kwenye kivinjari. Kivinjari lazima kifungwe kwa vivinjari vya familia ya Chromium.',
+        enabledButNoBrowser: 'Chagua kivinjari kutumia vidakuzi',
         banWarning: 'YouTube inaweza kufunga — na wakati mwingine kupiga marufuku — akaunti ambazo vidakuzi vyake vinatumiwa na yt-dlp. Tumia akaunti ya majaribio iwezekanavyo.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -246,6 +253,24 @@ const sw = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'Ubadilishaji wa sauti unahitaji hali ya sauti peke yake (ondoa chaguo la video).',
         requiresLossy: 'Mkondo wa asili umechaguliwa — kiwango cha biti kinatumika tu unapobadilisha kuwa mp3, m4a, au opus.'
+      },
+      botWall: {
+        heading: 'YouTube ilipunguza uchunguzi huu',
+        bodyUnconfigured: 'Orodha ya maumbo inaweza kuwa haikamilika. Sanidi vidakuzi katika mipangilio ya hali ya juu, au badilisha mtandao na ujaribu tena.',
+        bodyDisabled: 'Vidakuzi vimesanidiwa lakini vimezimwa. Viwashe na ujaribu tena kupata orodha kamili, au badilisha mtandao na ujaribu tena.',
+        bodyEnabled: 'Hata na vidakuzi, YouTube ilipunguza uchunguzi huu. Jaribu tena baadaye au badilisha mtandao.',
+        retryCta: 'Jaribu tena',
+        enableRetryCta: 'Washa vidakuzi na ujaribu tena',
+        openSettingsCta: 'Fungua mipangilio ya hali ya juu'
+      },
+      cookiesError: {
+        heading: 'Vidakuzi vinaweza kuwa sababu',
+        currentModeLabel: 'Chanzo cha vidakuzi',
+        currentModeFile: 'Faili',
+        currentModeBrowser: 'Kivinjari',
+        explanationFile: 'Faili yako ya vidakuzi inaweza kuwa tupu, imeisha muda wake, au iko katika umbizo lisilo sahihi (yt-dlp inategemea Netscape cookies.txt). Jaribu kusafirisha vidakuzi tena, chagua faili tofauti, ubadilishe hadi hali ya Kivinjari, au uzime vidakuzi.',
+        explanationBrowser: 'Vidakuzi vinasomwa moja kwa moja kutoka kwenye kivinjari. Ikiwa kivinjari kinaendesha sasa hivi, hifadhidata yake ya vidakuzi inaweza kufungwa (familia ya Chromium). Kivinjari pia lazima kiingie katika YouTube. Jaribu kufunga kivinjari, ubadilishe hadi kivinjari tofauti, ubadilishe hadi hali ya Faili, au uzime vidakuzi.',
+        openSettingsCta: 'Fungua mipangilio ya vidakuzi'
       }
     },
     folder: {

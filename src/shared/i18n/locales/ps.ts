@@ -144,7 +144,10 @@ const ps = {
         }
       },
       cookies: {
-        toggle: 'د کوکیز فایل وکاروئ',
+        sourceLabel: 'د کوکیزو سرچینه',
+        sourceOff: 'بند',
+        sourceFile: 'فایل',
+        sourceBrowser: 'براوزر',
         toggleDescription: 'د عمر محدودیت لرونکو، یوازې غړو، او شخصي ویډیوګانو سره مرسته کوي.',
         risk: 'خطر: cookies.txt د هغه براوزر هر ننوتلی سیشن لري — دا خصوصي وساتئ.',
         fileLabel: 'کوکیز فایل',
@@ -153,6 +156,10 @@ const ps = {
         placeholder: 'هیڅ فایل غوره نه دی شوی',
         helpLink: 'کوکیز څنګه صادر کړم؟',
         enabledButNoFile: 'د کوکیزو کارولو لپاره یو فایل غوره کړئ',
+        browserLabel: 'براوزر',
+        browserPlaceholder: 'براوزر غوره کړئ…',
+        browserHelp: 'کوکیز مستقیم له براوزر نه لولي. د Chromium کورنۍ براوزرونو لپاره براوزر بند باید وي.',
+        enabledButNoBrowser: 'د کوکیزو کارولو لپاره یو براوزر غوره کړئ',
         banWarning: 'YouTube ممکن هغه حسابونه چې د yt-dlp لخوا د کوکیزو لپاره کارول کیږي بنده کړي — کله چې ممکنه وي یو لنډمهاله حساب وکاروئ.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,24 @@ const ps = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'د غږ بدلول یوازې د غږ حالت ته اړتیا لري (د ویډیو انتخاب لغوه کړئ).',
         requiresLossy: 'یو اصلي سټریم غوره شوی — بټ ریټ یوازې د mp3, m4a, یا opus ته د بدلولو پر وخت پلي کیږي.'
+      },
+      botWall: {
+        heading: 'YouTube دا پلټنه محدوده کړه',
+        bodyUnconfigured: 'د بڼو لیست ممکن نامکمل وي. د پرمختللو تنظیماتو کې کوکیز تنظیم کړئ، یا شبکه بدله کړئ او بیا هڅه وکړئ.',
+        bodyDisabled: 'کوکیز تنظیم شوي خو بند دي. د بشپړ لیست لپاره کوکیز فعال کړئ او بیا هڅه وکړئ، یا شبکه بدله کړئ او بیا هڅه وکړئ.',
+        bodyEnabled: 'حتی د کوکیزو سره، YouTube دا پلټنه محدوده کړه. وروسته بیا هڅه وکړئ یا شبکه بدله کړئ.',
+        retryCta: 'بیا هڅه وکړئ',
+        enableRetryCta: 'کوکیز فعال کړئ او بیا هڅه وکړئ',
+        openSettingsCta: 'پرمختللي تنظیمات پرانیستل'
+      },
+      cookiesError: {
+        heading: 'کوکیز ممکن لامل وي',
+        currentModeLabel: 'د کوکیزو سرچینه',
+        currentModeFile: 'فایل',
+        currentModeBrowser: 'براوزر',
+        explanationFile: 'ستاسو د کوکیزو فایل ممکن خالي، پخوانی، یا د غلط بڼې وي (yt-dlp Netscape cookies.txt تمه لري). هڅه وکړئ کوکیز بیا صادر کړئ، بل فایل غوره کړئ، د براوزر حالت ته بدل شئ، یا کوکیز بند کړئ.',
+        explanationBrowser: 'کوکیز مستقیم له براوزر نه لوستل کیږي. که براوزر اوس مهال چلیږي، د کوکیزو ډیټابیس ممکن بند وي (Chromium کورنۍ). براوزر باید YouTube ته ننوتلی وي. هڅه وکړئ براوزر وتړئ، بل براوزر ته بدل شئ، د فایل حالت ته بدل شئ، یا کوکیز بند کړئ.',
+        openSettingsCta: 'د کوکیزو تنظیمات پرانیستل'
       }
     },
     folder: {

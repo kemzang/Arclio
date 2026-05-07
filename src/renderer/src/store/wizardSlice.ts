@@ -145,6 +145,8 @@ const RESET_STATE = {
   wizardThumbnail: '',
   wizardDuration: undefined as number | undefined,
   wizardFormats: [] as FormatOption[],
+  wizardFormatsDegraded: null,
+  advancedAutoOpen: false,
   formatsLoading: false,
   wizardError: null,
   wizardErrorOrigin: null,
@@ -176,15 +178,16 @@ const RESET_STATE = {
 async function runFormatProbe(url: string, set: SetState, get: GetState): Promise<void> {
   const result = await window.appApi.downloads.getFormats({ url });
   if (!result.ok) {
-    set({ wizardStep: 'error', formatsLoading: false, wizardError: result.error, wizardErrorOrigin: 'formats' });
+    set({ wizardStep: 'error', formatsLoading: false, wizardError: result.error, wizardErrorOrigin: 'formats', wizardFormatsDegraded: null });
     return;
   }
-  const { formats, title, thumbnail, duration, subtitles = {}, automaticCaptions = {} } = result.data;
+  const { formats, title, thumbnail, duration, subtitles = {}, automaticCaptions = {}, degraded } = result.data;
   const settings = get().settings;
   const { videoFormatId, audioSelection, preset } = restoreFormatSelection(formats, settings);
   const { languages: subtitleLanguages } = restoreSubtitleSelection(subtitles, automaticCaptions, settings);
   set({
     wizardFormats: formats,
+    wizardFormatsDegraded: degraded ?? null,
     wizardTitle: title,
     wizardThumbnail: thumbnail,
     wizardDuration: duration,
@@ -373,6 +376,42 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
         logStep('retry', wizardStep, 'formats', pickWizardSnapshot(get()));
         await get().submitUrl();
       }
+    },
+
+    // Re-run the format probe against the currently-active URL without
+    // resetting the wizard. Used by `<BotWallNotice>` so a user who changed
+    // network mid-session can re-spin without navigating back to the URL step.
+    retryFormatProbe: async () => {
+      const { wizardUrl } = get();
+      if (!wizardUrl) return;
+      set({ formatsLoading: true, wizardFormatsDegraded: null });
+      await runFormatProbe(wizardUrl, set, get);
+    },
+
+    // Switch cookies mode to whichever is configured (file > browser),
+    // persist via the system slice setter, then re-run the format probe.
+    // No-op if neither path nor browser is configured — the banner doesn't
+    // expose this action in that case.
+    retryProbeWithCookies: async () => {
+      const settings = get().settings;
+      const path = settings?.common.cookiesPath?.trim();
+      const browser = settings?.common.cookiesBrowser;
+      const targetMode: 'file' | 'browser' | null = path ? 'file' : browser ? 'browser' : null;
+      if (!targetMode) return;
+      await get().setCookiesMode(targetMode);
+      await get().retryFormatProbe();
+    },
+
+    // Used by `<CookiesErrorAlert>` on the wizard error step to send the
+    // user back to the URL step's cookies block without losing the URL
+    // they just submitted. `advancedAutoOpen` is consumed by `StepUrlInput`
+    // on mount.
+    openCookiesSettings: () => {
+      set({ wizardStep: 'url', wizardError: null, wizardErrorOrigin: null, advancedAutoOpen: true });
+    },
+
+    setAdvancedAutoOpen: (open) => {
+      set({ advancedAutoOpen: open });
     },
 
     setWizardOutputDir: async (dir, persist = true) => {

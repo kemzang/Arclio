@@ -6,12 +6,12 @@ export type { PreparedJob } from './preparedJob';
 // Re-export the enum types whose canonical definition lives in `schemas.ts`
 // (where they're z.enum schemas). Importing from `@shared/types` continues to
 // work for callers that don't care about the schema vs type distinction.
-export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection } from './schemas';
+export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection, CookiesMode, CookiesBrowser } from './schemas';
 
 export type { StatusKey } from './schemas';
 export type { LocalizedError, YtdlpErrorKey } from './i18n/types';
 
-import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey } from './schemas';
+import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey, CookiesMode, CookiesBrowser } from './schemas';
 
 export type AppErrorCode = 'validation' | 'token' | 'binary' | 'download' | 'ipc' | 'unknown';
 
@@ -45,7 +45,8 @@ export interface CommonSettings {
     home: string | null;
   };
   cookiesPath?: string;
-  cookiesEnabled?: boolean;
+  cookiesMode?: CookiesMode;
+  cookiesBrowser?: CookiesBrowser;
   proxyUrl?: string;
   clipboardWatchEnabled: boolean;
   closeBehavior?: 'ask' | 'tray' | 'quit';
@@ -277,7 +278,7 @@ export interface CommonPaths {
 export interface StartDownloadInput {
   url: string;
   outputDir?: string;
-  cookiesEnabled?: boolean;
+  cookiesMode?: CookiesMode;
   job: PreparedJob;
 }
 
@@ -289,6 +290,8 @@ export interface GetFormatsInput {
   url: string;
 }
 
+export type ProbeDegradationReason = 'botWall' | 'extractor';
+
 export interface GetFormatsOutput {
   formats: FormatOption[];
   title: string;
@@ -296,6 +299,7 @@ export interface GetFormatsOutput {
   duration?: number;
   subtitles: SubtitleMap;
   automaticCaptions: SubtitleMap;
+  degraded?: { reasons: ProbeDegradationReason[] };
 }
 
 export interface CancelDownloadInput {

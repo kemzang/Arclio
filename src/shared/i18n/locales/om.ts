@@ -143,7 +143,10 @@ const om = {
         }
       },
       cookies: {
-        toggle: 'Faayilii cookies fayyadami',
+        sourceLabel: 'Madda Cookies',
+        sourceOff: 'Dhaabbi',
+        sourceFile: 'Faayilii',
+        sourceBrowser: 'Browser',
         toggleDescription: "Viidiyoowwan umuriin-daangeffame, miseensota-qofaaf, fi dhuunfaa ta'e ni gargaara.",
         risk: "Balaa: cookies.txt seensa browser sanaa hunda qaba — dhuunfaa ta'ee eegi.",
         fileLabel: 'Faayilii Cookies',
@@ -152,6 +155,10 @@ const om = {
         placeholder: 'Faayilii hin filanne',
         helpLink: 'Akkamitti cookies erga?',
         enabledButNoFile: 'Cookies fayyadamuuf faayilii filadhu',
+        browserLabel: 'Browser',
+        browserPlaceholder: 'Browser filadhu…',
+        browserHelp: 'Cookies browser irraa kallattiin dubbisa. Chromium-gosa browser cufamuu qaba.',
+        enabledButNoBrowser: 'Cookies fayyadamuuf browser filadhu',
         banWarning: "YouTube akkawntoota cookies yt-dlp waliin fayyadaman mallatteessuu fi yeroo tokko tokko dhowwuu danda'a. Yoo danda'ame akkawuntii yeroo fayyadami.",
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -246,6 +253,24 @@ const om = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'Jijjiirraa sagalee haala sagalee-qofa (filannoo viidiyoo haqi) gaafata.',
         requiresLossy: 'Tarreessa uumamaa filatameera — saaffatni bitii yoo mp3, m4a, ykn opus keessatti jijjiiramu qofa hojiirra oola.'
+      },
+      botWall: {
+        heading: 'YouTube qorannoo kana daangeessee jira',
+        bodyUnconfigured: "Tarreessi foormaatii guutuu ta'uu dhiisuu danda'a. Qindaa'inoota ammayyaa keessatti cookies qopheessi, ykn netwoorkii jijjiiri achiin irra deebi'i.",
+        bodyDisabled: "Cookies qindaa'eera garuu dhaabbe jira. Tarreessa guutuu argachuuf cookies dandeessii achiin irra deebi'i, ykn netwoorkii jijjiiri achiin irra deebi'i.",
+        bodyEnabled: "Cookies waliin illee, YouTube qorannoo kana daangeessee jira. Booda irra deebi'i ykn netwoorkii jijjiiri.",
+        retryCta: "Irra deebi'i",
+        enableRetryCta: "Cookies dandeessii achiin irra deebi'i",
+        openSettingsCta: "Qindaa'inoota ammayyaa bani"
+      },
+      cookiesError: {
+        heading: "Cookies sababa ta'uu danda'a",
+        currentModeLabel: 'Madda Cookies',
+        currentModeFile: 'Faayilii',
+        currentModeBrowser: 'Browser',
+        explanationFile: "Faayilin cookies kee duwwaa, yeroon darbee, ykn foormaatii dogoggoraa ta'uu danda'a (yt-dlp Netscape cookies.txt eega). Cookies irra deebi'ii ergi, faayilii biraa filadhu, Browser haala jijjiiri, ykn cookies dhaabbi.",
+        explanationBrowser: "Cookies browser irraa kallattiin dubbifama. Browser yoo amma hojjechaa jiraate, kuusaa cookies isaa cufamuu danda'a (Chromium-gosa). Browser YouTube keessattis seenuu qaba. Browser cufadhu, browser biraa jijjiiri, Faayilii haala jijjiiri, ykn cookies dhaabbi.",
+        openSettingsCta: "Qindaa'inoota cookies bani"
       }
     },
     folder: {

@@ -6,6 +6,7 @@ import { VideoSummaryCard } from '../shared/VideoSummaryCard';
 import downloadingImg from '../../assets/Downloading.png';
 import { PresetStrip } from './format/PresetStrip';
 import { VideoColumn } from './format/VideoColumn';
+import { BotWallNotice } from './format/BotWallNotice';
 import { AudioColumn } from './format/AudioColumn';
 import { FormatFooter } from './format/FormatFooter';
 
@@ -54,6 +55,8 @@ export function StepFormatSelect(): JSX.Element {
       <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={view.currentResolutionLabel} />
 
       <PresetStrip activePreset={activePreset} onSelect={setPreset} />
+
+      <BotWallNotice />
 
       <div className="grid grid-cols-2 gap-[20px]">
         <VideoColumn formats={wizardFormats} selectedVideoFormatId={selectedVideoFormatId} onSelect={setSelectedVideoFormatId} />

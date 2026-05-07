@@ -144,7 +144,10 @@ const de = {
         }
       },
       cookies: {
-        toggle: 'Cookies-Datei verwenden',
+        sourceLabel: 'Cookies-Quelle',
+        sourceOff: 'Aus',
+        sourceFile: 'Datei',
+        sourceBrowser: 'Browser',
         toggleDescription: 'Hilft bei altersbeschränkten, nur-für-Mitglieder- und kontoprivaten Videos.',
         risk: 'Risiko: Eine cookies.txt enthält alle angemeldeten Sitzungen dieses Browsers — halte sie geheim.',
         fileLabel: 'Cookies-Datei',
@@ -153,6 +156,10 @@ const de = {
         placeholder: 'Keine Datei ausgewählt',
         helpLink: 'Wie exportiere ich Cookies?',
         enabledButNoFile: 'Wähle eine Datei aus, um Cookies zu nutzen',
+        browserLabel: 'Browser',
+        browserPlaceholder: 'Browser wählen…',
+        browserHelp: 'Liest Cookies direkt aus dem Browser. Bei Chromium-basierten Browsern muss der Browser geschlossen sein.',
+        enabledButNoBrowser: 'Wähle einen Browser, um Cookies zu nutzen',
         banWarning: 'YouTube kann Konten markieren — und teils sperren — deren Cookies von yt-dlp verwendet werden. Nutze nach Möglichkeit ein Wegwerfkonto.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,24 @@ const de = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'Die Audiokonvertierung erfordert den Nur-Audio-Modus (Videoauswahl aufheben).',
         requiresLossy: 'Ein nativer Stream ist ausgewählt — Bitrate gilt nur bei der Konvertierung zu mp3, m4a oder opus.'
+      },
+      botWall: {
+        heading: 'YouTube hat diese Abfrage eingeschränkt',
+        bodyUnconfigured: 'Die Formatliste ist möglicherweise unvollständig. Cookies in den erweiterten Einstellungen einrichten oder Netzwerk wechseln und erneut versuchen.',
+        bodyDisabled: 'Cookies sind konfiguriert, aber deaktiviert. Aktiviere sie und versuche es erneut für die vollständige Liste, oder wechsle das Netzwerk.',
+        bodyEnabled: 'Auch mit Cookies hat YouTube diese Abfrage eingeschränkt. Versuche es später erneut oder wechsle das Netzwerk.',
+        retryCta: 'Erneut versuchen',
+        enableRetryCta: 'Cookies aktivieren und erneut versuchen',
+        openSettingsCta: 'Erweiterte Einstellungen öffnen'
+      },
+      cookiesError: {
+        heading: 'Cookies könnten die Ursache sein',
+        currentModeLabel: 'Cookies-Quelle',
+        currentModeFile: 'Datei',
+        currentModeBrowser: 'Browser',
+        explanationFile: 'Deine Cookies-Datei könnte leer, abgelaufen oder im falschen Format vorliegen (yt-dlp erwartet Netscape cookies.txt). Versuche, die Cookies neu zu exportieren, eine andere Datei auszuwählen, in den Browser-Modus zu wechseln oder Cookies zu deaktivieren.',
+        explanationBrowser: 'Cookies werden direkt aus dem Browser gelesen. Wenn der Browser gerade läuft, ist die Cookie-Datenbank möglicherweise gesperrt (Chromium-Familie). Der Browser muss zudem bei YouTube angemeldet sein. Versuche, den Browser zu schließen, zu einem anderen Browser zu wechseln, in den Datei-Modus zu wechseln oder Cookies zu deaktivieren.',
+        openSettingsCta: 'Cookies-Einstellungen öffnen'
       }
     },
     folder: {

@@ -58,6 +58,12 @@ export const SUPPORTED_LANGS = supportedLangSchema.options;
 export const uiThemeSchema = z.enum(['light', 'dark', 'system']);
 export type UiTheme = z.infer<typeof uiThemeSchema>;
 
+export const cookiesModeSchema = z.enum(['off', 'file', 'browser']);
+export type CookiesMode = z.infer<typeof cookiesModeSchema>;
+
+export const cookiesBrowserSchema = z.enum(['firefox', 'chromium', 'chrome', 'brave', 'edge', 'safari', 'vivaldi']);
+export type CookiesBrowser = z.infer<typeof cookiesBrowserSchema>;
+
 export const queueItemStatusSchema = z.enum(['pending', 'downloading', 'paused', 'done', 'error', 'cancelled']);
 export type QueueItemStatus = z.infer<typeof queueItemStatusSchema>;
 
@@ -214,7 +220,7 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
 export const startDownloadSchema = z.object({
   url: youtubeUrlSchema,
   outputDir: z.string().min(1).optional(),
-  cookiesEnabled: z.boolean().optional(),
+  cookiesMode: cookiesModeSchema.optional(),
   job: preparedJobSchema
 });
 
@@ -247,7 +253,8 @@ const commonSettingsPatchSchema = z.object({
   uiTheme: uiThemeSchema.optional(),
   language: supportedLangSchema.optional(),
   cookiesPath: z.string().optional(),
-  cookiesEnabled: z.boolean().optional(),
+  cookiesMode: cookiesModeSchema.optional(),
+  cookiesBrowser: cookiesBrowserSchema.optional(),
   proxyUrl: z.string().optional(),
   clipboardWatchEnabled: z.boolean().optional(),
   closeBehavior: z.enum(['ask', 'tray', 'quit']).optional(),

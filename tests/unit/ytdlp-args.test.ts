@@ -441,33 +441,52 @@ describe('YtDlp — subtitle args', () => {
 });
 
 describe('YtDlp — cookies injection', () => {
-  it('cookiesEnabled+valid path → --cookies <path>', async () => {
+  it("cookiesMode='file'+valid path → --cookies <path>", async () => {
     const ytDlp = makeYtDlp({
-      settings: { cookiesEnabled: true, cookiesPath: '/home/u/cookies.txt' }
+      settings: { cookiesMode: 'file', cookiesPath: '/home/u/cookies.txt' }
     });
     await ytDlp.run({ kind: 'probe', url: URL });
     const args = getArgs();
     const idx = args.indexOf('--cookies');
     expect(idx).toBeGreaterThan(-1);
     expect(args[idx + 1]).toBe('/home/u/cookies.txt');
+    expect(args).not.toContain('--cookies-from-browser');
   });
 
-  it('cookiesEnabled=false → no --cookies even with path', async () => {
+  it("cookiesMode='off' → no --cookies even with path", async () => {
     const ytDlp = makeYtDlp({
-      settings: { cookiesEnabled: false, cookiesPath: '/home/u/cookies.txt' }
+      settings: { cookiesMode: 'off', cookiesPath: '/home/u/cookies.txt' }
     });
     await ytDlp.run({ kind: 'probe', url: URL });
     expect(getArgs()).not.toContain('--cookies');
   });
 
-  it('cookiesEnabled+empty path → no --cookies', async () => {
-    const ytDlp = makeYtDlp({ settings: { cookiesEnabled: true, cookiesPath: '   ' } });
+  it("cookiesMode='file'+empty path → no --cookies", async () => {
+    const ytDlp = makeYtDlp({ settings: { cookiesMode: 'file', cookiesPath: '   ' } });
     await ytDlp.run({ kind: 'probe', url: URL });
     expect(getArgs()).not.toContain('--cookies');
   });
 
+  it("cookiesMode='browser'+browser → --cookies-from-browser <browser>, no --cookies", async () => {
+    const ytDlp = makeYtDlp({ settings: { cookiesMode: 'browser', cookiesBrowser: 'firefox' } });
+    await ytDlp.run({ kind: 'probe', url: URL });
+    const args = getArgs();
+    const idx = args.indexOf('--cookies-from-browser');
+    expect(idx).toBeGreaterThan(-1);
+    expect(args[idx + 1]).toBe('firefox');
+    expect(args).not.toContain('--cookies');
+  });
+
+  it("cookiesMode='browser'+missing browser → no cookies args", async () => {
+    const ytDlp = makeYtDlp({ settings: { cookiesMode: 'browser' } });
+    await ytDlp.run({ kind: 'probe', url: URL });
+    const args = getArgs();
+    expect(args).not.toContain('--cookies');
+    expect(args).not.toContain('--cookies-from-browser');
+  });
+
   it('cookies appear before request-specific args (after extractor-args block)', async () => {
-    const ytDlp = makeYtDlp({ settings: { cookiesEnabled: true, cookiesPath: '/cookies.txt' } });
+    const ytDlp = makeYtDlp({ settings: { cookiesMode: 'file', cookiesPath: '/cookies.txt' } });
     await ytDlp.run({ kind: 'probe', url: URL });
     const args = getArgs();
     const cookiesIdx = args.indexOf('--cookies');

@@ -17,7 +17,10 @@ interface DownloadHandlerDeps {
 export function registerDownloadHandlers(deps: DownloadHandlerDeps): void {
   const { downloadService, formatProbeService, playlistProbeService, settingsStore } = deps;
 
-  handle(IPC_CHANNELS.downloadsGetFormats, getFormatsSchema, ({ url }) => formatProbeService.getFormats(url));
+  handle(IPC_CHANNELS.downloadsGetFormats, getFormatsSchema, async ({ url }) => {
+    const settings = await settingsStore.get();
+    return formatProbeService.getFormats(url, settings.common.cookiesMode ?? 'off');
+  });
 
   handle(IPC_CHANNELS.downloadsGetPlaylistItems, getPlaylistItemsSchema, ({ url }) => playlistProbeService.getPlaylistItems(url));
 
@@ -27,7 +30,7 @@ export function registerDownloadHandlers(deps: DownloadHandlerDeps): void {
     return downloadService.start({
       ...data,
       outputDir,
-      cookiesEnabled: settings.common.cookiesEnabled ?? false
+      cookiesMode: settings.common.cookiesMode ?? 'off'
     });
   });
 

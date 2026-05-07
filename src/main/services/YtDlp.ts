@@ -2,7 +2,7 @@ import type { ChildProcessWithoutNullStreams } from 'node:child_process';
 import log from 'electron-log/main';
 import { spawnYtDlp } from '@main/utils/process';
 import { classifyStderr, extractLastError, type StderrSignal } from '@main/utils/ytdlpErrors';
-import { resolveCookiesPath } from './cookiesResolver';
+import { resolveCookies, type ResolvedCookies } from './cookiesResolver';
 import { nonEmpty } from '@shared/format';
 import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath';
 import type { SubtitleFormat, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, StatusKey, AudioConvert } from '@shared/types';
@@ -124,7 +124,7 @@ interface InvokeOptions {
   denoPath: string | null;
   args: string[];
   tokenService: TokenService;
-  cookiesPath?: string;
+  cookies?: ResolvedCookies | null;
   proxyUrl?: string;
   timeoutMs?: number;
   signal?: YtDlpSignal;
@@ -140,7 +140,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
     extractorArgs = PLAYER_CLIENT_FALLBACK;
   }
 
-  const cookiesArgs = opts.cookiesPath ? ['--cookies', opts.cookiesPath] : [];
+  const cookiesArgs = opts.cookies?.kind === 'file' ? ['--cookies', opts.cookies.path] : opts.cookies?.kind === 'browser' ? ['--cookies-from-browser', opts.cookies.browser] : [];
   const proxyArgs = opts.proxyUrl ? ['--proxy', opts.proxyUrl] : [];
   // yt-dlp 2026+ requires a JS runtime for nsig/signature decoding on the web
   // client. With deno bundled, we point yt-dlp at it explicitly so it doesn't
@@ -154,7 +154,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
     binary: opts.ytDlpPath,
     ffmpeg: opts.ffmpegPath,
     deno: opts.denoPath,
-    cookiesPath: opts.cookiesPath ?? null,
+    cookies: opts.cookies?.kind ?? null,
     proxy: redactProxy(opts.proxyUrl),
     args
   });
@@ -397,7 +397,7 @@ export class YtDlp {
   async run(req: YtDlpRequest, signal?: YtDlpSignal): Promise<YtDlpResult> {
     if (!this._ytDlpPath) await this.prepare();
     const settings = await this.settingsStore.get();
-    const cookiesPath = resolveCookiesPath(settings);
+    const cookies = resolveCookies(settings);
     const proxyUrl = nonEmpty(settings.common?.proxyUrl?.trim());
     const { args, subtitleFormat } = buildArgs(req);
     const isProbe = req.kind === 'probe' || req.kind === 'playlist-probe';
@@ -408,7 +408,7 @@ export class YtDlp {
       denoPath: this._denoPath,
       args,
       tokenService: this.tokenService,
-      cookiesPath,
+      cookies,
       proxyUrl,
       timeoutMs: isProbe ? PROBE_TIMEOUT_MS : undefined,
       signal

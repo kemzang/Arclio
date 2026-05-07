@@ -144,7 +144,10 @@ const ar = {
         }
       },
       cookies: {
-        toggle: 'استخدام ملف الكوكيز',
+        sourceLabel: 'مصدر الكوكيز',
+        sourceOff: 'إيقاف',
+        sourceFile: 'ملف',
+        sourceBrowser: 'متصفح',
         toggleDescription: 'يساعد مع مقاطع الفيديو المقيدة بالعمر والمخصصة للأعضاء والخاصة بالحساب.',
         risk: 'تحذير: يحتوي cookies.txt على جميع جلسات تسجيل الدخول لذلك المتصفح — احتفظ به سرياً.',
         fileLabel: 'ملف الكوكيز',
@@ -153,6 +156,10 @@ const ar = {
         placeholder: 'لم يتم اختيار ملف',
         helpLink: 'كيف أصدّر الكوكيز؟',
         enabledButNoFile: 'اختر ملفاً لاستخدام الكوكيز',
+        browserLabel: 'المتصفح',
+        browserPlaceholder: 'اختر متصفحاً…',
+        browserHelp: 'يقرأ الكوكيز مباشرةً من المتصفح. يجب أن يكون المتصفح مغلقاً لمتصفحات عائلة Chromium.',
+        enabledButNoBrowser: 'اختر متصفحاً لاستخدام الكوكيز',
         banWarning: 'قد يُعلّم YouTube — وأحياناً يحظر — الحسابات التي يستخدم yt-dlp كوكيزها. استخدم حساباً مؤقتاً إن أمكن.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,24 @@ const ar = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'يتطلب تحويل الصوت وضع الصوت فقط (قم بإلغاء تحديد الفيديو).',
         requiresLossy: 'تم اختيار مقطع صوتي أصلي — معدل البت لا ينطبق إلا عند التحويل إلى mp3 أو m4a أو opus.'
+      },
+      botWall: {
+        heading: 'YouTube قيّد هذا الفحص',
+        bodyUnconfigured: 'قائمة الصيغ قد تكون غير مكتملة. أعدّ الكوكيز في الإعدادات المتقدمة، أو غيّر الشبكة وأعد المحاولة.',
+        bodyDisabled: 'الكوكيز مضبوطة لكنها معطّلة. فعّلها وأعد المحاولة للحصول على القائمة الكاملة، أو غيّر الشبكة وأعد المحاولة.',
+        bodyEnabled: 'حتى مع الكوكيز، قيّد YouTube هذا الفحص. حاول لاحقاً أو بدّل الشبكة.',
+        retryCta: 'إعادة المحاولة',
+        enableRetryCta: 'تفعيل الكوكيز وإعادة المحاولة',
+        openSettingsCta: 'فتح الإعدادات المتقدمة'
+      },
+      cookiesError: {
+        heading: 'ربما تكون الكوكيز هي السبب',
+        currentModeLabel: 'مصدر الكوكيز',
+        currentModeFile: 'ملف',
+        currentModeBrowser: 'متصفح',
+        explanationFile: 'ملف الكوكيز قد يكون فارغاً أو منتهي الصلاحية أو بتنسيق خاطئ (يتوقع yt-dlp ملف Netscape cookies.txt). جرّب إعادة تصدير الكوكيز، أو اختيار ملف مختلف، أو التبديل إلى وضع المتصفح، أو إيقاف الكوكيز.',
+        explanationBrowser: 'تُقرأ الكوكيز مباشرةً من المتصفح. إذا كان المتصفح يعمل حالياً، فقد تكون قاعدة بيانات الكوكيز مقفلة (متصفحات عائلة Chromium). يجب أن يكون المتصفح مسجّل الدخول إلى YouTube. جرّب إغلاق المتصفح، أو التبديل إلى متصفح مختلف، أو التبديل إلى وضع الملف، أو إيقاف الكوكيز.',
+        openSettingsCta: 'فتح إعدادات الكوكيز'
       }
     },
     folder: {

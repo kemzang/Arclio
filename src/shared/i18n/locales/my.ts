@@ -144,7 +144,10 @@ const my = {
         }
       },
       cookies: {
-        toggle: 'ကွတ်ကီးဖိုင်သုံးမည်',
+        sourceLabel: 'ကွတ်ကီးရင်းမြစ်',
+        sourceOff: 'ပိတ်',
+        sourceFile: 'ဖိုင်',
+        sourceBrowser: 'Browser',
         toggleDescription: 'အသက်အကန့်အသတ်ရှိ၊ အဖွဲ့ဝင်သာ နှင့် ကိုယ်ပိုင်ဗီဒီယိုများအတွက် ကူညီသည်။',
         risk: 'အန္တရာယ်: cookies.txt တွင် ထို browser ၏ login session အားလုံးပါဝင်သည် — လျှို့ဝှက်ထားပါ။',
         fileLabel: 'ကွတ်ကီးဖိုင်',
@@ -153,6 +156,10 @@ const my = {
         placeholder: 'ဖိုင်မရွေးရသေးပါ',
         helpLink: 'ကွတ်ကီးများ ထုတ်ယူနည်းကား?',
         enabledButNoFile: 'ကွတ်ကီးသုံးရန် ဖိုင်ရွေးပါ',
+        browserLabel: 'Browser',
+        browserPlaceholder: 'Browser ရွေးပါ…',
+        browserHelp: 'Browser မှ ကွတ်ကီးများကို တိုက်ရိုက်ဖတ်သည်။ Chromium မျိုးနွယ် browser များအတွက် browser ပိတ်ထားရမည်။',
+        enabledButNoBrowser: 'ကွတ်ကီးသုံးရန် browser ရွေးပါ',
         banWarning: 'yt-dlp မှ cookies သုံးသော account များကို YouTube မှ ပြဿနာတက်စေနိုင်သည် — ဖြစ်နိုင်လျှင် စမ်းသပ် account တစ်ခုသုံးပါ။',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,24 @@ const my = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'အသံပြောင်းလဲမှုအတွက် အသံသာမုဒ် လိုအပ်သည် (ဗီဒီယိုရွေးချယ်မှုကို ဖြုတ်ပါ)။',
         requiresLossy: 'Native stream ရွေးထားသည် — bitrate သည် mp3, m4a, သို့မဟုတ် opus သို့ပြောင်းရန်သာ သက်ဆိုင်သည်။'
+      },
+      botWall: {
+        heading: 'YouTube မှ ဤစစ်ဆေးမှုကို ကန့်သတ်ပြီ',
+        bodyUnconfigured: 'ဖော်မတ်စာရင်း မပြည့်စုံနိုင်ပါ။ အဆင့်မြင့်ဆက်တင်တွင် cookies တပ်ဆင်ပါ၊ သို့မဟုတ် network ပြောင်းပြီး ထပ်ကြိုးစားပါ။',
+        bodyDisabled: 'Cookies တပ်ဆင်ထားသော်လည်း ပိတ်ထားသည်။ ပြည့်စုံသောစာရင်းရရှိရန် ဖွင့်ပြီး ထပ်ကြိုးစားပါ၊ သို့မဟုတ် network ပြောင်းပြီး ထပ်ကြိုးစားပါ။',
+        bodyEnabled: 'Cookies ပါသော်လည်း YouTube မှ ဤစစ်ဆေးမှုကို ကန့်သတ်ပြီ။ နောက်မှ ထပ်ကြိုးစားပါ သို့မဟုတ် network ပြောင်းပါ။',
+        retryCta: 'ထပ်ကြိုးစားမည်',
+        enableRetryCta: 'Cookies ဖွင့်ပြီး ထပ်ကြိုးစားမည်',
+        openSettingsCta: 'အဆင့်မြင့်ဆက်တင် ဖွင့်မည်'
+      },
+      cookiesError: {
+        heading: 'Cookies သည် အကြောင်းရင်းဖြစ်နိုင်သည်',
+        currentModeLabel: 'ကွတ်ကီးရင်းမြစ်',
+        currentModeFile: 'ဖိုင်',
+        currentModeBrowser: 'Browser',
+        explanationFile: 'Cookies ဖိုင်သည် ဗလာဖြစ်နေ၊ သက်တမ်းကုန်နေ သို့မဟုတ် မှားသောဖော်မတ်ဖြစ်နေနိုင်သည် (yt-dlp သည် Netscape cookies.txt ကိုသာ လက်ခံသည်)။ Cookies ကို ထပ်မံ export လုပ်ကြည့်ပါ၊ ဖိုင်အခြားတစ်ခုရွေးကြည့်ပါ၊ Browser မုဒ်သို့ပြောင်းကြည့်ပါ၊ သို့မဟုတ် cookies ပိတ်ကြည့်ပါ။',
+        explanationBrowser: 'Cookies ကို browser မှ တိုက်ရိုက်ဖတ်သည်။ Browser ယခုဖွင့်ထားပါက၊ cookie database ကို ပိတ်ဆို့ထားနိုင်သည် (Chromium မျိုးနွယ်)။ Browser သည် YouTube သို့ login ဝင်ထားရမည်ဖြစ်သည်။ Browser ပိတ်ကြည့်ပါ၊ Browser အခြားတစ်ခုသို့ ပြောင်းကြည့်ပါ၊ ဖိုင်မုဒ်သို့ ပြောင်းကြည့်ပါ သို့မဟုတ် cookies ပိတ်ကြည့်ပါ။',
+        openSettingsCta: 'Cookies ဆက်တင် ဖွင့်မည်'
       }
     },
     folder: {

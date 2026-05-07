@@ -144,7 +144,10 @@ const sr = {
         }
       },
       cookies: {
-        toggle: 'Користи датотеку cookies',
+        sourceLabel: 'Извор cookies',
+        sourceOff: 'Искључено',
+        sourceFile: 'Датотека',
+        sourceBrowser: 'Прегледач',
         toggleDescription: 'Помаже са видеима са ограничењем старости, само за чланове и приватним видеима.',
         risk: 'Ризик: cookies.txt садржи сваку пријављену сесију за тај прегледач — чувај је приватном.',
         fileLabel: 'Датотека Cookies',
@@ -153,6 +156,10 @@ const sr = {
         placeholder: 'Нема изабране датотеке',
         helpLink: 'Како да извезем cookies?',
         enabledButNoFile: 'Изабери датотеку да би користио/ла cookies',
+        browserLabel: 'Прегледач',
+        browserPlaceholder: 'Изабери прегледач…',
+        browserHelp: 'Чита cookies директно из прегледача. Прегледач мора бити затворен за прегледаче Chromium породице.',
+        enabledButNoBrowser: 'Изабери прегледач да би користио/ла cookies',
         banWarning: 'YouTube може да означи — а понекад и забрани — налоге чији cookies користи yt-dlp. Ако је могуће, користи привремени налог.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,24 @@ const sr = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'Конверзија звука захтева режим само-звука (поништи избор видеа).',
         requiresLossy: 'Изабран је нативни стрим — битрејт се примењује само при конверзији у mp3, m4a или opus.'
+      },
+      botWall: {
+        heading: 'YouTube је ограничио ову проверу',
+        bodyUnconfigured: 'Списак формата можда није потпун. Подеси cookies у напредним подешавањима или промени мрежу и покушај поново.',
+        bodyDisabled: 'Cookies су подешени али искључени. Укључи их и покушај поново за потпун списак, или промени мрежу и покушај поново.',
+        bodyEnabled: 'Чак и са cookies, YouTube је ограничио ову проверу. Покушај касније или промени мрежу.',
+        retryCta: 'Покушај поново',
+        enableRetryCta: 'Укључи cookies и покушај поново',
+        openSettingsCta: 'Отвори напредна подешавања'
+      },
+      cookiesError: {
+        heading: 'Cookies могу бити узрок',
+        currentModeLabel: 'Извор cookies',
+        currentModeFile: 'Датотека',
+        currentModeBrowser: 'Прегледач',
+        explanationFile: 'Твоја датотека cookies можда је празна, истекла или у погрешном формату (yt-dlp очекује Netscape cookies.txt). Покушај поново да извезеш cookies, изабери другу датотеку, пређи у режим „Прегледач" или искључи cookies.',
+        explanationBrowser: 'Cookies се читају директно из прегледача. Ако је прегледач тренутно покренут, његова база cookies може бити закључана (Chromium породица). Прегледач такође мора бити пријављен на YouTube. Покушај затворити прегледач, пређи на другачији прегледач, пређи у режим „Датотека" или искључи cookies.',
+        openSettingsCta: 'Отвори подешавања cookies'
       }
     },
     folder: {

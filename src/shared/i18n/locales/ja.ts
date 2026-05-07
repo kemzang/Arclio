@@ -144,7 +144,10 @@ const ja = {
         }
       },
       cookies: {
-        toggle: 'Cookieファイルを使用',
+        sourceLabel: 'Cookieのソース',
+        sourceOff: 'オフ',
+        sourceFile: 'ファイル',
+        sourceBrowser: 'ブラウザ',
         toggleDescription: '年齢制限・メンバー限定・アカウント非公開の動画で役立ちます。',
         risk: '注意: cookies.txt にはそのブラウザのすべてのログイン情報が含まれます — 取り扱いに注意してください。',
         fileLabel: 'Cookieファイル',
@@ -153,6 +156,10 @@ const ja = {
         placeholder: 'ファイルが選択されていません',
         helpLink: 'Cookieを書き出す方法は?',
         enabledButNoFile: 'Cookieを使うにはファイルを選択してください',
+        browserLabel: 'ブラウザ',
+        browserPlaceholder: 'ブラウザを選択…',
+        browserHelp: 'ブラウザから直接Cookieを読み込みます。Chromiumベースのブラウザはブラウザを閉じた状態で使用してください。',
+        enabledButNoBrowser: 'Cookieを使うにはブラウザを選択してください',
         banWarning: '注意: yt-dlpがCookieで使うアカウントは、YouTube側でフラグが立てられたり、稀にBANされることがあります。可能なら使い捨てアカウントを使ってください。',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,24 @@ const ja = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: '音声変換には音声のみモードが必要です（動画の選択を解除してください）。',
         requiresLossy: 'ネイティブストリームが選択されています — ビットレートは mp3、m4a、または opus に変換する場合にのみ適用されます。'
+      },
+      botWall: {
+        heading: 'YouTubeがこの取得を制限しました',
+        bodyUnconfigured: 'フォーマット一覧が不完全な可能性があります。詳細設定でCookieを設定するか、ネットワークを変えて再試行してください。',
+        bodyDisabled: 'Cookieは設定されていますが無効になっています。有効にして再試行すると完全な一覧を取得できます。または、ネットワークを変えて再試行してください。',
+        bodyEnabled: 'Cookieを使用していても、YouTubeがこの取得を制限しました。しばらくしてから再試行するか、ネットワークを切り替えてください。',
+        retryCta: '再試行',
+        enableRetryCta: 'Cookieを有効にして再試行',
+        openSettingsCta: '詳細設定を開く'
+      },
+      cookiesError: {
+        heading: 'Cookieが原因かもしれません',
+        currentModeLabel: 'Cookieのソース',
+        currentModeFile: 'ファイル',
+        currentModeBrowser: 'ブラウザ',
+        explanationFile: 'Cookieファイルが空・期限切れ・または形式が正しくない可能性があります (yt-dlp は Netscape cookies.txt を期待しています)。Cookieを再エクスポートするか、別のファイルを選ぶか、ブラウザモードに切り替えるか、Cookieをオフにしてみてください。',
+        explanationBrowser: 'Cookieはブラウザから直接読み込まれます。ブラウザが起動中の場合、Cookieデータベースがロックされている可能性があります (Chromiumファミリー)。ブラウザがYouTubeにサインインしている必要もあります。ブラウザを閉じる、別のブラウザに切り替える、ファイルモードに変更する、またはCookieをオフにしてみてください。',
+        openSettingsCta: 'Cookie設定を開く'
       }
     },
     folder: {
