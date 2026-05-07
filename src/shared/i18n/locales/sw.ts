@@ -270,7 +270,18 @@ const sw = {
         currentModeBrowser: 'Kivinjari',
         explanationFile: 'Faili yako ya vidakuzi inaweza kuwa tupu, imeisha muda wake, au iko katika umbizo lisilo sahihi (yt-dlp inategemea Netscape cookies.txt). Jaribu kusafirisha vidakuzi tena, chagua faili tofauti, ubadilishe hadi hali ya Kivinjari, au uzime vidakuzi.',
         explanationBrowser: 'Vidakuzi vinasomwa moja kwa moja kutoka kwenye kivinjari. Ikiwa kivinjari kinaendesha sasa hivi, hifadhidata yake ya vidakuzi inaweza kufungwa (familia ya Chromium). Kivinjari pia lazima kiingie katika YouTube. Jaribu kufunga kivinjari, ubadilishe hadi kivinjari tofauti, ubadilishe hadi hali ya Faili, au uzime vidakuzi.',
-        openSettingsCta: 'Fungua mipangilio ya vidakuzi'
+        openSettingsCta: 'Fungua mipangilio ya vidakuzi',
+        dpapi: {
+          heading: 'Vidakuzi vya Chrome vimezuiwa na usimbaji fiche wa Windows',
+          explanation: 'Chrome 127 na toleo jipya zaidi husimba fiche vidakuzi kwa njia ambayo programu nyingine haziwezi kusoma kwenye Windows. Jaribu moja ya masuluhisho yaliyo hapa chini.',
+          fixFirefoxLabel: 'Badilisha kwenda Firefox',
+          fixFirefoxBody: 'Firefox haitumii App-Bound Encryption. Fungua mipangilio ya vidakuzi na uchague Firefox kutoka kwenye orodha ya vivinjari.',
+          fixFileLabel: 'Safirisha cookies.txt',
+          fixFileBody: 'Safirisha vidakuzi kutoka Chrome kwa kutumia kiendelezi cha kivinjari, kisha ubadilishe programu hii hadi hali ya Faili na uchague faili iliyosafirishwa.',
+          fixUnsafeLabel: 'Zindua Chrome huku App-Bound Encryption imezimwa',
+          fixUnsafeBody: 'Ongeza --disable-features=LockProfileCookieDatabase kwenye mkato wa kuzindua Chrome. Onyo: hii inabatilisha vidakuzi vilivyosimbwa fiche hapo awali, kwa hivyo utaondolewa katika kila tovuti na itabidi uingie tena.',
+          docsLinkLabel: 'yt-dlp nyaraka (issue #10927)'
+        }
       }
     },
     folder: {

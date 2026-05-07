@@ -271,7 +271,18 @@ const hi = {
         currentModeBrowser: 'ब्राउज़र',
         explanationFile: 'आपकी कुकी फ़ाइल खाली, एक्सपायर्ड या गलत फ़ॉर्मेट में हो सकती है (yt-dlp को Netscape cookies.txt चाहिए)। कुकी फिर से एक्सपोर्ट करें, कोई अलग फ़ाइल चुनें, ब्राउज़र मोड पर जाएँ, या कुकी बंद कर दें।',
         explanationBrowser: 'कुकी सीधे ब्राउज़र से पढ़ी जाती हैं। अगर ब्राउज़र अभी चल रहा है, तो उसका कुकी डेटाबेस लॉक हो सकता है (Chromium परिवार)। ब्राउज़र में YouTube पर लॉग इन भी होना ज़रूरी है। ब्राउज़र बंद करके देखें, कोई दूसरा ब्राउज़र आज़माएँ, फ़ाइल मोड पर जाएँ, या कुकी बंद कर दें।',
-        openSettingsCta: 'कुकी सेटिंग्स खोलें'
+        openSettingsCta: 'कुकी सेटिंग्स खोलें',
+        dpapi: {
+          heading: 'Chrome कुकी Windows एन्क्रिप्शन से ब्लॉक हैं',
+          explanation: 'Chrome 127 और उसके बाद के वर्शन कुकी को इस तरह एन्क्रिप्ट करते हैं कि Windows पर दूसरे ऐप उन्हें नहीं पढ़ सकते। नीचे दिए गए किसी एक समाधान को आज़माएँ।',
+          fixFirefoxLabel: 'Firefox पर स्विच करें',
+          fixFirefoxBody: 'Firefox, App-Bound Encryption का उपयोग नहीं करता। कुकी सेटिंग्स खोलें और ब्राउज़र सूची से Firefox चुनें।',
+          fixFileLabel: 'cookies.txt एक्सपोर्ट करें',
+          fixFileBody: 'Chrome से किसी ब्राउज़र एक्सटेंशन के ज़रिए कुकी एक्सपोर्ट करें, फिर इस ऐप को File मोड पर स्विच करें और एक्सपोर्ट की गई फ़ाइल चुनें।',
+          fixUnsafeLabel: 'App-Bound Encryption बंद करके Chrome लॉन्च करें',
+          fixUnsafeBody: 'Chrome के लॉन्च शॉर्टकट में --disable-features=LockProfileCookieDatabase जोड़ें। चेतावनी: इससे पहले से एन्क्रिप्टेड कुकी अमान्य हो जाएंगी, इसलिए आप हर साइट से साइन आउट हो जाएंगे और फिर से लॉग इन करना होगा।',
+          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+        }
       }
     },
     folder: {

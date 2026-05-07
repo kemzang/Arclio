@@ -271,7 +271,18 @@ const uk = {
         currentModeBrowser: 'Браузер',
         explanationFile: 'Файл cookies може бути порожнім, застарілим або у неправильному форматі (yt-dlp очікує Netscape cookies.txt). Спробуй повторно експортувати cookies, вибрати інший файл, перейти в режим «Браузер» або вимкнути cookies.',
         explanationBrowser: 'Cookies зчитуються безпосередньо з браузера. Якщо браузер зараз відкритий, його база даних cookies може бути заблокована (Chromium-сімейство). Браузер також має бути авторизований у YouTube. Спробуй закрити браузер, перейти на інший браузер, перейти в режим «Файл» або вимкнути cookies.',
-        openSettingsCta: 'Відкрити налаштування cookies'
+        openSettingsCta: 'Відкрити налаштування cookies',
+        dpapi: {
+          heading: 'Cookies Chrome заблоковані шифруванням Windows',
+          explanation: 'Chrome 127 і новіші версії шифрують cookies так, що інші застосунки не можуть їх прочитати у Windows. Спробуй одне із рішень нижче.',
+          fixFirefoxLabel: 'Перейти на Firefox',
+          fixFirefoxBody: 'Firefox не використовує App-Bound Encryption. Відкрий налаштування cookies і вибери Firefox зі списку браузерів.',
+          fixFileLabel: 'Експортувати cookies.txt',
+          fixFileBody: 'Експортуй cookies з Chrome за допомогою браузерного розширення, потім переключи цей застосунок у режим «Файл» і вибери експортований файл.',
+          fixUnsafeLabel: 'Запустити Chrome з вимкненим App-Bound Encryption',
+          fixUnsafeBody: 'Додай --disable-features=LockProfileCookieDatabase до ярлика запуску Chrome. Увага: це анулює раніше зашифровані cookies, тому ти вийдеш з усіх сайтів і тобі доведеться увійти знову.',
+          docsLinkLabel: 'Документація yt-dlp (issue #10927)'
+        }
       }
     },
     folder: {

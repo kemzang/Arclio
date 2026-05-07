@@ -271,7 +271,18 @@ const ja = {
         currentModeBrowser: 'ブラウザ',
         explanationFile: 'Cookieファイルが空・期限切れ・または形式が正しくない可能性があります (yt-dlp は Netscape cookies.txt を期待しています)。Cookieを再エクスポートするか、別のファイルを選ぶか、ブラウザモードに切り替えるか、Cookieをオフにしてみてください。',
         explanationBrowser: 'Cookieはブラウザから直接読み込まれます。ブラウザが起動中の場合、Cookieデータベースがロックされている可能性があります (Chromiumファミリー)。ブラウザがYouTubeにサインインしている必要もあります。ブラウザを閉じる、別のブラウザに切り替える、ファイルモードに変更する、またはCookieをオフにしてみてください。',
-        openSettingsCta: 'Cookie設定を開く'
+        openSettingsCta: 'Cookie設定を開く',
+        dpapi: {
+          heading: 'ChromeのCookieがWindowsの暗号化によりブロックされています',
+          explanation: 'Chrome 127以降、Windows上では他のアプリが読み取れない方法でCookieが暗号化されています。以下のいずれかの回避策をお試しください。',
+          fixFirefoxLabel: 'Firefoxに切り替える',
+          fixFirefoxBody: 'FirefoxはApp-Bound Encryptionを使用しません。Cookie設定を開き、ブラウザ一覧からFirefoxを選択してください。',
+          fixFileLabel: 'cookies.txtをエクスポート',
+          fixFileBody: 'ブラウザ拡張機能を使ってChromeからCookieをエクスポートし、このアプリをファイルモードに切り替えてエクスポートしたファイルを選択してください。',
+          fixUnsafeLabel: 'App-Bound Encryptionを無効にしてChromeを起動',
+          fixUnsafeBody: 'Chromeの起動ショートカットに --disable-features=LockProfileCookieDatabase を追加してください。警告: これにより以前に暗号化されたCookieが無効になり、すべてのサイトからサインアウトされるため、再度ログインが必要になります。',
+          docsLinkLabel: 'yt-dlp ドキュメント (issue #10927)'
+        }
       }
     },
     folder: {

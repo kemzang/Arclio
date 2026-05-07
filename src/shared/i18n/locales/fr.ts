@@ -271,7 +271,18 @@ const fr = {
         currentModeBrowser: 'Navigateur',
         explanationFile: 'Votre fichier de cookies est peut-être vide, expiré ou dans un mauvais format (yt-dlp attend un Netscape cookies.txt). Essayez de ré-exporter les cookies, de choisir un autre fichier, de passer en mode Navigateur ou de désactiver les cookies.',
         explanationBrowser: "Les cookies sont lus directement depuis le navigateur. Si le navigateur est en cours d'exécution, sa base de données de cookies est peut-être verrouillée (famille Chromium). Le navigateur doit également être connecté à YouTube. Essayez de fermer le navigateur, d'en choisir un autre, de passer en mode Fichier ou de désactiver les cookies.",
-        openSettingsCta: 'Ouvrir les paramètres des cookies'
+        openSettingsCta: 'Ouvrir les paramètres des cookies',
+        dpapi: {
+          heading: 'Cookies Chrome bloqués par le chiffrement Windows',
+          explanation: "Chrome 127 et versions ultérieures chiffrent les cookies d'une façon que les autres applications ne peuvent pas lire sur Windows. Essayez l'une des solutions ci-dessous.",
+          fixFirefoxLabel: 'Passer à Firefox',
+          fixFirefoxBody: "Firefox n'utilise pas App-Bound Encryption. Ouvrez les paramètres des cookies et choisissez Firefox dans la liste des navigateurs.",
+          fixFileLabel: 'Exporter cookies.txt',
+          fixFileBody: 'Exportez les cookies depuis Chrome avec une extension de navigateur, puis passez cette application en mode Fichier et sélectionnez le fichier exporté.',
+          fixUnsafeLabel: 'Lancer Chrome avec App-Bound Encryption désactivée',
+          fixUnsafeBody: 'Ajoutez --disable-features=LockProfileCookieDatabase au raccourci de lancement de Chrome. Avertissement : cela invalide les cookies chiffrés précédemment, vous serez donc déconnecté de tous les sites et devrez vous reconnecter.',
+          docsLinkLabel: 'Documentation yt-dlp (issue #10927)'
+        }
       }
     },
     folder: {

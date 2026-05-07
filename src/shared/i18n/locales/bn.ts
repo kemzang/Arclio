@@ -271,7 +271,18 @@ const bn = {
         currentModeBrowser: 'ব্রাউজার',
         explanationFile: 'আপনার কুকিজ ফাইলটি খালি, মেয়াদ শেষ বা ভুল ফরম্যাটে থাকতে পারে (yt-dlp Netscape cookies.txt আশা করে)। কুকিজ পুনরায় এক্সপোর্ট করুন, ভিন্ন ফাইল বেছে নিন, ব্রাউজার মোডে স্যুইচ করুন, অথবা কুকিজ বন্ধ করে দেখুন।',
         explanationBrowser: 'কুকিজ সরাসরি ব্রাউজার থেকে পড়া হয়। ব্রাউজার এখন চলছে থাকলে, এর কুকি ডেটাবেস লক থাকতে পারে (Chromium-পরিবার)। ব্রাউজারটি YouTube-এ সাইন ইন থাকতে হবে। ব্রাউজার বন্ধ করুন, ভিন্ন ব্রাউজারে স্যুইচ করুন, ফাইল মোডে স্যুইচ করুন, অথবা কুকিজ বন্ধ করে দেখুন।',
-        openSettingsCta: 'কুকিজ সেটিংস খুলুন'
+        openSettingsCta: 'কুকিজ সেটিংস খুলুন',
+        dpapi: {
+          heading: 'Windows এনক্রিপশন দ্বারা Chrome কুকিজ ব্লক হয়েছে',
+          explanation: 'Chrome 127 এবং পরবর্তী সংস্করণ Windows-এ কুকিজ এমনভাবে এনক্রিপ্ট করে যা অন্য অ্যাপ পড়তে পারে না। নিচের যেকোনো একটি সমাধান চেষ্টা করুন।',
+          fixFirefoxLabel: 'Firefox-এ যান',
+          fixFirefoxBody: 'Firefox App-Bound Encryption ব্যবহার করে না। কুকিজ সেটিংস খুলুন এবং ব্রাউজার তালিকা থেকে Firefox বেছে নিন।',
+          fixFileLabel: 'cookies.txt এক্সপোর্ট করুন',
+          fixFileBody: 'Chrome থেকে ব্রাউজার এক্সটেনশন দিয়ে কুকিজ এক্সপোর্ট করুন, তারপর এই অ্যাপটি File মোডে পরিবর্তন করে এক্সপোর্ট করা ফাইলটি বেছে নিন।',
+          fixUnsafeLabel: 'App-Bound Encryption নিষ্ক্রিয় করে Chrome চালু করুন',
+          fixUnsafeBody: 'Chrome-এর লঞ্চ শর্টকাটে --disable-features=LockProfileCookieDatabase যোগ করুন। সতর্কতা: এটি আগে এনক্রিপ্ট করা কুকিজ অকার্যকর করে দেয়, তাই আপনি প্রতিটি সাইট থেকে লগ আউট হয়ে যাবেন এবং আবার লগ ইন করতে হবে।',
+          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+        }
       }
     },
     folder: {

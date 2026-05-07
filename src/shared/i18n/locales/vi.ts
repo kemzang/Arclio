@@ -271,7 +271,18 @@ const vi = {
         currentModeBrowser: 'Trình duyệt',
         explanationFile: 'Tệp cookies của bạn có thể trống, đã hết hạn hoặc sai định dạng (yt-dlp yêu cầu Netscape cookies.txt). Hãy thử xuất lại cookies, chọn tệp khác, chuyển sang chế độ Trình duyệt hoặc tắt cookies.',
         explanationBrowser: 'Cookies được đọc trực tiếp từ trình duyệt. Nếu trình duyệt đang mở, cơ sở dữ liệu cookies có thể bị khóa (Chromium-family). Trình duyệt cũng phải đã đăng nhập vào YouTube. Hãy thử đóng trình duyệt, chuyển sang trình duyệt khác, chuyển sang chế độ Tệp hoặc tắt cookies.',
-        openSettingsCta: 'Mở cài đặt cookies'
+        openSettingsCta: 'Mở cài đặt cookies',
+        dpapi: {
+          heading: 'Cookies của Chrome bị chặn bởi mã hóa Windows',
+          explanation: 'Chrome 127 trở lên mã hóa cookies theo cách mà các ứng dụng khác không thể đọc trên Windows. Hãy thử một trong các cách khắc phục bên dưới.',
+          fixFirefoxLabel: 'Chuyển sang Firefox',
+          fixFirefoxBody: 'Firefox không sử dụng App-Bound Encryption. Mở cài đặt cookies và chọn Firefox từ danh sách trình duyệt.',
+          fixFileLabel: 'Xuất cookies.txt',
+          fixFileBody: 'Xuất cookies từ Chrome bằng tiện ích mở rộng trình duyệt, sau đó chuyển ứng dụng này sang chế độ Tệp và chọn tệp đã xuất.',
+          fixUnsafeLabel: 'Khởi chạy Chrome với App-Bound Encryption đã tắt',
+          fixUnsafeBody: 'Thêm --disable-features=LockProfileCookieDatabase vào shortcut khởi chạy Chrome. Cảnh báo: điều này sẽ làm mất hiệu lực các cookies đã mã hóa trước đó, khiến bạn bị đăng xuất khỏi mọi trang web và cần đăng nhập lại.',
+          docsLinkLabel: 'Tài liệu yt-dlp (issue #10927)'
+        }
       }
     },
     folder: {

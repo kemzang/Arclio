@@ -180,10 +180,13 @@ if (!('appApi' in window)) {
         // Visual harness: append `?fail=1` to a URL to simulate a hard
         // probe failure (drives the wizard error step + CookiesErrorAlert).
         // Combine with `&bot=1` to simulate a bot-wall hard fail so the
-        // BotWallNotice (forceShow on StepError) renders alongside.
+        // BotWallNotice (forceShow on StepError) renders alongside. Combine
+        // with `&dpapi=1` to simulate the Chrome 127+ App-Bound Encryption
+        // failure so the DPAPI variant of CookiesErrorAlert renders.
         if (/[?&]fail=1\b/.test(input.url)) {
           const isBot = /[?&]bot=1\b/.test(input.url);
-          const message = isBot ? "ERROR: [youtube] x: Sign in to confirm you're not a bot. Use --cookies-from-browser …" : 'ERROR: [youtube] dQw4w9WgXcQ: Video unavailable. The uploader has not made this video available in your country.';
+          const isDpapi = /[?&]dpapi=1\b/.test(input.url);
+          const message = isDpapi ? 'ERROR: Failed to decrypt with DPAPI. See https://github.com/yt-dlp/yt-dlp/issues/10927 for more info' : isBot ? "ERROR: [youtube] x: Sign in to confirm you're not a bot. Use --cookies-from-browser …" : 'ERROR: [youtube] dQw4w9WgXcQ: Video unavailable. The uploader has not made this video available in your country.';
           return {
             ok: false,
             error: { code: 'download', message, recoverable: true }

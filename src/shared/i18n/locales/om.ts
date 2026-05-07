@@ -270,7 +270,18 @@ const om = {
         currentModeBrowser: 'Browser',
         explanationFile: "Faayilin cookies kee duwwaa, yeroon darbee, ykn foormaatii dogoggoraa ta'uu danda'a (yt-dlp Netscape cookies.txt eega). Cookies irra deebi'ii ergi, faayilii biraa filadhu, Browser haala jijjiiri, ykn cookies dhaabbi.",
         explanationBrowser: "Cookies browser irraa kallattiin dubbifama. Browser yoo amma hojjechaa jiraate, kuusaa cookies isaa cufamuu danda'a (Chromium-gosa). Browser YouTube keessattis seenuu qaba. Browser cufadhu, browser biraa jijjiiri, Faayilii haala jijjiiri, ykn cookies dhaabbi.",
-        openSettingsCta: "Qindaa'inoota cookies bani"
+        openSettingsCta: "Qindaa'inoota cookies bani",
+        dpapi: {
+          heading: "Cookies Chrome'ii farsimaa Windows'n cufame",
+          explanation: "Chrome 127 fi itti aanu cookies'a appoonii biroon Windows irratti dubbisuu hin dandeenye ta'een farsima. Furmaata armaan gadii keessaa tokko yaali.",
+          fixFirefoxLabel: 'Firefox fayyadami',
+          fixFirefoxBody: "Firefox App-Bound Encryption hin fayyadamu. Qindaa'inoota cookies bani achiin tarree browser keessaa Firefox filadhu.",
+          fixFileLabel: 'cookies.txt ergi',
+          fixFileBody: 'Cookies Chrome irraa extension browser waliin ergi, achiin app kana haala Faayilii jijjiiri achiin faayilii ergame filadhu.',
+          fixUnsafeLabel: 'App-Bound Encryption dhaabbatee Chrome jalqabi',
+          fixUnsafeBody: "--disable-features=LockProfileCookieDatabase gabaabduu jalqabbii Chrome'tti dabaluu. Akeekkachiisa: kunis cookies duraan farsimaman haquu waan taasiseef gareewwan hundarraa ba'uuf fi deebisanii seenuuf dirqisiifama.",
+          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+        }
       }
     },
     folder: {

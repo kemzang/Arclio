@@ -270,7 +270,18 @@ const en = {
         currentModeBrowser: 'Browser',
         explanationFile: 'Your cookies file might be empty, expired, or in the wrong format (yt-dlp expects Netscape cookies.txt). Try re-exporting cookies, picking a different file, switching to Browser mode, or turning cookies off.',
         explanationBrowser: 'Cookies are read directly from the browser. If the browser is currently running, its cookie database may be locked (Chromium-family). The browser must also be signed in to YouTube. Try closing the browser, switching to a different browser, switching to File mode, or turning cookies off.',
-        openSettingsCta: 'Open cookies settings'
+        openSettingsCta: 'Open cookies settings',
+        dpapi: {
+          heading: 'Chrome cookies blocked by Windows encryption',
+          explanation: "Chrome 127 and newer encrypts cookies in a way other apps can't read on Windows. Try one of the workarounds below.",
+          fixFirefoxLabel: 'Switch to Firefox',
+          fixFirefoxBody: "Firefox doesn't use App-Bound Encryption. Open cookies settings and pick Firefox from the browser list.",
+          fixFileLabel: 'Export cookies.txt',
+          fixFileBody: 'Export cookies from Chrome with a browser extension, then switch this app to File mode and pick the exported file.',
+          fixUnsafeLabel: 'Launch Chrome with App-Bound Encryption disabled',
+          fixUnsafeBody: "Add --disable-features=LockProfileCookieDatabase to Chrome's launch shortcut. Warning: this invalidates previously encrypted cookies, so you'll be signed out of every site and need to log in again.",
+          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+        }
       }
     },
     folder: {

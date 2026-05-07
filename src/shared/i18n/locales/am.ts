@@ -271,7 +271,18 @@ const am = {
         currentModeBrowser: 'አሳሽ',
         explanationFile: 'የ Cookies ፋይልዎ ባዶ፣ ጊዜው ያለፈ፣ ወይም ትክክለኛ ቅርጸት ላይሆን ይችላል (yt-dlp Netscape cookies.txt ይጠቀማል)። Cookies ዳግም ወደ ውጭ ለማሳደር፣ ሌላ ፋይል ለመምረጥ፣ ወደ አሳሽ ሁነታ ለመቀየር፣ ወይም Cookies ለማጥፋት ይሞክሩ።',
         explanationBrowser: 'Cookies ቀጥታ ከአሳሹ ይነበባሉ። አሳሹ አሁን እየሰራ ከሆነ፣ የ cookie ዳታቤዝ ተቆልፎ ሊሆን ይችላል (Chromium-ቤተሰብ)። አሳሹ ወደ YouTube ገብቶ መሆን አለበት። አሳሹን ለመዝጋት፣ ወደ ሌላ አሳሽ ለመቀየር፣ ወደ ፋይል ሁነታ ለመቀየር፣ ወይም Cookies ለማጥፋት ይሞክሩ።',
-        openSettingsCta: 'የ Cookies ቅንብሮችን ክፈት'
+        openSettingsCta: 'የ Cookies ቅንብሮችን ክፈት',
+        dpapi: {
+          heading: 'Chrome cookies በ Windows ምስጠራ ታግደዋል',
+          explanation: 'Chrome 127 እና ከዚያ በኋላ ያሉ ስሪቶች cookies ን በ Windows ላይ ሌሎች አፕሊኬሽኖች ሊያነቡ በማይችሉ መንገድ ያመስጥሩታል። ከዚህ በታች ያሉ አንዱን መፍትሄ ይሞክሩ።',
+          fixFirefoxLabel: 'ወደ Firefox ቀይር',
+          fixFirefoxBody: 'Firefox App-Bound Encryption አይጠቀምም። የ Cookies ቅንብሮቹን ክፈት እና ከአሳሽ ዝርዝሩ Firefox ን ምረጥ።',
+          fixFileLabel: 'cookies.txt ወደ ውጭ ላክ',
+          fixFileBody: 'Cookies ን ከ Chrome በ browser extension ወደ ውጭ ላክ፣ ከዚያ ይህን አፕ ወደ ፋይል ሁነታ ቀይር እና የወጣውን ፋይል ምረጥ።',
+          fixUnsafeLabel: 'Chrome ን App-Bound Encryption አሰናክሎ ጀምር',
+          fixUnsafeBody: 'Chrome ን ለማስጀምር --disable-features=LockProfileCookieDatabase ወደ ቅርበት አክል። ማስጠንቀቂያ: ይህ ቀደም ሲል የተመሰጠሩ cookies ን ስለሚያወድም ከሁሉም ጣቢያዎች ይወጣሉ እና ዳግም መግባት ይኖርብዎታል።',
+          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+        }
       }
     },
     folder: {

@@ -271,7 +271,18 @@ const sr = {
         currentModeBrowser: 'Прегледач',
         explanationFile: 'Твоја датотека cookies можда је празна, истекла или у погрешном формату (yt-dlp очекује Netscape cookies.txt). Покушај поново да извезеш cookies, изабери другу датотеку, пређи у режим „Прегледач" или искључи cookies.',
         explanationBrowser: 'Cookies се читају директно из прегледача. Ако је прегледач тренутно покренут, његова база cookies може бити закључана (Chromium породица). Прегледач такође мора бити пријављен на YouTube. Покушај затворити прегледач, пређи на другачији прегледач, пређи у режим „Датотека" или искључи cookies.',
-        openSettingsCta: 'Отвори подешавања cookies'
+        openSettingsCta: 'Отвори подешавања cookies',
+        dpapi: {
+          heading: 'Chrome cookies блокиран Windows шифровањем',
+          explanation: 'Chrome 127 и новији шифрују cookies на начин који друге апликације не могу да прочитају на Windows-у. Испробај неко од решења испод.',
+          fixFirefoxLabel: 'Пређи на Firefox',
+          fixFirefoxBody: 'Firefox не користи App-Bound Encryption. Отвори подешавања cookies и изабери Firefox са листе прегледача.',
+          fixFileLabel: 'Извези cookies.txt',
+          fixFileBody: 'Извези cookies из Chrome-а помоћу додатка за прегледач, па пређи у режим Датотека и изабери извезену датотеку.',
+          fixUnsafeLabel: 'Покрени Chrome са онемогућеном App-Bound Encryption',
+          fixUnsafeBody: 'Додај --disable-features=LockProfileCookieDatabase пречици за покретање Chrome-а. Упозорење: ово поништава претходно шифроване cookies, тако да ћеш бити одјављен са сваке странице и морати поново да се пријавиш.',
+          docsLinkLabel: 'yt-dlp документација (issue #10927)'
+        }
       }
     },
     folder: {

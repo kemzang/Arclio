@@ -271,7 +271,18 @@ const ar = {
         currentModeBrowser: 'متصفح',
         explanationFile: 'ملف الكوكيز قد يكون فارغاً أو منتهي الصلاحية أو بتنسيق خاطئ (يتوقع yt-dlp ملف Netscape cookies.txt). جرّب إعادة تصدير الكوكيز، أو اختيار ملف مختلف، أو التبديل إلى وضع المتصفح، أو إيقاف الكوكيز.',
         explanationBrowser: 'تُقرأ الكوكيز مباشرةً من المتصفح. إذا كان المتصفح يعمل حالياً، فقد تكون قاعدة بيانات الكوكيز مقفلة (متصفحات عائلة Chromium). يجب أن يكون المتصفح مسجّل الدخول إلى YouTube. جرّب إغلاق المتصفح، أو التبديل إلى متصفح مختلف، أو التبديل إلى وضع الملف، أو إيقاف الكوكيز.',
-        openSettingsCta: 'فتح إعدادات الكوكيز'
+        openSettingsCta: 'فتح إعدادات الكوكيز',
+        dpapi: {
+          heading: 'كوكيز Chrome محجوبة بسبب تشفير Windows',
+          explanation: 'يُشفّر Chrome 127 والإصدارات الأحدث الكوكيز بطريقة لا تستطيع التطبيقات الأخرى قراءتها على Windows. جرّب أحد الحلول البديلة أدناه.',
+          fixFirefoxLabel: 'التبديل إلى Firefox',
+          fixFirefoxBody: 'لا يستخدم Firefox تشفير App-Bound Encryption. افتح إعدادات الكوكيز واختر Firefox من قائمة المتصفحات.',
+          fixFileLabel: 'تصدير cookies.txt',
+          fixFileBody: 'صدّر الكوكيز من Chrome باستخدام إضافة متصفح، ثم بدّل هذا التطبيق إلى وضع الملف واختر الملف المُصدَّر.',
+          fixUnsafeLabel: 'تشغيل Chrome مع تعطيل App-Bound Encryption',
+          fixUnsafeBody: 'أضف --disable-features=LockProfileCookieDatabase إلى اختصار تشغيل Chrome. تحذير: سيؤدي ذلك إلى إبطال الكوكيز المشفّرة مسبقاً، وستُسجَّل خارجاً من جميع المواقع وستحتاج إلى تسجيل الدخول من جديد.',
+          docsLinkLabel: 'وثائق yt-dlp (issue #10927)'
+        }
       }
     },
     folder: {

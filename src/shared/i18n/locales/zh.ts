@@ -271,7 +271,18 @@ const zh = {
         currentModeBrowser: '浏览器',
         explanationFile: '你的 cookies 文件可能为空、已过期或格式不正确（yt-dlp 需要 Netscape cookies.txt 格式）。请尝试重新导出 cookies、选择其他文件、切换到浏览器模式或关闭 cookies。',
         explanationBrowser: 'Cookies 直接从浏览器读取。如果浏览器当前正在运行，其 cookie 数据库可能已被锁定（Chromium-family）。浏览器还必须已登录 YouTube。请尝试关闭浏览器、切换到其他浏览器、切换到文件模式或关闭 cookies。',
-        openSettingsCta: '打开 cookies 设置'
+        openSettingsCta: '打开 cookies 设置',
+        dpapi: {
+          heading: 'Chrome Cookies 被 Windows 加密阻止',
+          explanation: 'Chrome 127 及更新版本以其他应用在 Windows 上无法读取的方式加密 cookies。请尝试以下任一解决方法。',
+          fixFirefoxLabel: '切换到 Firefox',
+          fixFirefoxBody: 'Firefox 不使用 App-Bound Encryption。打开 cookies 设置，从浏览器列表中选择 Firefox。',
+          fixFileLabel: '导出 cookies.txt',
+          fixFileBody: '使用浏览器扩展从 Chrome 导出 cookies，然后将此应用切换到文件模式并选择导出的文件。',
+          fixUnsafeLabel: '以禁用 App-Bound Encryption 的方式启动 Chrome',
+          fixUnsafeBody: '在 Chrome 的启动快捷方式中添加 --disable-features=LockProfileCookieDatabase。警告：这将使之前加密的 cookies 失效，你将被所有网站登出，需要重新登录。',
+          docsLinkLabel: 'yt-dlp 文档（issue #10927）'
+        }
       }
     },
     folder: {

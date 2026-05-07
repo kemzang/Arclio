@@ -271,7 +271,18 @@ const ps = {
         currentModeBrowser: 'براوزر',
         explanationFile: 'ستاسو د کوکیزو فایل ممکن خالي، پخوانی، یا د غلط بڼې وي (yt-dlp Netscape cookies.txt تمه لري). هڅه وکړئ کوکیز بیا صادر کړئ، بل فایل غوره کړئ، د براوزر حالت ته بدل شئ، یا کوکیز بند کړئ.',
         explanationBrowser: 'کوکیز مستقیم له براوزر نه لوستل کیږي. که براوزر اوس مهال چلیږي، د کوکیزو ډیټابیس ممکن بند وي (Chromium کورنۍ). براوزر باید YouTube ته ننوتلی وي. هڅه وکړئ براوزر وتړئ، بل براوزر ته بدل شئ، د فایل حالت ته بدل شئ، یا کوکیز بند کړئ.',
-        openSettingsCta: 'د کوکیزو تنظیمات پرانیستل'
+        openSettingsCta: 'د کوکیزو تنظیمات پرانیستل',
+        dpapi: {
+          heading: 'Chrome کوکیز د Windows د کوډ کولو لخوا بند شوي',
+          explanation: 'Chrome 127 او نوي نسخې کوکیز داسې کوډ کوي چې نور اپلیکیشنونه یې د Windows کې لوستلی نشي. لاندې یو له حلونو هڅه وکړئ.',
+          fixFirefoxLabel: 'Firefox ته بدل شئ',
+          fixFirefoxBody: 'Firefox د App-Bound Encryption نه کاروي. د کوکیزو تنظیمات پرانیستل او د براوزر له لیست نه Firefox غوره کړئ.',
+          fixFileLabel: 'cookies.txt صادر کړئ',
+          fixFileBody: 'د براوزر د توسیع سره له Chrome نه کوکیز صادر کړئ، بیا دا اپلیکیشن د فایل حالت ته بدل کړئ او صادر شوی فایل غوره کړئ.',
+          fixUnsafeLabel: 'Chrome د App-Bound Encryption غیر فعاله سره پیل کړئ',
+          fixUnsafeBody: 'د Chrome د پیل شارټ کټ کې --disable-features=LockProfileCookieDatabase اضافه کړئ. خبرداری: دا مخکې کوډ شوي کوکیز باطلوي، نو تاسو به له هر سایټ وتلئ او بیا ننوتل ضروري دي.',
+          docsLinkLabel: 'yt-dlp اسناد (issue #10927)'
+        }
       }
     },
     folder: {

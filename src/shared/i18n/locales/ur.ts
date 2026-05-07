@@ -271,7 +271,18 @@ const ur = {
         currentModeBrowser: 'براؤزر',
         explanationFile: 'آپ کی cookies فائل خالی، میعاد ختم، یا غلط فارمیٹ میں ہو سکتی ہے (yt-dlp Netscape cookies.txt کی توقع رکھتا ہے)۔ cookies دوبارہ ایکسپورٹ کریں، مختلف فائل منتخب کریں، براؤزر موڈ پر سوئچ کریں، یا cookies بند کر دیں۔',
         explanationBrowser: 'Cookies براہ راست براؤزر سے پڑھی جاتی ہیں۔ اگر براؤزر ابھی چل رہا ہے تو اس کا cookie ڈیٹا بیس لاک ہو سکتا ہے (Chromium-family)۔ براؤزر کا YouTube میں سائن اِن ہونا بھی ضروری ہے۔ براؤزر بند کریں، کوئی مختلف براؤزر آزمائیں، فائل موڈ پر سوئچ کریں، یا cookies بند کر دیں۔',
-        openSettingsCta: 'Cookies سیٹنگز کھولیں'
+        openSettingsCta: 'Cookies سیٹنگز کھولیں',
+        dpapi: {
+          heading: 'Chrome cookies ونڈوز انکرپشن کے ذریعے بلاک ہیں',
+          explanation: 'Chrome 127 اور اس سے نئے ورژن cookies کو اس طرح انکرپٹ کرتے ہیں کہ دوسری ایپس Windows پر انہیں پڑھ نہیں سکتیں۔ نیچے دیے گئے حلوں میں سے ایک آزمائیں۔',
+          fixFirefoxLabel: 'Firefox پر سوئچ کریں',
+          fixFirefoxBody: 'Firefox، App-Bound Encryption استعمال نہیں کرتا۔ Cookies سیٹنگز کھولیں اور براؤزر کی فہرست سے Firefox منتخب کریں۔',
+          fixFileLabel: 'cookies.txt ایکسپورٹ کریں',
+          fixFileBody: 'کسی براؤزر ایکسٹینشن سے Chrome سے cookies ایکسپورٹ کریں، پھر اس ایپ کو فائل موڈ پر سوئچ کریں اور ایکسپورٹ کی گئی فائل منتخب کریں۔',
+          fixUnsafeLabel: 'App-Bound Encryption غیر فعال کر کے Chrome لانچ کریں',
+          fixUnsafeBody: 'Chrome کی لانچ شارٹ کٹ میں --disable-features=LockProfileCookieDatabase شامل کریں۔ انتباہ: اس سے پہلے سے انکرپٹ cookies ختم ہو جاتی ہیں، اس لیے آپ ہر سائٹ سے لاگ آؤٹ ہو جائیں گے اور دوبارہ لاگ ان کرنا ہو گا۔',
+          docsLinkLabel: 'yt-dlp دستاویزات (issue #10927)'
+        }
       }
     },
     folder: {
