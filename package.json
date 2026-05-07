@@ -1,6 +1,6 @@
 {
   "name": "arroxy",
-  "version": "0.3.1-beta.3",
+  "version": "0.3.1-beta.4",
   "description": "Arroxy - YouTube downloader app",
   "main": "out/main/index.js",
   "author": {
@@ -40,6 +40,8 @@
     "build:docs": "bun run build:readme && bun run build:landing && bun run build:blog",
     "smoke": "bun scripts/smoke-youtube.ts",
     "smoke:pot": "bun scripts/smoke-pot-runner.ts",
+    "release:beta": "bash scripts/release.sh beta",
+    "release:stable": "bash scripts/release.sh stable",
     "prepare": "husky"
   },
   "dependencies": {

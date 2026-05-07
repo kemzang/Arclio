@@ -12,6 +12,23 @@ import type { InstallChannel, UpdateAvailablePayload, UpdateInstallResult } from
 // still gets a banner so the user can copy the upgrade command.
 const NON_INSTALLABLE: ReadonlySet<InstallChannel> = new Set(['scoop', 'homebrew', 'portable']);
 
+// Map the running version's semver prerelease tag to an electron-updater
+// release channel. Stable versions follow `latest` and must never see beta
+// releases; prerelease builds follow their own channel so a v0.3.1-beta.3
+// install upgrades along beta.yml, not latest.yml.
+function resolveUpdateChannel(version: string): { channel: string; allowPrerelease: boolean } {
+  const dashIdx = version.indexOf('-');
+  if (dashIdx === -1) return { channel: 'latest', allowPrerelease: false };
+  const tag = version
+    .slice(dashIdx + 1)
+    .split('.', 1)[0]
+    .toLowerCase();
+  if (tag === 'beta' || tag === 'alpha' || tag === 'rc') {
+    return { channel: tag, allowPrerelease: true };
+  }
+  return { channel: 'latest', allowPrerelease: false };
+}
+
 export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
   const installChannel = detectInstallChannel(app.getName());
 
@@ -25,7 +42,17 @@ export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
   // app-update.yml is absent from that extracted bundle, causing ENOENT when
   // electron-updater tries to read the feed. setFeedURL is authoritative and
   // overrides the missing file on all targets (no-op cost on NSIS/DMG/AppImage).
-  autoUpdater.setFeedURL({ provider: 'github', owner: 'antonio-orionus', repo: 'Arroxy' });
+  // The channel must match the running version's semver tag so a beta install
+  // queries beta.yml (not latest.yml — which 404s on prerelease releases).
+  const { channel, allowPrerelease } = resolveUpdateChannel(app.getVersion());
+  autoUpdater.setFeedURL({
+    provider: 'github',
+    owner: 'antonio-orionus',
+    repo: 'Arroxy',
+    channel
+  });
+  autoUpdater.channel = channel;
+  autoUpdater.allowPrerelease = allowPrerelease;
 
   autoUpdater.autoDownload = false;
   autoUpdater.autoInstallOnAppQuit = false;
@@ -87,6 +114,8 @@ export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
   });
 
   setTimeout(() => {
-    void autoUpdater.checkForUpdates();
+    autoUpdater.checkForUpdates().catch((err: Error) => {
+      log.error('[updater] checkForUpdates failed', err.message);
+    });
   }, 5_000);
 }

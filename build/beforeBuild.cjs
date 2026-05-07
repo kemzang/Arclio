@@ -15,4 +15,9 @@ exports.default = async function beforeBuild(context) {
   const script = path.join(cwd, 'scripts', 'build', 'fetch-embedded.sh');
   console.log(`[beforeBuild] fetch ffmpeg/ffprobe for ${platform}-${archName}`);
   execFileSync('bash', [script, platform, archName], { stdio: 'inherit', cwd });
+  // Returning falsy here makes electron-builder treat node_modules as
+  // "handled externally" and skip the prod-deps install/copy entirely
+  // (app-builder-lib/out/packager.js — _nodeModulesHandledExternally),
+  // which produces an asar with zero node_modules.
+  return true;
 };
