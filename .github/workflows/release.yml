@@ -172,6 +172,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # The flatpak-builder container runs as a different user than the
+          # workspace owner; without this, git refuses to read the repo with
+          # "fatal: detected dubious ownership". actions/checkout sets this
+          # too, but only into a temporary config that doesn't always survive
+          # across steps in this container image.
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           VERSION="${GITHUB_REF_NAME#v}"
           TARBALL="Arroxy-${VERSION}.tar.gz"
           gh release download "${GITHUB_REF_NAME}" \

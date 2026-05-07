@@ -24,18 +24,21 @@ def render_template(
 
 
 def collect_releases() -> list[tuple[str, str]]:
-    result = subprocess.run(
-        [
-            "git",
-            "for-each-ref",
-            "refs/tags/v*",
-            "--sort=-v:refname",
-            "--format=%(refname:short)|%(taggerdate:short)|%(committerdate:short)",
-        ],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
+    cmd = [
+        "git",
+        "for-each-ref",
+        "refs/tags/v*",
+        "--sort=-v:refname",
+        "--format=%(refname:short)|%(taggerdate:short)|%(committerdate:short)",
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        raise SystemExit(
+            f"git for-each-ref failed (exit {result.returncode})\n"
+            f"  cmd: {' '.join(cmd)}\n"
+            f"  stdout: {result.stdout!r}\n"
+            f"  stderr: {result.stderr!r}"
+        )
     pairs: list[tuple[str, str]] = []
     for line in result.stdout.splitlines():
         if not line.strip():
