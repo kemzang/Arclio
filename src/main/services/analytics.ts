@@ -95,6 +95,11 @@ export function setupAnalytics(clientId: string | undefined, clientSecret: strin
   _op = new OpenPanel({
     clientId,
     clientSecret,
+    // Identify as a web/app SDK so the OpenPanel server mints deviceId +
+    // sessionId. The default `node` sdk name is treated as backend ingest —
+    // server returns empty deviceId/sessionId and events arrive un-sessioned.
+    sdk: 'web',
+    sdkVersion: '1.3.1',
     // Runtime gate via filter — `disabled` queues instead of dropping, which
     // isn't what we want when the user opts out.
     filter: () => _on
