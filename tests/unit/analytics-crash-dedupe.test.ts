@@ -1,12 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@aptabase/electron/main', () => ({
-  initialize: vi.fn().mockResolvedValue(undefined),
-  trackEvent: vi.fn().mockResolvedValue(undefined)
-}));
+const { ctorMock, trackMock } = vi.hoisted(() => {
+  const trackMock = vi.fn().mockResolvedValue(undefined);
+  const identifyMock = vi.fn().mockResolvedValue(undefined);
+  const setGlobalPropertiesMock = vi.fn();
+  const ctorMock = vi.fn().mockImplementation(function () {
+    return { track: trackMock, identify: identifyMock, setGlobalProperties: setGlobalPropertiesMock };
+  });
+  return { ctorMock, trackMock };
+});
+
+vi.mock('@openpanel/sdk', () => ({ OpenPanel: ctorMock }));
 
 import { setAnalyticsEnabled, setupAnalytics, trackCrashDetectedOncePerSession } from '@main/services/analytics';
-import { trackEvent } from '@aptabase/electron/main';
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -15,7 +21,7 @@ beforeEach(() => {
 
 describe('trackCrashDetectedOncePerSession', () => {
   it('emits a repeated identical child-process crash only once per session', () => {
-    setupAnalytics('A-EU-test123456', false);
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
     setAnalyticsEnabled(true);
 
     trackCrashDetectedOncePerSession({
@@ -31,15 +37,15 @@ describe('trackCrashDetectedOncePerSession', () => {
       name: 'Network Service'
     });
 
-    expect(trackEvent).toHaveBeenCalledTimes(1);
-    expect(trackEvent).toHaveBeenCalledWith('crash_detected', {
+    expect(trackMock).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledWith('crash_detected', {
       type: 'Utility',
       reason: 'crashed'
     });
   });
 
   it('dedupes child-process crashes by type and reason even when names differ', () => {
-    setupAnalytics('A-EU-test123456', false);
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
     setAnalyticsEnabled(true);
 
     trackCrashDetectedOncePerSession({
@@ -55,11 +61,11 @@ describe('trackCrashDetectedOncePerSession', () => {
       name: 'Audio Service'
     });
 
-    expect(trackEvent).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledTimes(1);
   });
 
   it('dedupes renderer crashes by reason even when window roles differ', () => {
-    setupAnalytics('A-EU-test123456', false);
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
     setAnalyticsEnabled(true);
 
     trackCrashDetectedOncePerSession({
@@ -78,15 +84,15 @@ describe('trackCrashDetectedOncePerSession', () => {
       reason: 'crashed'
     });
 
-    expect(trackEvent).toHaveBeenCalledTimes(1);
-    expect(trackEvent).toHaveBeenNthCalledWith(1, 'crash_detected', {
+    expect(trackMock).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledWith('crash_detected', {
       type: 'renderer',
       reason: 'crashed'
     });
   });
 
   it('does not poison the dedupe set while analytics is disabled or not started', () => {
-    setupAnalytics('A-EU-test123456', false);
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
     setAnalyticsEnabled(false);
 
     const childCrash = {
@@ -97,27 +103,27 @@ describe('trackCrashDetectedOncePerSession', () => {
     } as const;
 
     trackCrashDetectedOncePerSession(childCrash);
-    expect(trackEvent).not.toHaveBeenCalled();
+    expect(trackMock).not.toHaveBeenCalled();
 
     setAnalyticsEnabled(true);
     trackCrashDetectedOncePerSession(childCrash);
-    expect(trackEvent).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledTimes(1);
 
     vi.clearAllMocks();
 
-    setupAnalytics(undefined, false);
+    setupAnalytics(undefined, undefined, false, 'install-id-test');
     setAnalyticsEnabled(true);
     trackCrashDetectedOncePerSession(childCrash);
-    expect(trackEvent).not.toHaveBeenCalled();
+    expect(trackMock).not.toHaveBeenCalled();
 
-    setupAnalytics('A-EU-test123456', false);
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
     setAnalyticsEnabled(true);
     trackCrashDetectedOncePerSession(childCrash);
-    expect(trackEvent).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledTimes(1);
   });
 
   it('clears the session dedupe state on fresh setupAnalytics()', () => {
-    setupAnalytics('A-EU-test123456', false);
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
     setAnalyticsEnabled(true);
 
     const childCrash = {
@@ -128,12 +134,12 @@ describe('trackCrashDetectedOncePerSession', () => {
     } as const;
 
     trackCrashDetectedOncePerSession(childCrash);
-    expect(trackEvent).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledTimes(1);
 
-    setupAnalytics('A-EU-test123456', false);
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
     setAnalyticsEnabled(true);
     trackCrashDetectedOncePerSession(childCrash);
 
-    expect(trackEvent).toHaveBeenCalledTimes(2);
+    expect(trackMock).toHaveBeenCalledTimes(2);
   });
 });

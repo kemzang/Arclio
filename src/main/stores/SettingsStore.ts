@@ -1,10 +1,11 @@
+import { randomUUID } from 'node:crypto';
 import Store from 'electron-store';
 import type { AppSettings, CommonSettings, PlaylistPrefs, SinglePrefs } from '@shared/types';
 import type { SettingsPatch } from '@shared/api';
 
 export type { SettingsPatch };
 
-const COMMON_FLAT_KEYS = ['defaultOutputDir', 'rememberLastOutputDir', 'uiZoom', 'uiTheme', 'language', 'commonPaths', 'cookiesPath', 'cookiesEnabled', 'proxyUrl', 'clipboardWatchEnabled', 'closeBehavior', 'embedChapters', 'embedMetadata', 'embedThumbnail', 'writeDescription', 'writeThumbnail', 'lastSponsorBlockMode', 'lastSponsorBlockCategories', 'analyticsEnabled', 'firstRunCompleted', 'drawerOpen'] as const;
+const COMMON_FLAT_KEYS = ['defaultOutputDir', 'rememberLastOutputDir', 'uiZoom', 'uiTheme', 'language', 'commonPaths', 'cookiesPath', 'cookiesEnabled', 'proxyUrl', 'clipboardWatchEnabled', 'closeBehavior', 'embedChapters', 'embedMetadata', 'embedThumbnail', 'writeDescription', 'writeThumbnail', 'lastSponsorBlockMode', 'lastSponsorBlockCategories', 'analyticsEnabled', 'firstRunCompleted', 'drawerOpen', 'installId'] as const;
 
 const SINGLE_FLAT_KEYS = ['lastPreset', 'lastVideoResolution', 'lastSubtitleLanguages', 'lastSubtitleMode', 'lastSubtitleFormat', 'lastSubfolderEnabled', 'lastSubfolder'] as const;
 
@@ -60,6 +61,18 @@ export class SettingsStore {
     this.store = new Store<AppSettings>({ name: 'settings', cwd: userDataPath, defaults, clearInvalidConfig: true });
     this.defaults = defaults;
     this.maybeMigrate();
+    this.ensureInstallId();
+  }
+
+  // Guarantee a per-install UUID for telemetry (TelemetryDeck `clientUser`).
+  // electron-store's `defaults` is shallow-merged at the top level, so an
+  // existing user whose on-disk `common` predates this field would never
+  // receive the default. Stamp lazily here after migration.
+  private ensureInstallId(): void {
+    const current = this.store.store;
+    if (current.common.installId) return;
+    const next: AppSettings = { ...current, common: { ...current.common, installId: randomUUID() } };
+    this.store.set(next);
   }
 
   private maybeMigrate(): void {

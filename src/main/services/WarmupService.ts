@@ -10,10 +10,11 @@ import type { TokenService } from './TokenService';
 const logger = log.scope('warmup');
 
 // Cap any single binary resolve at this. Unbounded `got` retries on a slow
-// CDN can otherwise hang the splash for ~30 minutes — the user has no out
-// without a Cancel button. With Cancel + this cap, worst-case wait is ~90s
-// per binary before the failure surfaces and the repair UI takes over.
-const PER_BINARY_BUDGET_MS = 90_000;
+// CDN can otherwise hang the splash for a very long time — the user has no
+// out without a Cancel button. We allow a long budget because large Windows
+// ffmpeg archives can take several minutes on slow links, and aborting a
+// still-progressing transfer at 90s proved too aggressive in production.
+const PER_BINARY_BUDGET_MS = 30 * 60 * 1000;
 
 // `got` fires `downloadProgress` per network chunk — hundreds of events per
 // second on a fast pipe. Without throttling, the IPC fire-hose plus per-event

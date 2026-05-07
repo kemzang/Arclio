@@ -5,13 +5,14 @@ import fsPromises from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { app } from 'electron';
 import extractZip from 'extract-zip';
 import got, { type Method } from 'got';
 import log from 'electron-log/main';
 
 const execFileAsync = promisify(execFile);
 import { trackMain } from '@main/services/analytics';
-import type { BinaryOverrides, DependencyAttempt, DependencyDiagnostic, DependencyFailure, DependencyFailureKind, DependencyId, DependencySource, StatusKey, WarmupProgressEvent } from '@shared/types';
+import { FAILURE_CODE, type BinaryOverrides, type DependencyAttempt, type DependencyDiagnostic, type DependencyFailure, type DependencyFailureKind, type DependencyId, type DependencySource, type StatusKey, type WarmupProgressEvent } from '@shared/types';
 
 type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | number>) => void;
 type DownloadProgressCallback = (downloaded: number, total: number | undefined) => void;
@@ -33,6 +34,14 @@ const PROBE_TIMEOUT_MS = 10_000;
 function isAbortError(err: unknown): boolean {
   if (!(err instanceof Error)) return false;
   return err.name === 'AbortError' || (err as { code?: string }).code === 'ABORT_ERR';
+}
+
+// Cancellation errors must keep their AbortError marker so classifyDownloadError
+// → 'timeout'. A plain `new Error('Cancelled')` reads as a generic download_failed.
+function cancelError(message = 'Cancelled'): Error {
+  const err = new Error(message);
+  err.name = 'AbortError';
+  return err;
 }
 
 function abortFailure(message: string): DependencyFailure {
@@ -64,9 +73,13 @@ function classifyProbeError(err: NodeJS.ErrnoException, stderr?: string): Depend
 
 async function probeBinary(filePath: string, args: string[], timeoutMs: number = PROBE_TIMEOUT_MS, signal?: AbortSignal): Promise<{ ok: true; output: string } | { ok: false; failure: DependencyFailure }> {
   if (signal?.aborted) return { ok: false, failure: abortFailure('Cancelled before probe') };
+  // BtbN's Linux shared ffmpeg/ffprobe build expects libav*.so.* siblings in
+  // the executable's own directory. Inject LD_LIBRARY_PATH so probing the
+  // bundled binary works the same way spawnYtDlp/spawnFFmpeg do at runtime.
+  const env = process.platform === 'linux' ? { ...process.env, LD_LIBRARY_PATH: path.dirname(filePath) + (process.env.LD_LIBRARY_PATH ? path.delimiter + process.env.LD_LIBRARY_PATH : '') } : undefined;
   return new Promise((resolve) => {
     let settled = false;
-    const child = execFile(filePath, args, { timeout: timeoutMs, windowsHide: true, maxBuffer: 1024 * 1024, signal }, (err, stdout, stderr) => {
+    const child = execFile(filePath, args, { timeout: timeoutMs, windowsHide: true, maxBuffer: 1024 * 1024, signal, env }, (err, stdout, stderr) => {
       if (settled) return;
       settled = true;
       if (err) {
@@ -137,6 +150,7 @@ function failedDiagnostic(id: DependencyId, attempts: DependencyAttempt[]): Depe
 }
 
 function classifyDownloadError(err: unknown): DependencyFailureKind {
+  if (isAbortError(err)) return 'timeout';
   const msg = err instanceof Error ? err.message.toLowerCase() : '';
   if (msg.includes('checksum')) return 'hash_failed';
   if (msg.includes('archive') || msg.includes('did not contain') || msg.includes('extract')) return 'extract_failed';
@@ -188,6 +202,22 @@ function parseShaLine(content: string, fileName: string): string | null {
   return null;
 }
 
+// Single-line plain-hex SHA used by deno's Linux/Mac sha256sum sibling.
+// Falls back to any 64-hex token in the body (covers labelled forms).
+function parseStandaloneSha256(content: string): string | null {
+  const firstToken = content.trim().split(/\s+/)[0] ?? '';
+  if (/^[a-fA-F0-9]{64}$/.test(firstToken)) return firstToken.toLowerCase();
+  const labelled = /\b([a-fA-F0-9]{64})\b/.exec(content);
+  return labelled ? labelled[1].toLowerCase() : null;
+}
+
+// Deno Windows .sha256sum uses multi-line "Hash : <64-hex>" PowerShell
+// format. Linux/Mac use parseStandaloneSha256 instead.
+function parsePowerShellFileHash(content: string): string | null {
+  const match = /^\s*Hash\s*:\s*([a-fA-F0-9]{64})\s*$/m.exec(content);
+  return match ? match[1].toLowerCase() : null;
+}
+
 // Network plumbing handled by `got`: per-phase timeouts (DNS/TCP/TLS/header/idle/total),
 // jittered exponential backoff, automatic redirect handling with retry on transient
 // HTTP errors (408/429/5xx) and network errors (ECONNRESET/ETIMEDOUT/EAI_AGAIN/...).
@@ -217,7 +247,7 @@ async function downloadText(url: string, signal?: AbortSignal): Promise<string> 
   if (signal) {
     if (signal.aborted) {
       req.cancel();
-      throw new Error('Cancelled');
+      throw cancelError();
     }
     const onAbort = (): void => req.cancel();
     signal.addEventListener('abort', onAbort, { once: true });
@@ -270,7 +300,7 @@ function resolvePartialResponseMode(startByte: number, statusCode: number | unde
 // attempt, resume via `Range: bytes=<size>-`. If the server responds 200
 // (no range support) instead of 206, truncate and start fresh.
 async function downloadFile(url: string, destination: string, onProgress?: DownloadProgressCallback, allowPartialRetry = true, signal?: AbortSignal): Promise<void> {
-  if (signal?.aborted) throw new Error('Cancelled');
+  if (signal?.aborted) throw cancelError();
   await fsPromises.mkdir(path.dirname(destination), { recursive: true });
 
   const partPath = `${destination}.part`;
@@ -287,7 +317,7 @@ async function downloadFile(url: string, destination: string, onProgress?: Downl
 
   const stream = got.stream(url, { headers, retry: HTTP_RETRY, timeout: HTTP_TIMEOUT, followRedirect: true });
   const onAbort = (): void => {
-    stream.destroy(new Error('Cancelled'));
+    stream.destroy(cancelError());
   };
   if (signal) {
     if (signal.aborted) onAbort();
@@ -350,9 +380,9 @@ async function sha256ForFile(filePath: string): Promise<string> {
   });
 }
 
-// One place for every upstream URL/host the bootstrap touches. Keep this
-// block as the single grep target — every code path that downloads a binary
-// or hits a release index reads from here.
+// Upstream sources still reached at runtime. ffmpeg + ffprobe are no longer
+// here — they ship via electron-builder extraResources (see fetch-embedded.sh
+// + bundledBinaryPath above). Only yt-dlp + deno remain runtime-fetched.
 const BINARY_SOURCES = {
   ytDlpNightly: {
     download: 'https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download',
@@ -364,40 +394,18 @@ const BINARY_SOURCES = {
   },
   deno: {
     download: 'https://github.com/denoland/deno/releases/latest/download'
-  },
-  ffmpegStatic: {
-    // eugeneware/ffmpeg-static, pinned to b6.0 (last tag with full platform
-    // matrix). Used on Linux/macOS as the single ffmpeg binary.
-    download: 'https://github.com/eugeneware/ffmpeg-static/releases/download/b6.0'
-  },
-  ffmpegBtbn: {
-    // BtbN — Linux ffprobe (tar.xz, contains bin/ffprobe).
-    download: 'https://github.com/BtbN/FFmpeg-Builds/releases/download/latest'
-  },
-  ffmpegGyan: {
-    // gyan.dev — Win ffmpeg + ffprobe pair (essentials ZIP, ~30 MB).
-    download: 'https://www.gyan.dev/ffmpeg/builds',
-    essentialsArchive: 'ffmpeg-release-essentials.zip'
-  },
-  ffmpegEvermeet: {
-    // evermeet.cx — macOS ffprobe (.zip, redirects to latest).
-    ffprobeZip: 'https://evermeet.cx/ffmpeg/getrelease/ffprobe/zip'
   }
 } as const;
 
 type AssetPlatform = 'win32' | 'darwin' | 'linux';
 type AssetArch = 'arm64' | 'x64';
 
+// yt-dlp_macos is a Mach-O universal binary (x86_64 + arm64); yt-dlp_macos_legacy
+// was discontinued upstream and now 404s on every release tag.
 const YT_DLP_ASSETS: Record<AssetPlatform, Record<AssetArch, string>> = {
   win32: { x64: 'yt-dlp.exe', arm64: 'yt-dlp.exe' },
-  darwin: { x64: 'yt-dlp_macos_legacy', arm64: 'yt-dlp_macos' },
+  darwin: { x64: 'yt-dlp_macos', arm64: 'yt-dlp_macos' },
   linux: { x64: 'yt-dlp_linux', arm64: 'yt-dlp_linux_aarch64' }
-};
-
-const FFMPEG_ASSETS: Record<AssetPlatform, Record<AssetArch, string>> = {
-  win32: { x64: 'ffmpeg-win32-x64', arm64: 'ffmpeg-win32-arm64' },
-  darwin: { x64: 'ffmpeg-darwin-x64', arm64: 'ffmpeg-darwin-arm64' },
-  linux: { x64: 'ffmpeg-linux-x64', arm64: 'ffmpeg-linux-arm64' }
 };
 
 // Deno releases ship as ZIPs named deno-<rust-target>.zip on the GitHub release
@@ -408,52 +416,6 @@ const DENO_ASSETS: Record<AssetPlatform, Record<AssetArch, string | null>> = {
   darwin: { x64: 'x86_64-apple-darwin', arm64: 'aarch64-apple-darwin' },
   linux: { x64: 'x86_64-unknown-linux-gnu', arm64: 'aarch64-unknown-linux-gnu' }
 };
-
-// ffprobe is shipped alongside ffmpeg in the canonical FFmpeg distributions.
-// We pull it at runtime instead of bundling via @ffprobe-installer/* npm
-// optional deps, which were unreliable on cross-platform CI: bun's frozen
-// lockfile sometimes skips the host-platform optional, and electron-builder
-// can't unpack what was never installed.
-//
-// - Win/Linux: BtbN/FFmpeg-Builds — single `latest` rolling tag, archives
-//   contain bin/ffprobe(.exe). Linux is .tar.xz (extracted via system tar).
-// - macOS: evermeet.cx — ships ffprobe as a standalone .zip; the
-//   /getrelease/ffprobe/zip endpoint redirects to the latest version.
-type FfprobeArchive = { source: 'btbn'; archive: string; format: 'zip' | 'tar.xz' } | { source: 'gyan'; archive: string; format: 'zip' } | { source: 'evermeet'; format: 'zip' };
-
-const FFPROBE_ASSETS: Record<AssetPlatform, Record<AssetArch, FfprobeArchive | null>> = {
-  win32: {
-    // gyan.dev "essentials" build: ~30 MB ffprobe.exe vs ~197 MB for BtbN GPL
-    // (which statically links every codec/filter we don't use). Smaller transfer
-    // = lower stall risk during warmup, less disk usage per user.
-    x64: { source: 'gyan', archive: 'ffmpeg-release-essentials.zip', format: 'zip' },
-    arm64: null
-  },
-  linux: {
-    x64: { source: 'btbn', archive: 'ffmpeg-master-latest-linux64-gpl.tar.xz', format: 'tar.xz' },
-    arm64: { source: 'btbn', archive: 'ffmpeg-master-latest-linuxarm64-gpl.tar.xz', format: 'tar.xz' }
-  },
-  darwin: {
-    x64: { source: 'evermeet', format: 'zip' },
-    arm64: { source: 'evermeet', format: 'zip' }
-  }
-};
-
-function ffprobeAsset(): FfprobeArchive | null {
-  const target = currentAssetTarget();
-  if (!target) return null;
-  return FFPROBE_ASSETS[target.platform][target.arch];
-}
-
-function ffprobeDownloadUrl(asset: FfprobeArchive): string {
-  if (asset.source === 'btbn') return `${BINARY_SOURCES.ffmpegBtbn.download}/${asset.archive}`;
-  if (asset.source === 'gyan') return `${BINARY_SOURCES.ffmpegGyan.download}/${asset.archive}`;
-  return BINARY_SOURCES.ffmpegEvermeet.ffprobeZip;
-}
-
-function ffprobeExecutableName(): string {
-  return process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe';
-}
 
 function currentAssetTarget(): { platform: AssetPlatform; arch: AssetArch } | null {
   const platform = process.platform;
@@ -466,12 +428,6 @@ function ytDlpAssetName(): string {
   const target = currentAssetTarget();
   if (!target) return 'yt-dlp_linux';
   return YT_DLP_ASSETS[target.platform][target.arch];
-}
-
-function ffmpegAssetName(): string | null {
-  const target = currentAssetTarget();
-  if (!target) return null;
-  return FFMPEG_ASSETS[target.platform][target.arch];
 }
 
 function denoAssetTarget(): string | null {
@@ -488,6 +444,34 @@ function denoAssetName(): string | null {
 function denoExecutableName(): string {
   return process.platform === 'win32' ? 'deno.exe' : 'deno';
 }
+
+// Resolve absolute path to a build-time-embedded ffmpeg/ffprobe binary.
+//
+// Production: binaries ship via electron-builder `extraResources`, so they
+// land in `process.resourcesPath` (Mac: Arroxy.app/Contents/Resources, Win:
+// <install>/resources, Linux AppImage: /tmp/.mount_*/resources).
+//
+// Development: scripts/build/fetch-embedded.sh populates
+// build/embedded/<platform>-<arch>/ once before `bun run dev`, so the
+// dev branch reads from there to mirror the production layout.
+function bundledBinaryPath(name: 'ffmpeg' | 'ffprobe'): string {
+  const ext = process.platform === 'win32' ? '.exe' : '';
+  const fileName = `${name}${ext}`;
+  if (app.isPackaged) {
+    return path.join(process.resourcesPath, fileName);
+  }
+  const arch = process.arch === 'arm64' ? 'arm64' : 'x64';
+  // __dirname in dev points at the electron-vite-compiled main bundle
+  // (out/main). Resolve up to repo root, then into build/embedded/.
+  return path.join(__dirname, '..', '..', 'build', 'embedded', `${process.platform}-${arch}`, fileName);
+}
+
+// Directory containing the embedded ffmpeg/ffprobe pair. Used by
+// spawnYtDlp + spawnFFmpeg to set LD_LIBRARY_PATH (Linux) so BtbN's
+// shared libav*.so.* siblings resolve.
+// Bound recursion so a malicious archive (deep tree or symlink cycle) cannot
+// stall extraction. Used by deno's zip extractor.
+const ARCHIVE_TREE_MAX_DEPTH = 8;
 
 interface EnsureBinaryConfig {
   name: string;
@@ -542,7 +526,7 @@ export class BinaryManager {
   }
 
   getFfmpegPath(): string {
-    return this.resolved.ffmpeg ?? process.env.ARROXY_FFMPEG_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg');
+    return this.resolved.ffmpeg ?? process.env.ARROXY_FFMPEG_PATH ?? bundledBinaryPath('ffmpeg');
   }
 
   getDenoPath(): string {
@@ -550,7 +534,7 @@ export class BinaryManager {
   }
 
   getFfprobePath(): string {
-    return this.resolved.ffprobe ?? process.env.ARROXY_FFPROBE_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe');
+    return this.resolved.ffprobe ?? process.env.ARROXY_FFPROBE_PATH ?? bundledBinaryPath('ffprobe');
   }
 
   // Probe-and-record helper used by every resolve chain. Runs the binary's
@@ -667,6 +651,15 @@ export class BinaryManager {
   // Wraps a managed-download attempt, recording download/extract/hash failures
   // as attempts on the chain. Returns true if the file is on disk after the
   // call (probe still has to run separately).
+  private recordManagedFailure(id: DependencyId, attempts: DependencyAttempt[], source: DependencySource, onProgress: ProgressEmitter | undefined, err: unknown): void {
+    const failure: DependencyFailure = { kind: classifyDownloadError(err), message: errorMessage(err) };
+    attempts.push(makeAttempt(source, failure));
+    onProgress?.({ binary: id, phase: 'failed', source, failureKind: failure.kind });
+    const tracked = id === 'yt-dlp' ? 'ytdlp' : id;
+    trackMain('binary_setup_failed', { binary: tracked, phase: failure.kind, code: FAILURE_CODE[failure.kind] });
+    logger.warn(`${id} managed download failed`, { source, error: failure.message });
+  }
+
   private async tryManagedDownload(id: DependencyId, attempts: DependencyAttempt[], source: DependencySource, onProgress: ProgressEmitter | undefined, run: () => Promise<void>): Promise<boolean> {
     onProgress?.({ binary: id, phase: 'downloading', source });
     try {
@@ -674,12 +667,7 @@ export class BinaryManager {
       onProgress?.({ binary: id, phase: 'extracting', source });
       return true;
     } catch (err) {
-      const failure: DependencyFailure = { kind: classifyDownloadError(err), message: errorMessage(err) };
-      attempts.push(makeAttempt(source, failure));
-      onProgress?.({ binary: id, phase: 'failed', source, failureKind: failure.kind });
-      const tracked = id === 'yt-dlp' ? 'ytdlp' : id;
-      trackMain('binary_setup_failed', { binary: tracked, phase: failure.kind });
-      logger.warn(`${id} managed download failed`, { source, error: failure.message });
+      this.recordManagedFailure(id, attempts, source, onProgress, err);
       return false;
     }
   }
@@ -708,223 +696,49 @@ export class BinaryManager {
   // spawnYtDlp's existing PATH injection finds both with one PATH entry.
   // Returns null if the platform/arch has no upstream build; the caller
   // tolerates this (ffprobe is only needed by certain post-processors).
-  // FFmpeg and ffprobe must be a matched pair: yt-dlp post-processors expect
-  // both side-by-side on PATH, and version skew between them tends to break
-  // codec/container handling. On Windows we pull a single Gyan archive that
-  // bundles both; on Linux/macOS we resolve each from its current upstream.
+  // ffmpeg + ffprobe ship via electron-builder extraResources at build time.
+  // Resolve order per binary: manualOverride → envOverride → bundled probe.
+  // No download/extract/checksum/retry — fetch-embedded.sh did all that during
+  // CI build. Pair coherence solved by construction (one matched archive →
+  // both binaries land together in process.resourcesPath).
   async resolveFFmpegPair(opts: ResolveOptions = {}): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic }> {
-    return process.platform === 'win32' ? this.resolveFFmpegPairWin(opts) : this.resolveFFmpegPairUnix(opts);
-  }
-
-  private async resolveFFmpegPairWin(opts: ResolveOptions): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic }> {
     const overrides = opts.overrides ?? this.overridesProvider();
     const onProgress = opts.onProgress;
     const signal = opts.signal;
-    const ffmpegAttempts: DependencyAttempt[] = [];
-    const ffprobeAttempts: DependencyAttempt[] = [];
-    onProgress?.({ binary: 'ffmpeg', phase: 'starting' });
-    onProgress?.({ binary: 'ffprobe', phase: 'starting' });
 
-    // Manual overrides — pair only succeeds if both probe-pass.
-    const manualPair = await this.tryPairOverride(overrides?.ffmpeg, overrides?.ffprobe, 'manualOverride', undefined, ffmpegAttempts, ffprobeAttempts, onProgress, signal);
-    if (manualPair) return manualPair;
+    const resolveOne = async (id: 'ffmpeg' | 'ffprobe', overridePath: string | undefined, envVar: string): Promise<DependencyDiagnostic> => {
+      const attempts: DependencyAttempt[] = [];
+      onProgress?.({ binary: id, phase: 'starting' });
 
-    const envFfmpeg = process.env.ARROXY_FFMPEG_PATH;
-    const envFfprobe = process.env.ARROXY_FFPROBE_PATH;
-    const envPair = await this.tryPairOverride(envFfmpeg, envFfprobe, 'envOverride', { ffmpeg: 'ARROXY_FFMPEG_PATH', ffprobe: 'ARROXY_FFPROBE_PATH' }, ffmpegAttempts, ffprobeAttempts, onProgress, signal);
-    if (envPair) return envPair;
+      if (overridePath) {
+        const source: DependencySource = { kind: 'manualOverride', path: overridePath };
+        const diag = await this.probeAndAccept(id, source, overridePath, attempts, onProgress, signal);
+        if (diag) return diag;
+      }
 
-    // Managed Gyan essentials ZIP — contains bin/ffmpeg.exe + bin/ffprobe.exe.
-    const pairDir = path.join(this.cacheDir, 'ffmpeg-pair');
-    const ffmpegPath = path.join(pairDir, 'ffmpeg.exe');
-    const ffprobePath = path.join(pairDir, 'ffprobe.exe');
-    const archiveUrl = `${BINARY_SOURCES.ffmpegGyan.download}/${BINARY_SOURCES.ffmpegGyan.essentialsArchive}`;
-    const managedSource: DependencySource = { kind: 'managed', channel: 'default', url: archiveUrl };
+      const envPath = process.env[envVar];
+      if (envPath) {
+        const source: DependencySource = { kind: 'envOverride', path: envPath, envVar };
+        const diag = await this.probeAndAccept(id, source, envPath, attempts, onProgress, signal);
+        if (diag) return diag;
+      }
 
-    const pairAlreadyExists = (await this.isUsableBinary(ffmpegPath)) && (await this.isUsableBinary(ffprobePath));
-    const downloadOk = pairAlreadyExists
-      ? true
-      : await this.tryManagedDownload('ffmpeg', ffmpegAttempts, managedSource, onProgress, () =>
-          this.ensureZippedBinaryMulti({
-            name: 'ffmpeg-pair',
-            downloadUrl: archiveUrl,
-            zipFileName: 'ffmpeg-release-essentials.zip',
-            members: [
-              { innerName: 'ffmpeg.exe', destinationPath: ffmpegPath },
-              { innerName: 'ffprobe.exe', destinationPath: ffprobePath }
-            ],
-            expectedSha256: () => Promise.resolve(null),
-            onStatus: opts.onStatus,
-            onDownloadProgress: makeDownloadProgress('ffmpeg', managedSource, onProgress),
-            signal
-          })
-        );
+      const bundled = bundledBinaryPath(id);
+      const source: DependencySource = { kind: 'bundled', path: bundled };
+      const diag = await this.probeAndAccept(id, source, bundled, attempts, onProgress, signal);
+      if (diag) return diag;
 
-    if (downloadOk) {
-      const ffmpegDiag = await this.probeAndAccept('ffmpeg', managedSource, ffmpegPath, ffmpegAttempts, onProgress, signal);
-      const ffprobeDiag = await this.probeAndAccept('ffprobe', managedSource, ffprobePath, ffprobeAttempts, onProgress, signal);
-      if (ffmpegDiag && ffprobeDiag) return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
-    } else {
-      // Mirror the failure on ffprobe so the diagnostic surfaces it too.
-      const last = ffmpegAttempts[ffmpegAttempts.length - 1];
-      if (last?.failure) ffprobeAttempts.push(makeAttempt(managedSource, last.failure));
-    }
-
-    // System PATH pair: both binaries must come from the same directory.
-    onProgress?.({ binary: 'ffmpeg', phase: 'fallback' });
-    onProgress?.({ binary: 'ffprobe', phase: 'fallback' });
-    const ffmpegCandidates = await whereOnPath('ffmpeg.exe', signal);
-    const probeCandidates = new Set((await whereOnPath('ffprobe.exe', signal)).map((p) => path.dirname(p).toLowerCase()));
-    for (const ffmpegCandidate of ffmpegCandidates) {
-      const dir = path.dirname(ffmpegCandidate);
-      if (!probeCandidates.has(dir.toLowerCase())) continue;
-      const probeCandidate = path.join(dir, 'ffprobe.exe');
-      const ffmpegSource: DependencySource = { kind: 'systemPath', path: ffmpegCandidate };
-      const probeSource: DependencySource = { kind: 'systemPath', path: probeCandidate };
-      const ffmpegDiag = await this.probeAndAccept('ffmpeg', ffmpegSource, ffmpegCandidate, ffmpegAttempts, onProgress, signal);
-      if (!ffmpegDiag) continue;
-      const ffprobeDiag = await this.probeAndAccept('ffprobe', probeSource, probeCandidate, ffprobeAttempts, onProgress, signal);
-      if (ffprobeDiag) return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
-      // ffmpeg succeeded but ffprobe didn't — the pair is incomplete; drop ffmpeg too.
-      delete this.resolved.ffmpeg;
-    }
-
-    const ffmpegDiag = failedDiagnostic('ffmpeg', ffmpegAttempts);
-    const ffprobeDiag = failedDiagnostic('ffprobe', ffprobeAttempts);
-    this.lastDiagnostics.ffmpeg = ffmpegDiag;
-    this.lastDiagnostics.ffprobe = ffprobeDiag;
-    return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
-  }
-
-  // Pair-override helper for manual + env paths. Both halves must be set and
-  // both must probe. Half-set is treated as an explicit pair_incomplete failure
-  // on whichever side is missing, then the chain advances.
-  private async tryPairOverride(ffmpegPath: string | undefined, ffprobePath: string | undefined, kind: 'manualOverride' | 'envOverride', envVars: { ffmpeg: string; ffprobe: string } | undefined, ffmpegAttempts: DependencyAttempt[], ffprobeAttempts: DependencyAttempt[], onProgress: ProgressEmitter | undefined, signal?: AbortSignal): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic } | null> {
-    if (!ffmpegPath && !ffprobePath) return null;
-    const buildSource = (which: 'ffmpeg' | 'ffprobe', filePath: string): DependencySource => {
-      if (kind === 'envOverride' && envVars) return { kind: 'envOverride', path: filePath, envVar: envVars[which] };
-      return { kind: 'manualOverride', path: filePath };
+      const failed = failedDiagnostic(id, attempts);
+      this.lastDiagnostics[id] = failed;
+      return failed;
     };
 
-    if (!ffmpegPath || !ffprobePath) {
-      const missing: DependencyFailure = { kind: 'pair_incomplete', message: 'ffmpeg and ffprobe overrides must both be set' };
-      if (ffmpegPath) {
-        const source = buildSource('ffmpeg', ffmpegPath);
-        ffmpegAttempts.push(makeAttempt(source, missing));
-        onProgress?.({ binary: 'ffmpeg', phase: 'failed', source, failureKind: missing.kind });
-      }
-      if (ffprobePath) {
-        const source = buildSource('ffprobe', ffprobePath);
-        ffprobeAttempts.push(makeAttempt(source, missing));
-        onProgress?.({ binary: 'ffprobe', phase: 'failed', source, failureKind: missing.kind });
-      }
-      return null;
-    }
-
-    const ffmpegSource = buildSource('ffmpeg', ffmpegPath);
-    const ffprobeSource = buildSource('ffprobe', ffprobePath);
-    const ffmpegDiag = await this.probeAndAccept('ffmpeg', ffmpegSource, ffmpegPath, ffmpegAttempts, onProgress, signal);
-    const ffprobeDiag = await this.probeAndAccept('ffprobe', ffprobeSource, ffprobePath, ffprobeAttempts, onProgress, signal);
-    if (ffmpegDiag && ffprobeDiag) return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
-    if (ffmpegDiag && !ffprobeDiag) delete this.resolved.ffmpeg;
-    if (!ffmpegDiag && ffprobeDiag) delete this.resolved.ffprobe;
-    return null;
-  }
-
-  // Non-Windows: keep the existing per-binary upstreams (eugeneware ffmpeg,
-  // BtbN/evermeet/Gyan ffprobe) but gate each on a runnable probe.
-  private async resolveFFmpegPairUnix(opts: ResolveOptions): Promise<{ ffmpeg: DependencyDiagnostic; ffprobe: DependencyDiagnostic }> {
-    const onProgress = opts.onProgress;
-    const overrides = opts.overrides ?? this.overridesProvider();
-    const signal = opts.signal;
-
-    const ffmpegDiag = await this.resolveSingleBinary(
-      'ffmpeg',
-      overrides?.ffmpeg,
-      process.env.ARROXY_FFMPEG_PATH,
-      'ARROXY_FFMPEG_PATH',
-      async (source, attempts) => {
-        const assetName = ffmpegAssetName();
-        if (!assetName) return null;
-        const targetPath = path.join(this.cacheDir, 'ffmpeg');
-        const url = `${BINARY_SOURCES.ffmpegStatic.download}/${assetName}`;
-        const checksumUrl = `${url}.sha256`;
-        const downloadOk = await this.tryManagedDownload('ffmpeg', attempts, source, onProgress, () =>
-          this.ensureBinary({
-            name: 'ffmpeg',
-            destinationPath: targetPath,
-            downloadUrl: url,
-            expectedSha256: async () => {
-              try {
-                const checksumText = await downloadText(checksumUrl, signal);
-                const firstToken = checksumText.trim().split(/\s+/)[0];
-                return /^[a-fA-F0-9]{64}$/.test(firstToken) ? firstToken.toLowerCase() : null;
-              } catch {
-                return null;
-              }
-            },
-            onStatus: opts.onStatus,
-            onDownloadProgress: makeDownloadProgress('ffmpeg', source, onProgress),
-            requiredChecksum: false,
-            signal
-          })
-        );
-        return downloadOk ? targetPath : null;
-      },
-      { kind: 'managed', channel: 'default', url: BINARY_SOURCES.ffmpegStatic.download },
-      opts
-    );
-
-    const ffprobeDiag = await this.resolveSingleBinary(
-      'ffprobe',
-      overrides?.ffprobe,
-      process.env.ARROXY_FFPROBE_PATH,
-      'ARROXY_FFPROBE_PATH',
-      async (source, attempts) => {
-        const asset = ffprobeAsset();
-        if (!asset) return null;
-        const targetPath = path.join(this.cacheDir, ffprobeExecutableName());
-        // Skip the network round-trip if the file already exists. ensureBinary
-        // does this for the simple-download path; ensureZippedBinary/TarXzBinary
-        // do not, so we mirror it here.
-        if (await this.isUsableBinary(targetPath)) return targetPath;
-        const url = ffprobeDownloadUrl(asset);
-        const downloadOk = await this.tryManagedDownload('ffprobe', attempts, source, onProgress, () => {
-          if (asset.format === 'zip') {
-            return this.ensureZippedBinary({
-              name: 'ffprobe',
-              downloadUrl: url,
-              zipFileName: asset.source === 'evermeet' ? 'ffprobe.zip' : asset.archive,
-              innerExecutableName: ffprobeExecutableName(),
-              destinationPath: targetPath,
-              expectedSha256: () => Promise.resolve(null),
-              onStatus: opts.onStatus,
-              onDownloadProgress: makeDownloadProgress('ffprobe', source, onProgress),
-              signal
-            });
-          }
-          return this.ensureTarXzBinary({
-            name: 'ffprobe',
-            downloadUrl: url,
-            archiveFileName: asset.archive,
-            innerExecutableName: ffprobeExecutableName(),
-            destinationPath: targetPath,
-            onStatus: opts.onStatus,
-            onDownloadProgress: makeDownloadProgress('ffprobe', source, onProgress),
-            signal
-          });
-        });
-        return downloadOk ? targetPath : null;
-      },
-      { kind: 'managed', channel: 'default', url: 'ffprobe-managed' },
-      opts
-    );
-
-    return { ffmpeg: ffmpegDiag, ffprobe: ffprobeDiag };
+    const [ffmpeg, ffprobe] = await Promise.all([resolveOne('ffmpeg', overrides?.ffmpeg, 'ARROXY_FFMPEG_PATH'), resolveOne('ffprobe', overrides?.ffprobe, 'ARROXY_FFPROBE_PATH')]);
+    return { ffmpeg, ffprobe };
   }
 
   // Single-binary resolve helper: manual override → env override → managed
-  // download. Used by resolveDeno and the non-Windows ffmpeg/ffprobe paths.
+  // download. Used by resolveDeno.
   private async resolveSingleBinary(id: DependencyId, manualPath: string | undefined, envPath: string | undefined, envVar: string, doManaged: (source: DependencySource, attempts: DependencyAttempt[]) => Promise<string | null>, managedSource: DependencySource, opts: ResolveOptions): Promise<DependencyDiagnostic> {
     const attempts: DependencyAttempt[] = [];
     const onProgress = opts.onProgress;
@@ -966,52 +780,6 @@ export class BinaryManager {
     const onProgress = wrapDownloadProgressEmitter(onDownloadProgress);
     const pair = await this.resolveFFmpegPair({ onStatus, onProgress });
     return pair.ffprobe.resolvedPath;
-  }
-
-  // Linux BtbN ffmpeg builds ship as .tar.xz, which Node has no built-in
-  // extractor for. We shell out to system `tar` (always present on Linux/
-  // macOS, ships with Win10 1803+ but we use zip on Windows). xz support
-  // in `tar` is provided by xz-utils, also ubiquitous on modern distros.
-  private async ensureTarXzBinary(config: { name: string; downloadUrl: string; archiveFileName: string; innerExecutableName: string; destinationPath: string; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback; signal?: AbortSignal }): Promise<void> {
-    const { destinationPath, name, onStatus, onDownloadProgress, signal } = config;
-
-    const existing = this.inProgress.get(destinationPath);
-    if (existing) return existing;
-
-    const promise = (async (): Promise<void> => {
-      const tempDir = await fsPromises.mkdtemp(path.join(os.tmpdir(), `arroxy-${name}-`));
-      const archivePath = path.join(tempDir, config.archiveFileName);
-
-      try {
-        onStatus?.('downloadingBinary', { name });
-        logger.info(`Downloading ${name}`, {
-          downloadUrl: config.downloadUrl,
-          destinationPath
-        });
-
-        await downloadFile(config.downloadUrl, archivePath, onDownloadProgress, true, signal);
-
-        const extractDir = path.join(tempDir, 'unpacked');
-        await fsPromises.mkdir(extractDir, { recursive: true });
-        await execFileAsync('tar', ['-xJf', archivePath, '-C', extractDir], { signal });
-
-        const innerPath = await this.findExecutableInTree(extractDir, config.innerExecutableName);
-        if (!innerPath) {
-          throw new Error(`${name} archive did not contain ${config.innerExecutableName}`);
-        }
-
-        await fsPromises.mkdir(path.dirname(destinationPath), { recursive: true });
-        await fsPromises.copyFile(innerPath, destinationPath);
-        await fsPromises.chmod(destinationPath, 0o755);
-      } finally {
-        await fsPromises.rm(tempDir, { recursive: true, force: true });
-      }
-    })().finally(() => {
-      this.inProgress.delete(destinationPath);
-    });
-
-    this.inProgress.set(destinationPath, promise);
-    return promise;
   }
 
   // Deno is the JS runtime yt-dlp uses for nsig/signature decoding on the web
@@ -1058,13 +826,7 @@ export class BinaryManager {
             expectedSha256: async () => {
               try {
                 const checksumText = await downloadText(checksumUrl, signal);
-                return (
-                  parseShaLine(checksumText, assetName) ??
-                  (() => {
-                    const firstToken = checksumText.trim().split(/\s+/)[0];
-                    return /^[a-fA-F0-9]{64}$/.test(firstToken) ? firstToken.toLowerCase() : null;
-                  })()
-                );
+                return parseShaLine(checksumText, assetName) ?? parseStandaloneSha256(checksumText) ?? parsePowerShellFileHash(checksumText);
               } catch {
                 return null;
               }
@@ -1086,7 +848,7 @@ export class BinaryManager {
     return diag.resolvedPath;
   }
 
-  private async ensureZippedBinary(config: { name: string; downloadUrl: string; zipFileName: string; innerExecutableName: string; destinationPath: string; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback; signal?: AbortSignal }): Promise<void> {
+  private async ensureZippedBinary(config: { name: string; downloadUrl: string; zipFileName: string; innerExecutableName: string; destinationPath: string; expectedSha256: () => Promise<string | null>; requiredChecksum?: boolean; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback; signal?: AbortSignal }): Promise<void> {
     const { destinationPath, name, onStatus, onDownloadProgress, signal } = config;
 
     const existing = this.inProgress.get(destinationPath);
@@ -1111,6 +873,8 @@ export class BinaryManager {
           if (actual !== expected) {
             throw new Error(`${name} checksum mismatch. Expected ${expected.slice(0, 8)}..., got ${actual.slice(0, 8)}...`);
           }
+        } else if (config.requiredChecksum) {
+          throw new Error(`Checksum source unavailable for ${name}. Refusing to use unverified archive.`);
         } else {
           logger.warn(`Checksum unavailable for ${name}, proceeding without verification`);
         }
@@ -1141,66 +905,14 @@ export class BinaryManager {
     return promise;
   }
 
-  // Variant of ensureZippedBinary that extracts multiple members from a single
-  // archive into distinct destinations. Used for the Windows ffmpeg+ffprobe
-  // pair so both binaries come from the exact same Gyan build.
-  private async ensureZippedBinaryMulti(config: { name: string; downloadUrl: string; zipFileName: string; members: { innerName: string; destinationPath: string }[]; expectedSha256: () => Promise<string | null>; onStatus?: StatusReporter; onDownloadProgress?: DownloadProgressCallback; signal?: AbortSignal }): Promise<void> {
-    const { name, members, onStatus, onDownloadProgress, signal } = config;
-    const lockKey = members[0]?.destinationPath ?? name;
-
-    const existing = this.inProgress.get(lockKey);
-    if (existing) return existing;
-
-    const promise = (async (): Promise<void> => {
-      const tempDir = await fsPromises.mkdtemp(path.join(os.tmpdir(), `arroxy-${name}-`));
-      const zipPath = path.join(tempDir, config.zipFileName);
-
-      try {
-        onStatus?.('downloadingBinary', { name });
-        logger.info(`Downloading ${name}`, { downloadUrl: config.downloadUrl });
-
-        await downloadFile(config.downloadUrl, zipPath, onDownloadProgress, true, signal);
-
-        const expected = await config.expectedSha256();
-        if (expected) {
-          const actual = await sha256ForFile(zipPath);
-          if (actual !== expected) {
-            throw new Error(`${name} checksum mismatch. Expected ${expected.slice(0, 8)}..., got ${actual.slice(0, 8)}...`);
-          }
-        }
-
-        const extractDir = path.join(tempDir, 'unpacked');
-        await fsPromises.mkdir(extractDir, { recursive: true });
-        await extractZip(zipPath, { dir: extractDir });
-
-        for (const member of members) {
-          const innerPath = await this.findExecutableInTree(extractDir, member.innerName);
-          if (!innerPath) {
-            throw new Error(`${name} archive did not contain ${member.innerName}`);
-          }
-          await fsPromises.mkdir(path.dirname(member.destinationPath), { recursive: true });
-          await fsPromises.copyFile(innerPath, member.destinationPath);
-          if (process.platform !== 'win32') {
-            await fsPromises.chmod(member.destinationPath, 0o755);
-          }
-        }
-      } finally {
-        await fsPromises.rm(tempDir, { recursive: true, force: true });
-      }
-    })().finally(() => {
-      this.inProgress.delete(lockKey);
-    });
-
-    this.inProgress.set(lockKey, promise);
-    return promise;
-  }
-
-  private async findExecutableInTree(root: string, name: string): Promise<string | null> {
+  private async findExecutableInTree(root: string, name: string, depth = 0): Promise<string | null> {
+    if (depth > ARCHIVE_TREE_MAX_DEPTH) return null;
     const entries = await fsPromises.readdir(root, { withFileTypes: true });
     for (const entry of entries) {
+      if (entry.isSymbolicLink()) continue;
       const full = path.join(root, entry.name);
       if (entry.isDirectory()) {
-        const nested = await this.findExecutableInTree(full, name);
+        const nested = await this.findExecutableInTree(full, name, depth + 1);
         if (nested) return nested;
       } else if (entry.isFile() && entry.name === name) {
         return full;
@@ -1234,7 +946,7 @@ export class BinaryManager {
   private async downloadBinary(config: EnsureBinaryConfig): Promise<void> {
     const maxAttempts = 3;
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-      if (config.signal?.aborted) throw new Error('Cancelled');
+      if (config.signal?.aborted) throw cancelError();
       try {
         await this.attemptDownload(config);
         return;
@@ -1370,14 +1082,17 @@ export class BinaryManager {
 
 export const binaryInternals = {
   parseShaLine,
+  parseStandaloneSha256,
+  parsePowerShellFileHash,
   parseContentRangeStart,
   resolvePartialResponseMode,
   ytDlpAssetName,
-  ffmpegAssetName,
   denoAssetName,
   denoAssetTarget,
   denoExecutableName,
   sha256ForFile,
   classifyProbeError,
-  whereOnPath
+  classifyDownloadError,
+  whereOnPath,
+  bundledBinaryPath
 };

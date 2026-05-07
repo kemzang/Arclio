@@ -8,17 +8,22 @@ const require = createRequire(import.meta.url);
 const { version } = require('./package.json') as { version: string };
 
 export default defineConfig(({ mode }) => {
-  // Inline APTABASE_KEY from .env at build time. Without this, process.env.APTABASE_KEY
-  // is undefined in the packaged app (no shell env to read from), and analytics silently
-  // never initialize. Empty-string prefix loads all keys regardless of VITE_/MAIN_VITE_ prefix.
+  // Inline OpenPanel credentials from .env at build time. Without this,
+  // process.env.OPENPANEL_CLIENT_ID is undefined in the packaged app (no
+  // shell env to read from) and analytics silently never initialize.
+  // Empty-string prefix loads all keys regardless of VITE_/MAIN_VITE_ prefix.
   const env = loadEnv(mode, '.', '');
-  const aptabaseKey = env.APTABASE_KEY ?? process.env.APTABASE_KEY ?? '';
+  const openpanelClientId = env.OPENPANEL_CLIENT_ID ?? process.env.OPENPANEL_CLIENT_ID ?? '';
+  const openpanelClientSecret = env.OPENPANEL_CLIENT_SECRET ?? process.env.OPENPANEL_CLIENT_SECRET ?? '';
+  const arroxyAnalyticsDebug = env.ARROXY_ANALYTICS_DEBUG ?? process.env.ARROXY_ANALYTICS_DEBUG ?? '';
 
   return {
     main: {
       plugins: [externalizeDepsPlugin()],
       define: {
-        'process.env.APTABASE_KEY': JSON.stringify(aptabaseKey),
+        'process.env.OPENPANEL_CLIENT_ID': JSON.stringify(openpanelClientId),
+        'process.env.OPENPANEL_CLIENT_SECRET': JSON.stringify(openpanelClientSecret),
+        'process.env.ARROXY_ANALYTICS_DEBUG': JSON.stringify(arroxyAnalyticsDebug),
       },
       resolve: {
         alias: {

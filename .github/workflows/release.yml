@@ -30,9 +30,10 @@ jobs:
     # (.github/workflows/installer-smoke.yml) so it can be smoke-tested
     # before publish. mac/linux still build + publish here via dist:release.
     #
-    # ffmpeg/ffprobe are downloaded at runtime by BinaryManager (BtbN for
-    # Win/Linux, evermeet.cx for macOS) — no per-platform npm optional deps
-    # to patch in here.
+    # ffmpeg/ffprobe are embedded at build time via electron-builder's
+    # beforeBuild hook (build/beforeBuild.cjs invokes
+    # scripts/build/fetch-embedded.sh). yt-dlp + deno remain runtime-fetched
+    # by BinaryManager.
     needs: verify-version
     strategy:
       matrix:
@@ -51,7 +52,8 @@ jobs:
       - run: bun run ${{ matrix.dist-cmd }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APTABASE_KEY: ${{ secrets.APTABASE_KEY }}
+          OPENPANEL_CLIENT_ID: ${{ secrets.OPENPANEL_CLIENT_ID }}
+          OPENPANEL_CLIENT_SECRET: ${{ secrets.OPENPANEL_CLIENT_SECRET }}
 
   finalize:
     needs: build
@@ -105,9 +107,21 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish release
-        run: gh release edit ${{ github.ref_name }} --draft=false
+        # Tags w/ a semver pre-release suffix (e.g. v0.4.0-beta.1) un-draft as
+        # GitHub Pre-release. electron-updater's GitHub provider queries
+        # /releases/latest, which excludes pre-releases — existing user installs
+        # do NOT auto-update. Manual install from the release page works for
+        # internal testing. Stable tags (e.g. v0.4.0) un-draft as full release
+        # and trigger normal user auto-update.
         env:
           GH_TOKEN: ${{ secrets.WINGET_TOKEN }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          EXTRA=""
+          if [[ "$REF_NAME" == *-* ]]; then
+            EXTRA="--prerelease"
+          fi
+          gh release edit "$REF_NAME" --draft=false $EXTRA
 
   build-flatpak:
     # Build a Flatpak bundle for the GitHub Release only.
@@ -173,6 +187,9 @@ jobs:
 
   publish-scoop:
     needs: finalize
+    # Skip for pre-release tags (e.g. v0.4.0-beta.1) — only stable releases
+    # bump the public Scoop bucket.
+    if: ${{ !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout bucket
@@ -212,6 +229,8 @@ jobs:
 
   publish-homebrew:
     needs: finalize
+    # Skip for pre-release tags — only stable releases bump the Homebrew tap.
+    if: ${{ !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout tap

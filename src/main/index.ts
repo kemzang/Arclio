@@ -122,9 +122,6 @@ function createMainWindow(): BrowserWindow {
 }
 
 if (hasSingleInstanceLock) {
-  // Must be called before app.isReady() so aptabase registers its custom protocol scheme.
-  setupAnalytics(process.env.APTABASE_KEY, !!process.env.ELECTRON_RENDERER_URL || isMockBackend || !!process.env.ARROXY_SMOKE_URL);
-
   void app.whenReady().then(async () => {
     const userDataPath = app.getPath('userData');
     log.transports.file.resolvePathFn = () => path.join(userDataPath, 'logs', 'main.log');
@@ -137,6 +134,22 @@ if (hasSingleInstanceLock) {
 
     const settingsStore = new SettingsStore(userDataPath, defaultAppSettings(app.getPath('downloads')));
     const initialSettings = await settingsStore.get();
+    // installId is stamped lazily by SettingsStore on first launch — guaranteed
+    // present after `get()`. Empty string fallback keeps TS happy without
+    // weakening the type elsewhere.
+    const installId = initialSettings.common.installId ?? '';
+    const isDev = !!process.env.ELECTRON_RENDERER_URL || isMockBackend || !!process.env.ARROXY_SMOKE_URL;
+    const cpuModel = os.cpus()[0]?.model ?? 'unknown';
+    const osLocale = app.getLocale();
+    setupAnalytics(process.env.OPENPANEL_CLIENT_ID, process.env.OPENPANEL_CLIENT_SECRET, isDev, installId, {
+      appVersion: app.getVersion(),
+      platform: process.platform,
+      architecture: process.arch,
+      systemVersion: os.release(),
+      modelName: cpuModel,
+      osLocale,
+      appLocale: initialSettings.common.language ?? osLocale
+    });
     const languageRef: { current: ReturnType<typeof pickLanguage> } = {
       current: pickLanguage(initialSettings.common.language ?? app.getLocale())
     };

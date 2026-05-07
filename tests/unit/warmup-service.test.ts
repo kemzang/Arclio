@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { afterEach, describe, it, expect, vi } from 'vitest';
 import { WarmupService } from '@main/services/WarmupService';
 import type { BinaryManager } from '@main/services/BinaryManager';
 import type { TokenService } from '@main/services/TokenService';
@@ -28,6 +28,10 @@ function fakeBinaryManager(opts: { ytDlp: 'runnable' | 'failed'; ffmpeg: 'runnab
 }
 
 const noopToken = { warmUp: vi.fn().mockResolvedValue(undefined) } as unknown as TokenService;
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe('WarmupService', () => {
   it('returns blockingFailures excluding deno', async () => {
@@ -81,5 +85,18 @@ describe('WarmupService', () => {
     resolveYt(diag('yt-dlp', 'runnable'));
     await a;
     expect((bm.resolveYtDlp as ReturnType<typeof vi.fn>).mock.calls.length).toBe(1);
+  });
+
+  it('uses a 30 minute per-binary warmup budget', async () => {
+    const timeoutSpy = vi.spyOn(AbortSignal, 'timeout').mockImplementation(() => new AbortController().signal);
+    const bm = fakeBinaryManager({ ytDlp: 'runnable', ffmpeg: 'runnable', ffprobe: 'runnable', deno: 'runnable' });
+    const svc = new WarmupService({ binaryManager: bm, tokenService: noopToken });
+
+    await svc.run();
+
+    expect(timeoutSpy).toHaveBeenCalledTimes(3);
+    expect(timeoutSpy).toHaveBeenNthCalledWith(1, 1_800_000);
+    expect(timeoutSpy).toHaveBeenNthCalledWith(2, 1_800_000);
+    expect(timeoutSpy).toHaveBeenNthCalledWith(3, 1_800_000);
   });
 });
