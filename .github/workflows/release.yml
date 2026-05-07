@@ -163,6 +163,11 @@ jobs:
       options: --privileged
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Need full tag history so render-flatpak-manifest.py can read tagger
+          # dates of prior v* tags to render the metainfo <releases> block.
+          fetch-depth: 0
+          fetch-tags: true
       - name: Render manifest for this release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -178,12 +183,17 @@ jobs:
             --sha256 "$HASH" \
             --archive-path "$TARBALL" \
             --template flatpak/io.github.antonio_orionus.Arroxy.yml.in \
-            --output flatpak/io.github.antonio_orionus.Arroxy.yml
+            --output flatpak/io.github.antonio_orionus.Arroxy.yml \
+            --metainfo-template flatpak/io.github.antonio_orionus.Arroxy.metainfo.xml.in \
+            --metainfo-output flatpak/io.github.antonio_orionus.Arroxy.metainfo.xml
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           bundle: arroxy.flatpak
           manifest-path: flatpak/io.github.antonio_orionus.Arroxy.yml
-          cache-key: flatpak-builder-${{ github.sha }}
+          # Stable across release tags. Previously keyed on github.sha which
+          # never hit, adding ~7 min per release. Invalidates only when flatpak
+          # manifest or electron build inputs change.
+          cache-key: flatpak-builder-${{ hashFiles('flatpak/**', 'electron-builder.json5', 'package.json') }}
 
   upload-flatpak:
     needs: build-flatpak

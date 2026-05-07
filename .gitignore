@@ -43,6 +43,9 @@ flatpak/builddir/
 flatpak/repo/
 flatpak/flathub.json
 flatpak/io.github.antonio_orionus.Arroxy.yml
+flatpak/io.github.antonio_orionus.Arroxy.metainfo.xml
+flatpak/*.flatpak
+flatpak/Arroxy-*.tar.gz
 .flatpak-builder/
 build-dir/
 private
