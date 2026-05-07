@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 import { LOCALES } from "./strings.mjs";
 import { loadPosts } from "./blog/loadPosts.mjs";
-import { escapeHtml, safeJson, applyStrings, applyMacros } from "./lib/render.mjs";
+import { escapeHtml, safeJson, applyStrings, applyMacros, buildOpenpanelScript } from "./lib/render.mjs";
 
 const POSTS = loadPosts();
 
@@ -237,6 +237,7 @@ async function main() {
 
   const template = await readFile(TEMPLATE_PATH, "utf8");
   const hreflangLinks = buildHreflangLinks(LOCALES);
+  const openpanelScript = buildOpenpanelScript();
 
   // Wipe previous generated locale dirs (keep docs/index.html, assets, my/).
   for (const loc of LOCALES) {
@@ -272,6 +273,7 @@ async function main() {
       LANG_DIRS_JSON: safeJson(langDirs),
       JSON_LD: buildJsonLd(loc),
       FAQ_JSON_LD: buildFaqJsonLd(loc),
+      OPENPANEL_SCRIPT: openpanelScript,
     });
 
     await mkdir(outDir, { recursive: true });

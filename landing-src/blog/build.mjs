@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 
 import { marked } from "marked";
 
-import { applyStrings, applyMacros, escapeHtml, safeJson } from "../lib/render.mjs";
+import { applyStrings, applyMacros, escapeHtml, safeJson, buildOpenpanelScript } from "../lib/render.mjs";
 import { loadPosts } from "./loadPosts.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -61,7 +61,7 @@ function buildPostJsonLd(post, canonical) {
   });
 }
 
-async function renderPost(post, postTemplate) {
+async function renderPost(post, postTemplate, openpanelScript) {
   const canonical = `${SITE_URL}blog/${post.slug}/`;
   const bodyHtml = marked.parse(post.markdown);
 
@@ -79,6 +79,7 @@ async function renderPost(post, postTemplate) {
   html = applyMacros(html, {
     CANONICAL: canonical,
     JSON_LD: buildPostJsonLd(post, canonical),
+    OPENPANEL_SCRIPT: openpanelScript,
   });
 
   const outDir = resolve(BLOG_DIR, post.slug);
@@ -98,9 +99,10 @@ function postCard(post) {
         </a>`;
 }
 
-async function renderIndex(posts, indexTemplate) {
+async function renderIndex(posts, indexTemplate, openpanelScript) {
   const html = applyMacros(indexTemplate, {
     POSTS_HTML: posts.map(postCard).join("\n"),
+    OPENPANEL_SCRIPT: openpanelScript,
   });
   await mkdir(BLOG_DIR, { recursive: true });
   await writeFile(resolve(BLOG_DIR, "index.html"), html, "utf8");
@@ -118,9 +120,11 @@ async function main() {
     readFile(INDEX_TEMPLATE_PATH, "utf8"),
   ]);
 
-  await renderIndex(posts, indexTemplate);
+  const openpanelScript = buildOpenpanelScript();
+
+  await renderIndex(posts, indexTemplate, openpanelScript);
   for (const post of posts) {
-    await renderPost(post, postTemplate);
+    await renderPost(post, postTemplate, openpanelScript);
   }
 
   console.log(`\nBuilt ${posts.length} post${posts.length === 1 ? "" : "s"} + listing.`);

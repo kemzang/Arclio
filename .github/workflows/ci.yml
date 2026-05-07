@@ -49,6 +49,8 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Regenerate landing + blog pages
+        env:
+          LANDING_OPENPANEL_CLIENT_ID: ${{ secrets.LANDING_OPENPANEL_CLIENT_ID }}
         run: bun run build:docs
 
       - name: Verify docs/ matches landing-src/
