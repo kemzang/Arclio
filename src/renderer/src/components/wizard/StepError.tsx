@@ -27,7 +27,7 @@ export function StepError(): JSX.Element {
         {message}
       </p>
       {showBotWallNotice || showCookiesAlert ? (
-        <div className="w-full max-w-md text-left flex flex-col gap-2">
+        <div className="w-full max-w-md text-start flex flex-col gap-2">
           {showBotWallNotice ? <BotWallNotice forceShow /> : null}
           {showCookiesAlert ? <CookiesErrorAlert /> : null}
         </div>

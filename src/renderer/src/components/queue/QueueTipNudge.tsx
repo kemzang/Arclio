@@ -23,7 +23,7 @@ export function QueueTipNudge({ visible, onDismiss }: Props): JSX.Element | null
   if (!rendered) return null;
 
   return (
-    <div className="absolute bottom-full left-0 right-0 mb-1 pointer-events-none z-10 flex justify-center px-4">
+    <div className="absolute bottom-full inset-x-0 mb-1 pointer-events-none z-10 flex justify-center px-4">
       <div
         className={cn(cls, 'flex items-end gap-2 pointer-events-auto')}
         onAnimationEnd={() => {
@@ -35,7 +35,7 @@ export function QueueTipNudge({ visible, onDismiss }: Props): JSX.Element | null
           {t('queue.tip')}
           <span
             aria-hidden
-            className="absolute -bottom-[6px] left-6 w-0 h-0"
+            className="absolute -bottom-[6px] start-6 w-0 h-0"
             style={{
               borderLeft: '6px solid transparent',
               borderRight: '6px solid transparent',

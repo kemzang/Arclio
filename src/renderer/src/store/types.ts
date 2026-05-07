@@ -1,6 +1,7 @@
 import type { StoreApi } from 'zustand';
 import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, GetFormatsOutput, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
 import type { AudioSelection } from '@shared/schemas';
+import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
 export type { AudioSelection };
 export type WizardStep = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
 
@@ -62,11 +63,13 @@ export interface WizardSlice {
   playlistProbeLoading: boolean;
   mixedUrlPromptOpen: boolean;
   mixedUrlPending: string | null;
+  cookiesConfigDialogIssue: IncompleteCookiesConfigIssue | null;
   selectedPlaylistPreset: PlaylistPreset | null;
 
   setWizardUrl: (url: string) => void;
   submitUrl: () => Promise<void>;
   dismissMixedPrompt: (choice: 'video' | 'playlist') => Promise<void>;
+  dismissCookiesConfigDialog: () => void;
   setPlaylistItemSelected: (id: string, checked: boolean) => void;
   selectAllPlaylistItems: () => void;
   selectNonePlaylistItems: () => void;

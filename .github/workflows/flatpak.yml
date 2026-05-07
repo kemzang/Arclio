@@ -109,5 +109,5 @@ jobs:
         with:
           bundle: arroxy.flatpak
           manifest-path: flatpak/io.github.antonio_orionus.Arroxy.yml
-          cache-key: flatpak-builder-${{ github.sha }}
+          cache-key: flatpak-builder-${{ hashFiles('flatpak/**') }}
           verbose: true

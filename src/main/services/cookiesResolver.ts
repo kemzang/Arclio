@@ -1,10 +1,12 @@
 import type { AppSettings, CookiesBrowser } from '@shared/types';
+import { getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
 import { nonEmpty } from '@shared/format';
 
 export type ResolvedCookies = { kind: 'file'; path: string } | { kind: 'browser'; browser: CookiesBrowser };
 
 export function resolveCookies(settings: AppSettings): ResolvedCookies | null {
   const mode = settings.common?.cookiesMode ?? 'off';
+  if (getIncompleteCookiesConfigIssue(settings.common)) return null;
   if (mode === 'off') return null;
   if (mode === 'file') {
     const path = nonEmpty(settings.common?.cookiesPath?.trim());

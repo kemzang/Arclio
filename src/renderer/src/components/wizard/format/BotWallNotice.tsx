@@ -37,7 +37,7 @@ export function BotWallNotice({ forceShow = false }: Props): JSX.Element | null 
           <span className="leading-snug">{body}</span>
         </div>
       </div>
-      <div className="flex flex-wrap gap-2 pl-6">
+      <div className="flex flex-wrap gap-2 ps-6">
         {variant === 'disabled' ? (
           <Button type="button" size="sm" variant="default" onClick={() => void retryProbeWithCookies()} className="gap-1.5" data-testid="bot-wall-enable-cta">
             <ShieldCheck size={12} />

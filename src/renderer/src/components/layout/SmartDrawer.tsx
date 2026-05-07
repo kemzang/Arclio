@@ -72,7 +72,7 @@ export function SmartDrawer(): JSX.Element {
           <span className="text-[12px] font-bold uppercase tracking-widest text-muted-foreground">
             {t('queue.header')}
             {totalCount > 0 && (
-              <Badge variant="secondary" className="ml-1 text-[9px] font-mono h-4 px-1">
+              <Badge variant="secondary" className="ms-1 text-[9px] font-mono h-4 px-1">
                 {totalCount}
               </Badge>
             )}
@@ -138,7 +138,7 @@ export function SmartDrawer(): JSX.Element {
           <div
             aria-hidden
             data-testid="drawer-header-progress"
-            className="absolute bottom-0 left-0 h-[2px] transition-[width] duration-500"
+            className="absolute bottom-0 start-0 h-[2px] transition-[width] duration-500"
             style={{
               width: `${headerProgress}%`,
               background: 'linear-gradient(90deg, var(--brand), var(--brand-hover))',

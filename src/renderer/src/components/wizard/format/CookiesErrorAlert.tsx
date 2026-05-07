@@ -29,7 +29,7 @@ export function CookiesErrorAlert(): JSX.Element | null {
             <span className="leading-snug">{t('wizard.formats.cookiesError.dpapi.explanation')}</span>
           </div>
         </div>
-        <ol className="flex flex-col gap-1.5 pl-9 list-decimal marker:text-amber-700/80 dark:marker:text-amber-200/70">
+        <ol className="flex flex-col gap-1.5 ps-9 list-decimal marker:text-amber-700/80 dark:marker:text-amber-200/70">
           <li>
             <span className="font-medium">{t('wizard.formats.cookiesError.dpapi.fixFirefoxLabel')}.</span> <span className="leading-snug">{t('wizard.formats.cookiesError.dpapi.fixFirefoxBody')}</span>
           </li>
@@ -43,7 +43,7 @@ export function CookiesErrorAlert(): JSX.Element | null {
             </button>
           </li>
         </ol>
-        <div className="flex flex-wrap gap-2 pl-6">
+        <div className="flex flex-wrap gap-2 ps-6">
           <Button type="button" size="sm" variant="outline" onClick={() => openCookiesSettings()} className="gap-1.5" data-testid="cookies-error-open-settings-cta">
             <ExternalLink size={12} />
             {t('wizard.formats.cookiesError.openSettingsCta')}
@@ -68,7 +68,7 @@ export function CookiesErrorAlert(): JSX.Element | null {
           <span className="leading-snug">{explanation}</span>
         </div>
       </div>
-      <div className="flex flex-wrap gap-2 pl-6">
+      <div className="flex flex-wrap gap-2 ps-6">
         <Button type="button" size="sm" variant="outline" onClick={() => openCookiesSettings()} className="gap-1.5" data-testid="cookies-error-open-settings-cta">
           <ExternalLink size={12} />
           {t('wizard.formats.cookiesError.openSettingsCta')}

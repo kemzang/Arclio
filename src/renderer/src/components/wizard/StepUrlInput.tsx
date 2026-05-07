@@ -10,6 +10,7 @@ import { RadioOption } from '../ui/radio-option';
 import { Item, ItemGroup, ItemMedia, ItemContent, ItemTitle, ItemDescription } from '../ui/item';
 import { MascotBubble } from '../shared/MascotBubble';
 import { ClipboardConfirmDialog } from '../shared/ClipboardConfirmDialog';
+import { IncompleteCookiesConfigDialog } from './IncompleteCookiesConfigDialog';
 import { formatHomeRelativePath } from '@renderer/lib/utils';
 import { cleanYoutubeUrl } from '@shared/url';
 import type { CookiesBrowser, CookiesMode } from '@shared/types';
@@ -34,7 +35,7 @@ const COOKIES_CHROME_URL = 'https://chromewebstore.google.com/detail/get-cookies
 
 export function StepUrlInput(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl } = useAppStore();
+  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl, cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings } = useAppStore();
   const inputRef = useRef<HTMLInputElement>(null);
   const hasActiveDownloads = queue.some((i) => i.status === 'downloading');
   const [pendingClipboardUrl, setPendingClipboardUrl] = useState<string | null>(null);
@@ -65,7 +66,9 @@ export function StepUrlInput(): JSX.Element {
     const advanced = document.querySelector('[data-testid="advanced-section"]');
     if (advanced instanceof HTMLDetailsElement) advanced.open = true;
     const cookiesSection = document.querySelector('[data-testid="cookies-source"]');
-    cookiesSection?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    if (cookiesSection instanceof HTMLElement) {
+      cookiesSection.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
+    }
     setAdvancedAutoOpen(false);
   }, [advancedAutoOpen, setAdvancedAutoOpen]);
 
@@ -132,9 +135,9 @@ export function StepUrlInput(): JSX.Element {
         <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.url.heading')}</p>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <Input ref={inputRef} type="url" className={`h-10 ${wizardUrl.trim() ? 'pr-9' : ''}`} value={wizardUrl} onChange={(e) => setWizardUrl(e.target.value)} onKeyDown={handleKeyDown} onPaste={handlePaste} placeholder={t('wizard.url.placeholder')} spellCheck={false} data-testid="url-input" />
+            <Input ref={inputRef} type="url" className={`h-10 ${wizardUrl.trim() ? 'pe-9' : ''}`} value={wizardUrl} onChange={(e) => setWizardUrl(e.target.value)} onKeyDown={handleKeyDown} onPaste={handlePaste} placeholder={t('wizard.url.placeholder')} spellCheck={false} data-testid="url-input" />
             {wizardUrl.trim() ? (
-              <button type="button" onClick={handleClearUrl} aria-label={t('wizard.url.clearAria')} data-testid="url-clear" className="absolute right-1.5 top-1/2 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-muted hover:text-foreground transition-colors">
+              <button type="button" onClick={handleClearUrl} aria-label={t('wizard.url.clearAria')} data-testid="url-clear" className="absolute end-1.5 top-1/2 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-muted hover:text-foreground transition-colors">
                 <X size={14} />
               </button>
             ) : null}
@@ -304,6 +307,7 @@ export function StepUrlInput(): JSX.Element {
       </details>
 
       <ClipboardConfirmDialog open={pendingClipboardUrl !== null && initialized} url={pendingClipboardUrl} onUse={handleConfirmClipboard} onDisable={handleDisableClipboard} onCancel={handleCancelClipboard} />
+      <IncompleteCookiesConfigDialog issue={cookiesConfigDialogIssue} onDismiss={dismissCookiesConfigDialog} onOpenSettings={openCookiesSettings} />
     </div>
   );
 }
