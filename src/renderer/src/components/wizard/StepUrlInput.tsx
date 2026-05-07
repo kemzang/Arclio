@@ -231,14 +231,14 @@ export function StepUrlInput(): JSX.Element {
                   const val = e.target.value as CookiesBrowser | '';
                   if (val) void setCookiesBrowser(val);
                 }}
-                className="h-9 rounded-md border border-input bg-transparent px-3 text-[12px] text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                className="h-9 rounded-md border border-input bg-background px-3 text-[12px] text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 data-testid="cookies-browser-select"
               >
-                <option value="" disabled>
+                <option value="" disabled className="bg-popover text-popover-foreground">
                   {t('wizard.url.cookies.browserPlaceholder')}
                 </option>
                 {visibleBrowsers.map((b) => (
-                  <option key={b.value} value={b.value}>
+                  <option key={b.value} value={b.value} className="bg-popover text-popover-foreground">
                     {b.label}
                   </option>
                 ))}
