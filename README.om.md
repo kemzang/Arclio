@@ -3,7 +3,7 @@
 
 # Arroxy — Buufataa YouTube Bilisaa fi Madda Banaa Windows, macOS & Linux
 
-**4K · 1080p60 · HDR · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
 
 **Afaan:** **Afaan Oromoo** · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
@@ -71,7 +71,7 @@ YouTube ittisa bot isaa yoo haaromse, meeshaalee hedduun kuukkii biraawzaraa You
 
 - Hanga **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p
 - **Frame rate ol'aanaa** akka jiru eegama — 60 fps, 120 fps, HDR
-- **Sagalee qofa** MP3, AAC, ykn Opus tti erga
+- **Audio qofa** gara MP3, M4A/AAC, Opus yookaan WAV
 - Preset saffisoo: *Qulqullina gaarii* · *Walirraanfattee* · *Faayila xiqqaa*
 
 ### Icciitii & to'annaa
@@ -82,7 +82,7 @@ YouTube ittisa bot isaa yoo haaromse, meeshaalee hedduun kuukkii biraawzaraa You
 
 ### Hojii hordoffii
 
-- **URL YouTube kamiyyuu maxxansi** — viidiyoo fi Shorts lameenuu ni deeggara
+- **URL YouTube kamiyyuu maxxansi** — viidiyoowwan, Shorts fi playlist ni deeggara; playlist guutuu buufadhu yookaan dura viidiyoowwan filataman qofa filadhu
 - **Queue buufannoo heddu** — buufannoota heddu walitti aanee hordofi
 - **Eegaa clipboard** — link YouTube koppiisi Arroxy URL of-hordofaa guutu yeroo app deebi'itu (Advanced settings keessatti jijjiiri)
 - **URL of-qulqulleessa** — params hordoffii (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) haqa fi linkiiwwan `youtube.com/redirect` bana
@@ -217,7 +217,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Buufannoonni kallattiin [yt-dlp](https://github.com/yt-dlp/yt-dlp) fayyadamuudhaan YouTube irraa foldera filatteetti darbamu — miila-seerri hunduu sarara servera sadarkaa-sadaffaa tokko keessa darbuu hin qabu. Seenaa ilaaluu, seenaa buufannoo, URLs, fi qabiyyee faayilaa meeshaa kee irratti hafu.
 
-Arroxy telemetrii anonymous, walitti makamaa [Aptabase](https://aptabase.com) fayyadamuudhaan erga — pirojekti indie tokkoof eegaa namni dhugumaan itti fayyadamaa jira beekuuf gahaa qofa (eegaluu, OS, verzhiyoonii app, caccabu). URLs hin jiru, mata-duree viidiyoo hin jiru, kallattii faayilaa hin jiru, IP hin jiru, odeeffannoo akkaawuntii hin jiru — Aptabase madda banaa fi GDPR-hayyamaadha. Settings keessatti dhorkuu dandeessa.
+Arroxy telemetrii anonymous, walitti makamaa [TelemetryDeck](https://telemetrydeck.com) fayyadamuudhaan erga — pirojekti indie tokkoof namni dhugumaan itti fayyadamaa jira beekuuf gahaa qofa (eegaluu, OS, verzhiyoonii app, caccabu). URLs hin jiru, mata-duree viidiyoo hin jiru, kallattii faayilaa hin jiru, odeeffannoo akkaawuntii hin jiru. ID diriirsa tokkoon tokko erguun dura hash godhama fi TelemetryDeck IPs hin kuusu — EU-tti qabamee fi GDPR-hayyaamaadha. Settings keessatti dhorkuu dandeessa.
 
 ---
 
@@ -230,7 +230,7 @@ Eeyyee — hayyama MIT, sadarkaa kafaltii hin jiru, amaloota dhorkamuun hin jiru
 YouTube tajaajiluu danda'u: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, sagalee qofas. 60 fps, 120 fps, fi HDR streams akka jiru eegamu.
 
 **Sagalee qofaa MP3 akka ta'uun baasuu danda'aa?**
-Eeyyee. Menuu format keessatti *sagalee qofa* filadhu fi MP3, AAC, ykn Opus filadhu.
+Eeyyee. Menu format keessaa *audio qofa* filadhu, booda MP3, M4A/AAC, Opus yookaan WAV filadhu.
 
 **Akkaawuntii YouTube ykn kuukkii barbaachisaa?**
 Lakki. Arroxy tokkicha token ummataa YouTube biraawzara kamiiyyuuf tajaajiltu fayyadama. Kuukkii hin jiru, seensuu hin jiru, odeeffannoo kuufame hin jiru. [Kuukkii hin jiru, seensuu hin jiru, akkaawuntii waliin hin hidhu](#no-cookies) ilaali kuni maaliif barbaachisuu ibsuuf.
@@ -245,7 +245,7 @@ Sagal: Ingliziffaa, Español, Deutsch, Français, 日本語, 中文, Русск�
 Lakki. yt-dlp fi ffmpeg of-hordofaan yeroo jalqabaaf baasii GitHub isaanitii irraa buufamanii naannoo kuufamu.
 
 **Playlist ykn chaanaalii guutuu buusuu danda'aa?**
-Viidiyoo fi Shorts tokkoo-tokkoo har'a. Playlist fi chaanaalii deggeruu [karoora](#roadmap) irraa jira.
+Eeyyee, playlist'f: URL playlist maxxansi, booda tarree guutuu yookaan viidiyoowwan ati filatte qofa queue keessa galchi. Channel guutuu batch'n buusuun ammaaf hin deggaramu.
 
 **macOS "app miidhaameera" jedha — maal godhaa?**
 Sun macOS Gatekeeper app mallattoo hin qabne dhorku, midhaa dhugaa miti. Sirreessaaf kutaa [yeroo jalqabaa macOS irratti eegaluu](#download) ilaali.
@@ -261,9 +261,7 @@ Dhufuuf jiru — bakka dursa hordofee:
 
 | Amalli    | Ibsa    |
 | ---------------- | ---------------- |
-| **Playlist & chaanaalii buusuu** | Playlist ykn URL chaanaalii maxxansi; viidiyoo hunda hordoffii guyyaa ykn lakkoofsa wajjin kaa'i |
 | **Galchii URL fakkaataa** | URLs heddu yeroo tokkotti maxxansi fi isaan tokkoon oofii |
-| **Jijjiiruu format** | Buufannoota meeshaa adda tokko malee MP3, WAV, FLAC tti jijjiiri |
 | **Template maqaa faayilaa dhuunfaa** | Faayiloota mata-duree, olkaa'aa, guyyaa, mookii shan — preview qindoofame wajjin maqaa kaa'i |
 | **Buufannoo yeroo qabamee** | Queue yeroo qindaawaa irratti eegali (halkaniidhumaan hojeti) |
 | **Daangaa saffisaa** | Bandwidth daangessii buufannoonni walitti hidhamina kee hin guunnee |

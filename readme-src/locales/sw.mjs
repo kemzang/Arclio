@@ -118,7 +118,7 @@ export const sw = {
   feat_quality_h3: "Ubora na fomati",
   feat_quality_1: "Hadi **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Kiwango cha juu cha fremu** kimehifadhiwa kama kilivyo — fps 60, fps 120, HDR",
-  feat_quality_3: "Usafirishaji wa **sauti pekee** kwa MP3, AAC, au Opus",
+  feat_quality_3: "**Sauti pekee** kama MP3, M4A/AAC, Opus au WAV",
   feat_quality_4: "Maandiko ya haraka: *Ubora bora* · *Usawa* · *Faili ndogo*",
   feat_privacy_h3: "Faragha na udhibiti",
   feat_privacy_1:
@@ -127,7 +127,7 @@ export const sw = {
   feat_privacy_3: "Faili zimehifadhiwa moja kwa moja kwenye folda unayochagua",
   feat_workflow_h3: "Mtiririko wa kazi",
   feat_workflow_1:
-    "**Bandika URL yoyote ya YouTube** — video na Shorts zote zinaauni",
+    "**Bandika URL yoyote ya YouTube** — video, Shorts na playlist zinaungwa mkono; pakua playlist nzima au chagua video maalum kwanza",
   feat_workflow_2:
     "**Foleni ya upakuaji wa pamoja** — fuatilia maudhui kadhaa yanayopakuliwa wakati huo huo",
   feat_workflow_3:
@@ -214,14 +214,14 @@ export const sw = {
   privacy_p1:
     "Maudhui hupakuliwa moja kwa moja kupitia [yt-dlp](https://github.com/yt-dlp/yt-dlp) kutoka YouTube hadi kwenye folda unayochagua — hakuna kitu kinachopita kwenye seva ya mtu wa tatu. Historia ya kutazama, historia ya kupakua, URL, na maudhui ya faili yanabaki kwenye kifaa chako.",
   privacy_p2:
-    "Arroxy hutuma telemetry isiyo na jina na ya jumla kupitia [Aptabase](https://aptabase.com) — tu ya kutosha kwa mradi wa kujitegemea kuona kama mtu anahusika nayo (uzinduzi, OS, toleo la programu, ajali). Hakuna URL, hakuna vichwa vya video, hakuna njia za faili, hakuna IP, hakuna taarifa za akaunti — Aptabase ni chanzo wazi na inayofaa GDPR kwa muundo. Unaweza kujiepusha katika Mipangilio.",
+    "Arroxy hutuma telemetry isiyo na jina na ya jumla kupitia [TelemetryDeck](https://telemetrydeck.com) — tu ya kutosha kwa mradi wa kujitegemea kuona kama mtu anahusika nayo (uzinduzi, OS, toleo la programu, ajali). Hakuna URLs, hakuna vichwa vya video, hakuna njia za faili, hakuna taarifa za akaunti. Kitambulisho cha kila usanidi hufishwa kabla ya kutumwa na TelemetryDeck haitawahi kuhifadhi IPs — inashikiliwa EU na inayofaa GDPR kwa muundo. Unaweza kujiepusha katika Mipangilio.",
   faq_q1: "Je, ni bure kweli kweli?",
   faq_a1: "Ndiyo — leseni ya MIT, hakuna ngazi ya malipo, hakuna kizuizi cha vipengele.",
   faq_q2: "Ninaweza kupakua ubora gani wa video?",
   faq_a2:
     "Chochote YouTube kinatoa: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, pamoja na sauti pekee. Mtiririko wa fps 60, fps 120, na HDR huhifadhiwa kama ulivyo.",
   faq_q3: "Je, ninaweza kutoa sauti pekee kama MP3?",
-  faq_a3: "Ndiyo. Chagua *sauti pekee* katika menyu ya fomati na uchague MP3, AAC, au Opus.",
+  faq_a3: "Ndiyo. Chagua *sauti pekee* kwenye menyu ya fomati kisha uchague MP3, M4A/AAC, Opus au WAV.",
   faq_q4: "Je, ninahitaji akaunti ya YouTube au vidakuzi?",
   faq_a4:
     "Hapana. Arroxy inatumia tokeni za umma pekee ambazo YouTube inawapa vivinjari vyote. Hakuna vidakuzi, hakuna kuingia, hakuna vitambulisho vilivyohifadhiwa. Tazama [Hakuna vidakuzi, hakuna kuingia, hakuna kuunganisha akaunti](#no-cookies) kwa sababu hii ina maana.",
@@ -236,7 +236,7 @@ export const sw = {
     "Hapana. yt-dlp na ffmpeg zinapakuliwa kiotomatiki wakati wa uzinduzi wa kwanza kutoka kwa matoleo rasmi ya GitHub na kuhifadhiwa mahali hapo.",
   faq_q8: "Je, ninaweza kupakua orodha za kucheza au vituo vyote?",
   faq_a8:
-    "Video moja na Shorts kwa sasa. Usaidizi wa orodha ya kucheza na vituo uko kwenye [ramani ya barabara](#roadmap).",
+    "Ndiyo kwa playlist: bandika URL ya playlist, kisha weka foleni ya orodha yote au video ulizochagua tu. Upakuaji wa kundi wa channel nzima bado haujaungwa mkono.",
   faq_q9: 'macOS inasema "programu imeharibiwa" — nifanye nini?',
   faq_a9:
     "Hiyo ni macOS Gatekeeper inayozuia programu isiyosainiwa, si uharibifu wa kweli. Tazama sehemu ya [uzinduzi wa kwanza kwenye macOS](#download) kwa suluhisho.",

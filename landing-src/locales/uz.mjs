@@ -61,11 +61,11 @@ export const uz = {
   features_h2: "Kutganingizning hammasi, hech qanday murakkabliksiz.",
   features_sub: "URL manzilini joylashtiring, sifat tanlang, yuklab olishni bosing. Hammasi shu.",
   f1_h: "4K UHD gacha",
-  f1_p: "2160p, 1440p, 1080p, 720p — YouTube taklif etadigan har bir aniqlik, shuningdek faqat audio MP3, AAC va Opus.",
+  f1_p: "2160p, 1440p, 1080p, 720p — YouTube taklif qiladigan har bir aniqlik, shuningdek faqat audio uchun MP3, M4A/AAC, Opus va WAV ga o‘tkazish.",
   f2_h: "60 fps va HDR saqlanadi",
   f2_p: "Yuqori kadrlar tezligi va HDR oqimlari YouTube kodlashi bo'yicha aynan shunday keladi — sifat yo'qotilmaydi.",
-  f3_h: "Bir vaqtda bir nechtasi",
-  f3_p: "Xohlagan miqdordagi videolarni navbatga qo'ying. Yuklab olish paneli har birining jarayonini parallel kuzatib boradi.",
+  f3_h: "Playlistlar ham",
+  f3_p: "Playlist URL manzilini joylang, butun ro‘yxatni yuklab oling yoki Arroxy navbatga qo‘shishidan oldin faqat kerakli videolarni belgilang.",
   f4_h: "Avtomatik yangilanishlar",
   f4_p: "Arroxy yt-dlp va ffmpeg'ni har doim yangilab turadi — YouTube'ning har bir o'zgarishi bilan ishlaydi.",
   f5_h: "21 til",
@@ -103,7 +103,7 @@ export const uz = {
   p2_h: "Cookie yo'q",
   p2_p: "Arroxy har qanday brauzer so'raydigan tokenlarni so'raydi. Hech narsa eksport qilinmaydi, hech narsa saqlanmaydi.",
   p3_h: "Foydalanuvchi identifikatorlari yo'q",
-  p3_p: "Aptabase orqali anonim, faqat sessiya davomidagi telemetriya — o'rnatish identifikatorlari yo'q, barmoq izi yo'q, shaxsiy ma'lumotlar yo'q. Yuklamalaringiz, tarixingiz va fayllaringiz hech qachon qurilmangizdan chiqmaydi.",
+  p3_p: "TelemetryDeck orqali anonim telemetriya — har bir o'rnatmaning IDsi ilova tark etishidan oldin xeshlanadi, barmoq izi yo'q, shaxsiy ma'lumotlar yo'q. Yuklamalaringiz, tarixingiz va fayllaringiz hech qachon qurilmangizdan chiqmaydi.",
   p4_h: "Uchinchi tomon serverlari yo'q",
   p4_p: "Butun jarayon yt-dlp + ffmpeg orqali mahalliy tarzda ishlaydi. Fayllar hech qachon masofaviy serverga tegmaydi.",
 
@@ -136,7 +136,7 @@ export const uz = {
   faq_h2: "Ko'p so'raladigan savollar",
   faq_q1: "Qanday video sifatlarini yuklab olishim mumkin?",
   faq_a1:
-    "YouTube taklif etadigan har qanday narsa — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p va faqat audio. Yuqori kadrlar tezligi (60 fps, 120 fps) va HDR mazmuni o'zgarishsiz saqlanadi. Arroxy barcha mavjud formatlarni ko'rsatadi va siz aynan nimani olishni tanlashingiz mumkin.",
+    "YouTube taklif qiladigan hamma narsa — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p va faqat audio. Yuqori kadr tezligidagi oqimlar (60 fps, 120 fps) va HDR kontent o‘z holicha saqlanadi. Arroxy mavjud bo‘lgan har bir formatni ko‘rsatadi, jumladan faqat audio yuklab olishlar uchun MP3, M4A/AAC, Opus va WAV ga o‘tkazish imkonini ham.",
   faq_q2: "Haqiqatan ham bepulmi?",
   faq_a2: "Ha. MIT litsenziyasi. Premium daraja yo'q, imkoniyatlar cheklanmagan.",
   faq_q3: "Arroxy qanday tillarda mavjud?",
@@ -150,7 +150,7 @@ export const uz = {
     "Ha — va Arroxy'ning ikkita bardoshlilik qatlami bor. Birinchidan, yt-dlp eng faol saqlanadigan ochiq manba vositalaridan biri — YouTube o'zgarishlaridan soatlar ichida yangilanadi. Ikkinchidan, Arroxy cookie'lar yoki Google hisobingizga umuman tayanmaydi, shuning uchun muddati tugaydigan seans ham, almashtiriladigan hisob ma'lumotlari ham yo'q. Bu kombinatsiya uni eksport qilingan brauzer cookie'lariga tayanadigan vositalardan sezilarli darajada barqarorroq qiladi.",
   faq_q6: "Pleylistlarni yuklab olish mumkinmi?",
   faq_a6:
-    "Bugun yagona videolar qo'llab-quvvatlanadi. Pleylist va kanal qo'llab-quvvatlash yo'l xaritasida.",
+    "Ha. Playlist URL manzilini joylang, barcha videolarni yoki faqat keraklilarini tanlang, va Arroxy ularni bitta to‘plam sifatida navbatga qo‘shadi. Butun kanalni to‘plam holida yuklab olish hali qo‘llab-quvvatlanmaydi.",
   faq_q7: "Bu YouTube hisobim yoki cookie'larimni talab qiladimi?",
   faq_a7:
     "Yo'q — va bu juda muhim. YouTube yangilanishidan keyin ishlamay qolgan ko'pgina vositalar brauzeringizning YouTube cookie'larini eksport qilishni taklif qiladi. Bu yechim YouTube seanslarni ~30 daqiqada bir aylantirganida buziladi va yt-dlp'ning o'z hujjatlari bu Google hisobingizning belgilanishiga olib kelishi mumkinligi haqida ogohlantiradi. Arroxy hech qachon cookie'lar yoki hisob ma'lumotlaridan foydalanmaydi. Kirish yo'q. Bog'langan hisob yo'q. Muddati tugaydigan narsa yo'q, taqiqlanadigan narsa yo'q.",

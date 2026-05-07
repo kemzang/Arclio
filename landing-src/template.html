@@ -343,7 +343,13 @@
       body[data-os="mobile"] #mobile-notice { display: block !important; }
 
       .first-launch-help {
-        margin: 14px auto 0;
+        --first-launch-inline-pad: 16px;
+        --first-launch-icon-size: 16px;
+        --first-launch-summary-gap: 8px;
+        --first-launch-text-offset:
+          calc(var(--first-launch-inline-pad) + var(--first-launch-icon-size) + var(--first-launch-summary-gap));
+        margin-top: 14px;
+        margin-inline: 0 auto;
         max-width: 560px;
         background: var(--bg-card);
         border: 1px solid var(--border);
@@ -353,21 +359,21 @@
       .first-launch-help summary {
         list-style: none;
         cursor: pointer;
-        padding: 12px 16px;
+        padding: 12px var(--first-launch-inline-pad);
         font-size: 14px;
         font-weight: 600;
         color: var(--text-dim);
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: var(--first-launch-summary-gap);
         transition: color .15s;
       }
       .first-launch-help summary::-webkit-details-marker { display: none; }
       .first-launch-help summary::before {
         content: '';
         display: inline-block;
-        width: 16px;
-        height: 16px;
+        width: var(--first-launch-icon-size);
+        height: var(--first-launch-icon-size);
         border-radius: 50%;
         background:
           linear-gradient(var(--brand-hover), var(--brand-hover)) center / 2px 7px no-repeat,
@@ -387,7 +393,9 @@
       .first-launch-help[open] summary::after { transform: rotate(45deg); color: var(--brand-hover); }
       .first-launch-help summary:hover { color: var(--text); }
       .first-launch-body {
-        padding: 0 16px 14px;
+        padding-block: 0 14px;
+        padding-inline: var(--first-launch-inline-pad);
+        padding-inline-start: var(--first-launch-text-offset);
         font-size: 13.5px;
         line-height: 1.65;
         color: var(--text-dim);

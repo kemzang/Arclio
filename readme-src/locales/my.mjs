@@ -118,7 +118,7 @@ export const my = {
   feat_quality_h3: "အရည်အသွေးနှင့် format များ",
   feat_quality_1: "**4K UHD (2160p)** အထိ၊ 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**High frame rate** ကို မူရင်းအတိုင်း ထိန်းသိမ်း — 60 fps, 120 fps, HDR",
-  feat_quality_3: "MP3, AAC သို့မဟုတ် Opus သို့ **Audio-only** export",
+  feat_quality_3: "**အသံသာ** ကို MP3၊ M4A/AAC၊ Opus သို့မဟုတ် WAV အဖြစ် export လုပ်နိုင်သည်",
   feat_quality_4: "အမြန် presets: *အကောင်းဆုံးအရည်အသွေး* · * မျှတသော* · *ဖိုင်ငယ်*",
   feat_privacy_h3: "ကိုယ်ရေးကိုယ်တာနှင့် ထိန်းချုပ်မှု",
   feat_privacy_1:
@@ -127,7 +127,7 @@ export const my = {
   feat_privacy_3: "သင်ရွေးချယ်သောဖိုဒါတွင် ဖိုင်များကို တိုက်ရိုက်သိမ်းဆည်းသည်",
   feat_workflow_h3: "Workflow",
   feat_workflow_1:
-    "**မည်သည့် YouTube URL မဆို Paste လုပ်ပါ** — ဗီဒီယိုများနှင့် Shorts နှစ်မျိုးစလုံး ပံ့ပိုးသည်",
+    "**YouTube URL မည်သည့်လင့်ခ်မဆို paste လုပ်ပါ** — video, Shorts နှင့် playlist များကို support လုပ်ထားပြီး playlist တစ်ခုလုံးကို download လုပ်နိုင်သလို သင်ရွေးထားသော video များကိုသာ အရင်ရွေးပြီး download လုပ်နိုင်သည်",
   feat_workflow_2:
     "**Multi-download queue** — downloads များစွာကို တပြိုင်တည်း ခြေရာခံပါ",
   feat_workflow_3:
@@ -214,14 +214,14 @@ export const my = {
   privacy_p1:
     "Downloads များကို [yt-dlp](https://github.com/yt-dlp/yt-dlp) မှတဆင့် YouTube မှ တိုက်ရိုက် သင်ရွေးချယ်သောဖိုဒါသို့ fetch လုပ်သည် — third-party server မှတဆင့် routing မလုပ်ပါ။ ကြည့်ရှုမှတ်တမ်း၊ ဒေါင်းလုဒ်မှတ်တမ်း၊ URL များနှင့် ဖိုင်အကြောင်းအရာများသည် သင့်ကိရိယာပေါ်တွင်သာ ကျန်ရှိသည်။",
   privacy_p2:
-    "Arroxy သည် [Aptabase](https://aptabase.com) မှတဆင့် anonymous aggregate telemetry ပေးပို့သည် — indie project တစ်ခုအတွက် တစ်ယောက်ယောက်က တကယ်အသုံးပြုနေသည်ကို မြင်နိုင်ရုံလောက် (launches, OS, app version, crashes)။ URL မပါ၊ ဗီဒီယိုခေါင်းစဉ်မပါ၊ ဖိုင် path မပါ၊ IP မပါ၊ account info မပါ — Aptabase သည် design အားဖြင့် open-source ဖြစ်ပြီး GDPR-friendly ဖြစ်သည်။ Settings တွင် opt out လုပ်နိုင်သည်။",
+    "Arroxy သည် [TelemetryDeck](https://telemetrydeck.com) မှတဆင့် anonymous aggregate telemetry ပေးပို့သည် — indie project တစ်ခုအတွက် တစ်ယောက်ယောက်က တကယ်အသုံးပြုနေသည်ကို မြင်နိုင်ရုံလောက် (launches, OS, app version, crashes)။ URLs မပါ၊ ဗီဒီယိုခေါင်းစဉ်မပါ၊ ဖိုင် path မပါ၊ account info မပါ။ per-install ID ကို ပို့မတိုင်ခင် hash လုပ်ပြီး TelemetryDeck သည် IPs ကို ဘယ်တော့မှ သိမ်းဆည်းမည် မဟုတ် — EU-hosted ဖြစ်ပြီး design အားဖြင့် GDPR-friendly ဖြစ်သည်။ Settings တွင် opt out လုပ်နိုင်သည်။",
   faq_q1: "တကယ်ကို အခမဲ့လား?",
   faq_a1: "ဟုတ်သည် — MIT licensed၊ premium tier မပါ၊ feature gating မပါ။",
   faq_q2: "မည်သည့် ဗီဒီယိုအရည်အသွေးများ ဒေါင်းလုဒ်ဆွဲနိုင်သနည်း?",
   faq_a2:
     "YouTube ပေးသောအရာများအားလုံး: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p နှင့် audio-only။ 60 fps, 120 fps နှင့် HDR streams များကို မူရင်းအတိုင်း ထိန်းသိမ်းသည်။",
   faq_q3: "Audio ကိုသာ MP3 အဖြစ် ထုတ်ယူနိုင်သလား?",
-  faq_a3: "ဟုတ်သည်။ Format menu တွင် *audio-only* ကိုရွေးပြီး MP3, AAC သို့မဟုတ် Opus ကိုရွေးပါ။",
+  faq_a3: "ဟုတ်ပါတယ်။ format menu ထဲက *အသံသာ* ကိုရွေးပြီး MP3၊ M4A/AAC၊ Opus သို့မဟုတ် WAV ကိုရွေးပါ။",
   faq_q4: "YouTube account သို့မဟုတ် cookie လိုအပ်သလား?",
   faq_a4:
     "မလိုအပ်ပါ။ Arroxy သည် YouTube က မည်သည့်ဘရောက်ဇာကိုမဆို ပေးသော public tokens များကိုသာ အသုံးပြုသည်။ Cookie မပါ၊ login မပါ၊ credential မသိမ်းဆည်းပါ။ ၎င်းသည် အဘယ်ကြောင့် အရေးကြီးသည်ကို [Cookie မပါ၊ login မပါ၊ account ချိတ်ဆက်မှုမပါ](#no-cookies) တွင် ကြည့်ပါ။",
@@ -236,7 +236,7 @@ export const my = {
     "မလိုအပ်ပါ။ yt-dlp နှင့် ffmpeg တို့ကို ပထမဆုံး launch လုပ်သောအခါ official GitHub releases မှ အလိုအလျောက် download ဆင်းပြီး locally cache သိမ်းသည်။",
   faq_q8: "Playlist များ သို့မဟုတ် channel တစ်ခုလုံး ဒေါင်းလုဒ်ဆွဲနိုင်သလား?",
   faq_a8:
-    "ယနေ့တွင် single videos နှင့် Shorts သာ။ Playlist နှင့် channel ပံ့ပိုးမှုသည် [roadmap](#roadmap) တွင် ပါဝင်သည်။",
+    "ဟုတ်ပါတယ်၊ playlist အတွက်: playlist URL ကို paste လုပ်ပြီး စာရင်းတစ်ခုလုံးကို သို့မဟုတ် သင်ရွေးထားသော video များကိုသာ queue ထဲထည့်နိုင်သည်။ channel တစ်ခုလုံးကို batch အလိုက် download လုပ်ခြင်းကိုတော့ မထောက်ပံ့သေးပါ။",
   faq_q9: 'macOS က "app ပျက်စီးနေသည်" ဟုဆိုသည် — ဘာလုပ်ရမည်နည်း?',
   faq_a9:
     "၎င်းသည် macOS Gatekeeper သည် unsigned app ကို ပိတ်ဆို့ခြင်းဖြစ်ပြီး တကယ်ပျက်စီးမှုမဟုတ်ပါ။ ဖြေရှင်းနည်းအတွက် [macOS တွင် ပထမဆုံး launch လုပ်ခြင်း](#download) section ကိုကြည့်ပါ။",

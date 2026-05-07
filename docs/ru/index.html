@@ -72,7 +72,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Arroxy","applicationCategory":"MultimediaApplication","operatingSystem":"Windows, macOS, Linux","description":"Бесплатный десктопный загрузчик YouTube с лицензией MIT для Windows, macOS и Linux. Скачивайте видео в 4K HDR при 60 fps без аккаунта Google, browser cookies или любого входа.","inLanguage":"ru","url":"https://arroxy.orionus.dev/ru/","image":"https://arroxy.orionus.dev/assets/icon.png","license":"https://opensource.org/licenses/MIT","downloadUrl":"https://github.com/antonio-orionus/Arroxy/releases/latest","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI"}},{"@context":"https://schema.org","@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI","sameAs":["https://x.com/OrionusAI","https://github.com/antonio-orionus"]}]</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"ru","mainEntity":[{"@type":"Question","name":"Какие качества видео можно скачивать?","acceptedAnswer":{"@type":"Answer","text":"Всё, что предлагает YouTube — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p и только аудио. Потоки с высокой частотой кадров (60 fps, 120 fps) и HDR сохраняются как есть. Arroxy показывает все доступные форматы и даёт точно выбрать нужный."}},{"@type":"Question","name":"Это правда бесплатно?","acceptedAnswer":{"@type":"Answer","text":"Да. Лицензия MIT. Никаких премиум-уровней, никаких заблокированных функций."}},{"@type":"Question","name":"На каких языках доступен Arroxy?","acceptedAnswer":{"@type":"Answer","text":"На двадцати одном, прямо из коробки: English, Español (испанский), Deutsch (немецкий), Français (французский), 日本語 (японский), 中文 (китайский), Русский, Українська (украинский), हिन्दी (хинди), Afaan Oromoo (оромо), Kiswahili (суахили), O'zbekcha (узбекский), Tiếng Việt (вьетнамский), አማርኛ (амхарский), العربية (арабский), اردو (урду), پښتو (пушту), বাংলা (бенгальский), မြန်မာဘာသာ (бирманский), Ελληνικά (греческий) и Српски (сербский). Arroxy автоматически определяет язык системы при первом запуске, и вы можете переключиться в любой момент через выбор языка в панели инструментов. Файлы локализации — это простые TypeScript-объекты в src/shared/i18n/locales/ — откройте PR на GitHub, чтобы внести вклад."}},{"@type":"Question","name":"Нужно что-то устанавливать?","acceptedAnswer":{"@type":"Answer","text":"Нет. yt-dlp и ffmpeg автоматически скачиваются при первом запуске с официальных GitHub releases и кешируются на вашей машине. После этого никакой настройки не требуется."}},{"@type":"Question","name":"Будет ли работать, если YouTube что-то изменит?","acceptedAnswer":{"@type":"Answer","text":"Да — у Arroxy два уровня устойчивости. Во-первых, yt-dlp — один из самых активно поддерживаемых open-source инструментов, обновления выходят в течение часов после изменений YouTube. Во-вторых, Arroxy вообще не зависит от кук или вашего аккаунта Google, так что нет сессий, которые истекают, и нет учётных данных, которые надо менять. Эта комбинация делает его значительно стабильнее инструментов, использующих экспорт кук из браузера."}},{"@type":"Question","name":"Можно ли скачивать плейлисты?","acceptedAnswer":{"@type":"Answer","text":"Сейчас поддерживаются только отдельные видео. Поддержка плейлистов и каналов — в дорожной карте."}},{"@type":"Question","name":"Нужен ли мой YouTube-аккаунт или куки?","acceptedAnswer":{"@type":"Answer","text":"Нет — и это важнее, чем кажется. Большинство инструментов, которые перестают работать после обновления YouTube, советуют экспортировать куки YouTube из браузера. Этот обходной путь ломается каждые ~30 минут, когда YouTube меняет сессии, а в документации yt-dlp прямо предупреждают, что это может привести к флагу аккаунта Google. Arroxy никогда не использует ни куки, ни учётные данные. Никакого логина. Никакого привязанного аккаунта. Нечему истекать, нечему банить."}},{"@type":"Question","name":"macOS говорит «приложение повреждено» или «не может быть открыто» — что делать?","acceptedAnswer":{"@type":"Answer","text":"Это macOS Gatekeeper блокирует неподписанное приложение — реального повреждения нет. В README есть пошаговая инструкция для первого запуска на macOS."}},{"@type":"Question","name":"Это законно?","acceptedAnswer":{"@type":"Answer","text":"Скачивание видео для личного использования в большинстве юрисдикций обычно допустимо. Вы сами отвечаете за соблюдение Условий использования YouTube и местных законов."}}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"ru","mainEntity":[{"@type":"Question","name":"Какие качества видео можно скачивать?","acceptedAnswer":{"@type":"Answer","text":"Всё, что предлагает YouTube — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p и только аудио. Потоки с высокой частотой кадров (60 fps, 120 fps) и HDR-контент сохраняются как есть. Arroxy показывает все доступные форматы, включая конвертацию в MP3, M4A/AAC, Opus и WAV для загрузок только аудио."}},{"@type":"Question","name":"Это правда бесплатно?","acceptedAnswer":{"@type":"Answer","text":"Да. Лицензия MIT. Никаких премиум-уровней, никаких заблокированных функций."}},{"@type":"Question","name":"На каких языках доступен Arroxy?","acceptedAnswer":{"@type":"Answer","text":"На двадцати одном, прямо из коробки: English, Español (испанский), Deutsch (немецкий), Français (французский), 日本語 (японский), 中文 (китайский), Русский, Українська (украинский), हिन्दी (хинди), Afaan Oromoo (оромо), Kiswahili (суахили), O'zbekcha (узбекский), Tiếng Việt (вьетнамский), አማርኛ (амхарский), العربية (арабский), اردو (урду), پښتو (пушту), বাংলা (бенгальский), မြန်မာဘာသာ (бирманский), Ελληνικά (греческий) и Српски (сербский). Arroxy автоматически определяет язык системы при первом запуске, и вы можете переключиться в любой момент через выбор языка в панели инструментов. Файлы локализации — это простые TypeScript-объекты в src/shared/i18n/locales/ — откройте PR на GitHub, чтобы внести вклад."}},{"@type":"Question","name":"Нужно что-то устанавливать?","acceptedAnswer":{"@type":"Answer","text":"Нет. yt-dlp и ffmpeg автоматически скачиваются при первом запуске с официальных GitHub releases и кешируются на вашей машине. После этого никакой настройки не требуется."}},{"@type":"Question","name":"Будет ли работать, если YouTube что-то изменит?","acceptedAnswer":{"@type":"Answer","text":"Да — у Arroxy два уровня устойчивости. Во-первых, yt-dlp — один из самых активно поддерживаемых open-source инструментов, обновления выходят в течение часов после изменений YouTube. Во-вторых, Arroxy вообще не зависит от кук или вашего аккаунта Google, так что нет сессий, которые истекают, и нет учётных данных, которые надо менять. Эта комбинация делает его значительно стабильнее инструментов, использующих экспорт кук из браузера."}},{"@type":"Question","name":"Можно ли скачивать плейлисты?","acceptedAnswer":{"@type":"Answer","text":"Да. Вставь ссылку на плейлист, выбери все видео или только те, которые хочешь, и Arroxy поставит их в очередь одним пакетом. Пакетная загрузка целых каналов пока не поддерживается."}},{"@type":"Question","name":"Нужен ли мой YouTube-аккаунт или куки?","acceptedAnswer":{"@type":"Answer","text":"Нет — и это важнее, чем кажется. Большинство инструментов, которые перестают работать после обновления YouTube, советуют экспортировать куки YouTube из браузера. Этот обходной путь ломается каждые ~30 минут, когда YouTube меняет сессии, а в документации yt-dlp прямо предупреждают, что это может привести к флагу аккаунта Google. Arroxy никогда не использует ни куки, ни учётные данные. Никакого логина. Никакого привязанного аккаунта. Нечему истекать, нечему банить."}},{"@type":"Question","name":"macOS говорит «приложение повреждено» или «не может быть открыто» — что делать?","acceptedAnswer":{"@type":"Answer","text":"Это macOS Gatekeeper блокирует неподписанное приложение — реального повреждения нет. В README есть пошаговая инструкция для первого запуска на macOS."}},{"@type":"Question","name":"Это законно?","acceptedAnswer":{"@type":"Answer","text":"Скачивание видео для личного использования в большинстве юрисдикций обычно допустимо. Вы сами отвечаете за соблюдение Условий использования YouTube и местных законов."}}]}</script>
 
     <style>
       :root {
@@ -383,7 +383,13 @@
       body[data-os="mobile"] #mobile-notice { display: block !important; }
 
       .first-launch-help {
-        margin: 14px auto 0;
+        --first-launch-inline-pad: 16px;
+        --first-launch-icon-size: 16px;
+        --first-launch-summary-gap: 8px;
+        --first-launch-text-offset:
+          calc(var(--first-launch-inline-pad) + var(--first-launch-icon-size) + var(--first-launch-summary-gap));
+        margin-top: 14px;
+        margin-inline: 0 auto;
         max-width: 560px;
         background: var(--bg-card);
         border: 1px solid var(--border);
@@ -393,21 +399,21 @@
       .first-launch-help summary {
         list-style: none;
         cursor: pointer;
-        padding: 12px 16px;
+        padding: 12px var(--first-launch-inline-pad);
         font-size: 14px;
         font-weight: 600;
         color: var(--text-dim);
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: var(--first-launch-summary-gap);
         transition: color .15s;
       }
       .first-launch-help summary::-webkit-details-marker { display: none; }
       .first-launch-help summary::before {
         content: '';
         display: inline-block;
-        width: 16px;
-        height: 16px;
+        width: var(--first-launch-icon-size);
+        height: var(--first-launch-icon-size);
         border-radius: 50%;
         background:
           linear-gradient(var(--brand-hover), var(--brand-hover)) center / 2px 7px no-repeat,
@@ -427,7 +433,9 @@
       .first-launch-help[open] summary::after { transform: rotate(45deg); color: var(--brand-hover); }
       .first-launch-help summary:hover { color: var(--text); }
       .first-launch-body {
-        padding: 0 16px 14px;
+        padding-block: 0 14px;
+        padding-inline: var(--first-launch-inline-pad);
+        padding-inline-start: var(--first-launch-text-offset);
         font-size: 13.5px;
         line-height: 1.65;
         color: var(--text-dim);
@@ -849,7 +857,7 @@
           <div class="feature">
             <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9"/><path d="M3 15h18l-2 4H5z"/></svg></div>
             <h3>До 4K UHD</h3>
-            <p>2160p, 1440p, 1080p, 720p — все разрешения, которые предлагает YouTube, плюс только аудио в MP3, AAC и Opus.</p>
+            <p>2160p, 1440p, 1080p, 720p — любое разрешение, которое предлагает YouTube, плюс конвертация только аудио в MP3, M4A/AAC, Opus и WAV.</p>
           </div>
           <div class="feature">
             <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-3 9h8l-9 11 3-9H4l9-11z"/></svg></div>
@@ -858,8 +866,8 @@
           </div>
           <div class="feature">
             <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="14" x="3" y="3" rx="2"/><path d="M7 21h10"/><path d="M12 17v4"/></svg></div>
-            <h3>Сразу несколько</h3>
-            <p>Ставьте в очередь сколько угодно видео. Панель загрузок отслеживает прогресс каждого параллельно.</p>
+            <h3>И плейлисты тоже</h3>
+            <p>Вставь ссылку на плейлист, скачай весь список или отметь только нужные видео перед тем, как Arroxy поставит их в очередь.</p>
           </div>
           <div class="feature">
             <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
@@ -944,7 +952,7 @@
           </div>
           <div class="privacy-card">
             <h3>Без идентификаторов пользователя</h3>
-            <p>Анонимная телеметрия только для сессии через Aptabase — никаких ID установки, никакого фингерпринтинга, никаких личных данных. Ваши загрузки, история и файлы никогда не покидают ваше устройство.</p>
+            <p>Анонимная телеметрия через TelemetryDeck — ваш ID установки хешируется перед отправкой из приложения, никакого фингерпринтинга, никаких личных данных. Ваши загрузки, история и файлы никогда не покидают ваше устройство.</p>
           </div>
           <div class="privacy-card">
             <h3>Без сторонних серверов</h3>
@@ -963,7 +971,7 @@
         <div class="faq-list">
           <details class="faq-item">
             <summary>Какие качества видео можно скачивать?</summary>
-            <div class="faq-answer">Всё, что предлагает YouTube — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p и только аудио. Потоки с высокой частотой кадров (60 fps, 120 fps) и HDR сохраняются как есть. Arroxy показывает все доступные форматы и даёт точно выбрать нужный.</div>
+            <div class="faq-answer">Всё, что предлагает YouTube — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p и только аудио. Потоки с высокой частотой кадров (60 fps, 120 fps) и HDR-контент сохраняются как есть. Arroxy показывает все доступные форматы, включая конвертацию в MP3, M4A/AAC, Opus и WAV для загрузок только аудио.</div>
           </details>
           <details class="faq-item">
             <summary>Это правда бесплатно?</summary>
@@ -983,7 +991,7 @@
           </details>
           <details class="faq-item">
             <summary>Можно ли скачивать плейлисты?</summary>
-            <div class="faq-answer">Сейчас поддерживаются только отдельные видео. Поддержка плейлистов и каналов — в дорожной карте.</div>
+            <div class="faq-answer">Да. Вставь ссылку на плейлист, выбери все видео или только те, которые хочешь, и Arroxy поставит их в очередь одним пакетом. Пакетная загрузка целых каналов пока не поддерживается.</div>
           </details>
           <details class="faq-item">
             <summary>Нужен ли мой YouTube-аккаунт или куки?</summary>

@@ -3,7 +3,7 @@
 
 # Arroxy — Kostenloser Open-Source YouTube Downloader für Windows, macOS & Linux
 
-**4K · 1080p60 · HDR · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
 
 **Sprache:** [Afaan Oromoo](README.om.md) · **Deutsch** · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
@@ -73,7 +73,7 @@ Wenn YouTube seine Bot-Erkennung aktualisiert, sagen die meisten Tools, du solls
 
 - Bis zu **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p
 - **Hohe Bildrate** unverändert erhalten — 60 fps, 120 fps, HDR
-- **Nur Audio** als MP3, AAC oder Opus exportieren
+- **Nur Audio** als MP3, M4A/AAC, Opus oder WAV exportieren
 - Schnell-Presets: *Beste Qualität* · *Ausgewogen* · *Kleine Datei*
 
 ### Datenschutz & Kontrolle
@@ -84,7 +84,7 @@ Wenn YouTube seine Bot-Erkennung aktualisiert, sagen die meisten Tools, du solls
 
 ### Workflow
 
-- **Beliebige YouTube-URL einfügen** — Videos und Shorts werden beide unterstützt
+- **Beliebige YouTube-URL einfügen** — Videos, Shorts und Playlists werden unterstützt; lade die ganze Playlist herunter oder wähle zuerst einzelne Videos aus
 - **Mehrfach-Download-Warteschlange** — mehrere Downloads parallel verfolgen
 - **Zwischenablage-Überwachung** — kopiere einen YouTube-Link und Arroxy füllt die URL automatisch aus, wenn du die App wieder fokussierst (in den erweiterten Einstellungen umschaltbar)
 - **URLs automatisch bereinigen** — entfernt Tracking-Parameter (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) und löst `youtube.com/redirect`-Links auf
@@ -219,7 +219,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Downloads werden direkt über [yt-dlp](https://github.com/yt-dlp/yt-dlp) von YouTube in den von dir gewählten Ordner geholt — nichts wird über einen Drittanbieter-Server geleitet. Verlauf, Download-Historie, URLs und Dateiinhalte bleiben auf deinem Gerät.
 
-Arroxy sendet anonyme, aggregierte Telemetrie über [Aptabase](https://aptabase.com) — gerade genug, damit ein Indie-Projekt sehen kann, ob es überhaupt genutzt wird (Starts, OS, App-Version, Abstürze). Keine URLs, keine Video-Titel, keine Dateipfade, keine IPs, keine Kontodaten — Aptabase ist Open Source und by Design GDPR-freundlich. Du kannst das in den Einstellungen deaktivieren.
+Arroxy sendet anonyme, aggregierte Telemetrie über [TelemetryDeck](https://telemetrydeck.com) — gerade genug, damit ein Indie-Projekt sehen kann, ob es überhaupt genutzt wird (Starts, OS, App-Version, Abstürze). Keine URLs, keine Video-Titel, keine Dateipfade, keine Kontodaten. Die pro-Installation-ID wird vor dem Senden gehasht und TelemetryDeck speichert keine IPs — EU-gehostet und GDPR-freundlich by Design. Du kannst das in den Einstellungen deaktivieren.
 
 ---
 
@@ -232,7 +232,7 @@ Ja — MIT-Lizenz, keine Premium-Stufe, keine Funktionsbarrieren.
 Alles, was YouTube anbietet: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, plus nur Audio. Hochbildraten-Streams mit 60 fps und 120 fps sowie HDR-Inhalte werden unverändert übernommen.
 
 **Kann ich nur den Audio-Track als MP3 extrahieren?**
-Ja. Wähle im Format-Menü *nur Audio* und entscheide dich für MP3, AAC oder Opus.
+Ja. Wähle im Formatmenü *nur Audio* und dann MP3, M4A/AAC, Opus oder WAV.
 
 **Brauche ich ein YouTube-Konto oder Cookies?**
 Nein. Arroxy verwendet nur die öffentlichen Tokens, die YouTube an jeden Browser ausliefert. Keine Cookies, kein Login, keine gespeicherten Anmeldedaten. Siehe [Keine Cookies, kein Login, keine Kontoverknüpfung](#no-cookies) für den Hintergrund.
@@ -247,7 +247,7 @@ Neun: English, Español, Deutsch, Français, 日本語, 中文, Русский, 
 Nein. yt-dlp und ffmpeg werden beim ersten Start automatisch von ihren offiziellen GitHub-Releases heruntergeladen und lokal gecacht.
 
 **Kann ich Playlists oder ganze Kanäle herunterladen?**
-Aktuell nur einzelne Videos und Shorts. Playlist- und Kanal-Support sind auf der [Roadmap](#roadmap).
+Ja, für Playlists: Füge eine Playlist-URL ein und stelle dann entweder die ganze Liste oder nur die Videos in die Warteschlange, die du auswählst. Ganze Kanäle im Batch werden noch nicht unterstützt.
 
 **macOS sagt „die App ist beschädigt" — was tun?**
 Das ist macOS Gatekeeper, der eine unsignierte App blockiert — keine echte Beschädigung. Schau dir den Abschnitt [Erststart unter macOS](#download) für die Lösung an.
@@ -263,9 +263,7 @@ Was kommt — grob nach Priorität sortiert:
 
 | Funktion    | Beschreibung    |
 | ---------------- | ---------------- |
-| **Playlist- & Kanal-Downloads** | Playlist- oder Kanal-URL einfügen; alle Videos mit Datums- oder Anzahl-Filtern in die Warteschlange |
 | **Mehrere URLs auf einmal eingeben** | Mehrere URLs einfügen und alle auf einmal starten |
-| **Format-Konvertierung** | Downloads in MP3, WAV, FLAC konvertieren — ohne extra Tool |
 | **Eigene Dateinamen-Vorlagen** | Dateien nach Titel, Hochlader, Datum, Auflösung benennen — mit Live-Vorschau |
 | **Geplante Downloads** | Warteschlange zu einer bestimmten Zeit starten (Nacht-Runs) |
 | **Geschwindigkeitsbegrenzung** | Bandbreite deckeln, damit Downloads deine Verbindung nicht auslasten |

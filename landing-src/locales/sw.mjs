@@ -61,11 +61,11 @@ export const sw = {
   features_h2: "Kila unachotegemea, bila ugumu wowote.",
   features_sub: "Bandika URL, chagua ubora, bonyeza pakua. Hiyo tu.",
   f1_h: "Hadi 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — kila azimio YouTube inayotoa, pamoja na sauti peke yake MP3, AAC, na Opus.",
+  f1_p: "2160p, 1440p, 1080p, 720p — kila mwonekano ambao YouTube inatoa, pamoja na ubadilishaji wa sauti pekee kuwa MP3, M4A/AAC, Opus na WAV.",
   f2_h: "60 fps & HDR imehifadhiwa",
   f2_p: "Mtiririko wa kasi ya fremu nyingi na HDR unakuja hasa kama YouTube inavyousimba — bila kupoteza ubora.",
-  f3_h: "Nyingi kwa wakati mmoja",
-  f3_p: "Weka foleni video nyingi unavyotaka. Paneli ya upakuaji inafuatilia maendeleo ya kila moja kwa sambamba.",
+  f3_h: "Playlist pia",
+  f3_p: "Bandika URL ya playlist, pakua orodha yote, au tiki video unazotaka tu kabla Arroxy haijaziweka kwenye foleni.",
   f4_h: "Masasisho ya kiotomatiki",
   f4_p: "Arroxy inaweka yt-dlp na ffmpeg safi chini ya kofia — inafanya kazi kupitia kila mabadiliko ya YouTube.",
   f5_h: "Lugha 21",
@@ -103,7 +103,7 @@ export const sw = {
   p2_h: "Bila vidakuzi",
   p2_p: "Arroxy inaomba alama sawa na kivinjari chochote. Hakuna kinachosafirishwa, hakuna kinachohifadhiwa.",
   p3_h: "Hakuna vitambulisho vya mtumiaji",
-  p3_p: "Telemetry ya kisirisiri ya vikao peke yake kupitia Aptabase — hakuna vitambulisho vya usakinishaji, hakuna uchapaji wa alama, hakuna data ya kibinafsi. Vipakuliaji vyako, historia, na faili hazitoki kamwe kwenye kifaa chako.",
+  p3_p: "Telemetry isiyo na jina kupitia TelemetryDeck — kitambulisho chako cha usanidi hufishwa kabla ya kuacha programu, hakuna uchapaji wa alama, hakuna data ya kibinafsi. Vipakuliaji vyako, historia, na faili hazitoki kamwe kwenye kifaa chako.",
   p4_h: "Bila seva za tatu",
   p4_p: "Mchakato wote unafanya kazi ndani ya mfumo kupitia yt-dlp + ffmpeg. Faili kamwe hazigusi seva ya mbali.",
 
@@ -136,7 +136,7 @@ export const sw = {
   faq_h2: "Maswali yanayoulizwa mara kwa mara",
   faq_q1: "Ni ubora gani wa video ninaweza kupakua?",
   faq_a1:
-    "Chochote YouTube inachopendekeza — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p, na sauti peke yake. Mtiririko wa kasi ya fremu nyingi (60 fps, 120 fps) na maudhui ya HDR yanahifadhiwa kama yalivyo. Arroxy inakuonyesha kila muundo unaopo na inakuruhusu kuchagua hasa unachotaka.",
+    "Kila kitu ambacho YouTube inatoa — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p na sauti pekee. Mitiririko ya fremu nyingi (60 fps, 120 fps) na maudhui ya HDR huhifadhiwa kama yalivyo. Arroxy hukuonyesha kila fomati inayopatikana, pamoja na ubadilishaji wa MP3, M4A/AAC, Opus na WAV kwa upakuaji wa sauti pekee.",
   faq_q2: "Je, ni bure kweli kweli?",
   faq_a2: "Ndiyo. Leseni ya MIT. Hakuna ngazi ya malipo, hakuna kizuizi cha vipengele.",
   faq_q3: "Arroxy inapatikana katika lugha zipi?",
@@ -150,7 +150,7 @@ export const sw = {
     "Ndiyo — na Arroxy ina tabaka mbili za ustahimilivu. Kwanza, yt-dlp ni moja ya zana za chanzo huria zinazodumishwa zaidi — inasasishwa ndani ya masaa ya mabadiliko ya YouTube. Pili, Arroxy haiitegemei vidakuzi wala akaunti yako ya Google kamwe, kwa hivyo hakuna kikao cha kuisha muda wala vitambulisho vya kubadilisha. Mchanganyiko huo unaifanya iwe thabiti zaidi kuliko zana zinazotegemea vidakuzi vya kivinjari vilivyosafirishwa.",
   faq_q6: "Je, ninaweza kupakua orodha za kucheza?",
   faq_a6:
-    "Video moja zinaungwa mkono leo. Msaada wa orodha za kucheza na chaneli uko kwenye ramani ya barabara.",
+    "Ndiyo. Bandika URL ya playlist, chagua video zote au zile tu unazotaka, na Arroxy itaziweka kwenye foleni kama kundi moja. Upakuaji wa kundi wa channel nzima bado haujaungwa mkono.",
   faq_q7: "Je, inahitaji akaunti yangu ya YouTube au vidakuzi?",
   faq_a7:
     "Hapana — na hiyo ni jambo kubwa zaidi kuliko inavyosikika. Zana nyingi zinazoacha kufanya kazi baada ya sasisho la YouTube zinakuambia kusafirisha vidakuzi vya YouTube vya kivinjari chako. Suluhisho hilo huvunjika kila dakika ~30 YouTube inapobadilisha vikao, na hati za yt-dlp zenyewe zinaonyan kuwa zinaweza kupiga bendera akaunti yako ya Google. Arroxy kamwe haitumii vidakuzi wala vitambulisho. Bila kuingia. Bila akaunti iliyounganishwa. Hakuna kinachokwisha muda, hakuna kinachopigwa marufuku.",

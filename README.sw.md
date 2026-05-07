@@ -3,7 +3,7 @@
 
 # Arroxy — Kipakuzi Bure cha YouTube cha Chanzo Wazi kwa Windows, macOS na Linux
 
-**4K · 1080p60 · HDR · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
 
 **Soma kwa:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · **Kiswahili** · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
@@ -71,7 +71,7 @@ YouTube inapoboresha ugunduzi wake wa boti, zana nyingi hukuambia kuhamisha vida
 
 - Hadi **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p
 - **Kiwango cha juu cha fremu** kimehifadhiwa kama kilivyo — fps 60, fps 120, HDR
-- Usafirishaji wa **sauti pekee** kwa MP3, AAC, au Opus
+- **Sauti pekee** kama MP3, M4A/AAC, Opus au WAV
 - Maandiko ya haraka: *Ubora bora* · *Usawa* · *Faili ndogo*
 
 ### Faragha na udhibiti
@@ -82,7 +82,7 @@ YouTube inapoboresha ugunduzi wake wa boti, zana nyingi hukuambia kuhamisha vida
 
 ### Mtiririko wa kazi
 
-- **Bandika URL yoyote ya YouTube** — video na Shorts zote zinaauni
+- **Bandika URL yoyote ya YouTube** — video, Shorts na playlist zinaungwa mkono; pakua playlist nzima au chagua video maalum kwanza
 - **Foleni ya upakuaji wa pamoja** — fuatilia maudhui kadhaa yanayopakuliwa wakati huo huo
 - **Ufuatiliaji wa ubao wa kunakili** — nakili kiungo cha YouTube na Arroxy itajaza URL kiotomatiki ukirejesha umakini kwenye programu (washa/zima katika mipangilio ya Kina)
 - **Usafi wa URL kiotomatiki** — huondoa vigezo vya ufuatiliaji (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) na kufungua viungo vya `youtube.com/redirect`
@@ -217,7 +217,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Maudhui hupakuliwa moja kwa moja kupitia [yt-dlp](https://github.com/yt-dlp/yt-dlp) kutoka YouTube hadi kwenye folda unayochagua — hakuna kitu kinachopita kwenye seva ya mtu wa tatu. Historia ya kutazama, historia ya kupakua, URL, na maudhui ya faili yanabaki kwenye kifaa chako.
 
-Arroxy hutuma telemetry isiyo na jina na ya jumla kupitia [Aptabase](https://aptabase.com) — tu ya kutosha kwa mradi wa kujitegemea kuona kama mtu anahusika nayo (uzinduzi, OS, toleo la programu, ajali). Hakuna URL, hakuna vichwa vya video, hakuna njia za faili, hakuna IP, hakuna taarifa za akaunti — Aptabase ni chanzo wazi na inayofaa GDPR kwa muundo. Unaweza kujiepusha katika Mipangilio.
+Arroxy hutuma telemetry isiyo na jina na ya jumla kupitia [TelemetryDeck](https://telemetrydeck.com) — tu ya kutosha kwa mradi wa kujitegemea kuona kama mtu anahusika nayo (uzinduzi, OS, toleo la programu, ajali). Hakuna URLs, hakuna vichwa vya video, hakuna njia za faili, hakuna taarifa za akaunti. Kitambulisho cha kila usanidi hufishwa kabla ya kutumwa na TelemetryDeck haitawahi kuhifadhi IPs — inashikiliwa EU na inayofaa GDPR kwa muundo. Unaweza kujiepusha katika Mipangilio.
 
 ---
 
@@ -230,7 +230,7 @@ Ndiyo — leseni ya MIT, hakuna ngazi ya malipo, hakuna kizuizi cha vipengele.
 Chochote YouTube kinatoa: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, pamoja na sauti pekee. Mtiririko wa fps 60, fps 120, na HDR huhifadhiwa kama ulivyo.
 
 **Je, ninaweza kutoa sauti pekee kama MP3?**
-Ndiyo. Chagua *sauti pekee* katika menyu ya fomati na uchague MP3, AAC, au Opus.
+Ndiyo. Chagua *sauti pekee* kwenye menyu ya fomati kisha uchague MP3, M4A/AAC, Opus au WAV.
 
 **Je, ninahitaji akaunti ya YouTube au vidakuzi?**
 Hapana. Arroxy inatumia tokeni za umma pekee ambazo YouTube inawapa vivinjari vyote. Hakuna vidakuzi, hakuna kuingia, hakuna vitambulisho vilivyohifadhiwa. Tazama [Hakuna vidakuzi, hakuna kuingia, hakuna kuunganisha akaunti](#no-cookies) kwa sababu hii ina maana.
@@ -245,7 +245,7 @@ Tisa: English, Español, Deutsch, Français, 日本語, 中文, Русский, 
 Hapana. yt-dlp na ffmpeg zinapakuliwa kiotomatiki wakati wa uzinduzi wa kwanza kutoka kwa matoleo rasmi ya GitHub na kuhifadhiwa mahali hapo.
 
 **Je, ninaweza kupakua orodha za kucheza au vituo vyote?**
-Video moja na Shorts kwa sasa. Usaidizi wa orodha ya kucheza na vituo uko kwenye [ramani ya barabara](#roadmap).
+Ndiyo kwa playlist: bandika URL ya playlist, kisha weka foleni ya orodha yote au video ulizochagua tu. Upakuaji wa kundi wa channel nzima bado haujaungwa mkono.
 
 **macOS inasema "programu imeharibiwa" — nifanye nini?**
 Hiyo ni macOS Gatekeeper inayozuia programu isiyosainiwa, si uharibifu wa kweli. Tazama sehemu ya [uzinduzi wa kwanza kwenye macOS](#download) kwa suluhisho.
@@ -261,9 +261,7 @@ Inakuja — kwa takriban mpangilio wa kipaumbele:
 
 | Kipengele    | Maelezo    |
 | ---------------- | ---------------- |
-| **Upakuaji wa orodha ya kucheza na vituo** | Bandika URL ya orodha ya kucheza au kituo; panga video zote na vichujio vya tarehe au idadi |
 | **Uingizaji wa URL nyingi** | Bandika URL nyingi kwa wakati mmoja na uziendeshe mara moja |
-| **Ubadilishaji wa fomati** | Badilisha maudhui yaliyopakuliwa kuwa MP3, WAV, FLAC bila zana nyingine |
 | **Templeti maalum za majina ya faili** | Weka jina la faili kwa kichwa, mpakiaji, tarehe, azimio — na onyesho la moja kwa moja |
 | **Upakuaji uliopangwa** | Anza foleni kwa wakati uliowekwa (uendeshaji wa usiku) |
 | **Vikwazo vya kasi** | Punguza kipimo data ili maudhui yasijaze muunganisho wako |

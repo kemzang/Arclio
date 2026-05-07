@@ -3,7 +3,7 @@
 
 # Arroxy — Windows, macOS va Linux uchun Bepul Ochiq Manbali YouTube Yuklovchi
 
-**4K · 1080p60 · HDR · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
 
 **O'qing:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · **O'zbekcha** · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
@@ -71,7 +71,7 @@ YouTube bot aniqlashini yangilaganda, ko'pchilik vositalar sizdan muammo yechimi
 
 - **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p gacha
 - **Yuqori kadr tezligi** o'zgarmagan holda saqlanadi — 60 fps, 120 fps, HDR
-- **Faqat audio** MP3, AAC yoki Opus formatiga eksport
+- **Faqat audio** ni MP3, M4A/AAC, Opus yoki WAV ga eksport qilish
 - Tezkor sozlamalar: *Eng yaxshi sifat* · *Muvozanatli* · *Kichik fayl*
 
 ### Maxfiylik va nazorat
@@ -82,7 +82,7 @@ YouTube bot aniqlashini yangilaganda, ko'pchilik vositalar sizdan muammo yechimi
 
 ### Ish oqimi
 
-- **Istalgan YouTube URL'ini joylashtiring** — videolar va Shortlar ham qo'llab-quvvatlanadi
+- **Istalgan YouTube URL manzilini joylang** — videolar, Shorts va playlistlar qo‘llab-quvvatlanadi; butun playlistni yuklab oling yoki avval aniq videolarni tanlang
 - **Ko'p yuklab olish navbati** — bir nechta yuklamalarni parallel kuzatib boring
 - **Bufer kuzatish** — YouTube havolasini nusxalang va Arroxy ilovaga qaytganingizda URL'ni avtomatik to'ldiradi (Kengaytirilgan sozlamalarda o'chirish/yoqish mumkin)
 - **URL'larni avtomatik tozalash** — kuzatish parametrlarini olib tashlaydi (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) va `youtube.com/redirect` havolalarini ochadi
@@ -217,7 +217,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Yuklamalar YouTube'dan siz tanlagan papkaga to'g'ridan-to'g'ri [yt-dlp](https://github.com/yt-dlp/yt-dlp) orqali olinadi — hech narsa uchinchi tomon server orqali yo'naltirilmaydi. Ko'rish tarixi, yuklab olish tarixi, URL'lar va fayl mazmunlari qurilmangizda qoladi.
 
-Arroxy [Aptabase](https://aptabase.com) orqali anonim, agregat telemetriya yuboradi — faqat mustaqil loyiha uchun kimdir uni haqiqatan ham ishlatayotganini ko'rish uchun yetarli (ishga tushirishlar, OT, ilova versiyasi, nosozliklar). URL'lar yo'q, video sarlavhalari yo'q, fayl yo'llari yo'q, IP yo'q, hisob ma'lumotlari yo'q — Aptabase ochiq manbali va o'z dizayni bo'yicha GDPR ga mos keladi. Sozlamalarda o'chirib qo'yishingiz mumkin.
+Arroxy [TelemetryDeck](https://telemetrydeck.com) orqali anonim, agregat telemetriya yuboradi — faqat mustaqil loyiha uchun kimdir uni haqiqatan ham ishlatayotganini ko'rish uchun yetarli (ishga tushirishlar, OS, ilova versiyasi, nosozliklar). URLs yo'q, video sarlavhalari yo'q, fayl yo'llari yo'q, hisob ma'lumotlari yo'q. Har bir o'rnatma IDsi yuborishdan oldin xeshlanadi va TelemetryDeck hech qachon IPs saqlamaydi — EU-da joylashgan va dizayni bo'yicha GDPR ga mos keladi. Sozlamalarda o'chirib qo'yishingiz mumkin.
 
 ---
 
@@ -230,7 +230,7 @@ Ha — MIT litsenziyalangan, premium daraja yo'q, xususiyat cheklash yo'q.
 YouTube uzatadigan har qanday narsa: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p va faqat audio. 60 fps, 120 fps va HDR oqimlari o'zgarmagan holda saqlanadi.
 
 **Faqat audioni MP3 sifatida chiqarib olishim mumkinmi?**
-Ha. Format menyusida *faqat audio* ni tanlang va MP3, AAC yoki Opus ni tanlang.
+Ha. Format menyusidan *faqat audio* ni tanlang va MP3, M4A/AAC, Opus yoki WAV ni belgilang.
 
 **YouTube hisob yoki kukilar kerakmi?**
 Yo'q. Arroxy faqat YouTube har qanday brauzerga uzatadigan ommaviy tokenlardan foydalanadi. Kukilar yo'q, kirish yo'q, saqlanadigan hisob ma'lumotlari yo'q. Buning nima uchun muhimligi haqida [Kukilarsiz, kirish yo'q, hisob bog'liq emas](#no-cookies) ga qarang.
@@ -245,7 +245,7 @@ To'qqizta: English, Español, Deutsch, Français, 日本語, 中文, Русск�
 Yo'q. yt-dlp va ffmpeg birinchi ishga tushirishda rasmiy GitHub relizlaridan avtomatik yuklab olinadi va mahalliy keshlanadi.
 
 **Playlist yoki butun kanallarni yuklab olishim mumkinmi?**
-Hozirda faqat bitta videolar va Shortlar. Playlist va kanal qo'llab-quvvatlash [yo'l xaritasida](#roadmap).
+Ha, playlistlar uchun: playlist URL manzilini joylang, keyin butun ro‘yxatni yoki faqat tanlagan videolaringizni navbatga qo‘shing. Butun kanalni to‘plam holida yuklab olish hali qo‘llab-quvvatlanmaydi.
 
 **macOS "ilova shikastlangan" deydi — nima qilaman?**
 Bu macOS Gatekeeper imzalanmagan ilovani bloklayotgani, haqiqiy shikastlanish emas. Tuzatish uchun [macOS da birinchi ishga tushirish](#download) bo'limiga qarang.
@@ -261,9 +261,7 @@ Kelayotgan — taxminan ustuvorlik tartibida:
 
 | Xususiyat    | Tavsif    |
 | ---------------- | ---------------- |
-| **Playlist va kanal yuklab olish** | Playlist yoki kanal URL'ini joylashtiring; sana yoki miqdor filtrlari bilan barcha videolarni navbatga qo'shing |
 | **Toplu URL kiritish** | Bir vaqtning o'zida bir nechta URL'larni joylashtiring va ularni bitta yugurishda bajaring |
-| **Format konvertatsiyasi** | Alohida vositasiz yuklamalarni MP3, WAV, FLAC ga aylantirish |
 | **Maxsus fayl nomi shablonlari** | Fayllarni sarlavha, yuklovchi, sana, aniqlik bo'yicha nomlash — jonli ko'rinish bilan |
 | **Rejalashtirilgan yuklab olishlar** | Navbatni belgilangan vaqtda boshlash (tunda ishlash) |
 | **Tezlik cheklovlari** | Yuklamalar ulanishingizni to'liq egallab olmasligi uchun o'tkazish qobiliyatini cheklash |

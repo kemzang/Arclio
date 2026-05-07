@@ -61,11 +61,11 @@ export const om = {
   features_h2: "Waan eegdu hunda, rakkoo tokko malee.",
   features_sub: "URL maxxansi, qulqullina filadhu, buufi cuqaasi. Kun dha.",
   f1_h: "Hamma 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — YouTube kennu murteessaa hunda, akkasumas sagantaa qofa MP3, AAC, fi Opus.",
+  f1_p: "2160p, 1440p, 1080p, 720p — resolution YouTube dhiyeessu hunda, akkasumas audio qofa gara MP3, M4A/AAC, Opus fi WAV jijjiiruu.",
   f2_h: "60 fps fi HDR eegamaniiru",
   f2_p: "Raadiyoon sarara fps olaanaa fi HDR YouTube encode godhe sana sana dhufu — qulqullina dhabuu tokko malee.",
-  f3_h: "Yeroo tokkotti baay'ee",
-  f3_p: "Viidiyoo barbaaddu hunda toora itti naqii. Paanaaliin buufachuu hundi tokkoon tokkoon isaanii adeemsa mul'isa.",
+  f3_h: "Playlist illee",
+  f3_p: "URL playlist maxxansi, tarree guutuu buufadhu yookaan Arroxy queue keessa galchuu isaa dura viidiyoowwan ati barbaaddu qofa mallatteessi.",
   f4_h: "Haaromsa ofii",
   f4_p: "Arroxy yt-dlp fi ffmpeg haaromsa jalaa — jijjiirama YouTube hundaaf hojjeta.",
   f5_h: "Afaan 21",
@@ -103,7 +103,7 @@ export const om = {
   p2_h: "Kuukii hin jiru",
   p2_p: "Arroxy tokeenota browser kamiyyuu gaafatu sana gaafata. Wanti ol-baafame hin jiru, wanti kuufame hin jiru.",
   p3_h: "ID fayyadamaa hin jiru",
-  p3_p: "Teelemeettrii maqaa-dhabduu, seesiiniif qofa Aptabase waliin — ID diriirsa hin jiru, maamilooma hin jiru, ragaa dhuunfaa hin jiru. Buufatoota, seenaa, fi faayiloonni kee meeshaa kee irratti hafu — guutummaatti.",
+  p3_p: "Teelemeettrii maqaa-dhabduu TelemetryDeck waliin — ID diriirsa kee app irraa bahuun dura hash godhama, maamilooma hin jiru, ragaa dhuunfaa hin jiru. Buufatoota, seenaa, fi faayiloonni kee meeshaa kee irratti hafu — guutummaatti.",
   p4_h: "Sirnaalee sadaffaa hin jiran",
   p4_p: "Tooftaan guutuun naannoo yt-dlp + ffmpeg waliin hojjeta. Faayiloonni sarara fagoo tokkollee hin tuqan.",
 
@@ -136,7 +136,7 @@ export const om = {
   faq_h2: "Gaaffilee yeroo baay'ee gaafataman",
   faq_q1: "Qulqullina viidiyoo kamii buufachuu danda'a?",
   faq_a1:
-    "YouTube kennu kamiyyuu — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p, fi sagantaa qofa. Sarara fps olaanaa (60 fps, 120 fps) fi HDR akka jiranitti eegamu. Arroxy formatoota argachuu danda'an hunda sitti agarsiisa, sirumaan maalii buufachuu feetu akka filattu si hayyama.",
+    "Waan YouTube dhiyeessu hunda — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p fi audio qofa. Streams frame rate ol-aanaa qaban (60 fps, 120 fps) fi HDR akkuma jirutti eegamu. Arroxy format hunda agarsiisa; buufata audio qofaaf MP3, M4A/AAC, Opus fi WAV jijjiiruus ni dabalata.",
   faq_q2: "Dhugumatti bilisaa dha?",
   faq_a2: "Eeyyee. Hayyama MIT. Sadarkaa premium hin jiru, amaloota eegame hin jiru.",
   faq_q3: "Arroxy afaan meeqa keessatti argama?",
@@ -150,7 +150,7 @@ export const om = {
     "Eeyyee — Arroxynis kutaalee lamaatu jabina qaba. Jalqaba, yt-dlp meeshaalee madda banaa hojii irra oolan keessaa baay'ee qoratamani tokko dha — jijjiirama YouTube booda sa'aatii muraasa keessatti haaromfama. Lammaffaa, Arroxy kuukii ykn akkaawuntii Google kee irratti hundaa'a hin qabu, kanaafuu seesiini dhumatu hin jiru, ibsitoonni jijjiiramuu hin qaban. Walitti makamni kun meeshaalee kuukii browser ergan irratti hundaa'an caalaa yk hammaachuu godha.",
   faq_q6: "Tarree taphachuu buufachuu danda'aa?",
   faq_a6:
-    "Viidiyoo takka takka har'a ni deeggarama. Deeggarsi tarree fi chaanaalii karaa karoora irratti jira.",
+    "Eeyyee. URL playlist maxxansi, viidiyoowwan hunda yookaan kan ati barbaaddu qofa filadhu, Arroxy immoo akka batch tokkootti queue keessa galcha. Channel guutuu batch'n buusuun ammaaf hin deggaramu.",
   faq_q7: "Akkaawuntii YouTube koo ykn kuukii barbaadaa?",
   faq_a7:
     "Lakki — kunis waan itti dhagayamu caalaa guddaa dha. Meeshaalee hedduu haaromsa YouTube booda hojjechuuf dhaaban kuukii YouTube browser keetii erguuf si gaafatu. Furmaanni sun yeroo 30 hunda YouTube seesiini naanna'a waan ta'eef caba, fi dokumeentiin yt-dlp ofii isaa akkaawuntii Google kee mallatteffamuu danda'a jechuun dhorka. Arroxy kuukii ykn ibsitoo gonkumaa hin fayyadamu. Seensa hin jiru. Akkaawuntii walqabate hin jiru. Dhumatu hin jiru, dhorkamu hin jiru.",

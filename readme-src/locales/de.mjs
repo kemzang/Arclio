@@ -119,7 +119,7 @@ export const de = {
   feat_quality_h3: "Qualität & Formate",
   feat_quality_1: "Bis zu **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Hohe Bildrate** unverändert erhalten — 60 fps, 120 fps, HDR",
-  feat_quality_3: "**Nur Audio** als MP3, AAC oder Opus exportieren",
+  feat_quality_3: "**Nur Audio** als MP3, M4A/AAC, Opus oder WAV exportieren",
   feat_quality_4: "Schnell-Presets: *Beste Qualität* · *Ausgewogen* · *Kleine Datei*",
   feat_privacy_h3: "Datenschutz & Kontrolle",
   feat_privacy_1:
@@ -128,7 +128,7 @@ export const de = {
   feat_privacy_3: "Dateien direkt in den von dir gewählten Ordner gespeichert",
   feat_workflow_h3: "Workflow",
   feat_workflow_1:
-    "**Beliebige YouTube-URL einfügen** — Videos und Shorts werden beide unterstützt",
+    "**Beliebige YouTube-URL einfügen** — Videos, Shorts und Playlists werden unterstützt; lade die ganze Playlist herunter oder wähle zuerst einzelne Videos aus",
   feat_workflow_2:
     "**Mehrfach-Download-Warteschlange** — mehrere Downloads parallel verfolgen",
   feat_workflow_3:
@@ -215,14 +215,14 @@ export const de = {
   privacy_p1:
     "Downloads werden direkt über [yt-dlp](https://github.com/yt-dlp/yt-dlp) von YouTube in den von dir gewählten Ordner geholt — nichts wird über einen Drittanbieter-Server geleitet. Verlauf, Download-Historie, URLs und Dateiinhalte bleiben auf deinem Gerät.",
   privacy_p2:
-    "Arroxy sendet anonyme, aggregierte Telemetrie über [Aptabase](https://aptabase.com) — gerade genug, damit ein Indie-Projekt sehen kann, ob es überhaupt genutzt wird (Starts, OS, App-Version, Abstürze). Keine URLs, keine Video-Titel, keine Dateipfade, keine IPs, keine Kontodaten — Aptabase ist Open Source und by Design GDPR-freundlich. Du kannst das in den Einstellungen deaktivieren.",
+    "Arroxy sendet anonyme, aggregierte Telemetrie über [TelemetryDeck](https://telemetrydeck.com) — gerade genug, damit ein Indie-Projekt sehen kann, ob es überhaupt genutzt wird (Starts, OS, App-Version, Abstürze). Keine URLs, keine Video-Titel, keine Dateipfade, keine Kontodaten. Die pro-Installation-ID wird vor dem Senden gehasht und TelemetryDeck speichert keine IPs — EU-gehostet und GDPR-freundlich by Design. Du kannst das in den Einstellungen deaktivieren.",
   faq_q1: "Ist es wirklich kostenlos?",
   faq_a1: "Ja — MIT-Lizenz, keine Premium-Stufe, keine Funktionsbarrieren.",
   faq_q2: "Welche Videoqualitäten kann ich herunterladen?",
   faq_a2:
     "Alles, was YouTube anbietet: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, plus nur Audio. Hochbildraten-Streams mit 60 fps und 120 fps sowie HDR-Inhalte werden unverändert übernommen.",
   faq_q3: "Kann ich nur den Audio-Track als MP3 extrahieren?",
-  faq_a3: "Ja. Wähle im Format-Menü *nur Audio* und entscheide dich für MP3, AAC oder Opus.",
+  faq_a3: "Ja. Wähle im Formatmenü *nur Audio* und dann MP3, M4A/AAC, Opus oder WAV.",
   faq_q4: "Brauche ich ein YouTube-Konto oder Cookies?",
   faq_a4:
     "Nein. Arroxy verwendet nur die öffentlichen Tokens, die YouTube an jeden Browser ausliefert. Keine Cookies, kein Login, keine gespeicherten Anmeldedaten. Siehe [Keine Cookies, kein Login, keine Kontoverknüpfung](#no-cookies) für den Hintergrund.",
@@ -237,7 +237,7 @@ export const de = {
     "Nein. yt-dlp und ffmpeg werden beim ersten Start automatisch von ihren offiziellen GitHub-Releases heruntergeladen und lokal gecacht.",
   faq_q8: "Kann ich Playlists oder ganze Kanäle herunterladen?",
   faq_a8:
-    "Aktuell nur einzelne Videos und Shorts. Playlist- und Kanal-Support sind auf der [Roadmap](#roadmap).",
+    "Ja, für Playlists: Füge eine Playlist-URL ein und stelle dann entweder die ganze Liste oder nur die Videos in die Warteschlange, die du auswählst. Ganze Kanäle im Batch werden noch nicht unterstützt.",
   faq_q9: 'macOS sagt „die App ist beschädigt" — was tun?',
   faq_a9:
     "Das ist macOS Gatekeeper, der eine unsignierte App blockiert — keine echte Beschädigung. Schau dir den Abschnitt [Erststart unter macOS](#download) für die Lösung an.",

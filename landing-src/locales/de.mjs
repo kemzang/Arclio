@@ -61,11 +61,11 @@ export const de = {
   features_h2: "Alles, was du erwartest — ganz ohne Reibung.",
   features_sub: "URL einfügen, Qualität wählen, Download klicken. Mehr nicht.",
   f1_h: "Bis zu 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — jede Auflösung, die YouTube bietet, plus Audio-only MP3, AAC und Opus.",
+  f1_p: "2160p, 1440p, 1080p, 720p — jede Auflösung, die YouTube anbietet, plus reine Audio-Konvertierung in MP3, M4A/AAC, Opus und WAV.",
   f2_h: "60 fps & HDR erhalten",
   f2_p: "High-Framerate- und HDR-Streams kommen genau so durch, wie YouTube sie kodiert — ohne Qualitätsverlust.",
-  f3_h: "Mehrere gleichzeitig",
-  f3_p: "Reihe so viele Videos in die Warteschlange ein, wie du willst. Das Download-Panel verfolgt jeden Fortschritt parallel.",
+  f3_h: "Auch Playlists",
+  f3_p: "Füge eine Playlist-URL ein, lade die ganze Liste herunter oder markiere nur die Videos, die du willst, bevor Arroxy sie in die Warteschlange legt.",
   f4_h: "Auto-Updates",
   f4_p: "Arroxy hält yt-dlp und ffmpeg im Hintergrund aktuell — funktioniert nach jeder YouTube-Änderung.",
   f5_h: "21 Sprachen",
@@ -103,7 +103,7 @@ export const de = {
   p2_h: "Keine Cookies",
   p2_p: "Arroxy fordert dieselben Tokens an wie jeder Browser. Nichts exportiert, nichts gespeichert.",
   p3_h: "Keine Nutzer-IDs",
-  p3_p: "Anonyme, sitzungsbasierte Telemetrie via Aptabase — keine Installations-IDs, kein Fingerprinting, keine personenbezogenen Daten. Deine Downloads, Verlauf und Dateien verlassen nie dein Gerät.",
+  p3_p: "Anonyme Telemetrie via TelemetryDeck — deine pro-Installation-ID wird gehasht, bevor sie die App verlässt, kein Fingerprinting, keine personenbezogenen Daten. Deine Downloads, Verlauf und Dateien verlassen nie dein Gerät.",
   p4_h: "Keine Drittanbieter-Server",
   p4_p: "Die ganze Pipeline läuft lokal über yt-dlp + ffmpeg. Dateien berühren nie einen Remote-Server.",
 
@@ -136,7 +136,7 @@ export const de = {
   faq_h2: "Häufig gestellte Fragen",
   faq_q1: "Welche Videoqualitäten kann ich herunterladen?",
   faq_a1:
-    "Alles, was YouTube anbietet — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p und nur Audio. Hochbildraten-Streams (60 fps, 120 fps) und HDR-Inhalte werden unverändert übernommen. Arroxy zeigt dir jedes verfügbare Format und lässt dich exakt auswählen.",
+    "Alles, was YouTube anbietet — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p und Audio-only. Streams mit hoher Bildrate (60 fps, 120 fps) und HDR-Inhalte bleiben unverändert erhalten. Arroxy zeigt jedes verfügbare Format, inklusive MP3-, M4A/AAC-, Opus- und WAV-Konvertierung für reine Audio-Downloads.",
   faq_q2: "Ist es wirklich kostenlos?",
   faq_a2:
     "Ja. MIT-Lizenz. Keine Premium-Stufe, keine versteckten Funktionsbarrieren.",
@@ -151,7 +151,7 @@ export const de = {
     "Ja — und Arroxy hat zwei Resilienzschichten. Erstens: yt-dlp ist eines der am aktivsten gepflegten Open-Source-Tools überhaupt — es wird innerhalb von Stunden nach YouTube-Änderungen aktualisiert. Zweitens: Arroxy verlässt sich überhaupt nicht auf Cookies oder dein Google-Konto, also gibt's keine Session, die abläuft, und keine Anmeldedaten, die rotiert werden müssen. Diese Kombination macht es deutlich stabiler als Tools, die auf exportierte Browser-Cookies angewiesen sind.",
   faq_q6: "Kann ich Playlists herunterladen?",
   faq_a6:
-    "Aktuell werden nur einzelne Videos unterstützt. Playlist- und Kanal-Support ist auf der Roadmap.",
+    "Ja. Füge eine Playlist-URL ein, wähle alle Videos oder nur die aus, die du willst, und Arroxy stellt sie als einen Batch in die Warteschlange. Ganze Kanäle im Batch werden noch nicht unterstützt.",
   faq_q7: "Braucht es mein YouTube-Konto oder Cookies?",
   faq_a7:
     "Nein — und das ist wichtiger, als es klingt. Die meisten Tools, die nach einem YouTube-Update aufhören zu funktionieren, weisen dich an, deine Browser-Cookies zu exportieren. Dieser Workaround bricht alle ~30 Minuten zusammen, wenn YouTube Sessions rotiert, und yt-dlps eigene Doku warnt, dass das dein Google-Konto markieren kann. Arroxy nutzt nie Cookies oder Anmeldedaten. Kein Login. Kein verknüpftes Konto. Nichts läuft ab, nichts wird gesperrt.",

@@ -61,11 +61,11 @@ export const fr = {
   features_h2: "Tout ce que vous attendez, sans la moindre friction.",
   features_sub: "Collez une URL, choisissez une qualité, cliquez sur télécharger. C'est tout.",
   f1_h: "Jusqu'à 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — toutes les résolutions proposées par YouTube, plus l'audio seul en MP3, AAC et Opus.",
+  f1_p: "2160p, 1440p, 1080p, 720p — toutes les résolutions que YouTube propose, plus la conversion audio seule en MP3, M4A/AAC, Opus et WAV.",
   f2_h: "60 fps et HDR préservés",
   f2_p: "Les flux haute fréquence d'images et HDR passent exactement comme YouTube les encode — sans perte de qualité.",
-  f3_h: "Plusieurs à la fois",
-  f3_p: "Mettez autant de vidéos que vous voulez en file d'attente. Le panneau suit la progression de chacune en parallèle.",
+  f3_h: "Playlists incluses",
+  f3_p: "Colle l'URL d'une playlist, télécharge toute la liste ou coche seulement les vidéos que tu veux avant qu'Arroxy les mette en file.",
   f4_h: "Mises à jour automatiques",
   f4_p: "Arroxy garde yt-dlp et ffmpeg à jour en coulisse — résiste à chaque changement de YouTube.",
   f5_h: "21 langues",
@@ -103,7 +103,7 @@ export const fr = {
   p2_h: "Sans cookies",
   p2_p: "Arroxy demande les mêmes tokens que n'importe quel navigateur. Rien n'est exporté, rien n'est stocké.",
   p3_h: "Sans identifiants utilisateur",
-  p3_p: "Télémétrie anonyme, limitée à la session via Aptabase — aucun identifiant d'installation, aucun empreinte numérique, aucune donnée personnelle. Vos téléchargements, historique et fichiers ne quittent jamais votre machine.",
+  p3_p: "Télémétrie anonyme via TelemetryDeck — ton identifiant par installation est haché avant de quitter l'app, aucune empreinte numérique, aucune donnée personnelle. Tes téléchargements, historique et fichiers ne quittent jamais ta machine.",
   p4_h: "Sans serveurs tiers",
   p4_p: "Tout le pipeline tourne en local via yt-dlp + ffmpeg. Les fichiers ne touchent jamais un serveur distant.",
 
@@ -136,7 +136,7 @@ export const fr = {
   faq_h2: "Questions fréquentes",
   faq_q1: "Quelles qualités de vidéo puis-je télécharger ?",
   faq_a1:
-    "Tout ce que YouTube propose — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p et audio seul. Les flux haut framerate (60 fps, 120 fps) et HDR sont préservés tels quels. Arroxy te montre tous les formats disponibles et te laisse choisir précisément ce que tu veux récupérer.",
+    "Tout ce que YouTube propose — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p et audio seul. Les flux haut framerate (60 fps, 120 fps) et le HDR sont préservés tels quels. Arroxy te montre tous les formats disponibles, y compris la conversion en MP3, M4A/AAC, Opus et WAV pour les téléchargements audio seuls.",
   faq_q2: "C'est vraiment gratuit ?",
   faq_a2:
     "Oui. Licence MIT. Pas de version premium, pas de fonctions verrouillées.",
@@ -152,7 +152,7 @@ export const fr = {
     "Oui — et Arroxy a deux couches de résilience. Premièrement, yt-dlp est l'un des outils open source les plus activement maintenus — il est mis à jour dans les heures qui suivent les changements YouTube. Deuxièmement, Arroxy ne dépend pas du tout des cookies ni de ton compte Google, donc aucune session n'expire et aucun identifiant à renouveler. Cette combinaison le rend bien plus stable que les outils dépendant de cookies de navigateur exportés.",
   faq_q6: "Puis-je télécharger des playlists ?",
   faq_a6:
-    "Aujourd'hui, seules les vidéos individuelles sont supportées. Le support des playlists et des chaînes est sur la feuille de route.",
+    "Oui. Colle l'URL d'une playlist, sélectionne toutes les vidéos ou seulement celles que tu veux, et Arroxy les met en file comme un seul lot. Les téléchargements par lot de chaînes entières ne sont pas encore pris en charge.",
   faq_q7: "A-t-il besoin de mon compte YouTube ou de cookies ?",
   faq_a7:
     "Non — et c'est plus important qu'il n'y paraît. La plupart des outils qui cessent de fonctionner après une mise à jour de YouTube te disent d'exporter les cookies YouTube de ton navigateur. Ce contournement casse toutes les ~30 minutes quand YouTube renouvelle les sessions, et la doc de yt-dlp prévient que ça peut faire signaler ton compte Google. Arroxy n'utilise jamais de cookies ni d'identifiants. Pas de login. Pas de compte lié. Rien à expirer, rien à bannir.",

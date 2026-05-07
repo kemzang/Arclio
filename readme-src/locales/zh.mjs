@@ -119,7 +119,7 @@ export const zh = {
   feat_quality_h3: "画质与格式",
   feat_quality_1: "最高 **4K UHD（2160p）**、1440p、1080p、720p、480p、360p",
   feat_quality_2: "**高帧率**原样保留 — 60 fps、120 fps、HDR",
-  feat_quality_3: "**纯音频**导出为 MP3、AAC 或 Opus",
+  feat_quality_3: "**仅音频**导出为 MP3、M4A/AAC、Opus 或 WAV",
   feat_quality_4: "快速预设：*最佳画质* · *平衡* · *小文件*",
   feat_privacy_h3: "隐私与控制",
   feat_privacy_1:
@@ -128,7 +128,7 @@ export const zh = {
   feat_privacy_3: "文件直接保存到你选择的文件夹",
   feat_workflow_h3: "工作流",
   feat_workflow_1:
-    "**粘贴任意 YouTube 链接** — 视频和 Shorts 均支持",
+    "**粘贴任意 YouTube 链接** — 支持视频、Shorts 和播放列表；可下载整个播放列表，也可先挑选具体视频",
   feat_workflow_2:
     "**多任务下载队列** — 并行跟踪多个下载",
   feat_workflow_3:
@@ -215,14 +215,14 @@ export const zh = {
   privacy_p1:
     "下载通过 [yt-dlp](https://github.com/yt-dlp/yt-dlp) 直接从 YouTube 获取到你选择的文件夹 — 不经过任何第三方服务器。观看历史、下载历史、URL 和文件内容均保留在你的设备上。",
   privacy_p2:
-    "Arroxy 通过 [Aptabase](https://aptabase.com) 发送匿名聚合遥测数据 — 仅够独立项目了解是否有人在使用（启动次数、操作系统、应用版本、崩溃）。无 URL、无视频标题、无文件路径、无 IP、无账号信息 — Aptabase 开源且在设计上符合 GDPR。你可以在设置中关闭遥测。",
+    "Arroxy 通过 [TelemetryDeck](https://telemetrydeck.com) 发送匿名聚合遥测数据 — 仅够独立项目了解是否有人在使用（启动次数、OS、应用版本、崩溃）。无 URLs、无视频标题、无文件路径、无账号信息。每次安装的 ID 在发送前经过哈希处理，TelemetryDeck 从不存储 IPs — 在 EU 托管，设计上符合 GDPR。你可以在设置中选择退出。",
   faq_q1: "真的免费吗？",
   faq_a1: "是的 — MIT 许可证，无付费版，无功能门槛。",
   faq_q2: "能下载哪些视频画质？",
   faq_a2:
     "YouTube 提供的都行：4K UHD（2160p）、1440p、1080p、720p、480p、360p，以及纯音频。60 fps、120 fps 和 HDR 流原样保留。",
   faq_q3: "能将音频提取为 MP3 吗？",
-  faq_a3: "可以。在格式菜单中选择*纯音频*，然后选择 MP3、AAC 或 Opus。",
+  faq_a3: "可以。在格式菜单里选择*仅音频*，然后选择 MP3、M4A/AAC、Opus 或 WAV。",
   faq_q4: "需要 YouTube 账号或 Cookie 吗？",
   faq_a4:
     "不需要。Arroxy 仅使用 YouTube 向任意浏览器提供的公开 Token。无 Cookie、无登录、无凭据存储。详见[无 Cookie、无登录、无账号绑定](#no-cookies)，了解为何这点很重要。",
@@ -237,7 +237,7 @@ export const zh = {
     "不需要。yt-dlp 和 ffmpeg 在首次启动时自动从其官方 GitHub releases 下载并缓存到本地。",
   faq_q8: "能下载播放列表或整个频道吗？",
   faq_a8:
-    "目前支持单个视频和 Shorts。播放列表和频道支持在[路线图](#roadmap)中。",
+    "播放列表可以：粘贴播放列表链接后，可以把整个列表加入队列，也可以只加入你选中的视频。整频道批量下载暂未支持。",
   faq_q9: 'macOS 提示"应用已损坏" — 怎么处理？',
   faq_a9:
     "这是 macOS Gatekeeper 在拦截未签名应用，并非真正损坏。请参见 [macOS 首次启动](#download)章节的处理步骤。",

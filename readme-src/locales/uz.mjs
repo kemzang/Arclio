@@ -118,7 +118,7 @@ export const uz = {
   feat_quality_h3: "Sifat va formatlar",
   feat_quality_1: "**4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p gacha",
   feat_quality_2: "**Yuqori kadr tezligi** o'zgarmagan holda saqlanadi — 60 fps, 120 fps, HDR",
-  feat_quality_3: "**Faqat audio** MP3, AAC yoki Opus formatiga eksport",
+  feat_quality_3: "**Faqat audio** ni MP3, M4A/AAC, Opus yoki WAV ga eksport qilish",
   feat_quality_4: "Tezkor sozlamalar: *Eng yaxshi sifat* · *Muvozanatli* · *Kichik fayl*",
   feat_privacy_h3: "Maxfiylik va nazorat",
   feat_privacy_1:
@@ -127,7 +127,7 @@ export const uz = {
   feat_privacy_3: "Fayllar siz tanlagan papkaga to'g'ridan-to'g'ri saqlanadi",
   feat_workflow_h3: "Ish oqimi",
   feat_workflow_1:
-    "**Istalgan YouTube URL'ini joylashtiring** — videolar va Shortlar ham qo'llab-quvvatlanadi",
+    "**Istalgan YouTube URL manzilini joylang** — videolar, Shorts va playlistlar qo‘llab-quvvatlanadi; butun playlistni yuklab oling yoki avval aniq videolarni tanlang",
   feat_workflow_2:
     "**Ko'p yuklab olish navbati** — bir nechta yuklamalarni parallel kuzatib boring",
   feat_workflow_3:
@@ -214,14 +214,14 @@ export const uz = {
   privacy_p1:
     "Yuklamalar YouTube'dan siz tanlagan papkaga to'g'ridan-to'g'ri [yt-dlp](https://github.com/yt-dlp/yt-dlp) orqali olinadi — hech narsa uchinchi tomon server orqali yo'naltirilmaydi. Ko'rish tarixi, yuklab olish tarixi, URL'lar va fayl mazmunlari qurilmangizda qoladi.",
   privacy_p2:
-    "Arroxy [Aptabase](https://aptabase.com) orqali anonim, agregat telemetriya yuboradi — faqat mustaqil loyiha uchun kimdir uni haqiqatan ham ishlatayotganini ko'rish uchun yetarli (ishga tushirishlar, OT, ilova versiyasi, nosozliklar). URL'lar yo'q, video sarlavhalari yo'q, fayl yo'llari yo'q, IP yo'q, hisob ma'lumotlari yo'q — Aptabase ochiq manbali va o'z dizayni bo'yicha GDPR ga mos keladi. Sozlamalarda o'chirib qo'yishingiz mumkin.",
+    "Arroxy [TelemetryDeck](https://telemetrydeck.com) orqali anonim, agregat telemetriya yuboradi — faqat mustaqil loyiha uchun kimdir uni haqiqatan ham ishlatayotganini ko'rish uchun yetarli (ishga tushirishlar, OS, ilova versiyasi, nosozliklar). URLs yo'q, video sarlavhalari yo'q, fayl yo'llari yo'q, hisob ma'lumotlari yo'q. Har bir o'rnatma IDsi yuborishdan oldin xeshlanadi va TelemetryDeck hech qachon IPs saqlamaydi — EU-da joylashgan va dizayni bo'yicha GDPR ga mos keladi. Sozlamalarda o'chirib qo'yishingiz mumkin.",
   faq_q1: "Bu haqiqatan ham bepulmi?",
   faq_a1: "Ha — MIT litsenziyalangan, premium daraja yo'q, xususiyat cheklash yo'q.",
   faq_q2: "Qanday video sifatlarini yuklab olishim mumkin?",
   faq_a2:
     "YouTube uzatadigan har qanday narsa: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p va faqat audio. 60 fps, 120 fps va HDR oqimlari o'zgarmagan holda saqlanadi.",
   faq_q3: "Faqat audioni MP3 sifatida chiqarib olishim mumkinmi?",
-  faq_a3: "Ha. Format menyusida *faqat audio* ni tanlang va MP3, AAC yoki Opus ni tanlang.",
+  faq_a3: "Ha. Format menyusidan *faqat audio* ni tanlang va MP3, M4A/AAC, Opus yoki WAV ni belgilang.",
   faq_q4: "YouTube hisob yoki kukilar kerakmi?",
   faq_a4:
     "Yo'q. Arroxy faqat YouTube har qanday brauzerga uzatadigan ommaviy tokenlardan foydalanadi. Kukilar yo'q, kirish yo'q, saqlanadigan hisob ma'lumotlari yo'q. Buning nima uchun muhimligi haqida [Kukilarsiz, kirish yo'q, hisob bog'liq emas](#no-cookies) ga qarang.",
@@ -236,7 +236,7 @@ export const uz = {
     "Yo'q. yt-dlp va ffmpeg birinchi ishga tushirishda rasmiy GitHub relizlaridan avtomatik yuklab olinadi va mahalliy keshlanadi.",
   faq_q8: "Playlist yoki butun kanallarni yuklab olishim mumkinmi?",
   faq_a8:
-    "Hozirda faqat bitta videolar va Shortlar. Playlist va kanal qo'llab-quvvatlash [yo'l xaritasida](#roadmap).",
+    "Ha, playlistlar uchun: playlist URL manzilini joylang, keyin butun ro‘yxatni yoki faqat tanlagan videolaringizni navbatga qo‘shing. Butun kanalni to‘plam holida yuklab olish hali qo‘llab-quvvatlanmaydi.",
   faq_q9: 'macOS "ilova shikastlangan" deydi — nima qilaman?',
   faq_a9:
     "Bu macOS Gatekeeper imzalanmagan ilovani bloklayotgani, haqiqiy shikastlanish emas. Tuzatish uchun [macOS da birinchi ishga tushirish](#download) bo'limiga qarang.",

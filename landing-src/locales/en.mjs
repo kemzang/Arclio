@@ -61,11 +61,11 @@ export const en = {
   features_h2: "Everything you'd expect, none of the friction.",
   features_sub: "Paste a URL, pick a quality, click download. That's it.",
   f1_h: "Up to 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — every resolution YouTube offers, plus audio-only MP3, AAC, and Opus.",
+  f1_p: "2160p, 1440p, 1080p, 720p — every resolution YouTube offers, plus audio-only MP3, M4A/AAC, Opus, and WAV conversion.",
   f2_h: "60 fps & HDR preserved",
   f2_p: "High frame-rate and HDR streams come through exactly as YouTube encodes them — no quality loss.",
-  f3_h: "Multiple at once",
-  f3_p: "Queue as many videos as you want. The download panel tracks progress for each in parallel.",
+  f3_h: "Playlists too",
+  f3_p: "Paste a playlist URL, download the whole list, or tick only the videos you want before Arroxy queues them up.",
   f4_h: "Auto-updates",
   f4_p: "Arroxy keeps yt-dlp and ffmpeg fresh under the hood — works through every YouTube change.",
   f5_h: "21 languages",
@@ -103,7 +103,7 @@ export const en = {
   p2_h: "No cookies",
   p2_p: "Arroxy requests the same tokens any browser does. Nothing exported, nothing stored.",
   p3_h: "No user IDs",
-  p3_p: "Anonymous, session-only telemetry via Aptabase — no install IDs, no fingerprinting, no personal data. Your downloads, history, and files never leave your machine.",
+  p3_p: "Anonymous telemetry via TelemetryDeck — your per-install ID is hashed before it leaves the app, no fingerprinting, no personal data. Your downloads, history, and files never leave your machine.",
   p4_h: "No third-party servers",
   p4_p: "The whole pipeline runs locally via yt-dlp + ffmpeg. Files never touch a remote server.",
 
@@ -136,7 +136,7 @@ export const en = {
   faq_h2: "Frequently asked questions",
   faq_q1: "What video qualities can I download?",
   faq_a1:
-    "Anything YouTube offers — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p, and audio-only. High frame-rate streams (60 fps, 120 fps) and HDR content are preserved as-is. Arroxy shows you every available format and lets you choose exactly what to grab.",
+    "Anything YouTube offers — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p, and audio-only. High frame-rate streams (60 fps, 120 fps) and HDR content are preserved as-is. Arroxy shows every available format, including MP3, M4A/AAC, Opus, and WAV conversion for audio-only downloads.",
   faq_q2: "Is it really free?",
   faq_a2: "Yes. MIT licensed. No premium tier, no feature gating.",
   faq_q3: "What languages is Arroxy available in?",
@@ -150,7 +150,7 @@ export const en = {
     "Yes — and Arroxy has two layers of resilience. First, yt-dlp is one of the most actively maintained open-source tools around — it updates within hours of YouTube changes. Second, Arroxy doesn't rely on cookies or your Google account at all, so there's no session to expire and no credentials to rotate. That combination makes it significantly more stable than tools that depend on exported browser cookies.",
   faq_q6: "Can I download playlists?",
   faq_a6:
-    "Single videos are supported today. Playlist and channel support is on the roadmap.",
+    "Yes. Paste a playlist URL, select all videos or only the ones you want, and Arroxy queues them as one batch. Whole-channel batch downloads are not supported yet.",
   faq_q7: "Does it need my YouTube account or cookies?",
   faq_a7:
     "No — and that's a bigger deal than it sounds. Most tools that stop working after a YouTube update tell you to export your browser's YouTube cookies. That workaround breaks every ~30 minutes as YouTube rotates sessions, and yt-dlp's own docs warn it can get your Google account flagged. Arroxy never uses cookies or credentials. No login. No account linked. Nothing to expire, nothing to ban.",

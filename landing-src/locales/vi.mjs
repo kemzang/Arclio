@@ -61,11 +61,11 @@ export const vi = {
   features_h2: "Tất cả những gì bạn mong đợi, không có bất kỳ phiền hà nào.",
   features_sub: "Dán URL, chọn chất lượng, nhấn tải xuống. Chỉ vậy thôi.",
   f1_h: "Lên tới 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — mọi độ phân giải YouTube cung cấp, cộng thêm chỉ âm thanh MP3, AAC và Opus.",
+  f1_p: "2160p, 1440p, 1080p, 720p — mọi độ phân giải YouTube cung cấp, kèm chuyển đổi chỉ âm thanh sang MP3, M4A/AAC, Opus và WAV.",
   f2_h: "60 fps & HDR được bảo toàn",
   f2_p: "Luồng tốc độ khung hình cao và HDR được truyền tải chính xác như YouTube mã hóa — không mất chất lượng.",
-  f3_h: "Nhiều video cùng lúc",
-  f3_p: "Thêm bao nhiêu video vào hàng đợi tùy ý. Bảng tải xuống theo dõi tiến trình từng video song song.",
+  f3_h: "Có cả playlist",
+  f3_p: "Dán URL playlist, tải toàn bộ danh sách hoặc chỉ đánh dấu những video bạn muốn trước khi Arroxy đưa chúng vào hàng đợi.",
   f4_h: "Tự động cập nhật",
   f4_p: "Arroxy tự động giữ yt-dlp và ffmpeg luôn mới — hoạt động qua mọi thay đổi của YouTube.",
   f5_h: "21 ngôn ngữ",
@@ -103,7 +103,7 @@ export const vi = {
   p2_h: "Không cookie",
   p2_p: "Arroxy yêu cầu cùng token như mọi trình duyệt. Không có gì được xuất, không có gì được lưu trữ.",
   p3_h: "Không có ID người dùng",
-  p3_p: "Dữ liệu phân tích ẩn danh, chỉ trong phiên qua Aptabase — không có ID cài đặt, không có dấu vân tay, không có dữ liệu cá nhân. Lịch sử tải xuống và tệp của bạn không bao giờ rời khỏi máy tính của bạn.",
+  p3_p: "Telemetry ẩn danh qua TelemetryDeck — ID cài đặt của bạn được băm trước khi rời khỏi ứng dụng, không có dấu vân tay, không có dữ liệu cá nhân. Lịch sử tải xuống và tệp của bạn không bao giờ rời khỏi máy tính của bạn.",
   p4_h: "Không có máy chủ bên thứ ba",
   p4_p: "Toàn bộ quy trình chạy cục bộ qua yt-dlp + ffmpeg. Các tệp không bao giờ chạm đến máy chủ từ xa.",
 
@@ -136,7 +136,7 @@ export const vi = {
   faq_h2: "Câu hỏi thường gặp",
   faq_q1: "Tôi có thể tải video ở những chất lượng nào?",
   faq_a1:
-    "Tất cả những gì YouTube cung cấp — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p và chỉ âm thanh. Các luồng tốc độ khung hình cao (60 fps, 120 fps) và nội dung HDR được bảo toàn nguyên vẹn. Arroxy hiển thị cho bạn mọi định dạng có sẵn và cho phép bạn chọn chính xác những gì muốn tải.",
+    "Bất cứ thứ gì YouTube cung cấp — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p và chỉ âm thanh. Luồng tốc độ khung hình cao (60 fps, 120 fps) và nội dung HDR được giữ nguyên. Arroxy hiển thị mọi định dạng khả dụng, bao gồm chuyển đổi sang MP3, M4A/AAC, Opus và WAV cho các lượt tải chỉ âm thanh.",
   faq_q2: "Thực sự miễn phí không?",
   faq_a2: "Có. Giấy phép MIT. Không có gói cao cấp, không có tính năng bị khóa.",
   faq_q3: "Arroxy có sẵn bằng những ngôn ngữ nào?",
@@ -150,7 +150,7 @@ export const vi = {
     "Có — và Arroxy có hai lớp khả năng chống chịu. Thứ nhất, yt-dlp là một trong những công cụ mã nguồn mở được duy trì tích cực nhất — nó cập nhật trong vài giờ sau khi YouTube thay đổi. Thứ hai, Arroxy hoàn toàn không phụ thuộc vào cookie hay tài khoản Google của bạn, vì vậy không có phiên nào hết hạn và không có thông tin đăng nhập nào cần xoay vòng. Sự kết hợp đó khiến nó ổn định hơn đáng kể so với các công cụ phụ thuộc vào cookie trình duyệt được xuất ra.",
   faq_q6: "Tôi có thể tải playlist không?",
   faq_a6:
-    "Hiện tại chỉ hỗ trợ video đơn lẻ. Hỗ trợ playlist và kênh đang có trong lộ trình phát triển.",
+    "Có. Dán URL playlist, chọn tất cả video hoặc chỉ những video bạn muốn, và Arroxy sẽ xếp chúng thành một lô duy nhất. Tải hàng loạt cả kênh vẫn chưa được hỗ trợ.",
   faq_q7: "Nó có cần tài khoản YouTube hay cookie của tôi không?",
   faq_a7:
     "Không — và điều đó quan trọng hơn bạn nghĩ. Hầu hết các công cụ ngừng hoạt động sau khi YouTube cập nhật đều yêu cầu bạn xuất cookie YouTube từ trình duyệt. Cách khắc phục đó bị phá vỡ sau khoảng ~30 phút khi YouTube xoay vòng phiên, và tài liệu của yt-dlp chính họ cảnh báo rằng điều đó có thể khiến tài khoản Google của bạn bị gắn cờ. Arroxy không bao giờ sử dụng cookie hay thông tin đăng nhập. Không đăng nhập. Không có tài khoản nào được liên kết. Không có gì hết hạn, không có gì bị cấm.",

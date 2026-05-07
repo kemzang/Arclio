@@ -72,7 +72,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Arroxy","applicationCategory":"MultimediaApplication","operatingSystem":"Windows, macOS, Linux","description":"Téléchargeur YouTube de bureau gratuit sous licence MIT pour Windows, macOS et Linux. Téléchargez des vidéos jusqu'en 4K HDR à 60 fps sans compte Google, sans cookies de navigateur ni connexion.","inLanguage":"fr","url":"https://arroxy.orionus.dev/fr/","image":"https://arroxy.orionus.dev/assets/icon.png","license":"https://opensource.org/licenses/MIT","downloadUrl":"https://github.com/antonio-orionus/Arroxy/releases/latest","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI"}},{"@context":"https://schema.org","@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI","sameAs":["https://x.com/OrionusAI","https://github.com/antonio-orionus"]}]</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"fr","mainEntity":[{"@type":"Question","name":"Quelles qualités de vidéo puis-je télécharger ?","acceptedAnswer":{"@type":"Answer","text":"Tout ce que YouTube propose — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p et audio seul. Les flux haut framerate (60 fps, 120 fps) et HDR sont préservés tels quels. Arroxy te montre tous les formats disponibles et te laisse choisir précisément ce que tu veux récupérer."}},{"@type":"Question","name":"C'est vraiment gratuit ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Licence MIT. Pas de version premium, pas de fonctions verrouillées."}},{"@type":"Question","name":"Dans quelles langues Arroxy est-il disponible ?","acceptedAnswer":{"@type":"Answer","text":"Vingt-et-une, prêtes à l'emploi : English, Español (espagnol), Deutsch (allemand), Français, 日本語 (japonais), 中文 (chinois), Русский (russe), Українська (ukrainien), हिन्दी (hindi), Afaan Oromoo, Kiswahili, O'zbekcha (ouzbek), Tiếng Việt (vietnamien), አማርኛ (amharique), العربية (arabe), اردو (ourdou), پښتو (pachto), বাংলা (bengali), မြန်မာဘာသာ (birman), Ελληνικά (grec) et Српски (serbe). Arroxy détecte la langue de ton système d'exploitation au premier lancement et tu peux changer à tout moment depuis le sélecteur de langue dans la barre d'outils. Les traductions sont de simples objets TypeScript dans src/shared/i18n/locales/ — ouvre une PR sur GitHub pour contribuer."}},{"@type":"Question","name":"Faut-il installer quelque chose ?","acceptedAnswer":{"@type":"Answer","text":"Non. yt-dlp et ffmpeg sont téléchargés automatiquement au premier lancement depuis leurs releases officielles GitHub et mis en cache sur ta machine. Après ça, aucune configuration supplémentaire."}},{"@type":"Question","name":"Est-ce que ça continuera de marcher si YouTube change quelque chose ?","acceptedAnswer":{"@type":"Answer","text":"Oui — et Arroxy a deux couches de résilience. Premièrement, yt-dlp est l'un des outils open source les plus activement maintenus — il est mis à jour dans les heures qui suivent les changements YouTube. Deuxièmement, Arroxy ne dépend pas du tout des cookies ni de ton compte Google, donc aucune session n'expire et aucun identifiant à renouveler. Cette combinaison le rend bien plus stable que les outils dépendant de cookies de navigateur exportés."}},{"@type":"Question","name":"Puis-je télécharger des playlists ?","acceptedAnswer":{"@type":"Answer","text":"Aujourd'hui, seules les vidéos individuelles sont supportées. Le support des playlists et des chaînes est sur la feuille de route."}},{"@type":"Question","name":"A-t-il besoin de mon compte YouTube ou de cookies ?","acceptedAnswer":{"@type":"Answer","text":"Non — et c'est plus important qu'il n'y paraît. La plupart des outils qui cessent de fonctionner après une mise à jour de YouTube te disent d'exporter les cookies YouTube de ton navigateur. Ce contournement casse toutes les ~30 minutes quand YouTube renouvelle les sessions, et la doc de yt-dlp prévient que ça peut faire signaler ton compte Google. Arroxy n'utilise jamais de cookies ni d'identifiants. Pas de login. Pas de compte lié. Rien à expirer, rien à bannir."}},{"@type":"Question","name":"macOS dit « l'application est endommagée » ou « ne peut pas être ouverte » — que faire ?","acceptedAnswer":{"@type":"Answer","text":"C'est Gatekeeper de macOS qui bloque une app non signée — pas un vrai dommage. Le README contient la marche à suivre pour le premier lancement sur macOS."}},{"@type":"Question","name":"C'est légal ?","acceptedAnswer":{"@type":"Answer","text":"Télécharger des vidéos pour un usage personnel est généralement accepté dans la plupart des juridictions. Tu es responsable de respecter les Conditions d'Utilisation de YouTube et les lois de ton pays."}}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"fr","mainEntity":[{"@type":"Question","name":"Quelles qualités de vidéo puis-je télécharger ?","acceptedAnswer":{"@type":"Answer","text":"Tout ce que YouTube propose — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p et audio seul. Les flux haut framerate (60 fps, 120 fps) et le HDR sont préservés tels quels. Arroxy te montre tous les formats disponibles, y compris la conversion en MP3, M4A/AAC, Opus et WAV pour les téléchargements audio seuls."}},{"@type":"Question","name":"C'est vraiment gratuit ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Licence MIT. Pas de version premium, pas de fonctions verrouillées."}},{"@type":"Question","name":"Dans quelles langues Arroxy est-il disponible ?","acceptedAnswer":{"@type":"Answer","text":"Vingt-et-une, prêtes à l'emploi : English, Español (espagnol), Deutsch (allemand), Français, 日本語 (japonais), 中文 (chinois), Русский (russe), Українська (ukrainien), हिन्दी (hindi), Afaan Oromoo, Kiswahili, O'zbekcha (ouzbek), Tiếng Việt (vietnamien), አማርኛ (amharique), العربية (arabe), اردو (ourdou), پښتو (pachto), বাংলা (bengali), မြန်မာဘာသာ (birman), Ελληνικά (grec) et Српски (serbe). Arroxy détecte la langue de ton système d'exploitation au premier lancement et tu peux changer à tout moment depuis le sélecteur de langue dans la barre d'outils. Les traductions sont de simples objets TypeScript dans src/shared/i18n/locales/ — ouvre une PR sur GitHub pour contribuer."}},{"@type":"Question","name":"Faut-il installer quelque chose ?","acceptedAnswer":{"@type":"Answer","text":"Non. yt-dlp et ffmpeg sont téléchargés automatiquement au premier lancement depuis leurs releases officielles GitHub et mis en cache sur ta machine. Après ça, aucune configuration supplémentaire."}},{"@type":"Question","name":"Est-ce que ça continuera de marcher si YouTube change quelque chose ?","acceptedAnswer":{"@type":"Answer","text":"Oui — et Arroxy a deux couches de résilience. Premièrement, yt-dlp est l'un des outils open source les plus activement maintenus — il est mis à jour dans les heures qui suivent les changements YouTube. Deuxièmement, Arroxy ne dépend pas du tout des cookies ni de ton compte Google, donc aucune session n'expire et aucun identifiant à renouveler. Cette combinaison le rend bien plus stable que les outils dépendant de cookies de navigateur exportés."}},{"@type":"Question","name":"Puis-je télécharger des playlists ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Colle l'URL d'une playlist, sélectionne toutes les vidéos ou seulement celles que tu veux, et Arroxy les met en file comme un seul lot. Les téléchargements par lot de chaînes entières ne sont pas encore pris en charge."}},{"@type":"Question","name":"A-t-il besoin de mon compte YouTube ou de cookies ?","acceptedAnswer":{"@type":"Answer","text":"Non — et c'est plus important qu'il n'y paraît. La plupart des outils qui cessent de fonctionner après une mise à jour de YouTube te disent d'exporter les cookies YouTube de ton navigateur. Ce contournement casse toutes les ~30 minutes quand YouTube renouvelle les sessions, et la doc de yt-dlp prévient que ça peut faire signaler ton compte Google. Arroxy n'utilise jamais de cookies ni d'identifiants. Pas de login. Pas de compte lié. Rien à expirer, rien à bannir."}},{"@type":"Question","name":"macOS dit « l'application est endommagée » ou « ne peut pas être ouverte » — que faire ?","acceptedAnswer":{"@type":"Answer","text":"C'est Gatekeeper de macOS qui bloque une app non signée — pas un vrai dommage. Le README contient la marche à suivre pour le premier lancement sur macOS."}},{"@type":"Question","name":"C'est légal ?","acceptedAnswer":{"@type":"Answer","text":"Télécharger des vidéos pour un usage personnel est généralement accepté dans la plupart des juridictions. Tu es responsable de respecter les Conditions d'Utilisation de YouTube et les lois de ton pays."}}]}</script>
 
     <style>
       :root {
@@ -383,7 +383,13 @@
       body[data-os="mobile"] #mobile-notice { display: block !important; }
 
       .first-launch-help {
-        margin: 14px auto 0;
+        --first-launch-inline-pad: 16px;
+        --first-launch-icon-size: 16px;
+        --first-launch-summary-gap: 8px;
+        --first-launch-text-offset:
+          calc(var(--first-launch-inline-pad) + var(--first-launch-icon-size) + var(--first-launch-summary-gap));
+        margin-top: 14px;
+        margin-inline: 0 auto;
         max-width: 560px;
         background: var(--bg-card);
         border: 1px solid var(--border);
@@ -393,21 +399,21 @@
       .first-launch-help summary {
         list-style: none;
         cursor: pointer;
-        padding: 12px 16px;
+        padding: 12px var(--first-launch-inline-pad);
         font-size: 14px;
         font-weight: 600;
         color: var(--text-dim);
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: var(--first-launch-summary-gap);
         transition: color .15s;
       }
       .first-launch-help summary::-webkit-details-marker { display: none; }
       .first-launch-help summary::before {
         content: '';
         display: inline-block;
-        width: 16px;
-        height: 16px;
+        width: var(--first-launch-icon-size);
+        height: var(--first-launch-icon-size);
         border-radius: 50%;
         background:
           linear-gradient(var(--brand-hover), var(--brand-hover)) center / 2px 7px no-repeat,
@@ -427,7 +433,9 @@
       .first-launch-help[open] summary::after { transform: rotate(45deg); color: var(--brand-hover); }
       .first-launch-help summary:hover { color: var(--text); }
       .first-launch-body {
-        padding: 0 16px 14px;
+        padding-block: 0 14px;
+        padding-inline: var(--first-launch-inline-pad);
+        padding-inline-start: var(--first-launch-text-offset);
         font-size: 13.5px;
         line-height: 1.65;
         color: var(--text-dim);
@@ -849,7 +857,7 @@
           <div class="feature">
             <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9"/><path d="M3 15h18l-2 4H5z"/></svg></div>
             <h3>Jusqu'à 4K UHD</h3>
-            <p>2160p, 1440p, 1080p, 720p — toutes les résolutions proposées par YouTube, plus l'audio seul en MP3, AAC et Opus.</p>
+            <p>2160p, 1440p, 1080p, 720p — toutes les résolutions que YouTube propose, plus la conversion audio seule en MP3, M4A/AAC, Opus et WAV.</p>
           </div>
           <div class="feature">
             <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-3 9h8l-9 11 3-9H4l9-11z"/></svg></div>
@@ -858,8 +866,8 @@
           </div>
           <div class="feature">
             <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="14" x="3" y="3" rx="2"/><path d="M7 21h10"/><path d="M12 17v4"/></svg></div>
-            <h3>Plusieurs à la fois</h3>
-            <p>Mettez autant de vidéos que vous voulez en file d'attente. Le panneau suit la progression de chacune en parallèle.</p>
+            <h3>Playlists incluses</h3>
+            <p>Colle l'URL d'une playlist, télécharge toute la liste ou coche seulement les vidéos que tu veux avant qu'Arroxy les mette en file.</p>
           </div>
           <div class="feature">
             <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
@@ -944,7 +952,7 @@
           </div>
           <div class="privacy-card">
             <h3>Sans identifiants utilisateur</h3>
-            <p>Télémétrie anonyme, limitée à la session via Aptabase — aucun identifiant d'installation, aucun empreinte numérique, aucune donnée personnelle. Vos téléchargements, historique et fichiers ne quittent jamais votre machine.</p>
+            <p>Télémétrie anonyme via TelemetryDeck — ton identifiant par installation est haché avant de quitter l'app, aucune empreinte numérique, aucune donnée personnelle. Tes téléchargements, historique et fichiers ne quittent jamais ta machine.</p>
           </div>
           <div class="privacy-card">
             <h3>Sans serveurs tiers</h3>
@@ -963,7 +971,7 @@
         <div class="faq-list">
           <details class="faq-item">
             <summary>Quelles qualités de vidéo puis-je télécharger ?</summary>
-            <div class="faq-answer">Tout ce que YouTube propose — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p et audio seul. Les flux haut framerate (60 fps, 120 fps) et HDR sont préservés tels quels. Arroxy te montre tous les formats disponibles et te laisse choisir précisément ce que tu veux récupérer.</div>
+            <div class="faq-answer">Tout ce que YouTube propose — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p et audio seul. Les flux haut framerate (60 fps, 120 fps) et le HDR sont préservés tels quels. Arroxy te montre tous les formats disponibles, y compris la conversion en MP3, M4A/AAC, Opus et WAV pour les téléchargements audio seuls.</div>
           </details>
           <details class="faq-item">
             <summary>C'est vraiment gratuit ?</summary>
@@ -983,7 +991,7 @@
           </details>
           <details class="faq-item">
             <summary>Puis-je télécharger des playlists ?</summary>
-            <div class="faq-answer">Aujourd'hui, seules les vidéos individuelles sont supportées. Le support des playlists et des chaînes est sur la feuille de route.</div>
+            <div class="faq-answer">Oui. Colle l'URL d'une playlist, sélectionne toutes les vidéos ou seulement celles que tu veux, et Arroxy les met en file comme un seul lot. Les téléchargements par lot de chaînes entières ne sont pas encore pris en charge.</div>
           </details>
           <details class="faq-item">
             <summary>A-t-il besoin de mon compte YouTube ou de cookies ?</summary>

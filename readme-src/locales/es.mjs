@@ -119,7 +119,7 @@ export const es = {
   feat_quality_h3: "Calidad y formatos",
   feat_quality_1: "Hasta **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Alta frecuencia de fotogramas** conservada tal cual — 60 fps, 120 fps, HDR",
-  feat_quality_3: "Exportación de **solo audio** a MP3, AAC u Opus",
+  feat_quality_3: "**Solo audio** a MP3, M4A/AAC, Opus o WAV",
   feat_quality_4: "Presets rápidos: *Mejor calidad* · *Equilibrado* · *Archivo pequeño*",
   feat_privacy_h3: "Privacidad y control",
   feat_privacy_1:
@@ -128,7 +128,7 @@ export const es = {
   feat_privacy_3: "Archivos guardados directamente en la carpeta que elijas",
   feat_workflow_h3: "Flujo de trabajo",
   feat_workflow_1:
-    "**Pega cualquier URL de YouTube** — videos y Shorts compatibles",
+    "**Pega cualquier URL de YouTube** — compatible con videos, Shorts y playlists; descarga toda la playlist o elige primero videos concretos",
   feat_workflow_2:
     "**Cola de múltiples descargas** — sigue varias descargas en paralelo",
   feat_workflow_3:
@@ -215,14 +215,14 @@ export const es = {
   privacy_p1:
     "Las descargas se obtienen directamente a través de [yt-dlp](https://github.com/yt-dlp/yt-dlp) desde YouTube hacia la carpeta que elijas — nada pasa por un servidor de terceros. El historial de visualización, el historial de descargas, las URLs y el contenido de los archivos permanecen en tu dispositivo.",
   privacy_p2:
-    "Arroxy envía telemetría anónima y agregada a través de [Aptabase](https://aptabase.com) — lo justo para que un proyecto independiente vea si alguien lo usa realmente (arranques, SO, versión de la app, fallos). Sin URLs, sin títulos de video, sin rutas de archivo, sin IPs, sin información de cuenta — Aptabase es de código abierto y compatible con GDPR por diseño. Puedes desactivarlo en Configuración.",
+    "Arroxy envía telemetría anónima y agregada a través de [TelemetryDeck](https://telemetrydeck.com) — lo justo para que un proyecto independiente vea si alguien lo usa realmente (arranques, OS, versión de la app, fallos). Sin URLs, sin títulos de video, sin rutas de archivo, sin información de cuenta. El ID por instalación se hashea antes del envío y TelemetryDeck nunca almacena IPs — alojado en la EU y compatible con GDPR por diseño. Puedes desactivarlo en Configuración.",
   faq_q1: "¿Es realmente gratis?",
   faq_a1: "Sí — licencia MIT, sin nivel premium, sin funciones bloqueadas.",
   faq_q2: "¿Qué calidades de video puedo descargar?",
   faq_a2:
     "Cualquiera que sirva YouTube: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, más solo audio. Los streams de 60 fps, 120 fps y HDR se conservan tal cual.",
   faq_q3: "¿Puedo extraer solo el audio como MP3?",
-  faq_a3: "Sí. Elige *solo audio* en el menú de formato y selecciona MP3, AAC u Opus.",
+  faq_a3: "Sí. Elige *solo audio* en el menú de formatos y luego MP3, M4A/AAC, Opus o WAV.",
   faq_q4: "¿Necesito una cuenta de YouTube o cookies?",
   faq_a4:
     "No. Arroxy usa solo los tokens públicos que YouTube sirve a cualquier navegador. Sin cookies, sin inicio de sesión, sin credenciales almacenadas. Consulta [Sin cookies, sin inicio de sesión, sin cuenta vinculada](#no-cookies) para entender por qué es importante.",
@@ -237,7 +237,7 @@ export const es = {
     "No. yt-dlp y ffmpeg se descargan automáticamente en el primer arranque desde sus releases oficiales en GitHub y se guardan en caché localmente.",
   faq_q8: "¿Puedo descargar listas de reproducción o canales completos?",
   faq_a8:
-    "Hoy se admiten videos individuales y Shorts. El soporte de listas y canales está en la [hoja de ruta](#roadmap).",
+    "Sí, para playlists: pega la URL de una playlist y luego pon en cola toda la lista o solo los videos que selecciones. Las descargas por lotes de canales completos todavía no están disponibles.",
   faq_q9: 'macOS dice "la aplicación está dañada" — ¿qué hago?',
   faq_a9:
     "Es Gatekeeper de macOS bloqueando una app sin firmar — no es un daño real. Consulta la sección de [primer arranque en macOS](#download) para la solución.",

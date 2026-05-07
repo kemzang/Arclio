@@ -118,7 +118,7 @@ export const om = {
   feat_quality_h3: "Qulqullina & formatoota",
   feat_quality_1: "Hanga **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Frame rate ol'aanaa** akka jiru eegama — 60 fps, 120 fps, HDR",
-  feat_quality_3: "**Sagalee qofa** MP3, AAC, ykn Opus tti erga",
+  feat_quality_3: "**Audio qofa** gara MP3, M4A/AAC, Opus yookaan WAV",
   feat_quality_4: "Preset saffisoo: *Qulqullina gaarii* · *Walirraanfattee* · *Faayila xiqqaa*",
   feat_privacy_h3: "Icciitii & to'annaa",
   feat_privacy_1:
@@ -127,7 +127,7 @@ export const om = {
   feat_privacy_3: "Faayiloonni kallattiin foldera filatteen seenu",
   feat_workflow_h3: "Hojii hordoffii",
   feat_workflow_1:
-    "**URL YouTube kamiyyuu maxxansi** — viidiyoo fi Shorts lameenuu ni deeggara",
+    "**URL YouTube kamiyyuu maxxansi** — viidiyoowwan, Shorts fi playlist ni deeggara; playlist guutuu buufadhu yookaan dura viidiyoowwan filataman qofa filadhu",
   feat_workflow_2:
     "**Queue buufannoo heddu** — buufannoota heddu walitti aanee hordofi",
   feat_workflow_3:
@@ -214,14 +214,14 @@ export const om = {
   privacy_p1:
     "Buufannoonni kallattiin [yt-dlp](https://github.com/yt-dlp/yt-dlp) fayyadamuudhaan YouTube irraa foldera filatteetti darbamu — miila-seerri hunduu sarara servera sadarkaa-sadaffaa tokko keessa darbuu hin qabu. Seenaa ilaaluu, seenaa buufannoo, URLs, fi qabiyyee faayilaa meeshaa kee irratti hafu.",
   privacy_p2:
-    "Arroxy telemetrii anonymous, walitti makamaa [Aptabase](https://aptabase.com) fayyadamuudhaan erga — pirojekti indie tokkoof eegaa namni dhugumaan itti fayyadamaa jira beekuuf gahaa qofa (eegaluu, OS, verzhiyoonii app, caccabu). URLs hin jiru, mata-duree viidiyoo hin jiru, kallattii faayilaa hin jiru, IP hin jiru, odeeffannoo akkaawuntii hin jiru — Aptabase madda banaa fi GDPR-hayyamaadha. Settings keessatti dhorkuu dandeessa.",
+    "Arroxy telemetrii anonymous, walitti makamaa [TelemetryDeck](https://telemetrydeck.com) fayyadamuudhaan erga — pirojekti indie tokkoof namni dhugumaan itti fayyadamaa jira beekuuf gahaa qofa (eegaluu, OS, verzhiyoonii app, caccabu). URLs hin jiru, mata-duree viidiyoo hin jiru, kallattii faayilaa hin jiru, odeeffannoo akkaawuntii hin jiru. ID diriirsa tokkoon tokko erguun dura hash godhama fi TelemetryDeck IPs hin kuusu — EU-tti qabamee fi GDPR-hayyaamaadha. Settings keessatti dhorkuu dandeessa.",
   faq_q1: "Dhuguma bilisaa dha?",
   faq_a1: "Eeyyee — hayyama MIT, sadarkaa kafaltii hin jiru, amaloota dhorkamuun hin jiru.",
   faq_q2: "Qulqullina viidiyoo maal buusuu danda'a?",
   faq_a2:
     "YouTube tajaajiluu danda'u: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, sagalee qofas. 60 fps, 120 fps, fi HDR streams akka jiru eegamu.",
   faq_q3: "Sagalee qofaa MP3 akka ta'uun baasuu danda'aa?",
-  faq_a3: "Eeyyee. Menuu format keessatti *sagalee qofa* filadhu fi MP3, AAC, ykn Opus filadhu.",
+  faq_a3: "Eeyyee. Menu format keessaa *audio qofa* filadhu, booda MP3, M4A/AAC, Opus yookaan WAV filadhu.",
   faq_q4: "Akkaawuntii YouTube ykn kuukkii barbaachisaa?",
   faq_a4:
     "Lakki. Arroxy tokkicha token ummataa YouTube biraawzara kamiiyyuuf tajaajiltu fayyadama. Kuukkii hin jiru, seensuu hin jiru, odeeffannoo kuufame hin jiru. [Kuukkii hin jiru, seensuu hin jiru, akkaawuntii waliin hin hidhu](#no-cookies) ilaali kuni maaliif barbaachisuu ibsuuf.",
@@ -236,7 +236,7 @@ export const om = {
     "Lakki. yt-dlp fi ffmpeg of-hordofaan yeroo jalqabaaf baasii GitHub isaanitii irraa buufamanii naannoo kuufamu.",
   faq_q8: "Playlist ykn chaanaalii guutuu buusuu danda'aa?",
   faq_a8:
-    "Viidiyoo fi Shorts tokkoo-tokkoo har'a. Playlist fi chaanaalii deggeruu [karoora](#roadmap) irraa jira.",
+    "Eeyyee, playlist'f: URL playlist maxxansi, booda tarree guutuu yookaan viidiyoowwan ati filatte qofa queue keessa galchi. Channel guutuu batch'n buusuun ammaaf hin deggaramu.",
   faq_q9: 'macOS "app miidhaameera" jedha — maal godhaa?',
   faq_a9:
     "Sun macOS Gatekeeper app mallattoo hin qabne dhorku, midhaa dhugaa miti. Sirreessaaf kutaa [yeroo jalqabaa macOS irratti eegaluu](#download) ilaali.",

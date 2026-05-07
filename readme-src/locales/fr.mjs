@@ -119,7 +119,7 @@ export const fr = {
   feat_quality_h3: "Qualité & formats",
   feat_quality_1: "Jusqu'à **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Haut framerate** préservé tel quel — 60 fps, 120 fps, HDR",
-  feat_quality_3: "Export **audio seul** en MP3, AAC ou Opus",
+  feat_quality_3: "**Audio seul** en MP3, M4A/AAC, Opus ou WAV",
   feat_quality_4: "Préréglages rapides : *Meilleure qualité* · *Équilibré* · *Petit fichier*",
   feat_privacy_h3: "Confidentialité & contrôle",
   feat_privacy_1:
@@ -128,7 +128,7 @@ export const fr = {
   feat_privacy_3: "Fichiers enregistrés directement dans le dossier que tu choisis",
   feat_workflow_h3: "Flux de travail",
   feat_workflow_1:
-    "**Colle n'importe quelle URL YouTube** — vidéos et Shorts tous deux supportés",
+    "**Colle n'importe quelle URL YouTube** — vidéos, Shorts et playlists pris en charge ; télécharge toute la playlist ou choisis d'abord des vidéos précises",
   feat_workflow_2:
     "**File de téléchargement multi** — suivi de plusieurs téléchargements en parallèle",
   feat_workflow_3:
@@ -215,14 +215,14 @@ export const fr = {
   privacy_p1:
     "Les téléchargements sont récupérés directement via [yt-dlp](https://github.com/yt-dlp/yt-dlp) depuis YouTube vers le dossier que tu choisis — rien ne passe par un serveur tiers. L'historique de visionnage, l'historique de téléchargement, les URLs et le contenu des fichiers restent sur ton appareil.",
   privacy_p2:
-    "Arroxy envoie une télémétrie anonyme et agrégée via [Aptabase](https://aptabase.com) — juste assez pour qu'un projet indépendant sache si quelqu'un l'utilise vraiment (lancements, OS, version de l'app, crashs). Pas d'URLs, pas de titres de vidéos, pas de chemins de fichiers, pas d'IPs, pas d'informations de compte — Aptabase est open source et GDPR-friendly par conception. Tu peux te désabonner dans les Paramètres.",
+    "Arroxy envoie une télémétrie anonyme et agrégée via [TelemetryDeck](https://telemetrydeck.com) — juste assez pour qu'un projet indépendant sache si quelqu'un l'utilise vraiment (lancements, OS, version de l'app, crashs). Pas d'URLs, pas de titres de vidéos, pas de chemins de fichiers, pas d'informations de compte. L'identifiant par installation est haché avant l'envoi et TelemetryDeck ne stocke jamais les IPs — hébergé dans l'EU et GDPR-friendly par conception. Tu peux te désabonner dans les Paramètres.",
   faq_q1: "C'est vraiment gratuit ?",
   faq_a1: "Oui — licence MIT, pas de niveau premium, pas de fonctions verrouillées.",
   faq_q2: "Quelles qualités de vidéo puis-je télécharger ?",
   faq_a2:
     "Tout ce que YouTube propose : 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, plus audio seul. Les flux 60 fps, 120 fps et HDR sont préservés tels quels.",
   faq_q3: "Puis-je extraire uniquement l'audio en MP3 ?",
-  faq_a3: "Oui. Sélectionne *audio seul* dans le menu de format et choisis MP3, AAC ou Opus.",
+  faq_a3: "Oui. Choisis *audio seul* dans le menu des formats puis MP3, M4A/AAC, Opus ou WAV.",
   faq_q4: "Ai-je besoin d'un compte YouTube ou de cookies ?",
   faq_a4:
     "Non. Arroxy utilise uniquement les tokens publics que YouTube sert à n'importe quel navigateur. Pas de cookies, pas de connexion, pas d'identifiants stockés. Voir [Pas de cookies, pas de connexion, pas de compte lié](#no-cookies) pour comprendre pourquoi c'est important.",
@@ -237,7 +237,7 @@ export const fr = {
     "Non. yt-dlp et ffmpeg sont téléchargés automatiquement au premier lancement depuis leurs releases officielles GitHub et mis en cache en local.",
   faq_q8: "Puis-je télécharger des playlists ou des chaînes entières ?",
   faq_a8:
-    "Les vidéos individuelles et les Shorts uniquement pour l'instant. Le support des playlists et des chaînes est sur la [feuille de route](#roadmap).",
+    "Oui, pour les playlists : colle l'URL d'une playlist puis mets en file toute la liste ou seulement les vidéos que tu sélectionnes. Les téléchargements par lot de chaînes entières ne sont pas encore pris en charge.",
   faq_q9: 'macOS dit "l\'application est endommagée" — que faire ?',
   faq_a9:
     "C'est Gatekeeper de macOS qui bloque une app non signée, pas un vrai endommagement. Voir la section [premier lancement sur macOS](#download) pour la marche à suivre.",

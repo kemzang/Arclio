@@ -3,7 +3,7 @@
 
 # Arroxy — Free Open-Source YouTube Downloader for Windows, macOS & Linux
 
-**4K · 1080p60 · HDR · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
 
 **Read in:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · **English** · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
@@ -71,7 +71,7 @@ When YouTube updates its bot detection, most tools tell you to export your brows
 
 - Up to **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p
 - **High frame rate** preserved as-is — 60 fps, 120 fps, HDR
-- **Audio-only** export to MP3, AAC, or Opus
+- **Audio-only** export to MP3, M4A/AAC, Opus, or WAV
 - Quick presets: *Best quality* · *Balanced* · *Small file*
 
 ### Privacy & control
@@ -82,7 +82,7 @@ When YouTube updates its bot detection, most tools tell you to export your brows
 
 ### Workflow
 
-- **Paste any YouTube URL** — videos and Shorts both supported
+- **Paste any YouTube URL** — videos, Shorts, and playlists supported; download the whole playlist or pick specific videos first
 - **Multi-download queue** — track several downloads in parallel
 - **Clipboard watch** — copy a YouTube link and Arroxy auto-fills the URL when you refocus the app (toggle in Advanced settings)
 - **Auto-clean URLs** — strips tracking params (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) and unwraps `youtube.com/redirect` links
@@ -217,7 +217,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Downloads are fetched directly via [yt-dlp](https://github.com/yt-dlp/yt-dlp) from YouTube to the folder you pick — nothing routed through a third-party server. Watch history, download history, URLs, and file contents stay on your device.
 
-Arroxy sends anonymous, aggregate telemetry via [Aptabase](https://aptabase.com) — just enough for an indie project to see whether anyone is actually using it (launches, OS, app version, crashes). No URLs, no video titles, no file paths, no IPs, no account info — Aptabase is open-source and GDPR-friendly by design. You can opt out in Settings.
+Arroxy sends anonymous, aggregate telemetry via [TelemetryDeck](https://telemetrydeck.com) — just enough for an indie project to see whether anyone is actually using it (launches, OS, app version, crashes). No URLs, no video titles, no file paths, no account info. The per-install ID is hashed before send and TelemetryDeck never stores IPs — EU-hosted and GDPR-friendly by design. You can opt out in Settings.
 
 ---
 
@@ -230,7 +230,7 @@ Yes — MIT licensed, no premium tier, no feature gating.
 Anything YouTube serves: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, plus audio-only. 60 fps, 120 fps, and HDR streams are preserved as-is.
 
 **Can I extract just the audio as MP3?**
-Yes. Pick *audio-only* in the format menu and choose MP3, AAC, or Opus.
+Yes. Pick *audio-only* in the format menu and choose MP3, M4A/AAC, Opus, or WAV.
 
 **Do I need a YouTube account or cookies?**
 No. Arroxy uses only the public tokens YouTube serves to any browser. No cookies, no login, no credentials stored. See [No cookies, no logins, no account linking](#no-cookies) for why this matters.
@@ -245,7 +245,7 @@ Nine: English, Español, Deutsch, Français, 日本語, 中文, Русский, 
 No. yt-dlp and ffmpeg are downloaded automatically on first launch from their official GitHub releases and cached locally.
 
 **Can I download playlists or whole channels?**
-Single videos and Shorts today. Playlist and channel support are on the [roadmap](#roadmap).
+Yes for playlists: paste a playlist URL, then queue the whole list or only the videos you select. Whole-channel batch downloads are not supported yet.
 
 **macOS says "the app is damaged" — what do I do?**
 That's macOS Gatekeeper blocking an unsigned app, not actual damage. See the [first-time launch on macOS](#download) section for the fix.
@@ -261,9 +261,7 @@ Coming up — roughly in priority order:
 
 | Feature    | Description    |
 | ---------------- | ---------------- |
-| **Playlist & channel downloads** | Paste a playlist or channel URL; queue all videos with date or count filters |
 | **Batch URL input** | Paste multiple URLs at once and run them in one go |
-| **Format conversion** | Convert downloads to MP3, WAV, FLAC without a separate tool |
 | **Custom filename templates** | Name files by title, uploader, date, resolution — with live preview |
 | **Scheduled downloads** | Start a queue at a set time (overnight runs) |
 | **Speed limits** | Cap bandwidth so downloads don't saturate your connection |

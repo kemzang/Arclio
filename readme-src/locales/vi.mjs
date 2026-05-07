@@ -118,7 +118,7 @@ export const vi = {
   feat_quality_h3: "Chất lượng & định dạng",
   feat_quality_1: "Lên tới **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Tốc độ khung hình cao** được giữ nguyên — 60 fps, 120 fps, HDR",
-  feat_quality_3: "Xuất **chỉ âm thanh** sang MP3, AAC hoặc Opus",
+  feat_quality_3: "**Chỉ âm thanh** sang MP3, M4A/AAC, Opus hoặc WAV",
   feat_quality_4: "Cài đặt nhanh: *Chất lượng tốt nhất* · *Cân bằng* · *File nhỏ*",
   feat_privacy_h3: "Quyền riêng tư & kiểm soát",
   feat_privacy_1:
@@ -127,7 +127,7 @@ export const vi = {
   feat_privacy_3: "File được lưu thẳng vào thư mục bạn chọn",
   feat_workflow_h3: "Quy trình làm việc",
   feat_workflow_1:
-    "**Dán bất kỳ URL YouTube nào** — hỗ trợ cả video lẫn Shorts",
+    "**Dán bất kỳ URL YouTube nào** — hỗ trợ video, Shorts và playlist; tải toàn bộ playlist hoặc chọn trước những video cụ thể",
   feat_workflow_2:
     "**Hàng đợi tải xuống nhiều luồng** — theo dõi nhiều lượt tải song song",
   feat_workflow_3:
@@ -214,14 +214,14 @@ export const vi = {
   privacy_p1:
     "Tải xuống được lấy trực tiếp qua [yt-dlp](https://github.com/yt-dlp/yt-dlp) từ YouTube đến thư mục bạn chọn — không có gì đi qua máy chủ bên thứ ba. Lịch sử xem, lịch sử tải xuống, URL và nội dung file vẫn ở trên thiết bị của bạn.",
   privacy_p2:
-    "Arroxy gửi telemetry ẩn danh, tổng hợp qua [Aptabase](https://aptabase.com) — vừa đủ để một dự án indie biết có ai đang thực sự dùng hay không (số lần khởi động, OS, phiên bản ứng dụng, sự cố). Không có URL, không có tiêu đề video, không có đường dẫn file, không có IP, không có thông tin tài khoản — Aptabase là mã nguồn mở và thân thiện GDPR theo thiết kế. Bạn có thể từ chối trong Cài đặt.",
+    "Arroxy gửi telemetry ẩn danh, tổng hợp qua [TelemetryDeck](https://telemetrydeck.com) — vừa đủ để một dự án indie biết có ai đang thực sự dùng hay không (số lần khởi động, OS, phiên bản ứng dụng, sự cố). Không có URLs, không có tiêu đề video, không có đường dẫn file, không có thông tin tài khoản. ID cài đặt được băm trước khi gửi và TelemetryDeck không bao giờ lưu IPs — được lưu trữ tại EU và thân thiện GDPR theo thiết kế. Bạn có thể từ chối trong Cài đặt.",
   faq_q1: "Thực sự miễn phí không?",
   faq_a1: "Có — giấy phép MIT, không có gói cao cấp, không khóa tính năng.",
   faq_q2: "Tôi có thể tải xuống chất lượng video nào?",
   faq_a2:
     "Bất kỳ thứ gì YouTube cung cấp: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, cùng với chỉ âm thanh. Các luồng 60 fps, 120 fps và HDR được giữ nguyên.",
   faq_q3: "Tôi có thể trích xuất chỉ âm thanh dạng MP3 không?",
-  faq_a3: "Có. Chọn *chỉ âm thanh* trong menu định dạng và chọn MP3, AAC hoặc Opus.",
+  faq_a3: "Có. Chọn *chỉ âm thanh* trong menu định dạng rồi chọn MP3, M4A/AAC, Opus hoặc WAV.",
   faq_q4: "Tôi có cần tài khoản YouTube hay cookie không?",
   faq_a4:
     "Không. Arroxy chỉ sử dụng các token công khai mà YouTube cung cấp cho bất kỳ trình duyệt nào. Không cookie, không đăng nhập, không lưu thông tin xác thực. Xem [Không cookie, không đăng nhập, không liên kết tài khoản](#no-cookies) để hiểu tại sao điều này quan trọng.",
@@ -236,7 +236,7 @@ export const vi = {
     "Không. yt-dlp và ffmpeg được tải xuống tự động khi khởi động lần đầu từ các bản phát hành GitHub chính thức của chúng và lưu vào bộ nhớ đệm cục bộ.",
   faq_q8: "Tôi có thể tải xuống danh sách phát hoặc toàn bộ kênh không?",
   faq_a8:
-    "Hiện tại chỉ hỗ trợ video đơn lẻ và Shorts. Hỗ trợ danh sách phát và kênh có trong [lộ trình phát triển](#roadmap).",
+    "Có, với playlist: dán URL playlist rồi xếp hàng toàn bộ danh sách hoặc chỉ những video bạn chọn. Tải hàng loạt cả kênh vẫn chưa được hỗ trợ.",
   faq_q9: 'macOS báo "ứng dụng bị hỏng" — tôi phải làm gì?',
   faq_a9:
     "Đó là macOS Gatekeeper chặn ứng dụng chưa được ký, không phải file thực sự bị hỏng. Xem phần [lần đầu khởi động trên macOS](#download) để biết cách xử lý.",

@@ -61,11 +61,11 @@ export const es = {
   features_h2: "Todo lo que esperas, sin fricción.",
   features_sub: "Pega una URL, elige la calidad, haz clic en descargar. Así de simple.",
   f1_h: "Hasta 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — todas las resoluciones que ofrece YouTube, además de audio MP3, AAC y Opus.",
+  f1_p: "2160p, 1440p, 1080p, 720p — todas las resoluciones que ofrece YouTube, más conversión de solo audio a MP3, M4A/AAC, Opus y WAV.",
   f2_h: "60 fps y HDR preservados",
   f2_p: "Las transmisiones de alta tasa de fotogramas y HDR llegan tal como las codifica YouTube — sin pérdida de calidad.",
-  f3_h: "Varios a la vez",
-  f3_p: "Pon en cola tantos videos como quieras. El panel de descargas muestra el progreso de cada uno en paralelo.",
+  f3_h: "También playlists",
+  f3_p: "Pega la URL de una playlist, descarga la lista completa o marca solo los videos que quieras antes de que Arroxy los ponga en cola.",
   f4_h: "Actualizaciones automáticas",
   f4_p: "Arroxy mantiene yt-dlp y ffmpeg al día — funciona con cada cambio de YouTube.",
   f5_h: "21 idiomas",
@@ -103,7 +103,7 @@ export const es = {
   p2_h: "Sin cookies",
   p2_p: "Arroxy solicita los mismos tokens que cualquier navegador. Nada se exporta, nada se almacena.",
   p3_h: "Sin IDs de usuario",
-  p3_p: "Telemetría anónima y solo de sesión vía Aptabase — sin IDs de instalación, sin fingerprinting, sin datos personales. Tus descargas, historial y archivos nunca salen de tu máquina.",
+  p3_p: "Telemetría anónima vía TelemetryDeck — tu ID por instalación se hashea antes de salir de la app, sin fingerprinting, sin datos personales. Tus descargas, historial y archivos nunca salen de tu máquina.",
   p4_h: "Sin servidores de terceros",
   p4_p: "Todo el proceso se ejecuta localmente con yt-dlp + ffmpeg. Los archivos nunca tocan un servidor remoto.",
 
@@ -136,7 +136,7 @@ export const es = {
   faq_h2: "Preguntas frecuentes",
   faq_q1: "¿Qué calidades de video puedo descargar?",
   faq_a1:
-    "Cualquiera que ofrezca YouTube — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p y solo audio. Los streams de alto frame rate (60 fps, 120 fps) y HDR se conservan tal cual. Arroxy te muestra todos los formatos disponibles y te deja elegir exactamente cuál bajar.",
+    "Todo lo que ofrece YouTube: 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p y solo audio. Las transmisiones de alta tasa de cuadros (60 fps, 120 fps) y el contenido HDR se conservan tal cual. Arroxy te muestra todos los formatos disponibles, incluida la conversión a MP3, M4A/AAC, Opus y WAV para descargas de solo audio.",
   faq_q2: "¿De verdad es gratis?",
   faq_a2: "Sí. Licencia MIT. Sin nivel premium, sin funciones bloqueadas.",
   faq_q3: "¿En qué idiomas está disponible Arroxy?",
@@ -150,7 +150,7 @@ export const es = {
     "Sí — y Arroxy tiene dos capas de resiliencia. Primero, yt-dlp es una de las herramientas open-source más mantenidas activamente — se actualiza en horas tras cualquier cambio de YouTube. Segundo, Arroxy no depende de cookies ni de tu cuenta de Google, así que no hay sesión que caduque ni credenciales que rotar. Esa combinación lo hace mucho más estable que las herramientas que dependen de cookies exportadas del navegador.",
   faq_q6: "¿Puedo descargar listas de reproducción?",
   faq_a6:
-    "Hoy se admiten videos individuales. El soporte de listas y canales está en la hoja de ruta.",
+    "Sí. Pega la URL de una playlist, selecciona todos los videos o solo los que quieras, y Arroxy los pone en cola como un solo lote. Las descargas por lotes de canales completos todavía no están disponibles.",
   faq_q7: "¿Necesita mi cuenta de YouTube o cookies?",
   faq_a7:
     "No — y es un tema más importante de lo que parece. La mayoría de las herramientas que dejan de funcionar tras una actualización de YouTube te piden exportar las cookies de YouTube de tu navegador. Esa solución se rompe cada ~30 minutos cuando YouTube rota las sesiones, y la propia documentación de yt-dlp advierte que puede provocar el baneo de tu cuenta de Google. Arroxy nunca usa cookies ni credenciales. Sin login. Sin cuenta vinculada. Nada que caduque, nada que banear.",

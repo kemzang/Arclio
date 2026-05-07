@@ -3,7 +3,7 @@
 
 # Arroxy — Téléchargeur YouTube gratuit et open source pour Windows, macOS & Linux
 
-**4K · 1080p60 · HDR · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
 
 **Lire en :** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · **Français** · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
@@ -73,7 +73,7 @@ Lorsque YouTube met à jour sa détection de bots, la plupart des outils te dema
 
 - Jusqu'à **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p
 - **Haut framerate** préservé tel quel — 60 fps, 120 fps, HDR
-- Export **audio seul** en MP3, AAC ou Opus
+- **Audio seul** en MP3, M4A/AAC, Opus ou WAV
 - Préréglages rapides : *Meilleure qualité* · *Équilibré* · *Petit fichier*
 
 ### Confidentialité & contrôle
@@ -84,7 +84,7 @@ Lorsque YouTube met à jour sa détection de bots, la plupart des outils te dema
 
 ### Flux de travail
 
-- **Colle n'importe quelle URL YouTube** — vidéos et Shorts tous deux supportés
+- **Colle n'importe quelle URL YouTube** — vidéos, Shorts et playlists pris en charge ; télécharge toute la playlist ou choisis d'abord des vidéos précises
 - **File de téléchargement multi** — suivi de plusieurs téléchargements en parallèle
 - **Surveillance du presse-papiers** — copie un lien YouTube et Arroxy remplit automatiquement l'URL quand tu reviens sur l'app (désactivable dans les Paramètres avancés)
 - **Nettoyage auto des URLs** — supprime les paramètres de tracking (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) et dénoue les liens `youtube.com/redirect`
@@ -219,7 +219,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Les téléchargements sont récupérés directement via [yt-dlp](https://github.com/yt-dlp/yt-dlp) depuis YouTube vers le dossier que tu choisis — rien ne passe par un serveur tiers. L'historique de visionnage, l'historique de téléchargement, les URLs et le contenu des fichiers restent sur ton appareil.
 
-Arroxy envoie une télémétrie anonyme et agrégée via [Aptabase](https://aptabase.com) — juste assez pour qu'un projet indépendant sache si quelqu'un l'utilise vraiment (lancements, OS, version de l'app, crashs). Pas d'URLs, pas de titres de vidéos, pas de chemins de fichiers, pas d'IPs, pas d'informations de compte — Aptabase est open source et GDPR-friendly par conception. Tu peux te désabonner dans les Paramètres.
+Arroxy envoie une télémétrie anonyme et agrégée via [TelemetryDeck](https://telemetrydeck.com) — juste assez pour qu'un projet indépendant sache si quelqu'un l'utilise vraiment (lancements, OS, version de l'app, crashs). Pas d'URLs, pas de titres de vidéos, pas de chemins de fichiers, pas d'informations de compte. L'identifiant par installation est haché avant l'envoi et TelemetryDeck ne stocke jamais les IPs — hébergé dans l'EU et GDPR-friendly par conception. Tu peux te désabonner dans les Paramètres.
 
 ---
 
@@ -232,7 +232,7 @@ Oui — licence MIT, pas de niveau premium, pas de fonctions verrouillées.
 Tout ce que YouTube propose : 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, plus audio seul. Les flux 60 fps, 120 fps et HDR sont préservés tels quels.
 
 **Puis-je extraire uniquement l'audio en MP3 ?**
-Oui. Sélectionne *audio seul* dans le menu de format et choisis MP3, AAC ou Opus.
+Oui. Choisis *audio seul* dans le menu des formats puis MP3, M4A/AAC, Opus ou WAV.
 
 **Ai-je besoin d'un compte YouTube ou de cookies ?**
 Non. Arroxy utilise uniquement les tokens publics que YouTube sert à n'importe quel navigateur. Pas de cookies, pas de connexion, pas d'identifiants stockés. Voir [Pas de cookies, pas de connexion, pas de compte lié](#no-cookies) pour comprendre pourquoi c'est important.
@@ -247,7 +247,7 @@ Neuf : English, Español, Deutsch, Français, 日本語, 中文, Русский,
 Non. yt-dlp et ffmpeg sont téléchargés automatiquement au premier lancement depuis leurs releases officielles GitHub et mis en cache en local.
 
 **Puis-je télécharger des playlists ou des chaînes entières ?**
-Les vidéos individuelles et les Shorts uniquement pour l'instant. Le support des playlists et des chaînes est sur la [feuille de route](#roadmap).
+Oui, pour les playlists : colle l'URL d'une playlist puis mets en file toute la liste ou seulement les vidéos que tu sélectionnes. Les téléchargements par lot de chaînes entières ne sont pas encore pris en charge.
 
 **macOS dit "l'application est endommagée" — que faire ?**
 C'est Gatekeeper de macOS qui bloque une app non signée, pas un vrai endommagement. Voir la section [premier lancement sur macOS](#download) pour la marche à suivre.
@@ -263,9 +263,7 @@ Pour un usage personnel et privé, c'est généralement accepté dans la plupart
 
 | Fonctionnalité    | Description    |
 | ---------------- | ---------------- |
-| **Téléchargement de playlists et chaînes** | Colle l'URL d'une playlist ou d'une chaîne ; mets toutes les vidéos en file avec des filtres de date ou de nombre |
 | **Saisie d'URLs en lot** | Colle plusieurs URLs d'un coup et lance tout ensemble |
-| **Conversion de format** | Convertis les téléchargements en MP3, WAV, FLAC sans outil supplémentaire |
 | **Modèles de noms de fichier personnalisés** | Nomme les fichiers par titre, auteur, date, résolution — avec aperçu en direct |
 | **Téléchargements programmés** | Démarre une file à une heure définie (lancements nocturnes) |
 | **Limites de vitesse** | Plafonne la bande passante pour ne pas saturer ta connexion |
