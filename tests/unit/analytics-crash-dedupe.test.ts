@@ -5,7 +5,7 @@ const { ctorMock, trackMock } = vi.hoisted(() => {
   const identifyMock = vi.fn().mockResolvedValue(undefined);
   const setGlobalPropertiesMock = vi.fn();
   const ctorMock = vi.fn().mockImplementation(function () {
-    return { track: trackMock, identify: identifyMock, setGlobalProperties: setGlobalPropertiesMock };
+    return { track: trackMock, identify: identifyMock, setGlobalProperties: setGlobalPropertiesMock, api: { addHeader: vi.fn() } };
   });
   return { ctorMock, trackMock };
 });
