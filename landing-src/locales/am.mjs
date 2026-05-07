@@ -67,7 +67,7 @@ export const am = {
   f3_h: "Playlists ደግሞ",
   f3_p: "የplaylist URL ለጥፍ፣ ሙሉ ዝርዝሩን አውርድ ወይም Arroxy ወደ ቅደም ተከተል ከማከልዎ በፊት የሚፈልጉትን ቪዲዮዎች ብቻ ምልክት ያድርጉ።",
   f4_h: "ራስ-ሰር ዝማኔዎች",
-  f4_p: "Arroxy yt-dlp እና ffmpeg ከጀርባ ትኩስ ያደርጋቸዋል — ለእያንዳንዱ የ YouTube ለውጥ ይሰራል።",
+  f4_p: "Arroxy yt-dlp ወቅታዊ ያደርጋል እና ffmpeg በአፑ ውስጥ ተካትቷል — ለእያንዳንዱ የ YouTube ለውጥ ይሰራል።",
   f5_h: "21 ቋንቋዎች",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — ቋንቋዎን ራስ-ሰር ያወቃል።",
   f6_h: "ብዙ-መድረክ",
@@ -102,8 +102,8 @@ export const am = {
   p1_p: "ምንም Google አካውንት። ምንም ጊዜ የሚያልቅ ክፍለ-ጊዜ የለም። አካውንትዎ ምልክት የሚደረግበት ምንም አደጋ የለም።",
   p2_h: "ኩኪ የለም",
   p2_p: "Arroxy ማንኛውም ማሰሻ የሚጠቀማቸውን ተመሳሳይ ቶከኖች ብቻ ይጠይቃል። ምንም ወደ ውጭ አይላክም፣ ምንም አይከማችም።",
-  p3_h: "ምንም የተጠቃሚ መለያ ቁጥሮች የሉም",
-  p3_p: "ስም-አልባ telemetry በ TelemetryDeck አማካኝነት — በጭፍን የተቀናጀ ማንነቱ ከአፕ ከመውጣቱ በፊት ይሃሽ ይደረጋል፣ ምንም fingerprinting፣ ምንም የግል ዳታ። ማውረዶችዎ፣ ታሪክዎ እና ፋይሎችዎ ፈጽሞ ማሽንዎን አይለቁም።",
+  p3_h: "ስም-አልባ telemetry",
+  p3_p: "ስም-አልባ telemetry በ OpenPanel — የዘፈቀደ የእያንዳንዱ ጭነት ID ጅምሮችን፣ ስሪቶችን፣ OS እና ብልሽቶችን ለመቁጠር ይረዳል፤ URLs፣ ርዕሶች፣ የፋይል መንገዶች፣ የመለያ መረጃ፣ fingerprinting ወይም የግል ዳታ የለም። ማውረዶችዎ፣ ታሪክዎ እና ፋይሎችዎ ፈጽሞ ማሽንዎን አይለቁም።",
   p4_h: "ምንም የሦስተኛ-ወገን አገልጋዮች የሉም",
   p4_p: "ሁሉም ሂደቱ በ yt-dlp + ffmpeg አማካኝነት በአካባቢ ይሄዳል። ፋይሎች ርቀት አገልጋይ ፈጽሞ አይነኩም።",
 
@@ -144,7 +144,7 @@ export const am = {
     "ሃያ አንድ፣ ከሳጥን ውጭ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek) እና Српски (Serbian)። Arroxy በመጀመሪያ ጊዜ ሲጀምሩ የስርዓተ ምOS ቋንቋዎን ራስ-ሰር ያወቃል፣ ከመሳሪያ አሞሌ የቋንቋ ምርጫ ማንኛውም ጊዜ መቀየር ይችላሉ። ትርጉሞች ከ src/shared/i18n/locales/ ውስጥ ቀላል TypeScript ዕቃዎች ናቸው — ለማዋጮ GitHub ላይ PR ይክፈቱ።",
   faq_q4: "ምንም ነገር መጫን አለብኝ?",
   faq_a4:
-    "አይደለም። yt-dlp እና ffmpeg በመጀመሪያ ጊዜ ከይፋዊ GitHub releases ራስ-ሰር ይወርዳሉ፣ በማሽንዎ ላይ ይቀመጣሉ። ከዚያ ምንም ተጨማሪ ማዋቀር አያስፈልግም።",
+    "አይ። yt-dlp በመጀመሪያ አስጀማሪ ራስ-ሰር ይወርዳል እና በማሽንዎ ላይ ይቀመጣል፤ ffmpeg እና ffprobe ከአፑ ጋር ይመጣሉ። ከዚያ ተጨማሪ setup አያስፈልግም።",
   faq_q5: "YouTube ሆኖ ቢቀይር ይሰራ ይሆን?",
   faq_a5:
     "አዎ — Arroxy ሁለት የተጣጣሚነት ደረጃዎች አሉት። መጀመሪያ፣ yt-dlp ከሚጠናከሩ ክፍት-ምንጭ መሳሪያዎች አንዱ ነው — የ YouTube ለውጦች ከሰዓታት ውስጥ ዝማኔ ያደርጋሉ። ሁለተኛ፣ Arroxy ኩኪዎች ወይም Google አካውንትዎን ፈጽሞ አይጠቀምም፣ ስለዚህ ምንም ጊዜ የሚያልቅ ክፍለ-ጊዜ የለም፣ ምንም ምስክርነቶች ማሽከርከር አያስፈልጉም። ያ ጥምረት ከ browser ኩኪዎች ወደ ውጭ ማረፊያ ላይ ከሚወሰኑ መሳሪያዎች በጣም የተረጋጋ ያደርገዋል።",

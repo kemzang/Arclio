@@ -688,14 +688,6 @@ export class BinaryManager {
     return diag.resolvedPath;
   }
 
-  // ffprobe is required by yt-dlp's post-processing (chapter modification,
-  // SponsorBlock-remove, embed-thumbnail, --add-metadata) to read media
-  // duration. Downloaded at runtime from the canonical FFmpeg distributions
-  // (BtbN for Win/Linux, evermeet.cx for macOS) and cached under
-  // runtime-cache/binaries/ so it lives next to ffmpeg — this way
-  // spawnYtDlp's existing PATH injection finds both with one PATH entry.
-  // Returns null if the platform/arch has no upstream build; the caller
-  // tolerates this (ffprobe is only needed by certain post-processors).
   // ffmpeg + ffprobe ship via electron-builder extraResources at build time.
   // Resolve order per binary: manualOverride → envOverride → bundled probe.
   // No download/extract/checksum/retry — fetch-embedded.sh did all that during

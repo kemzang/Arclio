@@ -87,7 +87,7 @@ export class SettingsStore {
     this.ensureInstallId();
   }
 
-  // Guarantee a per-install UUID for telemetry (TelemetryDeck `clientUser`).
+  // Guarantee a per-install UUID for telemetry (OpenPanel `profileId`).
   // electron-store's `defaults` is shallow-merged at the top level, so an
   // existing user whose on-disk `common` predates this field would never
   // receive the default. Stamp lazily here after migration.

@@ -35,7 +35,7 @@ describe('binaryInternals', () => {
     expect(digest).toBe('b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9');
   });
 
-  it('parses the raw SHA-256 body from Gyan direct', () => {
+  it('parses a raw SHA-256 body', () => {
     const sha = binaryInternals.parseStandaloneSha256('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541\n');
 
     expect(sha).toBe('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541');
@@ -46,7 +46,7 @@ describe('binaryInternals', () => {
     expect(sha).toBe('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541');
   });
 
-  it('parses the "<hash>  filename.zip" canonical Gyan body', () => {
+  it('parses the "<hash>  filename.zip" SHA-256 body', () => {
     const sha = binaryInternals.parseStandaloneSha256('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541  ffmpeg-release-essentials.zip');
     expect(sha).toBe('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541');
   });

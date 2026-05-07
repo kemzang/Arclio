@@ -87,7 +87,7 @@ Khi YouTube cập nhật hệ thống phát hiện bot, hầu hết các công c
 - **Theo dõi clipboard** — sao chép liên kết YouTube và Arroxy tự điền URL khi bạn chuyển lại ứng dụng (bật/tắt trong Cài đặt nâng cao)
 - **Tự làm sạch URL** — loại bỏ các tham số theo dõi (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) và mở gói các liên kết `youtube.com/redirect`
 - **Chế độ khay hệ thống** — đóng cửa sổ vẫn tiếp tục tải xuống ở nền
-- **9 ngôn ngữ** — tự động phát hiện ngôn ngữ hệ thống, có thể đổi bất cứ lúc nào
+- **21 ngôn ngữ** — tự động phát hiện ngôn ngữ hệ thống, có thể đổi bất cứ lúc nào
 
 ### Phụ đề & hậu xử lý
 
@@ -217,7 +217,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Tải xuống được lấy trực tiếp qua [yt-dlp](https://github.com/yt-dlp/yt-dlp) từ YouTube đến thư mục bạn chọn — không có gì đi qua máy chủ bên thứ ba. Lịch sử xem, lịch sử tải xuống, URL và nội dung file vẫn ở trên thiết bị của bạn.
 
-Arroxy gửi telemetry ẩn danh, tổng hợp qua [TelemetryDeck](https://telemetrydeck.com) — vừa đủ để một dự án indie biết có ai đang thực sự dùng hay không (số lần khởi động, OS, phiên bản ứng dụng, sự cố). Không có URLs, không có tiêu đề video, không có đường dẫn file, không có thông tin tài khoản. ID cài đặt được băm trước khi gửi và TelemetryDeck không bao giờ lưu IPs — được lưu trữ tại EU và thân thiện GDPR theo thiết kế. Bạn có thể từ chối trong Cài đặt.
+Arroxy gửi telemetry ẩn danh, tổng hợp qua [OpenPanel](https://openpanel.dev) — vừa đủ để hiểu lượt khởi động, OS, phiên bản ứng dụng và sự cố. Không có URL, tiêu đề video, đường dẫn tệp, thông tin tài khoản, fingerprinting hay dữ liệu cá nhân. ID cho mỗi lần cài đặt là ngẫu nhiên và không gắn với danh tính của bạn. Bạn có thể tắt trong Cài đặt.
 
 ---
 
@@ -239,10 +239,10 @@ Không. Arroxy chỉ sử dụng các token công khai mà YouTube cung cấp ch
 Hai lớp bảo vệ: yt-dlp cập nhật trong vòng vài giờ sau khi YouTube thay đổi, và Arroxy không phụ thuộc vào cookie hết hạn sau ~30 phút. Điều này khiến nó ổn định hơn đáng kể so với các công cụ phụ thuộc vào phiên trình duyệt đã xuất.
 
 **Arroxy có sẵn bằng những ngôn ngữ nào?**
-Chín ngôn ngữ: English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी. Tự động phát hiện ngôn ngữ hệ thống; có thể đổi bất cứ lúc nào từ thanh công cụ. Các file locale là các đối tượng TypeScript thuần túy trong `src/shared/i18n/locales/` — [PR luôn được chào đón](../../pulls).
+Hai mươi mốt ngôn ngữ, có sẵn ngay khi cài đặt: English, Español (Tây Ban Nha), Deutsch (Đức), Français (Pháp), 日本語 (Nhật), 中文 (Trung Quốc), Русский (Nga), Українська (Ukraine), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Việt Nam), አማርኛ (Amharic), العربية (Ả Rập), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Miến Điện), Ελληνικά (Hy Lạp) và Српски (Serbia). Arroxy tự động phát hiện ngôn ngữ hệ điều hành của bạn khi khởi động lần đầu và bạn có thể chuyển đổi bất cứ lúc nào từ bộ chọn ngôn ngữ trên thanh công cụ. Các bản dịch được lưu dưới dạng đối tượng TypeScript thuần trong src/shared/i18n/locales/ — mở PR trên GitHub để đóng góp.
 
 **Tôi có cần cài đặt thêm gì không?**
-Không. yt-dlp và ffmpeg được tải xuống tự động khi khởi động lần đầu từ các bản phát hành GitHub chính thức của chúng và lưu vào bộ nhớ đệm cục bộ.
+Không. yt-dlp được tải xuống tự động khi khởi động lần đầu và được lưu vào bộ nhớ đệm trên máy của bạn; ffmpeg và ffprobe đi kèm với ứng dụng. Sau đó, không cần thiết lập thêm gì.
 
 **Tôi có thể tải xuống danh sách phát hoặc toàn bộ kênh không?**
 Có, với playlist: dán URL playlist rồi xếp hàng toàn bộ danh sách hoặc chỉ những video bạn chọn. Tải hàng loạt cả kênh vẫn chưa được hỗ trợ.
@@ -280,7 +280,7 @@ Bạn có ý tưởng tính năng? [Mở yêu cầu](../../issues) — ý kiến
 - **React 19** + **TypeScript** — UI
 - **Tailwind CSS v4** — tạo kiểu
 - **Zustand** — quản lý trạng thái
-- **yt-dlp** + **ffmpeg** — công cụ tải xuống và ghép luồng (lấy từ GitHub khi khởi động lần đầu, luôn cập nhật)
+- **yt-dlp** + **ffmpeg** — công cụ tải xuống và ghép luồng (yt-dlp được lấy lúc chạy; ffmpeg/ffprobe được đóng gói khi build)
 - **Vite** + **electron-vite** — công cụ build
 - **Vitest** + **Playwright** — kiểm thử đơn vị và end-to-end
 
@@ -340,7 +340,7 @@ bun run dist         # đóng gói cho OS hiện tại
 bun run dist:win     # biên dịch chéo Windows portable exe
 ```
 
-> yt-dlp và ffmpeg không được đóng gói sẵn — chúng được tải từ GitHub khi khởi động lần đầu và lưu vào thư mục dữ liệu ứng dụng của bạn.
+> yt-dlp được lấy từ GitHub khi khởi động lần đầu và lưu trong thư mục dữ liệu ứng dụng. ffmpeg và ffprobe được đóng gói trong mọi bản phát hành Arroxy.
 
 </details>
 

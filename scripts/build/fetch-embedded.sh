@@ -34,7 +34,23 @@ source "$ROOT/scripts/test-binaries/_lib.sh"
 # If both binaries are already present, skip — fetch-embedded is idempotent.
 exe_ext=""
 [[ "$PLATFORM" == "win32" ]] && exe_ext=".exe"
-if [[ -f "$OUT/ffmpeg${exe_ext}" && -f "$OUT/ffprobe${exe_ext}" ]]; then
+
+has_required_payload() {
+  [[ -f "$OUT/ffmpeg${exe_ext}" && -f "$OUT/ffprobe${exe_ext}" ]] || return 1
+  case "$PLATFORM" in
+    win32)
+      compgen -G "$OUT/*.dll" >/dev/null
+      ;;
+    linux)
+      compgen -G "$OUT/lib*.so*" >/dev/null
+      ;;
+    *)
+      return 0
+      ;;
+  esac
+}
+
+if has_required_payload; then
   ok "embedded binaries already present at $OUT, skipping fetch"
   exit 0
 fi

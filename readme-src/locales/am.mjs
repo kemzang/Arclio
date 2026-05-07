@@ -5,7 +5,7 @@ const TECH_CONTENT = `<details>
 - **React 19** + **TypeScript** — UI
 - **Tailwind CSS v4** — ቅጥ አሠጣጥ
 - **Zustand** — የሁኔታ አስተዳደር
-- **yt-dlp** + **ffmpeg** — የማውረድ እና ማዋሃጃ ሞተር (በመጀመሪያ አስጀማሪ ከ GitHub ይወርዳሉ፣ ሁልጊዜ ወቅታዊ)
+- **yt-dlp** + **ffmpeg** — የማውረድ እና mux ሞተር (yt-dlp በ runtime ይወርዳል፤ ffmpeg/ffprobe በ build time ይካተታሉ)
 - **Vite** + **electron-vite** — የግንባታ መሣሪያዎች
 - **Vitest** + **Playwright** — የአሃዳዊ እና ከጫፍ-ወደ-ጫፍ ፈተናዎች
 
@@ -65,7 +65,7 @@ bun run dist         # package for current OS
 bun run dist:win     # cross-compile Windows portable exe
 \`\`\`
 
-> yt-dlp እና ffmpeg አያካተቱም — በመጀመሪያ አስጀማሪ ከዕውቅ GitHub ስሪቶቻቸው ይወርዳሉ እናም በአፕ ዳታ አቃፊዎ ውስጥ ይቀመጣሉ።
+> yt-dlp በመጀመሪያ አስጀማሪ ከ GitHub ይወርዳል እና በ app data አቃፊ ይቀመጣል። ffmpeg እና ffprobe ከእያንዳንዱ የArroxy ስሪት ጋር ተካትተው ይመጣሉ።
 
 </details>`;
 
@@ -137,7 +137,7 @@ export const am = {
   feat_workflow_5:
     "**ትሬ ሁነታ** — መስኮቱን መዝጋት ማውረዶቹን በጀርባ ያስቀጥላሉ",
   feat_workflow_6:
-    "**9 ቋንቋዎች** — የሥርዓት ቋንቋ ራስ ሰር ያውቃሉ፣ ሁልጊዜ መቀየር ይቻላሉ",
+    "**21 ቋንቋዎች** — የሥርዓት ቋንቋ ራስ ሰር ያውቃሉ፣ ሁልጊዜ መቀየር ይቻላሉ",
   feat_post_h3: "ንዑስ ርዕሶች እና ድህረ-ሂደት",
   feat_post_1:
     "**ንዑስ ርዕሶች** በ SRT፣ VTT፣ ወይም ASS — እጅ ወይም ራስ ሰር የተፈጠሩ፣ በማንኛውም ቋንቋ",
@@ -214,7 +214,7 @@ export const am = {
   privacy_p1:
     "ማውረዶቹ ቀጥታ በ [yt-dlp](https://github.com/yt-dlp/yt-dlp) ከ YouTube ወደ መረጡት አቃፊ ይወርዳሉ — ምንም ሦስተኛ ወገን ሰርቨር አይሆንም። የእይታ ታሪክ፣ የማውረድ ታሪክ፣ URLs፣ እና የፋይሎቹ ይዘቶች በመሳሪያዎ ላይ ይቆያሉ።",
   privacy_p2:
-    "Arroxy ስም-አልባ፣ ሰብሰቦ ቴሌሜትሪ በ [TelemetryDeck](https://telemetrydeck.com) ይልካሉ — ለኢንዲ ፕሮጀክት ምን ጥቅም ላይ እንዳለ ለማየት ብቻ (ጅምሮች፣ OS፣ አፕ ስሪት፣ ብልሽቶች)። ምንም URLs፣ ምንም ቪዲዮ ርዕሶች፣ ምንም የፋይል ዱካዎች፣ ምንም ሒሳብ መረጃ የለም። በጭፍን የተቀናጀ ማንነቱ ከመላኩ በፊት ይሃሽ ይደረጋል፣ TelemetryDeck ደግሞ IPs ፈጽሞ አያከማቸም — EU ውስጥ የሚሰራ እና ዲዛይን ሆኖ GDPR-ምቹ ነው። ቅንብሮቹ ውስጥ መቃወም ይቻሉ።",
+    "Arroxy ስም-አልባ፣ የተጠቃለለ telemetry በ [OpenPanel](https://openpanel.dev) ይልካል — ጅምሮችን፣ OS፣ የአፕ ስሪቶችን እና ብልሽቶችን ለመረዳት ብቻ። URLs፣ የቪዲዮ ርዕሶች፣ የፋይል መንገዶች፣ የመለያ መረጃ፣ fingerprinting ወይም የግል ዳታ የለም። የእያንዳንዱ ጭነት ID የዘፈቀደ ነው እና ከማንነትዎ ጋር አይያያዝም። በSettings ውስጥ opt out ማድረግ ይችላሉ።",
   faq_q1: "በርግጥ ነፃ ነው?",
   faq_a1: "አዎ — MIT ፈቃድ አለው፣ ምንም ፕሪሚየም ደረጃ፣ ምንም ባህሪ ቁጥጥር የለም።",
   faq_q2: "ምን ዓይነት ቪዲዮ ጥራቶች ማውረድ እችላሉ?",
@@ -230,10 +230,10 @@ export const am = {
     "ሁለት የጥንካሬ ሽፋኖች: yt-dlp የ YouTube ለውጦቹ ከደረሱ ከጥቂት ሰዓት ውስጥ ያዘምናሉ፣ እናም Arroxy በ~30 ደቂቃ ውስጥ ሊቋርጡ በሚችሉ ኩኪዎች አይመሠረቱም። ይህ ከምን ኮድ ያለው ብሮውዘር ክፍለ ጊዜዎች ላይ ከሚወሰኑ ሶፍትዌሮች ጋር ሲነጻጸር ግልፅ ስርዓት ይሰጣሉ።",
   faq_q6: "Arroxy በምን ቋንቋዎች ይገኛሉ?",
   faq_a6:
-    "ዘጠኝ: English፣ Español፣ Deutsch፣ Français፣ 日本語፣ 中文፣ Русский፣ Українська፣ हिन्दी። የሥርዓት ቋንቋዎን ራስ ሰር ያወቁ; ሁልጊዜ ከቱልባሩ ይቀይሩ። የቦታ ፋይሎቹ `src/shared/i18n/locales/` ውስጥ ቀጥተኛ TypeScript ዕቃዎች ናቸው — [PRs ይቀበላሉ](../../pulls)።",
+    "ሃያ አንድ፣ ከሳጥን ውጭ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek) እና Српски (Serbian)። Arroxy በመጀመሪያ ጊዜ ሲጀምሩ የስርዓተ ምOS ቋንቋዎን ራስ-ሰር ያወቃል፣ ከመሳሪያ አሞሌ የቋንቋ ምርጫ ማንኛውም ጊዜ መቀየር ይችላሉ። ትርጉሞች ከ src/shared/i18n/locales/ ውስጥ ቀላል TypeScript ዕቃዎች ናቸው — ለማዋጮ GitHub ላይ PR ይክፈቱ።",
   faq_q7: "ሌላ ነገር ጫን ያስፈልጋሉ?",
   faq_a7:
-    "አይ። yt-dlp እና ffmpeg በመጀመሪያ አስጀማሪ ከዕውቅ GitHub ስሪቶቻቸው ራስ ሰር ይወርዳሉ እናም አካባቢያዊ ይቀምጣሉ።",
+    "አይ። yt-dlp በመጀመሪያ አስጀማሪ ራስ-ሰር ይወርዳል እና በማሽንዎ ላይ ይቀመጣል፤ ffmpeg እና ffprobe ከአፑ ጋር ይመጣሉ። ከዚያ ተጨማሪ setup አያስፈልግም።",
   faq_q8: "ፕሌይሊስቶች ወይም ሙሉ ቻናሎች ማውረድ ይቻላሉ?",
   faq_a8:
     "አዎ፣ ለplaylists: የplaylist URL ለጥፍ፣ ከዚያ ሙሉ ዝርዝሩን ወይም አንተ የመረጥካቸውን ቪዲዮዎች ብቻ ወደ ቅደም ተከተል አክል። ሙሉ channel በብዛት ማውረድ ገና አይደገፍም።",

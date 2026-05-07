@@ -67,7 +67,7 @@ export const my = {
   f3_h: "Playlist များလည်း",
   f3_p: "playlist URL ကို paste လုပ်ပြီး စာရင်းတစ်ခုလုံးကို download လုပ်နိုင်သလို Arroxy က queue မထည့်ခင် သင်လိုချင်သော video များကိုသာ အမှတ်ခြစ်ရွေးနိုင်သည်။",
   f4_h: "အလိုအလျောက် အပ်ဒိတ်",
-  f4_p: "Arroxy သည် yt-dlp နှင့် ffmpeg ကို နောက်ကွယ်မှ နောက်ဆုံးထားသည် — YouTube ပြောင်းလဲမှုတိုင်းတွင် အလုပ်လုပ်သည်။",
+  f4_p: "Arroxy သည် yt-dlp ကို နောက်ဆုံးထားပြီး ffmpeg ကို app ထဲတွင် ထည့်ပေးထားသည် — YouTube ပြောင်းလဲမှုတိုင်းတွင် အလုပ်လုပ်သည်။",
   f5_h: "ဘာသာစကား ၂၁ မျိုး",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — သင့်ဘာသာစကားကို အလိုအလျောက် ရှာဖွေသည်။",
   f6_h: "Cross-platform",
@@ -102,8 +102,8 @@ export const my = {
   p1_p: "Google account မလိုအပ်။ သက်တမ်းကုန်သော session မရှိ။ သင့် account ကို flag ဖြစ်မည့် အန္တရာယ် သုညရှိသည်။",
   p2_h: "ကွတ်ကီးမရှိ",
   p2_p: "Arroxy သည် မည်သည့် browser မဆို တောင်းသော token တူညီသည်ကို တောင်းသည်။ ထုတ်ယူသည့်အရာ မရှိ၊ သိမ်းဆည်းသည့်အရာ မရှိ။",
-  p3_h: "User ID မရှိ",
-  p3_p: "TelemetryDeck မှတဆင့် anonymous telemetry — သင့် per-install ID ကို app မထွက်ခင် hash လုပ်ပြီး fingerprinting မရှိ၊ ကိုယ်ရေးကိုယ်တာ data မရှိ။ သင်၏ ဒေါင်းလုဒ်၊ မှတ်တမ်းနှင့် ဖိုင်များသည် သင့်စက်ကို ဘယ်တော့မှ မထွက်ပါ။",
+  p3_h: "Anonymous telemetry",
+  p3_p: "OpenPanel မှတဆင့် anonymous telemetry — random per-install ID သည် launches, versions, OS နှင့် crashes ကိုရေတွက်ရန်ကူညီသည်; URLs, titles, file paths, account info, fingerprinting သို့မဟုတ် personal data မရှိပါ။ သင့် downloads, history နှင့် files များသည် သင့်စက်ကို ဘယ်တော့မှ မထွက်ပါ။",
   p4_h: "ပြင်ပ server မရှိ",
   p4_p: "pipeline တစ်ခုလုံးသည် yt-dlp + ffmpeg မှတဆင့် ဒေသတွင်း အလုပ်လုပ်သည်။ ဖိုင်များသည် remote server ကို ဘယ်တော့မှ မထိ။",
 
@@ -144,7 +144,7 @@ export const my = {
     "နှစ်ဆယ့်တစ်မျိုး၊ အသင့်ပါ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ, Ελληνικά (Greek), နှင့် Српски (Serbian)။ Arroxy သည် ပထမဆုံး ဖွင့်ချိန်တွင် သင့် operating system ၏ ဘာသာစကားကို အလိုအလျောက် ရှာဖွေပြီး toolbar ရှိ ဘာသာစကားရွေးချယ်မှုမှ မည်သည့်အချိန်မဆို ပြောင်းနိုင်သည်။ Locale ဖိုင်များသည် src/shared/i18n/locales/ တွင် plain TypeScript object များဖြစ်သည် — ပါဝင်ကူညီရန် GitHub တွင် PR တင်ပါ။",
   faq_q4: "ဘာတစ်ခုခု တပ်ဆင်ရန် လိုအပ်သလား?",
   faq_a4:
-    "မလိုပါ။ yt-dlp နှင့် ffmpeg တို့သည် ပထမဆုံး ဖွင့်ချိန်တွင် ၎င်းတို့၏ တရားဝင် GitHub releases မှ အလိုအလျောက် ဒေါင်းလုဒ်လုပ်ပြီး သင့်စက်တွင် cache လုပ်သည်။ ထို့နောက် နောက်ထပ် setup မလိုအပ်ပါ။",
+    "မလိုပါ။ yt-dlp သည် ပထမဆုံး ဖွင့်ချိန်တွင် အလိုအလျောက် ဒေါင်းလုဒ်လုပ်ပြီး သင့်စက်တွင် cache လုပ်သည်; ffmpeg နှင့် ffprobe သည် app နှင့်အတူ ပါလာသည်။ ထို့နောက် နောက်ထပ် setup မလိုအပ်ပါ။",
   faq_q5: "YouTube ဘာတစ်ခုခု ပြောင်းလဲပါက ဆက်လုပ်ဆောင်နိုင်မည်လား?",
   faq_a5:
     "ဟုတ်ကဲ့ — Arroxy တွင် ခံနိုင်ရည် layer နှစ်ထပ် ရှိသည်။ ပထမ၊ yt-dlp သည် အစဉ်တစိုက် ထိန်းသိမ်းနေသော open-source tool များထဲမှ တစ်ခုဖြစ်သည် — YouTube ပြောင်းလဲမှုပြီး နာရီအနည်းငယ်အတွင်း အပ်ဒိတ်လုပ်သည်။ ဒုတိယ၊ Arroxy သည် ကွတ်ကီး သို့မဟုတ် သင့် Google account ကို လုံးဝ မမှီခိုသောကြောင့် သက်တမ်းကုန်မည့် session မရှိပြီး rotate လုပ်ရမည့် credential မရှိ။ ထို combination ကြောင့် browser cookie ထုတ်ယူမှုကို မှီခိုသော tool များထက် သိသိသာသာ ပိုမိုတည်ငြိမ်သည်။",

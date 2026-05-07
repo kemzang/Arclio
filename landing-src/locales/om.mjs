@@ -67,7 +67,7 @@ export const om = {
   f3_h: "Playlist illee",
   f3_p: "URL playlist maxxansi, tarree guutuu buufadhu yookaan Arroxy queue keessa galchuu isaa dura viidiyoowwan ati barbaaddu qofa mallatteessi.",
   f4_h: "Haaromsa ofii",
-  f4_p: "Arroxy yt-dlp fi ffmpeg haaromsa jalaa — jijjiirama YouTube hundaaf hojjeta.",
+  f4_p: "Arroxy yt-dlp haaromsee eega, ffmpeg immoo app keessatti waliin dhufa — jijjiirama YouTube hundaaf hojjeta.",
   f5_h: "Afaan 21",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — kan kee ofii isaa argata.",
   f6_h: "Platform hedduu",
@@ -102,8 +102,8 @@ export const om = {
   p1_p: "Akkaawuntii Google hin barbaadu. Seesiini dhumuu hin jiru. Akkaawuntiin kee mallatteffamuuf carraan duwwaa dha.",
   p2_h: "Kuukii hin jiru",
   p2_p: "Arroxy tokeenota browser kamiyyuu gaafatu sana gaafata. Wanti ol-baafame hin jiru, wanti kuufame hin jiru.",
-  p3_h: "ID fayyadamaa hin jiru",
-  p3_p: "Teelemeettrii maqaa-dhabduu TelemetryDeck waliin — ID diriirsa kee app irraa bahuun dura hash godhama, maamilooma hin jiru, ragaa dhuunfaa hin jiru. Buufatoota, seenaa, fi faayiloonni kee meeshaa kee irratti hafu — guutummaatti.",
+  p3_h: "Teelemeetrii maqaa-dhabduu",
+  p3_p: "Teelemeetrii maqaa-dhabduu OpenPanel waliin — ID tasaa kan install tokkoon tokkoo eegaluu, version, OS fi kufaatii lakkaaʼuuf gargaara; URL, mata-duree, karaa faayilaa, odeeffannoo account, fingerprinting yookaan data dhuunfaa hin jiru. Buufatoonni, seenaa fi faayiloonni kee meeshaa kee irraa hin bahan.",
   p4_h: "Sirnaalee sadaffaa hin jiran",
   p4_p: "Tooftaan guutuun naannoo yt-dlp + ffmpeg waliin hojjeta. Faayiloonni sarara fagoo tokkollee hin tuqan.",
 
@@ -144,7 +144,7 @@ export const om = {
     "Digdamatokkoo, yeroo jalqabaatii: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), fi Српски (Serbian). Arroxy afaan mana-hojii kee sirna hojjetaa irratti yeroo jalqabaatti ofumaa argata, yeroo kamiiyyuu toolbar irraa filataa afaan jijjiiruu dandeessa. Hiikaaleen objiektii TypeScript duwwaa akka src/shared/i18n/locales/ keessa jiran — gargaaruf GitHub irratti PR bani.",
   faq_q4: "Wanta diriirsu barbaadaa?",
   faq_a4:
-    "Lakki. yt-dlp fi ffmpeg jalqaba banuu irratti GitHub releases isaanitii ofumaan buufamu, meeshaa kee irratti kuufamu. Kana booda, qindaa'ina dabalataa barbaachisaa miti.",
+    "Lakki. yt-dlp jalqaba banuu irratti ofumaan buufamee meeshaa kee irratti kuufama; ffmpeg fi ffprobe app waliin dhufu. Sana booda qindaaʼinni dabalataa hin barbaachisu.",
   faq_q5: "YouTube waa jijjiire yoo hojjetaa tura?",
   faq_a5:
     "Eeyyee — Arroxynis kutaalee lamaatu jabina qaba. Jalqaba, yt-dlp meeshaalee madda banaa hojii irra oolan keessaa baay'ee qoratamani tokko dha — jijjiirama YouTube booda sa'aatii muraasa keessatti haaromfama. Lammaffaa, Arroxy kuukii ykn akkaawuntii Google kee irratti hundaa'a hin qabu, kanaafuu seesiini dhumatu hin jiru, ibsitoonni jijjiiramuu hin qaban. Walitti makamni kun meeshaalee kuukii browser ergan irratti hundaa'an caalaa yk hammaachuu godha.",

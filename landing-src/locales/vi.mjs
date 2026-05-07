@@ -67,7 +67,7 @@ export const vi = {
   f3_h: "Có cả playlist",
   f3_p: "Dán URL playlist, tải toàn bộ danh sách hoặc chỉ đánh dấu những video bạn muốn trước khi Arroxy đưa chúng vào hàng đợi.",
   f4_h: "Tự động cập nhật",
-  f4_p: "Arroxy tự động giữ yt-dlp và ffmpeg luôn mới — hoạt động qua mọi thay đổi của YouTube.",
+  f4_p: "Arroxy giữ yt-dlp luôn mới và đóng gói ffmpeg trong ứng dụng — hoạt động qua mọi thay đổi của YouTube.",
   f5_h: "21 ngôn ngữ",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — tự động nhận diện ngôn ngữ của bạn.",
   f6_h: "Đa nền tảng",
@@ -102,8 +102,8 @@ export const vi = {
   p1_p: "Không cần tài khoản Google. Không phiên nào hết hạn. Không có nguy cơ tài khoản bị gắn cờ.",
   p2_h: "Không cookie",
   p2_p: "Arroxy yêu cầu cùng token như mọi trình duyệt. Không có gì được xuất, không có gì được lưu trữ.",
-  p3_h: "Không có ID người dùng",
-  p3_p: "Telemetry ẩn danh qua TelemetryDeck — ID cài đặt của bạn được băm trước khi rời khỏi ứng dụng, không có dấu vân tay, không có dữ liệu cá nhân. Lịch sử tải xuống và tệp của bạn không bao giờ rời khỏi máy tính của bạn.",
+  p3_h: "Telemetry ẩn danh",
+  p3_p: "Telemetry ẩn danh qua OpenPanel — một ID ngẫu nhiên cho mỗi lần cài đặt giúp đếm lượt khởi động, phiên bản, OS và sự cố; không URL, tiêu đề, đường dẫn tệp, thông tin tài khoản, fingerprinting hay dữ liệu cá nhân. Lịch sử tải xuống và tệp của bạn không bao giờ rời khỏi máy.",
   p4_h: "Không có máy chủ bên thứ ba",
   p4_p: "Toàn bộ quy trình chạy cục bộ qua yt-dlp + ffmpeg. Các tệp không bao giờ chạm đến máy chủ từ xa.",
 
@@ -144,7 +144,7 @@ export const vi = {
     "Hai mươi mốt ngôn ngữ, có sẵn ngay khi cài đặt: English, Español (Tây Ban Nha), Deutsch (Đức), Français (Pháp), 日本語 (Nhật), 中文 (Trung Quốc), Русский (Nga), Українська (Ukraine), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Việt Nam), አማርኛ (Amharic), العربية (Ả Rập), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Miến Điện), Ελληνικά (Hy Lạp) và Српски (Serbia). Arroxy tự động phát hiện ngôn ngữ hệ điều hành của bạn khi khởi động lần đầu và bạn có thể chuyển đổi bất cứ lúc nào từ bộ chọn ngôn ngữ trên thanh công cụ. Các bản dịch được lưu dưới dạng đối tượng TypeScript thuần trong src/shared/i18n/locales/ — mở PR trên GitHub để đóng góp.",
   faq_q4: "Tôi có cần cài đặt thêm gì không?",
   faq_a4:
-    "Không. yt-dlp và ffmpeg được tải xuống tự động khi khởi động lần đầu từ các bản phát hành chính thức trên GitHub và được lưu vào bộ nhớ đệm trên máy của bạn. Sau đó, không cần thiết lập thêm gì.",
+    "Không. yt-dlp được tải xuống tự động khi khởi động lần đầu và được lưu vào bộ nhớ đệm trên máy của bạn; ffmpeg và ffprobe đi kèm với ứng dụng. Sau đó, không cần thiết lập thêm gì.",
   faq_q5: "Nó có tiếp tục hoạt động nếu YouTube thay đổi gì đó không?",
   faq_a5:
     "Có — và Arroxy có hai lớp khả năng chống chịu. Thứ nhất, yt-dlp là một trong những công cụ mã nguồn mở được duy trì tích cực nhất — nó cập nhật trong vài giờ sau khi YouTube thay đổi. Thứ hai, Arroxy hoàn toàn không phụ thuộc vào cookie hay tài khoản Google của bạn, vì vậy không có phiên nào hết hạn và không có thông tin đăng nhập nào cần xoay vòng. Sự kết hợp đó khiến nó ổn định hơn đáng kể so với các công cụ phụ thuộc vào cookie trình duyệt được xuất ra.",

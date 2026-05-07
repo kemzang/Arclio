@@ -67,7 +67,7 @@ export const uz = {
   f3_h: "Playlistlar ham",
   f3_p: "Playlist URL manzilini joylang, butun ro‘yxatni yuklab oling yoki Arroxy navbatga qo‘shishidan oldin faqat kerakli videolarni belgilang.",
   f4_h: "Avtomatik yangilanishlar",
-  f4_p: "Arroxy yt-dlp va ffmpeg'ni har doim yangilab turadi — YouTube'ning har bir o'zgarishi bilan ishlaydi.",
+  f4_p: "Arroxy yt-dlp’ni dolzarb saqlaydi, ffmpeg esa ilova ichida keladi — YouTube’ning har bir o‘zgarishi bilan ishlaydi.",
   f5_h: "21 til",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — tilingizni avtomatik aniqlaydi.",
   f6_h: "Ko'p platformali",
@@ -102,8 +102,8 @@ export const uz = {
   p1_p: "Google hisobi yo'q. Muddati tugaydigan seanslar yo'q. Hisobingiz belgilanish xavfi nol.",
   p2_h: "Cookie yo'q",
   p2_p: "Arroxy har qanday brauzer so'raydigan tokenlarni so'raydi. Hech narsa eksport qilinmaydi, hech narsa saqlanmaydi.",
-  p3_h: "Foydalanuvchi identifikatorlari yo'q",
-  p3_p: "TelemetryDeck orqali anonim telemetriya — har bir o'rnatmaning IDsi ilova tark etishidan oldin xeshlanadi, barmoq izi yo'q, shaxsiy ma'lumotlar yo'q. Yuklamalaringiz, tarixingiz va fayllaringiz hech qachon qurilmangizdan chiqmaydi.",
+  p3_h: "Anonim telemetriya",
+  p3_p: "OpenPanel orqali anonim telemetriya — har bir o‘rnatish uchun tasodifiy ID ishga tushirishlar, versiyalar, OS va nosozliklarni sanashga yordam beradi; URL, sarlavha, fayl yo‘li, hisob ma’lumoti, fingerprinting yoki shaxsiy ma’lumot yo‘q. Yuklamalaringiz, tarixingiz va fayllaringiz hech qachon qurilmangizdan chiqmaydi.",
   p4_h: "Uchinchi tomon serverlari yo'q",
   p4_p: "Butun jarayon yt-dlp + ffmpeg orqali mahalliy tarzda ishlaydi. Fayllar hech qachon masofaviy serverga tegmaydi.",
 
@@ -144,7 +144,7 @@ export const uz = {
     "Yigirma bir, darhol tayyor: English, Español (ispan), Deutsch (nemis), Français (frantsuz), 日本語 (yapon), 中文 (xitoy), Русский (rus), Українська (ukrain), हिन्दी (hind), Afaan Oromoo, Kiswahili, O'zbekcha (o'zbek), Tiếng Việt (vyetnam), አማርኛ (amxar), العربية (arab), اردو (urdu), پښتو (pushtu), বাংলা (bengal), မြန်မာဘာသာ (birma), Ελληνικά (grek) va Српски (serb). Arroxy birinchi ishga tushirishda operatsion tizimingiz tilini avtomatik aniqlaydi va siz istalgan vaqtda asboblar panelindagi til tanlagichidan o'zgartirishingiz mumkin. Tarjimalar src/shared/i18n/locales/ ichidagi oddiy TypeScript obyektlari sifatida saqlanadi — hissa qo'shish uchun GitHub'da PR oching.",
   faq_q4: "Biror narsa o'rnatishim kerakmi?",
   faq_a4:
-    "Yo'q. yt-dlp va ffmpeg birinchi ishga tushirishda rasmiy GitHub relizlaridan avtomatik yuklab olinadi va kompyuteringizda keshlanadi. Undan keyin qo'shimcha sozlash shart emas.",
+    "Yo‘q. yt-dlp birinchi ishga tushirishda avtomatik yuklab olinadi va kompyuteringizda keshlanadi; ffmpeg va ffprobe ilova bilan birga keladi. Undan keyin qo‘shimcha sozlash shart emas.",
   faq_q5: "YouTube biror narsa o'zgartirsa ham ishlaydimiw?",
   faq_a5:
     "Ha — va Arroxy'ning ikkita bardoshlilik qatlami bor. Birinchidan, yt-dlp eng faol saqlanadigan ochiq manba vositalaridan biri — YouTube o'zgarishlaridan soatlar ichida yangilanadi. Ikkinchidan, Arroxy cookie'lar yoki Google hisobingizga umuman tayanmaydi, shuning uchun muddati tugaydigan seans ham, almashtiriladigan hisob ma'lumotlari ham yo'q. Bu kombinatsiya uni eksport qilingan brauzer cookie'lariga tayanadigan vositalardan sezilarli darajada barqarorroq qiladi.",
