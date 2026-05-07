@@ -25,6 +25,31 @@ jobs:
           fi
           echo "Releasing version $PACKAGE_VERSION"
 
+  prepare-release:
+    # Pre-create a single draft release for this tag before any publisher runs.
+    # Without this, the parallel mac/linux `build` matrix jobs each call
+    # electron-publisher-github's getOrCreateRelease(), which lists releases
+    # by tag and creates a draft when none is found. Both racers see no
+    # release simultaneously and create one each, plus the Windows Installer
+    # workflow creates a third — leaving Linux assets stranded in an orphan
+    # draft and breaking `build-flatpak`'s `gh release download`.
+    #
+    # By pre-creating a draft here, electron-publisher reuses it (it returns
+    # the existing draft on the next list-releases call) and Windows
+    # Installer's `view || create` shortcut also reuses it.
+    needs: verify-version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Ensure single draft release exists for this tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+            || gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+                 --draft --title "$GITHUB_REF_NAME" --notes ""
+
   build:
     # Windows is built separately by the Windows Installer workflow
     # (.github/workflows/installer-smoke.yml) so it can be smoke-tested
@@ -34,7 +59,7 @@ jobs:
     # beforeBuild hook (build/beforeBuild.cjs invokes
     # scripts/build/fetch-embedded.sh). yt-dlp + deno remain runtime-fetched
     # by BinaryManager.
-    needs: verify-version
+    needs: prepare-release
     strategy:
       matrix:
         include:
