@@ -67,7 +67,7 @@ export const fr = {
   f3_h: "Playlists incluses",
   f3_p: "Colle l'URL d'une playlist, télécharge toute la liste ou coche seulement les vidéos que tu veux avant qu'Arroxy les mette en file.",
   f4_h: "Mises à jour automatiques",
-  f4_p: "Arroxy garde yt-dlp et ffmpeg à jour en coulisse — résiste à chaque changement de YouTube.",
+  f4_p: "Arroxy garde yt-dlp à jour et embarque ffmpeg dans l’app — résiste à chaque changement de YouTube.",
   f5_h: "21 langues",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — détecte la vôtre automatiquement.",
   f6_h: "Multiplateforme",
@@ -102,8 +102,8 @@ export const fr = {
   p1_p: "Aucun compte Google. Aucune session à expirer. Zéro risque que votre compte soit signalé.",
   p2_h: "Sans cookies",
   p2_p: "Arroxy demande les mêmes tokens que n'importe quel navigateur. Rien n'est exporté, rien n'est stocké.",
-  p3_h: "Sans identifiants utilisateur",
-  p3_p: "Télémétrie anonyme via TelemetryDeck — ton identifiant par installation est haché avant de quitter l'app, aucune empreinte numérique, aucune donnée personnelle. Tes téléchargements, historique et fichiers ne quittent jamais ta machine.",
+  p3_h: "Télémétrie anonyme",
+  p3_p: "Télémétrie anonyme via OpenPanel — un identifiant aléatoire par installation aide à compter les lancements, versions, OS et crashs ; pas d’URLs, titres, chemins de fichiers, infos de compte, fingerprinting ni données personnelles. Tes téléchargements, historique et fichiers ne quittent jamais ta machine.",
   p4_h: "Sans serveurs tiers",
   p4_p: "Tout le pipeline tourne en local via yt-dlp + ffmpeg. Les fichiers ne touchent jamais un serveur distant.",
 
@@ -145,7 +145,7 @@ export const fr = {
     "Vingt-et-une, prêtes à l'emploi : English, Español (espagnol), Deutsch (allemand), Français, 日本語 (japonais), 中文 (chinois), Русский (russe), Українська (ukrainien), हिन्दी (hindi), Afaan Oromoo, Kiswahili, O'zbekcha (ouzbek), Tiếng Việt (vietnamien), አማርኛ (amharique), العربية (arabe), اردو (ourdou), پښتو (pachto), বাংলা (bengali), မြန်မာဘာသာ (birman), Ελληνικά (grec) et Српски (serbe). Arroxy détecte la langue de ton système d'exploitation au premier lancement et tu peux changer à tout moment depuis le sélecteur de langue dans la barre d'outils. Les traductions sont de simples objets TypeScript dans src/shared/i18n/locales/ — ouvre une PR sur GitHub pour contribuer.",
   faq_q4: "Faut-il installer quelque chose ?",
   faq_a4:
-    "Non. yt-dlp et ffmpeg sont téléchargés automatiquement au premier lancement depuis leurs releases officielles GitHub et mis en cache sur ta machine. Après ça, aucune configuration supplémentaire.",
+    "Non. yt-dlp est téléchargé automatiquement au premier lancement et mis en cache sur ta machine ; ffmpeg et ffprobe sont inclus dans l’app. Après ça, aucune configuration supplémentaire.",
   faq_q5:
     "Est-ce que ça continuera de marcher si YouTube change quelque chose ?",
   faq_a5:

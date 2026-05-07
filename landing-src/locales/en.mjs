@@ -67,7 +67,7 @@ export const en = {
   f3_h: "Playlists too",
   f3_p: "Paste a playlist URL, download the whole list, or tick only the videos you want before Arroxy queues them up.",
   f4_h: "Auto-updates",
-  f4_p: "Arroxy keeps yt-dlp and ffmpeg fresh under the hood — works through every YouTube change.",
+  f4_p: "Arroxy keeps yt-dlp current and ships ffmpeg inside the app — works through every YouTube change.",
   f5_h: "21 languages",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — auto-detects yours.",
   f6_h: "Cross-platform",
@@ -102,8 +102,8 @@ export const en = {
   p1_p: "No Google account. No sessions to expire. Zero risk of your account getting flagged.",
   p2_h: "No cookies",
   p2_p: "Arroxy requests the same tokens any browser does. Nothing exported, nothing stored.",
-  p3_h: "No user IDs",
-  p3_p: "Anonymous telemetry via TelemetryDeck — your per-install ID is hashed before it leaves the app, no fingerprinting, no personal data. Your downloads, history, and files never leave your machine.",
+  p3_h: "Anonymous telemetry",
+  p3_p: "Anonymous telemetry via OpenPanel — a random per-install ID helps count launches, versions, OS, and crashes; no URLs, titles, file paths, account info, fingerprinting, or personal data. Your downloads, history, and files never leave your machine.",
   p4_h: "No third-party servers",
   p4_p: "The whole pipeline runs locally via yt-dlp + ffmpeg. Files never touch a remote server.",
 
@@ -144,7 +144,7 @@ export const en = {
     "Twenty-one, out of the box: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), and Српски (Serbian). Arroxy auto-detects your operating system's language on first launch and you can switch at any time from the language picker in the toolbar. Translations live as plain TypeScript objects in src/shared/i18n/locales/ — open a PR on GitHub to contribute.",
   faq_q4: "Do I need to install anything?",
   faq_a4:
-    "No. yt-dlp and ffmpeg are downloaded automatically on first launch from their official GitHub releases and cached on your machine. After that, no extra setup is needed.",
+    "No. yt-dlp is downloaded automatically on first launch and cached on your machine; ffmpeg and ffprobe ship with the app. After that, no extra setup is needed.",
   faq_q5: "Will it keep working if YouTube changes something?",
   faq_a5:
     "Yes — and Arroxy has two layers of resilience. First, yt-dlp is one of the most actively maintained open-source tools around — it updates within hours of YouTube changes. Second, Arroxy doesn't rely on cookies or your Google account at all, so there's no session to expire and no credentials to rotate. That combination makes it significantly more stable than tools that depend on exported browser cookies.",

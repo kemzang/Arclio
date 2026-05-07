@@ -19,7 +19,7 @@ function resetStore(overrides: Partial<ReturnType<typeof useAppStore.getState>> 
         defaultOutputDir: '/tmp',
         rememberLastOutputDir: false,
         clipboardWatchEnabled: true,
-        cookiesEnabled: false,
+        cookiesMode: 'off',
         cookiesPath: ''
       },
       single: {},

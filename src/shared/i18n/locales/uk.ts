@@ -144,7 +144,10 @@ const uk = {
         }
       },
       cookies: {
-        toggle: 'Використовувати файл cookies',
+        sourceLabel: 'Джерело cookies',
+        sourceOff: 'Вимк',
+        sourceFile: 'Файл',
+        sourceBrowser: 'Браузер',
         toggleDescription: 'Допомагає з відео з віковим обмеженням, лише для учасників і приватними у твоєму акаунті.',
         risk: 'Ризик: cookies.txt містить усі активні сесії браузера — тримай його в таємниці.',
         fileLabel: 'Файл cookies',
@@ -153,6 +156,10 @@ const uk = {
         placeholder: 'Файл не обрано',
         helpLink: 'Як експортувати cookies?',
         enabledButNoFile: 'Обери файл, щоб використовувати cookies',
+        browserLabel: 'Браузер',
+        browserPlaceholder: 'Вибери браузер…',
+        browserHelp: 'Зчитує cookies безпосередньо з браузера. Браузери на основі Chromium мають бути закриті.',
+        enabledButNoBrowser: 'Вибери браузер, щоб використовувати cookies',
         banWarning: 'YouTube може позначити — і іноді забанити — акаунти, чиї cookies використовує yt-dlp. По можливості використовуй одноразовий акаунт.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,35 @@ const uk = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'Конвертація аудіо потребує режиму «Тільки аудіо» (зніміть вибір відео).',
         requiresLossy: 'Вибрано нативний потік — бітрейт застосовується лише при конвертації в mp3, m4a або opus.'
+      },
+      botWall: {
+        heading: 'YouTube обмежив цей запит',
+        bodyUnconfigured: 'Список форматів може бути неповним. Налаштуй cookies у розширених налаштуваннях або зміни мережу та спробуй ще раз.',
+        bodyDisabled: 'Cookies налаштовані, але вимкнені. Увімкни їх і спробуй ще раз, щоб отримати повний список, або зміни мережу та повтори.',
+        bodyEnabled: 'Навіть з cookies YouTube обмежив цей запит. Спробуй пізніше або зміни мережу.',
+        retryCta: 'Повторити',
+        enableRetryCta: 'Увімкнути cookies і повторити',
+        openSettingsCta: 'Відкрити розширені налаштування'
+      },
+      cookiesError: {
+        heading: 'Причина може бути в cookies',
+        currentModeLabel: 'Джерело cookies',
+        currentModeFile: 'Файл',
+        currentModeBrowser: 'Браузер',
+        explanationFile: 'Файл cookies може бути порожнім, застарілим або у неправильному форматі (yt-dlp очікує Netscape cookies.txt). Спробуй повторно експортувати cookies, вибрати інший файл, перейти в режим «Браузер» або вимкнути cookies.',
+        explanationBrowser: 'Cookies зчитуються безпосередньо з браузера. Якщо браузер зараз відкритий, його база даних cookies може бути заблокована (Chromium-сімейство). Браузер також має бути авторизований у YouTube. Спробуй закрити браузер, перейти на інший браузер, перейти в режим «Файл» або вимкнути cookies.',
+        openSettingsCta: 'Відкрити налаштування cookies',
+        dpapi: {
+          heading: 'Cookies Chrome заблоковані шифруванням Windows',
+          explanation: 'Chrome 127 і новіші версії шифрують cookies так, що інші застосунки не можуть їх прочитати у Windows. Спробуй одне із рішень нижче.',
+          fixFirefoxLabel: 'Перейти на Firefox',
+          fixFirefoxBody: 'Firefox не використовує App-Bound Encryption. Відкрий налаштування cookies і вибери Firefox зі списку браузерів.',
+          fixFileLabel: 'Експортувати cookies.txt',
+          fixFileBody: 'Експортуй cookies з Chrome за допомогою браузерного розширення, потім переключи цей застосунок у режим «Файл» і вибери експортований файл.',
+          fixUnsafeLabel: 'Запустити Chrome з вимкненим App-Bound Encryption',
+          fixUnsafeBody: 'Додай --disable-features=LockProfileCookieDatabase до ярлика запуску Chrome. Увага: це анулює раніше зашифровані cookies, тому ти вийдеш з усіх сайтів і тобі доведеться увійти знову.',
+          docsLinkLabel: 'Документація yt-dlp (issue #10927)'
+        }
       }
     },
     folder: {

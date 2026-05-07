@@ -12,14 +12,23 @@ import { ytDlpInfoSchema, type YtDlpInfo, type YtDlpSubtitleTrack } from '@share
 import { LIVE_CHAT_LANG } from '@shared/constants';
 import { YtDlp } from './YtDlp';
 
-const PROBE_DEGRADATION_SIGNALS = [
-  { label: 'n challenge solving failed', pattern: /n challenge solving failed/i },
-  { label: 'Some formats may be missing', pattern: /some formats may be missing/i },
-  { label: 'Error solving n challenge request', pattern: /error solving n challenge request/i },
-  { label: 'Failed to download m3u8 information', pattern: /failed to download m3u8 information/i },
-  { label: 'Unable to download webpage', pattern: /unable to download webpage/i },
-  { label: 'IncompleteRead', pattern: /incompleteread/i }
-] as const;
+type ProbeSignalCategory = 'extractor' | 'bot';
+
+const PROBE_DEGRADATION_SIGNALS: readonly { label: string; pattern: RegExp; category: ProbeSignalCategory }[] = [
+  { label: 'n challenge solving failed', pattern: /n challenge solving failed/i, category: 'extractor' },
+  { label: 'Some formats may be missing', pattern: /some formats may be missing/i, category: 'extractor' },
+  { label: 'Error solving n challenge request', pattern: /error solving n challenge request/i, category: 'extractor' },
+  { label: 'Failed to download m3u8 information', pattern: /failed to download m3u8 information/i, category: 'extractor' },
+  { label: 'Unable to download webpage', pattern: /unable to download webpage/i, category: 'extractor' },
+  { label: 'IncompleteRead', pattern: /incompleteread/i, category: 'extractor' },
+  { label: 'Sign in to confirm', pattern: /sign in to confirm you'?re not a bot/i, category: 'bot' },
+  { label: 'HTTP 429', pattern: /HTTP Error 429\b|too many requests/i, category: 'bot' }
+];
+
+interface ProbeSignal {
+  label: string;
+  category: ProbeSignalCategory;
+}
 
 type ProbeAttemptName = 'initial' | 'retry';
 
@@ -28,7 +37,7 @@ interface ProbeSuccess {
   title: string;
   stderr: string;
   formatCount: number;
-  degradationSignals: string[];
+  degradationSignals: ProbeSignal[];
 }
 
 type ProbeAttemptResult =
@@ -125,18 +134,25 @@ function categorizeProbeError(msg: string): string {
   return 'unknown';
 }
 
-export function detectProbeDegradationSignals(stderr: string): string[] {
-  return PROBE_DEGRADATION_SIGNALS.filter(({ pattern }) => pattern.test(stderr)).map(({ label }) => label);
+export function detectProbeDegradationSignals(stderr: string): ProbeSignal[] {
+  return PROBE_DEGRADATION_SIGNALS.filter(({ pattern }) => pattern.test(stderr)).map(({ label, category }) => ({ label, category }));
 }
 
-function buildProbeOutput(parsed: YtDlpInfo, formats: FormatOption[]): GetFormatsOutput {
+function deriveDegraded(signals: ProbeSignal[]): GetFormatsOutput['degraded'] {
+  if (signals.length === 0) return undefined;
+  const reasons = Array.from(new Set(signals.map((s) => (s.category === 'bot' ? 'botWall' : 'extractor')))) as ('botWall' | 'extractor')[];
+  return { reasons };
+}
+
+function buildProbeOutput(parsed: YtDlpInfo, formats: FormatOption[], degraded?: GetFormatsOutput['degraded']): GetFormatsOutput {
   return {
     formats,
     title: parsed.title ?? '',
     thumbnail: parsed.thumbnail ?? '',
     duration: typeof parsed.duration === 'number' ? Math.round(parsed.duration) : undefined,
     subtitles: sanitizeSubtitleMap(parsed.subtitles),
-    automaticCaptions: sanitizeSubtitleMap(parsed.automatic_captions, true)
+    automaticCaptions: sanitizeSubtitleMap(parsed.automatic_captions, true),
+    ...(degraded ? { degraded } : {})
   };
 }
 
@@ -146,8 +162,22 @@ export class FormatProbeService {
     private readonly mockMode = false
   ) {}
 
-  async getFormats(url: string): Promise<Result<GetFormatsOutput>> {
+  async getFormats(url: string, cookiesMode: 'off' | 'file' | 'browser' = 'off'): Promise<Result<GetFormatsOutput>> {
     const startMs = Date.now();
+    const emitSuccess = (output: GetFormatsOutput): void => {
+      trackMain('format_probed', {
+        duration_bucket: probeDurationBucket(Date.now() - startMs),
+        bot_wall: output.degraded?.reasons.includes('botWall') === true,
+        cookies_mode: cookiesMode
+      });
+    };
+    const emitFailure = (errorCategory: string): void => {
+      trackMain('format_probed', {
+        duration_bucket: probeDurationBucket(Date.now() - startMs),
+        error_category: errorCategory,
+        cookies_mode: cookiesMode
+      });
+    };
     try {
       if (this.mockMode) {
         return ok({
@@ -195,14 +225,12 @@ export class FormatProbeService {
 
       const initial = await this.runProbeAttempt(url, 'initial');
       if (initial.kind === 'failure') {
-        trackMain('format_probed', {
-          duration_bucket: probeDurationBucket(Date.now() - startMs),
-          error_category: initial.errorCategory
-        });
+        emitFailure(initial.errorCategory);
         return fail(initial.error);
       }
 
       if (initial.data.degradationSignals.length === 0) {
+        emitSuccess(initial.data.output);
         return ok(initial.data.output);
       }
 
@@ -230,6 +258,7 @@ export class FormatProbeService {
           reason: 'retry_failed',
           initialFormatCount: initial.data.formatCount
         });
+        emitSuccess(initial.data.output);
         return ok(initial.data.output);
       }
 
@@ -246,6 +275,7 @@ export class FormatProbeService {
           initialFormatCount: initial.data.formatCount,
           retryFormatCount: retry.data.formatCount
         });
+        emitSuccess(retry.data.output);
         return ok(retry.data.output);
       }
 
@@ -263,14 +293,13 @@ export class FormatProbeService {
         initialFormatCount: initial.data.formatCount,
         retryFormatCount: retry.data.formatCount
       });
-      return ok((selectedAttempt === 'retry' ? retry : initial).data.output);
+      const finalOutput = (selectedAttempt === 'retry' ? retry : initial).data.output;
+      emitSuccess(finalOutput);
+      return ok(finalOutput);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown format probing error';
       logger.error('Format probe failure', { message, url });
-      trackMain('format_probed', {
-        duration_bucket: probeDurationBucket(Date.now() - startMs),
-        error_category: categorizeProbeError(message)
-      });
+      emitFailure(categorizeProbeError(message));
       return fail(createAppError('download', message));
     }
   }
@@ -316,17 +345,18 @@ export class FormatProbeService {
       const parsed = parseResult.data;
       const formats = mapFormats(parsed);
       const degradationSignals = detectProbeDegradationSignals(result.stderr);
+      const degraded = deriveDegraded(degradationSignals);
       logger.info('Format probe complete', {
         attempt,
         url,
         title: parsed.title,
         formatCount: formats.length,
-        degradationSignals: degradationSignals.length > 0 ? degradationSignals : undefined
+        degradationSignals: degradationSignals.length > 0 ? degradationSignals.map((s) => s.label) : undefined
       });
       return {
         kind: 'success',
         data: {
-          output: buildProbeOutput(parsed, formats),
+          output: buildProbeOutput(parsed, formats, degraded),
           title: parsed.title ?? '',
           stderr: result.stderr,
           formatCount: formats.length,

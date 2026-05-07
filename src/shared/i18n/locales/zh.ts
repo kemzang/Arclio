@@ -144,7 +144,10 @@ const zh = {
         }
       },
       cookies: {
-        toggle: '使用 Cookie 文件',
+        sourceLabel: 'Cookies 来源',
+        sourceOff: '关闭',
+        sourceFile: '文件',
+        sourceBrowser: '浏览器',
         toggleDescription: '可帮助下载年龄限制、会员专属和账户私享的视频。',
         risk: '风险: cookies.txt 包含该浏览器所有已登录的会话 — 请妥善保管。',
         fileLabel: 'Cookie 文件',
@@ -153,6 +156,10 @@ const zh = {
         placeholder: '未选择文件',
         helpLink: '如何导出 Cookie?',
         enabledButNoFile: '请选择一个文件以使用 Cookie',
+        browserLabel: '浏览器',
+        browserPlaceholder: '选择浏览器…',
+        browserHelp: '直接从浏览器读取 cookies。Chromium 系列浏览器使用时必须先关闭。',
+        enabledButNoBrowser: '请选择一个浏览器以使用 Cookie',
         banWarning: '提醒: yt-dlp 使用的 Cookie 对应账号可能被 YouTube 标记,有时甚至被封禁。建议尽量使用临时小号。',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,35 @@ const zh = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: '音频转换需要仅音频模式（取消选择视频选项）。',
         requiresLossy: '已选择原生流——比特率仅在转换为 mp3、m4a 或 opus 时适用。'
+      },
+      botWall: {
+        heading: 'YouTube 限制了本次探测',
+        bodyUnconfigured: '格式列表可能不完整。请在高级设置中配置 cookies，或更换网络后重试。',
+        bodyDisabled: 'Cookies 已配置但未启用。启用后重试可获取完整列表，或更换网络后重试。',
+        bodyEnabled: '即使使用了 cookies，YouTube 仍然限制了本次探测。请稍后重试或更换网络。',
+        retryCta: '重试',
+        enableRetryCta: '启用 cookies 并重试',
+        openSettingsCta: '打开高级设置'
+      },
+      cookiesError: {
+        heading: 'Cookies 可能是原因所在',
+        currentModeLabel: 'Cookies 来源',
+        currentModeFile: '文件',
+        currentModeBrowser: '浏览器',
+        explanationFile: '你的 cookies 文件可能为空、已过期或格式不正确（yt-dlp 需要 Netscape cookies.txt 格式）。请尝试重新导出 cookies、选择其他文件、切换到浏览器模式或关闭 cookies。',
+        explanationBrowser: 'Cookies 直接从浏览器读取。如果浏览器当前正在运行，其 cookie 数据库可能已被锁定（Chromium-family）。浏览器还必须已登录 YouTube。请尝试关闭浏览器、切换到其他浏览器、切换到文件模式或关闭 cookies。',
+        openSettingsCta: '打开 cookies 设置',
+        dpapi: {
+          heading: 'Chrome Cookies 被 Windows 加密阻止',
+          explanation: 'Chrome 127 及更新版本以其他应用在 Windows 上无法读取的方式加密 cookies。请尝试以下任一解决方法。',
+          fixFirefoxLabel: '切换到 Firefox',
+          fixFirefoxBody: 'Firefox 不使用 App-Bound Encryption。打开 cookies 设置，从浏览器列表中选择 Firefox。',
+          fixFileLabel: '导出 cookies.txt',
+          fixFileBody: '使用浏览器扩展从 Chrome 导出 cookies，然后将此应用切换到文件模式并选择导出的文件。',
+          fixUnsafeLabel: '以禁用 App-Bound Encryption 的方式启动 Chrome',
+          fixUnsafeBody: '在 Chrome 的启动快捷方式中添加 --disable-features=LockProfileCookieDatabase。警告：这将使之前加密的 cookies 失效，你将被所有网站登出，需要重新登录。',
+          docsLinkLabel: 'yt-dlp 文档（issue #10927）'
+        }
       }
     },
     folder: {

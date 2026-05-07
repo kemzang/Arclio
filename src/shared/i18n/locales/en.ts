@@ -143,7 +143,10 @@ const en = {
         }
       },
       cookies: {
-        toggle: 'Use cookies file',
+        sourceLabel: 'Cookies source',
+        sourceOff: 'Off',
+        sourceFile: 'File',
+        sourceBrowser: 'Browser',
         toggleDescription: 'Helps with age-restricted, members-only, and account-private videos.',
         risk: 'Risk: a cookies.txt contains every logged-in session for that browser — keep it private.',
         fileLabel: 'Cookies file',
@@ -152,6 +155,10 @@ const en = {
         placeholder: 'No file selected',
         helpLink: 'How do I export cookies?',
         enabledButNoFile: 'Pick a file to use cookies',
+        browserLabel: 'Browser',
+        browserPlaceholder: 'Pick a browser…',
+        browserHelp: 'Reads cookies directly from the browser. The browser must be closed for Chromium-family browsers.',
+        enabledButNoBrowser: 'Pick a browser to use cookies',
         banWarning: 'YouTube may flag — and sometimes ban — accounts whose cookies are used by yt-dlp. Use a throwaway account when possible.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -246,6 +253,35 @@ const en = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'Audio conversion requires audio-only mode (deselect the video pick).',
         requiresLossy: 'A native stream is selected — bitrate only applies when converting to mp3, m4a, or opus.'
+      },
+      botWall: {
+        heading: 'YouTube limited this probe',
+        bodyUnconfigured: 'The format list may be incomplete. Set up cookies in advanced settings, or change network and retry.',
+        bodyDisabled: 'Cookies are configured but turned off. Enable them and retry to get the full list, or change network and retry.',
+        bodyEnabled: 'Even with cookies, YouTube limited this probe. Try again later or switch network.',
+        retryCta: 'Retry',
+        enableRetryCta: 'Enable cookies and retry',
+        openSettingsCta: 'Open advanced settings'
+      },
+      cookiesError: {
+        heading: 'Cookies might be the cause',
+        currentModeLabel: 'Cookies source',
+        currentModeFile: 'File',
+        currentModeBrowser: 'Browser',
+        explanationFile: 'Your cookies file might be empty, expired, or in the wrong format (yt-dlp expects Netscape cookies.txt). Try re-exporting cookies, picking a different file, switching to Browser mode, or turning cookies off.',
+        explanationBrowser: 'Cookies are read directly from the browser. If the browser is currently running, its cookie database may be locked (Chromium-family). The browser must also be signed in to YouTube. Try closing the browser, switching to a different browser, switching to File mode, or turning cookies off.',
+        openSettingsCta: 'Open cookies settings',
+        dpapi: {
+          heading: 'Chrome cookies blocked by Windows encryption',
+          explanation: "Chrome 127 and newer encrypts cookies in a way other apps can't read on Windows. Try one of the workarounds below.",
+          fixFirefoxLabel: 'Switch to Firefox',
+          fixFirefoxBody: "Firefox doesn't use App-Bound Encryption. Open cookies settings and pick Firefox from the browser list.",
+          fixFileLabel: 'Export cookies.txt',
+          fixFileBody: 'Export cookies from Chrome with a browser extension, then switch this app to File mode and pick the exported file.',
+          fixUnsafeLabel: 'Launch Chrome with App-Bound Encryption disabled',
+          fixUnsafeBody: "Add --disable-features=LockProfileCookieDatabase to Chrome's launch shortcut. Warning: this invalidates previously encrypted cookies, so you'll be signed out of every site and need to log in again.",
+          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+        }
       }
     },
     folder: {

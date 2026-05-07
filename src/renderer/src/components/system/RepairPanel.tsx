@@ -61,7 +61,7 @@ export function RepairPanel({ diagnostics, blocking }: Props): JSX.Element {
         <AlertTriangle size={16} />
         <span className="font-medium">{t('repair.title')}</span>
       </div>
-      <ul className="mt-3 space-y-3 text-left text-sm">
+      <ul className="mt-3 space-y-3 text-start text-sm">
         {blocking.map((id) => {
           const diag = diagnostics[id];
           // `in` guards forward-compat: a newer main process may serialize a

@@ -5,7 +5,7 @@ const TECH_CONTENT = `<details>
 - **React 19** + **TypeScript** — UI
 - **Tailwind CSS v4** — 样式
 - **Zustand** — 状态管理
-- **yt-dlp** + **ffmpeg** — 下载与混流引擎（首次启动时从 GitHub 自动获取，始终保持最新）
+- **yt-dlp** + **ffmpeg** — 下载与混流引擎（yt-dlp 在运行时获取；ffmpeg/ffprobe 在构建时打包）
 - **Vite** + **electron-vite** — 构建工具
 - **Vitest** + **Playwright** — 单元测试与端到端测试
 
@@ -65,7 +65,7 @@ bun run dist         # 为当前系统打包
 bun run dist:win     # 交叉编译 Windows 便携版 exe
 \`\`\`
 
-> yt-dlp 和 ffmpeg 不随包附带 — 它们在首次启动时从 GitHub 获取并缓存到你的应用数据目录。
+> yt-dlp 会在首次启动时从 GitHub 获取并缓存到你的应用数据目录。ffmpeg 和 ffprobe 随每个 Arroxy 版本一起提供。
 
 </details>`;
 
@@ -138,7 +138,7 @@ export const zh = {
   feat_workflow_5:
     "**托盘模式** — 关闭窗口后下载在后台继续运行",
   feat_workflow_6:
-    "**9 种语言** — 自动检测系统语言，随时切换",
+    "**21 种语言** — 自动检测系统语言，随时切换",
   feat_post_h3: "字幕与后处理",
   feat_post_1:
     "**字幕**以 SRT、VTT 或 ASS 格式下载 — 手动或自动生成，支持任意可用语言",
@@ -215,7 +215,7 @@ export const zh = {
   privacy_p1:
     "下载通过 [yt-dlp](https://github.com/yt-dlp/yt-dlp) 直接从 YouTube 获取到你选择的文件夹 — 不经过任何第三方服务器。观看历史、下载历史、URL 和文件内容均保留在你的设备上。",
   privacy_p2:
-    "Arroxy 通过 [TelemetryDeck](https://telemetrydeck.com) 发送匿名聚合遥测数据 — 仅够独立项目了解是否有人在使用（启动次数、OS、应用版本、崩溃）。无 URLs、无视频标题、无文件路径、无账号信息。每次安装的 ID 在发送前经过哈希处理，TelemetryDeck 从不存储 IPs — 在 EU 托管，设计上符合 GDPR。你可以在设置中选择退出。",
+    "Arroxy 通过 [OpenPanel](https://openpanel.dev) 发送匿名聚合遥测数据 — 仅用于了解启动次数、OS、应用版本和崩溃。无 URL、无视频标题、无文件路径、无账号信息、无指纹识别、无个人数据。每次安装的 ID 是随机的，不与你的身份绑定。你可以在设置中选择退出。",
   faq_q1: "真的免费吗？",
   faq_a1: "是的 — MIT 许可证，无付费版，无功能门槛。",
   faq_q2: "能下载哪些视频画质？",
@@ -231,10 +231,10 @@ export const zh = {
     "两层保障：yt-dlp 在 YouTube 变化后数小时内更新，而 Arroxy 不依赖每 ~30 分钟就会过期的 Cookie。这使它比依赖导出浏览器会话的工具稳定得多。",
   faq_q6: "Arroxy 支持哪些语言？",
   faq_a6:
-    "九种：English、Español、Deutsch、Français、日本語、中文、Русский、Українська、हिन्दी。自动检测系统语言；随时可从工具栏切换。语言文件是 `src/shared/i18n/locales/` 中的纯 TypeScript 对象 — [欢迎提交 PR](../../pulls)。",
+    "开箱即用支持二十一种：English、Español（西班牙语）、Deutsch（德语）、Français（法语）、日本語（日语）、中文、Русский（俄语）、Українська（乌克兰语）、हिन्दी（印地语）、Afaan Oromoo、Kiswahili、O'zbekcha（乌兹别克语）、Tiếng Việt（越南语）、አማርኛ（阿姆哈拉语）、العربية（阿拉伯语）、اردو（乌尔都语）、پښتو（普什图语）、বাংলা（孟加拉语）、မြန်မာဘာသာ（缅甸语）、Ελληνικά（希腊语）和 Српски（塞尔维亚语）。Arroxy 在首次启动时自动检测系统语言，随时可在工具栏的语言选择器中切换。翻译以纯 TypeScript 对象的形式存放在 src/shared/i18n/locales/ — 在 GitHub 上发个 PR 即可贡献。",
   faq_q7: "需要额外安装其他软件吗？",
   faq_a7:
-    "不需要。yt-dlp 和 ffmpeg 在首次启动时自动从其官方 GitHub releases 下载并缓存到本地。",
+    "不需要。yt-dlp 会在首次启动时自动下载并缓存到你的机器上；ffmpeg 和 ffprobe 随应用一起提供。之后无需任何额外配置。",
   faq_q8: "能下载播放列表或整个频道吗？",
   faq_a8:
     "播放列表可以：粘贴播放列表链接后，可以把整个列表加入队列，也可以只加入你选中的视频。整频道批量下载暂未支持。",

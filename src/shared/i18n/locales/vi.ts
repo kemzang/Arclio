@@ -144,7 +144,10 @@ const vi = {
         }
       },
       cookies: {
-        toggle: 'Dùng tệp cookies',
+        sourceLabel: 'Nguồn cookies',
+        sourceOff: 'Tắt',
+        sourceFile: 'Tệp',
+        sourceBrowser: 'Trình duyệt',
         toggleDescription: 'Hỗ trợ tải video giới hạn độ tuổi, dành riêng cho thành viên và video riêng tư của tài khoản.',
         risk: 'Rủi ro: một cookies.txt chứa mọi phiên đăng nhập của trình duyệt đó — hãy giữ bí mật.',
         fileLabel: 'Tệp Cookies',
@@ -153,6 +156,10 @@ const vi = {
         placeholder: 'Chưa chọn tệp',
         helpLink: 'Cách xuất cookies?',
         enabledButNoFile: 'Chọn một tệp để dùng cookies',
+        browserLabel: 'Trình duyệt',
+        browserPlaceholder: 'Chọn trình duyệt…',
+        browserHelp: 'Đọc cookies trực tiếp từ trình duyệt. Trình duyệt phải được đóng đối với các trình duyệt thuộc dòng Chromium.',
+        enabledButNoBrowser: 'Chọn một trình duyệt để dùng cookies',
         banWarning: 'YouTube có thể gắn cờ — và đôi khi cấm — các tài khoản có cookies được yt-dlp sử dụng. Hãy dùng tài khoản phụ khi có thể.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,35 @@ const vi = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'Chuyển đổi âm thanh yêu cầu chế độ chỉ âm thanh (bỏ chọn lựa chọn video).',
         requiresLossy: 'Đang chọn luồng gốc — tốc độ bit chỉ áp dụng khi chuyển đổi sang mp3, m4a hoặc opus.'
+      },
+      botWall: {
+        heading: 'YouTube đã giới hạn lần kiểm tra này',
+        bodyUnconfigured: 'Danh sách định dạng có thể không đầy đủ. Thiết lập cookies trong cài đặt nâng cao, hoặc đổi mạng và thử lại.',
+        bodyDisabled: 'Cookies đã được cấu hình nhưng đang tắt. Bật lên và thử lại để có danh sách đầy đủ, hoặc đổi mạng và thử lại.',
+        bodyEnabled: 'Ngay cả với cookies, YouTube vẫn giới hạn lần kiểm tra này. Hãy thử lại sau hoặc đổi mạng.',
+        retryCta: 'Thử lại',
+        enableRetryCta: 'Bật cookies và thử lại',
+        openSettingsCta: 'Mở cài đặt nâng cao'
+      },
+      cookiesError: {
+        heading: 'Cookies có thể là nguyên nhân',
+        currentModeLabel: 'Nguồn cookies',
+        currentModeFile: 'Tệp',
+        currentModeBrowser: 'Trình duyệt',
+        explanationFile: 'Tệp cookies của bạn có thể trống, đã hết hạn hoặc sai định dạng (yt-dlp yêu cầu Netscape cookies.txt). Hãy thử xuất lại cookies, chọn tệp khác, chuyển sang chế độ Trình duyệt hoặc tắt cookies.',
+        explanationBrowser: 'Cookies được đọc trực tiếp từ trình duyệt. Nếu trình duyệt đang mở, cơ sở dữ liệu cookies có thể bị khóa (Chromium-family). Trình duyệt cũng phải đã đăng nhập vào YouTube. Hãy thử đóng trình duyệt, chuyển sang trình duyệt khác, chuyển sang chế độ Tệp hoặc tắt cookies.',
+        openSettingsCta: 'Mở cài đặt cookies',
+        dpapi: {
+          heading: 'Cookies của Chrome bị chặn bởi mã hóa Windows',
+          explanation: 'Chrome 127 trở lên mã hóa cookies theo cách mà các ứng dụng khác không thể đọc trên Windows. Hãy thử một trong các cách khắc phục bên dưới.',
+          fixFirefoxLabel: 'Chuyển sang Firefox',
+          fixFirefoxBody: 'Firefox không sử dụng App-Bound Encryption. Mở cài đặt cookies và chọn Firefox từ danh sách trình duyệt.',
+          fixFileLabel: 'Xuất cookies.txt',
+          fixFileBody: 'Xuất cookies từ Chrome bằng tiện ích mở rộng trình duyệt, sau đó chuyển ứng dụng này sang chế độ Tệp và chọn tệp đã xuất.',
+          fixUnsafeLabel: 'Khởi chạy Chrome với App-Bound Encryption đã tắt',
+          fixUnsafeBody: 'Thêm --disable-features=LockProfileCookieDatabase vào shortcut khởi chạy Chrome. Cảnh báo: điều này sẽ làm mất hiệu lực các cookies đã mã hóa trước đó, khiến bạn bị đăng xuất khỏi mọi trang web và cần đăng nhập lại.',
+          docsLinkLabel: 'Tài liệu yt-dlp (issue #10927)'
+        }
       }
     },
     folder: {

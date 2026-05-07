@@ -1,4 +1,4 @@
-import { initialize as aptabaseInit, trackEvent } from '@aptabase/electron/main';
+import { OpenPanel } from '@openpanel/sdk';
 
 type Props = Record<string, string | number | boolean>;
 type CrashReason = 'clean-exit' | 'abnormal-exit' | 'killed' | 'crashed' | 'oom' | 'launch-failed' | 'integrity-failure' | 'memory-eviction';
@@ -19,49 +19,123 @@ type CrashDetectedInput =
       serviceName?: string;
     };
 
-// Allowlist: event name → permitted prop keys.
-// Any call with an unknown event or disallowed key throws in dev and silently
-// drops in prod, preventing accidental URL/path/title leakage.
+export interface DeviceInfo {
+  appVersion: string;
+  platform: NodeJS.Platform;
+  architecture: string;
+  systemVersion: string;
+  modelName: string;
+  // Raw OS/Electron-detected locale (e.g. `app.getLocale()`).
+  osLocale: string;
+  // User's in-app language override from Settings; falls back to OS locale.
+  appLocale: string;
+}
+
 const ALLOWED: Record<string, readonly string[]> = {
   app_started: ['install_channel', 'platform_arch', 'is_first_run'],
   update_available: ['to_version', 'install_channel'],
   update_install_clicked: ['install_channel'],
-  format_probed: ['duration_bucket', 'error_category'],
-  download_started: ['preset', 'has_subtitles', 'has_sponsorblock', 'cookies_enabled', 'embed_metadata', 'embed_thumbnail'],
+  format_probed: ['duration_bucket', 'error_category', 'bot_wall', 'cookies_mode'],
+  download_started: ['preset', 'has_subtitles', 'has_sponsorblock', 'cookies_mode', 'embed_metadata', 'embed_thumbnail'],
   download_finished: ['outcome', 'duration_bucket', 'size_bucket', 'error_category'],
   tray_close_chosen: ['choice', 'remember'],
-  binary_setup_failed: ['binary', 'phase'],
+  binary_setup_failed: ['binary', 'phase', 'code'],
   crash_detected: ['type', 'reason'],
   wizard_started: []
 };
 
 const MAX_STR = 32;
 
+function mapOperatingSystem(platform: NodeJS.Platform): string {
+  if (platform === 'darwin') return 'macOS';
+  if (platform === 'win32') return 'Windows';
+  if (platform === 'linux') return 'Linux';
+  return platform;
+}
+
+// Build a browser-like User-Agent. OpenPanel's ingest classifies events as
+// client vs. server purely from the request's User-Agent header (parsed via
+// UAParser): a generic Node fetch UA matches its server-event regex, so the
+// server skips sessionId/deviceId/os/browser. Sending a Chrome-shaped UA makes
+// it parse correctly and mint a session.
+function buildBrowserishUserAgent(info?: DeviceInfo): string {
+  const chromeVersion = process.versions.chrome ?? '124.0.0.0';
+  const platform = info?.platform ?? process.platform;
+  const arch = info?.architecture ?? process.arch;
+  let osPart: string;
+  if (platform === 'win32') {
+    osPart = 'Windows NT 10.0; Win64; x64';
+  } else if (platform === 'darwin') {
+    osPart = 'Macintosh; Intel Mac OS X 10_15_7';
+  } else {
+    const linuxArch = arch === 'arm64' ? 'aarch64' : 'x86_64';
+    osPart = `X11; Linux ${linuxArch}`;
+  }
+  const appVer = info?.appVersion ?? '0.0.0';
+  return `Mozilla/5.0 (${osPart}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36 Arroxy/${appVer}`;
+}
+
+function buildDefaultPayload(info: DeviceInfo): Record<string, string> {
+  const segs = info.systemVersion.split('.');
+  const major = segs[0] ?? '';
+  const majorMinor = segs.length >= 2 ? `${segs[0]}.${segs[1]}` : major;
+  return {
+    app_version: info.appVersion,
+    build_number: info.appVersion,
+    platform: info.platform,
+    operating_system: mapOperatingSystem(info.platform),
+    system_version: info.systemVersion,
+    major_system_version: major,
+    major_minor_system_version: majorMinor,
+    architecture: info.architecture,
+    model_name: info.modelName.slice(0, 64),
+    os_locale: info.osLocale,
+    app_locale: info.appLocale,
+    sdk_client_version: `arroxy/${info.appVersion}`
+  };
+}
+
 let _dev = false;
-let _started = false;
+let _op: OpenPanel | null = null;
 let _on = false;
 const _seenCrashSignatures = new Set<string>();
 
-// Must be called synchronously before app.isReady() so aptabase can register
-// its custom protocol scheme before Electron locks the scheme registry.
+// Initialize OpenPanel. Plain HTTPS POST — safe to call from app.whenReady()
+// after settings load.
 //
 // In dev we stay fully offline by default — HMR reloads would otherwise spam
 // `wizard_started` / `app_started` and pollute prod stats. Set
-// ARROXY_ANALYTICS_DEBUG=1 to opt in; events will be tagged debug-mode by the
-// Aptabase SDK (app.isPackaged === false) so they're filterable on the dashboard.
-export function setupAnalytics(appKey: string | undefined, isDev: boolean): void {
+// ARROXY_ANALYTICS_DEBUG=1 to opt in.
+export function setupAnalytics(clientId: string | undefined, clientSecret: string | undefined, isDev: boolean, installId: string, deviceInfo?: DeviceInfo): void {
   _dev = isDev;
-  _started = false;
+  _op = null;
   _on = false;
   _seenCrashSignatures.clear();
-  if (!appKey) return;
+  if (!clientId || !clientSecret) return;
   const debugOptIn = process.env.ARROXY_ANALYTICS_DEBUG === '1';
   if (isDev && !debugOptIn) return;
-  void aptabaseInit(appKey);
-  _started = true;
+  _op = new OpenPanel({
+    clientId,
+    clientSecret,
+    sdk: 'web',
+    sdkVersion: '1.3.1',
+    // Runtime gate via filter — `disabled` queues instead of dropping, which
+    // isn't what we want when the user opts out.
+    filter: () => _on
+  });
+  // Override the request User-Agent so OpenPanel ingest classifies events as
+  // client (mints sessionId/deviceId, parses os/browser). See
+  // buildBrowserishUserAgent for the why.
+  _op.api.addHeader('user-agent', buildBrowserishUserAgent(deviceInfo));
+  if (deviceInfo) {
+    const payload = buildDefaultPayload(deviceInfo);
+    _op.setGlobalProperties(payload);
+    void _op.identify({ profileId: installId, properties: payload });
+  } else {
+    void _op.identify({ profileId: installId });
+  }
 }
 
-// Called after settings are loaded inside app.whenReady().
 export function setAnalyticsEnabled(enabled: boolean): void {
   _on = enabled;
 }
@@ -111,8 +185,8 @@ export function trackMain(name: string, props?: Props): boolean {
       }
     }
   }
-  if (!_started || !_on) return false;
-  void trackEvent(name, props);
+  if (!_op || !_on) return false;
+  void _op.track(name, props);
   return true;
 }
 

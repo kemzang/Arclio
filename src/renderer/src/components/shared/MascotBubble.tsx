@@ -12,30 +12,30 @@ export function MascotBubble({ image, message, side = 'left', className }: Props
   const isRight = side === 'right';
 
   return (
-    <div className={cn('flex items-center rtl:[transform:scaleX(-1)]', isRight && 'flex-row-reverse', className)}>
-      <div className="rounded-2xl bg-[var(--brand-dim)] p-2 shrink-0 rtl:[transform:scaleX(-1)]">
+    <div className={cn('flex items-center', isRight && 'flex-row-reverse', className)}>
+      <div className="rounded-2xl bg-[var(--brand-dim)] p-2 shrink-0">
         <img src={image} alt="" aria-hidden className="w-20 h-20 object-contain" />
       </div>
-      <div className={cn('relative rounded-xl border border-border bg-secondary px-3 py-2 text-xs text-muted-foreground leading-relaxed shadow-sm rtl:[transform:scaleX(-1)]', !isRight ? 'ml-2' : 'mr-2')}>
+      <div className={cn('relative rounded-xl border border-border bg-secondary px-3 py-2 text-xs text-muted-foreground leading-relaxed shadow-sm', !isRight ? 'ms-2' : 'me-2')}>
         {message}
         {!isRight && (
           <>
             <span
               aria-hidden
-              className="absolute top-[10px] -left-[7px] w-0 h-0"
+              className="absolute top-[10px] -start-[7px] w-0 h-0"
               style={{
                 borderTop: '6px solid transparent',
                 borderBottom: '6px solid transparent',
-                borderRight: '7px solid var(--border)'
+                borderInlineEnd: '7px solid var(--border)'
               }}
             />
             <span
               aria-hidden
-              className="absolute top-[10px] -left-[5px] w-0 h-0"
+              className="absolute top-[10px] -start-[5px] w-0 h-0"
               style={{
                 borderTop: '6px solid transparent',
                 borderBottom: '6px solid transparent',
-                borderRight: '7px solid var(--secondary)'
+                borderInlineEnd: '7px solid var(--secondary)'
               }}
             />
           </>
@@ -44,20 +44,20 @@ export function MascotBubble({ image, message, side = 'left', className }: Props
           <>
             <span
               aria-hidden
-              className="absolute top-[10px] -right-[7px] w-0 h-0"
+              className="absolute top-[10px] -end-[7px] w-0 h-0"
               style={{
                 borderTop: '6px solid transparent',
                 borderBottom: '6px solid transparent',
-                borderLeft: '7px solid var(--border)'
+                borderInlineStart: '7px solid var(--border)'
               }}
             />
             <span
               aria-hidden
-              className="absolute top-[10px] -right-[5px] w-0 h-0"
+              className="absolute top-[10px] -end-[5px] w-0 h-0"
               style={{
                 borderTop: '6px solid transparent',
                 borderBottom: '6px solid transparent',
-                borderLeft: '7px solid var(--secondary)'
+                borderInlineStart: '7px solid var(--secondary)'
               }}
             />
           </>

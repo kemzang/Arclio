@@ -144,7 +144,10 @@ const fr = {
         }
       },
       cookies: {
-        toggle: 'Utiliser un fichier de cookies',
+        sourceLabel: 'Source des cookies',
+        sourceOff: 'Désactivé',
+        sourceFile: 'Fichier',
+        sourceBrowser: 'Navigateur',
         toggleDescription: "Aide pour les vidéos avec restriction d'âge, réservées aux membres ou privées du compte.",
         risk: 'Risque : un cookies.txt contient toutes les sessions connectées de ce navigateur — gardez-le privé.',
         fileLabel: 'Fichier de cookies',
@@ -153,6 +156,10 @@ const fr = {
         placeholder: 'Aucun fichier sélectionné',
         helpLink: 'Comment exporter les cookies ?',
         enabledButNoFile: 'Choisissez un fichier pour utiliser les cookies',
+        browserLabel: 'Navigateur',
+        browserPlaceholder: 'Choisir un navigateur…',
+        browserHelp: 'Lit les cookies directement depuis le navigateur. Le navigateur doit être fermé pour les navigateurs basés sur Chromium.',
+        enabledButNoBrowser: 'Choisissez un navigateur pour utiliser les cookies',
         banWarning: 'YouTube peut signaler — et parfois bannir — les comptes dont les cookies sont utilisés par yt-dlp. Préférez un compte jetable.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,35 @@ const fr = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'La conversion audio nécessite le mode audio seul (désélectionnez la piste vidéo).',
         requiresLossy: "Un flux natif est sélectionné — le débit ne s'applique que lors de la conversion en mp3, m4a ou opus."
+      },
+      botWall: {
+        heading: 'YouTube a limité cette analyse',
+        bodyUnconfigured: 'La liste des formats est peut-être incomplète. Configurez les cookies dans les paramètres avancés, ou changez de réseau et réessayez.',
+        bodyDisabled: 'Les cookies sont configurés mais désactivés. Activez-les et réessayez pour obtenir la liste complète, ou changez de réseau et réessayez.',
+        bodyEnabled: 'Même avec les cookies, YouTube a limité cette analyse. Réessayez plus tard ou changez de réseau.',
+        retryCta: 'Réessayer',
+        enableRetryCta: 'Activer les cookies et réessayer',
+        openSettingsCta: 'Ouvrir les paramètres avancés'
+      },
+      cookiesError: {
+        heading: 'Les cookies pourraient être en cause',
+        currentModeLabel: 'Source des cookies',
+        currentModeFile: 'Fichier',
+        currentModeBrowser: 'Navigateur',
+        explanationFile: 'Votre fichier de cookies est peut-être vide, expiré ou dans un mauvais format (yt-dlp attend un Netscape cookies.txt). Essayez de ré-exporter les cookies, de choisir un autre fichier, de passer en mode Navigateur ou de désactiver les cookies.',
+        explanationBrowser: "Les cookies sont lus directement depuis le navigateur. Si le navigateur est en cours d'exécution, sa base de données de cookies est peut-être verrouillée (famille Chromium). Le navigateur doit également être connecté à YouTube. Essayez de fermer le navigateur, d'en choisir un autre, de passer en mode Fichier ou de désactiver les cookies.",
+        openSettingsCta: 'Ouvrir les paramètres des cookies',
+        dpapi: {
+          heading: 'Cookies Chrome bloqués par le chiffrement Windows',
+          explanation: "Chrome 127 et versions ultérieures chiffrent les cookies d'une façon que les autres applications ne peuvent pas lire sur Windows. Essayez l'une des solutions ci-dessous.",
+          fixFirefoxLabel: 'Passer à Firefox',
+          fixFirefoxBody: "Firefox n'utilise pas App-Bound Encryption. Ouvrez les paramètres des cookies et choisissez Firefox dans la liste des navigateurs.",
+          fixFileLabel: 'Exporter cookies.txt',
+          fixFileBody: 'Exportez les cookies depuis Chrome avec une extension de navigateur, puis passez cette application en mode Fichier et sélectionnez le fichier exporté.',
+          fixUnsafeLabel: 'Lancer Chrome avec App-Bound Encryption désactivée',
+          fixUnsafeBody: 'Ajoutez --disable-features=LockProfileCookieDatabase au raccourci de lancement de Chrome. Avertissement : cela invalide les cookies chiffrés précédemment, vous serez donc déconnecté de tous les sites et devrez vous reconnecter.',
+          docsLinkLabel: 'Documentation yt-dlp (issue #10927)'
+        }
       }
     },
     folder: {

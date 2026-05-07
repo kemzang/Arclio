@@ -6,13 +6,28 @@ import { track } from '@renderer/lib/analytics';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Switch } from '../ui/switch';
+import { RadioOption } from '../ui/radio-option';
 import { Item, ItemGroup, ItemMedia, ItemContent, ItemTitle, ItemDescription } from '../ui/item';
 import { MascotBubble } from '../shared/MascotBubble';
 import { ClipboardConfirmDialog } from '../shared/ClipboardConfirmDialog';
+import { IncompleteCookiesConfigDialog } from './IncompleteCookiesConfigDialog';
 import { formatHomeRelativePath } from '@renderer/lib/utils';
 import { cleanYoutubeUrl } from '@shared/url';
+import type { CookiesBrowser, CookiesMode } from '@shared/types';
 import hiImg from '../../assets/Hi.png';
 import downloadingImg from '../../assets/Downloading.png';
+
+// Brand names are stable English globally — not translated. Keep this list
+// in sync with the `cookiesBrowserSchema` enum in `src/shared/schemas.ts`.
+const COOKIES_BROWSERS: readonly { value: CookiesBrowser; label: string; macOnly?: boolean }[] = [
+  { value: 'firefox', label: 'Firefox' },
+  { value: 'chromium', label: 'Chromium' },
+  { value: 'chrome', label: 'Chrome' },
+  { value: 'brave', label: 'Brave' },
+  { value: 'edge', label: 'Edge' },
+  { value: 'safari', label: 'Safari', macOnly: true },
+  { value: 'vivaldi', label: 'Vivaldi' }
+];
 
 const COOKIES_HELP_URL = 'https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp';
 const COOKIES_FIREFOX_URL = 'https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/';
@@ -20,16 +35,20 @@ const COOKIES_CHROME_URL = 'https://chromewebstore.google.com/detail/get-cookies
 
 export function StepUrlInput(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, setCookiesPath, setCookiesEnabled, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl } = useAppStore();
+  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl, cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings } = useAppStore();
   const inputRef = useRef<HTMLInputElement>(null);
   const hasActiveDownloads = queue.some((i) => i.status === 'downloading');
   const [pendingClipboardUrl, setPendingClipboardUrl] = useState<string | null>(null);
 
   const cookiesPath = settings?.common?.cookiesPath ?? '';
-  const cookiesEnabled = settings?.common?.cookiesEnabled ?? false;
+  const cookiesMode: CookiesMode = settings?.common?.cookiesMode ?? 'off';
+  const cookiesBrowser = settings?.common?.cookiesBrowser;
   const proxyUrl = settings?.common?.proxyUrl ?? '';
   const commonPaths = settings?.common?.commonPaths;
-  const showMissingFileWarning = cookiesEnabled && !cookiesPath.trim();
+  const showMissingFileWarning = cookiesMode === 'file' && !cookiesPath.trim();
+  const showMissingBrowserWarning = cookiesMode === 'browser' && !cookiesBrowser;
+  const platform = (window as Window & { platform?: NodeJS.Platform }).platform;
+  const visibleBrowsers = COOKIES_BROWSERS.filter((b) => !b.macOnly || platform === 'darwin');
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -38,6 +57,20 @@ export function StepUrlInput(): JSX.Element {
       track('wizard_started');
     }
   }, []);
+
+  // Honor `openCookiesSettings()` from the wizard error step: expand the
+  // advanced section and scroll the cookies block into view, then clear
+  // the flag so a subsequent reset doesn't re-fire it.
+  useEffect(() => {
+    if (!advancedAutoOpen) return;
+    const advanced = document.querySelector('[data-testid="advanced-section"]');
+    if (advanced instanceof HTMLDetailsElement) advanced.open = true;
+    const cookiesSection = document.querySelector('[data-testid="cookies-source"]');
+    if (cookiesSection instanceof HTMLElement) {
+      cookiesSection.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
+    }
+    setAdvancedAutoOpen(false);
+  }, [advancedAutoOpen, setAdvancedAutoOpen]);
 
   useEffect(() => {
     return window.appApi.events.onClipboardUrl((url) => {
@@ -102,9 +135,9 @@ export function StepUrlInput(): JSX.Element {
         <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.url.heading')}</p>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <Input ref={inputRef} type="url" className={`h-10 ${wizardUrl.trim() ? 'pr-9' : ''}`} value={wizardUrl} onChange={(e) => setWizardUrl(e.target.value)} onKeyDown={handleKeyDown} onPaste={handlePaste} placeholder={t('wizard.url.placeholder')} spellCheck={false} data-testid="url-input" />
+            <Input ref={inputRef} type="url" className={`h-10 ${wizardUrl.trim() ? 'pe-9' : ''}`} value={wizardUrl} onChange={(e) => setWizardUrl(e.target.value)} onKeyDown={handleKeyDown} onPaste={handlePaste} placeholder={t('wizard.url.placeholder')} spellCheck={false} data-testid="url-input" />
             {wizardUrl.trim() ? (
-              <button type="button" onClick={handleClearUrl} aria-label={t('wizard.url.clearAria')} data-testid="url-clear" className="absolute right-1.5 top-1/2 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-muted hover:text-foreground transition-colors">
+              <button type="button" onClick={handleClearUrl} aria-label={t('wizard.url.clearAria')} data-testid="url-clear" className="absolute end-1.5 top-1/2 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-muted hover:text-foreground transition-colors">
                 <X size={14} />
               </button>
             ) : null}
@@ -159,32 +192,69 @@ export function StepUrlInput(): JSX.Element {
             <Switch checked={settings?.common?.clipboardWatchEnabled ?? false} onCheckedChange={(checked) => void setClipboardWatchEnabled(checked)} aria-label={t('wizard.url.clipboard.toggle')} data-testid="clipboard-watch-toggle" />
           </div>
 
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-col gap-1.5" data-testid="cookies-source">
             <div className="flex flex-col gap-0.5">
-              <span className="text-[13px] font-medium text-foreground">{t('wizard.url.cookies.toggle')}</span>
+              <span className="text-[13px] font-medium text-foreground">{t('wizard.url.cookies.sourceLabel')}</span>
               <span className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.cookies.toggleDescription')}</span>
             </div>
-            <Switch checked={cookiesEnabled} onCheckedChange={(checked) => void setCookiesEnabled(checked)} aria-label={t('wizard.url.cookies.toggle')} data-testid="cookies-toggle" />
+            <div className="flex flex-wrap gap-1" role="radiogroup" aria-label={t('wizard.url.cookies.sourceLabel')}>
+              <RadioOption label={t('wizard.url.cookies.sourceOff')} checked={cookiesMode === 'off'} onClick={() => void setCookiesMode('off')} />
+              <RadioOption label={t('wizard.url.cookies.sourceFile')} checked={cookiesMode === 'file'} onClick={() => void setCookiesMode('file')} />
+              <RadioOption label={t('wizard.url.cookies.sourceBrowser')} checked={cookiesMode === 'browser'} onClick={() => void setCookiesMode('browser')} />
+            </div>
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <span className="text-[11px] font-medium text-[var(--text-subtle)]">{t('wizard.url.cookies.fileLabel')}</span>
-            <div className="flex gap-2">
-              <Input readOnly value={cookiesPath ? formatHomeRelativePath(cookiesPath, commonPaths) : ''} placeholder={t('wizard.url.cookies.placeholder')} className="flex-1 h-9 text-[12px] font-mono" data-testid="cookies-path" />
-              <Button type="button" size="sm" variant="outline" onClick={() => void handleChooseCookies()} data-testid="cookies-choose">
-                {t('wizard.url.cookies.choose')}
-              </Button>
-              <Button type="button" size="sm" variant="ghost" onClick={() => void setCookiesPath('')} disabled={!cookiesPath} data-testid="cookies-clear">
-                {t('wizard.url.cookies.clear')}
-              </Button>
+          {cookiesMode === 'file' ? (
+            <div className="flex flex-col gap-1.5">
+              <span className="text-[11px] font-medium text-[var(--text-subtle)]">{t('wizard.url.cookies.fileLabel')}</span>
+              <div className="flex gap-2">
+                <Input readOnly value={cookiesPath ? formatHomeRelativePath(cookiesPath, commonPaths) : ''} placeholder={t('wizard.url.cookies.placeholder')} className="flex-1 h-9 text-[12px] font-mono" data-testid="cookies-path" />
+                <Button type="button" size="sm" variant="outline" onClick={() => void handleChooseCookies()} data-testid="cookies-choose">
+                  {t('wizard.url.cookies.choose')}
+                </Button>
+                <Button type="button" size="sm" variant="ghost" onClick={() => void setCookiesPath('')} disabled={!cookiesPath} data-testid="cookies-clear">
+                  {t('wizard.url.cookies.clear')}
+                </Button>
+              </div>
+              {showMissingFileWarning ? (
+                <p className="flex items-center gap-1.5 text-[11px] text-amber-500" data-testid="cookies-warning">
+                  <AlertTriangle size={12} />
+                  {t('wizard.url.cookies.enabledButNoFile')}
+                </p>
+              ) : null}
             </div>
-            {showMissingFileWarning ? (
-              <p className="flex items-center gap-1.5 text-[11px] text-amber-500" data-testid="cookies-warning">
-                <AlertTriangle size={12} />
-                {t('wizard.url.cookies.enabledButNoFile')}
-              </p>
-            ) : null}
-          </div>
+          ) : null}
+
+          {cookiesMode === 'browser' ? (
+            <div className="flex flex-col gap-1.5">
+              <span className="text-[11px] font-medium text-[var(--text-subtle)]">{t('wizard.url.cookies.browserLabel')}</span>
+              <select
+                value={cookiesBrowser ?? ''}
+                onChange={(e) => {
+                  const val = e.target.value as CookiesBrowser | '';
+                  if (val) void setCookiesBrowser(val);
+                }}
+                className="h-9 rounded-md border border-input bg-background px-3 text-[12px] text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                data-testid="cookies-browser-select"
+              >
+                <option value="" disabled className="bg-popover text-popover-foreground">
+                  {t('wizard.url.cookies.browserPlaceholder')}
+                </option>
+                {visibleBrowsers.map((b) => (
+                  <option key={b.value} value={b.value} className="bg-popover text-popover-foreground">
+                    {b.label}
+                  </option>
+                ))}
+              </select>
+              <p className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.cookies.browserHelp')}</p>
+              {showMissingBrowserWarning ? (
+                <p className="flex items-center gap-1.5 text-[11px] text-amber-500" data-testid="cookies-browser-warning">
+                  <AlertTriangle size={12} />
+                  {t('wizard.url.cookies.enabledButNoBrowser')}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="flex flex-col gap-1 text-[11px] text-[var(--text-subtle)] leading-relaxed">
             <p>{t('wizard.url.cookies.risk')}</p>
@@ -237,6 +307,7 @@ export function StepUrlInput(): JSX.Element {
       </details>
 
       <ClipboardConfirmDialog open={pendingClipboardUrl !== null && initialized} url={pendingClipboardUrl} onUse={handleConfirmClipboard} onDisable={handleDisableClipboard} onCancel={handleCancelClipboard} />
+      <IncompleteCookiesConfigDialog issue={cookiesConfigDialogIssue} onDismiss={dismissCookiesConfigDialog} onOpenSettings={openCookiesSettings} />
     </div>
   );
 }

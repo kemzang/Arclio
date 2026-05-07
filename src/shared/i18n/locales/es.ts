@@ -143,7 +143,10 @@ const es = {
         }
       },
       cookies: {
-        toggle: 'Usar archivo de cookies',
+        sourceLabel: 'Fuente de cookies',
+        sourceOff: 'Desactivado',
+        sourceFile: 'Archivo',
+        sourceBrowser: 'Navegador',
         toggleDescription: 'Ayuda con vídeos restringidos por edad, solo para miembros y privados de tu cuenta.',
         risk: 'Riesgo: un cookies.txt contiene todas las sesiones iniciadas de ese navegador — guárdalo en privado.',
         fileLabel: 'Archivo de cookies',
@@ -152,6 +155,10 @@ const es = {
         placeholder: 'Sin archivo seleccionado',
         helpLink: '¿Cómo exporto las cookies?',
         enabledButNoFile: 'Selecciona un archivo para usar cookies',
+        browserLabel: 'Navegador',
+        browserPlaceholder: 'Elige un navegador…',
+        browserHelp: 'Lee las cookies directamente del navegador. El navegador debe estar cerrado para los basados en Chromium.',
+        enabledButNoBrowser: 'Elige un navegador para usar cookies',
         banWarning: 'YouTube puede marcar — y a veces banear — cuentas cuyas cookies usa yt-dlp. Usa una cuenta desechable cuando puedas.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -246,6 +253,35 @@ const es = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'La conversión de audio requiere el modo solo audio (deselecciona el vídeo).',
         requiresLossy: 'Se ha seleccionado una transmisión nativa — la tasa de bits solo se aplica al convertir a mp3, m4a u opus.'
+      },
+      botWall: {
+        heading: 'YouTube ha limitado esta consulta',
+        bodyUnconfigured: 'La lista de formatos puede estar incompleta. Configura las cookies en los ajustes avanzados, o cambia de red e inténtalo de nuevo.',
+        bodyDisabled: 'Las cookies están configuradas pero desactivadas. Actívalas y vuelve a intentarlo para obtener la lista completa, o cambia de red e inténtalo de nuevo.',
+        bodyEnabled: 'Incluso con cookies, YouTube ha limitado esta consulta. Inténtalo más tarde o cambia de red.',
+        retryCta: 'Reintentar',
+        enableRetryCta: 'Activar cookies y reintentar',
+        openSettingsCta: 'Abrir ajustes avanzados'
+      },
+      cookiesError: {
+        heading: 'Las cookies podrían ser la causa',
+        currentModeLabel: 'Fuente de cookies',
+        currentModeFile: 'Archivo',
+        currentModeBrowser: 'Navegador',
+        explanationFile: 'El archivo de cookies puede estar vacío, caducado o en un formato incorrecto (yt-dlp espera Netscape cookies.txt). Prueba a exportar las cookies de nuevo, elegir un archivo diferente, cambiar al modo Navegador o desactivar las cookies.',
+        explanationBrowser: 'Las cookies se leen directamente del navegador. Si el navegador está abierto en este momento, su base de datos de cookies puede estar bloqueada (familia Chromium). El navegador también debe tener la sesión de YouTube iniciada. Prueba a cerrar el navegador, cambiar a otro, cambiar al modo Archivo o desactivar las cookies.',
+        openSettingsCta: 'Abrir ajustes de cookies',
+        dpapi: {
+          heading: 'Cookies de Chrome bloqueadas por el cifrado de Windows',
+          explanation: 'Chrome 127 y versiones posteriores cifran las cookies de un modo que otras aplicaciones no pueden leer en Windows. Prueba una de las soluciones siguientes.',
+          fixFirefoxLabel: 'Cambiar a Firefox',
+          fixFirefoxBody: 'Firefox no usa App-Bound Encryption. Abre los ajustes de cookies y elige Firefox en la lista de navegadores.',
+          fixFileLabel: 'Exportar cookies.txt',
+          fixFileBody: 'Exporta las cookies de Chrome con una extensión del navegador, luego cambia esta aplicación al modo Archivo y selecciona el archivo exportado.',
+          fixUnsafeLabel: 'Iniciar Chrome con App-Bound Encryption desactivada',
+          fixUnsafeBody: 'Añade --disable-features=LockProfileCookieDatabase al acceso directo de inicio de Chrome. Advertencia: esto invalida las cookies cifradas anteriormente, por lo que se cerrará tu sesión en todos los sitios y deberás iniciarla de nuevo.',
+          docsLinkLabel: 'Documentación de yt-dlp (issue #10927)'
+        }
       }
     },
     folder: {

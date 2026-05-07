@@ -1,12 +1,19 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-vi.mock('@aptabase/electron/main', () => ({
-  initialize: vi.fn().mockResolvedValue(undefined),
-  trackEvent: vi.fn().mockResolvedValue(undefined)
-}));
+const { ctorMock, trackMock, identifyMock, setGlobalPropertiesMock } = vi.hoisted(() => {
+  const trackMock = vi.fn().mockResolvedValue(undefined);
+  const identifyMock = vi.fn().mockResolvedValue(undefined);
+  const setGlobalPropertiesMock = vi.fn();
+  const addHeaderMock = vi.fn();
+  const ctorMock = vi.fn().mockImplementation(function () {
+    return { track: trackMock, identify: identifyMock, setGlobalProperties: setGlobalPropertiesMock, api: { addHeader: addHeaderMock } };
+  });
+  return { ctorMock, trackMock, identifyMock, setGlobalPropertiesMock };
+});
+
+vi.mock('@openpanel/sdk', () => ({ OpenPanel: ctorMock }));
 
 import { setupAnalytics, setAnalyticsEnabled, trackMain, probeDurationBucket, downloadDurationBucket, sizeBucket } from '@main/services/analytics';
-import { initialize as aptabaseInit, trackEvent } from '@aptabase/electron/main';
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -14,72 +21,169 @@ beforeEach(() => {
 });
 
 describe('allowlist validation', () => {
-  it('(a) throws for unknown event names in dev mode', () => {
-    setupAnalytics(undefined, true);
+  it('throws for unknown event names in dev mode', () => {
+    setupAnalytics(undefined, undefined, true, 'install-id-test');
     expect(() => trackMain('not_a_real_event')).toThrow('[analytics] unknown event: "not_a_real_event"');
   });
 
   it('throws for disallowed prop key in dev mode', () => {
-    setupAnalytics(undefined, true);
+    setupAnalytics(undefined, undefined, true, 'install-id-test');
     expect(() => trackMain('app_started', { install_channel: 'direct', url: 'http://evil.com' } as any)).toThrow(/prop "url" not allowed/);
   });
 
-  it('(b) throws for overlong prop string values in dev mode', () => {
-    setupAnalytics(undefined, true);
+  it('throws for overlong prop string values in dev mode', () => {
+    setupAnalytics(undefined, undefined, true, 'install-id-test');
     expect(() => trackMain('app_started', { install_channel: 'x'.repeat(33) })).toThrow(/too long/);
   });
 
   it('silently drops unknown event names in prod mode (no app key)', () => {
-    setupAnalytics(undefined, false);
+    setupAnalytics(undefined, undefined, false, 'install-id-test');
     expect(() => trackMain('totally_fake_event')).not.toThrow();
   });
 
   it('silently drops disallowed prop key in prod mode', () => {
-    setupAnalytics(undefined, false);
+    setupAnalytics(undefined, undefined, false, 'install-id-test');
     expect(() => trackMain('app_started', { install_channel: 'direct', secret_url: 'http://evil.com' } as any)).not.toThrow();
+  });
+
+  it('accepts stable failure code on binary_setup_failed', () => {
+    setupAnalytics(undefined, undefined, true, 'install-id-test');
+    expect(() => trackMain('binary_setup_failed', { binary: 'ffmpeg', phase: 'download_failed', code: 'ARX-001' })).not.toThrow();
   });
 });
 
-describe('(c) analyticsEnabled=false short-circuits', () => {
-  it('does not call trackEvent when disabled', async () => {
-    setupAnalytics('A-EU-test123456', false);
+describe('OpenPanel track delegation', () => {
+  it('emits a single op.track call per event (no companion error events)', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
+    setAnalyticsEnabled(true);
+    trackMain('binary_setup_failed', { binary: 'ytdlp', phase: 'download_failed', code: 'ARX-001' });
+    expect(trackMock).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledWith('binary_setup_failed', { binary: 'ytdlp', phase: 'download_failed', code: 'ARX-001' });
+  });
+
+  it('emits download_finished as a single event regardless of outcome', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
+    setAnalyticsEnabled(true);
+    trackMain('download_finished', { outcome: 'success', duration_bucket: '<30s', size_bucket: '<50MB' });
+    expect(trackMock).toHaveBeenCalledTimes(1);
+    trackMock.mockClear();
+    trackMain('download_finished', { outcome: 'error', error_category: 'disk_full' });
+    expect(trackMock).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledWith('download_finished', { outcome: 'error', error_category: 'disk_full' });
+  });
+
+  it('emits app_started normally', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
+    setAnalyticsEnabled(true);
+    trackMain('app_started', { install_channel: 'direct', platform_arch: 'linux-x64', is_first_run: false });
+    expect(trackMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('identify + global properties', () => {
+  it('calls identify with profileId=installId and global properties when deviceInfo is provided', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test', {
+      appVersion: '1.2.3',
+      platform: 'linux',
+      architecture: 'x64',
+      systemVersion: '6.8.0-111-generic',
+      modelName: 'Intel(R) Core(TM) i7-12700H',
+      osLocale: 'en-US',
+      appLocale: 'es'
+    });
+    expect(identifyMock).toHaveBeenCalledTimes(1);
+    expect(identifyMock).toHaveBeenCalledWith({
+      profileId: 'install-id-test',
+      properties: expect.objectContaining({
+        app_version: '1.2.3',
+        build_number: '1.2.3',
+        platform: 'linux',
+        operating_system: 'Linux',
+        system_version: '6.8.0-111-generic',
+        major_system_version: '6',
+        major_minor_system_version: '6.8',
+        architecture: 'x64',
+        model_name: 'Intel(R) Core(TM) i7-12700H',
+        os_locale: 'en-US',
+        app_locale: 'es',
+        sdk_client_version: 'arroxy/1.2.3'
+      })
+    });
+    expect(setGlobalPropertiesMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('truncates model_name to 64 chars', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test', {
+      appVersion: '1.0.0',
+      platform: 'darwin',
+      architecture: 'arm64',
+      systemVersion: '23.5.0',
+      modelName: 'X'.repeat(120),
+      osLocale: 'en-US',
+      appLocale: 'en-US'
+    });
+    const props = setGlobalPropertiesMock.mock.calls[0][0];
+    expect(props.model_name.length).toBe(64);
+  });
+
+  it('still calls identify (no properties) when deviceInfo is omitted', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
+    expect(identifyMock).toHaveBeenCalledWith({ profileId: 'install-id-test' });
+    expect(setGlobalPropertiesMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('analyticsEnabled=false short-circuits', () => {
+  it('does not call track when disabled', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
     setAnalyticsEnabled(false);
     trackMain('app_started', {
       install_channel: 'direct',
       platform_arch: 'linux-x64',
       is_first_run: false
     });
-    expect(trackEvent).not.toHaveBeenCalled();
+    expect(trackMock).not.toHaveBeenCalled();
   });
 
-  it('does not call trackEvent when no app key (not started)', () => {
-    setupAnalytics(undefined, false);
+  it('does not call track when no credentials (not started)', () => {
+    setupAnalytics(undefined, undefined, false, 'install-id-test');
     setAnalyticsEnabled(true);
     trackMain('app_started', {
       install_channel: 'direct',
       platform_arch: 'linux-x64',
       is_first_run: false
     });
-    expect(trackEvent).not.toHaveBeenCalled();
+    expect(trackMock).not.toHaveBeenCalled();
+  });
+
+  it('does not call track when only clientId is provided (missing secret)', () => {
+    setupAnalytics('client-id', undefined, false, 'install-id-test');
+    setAnalyticsEnabled(true);
+    trackMain('app_started', { install_channel: 'direct', platform_arch: 'linux-x64', is_first_run: false });
+    expect(ctorMock).not.toHaveBeenCalled();
+    expect(trackMock).not.toHaveBeenCalled();
   });
 });
 
 describe('dev-mode debug opt-in', () => {
-  it('does NOT initialize aptabase in dev by default', () => {
-    setupAnalytics('A-EU-test123456', true);
-    expect(aptabaseInit).not.toHaveBeenCalled();
+  it('does NOT initialize OpenPanel in dev by default', () => {
+    setupAnalytics('client-id', 'client-secret', true, 'install-id-test');
+    expect(ctorMock).not.toHaveBeenCalled();
   });
 
-  it('initializes aptabase in dev when ARROXY_ANALYTICS_DEBUG=1', () => {
+  it('initializes OpenPanel in dev when ARROXY_ANALYTICS_DEBUG=1', () => {
     process.env.ARROXY_ANALYTICS_DEBUG = '1';
-    setupAnalytics('A-EU-test123456', true);
-    expect(aptabaseInit).toHaveBeenCalledWith('A-EU-test123456');
+    setupAnalytics('client-id', 'client-secret', true, 'install-id-test');
+    expect(ctorMock).toHaveBeenCalledTimes(1);
+    const opts = ctorMock.mock.calls[0][0];
+    expect(opts).toMatchObject({ clientId: 'client-id', clientSecret: 'client-secret' });
+    expect(typeof opts.filter).toBe('function');
   });
 
-  it('still skips when no app key, even with debug flag', () => {
+  it('still skips when no credentials, even with debug flag', () => {
     process.env.ARROXY_ANALYTICS_DEBUG = '1';
-    setupAnalytics(undefined, true);
-    expect(aptabaseInit).not.toHaveBeenCalled();
+    setupAnalytics(undefined, undefined, true, 'install-id-test');
+    expect(ctorMock).not.toHaveBeenCalled();
   });
 });
 

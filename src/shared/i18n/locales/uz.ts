@@ -144,7 +144,10 @@ const uz = {
         }
       },
       cookies: {
-        toggle: 'Cookies faylidan foydalanish',
+        sourceLabel: 'Cookies manbai',
+        sourceOff: "O'chirilgan",
+        sourceFile: 'Fayl',
+        sourceBrowser: 'Brauzer',
         toggleDescription: "Yosh cheklovli, faqat a'zolar uchun va shaxsiy hisob videolari bilan yordam beradi.",
         risk: "Xavf: cookies.txt o'sha brauzerning barcha kirgan sessiyalarini o'z ichiga oladi — uni shaxsiy saqlang.",
         fileLabel: 'Cookies fayli',
@@ -153,6 +156,10 @@ const uz = {
         placeholder: 'Fayl tanlanmagan',
         helpLink: 'Cookiesni qanday eksport qilaman?',
         enabledButNoFile: 'Cookiesdan foydalanish uchun fayl tanlang',
+        browserLabel: 'Brauzer',
+        browserPlaceholder: 'Brauzer tanlang…',
+        browserHelp: "Brauzerdan to'g'ridan-to'g'ri cookies o'qiydi. Chromium oilasidagi brauzerlar yopiq bo'lishi kerak.",
+        enabledButNoBrowser: 'Cookiesdan foydalanish uchun brauzer tanlang',
         banWarning: "YouTube — va ba'zida — yt-dlp cookieslaridan foydalanadigan hisoblarni belgilashi yoki taqiqlashi mumkin. Iloji bo'lsa vaqtinchalik hisob ishlating.",
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,35 @@ const uz = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'Audio konvertatsiyasi faqat audio rejimini talab qiladi (video tanlovini bekor qiling).',
         requiresLossy: "Mahalliy oqim tanlangan — bit tezligi faqat mp3, m4a yoki opus ga konvertatsiya qilishda qo'llaniladi."
+      },
+      botWall: {
+        heading: 'YouTube bu tekshiruvni chekladi',
+        bodyUnconfigured: "Format ro'yxati to'liq bo'lmasligi mumkin. Kengaytirilgan sozlamalarda cookiesni sozlang yoki tarmoqni o'zgartiring va qayta urinib ko'ring.",
+        bodyDisabled: "Cookies sozlangan, lekin o'chirilgan. To'liq ro'yxat uchun ularni yoqing va qayta urinib ko'ring, yoki tarmoqni o'zgartirin.",
+        bodyEnabled: "Cookies bilan ham YouTube bu tekshiruvni chekladi. Keyinroq urinib ko'ring yoki tarmoqni o'zgartiring.",
+        retryCta: 'Qayta urinish',
+        enableRetryCta: 'Cookiesni yoqish va qayta urinish',
+        openSettingsCta: 'Kengaytirilgan sozlamalarni ochish'
+      },
+      cookiesError: {
+        heading: "Sabab cookies bo'lishi mumkin",
+        currentModeLabel: 'Cookies manbai',
+        currentModeFile: 'Fayl',
+        currentModeBrowser: 'Brauzer',
+        explanationFile: "Cookies faylingiz bo'sh, muddati o'tgan yoki noto'g'ri formatda bo'lishi mumkin (yt-dlp Netscape cookies.txt kutadi). Cookiesni qayta eksport qiling, boshqa fayl tanlang, Brauzer rejimiga o'ting yoki cookiesni o'chiring.",
+        explanationBrowser: "Cookies to'g'ridan-to'g'ri brauzerdan o'qiladi. Agar brauzer hozir ochiq bo'lsa, uning cookie ma'lumotlar bazasi qulflangan bo'lishi mumkin (Chromium-family). Brauzer YouTube ga kirgan bo'lishi ham kerak. Brauzerni yoping, boshqa brauzer sinab ko'ring, Fayl rejimiga o'ting yoki cookiesni o'chiring.",
+        openSettingsCta: 'Cookies sozlamalarini ochish',
+        dpapi: {
+          heading: 'Chrome cookies Windows shifrlash orqali bloklangan',
+          explanation: "Chrome 127 va undan yangi versiyalar cookies ni Windows da boshqa ilovalar o'qiy olmaydigan tarzda shifrlaydi. Quyidagi yechimlardan birini sinab ko'ring.",
+          fixFirefoxLabel: "Firefox ga o'tish",
+          fixFirefoxBody: "Firefox App-Bound Encryption dan foydalanmaydi. Cookies sozlamalarini oching va brauzer ro'yxatidan Firefox ni tanlang.",
+          fixFileLabel: 'cookies.txt ni eksport qilish',
+          fixFileBody: "Chrome dan brauzer kengaytmasi yordamida cookies ni eksport qiling, so'ng bu ilovani Fayl rejimiga o'tkazing va eksport qilingan faylni tanlang.",
+          fixUnsafeLabel: "App-Bound Encryption o'chirilgan holda Chrome ni ishga tushirish",
+          fixUnsafeBody: "Chrome ishga tushirish yorlig'iga --disable-features=LockProfileCookieDatabase qo'shing. Ogohlantirish: bu oldindan shifrlangan cookies ni bekor qiladi, shuning uchun siz barcha saytlardan chiqib ketasiz va qayta kirishingiz kerak bo'ladi.",
+          docsLinkLabel: 'yt-dlp hujjatlar (issue #10927)'
+        }
       }
     },
     folder: {

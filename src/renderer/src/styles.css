@@ -98,6 +98,26 @@
     transform: translateX(0);
   }
 }
+@keyframes fade-slide-in-forward-rtl {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fade-slide-in-backward-rtl {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 .wizard-step {
   animation: fade-slide-in 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
@@ -106,6 +126,12 @@
 }
 .wizard-backward .wizard-step {
   animation: fade-slide-in-backward 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+[dir='rtl'] .wizard-forward .wizard-step {
+  animation-name: fade-slide-in-forward-rtl;
+}
+[dir='rtl'] .wizard-backward .wizard-step {
+  animation-name: fade-slide-in-backward-rtl;
 }
 
 /* ── Queue card entrance ───────────────────────────────── */
@@ -118,6 +144,19 @@
     opacity: 1;
     transform: translateX(0);
   }
+}
+@keyframes card-enter-rtl {
+  from {
+    opacity: 0;
+    transform: translateX(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+[dir='rtl'] .queue-card {
+  animation-name: card-enter-rtl;
 }
 .queue-card {
   animation: card-enter 0.18s ease both;

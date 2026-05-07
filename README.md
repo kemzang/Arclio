@@ -87,7 +87,7 @@ When YouTube updates its bot detection, most tools tell you to export your brows
 - **Clipboard watch** — copy a YouTube link and Arroxy auto-fills the URL when you refocus the app (toggle in Advanced settings)
 - **Auto-clean URLs** — strips tracking params (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) and unwraps `youtube.com/redirect` links
 - **Tray mode** — closing the window keeps downloads running in the background
-- **9 languages** — auto-detects system locale, switchable any time
+- **21 languages** — auto-detects system locale, switchable any time
 
 ### Subtitles & post-processing
 
@@ -217,7 +217,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Downloads are fetched directly via [yt-dlp](https://github.com/yt-dlp/yt-dlp) from YouTube to the folder you pick — nothing routed through a third-party server. Watch history, download history, URLs, and file contents stay on your device.
 
-Arroxy sends anonymous, aggregate telemetry via [TelemetryDeck](https://telemetrydeck.com) — just enough for an indie project to see whether anyone is actually using it (launches, OS, app version, crashes). No URLs, no video titles, no file paths, no account info. The per-install ID is hashed before send and TelemetryDeck never stores IPs — EU-hosted and GDPR-friendly by design. You can opt out in Settings.
+Arroxy sends anonymous, aggregate telemetry via [OpenPanel](https://openpanel.dev) — just enough for an indie project to understand launches, OS, app versions, and crashes. No URLs, video titles, file paths, account info, fingerprinting, or personal data. The per-install ID is random and not tied to your identity. You can opt out in Settings.
 
 ---
 
@@ -239,10 +239,10 @@ No. Arroxy uses only the public tokens YouTube serves to any browser. No cookies
 Two layers of resilience: yt-dlp updates within hours of YouTube changes, and Arroxy doesn't rely on cookies that expire every ~30 minutes. That makes it noticeably more stable than tools that depend on exported browser sessions.
 
 **What languages is Arroxy available in?**
-Nine: English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी. Auto-detects your system language; switch any time from the toolbar. Locale files are plain TypeScript objects in `src/shared/i18n/locales/` — [PRs welcome](../../pulls).
+Twenty-one, out of the box: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), and Српски (Serbian). Arroxy auto-detects your operating system's language on first launch and you can switch at any time from the language picker in the toolbar. Translations live as plain TypeScript objects in src/shared/i18n/locales/ — open a PR on GitHub to contribute.
 
 **Do I need to install anything else?**
-No. yt-dlp and ffmpeg are downloaded automatically on first launch from their official GitHub releases and cached locally.
+No. yt-dlp is downloaded automatically on first launch and cached on your machine; ffmpeg and ffprobe ship with the app. After that, no extra setup is needed.
 
 **Can I download playlists or whole channels?**
 Yes for playlists: paste a playlist URL, then queue the whole list or only the videos you select. Whole-channel batch downloads are not supported yet.
@@ -280,7 +280,7 @@ Have a feature in mind? [Open a request](../../issues) — community input shape
 - **React 19** + **TypeScript** — UI
 - **Tailwind CSS v4** — styling
 - **Zustand** — state management
-- **yt-dlp** + **ffmpeg** — download and mux engine (fetched from GitHub on first launch, always up-to-date)
+- **yt-dlp** + **ffmpeg** — download and mux engine (yt-dlp fetched at runtime; ffmpeg/ffprobe bundled at build time)
 - **Vite** + **electron-vite** — build tooling
 - **Vitest** + **Playwright** — unit and end-to-end tests
 
@@ -340,7 +340,7 @@ bun run dist         # package for current OS
 bun run dist:win     # cross-compile Windows portable exe
 ```
 
-> yt-dlp and ffmpeg are not bundled — they're fetched from GitHub on first launch and cached in your app data folder.
+> yt-dlp is fetched from GitHub on first launch and cached in your app data folder. ffmpeg and ffprobe are bundled with every Arroxy release.
 
 </details>
 

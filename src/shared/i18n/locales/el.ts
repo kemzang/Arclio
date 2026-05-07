@@ -144,7 +144,10 @@ const el = {
         }
       },
       cookies: {
-        toggle: 'Χρήση αρχείου cookies',
+        sourceLabel: 'Πηγή cookies',
+        sourceOff: 'Απενεργοποιημένο',
+        sourceFile: 'Αρχείο',
+        sourceBrowser: 'Πρόγραμμα περιήγησης',
         toggleDescription: 'Βοηθά με βίντεο με περιορισμό ηλικίας, μόνο για μέλη και ιδιωτικά.',
         risk: 'Κίνδυνος: το cookies.txt περιέχει κάθε συνδεδεμένη συνεδρία του προγράμματος περιήγησης — κράτα το ιδιωτικό.',
         fileLabel: 'Αρχείο cookies',
@@ -153,6 +156,10 @@ const el = {
         placeholder: 'Δεν έχει επιλεγεί αρχείο',
         helpLink: 'Πώς εξάγω τα cookies;',
         enabledButNoFile: 'Επέλεξε αρχείο για χρήση cookies',
+        browserLabel: 'Πρόγραμμα περιήγησης',
+        browserPlaceholder: 'Επέλεξε πρόγραμμα περιήγησης…',
+        browserHelp: 'Διαβάζει cookies απευθείας από το πρόγραμμα περιήγησης. Για προγράμματα της οικογένειας Chromium, το πρόγραμμα πρέπει να είναι κλειστό.',
+        enabledButNoBrowser: 'Επέλεξε πρόγραμμα περιήγησης για χρήση cookies',
         banWarning: 'Το YouTube μπορεί να επισημάνει — και μερικές φορές να αποκλείσει — λογαριασμούς των οποίων τα cookies χρησιμοποιούνται από το yt-dlp. Χρησιμοποίησε έναν εφεδρικό λογαριασμό αν είναι δυνατόν.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,35 @@ const el = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'Η μετατροπή ήχου απαιτεί λειτουργία μόνο ήχου (αποεπίλεξε το βίντεο).',
         requiresLossy: 'Επιλέχθηκε εγγενής ροή — ο ρυθμός bit ισχύει μόνο κατά τη μετατροπή σε mp3, m4a ή opus.'
+      },
+      botWall: {
+        heading: 'Το YouTube περιόρισε αυτή την ανίχνευση',
+        bodyUnconfigured: 'Η λίστα μορφών μπορεί να είναι ελλιπής. Ρύθμισε cookies στις ρυθμίσεις για προχωρημένους, ή άλλαξε δίκτυο και δοκίμασε ξανά.',
+        bodyDisabled: 'Τα cookies είναι ρυθμισμένα αλλά απενεργοποιημένα. Ενεργοποίησέ τα και δοκίμασε ξανά για πλήρη λίστα, ή άλλαξε δίκτυο.',
+        bodyEnabled: 'Ακόμα και με cookies, το YouTube περιόρισε αυτή την ανίχνευση. Δοκίμασε αργότερα ή άλλαξε δίκτυο.',
+        retryCta: 'Επανάληψη',
+        enableRetryCta: 'Ενεργοποίηση cookies και επανάληψη',
+        openSettingsCta: 'Άνοιγμα ρυθμίσεων για προχωρημένους'
+      },
+      cookiesError: {
+        heading: 'Τα cookies μπορεί να φταίνε',
+        currentModeLabel: 'Πηγή cookies',
+        currentModeFile: 'Αρχείο',
+        currentModeBrowser: 'Πρόγραμμα περιήγησης',
+        explanationFile: 'Το αρχείο cookies μπορεί να είναι κενό, ληγμένο ή σε λάθος μορφή (το yt-dlp αναμένει Netscape cookies.txt). Δοκίμασε να εξάγεις ξανά τα cookies, να επιλέξεις διαφορετικό αρχείο, να μεταβείς σε λειτουργία προγράμματος περιήγησης ή να απενεργοποιήσεις τα cookies.',
+        explanationBrowser: 'Τα cookies διαβάζονται απευθείας από το πρόγραμμα περιήγησης. Αν τρέχει αυτή τη στιγμή, η βάση δεδομένων cookies μπορεί να είναι κλειδωμένη (οικογένεια Chromium). Το πρόγραμμα περιήγησης πρέπει επίσης να είναι συνδεδεμένο στο YouTube. Δοκίμασε να το κλείσεις, να χρησιμοποιήσεις διαφορετικό πρόγραμμα, να μεταβείς σε λειτουργία αρχείου ή να απενεργοποιήσεις τα cookies.',
+        openSettingsCta: 'Άνοιγμα ρυθμίσεων cookies',
+        dpapi: {
+          heading: 'Τα cookies του Chrome αποκλείστηκαν από την κρυπτογράφηση των Windows',
+          explanation: 'Το Chrome 127 και νεότερες εκδόσεις κρυπτογραφούν τα cookies με τρόπο που άλλες εφαρμογές δεν μπορούν να διαβάσουν στα Windows. Δοκίμασε μία από τις παρακάτω λύσεις.',
+          fixFirefoxLabel: 'Μετάβαση στο Firefox',
+          fixFirefoxBody: 'Το Firefox δεν χρησιμοποιεί App-Bound Encryption. Άνοιξε τις ρυθμίσεις cookies και επέλεξε Firefox από τη λίστα προγραμμάτων περιήγησης.',
+          fixFileLabel: 'Εξαγωγή cookies.txt',
+          fixFileBody: 'Εξήγαγε τα cookies από το Chrome με ένα επέκταση προγράμματος περιήγησης, μετά άλλαξε αυτή την εφαρμογή σε λειτουργία Αρχείο και επέλεξε το εξαχθέν αρχείο.',
+          fixUnsafeLabel: 'Εκκίνηση Chrome με απενεργοποιημένο App-Bound Encryption',
+          fixUnsafeBody: 'Πρόσθεσε --disable-features=LockProfileCookieDatabase στη συντόμευση εκκίνησης του Chrome. Προειδοποίηση: αυτό ακυρώνει τα προηγουμένως κρυπτογραφημένα cookies, οπότε θα αποσυνδεθείς από κάθε ιστότοπο και θα χρειαστεί να συνδεθείς ξανά.',
+          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+        }
       }
     },
     folder: {

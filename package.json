@@ -1,6 +1,6 @@
 {
   "name": "arroxy",
-  "version": "0.3.0",
+  "version": "0.3.1-beta.12",
   "description": "Arroxy - YouTube downloader app",
   "main": "out/main/index.js",
   "author": {
@@ -10,7 +10,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "ELECTRON_DISABLE_SANDBOX=1 electron-vite dev",
+    "dev": "bun run embed:fetch:host && ELECTRON_DISABLE_SANDBOX=1 electron-vite dev",
+    "embed:fetch:host": "bash scripts/build/fetch-embedded.sh $(node -e \"console.log(process.platform)\") $(node -e \"console.log(process.arch === 'arm64' ? 'arm64' : 'x64')\")",
     "clean": "rm -rf dist out",
     "build": "bun run typecheck && electron-vite build",
     "dist": "bun run clean && bun run build && electron-builder --publish never",
@@ -33,21 +34,23 @@
     "test:watch": "vitest",
     "test:e2e": "bun run build && xvfb-run -a playwright test",
     "test:browser": "playwright test --config playwright.browser.config.ts",
-    "build:landing": "node landing-src/build.mjs",
-    "build:blog": "node landing-src/blog/build.mjs",
-    "build:readme": "node readme-src/build.mjs",
+    "build:landing": "bun landing-src/build.mjs",
+    "build:blog": "bun landing-src/blog/build.mjs",
+    "build:readme": "bun readme-src/build.mjs",
     "build:docs": "bun run build:readme && bun run build:landing && bun run build:blog",
     "smoke": "bun scripts/smoke-youtube.ts",
     "smoke:pot": "bun scripts/smoke-pot-runner.ts",
+    "release:beta": "bash scripts/release.sh beta",
+    "release:stable": "bash scripts/release.sh stable",
     "prepare": "husky"
   },
   "dependencies": {
-    "@aptabase/electron": "^0.3.1",
     "@base-ui/react": "^1.4.1",
     "@fontsource-variable/geist": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/outfit": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
+    "@openpanel/sdk": "^1.3.1",
     "@tanstack/react-virtual": "^3.13.24",
     "@testing-library/dom": "^10.4.1",
     "class-variance-authority": "^0.7.1",
@@ -106,7 +109,14 @@
     "vitest": "^4.1.5"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx,css}": "prettier --write",
-    "tests/**/*.{ts,tsx}": "prettier --write"
+    "src/**/*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0"
+    ],
+    "src/**/*.css": "prettier --write",
+    "tests/**/*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0"
+    ]
   }
 }

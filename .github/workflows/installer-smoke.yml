@@ -47,7 +47,8 @@ jobs:
       - name: Build Windows artifacts
         shell: bash
         env:
-          APTABASE_KEY: ${{ secrets.APTABASE_KEY }}
+          OPENPANEL_CLIENT_ID: ${{ secrets.OPENPANEL_CLIENT_ID }}
+          OPENPANEL_CLIENT_SECRET: ${{ secrets.OPENPANEL_CLIENT_SECRET }}
         run: |
           if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
             bun run dist:win

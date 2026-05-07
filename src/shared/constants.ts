@@ -33,6 +33,11 @@ export const DEFAULTS: {
 // Single factory for the AppSettings shape — main process, tests, and
 // browserMock all build from here. Adding a new field to AppSettings forces
 // every caller to supply or ignore it explicitly.
+//
+// `installId` is intentionally omitted — it's stamped lazily by SettingsStore
+// on first launch (Node-only, depends on `node:crypto`). Keeping it out of
+// this factory avoids pulling Node modules into renderer/test bundles that
+// import the defaults helper.
 export function defaultAppSettings(downloadsDir: string): AppSettings {
   return {
     common: {

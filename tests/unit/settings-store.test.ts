@@ -109,7 +109,8 @@ describe('settings and recent stores', () => {
         lastSubfolder: 'old-subfolder',
         lastPlaylistPreset: 'video-1080p',
         lastPlaylistSubfolderEnabled: true,
-        cookiesEnabled: true
+        cookiesEnabled: true,
+        cookiesPath: '/legacy/cookies.txt'
       }),
       'utf-8'
     );
@@ -118,7 +119,9 @@ describe('settings and recent stores', () => {
     const settings = await store.get();
 
     expect(settings.common.defaultOutputDir).toBe('/legacy/dir');
-    expect(settings.common.cookiesEnabled).toBe(true);
+    // Legacy `cookiesEnabled: true` + non-empty path migrates to `cookiesMode: 'file'`.
+    expect(settings.common.cookiesMode).toBe('file');
+    expect((settings.common as unknown as { cookiesEnabled?: boolean }).cookiesEnabled).toBeUndefined();
     expect(settings.single.lastPreset).toBe('best-quality');
     expect(settings.single.lastSubfolder).toBe('old-subfolder');
     expect(settings.playlist.lastPlaylistPreset).toBe('video-1080p');

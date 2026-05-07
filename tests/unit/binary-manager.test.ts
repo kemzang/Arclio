@@ -34,4 +34,37 @@ describe('binaryInternals', () => {
     const digest = await binaryInternals.sha256ForFile(filePath);
     expect(digest).toBe('b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9');
   });
+
+  it('parses a raw SHA-256 body', () => {
+    const sha = binaryInternals.parseStandaloneSha256('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541\n');
+
+    expect(sha).toBe('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541');
+  });
+
+  it('parses a labelled SHA-256 line if upstream changes the format', () => {
+    const sha = binaryInternals.parseStandaloneSha256('SHA256: 6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541\n');
+    expect(sha).toBe('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541');
+  });
+
+  it('parses the "<hash>  filename.zip" SHA-256 body', () => {
+    const sha = binaryInternals.parseStandaloneSha256('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541  ffmpeg-release-essentials.zip');
+    expect(sha).toBe('6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541');
+  });
+
+  it('returns null when the body has no 64-hex token at all', () => {
+    expect(binaryInternals.parseStandaloneSha256('not a hash')).toBeNull();
+    expect(binaryInternals.parseStandaloneSha256('')).toBeNull();
+  });
+
+  it('parses the PowerShell Get-FileHash format used by deno Windows .sha256sum', () => {
+    const content = '\nAlgorithm : SHA256\nHash      : 25F9871F5C1D9E999D60071F8069767134495FD601D2E2C7CE1E8C641487BDA0\nPath      : C:\\a\\deno\\deno\\target\\release\\deno-x86_64-pc-windows-msvc.zip\n';
+    const sha = binaryInternals.parsePowerShellFileHash(content);
+
+    expect(sha).toBe('25f9871f5c1d9e999d60071f8069767134495fd601d2e2c7ce1e8c641487bda0');
+  });
+
+  it('returns null for sha sources that lack a Hash line', () => {
+    expect(binaryInternals.parsePowerShellFileHash('Algorithm : SHA256\nHash      : nothex\n')).toBeNull();
+    expect(binaryInternals.parsePowerShellFileHash('')).toBeNull();
+  });
 });

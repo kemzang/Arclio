@@ -144,7 +144,10 @@ const am = {
         }
       },
       cookies: {
-        toggle: 'የ cookies ፋይል ጠቀም',
+        sourceLabel: 'የ Cookies ምንጭ',
+        sourceOff: 'ጠፍ',
+        sourceFile: 'ፋይል',
+        sourceBrowser: 'አሳሽ',
         toggleDescription: 'ዕድሜ-ተገደበ፣ አባላት-ብቻ እና የግል ቪዲዮዎችን ያግዛል።',
         risk: 'አደጋ: cookies.txt ለዚያ አሳሽ ሁሉንም የገቡ ስሬቶች ይዟል — ይጠብቁ።',
         fileLabel: 'Cookies ፋይል',
@@ -153,6 +156,10 @@ const am = {
         placeholder: 'ምንም ፋይል አልተመረጠም',
         helpLink: 'cookies ስዴት እንዴት ነው?',
         enabledButNoFile: 'cookies ለመጠቀም ፋይል ምረጥ',
+        browserLabel: 'አሳሽ',
+        browserPlaceholder: 'አሳሽ ምረጥ…',
+        browserHelp: 'Cookies ቀጥታ ከአሳሹ ያነባል። Chromium-ቤተሰብ አሳሾች ሲጠቀሙ አሳሹ ዝጋ።',
+        enabledButNoBrowser: 'cookies ለመጠቀም አሳሽ ምረጥ',
         banWarning: 'YouTube cookies ያለ yt-dlp ጥቅም ላይ ሲውሉ መለያዎችን ሊያግድ ይችላል። የሚጥሉ መለያ ይጠቀሙ።',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,35 @@ const am = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'የድምጽ ቅርጸት ለወጥ ድምጽ-ብቻ ሁነታ ያስፈልጋል (የቪዲዮ ምርጫውን ሰርዝ)።',
         requiresLossy: 'የቀጥታ ዥረት ተመርጧል — ቢትሬት የሚሰራው ወደ mp3፣ m4a፣ ወይም opus ሲቀይሩ ብቻ ነው።'
+      },
+      botWall: {
+        heading: 'YouTube ይህን ምርምር ገደበ',
+        bodyUnconfigured: 'የቅርጸት ዝርዝሩ ሙሉ ላይሆን ይችላል። Cookies በከፍተኛ ቅንብሮች ያዘጋጁ፣ ወይም አውታረ መረብ ቀይሩ እና እንደገና ሞክሩ።',
+        bodyDisabled: 'Cookies ተዘጋጅቷል ነገር ግን ጠፍ ነው። ያስቡ እና እንደገና ሞክሩ፣ ወይም አውታረ መረብ ቀይሩ።',
+        bodyEnabled: 'Cookies ቢኖርም YouTube ይህን ምርምር ገደበ። ቆይቶ ዳግም ሞክሩ ወይም አውታረ መረብ ቀይሩ።',
+        retryCta: 'እንደገና ሞክር',
+        enableRetryCta: 'Cookies አስቻል እና እንደገና ሞክር',
+        openSettingsCta: 'ከፍተኛ ቅንብሮችን ክፈት'
+      },
+      cookiesError: {
+        heading: 'Cookies ምክንያቱ ሊሆን ይችላል',
+        currentModeLabel: 'Cookies ምንጭ',
+        currentModeFile: 'ፋይል',
+        currentModeBrowser: 'አሳሽ',
+        explanationFile: 'የ Cookies ፋይልዎ ባዶ፣ ጊዜው ያለፈ፣ ወይም ትክክለኛ ቅርጸት ላይሆን ይችላል (yt-dlp Netscape cookies.txt ይጠቀማል)። Cookies ዳግም ወደ ውጭ ለማሳደር፣ ሌላ ፋይል ለመምረጥ፣ ወደ አሳሽ ሁነታ ለመቀየር፣ ወይም Cookies ለማጥፋት ይሞክሩ።',
+        explanationBrowser: 'Cookies ቀጥታ ከአሳሹ ይነበባሉ። አሳሹ አሁን እየሰራ ከሆነ፣ የ cookie ዳታቤዝ ተቆልፎ ሊሆን ይችላል (Chromium-ቤተሰብ)። አሳሹ ወደ YouTube ገብቶ መሆን አለበት። አሳሹን ለመዝጋት፣ ወደ ሌላ አሳሽ ለመቀየር፣ ወደ ፋይል ሁነታ ለመቀየር፣ ወይም Cookies ለማጥፋት ይሞክሩ።',
+        openSettingsCta: 'የ Cookies ቅንብሮችን ክፈት',
+        dpapi: {
+          heading: 'Chrome cookies በ Windows ምስጠራ ታግደዋል',
+          explanation: 'Chrome 127 እና ከዚያ በኋላ ያሉ ስሪቶች cookies ን በ Windows ላይ ሌሎች አፕሊኬሽኖች ሊያነቡ በማይችሉ መንገድ ያመስጥሩታል። ከዚህ በታች ያሉ አንዱን መፍትሄ ይሞክሩ።',
+          fixFirefoxLabel: 'ወደ Firefox ቀይር',
+          fixFirefoxBody: 'Firefox App-Bound Encryption አይጠቀምም። የ Cookies ቅንብሮቹን ክፈት እና ከአሳሽ ዝርዝሩ Firefox ን ምረጥ።',
+          fixFileLabel: 'cookies.txt ወደ ውጭ ላክ',
+          fixFileBody: 'Cookies ን ከ Chrome በ browser extension ወደ ውጭ ላክ፣ ከዚያ ይህን አፕ ወደ ፋይል ሁነታ ቀይር እና የወጣውን ፋይል ምረጥ።',
+          fixUnsafeLabel: 'Chrome ን App-Bound Encryption አሰናክሎ ጀምር',
+          fixUnsafeBody: 'Chrome ን ለማስጀምር --disable-features=LockProfileCookieDatabase ወደ ቅርበት አክል። ማስጠንቀቂያ: ይህ ቀደም ሲል የተመሰጠሩ cookies ን ስለሚያወድም ከሁሉም ጣቢያዎች ይወጣሉ እና ዳግም መግባት ይኖርብዎታል።',
+          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+        }
       }
     },
     folder: {

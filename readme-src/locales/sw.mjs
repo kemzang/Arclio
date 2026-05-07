@@ -5,7 +5,7 @@ const TECH_CONTENT = `<details>
 - **React 19** + **TypeScript** — kiolesura cha mtumiaji
 - **Tailwind CSS v4** — muundo wa kuonekana
 - **Zustand** — usimamizi wa hali
-- **yt-dlp** + **ffmpeg** — injini ya kupakua na kuchanganya (hupakuliwa kutoka GitHub wakati wa uzinduzi wa kwanza, daima ya kisasa)
+- **yt-dlp** + **ffmpeg** — injini ya kupakua na kuchanganya (yt-dlp hupakuliwa wakati wa runtime; ffmpeg/ffprobe hujumuishwa wakati wa build)
 - **Vite** + **electron-vite** — zana za ujenzi
 - **Vitest** + **Playwright** — majaribio ya kitengo na ya mwisho-hadi-mwisho
 
@@ -65,7 +65,7 @@ bun run dist         # funga kwa OS ya sasa
 bun run dist:win     # mkusanyiko wa msalaba kwa Windows portable exe
 \`\`\`
 
-> yt-dlp na ffmpeg hazijaunganishwa — zinapakuliwa kiotomatiki wakati wa uzinduzi wa kwanza kutoka kwa matoleo rasmi ya GitHub na kuhifadhiwa mahali pa kawaida.
+> yt-dlp hupakuliwa kutoka GitHub wakati wa uzinduzi wa kwanza na kuhifadhiwa kwenye folda ya data ya programu. ffmpeg na ffprobe hujumuishwa katika kila toleo la Arroxy.
 
 </details>`;
 
@@ -137,7 +137,7 @@ export const sw = {
   feat_workflow_5:
     "**Hali ya tray** — kufunga dirisha kunaacha maudhui kuendelea kupakuliwa nyuma ya skrini",
   feat_workflow_6:
-    "**Lugha 9** — hugundua kiotomatiki lugha ya mfumo, inaweza kubadilishwa wakati wowote",
+    "**Lugha 21** — hugundua kiotomatiki lugha ya mfumo, inaweza kubadilishwa wakati wowote",
   feat_post_h3: "Manukuu na usindikaji wa baada ya kupakua",
   feat_post_1:
     "**Manukuu** katika SRT, VTT, au ASS — ya mkono au yaliyozalishwa kiotomatiki, katika lugha yoyote inayopatikana",
@@ -214,7 +214,7 @@ export const sw = {
   privacy_p1:
     "Maudhui hupakuliwa moja kwa moja kupitia [yt-dlp](https://github.com/yt-dlp/yt-dlp) kutoka YouTube hadi kwenye folda unayochagua — hakuna kitu kinachopita kwenye seva ya mtu wa tatu. Historia ya kutazama, historia ya kupakua, URL, na maudhui ya faili yanabaki kwenye kifaa chako.",
   privacy_p2:
-    "Arroxy hutuma telemetry isiyo na jina na ya jumla kupitia [TelemetryDeck](https://telemetrydeck.com) — tu ya kutosha kwa mradi wa kujitegemea kuona kama mtu anahusika nayo (uzinduzi, OS, toleo la programu, ajali). Hakuna URLs, hakuna vichwa vya video, hakuna njia za faili, hakuna taarifa za akaunti. Kitambulisho cha kila usanidi hufishwa kabla ya kutumwa na TelemetryDeck haitawahi kuhifadhi IPs — inashikiliwa EU na inayofaa GDPR kwa muundo. Unaweza kujiepusha katika Mipangilio.",
+    "Arroxy hutuma telemetry isiyo na jina na ya jumla kupitia [OpenPanel](https://openpanel.dev) — ya kutosha kuelewa uzinduzi, OS, matoleo ya programu na ajali. Hakuna URLs, vichwa vya video, njia za faili, taarifa za akaunti, fingerprinting au data binafsi. Kitambulisho cha kila usakinishaji ni cha nasibu na hakihusiani na utambulisho wako. Unaweza kujiondoa katika Mipangilio.",
   faq_q1: "Je, ni bure kweli kweli?",
   faq_a1: "Ndiyo — leseni ya MIT, hakuna ngazi ya malipo, hakuna kizuizi cha vipengele.",
   faq_q2: "Ninaweza kupakua ubora gani wa video?",
@@ -230,10 +230,10 @@ export const sw = {
     "Tabaka mbili za ustahimilivu: yt-dlp husasishwa ndani ya masaa machache baada ya mabadiliko ya YouTube, na Arroxy haitegemei vidakuzi vinavyoisha kila dakika ~30. Hii inafanya iwe thabiti zaidi dhahiri kuliko zana zinazotegemea vikao vya kivinjari vilivyohamishwa.",
   faq_q6: "Arroxy inapatikana katika lugha zipi?",
   faq_a6:
-    "Tisa: English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी. Hugundua kiotomatiki lugha ya mfumo wako; badilisha wakati wowote kutoka kwenye upau wa zana. Faili za eneo zinapatikana kama vitu vya TypeScript wazi katika `src/shared/i18n/locales/` — [PRs zinakaribushwa](../../pulls).",
+    "Ishirini na moja, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kijerumani), Français (Kifaransa), 日本語 (Kijapani), 中文 (Kichina), Русский (Kirusi), Українська (Kiukraini), हिन्दी (Kihindi), Afaan Oromoo, Kiswahili, O'zbekcha (Kiuzbeki), Tiếng Việt (Kivietinamu), አማርኛ (Kiamhara), العربية (Kiarabu), اردو (Kiurdu), پښتو (Kipashto), বাংলা (Kibengali), မြန်မာဘာသာ (Kiburma), Ελληνικά (Kigiriki), na Српски (Kiserbia). Arroxy hugundua lugha ya mfumo wako wa uendeshaji wakati wa uzinduzi wa kwanza na unaweza kubadili wakati wowote kutoka kichaguo cha lugha kwenye upau wa zana. Tafsiri zinaishi kama vitu vya TypeScript vya kawaida katika src/shared/i18n/locales/ — fungua PR kwenye GitHub kuchangia.",
   faq_q7: "Je, ninahitaji kusakinisha kitu kingine chochote?",
   faq_a7:
-    "Hapana. yt-dlp na ffmpeg zinapakuliwa kiotomatiki wakati wa uzinduzi wa kwanza kutoka kwa matoleo rasmi ya GitHub na kuhifadhiwa mahali hapo.",
+    "Hapana. yt-dlp hupakuliwa kiotomatiki wakati wa uzinduzi wa kwanza na kuhifadhiwa kwenye kifaa chako; ffmpeg na ffprobe huja pamoja na programu. Baada ya hapo, hakuna usanidi wa ziada unaohitajika.",
   faq_q8: "Je, ninaweza kupakua orodha za kucheza au vituo vyote?",
   faq_a8:
     "Ndiyo kwa playlist: bandika URL ya playlist, kisha weka foleni ya orodha yote au video ulizochagua tu. Upakuaji wa kundi wa channel nzima bado haujaungwa mkono.",

@@ -1,10 +1,16 @@
+import { randomUUID } from 'node:crypto';
 import Store from 'electron-store';
 import type { AppSettings, CommonSettings, PlaylistPrefs, SinglePrefs } from '@shared/types';
 import type { SettingsPatch } from '@shared/api';
 
 export type { SettingsPatch };
 
-const COMMON_FLAT_KEYS = ['defaultOutputDir', 'rememberLastOutputDir', 'uiZoom', 'uiTheme', 'language', 'commonPaths', 'cookiesPath', 'cookiesEnabled', 'proxyUrl', 'clipboardWatchEnabled', 'closeBehavior', 'embedChapters', 'embedMetadata', 'embedThumbnail', 'writeDescription', 'writeThumbnail', 'lastSponsorBlockMode', 'lastSponsorBlockCategories', 'analyticsEnabled', 'firstRunCompleted', 'drawerOpen'] as const;
+const COMMON_FLAT_KEYS = ['defaultOutputDir', 'rememberLastOutputDir', 'uiZoom', 'uiTheme', 'language', 'commonPaths', 'cookiesPath', 'cookiesMode', 'cookiesBrowser', 'proxyUrl', 'clipboardWatchEnabled', 'closeBehavior', 'embedChapters', 'embedMetadata', 'embedThumbnail', 'writeDescription', 'writeThumbnail', 'lastSponsorBlockMode', 'lastSponsorBlockCategories', 'analyticsEnabled', 'firstRunCompleted', 'drawerOpen', 'installId'] as const;
+
+// Legacy keys retained only so the flat-to-nested migration can pick them up
+// from old settings files. The values are normalized in `migrateCookiesMode`
+// and the legacy keys are stripped from the persisted shape.
+const LEGACY_COMMON_FLAT_KEYS = ['cookiesEnabled'] as const;
 
 const SINGLE_FLAT_KEYS = ['lastPreset', 'lastVideoResolution', 'lastSubtitleLanguages', 'lastSubtitleMode', 'lastSubtitleFormat', 'lastSubfolderEnabled', 'lastSubfolder'] as const;
 
@@ -23,14 +29,32 @@ function isLegacyShape(raw: Record<string, unknown>): boolean {
   // present even on a fresh install. The signal of legacy data is the
   // presence of any flat key — those only appear if the on-disk file came
   // from a pre-nested version.
-  return COMMON_FLAT_KEYS.some((k) => k in raw) || SINGLE_FLAT_KEYS.some((k) => k in raw) || PLAYLIST_FLAT_KEYS.some((k) => k in raw);
+  return COMMON_FLAT_KEYS.some((k) => k in raw) || LEGACY_COMMON_FLAT_KEYS.some((k) => k in raw) || SINGLE_FLAT_KEYS.some((k) => k in raw) || PLAYLIST_FLAT_KEYS.some((k) => k in raw);
 }
 
 function migrateFlatToNested(raw: Record<string, unknown>, defaults: AppSettings): AppSettings {
-  const common = { ...defaults.common, ...pickKeys(raw, COMMON_FLAT_KEYS) } as CommonSettings;
+  const picked = { ...pickKeys(raw, COMMON_FLAT_KEYS), ...pickKeys(raw, LEGACY_COMMON_FLAT_KEYS) };
+  const common = { ...defaults.common, ...picked } as CommonSettings & { cookiesEnabled?: boolean };
   const single = { ...defaults.single, ...pickKeys(raw, SINGLE_FLAT_KEYS) } as SinglePrefs;
   const playlist = { ...defaults.playlist, ...pickKeys(raw, PLAYLIST_FLAT_KEYS) } as PlaylistPrefs;
   return { common, single, playlist };
+}
+
+// Normalize the cookies setting from the pre-radio shape (`cookiesEnabled`
+// boolean) to the tri-state `cookiesMode`. Idempotent — a no-op once
+// `cookiesMode` is set, regardless of any leftover legacy fields.
+function migrateCookiesMode(common: CommonSettings): CommonSettings {
+  const legacy = common as CommonSettings & { cookiesEnabled?: boolean };
+  if (legacy.cookiesMode !== undefined) {
+    if (legacy.cookiesEnabled === undefined) return common;
+    const { cookiesEnabled: _drop, ...rest } = legacy;
+    return rest;
+  }
+  const enabled = legacy.cookiesEnabled === true;
+  const hasPath = typeof legacy.cookiesPath === 'string' && legacy.cookiesPath.length > 0;
+  const mode = enabled && hasPath ? 'file' : 'off';
+  const { cookiesEnabled: _drop, ...rest } = legacy;
+  return { ...rest, cookiesMode: mode };
 }
 
 function mergeCommon(base: CommonSettings, patch: Partial<CommonSettings> | undefined): CommonSettings {
@@ -60,16 +84,30 @@ export class SettingsStore {
     this.store = new Store<AppSettings>({ name: 'settings', cwd: userDataPath, defaults, clearInvalidConfig: true });
     this.defaults = defaults;
     this.maybeMigrate();
+    this.ensureInstallId();
+  }
+
+  // Guarantee a per-install UUID for telemetry (OpenPanel `profileId`).
+  // electron-store's `defaults` is shallow-merged at the top level, so an
+  // existing user whose on-disk `common` predates this field would never
+  // receive the default. Stamp lazily here after migration.
+  private ensureInstallId(): void {
+    const current = this.store.store;
+    if (current.common.installId) return;
+    const next: AppSettings = { ...current, common: { ...current.common, installId: randomUUID() } };
+    this.store.set(next);
   }
 
   private maybeMigrate(): void {
     const raw = this.store.store as unknown as Record<string, unknown>;
-    if (!isLegacyShape(raw)) return;
-    const migrated = migrateFlatToNested(raw, this.defaults);
-    // Replace the entire on-disk shape with the nested one. Wiping flat keys
-    // first prevents both shapes from coexisting on disk.
+    const isLegacy = isLegacyShape(raw);
+    const baseline: AppSettings = isLegacy ? migrateFlatToNested(raw, this.defaults) : this.store.store;
+    const cookiesMigrated: AppSettings = { ...baseline, common: migrateCookiesMode(baseline.common) };
+    if (!isLegacy && cookiesMigrated.common === baseline.common) return;
+    // Replace the entire on-disk shape with the migrated one. Wiping any
+    // legacy flat keys first prevents both shapes from coexisting on disk.
     this.store.clear();
-    this.store.set(migrated);
+    this.store.set(cookiesMigrated);
   }
 
   async get(): Promise<AppSettings> {

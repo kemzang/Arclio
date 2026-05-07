@@ -80,11 +80,7 @@
   </screenshots>
 
   <releases>
-    <release version="0.2.5" date="2026-04-28">
-      <description>
-        <p>Initial Flatpak bundle release. Download YouTube videos, audio, and subtitles with a wizard UI.</p>
-      </description>
-    </release>
+__RELEASES__
   </releases>
 
   <content_rating type="oars-1.1"/>

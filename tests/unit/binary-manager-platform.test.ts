@@ -25,9 +25,9 @@ describe('ytDlpAssetName', () => {
     expect(binaryInternals.ytDlpAssetName()).toBe('yt-dlp_macos');
   });
 
-  it('darwin x64 → yt-dlp_macos_legacy', () => {
+  it('darwin x64 → yt-dlp_macos (universal binary, _legacy was removed upstream)', () => {
     setPlatform('darwin', 'x64');
-    expect(binaryInternals.ytDlpAssetName()).toBe('yt-dlp_macos_legacy');
+    expect(binaryInternals.ytDlpAssetName()).toBe('yt-dlp_macos');
   });
 
   it('linux x64 → yt-dlp_linux', () => {
@@ -38,43 +38,6 @@ describe('ytDlpAssetName', () => {
   it('linux arm64 → yt-dlp_linux_aarch64', () => {
     setPlatform('linux', 'arm64');
     expect(binaryInternals.ytDlpAssetName()).toBe('yt-dlp_linux_aarch64');
-  });
-});
-
-describe('ffmpegAssetName', () => {
-  it('win32 x64 → ffmpeg-win32-x64', () => {
-    setPlatform('win32', 'x64');
-    expect(binaryInternals.ffmpegAssetName()).toBe('ffmpeg-win32-x64');
-  });
-
-  it('win32 arm64 → ffmpeg-win32-arm64', () => {
-    setPlatform('win32', 'arm64');
-    expect(binaryInternals.ffmpegAssetName()).toBe('ffmpeg-win32-arm64');
-  });
-
-  it('darwin arm64 → ffmpeg-darwin-arm64', () => {
-    setPlatform('darwin', 'arm64');
-    expect(binaryInternals.ffmpegAssetName()).toBe('ffmpeg-darwin-arm64');
-  });
-
-  it('darwin x64 → ffmpeg-darwin-x64', () => {
-    setPlatform('darwin', 'x64');
-    expect(binaryInternals.ffmpegAssetName()).toBe('ffmpeg-darwin-x64');
-  });
-
-  it('linux x64 → ffmpeg-linux-x64', () => {
-    setPlatform('linux', 'x64');
-    expect(binaryInternals.ffmpegAssetName()).toBe('ffmpeg-linux-x64');
-  });
-
-  it('linux arm64 → ffmpeg-linux-arm64', () => {
-    setPlatform('linux', 'arm64');
-    expect(binaryInternals.ffmpegAssetName()).toBe('ffmpeg-linux-arm64');
-  });
-
-  it('unknown platform → null', () => {
-    setPlatform('freebsd', 'x64');
-    expect(binaryInternals.ffmpegAssetName()).toBeNull();
   });
 });
 

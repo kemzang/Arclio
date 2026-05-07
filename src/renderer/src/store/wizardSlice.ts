@@ -1,6 +1,7 @@
 import { DEFAULTS } from '@shared/constants';
 import { DEFAULT_AUDIO_BITRATE } from '@shared/schemas';
 import type { AppError, AppSettings, FormatOption, PlaylistEntry, PlaylistPreset, Preset, SubtitleMap, WizardTransition } from '@shared/types';
+import { getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
 import { cleanYoutubeUrl, forcePlaylistOnly, forceVideoOnly, isMixedVideoPlaylistUrl, isPlaylistUrl, isSingleVideoUrl } from '@shared/url';
 import type { AppState, AudioSelection, GetState, SetState, WizardMode, WizardSlice, WizardStep } from './types';
 import { presetProducesMedia, presetProducesVideo } from '@shared/presetTraits';
@@ -145,6 +146,8 @@ const RESET_STATE = {
   wizardThumbnail: '',
   wizardDuration: undefined as number | undefined,
   wizardFormats: [] as FormatOption[],
+  wizardFormatsDegraded: null,
+  advancedAutoOpen: false,
   formatsLoading: false,
   wizardError: null,
   wizardErrorOrigin: null,
@@ -170,21 +173,38 @@ const RESET_STATE = {
   playlistProbeLoading: false,
   mixedUrlPromptOpen: false,
   mixedUrlPending: null as string | null,
+  cookiesConfigDialogIssue: null,
   selectedPlaylistPreset: null as PlaylistPreset | null
 } as const;
+
+function maybeBlockIncompleteCookiesConfig(url: string, set: SetState, get: GetState): boolean {
+  const issue = getIncompleteCookiesConfigIssue(get().settings?.common);
+  if (!issue) return false;
+  set({
+    wizardUrl: url,
+    wizardStep: 'url',
+    formatsLoading: false,
+    playlistProbeLoading: false,
+    wizardError: null,
+    wizardErrorOrigin: null,
+    cookiesConfigDialogIssue: issue
+  });
+  return true;
+}
 
 async function runFormatProbe(url: string, set: SetState, get: GetState): Promise<void> {
   const result = await window.appApi.downloads.getFormats({ url });
   if (!result.ok) {
-    set({ wizardStep: 'error', formatsLoading: false, wizardError: result.error, wizardErrorOrigin: 'formats' });
+    set({ wizardStep: 'error', formatsLoading: false, wizardError: result.error, wizardErrorOrigin: 'formats', wizardFormatsDegraded: null });
     return;
   }
-  const { formats, title, thumbnail, duration, subtitles = {}, automaticCaptions = {} } = result.data;
+  const { formats, title, thumbnail, duration, subtitles = {}, automaticCaptions = {}, degraded } = result.data;
   const settings = get().settings;
   const { videoFormatId, audioSelection, preset } = restoreFormatSelection(formats, settings);
   const { languages: subtitleLanguages } = restoreSubtitleSelection(subtitles, automaticCaptions, settings);
   set({
     wizardFormats: formats,
+    wizardFormatsDegraded: degraded ?? null,
     wizardTitle: title,
     wizardThumbnail: thumbnail,
     wizardDuration: duration,
@@ -212,6 +232,7 @@ async function runSingleVideoProbe(url: string, set: SetState, get: GetState): P
     wizardMode: 'single',
     formatsLoading: true,
     wizardError: null,
+    cookiesConfigDialogIssue: null,
     playlistItems: [],
     selectedPlaylistItemIds: [],
     playlistTitle: '',
@@ -223,7 +244,7 @@ async function runSingleVideoProbe(url: string, set: SetState, get: GetState): P
 
 async function runPlaylistProbe(url: string, set: SetState, get: GetState): Promise<void> {
   const fromStep = get().wizardStep;
-  set({ wizardUrl: url, wizardStep: 'playlistItems', wizardMode: 'playlist', playlistProbeLoading: true, wizardError: null });
+  set({ wizardUrl: url, wizardStep: 'playlistItems', wizardMode: 'playlist', playlistProbeLoading: true, wizardError: null, cookiesConfigDialogIssue: null });
   logStep('submitUrl', fromStep, 'playlistItems', pickWizardSnapshot(get()));
 
   const result = await window.appApi.downloads.getPlaylistItems({ url });
@@ -264,7 +285,7 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
       if (!cleaned) return;
 
       if (isMixedVideoPlaylistUrl(cleaned)) {
-        set({ wizardUrl: cleaned, mixedUrlPromptOpen: true, mixedUrlPending: cleaned, wizardError: null });
+        set({ wizardUrl: cleaned, mixedUrlPromptOpen: true, mixedUrlPending: cleaned, wizardError: null, cookiesConfigDialogIssue: null });
         return;
       }
 
@@ -286,11 +307,14 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
           wizardStep: 'error',
           formatsLoading: false,
           wizardError: error,
-          wizardErrorOrigin: 'formats'
+          wizardErrorOrigin: 'formats',
+          cookiesConfigDialogIssue: null
         });
         logStep('submitUrl', fromStep, 'error', pickWizardSnapshot(get()));
         return;
       }
+
+      if (maybeBlockIncompleteCookiesConfig(cleaned, set, get)) return;
 
       await runSingleVideoProbe(cleaned, set, get);
     },
@@ -302,10 +326,15 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
       const url = choice === 'video' ? forceVideoOnly(pending) : forcePlaylistOnly(pending);
       set({ wizardUrl: url });
       if (choice === 'video') {
+        if (maybeBlockIncompleteCookiesConfig(url, set, get)) return;
         await runSingleVideoProbe(url, set, get);
       } else {
         await runPlaylistProbe(url, set, get);
       }
+    },
+
+    dismissCookiesConfigDialog: () => {
+      set({ cookiesConfigDialogIssue: null });
     },
 
     setPlaylistItemSelected: (id, checked) =>
@@ -373,6 +402,42 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
         logStep('retry', wizardStep, 'formats', pickWizardSnapshot(get()));
         await get().submitUrl();
       }
+    },
+
+    // Re-run the format probe against the currently-active URL without
+    // resetting the wizard. Used by `<BotWallNotice>` so a user who changed
+    // network mid-session can re-spin without navigating back to the URL step.
+    retryFormatProbe: async () => {
+      const { wizardUrl } = get();
+      if (!wizardUrl) return;
+      set({ formatsLoading: true, wizardFormatsDegraded: null });
+      await runFormatProbe(wizardUrl, set, get);
+    },
+
+    // Switch cookies mode to whichever is configured (file > browser),
+    // persist via the system slice setter, then re-run the format probe.
+    // No-op if neither path nor browser is configured — the banner doesn't
+    // expose this action in that case.
+    retryProbeWithCookies: async () => {
+      const settings = get().settings;
+      const path = settings?.common.cookiesPath?.trim();
+      const browser = settings?.common.cookiesBrowser;
+      const targetMode: 'file' | 'browser' | null = path ? 'file' : browser ? 'browser' : null;
+      if (!targetMode) return;
+      await get().setCookiesMode(targetMode);
+      await get().retryFormatProbe();
+    },
+
+    // Used by `<CookiesErrorAlert>` on the wizard error step to send the
+    // user back to the URL step's cookies block without losing the URL
+    // they just submitted. `advancedAutoOpen` is consumed by `StepUrlInput`
+    // on mount.
+    openCookiesSettings: () => {
+      set({ wizardStep: 'url', wizardError: null, wizardErrorOrigin: null, advancedAutoOpen: true, cookiesConfigDialogIssue: null });
+    },
+
+    setAdvancedAutoOpen: (open) => {
+      set({ advancedAutoOpen: open });
     },
 
     setWizardOutputDir: async (dir, persist = true) => {

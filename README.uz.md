@@ -87,7 +87,7 @@ YouTube bot aniqlashini yangilaganda, ko'pchilik vositalar sizdan muammo yechimi
 - **Bufer kuzatish** — YouTube havolasini nusxalang va Arroxy ilovaga qaytganingizda URL'ni avtomatik to'ldiradi (Kengaytirilgan sozlamalarda o'chirish/yoqish mumkin)
 - **URL'larni avtomatik tozalash** — kuzatish parametrlarini olib tashlaydi (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) va `youtube.com/redirect` havolalarini ochadi
 - **Tray rejimi** — oynani yopish yuklamalarni fon rejimida davom ettiradi
-- **9 til** — tizim tilini avtomatik aniqlaydi, istalgan vaqt almashtirish mumkin
+- **21 til** — tizim tilini avtomatik aniqlaydi, istalgan vaqt almashtirish mumkin
 
 ### Subtitrlar va keyingi qayta ishlash
 
@@ -217,7 +217,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Yuklamalar YouTube'dan siz tanlagan papkaga to'g'ridan-to'g'ri [yt-dlp](https://github.com/yt-dlp/yt-dlp) orqali olinadi — hech narsa uchinchi tomon server orqali yo'naltirilmaydi. Ko'rish tarixi, yuklab olish tarixi, URL'lar va fayl mazmunlari qurilmangizda qoladi.
 
-Arroxy [TelemetryDeck](https://telemetrydeck.com) orqali anonim, agregat telemetriya yuboradi — faqat mustaqil loyiha uchun kimdir uni haqiqatan ham ishlatayotganini ko'rish uchun yetarli (ishga tushirishlar, OS, ilova versiyasi, nosozliklar). URLs yo'q, video sarlavhalari yo'q, fayl yo'llari yo'q, hisob ma'lumotlari yo'q. Har bir o'rnatma IDsi yuborishdan oldin xeshlanadi va TelemetryDeck hech qachon IPs saqlamaydi — EU-da joylashgan va dizayni bo'yicha GDPR ga mos keladi. Sozlamalarda o'chirib qo'yishingiz mumkin.
+Arroxy [OpenPanel](https://openpanel.dev) orqali anonim, agregat telemetriya yuboradi — ishga tushirishlar, OS, ilova versiyalari va nosozliklarni tushunish uchun yetarli. URL, video sarlavhasi, fayl yo‘li, hisob ma’lumoti, fingerprinting yoki shaxsiy ma’lumot yo‘q. Har bir o‘rnatish IDsi tasodifiy va shaxsingizga bog‘lanmagan. Sozlamalarda o‘chirib qo‘yishingiz mumkin.
 
 ---
 
@@ -239,10 +239,10 @@ Yo'q. Arroxy faqat YouTube har qanday brauzerga uzatadigan ommaviy tokenlardan f
 Ikki qavatli chidamlilik: yt-dlp YouTube o'zgarishlaridan bir necha soat ichida yangilanadi, Arroxy esa har ~30 daqiqada muddati tugaydigan kukilarga tayanmaydi. Bu uni eksport qilingan brauzer seanslariga bog'liq vositalardan sezilarli darajada barqarorroq qiladi.
 
 **Arroxy qanday tillarda mavjud?**
-To'qqizta: English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी. Tizim tilini avtomatik aniqlaydi; istalgan vaqt asboblar panelidan almashtiring. Lokalizatsiya fayllari `src/shared/i18n/locales/` dagi oddiy TypeScript ob'ektlari — [PR'lar mamnuniyat bilan qabul qilinadi](../../pulls).
+Yigirma bir, darhol tayyor: English, Español (ispan), Deutsch (nemis), Français (frantsuz), 日本語 (yapon), 中文 (xitoy), Русский (rus), Українська (ukrain), हिन्दी (hind), Afaan Oromoo, Kiswahili, O'zbekcha (o'zbek), Tiếng Việt (vyetnam), አማርኛ (amxar), العربية (arab), اردو (urdu), پښتو (pushtu), বাংলা (bengal), မြန်မာဘာသာ (birma), Ελληνικά (grek) va Српски (serb). Arroxy birinchi ishga tushirishda operatsion tizimingiz tilini avtomatik aniqlaydi va siz istalgan vaqtda asboblar panelindagi til tanlagichidan o'zgartirishingiz mumkin. Tarjimalar src/shared/i18n/locales/ ichidagi oddiy TypeScript obyektlari sifatida saqlanadi — hissa qo'shish uchun GitHub'da PR oching.
 
 **Boshqa narsalarni o'rnatishim kerakmi?**
-Yo'q. yt-dlp va ffmpeg birinchi ishga tushirishda rasmiy GitHub relizlaridan avtomatik yuklab olinadi va mahalliy keshlanadi.
+Yo‘q. yt-dlp birinchi ishga tushirishda avtomatik yuklab olinadi va kompyuteringizda keshlanadi; ffmpeg va ffprobe ilova bilan birga keladi. Undan keyin qo‘shimcha sozlash shart emas.
 
 **Playlist yoki butun kanallarni yuklab olishim mumkinmi?**
 Ha, playlistlar uchun: playlist URL manzilini joylang, keyin butun ro‘yxatni yoki faqat tanlagan videolaringizni navbatga qo‘shing. Butun kanalni to‘plam holida yuklab olish hali qo‘llab-quvvatlanmaydi.
@@ -280,7 +280,7 @@ Xayyolizda xususiyat bormi? [So'rov yuboring](../../issues) — jamiyat ishtirok
 - **React 19** + **TypeScript** — UI
 - **Tailwind CSS v4** — stilizatsiya
 - **Zustand** — holat boshqaruvi
-- **yt-dlp** + **ffmpeg** — yuklab olish va mux mexanizmi (birinchi ishga tushirishda GitHubdan yuklab olinadi, har doim dolzarb)
+- **yt-dlp** + **ffmpeg** — yuklab olish va mux mexanizmi (yt-dlp runtime’da olinadi; ffmpeg/ffprobe build vaqtida qo‘shiladi)
 - **Vite** + **electron-vite** — qurish vositalari
 - **Vitest** + **Playwright** — birlik va uchdan-uchgacha testlar
 
@@ -340,7 +340,7 @@ bun run dist         # joriy OT uchun paketlash
 bun run dist:win     # Windows portable exe ni cross-kompilyatsiya qilish
 ```
 
-> yt-dlp va ffmpeg paketga kiritilmagan — ular birinchi ishga tushirishda rasmiy GitHub relizlaridan yuklab olinadi va mahalliy keshlanadi.
+> yt-dlp birinchi ishga tushirishda GitHub’dan olinadi va ilova ma’lumotlari papkasida keshlanadi. ffmpeg va ffprobe har bir Arroxy relizi bilan birga keladi.
 
 </details>
 

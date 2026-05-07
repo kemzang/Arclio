@@ -37,6 +37,7 @@ class FakeDownloadService extends EventEmitter {
 
 function makeDeps() {
   const downloadService = new FakeDownloadService();
+  const formatProbeService = { getFormats: vi.fn() };
   const mainWindow = {
     isDestroyed: vi.fn().mockReturnValue(false),
     webContents: { send: vi.fn() },
@@ -52,9 +53,14 @@ function makeDeps() {
   };
   const settingsStore = {
     get: vi.fn().mockResolvedValue({
-      defaultOutputDir: '/tmp',
-      rememberLastOutputDir: true,
-      clipboardWatchEnabled: false
+      common: {
+        defaultOutputDir: '/tmp',
+        rememberLastOutputDir: true,
+        clipboardWatchEnabled: false,
+        cookiesMode: 'off'
+      },
+      single: {},
+      playlist: {}
     }),
     update: vi.fn()
   };
@@ -63,7 +69,7 @@ function makeDeps() {
   return {
     mainWindow: mainWindow as never,
     downloadService: downloadService as never,
-    formatProbeService: { probe: vi.fn() } as never,
+    formatProbeService: formatProbeService as never,
     playlistProbeService: { getPlaylistItems: vi.fn() } as never,
     settingsStore: settingsStore as never,
     queueStore: queueStore as never,
@@ -76,7 +82,7 @@ function makeDeps() {
     tokenService: { warmUp: vi.fn() } as never,
     languageRef: languageRef as never,
     clipboardWatcher: clipboardWatcher as never,
-    _raw: { downloadService, mainWindow, queueStore, languageRef, clipboardWatcher }
+    _raw: { downloadService, formatProbeService, mainWindow, queueStore, settingsStore, languageRef, clipboardWatcher }
   };
 }
 
@@ -257,6 +263,74 @@ describe('registerIpcHandlers', () => {
       const result = (await handler(null, [validItem])) as { ok: boolean };
       expect(result.ok).toBe(true);
       expect(deps._raw.queueStore.save).toHaveBeenCalledOnce();
+    });
+
+    it('downloads:getFormats rejects incomplete cookies config before probing', async () => {
+      const deps = makeDeps();
+      deps._raw.settingsStore.get.mockResolvedValue({
+        common: {
+          defaultOutputDir: '/tmp',
+          rememberLastOutputDir: true,
+          clipboardWatchEnabled: false,
+          cookiesMode: 'file',
+          cookiesPath: '   '
+        },
+        single: {},
+        playlist: {}
+      });
+      registerIpcHandlers(deps);
+
+      const handler = findCall(IPC_CHANNELS.downloadsGetFormats)!.fn;
+      const result = (await handler(null, { url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' })) as {
+        ok: boolean;
+        error?: { code: string; message: string };
+      };
+
+      expect(result.ok).toBe(false);
+      expect(result.error).toMatchObject({ code: 'validation', message: 'Pick a file to use cookies' });
+      expect(deps._raw.formatProbeService.getFormats).not.toHaveBeenCalled();
+    });
+
+    it('downloads:start rejects incomplete cookies config before starting downloads', async () => {
+      const deps = makeDeps();
+      deps._raw.settingsStore.get.mockResolvedValue({
+        common: {
+          defaultOutputDir: '/tmp',
+          rememberLastOutputDir: true,
+          clipboardWatchEnabled: false,
+          cookiesMode: 'browser'
+        },
+        single: {},
+        playlist: {}
+      });
+      registerIpcHandlers(deps);
+
+      const handler = findCall(IPC_CHANNELS.downloadsStart)!.fn;
+      const result = (await handler(null, {
+        url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        outputDir: '/tmp',
+        job: {
+          kind: 'single-format',
+          source: 'youtube',
+          formatId: '137+251',
+          preset: 'custom',
+          sponsorBlock: { mode: 'off' },
+          embed: {
+            chapters: false,
+            metadata: false,
+            thumbnail: false,
+            description: false,
+            thumbnailSidecar: false
+          }
+        }
+      })) as {
+        ok: boolean;
+        error?: { code: string; message: string };
+      };
+
+      expect(result.ok).toBe(false);
+      expect(result.error).toMatchObject({ code: 'validation', message: 'Pick a browser to use cookies' });
+      expect(deps._raw.downloadService.start).not.toHaveBeenCalled();
     });
   });
 });

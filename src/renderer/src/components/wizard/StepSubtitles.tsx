@@ -101,7 +101,7 @@ export function StepSubtitles(): JSX.Element {
                 <span className="text-[11px] italic text-[var(--text-subtle)]">{t('wizard.subtitles.noSelected')}</span>
               ) : (
                 selectedItems.map(({ code, displayName }) => (
-                  <span key={code} className="flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full text-[11px] font-semibold bg-[var(--brand)] text-white">
+                  <span key={code} className="flex items-center gap-1 h-6 ps-2.5 pe-1.5 rounded-full text-[11px] font-semibold bg-[var(--brand)] text-white">
                     {displayName}
                     <button
                       type="button"
@@ -129,7 +129,7 @@ export function StepSubtitles(): JSX.Element {
 
           {/* Search input */}
           <div className="relative">
-            <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--text-subtle)] pointer-events-none" />
+            <Search size={13} className="absolute start-2.5 top-1/2 -translate-y-1/2 text-[var(--text-subtle)] pointer-events-none" />
             <input
               type="text"
               value={query}
@@ -137,7 +137,7 @@ export function StepSubtitles(): JSX.Element {
                 setQuery(e.target.value);
               }}
               placeholder={t('wizard.subtitles.searchPlaceholder')}
-              className="w-full h-8 pl-7 pr-3 rounded-md border border-[var(--border-strong)] bg-secondary/60 text-sm text-foreground placeholder:text-[var(--text-subtle)] focus:outline-none focus:ring-1 focus:ring-[var(--brand)] focus:border-[var(--brand)] transition-colors"
+              className="w-full h-8 ps-7 pe-3 rounded-md border border-[var(--border-strong)] bg-secondary/60 text-sm text-foreground placeholder:text-[var(--text-subtle)] focus:outline-none focus:ring-1 focus:ring-[var(--brand)] focus:border-[var(--brand)] transition-colors"
             />
           </div>
 
@@ -216,12 +216,12 @@ function LangSection({ label, items, selected, onToggle, autoBadge }: LangSectio
               onClick={() => {
                 onToggle(code);
               }}
-              className="flex w-full items-center gap-2 h-7 px-2 rounded-md text-sm font-medium transition-colors cursor-pointer aria-checked:bg-[var(--brand-dim)] aria-checked:border-l-2 aria-checked:border-[var(--brand)] aria-checked:text-[var(--brand)] hover:bg-accent/60"
+              className="flex w-full items-center gap-2 h-7 px-2 rounded-md text-sm font-medium transition-colors cursor-pointer aria-checked:bg-[var(--brand-dim)] aria-checked:border-s-2 aria-checked:border-[var(--brand)] aria-checked:text-[var(--brand)] hover:bg-accent/60"
             >
               <span aria-hidden="true" className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[var(--border-strong)] transition-colors" style={isChecked ? { borderColor: 'var(--brand)' } : undefined}>
                 {isChecked && <Check size={10} strokeWidth={3} className="text-[var(--brand)]" />}
               </span>
-              <span className="flex-1 text-left truncate">{displayName}</span>
+              <span className="flex-1 text-start truncate">{displayName}</span>
               {isAuto && <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[var(--brand-dim)] text-[var(--brand)] shrink-0">{autoBadge}</span>}
             </button>
           );

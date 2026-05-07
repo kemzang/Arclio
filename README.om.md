@@ -87,7 +87,7 @@ YouTube ittisa bot isaa yoo haaromse, meeshaalee hedduun kuukkii biraawzaraa You
 - **Eegaa clipboard** — link YouTube koppiisi Arroxy URL of-hordofaa guutu yeroo app deebi'itu (Advanced settings keessatti jijjiiri)
 - **URL of-qulqulleessa** — params hordoffii (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) haqa fi linkiiwwan `youtube.com/redirect` bana
 - **Haala tray** — window cufuu buufannoo duubatti itti fufsisee hojechisisa
-- **Afaan 9** — afaan siistamaa of-danda'ee addaan baafata, yeroo kamiyyuu jijjiiruu danda'ama
+- **Afaan 21** — afaan siistamaa of-danda'ee addaan baafata, yeroo kamiyyuu jijjiiruu danda'ama
 
 ### Subtitle & seensuu boodaa
 
@@ -217,7 +217,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Buufannoonni kallattiin [yt-dlp](https://github.com/yt-dlp/yt-dlp) fayyadamuudhaan YouTube irraa foldera filatteetti darbamu — miila-seerri hunduu sarara servera sadarkaa-sadaffaa tokko keessa darbuu hin qabu. Seenaa ilaaluu, seenaa buufannoo, URLs, fi qabiyyee faayilaa meeshaa kee irratti hafu.
 
-Arroxy telemetrii anonymous, walitti makamaa [TelemetryDeck](https://telemetrydeck.com) fayyadamuudhaan erga — pirojekti indie tokkoof namni dhugumaan itti fayyadamaa jira beekuuf gahaa qofa (eegaluu, OS, verzhiyoonii app, caccabu). URLs hin jiru, mata-duree viidiyoo hin jiru, kallattii faayilaa hin jiru, odeeffannoo akkaawuntii hin jiru. ID diriirsa tokkoon tokko erguun dura hash godhama fi TelemetryDeck IPs hin kuusu — EU-tti qabamee fi GDPR-hayyaamaadha. Settings keessatti dhorkuu dandeessa.
+Arroxy telemetrii maqaa-dhabduu walitti makamaa [OpenPanel](https://openpanel.dev) fayyadamuudhaan erga — eegaluu, OS, version app fi kufaatii hubachuuf qofa. URL, mata-duree viidiyoo, karaa faayilaa, odeeffannoo account, fingerprinting yookaan data dhuunfaa hin jiru. ID install tokkoon tokkoo tasaa dha, eenyummaa keetti hin hidhamu. Settings keessatti dhaabuu dandeessa.
 
 ---
 
@@ -239,10 +239,10 @@ Lakki. Arroxy tokkicha token ummataa YouTube biraawzara kamiiyyuuf tajaajiltu fa
 Ciminni lamaatu jira: yt-dlp saatii keessatti jijjirama YouTube haaromsa, Arroxys kuukkii daqiiqaa ~30 keessatti dhumuu irratti hin hirkattu. Kun meeshaalee naannoo biraawzaraa erge irratti hirkatan caala qajeelina beekamaa godha.
 
 **Arroxy afaan meeqa keessatti argamu?**
-Sagal: Ingliziffaa, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी. Afaan siistamaa of-danda'ee addaan baafata; yeroo kamiyyuu toolbar irraa jijjiiri. Faayiloonni locale TypeScript `src/shared/i18n/locales/` keessa jiru — [PRs simatamu](../../pulls).
+Digdamatokkoo, yeroo jalqabaatii: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), fi Српски (Serbian). Arroxy afaan mana-hojii kee sirna hojjetaa irratti yeroo jalqabaatti ofumaa argata, yeroo kamiiyyuu toolbar irraa filataa afaan jijjiiruu dandeessa. Hiikaaleen objiektii TypeScript duwwaa akka src/shared/i18n/locales/ keessa jiran — gargaaruf GitHub irratti PR bani.
 
 **Waan biraa fayyadu barbaachisaa?**
-Lakki. yt-dlp fi ffmpeg of-hordofaan yeroo jalqabaaf baasii GitHub isaanitii irraa buufamanii naannoo kuufamu.
+Lakki. yt-dlp jalqaba banuu irratti ofumaan buufamee meeshaa kee irratti kuufama; ffmpeg fi ffprobe app waliin dhufu. Sana booda qindaaʼinni dabalataa hin barbaachisu.
 
 **Playlist ykn chaanaalii guutuu buusuu danda'aa?**
 Eeyyee, playlist'f: URL playlist maxxansi, booda tarree guutuu yookaan viidiyoowwan ati filatte qofa queue keessa galchi. Channel guutuu batch'n buusuun ammaaf hin deggaramu.
@@ -280,7 +280,7 @@ Amala yaaddetee jirtaa? [Gaaffii bani](../../issues) — galchiin hawaasaa dursa
 - **React 19** + **TypeScript** — UI
 - **Tailwind CSS v4** — kallattii
 - **Zustand** — bulchiinsa haala
-- **yt-dlp** + **ffmpeg** — injinii buusuu fi walitti makuu (yeroo jalqabaaf GitHub irraa fudhatama, yeroo hunda haaraa)
+- **yt-dlp** + **ffmpeg** — injinii buusuu fi walitti makuu (yt-dlp runtime irratti fudhatama; ffmpeg/ffprobe build time irratti waliin maramu)
 - **Vite** + **electron-vite** — meeshaalee ijaarsaa
 - **Vitest** + **Playwright** — qormaata unit fi end-to-end
 
@@ -340,7 +340,7 @@ bun run dist         # OS ammaa kanaaf qindeessi
 bun run dist:win     # Windows portable exe cross-compile
 ```
 
-> yt-dlp fi ffmpeg waliin hin maramne — yeroo jalqabaaf GitHub irraa buufamanii foldaraa data appichaa keessatti kuufamu.
+> yt-dlp yeroo jalqabaaf GitHub irraa fudhatamee foldara data app keessatti kuufama. ffmpeg fi ffprobe release Arroxy hunda waliin dhufu.
 
 </details>
 

@@ -31,16 +31,16 @@ interface Props {
 
 const STATUS_BORDER: Record<QueueItemStatus, string> = {
   pending: 'border-border',
-  downloading: 'border-l-2 border-l-[var(--brand)] shadow-[inset_3px_0_12px_var(--brand-glow)]',
-  paused: 'border-l-2 border-l-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)]',
-  done: 'border-l-2 border-l-[var(--color-status-done)] shadow-[inset_3px_0_12px_var(--color-status-done-glow)]',
-  error: 'border-l-2 border-l-[var(--color-status-error)] shadow-[inset_3px_0_12px_var(--color-status-error-glow)]',
+  downloading: 'border-s-2 border-s-[var(--brand)] shadow-[inset_3px_0_12px_var(--brand-glow)] rtl:shadow-[inset_-3px_0_12px_var(--brand-glow)]',
+  paused: 'border-s-2 border-s-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-paused-glow)]',
+  done: 'border-s-2 border-s-[var(--color-status-done)] shadow-[inset_3px_0_12px_var(--color-status-done-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-done-glow)]',
+  error: 'border-s-2 border-s-[var(--color-status-error)] shadow-[inset_3px_0_12px_var(--color-status-error-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-error-glow)]',
   cancelled: 'border-border'
 };
 
 // Yellow/orange tint for completed-with-subtitle-warning. Reuses existing paused tokens
 // since both convey "completed but not perfect".
-const SUBS_FAILED_BORDER = 'border-l-2 border-l-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)]';
+const SUBS_FAILED_BORDER = 'border-s-2 border-s-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-paused-glow)]';
 
 export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
   const { t, i18n } = useTranslation();

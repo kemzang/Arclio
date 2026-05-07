@@ -144,7 +144,10 @@ const ur = {
         }
       },
       cookies: {
-        toggle: 'cookies فائل استعمال کریں',
+        sourceLabel: 'Cookies کا ذریعہ',
+        sourceOff: 'بند',
+        sourceFile: 'فائل',
+        sourceBrowser: 'براؤزر',
         toggleDescription: 'عمر کی پابندی والی، صرف ممبرز والی، اور اکاؤنٹ پرائیویٹ ویڈیوز کے لیے مددگار۔',
         risk: 'خطرہ: cookies.txt میں اس براؤزر کے ہر لاگ اِن سیشن کی معلومات ہوتی ہیں — اسے پرائیویٹ رکھیں۔',
         fileLabel: 'Cookies فائل',
@@ -153,6 +156,10 @@ const ur = {
         placeholder: 'کوئی فائل منتخب نہیں',
         helpLink: 'cookies کیسے ایکسپورٹ کروں؟',
         enabledButNoFile: 'cookies استعمال کرنے کے لیے فائل منتخب کریں',
+        browserLabel: 'براؤزر',
+        browserPlaceholder: 'براؤزر منتخب کریں…',
+        browserHelp: 'براؤزر سے براہ راست cookies پڑھتا ہے۔ Chromium خاندان کے براؤزرز بند ہونے چاہئیں۔',
+        enabledButNoBrowser: 'cookies استعمال کرنے کے لیے براؤزر منتخب کریں',
         banWarning: 'YouTube ان اکاؤنٹس کو فلیگ — اور کبھی کبھار بین — کر سکتا ہے جن کے cookies yt-dlp کے ساتھ استعمال ہوں۔ ممکن ہو تو ٹمپریری اکاؤنٹ استعمال کریں۔',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,35 @@ const ur = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'آڈیو کنورژن کے لیے صرف آڈیو موڈ ضروری ہے (ویڈیو انتخاب ہٹائیں)۔',
         requiresLossy: 'ایک نیٹیو سٹریم منتخب ہے — بٹ ریٹ صرف اس وقت لاگو ہوتا ہے جب mp3، m4a، یا opus میں کنورٹ کیا جائے۔'
+      },
+      botWall: {
+        heading: 'YouTube نے یہ پروب محدود کر دی',
+        bodyUnconfigured: 'فارمیٹ کی فہرست نامکمل ہو سکتی ہے۔ ایڈوانسڈ سیٹنگز میں cookies ترتیب دیں، یا نیٹ ورک تبدیل کر کے دوبارہ کوشش کریں۔',
+        bodyDisabled: 'Cookies ترتیب دی گئی ہیں لیکن بند ہیں۔ مکمل فہرست کے لیے انہیں فعال کریں اور دوبارہ کوشش کریں، یا نیٹ ورک تبدیل کر کے دوبارہ کوشش کریں۔',
+        bodyEnabled: 'Cookies کے ساتھ بھی YouTube نے یہ پروب محدود کی۔ بعد میں دوبارہ کوشش کریں یا نیٹ ورک تبدیل کریں۔',
+        retryCta: 'دوبارہ کوشش کریں',
+        enableRetryCta: 'Cookies فعال کریں اور دوبارہ کوشش کریں',
+        openSettingsCta: 'ایڈوانسڈ سیٹنگز کھولیں'
+      },
+      cookiesError: {
+        heading: 'Cookies وجہ ہو سکتی ہیں',
+        currentModeLabel: 'Cookies کا ذریعہ',
+        currentModeFile: 'فائل',
+        currentModeBrowser: 'براؤزر',
+        explanationFile: 'آپ کی cookies فائل خالی، میعاد ختم، یا غلط فارمیٹ میں ہو سکتی ہے (yt-dlp Netscape cookies.txt کی توقع رکھتا ہے)۔ cookies دوبارہ ایکسپورٹ کریں، مختلف فائل منتخب کریں، براؤزر موڈ پر سوئچ کریں، یا cookies بند کر دیں۔',
+        explanationBrowser: 'Cookies براہ راست براؤزر سے پڑھی جاتی ہیں۔ اگر براؤزر ابھی چل رہا ہے تو اس کا cookie ڈیٹا بیس لاک ہو سکتا ہے (Chromium-family)۔ براؤزر کا YouTube میں سائن اِن ہونا بھی ضروری ہے۔ براؤزر بند کریں، کوئی مختلف براؤزر آزمائیں، فائل موڈ پر سوئچ کریں، یا cookies بند کر دیں۔',
+        openSettingsCta: 'Cookies سیٹنگز کھولیں',
+        dpapi: {
+          heading: 'Chrome cookies ونڈوز انکرپشن کے ذریعے بلاک ہیں',
+          explanation: 'Chrome 127 اور اس سے نئے ورژن cookies کو اس طرح انکرپٹ کرتے ہیں کہ دوسری ایپس Windows پر انہیں پڑھ نہیں سکتیں۔ نیچے دیے گئے حلوں میں سے ایک آزمائیں۔',
+          fixFirefoxLabel: 'Firefox پر سوئچ کریں',
+          fixFirefoxBody: 'Firefox، App-Bound Encryption استعمال نہیں کرتا۔ Cookies سیٹنگز کھولیں اور براؤزر کی فہرست سے Firefox منتخب کریں۔',
+          fixFileLabel: 'cookies.txt ایکسپورٹ کریں',
+          fixFileBody: 'کسی براؤزر ایکسٹینشن سے Chrome سے cookies ایکسپورٹ کریں، پھر اس ایپ کو فائل موڈ پر سوئچ کریں اور ایکسپورٹ کی گئی فائل منتخب کریں۔',
+          fixUnsafeLabel: 'App-Bound Encryption غیر فعال کر کے Chrome لانچ کریں',
+          fixUnsafeBody: 'Chrome کی لانچ شارٹ کٹ میں --disable-features=LockProfileCookieDatabase شامل کریں۔ انتباہ: اس سے پہلے سے انکرپٹ cookies ختم ہو جاتی ہیں، اس لیے آپ ہر سائٹ سے لاگ آؤٹ ہو جائیں گے اور دوبارہ لاگ ان کرنا ہو گا۔',
+          docsLinkLabel: 'yt-dlp دستاویزات (issue #10927)'
+        }
       }
     },
     folder: {

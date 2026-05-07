@@ -262,12 +262,23 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       set({ settings: result.data });
     },
 
-    setCookiesEnabled: async (enabled) => {
+    setCookiesMode: async (mode) => {
       const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, cookiesEnabled: enabled } } });
-      const result = await window.appApi.settings.update({ common: { cookiesEnabled: enabled } });
+      if (current) set({ settings: { ...current, common: { ...current.common, cookiesMode: mode } } });
+      const result = await window.appApi.settings.update({ common: { cookiesMode: mode } });
       if (!result.ok) {
-        notify.settingsSaveFailed('cookiesEnabled', result.error);
+        notify.settingsSaveFailed('cookiesMode', result.error);
+        return;
+      }
+      set({ settings: result.data });
+    },
+
+    setCookiesBrowser: async (browser) => {
+      const current = get().settings;
+      if (current) set({ settings: { ...current, common: { ...current.common, cookiesBrowser: browser } } });
+      const result = await window.appApi.settings.update({ common: { cookiesBrowser: browser } });
+      if (!result.ok) {
+        notify.settingsSaveFailed('cookiesBrowser', result.error);
         return;
       }
       set({ settings: result.data });

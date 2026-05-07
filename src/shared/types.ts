@@ -6,12 +6,12 @@ export type { PreparedJob } from './preparedJob';
 // Re-export the enum types whose canonical definition lives in `schemas.ts`
 // (where they're z.enum schemas). Importing from `@shared/types` continues to
 // work for callers that don't care about the schema vs type distinction.
-export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection } from './schemas';
+export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection, CookiesMode, CookiesBrowser } from './schemas';
 
 export type { StatusKey } from './schemas';
 export type { LocalizedError, YtdlpErrorKey } from './i18n/types';
 
-import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey } from './schemas';
+import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey, CookiesMode, CookiesBrowser } from './schemas';
 
 export type AppErrorCode = 'validation' | 'token' | 'binary' | 'download' | 'ipc' | 'unknown';
 
@@ -28,6 +28,10 @@ export interface AppError {
 export interface CommonSettings {
   defaultOutputDir: string;
   rememberLastOutputDir: boolean;
+  // Stable per-install random UUID used as the OpenPanel `profileId`. No PII —
+  // this is a random anonymous identifier, not derived from the user. Generated
+  // lazily by SettingsStore on first launch when missing.
+  installId?: string;
   uiZoom?: number;
   uiTheme?: UiTheme;
   language?: SupportedLang;
@@ -41,7 +45,8 @@ export interface CommonSettings {
     home: string | null;
   };
   cookiesPath?: string;
-  cookiesEnabled?: boolean;
+  cookiesMode?: CookiesMode;
+  cookiesBrowser?: CookiesBrowser;
   proxyUrl?: string;
   clipboardWatchEnabled: boolean;
   closeBehavior?: 'ask' | 'tray' | 'quit';
@@ -199,7 +204,7 @@ export type DependencyId = (typeof DEPENDENCY_IDS)[number];
 
 export const BLOCKING_DEPENDENCY_IDS: readonly DependencyId[] = ['yt-dlp', 'ffmpeg', 'ffprobe'] as const;
 
-export type DependencySource = { kind: 'manualOverride'; path: string } | { kind: 'envOverride'; path: string; envVar: string } | { kind: 'managed'; channel: 'nightly' | 'stable' | 'default'; url: string } | { kind: 'systemPath'; path: string };
+export type DependencySource = { kind: 'manualOverride'; path: string } | { kind: 'envOverride'; path: string; envVar: string } | { kind: 'managed'; channel: 'nightly' | 'stable' | 'default'; url: string } | { kind: 'systemPath'; path: string } | { kind: 'cache'; path: string } | { kind: 'bundled'; path: string };
 
 export type DependencyFailureKind = 'download_failed' | 'extract_failed' | 'hash_failed' | 'spawn_failed' | 'permission_denied' | 'blocked_or_quarantined' | 'bad_exit_code' | 'timeout' | 'pair_incomplete';
 
@@ -273,7 +278,7 @@ export interface CommonPaths {
 export interface StartDownloadInput {
   url: string;
   outputDir?: string;
-  cookiesEnabled?: boolean;
+  cookiesMode?: CookiesMode;
   job: PreparedJob;
 }
 
@@ -285,6 +290,8 @@ export interface GetFormatsInput {
   url: string;
 }
 
+export type ProbeDegradationReason = 'botWall' | 'extractor';
+
 export interface GetFormatsOutput {
   formats: FormatOption[];
   title: string;
@@ -292,6 +299,7 @@ export interface GetFormatsOutput {
   duration?: number;
   subtitles: SubtitleMap;
   automaticCaptions: SubtitleMap;
+  degraded?: { reasons: ProbeDegradationReason[] };
 }
 
 export interface CancelDownloadInput {

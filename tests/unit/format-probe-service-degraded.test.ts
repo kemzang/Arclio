@@ -59,7 +59,14 @@ describe('detectProbeDegradationSignals', () => {
   it('matches every degradation signal explicitly', () => {
     const stderr = ['n challenge solving failed', 'Some formats may be missing', 'Error solving n challenge request', 'Failed to download m3u8 information', 'Unable to download webpage', 'IncompleteRead'].join('\n');
 
-    expect(detectProbeDegradationSignals(stderr)).toEqual(['n challenge solving failed', 'Some formats may be missing', 'Error solving n challenge request', 'Failed to download m3u8 information', 'Unable to download webpage', 'IncompleteRead']);
+    expect(detectProbeDegradationSignals(stderr)).toEqual([
+      { label: 'n challenge solving failed', category: 'extractor' },
+      { label: 'Some formats may be missing', category: 'extractor' },
+      { label: 'Error solving n challenge request', category: 'extractor' },
+      { label: 'Failed to download m3u8 information', category: 'extractor' },
+      { label: 'Unable to download webpage', category: 'extractor' },
+      { label: 'IncompleteRead', category: 'extractor' }
+    ]);
   });
 });
 

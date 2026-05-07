@@ -1,6 +1,7 @@
 import type { StoreApi } from 'zustand';
-import type { AppError, AppSettings, AudioBitrate, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
+import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, GetFormatsOutput, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
 import type { AudioSelection } from '@shared/schemas';
+import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
 export type { AudioSelection };
 export type WizardStep = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
 
@@ -21,6 +22,12 @@ export interface WizardSlice {
   wizardThumbnail: string;
   wizardDuration?: number;
   wizardFormats: FormatOption[];
+  wizardFormatsDegraded: NonNullable<GetFormatsOutput['degraded']> | null;
+  // Transient flag set when the user navigates to the URL step from the
+  // CookiesErrorAlert's "Open cookies settings" link. `StepUrlInput` reads
+  // it on mount, expands the advanced section, scrolls the cookies block
+  // into view, and clears the flag so it doesn't re-fire on re-render.
+  advancedAutoOpen: boolean;
   selectedVideoFormatId: string;
   audioSelection: AudioSelection;
   // Preserves the user's bitrate choice when toggling between mp3/m4a/opus
@@ -56,11 +63,13 @@ export interface WizardSlice {
   playlistProbeLoading: boolean;
   mixedUrlPromptOpen: boolean;
   mixedUrlPending: string | null;
+  cookiesConfigDialogIssue: IncompleteCookiesConfigIssue | null;
   selectedPlaylistPreset: PlaylistPreset | null;
 
   setWizardUrl: (url: string) => void;
   submitUrl: () => Promise<void>;
   dismissMixedPrompt: (choice: 'video' | 'playlist') => Promise<void>;
+  dismissCookiesConfigDialog: () => void;
   setPlaylistItemSelected: (id: string, checked: boolean) => void;
   selectAllPlaylistItems: () => void;
   selectNonePlaylistItems: () => void;
@@ -71,6 +80,10 @@ export interface WizardSlice {
   back: () => void;
   reset: () => void;
   retry: () => Promise<void>;
+  retryFormatProbe: () => Promise<void>;
+  retryProbeWithCookies: () => Promise<void>;
+  openCookiesSettings: () => void;
+  setAdvancedAutoOpen: (open: boolean) => void;
   setWizardOutputDir: (dir: string, persist?: boolean) => Promise<void>;
   setSelectedVideoFormatId: (id: string) => void;
   setAudioSelection: (sel: AudioSelection) => void;
@@ -141,7 +154,8 @@ export interface SystemSlice {
   openLogs: () => Promise<void>;
   setLanguage: (lang: SupportedLang) => void;
   setCookiesPath: (path: string) => Promise<void>;
-  setCookiesEnabled: (enabled: boolean) => Promise<void>;
+  setCookiesMode: (mode: CookiesMode) => Promise<void>;
+  setCookiesBrowser: (browser: CookiesBrowser) => Promise<void>;
   setProxyUrl: (url: string) => Promise<void>;
   setClipboardWatchEnabled: (enabled: boolean) => Promise<void>;
   setCloseBehavior: (value: 'tray' | 'quit') => Promise<void>;

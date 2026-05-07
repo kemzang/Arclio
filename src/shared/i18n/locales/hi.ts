@@ -144,7 +144,10 @@ const hi = {
         }
       },
       cookies: {
-        toggle: 'कुकी फ़ाइल का उपयोग करें',
+        sourceLabel: 'कुकी स्रोत',
+        sourceOff: 'बंद',
+        sourceFile: 'फ़ाइल',
+        sourceBrowser: 'ब्राउज़र',
         toggleDescription: 'आयु-प्रतिबंधित, सदस्य-केवल और खाता-निजी वीडियो में मदद करता है।',
         risk: 'जोखिम: cookies.txt में उस ब्राउज़र के सभी लॉग-इन सत्र होते हैं — इसे निजी रखें।',
         fileLabel: 'कुकी फ़ाइल',
@@ -153,6 +156,10 @@ const hi = {
         placeholder: 'कोई फ़ाइल चयनित नहीं',
         helpLink: 'कुकी कैसे एक्सपोर्ट करें?',
         enabledButNoFile: 'कुकी का उपयोग करने के लिए फ़ाइल चुनें',
+        browserLabel: 'ब्राउज़र',
+        browserPlaceholder: 'ब्राउज़र चुनें…',
+        browserHelp: 'ब्राउज़र से सीधे कुकी पढ़ता है। Chromium-आधारित ब्राउज़र के लिए ब्राउज़र बंद होना चाहिए।',
+        enabledButNoBrowser: 'कुकी उपयोग करने के लिए ब्राउज़र चुनें',
         banWarning: 'चेतावनी: yt-dlp जिन कुकी का उपयोग करता है, उनसे जुड़े अकाउंट को YouTube फ़्लैग — और कभी-कभी बैन — कर सकता है। हो सके तो डिस्पोज़ेबल अकाउंट का उपयोग करें।',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
@@ -247,6 +254,35 @@ const hi = {
         lossyLabel: '{{target}} {{bitrate}} kbps',
         requiresAudioOnly: 'ऑडियो कनवर्शन के लिए केवल-ऑडियो मोड ज़रूरी है (वीडियो चयन हटाएं)।',
         requiresLossy: 'एक नेटिव स्ट्रीम चुनी गई है — बिटरेट केवल mp3, m4a, या opus में कनवर्ट करते समय लागू होता है।'
+      },
+      botWall: {
+        heading: 'YouTube ने इस जाँच को सीमित किया',
+        bodyUnconfigured: 'फ़ॉर्मेट सूची अधूरी हो सकती है। उन्नत सेटिंग्स में कुकी सेट करें, या नेटवर्क बदलकर पुनः प्रयास करें।',
+        bodyDisabled: 'कुकी कॉन्फ़िगर हैं लेकिन बंद हैं। पूरी सूची पाने के लिए उन्हें चालू करके पुनः प्रयास करें, या नेटवर्क बदलकर पुनः प्रयास करें।',
+        bodyEnabled: 'कुकी के साथ भी YouTube ने इस जाँच को सीमित किया। बाद में पुनः प्रयास करें या नेटवर्क बदलें।',
+        retryCta: 'पुनः प्रयास',
+        enableRetryCta: 'कुकी चालू करके पुनः प्रयास करें',
+        openSettingsCta: 'उन्नत सेटिंग्स खोलें'
+      },
+      cookiesError: {
+        heading: 'कुकी इसकी वजह हो सकती है',
+        currentModeLabel: 'कुकी स्रोत',
+        currentModeFile: 'फ़ाइल',
+        currentModeBrowser: 'ब्राउज़र',
+        explanationFile: 'आपकी कुकी फ़ाइल खाली, एक्सपायर्ड या गलत फ़ॉर्मेट में हो सकती है (yt-dlp को Netscape cookies.txt चाहिए)। कुकी फिर से एक्सपोर्ट करें, कोई अलग फ़ाइल चुनें, ब्राउज़र मोड पर जाएँ, या कुकी बंद कर दें।',
+        explanationBrowser: 'कुकी सीधे ब्राउज़र से पढ़ी जाती हैं। अगर ब्राउज़र अभी चल रहा है, तो उसका कुकी डेटाबेस लॉक हो सकता है (Chromium परिवार)। ब्राउज़र में YouTube पर लॉग इन भी होना ज़रूरी है। ब्राउज़र बंद करके देखें, कोई दूसरा ब्राउज़र आज़माएँ, फ़ाइल मोड पर जाएँ, या कुकी बंद कर दें।',
+        openSettingsCta: 'कुकी सेटिंग्स खोलें',
+        dpapi: {
+          heading: 'Chrome कुकी Windows एन्क्रिप्शन से ब्लॉक हैं',
+          explanation: 'Chrome 127 और उसके बाद के वर्शन कुकी को इस तरह एन्क्रिप्ट करते हैं कि Windows पर दूसरे ऐप उन्हें नहीं पढ़ सकते। नीचे दिए गए किसी एक समाधान को आज़माएँ।',
+          fixFirefoxLabel: 'Firefox पर स्विच करें',
+          fixFirefoxBody: 'Firefox, App-Bound Encryption का उपयोग नहीं करता। कुकी सेटिंग्स खोलें और ब्राउज़र सूची से Firefox चुनें।',
+          fixFileLabel: 'cookies.txt एक्सपोर्ट करें',
+          fixFileBody: 'Chrome से किसी ब्राउज़र एक्सटेंशन के ज़रिए कुकी एक्सपोर्ट करें, फिर इस ऐप को File मोड पर स्विच करें और एक्सपोर्ट की गई फ़ाइल चुनें।',
+          fixUnsafeLabel: 'App-Bound Encryption बंद करके Chrome लॉन्च करें',
+          fixUnsafeBody: 'Chrome के लॉन्च शॉर्टकट में --disable-features=LockProfileCookieDatabase जोड़ें। चेतावनी: इससे पहले से एन्क्रिप्टेड कुकी अमान्य हो जाएंगी, इसलिए आप हर साइट से साइन आउट हो जाएंगे और फिर से लॉग इन करना होगा।',
+          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+        }
       }
     },
     folder: {

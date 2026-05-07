@@ -89,7 +89,7 @@ Wenn YouTube seine Bot-Erkennung aktualisiert, sagen die meisten Tools, du solls
 - **Zwischenablage-Überwachung** — kopiere einen YouTube-Link und Arroxy füllt die URL automatisch aus, wenn du die App wieder fokussierst (in den erweiterten Einstellungen umschaltbar)
 - **URLs automatisch bereinigen** — entfernt Tracking-Parameter (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) und löst `youtube.com/redirect`-Links auf
 - **Tray-Modus** — das Schließen des Fensters lässt Downloads im Hintergrund weiterlaufen
-- **9 Sprachen** — erkennt automatisch die Systemsprache, jederzeit umschaltbar
+- **21 Sprachen** — erkennt automatisch die Systemsprache, jederzeit umschaltbar
 
 ### Untertitel & Nachbearbeitung
 
@@ -219,7 +219,7 @@ flatpak run io.github.antonio_orionus.Arroxy
 
 Downloads werden direkt über [yt-dlp](https://github.com/yt-dlp/yt-dlp) von YouTube in den von dir gewählten Ordner geholt — nichts wird über einen Drittanbieter-Server geleitet. Verlauf, Download-Historie, URLs und Dateiinhalte bleiben auf deinem Gerät.
 
-Arroxy sendet anonyme, aggregierte Telemetrie über [TelemetryDeck](https://telemetrydeck.com) — gerade genug, damit ein Indie-Projekt sehen kann, ob es überhaupt genutzt wird (Starts, OS, App-Version, Abstürze). Keine URLs, keine Video-Titel, keine Dateipfade, keine Kontodaten. Die pro-Installation-ID wird vor dem Senden gehasht und TelemetryDeck speichert keine IPs — EU-gehostet und GDPR-freundlich by Design. Du kannst das in den Einstellungen deaktivieren.
+Arroxy sendet anonyme, aggregierte Telemetrie über [OpenPanel](https://openpanel.dev) — gerade genug, um Starts, OS, App-Versionen und Abstürze zu verstehen. Keine URLs, Video-Titel, Dateipfade, Kontodaten, Fingerprinting oder personenbezogenen Daten. Die ID pro Installation ist zufällig und nicht mit deiner Identität verknüpft. Du kannst das in den Einstellungen deaktivieren.
 
 ---
 
@@ -241,10 +241,10 @@ Nein. Arroxy verwendet nur die öffentlichen Tokens, die YouTube an jeden Browse
 Zwei Resilienzschichten: yt-dlp wird innerhalb von Stunden nach YouTube-Änderungen aktualisiert, und Arroxy verlässt sich nicht auf Cookies, die alle ~30 Minuten ablaufen. Das macht es deutlich stabiler als Tools, die auf exportierte Browser-Sessions angewiesen sind.
 
 **In welchen Sprachen ist Arroxy verfügbar?**
-Neun: English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी. Erkennt automatisch deine Systemsprache; jederzeit über die Symbolleiste umschaltbar. Sprachdateien sind einfache TypeScript-Objekte in `src/shared/i18n/locales/` — [PRs willkommen](../../pulls).
+Einundzwanzig, direkt out of the box: English, Español (Spanisch), Deutsch, Français (Französisch), 日本語 (Japanisch), 中文 (Chinesisch), Русский (Russisch), Українська (Ukrainisch), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Usbekisch), Tiếng Việt (Vietnamesisch), አማርኛ (Amharisch), العربية (Arabisch), اردو (Urdu), پښتو (Paschto), বাংলা (Bengalisch), မြန်မာဘာသာ (Birmanisch), Ελληνικά (Griechisch) und Српски (Serbisch). Arroxy erkennt deine Betriebssystem-Sprache beim ersten Start und du kannst jederzeit über die Sprachauswahl in der Symbolleiste wechseln. Übersetzungen liegen als einfache TypeScript-Objekte in src/shared/i18n/locales/ — öffne einen PR auf GitHub, um beizutragen.
 
 **Muss ich etwas zusätzlich installieren?**
-Nein. yt-dlp und ffmpeg werden beim ersten Start automatisch von ihren offiziellen GitHub-Releases heruntergeladen und lokal gecacht.
+Nein. yt-dlp wird beim ersten Start automatisch heruntergeladen und auf deinem Rechner gecacht; ffmpeg und ffprobe werden mit der App geliefert. Danach ist keine weitere Einrichtung nötig.
 
 **Kann ich Playlists oder ganze Kanäle herunterladen?**
 Ja, für Playlists: Füge eine Playlist-URL ein und stelle dann entweder die ganze Liste oder nur die Videos in die Warteschlange, die du auswählst. Ganze Kanäle im Batch werden noch nicht unterstützt.
@@ -282,7 +282,7 @@ Eine Funktion im Sinn? [Anfrage öffnen](../../issues) — Community-Input besti
 - **React 19** + **TypeScript** — UI
 - **Tailwind CSS v4** — Styling
 - **Zustand** — State Management
-- **yt-dlp** + **ffmpeg** — Download- und Mux-Engine (beim ersten Start von GitHub geholt, immer aktuell)
+- **yt-dlp** + **ffmpeg** — Download- und Mux-Engine (yt-dlp wird zur Laufzeit geholt; ffmpeg/ffprobe sind beim Build gebündelt)
 - **Vite** + **electron-vite** — Build-Tooling
 - **Vitest** + **Playwright** — Unit- und End-to-End-Tests
 
@@ -342,7 +342,7 @@ bun run dist         # für aktuelles OS paketieren
 bun run dist:win     # Windows Portable exe cross-kompilieren
 ```
 
-> yt-dlp und ffmpeg sind nicht gebündelt — sie werden beim ersten Start von den offiziellen GitHub-Releases geholt und im App-Datenordner gecacht.
+> yt-dlp wird beim ersten Start von GitHub geholt und im App-Datenordner gecacht. ffmpeg und ffprobe sind in jedem Arroxy-Release enthalten.
 
 </details>
 

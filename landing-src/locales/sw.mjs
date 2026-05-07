@@ -67,7 +67,7 @@ export const sw = {
   f3_h: "Playlist pia",
   f3_p: "Bandika URL ya playlist, pakua orodha yote, au tiki video unazotaka tu kabla Arroxy haijaziweka kwenye foleni.",
   f4_h: "Masasisho ya kiotomatiki",
-  f4_p: "Arroxy inaweka yt-dlp na ffmpeg safi chini ya kofia — inafanya kazi kupitia kila mabadiliko ya YouTube.",
+  f4_p: "Arroxy huweka yt-dlp ya kisasa na husafirisha ffmpeg ndani ya programu — hufanya kazi kupitia kila mabadiliko ya YouTube.",
   f5_h: "Lugha 21",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — hugundua yako kiotomatiki.",
   f6_h: "Majukwaa mengi",
@@ -102,8 +102,8 @@ export const sw = {
   p1_p: "Hakuna akaunti ya Google. Hakuna vikao vya kuisha muda. Hatari sifuri ya akaunti yako kupigwa bendera.",
   p2_h: "Bila vidakuzi",
   p2_p: "Arroxy inaomba alama sawa na kivinjari chochote. Hakuna kinachosafirishwa, hakuna kinachohifadhiwa.",
-  p3_h: "Hakuna vitambulisho vya mtumiaji",
-  p3_p: "Telemetry isiyo na jina kupitia TelemetryDeck — kitambulisho chako cha usanidi hufishwa kabla ya kuacha programu, hakuna uchapaji wa alama, hakuna data ya kibinafsi. Vipakuliaji vyako, historia, na faili hazitoki kamwe kwenye kifaa chako.",
+  p3_h: "Telemetry isiyo na jina",
+  p3_p: "Telemetry isiyo na jina kupitia OpenPanel — kitambulisho cha nasibu kwa kila usakinishaji husaidia kuhesabu uzinduzi, matoleo, OS na ajali; hakuna URLs, vichwa, njia za faili, taarifa za akaunti, fingerprinting au data binafsi. Vipakuliwa, historia na faili zako hazitoki kamwe kwenye kifaa chako.",
   p4_h: "Bila seva za tatu",
   p4_p: "Mchakato wote unafanya kazi ndani ya mfumo kupitia yt-dlp + ffmpeg. Faili kamwe hazigusi seva ya mbali.",
 
@@ -144,7 +144,7 @@ export const sw = {
     "Ishirini na moja, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kijerumani), Français (Kifaransa), 日本語 (Kijapani), 中文 (Kichina), Русский (Kirusi), Українська (Kiukraini), हिन्दी (Kihindi), Afaan Oromoo, Kiswahili, O'zbekcha (Kiuzbeki), Tiếng Việt (Kivietinamu), አማርኛ (Kiamhara), العربية (Kiarabu), اردو (Kiurdu), پښتو (Kipashto), বাংলা (Kibengali), မြန်မာဘာသာ (Kiburma), Ελληνικά (Kigiriki), na Српски (Kiserbia). Arroxy hugundua lugha ya mfumo wako wa uendeshaji wakati wa uzinduzi wa kwanza na unaweza kubadili wakati wowote kutoka kichaguo cha lugha kwenye upau wa zana. Tafsiri zinaishi kama vitu vya TypeScript vya kawaida katika src/shared/i18n/locales/ — fungua PR kwenye GitHub kuchangia.",
   faq_q4: "Je, ninahitaji kusakinisha chochote?",
   faq_a4:
-    "Hapana. yt-dlp na ffmpeg zinapakuliwa kiotomatiki wakati wa uzinduzi wa kwanza kutoka matoleo yao rasmi ya GitHub na kuhifadhiwa kwenye kompyuta yako. Baada ya hapo, hakuna usanidi wa ziada unaohitajika.",
+    "Hapana. yt-dlp hupakuliwa kiotomatiki wakati wa uzinduzi wa kwanza na kuhifadhiwa kwenye kifaa chako; ffmpeg na ffprobe huja pamoja na programu. Baada ya hapo, hakuna usanidi wa ziada unaohitajika.",
   faq_q5: "Je, itaendelea kufanya kazi ikiwa YouTube itabadilisha kitu?",
   faq_a5:
     "Ndiyo — na Arroxy ina tabaka mbili za ustahimilivu. Kwanza, yt-dlp ni moja ya zana za chanzo huria zinazodumishwa zaidi — inasasishwa ndani ya masaa ya mabadiliko ya YouTube. Pili, Arroxy haiitegemei vidakuzi wala akaunti yako ya Google kamwe, kwa hivyo hakuna kikao cha kuisha muda wala vitambulisho vya kubadilisha. Mchanganyiko huo unaifanya iwe thabiti zaidi kuliko zana zinazotegemea vidakuzi vya kivinjari vilivyosafirishwa.",

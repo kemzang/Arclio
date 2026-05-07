@@ -32,3 +32,28 @@ export function applyMacros(html, macros) {
   }
   return html;
 }
+
+// Build the OpenPanel web tracker snippet from LANDING_OPENPANEL_CLIENT_ID.
+// Web SDK uses clientId only (publicly served HTML — secret would leak).
+// Returns empty string when env var is unset, so unconfigured local builds
+// emit no tracker. CI must export the env var or docs/ drift check fails.
+export function buildOpenpanelScript() {
+  const clientId = process.env.LANDING_OPENPANEL_CLIENT_ID;
+  if (!clientId) return "";
+  if (!/^[A-Za-z0-9-]+$/.test(clientId)) {
+    throw new Error(
+      `LANDING_OPENPANEL_CLIENT_ID has unexpected characters: ${clientId}`,
+    );
+  }
+  return `
+    <script>
+      window.op = window.op || function(...args){(window.op.q=window.op.q||[]).push(args);};
+      window.op('init', {
+        clientId: '${clientId}',
+        trackScreenViews: true,
+        trackOutgoingLinks: true,
+        trackAttributes: true,
+      });
+    </script>
+    <script src="https://openpanel.dev/op1.js" defer async></script>`;
+}
