@@ -15,6 +15,15 @@ const am = {
     zoomIn: 'አቅርብ',
     zoomOut: 'አርቅ'
   },
+  about: {
+    button: 'ስለ',
+    openTitle: 'ስለ Arroxy',
+    tagline: 'ለዴስክቶፕ ፈጣን እና ቀላል ቪዲዮ እና ኦዲዮ አውርጅ።',
+    websiteLink: 'ድረ-ገጽ',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT ፈቃድ · በ Antonio Orionus',
+    thirdPartyNotices: 'የሦስተኛ ወገን ማስታወቂያዎችን ይመልከቱ'
+  },
   titleBar: {
     close: 'ዝጋ',
     minimize: 'አሳንስ',

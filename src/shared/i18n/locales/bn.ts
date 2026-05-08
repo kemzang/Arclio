@@ -15,6 +15,15 @@ const bn = {
     zoomIn: 'জুম ইন',
     zoomOut: 'জুম আউট'
   },
+  about: {
+    button: 'সম্পর্কে',
+    openTitle: 'Arroxy সম্পর্কে',
+    tagline: 'ডেস্কটপের জন্য দ্রুত ও সহজ ভিডিও ও অডিও ডাউনলোডার।',
+    websiteLink: 'ওয়েবসাইট',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT লাইসেন্স · Antonio Orionus দ্বারা',
+    thirdPartyNotices: 'তৃতীয়-পক্ষ নোটিশ দেখুন'
+  },
   titleBar: {
     close: 'বন্ধ করুন',
     minimize: 'ছোট করুন',

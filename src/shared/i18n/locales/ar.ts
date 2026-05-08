@@ -15,6 +15,15 @@ const ar = {
     zoomIn: 'تكبير',
     zoomOut: 'تصغير'
   },
+  about: {
+    button: 'حول',
+    openTitle: 'حول Arroxy',
+    tagline: 'محمّل فيديو وصوت سريع وسهل لسطح المكتب.',
+    websiteLink: 'موقع الويب',
+    githubLink: 'GitHub',
+    licenseLine: 'ترخيص MIT · بواسطة Antonio Orionus',
+    thirdPartyNotices: 'عرض إشعارات الطرف الثالث'
+  },
   titleBar: {
     close: 'إغلاق',
     minimize: 'تصغير',

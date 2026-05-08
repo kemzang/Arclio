@@ -15,6 +15,15 @@ const zh = {
     zoomIn: '放大',
     zoomOut: '缩小'
   },
+  about: {
+    button: '关于',
+    openTitle: '关于 Arroxy',
+    tagline: '快速易用的桌面视频与音频下载工具。',
+    websiteLink: '官网',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT 许可证 · 作者 Antonio Orionus',
+    thirdPartyNotices: '查看第三方声明'
+  },
   titleBar: {
     close: '关闭',
     minimize: '最小化',

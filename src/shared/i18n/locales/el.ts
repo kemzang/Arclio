@@ -15,6 +15,15 @@ const el = {
     zoomIn: 'Μεγέθυνση',
     zoomOut: 'Σμίκρυνση'
   },
+  about: {
+    button: 'Σχετικά',
+    openTitle: 'Σχετικά με το Arroxy',
+    tagline: 'Γρήγορο και φιλικό πρόγραμμα λήψης βίντεο και ήχου για υπολογιστή.',
+    websiteLink: 'Ιστότοπος',
+    githubLink: 'GitHub',
+    licenseLine: 'Άδεια MIT · από Antonio Orionus',
+    thirdPartyNotices: 'Προβολή ανακοινώσεων τρίτων'
+  },
   titleBar: {
     close: 'Κλείσιμο',
     minimize: 'Ελαχιστοποίηση',

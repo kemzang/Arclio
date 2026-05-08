@@ -11,6 +11,7 @@ import { FeedbackNudge } from './components/system/FeedbackNudge';
 import { UpdateBanner } from './components/system/UpdateBanner';
 import { ThemeToggle } from './components/system/ThemeToggle';
 import { LanguagePicker } from './components/system/LanguagePicker';
+import { AboutDialog } from './components/system/AboutDialog';
 import { useUpdateChannel } from './components/system/useUpdateChannel';
 import { TooltipProvider } from './components/ui/tooltip';
 import { cn } from './lib/utils';
@@ -26,7 +27,7 @@ function buildDebugInfo(): string {
 
 export function App(): JSX.Element {
   const { t } = useTranslation();
-  const { initialized, initialize, openLogs, uiZoom, setUiZoom, uiTheme, warmupBlocking, warmupDiagnostics, warmupProgress } = useAppStore();
+  const { initialized, initialize, openLogs, uiZoom, setUiZoom, uiTheme, warmupBlocking, warmupDiagnostics, warmupProgress, setAboutDialogOpen } = useAppStore();
   const update = useUpdateChannel();
   const [debugCopied, setDebugCopied] = useState(false);
   const [showNudge, setShowNudge] = useState(false);
@@ -100,7 +101,12 @@ export function App(): JSX.Element {
             <LanguagePicker />
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-[11px] text-muted-foreground/50 tabular-nums select-none">v{window.appVersion}</span>
+            <button type="button" className="text-[11px] text-muted-foreground/50 tabular-nums select-none hover:text-foreground/80 transition-colors" onClick={() => setAboutDialogOpen(true)} title={t('about.openTitle')} data-testid="btn-about-version">
+              v{window.appVersion}
+            </button>
+            <button type="button" className="text-[13px] text-muted-foreground hover:text-foreground/80 transition-colors" onClick={() => setAboutDialogOpen(true)} title={t('about.openTitle')} data-testid="btn-about">
+              {t('about.button')}
+            </button>
             <button type="button" className="w-5 h-5 flex items-center justify-center text-muted-foreground hover:text-foreground/80 transition-colors" onClick={copyDebugInfo} title={debugCopied ? t('app.debugCopied') : t('app.debugCopyTitle')} data-testid="btn-debug">
               <Bug size={14} />
             </button>
@@ -125,6 +131,7 @@ export function App(): JSX.Element {
         </footer>
 
         <SplashScreen initialized={initialized} warmupBlocking={warmupBlocking} warmupDiagnostics={warmupDiagnostics} warmupProgress={warmupProgress} />
+        <AboutDialog />
       </div>
     </TooltipProvider>
   );

@@ -15,6 +15,15 @@ const sw = {
     zoomIn: 'Kuza',
     zoomOut: 'Punguza'
   },
+  about: {
+    button: 'Kuhusu',
+    openTitle: 'Kuhusu Arroxy',
+    tagline: 'Kipakuzi cha video na sauti cha haraka na rahisi kwa kompyuta.',
+    websiteLink: 'Tovuti',
+    githubLink: 'GitHub',
+    licenseLine: 'Leseni ya MIT · na Antonio Orionus',
+    thirdPartyNotices: 'Tazama notisi za wengine'
+  },
   titleBar: {
     close: 'Funga',
     minimize: 'Punguza',

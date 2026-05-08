@@ -15,6 +15,15 @@ const uk = {
     zoomIn: 'Збільшити',
     zoomOut: 'Зменшити'
   },
+  about: {
+    button: 'Про програму',
+    openTitle: 'Про програму Arroxy',
+    tagline: 'Швидкий і зручний завантажувач відео та аудіо для робочого столу.',
+    websiteLink: 'Сайт',
+    githubLink: 'GitHub',
+    licenseLine: 'Ліцензія MIT · by Antonio Orionus',
+    thirdPartyNotices: 'Переглянути повідомлення про сторонні компоненти'
+  },
   titleBar: {
     close: 'Закрити',
     minimize: 'Згорнути',

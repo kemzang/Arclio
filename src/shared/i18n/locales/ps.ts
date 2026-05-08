@@ -15,6 +15,15 @@ const ps = {
     zoomIn: 'لویول',
     zoomOut: 'کوچنیول'
   },
+  about: {
+    button: 'د اړوند',
+    openTitle: 'د Arroxy اړوند',
+    tagline: 'د ډیسکټاپ لپاره چټک او اسانه ویډیو او غږ ډاونلوډر.',
+    websiteLink: 'ویب پاڼه',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT جواز · د Antonio Orionus لخوا',
+    thirdPartyNotices: 'د دریم ډلې خبرتیاوې وګورئ'
+  },
   titleBar: {
     close: 'تړل',
     minimize: 'کوچنی کول',

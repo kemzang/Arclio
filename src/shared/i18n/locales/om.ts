@@ -15,6 +15,15 @@ const om = {
     zoomIn: 'Guddisi',
     zoomOut: 'Xiqqeessi'
   },
+  about: {
+    button: "Waa'ee",
+    openTitle: "Waa'ee Arroxy",
+    tagline: 'Buufataa viidiyoo fi sagalee ariifataa fi miidhaaginaan desktop irratti.',
+    websiteLink: 'Marsariitii',
+    githubLink: 'GitHub',
+    licenseLine: 'Heeyyama MIT · by Antonio Orionus',
+    thirdPartyNotices: 'Beeksisa seera-biroo ilaali'
+  },
   titleBar: {
     close: 'Cufii',
     minimize: 'Xiqqeessi',

@@ -9,6 +9,7 @@ export function createUiSlice(set: SetState, _get: GetState): UiSlice {
     drawerOpen: false,
     showQueueTip: false,
     interJobSleepEndsAt: null,
+    aboutDialogOpen: false,
 
     setDrawerOpen: (open) => {
       set({ drawerOpen: open });
@@ -32,6 +33,8 @@ export function createUiSlice(set: SetState, _get: GetState): UiSlice {
       void window.appApi.settings.update({ common: { uiTheme: theme } }).then((result) => {
         if (!result.ok) console.error('[settings] uiTheme save failed', result.error);
       });
-    }
+    },
+
+    setAboutDialogOpen: (open) => set({ aboutDialogOpen: open })
   };
 }

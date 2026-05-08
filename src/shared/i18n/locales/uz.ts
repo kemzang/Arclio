@@ -15,6 +15,15 @@ const uz = {
     zoomIn: 'Kattalashtirish',
     zoomOut: 'Kichraytirish'
   },
+  about: {
+    button: 'Dastur haqida',
+    openTitle: 'Arroxy haqida',
+    tagline: 'Ish stoli uchun tez va qulay video va audio yuklash dasturi.',
+    websiteLink: 'Veb-sayt',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT litsenziyasi · by Antonio Orionus',
+    thirdPartyNotices: "Uchinchi tomon bildirishnomalarini ko'rish"
+  },
   titleBar: {
     close: 'Yopish',
     minimize: 'Kichraytirish',

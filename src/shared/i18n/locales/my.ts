@@ -15,6 +15,15 @@ const my = {
     zoomIn: 'ချဲ့မည်',
     zoomOut: 'ချုံ့မည်'
   },
+  about: {
+    button: 'အကြောင်း',
+    openTitle: 'Arroxy အကြောင်း',
+    tagline: 'Desktop အတွက် မြန်ဆန်သော ဗီဒီယို နှင့် အသံ ဒေါင်းလုဒ်တူး။',
+    websiteLink: 'ဝက်ဘ်ဆိုက်',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT လိုင်စင် · Antonio Orionus မှ',
+    thirdPartyNotices: 'တတိယပါတီ သတိပေးချက်များ ကြည့်မည်'
+  },
   titleBar: {
     close: 'ပိတ်မည်',
     minimize: 'သေးငယ်အောင်လုပ်မည်',

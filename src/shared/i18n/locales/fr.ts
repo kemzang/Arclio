@@ -15,6 +15,15 @@ const fr = {
     zoomIn: 'Zoom avant',
     zoomOut: 'Zoom arrière'
   },
+  about: {
+    button: 'À propos',
+    openTitle: "À propos d'Arroxy",
+    tagline: 'Téléchargeur vidéo et audio rapide et convivial pour le bureau.',
+    websiteLink: 'Site web',
+    githubLink: 'GitHub',
+    licenseLine: 'Licence MIT · par Antonio Orionus',
+    thirdPartyNotices: 'Voir les mentions tierces'
+  },
   titleBar: {
     close: 'Fermer',
     minimize: 'Réduire',

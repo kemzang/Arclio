@@ -15,6 +15,15 @@ const de = {
     zoomIn: 'Vergrößern',
     zoomOut: 'Verkleinern'
   },
+  about: {
+    button: 'Info',
+    openTitle: 'Über Arroxy',
+    tagline: 'Schneller, benutzerfreundlicher Video- und Audio-Downloader für den Desktop.',
+    websiteLink: 'Website',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT-Lizenz · von Antonio Orionus',
+    thirdPartyNotices: 'Drittanbieter-Hinweise anzeigen'
+  },
   titleBar: {
     close: 'Schließen',
     minimize: 'Minimieren',

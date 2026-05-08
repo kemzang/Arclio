@@ -15,6 +15,15 @@ const sr = {
     zoomIn: 'Увећај',
     zoomOut: 'Умањи'
   },
+  about: {
+    button: 'О апликацији',
+    openTitle: 'О апликацији Arroxy',
+    tagline: 'Брз и пријатан преузимач видеа и звука за рачунар.',
+    websiteLink: 'Веб-сајт',
+    githubLink: 'GitHub',
+    licenseLine: 'Лиценца MIT · by Antonio Orionus',
+    thirdPartyNotices: 'Прикажи обавештења о компонентама трећих страна'
+  },
   titleBar: {
     close: 'Затвори',
     minimize: 'Минимизуј',

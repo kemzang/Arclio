@@ -15,6 +15,15 @@ const ur = {
     zoomIn: 'زوم اِن',
     zoomOut: 'زوم آؤٹ'
   },
+  about: {
+    button: 'کے بارے میں',
+    openTitle: 'Arroxy کے بارے میں',
+    tagline: 'ڈیسک ٹاپ کے لیے تیز اور آسان ویڈیو اور آڈیو ڈاؤن لوڈر۔',
+    websiteLink: 'ویب سائٹ',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT لائسنس · از Antonio Orionus',
+    thirdPartyNotices: 'فریق ثالث کے نوٹس دیکھیں'
+  },
   titleBar: {
     close: 'بند کریں',
     minimize: 'چھوٹا کریں',

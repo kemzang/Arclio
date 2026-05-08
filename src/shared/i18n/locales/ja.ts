@@ -15,6 +15,15 @@ const ja = {
     zoomIn: '拡大',
     zoomOut: '縮小'
   },
+  about: {
+    button: '情報',
+    openTitle: 'Arroxy について',
+    tagline: 'デスクトップ向けの高速で使いやすい動画・音声ダウンローダー。',
+    websiteLink: '公式サイト',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT ライセンス · 作者 Antonio Orionus',
+    thirdPartyNotices: 'サードパーティ通知を表示'
+  },
   titleBar: {
     close: '閉じる',
     minimize: '最小化',

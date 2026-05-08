@@ -128,11 +128,13 @@ export interface UiSlice {
   drawerOpen: boolean;
   showQueueTip: boolean;
   interJobSleepEndsAt: number | null;
+  aboutDialogOpen: boolean;
 
   setDrawerOpen: (open: boolean) => void;
   dismissQueueTip: () => void;
   setUiZoom: (zoom: number) => void;
   setUiTheme: (theme: UiTheme) => void;
+  setAboutDialogOpen: (open: boolean) => void;
 }
 
 export interface SystemSlice {

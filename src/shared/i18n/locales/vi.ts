@@ -15,6 +15,15 @@ const vi = {
     zoomIn: 'Phóng to',
     zoomOut: 'Thu nhỏ'
   },
+  about: {
+    button: 'Giới thiệu',
+    openTitle: 'Giới thiệu về Arroxy',
+    tagline: 'Phần mềm tải video & âm thanh nhanh, thân thiện dành cho máy tính.',
+    websiteLink: 'Trang web',
+    githubLink: 'GitHub',
+    licenseLine: 'Giấy phép MIT · bởi Antonio Orionus',
+    thirdPartyNotices: 'Xem thông báo bên thứ ba'
+  },
   titleBar: {
     close: 'Đóng',
     minimize: 'Thu nhỏ',

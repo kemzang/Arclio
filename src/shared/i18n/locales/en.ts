@@ -15,6 +15,15 @@ const en = {
     zoomIn: 'Zoom in',
     zoomOut: 'Zoom out'
   },
+  about: {
+    button: 'About',
+    openTitle: 'About Arroxy',
+    tagline: 'Fast, friendly video & audio downloader for desktop.',
+    websiteLink: 'Website',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT License · by Antonio Orionus',
+    thirdPartyNotices: 'View third-party notices'
+  },
   titleBar: {
     close: 'Close',
     minimize: 'Minimize',
