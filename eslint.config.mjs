@@ -6,7 +6,6 @@ import reactPlugin from 'eslint-plugin-react';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import tseslint from 'typescript-eslint';
 import security from 'eslint-plugin-security';
-import electronToolkitTs from '@electron-toolkit/eslint-config-ts';
 
 export default tseslint.config(
   {
@@ -15,9 +14,50 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
-  // @electron-toolkit/eslint-config-ts — curated TS rules for Electron (ban-ts-comment,
-  // explicit-function-return-type with expression allowances, no-empty-function, etc.)
-  ...electronToolkitTs.configs.recommended,
+  // @electron-toolkit/eslint-config-ts curated TS rules — inlined to avoid
+  // double-defining the @typescript-eslint plugin (its preset bundles
+  // tseslint.configs.recommended which collides with the type-checked configs above).
+  {
+    rules: {
+      '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],
+      '@typescript-eslint/explicit-function-return-type': [
+        'error',
+        {
+          allowExpressions: true,
+          allowTypedFunctionExpressions: true,
+          allowHigherOrderFunctions: true,
+          allowIIFEs: true
+        }
+      ],
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
+      '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/no-require-imports': 'error',
+      '@typescript-eslint/no-unused-expressions': [
+        'error',
+        {
+          allowShortCircuit: true,
+          allowTaggedTemplates: true,
+          allowTernary: true
+        }
+      ]
+    }
+  },
+  {
+    files: ['**/*.{js,mjs,cjs}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+        ...globals.es2021
+      }
+    },
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off'
+    }
+  },
   // Disable type-aware linting on non-TS files (config, build scripts) — they're not in tsconfig.
   {
     files: ['**/*.{js,mjs,cjs,mts,cts}'],
