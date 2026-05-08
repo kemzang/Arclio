@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import Store from 'electron-store';
-import type { AppSettings, CommonSettings, PlaylistPrefs, SinglePrefs } from '@shared/types';
-import type { SettingsPatch } from '@shared/api';
+import type { AppSettings, CommonSettings, PlaylistPrefs, SinglePrefs } from '@shared/types.js';
+import type { SettingsPatch } from '@shared/api.js';
 
 export type { SettingsPatch };
 

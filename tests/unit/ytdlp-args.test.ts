@@ -1,14 +1,14 @@
 import { EventEmitter } from 'node:events';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { YtDlp } from '@main/services/YtDlp';
-import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath';
+import { YtDlp } from '@main/services/YtDlp.js';
+import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath.js';
 
 vi.mock('@main/utils/process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@main/utils/process')>();
+  const actual = await importOriginal<typeof import('@main/utils/process.js')>();
   return { ...actual, spawnYtDlp: vi.fn() };
 });
 
-import { spawnYtDlp } from '@main/utils/process';
+import { spawnYtDlp } from '@main/utils/process.js';
 
 const URL = 'https://www.youtube.com/watch?v=test';
 const OUTPUT_DIR = '/downloads';

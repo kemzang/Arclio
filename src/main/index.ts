@@ -2,29 +2,29 @@ import path from 'node:path';
 import fs from 'node:fs';
 import os from 'node:os';
 import { app, BrowserWindow, dialog } from 'electron';
-import log from 'electron-log/main';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { TrayManager } from '@main/services/TrayManager';
-import { mainT, pluralKey } from '@main/i18n';
-import { pickLanguage } from '@shared/i18n';
-import { registerIpcHandlers } from '@main/ipc/registerIpcHandlers';
-import { registerUpdaterHandlers } from '@main/ipc/registerUpdaterHandlers';
-import { setupAnalytics, setAnalyticsEnabled, trackCrashDetectedOncePerSession, trackMain } from '@main/services/analytics';
-import { detectInstallChannel } from '@main/installChannel';
-import { BinaryManager } from '@main/services/BinaryManager';
-import { DownloadService } from '@main/services/DownloadService';
-import { FormatProbeService } from '@main/services/FormatProbeService';
-import { PlaylistProbeService } from '@main/services/PlaylistProbeService';
-import { TokenService } from '@main/services/TokenService';
-import { YtDlp } from '@main/services/YtDlp';
-import { RecentJobsStore } from '@main/stores/RecentJobsStore';
-import { SettingsStore } from '@main/stores/SettingsStore';
-import { QueueStore } from '@main/stores/QueueStore';
-import { ClipboardWatcher, watcherWindowFromBrowserWindow } from '@main/services/ClipboardWatcher';
-import { HiddenWindowTokenProvider } from '@main/token/providers/HiddenWindowTokenProvider';
-import { MockTokenProvider } from '@main/token/providers/MockTokenProvider';
-import { defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT } from '@shared/constants';
-import { runSmokeMode, readSmokeUrl, exitWithCode } from '@main/smoke';
+import log from 'electron-log/main.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { TrayManager } from '@main/services/TrayManager.js';
+import { mainT, pluralKey } from '@main/i18n.js';
+import { pickLanguage } from '@shared/i18n/index.js';
+import { registerIpcHandlers } from '@main/ipc/registerIpcHandlers.js';
+import { registerUpdaterHandlers } from '@main/ipc/registerUpdaterHandlers.js';
+import { setupAnalytics, setAnalyticsEnabled, trackCrashDetectedOncePerSession, trackMain } from '@main/services/analytics.js';
+import { detectInstallChannel } from '@main/installChannel.js';
+import { BinaryManager } from '@main/services/BinaryManager.js';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { FormatProbeService } from '@main/services/FormatProbeService.js';
+import { PlaylistProbeService } from '@main/services/PlaylistProbeService.js';
+import { TokenService } from '@main/services/TokenService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
+import { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
+import { SettingsStore } from '@main/stores/SettingsStore.js';
+import { QueueStore } from '@main/stores/QueueStore.js';
+import { ClipboardWatcher, watcherWindowFromBrowserWindow } from '@main/services/ClipboardWatcher.js';
+import { HiddenWindowTokenProvider } from '@main/token/providers/HiddenWindowTokenProvider.js';
+import { MockTokenProvider } from '@main/token/providers/MockTokenProvider.js';
+import { defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT } from '@shared/constants.js';
+import { runSmokeMode, readSmokeUrl, exitWithCode } from '@main/smoke.js';
 import contextMenu from 'electron-context-menu';
 import windowStateKeeper from 'electron-window-state';
 
@@ -74,6 +74,13 @@ try {
   log.warn('argv.json read failed', err);
 }
 
+// Sandbox every BrowserWindow without per-window opt-in. Matches vscode +
+// element-desktop. Must run before BrowserWindow construction; safe to call
+// pre-`whenReady`. contextIsolation + nodeIntegration:false stay declared on
+// each BrowserWindow because they're orthogonal guarantees that
+// app.enableSandbox() does not subsume.
+app.enableSandbox();
+
 const hasSingleInstanceLock = app.requestSingleInstanceLock();
 
 if (!hasSingleInstanceLock) {
@@ -95,10 +102,9 @@ function createMainWindow(): BrowserWindow {
     titleBarStyle: 'hidden',
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, '../preload/index.js'),
+      preload: path.join(import.meta.dirname, '../preload/index.cjs'),
       contextIsolation: true,
-      nodeIntegration: false,
-      sandbox: true
+      nodeIntegration: false
     }
   });
 
@@ -115,7 +121,7 @@ function createMainWindow(): BrowserWindow {
   if (process.env.ELECTRON_RENDERER_URL) {
     void window.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
-    void window.loadFile(path.join(__dirname, '../renderer/index.html'));
+    void window.loadFile(path.join(import.meta.dirname, '../renderer/index.html'));
   }
 
   return window;

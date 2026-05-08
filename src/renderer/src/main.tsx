@@ -1,10 +1,10 @@
-import './browserMock';
-import 'electron-log/renderer';
+import './browserMock.js';
+import 'electron-log/renderer.js';
 import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from './App';
-import { initI18n, pickLanguage, isRtl } from '@shared/i18n';
-import { useAppStore } from './store/useAppStore';
+import { App } from './App.js';
+import { initI18n, pickLanguage, isRtl } from '@shared/i18n/index.js';
+import { useAppStore } from './store/useAppStore.js';
 import './styles.css';
 
 async function bootstrap(): Promise<void> {

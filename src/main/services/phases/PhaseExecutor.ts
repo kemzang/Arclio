@@ -1,5 +1,5 @@
-import { STATUS_KEY } from '@shared/schemas';
-import type { Phase, PhaseContext } from './types';
+import { STATUS_KEY } from '@shared/schemas.js';
+import type { Phase, PhaseContext } from './types.js';
 
 export class PhaseExecutor {
   async run(ctx: PhaseContext, phases: Phase[]): Promise<void> {

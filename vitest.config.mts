@@ -6,7 +6,7 @@ const alias = {
   '@preload': path.resolve('src/preload'),
   '@renderer': path.resolve('src/renderer/src'),
   '@shared': path.resolve('src/shared'),
-  'electron-log/main': path.resolve('tests/__mocks__/electron-log-main.ts'),
+  'electron-log/main.js': path.resolve('tests/__mocks__/electron-log-main.ts'),
   electron: path.resolve('tests/__mocks__/electron.ts')
 };
 

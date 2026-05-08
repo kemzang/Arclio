@@ -1,6 +1,6 @@
-import { ZOOM_MIN, ZOOM_MAX, ZOOM_STEP } from '@shared/schemas';
-import { DEFAULTS } from '@shared/constants';
-import type { GetState, SetState, UiSlice } from './types';
+import { ZOOM_MIN, ZOOM_MAX, ZOOM_STEP } from '@shared/schemas.js';
+import { DEFAULTS } from '@shared/constants.js';
+import type { GetState, SetState, UiSlice } from './types.js';
 
 export function createUiSlice(set: SetState, _get: GetState): UiSlice {
   return {

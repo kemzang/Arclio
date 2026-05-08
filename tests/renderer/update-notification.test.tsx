@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { App } from '@renderer/App';
-import { useAppStore } from '@renderer/store/useAppStore';
-import type { AppApi } from '@shared/api';
-import type { UpdateAvailablePayload } from '@shared/types';
-import { ok } from '../shared/fixtures';
+import { App } from '@renderer/App.js';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import type { AppApi } from '@shared/api.js';
+import type { UpdateAvailablePayload } from '@shared/types.js';
+import { ok } from '../shared/fixtures.js';
 
 type UpdateListener = (info: UpdateAvailablePayload) => void;
 

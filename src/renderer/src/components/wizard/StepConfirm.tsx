@@ -1,13 +1,13 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanSize } from '@shared/format';
-import { useAppStore, presetLabel, resolveAudioLabel, resolveVideoResolution } from '../../store/useAppStore';
-import { formatHomeRelativePath } from '@renderer/lib/utils';
-import { effectiveOutputDir } from '@renderer/lib/path';
-import { resolveSubtitleLabel, SUBTITLE_MODE_I18N_KEYS } from '../../lib/subtitleLabel';
-import { Button } from '../ui/button';
-import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip';
-import { VideoSummaryCard } from '../shared/VideoSummaryCard';
+import { humanSize } from '@shared/format.js';
+import { useAppStore, presetLabel, resolveAudioLabel, resolveVideoResolution } from '../../store/useAppStore.js';
+import { formatHomeRelativePath } from '@renderer/lib/utils.js';
+import { effectiveOutputDir } from '@renderer/lib/path.js';
+import { resolveSubtitleLabel, SUBTITLE_MODE_I18N_KEYS } from '../../lib/subtitleLabel.js';
+import { Button } from '../ui/button.js';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip.js';
+import { VideoSummaryCard } from '../shared/VideoSummaryCard.js';
 import loveImg from '../../assets/Love.png';
 
 export function StepConfirm(): JSX.Element {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isYouTubeUrl, startDownloadSchema, ytDlpInfoSchema, queueArraySchema, audioConvertSchema, MAX_SUBTITLE_LANGUAGES } from '@shared/schemas';
+import { isYouTubeUrl, startDownloadSchema, ytDlpInfoSchema, queueArraySchema, audioConvertSchema, MAX_SUBTITLE_LANGUAGES } from '@shared/schemas.js';
 
 describe('isYouTubeUrl', () => {
   it.each(['https://www.youtube.com/watch?v=dQw4w9WgXcQ', 'https://youtu.be/dQw4w9WgXcQ', 'https://m.youtube.com/watch?v=abc', 'https://music.youtube.com/watch?v=abc'])('accepts %s', (url) => {

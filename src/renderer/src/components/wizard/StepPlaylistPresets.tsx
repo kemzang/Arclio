@@ -1,12 +1,12 @@
 import { type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PlaylistPreset } from '@shared/schemas';
-import { useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { Item, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from '../ui/item';
-import { ScrollArea } from '../ui/scroll-area';
-import { Separator } from '../ui/separator';
-import { cn } from '@renderer/lib/utils';
+import type { PlaylistPreset } from '@shared/schemas.js';
+import { useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from '../ui/item.js';
+import { ScrollArea } from '../ui/scroll-area.js';
+import { Separator } from '../ui/separator.js';
+import { cn } from '@renderer/lib/utils.js';
 
 const VIDEO_PRESETS: PlaylistPreset[] = ['video-best', 'video-2160p', 'video-1440p', 'video-1080p', 'video-720p', 'video-480p', 'video-360p'];
 const AUDIO_PRESETS: PlaylistPreset[] = ['audio-best', 'audio-mp3'];

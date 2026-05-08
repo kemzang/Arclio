@@ -1,17 +1,17 @@
-import type { LocalizedError } from './i18n/types';
-import type { PreparedJob } from './preparedJob';
+import type { LocalizedError } from './i18n/types.js';
+import type { PreparedJob } from './preparedJob.js';
 
-export type { PreparedJob } from './preparedJob';
+export type { PreparedJob } from './preparedJob.js';
 
 // Re-export the enum types whose canonical definition lives in `schemas.ts`
 // (where they're z.enum schemas). Importing from `@shared/types` continues to
 // work for callers that don't care about the schema vs type distinction.
-export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection, CookiesMode, CookiesBrowser } from './schemas';
+export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection, CookiesMode, CookiesBrowser } from './schemas.js';
 
-export type { StatusKey } from './schemas';
-export type { LocalizedError, YtdlpErrorKey } from './i18n/types';
+export type { StatusKey } from './schemas.js';
+export type { LocalizedError, YtdlpErrorKey } from './i18n/types.js';
 
-import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey, CookiesMode, CookiesBrowser } from './schemas';
+import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey, CookiesMode, CookiesBrowser } from './schemas.js';
 
 export type AppErrorCode = 'validation' | 'token' | 'binary' | 'download' | 'ipc' | 'unknown';
 
@@ -20,7 +20,7 @@ export interface AppError {
   message: string;
   details?: string;
   recoverable?: boolean;
-  localizedKey?: import('./schemas').YtdlpErrorKey;
+  localizedKey?: import('./schemas.js').YtdlpErrorKey;
 }
 
 // Mode-independent prefs and infrastructure config. Anything that applies
@@ -88,7 +88,7 @@ export interface SinglePrefs {
 // Playlist flow prefs. Kept separate so a playlist run doesn't clobber the
 // single-mode preset/subfolder, and vice versa.
 export interface PlaylistPrefs {
-  lastPlaylistPreset?: import('./schemas').PlaylistPreset;
+  lastPlaylistPreset?: import('./schemas.js').PlaylistPreset;
   lastPlaylistSubfolderEnabled?: boolean;
   lastPlaylistSubfolder?: string;
 }
@@ -154,7 +154,7 @@ export interface QueueItem {
   thumbnail: string;
   outputDir: string;
   formatLabel: string;
-  status: import('./schemas').QueueItemStatus;
+  status: import('./schemas.js').QueueItemStatus;
   progressPercent: number;
   progressDetail: string | null;
   lastStatus: StatusSnapshot | null;

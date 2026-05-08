@@ -1,13 +1,13 @@
-import type { AppSettings, DependencyId, QueueItem, SubtitleFormat, SubtitleMode } from '@shared/types';
-import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas';
-import { DEFAULTS } from '@shared/constants';
-import { i18next, pickLanguage, isRtl } from '@shared/i18n';
-import { nextMonotonicPercent, ProgressFormatter } from './progress';
-import { progressFormatters, saveQueue, updateQueueItem } from './queueSlice';
-import type { JobScheduler } from './jobScheduler';
-import type { GetState, SetState, ShareTrigger, SystemSlice } from './types';
-import { notify } from '../lib/notify';
-import { track } from '../lib/analytics';
+import type { AppSettings, DependencyId, QueueItem, SubtitleFormat, SubtitleMode } from '@shared/types.js';
+import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas.js';
+import { DEFAULTS } from '@shared/constants.js';
+import { i18next, pickLanguage, isRtl } from '@shared/i18n/index.js';
+import { nextMonotonicPercent, ProgressFormatter } from './progress.js';
+import { progressFormatters, saveQueue, updateQueueItem } from './queueSlice.js';
+import type { JobScheduler } from './jobScheduler.js';
+import type { GetState, SetState, ShareTrigger, SystemSlice } from './types.js';
+import { notify } from '../lib/notify.js';
+import { track } from '../lib/analytics.js';
 
 let unbindStatus: (() => void) | null = null;
 let unbindProgress: (() => void) | null = null;

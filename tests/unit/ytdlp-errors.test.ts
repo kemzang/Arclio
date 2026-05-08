@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { extractLastError, classifyStderr } from '@main/utils/ytdlpErrors';
-import { YTDLP_ERROR_KEYS } from '@shared/schemas';
+import { extractLastError, classifyStderr } from '@main/utils/ytdlpErrors.js';
+import { YTDLP_ERROR_KEYS } from '@shared/schemas.js';
 
 describe('extractLastError', () => {
   it('returns the ERROR: line from single-line stderr', () => {

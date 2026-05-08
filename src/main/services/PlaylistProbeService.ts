@@ -1,10 +1,10 @@
-import log from 'electron-log/main';
+import log from 'electron-log/main.js';
 import { z } from 'zod';
-import { createAppError } from '@main/utils/errorFactory';
-import { splitStderrLines } from '@main/utils/process';
-import { ok, fail, type Result } from '@shared/result';
-import type { GetPlaylistItemsOutput, PlaylistEntry } from '@shared/types';
-import { YtDlp } from './YtDlp';
+import { createAppError } from '@main/utils/errorFactory.js';
+import { splitStderrLines } from '@main/utils/process.js';
+import { ok, fail, type Result } from '@shared/result.js';
+import type { GetPlaylistItemsOutput, PlaylistEntry } from '@shared/types.js';
+import { YtDlp } from './YtDlp.js';
 
 const logger = log.scope('playlist-probe');
 

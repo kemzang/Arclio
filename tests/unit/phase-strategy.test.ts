@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { strategyFor, phasesFor, type StrategyKind } from '@main/services/phases';
-import type { PreparedJob, SubtitleOptions, SponsorBlockOptions, EmbedOptions } from '@shared/preparedJob';
+import { strategyFor, phasesFor, type StrategyKind } from '@main/services/phases/index.js';
+import type { PreparedJob, SubtitleOptions, SponsorBlockOptions, EmbedOptions } from '@shared/preparedJob.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { prepareJob, type PrepareJobInput } from '@shared/prepareJob';
-import { preparedJobSchema, type EmbedOptions } from '@shared/preparedJob';
+import { prepareJob, type PrepareJobInput } from '@shared/prepareJob.js';
+import { preparedJobSchema, type EmbedOptions } from '@shared/preparedJob.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const EMBED_ALL: EmbedOptions = { chapters: true, metadata: true, thumbnail: true, description: true, thumbnailSidecar: true };

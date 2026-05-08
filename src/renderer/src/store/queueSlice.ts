@@ -1,15 +1,15 @@
-import type { LocalizedError, PlaylistEntry, QueueItem, StartDownloadInput } from '@shared/types';
-import { QUEUE_STATUS } from '@shared/schemas';
-import { ProgressFormatter } from './progress';
-import { buildAudioConvertPayload, buildFormatId, buildFormatLabel, generateId, resolveVideoResolution } from './helpers';
-import { effectiveOutputDir } from '@renderer/lib/path';
-import { joinSubfolder, safeFolderName } from '@shared/subfolder';
-import { prepareJob } from '@shared/prepareJob';
-import type { EmbedOptions, SubtitleOptions } from '@shared/preparedJob';
-import { isHeld } from '@shared/queueItem';
+import type { LocalizedError, PlaylistEntry, QueueItem, StartDownloadInput } from '@shared/types.js';
+import { QUEUE_STATUS } from '@shared/schemas.js';
+import { ProgressFormatter } from './progress.js';
+import { buildAudioConvertPayload, buildFormatId, buildFormatLabel, generateId, resolveVideoResolution } from './helpers.js';
+import { effectiveOutputDir } from '@renderer/lib/path.js';
+import { joinSubfolder, safeFolderName } from '@shared/subfolder.js';
+import { prepareJob } from '@shared/prepareJob.js';
+import type { EmbedOptions, SubtitleOptions } from '@shared/preparedJob.js';
+import { isHeld } from '@shared/queueItem.js';
 import i18next from 'i18next';
-import type { GetState, SetState, QueueSlice } from './types';
-import type { JobScheduler } from './jobScheduler';
+import type { GetState, SetState, QueueSlice } from './types.js';
+import type { JobScheduler } from './jobScheduler.js';
 
 export const progressFormatters = new Map<string, ProgressFormatter>();
 

@@ -1,8 +1,8 @@
 import type { JSX } from 'react';
 import { AlertTriangle, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { Button } from '@renderer/components/ui/button';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { Button } from '@renderer/components/ui/button.js';
 
 const DPAPI_DOCS_URL = 'https://github.com/yt-dlp/yt-dlp/issues/10927';
 

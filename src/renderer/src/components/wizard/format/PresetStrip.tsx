@@ -1,9 +1,9 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Preset } from '@shared/types';
-import { presetOptions } from '../../../store/useAppStore';
-import { ToggleGroup, ToggleGroupItem } from '../../ui/toggle-group';
-import { Tooltip, TooltipTrigger, TooltipContent } from '../../ui/tooltip';
+import type { Preset } from '@shared/types.js';
+import { presetOptions } from '../../../store/useAppStore.js';
+import { ToggleGroup, ToggleGroupItem } from '../../ui/toggle-group.js';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../../ui/tooltip.js';
 
 interface PresetStripProps {
   activePreset: Preset | null;

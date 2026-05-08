@@ -1,7 +1,7 @@
-import type { PlaylistPreset, Preset } from '@shared/types';
-import { playlistPresetSpec } from '@shared/playlistPresets';
-import { presetProducesMedia, presetProducesVideo } from '@shared/presetTraits';
-import type { WizardMode, WizardStep } from '../../store/types';
+import type { PlaylistPreset, Preset } from '@shared/types.js';
+import { playlistPresetSpec } from '@shared/playlistPresets.js';
+import { presetProducesMedia, presetProducesVideo } from '@shared/presetTraits.js';
+import type { WizardMode, WizardStep } from '../../store/types.js';
 
 export type VisibleStep = Exclude<WizardStep, 'error'>;
 

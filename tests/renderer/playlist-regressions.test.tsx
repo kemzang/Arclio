@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 import { act } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { ok } from '../shared/fixtures';
-import { buildAppSettings } from '../shared/settingsFixtures';
-import type { PlaylistEntry, StatusEvent } from '@shared/types';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { ok } from '../shared/fixtures.js';
+import { buildAppSettings } from '../shared/settingsFixtures.js';
+import type { PlaylistEntry, StatusEvent } from '@shared/types.js';
 
 const PLAYLIST_ENTRIES: PlaylistEntry[] = [
   { id: 'p1', url: 'https://youtube.com/watch?v=p1', title: 'Vid 1', thumbnail: '', playlistIndex: 1 },

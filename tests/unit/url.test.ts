@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseVideoId, cleanYoutubeUrl, isPlaylistUrl, isMixedVideoPlaylistUrl, extractPlaylistId, forceVideoOnly, forcePlaylistOnly } from '@shared/url';
+import { parseVideoId, cleanYoutubeUrl, isPlaylistUrl, isMixedVideoPlaylistUrl, extractPlaylistId, forceVideoOnly, forcePlaylistOnly } from '@shared/url.js';
 
 describe('parseVideoId', () => {
   it('extracts ID from youtube.com URL', () => {

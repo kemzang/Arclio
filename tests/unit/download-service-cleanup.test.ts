@@ -3,8 +3,8 @@ import { mkdtemp, writeFile, readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { rmSync } from 'node:fs';
-import { DownloadService } from '@main/services/DownloadService';
-import { YtDlp } from '@main/services/YtDlp';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
 
 function makeService() {
   const ytDlp = new YtDlp({} as never, {} as never, { get: async () => ({}) } as never);

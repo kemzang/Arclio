@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '../../store/useAppStore';
-import { STEP_REGISTRY } from '../wizard/stepRegistry';
-import { STEPS, shouldSkip } from '../wizard/stepNavigation';
-import { StepError } from '../wizard/StepError';
-import { MixedUrlPromptDialog } from '../wizard/MixedUrlPromptDialog';
-import { cn } from '@renderer/lib/utils';
+import { useAppStore } from '../../store/useAppStore.js';
+import { STEP_REGISTRY } from '../wizard/stepRegistry.js';
+import { STEPS, shouldSkip } from '../wizard/stepNavigation.js';
+import { StepError } from '../wizard/StepError.js';
+import { MixedUrlPromptDialog } from '../wizard/MixedUrlPromptDialog.js';
+import { cn } from '@renderer/lib/utils.js';
 
 export function WizardPanel(): JSX.Element {
   const { t } = useTranslation();

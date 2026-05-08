@@ -1,8 +1,8 @@
 import { useState, type JSX } from 'react';
 import { Copy, CopyCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { UpdateAvailablePayload } from '@shared/types';
-import { resolveAction } from './updateBannerAction';
+import type { UpdateAvailablePayload } from '@shared/types.js';
+import { resolveAction } from './updateBannerAction.js';
 
 interface Props {
   info: UpdateAvailablePayload;

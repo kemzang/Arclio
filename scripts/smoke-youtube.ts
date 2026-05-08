@@ -23,8 +23,8 @@ import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { ytDlpInfoSchema } from '../src/shared/schemas';
-import { resolveSmokeUrl } from './smoke-shared';
+import { ytDlpInfoSchema } from '../src/shared/schemas.js';
+import { resolveSmokeUrl } from './smoke-shared.js';
 
 const PLAYER_CLIENT_FALLBACK = 'youtube:player_client=default,-web,-web_safari';
 

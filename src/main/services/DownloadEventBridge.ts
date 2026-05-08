@@ -1,7 +1,7 @@
 import type { BrowserWindow } from 'electron';
-import { IPC_CHANNELS } from '@shared/ipc';
-import type { ProgressEvent, StatusEvent } from '@shared/types';
-import type { DownloadService } from './DownloadService';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import type { ProgressEvent, StatusEvent } from '@shared/types.js';
+import type { DownloadService } from './DownloadService.js';
 
 const PROGRESS_THROTTLE_MS = 100;
 

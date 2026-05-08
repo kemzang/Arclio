@@ -2,7 +2,7 @@
 // `schemas.ts` (which depends on these types via `queueItemSchema` and
 // `startDownloadSchema`) does not import a sibling that would re-import
 // it — keeps module init free of circular hazards.
-import type { AudioConvert, PlaylistPreset, Preset, SponsorBlockCategory, SubtitleFormat, SubtitleMode } from './schemas';
+import type { AudioConvert, PlaylistPreset, Preset, SponsorBlockCategory, SubtitleFormat, SubtitleMode } from './schemas.js';
 
 export type JobSource = 'youtube' | 'generic';
 
@@ -66,4 +66,4 @@ export type PreparedJob =
 
 // Schema re-exported here so `@shared/preparedJob` is the canonical path for
 // both type and runtime validator.
-export { preparedJobSchema } from './schemas';
+export { preparedJobSchema } from './schemas.js';

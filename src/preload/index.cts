@@ -1,9 +1,9 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
 declare const __APP_VERSION__: string;
-import { IPC_CHANNELS } from '@shared/ipc';
-import type { AppApi } from '@shared/api';
-import type { ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmupProgressEvent } from '@shared/types';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import type { AppApi } from '@shared/api.js';
+import type { ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmupProgressEvent } from '@shared/types.js';
 
 const api: AppApi = {
   app: {

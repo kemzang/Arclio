@@ -1,4 +1,4 @@
-import type { YtdlpErrorKey } from '@shared/i18n/types';
+import type { YtdlpErrorKey } from '@shared/i18n/types.js';
 
 // Subset of YtdlpErrorKey that yt-dlp can emit on stderr. Client-side
 // validation keys (e.g. `unsupportedUrl`, raised before yt-dlp ever runs)

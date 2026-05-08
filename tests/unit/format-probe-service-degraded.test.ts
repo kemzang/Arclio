@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { FormatProbeService, detectProbeDegradationSignals } from '@main/services/FormatProbeService';
-import type { YtDlpResult } from '@main/services/YtDlp';
+import { FormatProbeService, detectProbeDegradationSignals } from '@main/services/FormatProbeService.js';
+import type { YtDlpResult } from '@main/services/YtDlp.js';
 
 const YOUTUBE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 

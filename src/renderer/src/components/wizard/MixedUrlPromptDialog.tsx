@@ -1,8 +1,8 @@
 import { type JSX, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
-import { Button } from '../ui/button';
-import { useAppStore } from '../../store/useAppStore';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog.js';
+import { Button } from '../ui/button.js';
+import { useAppStore } from '../../store/useAppStore.js';
 
 export function MixedUrlPromptDialog(): JSX.Element {
   const { t } = useTranslation();

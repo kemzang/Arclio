@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isValidSubfolder, effectiveOutputDir, joinSubfolder } from '@shared/subfolder';
+import { isValidSubfolder, effectiveOutputDir, joinSubfolder } from '@shared/subfolder.js';
 
 describe('isValidSubfolder', () => {
   it('accepts ordinary names', () => {

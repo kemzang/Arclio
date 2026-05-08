@@ -1,5 +1,5 @@
 import Store from 'electron-store';
-import type { RecentJob } from '@shared/types';
+import type { RecentJob } from '@shared/types.js';
 
 const MAX_JOBS = 30;
 

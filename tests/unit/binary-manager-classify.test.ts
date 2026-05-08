@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { binaryInternals } from '@main/services/BinaryManager';
+import { binaryInternals } from '@main/services/BinaryManager.js';
 
 const { classifyProbeError } = binaryInternals;
 

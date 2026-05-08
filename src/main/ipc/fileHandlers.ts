@@ -1,11 +1,11 @@
 import path from 'node:path';
 import { app, dialog, shell, type BrowserWindow } from 'electron';
-import log from 'electron-log/main';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { ok } from '@shared/result';
-import { DEPENDENCY_IDS, type DependencyId } from '@shared/types';
-import type { BinaryManager } from '@main/services/BinaryManager';
-import { handleRaw, toIpcFailure, toUnknownFailure } from './utils';
+import log from 'electron-log/main.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { ok } from '@shared/result.js';
+import { DEPENDENCY_IDS, type DependencyId } from '@shared/types.js';
+import type { BinaryManager } from '@main/services/BinaryManager.js';
+import { handleRaw, toIpcFailure, toUnknownFailure } from './utils.js';
 
 export function registerFileHandlers(mainWindow: BrowserWindow, binaryManager: BinaryManager): void {
   handleRaw(IPC_CHANNELS.chooseFolder, async () => {

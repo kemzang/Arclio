@@ -25,8 +25,8 @@ vi.mock('electron', () => ({
   }
 }));
 
-import { registerIpcHandlers } from '@main/ipc/registerIpcHandlers';
-import { IPC_CHANNELS } from '@shared/ipc';
+import { registerIpcHandlers } from '@main/ipc/registerIpcHandlers.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
 
 class FakeDownloadService extends EventEmitter {
   start = vi.fn();

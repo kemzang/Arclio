@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatHomeRelativePath } from '@renderer/lib/utils';
+import { formatHomeRelativePath } from '@renderer/lib/utils.js';
 
 const commonPaths = {
   downloads: '/Users/bob/Downloads',

@@ -1,8 +1,8 @@
 {
   "appId": "com.arroxy.app",
   "productName": "Arroxy",
-  "afterPack": "./build/afterPack.cjs",
-  "beforeBuild": "./build/beforeBuild.cjs",
+  "afterPack": "./build/afterPack.mjs",
+  "beforeBuild": "./build/beforeBuild.mjs",
   "directories": {
     "output": "dist",
     "buildResources": "build"

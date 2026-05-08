@@ -1,31 +1,31 @@
 import i18next, { type i18n as I18nInstance } from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import om from './locales/om';
-import de from './locales/de';
-import en from './locales/en';
-import es from './locales/es';
-import fr from './locales/fr';
-import sw from './locales/sw';
-import uz from './locales/uz';
-import am from './locales/am';
-import ar from './locales/ar';
-import ur from './locales/ur';
-import ps from './locales/ps';
-import bn from './locales/bn';
-import hi from './locales/hi';
-import my from './locales/my';
-import el from './locales/el';
-import ru from './locales/ru';
-import sr from './locales/sr';
-import uk from './locales/uk';
-import zh from './locales/zh';
-import ja from './locales/ja';
-import vi from './locales/vi';
-import { SUPPORTED_LANGS, type SupportedLang, type EnTranslation, type LocaleResource } from './types';
+import om from './locales/om.js';
+import de from './locales/de.js';
+import en from './locales/en.js';
+import es from './locales/es.js';
+import fr from './locales/fr.js';
+import sw from './locales/sw.js';
+import uz from './locales/uz.js';
+import am from './locales/am.js';
+import ar from './locales/ar.js';
+import ur from './locales/ur.js';
+import ps from './locales/ps.js';
+import bn from './locales/bn.js';
+import hi from './locales/hi.js';
+import my from './locales/my.js';
+import el from './locales/el.js';
+import ru from './locales/ru.js';
+import sr from './locales/sr.js';
+import uk from './locales/uk.js';
+import zh from './locales/zh.js';
+import ja from './locales/ja.js';
+import vi from './locales/vi.js';
+import { SUPPORTED_LANGS, type SupportedLang, type EnTranslation, type LocaleResource } from './types.js';
 
-export { SUPPORTED_LANGS, LANGUAGE_NATIVE_NAMES } from './types';
-export type { SupportedLang, YtdlpErrorKey, LocalizedError } from './types';
-export { isRtl } from './rtl';
+export { SUPPORTED_LANGS, LANGUAGE_NATIVE_NAMES } from './types.js';
+export type { SupportedLang, YtdlpErrorKey, LocalizedError } from './types.js';
+export { isRtl } from './rtl.js';
 
 const RESOURCES: Record<SupportedLang, LocaleResource> = {
   om,

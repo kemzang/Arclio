@@ -1,4 +1,4 @@
-import type { CookiesBrowser, CookiesMode } from './schemas';
+import type { CookiesBrowser, CookiesMode } from './schemas.js';
 
 export interface CookiesConfigInput {
   cookiesMode?: CookiesMode;

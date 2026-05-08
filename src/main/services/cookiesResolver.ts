@@ -1,6 +1,6 @@
-import type { AppSettings, CookiesBrowser } from '@shared/types';
-import { getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
-import { nonEmpty } from '@shared/format';
+import type { AppSettings, CookiesBrowser } from '@shared/types.js';
+import { getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
+import { nonEmpty } from '@shared/format.js';
 
 export type ResolvedCookies = { kind: 'file'; path: string } | { kind: 'browser'; browser: CookiesBrowser };
 

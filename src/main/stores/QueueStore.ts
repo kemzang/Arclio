@@ -1,7 +1,7 @@
 import Store from 'electron-store';
-import type { QueueItem } from '@shared/types';
-import { queueArraySchema, QUEUE_STATUS } from '@shared/schemas';
-import { fail, ok, type Result } from '@shared/result';
+import type { QueueItem } from '@shared/types.js';
+import { queueArraySchema, QUEUE_STATUS } from '@shared/schemas.js';
+import { fail, ok, type Result } from '@shared/result.js';
 
 interface QueueData {
   items: QueueItem[];

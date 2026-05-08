@@ -1,8 +1,8 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { PreflightPhase } from '@main/services/phases/PreflightPhase';
-import type { PhaseContext, ActiveDownload } from '@main/services/phases/types';
-import type { DownloadJob, StartDownloadInput } from '@shared/types';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+import { PreflightPhase } from '@main/services/phases/PreflightPhase.js';
+import type { PhaseContext, ActiveDownload } from '@main/services/phases/types.js';
+import type { DownloadJob, StartDownloadInput } from '@shared/types.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };
@@ -12,7 +12,7 @@ vi.mock('@main/utils/diskSpace', () => ({
   checkDiskSpace: vi.fn()
 }));
 
-import { checkDiskSpace } from '@main/utils/diskSpace';
+import { checkDiskSpace } from '@main/utils/diskSpace.js';
 
 beforeEach(() => {
   vi.clearAllMocks();

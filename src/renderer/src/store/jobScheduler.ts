@@ -1,6 +1,6 @@
-import { QUEUE_STATUS } from '@shared/schemas';
-import { isHeld } from '@shared/queueItem';
-import type { GetState, SetState } from './types';
+import { QUEUE_STATUS } from '@shared/schemas.js';
+import { isHeld } from '@shared/queueItem.js';
+import type { GetState, SetState } from './types.js';
 
 const NEXT_JOB_DELAY_MS = 3000;
 

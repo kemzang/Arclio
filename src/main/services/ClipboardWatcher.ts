@@ -1,6 +1,6 @@
 import { clipboard, type BrowserWindow } from 'electron';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { isYouTubeUrl } from '@shared/schemas';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { isYouTubeUrl } from '@shared/schemas.js';
 
 export interface ClipboardReader {
   readText(): string;

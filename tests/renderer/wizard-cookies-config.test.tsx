@@ -1,12 +1,12 @@
 // @vitest-environment jsdom
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { StepUrlInput } from '@renderer/components/wizard/StepUrlInput';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { buildMockAppApi } from '../shared/mockAppApi';
-import type { AppApi, SettingsPatch } from '@shared/api';
-import type { AppSettings } from '@shared/types';
-import { ok } from '../shared/fixtures';
+import { StepUrlInput } from '@renderer/components/wizard/StepUrlInput.js';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { buildMockAppApi } from '../shared/mockAppApi.js';
+import type { AppApi, SettingsPatch } from '@shared/api.js';
+import type { AppSettings } from '@shared/types.js';
+import { ok } from '../shared/fixtures.js';
 
 const SINGLE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 const PLAYLIST_URL = 'https://www.youtube.com/playlist?list=PLabc';

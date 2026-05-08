@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it } from 'vitest';
-import { useAppStore } from '@renderer/store/useAppStore';
-import type { FormatOption } from '@shared/types';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import type { FormatOption } from '@shared/types.js';
 
 const FORMATS: FormatOption[] = [
   {

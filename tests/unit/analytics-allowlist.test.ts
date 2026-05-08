@@ -13,7 +13,7 @@ const { ctorMock, trackMock, identifyMock, setGlobalPropertiesMock } = vi.hoiste
 
 vi.mock('@openpanel/sdk', () => ({ OpenPanel: ctorMock }));
 
-import { setupAnalytics, setAnalyticsEnabled, trackMain, probeDurationBucket, downloadDurationBucket, sizeBucket } from '@main/services/analytics';
+import { setupAnalytics, setAnalyticsEnabled, trackMain, probeDurationBucket, downloadDurationBucket, sizeBucket } from '@main/services/analytics.js';
 
 beforeEach(() => {
   vi.clearAllMocks();

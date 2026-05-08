@@ -1,7 +1,7 @@
-import type { AppApi } from '@shared/api';
-import type { AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent } from '@shared/types';
-import { isYouTubeUrl } from '@shared/schemas';
-import { defaultAppSettings } from '@shared/constants';
+import type { AppApi } from '@shared/api.js';
+import type { AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent } from '@shared/types.js';
+import { isYouTubeUrl } from '@shared/schemas.js';
+import { defaultAppSettings } from '@shared/constants.js';
 
 if (!('appApi' in window)) {
   const statusListeners = new Set<(e: StatusEvent) => void>();

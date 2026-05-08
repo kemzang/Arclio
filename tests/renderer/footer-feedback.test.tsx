@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { App } from '@renderer/App';
-import { useAppStore } from '@renderer/store/useAppStore';
+import { App } from '@renderer/App.js';
+import { useAppStore } from '@renderer/store/useAppStore.js';
 
 function ok<T>(data: T) {
   return Promise.resolve({ ok: true as const, data });

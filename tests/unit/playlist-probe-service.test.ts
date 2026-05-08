@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mapFlatEntries } from '@main/services/PlaylistProbeService';
+import { mapFlatEntries } from '@main/services/PlaylistProbeService.js';
 
 describe('mapFlatEntries', () => {
   it('parses well-formed flat-playlist entries', () => {

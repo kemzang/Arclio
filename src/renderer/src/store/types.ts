@@ -1,7 +1,7 @@
 import type { StoreApi } from 'zustand';
-import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, GetFormatsOutput, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
-import type { AudioSelection } from '@shared/schemas';
-import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
+import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, GetFormatsOutput, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types.js';
+import type { AudioSelection } from '@shared/schemas.js';
+import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 export type { AudioSelection };
 export type WizardStep = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
 
@@ -145,7 +145,7 @@ export interface SystemSlice {
   warmupDiagnostics: Record<DependencyId, DependencyDiagnostic> | null;
   warmupBlocking: DependencyId[];
   warmupRunning: boolean;
-  warmupProgress: Partial<Record<DependencyId, import('@shared/types').WarmupProgressEvent>> | null;
+  warmupProgress: Partial<Record<DependencyId, import('@shared/types.js').WarmupProgressEvent>> | null;
   settings: AppSettings | null;
   language: SupportedLang;
   commonPaths: AppSettings['common']['commonPaths'];

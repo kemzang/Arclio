@@ -1,4 +1,4 @@
-import type { AppApi } from '@shared/api';
+import type { AppApi } from '@shared/api.js';
 
 declare global {
   interface Window {

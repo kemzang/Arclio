@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { playlistPresetSpec } from '@shared/playlistPresets';
-import { PLAYLIST_PRESETS } from '@shared/schemas';
+import { playlistPresetSpec } from '@shared/playlistPresets.js';
+import { PLAYLIST_PRESETS } from '@shared/schemas.js';
 
 describe('playlistPresetSpec', () => {
   it('every preset returns a spec', () => {

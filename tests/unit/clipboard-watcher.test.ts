@@ -8,7 +8,7 @@ vi.mock('@shared/ipc', () => ({
   IPC_CHANNELS: { eventsClipboardUrl: 'events:clipboardUrl' }
 }));
 
-import { ClipboardWatcher, type WatcherWindow, type WatcherEvent } from '@main/services/ClipboardWatcher';
+import { ClipboardWatcher, type WatcherWindow, type WatcherEvent } from '@main/services/ClipboardWatcher.js';
 
 type SendMock = WatcherWindow['send'] & { mock: { calls: unknown[][] } };
 

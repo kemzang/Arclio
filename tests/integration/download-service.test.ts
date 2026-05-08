@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
-import { DownloadService } from '@main/services/DownloadService';
-import { YtDlp } from '@main/services/YtDlp';
-import type { DownloadJob } from '@shared/types';
-import type { PreparedJob } from '@shared/preparedJob';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
+import type { DownloadJob } from '@shared/types.js';
+import type { PreparedJob } from '@shared/preparedJob.js';
 
 const DEFAULT_JOB: PreparedJob = {
   kind: 'single-format',

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { TokenService } from '@main/services/TokenService';
+import { TokenService } from '@main/services/TokenService.js';
 
 function makeProvider(
   overrides: Partial<{

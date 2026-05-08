@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { pickLanguage } from '@shared/i18n';
-import { mainT, pluralKey } from '@main/i18n';
+import { pickLanguage } from '@shared/i18n/index.js';
+import { mainT, pluralKey } from '@main/i18n.js';
 
 describe('pickLanguage', () => {
   it('returns en for undefined or null input', () => {

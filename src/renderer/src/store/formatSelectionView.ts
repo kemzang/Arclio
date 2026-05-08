@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { i18next } from '@shared/i18n';
-import type { AudioBitrate, FormatOption } from '@shared/types';
-import type { Preset } from '@shared/schemas';
-import type { AudioSelection } from './types';
-import { useAppStore } from './useAppStore';
-import { resolveVideoResolution } from './helpers';
-import { presetProducesMedia } from '@shared/presetTraits';
+import { i18next } from '@shared/i18n/index.js';
+import type { AudioBitrate, FormatOption } from '@shared/types.js';
+import type { Preset } from '@shared/schemas.js';
+import type { AudioSelection } from './types.js';
+import { useAppStore } from './useAppStore.js';
+import { resolveVideoResolution } from './helpers.js';
+import { presetProducesMedia } from '@shared/presetTraits.js';
 
 export type ConvertTooltipKey = 'wizard.formats.convert.requiresAudioOnly' | 'wizard.formats.convert.requiresLossy';
 

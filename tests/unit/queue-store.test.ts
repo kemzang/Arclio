@@ -2,8 +2,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { QueueStore } from '@main/stores/QueueStore';
-import { makeItem } from '../shared/fixtures';
+import { QueueStore } from '@main/stores/QueueStore.js';
+import { makeItem } from '../shared/fixtures.js';
 
 async function tempStore(): Promise<[QueueStore, string]> {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'queue-store-'));

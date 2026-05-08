@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, act, fireEvent, screen } from '@testing-library/react';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { StepUrlInput } from '@renderer/components/wizard/StepUrlInput';
-import { buildMockAppApi } from '../shared/mockAppApi';
-import type { AppApi } from '@shared/api';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { StepUrlInput } from '@renderer/components/wizard/StepUrlInput.js';
+import { buildMockAppApi } from '../shared/mockAppApi.js';
+import type { AppApi } from '@shared/api.js';
 
 let mockApi: AppApi;
 let clipboardUnsub: () => void;

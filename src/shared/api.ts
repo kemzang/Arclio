@@ -1,6 +1,6 @@
-import type { Result } from './result';
-import type { SupportedLang } from './i18n/types';
-import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, GetFormatsInput, GetFormatsOutput, GetPlaylistItemsInput, GetPlaylistItemsOutput, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProgressEvent, QueueItem, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types';
+import type { Result } from './result.js';
+import type { SupportedLang } from './i18n/types.js';
+import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, GetFormatsInput, GetFormatsOutput, GetPlaylistItemsInput, GetPlaylistItemsOutput, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProgressEvent, QueueItem, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types.js';
 
 export interface SettingsPatch {
   common?: Partial<CommonSettings>;

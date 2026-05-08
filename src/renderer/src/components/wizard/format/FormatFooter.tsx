@@ -1,9 +1,9 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanSize } from '@shared/format';
-import { useFormatSelectionView } from '../../../store/formatSelectionView';
-import { Button } from '../../ui/button';
-import { Separator } from '../../ui/separator';
+import { humanSize } from '@shared/format.js';
+import { useFormatSelectionView } from '../../../store/formatSelectionView.js';
+import { Button } from '../../ui/button.js';
+import { Separator } from '../../ui/separator.js';
 
 interface FormatFooterProps {
   onBack: () => void;

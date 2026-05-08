@@ -28,9 +28,9 @@ vi.mock('@main/installChannel', () => ({
 
 import { app, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
-import { registerUpdaterHandlers } from '@main/ipc/registerUpdaterHandlers';
-import { IPC_CHANNELS } from '@shared/ipc';
-import log from 'electron-log/main';
+import { registerUpdaterHandlers } from '@main/ipc/registerUpdaterHandlers.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import log from 'electron-log/main.js';
 
 type EventName = 'update-available' | 'update-downloaded' | 'error';
 type HandlerMap = Partial<Record<EventName, (...args: unknown[]) => void>>;
@@ -117,7 +117,7 @@ describe('registerUpdaterHandlers', () => {
         quitAndInstall: vi.fn()
       }
     }));
-    const { registerUpdaterHandlers: registerWithScoop } = await import('@main/ipc/registerUpdaterHandlers');
+    const { registerUpdaterHandlers: registerWithScoop } = await import('@main/ipc/registerUpdaterHandlers.js');
     const { autoUpdater: scopedAutoUpdater } = await import('electron-updater');
 
     const handlers: HandlerMap = {};
@@ -161,7 +161,7 @@ describe('registerUpdaterHandlers', () => {
         quitAndInstall: vi.fn()
       }
     }));
-    const { registerUpdaterHandlers: registerWithFlatpak } = await import('@main/ipc/registerUpdaterHandlers');
+    const { registerUpdaterHandlers: registerWithFlatpak } = await import('@main/ipc/registerUpdaterHandlers.js');
     const { autoUpdater: scopedAutoUpdater } = await import('electron-updater');
 
     registerWithFlatpak(makeWindow());
@@ -296,7 +296,7 @@ describe('registerUpdaterHandlers', () => {
           quitAndInstall: vi.fn()
         }
       }));
-      const { registerUpdaterHandlers: register } = await import('@main/ipc/registerUpdaterHandlers');
+      const { registerUpdaterHandlers: register } = await import('@main/ipc/registerUpdaterHandlers.js');
       const { autoUpdater: scopedAutoUpdater } = await import('electron-updater');
       const { ipcMain: scopedIpcMain } = await import('electron');
 

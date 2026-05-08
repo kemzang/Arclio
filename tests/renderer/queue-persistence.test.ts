@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { useAppStore } from '@renderer/store/useAppStore';
-import type { QueueItem, StatusEvent } from '@shared/types';
-import { makeItem, makeJob, ok } from '../shared/fixtures';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import type { QueueItem, StatusEvent } from '@shared/types.js';
+import { makeItem, makeJob, ok } from '../shared/fixtures.js';
 
 describe('Queue persistence — store behavior', () => {
   let saveMock: ReturnType<typeof vi.fn>;

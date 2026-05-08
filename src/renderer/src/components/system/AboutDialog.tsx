@@ -1,9 +1,9 @@
 import { type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExternalLink, Share2 } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
-import { useAppStore } from '../../store/useAppStore';
+import { Button } from '../ui/button.js';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog.js';
+import { useAppStore } from '../../store/useAppStore.js';
 import appIcon from '../../assets/App-icon-HQ.png';
 
 const WEBSITE_URL = 'https://arroxy.orionus.dev/';

@@ -3,15 +3,15 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { DownloadService } from '@main/services/DownloadService';
-import { YtDlp } from '@main/services/YtDlp';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
 
 vi.mock('@main/utils/process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@main/utils/process')>();
+  const actual = await importOriginal<typeof import('@main/utils/process.js')>();
   return { ...actual, spawnYtDlp: vi.fn(), spawnFFmpeg: vi.fn() };
 });
 
-import { spawnYtDlp, spawnFFmpeg } from '@main/utils/process';
+import { spawnYtDlp, spawnFFmpeg } from '@main/utils/process.js';
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -30,9 +30,9 @@ function makeFakeProcess(exitCode: number, stderr = '') {
   return proc;
 }
 
-import type { StatusEvent, StatusKey } from '@shared/types';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
-import type { SubtitleMode, SubtitleFormat } from '@shared/schemas';
+import type { StatusEvent, StatusKey } from '@shared/types.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
+import type { SubtitleMode, SubtitleFormat } from '@shared/schemas.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };

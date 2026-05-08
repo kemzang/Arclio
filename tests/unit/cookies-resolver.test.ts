@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { resolveCookies } from '@main/services/cookiesResolver';
-import type { AppSettings } from '@shared/types';
+import { resolveCookies } from '@main/services/cookiesResolver.js';
+import type { AppSettings } from '@shared/types.js';
 
 function settings(common: Partial<AppSettings['common']>): AppSettings {
   return {

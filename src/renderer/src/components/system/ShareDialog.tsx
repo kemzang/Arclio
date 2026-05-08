@@ -1,10 +1,10 @@
 import { type JSX, type ComponentType, type SVGProps, useMemo, useRef, useState } from 'react';
 import { Copy, CopyCheck, Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
-import { Button } from '../ui/button';
-import { useAppStore } from '../../store/useAppStore';
-import { track } from '../../lib/analytics';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog.js';
+import { Button } from '../ui/button.js';
+import { useAppStore } from '../../store/useAppStore.js';
+import { track } from '../../lib/analytics.js';
 
 import IconX from '~icons/simple-icons/x';
 import IconFacebook from '~icons/logos/facebook';

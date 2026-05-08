@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
-import { restoreFormatSelection } from '@renderer/store/wizardSlice';
-import type { AppSettings, FormatOption, SinglePrefs } from '@shared/types';
+import { restoreFormatSelection } from '@renderer/store/wizardSlice.js';
+import type { AppSettings, FormatOption, SinglePrefs } from '@shared/types.js';
 
 const FORMATS: FormatOption[] = [
   { formatId: '137', label: '1080p mp4', ext: 'mp4', resolution: '1080p', fps: 30, filesize: 800_000_000, isVideoOnly: true, isAudioOnly: false },

@@ -1,7 +1,7 @@
-import type { AppError, AudioConvert, FormatOption, LocalizedError, Preset, StatusSnapshot } from '@shared/types';
-import { PRESETS } from '@shared/schemas';
-import { i18next } from '@shared/i18n';
-import type { AudioSelection, WizardStep } from './types';
+import type { AppError, AudioConvert, FormatOption, LocalizedError, Preset, StatusSnapshot } from '@shared/types.js';
+import { PRESETS } from '@shared/schemas.js';
+import { i18next } from '@shared/i18n/index.js';
+import type { AudioSelection, WizardStep } from './types.js';
 export type { WizardStep };
 
 export interface GroupedVideoFormat {

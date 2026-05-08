@@ -1,16 +1,16 @@
-import log from 'electron-log/main';
-import { trackMain, probeDurationBucket } from '@main/services/analytics';
+import log from 'electron-log/main.js';
+import { trackMain, probeDurationBucket } from '@main/services/analytics.js';
 
 const logger = log.scope('probe');
-import { createAppError } from '@main/utils/errorFactory';
-import { splitStderrLines } from '@main/utils/process';
-import { ok, fail, type Result } from '@shared/result';
-import { sortFormatsByQuality } from '@shared/qualitySorter';
-import { humanSize } from '@shared/format';
-import type { FormatOption, GetFormatsOutput, SubtitleMap } from '@shared/types';
-import { ytDlpInfoSchema, type YtDlpInfo, type YtDlpSubtitleTrack } from '@shared/schemas';
-import { LIVE_CHAT_LANG } from '@shared/constants';
-import { YtDlp } from './YtDlp';
+import { createAppError } from '@main/utils/errorFactory.js';
+import { splitStderrLines } from '@main/utils/process.js';
+import { ok, fail, type Result } from '@shared/result.js';
+import { sortFormatsByQuality } from '@shared/qualitySorter.js';
+import { humanSize } from '@shared/format.js';
+import type { FormatOption, GetFormatsOutput, SubtitleMap } from '@shared/types.js';
+import { ytDlpInfoSchema, type YtDlpInfo, type YtDlpSubtitleTrack } from '@shared/schemas.js';
+import { LIVE_CHAT_LANG } from '@shared/constants.js';
+import { YtDlp } from './YtDlp.js';
 
 type ProbeSignalCategory = 'extractor' | 'bot';
 

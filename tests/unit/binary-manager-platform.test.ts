@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { binaryInternals } from '@main/services/BinaryManager';
+import { binaryInternals } from '@main/services/BinaryManager.js';
 
 const originalPlatformDescriptor = Object.getOwnPropertyDescriptor(process, 'platform')!;
 const originalArchDescriptor = Object.getOwnPropertyDescriptor(process, 'arch')!;

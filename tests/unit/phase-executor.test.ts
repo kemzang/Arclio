@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
-import { PhaseExecutor } from '@main/services/phases/PhaseExecutor';
-import { STATUS_KEY } from '@shared/schemas';
-import type { Phase, PhaseContext, PhaseOutcome, ActiveDownload } from '@main/services/phases/types';
-import type { DownloadJob, LocalizedError, StartDownloadInput } from '@shared/types';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+import { PhaseExecutor } from '@main/services/phases/PhaseExecutor.js';
+import { STATUS_KEY } from '@shared/schemas.js';
+import type { Phase, PhaseContext, PhaseOutcome, ActiveDownload } from '@main/services/phases/types.js';
+import type { DownloadJob, LocalizedError, StartDownloadInput } from '@shared/types.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };

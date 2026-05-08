@@ -1,11 +1,11 @@
 import { type JSX, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { Checkbox } from '../ui/checkbox';
-import { Input } from '../ui/input';
-import { Separator } from '../ui/separator';
+import { useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { Checkbox } from '../ui/checkbox.js';
+import { Input } from '../ui/input.js';
+import { Separator } from '../ui/separator.js';
 
 function formatDuration(seconds: number | undefined, liveLabel: string): string {
   if (seconds === undefined || seconds === 0) return liveLabel;

@@ -11,7 +11,7 @@ import { spawn } from 'node:child_process';
 import { existsSync, mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { resolveSmokeUrl } from './smoke-shared';
+import { resolveSmokeUrl } from './smoke-shared.js';
 
 function fail(message: string): never {
   console.error(`smoke:pot — ${message}`);

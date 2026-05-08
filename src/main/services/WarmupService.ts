@@ -1,11 +1,11 @@
 import type { BrowserWindow } from 'electron';
-import log from 'electron-log/main';
+import log from 'electron-log/main.js';
 
-import { ok, type Result } from '@shared/result';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { BLOCKING_DEPENDENCY_IDS, DEPENDENCY_IDS, type DependencyDiagnostic, type DependencyId, type WarmUpOutput, type WarmupProgressEvent } from '@shared/types';
-import type { BinaryManager } from './BinaryManager';
-import type { TokenService } from './TokenService';
+import { ok, type Result } from '@shared/result.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { BLOCKING_DEPENDENCY_IDS, DEPENDENCY_IDS, type DependencyDiagnostic, type DependencyId, type WarmUpOutput, type WarmupProgressEvent } from '@shared/types.js';
+import type { BinaryManager } from './BinaryManager.js';
+import type { TokenService } from './TokenService.js';
 
 const logger = log.scope('warmup');
 

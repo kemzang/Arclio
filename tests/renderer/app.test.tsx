@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { App } from '@renderer/App';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { buildMockAppApi } from '../shared/mockAppApi';
+import { App } from '@renderer/App.js';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { buildMockAppApi } from '../shared/mockAppApi.js';
 
 const mockAppApi = buildMockAppApi();
 

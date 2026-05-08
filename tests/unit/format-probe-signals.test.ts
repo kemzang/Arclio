@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { detectProbeDegradationSignals } from '@main/services/FormatProbeService';
+import { detectProbeDegradationSignals } from '@main/services/FormatProbeService.js';
 
 describe('detectProbeDegradationSignals', () => {
   it('returns empty for clean stderr', () => {

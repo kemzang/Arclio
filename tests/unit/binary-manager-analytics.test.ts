@@ -4,9 +4,9 @@ vi.mock('@main/services/analytics', () => ({
   trackMain: vi.fn()
 }));
 
-import { BinaryManager } from '@main/services/BinaryManager';
-import { trackMain } from '@main/services/analytics';
-import type { DependencyAttempt, DependencySource } from '@shared/types';
+import { BinaryManager } from '@main/services/BinaryManager.js';
+import { trackMain } from '@main/services/analytics.js';
+import type { DependencyAttempt, DependencySource } from '@shared/types.js';
 
 afterEach(() => {
   vi.clearAllMocks();

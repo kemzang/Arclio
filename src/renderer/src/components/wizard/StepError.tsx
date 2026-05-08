@@ -1,9 +1,9 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatError, useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { BotWallNotice } from './format/BotWallNotice';
-import { CookiesErrorAlert } from './format/CookiesErrorAlert';
+import { formatError, useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { BotWallNotice } from './format/BotWallNotice.js';
+import { CookiesErrorAlert } from './format/CookiesErrorAlert.js';
 
 // Mirrors the bot-category patterns in `FormatProbeService` so a hard-fail
 // probe surfaces the same cookies CTA users see for a degraded probe.

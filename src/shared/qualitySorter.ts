@@ -1,4 +1,4 @@
-import type { FormatOption } from './types';
+import type { FormatOption } from './types.js';
 
 function resolutionHeight(resolution: string): number {
   const m = /(\d{3,4})/.exec(resolution);

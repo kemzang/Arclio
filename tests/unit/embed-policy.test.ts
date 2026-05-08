@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { resolveEmbedPolicy } from '@shared/embedPolicy';
+import { resolveEmbedPolicy } from '@shared/embedPolicy.js';
 
 describe('resolveEmbedPolicy', () => {
   describe('no audioConvert (native audio / video)', () => {

@@ -8,14 +8,14 @@ vi.mock('node:fs/promises', () => ({
   unlink: vi.fn().mockResolvedValue(undefined)
 }));
 
-vi.mock('@main/utils/process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@main/utils/process')>();
+vi.mock('@main/utils/process.js', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@main/utils/process.js')>();
   return { ...actual, spawnFFmpeg: vi.fn() };
 });
 
 import { readFile, writeFile, rename, unlink } from 'node:fs/promises';
-import { spawnFFmpeg } from '@main/utils/process';
-import { dedupeSubtitleFiles, muxSubtitlesIntoVideo } from '@main/services/subtitlePostProcess';
+import { spawnFFmpeg } from '@main/utils/process.js';
+import { dedupeSubtitleFiles, muxSubtitlesIntoVideo } from '@main/services/subtitlePostProcess.js';
 
 const JOB_ID = 'job-1';
 

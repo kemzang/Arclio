@@ -1,4 +1,4 @@
-import type { QueueItem } from './types';
+import type { QueueItem } from './types.js';
 
 // "Held" = an item the user paused while it was still pending. It never had
 // a downloadJobId because no main-process job was ever spawned for it. UI

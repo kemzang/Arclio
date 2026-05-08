@@ -1,8 +1,8 @@
 import { useEffect, useState, type JSX } from 'react';
 import { Minus, Share2, Square, Minimize2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { cn } from '@renderer/lib/utils';
-import { useAppStore } from '../../store/useAppStore';
+import { cn } from '@renderer/lib/utils.js';
+import { useAppStore } from '../../store/useAppStore.js';
 import appIcon from '@renderer/assets/App-icon-HQ.png';
 
 const drag: React.CSSProperties = { WebkitAppRegion: 'drag' } as React.CSSProperties;

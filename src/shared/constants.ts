@@ -1,5 +1,5 @@
-import type { SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, UiTheme } from './schemas';
-import type { AppSettings } from './types';
+import type { SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, UiTheme } from './schemas.js';
+import type { AppSettings } from './types.js';
 
 // Defaults — single source. Anywhere that needs a fallback for a missing field
 // (initial state, persistence migration, test fixtures, IPC fallback) must

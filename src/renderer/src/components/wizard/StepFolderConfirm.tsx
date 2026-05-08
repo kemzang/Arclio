@@ -1,14 +1,14 @@
 import { useState, useMemo, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
-import { RadioOption } from '../ui/radio-option';
-import { Switch } from '../ui/switch';
-import { Input } from '../ui/input';
-import { formatHomeRelativePath } from '@renderer/lib/utils';
-import { isValidSubfolder } from '@renderer/lib/path';
-import { VideoSummaryCard } from '../shared/VideoSummaryCard';
+import { useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { Separator } from '../ui/separator.js';
+import { RadioOption } from '../ui/radio-option.js';
+import { Switch } from '../ui/switch.js';
+import { Input } from '../ui/input.js';
+import { formatHomeRelativePath } from '@renderer/lib/utils.js';
+import { isValidSubfolder } from '@renderer/lib/path.js';
+import { VideoSummaryCard } from '../shared/VideoSummaryCard.js';
 
 interface Location {
   id: string;

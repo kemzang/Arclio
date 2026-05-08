@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 import { vi } from 'vitest';
-import { initI18n } from '@shared/i18n';
+import { initI18n } from '@shared/i18n/index.js';
 
 initI18n('en');
 

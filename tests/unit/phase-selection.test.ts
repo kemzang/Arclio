@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { phasesFor } from '@main/services/phases';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
-import type { StartDownloadInput } from '@shared/types';
+import { phasesFor } from '@main/services/phases/index.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
+import type { StartDownloadInput } from '@shared/types.js';
 
 const URL = 'https://www.youtube.com/watch?v=test';
 const FORMAT_ID = 'bv+ba';

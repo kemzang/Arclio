@@ -1,16 +1,16 @@
 import { useState, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AudioBitrate, AudioConvertTarget, FormatOption } from '@shared/types';
-import { AUDIO_CONVERT_TARGETS } from '@shared/audioTargets';
-import { AUDIO_BITRATES } from '@shared/schemas';
-import type { AudioSelection } from '../../../store/types';
-import { useFormatSelectionView } from '../../../store/formatSelectionView';
-import { ToggleGroup, ToggleGroupItem } from '../../ui/toggle-group';
-import { Tooltip, TooltipTrigger, TooltipContent } from '../../ui/tooltip';
-import { RadioOption } from '../../ui/radio-option';
-import { ScrollArea } from '../../ui/scroll-area';
-import { MascotBubble } from '../../shared/MascotBubble';
-import { cn } from '@renderer/lib/utils';
+import type { AudioBitrate, AudioConvertTarget, FormatOption } from '@shared/types.js';
+import { AUDIO_CONVERT_TARGETS } from '@shared/audioTargets.js';
+import { AUDIO_BITRATES } from '@shared/schemas.js';
+import type { AudioSelection } from '../../../store/types.js';
+import { useFormatSelectionView } from '../../../store/formatSelectionView.js';
+import { ToggleGroup, ToggleGroupItem } from '../../ui/toggle-group.js';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../../ui/tooltip.js';
+import { RadioOption } from '../../ui/radio-option.js';
+import { ScrollArea } from '../../ui/scroll-area.js';
+import { MascotBubble } from '../../shared/MascotBubble.js';
+import { cn } from '@renderer/lib/utils.js';
 import choosingImg from '../../../assets/Choosing.png';
 
 interface AudioColumnProps {

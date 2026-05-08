@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dedupeCues, type Cue } from '@main/services/cueDedupe';
+import { dedupeCues, type Cue } from '@main/services/cueDedupe.js';
 
 function collect(input: Cue[]): Cue[] {
   return [...dedupeCues(input)];

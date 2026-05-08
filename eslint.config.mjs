@@ -110,6 +110,14 @@ export default tseslint.config(
       'no-undef': 'off',
     }
   },
+  // electron-builder lifecycle hooks — plain ESM JS, no TS types. The
+  // explicit-return-type rule from @electron-toolkit's preset only fits TS.
+  {
+    files: ['build/*.mjs'],
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    }
+  },
   // shadcn/ui generated files — not a real HMR issue; a11y + return-type disabled since we don't control that code
   {
     files: ['src/renderer/src/components/ui/**/*.tsx'],

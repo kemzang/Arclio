@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import en from '@shared/i18n/locales/en';
-import es from '@shared/i18n/locales/es';
-import fr from '@shared/i18n/locales/fr';
-import de from '@shared/i18n/locales/de';
-import ru from '@shared/i18n/locales/ru';
-import uk from '@shared/i18n/locales/uk';
-import ja from '@shared/i18n/locales/ja';
-import zh from '@shared/i18n/locales/zh';
-import hi from '@shared/i18n/locales/hi';
-import { YTDLP_ERROR_KEYS, STATUS_KEY } from '@shared/schemas';
-import type { LocaleResource } from '@shared/i18n/types';
+import en from '@shared/i18n/locales/en.js';
+import es from '@shared/i18n/locales/es.js';
+import fr from '@shared/i18n/locales/fr.js';
+import de from '@shared/i18n/locales/de.js';
+import ru from '@shared/i18n/locales/ru.js';
+import uk from '@shared/i18n/locales/uk.js';
+import ja from '@shared/i18n/locales/ja.js';
+import zh from '@shared/i18n/locales/zh.js';
+import hi from '@shared/i18n/locales/hi.js';
+import { YTDLP_ERROR_KEYS, STATUS_KEY } from '@shared/schemas.js';
+import type { LocaleResource } from '@shared/i18n/types.js';
 
 const LOCALES: Record<string, LocaleResource> = { en, es, fr, de, ru, uk, ja, zh, hi };
 

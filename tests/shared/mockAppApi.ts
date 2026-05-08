@@ -1,8 +1,8 @@
 import { vi } from 'vitest';
-import type { AppApi } from '@shared/api';
-import type { AppSettings, DependencyDiagnostic, DependencyId, WarmUpOutput } from '@shared/types';
-import { defaultAppSettings } from '@shared/constants';
-import { ok } from '@shared/result';
+import type { AppApi } from '@shared/api.js';
+import type { AppSettings, DependencyDiagnostic, DependencyId, WarmUpOutput } from '@shared/types.js';
+import { defaultAppSettings } from '@shared/constants.js';
+import { ok } from '@shared/result.js';
 
 function runnableDeps(): Record<DependencyId, DependencyDiagnostic> {
   const make = (id: DependencyId): DependencyDiagnostic => ({

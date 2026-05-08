@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import mainImg from '../../assets/Main.png';
-import type { DependencyDiagnostic, DependencyId, WarmupProgressEvent } from '@shared/types';
-import { RepairPanel } from './RepairPanel';
+import type { DependencyDiagnostic, DependencyId, WarmupProgressEvent } from '@shared/types.js';
+import { RepairPanel } from './RepairPanel.js';
 
 interface Props {
   initialized: boolean;

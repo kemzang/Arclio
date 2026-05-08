@@ -1,14 +1,14 @@
-import log from 'electron-log/main';
-import { createAppError } from '@main/utils/errorFactory';
-import { cookiesConfigIssueMessage, getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { fail, type Result } from '@shared/result';
-import { cancelDownloadSchema, getFormatsSchema, getPlaylistItemsSchema, pauseResumeSchema, resumeSchema, startDownloadSchema } from '@shared/schemas';
-import type { DownloadService } from '@main/services/DownloadService';
-import type { FormatProbeService } from '@main/services/FormatProbeService';
-import type { PlaylistProbeService } from '@main/services/PlaylistProbeService';
-import type { SettingsStore } from '@main/stores/SettingsStore';
-import { handle } from './utils';
+import log from 'electron-log/main.js';
+import { createAppError } from '@main/utils/errorFactory.js';
+import { cookiesConfigIssueMessage, getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { fail, type Result } from '@shared/result.js';
+import { cancelDownloadSchema, getFormatsSchema, getPlaylistItemsSchema, pauseResumeSchema, resumeSchema, startDownloadSchema } from '@shared/schemas.js';
+import type { DownloadService } from '@main/services/DownloadService.js';
+import type { FormatProbeService } from '@main/services/FormatProbeService.js';
+import type { PlaylistProbeService } from '@main/services/PlaylistProbeService.js';
+import type { SettingsStore } from '@main/stores/SettingsStore.js';
+import { handle } from './utils.js';
 
 interface DownloadHandlerDeps {
   downloadService: DownloadService;

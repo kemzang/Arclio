@@ -1,6 +1,6 @@
 import { useEffect, useState, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { cn } from '@renderer/lib/utils';
+import { cn } from '@renderer/lib/utils.js';
 import downloadingImg from '../../assets/Downloading.png';
 
 interface Props {

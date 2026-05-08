@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { isValidSubfolder, SUBFOLDER_NAME_MAX } from './subfolder';
-import { AUDIO_CONVERT_TARGETS, type AudioConvertTarget } from './audioTargets';
+import { isValidSubfolder, SUBFOLDER_NAME_MAX } from './subfolder.js';
+import { AUDIO_CONVERT_TARGETS, type AudioConvertTarget } from './audioTargets.js';
 
 export type { AudioConvertTarget };
 

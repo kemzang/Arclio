@@ -1,7 +1,7 @@
-import { STATUS_KEY } from '@shared/schemas';
-import { DEFAULTS } from '@shared/constants';
-import { dedupeSubtitleFiles, muxSubtitlesIntoVideo, logger } from '../subtitlePostProcess';
-import type { Phase, PhaseContext, PhaseOutcome } from './types';
+import { STATUS_KEY } from '@shared/schemas.js';
+import { DEFAULTS } from '@shared/constants.js';
+import { dedupeSubtitleFiles, muxSubtitlesIntoVideo, logger } from '../subtitlePostProcess.js';
+import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
 async function runEmbedMux(ctx: PhaseContext): Promise<void> {
   const { active, ytDlp } = ctx;

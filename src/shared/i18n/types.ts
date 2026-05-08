@@ -1,5 +1,5 @@
-import type en from './locales/en';
-import { SUPPORTED_LANGS as LANGS, type SupportedLang as Lang, type YtdlpErrorKey as YtdlpErrorKeyAlias } from '../schemas';
+import type en from './locales/en.js';
+import { SUPPORTED_LANGS as LANGS, type SupportedLang as Lang, type YtdlpErrorKey as YtdlpErrorKeyAlias } from '../schemas.js';
 
 // Re-export so existing imports of `@shared/i18n/types` and `@shared/i18n`
 // continue to work; canonical definitions live in shared/schemas.ts.

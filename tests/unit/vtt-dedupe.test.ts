@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { dedupeVtt } from '@main/services/vttDedupe';
+import { dedupeVtt } from '@main/services/vttDedupe.js';
 
 const FIXTURES = join(__dirname, '../fixtures/subtitles');
 

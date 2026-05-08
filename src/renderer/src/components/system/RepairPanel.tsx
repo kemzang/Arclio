@@ -1,10 +1,10 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertTriangle, FolderOpen, RefreshCw, FileSearch, RotateCcw, X } from 'lucide-react';
-import type { BinaryOverrides, DependencyDiagnostic, DependencyFailureKind, DependencyId } from '@shared/types';
-import { FAILURE_CODE } from '@shared/types';
-import { useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
+import type { BinaryOverrides, DependencyDiagnostic, DependencyFailureKind, DependencyId } from '@shared/types.js';
+import { FAILURE_CODE } from '@shared/types.js';
+import { useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
 
 interface Props {
   diagnostics: Record<DependencyId, DependencyDiagnostic>;

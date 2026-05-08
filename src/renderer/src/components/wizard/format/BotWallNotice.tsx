@@ -1,8 +1,8 @@
 import type { JSX } from 'react';
 import { AlertTriangle, RefreshCw, ShieldCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { Button } from '@renderer/components/ui/button';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { Button } from '@renderer/components/ui/button.js';
 
 interface Props {
   // When set, the component renders even if `wizardFormatsDegraded` is null.

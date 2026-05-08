@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { create } from 'zustand';
-import { createJobScheduler } from '@renderer/store/jobScheduler';
-import type { AppState } from '@renderer/store/types';
-import { makeItem } from '../shared/fixtures';
+import { createJobScheduler } from '@renderer/store/jobScheduler.js';
+import type { AppState } from '@renderer/store/types.js';
+import { makeItem } from '../shared/fixtures.js';
 
 function makeTestStore(startSpy: ReturnType<typeof vi.fn>) {
   const useStore = create<AppState>()(

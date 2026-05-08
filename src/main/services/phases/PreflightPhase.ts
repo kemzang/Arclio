@@ -1,7 +1,7 @@
-import { STATUS_KEY } from '@shared/schemas';
-import { checkDiskSpace } from '@main/utils/diskSpace';
-import type { LocalizedError } from '@shared/types';
-import type { Phase, PhaseContext, PhaseOutcome } from './types';
+import { STATUS_KEY } from '@shared/schemas.js';
+import { checkDiskSpace } from '@main/utils/diskSpace.js';
+import type { LocalizedError } from '@shared/types.js';
+import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
 function formatGB(bytes: number): string {
   return `${Math.round(bytes / 1e8) / 10} GB`;

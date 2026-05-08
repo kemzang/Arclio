@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { QueueItemCard } from '@renderer/components/queue/QueueItemCard';
-import { useAppStore } from '@renderer/store/useAppStore';
-import type { QueueItem, QueueItemStatus } from '@shared/types';
-import type { PreparedJob } from '@shared/preparedJob';
+import { QueueItemCard } from '@renderer/components/queue/QueueItemCard.js';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import type { QueueItem, QueueItemStatus } from '@shared/types.js';
+import type { PreparedJob } from '@shared/preparedJob.js';
 
 const DEFAULT_JOB: PreparedJob = {
   kind: 'single-format',

@@ -1,5 +1,5 @@
-import type { AudioConvert } from './schemas';
-import { isLossyTarget } from './audioTargets';
+import type { AudioConvert } from './schemas.js';
+import { isLossyTarget } from './audioTargets.js';
 
 export interface EmbedPolicyInput {
   embedMetadata?: boolean;

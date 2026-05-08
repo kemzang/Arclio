@@ -1,6 +1,6 @@
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
-import type { DownloadJob, LocalizedError, RecentJob, StartDownloadInput, StatusEvent, StatusKey } from '@shared/types';
-import type { YtDlp, YtDlpResult } from '../YtDlp';
+import type { DownloadJob, LocalizedError, RecentJob, StartDownloadInput, StatusEvent, StatusKey } from '@shared/types.js';
+import type { YtDlp, YtDlpResult } from '../YtDlp.js';
 
 export interface ActiveDownload {
   job: DownloadJob;

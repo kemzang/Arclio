@@ -1,14 +1,14 @@
 import type { JSX } from 'react';
-import { STEP_APPLICABLE, STEPS, type StepContext, type VisibleStep } from './stepNavigation';
-import { StepUrlInput } from './StepUrlInput';
-import { StepPlaylistItems } from './StepPlaylistItems';
-import { StepPlaylistPresets } from './StepPlaylistPresets';
-import { StepFormatSelect } from './StepFormatSelect';
-import { StepSubtitles } from './StepSubtitles';
-import { StepSponsorBlock } from './StepSponsorBlock';
-import { StepOutput } from './StepOutput';
-import { StepFolderConfirm } from './StepFolderConfirm';
-import { StepConfirm } from './StepConfirm';
+import { STEP_APPLICABLE, STEPS, type StepContext, type VisibleStep } from './stepNavigation.js';
+import { StepUrlInput } from './StepUrlInput.js';
+import { StepPlaylistItems } from './StepPlaylistItems.js';
+import { StepPlaylistPresets } from './StepPlaylistPresets.js';
+import { StepFormatSelect } from './StepFormatSelect.js';
+import { StepSubtitles } from './StepSubtitles.js';
+import { StepSponsorBlock } from './StepSponsorBlock.js';
+import { StepOutput } from './StepOutput.js';
+import { StepFolderConfirm } from './StepFolderConfirm.js';
+import { StepConfirm } from './StepConfirm.js';
 
 export interface StepDescriptor {
   id: VisibleStep;

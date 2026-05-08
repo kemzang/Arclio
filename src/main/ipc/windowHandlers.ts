@@ -1,6 +1,6 @@
 import type { BrowserWindow } from 'electron';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { handleRaw } from './utils';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { handleRaw } from './utils.js';
 
 export function registerWindowHandlers(mainWindow: BrowserWindow): void {
   handleRaw(IPC_CHANNELS.windowMinimize, () => {

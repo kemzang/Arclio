@@ -1,9 +1,9 @@
-import log from 'electron-log/main';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { supportedLangSchema } from '@shared/schemas';
-import type { SupportedLang } from '@shared/i18n/types';
-import type { WarmupService } from '@main/services/WarmupService';
-import { handleRaw } from './utils';
+import log from 'electron-log/main.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { supportedLangSchema } from '@shared/schemas.js';
+import type { SupportedLang } from '@shared/i18n/types.js';
+import type { WarmupService } from '@main/services/WarmupService.js';
+import { handleRaw } from './utils.js';
 
 interface AppHandlerDeps {
   warmupService: WarmupService;

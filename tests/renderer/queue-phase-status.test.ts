@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { useAppStore } from '@renderer/store/useAppStore';
-import type { QueueItem, StatusEvent, StatusKey } from '@shared/types';
-import { makeItem, ok } from '../shared/fixtures';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import type { QueueItem, StatusEvent, StatusKey } from '@shared/types.js';
+import { makeItem, ok } from '../shared/fixtures.js';
 
 describe('Queue store — phase status transitions', () => {
   let capturedOnStatus: ((event: StatusEvent) => void) | null = null;

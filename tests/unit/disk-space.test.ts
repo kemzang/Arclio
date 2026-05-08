@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { checkDiskSpace } from '@main/utils/diskSpace';
+import { checkDiskSpace } from '@main/utils/diskSpace.js';
 
 vi.mock('node:fs/promises', async (importOriginal) => {
   const actual = await importOriginal<typeof import('node:fs/promises')>();

@@ -1,15 +1,15 @@
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
-import log from 'electron-log/main';
-import { spawnYtDlp } from '@main/utils/process';
-import { classifyStderr, extractLastError, type StderrSignal } from '@main/utils/ytdlpErrors';
-import { resolveCookies, type ResolvedCookies } from './cookiesResolver';
-import { nonEmpty } from '@shared/format';
-import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath';
-import type { SubtitleFormat, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, StatusKey, AudioConvert } from '@shared/types';
-import { resolveEmbedPolicy } from '@shared/embedPolicy';
-import type { BinaryManager } from './BinaryManager';
-import type { TokenService } from './TokenService';
-import type { SettingsStore } from '@main/stores/SettingsStore';
+import log from 'electron-log/main.js';
+import { spawnYtDlp } from '@main/utils/process.js';
+import { classifyStderr, extractLastError, type StderrSignal } from '@main/utils/ytdlpErrors.js';
+import { resolveCookies, type ResolvedCookies } from './cookiesResolver.js';
+import { nonEmpty } from '@shared/format.js';
+import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath.js';
+import type { SubtitleFormat, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, StatusKey, AudioConvert } from '@shared/types.js';
+import { resolveEmbedPolicy } from '@shared/embedPolicy.js';
+import type { BinaryManager } from './BinaryManager.js';
+import type { TokenService } from './TokenService.js';
+import type { SettingsStore } from '@main/stores/SettingsStore.js';
 
 type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | number>) => void;
 

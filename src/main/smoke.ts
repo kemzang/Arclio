@@ -9,10 +9,10 @@
 // reports to stdout; exits cleanly.
 
 import { app } from 'electron';
-import { nonEmpty } from '@shared/format';
-import type { BinaryManager } from './services/BinaryManager';
-import type { FormatProbeService } from './services/FormatProbeService';
-import type { TokenService } from './services/TokenService';
+import { nonEmpty } from '@shared/format.js';
+import type { BinaryManager } from './services/BinaryManager.js';
+import type { FormatProbeService } from './services/FormatProbeService.js';
+import type { TokenService } from './services/TokenService.js';
 
 interface SmokeDeps {
   url: string;

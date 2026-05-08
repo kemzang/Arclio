@@ -7,11 +7,11 @@
 import { extname } from 'node:path';
 import { readFile, rename, unlink, writeFile } from 'node:fs/promises';
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
-import log from 'electron-log/main';
-import { dedupeSrt } from './srtDedupe';
-import { dedupeVtt } from './vttDedupe';
-import { spawnFFmpeg } from '@main/utils/process';
-import { detectSubtitleLang, EMBED_CONTAINER_EXT } from '@shared/subtitlePath';
+import log from 'electron-log/main.js';
+import { dedupeSrt } from './srtDedupe.js';
+import { dedupeVtt } from './vttDedupe.js';
+import { spawnFFmpeg } from '@main/utils/process.js';
+import { detectSubtitleLang, EMBED_CONTAINER_EXT } from '@shared/subtitlePath.js';
 
 export const logger = log.scope('subs');
 

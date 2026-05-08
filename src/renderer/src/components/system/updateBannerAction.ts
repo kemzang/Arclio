@@ -1,4 +1,4 @@
-import type { InstallChannel } from '@shared/types';
+import type { InstallChannel } from '@shared/types.js';
 
 export type Action = { kind: 'install' } | { kind: 'download' } | { kind: 'command'; cmd: string };
 

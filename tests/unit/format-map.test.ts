@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mapFormats } from '@main/services/FormatProbeService';
+import { mapFormats } from '@main/services/FormatProbeService.js';
 
 describe('mapFormats', () => {
   it('returns raw format_id without composing audio selector', () => {

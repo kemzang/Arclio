@@ -1,10 +1,10 @@
 import { create } from 'zustand';
-import { createWizardSlice } from './wizardSlice';
-import { createQueueSlice } from './queueSlice';
-import { createUiSlice } from './uiSlice';
-import { createSystemSlice } from './systemSlice';
-import { createJobScheduler } from './jobScheduler';
-import type { AppState } from './types';
+import { createWizardSlice } from './wizardSlice.js';
+import { createQueueSlice } from './queueSlice.js';
+import { createUiSlice } from './uiSlice.js';
+import { createSystemSlice } from './systemSlice.js';
+import { createJobScheduler } from './jobScheduler.js';
+import type { AppState } from './types.js';
 
 export const useAppStore = create<AppState>()((set, get) => {
   const scheduler = createJobScheduler(set, get);
@@ -17,6 +17,6 @@ export const useAppStore = create<AppState>()((set, get) => {
 });
 
 // Re-export pure helpers so existing import paths
-// (`import { foo } from '../store/useAppStore'`) keep working without churn
+// (`import { foo } from '../store/useAppStore.js'`) keep working without churn
 // in component files.
-export { presetLabel, presetOptions, groupVideoFormats, resolveAudioLabel, resolveVideoResolution, formatStatus, formatLocalizedError, formatError } from './helpers';
+export { presetLabel, presetOptions, groupVideoFormats, resolveAudioLabel, resolveVideoResolution, formatStatus, formatLocalizedError, formatError } from './helpers.js';

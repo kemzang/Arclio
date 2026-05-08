@@ -1,14 +1,14 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '../../store/useAppStore';
-import { useFormatSelectionView } from '../../store/formatSelectionView';
-import { VideoSummaryCard } from '../shared/VideoSummaryCard';
+import { useAppStore } from '../../store/useAppStore.js';
+import { useFormatSelectionView } from '../../store/formatSelectionView.js';
+import { VideoSummaryCard } from '../shared/VideoSummaryCard.js';
 import downloadingImg from '../../assets/Downloading.png';
-import { PresetStrip } from './format/PresetStrip';
-import { VideoColumn } from './format/VideoColumn';
-import { BotWallNotice } from './format/BotWallNotice';
-import { AudioColumn } from './format/AudioColumn';
-import { FormatFooter } from './format/FormatFooter';
+import { PresetStrip } from './format/PresetStrip.js';
+import { VideoColumn } from './format/VideoColumn.js';
+import { BotWallNotice } from './format/BotWallNotice.js';
+import { AudioColumn } from './format/AudioColumn.js';
+import { FormatFooter } from './format/FormatFooter.js';
 
 export function StepFormatSelect(): JSX.Element {
   const { t } = useTranslation();

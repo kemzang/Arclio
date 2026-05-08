@@ -3,10 +3,10 @@ import { describe, expect, it, vi, afterEach } from 'vitest';
 
 vi.mock('@main/utils/process');
 
-import { spawnYtDlp } from '@main/utils/process';
-import { DownloadService } from '@main/services/DownloadService';
-import { YtDlp } from '@main/services/YtDlp';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+import { spawnYtDlp } from '@main/utils/process.js';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };

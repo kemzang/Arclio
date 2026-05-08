@@ -1,14 +1,14 @@
 import { type JSX, type ReactNode } from 'react';
 import { AlertTriangle, Captions, Download, ExternalLink, Film, FolderInput, FolderOpen, Hourglass, Layers, Music, Pause, Play, RotateCcw, Tags, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { QueueItem, QueueItemStatus, StatusKey } from '@shared/types';
-import { isHeld } from '@shared/queueItem';
-import { useAppStore, formatStatus, formatLocalizedError } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
-import { Progress } from '../ui/progress';
-import { TooltipIconButton } from '../ui/tooltip-icon-button';
-import { cn } from '@renderer/lib/utils';
+import type { QueueItem, QueueItemStatus, StatusKey } from '@shared/types.js';
+import { isHeld } from '@shared/queueItem.js';
+import { useAppStore, formatStatus, formatLocalizedError } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { Badge } from '../ui/badge.js';
+import { Progress } from '../ui/progress.js';
+import { TooltipIconButton } from '../ui/tooltip-icon-button.js';
+import { cn } from '@renderer/lib/utils.js';
 
 const PHASE_ICON: Partial<Record<StatusKey, ReactNode>> = {
   downloadingMedia: <Download size={11} />,

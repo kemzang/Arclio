@@ -1,8 +1,8 @@
 import { mkdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
-import { STATUS_KEY } from '@shared/schemas';
-import type { YtDlpRequest } from '../YtDlp';
-import type { Phase, PhaseContext, PhaseOutcome } from './types';
+import { STATUS_KEY } from '@shared/schemas.js';
+import type { YtDlpRequest } from '../YtDlp.js';
+import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
 async function setupTempDir(outputDir: string, jobId: string): Promise<string | undefined> {
   const tempDir = join(outputDir, '.arroxy-temp', jobId.slice(0, 8));

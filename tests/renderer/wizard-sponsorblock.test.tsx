@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import { useAppStore } from '@renderer/store/useAppStore';
-import type { GetFormatsOutput, StatusEvent } from '@shared/types';
-import { ok } from '../shared/fixtures';
-import { buildAppSettings } from '../shared/settingsFixtures';
-import { DEFAULTS } from '@shared/constants';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import type { GetFormatsOutput, StatusEvent } from '@shared/types.js';
+import { ok } from '../shared/fixtures.js';
+import { buildAppSettings } from '../shared/settingsFixtures.js';
+import { DEFAULTS } from '@shared/constants.js';
 
 const YOUTUBE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 
@@ -384,7 +384,7 @@ describe('SponsorBlock — StepSponsorBlock UI', () => {
   let StepSponsorBlock: React.FC;
 
   beforeEach(async () => {
-    const mod = await import('@renderer/components/wizard/StepSponsorBlock');
+    const mod = await import('@renderer/components/wizard/StepSponsorBlock.js');
     StepSponsorBlock = mod.StepSponsorBlock;
   });
 

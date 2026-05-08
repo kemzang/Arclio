@@ -1,21 +1,21 @@
 import { useEffect, useState, type JSX } from 'react';
 import { Bug, Info, Share2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ZOOM_MIN, ZOOM_MAX, ZOOM_STEP } from '@shared/schemas';
-import { useAppStore } from './store/useAppStore';
-import { TitleBar } from './components/layout/TitleBar';
-import { WizardPanel } from './components/layout/WizardPanel';
-import { SmartDrawer } from './components/layout/SmartDrawer';
-import { SplashScreen } from './components/system/SplashScreen';
-import { FeedbackNudge } from './components/system/FeedbackNudge';
-import { UpdateBanner } from './components/system/UpdateBanner';
-import { ThemeToggle } from './components/system/ThemeToggle';
-import { LanguagePicker } from './components/system/LanguagePicker';
-import { AboutDialog } from './components/system/AboutDialog';
-import { ShareDialog } from './components/system/ShareDialog';
-import { useUpdateChannel } from './components/system/useUpdateChannel';
-import { TooltipProvider } from './components/ui/tooltip';
-import { cn } from './lib/utils';
+import { ZOOM_MIN, ZOOM_MAX, ZOOM_STEP } from '@shared/schemas.js';
+import { useAppStore } from './store/useAppStore.js';
+import { TitleBar } from './components/layout/TitleBar.js';
+import { WizardPanel } from './components/layout/WizardPanel.js';
+import { SmartDrawer } from './components/layout/SmartDrawer.js';
+import { SplashScreen } from './components/system/SplashScreen.js';
+import { FeedbackNudge } from './components/system/FeedbackNudge.js';
+import { UpdateBanner } from './components/system/UpdateBanner.js';
+import { ThemeToggle } from './components/system/ThemeToggle.js';
+import { LanguagePicker } from './components/system/LanguagePicker.js';
+import { AboutDialog } from './components/system/AboutDialog.js';
+import { ShareDialog } from './components/system/ShareDialog.js';
+import { useUpdateChannel } from './components/system/useUpdateChannel.js';
+import { TooltipProvider } from './components/ui/tooltip.js';
+import { cn } from './lib/utils.js';
 
 const FEEDBACK_URL = 'https://github.com/antonio-orionus/Arroxy/issues/new/choose';
 

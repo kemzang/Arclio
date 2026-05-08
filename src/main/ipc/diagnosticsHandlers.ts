@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron';
-import log from 'electron-log/main';
-import { IPC_CHANNELS } from '@shared/ipc';
-import type { WizardStepSnapshot } from '@shared/types';
+import log from 'electron-log/main.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import type { WizardStepSnapshot } from '@shared/types.js';
 
 const logger = log.scope('wizard');
 

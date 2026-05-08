@@ -1,8 +1,8 @@
-import log from 'electron-log/main';
-import { parseVideoId } from '@shared/url';
-import { nonEmpty } from '@shared/format';
-import { unknownToMessage } from '@main/utils/errorFactory';
-import type { TokenProvider } from '@main/token/TokenProvider';
+import log from 'electron-log/main.js';
+import { parseVideoId } from '@shared/url.js';
+import { nonEmpty } from '@shared/format.js';
+import { unknownToMessage } from '@main/utils/errorFactory.js';
+import type { TokenProvider } from '@main/token/TokenProvider.js';
 
 const logger = log.scope('token');
 

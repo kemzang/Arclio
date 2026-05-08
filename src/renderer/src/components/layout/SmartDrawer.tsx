@@ -2,13 +2,13 @@ import type { JSX } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronDown, Hourglass, Inbox, Pause, Share2, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { isHighValueDownload } from '@shared/queueItem';
-import { useAppStore, formatStatus } from '../../store/useAppStore';
-import { QueueItemCard } from '../queue/QueueItemCard';
-import { QueueTipNudge } from '../queue/QueueTipNudge';
-import { Badge } from '../ui/badge';
-import { ScrollArea } from '../ui/scroll-area';
-import { track } from '../../lib/analytics';
+import { isHighValueDownload } from '@shared/queueItem.js';
+import { useAppStore, formatStatus } from '../../store/useAppStore.js';
+import { QueueItemCard } from '../queue/QueueItemCard.js';
+import { QueueTipNudge } from '../queue/QueueTipNudge.js';
+import { Badge } from '../ui/badge.js';
+import { ScrollArea } from '../ui/scroll-area.js';
+import { track } from '../../lib/analytics.js';
 
 export function SmartDrawer(): JSX.Element {
   const { t } = useTranslation();

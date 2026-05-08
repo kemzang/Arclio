@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { SmartDrawer } from '@renderer/components/layout/SmartDrawer';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { makeItem } from '../shared/fixtures';
-import type { QueueItem } from '@shared/types';
+import { SmartDrawer } from '@renderer/components/layout/SmartDrawer.js';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { makeItem } from '../shared/fixtures.js';
+import type { QueueItem } from '@shared/types.js';
 
 const stubActions = {
   setDrawerOpen: vi.fn(),

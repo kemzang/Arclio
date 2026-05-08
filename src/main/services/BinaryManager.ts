@@ -8,11 +8,11 @@ import { promisify } from 'node:util';
 import { app } from 'electron';
 import extractZip from 'extract-zip';
 import got, { type Method } from 'got';
-import log from 'electron-log/main';
+import log from 'electron-log/main.js';
 
 const execFileAsync = promisify(execFile);
-import { trackMain } from '@main/services/analytics';
-import { FAILURE_CODE, type BinaryOverrides, type DependencyAttempt, type DependencyDiagnostic, type DependencyFailure, type DependencyFailureKind, type DependencyId, type DependencySource, type StatusKey, type WarmupProgressEvent } from '@shared/types';
+import { trackMain } from '@main/services/analytics.js';
+import { FAILURE_CODE, type BinaryOverrides, type DependencyAttempt, type DependencyDiagnostic, type DependencyFailure, type DependencyFailureKind, type DependencyId, type DependencySource, type StatusKey, type WarmupProgressEvent } from '@shared/types.js';
 
 type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | number>) => void;
 type DownloadProgressCallback = (downloaded: number, total: number | undefined) => void;
@@ -243,22 +243,13 @@ const HTTP_TIMEOUT = {
 };
 
 async function downloadText(url: string, signal?: AbortSignal): Promise<string> {
-  const req = got(url, { headers: HTTP_HEADERS, retry: HTTP_RETRY, timeout: HTTP_TIMEOUT, followRedirect: true });
-  if (signal) {
-    if (signal.aborted) {
-      req.cancel();
-      throw cancelError();
-    }
-    const onAbort = (): void => req.cancel();
-    signal.addEventListener('abort', onAbort, { once: true });
-    try {
-      const res = await req;
-      return res.body;
-    } finally {
-      signal.removeEventListener('abort', onAbort);
-    }
-  }
-  const res = await req;
+  const res = await got(url, {
+    headers: HTTP_HEADERS,
+    retry: HTTP_RETRY,
+    timeout: HTTP_TIMEOUT,
+    followRedirect: true,
+    signal
+  });
   return res.body;
 }
 
@@ -315,14 +306,13 @@ async function downloadFile(url: string, destination: string, onProgress?: Downl
   const headers: Record<string, string> = { ...HTTP_HEADERS };
   if (startByte > 0) headers.range = `bytes=${startByte}-`;
 
-  const stream = got.stream(url, { headers, retry: HTTP_RETRY, timeout: HTTP_TIMEOUT, followRedirect: true });
-  const onAbort = (): void => {
-    stream.destroy(cancelError());
-  };
-  if (signal) {
-    if (signal.aborted) onAbort();
-    else signal.addEventListener('abort', onAbort, { once: true });
-  }
+  const stream = got.stream(url, {
+    headers,
+    retry: HTTP_RETRY,
+    timeout: HTTP_TIMEOUT,
+    followRedirect: true,
+    signal
+  });
 
   try {
     await new Promise<void>((resolve, reject) => {
@@ -359,12 +349,9 @@ async function downloadFile(url: string, destination: string, onProgress?: Downl
         startByte
       });
       await fsPromises.rm(partPath, { force: true });
-      if (signal) signal.removeEventListener('abort', onAbort);
       return downloadFile(url, destination, onProgress, false, signal);
     }
     throw err;
-  } finally {
-    if (signal) signal.removeEventListener('abort', onAbort);
   }
 
   await fsPromises.rename(partPath, destination);
@@ -461,9 +448,9 @@ function bundledBinaryPath(name: 'ffmpeg' | 'ffprobe'): string {
     return path.join(process.resourcesPath, fileName);
   }
   const arch = process.arch === 'arm64' ? 'arm64' : 'x64';
-  // __dirname in dev points at the electron-vite-compiled main bundle
-  // (out/main). Resolve up to repo root, then into build/embedded/.
-  return path.join(__dirname, '..', '..', 'build', 'embedded', `${process.platform}-${arch}`, fileName);
+  // import.meta.dirname in dev points at the electron-vite-compiled main
+  // bundle (out/main). Resolve up to repo root, then into build/embedded/.
+  return path.join(import.meta.dirname, '..', '..', 'build', 'embedded', `${process.platform}-${arch}`, fileName);
 }
 
 // Directory containing the embedded ffmpeg/ffprobe pair. Used by
@@ -1027,26 +1014,16 @@ export class BinaryManager {
   }
 
   private async getRemoteYtDlpVersion(releaseLatestUrl: string, signal?: AbortSignal): Promise<RemoteVersionLookup> {
-    const req = got(releaseLatestUrl, {
-      method: 'GET',
-      headers: HTTP_HEADERS,
-      retry: HTTP_RETRY,
-      timeout: HTTP_TIMEOUT,
-      followRedirect: false,
-      throwHttpErrors: false
-    });
-
-    const onAbort = signal ? (): void => req.cancel() : null;
-    if (signal) {
-      if (signal.aborted) {
-        req.cancel();
-        return { tag: null, reason: 'cancelled' };
-      }
-      signal.addEventListener('abort', onAbort!, { once: true });
-    }
-
     try {
-      const res = await req;
+      const res = await got(releaseLatestUrl, {
+        method: 'GET',
+        headers: HTTP_HEADERS,
+        retry: HTTP_RETRY,
+        timeout: HTTP_TIMEOUT,
+        followRedirect: false,
+        throwHttpErrors: false,
+        signal
+      });
       const tag = parseTagFromLocation(res.headers.location);
       if (tag) return { tag, reason: null };
       const reason = `no tag in redirect (status=${res.statusCode}, location=${stringifyHeader(res.headers.location) ?? 'none'})`;
@@ -1056,8 +1033,6 @@ export class BinaryManager {
       const reason = err instanceof Error ? err.message : String(err);
       logger.warn('yt-dlp remote version fetch failed', { url: releaseLatestUrl, err: reason });
       return { tag: null, reason };
-    } finally {
-      if (signal && onAbort) signal.removeEventListener('abort', onAbort);
     }
   }
 

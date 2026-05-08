@@ -1,6 +1,6 @@
-import { playlistPresetSpec } from './playlistPresets';
-import type { EmbedOptions, JobSource, PreparedJob, SponsorBlockOptions, SubtitleOptions } from './preparedJob';
-import type { AudioConvert, PlaylistPreset, Preset, SponsorBlockCategory, SponsorBlockMode } from './schemas';
+import { playlistPresetSpec } from './playlistPresets.js';
+import type { EmbedOptions, JobSource, PreparedJob, SponsorBlockOptions, SubtitleOptions } from './preparedJob.js';
+import type { AudioConvert, PlaylistPreset, Preset, SponsorBlockCategory, SponsorBlockMode } from './schemas.js';
 
 // Pure builder. Lives in `src/shared/` (not renderer) so future QueueStore
 // migrations in main can synthesize jobs without a renderer dependency.
