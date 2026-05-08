@@ -26,7 +26,6 @@ Wenn Arroxy dir Zeit spart, hilft ein ⭐ anderen, es zu finden.
 ## Inhalt
 
 - [Warum Arroxy](#why)
-- [Keine Cookies, kein Login, keine Kontoverknüpfung](#no-cookies)
 - [Funktionen](#features)
 - [Download](#download)
 - [Datenschutz](#privacy)
@@ -51,19 +50,6 @@ Ein direkter Vergleich mit den gängigsten Alternativen:
 | Untertitel + SponsorBlock |   ✅   |         ⚠️          |     ❌      |             ❌             |         ❌         |
 
 Arroxy ist für eine Sache gebaut: URL einfügen, saubere lokale Datei erhalten. Keine Konten, kein Upselling, keine Datensammlung.
-
----
-
-## <a id="no-cookies"></a>Keine Cookies, kein Login, keine Kontoverknüpfung
-
-Das ist der häufigste Grund, warum Desktop-YouTube-Downloader kaputt gehen — und der Hauptgrund, warum Arroxy existiert.
-
-Wenn YouTube seine Bot-Erkennung aktualisiert, sagen die meisten Tools, du sollst als Workaround deine Browser-YouTube-Cookies exportieren. Zwei Probleme damit:
-
-1. Exportierte Sessions laufen typischerweise nach ~30 Minuten ab, sodass du sie ständig neu exportieren musst.
-2. yt-dlps eigene Dokumentation [warnt, dass Cookie-basierte Automatisierung dein Google-Konto markieren kann](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).
-
-**Arroxy fragt nie nach Cookies, Logins oder Anmeldedaten.** Es verwendet nur die öffentlichen Tokens, die YouTube an jeden Browser ausliefert. Nichts ist mit deiner Google-Identität verknüpft, nichts läuft ab, nichts muss rotiert werden.
 
 ---
 
@@ -120,65 +106,66 @@ Wenn YouTube seine Bot-Erkennung aktualisiert, sagen die meisten Tools, du solls
 
 [**Neuesten Release holen →**](../../releases/latest)
 
-### Per Paketmanager installieren
+### <a id="why-warning"></a>Warum du möglicherweise eine Warnung siehst
 
-| Kanal | Befehl                                                                                |
-| ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+Arroxy ist Open Source und MIT-lizenziert. Die Windows- und macOS-Builds sind **nicht code-signiert** — Apple Developer ID und Windows EV Code-Signing-Zertifikate kosten jeweils mehrere Hundert Dollar im Jahr, die ein Indie-Projekt aus eigener Tasche zahlt. Ohne diese Signaturen warnen Windows SmartScreen und macOS Gatekeeper beim ersten Start. Die Warnungen bedeuten *dein Betriebssystem erkennt den Herausgeber nicht* — sie bedeuten nicht, dass Arroxy Malware ist.
 
-<details>
-<summary><strong>Windows: Installer vs. Portable</strong></summary>
+Drei Wege, Arroxy selbst zu überprüfen, in aufsteigender Genauigkeit:
 
-|               | NSIS Installer | Portable `.exe` |
-| ------------- | :----------------------: | :---------------------: |
-| Installation erforderlich | Ja  | Nein — von überall startbar  |
-| Auto-Updates | ✅ in der App  | ❌ manueller Download  |
-| Startgeschwindigkeit | ✅ schneller  | ⚠️ langsamer Kaltstart  |
-| Eintrag im Startmenü |            ✅            |           ❌            |
-| Einfache Deinstallation |            ✅            | ❌ einfach Datei löschen  |
+- **Quellcode lesen.** Jede Zeile steht auf [GitHub](https://github.com/antonio-orionus/Arroxy) und du kannst [es aus dem Quellcode bauen](#tech).
+- **SHA256 prüfen.** Vergleiche deine Datei mit der veröffentlichten [`SHA256SUMS`](../../releases/latest) — siehe [Download verifizieren](#verify) unten.
+- **Drittanbieter-Scan.** Lade die Datei bei [VirusTotal](https://www.virustotal.com) hoch.
 
-**Empfehlung:** Nimm den NSIS Installer für Auto-Updates und schnelleren Start. Nimm die portable `.exe` für eine Option ohne Installation und ohne Registry-Einträge.
-
-**Windows SmartScreen-Warnung**
+### <a id="windows-first-launch"></a>Windows-Erststart
 
 Beim ersten Start kann **"Windows protected your PC"** oder **"Unknown publisher"** erscheinen. Das gilt sowohl für `Arroxy-Setup-*.exe` als auch für `Arroxy-Portable-*.exe`. Arroxy ist kostenlos und Open Source, und die Windows-Builds sind nicht mit einem kostenpflichtigen Zertifikat signiert, weshalb SmartScreen sie markiert. Das bedeutet **nicht** automatisch, dass Arroxy unsicher ist. So geht es weiter:
+
+<div align="center">
+  <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted" />
+  <img src="build/win-smartscreen-run-anyway.png" width="46%" alt="SmartScreen dialog after expanding More info, showing the "Run anyway" button" />
+</div>
 
 1. Klicke auf **More info**.
 2. Klicke auf **Run anyway**.
 
+#### Wenn Windows Defender die Datei markiert oder entfernt
+
+Defender-Heuristiken markieren unsignierte NSIS-Installer und Electron-Portables manchmal als verdächtig. Wenn Defender `Arroxy-Setup-*.exe` oder `Arroxy-Portable-*.exe` in Quarantäne stellt, stelle sie aus **Windows Security → Virus & threat protection → Protection history** wieder her und füge die Arroxy-Executable als erlaubtes Element unter **Manage settings → Add or remove exclusions** hinzu. Wie bei SmartScreen ist der Auslöser die fehlende Herausgebersignatur, nicht erkannte Malware.
+
 > Lade Arroxy nur von der offiziellen GitHub Releases-Seite herunter. Wenn du die Datei von einer anderen Website bekommen hast oder jemand sie dir geschickt hat, lösche sie und lade eine frische Kopie von der offiziellen Quelle herunter. Der Quellcode ist öffentlich, du kannst ihn also selbst prüfen oder Arroxy selbst kompilieren.
 
-</details>
+### <a id="macos-first-launch"></a>macOS-Erststart
 
-<details>
-<summary><strong>Erststart unter macOS</strong></summary>
+Arroxy ist noch nicht code-signiert für macOS, daher blockiert Gatekeeper den ersten Start. Der genaue Weg, um es zu erlauben, hängt von deiner macOS-Version ab — Sequoia 15 hat die alte Rechtsklick → Öffnen-Umgehung verschärft.
 
-Arroxy ist noch nicht code-signiert, daher warnt macOS Gatekeeper beim ersten Start. Das ist erwartet — kein Zeichen für eine Beschädigung.
+#### macOS Sequoia 15 und neuer (aktuell)
 
-**Methode über Systemeinstellungen (empfohlen):**
+Ab Sequoia 15 umgeht Rechtsklick → Öffnen Gatekeeper für viele unter Quarantäne stehende Apps nicht mehr. Nutze stattdessen die Systemeinstellungen:
 
-1. Rechtsklick auf das Arroxy-App-Symbol und **Öffnen** wählen.
-2. Der Warndialog erscheint — klicke auf **Abbrechen** (nicht auf *In den Papierkorb*)).
-3. Öffne **Systemeinstellungen → Datenschutz & Sicherheit**.
-4. Scroll runter zum Abschnitt **Sicherheit**. Dort steht _„Arroxy wurde blockiert, weil es nicht von einem identifizierten Entwickler stammt."_
-5. Klicke auf **Trotzdem öffnen** und bestätige mit deinem Passwort oder Touch ID.
+1. Ziehe `Arroxy.app` aus dem eingehängten DMG nach `/Applications`.
+2. Doppelklicke auf Arroxy. Der Blockierdialog erscheint — klicke auf **Done** (klicke nicht auf *Move to Trash*).
+3. Öffne **System Settings → Privacy & Security** und scrolle zum Abschnitt **Security**. Du siehst *"Arroxy was blocked to protect your Mac"* (oder eine nahezu identische Meldung).
+4. Klicke auf **Open Anyway**, bestätige mit deinem Passwort oder Touch ID, und starte Arroxy dann aus `/Applications` neu.
 
-Nach Schritt 5 öffnet sich Arroxy normal und die Warnung erscheint nie wieder.
+#### macOS Sonoma 14 und älter
 
-**Terminal-Methode (fortgeschritten):**
+1. Ziehe `Arroxy.app` aus dem eingehängten DMG nach `/Applications`.
+2. Rechtsklick (oder Control-Klick) auf `Arroxy.app` in `/Applications` und wähle **Open**.
+3. Der Warndialog hat nun einen **Open**-Button — klicke ihn und bestätige. Arroxy öffnet sich normal und die Warnung erscheint nie wieder.
+
+#### "App is damaged" oder anhaltende Gatekeeper-Blockierung — Terminal-Fix
+
+Wenn macOS sagt *"Arroxy is damaged and can't be opened"*, oder keiner der obigen Schritte die Blockierung aufhebt, ist das Quarantäne-Attribut auf dem DMG die Ursache (manche Browser und macOS's eigenes Translocation-Verhalten setzen es). Entferne es von der installierten App:
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/Arroxy.app
 ```
 
+**Apple Silicon vs Intel:** auf einem Mac der M-Serie (M1 / M2 / M3 / M4) lade das `arm64`-DMG herunter. Auf Intel-Macs lade das `x64`-DMG. Der falsche Build funktioniert auch über Rosetta, ist aber spürbar langsamer.
+
 > macOS-Builds werden per CI auf Apple Silicon- und Intel-Runnern erstellt. Falls Probleme auftreten, bitte [ein Issue öffnen](../../issues) — Feedback von macOS-Nutzern beeinflusst aktiv den macOS-Testzyklus.
 
-</details>
-
-<details>
-<summary><strong>Erststart unter Linux</strong></summary>
+### <a id="linux-first-launch"></a>Linux-Erststart
 
 AppImages werden direkt ausgeführt — keine Installation nötig. Du musst die Datei nur als ausführbar markieren.
 
@@ -204,12 +191,68 @@ sudo dnf install -y fuse-libs
 sudo pacman -S fuse2
 ```
 
+**Optionale Desktop-Integration:** installiere [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) einmalig, und jede AppImage, auf die du doppelklickst, wird automatisch in deinem Launcher-Menü registriert — keine manuelle `.desktop`-Datei nötig.
+
 **Flatpak (sandboxed Alternative):** Lade `Arroxy-*.flatpak` von derselben Release-Seite herunter.
 
 ```bash
 flatpak install --user Arroxy-*.flatpak
 flatpak run io.github.antonio_orionus.Arroxy
 ```
+
+<details>
+<summary><strong><a id="verify"></a>Download verifizieren (SHA256)</strong></summary>
+
+Jedes Release veröffentlicht eine `SHA256SUMS`-Datei zusammen mit den Binärdateien. Um zu prüfen, dass dein Download nicht beschädigt oder unterwegs manipuliert wurde, hashe deine Datei lokal und gleiche die Zeile in `SHA256SUMS` ab. Öffne die neueste Release-Seite → **Assets** → lade `SHA256SUMS` herunter.
+
+**Windows (PowerShell or Command Prompt):**
+
+```powershell
+certutil -hashfile Arroxy-Setup-<version>.exe SHA256
+```
+
+**macOS (Terminal):**
+
+```bash
+shasum -a 256 Arroxy-<version>-arm64.dmg
+```
+
+**Linux (Terminal):**
+
+```bash
+sha256sum Arroxy-*.AppImage
+```
+
+Möchtest du einen Drittanbieter-Malware-Scan? Lade die Datei bei [VirusTotal](https://www.virustotal.com) hoch. Eine Handvoll generischer Heuristik-Flags von kleineren Engines ist bei unsignierten Electron-Apps normal; weit verbreitete Erkennungen durch große Engines wären ein echter Anlass zur Sorge.
+
+</details>
+
+<details>
+<summary><strong>Per Paketmanager installieren</strong></summary>
+
+Verwendest du bereits einen Paketmanager? Du kannst den manuellen Download-Weg überspringen.
+
+| Kanal | Befehl                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------------- |
+| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
+| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
+| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+| Flatpak            | `flatpak install --user Arroxy-*.flatpak`                                                         |
+
+</details>
+
+<details>
+<summary><strong>Windows: Installer vs. Portable</strong></summary>
+
+|               | NSIS Installer | Portable `.exe` |
+| ------------- | :----------------------: | :---------------------: |
+| Installation erforderlich | Ja  | Nein — von überall startbar  |
+| Auto-Updates | ✅ in der App  | ❌ manueller Download  |
+| Startgeschwindigkeit | ✅ schneller  | ⚠️ langsamer Kaltstart  |
+| Eintrag im Startmenü |            ✅            |           ❌            |
+| Einfache Deinstallation |            ✅            | ❌ einfach Datei löschen  |
+
+**Empfehlung:** Nimm den NSIS Installer für Auto-Updates und schnelleren Start. Nimm die portable `.exe` für eine Option ohne Installation und ohne Registry-Einträge.
 
 </details>
 
@@ -235,10 +278,10 @@ Alles, was YouTube anbietet: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, plu
 Ja. Wähle im Formatmenü *nur Audio* und dann MP3, M4A/AAC, Opus oder WAV.
 
 **Brauche ich ein YouTube-Konto oder Cookies?**
-Nein. Arroxy verwendet nur die öffentlichen Tokens, die YouTube an jeden Browser ausliefert. Keine Cookies, kein Login, keine gespeicherten Anmeldedaten. Siehe [Keine Cookies, kein Login, keine Kontoverknüpfung](#no-cookies) für den Hintergrund.
+Standardmäßig nein — Arroxy funktioniert ohne YouTube-Konto, Login oder Cookie-Export. Optionale Cookie-Unterstützung steht in den erweiterten Einstellungen zur Verfügung (Cookies source: file or browser) für Inhalte, die eine Authentifizierung erfordern, etwa altersbeschränkte oder Mitglieder-only-Videos. Sie ist standardmäßig deaktiviert. Wenn du sie aktivierst, weist das yt-dlp-Wiki darauf hin, dass [Cookie-basierte Automatisierung ein Google-Konto markieren kann](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); ein Wegwerf-Konto ist in dem Fall die sicherere Wahl.
 
 **Funktioniert es weiter, wenn YouTube etwas ändert?**
-Zwei Resilienzschichten: yt-dlp wird innerhalb von Stunden nach YouTube-Änderungen aktualisiert, und Arroxy verlässt sich nicht auf Cookies, die alle ~30 Minuten ablaufen. Das macht es deutlich stabiler als Tools, die auf exportierte Browser-Sessions angewiesen sind.
+yt-dlp wird beim Start automatisch aktualisiert, und Arroxy liefert zügig Fixes, sobald YouTube etwas ändert. Falls du doch einmal auf ein Problem stößt, steht in den erweiterten Einstellungen optionale Cookie-Unterstützung als Fallback bereit.
 
 **In welchen Sprachen ist Arroxy verfügbar?**
 Einundzwanzig, direkt out of the box: English, Español (Spanisch), Deutsch, Français (Französisch), 日本語 (Japanisch), 中文 (Chinesisch), Русский (Russisch), Українська (Ukrainisch), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Usbekisch), Tiếng Việt (Vietnamesisch), አማርኛ (Amharisch), العربية (Arabisch), اردو (Urdu), پښتو (Paschto), বাংলা (Bengalisch), မြန်မာဘာသာ (Birmanisch), Ελληνικά (Griechisch) und Српски (Serbisch). Arroxy erkennt deine Betriebssystem-Sprache beim ersten Start und du kannst jederzeit über die Sprachauswahl in der Symbolleiste wechseln. Übersetzungen liegen als einfache TypeScript-Objekte in src/shared/i18n/locales/ — öffne einen PR auf GitHub, um beizutragen.
@@ -250,7 +293,7 @@ Nein. yt-dlp wird beim ersten Start automatisch heruntergeladen und auf deinem R
 Ja, für Playlists: Füge eine Playlist-URL ein und stelle dann entweder die ganze Liste oder nur die Videos in die Warteschlange, die du auswählst. Ganze Kanäle im Batch werden noch nicht unterstützt.
 
 **macOS sagt „die App ist beschädigt" — was tun?**
-Das ist macOS Gatekeeper, der eine unsignierte App blockiert — keine echte Beschädigung. Schau dir den Abschnitt [Erststart unter macOS](#download) für die Lösung an.
+Das ist macOS Gatekeeper, der eine unsignierte App blockiert — kein echter Schaden. Siehe ["App is damaged" — Terminal-Fix](#macos-first-launch) für den einzeiligen `xattr`-Befehl, der das behebt.
 
 **Ist das Herunterladen von YouTube-Videos legal?**
 Für den persönlichen, privaten Gebrauch ist es in den meisten Rechtsordnungen allgemein akzeptiert. Du bist selbst dafür verantwortlich, die [Nutzungsbedingungen](https://www.youtube.com/t/terms) von YouTube und die Urheberrechtsgesetze deines Landes einzuhalten.

@@ -1,13 +1,24 @@
 import { useEffect, useState, type JSX } from 'react';
-import { Minus, Square, Minimize2, X } from 'lucide-react';
+import { Minus, Share2, Square, Minimize2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@renderer/lib/utils';
+import { useAppStore } from '../../store/useAppStore';
 import appIcon from '@renderer/assets/App-icon-HQ.png';
 
 const drag: React.CSSProperties = { WebkitAppRegion: 'drag' } as React.CSSProperties;
 const noDrag: React.CSSProperties = { WebkitAppRegion: 'no-drag' } as React.CSSProperties;
 
 const isMac = window.platform === 'darwin';
+
+function ShareButton(): JSX.Element {
+  const { t } = useTranslation();
+  const openShareDialog = useAppStore((s) => s.openShareDialog);
+  return (
+    <button type="button" aria-label={t('share.footerTooltip')} title={t('share.footerTooltip')} data-testid="btn-share-titlebar" onClick={() => openShareDialog('titlebar')} style={noDrag} className="h-8 w-8 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-colors rounded">
+      <Share2 size={12} strokeWidth={2} />
+    </button>
+  );
+}
 
 function MacControls({ isMaximized }: { isMaximized: boolean }): JSX.Element {
   const { t } = useTranslation();
@@ -59,6 +70,8 @@ export function TitleBar(): JSX.Element {
         <img src={appIcon} alt="" width={14} height={14} className="opacity-70" draggable={false} />
         Arroxy
       </span>
+
+      <ShareButton />
 
       {!isMac && <WinLinuxControls isMaximized={isMaximized} />}
     </div>

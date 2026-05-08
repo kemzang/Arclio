@@ -508,6 +508,24 @@ const ja = {
       reload: '再読み込み',
       quit: '終了'
     }
+  },
+  share: {
+    title: 'Arroxyをシェア',
+    description: 'Arroxyは無料でオープンソースです。シェアすることでより多くの人に届けることができます。',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Arroxyを気に入ってくれてる? 役に立ちそうな人にシェアしてみて。',
+      dismiss: 'Dismiss share suggestion'
+    },
+    highValueBanner: {
+      body: 'Arroxyを気に入ってくれてる? ほかの人にも見つけてもらおう。',
+      dismiss: 'Dismiss share suggestion'
+    }
   }
 } as const;
 

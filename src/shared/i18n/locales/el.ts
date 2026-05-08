@@ -508,6 +508,24 @@ const el = {
       reload: 'Ανανέωση',
       quit: 'Έξοδος'
     }
+  },
+  share: {
+    title: 'Μοιράσου το Arroxy',
+    description: 'Το Arroxy είναι δωρεάν και ανοιχτού κώδικα. Η κοινοποίηση βοηθά περισσότερους να το ανακαλύψουν.',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Σου αρέσει το Arroxy; Μοιράσου το με κάποιον που μπορεί να το βρει χρήσιμο.',
+      dismiss: 'Dismiss share suggestion'
+    },
+    highValueBanner: {
+      body: 'Σου αρέσει το Arroxy; Βοήθησε άλλους να το ανακαλύψουν.',
+      dismiss: 'Dismiss share suggestion'
+    }
   }
 } as const;
 

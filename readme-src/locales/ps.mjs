@@ -88,7 +88,6 @@ export const ps = {
   ai_notice: "",
   toc_heading: "منځپانګه",
   why_h2: "ولې Arroxy",
-  nocookies_h2: "هیڅ کوکیز، هیڅ ننوتل، هیڅ د اکاونټ لینک کول",
   features_h2: "ځانګړتیاوې",
   dl_h2: "ډاونلوډ",
   privacy_h2: "محرمیت",
@@ -105,16 +104,6 @@ export const ps = {
   why_r7: "ساب ټایټلونه + SponsorBlock",
   why_summary:
     "Arroxy د یوه کار لپاره جوړ شوی: URL پیسټ کړئ، پاک ځایني فایل ترلاسه کړئ. هیڅ اکاونټونه، هیڅ اضافي پلورنه، هیڅ د معلوماتو راټولونه.",
-  nocookies_intro:
-    "دا ترټولو عام لامل دی چې د ډیسکټاپ YouTube ډاونلوډرونه ماتیږي — او د Arroxy د شتون اصلي دلیل.",
-  nocookies_setup:
-    "کله چې YouTube خپل بوټ کشف تازه کوي، ډیری وسیلې تاسو ته وايي چې د عارضي حل لپاره د خپل براوزر YouTube کوکیز صادر کړئ. دوه ستونزې پدې کې شته:",
-  nocookies_p1:
-    "صادر شوي سیشنونه معمولا د ~30 دقیقو دننه پای ته رسیږي، نو تاسو مکرر صادرونه کوئ.",
-  nocookies_p2:
-    "د yt-dlp خپله اسناد [خبرداری ورکوي چې د کوکیز پر بنسټ اتوماسیون کولی شي ستاسو د ګوګل اکاونټ بیرغ ولوي](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).",
-  nocookies_outro:
-    "**Arroxy هیڅکله د کوکیزونو، ننوتلو، یا کوم اعتبار غوښتنه نه کوي.** دا یوازې هغه عامه ټوکنونه کاروي چې YouTube هر براوزر ته وړاندې کوي. ستاسو د ګوګل پیژندتیا سره هیڅ تړاو نشته، هیڅ پای ته رسیدو نشته، هیڅ بدلونونه نشته.",
   feat_quality_h3: "کیفیت او بڼه",
   feat_quality_1: "تر **4K UHD (2160p)** پورې، 1440p، 1080p، 720p، 480p، 360p",
   feat_quality_2: "**لوړ فریم نرخ** لکه چې دی ساتل کیږي — 60 fps، 120 fps، HDR",
@@ -211,6 +200,67 @@ export const ps = {
   dl_linux_fuse_text: "که پیل لاهم ناکام شي، ممکن تاسو ته FUSE کمه وي:",
   dl_linux_flatpak_intro:
     "**Flatpak (sandboxed بدیل):** د ورته خپرونې پاڼې څخه `Arroxy-*.flatpak` ډاونلوډ کړئ.",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "ولې ممکن خبرداری وګورئ",
+  dl_warning_p1:
+    "Arroxy خلاصه سرچینه او MIT-licensed ده. د Windows او macOS جوړونې **د کوډ لاسلیک شوي نه دي** — د Apple Developer ID او د Windows EV د کوډ لاسلیک کولو سندونه هر کال د سلو ډالرو لګښت لري، چې یو خپلواک پروژه له خپل ځان ادا کوي. پرته له هغو لاسلیکونو، د Windows SmartScreen او macOS Gatekeeper به تاسو ته د لومړي پیل پر مهال خبرداری درکوي. خبرداریونه دا معنی لري چې *ستاسو OS خپرنده نه پیژني* — دا معنی نه لري چې Arroxy malware دی.",
+  dl_warning_p2:
+    "درې طریقې چې پخپله Arroxy تصدیق کړئ، د لوړیدونکي دقت سره:\n\n- **سرچینه ولولئ.** هره کرښه پر [GitHub](https://github.com/antonio-orionus/Arroxy) ده او تاسو کولی شئ [له سرچینې جوړ کړئ](#tech).\n- **SHA256 وڅیړئ.** ستاسو فایل د خپور شوي [`SHA256SUMS`](../../releases/latest) سره سمول کړئ — لاندې [خپل ډاونلوډ تصدیق کړئ](#verify) وګورئ.\n- **د دریمې ډلې سکن چلوئ.** فایل [VirusTotal](https://www.virustotal.com) ته اپلوډ کړئ.",
+
+  dl_win_first_h3: "Windows لومړی پیل",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" د "More info" لینک د روښانه کولو سره ډیالوګ',
+  shot_smartscreen_run_alt:
+    'SmartScreen د More info پراخولو وروسته ډیالوګ، د "Run anyway" تڼۍ ښودلو سره',
+  dl_win_defender_h4: "که Windows Defender فایل بیرغ کوي یا لرې کوي",
+  dl_win_defender_p:
+    "د Defender د اټکل کولو میکانیزمونه ځینې وختونه بې لاسلیکه NSIS نصب کوونکي او Electron پورټیبل د شکمن وګڼي. که Defender `Arroxy-Setup-*.exe` یا `Arroxy-Portable-*.exe` قرنطین کوي، له **Windows Security → Virus & threat protection → Protection history** بیرته راولئ، بیا د Arroxy اجرایوي د مجاز توکي تحت **Manage settings → Add or remove exclusions** ووهئ. لکه SmartScreen، محرک د غیر موجوده خپرندې لاسلیک دی، نه کشف شوی malware.",
+
+  dl_macos_first_h3: "macOS لومړی پیل",
+  dl_macos_intro:
+    "Arroxy لاهم د macOS لپاره کوډ لاسلیک شوی نه دی، نو Gatekeeper به لومړی پیل بند کوي. د مجاز کولو سمه لار ستاسو د macOS نسخې پورې اړه لري — Sequoia 15 د زوړ ښي-کلیک → Open بای‌پاس سخت کړ.",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 او وروسته (اوسني)",
+  dl_macos_sequoia_intro:
+    "پر Sequoia 15 او نوو، ښي-کلیک → Open نور د ډیری قرنطین شوو اپلیکیشنونو لپاره Gatekeeper بای‌پاس نه کوي. پرځای یې د System Settings پینل وکاروئ:",
+  dl_macos_sequoia_step1:
+    "د نصب شوي DMG نه `Arroxy.app` د `/Applications` ته ډریګ کړئ.",
+  dl_macos_sequoia_step2:
+    "Arroxy دوه ځله کلیک وکړئ. د بند کولو ډیالوګ ښکاري — **Done** کلیک وکړئ (د *Move to Trash* کلیک مه کوئ).",
+  dl_macos_sequoia_step3:
+    '**System Settings → Privacy & Security** خلاص کړئ او د **Security** برخې ته سکرول وکړئ. به وګورئ *"Arroxy was blocked to protect your Mac"* (یا نږدې ورته پیغام).',
+  dl_macos_sequoia_step4:
+    "**Open Anyway** کلیک وکړئ، د خپل پاسورډ یا Touch ID سره تایید کړئ، بیا Arroxy له `/Applications` بیا پیل کړئ.",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 او مخکې",
+  dl_macos_sonoma_step1:
+    "د نصب شوي DMG نه `Arroxy.app` د `/Applications` ته ډریګ کړئ.",
+  dl_macos_sonoma_step2:
+    "د `/Applications` کې `Arroxy.app` ښي-کلیک (یا Control-کلیک) وکړئ او **Open** غوره کړئ.",
+  dl_macos_sonoma_step3:
+    "د خبرداری ډیالوګ اوس د **Open** تڼۍ لري — یې کلیک کړئ او تایید کړئ. Arroxy نورمال خلاصیږي او خبرداری بیا نه ښکاري.",
+  dl_macos_damaged_h4:
+    '"App is damaged" یا دوامداره Gatekeeper بند — د Terminal فکس',
+  dl_macos_damaged_p:
+    'که macOS ووایي *"Arroxy is damaged and can\'t be opened"*، یا د پورتني ګامونو هیڅ یو بند نه پاکوي، د DMG د قرنطین صفت لامل دی (ځینې براوزران او د macOS خپل د انتقال چلند یې ټاکي). د نصب شوي اپلیکیشن نه یې ووباسئ:',
+  dl_macos_arch_note:
+    "**Apple Silicon د Intel پرتله:** پر M-series Mac (M1 / M2 / M3 / M4)، `arm64` DMG ډاونلوډ کړئ. پر Intel Mac، `x64` DMG ډاونلوډ کړئ. د غلط جوړونې چلول د Rosetta له لارې لاهم کار کوي خو د پام وړ ورو دي.",
+
+  dl_linux_first_h3: "Linux لومړی پیل",
+  dl_linux_appimagelauncher:
+    "**د ډیسکټاپ اختیاري یوځای کول:** یو ځل [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) نصب کړئ، او هر AppImage چې تاسو دوه ځله کلیک کوئ اتوماتیک ستاسو د لانچر مینو کې ثبتیږي — هیڅ لاسي `.desktop` فایل ته اړتیا نشته.",
+
+  dl_verify_h3: "خپل ډاونلوډ تصدیق کړئ (SHA256)",
+  dl_verify_intro:
+    "هره خپرونه د binary سره یوځای `SHA256SUMS` فایل خپروي. د دې لپاره چې ستاسو ډاونلوډ د لیږد پر مهال خراب یا لاسوهنه شوی نه دی، خپل فایل ځایي کشف کړئ او د `SHA256SUMS` کرښه سره یې سمول کړئ. د وروستۍ خپرونې پاڼه خلاص کړئ → **Assets** → `SHA256SUMS` ډاونلوډ کړئ.",
+  dl_verify_win_label: "Windows (PowerShell یا Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "د دریمې ډلې malware سکن غواړئ؟ فایل [VirusTotal](https://www.virustotal.com) کې اپلوډ کړئ. د کوچنیو انجنونو لخوا د عمومي اټکل کولو بیرغونه لږ شمیر د بې لاسلیکه Electron اپلیکیشنونو لپاره نورمال دي؛ د لوی انجنونو لخوا پراخه کشف کول به واقعي اندیښنه وي.",
+
+  dl_pm_intro:
+    "ایا لا مخکې پیکیج مدیر کاروئ؟ تاسو کولی شئ لاسي ډاونلوډ لار پریږدئ.",
+
   privacy_p1:
     "ډاونلوډونه مستقیما د [yt-dlp](https://github.com/yt-dlp/yt-dlp) له لارې له YouTube څخه هغه فولډر ته راوړل کیږي چې تاسو انتخاب کوئ — هیڅ شی د دریمې ډلې سرور له لارې نه تیریږي. د لیدلو تاریخ، ډاونلوډ تاریخ، URL، او د فایل منځپانګه ستاسو وسیله کې پاتې کیږي.",
   privacy_p2:
@@ -224,10 +274,10 @@ export const ps = {
   faq_a3: "هو. د format menu کې *یوازې آډیو* وټاکئ او بیا MP3، M4A/AAC، Opus یا WAV غوره کړئ.",
   faq_q4: "ایا ما ته د YouTube اکاونټ یا کوکیز ته اړتیا ده؟",
   faq_a4:
-    "نه. Arroxy یوازې هغه عامه ټوکنونه کاروي چې YouTube هر براوزر ته وړاندې کوي. هیڅ کوکیز، هیڅ ننوتل، هیڅ اعتبار خوندي شوی. د لامل لپاره [هیڅ کوکیز، هیڅ ننوتل، هیڅ د اکاونټ لینک کول](#no-cookies) وګورئ.",
+    "په ډیفالټ کې، نه — Arroxy د YouTube اکاونټ، ننوتلو، یا د کوکیز صادرولو پرته کار کوي. د کوکیز اختیاري ملاتړ په پرمختللو تنظیماتو کې شتون لري (د کوکیز سرچینه: فایل یا براوزر) د هغه منځپانګې لپاره چې اعتبار ته اړتیا لري، لکه د عمر محدودې یا یوازې د غړو ویډیوګانې. دا په ډیفالټ کې غیرفعاله ده. که تاسو یې فعاله کړئ، د yt-dlp ویکي یاد کوي چې [د کوکیز پر بنسټ اتومات کولی شي ستاسو د ګوګل اکاونټ بیرغ کړي](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)؛ په دې حالت کې یو لرې غورځولو وړ اکاونټ خوندي انتخاب دی.",
   faq_q5: "ایا کله چې YouTube یو شی بدل کوي کار کوي؟",
   faq_a5:
-    "د استحکام دوه پوړونه: yt-dlp د YouTube بدلونونو وروسته د ساعتونو دننه تازه کیږي، او Arroxy هغو کوکیزونو پورې اړه نه لري چې هره ~30 دقیقه پای ته رسیږي. دا دا هغو وسیلو پرتله نمایان ثابت ورکوي چې د صادر شوو براوزر سیشنونو پورې اړه لري.",
+    "yt-dlp د لانچ پر مهال اتومات تازه کیږي، او Arroxy هغه وخت چې YouTube یو شی بدل کړي په چټکۍ سره فکسونه لیږدوي. که تاسو کله ستونزه لرئ، د کوکیز اختیاري ملاتړ په پرمختللو تنظیماتو کې د بیک اپ په توګه شتون لري.",
   faq_q6: "Arroxy د کومو ژبو لپاره شته دی؟",
   faq_a6:
     "یویشت، له صندوقه: English، Español (سپانوي)، Deutsch (جرماني)، Français (فرانسوي)، 日本語 (جاپاني)، 中文 (چیني)، Русский (روسي)، Українська (اوکراني)، हिन्दी (هندي)، Afaan Oromoo، Kiswahili، O'zbekcha (ازبکي)، Tiếng Việt (ویتنامي)، አማርኛ (امهاري)، العربية (عربي)، اردو، پښتو، বাংলা (بنګالي)، မြန်မာဘာသာ (برمي)، Ελληνικά (یوناني)، او Српски (سربي). Arroxy ستاسو د عملیاتي سیسټم ژبه د لومړي پیلولو پر مهال اوتومات کشفوي او تاسو کولی شئ هر وخت د ټول بار کې د ژبې پیک نه بدل کړئ. ژباړې د ساده TypeScript اعتراضونو په توګه src/shared/i18n/locales/ کې اوسیږي — د مرستې لپاره GitHub کې PR پرانیزئ.",
@@ -239,7 +289,7 @@ export const ps = {
     "هو، د playlists لپاره: د playlist URL پیسټ کړئ، بیا ټول لېست یا یوازې هغه ویډیوګانې چې تاسو ټاکئ queue کړئ. د بشپړ channel batch download لا تراوسه نه ملاتړ کېږي.",
   faq_q9: 'macOS وايي "اپ خرابه ده" — څه وکړم؟',
   faq_a9:
-    "دا macOS Gatekeeper دی چې بې لاسلیکه اپ بندوي، واقعي زیان نه دی. د حل لپاره [د macOS پر لومړي پیل](#download) برخه وګورئ.",
+    'دا macOS Gatekeeper دی چې بې لاسلیکه اپ بندوي، واقعي زیان نه دی. ["App is damaged" — Terminal fix](#macos-first-launch) وګورئ چې د یو کرښه `xattr` کمانډ چې یې پاکوي.',
   faq_q10: "ایا د YouTube ویډیوز ډاونلوډ کول قانوني دي؟",
   faq_a10:
     "د شخصي، خصوصي کارولو لپاره دا معمولا ډیرو قضایي سیمو کې منل کیږي. تاسو د YouTube د [د کارولو شرایطو](https://www.youtube.com/t/terms) او د خپل ځایني د کاپي رایټ قوانینو سره مطابقت لرل ستاسو مسؤلیت دی.",

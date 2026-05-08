@@ -24,7 +24,6 @@ Arroxy yeroo si oolfate, ⭐ tokko kan biroo argachuu isaaniif gargaara.
 ## Qabiyyee
 
 - [Maaliif Arroxy](#why)
-- [Kuukkiin hin jiru, seensuu hin jiru, akkaawuntii waliin hin hidhu](#no-cookies)
 - [Amaloota](#features)
 - [Buusi](#download)
 - [Icciitii](#privacy)
@@ -49,19 +48,6 @@ Waltajjii maayyii walitti bira qabuu filannoolee beekamoo wajjin:
 | Subtitle + SponsorBlock |   ✅   |         ⚠️          |     ❌      |             ❌             |         ❌         |
 
 Arroxy waan tokko qofaaf ijaarame: URL maxxansi, faayila naannoo qulqulluu argadhu. Akkaawuntiin hin jiru, gurgurtaa dabalaataa hin jiru, odeeffannoo walitti qabuu hin jiru.
-
----
-
-## <a id="no-cookies"></a>Kuukkiin hin jiru, seensuu hin jiru, akkaawuntii waliin hin hidhu
-
-Kun sababii beekamaa hundaa buufataan YouTube desktop caccabaniif — fi sababii guddaa Arroxy jiruuf.
-
-YouTube ittisa bot isaa yoo haaromse, meeshaalee hedduun kuukkii biraawzaraa YouTube kee akka wantaatti akka ergu si gaafatu. Rakkoon lama:
-
-1. Seshinoota ergan tipikaalaan daqiiqaa ~30 keessatti dhumuu, kanaaf yeroo hedduu erga erga.
-2. Dookumentii yt-dlp mataa isaa [automatic kuukkii irratti hundaa'u akkaawuntii Google kee akka mallatteessu danda'u jedha](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).
-
-**Arroxy kuukkii, seensuu, ykn odeeffannoo biraa kamiyyuu gaafachuu hin qabu.** Tokkicha token ummataa YouTube biraawzara kamiiyyuuf tajaajiltu fayyadama. Eenyummaa Google keetiin walitti hin hidhamu, dhumuu hin qabu, jijjiiruu hin barbaachisu.
 
 ---
 
@@ -118,65 +104,66 @@ YouTube ittisa bot isaa yoo haaromse, meeshaalee hedduun kuukkii biraawzaraa You
 
 [**Baasii haaraa fudhachuu →**](../../releases/latest)
 
-### Package manager fayyadamuun fayyadu
+### <a id="why-warning"></a>Maaliif akeekkachiisa arguu dandeessa
 
-| Chaanaalii | Ajajaa                                                                                |
-| ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+Arroxy madda banaa fi hayyama MIT qaba. Ijaarsonni Windows fi macOS **mallattoo hin qaban** — ragaaleen Apple Developer ID fi Windows EV mallattoo koodii kafaltii waggaatti dhibba doolara baay'ee waan gaafataniif, pirojektiin self-funded baasii kana mataa isaarraa kafala. Mallattoo sana malee, Windows SmartScreen fi macOS Gatekeeper yeroo jalqabaatti si akeekachisuu. Akeekkachiisni kun *siistamni kee maxxantiisa hin beeku* jechuudha — Arroxy malwaare dha jechuuf miti.
 
-<details>
-<summary><strong>Windows: Fayyadu vs Portable</strong></summary>
+Haala sadii Arroxy ofii keetiin mirkaneessuuf, kutaa cimina irraa cimina gaditti:
 
-|               | NSIS Fayyadu | Portable `.exe` |
-| ------------- | :----------------------: | :---------------------: |
-| Fayyadu barbaachisa | Eeyyee  | Lakki — bakka kamiyyuu irraa oofii  |
-| Of-haaromeessa | ✅ app keessatti  | ❌ of-harkaan buusi  |
-| Saffisa eegaluu | ✅ saffisaa  | ⚠️ yeroo eegaluu jabinaafi gara jabina qabu  |
-| Start Menu tti dabalama |            ✅            |           ❌            |
-| Salphatti maqaa itti haquu |            ✅            | ❌ faayila haquu  |
+- **Koodii madda dubbisi.** Sarara hundi [GitHub](https://github.com/antonio-orionus/Arroxy) irratti jira fi [madda irraa ijaaruuf](#tech) ni danda'ama.
+- **SHA256 mirkaneessi.** Faayila kee [`SHA256SUMS`](../../releases/latest) maxxanfame walitti bira qabbi — armaan gadii [Buufannoo kee mirkaneessi](#verify) ilaali.
+- **Sakattaa miilaafi baasii.** Faayila [VirusTotal](https://www.virustotal.com) irratti fe'i.
 
-**Gorsa:** Of-haaromeessaa fi saffisa eegaluu gaaariif NSIS fayyadu fayyadami. Fayyadu hin barbaachifne, reejistrii hin barbaachifne filannoof portable `.exe` fayyadami.
-
-**Windows SmartScreen akeekkachiisa**
+### <a id="windows-first-launch"></a>Windows yeroo jalqabaa eegaluu
 
 Jalqaba banuu irratti **"Windows protected your PC"** ykn **"Unknown publisher"** arguu dandeessa. Kun `Arroxy-Setup-*.exe` fi `Arroxy-Portable-*.exe` lameeniifuu hojjeta. Arroxy bilisaa fi madda banaa dha, ijaarsonni Windows mallattoo kafaltii hin qabne waliin hin mallatteffamne, kanaafuu SmartScreen mallattoo isaanirratti kaa'a. Kun Arroxy nageenya hin qabu **jechuuf** of-hordofaan miti. Itti fufuuf:
+
+<div align="center">
+  <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted" />
+  <img src="build/win-smartscreen-run-anyway.png" width="46%" alt="SmartScreen dialog after expanding More info, showing the "Run anyway" button" />
+</div>
 
 1. **More info** cuqaasi.
 2. **Run anyway** cuqaasi.
 
+#### Windows Defender faayila mallattaa itti kaa'e ykn haqe yoo ta'e
+
+Heuristics Defender sometimes flag unsigned NSIS installers fi Electron portables akka shakkisiisoo. Defender `Arroxy-Setup-*.exe` ykn `Arroxy-Portable-*.exe` karantinii keessa kaa'e yoo ta'e, **Windows Security → Virus & threat protection → Protection history** irraa deebi'i, erga Arroxy executable **Manage settings → Add or remove exclusions** jalatti wantoota hayyamamaniitti dabalii. SmartScreen wajjin akkuma, kasaara mallattoo maxxantii dhabuu irraa dhufa, malwaare argamuuurraa miti.
+
 > Arroxy fuula GitHub Releases mirkaneessaatii qofa buufi. Faayila marsariitii biraatii argatte ykn namni tokko si erge yoo ta'e, haqii fi ganda mirkaneessaatii faayila haaraa buufi. Koodii madda ummataadhaan banaa waan ta'eef, of irraadhaa sakatta'uu ykn Arroxy of irraadhaa ijaaru dandeessa.
 
-</details>
+### <a id="macos-first-launch"></a>macOS yeroo jalqabaa eegaluu
 
-<details>
-<summary><strong>macOS irratti yeroo jalqabaa eegaluu</strong></summary>
+Arroxy ammallee macOS'f mallattoo hin qabdu, kanaafuu Gatekeeper yeroo jalqabaa ni dhorka. Hayyama kennuuf karaan sirrii macOS version keetiin murteeffama — Sequoia 15 mirga-cuqaasuu → banuu darbuu dulloomaa cime.
 
-Arroxy ammallee mallattoo hin qabdu, kanaaf macOS Gatekeeper yeroo jalqabaa si akeeka. Kun eegamu — midhaan agarsiisu miti.
+#### macOS Sequoia 15 fi booda (ammaa)
 
-**Mala System Settings (gorsamaa):**
+Sequoia 15 fi haaraa irraatti, mirga-cuqaasuu → banuu apps heddu quarantine jiran Gatekeeper hin darbu. System Settings panel fayyadami:
 
-1. Akaawuntii app Arroxy mirga-cuqaasi fi **Open** filadhu.
-2. Diyaalogiin akeekkachiisaa ni mul'ata — **Cancel** cuqaasi (*Move to Trash* hin cuqasin).
-3. **System Settings → Privacy & Security** bani.
-4. Kutaa **Security** hamma gaditti deemi. *"Arroxy meeshaa guddaa hin taanee irraa waan ta'eef itti fayyadamuun dhorkaame."* ni argita.
-5. **Open Anyway** cuqaasi fi jecha darbii keetin ykn Touch ID waliin mirkaneessi.
+1. `Arroxy.app` DMG ramadame irraa `/Applications` tti harkisi.
+2. Arroxy lama-cuqaasi. Diyaalogiin dhorkaaf ni mul'ata — **Done** cuqaasi (*Move to Trash* hin cuqasin).
+3. **System Settings → Privacy & Security** bani fi kutaa **Security** hamma gaditti deemi. *"Arroxy was blocked to protect your Mac"* (ykn ergaa itti dhiyaatu) ni argita.
+4. **Open Anyway** cuqaasi, jecha darbii keetin ykn Touch ID waliin mirkaneessi, erga Arroxy `/Applications` irraa deebi'ii eegali.
 
-Tarkaanfii 5 boodaa, Arroxy salphaan ni banama fi akeekkachiisni ammas hin mul'atu.
+#### macOS Sonoma 14 fi dura
 
-**Mala Terminal (ogeessa):**
+1. `Arroxy.app` DMG ramadame irraa `/Applications` tti harkisi.
+2. `Arroxy.app` `/Applications` keessatti mirga-cuqaasi (ykn Control-cuqaasi) fi **Open** filadhu.
+3. Diyaalogiin akeekkachiisaa amma **Open** button qaba — cuqaasii mirkaneessi. Arroxy salphaan ni banama fi akeekkachiisni ammas hin mul'atu.
+
+#### "App is damaged" ykn Gatekeeper dhorku cimaa — Terminal dursaa
+
+macOS *"Arroxy is damaged and can't be opened"* jedhe yoo ta'e, ykn tarkaanfiiwwan armaan olii hanga tokkollee dhorkuu hin baasnee, qabiyyeen quarantine DMG irratti sababii (biraawzarootni muraasaa fi macOS mataa isaa translocation behavior waan qindaa'aniif). App fayyadu irraa balleessi:
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/Arroxy.app
 ```
 
+**Apple Silicon vs Intel:** Mac M-series (M1 / M2 / M3 / M4) irratti, `arm64` DMG buusi. Intel Macs irratti, `x64` DMG buusi. Ijaarsaa dogoggora oofuu Rosetta fayyadamuudhaan hojjeta garuu ifa gadi bu'aa.
+
 > Ijaarsi macOS CI irratti Apple Silicon fi Intel runners irratti hojjetama. Rakkoo yoo qabaatte, maaloo [gaaffii bani](../../issues) — yaada fayyadamtootaa macOS irraa yeroo hedduu qabxii qormaata macOS murteessa.
 
-</details>
-
-<details>
-<summary><strong>Linux irratti yeroo jalqabaa eegaluu</strong></summary>
+### <a id="linux-first-launch"></a>Linux yeroo jalqabaa eegaluu
 
 AppImages kallattiin oofuu — fayyadu hin barbaachisu. Faayila akka hojjetu galchuuf qofa mallattaa itti kaa'uun barbaachisa.
 
@@ -202,12 +189,68 @@ sudo dnf install -y fuse-libs
 sudo pacman -S fuse2
 ```
 
+**Walitti makoo desktop filannoo:** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) yeroo tokkoo fayyadi, AppImage lama-cuqaaste kamiyyuu launcher menu keessatti of-dursuudhaan galmeeffama — faayila `.desktop` harkaan barbaachisu hin jiru.
+
 **Flatpak (filannoo sandboxed):** `Arroxy-*.flatpak` gara fuula baasii sanuma irraa buusi.
 
 ```bash
 flatpak install --user Arroxy-*.flatpak
 flatpak run io.github.antonio_orionus.Arroxy
 ```
+
+<details>
+<summary><strong><a id="verify"></a>Buufannoo kee mirkaneessi (SHA256)</strong></summary>
+
+Baasii hundi faayila `SHA256SUMS` binary waliin maxxansa. Buufannoon kee darbuu ykn dabsuu hin qabne mirkaneessuuf, faayila naannoo keessatti hash godhi fi sarara `SHA256SUMS` walitti bira qabbi. Fuula baasii haaraa bani → **Assets** → `SHA256SUMS` buusi.
+
+**Windows (PowerShell or Command Prompt):**
+
+```powershell
+certutil -hashfile Arroxy-Setup-<version>.exe SHA256
+```
+
+**macOS (Terminal):**
+
+```bash
+shasum -a 256 Arroxy-<version>-arm64.dmg
+```
+
+**Linux (Terminal):**
+
+```bash
+sha256sum Arroxy-*.AppImage
+```
+
+Sakattaa malwaare miilaafi baasii barbaaddaa? Faayila [VirusTotal](https://www.virustotal.com) irratti fe'i. Mallattoo heuristic yeroo muraasaa injinii xiqqaa irraa arguu Electron apps mallattoo hin qabne bira darbaa; injinii gurguddoo irraa arguu bal'aa rakkoo dhugaa ta'a.
+
+</details>
+
+<details>
+<summary><strong>Package manager fayyadamuun fayyadu</strong></summary>
+
+Durumaa package manager fayyadamtaa? Karaa buufannoo harkaa darbuu dandeessa.
+
+| Chaanaalii | Ajajaa                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------------- |
+| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
+| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
+| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+| Flatpak            | `flatpak install --user Arroxy-*.flatpak`                                                         |
+
+</details>
+
+<details>
+<summary><strong>Windows: Fayyadu vs Portable</strong></summary>
+
+|               | NSIS Fayyadu | Portable `.exe` |
+| ------------- | :----------------------: | :---------------------: |
+| Fayyadu barbaachisa | Eeyyee  | Lakki — bakka kamiyyuu irraa oofii  |
+| Of-haaromeessa | ✅ app keessatti  | ❌ of-harkaan buusi  |
+| Saffisa eegaluu | ✅ saffisaa  | ⚠️ yeroo eegaluu jabinaafi gara jabina qabu  |
+| Start Menu tti dabalama |            ✅            |           ❌            |
+| Salphatti maqaa itti haquu |            ✅            | ❌ faayila haquu  |
+
+**Gorsa:** Of-haaromeessaa fi saffisa eegaluu gaaariif NSIS fayyadu fayyadami. Fayyadu hin barbaachifne, reejistrii hin barbaachifne filannoof portable `.exe` fayyadami.
 
 </details>
 
@@ -233,10 +276,10 @@ YouTube tajaajiluu danda'u: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, saga
 Eeyyee. Menu format keessaa *audio qofa* filadhu, booda MP3, M4A/AAC, Opus yookaan WAV filadhu.
 
 **Akkaawuntii YouTube ykn kuukkii barbaachisaa?**
-Lakki. Arroxy tokkicha token ummataa YouTube biraawzara kamiiyyuuf tajaajiltu fayyadama. Kuukkii hin jiru, seensuu hin jiru, odeeffannoo kuufame hin jiru. [Kuukkii hin jiru, seensuu hin jiru, akkaawuntii waliin hin hidhu](#no-cookies) ilaali kuni maaliif barbaachisuu ibsuuf.
+Durtii, lakki — Arroxy akkaawuntii YouTube, seensuu, ykn ergaa kuukkii malee hojeeta. Deeggarsi kuukkii filannoof Qindoomina Olaanaa keessa jira (Madda Kuukkii: faayila ykn biraawzara) qabiyyee mirkaneessuu barbaadu, kan akka viidiyoowwan umurii daangeffaman ykn miseensoota qofaaf, fayyadamuuf. Durtii dhaabbatee jira. Yoo dandeessistee, dookumentii yt-dlp [automatic kuukkii irratti hundaa'u akkaawuntii Google mallatteessisuu danda'a](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) jedha; akkaawuntiin gatamuu danda'u haala kanatti filannoo nageenya qabeessa dha.
 
 **YouTube waan tokko jijjiirte itti fufaa hojeta?**
-Ciminni lamaatu jira: yt-dlp saatii keessatti jijjirama YouTube haaromsa, Arroxys kuukkii daqiiqaa ~30 keessatti dhumuu irratti hin hirkattu. Kun meeshaalee naannoo biraawzaraa erge irratti hirkatan caala qajeelina beekamaa godha.
+yt-dlp yeroo eegaluu irratti ofumaan haaromfama, fi Arroxy yeroo YouTube waan tokko jijjiirtu ariitiidhaan sirreessa erga. Yoo rakkoo argattan, deeggarsi kuukkii filannoof Qindoomina Olaanaa keessa akka filannoo deebii argama.
 
 **Arroxy afaan meeqa keessatti argamu?**
 Digdamatokkoo, yeroo jalqabaatii: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), fi Српски (Serbian). Arroxy afaan mana-hojii kee sirna hojjetaa irratti yeroo jalqabaatti ofumaa argata, yeroo kamiiyyuu toolbar irraa filataa afaan jijjiiruu dandeessa. Hiikaaleen objiektii TypeScript duwwaa akka src/shared/i18n/locales/ keessa jiran — gargaaruf GitHub irratti PR bani.
@@ -248,7 +291,7 @@ Lakki. yt-dlp jalqaba banuu irratti ofumaan buufamee meeshaa kee irratti kuufama
 Eeyyee, playlist'f: URL playlist maxxansi, booda tarree guutuu yookaan viidiyoowwan ati filatte qofa queue keessa galchi. Channel guutuu batch'n buusuun ammaaf hin deggaramu.
 
 **macOS "app miidhaameera" jedha — maal godhaa?**
-Sun macOS Gatekeeper app mallattoo hin qabne dhorku, midhaa dhugaa miti. Sirreessaaf kutaa [yeroo jalqabaa macOS irratti eegaluu](#download) ilaali.
+Sun macOS Gatekeeper app mallattoo hin qabne dhorku, midhaa dhugaa miti. ["App is damaged" — Terminal dursaa](#macos-first-launch) ilaali, ajaja sarara tokkoo `xattr` kan sirreessuu argachuuf.
 
 **Viidiyoo YouTube buusuu seeraa dha?**
 Fayyadama dhuunfaa, dhoksaa qofaaf yeroo hedduun mootummoota heddu keessatti fudhatama. [Dambii Tajaajilaaf](https://www.youtube.com/t/terms) YouTube fi seeraa mirga-qopheessaa naannoo keetti hordofuuf ati itti gaafatamtummaa qabda.

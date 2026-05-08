@@ -88,7 +88,6 @@ export const sr = {
   ai_notice: "",
   toc_heading: "Садржај",
   why_h2: "Зашто Arroxy",
-  nocookies_h2: "Без колачића, без пријаве, без повезивања налога",
   features_h2: "Функционалности",
   dl_h2: "Преузимање",
   privacy_h2: "Приватност",
@@ -105,16 +104,6 @@ export const sr = {
   why_r7: "Титлови + SponsorBlock",
   why_summary:
     "Arroxy је направљен за једну ствар: налепите URL, добијете чист локални фајл. Без налога, без додатне продаје, без прикупљања података.",
-  nocookies_intro:
-    "Ово је најчешћи разлог зашто десктоп преузимачи за YouTube престају да раде — и главни разлог зашто Arroxy постоји.",
-  nocookies_setup:
-    "Када YouTube ажурира откривање ботова, већина алата вам каже да извезете колачиће YouTube-а из претраживача као заобилазно решење. Два проблема с тим:",
-  nocookies_p1:
-    "Извезене сесије обично истичу за ~30 минута, па их стално поново извозите.",
-  nocookies_p2:
-    "Сопствена документација yt-dlp-а [упозорава да аутоматизација заснована на колачићима може означити ваш Google налог](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).",
-  nocookies_outro:
-    "**Arroxy никада не тражи колачиће, пријаве нити било какве акредитиве.** Користи само јавне токене које YouTube служи сваком претраживачу. Ништа повезано са вашим Google идентитетом, ништа не истиче, ништа не треба мењати.",
   feat_quality_h3: "Квалитет и формати",
   feat_quality_1: "До **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Висок број сличица** задржан без измена — 60 fps, 120 fps, HDR",
@@ -211,6 +200,67 @@ export const sr = {
   dl_linux_fuse_text: "Ако покретање и даље не успе, можда недостаје FUSE:",
   dl_linux_flatpak_intro:
     "**Flatpak (алтернатива у песковнику):** преузмите `Arroxy-*.flatpak` са исте странице издања.",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "Зашто можете видети упозорење",
+  dl_warning_p1:
+    "Arroxy је open-source пројекат са MIT лиценцом. Windows и macOS верзије **нису потписане кодом** — сертификати Apple Developer ID и Windows EV за потписивање кода коштају стотине долара годишње, које независни пројекат плаћа из сопственог џепа. Без тих потписа, Windows SmartScreen и macOS Gatekeeper ће вас упозорити при првом покретању. Упозорења значе *да ваш оперативни систем не препознаје издавача* — не значе да је Arroxy малвер.",
+  dl_warning_p2:
+    "Три начина да сами проверите Arroxy, по растућој строгости:\n\n- **Прочитајте изворни код.** Свака линија је на [GitHub](https://github.com/antonio-orionus/Arroxy)-у и можете [изградити апликацију из изворног кода](#tech).\n- **Проверите SHA256.** Упоредите свој фајл са објављеним [`SHA256SUMS`](../../releases/latest) — погледајте [Верификујте преузимање](#verify) испод.\n- **Покрените скенирање треће стране.** Отпремите фајл на [VirusTotal](https://www.virustotal.com).",
+
+  dl_win_first_h3: "Windows: прво покретање",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted',
+  shot_smartscreen_run_alt:
+    'SmartScreen dialog after expanding More info, showing the "Run anyway" button',
+  dl_win_defender_h4: "Ако Windows Defender означи или уклони фајл",
+  dl_win_defender_p:
+    "Defender хеуристика понекад означава непотписане NSIS инсталатере и Electron преносиве верзије као сумњиве. Ако Defender стави у карантин `Arroxy-Setup-*.exe` или `Arroxy-Portable-*.exe`, вратите га из **Windows Security → Virus & threat protection → Protection history**, а затим додајте Arroxy извршни фајл као дозвољену ставку под **Manage settings → Add or remove exclusions**. Као и у случају SmartScreen-а, покретач је недостајући потпис издавача, а не откривен малвер.",
+
+  dl_macos_first_h3: "macOS: прво покретање",
+  dl_macos_intro:
+    "Arroxy још увек није потписан кодом за macOS, па ће Gatekeeper блокирати прво покретање. Тачан начин да га дозволите зависи од верзије macOS-а — Sequoia 15 је затегла стари обилазак преко десног клика → Отвори.",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 и новије (актуелно)",
+  dl_macos_sequoia_intro:
+    "На Sequoia 15 и новијим верзијама, десни клик → Отвори више не заобилази Gatekeeper за многе апликације у карантину. Уместо тога користите панел Системских подешавања:",
+  dl_macos_sequoia_step1:
+    "Превуците `Arroxy.app` са монтираног DMG у `/Applications`.",
+  dl_macos_sequoia_step2:
+    "Двокликните Arroxy. Приказује се дијалог блокирања — кликните **Done** (не кликајте *Move to Trash*).",
+  dl_macos_sequoia_step3:
+    'Отворите **System Settings → Privacy & Security** и скролујте до одељка **Security**. Видећете *"Arroxy was blocked to protect your Mac"* (или сличну поруку).',
+  dl_macos_sequoia_step4:
+    "Кликните **Open Anyway**, потврдите лозинком или Touch ID-ом, а затим поново покрените Arroxy из `/Applications`.",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 и старије",
+  dl_macos_sonoma_step1:
+    "Превуците `Arroxy.app` са монтираног DMG у `/Applications`.",
+  dl_macos_sonoma_step2:
+    "Десним кликом (или Control-кликом) кликните на `Arroxy.app` у `/Applications` и одаберите **Open**.",
+  dl_macos_sonoma_step3:
+    "Дијалог упозорења сада има дугме **Open** — кликните га и потврдите. Arroxy се отвара нормално и упозорење се никад више не приказује.",
+  dl_macos_damaged_h4:
+    '"App is damaged" или упорна блокада Gatekeeper-а — исправка путем Terminal-а',
+  dl_macos_damaged_p:
+    'Ако macOS каже *"Arroxy is damaged and can\'t be opened"*, или ниједан од горњих корака не уклони блокаду, узрок је атрибут карантина на DMG-у (неки претраживачи и macOS-ово сопствено понашање трансположења га постављају). Уклоните га са инсталиране апликације:',
+  dl_macos_arch_note:
+    "**Apple Silicon vs Intel:** на Mac рачунару са процесором серије M (M1 / M2 / M3 / M4), преузмите DMG за `arm64`. На Intel Mac рачунарима, преузмите DMG за `x64`. Покретање погрешне верзије ради преко Rosetta, али је приметно спорије.",
+
+  dl_linux_first_h3: "Linux: прво покретање",
+  dl_linux_appimagelauncher:
+    "**Опционална интеграција са десктопом:** инсталирајте [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) једном, и свака AppImage коју двокликнете аутоматски се региструје у менију покретача — без ручног креирања `.desktop` фајлова.",
+
+  dl_verify_h3: "Верификујте преузимање (SHA256)",
+  dl_verify_intro:
+    "Свако издање објављује `SHA256SUMS` фајл поред бинарних датотека. Да бисте проверили да ваше преузимање није оштећено или измењено у транзиту, хешујте свој фајл локално и упоредите га са линијом у `SHA256SUMS`. Отворите страницу најновијег издања → **Assets** → преузмите `SHA256SUMS`.",
+  dl_verify_win_label: "Windows (PowerShell or Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "Желите скенирање малвера треће стране? Отпремите фајл на [VirusTotal](https://www.virustotal.com). Неколико генеричко-хеуристичких означавања од стране мањих машина је нормално за непотписане Electron апликације; масовна откривања од стране главних машина би представљала прави разлог за забринутост.",
+
+  dl_pm_intro:
+    "Већ користите менаџер пакета? Можете прескочити путању ручног преузимања.",
+
   privacy_p1:
     "Преузимања се преузимају директно преко [yt-dlp](https://github.com/yt-dlp/yt-dlp) са YouTube-а у фасциклу коју одаберете — ништа не пролази кроз сервер треће стране. Историја гледања, историја преузимања, URL-ови и садржај фајлова остају на вашем уређају.",
   privacy_p2:
@@ -224,10 +274,10 @@ export const sr = {
   faq_a3: "Da. Izaberi *samo audio* u meniju formata, pa zatim MP3, M4A/AAC, Opus ili WAV.",
   faq_q4: "Да ли треба YouTube налог или колачићи?",
   faq_a4:
-    "Не. Arroxy користи само јавне токене које YouTube служи сваком претраживачу. Без колачића, без пријаве, без ускладиштених акредитива. Погледајте [Без колачића, без пријаве, без повезивања налога](#no-cookies) за важност тога.",
+    "Подразумевано, не — Arroxy ради без YouTube налога, пријаве или извоза колачића. Опциона подршка за колачиће доступна је у Напредним подешавањима (Извор колачића: фајл или претраживач) за садржај који захтева аутентификацију, попут видеа са старосним ограничењем или доступних само члановима. Подразумевано је искључена. Ако је омогућите, документација yt-dlp-а напомиње да [аутоматизација заснована на колачићима може означити ваш Google налог](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); у том случају је безбедније користити налог за једнократну употребу.",
   faq_q5: "Хоће ли наставити да ради кад YouTube нешто промени?",
   faq_a5:
-    "Два слоја отпорности: yt-dlp се ажурира у року од неколико сати по промени YouTube-а, а Arroxy не ослања се на колачиће који истичу сваких ~30 минута. То га чини знатно стабилнијим од алата који зависе од извезених сесија претраживача.",
+    "yt-dlp се аутоматски ажурира при покретању, а Arroxy брзо испоручује исправке кад YouTube нешто промени. Ако ипак наиђете на проблем, у Напредним подешавањима је на располагању опциона подршка за колачиће као резервна опција.",
   faq_q6: "На којим је језицима Arroxy доступан?",
   faq_a6:
     "Двадесет и један, одмах из кутије: English, Español (шпански), Deutsch (немачки), Français (француски), 日本語 (јапански), 中文 (кинески), Русский (руски), Українська (украјински), हिन्दी (хинди), Afaan Oromoo (оромо), Kiswahili (свахили), O'zbekcha (узбечки), Tiếng Việt (вијетнамски), አማርኛ (амхарски), العربية (арапски), اردو (урду), پښتو (пашто), বাংলা (бенгалски), မြန်မာဘာသာ (бурмански), Ελληνικά (грчки) и Српски. Arroxy аутоматски препознаје језик вашег оперативног система при prvom покретању и можете да пређете на други у сваком тренутку преко бирача језика у траци са алаткама. Преводи су обични TypeScript објекти у src/shared/i18n/locales/ — отворите PR на GitHub-у да допринесете.",
@@ -239,7 +289,7 @@ export const sr = {
     "Da, za plejliste: nalepi URL plejliste, pa zatim stavi u red celu listu ili samo video snimke koje izabereš. Grupno preuzimanje celih kanala još nije podržano.",
   faq_q9: 'macOS каже да је "апликација оштећена" — шта да радим?',
   faq_a9:
-    "То је macOS Gatekeeper блокира непотписану апликацију, а не стварно оштећење. Погледајте одељак [прво покретање на macOS-у](#download) за решење.",
+    'То је macOS Gatekeeper блокира непотписану апликацију, а не стварно оштећење. Погледајте ["App is damaged" — исправка путем Terminal-а](#macos-first-launch) за jednolinijsku `xattr` команду која то решава.',
   faq_q10: "Да ли је преузимање YouTube видеа законито?",
   faq_a10:
     "За личну, приватну употребу то је углавном прихватљиво у већини јурисдикција. Ви сте одговорни за усклађеност са [Условима коришћења](https://www.youtube.com/t/terms) YouTube-а и локалним законима о ауторским правима.",

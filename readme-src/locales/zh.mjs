@@ -89,7 +89,6 @@ export const zh = {
     "> 🌐 这是 AI 辅助翻译。[英文 README](README.md) 是真实来源。发现错误？欢迎 [提交 PR](../../pulls)。",
   toc_heading: "目录",
   why_h2: "为什么选 Arroxy",
-  nocookies_h2: "无 Cookie、无登录、无账号绑定",
   features_h2: "功能特性",
   dl_h2: "下载",
   privacy_h2: "隐私",
@@ -106,16 +105,6 @@ export const zh = {
   why_r7: "字幕 + SponsorBlock",
   why_summary:
     "Arroxy 只做一件事：粘贴链接，获取干净的本地文件。无账号、无追加销售、无数据收集。",
-  nocookies_intro:
-    "这是桌面 YouTube 下载器最常见的失效原因 — 也是 Arroxy 存在的主要理由。",
-  nocookies_setup:
-    "每当 YouTube 更新机器人检测，大多数工具会让你导出浏览器的 YouTube Cookie 作为变通方案。这有两个问题：",
-  nocookies_p1:
-    "导出的会话通常在 ~30 分钟内过期，所以你需要反复导出。",
-  nocookies_p2:
-    "yt-dlp 自己的文档[警告基于 Cookie 的自动化可能会标记你的 Google 账号](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)。",
-  nocookies_outro:
-    "**Arroxy 从不索要 Cookie、登录凭据或任何账号信息。** 它仅使用 YouTube 向任意浏览器提供的公开 Token。与你的 Google 身份无关，没有过期问题，无需轮换。",
   feat_quality_h3: "画质与格式",
   feat_quality_1: "最高 **4K UHD（2160p）**、1440p、1080p、720p、480p、360p",
   feat_quality_2: "**高帧率**原样保留 — 60 fps、120 fps、HDR",
@@ -212,6 +201,67 @@ export const zh = {
   dl_linux_fuse_text: "如果仍无法启动，可能缺少 FUSE：",
   dl_linux_flatpak_intro:
     "**Flatpak（沙箱版）：** 从同一发布页下载 `Arroxy-*.flatpak`。",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "为什么可能会看到警告",
+  dl_warning_p1:
+    "Arroxy 是开源软件，采用 MIT 许可证。Windows 和 macOS 版本**未经代码签名** — Apple Developer ID 和 Windows EV 代码签名证书每年各需数百美元，对于独立项目来说完全自掏腰包。没有这些签名，Windows SmartScreen 和 macOS Gatekeeper 在首次启动时会向你发出警告。这些警告的意思是*你的系统不认识该发布者* — 并不意味着 Arroxy 是恶意软件。",
+  dl_warning_p2:
+    "三种自行验证 Arroxy 的方式，按严格程度递增：\n\n- **查看源码。** 每一行都在 [GitHub](https://github.com/antonio-orionus/Arroxy) 上，你也可以[从源码构建](#tech)。\n- **校验 SHA256。** 将你的文件与发布的 [`SHA256SUMS`](../../releases/latest) 对比 — 见下方[验证你的下载](#verify)。\n- **运行第三方扫描。** 将文件上传至 [VirusTotal](https://www.virustotal.com)。",
+
+  dl_win_first_h3: "Windows 首次启动",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted',
+  shot_smartscreen_run_alt:
+    'SmartScreen dialog after expanding More info, showing the "Run anyway" button',
+  dl_win_defender_h4: "如果 Windows Defender 标记或删除了文件",
+  dl_win_defender_p:
+    "Defender 启发式规则有时会将未签名的 NSIS 安装包和 Electron 便携版标记为可疑。如果 Defender 隔离了 `Arroxy-Setup-*.exe` 或 `Arroxy-Portable-*.exe`，请从 **Windows Security → Virus & threat protection → Protection history** 还原，然后在 **Manage settings → Add or remove exclusions** 中将 Arroxy 可执行文件添加为允许项。与 SmartScreen 一样，触发原因是缺少发布者签名，而非检测到恶意软件。",
+
+  dl_macos_first_h3: "macOS 首次启动",
+  dl_macos_intro:
+    "Arroxy 尚未为 macOS 进行代码签名，因此 Gatekeeper 会阻止首次启动。具体的解除方式取决于你的 macOS 版本 — Sequoia 15 收紧了旧的右键 → 打开绕过方式。",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 及更高版本（当前）",
+  dl_macos_sequoia_intro:
+    "在 Sequoia 15 及更新版本中，右键 → 打开对许多被隔离的应用不再能绕过 Gatekeeper。请改用系统设置面板：",
+  dl_macos_sequoia_step1:
+    "将 `Arroxy.app` 从挂载的 DMG 拖入 `/Applications`。",
+  dl_macos_sequoia_step2:
+    "双击 Arroxy，出现阻止对话框 — 点击 **Done**（不要点击 *Move to Trash*）。",
+  dl_macos_sequoia_step3:
+    '打开 **System Settings → Privacy & Security**，滚动到 **Security** 部分。你会看到 *"Arroxy was blocked to protect your Mac"*（或类似提示）。',
+  dl_macos_sequoia_step4:
+    "点击 **Open Anyway**，用密码或 Touch ID 确认，然后从 `/Applications` 重新启动 Arroxy。",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 及更早版本",
+  dl_macos_sonoma_step1:
+    "将 `Arroxy.app` 从挂载的 DMG 拖入 `/Applications`。",
+  dl_macos_sonoma_step2:
+    "在 `/Applications` 中右键（或 Control-单击）`Arroxy.app`，选择 **Open**。",
+  dl_macos_sonoma_step3:
+    "警告对话框现在有 **Open** 按钮 — 点击它并确认。Arroxy 正常打开，此后警告不再出现。",
+  dl_macos_damaged_h4:
+    '"App is damaged" 或持续的 Gatekeeper 拦截 — Terminal 修复方法',
+  dl_macos_damaged_p:
+    '如果 macOS 显示 *"Arroxy is damaged and can\'t be opened"*，或以上步骤均无法解除拦截，原因是 DMG 上的隔离属性（某些浏览器和 macOS 自身的文件位置转换机制会设置该属性）。从已安装的应用中清除该属性：',
+  dl_macos_arch_note:
+    "**Apple Silicon vs Intel：** 在搭载 M 系列芯片（M1 / M2 / M3 / M4）的 Mac 上，请下载 `arm64` DMG。在 Intel Mac 上，请下载 `x64` DMG。运行错误版本仍可通过 Rosetta 启动，但速度会明显变慢。",
+
+  dl_linux_first_h3: "Linux 首次启动",
+  dl_linux_appimagelauncher:
+    "**可选桌面集成：** 安装一次 [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher)，此后双击任意 AppImage 即可自动注册到启动器菜单 — 无需手动创建 `.desktop` 文件。",
+
+  dl_verify_h3: "验证你的下载（SHA256）",
+  dl_verify_intro:
+    "每次发布都会在二进制文件旁边附上 `SHA256SUMS` 文件。为确认下载文件在传输过程中未被损坏或篡改，请在本地对文件进行哈希计算，并与 `SHA256SUMS` 中对应的行进行比对。打开最新发布页 → **Assets** → 下载 `SHA256SUMS`。",
+  dl_verify_win_label: "Windows (PowerShell or Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "想要第三方恶意软件扫描？将文件上传到 [VirusTotal](https://www.virustotal.com)。小型引擎给出少量通用启发式标记对于未签名的 Electron 应用来说属于正常；主流引擎大面积检测才是真正值得警惕的情况。",
+
+  dl_pm_intro:
+    "已经在用包管理器？可以跳过手动下载流程。",
+
   privacy_p1:
     "下载通过 [yt-dlp](https://github.com/yt-dlp/yt-dlp) 直接从 YouTube 获取到你选择的文件夹 — 不经过任何第三方服务器。观看历史、下载历史、URL 和文件内容均保留在你的设备上。",
   privacy_p2:
@@ -225,10 +275,10 @@ export const zh = {
   faq_a3: "可以。在格式菜单里选择*仅音频*，然后选择 MP3、M4A/AAC、Opus 或 WAV。",
   faq_q4: "需要 YouTube 账号或 Cookie 吗？",
   faq_a4:
-    "不需要。Arroxy 仅使用 YouTube 向任意浏览器提供的公开 Token。无 Cookie、无登录、无凭据存储。详见[无 Cookie、无登录、无账号绑定](#no-cookies)，了解为何这点很重要。",
+    "默认不需要 — Arroxy 无需 YouTube 账号、登录或导出 Cookie 即可工作。对于需要身份验证的内容（例如年龄限制或仅会员可见的视频），高级设置中提供可选的 Cookie 支持（Cookies source: file or browser）。该选项默认关闭。如果你启用它，yt-dlp 的 wiki 指出[基于 Cookie 的自动化可能会标记 Google 账号](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)；这种情况下使用一次性账号是更安全的选择。",
   faq_q5: "YouTube 更新后还能继续使用吗？",
   faq_a5:
-    "两层保障：yt-dlp 在 YouTube 变化后数小时内更新，而 Arroxy 不依赖每 ~30 分钟就会过期的 Cookie。这使它比依赖导出浏览器会话的工具稳定得多。",
+    "yt-dlp 在启动时自动更新，YouTube 一旦发生变化，Arroxy 会及时发布修复。如果你确实遇到问题，高级设置中提供可选的 Cookie 支持作为后备方案。",
   faq_q6: "Arroxy 支持哪些语言？",
   faq_a6:
     "开箱即用支持二十一种：English、Español（西班牙语）、Deutsch（德语）、Français（法语）、日本語（日语）、中文、Русский（俄语）、Українська（乌克兰语）、हिन्दी（印地语）、Afaan Oromoo、Kiswahili、O'zbekcha（乌兹别克语）、Tiếng Việt（越南语）、አማርኛ（阿姆哈拉语）、العربية（阿拉伯语）、اردو（乌尔都语）、پښتو（普什图语）、বাংলা（孟加拉语）、မြန်မာဘာသာ（缅甸语）、Ελληνικά（希腊语）和 Српски（塞尔维亚语）。Arroxy 在首次启动时自动检测系统语言，随时可在工具栏的语言选择器中切换。翻译以纯 TypeScript 对象的形式存放在 src/shared/i18n/locales/ — 在 GitHub 上发个 PR 即可贡献。",
@@ -240,7 +290,7 @@ export const zh = {
     "播放列表可以：粘贴播放列表链接后，可以把整个列表加入队列，也可以只加入你选中的视频。整频道批量下载暂未支持。",
   faq_q9: 'macOS 提示"应用已损坏" — 怎么处理？',
   faq_a9:
-    "这是 macOS Gatekeeper 在拦截未签名应用，并非真正损坏。请参见 [macOS 首次启动](#download)章节的处理步骤。",
+    '这是 macOS Gatekeeper 在拦截未签名应用，并非真正损坏。请参见["App is damaged" — Terminal 修复方法](#macos-first-launch)，其中有一行 `xattr` 命令即可清除该问题。',
   faq_q10: "下载 YouTube 视频合法吗？",
   faq_a10:
     "在大多数地区，个人私人使用一般被接受。你需要自行负责遵守 YouTube 的[服务条款](https://www.youtube.com/t/terms)及当地版权法律。",

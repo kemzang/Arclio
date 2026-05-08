@@ -508,6 +508,24 @@ const my = {
       reload: 'ပြန်ဖွင့်မည်',
       quit: 'ထွက်မည်'
     }
+  },
+  share: {
+    title: 'Arroxy မျှဝေမည်',
+    description: 'Arroxy သည် အခမဲ့ နှင့် ဖွင့်ရင်းမြစ်ဖြစ်သည်။ မျှဝေခြင်းသည် လူပိုများ ၎င်းကို ရှာဖွေတွေ့ရှိနိုင်ရန် ကူညီသည်။',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Arroxy ကို နှစ်သက်ပါသလား? အသုံးဝင်နိုင်သော သူတစ်ဦးနှင့် မျှဝေပါ။',
+      dismiss: 'Dismiss share suggestion'
+    },
+    highValueBanner: {
+      body: 'Arroxy ကို နှစ်သက်ပါသလား? အခြားသူများ ရှာဖွေတွေ့ရှိနိုင်ရန် ကူညီပါ။',
+      dismiss: 'Dismiss share suggestion'
+    }
   }
 } as const;
 

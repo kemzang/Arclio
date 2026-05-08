@@ -1,6 +1,6 @@
 import { type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Share2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { useAppStore } from '../../store/useAppStore';
@@ -12,10 +12,15 @@ const NOTICES_URL = 'https://github.com/antonio-orionus/Arroxy/blob/main/THIRD_P
 
 export function AboutDialog(): JSX.Element {
   const { t } = useTranslation();
-  const { aboutDialogOpen, setAboutDialogOpen } = useAppStore();
+  const { aboutDialogOpen, setAboutDialogOpen, openShareDialog } = useAppStore();
 
   function open(url: string): void {
     void window.appApi.shell.openExternal(url);
+  }
+
+  function handleShare(): void {
+    setAboutDialogOpen(false);
+    openShareDialog('about');
   }
 
   return (
@@ -36,6 +41,10 @@ export function AboutDialog(): JSX.Element {
           <Button type="button" variant="outline" size="sm" onClick={() => open(GITHUB_URL)} data-testid="about-link-github">
             {t('about.githubLink')}
             <ExternalLink size={12} aria-hidden />
+          </Button>
+          <Button type="button" variant="outline" size="sm" onClick={handleShare} data-testid="about-link-share">
+            {t('share.shareAction')}
+            <Share2 size={12} aria-hidden />
           </Button>
         </div>
 

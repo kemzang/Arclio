@@ -3,6 +3,8 @@ import { createRequire } from 'node:module';
 import { defineConfig, externalizeDepsPlugin, loadEnv } from 'electron-vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import Icons from 'unplugin-icons/vite';
+import type { PluginOption } from 'vite';
 
 const require = createRequire(import.meta.url);
 const { version } = require('./package.json') as { version: string };
@@ -51,7 +53,7 @@ export default defineConfig(({ mode }) => {
           '@shared': path.resolve('src/shared')
         }
       },
-      plugins: [react(), tailwindcss()]
+      plugins: [react(), tailwindcss(), Icons({ compiler: 'jsx', jsx: 'react' }) as PluginOption]
     }
   };
 });

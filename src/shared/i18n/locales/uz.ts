@@ -508,6 +508,24 @@ const uz = {
       reload: 'Yangilash',
       quit: 'Chiqish'
     }
+  },
+  share: {
+    title: 'Arroxy ni ulashing',
+    description: "Arroxy bepul va ochiq manbali. Ulashish ko'proq odamlar uni topishiga yordam beradi.",
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: "Arroxy yoqdimi? Uni foydali deb topishi mumkin bo'lgan biri bilan ulashing.",
+      dismiss: 'Ulashish taklifini yopish'
+    },
+    highValueBanner: {
+      body: 'Arroxy yoqdimi? Boshqalarga uni topishga yordam bering.',
+      dismiss: 'Ulashish taklifini yopish'
+    }
   }
 } as const;
 

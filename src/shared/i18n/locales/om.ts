@@ -507,6 +507,24 @@ const om = {
       reload: "Fe'adhu",
       quit: 'Cufii'
     }
+  },
+  share: {
+    title: 'Arroxy Qoodi',
+    description: "Arroxy bilisaa fi madda-banaadha. Qoodun namoota baay'ee argachuu ni gargaara.",
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: "Arroxy si gammachiisaa jiraa? Namaa faayidaa qabu ta'uu danda'u wajjin qoodi.",
+      dismiss: 'Yaada qooduu haqdhaabi'
+    },
+    highValueBanner: {
+      body: 'Arroxy si gammachiisaa jiraa? Namoota biroo argachuu gargaari.',
+      dismiss: 'Yaada qooduu haqdhaabi'
+    }
   }
 } as const;
 

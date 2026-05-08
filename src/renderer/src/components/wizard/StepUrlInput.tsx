@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { ArrowRight, AlertTriangle, X, Video, ListVideo, Music } from 'lucide-react';
+import { ArrowRight, AlertTriangle, Share2, X, Video, ListVideo, Music } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '../../store/useAppStore';
 import { track } from '@renderer/lib/analytics';
@@ -35,11 +35,24 @@ const COOKIES_CHROME_URL = 'https://chromewebstore.google.com/detail/get-cookies
 
 export function StepUrlInput(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl, cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings } = useAppStore();
+  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl, cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings, openShareDialog, setShareInlineCardDismissed } = useAppStore();
   const inputRef = useRef<HTMLInputElement>(null);
   const hasActiveDownloads = queue.some((i) => i.status === 'downloading');
   const [pendingClipboardUrl, setPendingClipboardUrl] = useState<string | null>(null);
 
+  const shareCardVisible = !(settings?.common?.shareInlineCardDismissed ?? false);
+  const shareCardImpressionFiredRef = useRef(false);
+  useEffect(() => {
+    if (shareCardVisible && !shareCardImpressionFiredRef.current) {
+      shareCardImpressionFiredRef.current = true;
+      track('share_inline_card_impression');
+    }
+  }, [shareCardVisible]);
+
+  function handleShareInlineCardClick(): void {
+    track('share_inline_card_clicked');
+    openShareDialog('wizard-card');
+  }
   const cookiesPath = settings?.common?.cookiesPath ?? '';
   const cookiesMode: CookiesMode = settings?.common?.cookiesMode ?? 'off';
   const cookiesBrowser = settings?.common?.cookiesBrowser;
@@ -147,6 +160,18 @@ export function StepUrlInput(): JSX.Element {
           </Button>
         </div>
       </div>
+
+      {shareCardVisible && (
+        <div className="flex items-center gap-2 rounded-md border border-[var(--border-strong)] bg-card/40 px-3 py-2" data-testid="share-inline-card">
+          <button type="button" onClick={handleShareInlineCardClick} className="flex-1 inline-flex items-center gap-2 text-start text-[13px] text-foreground hover:text-foreground/80 transition-colors" data-testid="share-inline-card-body">
+            <Share2 size={14} className="shrink-0 text-[var(--brand)]" aria-hidden />
+            <span className="flex-1">{t('share.inlineCard.body')}</span>
+          </button>
+          <button type="button" onClick={() => void setShareInlineCardDismissed()} aria-label={t('share.inlineCard.dismiss')} title={t('share.inlineCard.dismiss')} data-testid="share-inline-card-dismiss" className="inline-flex h-6 w-6 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-muted hover:text-foreground transition-colors">
+            <X size={14} />
+          </button>
+        </div>
+      )}
 
       <div className="flex flex-col gap-2" data-testid="features">
         <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.url.features.heading')}</p>

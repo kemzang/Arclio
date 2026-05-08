@@ -28,6 +28,12 @@
     "tw-animate-css",
     "tailwindcss",
     "@types/extract-zip",
-    "gray-matter"
+    "gray-matter",
+    "@iconify-json/logos",
+    "@iconify-json/simple-icons",
+    "@svgr/plugin-jsx"
+  ],
+  "ignoreUnresolved": [
+    "~icons/.*"
   ]
 }

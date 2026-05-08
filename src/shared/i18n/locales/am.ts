@@ -508,6 +508,24 @@ const am = {
       reload: 'ዳግም ጫን',
       quit: 'ዝጋ'
     }
+  },
+  share: {
+    title: 'Arroxy ያጋሩ',
+    description: 'Arroxy ነፃ እና ክፍት ምንጭ ነው። ማጋራት ብዙ ሰዎች እንዲያገኙት ይረዳቸዋል።',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Arroxy ደስ ይለዎታል? ጠቃሚ ሊሆን ከሚችልለት ሰው ጋር ያጋሩት።',
+      dismiss: 'Dismiss share suggestion'
+    },
+    highValueBanner: {
+      body: 'Arroxy ደስ ይለዎታል? ሌሎች እንዲያገኙት ይርዷቸው።',
+      dismiss: 'Dismiss share suggestion'
+    }
   }
 } as const;
 

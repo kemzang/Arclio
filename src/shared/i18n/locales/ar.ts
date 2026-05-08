@@ -508,6 +508,24 @@ const ar = {
       reload: 'إعادة التحميل',
       quit: 'الخروج'
     }
+  },
+  share: {
+    title: 'مشاركة Arroxy',
+    description: 'Arroxy مجاني ومفتوح المصدر. مشاركته تساعد المزيد من الأشخاص على اكتشافه.',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'هل تستمتع بـ Arroxy؟ شاركه مع شخص قد يجده مفيداً.',
+      dismiss: 'Dismiss share suggestion'
+    },
+    highValueBanner: {
+      body: 'هل تستمتع بـ Arroxy؟ ساعد الآخرين على اكتشافه.',
+      dismiss: 'Dismiss share suggestion'
+    }
   }
 } as const;
 

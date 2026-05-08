@@ -5,12 +5,31 @@ import { i18next, pickLanguage, isRtl } from '@shared/i18n';
 import { nextMonotonicPercent, ProgressFormatter } from './progress';
 import { progressFormatters, saveQueue, updateQueueItem } from './queueSlice';
 import type { JobScheduler } from './jobScheduler';
-import type { GetState, SetState, SystemSlice } from './types';
+import type { GetState, SetState, ShareTrigger, SystemSlice } from './types';
 import { notify } from '../lib/notify';
+import { track } from '../lib/analytics';
 
 let unbindStatus: (() => void) | null = null;
 let unbindProgress: (() => void) | null = null;
 let unbindWarmupProgress: (() => void) | null = null;
+
+const SHARE_MILESTONES: readonly number[] = [3, 25, 100];
+
+function commonPatch(get: GetState, set: SetState, patch: Partial<AppSettings['common']>): void {
+  const current = get().settings;
+  if (current) {
+    set({ settings: { ...current, common: { ...current.common, ...patch } } });
+  }
+  void window.appApi.settings.update({ common: patch }).then((result) => {
+    if (!result.ok) notify.settingsSaveFailed('share', result.error);
+    else set({ settings: result.data });
+  });
+}
+
+function openShareDialogInternal(set: SetState, trigger: ShareTrigger): void {
+  set({ shareDialogOpen: true, shareDialogTrigger: trigger });
+  track('share_dialog_opened', { via: trigger });
+}
 
 const OVERRIDE_KEY: Record<DependencyId, 'ytDlp' | 'ffmpeg' | 'ffprobe' | 'deno'> = {
   'yt-dlp': 'ytDlp',
@@ -34,6 +53,8 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
     settings: null,
     language: pickLanguage(navigator.language),
     commonPaths: undefined,
+    shareDialogOpen: false,
+    shareDialogTrigger: null,
 
     initialize: async () => {
       if (get().initialized || get().initializing) return;
@@ -58,6 +79,12 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
             lastStatus: { key: event.statusKey, params: event.params }
           });
           saveQueue(get);
+          const prevCount = get().settings?.common.successfulDownloadCount ?? 0;
+          const nextCount = prevCount + 1;
+          commonPatch(get, set, { successfulDownloadCount: nextCount });
+          if (SHARE_MILESTONES.includes(nextCount)) {
+            openShareDialogInternal(set, 'milestone');
+          }
           scheduler.notifyJobFinished();
         } else if (event.stage === 'error') {
           progressFormatters.delete(event.jobId);
@@ -323,6 +350,38 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       const result = await window.appApi.settings.update({ common: { analyticsEnabled: enabled } });
       if (!result.ok) {
         notify.settingsSaveFailed('analyticsEnabled', result.error);
+        return;
+      }
+      set({ settings: result.data });
+    },
+
+    openShareDialog: (trigger) => {
+      openShareDialogInternal(set, trigger);
+    },
+
+    closeShareDialog: () => {
+      set({ shareDialogOpen: false, shareDialogTrigger: null });
+    },
+
+    setShareInlineCardDismissed: async () => {
+      track('share_inline_card_dismissed');
+      const current = get().settings;
+      if (current) set({ settings: { ...current, common: { ...current.common, shareInlineCardDismissed: true } } });
+      const result = await window.appApi.settings.update({ common: { shareInlineCardDismissed: true } });
+      if (!result.ok) {
+        notify.settingsSaveFailed('shareInlineCardDismissed', result.error);
+        return;
+      }
+      set({ settings: result.data });
+    },
+
+    setShareHighValueBannerDismissed: async () => {
+      track('share_prompt_dismissed', { via: 'high-value-inline' });
+      const current = get().settings;
+      if (current) set({ settings: { ...current, common: { ...current.common, shareHighValueBannerDismissed: true } } });
+      const result = await window.appApi.settings.update({ common: { shareHighValueBannerDismissed: true } });
+      if (!result.ok) {
+        notify.settingsSaveFailed('shareHighValueBannerDismissed', result.error);
         return;
       }
       set({ settings: result.data });

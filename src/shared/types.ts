@@ -61,6 +61,9 @@ export interface CommonSettings {
   firstRunCompleted?: boolean;
   drawerOpen?: boolean;
   binaryOverrides?: BinaryOverrides;
+  successfulDownloadCount?: number;
+  shareInlineCardDismissed?: boolean;
+  shareHighValueBannerDismissed?: boolean;
 }
 
 export interface BinaryOverrides {

@@ -508,6 +508,24 @@ const ru = {
       reload: 'Перезагрузить',
       quit: 'Выйти'
     }
+  },
+  share: {
+    title: 'Поделиться Arroxy',
+    description: 'Arroxy — бесплатный проект с открытым кодом. Рекомендуя его, ты помогаешь другим узнать о нём.',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Нравится Arroxy? Поделись с тем, кому это может пригодиться.',
+      dismiss: 'Скрыть предложение поделиться'
+    },
+    highValueBanner: {
+      body: 'Нравится Arroxy? Помоги другим его найти.',
+      dismiss: 'Скрыть предложение поделиться'
+    }
   }
 } as const;
 

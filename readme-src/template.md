@@ -26,7 +26,6 @@
 ## {{toc_heading}}
 
 - [{{why_h2}}](#why)
-- [{{nocookies_h2}}](#no-cookies)
 - [{{features_h2}}](#features)
 - [{{dl_h2}}](#download)
 - [{{privacy_h2}}](#privacy)
@@ -51,19 +50,6 @@
 | {{why_r7}} |   ✅   |         ⚠️          |     ❌      |             ❌             |         ❌         |
 
 {{why_summary}}
-
----
-
-## <a id="no-cookies"></a>{{nocookies_h2}}
-
-{{nocookies_intro}}
-
-{{nocookies_setup}}
-
-1. {{nocookies_p1}}
-2. {{nocookies_p2}}
-
-{{nocookies_outro}}
 
 ---
 
@@ -120,65 +106,62 @@
 
 [**{{dl_grab}}**](../../releases/latest)
 
-### {{dl_pkg_h3}}
+### <a id="why-warning"></a>{{dl_warning_h3}}
 
-| {{dl_channel_col}} | {{dl_command_col}}                                                                                |
-| ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+{{dl_warning_p1}}
 
-<details>
-<summary><strong>{{dl_win_h3}}</strong></summary>
+{{dl_warning_p2}}
 
-|               | {{dl_win_col_installer}} | {{dl_win_col_portable}} |
-| ------------- | :----------------------: | :---------------------: |
-| {{dl_win_r1}} | {{dl_win_r1_installer}}  | {{dl_win_r1_portable}}  |
-| {{dl_win_r2}} | {{dl_win_r2_installer}}  | {{dl_win_r2_portable}}  |
-| {{dl_win_r3}} | {{dl_win_r3_installer}}  | {{dl_win_r3_portable}}  |
-| {{dl_win_r4}} |            ✅            |           ❌            |
-| {{dl_win_r5}} |            ✅            | {{dl_win_r5_portable}}  |
-
-{{dl_win_rec}}
-
-**{{dl_win_smartscreen_h4}}**
+### <a id="windows-first-launch"></a>{{dl_win_first_h3}}
 
 {{dl_win_smartscreen_intro}}
+
+<div align="center">
+  <img src="build/win-smartscreen-more-info.png" width="46%" alt="{{shot_smartscreen_more_alt}}" />
+  <img src="build/win-smartscreen-run-anyway.png" width="46%" alt="{{shot_smartscreen_run_alt}}" />
+</div>
 
 1. {{dl_win_smartscreen_step1}}
 2. {{dl_win_smartscreen_step2}}
 
+#### {{dl_win_defender_h4}}
+
+{{dl_win_defender_p}}
+
 > {{dl_win_smartscreen_official}}
 
-</details>
+### <a id="macos-first-launch"></a>{{dl_macos_first_h3}}
 
-<details>
-<summary><strong>{{dl_macos_h3}}</strong></summary>
+{{dl_macos_intro}}
 
-{{dl_macos_warning}}
+#### {{dl_macos_sequoia_h4}}
 
-**{{dl_macos_m1_h4}}**
+{{dl_macos_sequoia_intro}}
 
-1. {{dl_macos_step1}}
-2. {{dl_macos_step2}}
-3. {{dl_macos_step3}}
-4. {{dl_macos_step4}}
-5. {{dl_macos_step5}}
+1. {{dl_macos_sequoia_step1}}
+2. {{dl_macos_sequoia_step2}}
+3. {{dl_macos_sequoia_step3}}
+4. {{dl_macos_sequoia_step4}}
 
-{{dl_macos_after}}
+#### {{dl_macos_sonoma_h4}}
 
-**{{dl_macos_m2_h4}}**
+1. {{dl_macos_sonoma_step1}}
+2. {{dl_macos_sonoma_step2}}
+3. {{dl_macos_sonoma_step3}}
+
+#### {{dl_macos_damaged_h4}}
+
+{{dl_macos_damaged_p}}
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/Arroxy.app
 ```
 
+{{dl_macos_arch_note}}
+
 > {{dl_macos_note}}
 
-</details>
-
-<details>
-<summary><strong>{{dl_linux_h3}}</strong></summary>
+### <a id="linux-first-launch"></a>{{dl_linux_first_h3}}
 
 {{dl_linux_intro}}
 
@@ -204,12 +187,68 @@ sudo dnf install -y fuse-libs
 sudo pacman -S fuse2
 ```
 
+{{dl_linux_appimagelauncher}}
+
 {{dl_linux_flatpak_intro}}
 
 ```bash
 flatpak install --user Arroxy-*.flatpak
 flatpak run io.github.antonio_orionus.Arroxy
 ```
+
+<details>
+<summary><strong><a id="verify"></a>{{dl_verify_h3}}</strong></summary>
+
+{{dl_verify_intro}}
+
+**{{dl_verify_win_label}}**
+
+```powershell
+certutil -hashfile Arroxy-Setup-<version>.exe SHA256
+```
+
+**{{dl_verify_mac_label}}**
+
+```bash
+shasum -a 256 Arroxy-<version>-arm64.dmg
+```
+
+**{{dl_verify_linux_label}}**
+
+```bash
+sha256sum Arroxy-*.AppImage
+```
+
+{{dl_verify_vt_text}}
+
+</details>
+
+<details>
+<summary><strong>{{dl_pkg_h3}}</strong></summary>
+
+{{dl_pm_intro}}
+
+| {{dl_channel_col}} | {{dl_command_col}}                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------------- |
+| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
+| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
+| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+| Flatpak            | `flatpak install --user Arroxy-*.flatpak`                                                         |
+
+</details>
+
+<details>
+<summary><strong>{{dl_win_h3}}</strong></summary>
+
+|               | {{dl_win_col_installer}} | {{dl_win_col_portable}} |
+| ------------- | :----------------------: | :---------------------: |
+| {{dl_win_r1}} | {{dl_win_r1_installer}}  | {{dl_win_r1_portable}}  |
+| {{dl_win_r2}} | {{dl_win_r2_installer}}  | {{dl_win_r2_portable}}  |
+| {{dl_win_r3}} | {{dl_win_r3_installer}}  | {{dl_win_r3_portable}}  |
+| {{dl_win_r4}} |            ✅            |           ❌            |
+| {{dl_win_r5}} |            ✅            | {{dl_win_r5_portable}}  |
+
+{{dl_win_rec}}
 
 </details>
 

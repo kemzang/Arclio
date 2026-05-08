@@ -88,7 +88,6 @@ export const ar = {
   ai_notice: "",
   toc_heading: "المحتويات",
   why_h2: "لماذا Arroxy",
-  nocookies_h2: "لا كوكيز، لا تسجيل دخول، لا ربط بالحساب",
   features_h2: "الميزات",
   dl_h2: "التنزيل",
   privacy_h2: "الخصوصية",
@@ -105,16 +104,6 @@ export const ar = {
   why_r7: "ترجمات + SponsorBlock",
   why_summary:
     "Arroxy مبني لغرض واحد: الصق رابطاً، احصل على ملف محلي نظيف. لا حسابات، لا عروض ترويجية، لا جمع بيانات.",
-  nocookies_intro:
-    "هذا هو السبب الأكثر شيوعاً لتعطل محمّلات يوتيوب للسطح المكتبي — والسبب الرئيسي لوجود Arroxy.",
-  nocookies_setup:
-    "عندما يُحدِّث يوتيوب آليات اكتشاف البوت، تطلب معظم الأدوات تصدير كوكيز يوتيوب من متصفحك كحل بديل. ثمة مشكلتان في ذلك:",
-  nocookies_p1:
-    "تنتهي صلاحية الجلسات المُصدَّرة عادةً خلال ~30 دقيقة، مما يضطرك لإعادة التصدير باستمرار.",
-  nocookies_p2:
-    "توثيق yt-dlp نفسه [يحذّر من أن أتمتة الكوكيز قد تُعلِّم حساب Google الخاص بك](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).",
-  nocookies_outro:
-    "**Arroxy لا يطلب كوكيز أو تسجيل دخول أو أي بيانات اعتماد.** يستخدم فقط الرموز العامة التي يقدمها يوتيوب لأي متصفح. لا شيء مرتبط بهويتك على Google، لا شيء ينتهي، لا شيء يحتاج إلى تجديد.",
   feat_quality_h3: "الجودة والصيغ",
   feat_quality_1: "حتى **4K UHD (2160p)**، 1440p، 1080p، 720p، 480p، 360p",
   feat_quality_2: "**معدل إطارات عالٍ** محفوظ كما هو — 60 fps، 120 fps، HDR",
@@ -211,6 +200,67 @@ export const ar = {
   dl_linux_fuse_text: "إذا فشل التشغيل بعد ذلك، قد يكون FUSE مفقوداً:",
   dl_linux_flatpak_intro:
     "**Flatpak (بديل معزول):** نزِّل `Arroxy-*.flatpak` من صفحة الإصدار نفسها.",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "لماذا قد تظهر لك تحذيرات",
+  dl_warning_p1:
+    "Arroxy مفتوح المصدر ومرخَّص بـ MIT. إصدارات Windows وmacOS **غير موقَّعة رمزياً** — شهادات Apple Developer ID وWindows EV للتوقيع الرمزي تكلّف كل منها مئات الدولارات سنوياً، وهو ما يتحمّله المشروع المستقل من جيبه. وبدون تلك التوقيعات، سيحذّرك Windows SmartScreen وmacOS Gatekeeper عند الإطلاق الأول. تعني هذه التحذيرات *أن نظام تشغيلك لا يتعرّف على الناشر* — ولا تعني أن Arroxy برنامج خبيث.",
+  dl_warning_p2:
+    "ثلاث طرق للتحقق من Arroxy بنفسك، بترتيب متصاعد من الصرامة:\n\n- **اقرأ الكود المصدري.** كل سطر موجود على [GitHub](https://github.com/antonio-orionus/Arroxy) ويمكنك [بناؤه من المصدر](#tech).\n- **تحقق من SHA256.** طابق ملفك مع [`SHA256SUMS`](../../releases/latest) المنشور — راجع [التحقق من تنزيلك](#verify) أدناه.\n- **أجرِ فحصاً بطرف ثالث.** ارفع الملف إلى [VirusTotal](https://www.virustotal.com).",
+
+  dl_win_first_h3: "التشغيل الأول على Windows",
+  shot_smartscreen_more_alt:
+    'نافذة SmartScreen "Windows protected your PC" مع إبراز رابط "More info"',
+  shot_smartscreen_run_alt:
+    'نافذة SmartScreen بعد توسيع More info، تعرض زر "Run anyway"',
+  dl_win_defender_h4: "إذا علّم Windows Defender الملف أو أزاله",
+  dl_win_defender_p:
+    "أحياناً تُعلِّم خوارزميات Defender التجريبية مثبّتات NSIS غير الموقَّعة وNSIS Electron المحمولة باعتبارها مشبوهة. إذا عزل Defender ملف `Arroxy-Setup-*.exe` أو `Arroxy-Portable-*.exe`، فاستعده من **Windows Security → Virus & threat protection → Protection history**، ثم أضف ملف Arroxy التنفيذي كعنصر مسموح به ضمن **Manage settings → Add or remove exclusions**. كما هو الحال مع SmartScreen، السبب هو غياب توقيع الناشر لا وجود برنامج خبيث.",
+
+  dl_macos_first_h3: "التشغيل الأول على macOS",
+  dl_macos_intro:
+    "Arroxy غير موقَّع رمزياً لـ macOS بعد، لذا سيحظر Gatekeeper الإطلاق الأول. يعتمد المسار الدقيق للسماح به على إصدار macOS الخاص بك — Sequoia 15 شدّد طريقة التجاوز القديمة عبر النقر الأيمن → Open.",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 والأحدث (الحالي)",
+  dl_macos_sequoia_intro:
+    "على Sequoia 15 والأحدث، النقر الأيمن → Open لم يعد يتجاوز Gatekeeper للكثير من التطبيقات المحجوزة. استخدم لوحة System Settings بدلاً من ذلك:",
+  dl_macos_sequoia_step1:
+    "اسحب `Arroxy.app` من DMG المثبَّت إلى `/Applications`.",
+  dl_macos_sequoia_step2:
+    "انقر مزدوجاً على Arroxy. تظهر نافذة الحظر — انقر **Done** (لا تنقر *Move to Trash*).",
+  dl_macos_sequoia_step3:
+    'افتح **System Settings → Privacy & Security** ومرِّر إلى قسم **Security**. ستجد *"Arroxy was blocked to protect your Mac"* (أو رسالة مشابهة).',
+  dl_macos_sequoia_step4:
+    "انقر **Open Anyway**، أكِّد بكلمة المرور أو Touch ID، ثم أعِد تشغيل Arroxy من `/Applications`.",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 وما قبله",
+  dl_macos_sonoma_step1:
+    "اسحب `Arroxy.app` من DMG المثبَّت إلى `/Applications`.",
+  dl_macos_sonoma_step2:
+    "انقر بزر الأيمن (أو Control-click) على `Arroxy.app` في `/Applications` واختر **Open**.",
+  dl_macos_sonoma_step3:
+    "نافذة التحذير تحتوي الآن على زر **Open** — انقره وأكِّد. يفتح Arroxy بشكل طبيعي ولن يظهر التحذير مجدداً.",
+  dl_macos_damaged_h4:
+    '"App is damaged" أو حظر Gatekeeper المستمر — إصلاح عبر Terminal',
+  dl_macos_damaged_p:
+    'إذا قال macOS *"Arroxy is damaged and can\'t be opened"*، أو لم تُزِل أيٌّ من الخطوات أعلاه الحظر، فسمة الحجر على DMG هي السبب (بعض المتصفحات وسلوك macOS الخاص بالنقل يُعيِّنانها). احذفها من التطبيق المثبَّت:',
+  dl_macos_arch_note:
+    "**Apple Silicon مقابل Intel:** على Mac من سلسلة M (M1 / M2 / M3 / M4)، نزِّل DMG الإصدار `arm64`. على أجهزة Intel، نزِّل DMG الإصدار `x64`. تشغيل الإصدار الخاطئ يعمل عبر Rosetta لكنه أبطأ بشكل ملحوظ.",
+
+  dl_linux_first_h3: "التشغيل الأول على Linux",
+  dl_linux_appimagelauncher:
+    "**تكامل سطح المكتب الاختياري:** ثبِّت [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) مرة واحدة، وأي AppImage تنقر عليه نقراً مزدوجاً سيُسجَّل تلقائياً في قائمة تطبيقاتك — دون الحاجة إلى إنشاء ملف `.desktop` يدوياً.",
+
+  dl_verify_h3: "التحقق من تنزيلك (SHA256)",
+  dl_verify_intro:
+    "يُنشر مع كل إصدار ملف `SHA256SUMS` إلى جانب الملفات الثنائية. للتحقق من عدم تلف تنزيلك أو العبث به أثناء النقل، احسب هاش ملفك محلياً وطابقه مع السطر المقابل في `SHA256SUMS`. افتح صفحة الإصدار الأخير → **Assets** → نزِّل `SHA256SUMS`.",
+  dl_verify_win_label: "Windows (PowerShell أو Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "تريد فحصاً لبرامج الخبيثة من طرف ثالث؟ ارفع الملف على [VirusTotal](https://www.virustotal.com). بضع إشارات هيوريستية عامة من محركات صغيرة أمر طبيعي لتطبيقات Electron غير الموقَّعة؛ أما الكشف الواسع من محركات رئيسية فيكون مدعاة قلق حقيقية.",
+
+  dl_pm_intro:
+    "تستخدم مدير حزم بالفعل؟ يمكنك تجاوز مسار التنزيل اليدوي.",
+
   privacy_p1:
     "تُجلب التنزيلات مباشرة عبر [yt-dlp](https://github.com/yt-dlp/yt-dlp) من يوتيوب إلى المجلد الذي تختاره — لا شيء يمر عبر خادم طرف ثالث. سجل المشاهدة والتنزيل والروابط ومحتوى الملفات تبقى على جهازك.",
   privacy_p2:
@@ -224,10 +274,10 @@ export const ar = {
   faq_a3: "نعم. اختر *صوت فقط* من قائمة الصيغ ثم اختر MP3 أو M4A/AAC أو Opus أو WAV.",
   faq_q4: "هل أحتاج إلى حساب يوتيوب أو كوكيز؟",
   faq_a4:
-    "لا. يستخدم Arroxy فقط الرموز العامة التي يقدمها يوتيوب لأي متصفح. لا كوكيز، لا تسجيل دخول، لا بيانات اعتماد مُخزَّنة. انظر [لا كوكيز، لا تسجيل دخول، لا ربط بالحساب](#no-cookies) لمعرفة أهمية ذلك.",
+    "افتراضياً، لا — يعمل Arroxy دون حساب YouTube أو تسجيل دخول أو تصدير كوكيز. يتوفر دعم اختياري للكوكيز في الإعدادات المتقدمة (Cookies source: file or browser) للمحتوى الذي يتطلب مصادقة، مثل الفيديوهات المقيَّدة بالعمر أو المخصَّصة للأعضاء فقط. وهو معطَّل افتراضياً. إذا فعّلته، فإن ويكي yt-dlp يشير إلى أن [الأتمتة المعتمدة على الكوكيز قد تُعلِّم حساب Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)؛ في هذه الحالة يكون الحساب البديل المؤقت الخيار الأكثر أماناً.",
   faq_q5: "هل سيستمر في العمل عند تغيير يوتيوب لشيء ما؟",
   faq_a5:
-    "طبقتان من الصمود: يتحدث yt-dlp خلال ساعات من تغييرات يوتيوب، ولا يعتمد Arroxy على كوكيز تنتهي صلاحيتها كل ~30 دقيقة. هذا يجعله أكثر استقراراً بشكل ملحوظ من الأدوات التي تعتمد على جلسات المتصفح المُصدَّرة.",
+    "يُحدَّث yt-dlp تلقائياً عند الإطلاق، ويُصدر Arroxy إصلاحات بسرعة عندما يُغيِّر YouTube شيئاً ما. وإن واجهت مشكلة، يتوفر دعم اختياري للكوكيز في الإعدادات المتقدمة كحل احتياطي.",
   faq_q6: "ما اللغات المتاحة في Arroxy؟",
   faq_a6:
     "إحدى وعشرون لغة، جاهزة للاستخدام: English وEspañol (الإسبانية) وDeutsch (الألمانية) وFrançais (الفرنسية) و日本語 (اليابانية) و中文 (الصينية) وРусский (الروسية) وУкраїнська (الأوكرانية) وहिन्दी (الهندية) وAfaan Oromoo وKiswahili وO'zbekcha (الأوزبكية) وTiếng Việt (الفيتنامية) وአማርኛ (الأمهرية) والعربية واردو (الأردية) وپښتو (البشتونية) وবাংলা (البنغالية) وမြန်မာဘာသာ (البورمية) وΕλληνικά (اليونانية) وСрпски (الصربية). يكتشف Arroxy لغة نظام تشغيلك تلقائياً عند الإطلاق الأول، ويمكنك التبديل في أي وقت من محدد اللغة في شريط الأدوات. تقع ملفات الترجمة كأوبجكتات TypeScript بسيطة في src/shared/i18n/locales/ — افتح طلب سحب على GitHub للمساهمة.",
@@ -239,7 +289,7 @@ export const ar = {
     "نعم، بالنسبة لقوائم التشغيل: الصق رابط قائمة التشغيل ثم ضع القائمة كاملة أو الفيديوهات التي تختارها فقط في قائمة الانتظار. تنزيل القنوات الكاملة دفعة واحدة غير مدعوم بعد.",
   faq_q9: "يقول macOS إن \"التطبيق تالف\" — ماذا أفعل؟",
   faq_a9:
-    "هذا Gatekeeper في macOS يحظر تطبيقاً غير موقَّع، وليس تلفاً فعلياً. انظر قسم [التشغيل لأول مرة على macOS](#download) للحل.",
+    'هذا Gatekeeper في macOS يحظر تطبيقاً غير موقَّع، وليس تلفاً فعلياً. راجع ["App is damaged" — إصلاح عبر Terminal](#macos-first-launch) لأمر `xattr` بسطر واحد يُزيل الحظر.',
   faq_q10: "هل تنزيل فيديوهات يوتيوب قانوني؟",
   faq_a10:
     "للاستخدام الشخصي الخاص، يُقبَل هذا عموماً في معظم الولايات القضائية. أنت مسؤول عن الامتثال لـ [شروط خدمة](https://www.youtube.com/t/terms) يوتيوب وقوانين حقوق النشر في بلدك.",

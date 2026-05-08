@@ -507,6 +507,24 @@ const sw = {
       reload: 'Pakia upya',
       quit: 'Toka'
     }
+  },
+  share: {
+    title: 'Shiriki Arroxy',
+    description: 'Arroxy ni ya bure na chanzo wazi. Kushiriki husaidia watu wengi zaidi kuigundua.',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Unafurahia Arroxy? Shiriki na mtu anayeweza kuifaidika.',
+      dismiss: 'Funga pendekezo la kushiriki'
+    },
+    highValueBanner: {
+      body: 'Unafurahia Arroxy? Saidia wengine kuigundua.',
+      dismiss: 'Funga pendekezo la kushiriki'
+    }
   }
 } as const;
 

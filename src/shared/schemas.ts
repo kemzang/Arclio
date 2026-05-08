@@ -268,6 +268,9 @@ const commonSettingsPatchSchema = z.object({
   analyticsEnabled: z.boolean().optional(),
   firstRunCompleted: z.boolean().optional(),
   drawerOpen: z.boolean().optional(),
+  successfulDownloadCount: z.number().int().nonnegative().optional(),
+  shareInlineCardDismissed: z.boolean().optional(),
+  shareHighValueBannerDismissed: z.boolean().optional(),
   binaryOverrides: z
     .object({
       ytDlp: z.string().min(1).optional(),

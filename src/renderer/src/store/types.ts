@@ -137,6 +137,8 @@ export interface UiSlice {
   setAboutDialogOpen: (open: boolean) => void;
 }
 
+export type ShareTrigger = 'footer' | 'titlebar' | 'about' | 'wizard-card' | 'milestone' | 'high-value-inline';
+
 export interface SystemSlice {
   initialized: boolean;
   initializing: boolean;
@@ -147,6 +149,8 @@ export interface SystemSlice {
   settings: AppSettings | null;
   language: SupportedLang;
   commonPaths: AppSettings['common']['commonPaths'];
+  shareDialogOpen: boolean;
+  shareDialogTrigger: ShareTrigger | null;
   initialize: () => Promise<void>;
   repairWarmup: () => Promise<void>;
   cancelWarmup: () => Promise<void>;
@@ -162,6 +166,10 @@ export interface SystemSlice {
   setClipboardWatchEnabled: (enabled: boolean) => Promise<void>;
   setCloseBehavior: (value: 'tray' | 'quit') => Promise<void>;
   setAnalyticsEnabled: (enabled: boolean) => Promise<void>;
+  openShareDialog: (trigger: ShareTrigger) => void;
+  closeShareDialog: () => void;
+  setShareInlineCardDismissed: () => Promise<void>;
+  setShareHighValueBannerDismissed: () => Promise<void>;
 }
 
 export type AppState = WizardSlice & QueueSlice & UiSlice & SystemSlice;

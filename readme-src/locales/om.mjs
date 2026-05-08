@@ -88,7 +88,6 @@ export const om = {
   ai_notice: "",
   toc_heading: "Qabiyyee",
   why_h2: "Maaliif Arroxy",
-  nocookies_h2: "Kuukkiin hin jiru, seensuu hin jiru, akkaawuntii waliin hin hidhu",
   features_h2: "Amaloota",
   dl_h2: "Buusi",
   privacy_h2: "Icciitii",
@@ -105,16 +104,6 @@ export const om = {
   why_r7: "Subtitle + SponsorBlock",
   why_summary:
     "Arroxy waan tokko qofaaf ijaarame: URL maxxansi, faayila naannoo qulqulluu argadhu. Akkaawuntiin hin jiru, gurgurtaa dabalaataa hin jiru, odeeffannoo walitti qabuu hin jiru.",
-  nocookies_intro:
-    "Kun sababii beekamaa hundaa buufataan YouTube desktop caccabaniif — fi sababii guddaa Arroxy jiruuf.",
-  nocookies_setup:
-    "YouTube ittisa bot isaa yoo haaromse, meeshaalee hedduun kuukkii biraawzaraa YouTube kee akka wantaatti akka ergu si gaafatu. Rakkoon lama:",
-  nocookies_p1:
-    "Seshinoota ergan tipikaalaan daqiiqaa ~30 keessatti dhumuu, kanaaf yeroo hedduu erga erga.",
-  nocookies_p2:
-    "Dookumentii yt-dlp mataa isaa [automatic kuukkii irratti hundaa'u akkaawuntii Google kee akka mallatteessu danda'u jedha](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).",
-  nocookies_outro:
-    "**Arroxy kuukkii, seensuu, ykn odeeffannoo biraa kamiyyuu gaafachuu hin qabu.** Tokkicha token ummataa YouTube biraawzara kamiiyyuuf tajaajiltu fayyadama. Eenyummaa Google keetiin walitti hin hidhamu, dhumuu hin qabu, jijjiiruu hin barbaachisu.",
   feat_quality_h3: "Qulqullina & formatoota",
   feat_quality_1: "Hanga **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Frame rate ol'aanaa** akka jiru eegama — 60 fps, 120 fps, HDR",
@@ -211,6 +200,67 @@ export const om = {
   dl_linux_fuse_text: "Eegaluun yoo ammallee fashale, FUSE dhabu danda'a:",
   dl_linux_flatpak_intro:
     "**Flatpak (filannoo sandboxed):** `Arroxy-*.flatpak` gara fuula baasii sanuma irraa buusi.",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "Maaliif akeekkachiisa arguu dandeessa",
+  dl_warning_p1:
+    "Arroxy madda banaa fi hayyama MIT qaba. Ijaarsonni Windows fi macOS **mallattoo hin qaban** — ragaaleen Apple Developer ID fi Windows EV mallattoo koodii kafaltii waggaatti dhibba doolara baay'ee waan gaafataniif, pirojektiin self-funded baasii kana mataa isaarraa kafala. Mallattoo sana malee, Windows SmartScreen fi macOS Gatekeeper yeroo jalqabaatti si akeekachisuu. Akeekkachiisni kun *siistamni kee maxxantiisa hin beeku* jechuudha — Arroxy malwaare dha jechuuf miti.",
+  dl_warning_p2:
+    "Haala sadii Arroxy ofii keetiin mirkaneessuuf, kutaa cimina irraa cimina gaditti:\n\n- **Koodii madda dubbisi.** Sarara hundi [GitHub](https://github.com/antonio-orionus/Arroxy) irratti jira fi [madda irraa ijaaruuf](#tech) ni danda'ama.\n- **SHA256 mirkaneessi.** Faayila kee [`SHA256SUMS`](../../releases/latest) maxxanfame walitti bira qabbi — armaan gadii [Buufannoo kee mirkaneessi](#verify) ilaali.\n- **Sakattaa miilaafi baasii.** Faayila [VirusTotal](https://www.virustotal.com) irratti fe'i.",
+
+  dl_win_first_h3: "Windows yeroo jalqabaa eegaluu",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted',
+  shot_smartscreen_run_alt:
+    'SmartScreen dialog after expanding More info, showing the "Run anyway" button',
+  dl_win_defender_h4: "Windows Defender faayila mallattaa itti kaa'e ykn haqe yoo ta'e",
+  dl_win_defender_p:
+    "Heuristics Defender sometimes flag unsigned NSIS installers fi Electron portables akka shakkisiisoo. Defender `Arroxy-Setup-*.exe` ykn `Arroxy-Portable-*.exe` karantinii keessa kaa'e yoo ta'e, **Windows Security → Virus & threat protection → Protection history** irraa deebi'i, erga Arroxy executable **Manage settings → Add or remove exclusions** jalatti wantoota hayyamamaniitti dabalii. SmartScreen wajjin akkuma, kasaara mallattoo maxxantii dhabuu irraa dhufa, malwaare argamuuurraa miti.",
+
+  dl_macos_first_h3: "macOS yeroo jalqabaa eegaluu",
+  dl_macos_intro:
+    "Arroxy ammallee macOS'f mallattoo hin qabdu, kanaafuu Gatekeeper yeroo jalqabaa ni dhorka. Hayyama kennuuf karaan sirrii macOS version keetiin murteeffama — Sequoia 15 mirga-cuqaasuu → banuu darbuu dulloomaa cime.",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 fi booda (ammaa)",
+  dl_macos_sequoia_intro:
+    "Sequoia 15 fi haaraa irraatti, mirga-cuqaasuu → banuu apps heddu quarantine jiran Gatekeeper hin darbu. System Settings panel fayyadami:",
+  dl_macos_sequoia_step1:
+    "`Arroxy.app` DMG ramadame irraa `/Applications` tti harkisi.",
+  dl_macos_sequoia_step2:
+    "Arroxy lama-cuqaasi. Diyaalogiin dhorkaaf ni mul'ata — **Done** cuqaasi (*Move to Trash* hin cuqasin).",
+  dl_macos_sequoia_step3:
+    '**System Settings → Privacy & Security** bani fi kutaa **Security** hamma gaditti deemi. *"Arroxy was blocked to protect your Mac"* (ykn ergaa itti dhiyaatu) ni argita.',
+  dl_macos_sequoia_step4:
+    "**Open Anyway** cuqaasi, jecha darbii keetin ykn Touch ID waliin mirkaneessi, erga Arroxy `/Applications` irraa deebi'ii eegali.",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 fi dura",
+  dl_macos_sonoma_step1:
+    "`Arroxy.app` DMG ramadame irraa `/Applications` tti harkisi.",
+  dl_macos_sonoma_step2:
+    "`Arroxy.app` `/Applications` keessatti mirga-cuqaasi (ykn Control-cuqaasi) fi **Open** filadhu.",
+  dl_macos_sonoma_step3:
+    "Diyaalogiin akeekkachiisaa amma **Open** button qaba — cuqaasii mirkaneessi. Arroxy salphaan ni banama fi akeekkachiisni ammas hin mul'atu.",
+  dl_macos_damaged_h4:
+    '"App is damaged" ykn Gatekeeper dhorku cimaa — Terminal dursaa',
+  dl_macos_damaged_p:
+    'macOS *"Arroxy is damaged and can\'t be opened"* jedhe yoo ta\'e, ykn tarkaanfiiwwan armaan olii hanga tokkollee dhorkuu hin baasnee, qabiyyeen quarantine DMG irratti sababii (biraawzarootni muraasaa fi macOS mataa isaa translocation behavior waan qindaa\'aniif). App fayyadu irraa balleessi:',
+  dl_macos_arch_note:
+    "**Apple Silicon vs Intel:** Mac M-series (M1 / M2 / M3 / M4) irratti, `arm64` DMG buusi. Intel Macs irratti, `x64` DMG buusi. Ijaarsaa dogoggora oofuu Rosetta fayyadamuudhaan hojjeta garuu ifa gadi bu'aa.",
+
+  dl_linux_first_h3: "Linux yeroo jalqabaa eegaluu",
+  dl_linux_appimagelauncher:
+    "**Walitti makoo desktop filannoo:** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) yeroo tokkoo fayyadi, AppImage lama-cuqaaste kamiyyuu launcher menu keessatti of-dursuudhaan galmeeffama — faayila `.desktop` harkaan barbaachisu hin jiru.",
+
+  dl_verify_h3: "Buufannoo kee mirkaneessi (SHA256)",
+  dl_verify_intro:
+    "Baasii hundi faayila `SHA256SUMS` binary waliin maxxansa. Buufannoon kee darbuu ykn dabsuu hin qabne mirkaneessuuf, faayila naannoo keessatti hash godhi fi sarara `SHA256SUMS` walitti bira qabbi. Fuula baasii haaraa bani → **Assets** → `SHA256SUMS` buusi.",
+  dl_verify_win_label: "Windows (PowerShell or Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "Sakattaa malwaare miilaafi baasii barbaaddaa? Faayila [VirusTotal](https://www.virustotal.com) irratti fe'i. Mallattoo heuristic yeroo muraasaa injinii xiqqaa irraa arguu Electron apps mallattoo hin qabne bira darbaa; injinii gurguddoo irraa arguu bal'aa rakkoo dhugaa ta'a.",
+
+  dl_pm_intro:
+    "Durumaa package manager fayyadamtaa? Karaa buufannoo harkaa darbuu dandeessa.",
+
   privacy_p1:
     "Buufannoonni kallattiin [yt-dlp](https://github.com/yt-dlp/yt-dlp) fayyadamuudhaan YouTube irraa foldera filatteetti darbamu — miila-seerri hunduu sarara servera sadarkaa-sadaffaa tokko keessa darbuu hin qabu. Seenaa ilaaluu, seenaa buufannoo, URLs, fi qabiyyee faayilaa meeshaa kee irratti hafu.",
   privacy_p2:
@@ -224,10 +274,10 @@ export const om = {
   faq_a3: "Eeyyee. Menu format keessaa *audio qofa* filadhu, booda MP3, M4A/AAC, Opus yookaan WAV filadhu.",
   faq_q4: "Akkaawuntii YouTube ykn kuukkii barbaachisaa?",
   faq_a4:
-    "Lakki. Arroxy tokkicha token ummataa YouTube biraawzara kamiiyyuuf tajaajiltu fayyadama. Kuukkii hin jiru, seensuu hin jiru, odeeffannoo kuufame hin jiru. [Kuukkii hin jiru, seensuu hin jiru, akkaawuntii waliin hin hidhu](#no-cookies) ilaali kuni maaliif barbaachisuu ibsuuf.",
+    "Durtii, lakki — Arroxy akkaawuntii YouTube, seensuu, ykn ergaa kuukkii malee hojeeta. Deeggarsi kuukkii filannoof Qindoomina Olaanaa keessa jira (Madda Kuukkii: faayila ykn biraawzara) qabiyyee mirkaneessuu barbaadu, kan akka viidiyoowwan umurii daangeffaman ykn miseensoota qofaaf, fayyadamuuf. Durtii dhaabbatee jira. Yoo dandeessistee, dookumentii yt-dlp [automatic kuukkii irratti hundaa'u akkaawuntii Google mallatteessisuu danda'a](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) jedha; akkaawuntiin gatamuu danda'u haala kanatti filannoo nageenya qabeessa dha.",
   faq_q5: "YouTube waan tokko jijjiirte itti fufaa hojeta?",
   faq_a5:
-    "Ciminni lamaatu jira: yt-dlp saatii keessatti jijjirama YouTube haaromsa, Arroxys kuukkii daqiiqaa ~30 keessatti dhumuu irratti hin hirkattu. Kun meeshaalee naannoo biraawzaraa erge irratti hirkatan caala qajeelina beekamaa godha.",
+    "yt-dlp yeroo eegaluu irratti ofumaan haaromfama, fi Arroxy yeroo YouTube waan tokko jijjiirtu ariitiidhaan sirreessa erga. Yoo rakkoo argattan, deeggarsi kuukkii filannoof Qindoomina Olaanaa keessa akka filannoo deebii argama.",
   faq_q6: "Arroxy afaan meeqa keessatti argamu?",
   faq_a6:
     "Digdamatokkoo, yeroo jalqabaatii: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), fi Српски (Serbian). Arroxy afaan mana-hojii kee sirna hojjetaa irratti yeroo jalqabaatti ofumaa argata, yeroo kamiiyyuu toolbar irraa filataa afaan jijjiiruu dandeessa. Hiikaaleen objiektii TypeScript duwwaa akka src/shared/i18n/locales/ keessa jiran — gargaaruf GitHub irratti PR bani.",
@@ -239,7 +289,7 @@ export const om = {
     "Eeyyee, playlist'f: URL playlist maxxansi, booda tarree guutuu yookaan viidiyoowwan ati filatte qofa queue keessa galchi. Channel guutuu batch'n buusuun ammaaf hin deggaramu.",
   faq_q9: 'macOS "app miidhaameera" jedha — maal godhaa?',
   faq_a9:
-    "Sun macOS Gatekeeper app mallattoo hin qabne dhorku, midhaa dhugaa miti. Sirreessaaf kutaa [yeroo jalqabaa macOS irratti eegaluu](#download) ilaali.",
+    'Sun macOS Gatekeeper app mallattoo hin qabne dhorku, midhaa dhugaa miti. ["App is damaged" — Terminal dursaa](#macos-first-launch) ilaali, ajaja sarara tokkoo `xattr` kan sirreessuu argachuuf.',
   faq_q10: "Viidiyoo YouTube buusuu seeraa dha?",
   faq_a10:
     "Fayyadama dhuunfaa, dhoksaa qofaaf yeroo hedduun mootummoota heddu keessatti fudhatama. [Dambii Tajaajilaaf](https://www.youtube.com/t/terms) YouTube fi seeraa mirga-qopheessaa naannoo keetti hordofuuf ati itti gaafatamtummaa qabda.",

@@ -88,7 +88,6 @@ export const vi = {
   ai_notice: "",
   toc_heading: "Mục lục",
   why_h2: "Tại sao chọn Arroxy",
-  nocookies_h2: "Không cookie, không đăng nhập, không liên kết tài khoản",
   features_h2: "Tính năng",
   dl_h2: "Tải xuống",
   privacy_h2: "Quyền riêng tư",
@@ -105,16 +104,6 @@ export const vi = {
   why_r7: "Phụ đề + SponsorBlock",
   why_summary:
     "Arroxy được xây dựng cho một mục đích duy nhất: dán URL, nhận file cục bộ sạch. Không tài khoản, không upsell, không thu thập dữ liệu.",
-  nocookies_intro:
-    "Đây là lý do phổ biến nhất khiến các trình tải video YouTube trên máy tính ngừng hoạt động — và cũng là lý do chính Arroxy ra đời.",
-  nocookies_setup:
-    "Khi YouTube cập nhật hệ thống phát hiện bot, hầu hết các công cụ sẽ yêu cầu bạn xuất cookie YouTube từ trình duyệt như một cách khắc phục. Hai vấn đề với cách đó:",
-  nocookies_p1:
-    "Phiên đã xuất thường hết hạn sau ~30 phút, nên bạn phải xuất lại liên tục.",
-  nocookies_p2:
-    "Tài liệu của chính yt-dlp [cảnh báo rằng tự động hóa dựa trên cookie có thể gắn cờ tài khoản Google của bạn](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).",
-  nocookies_outro:
-    "**Arroxy không bao giờ yêu cầu cookie, đăng nhập hay bất kỳ thông tin xác thực nào.** Nó chỉ sử dụng các token công khai mà YouTube cung cấp cho bất kỳ trình duyệt nào. Không có gì liên kết với danh tính Google của bạn, không có gì hết hạn, không có gì cần thay thế.",
   feat_quality_h3: "Chất lượng & định dạng",
   feat_quality_1: "Lên tới **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Tốc độ khung hình cao** được giữ nguyên — 60 fps, 120 fps, HDR",
@@ -211,6 +200,67 @@ export const vi = {
   dl_linux_fuse_text: "Nếu vẫn không khởi động được, bạn có thể thiếu FUSE:",
   dl_linux_flatpak_intro:
     "**Flatpak (lựa chọn thay thế sandbox):** tải `Arroxy-*.flatpak` từ cùng trang phát hành.",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "Tại sao bạn có thể thấy cảnh báo",
+  dl_warning_p1:
+    "Arroxy là phần mềm mã nguồn mở theo giấy phép MIT. Các bản build trên Windows và macOS **không được ký mã** — chứng chỉ Apple Developer ID và Windows EV code-signing mỗi loại tốn hàng trăm đô la mỗi năm, một dự án độc lập phải tự chi trả. Không có những chữ ký đó, Windows SmartScreen và macOS Gatekeeper sẽ cảnh báo khi khởi động lần đầu. Các cảnh báo có nghĩa là *hệ điều hành của bạn không nhận ra nhà phát hành* — không có nghĩa là Arroxy là phần mềm độc hại.",
+  dl_warning_p2:
+    "Ba cách để tự xác minh Arroxy, theo mức độ nghiêm ngặt tăng dần:\n\n- **Đọc mã nguồn.** Mọi dòng đều có trên [GitHub](https://github.com/antonio-orionus/Arroxy) và bạn có thể [tự build từ nguồn](#tech).\n- **Kiểm tra SHA256.** So sánh file của bạn với [`SHA256SUMS`](../../releases/latest) đã công bố — xem [Xác minh tải xuống](#verify) bên dưới.\n- **Chạy quét của bên thứ ba.** Tải file lên [VirusTotal](https://www.virustotal.com).",
+
+  dl_win_first_h3: "Lần đầu khởi động trên Windows",
+  shot_smartscreen_more_alt:
+    'Hộp thoại SmartScreen "Windows protected your PC" với liên kết "More info" được làm nổi bật',
+  shot_smartscreen_run_alt:
+    'Hộp thoại SmartScreen sau khi mở rộng More info, hiển thị nút "Run anyway"',
+  dl_win_defender_h4: "Nếu Windows Defender gắn cờ hoặc xóa file",
+  dl_win_defender_p:
+    "Heuristic của Defender đôi khi gắn cờ các trình cài đặt NSIS không được ký và Electron portable là đáng ngờ. Nếu Defender cách ly `Arroxy-Setup-*.exe` hoặc `Arroxy-Portable-*.exe`, hãy khôi phục nó từ **Windows Security → Virus & threat protection → Protection history**, sau đó thêm file thực thi Arroxy làm mục được phép trong **Manage settings → Add or remove exclusions**. Cũng giống SmartScreen, nguyên nhân là thiếu chữ ký nhà phát hành, không phải phần mềm độc hại bị phát hiện.",
+
+  dl_macos_first_h3: "Lần đầu khởi động trên macOS",
+  dl_macos_intro:
+    "Arroxy chưa được ký mã cho macOS, vì vậy Gatekeeper sẽ chặn lần khởi động đầu tiên. Cách cho phép chính xác phụ thuộc vào phiên bản macOS của bạn — Sequoia 15 đã siết chặt cách bỏ qua cũ bằng chuột phải → Open.",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 trở lên (hiện tại)",
+  dl_macos_sequoia_intro:
+    "Trên Sequoia 15 và mới hơn, chuột phải → Open không còn bỏ qua Gatekeeper cho nhiều ứng dụng bị cách ly. Thay vào đó, hãy dùng bảng System Settings:",
+  dl_macos_sequoia_step1:
+    "Kéo `Arroxy.app` từ DMG đã gắn vào `/Applications`.",
+  dl_macos_sequoia_step2:
+    "Nhấp đúp vào Arroxy. Hộp thoại chặn xuất hiện — nhấp **Done** (đừng nhấp *Move to Trash*).",
+  dl_macos_sequoia_step3:
+    'Mở **System Settings → Privacy & Security** và cuộn đến phần **Security**. Bạn sẽ thấy *"Arroxy was blocked to protect your Mac"* (hoặc thông báo gần giống).',
+  dl_macos_sequoia_step4:
+    "Nhấp **Open Anyway**, xác nhận bằng mật khẩu hoặc Touch ID, sau đó khởi động lại Arroxy từ `/Applications`.",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 và cũ hơn",
+  dl_macos_sonoma_step1:
+    "Kéo `Arroxy.app` từ DMG đã gắn vào `/Applications`.",
+  dl_macos_sonoma_step2:
+    "Nhấp chuột phải (hoặc Control-click) vào `Arroxy.app` trong `/Applications` và chọn **Open**.",
+  dl_macos_sonoma_step3:
+    "Hộp thoại cảnh báo bây giờ có nút **Open** — nhấp vào đó và xác nhận. Arroxy mở bình thường và cảnh báo sẽ không xuất hiện lại nữa.",
+  dl_macos_damaged_h4:
+    '"App is damaged" hoặc Gatekeeper chặn liên tục — sửa bằng Terminal',
+  dl_macos_damaged_p:
+    'Nếu macOS báo *"Arroxy is damaged and can\'t be opened"*, hoặc không có bước nào ở trên giải quyết được, thuộc tính cách ly trên DMG là nguyên nhân (một số trình duyệt và hành vi translocation của macOS tự đặt nó). Xóa nó khỏi ứng dụng đã cài đặt:',
+  dl_macos_arch_note:
+    "**Apple Silicon vs Intel:** trên Mac dòng M (M1 / M2 / M3 / M4), hãy tải DMG `arm64`. Trên Mac Intel, tải DMG `x64`. Chạy bản build sai vẫn hoạt động qua Rosetta nhưng sẽ chậm hơn đáng kể.",
+
+  dl_linux_first_h3: "Lần đầu khởi động trên Linux",
+  dl_linux_appimagelauncher:
+    "**Tích hợp desktop tùy chọn:** cài [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) một lần, và mọi AppImage bạn nhấp đúp sẽ tự động được đăng ký vào menu launcher — không cần tạo file `.desktop` thủ công.",
+
+  dl_verify_h3: "Xác minh tải xuống của bạn (SHA256)",
+  dl_verify_intro:
+    "Mỗi bản phát hành đều công bố file `SHA256SUMS` cùng với các file nhị phân. Để kiểm tra tải xuống của bạn không bị hỏng hoặc bị giả mạo trong quá trình truyền, hãy băm file cục bộ và so sánh với dòng trong `SHA256SUMS`. Mở trang phát hành mới nhất → **Assets** → tải `SHA256SUMS`.",
+  dl_verify_win_label: "Windows (PowerShell hoặc Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "Muốn quét phần mềm độc hại bên thứ ba? Tải file lên [VirusTotal](https://www.virustotal.com). Một số cờ heuristic chung từ các engine nhỏ là bình thường với ứng dụng Electron không được ký; phát hiện rộng rãi từ các engine lớn mới là mối lo ngại thực sự.",
+
+  dl_pm_intro:
+    "Đã dùng trình quản lý gói? Bạn có thể bỏ qua đường tải thủ công.",
+
   privacy_p1:
     "Tải xuống được lấy trực tiếp qua [yt-dlp](https://github.com/yt-dlp/yt-dlp) từ YouTube đến thư mục bạn chọn — không có gì đi qua máy chủ bên thứ ba. Lịch sử xem, lịch sử tải xuống, URL và nội dung file vẫn ở trên thiết bị của bạn.",
   privacy_p2:
@@ -224,10 +274,10 @@ export const vi = {
   faq_a3: "Có. Chọn *chỉ âm thanh* trong menu định dạng rồi chọn MP3, M4A/AAC, Opus hoặc WAV.",
   faq_q4: "Tôi có cần tài khoản YouTube hay cookie không?",
   faq_a4:
-    "Không. Arroxy chỉ sử dụng các token công khai mà YouTube cung cấp cho bất kỳ trình duyệt nào. Không cookie, không đăng nhập, không lưu thông tin xác thực. Xem [Không cookie, không đăng nhập, không liên kết tài khoản](#no-cookies) để hiểu tại sao điều này quan trọng.",
+    "Mặc định là không — Arroxy hoạt động mà không cần tài khoản YouTube, đăng nhập hay xuất cookie. Hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao (Cookies source: file or browser) cho nội dung yêu cầu xác thực, chẳng hạn như video giới hạn độ tuổi hoặc dành riêng cho thành viên. Mặc định tính năng này tắt. Nếu bạn bật nó, wiki của yt-dlp lưu ý rằng [tự động hóa dựa trên cookie có thể gắn cờ tài khoản Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); trong trường hợp đó, tài khoản dùng một lần là lựa chọn an toàn hơn.",
   faq_q5: "Ứng dụng có tiếp tục hoạt động khi YouTube thay đổi gì đó không?",
   faq_a5:
-    "Hai lớp bảo vệ: yt-dlp cập nhật trong vòng vài giờ sau khi YouTube thay đổi, và Arroxy không phụ thuộc vào cookie hết hạn sau ~30 phút. Điều này khiến nó ổn định hơn đáng kể so với các công cụ phụ thuộc vào phiên trình duyệt đã xuất.",
+    "yt-dlp được cập nhật tự động khi khởi động, và Arroxy nhanh chóng phát hành các bản sửa lỗi khi YouTube thay đổi điều gì đó. Nếu bạn vẫn gặp sự cố, hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao như một phương án dự phòng.",
   faq_q6: "Arroxy có sẵn bằng những ngôn ngữ nào?",
   faq_a6:
     "Hai mươi mốt ngôn ngữ, có sẵn ngay khi cài đặt: English, Español (Tây Ban Nha), Deutsch (Đức), Français (Pháp), 日本語 (Nhật), 中文 (Trung Quốc), Русский (Nga), Українська (Ukraine), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Việt Nam), አማርኛ (Amharic), العربية (Ả Rập), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Miến Điện), Ελληνικά (Hy Lạp) và Српски (Serbia). Arroxy tự động phát hiện ngôn ngữ hệ điều hành của bạn khi khởi động lần đầu và bạn có thể chuyển đổi bất cứ lúc nào từ bộ chọn ngôn ngữ trên thanh công cụ. Các bản dịch được lưu dưới dạng đối tượng TypeScript thuần trong src/shared/i18n/locales/ — mở PR trên GitHub để đóng góp.",
@@ -239,7 +289,7 @@ export const vi = {
     "Có, với playlist: dán URL playlist rồi xếp hàng toàn bộ danh sách hoặc chỉ những video bạn chọn. Tải hàng loạt cả kênh vẫn chưa được hỗ trợ.",
   faq_q9: 'macOS báo "ứng dụng bị hỏng" — tôi phải làm gì?',
   faq_a9:
-    "Đó là macOS Gatekeeper chặn ứng dụng chưa được ký, không phải file thực sự bị hỏng. Xem phần [lần đầu khởi động trên macOS](#download) để biết cách xử lý.",
+    'Đó là macOS Gatekeeper chặn ứng dụng chưa được ký, không phải file thực sự bị hỏng. Xem ["App is damaged" — sửa bằng Terminal](#macos-first-launch) để biết lệnh `xattr` một dòng giải quyết vấn đề.',
   faq_q10: "Tải video YouTube có hợp pháp không?",
   faq_a10:
     "Đối với mục đích sử dụng cá nhân, riêng tư thì nhìn chung được chấp nhận ở hầu hết các khu vực pháp lý. Bạn có trách nhiệm tuân thủ [Điều khoản dịch vụ](https://www.youtube.com/t/terms) của YouTube và luật bản quyền tại địa phương của bạn.",

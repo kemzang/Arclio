@@ -508,6 +508,24 @@ const sr = {
       reload: 'Поново учитај',
       quit: 'Затвори'
     }
+  },
+  share: {
+    title: 'Подели Arroxy',
+    description: 'Arroxy је бесплатан и отвореног кода. Дељењем помажеш другима да га открију.',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Свиђа ти се Arroxy? Подели га с неким коме би могао бити користан.',
+      dismiss: 'Одбаци предлог за дељење'
+    },
+    highValueBanner: {
+      body: 'Свиђа ти се Arroxy? Помози другима да га открију.',
+      dismiss: 'Одбаци предлог за дељење'
+    }
   }
 } as const;
 

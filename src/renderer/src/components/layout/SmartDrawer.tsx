@@ -1,12 +1,14 @@
 import type { JSX } from 'react';
-import { useEffect, useMemo, useState } from 'react';
-import { ChevronDown, Hourglass, Inbox, Pause, Trash2, X } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronDown, Hourglass, Inbox, Pause, Share2, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { isHighValueDownload } from '@shared/queueItem';
 import { useAppStore, formatStatus } from '../../store/useAppStore';
 import { QueueItemCard } from '../queue/QueueItemCard';
 import { QueueTipNudge } from '../queue/QueueTipNudge';
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
+import { track } from '../../lib/analytics';
 
 export function SmartDrawer(): JSX.Element {
   const { t } = useTranslation();
@@ -19,6 +21,9 @@ export function SmartDrawer(): JSX.Element {
   const pauseAll = useAppStore((s) => s.pauseAll);
   const cancelAll = useAppStore((s) => s.cancelAll);
   const interJobSleepEndsAt = useAppStore((s) => s.interJobSleepEndsAt);
+  const shareHighValueBannerDismissed = useAppStore((s) => s.settings?.common.shareHighValueBannerDismissed ?? false);
+  const openShareDialog = useAppStore((s) => s.openShareDialog);
+  const setShareHighValueBannerDismissed = useAppStore((s) => s.setShareHighValueBannerDismissed);
 
   // Tick every 250ms while sleep window active so the countdown ticks down
   // without re-rendering the whole drawer at 60fps.
@@ -49,6 +54,16 @@ export function SmartDrawer(): JSX.Element {
 
   const aggregatePercent = useMemo(() => (activeItems.length === 0 ? 0 : activeItems.reduce((sum, i) => sum + i.progressPercent, 0) / activeItems.length), [activeItems]);
   const headerProgress = activeCount === 1 ? activeItems[0].progressPercent : aggregatePercent;
+
+  const hasHighValueCompletion = useMemo(() => queue.some(isHighValueDownload), [queue]);
+  const showShareBanner = hasHighValueCompletion && !shareHighValueBannerDismissed;
+  const bannerImpressionFiredRef = useRef(false);
+  useEffect(() => {
+    if (showShareBanner && !bannerImpressionFiredRef.current) {
+      bannerImpressionFiredRef.current = true;
+      track('share_prompt_impression', { via: 'high-value-inline' });
+    }
+  }, [showShareBanner]);
 
   let headerSummary: string | null = null;
   if (activeCount === 1) {
@@ -153,6 +168,17 @@ export function SmartDrawer(): JSX.Element {
           <div className="px-4 py-1.5 text-[11px] font-mono text-[var(--color-status-paused)] bg-[var(--color-status-paused-glow)]/10 border-b border-border flex items-center gap-1.5" data-testid="inter-job-sleep-banner">
             <Hourglass size={11} className="animate-pulse shrink-0" />
             <span>{t('queue.interJobSleep', { count: sleepRemainingSec })}</span>
+          </div>
+        )}
+        {showShareBanner && (
+          <div className="bg-muted/40 border-b border-border flex items-stretch" data-testid="share-high-value-banner">
+            <button type="button" onClick={() => openShareDialog('high-value-inline')} className="flex-1 flex items-center gap-2 px-3 py-1.5 text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors text-left cursor-pointer" data-testid="share-high-value-banner-action">
+              <Share2 size={11} className="shrink-0 text-[var(--brand)]" />
+              <span className="flex-1 truncate">{t('share.highValueBanner.body')}</span>
+            </button>
+            <button type="button" aria-label={t('share.highValueBanner.dismiss')} className="text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors w-7 inline-flex items-center justify-center cursor-pointer" onClick={() => void setShareHighValueBannerDismissed()} data-testid="share-high-value-banner-dismiss">
+              <X size={11} />
+            </button>
           </div>
         )}
         <ScrollArea className="h-64">

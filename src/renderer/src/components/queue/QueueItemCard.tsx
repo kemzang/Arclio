@@ -1,4 +1,4 @@
-import type { JSX, ReactNode } from 'react';
+import { type JSX, type ReactNode } from 'react';
 import { AlertTriangle, Captions, Download, ExternalLink, Film, FolderInput, FolderOpen, Hourglass, Layers, Music, Pause, Play, RotateCcw, Tags, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { QueueItem, QueueItemStatus, StatusKey } from '@shared/types';

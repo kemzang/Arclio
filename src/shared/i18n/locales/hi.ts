@@ -508,6 +508,24 @@ const hi = {
       reload: 'रीलोड करें',
       quit: 'बाहर निकलें'
     }
+  },
+  share: {
+    title: 'Arroxy शेयर करें',
+    description: 'Arroxy मुफ़्त और ओपन-सोर्स है। शेयर करने से और लोग इसे खोज सकते हैं।',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Arroxy पसंद आ रहा है? किसी ऐसे व्यक्ति के साथ शेयर करें जिसे यह उपयोगी लग सकता है।',
+      dismiss: 'Dismiss share suggestion'
+    },
+    highValueBanner: {
+      body: 'Arroxy पसंद आ रहा है? दूसरों को भी इसे खोजने में मदद करें।',
+      dismiss: 'Dismiss share suggestion'
+    }
   }
 } as const;
 

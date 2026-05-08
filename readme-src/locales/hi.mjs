@@ -89,7 +89,6 @@ export const hi = {
     "> 🌐 यह AI-सहायता प्राप्त अनुवाद है। [अंग्रेज़ी README](README.md) सत्य का स्रोत है। कोई गलती दिखी? [PR का स्वागत है](../../pulls)।",
   toc_heading: "विषय-सूची",
   why_h2: "Arroxy क्यों?",
-  nocookies_h2: "कोई कुकीज़ नहीं, कोई लॉगिन नहीं, कोई अकाउंट लिंक नहीं",
   features_h2: "फ़ीचर",
   dl_h2: "डाउनलोड",
   privacy_h2: "प्राइवेसी",
@@ -106,16 +105,6 @@ export const hi = {
   why_r7: "सबटाइटल + SponsorBlock",
   why_summary:
     "Arroxy एक काम के लिए बना है: URL पेस्ट करें, एक साफ़ लोकल फ़ाइल पाएँ। कोई अकाउंट नहीं, कोई अपसेल नहीं, कोई डेटा कलेक्शन नहीं।",
-  nocookies_intro:
-    "यही सबसे आम कारण है कि डेस्कटॉप YouTube डाउनलोडर टूट जाते हैं — और मुख्य कारण कि Arroxy मौजूद है।",
-  nocookies_setup:
-    "जब YouTube अपना बॉट डिटेक्शन अपडेट करता है, तो ज़्यादातर टूल आपको वर्कअराउंड के रूप में अपने ब्राउज़र की YouTube कुकीज़ एक्सपोर्ट करने को कहते हैं। इसमें दो समस्याएँ हैं:",
-  nocookies_p1:
-    "एक्सपोर्ट किए गए सेशन आमतौर पर ~30 मिनट में एक्सपायर हो जाते हैं, इसलिए आपको बार-बार एक्सपोर्ट करना पड़ता है।",
-  nocookies_p2:
-    "yt-dlp की अपनी डॉक्यूमेंटेशन [चेतावनी देती है कि कुकी-आधारित ऑटोमेशन आपके Google अकाउंट को फ़्लैग कर सकता है](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)।",
-  nocookies_outro:
-    "**Arroxy कभी कुकीज़, लॉगिन या कोई क्रेडेंशियल नहीं माँगता।** यह केवल वही पब्लिक टोकन इस्तेमाल करता है जो YouTube किसी भी ब्राउज़र को देता है। आपकी Google पहचान से कुछ भी नहीं जुड़ा, कुछ एक्सपायर नहीं होता, कुछ रोटेट नहीं करना।",
   feat_quality_h3: "क्वालिटी और फ़ॉर्मैट",
   feat_quality_1: "**4K UHD (2160p)** तक, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**हाई फ़्रेम रेट** जैसा है वैसा — 60 fps, 120 fps, HDR",
@@ -212,6 +201,67 @@ export const hi = {
   dl_linux_fuse_text: "अगर फिर भी नहीं चलता, शायद FUSE नहीं है:",
   dl_linux_flatpak_intro:
     "**Flatpak (सैंडबॉक्स विकल्प):** उसी रिलीज़ पेज से `Arroxy-*.flatpak` डाउनलोड करें।",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "चेतावनी क्यों दिख सकती है",
+  dl_warning_p1:
+    "Arroxy ओपन-सोर्स और MIT-लाइसेंस्ड है। Windows और macOS बिल्ड **कोड-साइन्ड नहीं हैं** — Apple Developer ID और Windows EV कोड-साइनिंग सर्टिफ़िकेट में हर साल सैकड़ों डॉलर का खर्च होता है, जो एक इंडी प्रोजेक्ट अपनी जेब से भरता है। उन सिग्नेचर के बिना Windows SmartScreen और macOS Gatekeeper पहले लॉन्च पर चेतावनी देंगे। चेतावनी का मतलब है *आपका OS प्रकाशक को नहीं पहचानता* — इसका मतलब यह नहीं कि Arroxy मैलवेयर है।",
+  dl_warning_p2:
+    "Arroxy को ख़ुद वेरीफ़ाई करने के तीन तरीक़े, बढ़ती कठोरता के क्रम में:\n\n- **सोर्स पढ़ें।** हर लाइन [GitHub](https://github.com/antonio-orionus/Arroxy) पर है और आप [सोर्स से बिल्ड कर सकते हैं](#tech)।\n- **SHA256 जाँचें।** अपनी फ़ाइल को प्रकाशित [`SHA256SUMS`](../../releases/latest) से मिलाएँ — नीचे [अपना डाउनलोड वेरीफ़ाई करें](#verify) देखें।\n- **थर्ड-पार्टी स्कैन चलाएँ।** फ़ाइल को [VirusTotal](https://www.virustotal.com) पर अपलोड करें।",
+
+  dl_win_first_h3: "Windows पहला लॉन्च",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" डायलॉग जिसमें "More info" लिंक हाइलाइट है',
+  shot_smartscreen_run_alt:
+    'More info खुलने के बाद SmartScreen डायलॉग, जिसमें "Run anyway" बटन दिख रहा है',
+  dl_win_defender_h4: "अगर Windows Defender फ़ाइल फ़्लैग करे या हटाए",
+  dl_win_defender_p:
+    "Defender की heuristics कभी-कभी बिना साइन के NSIS इंस्टॉलर और Electron portables को संदिग्ध मान लेती है। अगर Defender `Arroxy-Setup-*.exe` या `Arroxy-Portable-*.exe` को quarantine करे, तो **Windows Security → Virus & threat protection → Protection history** से रिस्टोर करें, फिर Arroxy एक्ज़ीक्यूटेबल को **Manage settings → Add or remove exclusions** के तहत अनुमत आइटम के रूप में जोड़ें। SmartScreen की तरह ही, ट्रिगर ग़ायब publisher signature है, न कि कोई मैलवेयर।",
+
+  dl_macos_first_h3: "macOS पहला लॉन्च",
+  dl_macos_intro:
+    "Arroxy अभी macOS के लिए कोड-साइन्ड नहीं है, इसलिए Gatekeeper पहला लॉन्च ब्लॉक करेगा। इसे अनुमति देने का सटीक तरीक़ा आपके macOS वर्शन पर निर्भर करता है — Sequoia 15 ने पुराना राइट-क्लिक → Open बाईपास कड़ा कर दिया।",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 और बाद में (मौजूदा)",
+  dl_macos_sequoia_intro:
+    "Sequoia 15 और नए में, राइट-क्लिक → Open अब कई quarantined ऐप के लिए Gatekeeper बाईपास नहीं करता। बजाय इसके System Settings पैनल का इस्तेमाल करें:",
+  dl_macos_sequoia_step1:
+    "माउंट किए DMG से `Arroxy.app` को `/Applications` में खींचें।",
+  dl_macos_sequoia_step2:
+    "Arroxy को डबल-क्लिक करें। ब्लॉक डायलॉग आएगा — **Done** क्लिक करें (*Move to Trash* न क्लिक करें)।",
+  dl_macos_sequoia_step3:
+    '**System Settings → Privacy & Security** खोलें और **Security** सेक्शन तक स्क्रॉल करें। दिखेगा *"Arroxy was blocked to protect your Mac"* (या इससे मिलता-जुलता संदेश)।',
+  dl_macos_sequoia_step4:
+    "**Open Anyway** क्लिक करें, अपने पासवर्ड या Touch ID से पुष्टि करें, फिर `/Applications` से Arroxy दोबारा लॉन्च करें।",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 और पहले",
+  dl_macos_sonoma_step1:
+    "माउंट किए DMG से `Arroxy.app` को `/Applications` में खींचें।",
+  dl_macos_sonoma_step2:
+    "`/Applications` में `Arroxy.app` पर राइट-क्लिक (या Control-क्लिक) करें और **Open** चुनें।",
+  dl_macos_sonoma_step3:
+    "चेतावनी डायलॉग में अब **Open** बटन है — उसे क्लिक करें और पुष्टि करें। Arroxy सामान्य रूप से खुलेगा और चेतावनी फिर कभी नहीं आएगी।",
+  dl_macos_damaged_h4:
+    '"App is damaged" या लगातार Gatekeeper ब्लॉक — Terminal फ़िक्स',
+  dl_macos_damaged_p:
+    'अगर macOS कहे *"Arroxy is damaged and can\'t be opened"*, या ऊपर के किसी भी क़दम से ब्लॉक न हटे, तो DMG पर quarantine attribute कारण है (कुछ ब्राउज़र और macOS का ख़ुद का translocation behavior इसे सेट करता है)। इंस्टॉल की गई ऐप से इसे हटाएँ:',
+  dl_macos_arch_note:
+    "**Apple Silicon बनाम Intel:** M-series Mac (M1 / M2 / M3 / M4) पर `arm64` DMG डाउनलोड करें। Intel Mac पर `x64` DMG। ग़लत बिल्ड Rosetta से भी काम करेगा लेकिन ध्यान देने योग्य रूप से धीमा होगा।",
+
+  dl_linux_first_h3: "Linux पहला लॉन्च",
+  dl_linux_appimagelauncher:
+    "**वैकल्पिक डेस्कटॉप इंटिग्रेशन:** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) एक बार इंस्टॉल करें, और जो भी AppImage डबल-क्लिक करें वह अपने-आप आपके launcher menu में दर्ज हो जाएगा — कोई मैन्युअल `.desktop` फ़ाइल नहीं बनानी।",
+
+  dl_verify_h3: "अपना डाउनलोड वेरीफ़ाई करें (SHA256)",
+  dl_verify_intro:
+    "हर रिलीज़ बाइनरी के साथ `SHA256SUMS` फ़ाइल प्रकाशित करता है। यह जाँचने के लिए कि आपका डाउनलोड ट्रांज़िट में ख़राब या छेड़छाड़ नहीं हुआ, फ़ाइल को लोकल हैश करें और `SHA256SUMS` की लाइन से मिलाएँ। नवीनतम रिलीज़ पेज खोलें → **Assets** → `SHA256SUMS` डाउनलोड करें।",
+  dl_verify_win_label: "Windows (PowerShell या Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "थर्ड-पार्टी मैलवेयर स्कैन चाहते हैं? [VirusTotal](https://www.virustotal.com) पर फ़ाइल अपलोड करें। छोटे इंजनों से कुछ generic-heuristic फ़्लैग बिना साइन Electron ऐप के लिए सामान्य हैं; बड़े इंजनों से व्यापक detection असली चिंता का कारण होगा।",
+
+  dl_pm_intro:
+    "पहले से कोई पैकेज मैनेजर इस्तेमाल करते हैं? मैन्युअल डाउनलोड पाथ छोड़ सकते हैं।",
+
   privacy_p1:
     "डाउनलोड सीधे [yt-dlp](https://github.com/yt-dlp/yt-dlp) के ज़रिए YouTube से आपके चुने हुए फ़ोल्डर में फ़ेच होते हैं — किसी थर्ड-पार्टी सर्वर से नहीं गुज़रते। देखने की हिस्ट्री, डाउनलोड हिस्ट्री, URLs और फ़ाइल कंटेंट आपके डिवाइस पर रहते हैं।",
   privacy_p2:
@@ -225,10 +275,10 @@ export const hi = {
   faq_a3: "हाँ। format menu में *सिर्फ ऑडियो* चुनें और फिर MP3, M4A/AAC, Opus या WAV चुनें।",
   faq_q4: "क्या मुझे YouTube अकाउंट या कुकीज़ चाहिए?",
   faq_a4:
-    "नहीं। Arroxy केवल वही पब्लिक टोकन इस्तेमाल करता है जो YouTube किसी भी ब्राउज़र को देता है। कोई कुकीज़ नहीं, कोई लॉगिन नहीं, कोई क्रेडेंशियल स्टोर नहीं। [कोई कुकीज़ नहीं, कोई लॉगिन नहीं, कोई अकाउंट लिंक नहीं](#no-cookies) देखें कि यह क्यों मायने रखता है।",
+    "डिफ़ॉल्ट रूप से, नहीं — Arroxy YouTube अकाउंट, लॉगिन या कुकी एक्सपोर्ट के बिना काम करता है। ऐसी सामग्री के लिए जो प्रमाणीकरण की माँग करती है — जैसे आयु-प्रतिबंधित या केवल-सदस्यों वाले वीडियो — एडवांस्ड सेटिंग्स में वैकल्पिक कुकी सपोर्ट उपलब्ध है (Cookies source: file or browser)। यह डिफ़ॉल्ट रूप से बंद है। अगर आप इसे चालू करते हैं, तो yt-dlp की wiki बताती है कि [कुकी-आधारित ऑटोमेशन एक Google अकाउंट को फ़्लैग कर सकता है](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); उस स्थिति में एक throwaway अकाउंट सुरक्षित विकल्प है।",
   faq_q5: "जब YouTube कुछ बदले तो क्या यह काम करता रहेगा?",
   faq_a5:
-    "रिज़िलियेंस की दो परतें हैं: yt-dlp YouTube के बदलावों के घंटों के भीतर अपडेट होता है, और Arroxy उन कुकीज़ पर निर्भर नहीं है जो हर ~30 मिनट में एक्सपायर होती हैं। यह इसे ब्राउज़र सेशन एक्सपोर्ट पर निर्भर टूल्स से काफ़ी ज़्यादा स्थिर बनाता है।",
+    "yt-dlp लॉन्च पर अपने आप अपडेट हो जाता है, और जब YouTube कुछ बदलता है तो Arroxy तुरंत फ़िक्स जारी कर देता है। अगर आपको कभी कोई समस्या आए, तो एडवांस्ड सेटिंग्स में फ़ॉलबैक के रूप में वैकल्पिक कुकी सपोर्ट उपलब्ध है।",
   faq_q6: "Arroxy किन भाषाओं में उपलब्ध है?",
   faq_a6:
     "इक्कीस, बॉक्स से बाहर: English, Español (स्पेनिश), Deutsch (जर्मन), Français (फ़्रेंच), 日本語 (जापानी), 中文 (चीनी), Русский (रूसी), Українська (यूक्रेनी), हिन्दी, Afaan Oromoo (ओरोमो), Kiswahili (स्वाहिली), O'zbekcha (उज़्बेक), Tiếng Việt (वियतनामी), አማርኛ (अम्हारिक), العربية (अरबी), اردو (उर्दू), پښتو (पश्तो), বাংলা (बंगाली), မြန်မာဘာသာ (बर्मी), Ελληνικά (यूनानी) और Српски (सर्बियाई)। Arroxy पहले लॉन्च पर आपके ऑपरेटिंग सिस्टम की भाषा अपने आप पहचानता है, और आप टूलबार में भाषा चुनने वाले से कभी भी बदल सकते हैं। लोकेल फ़ाइलें src/shared/i18n/locales/ में सादे TypeScript ऑब्जेक्ट्स हैं — योगदान के लिए GitHub पर एक PR खोलें।",
@@ -240,7 +290,7 @@ export const hi = {
     "हाँ, playlists के लिए: playlist URL पेस्ट करें, फिर पूरी सूची या सिर्फ चुने हुए वीडियो queue करें. पूरे channel की batch downloads अभी supported नहीं हैं.",
   faq_q9: 'macOS कहता है "ऐप ख़राब है" — क्या करूँ?',
   faq_a9:
-    "यह macOS Gatekeeper बिना साइन की हुई ऐप को ब्लॉक कर रहा है, असली नुकसान नहीं है। फ़िक्स के लिए [macOS पर पहली बार लॉन्च](#download) सेक्शन देखें।",
+    'यह macOS Gatekeeper बिना साइन की ऐप को ब्लॉक कर रहा है, असली नुकसान नहीं। ["App is damaged" — Terminal fix](#macos-first-launch) देखें जहाँ एक लाइन का `xattr` कमांड इसे ठीक करता है।',
   faq_q10: "क्या YouTube वीडियो डाउनलोड करना क़ानूनी है?",
   faq_a10:
     "ज़्यादातर अधिकार-क्षेत्रों में पर्सनल, प्राइवेट इस्तेमाल के लिए यह आम तौर पर स्वीकार्य है। YouTube की [Terms of Service](https://www.youtube.com/t/terms) और अपने स्थानीय कॉपीराइट क़ानूनों का पालन करना आपकी ज़िम्मेदारी है।",

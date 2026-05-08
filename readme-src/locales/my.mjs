@@ -88,7 +88,6 @@ export const my = {
   ai_notice: "",
   toc_heading: "မာတိကာ",
   why_h2: "Arroxy ဘာကြောင့်",
-  nocookies_h2: "Cookie မပါ၊ login မပါ၊ account ချိတ်ဆက်မှုမပါ",
   features_h2: "လုပ်ဆောင်ချက်များ",
   dl_h2: "ဒေါင်းလုဒ်",
   privacy_h2: "ကိုယ်ရေးကိုယ်တာ",
@@ -105,16 +104,6 @@ export const my = {
   why_r7: "Subtitles + SponsorBlock",
   why_summary:
     "Arroxy ကို တစ်ခုတည်းသောရည်ရွယ်ချက်ဖြင့် တည်ဆောက်ထားသည်: URL ကို paste လုပ်ပြီး ကောင်းမွန်သောသော local file ကိုရရှိပါ။ Account မပါ၊ upsell မပါ၊ data ကောက်ခံမှုမပါ။",
-  nocookies_intro:
-    "ဤသည်မှာ desktop YouTube downloader များ ချွတ်ယွင်းရခြင်း၏ အဖြစ်များဆုံးအကြောင်းရင်းဖြစ်ပြီး Arroxy တည်ရှိရသည့် အဓိကအကြောင်းရင်းလည်းဖြစ်သည်။",
-  nocookies_setup:
-    "YouTube က bot detection ကို အပ်ဒိတ်လုပ်သည့်အခါ tool အများစုသည် သင့်ဘရောက်ဇာ၏ YouTube cookie များကို workaround အဖြစ် export လုပ်ရန် ပြောကြသည်။ ၎င်းနှင့်ပတ်သက်သော ပြဿနာနှစ်ရပ်ရှိသည်:",
-  nocookies_p1:
-    "Export ထားသော sessions များသည် ပုံမှန်အားဖြင့် ~30 မိနစ်အတွင်း သက်တမ်းကုန်ဆုံးသောကြောင့် အမြဲ re-export လုပ်နေရသည်။",
-  nocookies_p2:
-    "yt-dlp ၏ ကိုယ်ပိုင်စာတမ်းများသည် [cookie-based automation သည် သင့် Google account ကို flag လုပ်နိုင်ကြောင်း သတိပေးထားသည်](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)။",
-  nocookies_outro:
-    "**Arroxy သည် cookie၊ login သို့မဟုတ် မည်သည့် credential ကိုမျှ တောင်းဆိုခြင်းမရှိပါ။** ၎င်းသည် YouTube က မည်သည့်ဘရောက်ဇာကိုမဆို ပေးသော public tokens များကိုသာ အသုံးပြုသည်။ သင့် Google identity နှင့် ချိတ်ဆက်မှုမပါ၊ သက်တမ်းကုန်ဆုံးမည့်အရာမပါ၊ rotate လုပ်ရမည့်အရာမပါ။",
   feat_quality_h3: "အရည်အသွေးနှင့် format များ",
   feat_quality_1: "**4K UHD (2160p)** အထိ၊ 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**High frame rate** ကို မူရင်းအတိုင်း ထိန်းသိမ်း — 60 fps, 120 fps, HDR",
@@ -211,6 +200,67 @@ export const my = {
   dl_linux_fuse_text: "Launch မအောင်မြင်သေးလျှင် FUSE ပျောက်ဆုံးနေနိုင်သည်:",
   dl_linux_flatpak_intro:
     "**Flatpak (sandboxed alternative):** တူညီသော release page မှ `Arroxy-*.flatpak` ကို download ဆင်းပါ။",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "သတိပေးချက် ဘာကြောင့်မြင်ရနိုင်သနည်း",
+  dl_warning_p1:
+    "Arroxy သည် open-source ဖြစ်ပြီး MIT-licensed ဖြစ်သည်။ Windows နှင့် macOS builds များသည် **code-sign မလုပ်ထားပါ** — Apple Developer ID နှင့် Windows EV code-signing certificates တို့သည် တစ်နှစ်လျှင် ဒေါ်လာ ရာနှင့်ချီ ကုန်ကျပြီး indie project တစ်ခုအတွက် ကိုယ်တိုင်ကျခံရသည်။ ထိုလက်မှတ်များမပါဘဲ Windows SmartScreen နှင့် macOS Gatekeeper တို့သည် ပထမဆုံး launch တွင် သတိပေးလိမ့်မည်။ သတိပေးချက်များ၏ အဓိပ္ပာယ်မှာ *သင့် OS က publisher ကို မသိသောကြောင့်ဖြစ်ပြီး* Arroxy malware ဖြစ်ကြောင်း မဆိုလိုပါ။",
+  dl_warning_p2:
+    "Arroxy ကိုယ်တိုင် စစ်ဆေးရန် နည်းလမ်းသုံးမျိုး၊ တဆင့်ပြင်းထန်လာသောစီစဉ်မှုဖြင့်:\n\n- **Source ကိုဖတ်ပါ။** မျဉ်းတိုင်းသည် [GitHub](https://github.com/antonio-orionus/Arroxy) တွင်ရှိပြီး [source မှ build](#tech) လုပ်နိုင်သည်။\n- **SHA256 စစ်ဆေးပါ။** သင့်ဖိုင်ကို ထုတ်ဝေထားသော [`SHA256SUMS`](../../releases/latest) နှင့် ကိုက်ညီမှုစစ်ဆေးပါ — အောက်တွင် [သင့်ဒေါင်းလုဒ်ကို အတည်ပြုပါ](#verify) ကိုကြည့်ပါ။\n- **Third-party scan ပြုလုပ်ပါ။** ဖိုင်ကို [VirusTotal](https://www.virustotal.com) တွင် upload ပြုလုပ်ပါ။",
+
+  dl_win_first_h3: "Windows ပထမဆုံး launch",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" dialog တွင် "More info" link ကိုထင်ရှားအောင်ပြထားသည်',
+  shot_smartscreen_run_alt:
+    'More info ချဲ့ပြီးနောက် SmartScreen dialog တွင် "Run anyway" ခလုတ်ပေါ်လာသည်',
+  dl_win_defender_h4: "Windows Defender သည် ဖိုင်ကို flag လုပ်ခြင်း သို့မဟုတ် ဖယ်ရှားပါက",
+  dl_win_defender_p:
+    "Defender heuristics သည် တစ်ခါတစ်ရံ unsigned NSIS installers နှင့် Electron portables ကို သံသယဖြစ်ဖွယ်ဟု flag လုပ်တတ်သည်။ Defender က `Arroxy-Setup-*.exe` သို့မဟုတ် `Arroxy-Portable-*.exe` ကို quarantine ထည့်ပါက **Windows Security → Virus & threat protection → Protection history** မှ ပြန်ယူပြီး Arroxy executable ကို **Manage settings → Add or remove exclusions** အောက်တွင် ခွင့်ပြုထားသောအရာအဖြစ် ထည့်သွင်းပါ။ SmartScreen ကဲ့သို့ပင် trigger သည် ပျောက်ဆုံးသော publisher signature ဖြစ်ပြီး malware တွေ့ရှိမှုမဟုတ်ပါ။",
+
+  dl_macos_first_h3: "macOS ပထမဆုံး launch",
+  dl_macos_intro:
+    "Arroxy သည် macOS အတွက် code-sign မလုပ်ရသေးသောကြောင့် Gatekeeper သည် ပထမဆုံး launch ကို ပိတ်ဆို့လိမ့်မည်။ ၎င်းကို ခွင့်ပြုရန် တိကျသောနည်းလမ်းသည် သင့် macOS ဗားရှင်းပေါ် မူတည်သည် — Sequoia 15 သည် right-click → Open bypass ဟောင်းကို တင်းကျပ်လာသည်။",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 နှင့် နောက်ပိုင်း (လက်ရှိ)",
+  dl_macos_sequoia_intro:
+    "Sequoia 15 နှင့် နောက်ပိုင်းတွင် right-click → Open သည် quarantine ထည့်ထားသော apps များစွာအတွက် Gatekeeper ကို ကျော်ဖြတ်၍မရတော့ပါ။ ယင်းအစား System Settings panel ကို အသုံးပြုပါ:",
+  dl_macos_sequoia_step1:
+    "တပ်ဆင်ထားသော DMG မှ `Arroxy.app` ကို `/Applications` သို့ ဆွဲထည့်ပါ။",
+  dl_macos_sequoia_step2:
+    "Arroxy ကို double-click နှိပ်ပါ။ ပိတ်ဆို့မှု dialog ပေါ်လာသည် — **Done** ကိုနှိပ်ပါ (*Move to Trash* ကိုမနှိပ်ပါနှင့်)။",
+  dl_macos_sequoia_step3:
+    '**System Settings → Privacy & Security** ကိုဖွင့်ပြီး **Security** section သို့ scroll ဆင်းပါ။ *"Arroxy was blocked to protect your Mac"* (သို့မဟုတ် ၎င်းနှင့်ဆင်တူသော message) မြင်ရပါမည်။',
+  dl_macos_sequoia_step4:
+    "**Open Anyway** ကိုနှိပ်ပြီး သင့် password သို့မဟုတ် Touch ID ဖြင့် အတည်ပြုကာ `/Applications` မှ Arroxy ကို ပြန်လည်ဖွင့်ပါ။",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 နှင့် အစောပိုင်း",
+  dl_macos_sonoma_step1:
+    "တပ်ဆင်ထားသော DMG မှ `Arroxy.app` ကို `/Applications` သို့ ဆွဲထည့်ပါ။",
+  dl_macos_sonoma_step2:
+    "`/Applications` ထဲရှိ `Arroxy.app` ကို right-click (သို့မဟုတ် Control-click) နှိပ်ပြီး **Open** ကိုရွေးပါ။",
+  dl_macos_sonoma_step3:
+    "သတိပေးမှု dialog တွင် **Open** ခလုတ်ပေါ်လာသည် — ၎င်းကိုနှိပ်ပြီး အတည်ပြုပါ။ Arroxy ပုံမှန်ဖွင့်ပြီး သတိပေးချက်သည် နောက်ထပ်မပေါ်တော့ပါ။",
+  dl_macos_damaged_h4:
+    '"App is damaged" သို့မဟုတ် ဆက်တိုက် Gatekeeper ပိတ်ဆို့မှု — Terminal ဖြေရှင်းနည်း',
+  dl_macos_damaged_p:
+    'macOS က *"Arroxy is damaged and can\'t be opened"* ဟုဆိုပါက သို့မဟုတ် အထက်ပါ အဆင့်များထဲမှ တစ်ခုမျှ ပိတ်ဆို့မှုကို မဖယ်ရှားနိုင်ပါက DMG ပေါ်ရှိ quarantine attribute ဖြစ်သည် (အချို့သော browsers နှင့် macOS ကိုယ်တိုင်၏ translocation behavior က ၎င်းကို သတ်မှတ်ထားသည်)။ ထည့်သွင်းထားသော app မှ ၎င်းကိုဖယ်ရှားပါ:',
+  dl_macos_arch_note:
+    "**Apple Silicon နှင့် Intel:** M-series Mac (M1 / M2 / M3 / M4) ပေါ်တွင် `arm64` DMG ကိုဒေါင်းလုဒ်ဆွဲပါ။ Intel Mac ပေါ်တွင် `x64` DMG ကိုဒေါင်းလုဒ်ဆွဲပါ။ မမှန်ကန်သော build ကိုဖွင့်ပါက Rosetta မှတစ်ဆင့် အလုပ်လုပ်သော်လည်း သိသာစွာ နှေးကွေးပါမည်။",
+
+  dl_linux_first_h3: "Linux ပထမဆုံး launch",
+  dl_linux_appimagelauncher:
+    "**ရွေးချယ်နိုင်သော desktop ပေါင်းစည်းမှု:** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) ကို တစ်ကြိမ်ထည့်သွင်းပါ၊ သင် double-click နှိပ်သော AppImage တိုင်းသည် သင့် launcher menu တွင် အလိုအလျောက် မှတ်ပုံတင်ပြီး ကိုယ်တိုင် `.desktop` ဖိုင်ဖန်တီးရန် မလိုအပ်တော့ပါ။",
+
+  dl_verify_h3: "သင့်ဒေါင်းလုဒ်ကို အတည်ပြုပါ (SHA256)",
+  dl_verify_intro:
+    "Release တိုင်းသည် binaries များနှင့်အတူ `SHA256SUMS` ဖိုင်ကို ထုတ်ဝေသည်။ သင့်ဒေါင်းလုဒ်သည် ပိုဆောင်ရင်းတွင် ပျက်စီးသွားခြင်း သို့မဟုတ် ကြားဖြတ်ဝင်ရောက်ပြောင်းလဲမှုမရှိကြောင်း စစ်ဆေးရန် ဖိုင်ကို locally hash ပြုလုပ်ပြီး `SHA256SUMS` ရှိ လိုင်းနှင့် ကိုက်ညီမှုစစ်ဆေးပါ။ နောက်ဆုံး release page ဖွင့်ပါ → **Assets** → `SHA256SUMS` ကိုဒေါင်းလုဒ်ဆွဲပါ။",
+  dl_verify_win_label: "Windows (PowerShell သို့မဟုတ် Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "Third-party malware scan လိုချင်ပါသလား? [VirusTotal](https://www.virustotal.com) တွင် ဖိုင်ကို upload ပြုလုပ်ပါ။ unsigned Electron apps အတွက် သေးငယ်သော engines မှ generic-heuristic flags အနည်းငယ်ရှိခြင်းသည် ပုံမှန်ဖြစ်သည်၊ သို့သော် အဓိက engines များမှ ကျယ်ပြန့်သော detections ရှိပါက စစ်မှန်သောစိုးရိမ်ဖွယ်ရာဖြစ်သည်။",
+
+  dl_pm_intro:
+    "Package manager တစ်ခုကို သုံးနေပြီလား? ကိုယ်တိုင် download ဆင်းသောနည်းလမ်းကို ကျော်လွှားနိုင်သည်။",
+
   privacy_p1:
     "Downloads များကို [yt-dlp](https://github.com/yt-dlp/yt-dlp) မှတဆင့် YouTube မှ တိုက်ရိုက် သင်ရွေးချယ်သောဖိုဒါသို့ fetch လုပ်သည် — third-party server မှတဆင့် routing မလုပ်ပါ။ ကြည့်ရှုမှတ်တမ်း၊ ဒေါင်းလုဒ်မှတ်တမ်း၊ URL များနှင့် ဖိုင်အကြောင်းအရာများသည် သင့်ကိရိယာပေါ်တွင်သာ ကျန်ရှိသည်။",
   privacy_p2:
@@ -224,10 +274,10 @@ export const my = {
   faq_a3: "ဟုတ်ပါတယ်။ format menu ထဲက *အသံသာ* ကိုရွေးပြီး MP3၊ M4A/AAC၊ Opus သို့မဟုတ် WAV ကိုရွေးပါ။",
   faq_q4: "YouTube account သို့မဟုတ် cookie လိုအပ်သလား?",
   faq_a4:
-    "မလိုအပ်ပါ။ Arroxy သည် YouTube က မည်သည့်ဘရောက်ဇာကိုမဆို ပေးသော public tokens များကိုသာ အသုံးပြုသည်။ Cookie မပါ၊ login မပါ၊ credential မသိမ်းဆည်းပါ။ ၎င်းသည် အဘယ်ကြောင့် အရေးကြီးသည်ကို [Cookie မပါ၊ login မပါ၊ account ချိတ်ဆက်မှုမပါ](#no-cookies) တွင် ကြည့်ပါ။",
+    "ပုံမှန်အားဖြင့် မလိုအပ်ပါ — Arroxy သည် YouTube account, login သို့မဟုတ် cookie export မပါဘဲ အလုပ်လုပ်သည်။ အသက်အရွယ်ကန့်သတ်ထားသော သို့မဟုတ် member-only ဗီဒီယိုကဲ့သို့ authentication လိုအပ်သော content များအတွက် Advanced settings တွင် optional cookie support (Cookies source: file or browser) ရရှိနိုင်ပါသည်။ default အားဖြင့် ပိတ်ထားသည်။ သင်ဖွင့်လိုက်ပါက yt-dlp ၏ wiki က [cookie-based automation သည် Google account ကို flag လုပ်နိုင်ကြောင်း](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) သတိပေးထားသည်; ၎င်းအခြေအနေတွင် throwaway account တစ်ခုသည် ပိုပြီးဘေးကင်းသောရွေးချယ်မှုဖြစ်သည်။",
   faq_q5: "YouTube တွင် တစ်ခုခုပြောင်းသောအခါ ဆက်လက်အလုပ်လုပ်မည်လား?",
   faq_a5:
-    "ခံနိုင်ရည်ရှိမှုနှစ်ထပ်: yt-dlp သည် YouTube ပြောင်းလဲမှုများ ဖြစ်ပြီး နာရီပိုင်းအတွင်း update လုပ်သည်၊ Arroxy သည် ~30 မိနစ်တိုင်း သက်တမ်းကုန်ဆုံးသော cookie များပေါ်တွင် မမှီခိုပါ။ ၎င်းကြောင့် export လုပ်ထားသော browser session များပေါ်တွင် မှီခိုသော tools များထက် သိသာစွာ ပိုတည်ငြိမ်သည်။",
+    "yt-dlp ကို launch တိုင်း အလိုအလျောက် update လုပ်ပြီး YouTube က တစ်ခုခု ပြောင်းလဲသောအခါ Arroxy က fix များကို လျင်မြန်စွာ ထုတ်ပေးသည်။ ပြဿနာတစ်စုံတစ်ရာ ကြုံတွေ့ခဲ့ပါက Advanced settings တွင် optional cookie support ကို fallback အဖြစ် ရရှိနိုင်ပါသည်။",
   faq_q6: "Arroxy ကို မည်သည့်ဘာသာစကားများဖြင့် ရနိုင်သနည်း?",
   faq_a6:
     "နှစ်ဆယ့်တစ်မျိုး၊ အသင့်ပါ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ, Ελληνικά (Greek), နှင့် Српски (Serbian)။ Arroxy သည် ပထမဆုံး ဖွင့်ချိန်တွင် သင့် operating system ၏ ဘာသာစကားကို အလိုအလျောက် ရှာဖွေပြီး toolbar ရှိ ဘာသာစကားရွေးချယ်မှုမှ မည်သည့်အချိန်မဆို ပြောင်းနိုင်သည်။ Locale ဖိုင်များသည် src/shared/i18n/locales/ တွင် plain TypeScript object များဖြစ်သည် — ပါဝင်ကူညီရန် GitHub တွင် PR တင်ပါ။",
@@ -239,7 +289,7 @@ export const my = {
     "ဟုတ်ပါတယ်၊ playlist အတွက်: playlist URL ကို paste လုပ်ပြီး စာရင်းတစ်ခုလုံးကို သို့မဟုတ် သင်ရွေးထားသော video များကိုသာ queue ထဲထည့်နိုင်သည်။ channel တစ်ခုလုံးကို batch အလိုက် download လုပ်ခြင်းကိုတော့ မထောက်ပံ့သေးပါ။",
   faq_q9: 'macOS က "app ပျက်စီးနေသည်" ဟုဆိုသည် — ဘာလုပ်ရမည်နည်း?',
   faq_a9:
-    "၎င်းသည် macOS Gatekeeper သည် unsigned app ကို ပိတ်ဆို့ခြင်းဖြစ်ပြီး တကယ်ပျက်စီးမှုမဟုတ်ပါ။ ဖြေရှင်းနည်းအတွက် [macOS တွင် ပထမဆုံး launch လုပ်ခြင်း](#download) section ကိုကြည့်ပါ။",
+    '၎င်းသည် macOS Gatekeeper သည် unsigned app ကို ပိတ်ဆို့ခြင်းဖြစ်ပြီး တကယ်ပျက်စီးမှုမဟုတ်ပါ။ ["App is damaged" — Terminal fix](#macos-first-launch) ကိုကြည့်ပါ၊ ၎င်းကိုဖြေရှင်းသည့် တစ်ကြောင်းတည်းသော `xattr` command ပါဝင်သည်။',
   faq_q10: "YouTube ဗီဒီယိုများ ဒေါင်းလုဒ်ဆွဲခြင်း တရားဝင်ပါသလား?",
   faq_a10:
     "ကိုယ်ရေးကိုယ်တာ သုံးစွဲမှုအတွက် ကိုယ်ရေးကိုယ်တာ purposes အတွက် နိုင်ငံအများစုတွင် ယေဘုယျအားဖြင့် လက်ခံသည်။ YouTube ၏ [Terms of Service](https://www.youtube.com/t/terms) နှင့် သင့်ဒေသခံ copyright ဥပဒေများနှင့် ကိုက်ညီသည်ကို သင်ကိုယ်တိုင် တာဝန်ယူရသည်။",

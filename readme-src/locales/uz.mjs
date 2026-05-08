@@ -88,7 +88,6 @@ export const uz = {
   ai_notice: "",
   toc_heading: "Mundarija",
   why_h2: "Nima uchun Arroxy",
-  nocookies_h2: "Kukilarsiz, kirish yo'q, hisob bog'liq emas",
   features_h2: "Xususiyatlar",
   dl_h2: "Yuklab olish",
   privacy_h2: "Maxfiylik",
@@ -105,16 +104,6 @@ export const uz = {
   why_r7: "Subtitrlar + SponsorBlock",
   why_summary:
     "Arroxy bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl oling. Hisoblar yo'q, qo'shimcha takliflar yo'q, ma'lumot to'plash yo'q.",
-  nocookies_intro:
-    "Bu desktop YouTube yuklovchilarining buzilishining eng keng tarqalgan sababi — va Arroxining mavjud bo'lishining asosiy sababi.",
-  nocookies_setup:
-    "YouTube bot aniqlashini yangilaganda, ko'pchilik vositalar sizdan muammo yechimi sifatida brauzerning YouTube kukilarini eksport qilishni so'raydi. Buning ikkita muammosi bor:",
-  nocookies_p1:
-    "Eksport qilingan seanslar odatda ~30 daqiqa ichida muddati tugaydi, shuning uchun siz doimiy ravishda qayta eksport qilasiz.",
-  nocookies_p2:
-    "yt-dlp'ning o'z hujjatlarida [kuki asosidagi avtomatlashtirilish Google hisobingizni belgilashi mumkinligi haqida ogohlantirish bor](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).",
-  nocookies_outro:
-    "**Arroxy hech qachon kuki, kirish yoki biron-bir hisob ma'lumotini so'ramaydi.** U faqat YouTube har qanday brauzerga uzatadigan ommaviy tokenlardan foydalanadi. Google shaxsiyatingizga bog'liq hech narsa yo'q, muddati tugaydigan narsa yo'q, rotatsiya qilinadigan narsa yo'q.",
   feat_quality_h3: "Sifat va formatlar",
   feat_quality_1: "**4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p gacha",
   feat_quality_2: "**Yuqori kadr tezligi** o'zgarmagan holda saqlanadi — 60 fps, 120 fps, HDR",
@@ -211,6 +200,67 @@ export const uz = {
   dl_linux_fuse_text: "Agar ishga tushirish hali ham muvaffaqiyatsiz bo'lsa, FUSE etishmayotgan bo'lishi mumkin:",
   dl_linux_flatpak_intro:
     "**Flatpak (qumloq muhitdagi muqobil):** xuddi shu reliz sahifasidan `Arroxy-*.flatpak` ni yuklab oling.",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "Nima uchun ogohlantirish ko'rishingiz mumkin",
+  dl_warning_p1:
+    "Arroxy ochiq manbali va MIT litsenziyali. Windows va macOS qurilmalari **kod imzolanmagan** — Apple Developer ID va Windows EV kod imzolash sertifikatlari har biri yiliga yuzlab dollarga tushadi, buni mustaqil loyiha o'z hisobidan to'laydi. Bu imzolarsiz, Windows SmartScreen va macOS Gatekeeper birinchi ishga tushirishda ogohlantiradi. Ogohlantirishlar *operatsion tizimingiz nashriyotchini tanib olmasligini* anglatadi — bu Arroxy zararli dastur ekanligini anglatmaydi.",
+  dl_warning_p2:
+    "Arroxy ni o'zingiz tekshirishning uch yo'li, ortib boruvchi qat'iylikda:\n\n- **Manbani o'qing.** Har bir satr [GitHub](https://github.com/antonio-orionus/Arroxy) da mavjud va siz [manbadan yaratishingiz](#tech) mumkin.\n- **SHA256 ni tekshiring.** Faylingizni e'lon qilingan [`SHA256SUMS`](../../releases/latest) bilan solishtiring — pastdagi [Yuklab olishingizni tekshiring](#verify) ga qarang.\n- **Uchinchi tomon skanini o'tkazing.** Faylni [VirusTotal](https://www.virustotal.com) ga yuklang.",
+
+  dl_win_first_h3: "Windows da birinchi ishga tushirish",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" dialogi, "More info" havolasi ta\'kidlangan holda',
+  shot_smartscreen_run_alt:
+    'More info kengaytirilgandan so\'ng SmartScreen dialogi, "Run anyway" tugmasi ko\'rsatilgan holda',
+  dl_win_defender_h4: "Windows Defender fayl ni belgilasa yoki olib tashlasa",
+  dl_win_defender_p:
+    "Defender evristikasi ba'zida imzalanmagan NSIS o'rnatuvchilari va Electron portableni shubhali deb belgilaydi. Agar Defender `Arroxy-Setup-*.exe` yoki `Arroxy-Portable-*.exe` ni karantinga olsa, uni **Windows Security → Virus & threat protection → Protection history** dan qayta tiklang, so'ng Arroxy bajariladigan faylini **Manage settings → Add or remove exclusions** ostida ruxsat etilgan element sifatida qo'shing. SmartScreen singari, bu ham aniqlanmagan zararli dastur emas, balki etishmayotgan nashriyotchi imzosi sababli yuzaga keladi.",
+
+  dl_macos_first_h3: "macOS da birinchi ishga tushirish",
+  dl_macos_intro:
+    "Arroxy hali macOS uchun kod imzolanmagan, shuning uchun Gatekeeper birinchi ishga tushirishni bloklaydi. Uni ruxsat etishning aniq yo'li macOS versiyangizga bog'liq — Sequoia 15 eski sichqonchaning o'ng tugmasi → Open usulini qattiqlashtirib qo'ydi.",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 va undan keyingi (joriy)",
+  dl_macos_sequoia_intro:
+    "Sequoia 15 va undan yangi versiyalarda, sichqonchaning o'ng tugmasi → Open ko'plab karantindagi ilovalar uchun Gatekeeper ni chetlab o'tmaydi. Buning o'rniga Tizim Sozlamalari panelidan foydalaning:",
+  dl_macos_sequoia_step1:
+    "O'rnatilgan DMG dan `Arroxy.app` ni `/Applications` ga torting.",
+  dl_macos_sequoia_step2:
+    "Arroxy ni ikki marta bosing. Bloklash dialogi paydo bo'ladi — **Done** tugmasini bosing (*Move to Trash* ni bosmang).",
+  dl_macos_sequoia_step3:
+    '**System Settings → Privacy & Security** ni oching va **Security** bo\'limiga suring. Siz *"Arroxy was blocked to protect your Mac"* (yoki shunga o\'xshash xabar) ko\'rasiz.',
+  dl_macos_sequoia_step4:
+    "**Open Anyway** tugmasini bosing, parolingiz yoki Touch ID bilan tasdiqlang, so'ng Arroxy ni `/Applications` dan qayta ishga tushiring.",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 va undan oldingi",
+  dl_macos_sonoma_step1:
+    "O'rnatilgan DMG dan `Arroxy.app` ni `/Applications` ga torting.",
+  dl_macos_sonoma_step2:
+    "`/Applications` dagi `Arroxy.app` ga sichqonchaning o'ng tugmasi bilan bosing (yoki Control-click) va **Open** ni tanlang.",
+  dl_macos_sonoma_step3:
+    "Ogohlantirish dialogida endi **Open** tugmasi bor — uni bosing va tasdiqlang. Arroxy odatda ochiladi va ogohlantirish boshqa ko'rinmaydi.",
+  dl_macos_damaged_h4:
+    '"App is damaged" yoki doimiy Gatekeeper bloki — Terminal orqali tuzatish',
+  dl_macos_damaged_p:
+    'Agar macOS *"Arroxy is damaged and can\'t be opened"* desa, yoki yuqoridagi qadamlarning hech biri blokni bartaraf etmasa, DMG dagi karantin atributi sabab (ba\'zi brauzerlar va macOS ning o\'zining translokatsiya xatti-harakati uni o\'rnatadi). O\'rnatilgan ilovadan uni o\'chirib tashlang:',
+  dl_macos_arch_note:
+    "**Apple Silicon va Intel:** M seriyali Mac da (M1 / M2 / M3 / M4) `arm64` DMG ni yuklab oling. Intel Mac larda `x64` DMG ni yuklab oling. Noto'g'ri qurilmani ishga tushirish Rosetta orqali ishlaydi, lekin sezilarli darajada sekinroq.",
+
+  dl_linux_first_h3: "Linux da birinchi ishga tushirish",
+  dl_linux_appimagelauncher:
+    "**Ixtiyoriy ish stoli integratsiyasi:** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) ni bir marta o'rnating va siz ikki marta bosgandagi har qanday AppImage avtomatik ravishda ishga tushiruvchi menyungizga ro'yxatdan o'tkaziladi — qo'lda `.desktop` fayli talab qilinmaydi.",
+
+  dl_verify_h3: "Yuklab olishingizni tekshiring (SHA256)",
+  dl_verify_intro:
+    "Har bir reliz binarylar bilan birga `SHA256SUMS` faylini e'lon qiladi. Yuklab olishingiz tranzit davomida buzilmagan yoki o'zgartirilmaganligini tekshirish uchun faylingizni mahalliy ravishda hashlang va `SHA256SUMS` dagi satr bilan solishtiring. Oxirgi reliz sahifasini oching → **Assets** → `SHA256SUMS` ni yuklab oling.",
+  dl_verify_win_label: "Windows (PowerShell yoki Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "Uchinchi tomon zararli dastur skanini istaysizmi? Faylni [VirusTotal](https://www.virustotal.com) da yuklang. Kichik vositalardan bir nechta umumiy evristik belgilash imzalanmagan Electron ilovalar uchun odatiy holat; yirik vositalardan keng tarqalgan aniqlanishlar haqiqiy muammo bo'lar edi.",
+
+  dl_pm_intro:
+    "Paket menejeri allaqachon ishlatayapsizmi? Qo'lda yuklab olish yo'lidan o'tishingiz shart emas.",
+
   privacy_p1:
     "Yuklamalar YouTube'dan siz tanlagan papkaga to'g'ridan-to'g'ri [yt-dlp](https://github.com/yt-dlp/yt-dlp) orqali olinadi — hech narsa uchinchi tomon server orqali yo'naltirilmaydi. Ko'rish tarixi, yuklab olish tarixi, URL'lar va fayl mazmunlari qurilmangizda qoladi.",
   privacy_p2:
@@ -224,10 +274,10 @@ export const uz = {
   faq_a3: "Ha. Format menyusidan *faqat audio* ni tanlang va MP3, M4A/AAC, Opus yoki WAV ni belgilang.",
   faq_q4: "YouTube hisob yoki kukilar kerakmi?",
   faq_a4:
-    "Yo'q. Arroxy faqat YouTube har qanday brauzerga uzatadigan ommaviy tokenlardan foydalanadi. Kukilar yo'q, kirish yo'q, saqlanadigan hisob ma'lumotlari yo'q. Buning nima uchun muhimligi haqida [Kukilarsiz, kirish yo'q, hisob bog'liq emas](#no-cookies) ga qarang.",
+    "Standart holatda — yo'q. Arroxy YouTube hisobi, tizimga kirish yoki kuki eksportisiz ishlaydi. Autentifikatsiya talab qiladigan kontent (masalan, yosh chegarasi qo'yilgan yoki faqat a'zolar uchun videolar) uchun Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash mavjud (Cookies source: file or browser). Standart holatda u o'chirilgan. Agar uni yoqsangiz, yt-dlp wiki sahifasida [kuki asosidagi avtomatlashtirish Google hisobini belgilashi mumkinligi haqida ogohlantirish berilgan](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); bunday holatda bir martalik hisob xavfsizroq tanlovdir.",
   faq_q5: "YouTube nimadir o'zgartirsa ham ishlashda davom etadimi?",
   faq_a5:
-    "Ikki qavatli chidamlilik: yt-dlp YouTube o'zgarishlaridan bir necha soat ichida yangilanadi, Arroxy esa har ~30 daqiqada muddati tugaydigan kukilarga tayanmaydi. Bu uni eksport qilingan brauzer seanslariga bog'liq vositalardan sezilarli darajada barqarorroq qiladi.",
+    "yt-dlp ishga tushirishda avtomatik yangilanadi, va YouTube biror narsani o'zgartirganda Arroxy tezlik bilan tuzatishlarni chiqaradi. Agar siz biron muammoga duch kelsangiz, Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash zaxira variant sifatida mavjud.",
   faq_q6: "Arroxy qanday tillarda mavjud?",
   faq_a6:
     "Yigirma bir, darhol tayyor: English, Español (ispan), Deutsch (nemis), Français (frantsuz), 日本語 (yapon), 中文 (xitoy), Русский (rus), Українська (ukrain), हिन्दी (hind), Afaan Oromoo, Kiswahili, O'zbekcha (o'zbek), Tiếng Việt (vyetnam), አማርኛ (amxar), العربية (arab), اردو (urdu), پښتو (pushtu), বাংলা (bengal), မြန်မာဘာသာ (birma), Ελληνικά (grek) va Српски (serb). Arroxy birinchi ishga tushirishda operatsion tizimingiz tilini avtomatik aniqlaydi va siz istalgan vaqtda asboblar panelindagi til tanlagichidan o'zgartirishingiz mumkin. Tarjimalar src/shared/i18n/locales/ ichidagi oddiy TypeScript obyektlari sifatida saqlanadi — hissa qo'shish uchun GitHub'da PR oching.",
@@ -239,7 +289,7 @@ export const uz = {
     "Ha, playlistlar uchun: playlist URL manzilini joylang, keyin butun ro‘yxatni yoki faqat tanlagan videolaringizni navbatga qo‘shing. Butun kanalni to‘plam holida yuklab olish hali qo‘llab-quvvatlanmaydi.",
   faq_q9: 'macOS "ilova shikastlangan" deydi — nima qilaman?',
   faq_a9:
-    "Bu macOS Gatekeeper imzalanmagan ilovani bloklayotgani, haqiqiy shikastlanish emas. Tuzatish uchun [macOS da birinchi ishga tushirish](#download) bo'limiga qarang.",
+    'Bu macOS Gatekeeper imzalanmagan ilovani bloklayotgani, haqiqiy shikastlanish emas. Bir qatorli `xattr` buyrug\'i haqida ["App is damaged" — Terminal orqali tuzatish](#macos-first-launch) ga qarang.',
   faq_q10: "YouTube videolarini yuklab olish qonuniyimi?",
   faq_a10:
     "Shaxsiy, xususiy foydalanish uchun bu ko'pchilik yurisdiktsiyalarda umumiy qabul qilingan. Siz YouTube ning [Foydalanish Shartlari](https://www.youtube.com/t/terms) va mahalliy mualliflik huquqi qonunlariga rioya qilish uchun javobgarsiz.",

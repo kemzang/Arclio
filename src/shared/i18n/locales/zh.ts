@@ -508,6 +508,24 @@ const zh = {
       reload: '重新加载',
       quit: '退出'
     }
+  },
+  share: {
+    title: '分享 Arroxy',
+    description: 'Arroxy 免费且开源。分享它可以帮助更多人发现它。',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: '喜欢 Arroxy 吗？把它分享给可能觉得有用的人吧。',
+      dismiss: '关闭分享建议'
+    },
+    highValueBanner: {
+      body: '喜欢 Arroxy 吗？帮助其他人发现它。',
+      dismiss: '关闭分享建议'
+    }
   }
 } as const;
 

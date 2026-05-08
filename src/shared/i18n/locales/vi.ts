@@ -508,6 +508,24 @@ const vi = {
       reload: 'Tải lại',
       quit: 'Thoát'
     }
+  },
+  share: {
+    title: 'Chia sẻ Arroxy',
+    description: 'Arroxy miễn phí và mã nguồn mở. Chia sẻ giúp nhiều người hơn khám phá ra nó.',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Bạn thích Arroxy không? Hãy chia sẻ với ai đó có thể thấy nó hữu ích.',
+      dismiss: 'Bỏ qua gợi ý chia sẻ'
+    },
+    highValueBanner: {
+      body: 'Bạn thích Arroxy không? Hãy giúp người khác khám phá nó.',
+      dismiss: 'Bỏ qua gợi ý chia sẻ'
+    }
   }
 } as const;
 

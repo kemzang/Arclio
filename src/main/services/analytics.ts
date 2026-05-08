@@ -41,7 +41,16 @@ const ALLOWED: Record<string, readonly string[]> = {
   tray_close_chosen: ['choice', 'remember'],
   binary_setup_failed: ['binary', 'phase', 'code'],
   crash_detected: ['type', 'reason'],
-  wizard_started: []
+  wizard_started: [],
+  share_dialog_opened: ['via'],
+  share_dialog_closed: ['via', 'clicked'],
+  share_destination_clicked: ['destination'],
+  share_link_copied: [],
+  share_inline_card_impression: [],
+  share_inline_card_clicked: [],
+  share_inline_card_dismissed: [],
+  share_prompt_impression: ['via'],
+  share_prompt_dismissed: ['via']
 };
 
 const MAX_STR = 32;
