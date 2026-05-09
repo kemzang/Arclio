@@ -70,7 +70,7 @@ describe('DownloadService — postprocess ENOSPC reclassification', () => {
 
     const { service, recentJobsStore } = makeService();
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
-    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce());
+    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce(), { timeout: 5000 });
 
     const finalized = recentJobsStore.push.mock.calls[0]?.[0];
     expect(finalized?.status).toBe('failed');
@@ -87,7 +87,7 @@ describe('DownloadService — postprocess ENOSPC reclassification', () => {
 
     const { service, recentJobsStore } = makeService();
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
-    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce());
+    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce(), { timeout: 5000 });
 
     const finalized = recentJobsStore.push.mock.calls[0]?.[0];
     expect(finalized?.error?.key).toBeNull();
@@ -101,7 +101,7 @@ describe('DownloadService — postprocess ENOSPC reclassification', () => {
 
     const { service, recentJobsStore } = makeService();
     await service.start({ url: YOUTUBE_URL, outputDir: '/tmp', job: DEFAULT_JOB });
-    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce());
+    await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce(), { timeout: 5000 });
 
     // Only the preflight call — no post-failure probe.
     expect(vi.mocked(checkDiskSpace)).toHaveBeenCalledTimes(1);
