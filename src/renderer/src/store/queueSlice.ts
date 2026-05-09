@@ -344,7 +344,15 @@ export function createQueueSlice(set: SetState, get: GetState, scheduler: JobSch
         jobId: item.downloadJobId ?? undefined
       });
       if (result.ok && result.data.paused) {
-        updateQueueItem(set, itemId, { status: QUEUE_STATUS.paused, progressDetail: null });
+        // Persist tempDir + lastJobId so a paused-active item survives app
+        // restart and `resume()` can re-spawn yt-dlp pointed at the same
+        // `.part` files. tempDir undefined is fine for mock paths.
+        updateQueueItem(set, itemId, {
+          status: QUEUE_STATUS.paused,
+          progressDetail: null,
+          tempDir: result.data.tempDir,
+          lastJobId: result.data.jobId
+        });
         saveQueue(get);
       }
     },

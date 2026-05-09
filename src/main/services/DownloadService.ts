@@ -358,7 +358,7 @@ export class DownloadService extends EventEmitter {
       this.activeJobs.delete(active.job.id);
       this.pausedJobs.set(active.job.id, { job: active.job, input: active.input });
       logger.info('Mock download paused', { jobId: active.job.id });
-      return ok({ paused: true });
+      return ok({ paused: true, jobId: active.job.id });
     }
 
     if (!active.ytDlpProcess && !active.ffmpegProcess) {
@@ -375,7 +375,7 @@ export class DownloadService extends EventEmitter {
     // mux completes after the user thinks they paused.
     killActiveProcesses(active, 'SIGTERM');
     logger.info('SIGTERM sent to active processes', { jobId: active.job.id });
-    return ok({ paused: true });
+    return ok({ paused: true, tempDir: active.tempDir, jobId: active.job.id });
   }
 
   private async cancelOne(active: ActiveDownload): Promise<Result<CancelDownloadOutput>> {

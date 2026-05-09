@@ -328,6 +328,11 @@ export const queueItemSchema = z.object({
   finishedAt: z.string().nullable(),
   downloadJobId: z.string().nullable(),
   playlistGroupId: z.string().min(1).optional(),
+  // Persisted resume context for paused-active items. Survives app restart
+  // so the resumed yt-dlp run can target the same tempDir / .part files.
+  // Both undefined for held-pending items (they never spawned a job yet).
+  tempDir: z.string().min(1).optional(),
+  lastJobId: z.string().min(1).optional(),
   job: preparedJobSchema
 });
 

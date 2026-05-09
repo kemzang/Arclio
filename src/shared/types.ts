@@ -164,6 +164,9 @@ export interface QueueItem {
   finishedAt: string | null;
   downloadJobId: string | null;
   playlistGroupId?: string;
+  // Persisted resume context for paused-active items — see schema for details.
+  tempDir?: string;
+  lastJobId?: string;
   job: PreparedJob;
 }
 
@@ -343,6 +346,11 @@ export interface PauseDownloadInput {
 
 export interface PauseDownloadOutput {
   paused: boolean;
+  // Persisted resume context — set when paused = true. Renderer writes both
+  // back onto the QueueItem so a later resume after restart can re-spawn
+  // yt-dlp pointed at the same `.part` files instead of starting fresh.
+  tempDir?: string;
+  jobId?: string;
 }
 
 export type InstallChannel = 'direct' | 'winget' | 'scoop' | 'homebrew' | 'flatpak' | 'portable';

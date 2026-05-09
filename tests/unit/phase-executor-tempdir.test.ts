@@ -30,7 +30,9 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
     job: makeJob(),
     input,
     controller: new AbortController(),
-    get signal(): AbortSignal { return this.controller.signal; },
+    get signal(): AbortSignal {
+      return this.controller.signal;
+    },
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
