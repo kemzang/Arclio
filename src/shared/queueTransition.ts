@@ -13,15 +13,7 @@ import { QUEUE_STATUS } from './schemas.js';
 
 // Closed union of state-change signals. Mapped 1:1 from DownloadService /
 // systemSlice events (which are themselves rendered from yt-dlp lifecycle).
-export type QueueEvent =
-  | { kind: 'started'; downloadJobId: string }
-  | { kind: 'progress'; percent: number; detail?: string | null }
-  | { kind: 'paused' }
-  | { kind: 'resumed' }
-  | { kind: 'failed'; error: LocalizedError; lastStatusKey?: import('./schemas.js').StatusKey; params?: Record<string, string | number> }
-  | { kind: 'completed'; lastStatusKey?: import('./schemas.js').StatusKey; params?: Record<string, string | number>; finishedAt: string }
-  | { kind: 'cancelled' }
-  | { kind: 'retry-reset' };
+export type QueueEvent = { kind: 'started'; downloadJobId: string } | { kind: 'progress'; percent: number; detail?: string | null } | { kind: 'paused' } | { kind: 'resumed' } | { kind: 'failed'; error: LocalizedError; lastStatusKey?: import('./schemas.js').StatusKey; params?: Record<string, string | number> } | { kind: 'completed'; lastStatusKey?: import('./schemas.js').StatusKey; params?: Record<string, string | number>; finishedAt: string } | { kind: 'cancelled' } | { kind: 'retry-reset' };
 
 // Pure (item, event) -> item. No I/O, no IPC, no logging. Caller produces a
 // new item; existing references stay valid until they overwrite their slot.
