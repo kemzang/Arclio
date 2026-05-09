@@ -104,7 +104,7 @@ export function StepPlaylistItems(): JSX.Element {
                     }}
                   >
                     <Checkbox checked={checked} onCheckedChange={(v) => setPlaylistItemSelected(entry.id, !!v)} onClick={(e) => e.stopPropagation()} />
-                    {hasAnyThumbnail ? (entry.thumbnail ? <img src={entry.thumbnail} alt={t('wizard.playlist.thumbnailAlt')} referrerPolicy="no-referrer" className="h-8 w-[56px] shrink-0 rounded-sm object-cover" loading="lazy" /> : <div className="h-8 w-[56px] shrink-0 rounded-sm bg-muted" />) : null}
+                    {hasAnyThumbnail ? entry.thumbnail ? <img src={entry.thumbnail} alt={t('wizard.playlist.thumbnailAlt')} referrerPolicy="no-referrer" className="h-8 w-[56px] shrink-0 rounded-sm object-cover" loading="lazy" /> : <div className="h-8 w-[56px] shrink-0 rounded-sm bg-muted" /> : null}
                     <span className="flex-1 truncate text-sm">{entry.title}</span>
                     <span className="shrink-0 text-xs text-muted-foreground">{formatDuration(entry.duration, liveLabel)}</span>
                   </div>

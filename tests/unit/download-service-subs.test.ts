@@ -43,7 +43,8 @@ function makeJob(opts: { formatId?: string; subtitles?: { languages: string[]; w
   }
   return {
     kind: 'single-format',
-    extractor: 'youtube', extractorKey: 'Youtube',
+    extractor: 'youtube',
+    extractorKey: 'Youtube',
     formatId: opts.formatId ?? '137+251',
     preset: 'custom',
     sponsorBlock: SB_OFF,

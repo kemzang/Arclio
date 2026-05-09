@@ -47,10 +47,6 @@ export type EnTranslation = typeof en;
 // and translations fan out incrementally, so we don't enforce structural parity
 // in TypeScript. Every leaf is widened to `string` so any translation is
 // structurally valid; every nested key is optional.
-type DeepPartialStringLeaves<T> = T extends string
-  ? string
-  : T extends readonly (infer U)[]
-    ? readonly DeepPartialStringLeaves<U>[]
-    : { readonly [K in keyof T]?: DeepPartialStringLeaves<T[K]> };
+type DeepPartialStringLeaves<T> = T extends string ? string : T extends readonly (infer U)[] ? readonly DeepPartialStringLeaves<U>[] : { readonly [K in keyof T]?: DeepPartialStringLeaves<T[K]> };
 
 export type LocaleResource = DeepPartialStringLeaves<EnTranslation>;

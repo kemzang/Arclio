@@ -19,7 +19,8 @@ describe('prepareJob', () => {
       const job = prepareJob({ ...BASE, mode: 'single', formatId: '137+140', activePreset: null });
       expect(job).toEqual({
         kind: 'single-format',
-        extractor: 'youtube', extractorKey: 'Youtube',
+        extractor: 'youtube',
+        extractorKey: 'Youtube',
         formatId: '137+140',
         preset: 'custom',
         subtitles: undefined,
@@ -73,7 +74,8 @@ describe('prepareJob', () => {
       });
       expect(job).toEqual({
         kind: 'audio-convert',
-        extractor: 'youtube', extractorKey: 'Youtube',
+        extractor: 'youtube',
+        extractorKey: 'Youtube',
         audioConvert: { target: 'mp3', bitrateKbps: 192 },
         preset: 'audio-only',
         subtitles: undefined,
@@ -100,7 +102,8 @@ describe('prepareJob', () => {
       });
       expect(job).toEqual({
         kind: 'subtitle-only',
-        extractor: 'youtube', extractorKey: 'Youtube',
+        extractor: 'youtube',
+        extractorKey: 'Youtube',
         subtitles: { languages: ['en'], mode: 'sidecar', format: 'srt', writeAuto: false }
       });
       expect(preparedJobSchema.safeParse(job).success).toBe(true);
@@ -139,7 +142,8 @@ describe('prepareJob', () => {
       });
       expect(job).toEqual({
         kind: 'playlist-preset',
-        extractor: 'youtube', extractorKey: 'Youtube',
+        extractor: 'youtube',
+        extractorKey: 'Youtube',
         preset: 'video-1080p',
         formatSelector: 'bestvideo[height<=1080]+bestaudio/best[height<=1080]',
         audioConvert: undefined,

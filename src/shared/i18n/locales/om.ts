@@ -452,7 +452,7 @@ const om = {
       geoBlocked: 'Viidiyoon kun naanno kee keessatti hin argamu.',
       outOfDiskSpace: "Bakki disikii gahaa hin jiru. Bakka duwwaa godhi achiin irra deebi'i.",
       unsupportedUrl: 'Kunis URL viidiyoo fakkaata miti. YouTube viidiyoo, Short, ykn playlist liinkii maxxansi.',
-      chunkTransferFailure: 'Sarvarri buufannaa giddu-galeessatti kuteera, yt-dlp irra deebi\'uun yaale booddee kufe. Kun baay\'inaan foormaatii viidiyoo guddoo (4K HDR / VP9 bitrate olaanaa) irratti mul\'ata. Irra deebi\'i, network/VPN jijjiiri, ykn foormaatii qulqullina xiqqaa ta\'e filadhu.'
+      chunkTransferFailure: "Sarvarri buufannaa giddu-galeessatti kuteera, yt-dlp irra deebi'uun yaale booddee kufe. Kun baay'inaan foormaatii viidiyoo guddoo (4K HDR / VP9 bitrate olaanaa) irratti mul'ata. Irra deebi'i, network/VPN jijjiiri, ykn foormaatii qulqullina xiqqaa ta'e filadhu."
     }
   },
   presets: {

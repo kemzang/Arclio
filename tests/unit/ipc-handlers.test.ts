@@ -310,7 +310,8 @@ describe('registerIpcHandlers', () => {
         outputDir: '/tmp',
         job: {
           kind: 'single-format',
-          extractor: 'youtube', extractorKey: 'Youtube',
+          extractor: 'youtube',
+          extractorKey: 'Youtube',
           formatId: '137+251',
           preset: 'custom',
           sponsorBlock: { mode: 'off' },

@@ -23,7 +23,8 @@ function makeJob(): DownloadJob {
 
 const BASE_JOB: PreparedJob = {
   kind: 'single-format',
-  extractor: 'youtube', extractorKey: 'Youtube',
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
   formatId: 'bv+ba',
   preset: 'custom',
   sponsorBlock: SB_OFF,
@@ -153,7 +154,8 @@ describe('VideoPhase(embed=true)', () => {
         ...BASE_INPUT,
         job: {
           kind: 'audio-convert',
-          extractor: 'youtube', extractorKey: 'Youtube',
+          extractor: 'youtube',
+          extractorKey: 'Youtube',
           audioConvert: { target: 'mp3', bitrateKbps: 192 },
           preset: 'audio-only',
           sponsorBlock: SB_OFF,

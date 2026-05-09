@@ -19,32 +19,15 @@ describe('rewriteYouTubeChannelRoot — appends /videos to bare channel-root URL
     expect(rewriteYouTubeChannelRoot('https://www.youtube.com/user/OldName')).toBe('https://www.youtube.com/user/OldName/videos');
   });
 
-  it.each([
-    'https://www.youtube.com/@handle/videos',
-    'https://www.youtube.com/@handle/shorts',
-    'https://www.youtube.com/@handle/streams',
-    'https://www.youtube.com/@handle/playlists',
-    'https://www.youtube.com/@handle/about',
-    'https://www.youtube.com/@handle/community',
-    'https://www.youtube.com/channel/UCabcdefghijklmnopqrstuv/videos',
-    'https://www.youtube.com/c/CustomName/playlists'
-  ])('leaves %s unchanged (already has explicit tab)', (url) => {
+  it.each(['https://www.youtube.com/@handle/videos', 'https://www.youtube.com/@handle/shorts', 'https://www.youtube.com/@handle/streams', 'https://www.youtube.com/@handle/playlists', 'https://www.youtube.com/@handle/about', 'https://www.youtube.com/@handle/community', 'https://www.youtube.com/channel/UCabcdefghijklmnopqrstuv/videos', 'https://www.youtube.com/c/CustomName/playlists'])('leaves %s unchanged (already has explicit tab)', (url) => {
     expect(rewriteYouTubeChannelRoot(url)).toBe(url);
   });
 
-  it.each([
-    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    'https://www.youtube.com/playlist?list=PLabc',
-    'https://www.youtube.com/results?search_query=python'
-  ])('leaves non-channel YouTube URL unchanged: %s', (url) => {
+  it.each(['https://www.youtube.com/watch?v=dQw4w9WgXcQ', 'https://www.youtube.com/playlist?list=PLabc', 'https://www.youtube.com/results?search_query=python'])('leaves non-channel YouTube URL unchanged: %s', (url) => {
     expect(rewriteYouTubeChannelRoot(url)).toBe(url);
   });
 
-  it.each([
-    'https://vimeo.com/123',
-    'https://www.pornhub.com/channels/povd/videos',
-    'https://music.youtube.com/browse/UCabcdefghijklmnopqrstuv'
-  ])('leaves non-YouTube-com host unchanged: %s', (url) => {
+  it.each(['https://vimeo.com/123', 'https://www.pornhub.com/channels/povd/videos', 'https://music.youtube.com/browse/UCabcdefghijklmnopqrstuv'])('leaves non-YouTube-com host unchanged: %s', (url) => {
     expect(rewriteYouTubeChannelRoot(url)).toBe(url);
   });
 
@@ -55,21 +38,11 @@ describe('rewriteYouTubeChannelRoot — appends /videos to bare channel-root URL
 });
 
 describe('isMixedYouTubeUrl — detects ?v= AND ?list= on YouTube hosts', () => {
-  it.each([
-    'https://www.youtube.com/watch?v=abc&list=PLxyz',
-    'https://www.youtube.com/watch?v=abc&list=RDabc',
-    'https://www.youtube.com/watch?list=PLxyz&v=abc',
-    'https://m.youtube.com/watch?v=abc&list=PLxyz'
-  ])('returns true for mixed URL: %s', (url) => {
+  it.each(['https://www.youtube.com/watch?v=abc&list=PLxyz', 'https://www.youtube.com/watch?v=abc&list=RDabc', 'https://www.youtube.com/watch?list=PLxyz&v=abc', 'https://m.youtube.com/watch?v=abc&list=PLxyz'])('returns true for mixed URL: %s', (url) => {
     expect(isMixedYouTubeUrl(url)).toBe(true);
   });
 
-  it.each([
-    'https://www.youtube.com/watch?v=abc',
-    'https://www.youtube.com/playlist?list=PLxyz',
-    'https://www.youtube.com/@handle',
-    'https://www.youtube.com/results?search_query=x'
-  ])('returns false for single-param YT URL: %s', (url) => {
+  it.each(['https://www.youtube.com/watch?v=abc', 'https://www.youtube.com/playlist?list=PLxyz', 'https://www.youtube.com/@handle', 'https://www.youtube.com/results?search_query=x'])('returns false for single-param YT URL: %s', (url) => {
     expect(isMixedYouTubeUrl(url)).toBe(false);
   });
 

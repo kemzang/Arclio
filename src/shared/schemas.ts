@@ -121,9 +121,7 @@ export const MAX_SUBTITLE_LANGUAGES = 50;
 // Permissive http(s) URL schema. Multi-site support means we can't pre-filter
 // by host — yt-dlp itself decides whether the URL is supported (via extractor
 // match) and surfaces "Unsupported URL" via stderr if not.
-const webUrlSchema = z
-  .url('URL must be valid')
-  .refine((value) => /^https?:\/\//i.test(value), { message: 'Only http/https URLs are supported' });
+const webUrlSchema = z.url('URL must be valid').refine((value) => /^https?:\/\//i.test(value), { message: 'Only http/https URLs are supported' });
 
 export const probeSchema = z.object({
   url: webUrlSchema,

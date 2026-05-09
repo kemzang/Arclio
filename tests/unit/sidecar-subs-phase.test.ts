@@ -32,7 +32,8 @@ function makeJob(): DownloadJob {
 
 const BASE_JOB: PreparedJob = {
   kind: 'single-format',
-  extractor: 'youtube', extractorKey: 'Youtube',
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
   formatId: 'bv+ba',
   preset: 'custom',
   sponsorBlock: SB_OFF,

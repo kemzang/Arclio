@@ -36,9 +36,7 @@ export function rewriteYouTubeChannelRoot(url: string): string {
     if (!isYouTube) return url;
     const segments = u.pathname.split('/').filter(Boolean);
     if (segments.length === 0) return url;
-    const isChannelRoot =
-      (segments[0].startsWith('@') && segments.length === 1) ||
-      ((segments[0] === 'channel' || segments[0] === 'c' || segments[0] === 'user') && segments.length === 2);
+    const isChannelRoot = (segments[0].startsWith('@') && segments.length === 1) || ((segments[0] === 'channel' || segments[0] === 'c' || segments[0] === 'user') && segments.length === 2);
     if (!isChannelRoot) return url;
     // Don't rewrite if path already ends with an explicit tab name.
     const lastSegment = segments[segments.length - 1].toLowerCase();

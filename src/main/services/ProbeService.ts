@@ -39,9 +39,7 @@ interface ProbeAttemptSuccess {
   degradationSignals: ProbeSignal[];
 }
 
-type ProbeAttemptResult =
-  | { kind: 'success'; data: ProbeAttemptSuccess }
-  | { kind: 'failure'; error: ReturnType<typeof createAppError>; errorCategory: string };
+type ProbeAttemptResult = { kind: 'success'; data: ProbeAttemptSuccess } | { kind: 'failure'; error: ReturnType<typeof createAppError>; errorCategory: string };
 
 function sanitizeSubtitleMap(raw: Record<string, YtDlpSubtitleTrack[]> | undefined, opts: { isAutomaticCaptions: boolean; isYouTube: boolean }): SubtitleMap {
   if (!raw) return {};

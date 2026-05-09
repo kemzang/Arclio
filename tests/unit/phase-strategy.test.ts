@@ -61,7 +61,8 @@ describe('phasesFor — production repro cell', () => {
   it('audio-only + m4a-convert + 2 subs → preflight + video phase', () => {
     const job: PreparedJob = {
       kind: 'audio-convert',
-      extractor: 'youtube', extractorKey: 'Youtube',
+      extractor: 'youtube',
+      extractorKey: 'Youtube',
       audioConvert: { target: 'm4a', bitrateKbps: 192 },
       preset: 'audio-only',
       sponsorBlock: SB_OFF,

@@ -6,7 +6,8 @@ import type { PreparedJob } from '@shared/preparedJob.js';
 
 const DEFAULT_JOB: PreparedJob = {
   kind: 'single-format',
-  extractor: 'youtube', extractorKey: 'Youtube',
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
   formatId: '22',
   preset: 'custom',
   sponsorBlock: { mode: 'off' },

@@ -1,20 +1,5 @@
 import { useEffect, useRef, useState, type JSX, type ReactNode } from 'react';
-import {
-  ArrowRight,
-  AlertTriangle,
-  Share2,
-  X,
-  Video,
-  ListVideo,
-  Music,
-  Tv,
-  Smartphone,
-  Mic,
-  Globe,
-  ListMusic,
-  AudioLines,
-  Captions
-} from 'lucide-react';
+import { ArrowRight, AlertTriangle, Share2, X, Video, ListVideo, Music, Tv, Smartphone, Mic, Globe, ListMusic, AudioLines, Captions } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '../../store/useAppStore.js';
 import { track } from '@renderer/lib/analytics.js';
@@ -158,11 +143,7 @@ export function StepUrlInput(): JSX.Element {
   return (
     <div className="wizard-step flex flex-col gap-4" data-testid="step-url">
       <div className="flex items-center gap-3">
-        <MascotBubble
-          image={hasActiveDownloads ? downloadingImg : hiImg}
-          message={hasActiveDownloads ? t('wizard.url.mascotBusy') : t('wizard.url.mascotIdle')}
-          className="w-[30%] shrink-0"
-        />
+        <MascotBubble image={hasActiveDownloads ? downloadingImg : hiImg} message={hasActiveDownloads ? t('wizard.url.mascotBusy') : t('wizard.url.mascotIdle')} className="w-[30%] shrink-0" />
         <div className="flex flex-col gap-1.5 flex-1 min-w-0">
           <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.url.heading')}</p>
           <div className="flex gap-2">
@@ -361,10 +342,7 @@ function FeatureSection({ heading, children }: { heading: string; children: Reac
 
 function FeatureChip({ icon, label }: { icon: ReactNode; label: string }): JSX.Element {
   return (
-    <span
-      role="listitem"
-      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-strong)] bg-card/40 px-2.5 py-1 text-[12px] text-foreground"
-    >
+    <span role="listitem" className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-strong)] bg-card/40 px-2.5 py-1 text-[12px] text-foreground">
       <span aria-hidden className="text-[var(--text-subtle)]">
         {icon}
       </span>

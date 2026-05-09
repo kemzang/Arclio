@@ -56,7 +56,8 @@ function resetStore() {
     initialized: false,
     initializing: false,
     settings: { defaultOutputDir: '/tmp', rememberLastOutputDir: false },
-    wizardStep: 'confirm', wizardExtractor: 'youtube',
+    wizardStep: 'confirm',
+    wizardExtractor: 'youtube',
     wizardMode: 'single',
     formatsLoading: false,
     wizardUrl: '',
@@ -104,7 +105,8 @@ describe('D1/D3 — StepConfirm playlist-mode rendering', () => {
   function setPlaylistConfirmState() {
     useAppStore.setState({
       wizardMode: 'playlist',
-      wizardStep: 'confirm', wizardExtractor: 'youtube',
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube',
       playlistTitle: 'My Playlist',
       playlistItems: PLAYLIST_ENTRIES,
       selectedPlaylistItemIds: ['p1', 'p2'],

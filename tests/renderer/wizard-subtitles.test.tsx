@@ -292,7 +292,8 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitles: PROBE_RESULT.subtitles,
       wizardAutomaticCaptions: PROBE_RESULT.automaticCaptions,
       wizardSubtitleLanguages: ['en', 'es'],
-      wizardStep: 'confirm', wizardExtractor: 'youtube'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();
@@ -319,7 +320,8 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitles: PROBE_RESULT.subtitles,
       wizardAutomaticCaptions: PROBE_RESULT.automaticCaptions,
       wizardSubtitleLanguages: ['de-orig'], // auto-only lang
-      wizardStep: 'confirm', wizardExtractor: 'youtube'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();
@@ -344,7 +346,8 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitles: PROBE_RESULT.subtitles,
       wizardAutomaticCaptions: PROBE_RESULT.automaticCaptions,
       wizardSubtitleLanguages: ['en'],
-      wizardStep: 'confirm', wizardExtractor: 'youtube'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addAndDownloadImmediately();
@@ -377,7 +380,8 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitles: PROBE_RESULT.subtitles,
       wizardAutomaticCaptions: PROBE_RESULT.automaticCaptions,
       wizardSubtitleLanguages: ['en', 'es'],
-      wizardStep: 'confirm', wizardExtractor: 'youtube'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();
@@ -427,7 +431,8 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitleLanguages: ['en'],
       wizardSubtitleMode: 'subfolder',
       wizardSubtitleFormat: 'vtt',
-      wizardStep: 'confirm', wizardExtractor: 'youtube'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();
@@ -455,7 +460,8 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitleLanguages: ['en'],
       wizardSubtitleMode: 'embed',
       wizardSubtitleFormat: 'ass',
-      wizardStep: 'confirm', wizardExtractor: 'youtube'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addAndDownloadImmediately();
@@ -490,7 +496,8 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitleLanguages: ['en'],
       wizardSubtitleMode: 'subfolder',
       wizardSubtitleFormat: 'vtt',
-      wizardStep: 'confirm', wizardExtractor: 'youtube'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();

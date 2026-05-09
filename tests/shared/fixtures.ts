@@ -9,7 +9,8 @@ const SB_OFF: SponsorBlockOptions = { mode: 'off' };
 
 const DEFAULT_JOB: PreparedJob = {
   kind: 'single-format',
-  extractor: 'youtube', extractorKey: 'Youtube',
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
   formatId: '137+251',
   preset: 'custom',
   sponsorBlock: SB_OFF,

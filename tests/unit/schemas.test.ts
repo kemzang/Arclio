@@ -126,13 +126,7 @@ describe('audioConvertSchema', () => {
     expect(audioConvertSchema.safeParse(value).success).toBe(true);
   });
 
-  it.each([
-    { target: 'flac' },
-    { target: 'mp3' },
-    { target: 'mp3', bitrateKbps: 96 },
-    { target: 'mp3', bitrateKbps: 256000 },
-    {}
-  ])('rejects %j', (value) => {
+  it.each([{ target: 'flac' }, { target: 'mp3' }, { target: 'mp3', bitrateKbps: 96 }, { target: 'mp3', bitrateKbps: 256000 }, {}])('rejects %j', (value) => {
     expect(audioConvertSchema.safeParse(value).success).toBe(false);
   });
 

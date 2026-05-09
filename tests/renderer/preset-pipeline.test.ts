@@ -23,7 +23,8 @@ const EMBED_OFF = { chapters: false, metadata: false, thumbnail: false, descript
 function pipelineToPreparedJob(preset: Preset, audioSelection: AudioSelection, videoFormatId: string, subs: string[]): PreparedJob {
   return prepareJob({
     mode: 'single',
-    extractor: 'youtube', extractorKey: 'Youtube',
+    extractor: 'youtube',
+    extractorKey: 'Youtube',
     formatId: buildFormatId(videoFormatId, audioSelection),
     audioConvert: buildAudioConvertPayload(audioSelection),
     activePreset: preset,

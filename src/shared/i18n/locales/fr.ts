@@ -453,7 +453,7 @@ const fr = {
       geoBlocked: "Cette vidéo n'est pas disponible dans ta région.",
       outOfDiskSpace: "Espace disque insuffisant. Libère de l'espace et réessaie.",
       unsupportedUrl: 'Ça ne ressemble pas à une URL de vidéo. Colle un lien vers une vidéo YouTube, un Short ou une playlist.',
-      chunkTransferFailure: "Le serveur a interrompu le téléchargement en cours de route à plusieurs reprises et yt-dlp a abandonné après plusieurs tentatives. Cela touche généralement les formats vidéo les plus lourds (4K HDR / VP9 haut débit). Réessaie, change de réseau/VPN ou sélectionne un format de résolution inférieure."
+      chunkTransferFailure: 'Le serveur a interrompu le téléchargement en cours de route à plusieurs reprises et yt-dlp a abandonné après plusieurs tentatives. Cela touche généralement les formats vidéo les plus lourds (4K HDR / VP9 haut débit). Réessaie, change de réseau/VPN ou sélectionne un format de résolution inférieure.'
     }
   },
   presets: {
