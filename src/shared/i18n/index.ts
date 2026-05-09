@@ -24,7 +24,7 @@ import vi from './locales/vi.js';
 import { SUPPORTED_LANGS, type SupportedLang, type EnTranslation, type LocaleResource } from './types.js';
 
 export { SUPPORTED_LANGS, LANGUAGE_NATIVE_NAMES } from './types.js';
-export type { SupportedLang, YtdlpErrorKey, LocalizedError } from './types.js';
+export type { SupportedLang, YtDlpErrorKind, LocalizedError } from './types.js';
 export { isRtl } from './rtl.js';
 
 const RESOURCES: Record<SupportedLang, LocaleResource> = {

@@ -71,7 +71,7 @@ describe('PreflightPhase', () => {
     const outcome = await phase.run(makeCtx());
     expect(outcome.kind).toBe('hard-failed');
     if (outcome.kind === 'hard-failed') {
-      expect(outcome.error.key).toBe('outOfDiskSpace');
+      expect(outcome.error.kind).toBe('outOfDiskSpace');
     }
   });
 
@@ -96,7 +96,7 @@ describe('PreflightPhase', () => {
     const outcome = await phase.run(makeCtx());
     expect(outcome.kind).toBe('hard-failed');
     if (outcome.kind === 'hard-failed') {
-      expect(outcome.error.key).toBe('outOfDiskSpace');
+      expect(outcome.error.kind).toBe('outOfDiskSpace');
     }
   });
 
@@ -111,7 +111,7 @@ describe('PreflightPhase', () => {
     await phase.run(ctx);
     // Localized status key with GB-formatted required/free params; payload still
     // carries the actionable yt-dlp error key for downstream classification.
-    expect(ctx.emitStatus).toHaveBeenCalledWith('error', 'diskSpaceInsufficient', expect.objectContaining({ required: expect.any(String), free: expect.any(String) }), expect.objectContaining({ key: 'outOfDiskSpace' }));
+    expect(ctx.emitStatus).toHaveBeenCalledWith('error', 'diskSpaceInsufficient', expect.objectContaining({ required: expect.any(String), free: expect.any(String) }), expect.objectContaining({ kind: 'outOfDiskSpace' }));
   });
 
   it('calls checkDiskSpace with the job outputDir', async () => {
@@ -125,7 +125,7 @@ describe('PreflightPhase', () => {
     expect(checkDiskSpace).toHaveBeenCalledWith('/my/output', 500_000_000);
   });
 
-  it('hard-failed error rawMessage includes GB amounts', async () => {
+  it('hard-failed error raw text includes GB amounts', async () => {
     vi.mocked(checkDiskSpace).mockResolvedValue({
       ok: false,
       freeBytes: 1_073_741_824,
@@ -134,7 +134,7 @@ describe('PreflightPhase', () => {
     const phase = PreflightPhase(2_000_000_000);
     const outcome = await phase.run(makeCtx());
     if (outcome.kind === 'hard-failed') {
-      expect(outcome.error.rawMessage).toContain('GB');
+      expect(outcome.error.raw).toContain('GB');
     }
   });
 });

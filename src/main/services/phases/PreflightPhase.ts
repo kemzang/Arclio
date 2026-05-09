@@ -16,8 +16,8 @@ export function PreflightPhase(expectedBytes: number | undefined): Phase {
       if (!check.ok) {
         const requiredFmt = check.requiredBytes !== undefined ? formatGB(check.requiredBytes) : '—';
         const freeFmt = check.freeBytes !== undefined ? formatGB(check.freeBytes) : '—';
-        const rawMessage = check.error !== undefined ? `Cannot read disk space at ${job.outputDir}: ${check.error}` : `Need ${requiredFmt} free, only ${freeFmt} available`;
-        const error: LocalizedError = { key: 'outOfDiskSpace', rawMessage };
+        const raw = check.error !== undefined ? `Cannot read disk space at ${job.outputDir}: ${check.error}` : `Need ${requiredFmt} free, only ${freeFmt} available`;
+        const error: LocalizedError = { kind: 'outOfDiskSpace', raw };
         ctx.emitStatus('error', STATUS_KEY.diskSpaceInsufficient, { required: requiredFmt, free: freeFmt }, error);
         return { kind: 'hard-failed', error };
       }

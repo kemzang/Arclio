@@ -454,7 +454,11 @@ const zh = {
       geoBlocked: '该视频在你所在的地区不可用。',
       outOfDiskSpace: '磁盘空间不足。请清理空间后重试。',
       unsupportedUrl: '这看起来不像视频链接。请粘贴 YouTube 视频、Short 或播放列表的链接。',
-      chunkTransferFailure: '服务器在传输过程中反复中断下载，yt-dlp 多次重试后放弃。此问题通常出现在最大的视频格式（4K HDR / 高码率 VP9）上。请重试、切换网络或 VPN，或选择分辨率较低的格式。'
+      chunkTransferFailure: '服务器在传输过程中反复中断下载，yt-dlp 多次重试后放弃。此问题通常出现在最大的视频格式（4K HDR / 高码率 VP9）上。请重试、切换网络或 VPN，或选择分辨率较低的格式。',
+      postprocessFailure: 'yt-dlp 已完成下载，但后处理（合并 / mux / 转换）失败。这通常是 ffmpeg 的临时问题——请重试，如果仍然失败，请尝试其他格式组合。',
+      parse: '无法解析网站的响应。yt-dlp 的提取器可能已过时。Arroxy 会在启动时自动更新 yt-dlp——请几分钟后再重试，等待修复发布。',
+      network: '网络错误。请检查你的连接并重试。',
+      unknown: '下载失败。请查看下方的原始输出。'
     }
   },
   presets: {

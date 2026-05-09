@@ -453,7 +453,11 @@ const es = {
       geoBlocked: 'Este vídeo no está disponible en tu región.',
       outOfDiskSpace: 'No hay suficiente espacio en disco. Libera espacio e inténtalo de nuevo.',
       unsupportedUrl: 'Eso no parece una URL de vídeo. Pega un enlace a un vídeo de YouTube, un Short o una playlist.',
-      chunkTransferFailure: 'El servidor cortó la descarga repetidamente y yt-dlp se rindió tras varios intentos. Esto suele ocurrir con los formatos de mayor tamaño (4K HDR / VP9 de alta tasa de bits). Vuelve a intentarlo, cambia de red/VPN o elige un formato de menor resolución.'
+      chunkTransferFailure: 'El servidor cortó la descarga repetidamente y yt-dlp se rindió tras varios intentos. Esto suele ocurrir con los formatos de mayor tamaño (4K HDR / VP9 de alta tasa de bits). Vuelve a intentarlo, cambia de red/VPN o elige un formato de menor resolución.',
+      postprocessFailure: 'yt-dlp terminó la descarga, pero el post-procesado (mezcla / mux / conversión) falló. A menudo es un problema transitorio de ffmpeg — reintenta, y si persiste prueba con otra combinación de formatos.',
+      parse: 'No se pudo analizar la respuesta del sitio. Es posible que el extractor de yt-dlp esté desfasado. Arroxy actualiza yt-dlp automáticamente al iniciar — reintenta en unos minutos cuando llegue el arreglo.',
+      network: 'Error de red. Comprueba tu conexión y reintenta.',
+      unknown: 'La descarga falló. Mira la salida en bruto a continuación.'
     }
   },
   presets: {

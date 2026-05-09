@@ -84,7 +84,7 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
         logger.warn('Subtitle fetch failed — video already saved', {
           jobId: job.id,
           kind: subResult.kind,
-          ...(subResult.kind === 'exit-error' ? { code: subResult.exitCode, signal: subResult.signal } : {})
+          ...(subResult.kind === 'exit-error' ? { code: subResult.exitCode, errorKind: subResult.errorKind } : {})
         });
         return { kind: 'soft-failed', status: STATUS_KEY.subtitlesFailed };
       }

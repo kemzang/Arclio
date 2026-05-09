@@ -114,7 +114,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
           progressFormatters.delete(event.jobId);
           updateQueueItem(set, item.id, {
             status: QUEUE_STATUS.error,
-            error: event.error ?? { key: null },
+            error: event.error ?? { kind: 'unknown', raw: '' },
             lastStatus: { key: event.statusKey, params: event.params },
             downloadJobId: null
           });

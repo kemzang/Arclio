@@ -53,7 +53,7 @@ function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload
     active: makeActive(activeOverrides),
     ytDlp: { run: runMock, ffmpegPath: null } as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ key: null }),
+    emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'unknown', raw: '' }),
     attachYtDlpProcess: vi.fn(),
     safeConsume: vi.fn(),
     cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
@@ -72,7 +72,7 @@ const SUCCESS: YtDlpResult = {
 const EXIT_ERROR: YtDlpResult = {
   kind: 'exit-error',
   exitCode: 1,
-  signal: null,
+  errorKind: 'unknown',
   rawError: 'fail',
   stdout: '',
   stderr: ''

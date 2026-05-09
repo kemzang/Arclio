@@ -64,7 +64,7 @@ function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload
     active: makeActive(activeOverrides),
     ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ key: 'botBlock' }),
+    emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'botBlock', raw: '' }),
     attachYtDlpProcess: vi.fn(),
     safeConsume: vi.fn(),
     cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
@@ -90,7 +90,7 @@ const SUCCESS_FALLBACK: YtDlpResult = {
 const EXIT_ERROR: YtDlpResult = {
   kind: 'exit-error',
   exitCode: 1,
-  signal: 'botBlock',
+  errorKind: 'botBlock',
   rawError: 'bot',
   stdout: '',
   stderr: ''
@@ -283,7 +283,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
       active: { job, input, cancelRequested: false, pauseRequested: false, subtitlePaths: [], ...activeOverrides },
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn().mockReturnValue({ key: 'botBlock' }),
+      emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'botBlock', raw: '' }),
       attachYtDlpProcess: vi.fn(),
       safeConsume: vi.fn(),
       cleanupPartFiles: vi.fn().mockResolvedValue(undefined),

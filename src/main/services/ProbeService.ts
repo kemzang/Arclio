@@ -9,6 +9,7 @@ import type { FormatOption, PlaylistEntry, ProbePlaylistMode, ProbeResult, Probe
 import { LIVE_CHAT_LANG } from '@shared/constants.js';
 import { infoDictSchema, isPlaylistLike, isUrlRedirect, type InfoDict, type PlaylistInfo, type MultiVideoInfo, type VideoInfo, type YtDlpFormat, type YtDlpSubtitleTrack } from '@shared/ytdlp/infoDict.js';
 import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
+import { classifyYtDlpStderr, type YtDlpErrorKind } from '@shared/ytdlp/errors.js';
 import { siteForExtractor, type Site } from '@shared/sites/index.js';
 import { YtDlp } from './YtDlp.js';
 
@@ -45,7 +46,7 @@ interface ProbeAttemptSuccess {
   degradationSignals: ProbeSignal[];
 }
 
-type ProbeAttemptResult = { kind: 'success'; data: ProbeAttemptSuccess } | { kind: 'failure'; error: ReturnType<typeof createAppError>; errorCategory: string };
+type ProbeAttemptResult = { kind: 'success'; data: ProbeAttemptSuccess } | { kind: 'failure'; error: ReturnType<typeof createAppError>; errorCategory: ProbeFailureCategory };
 
 function sanitizeSubtitleMap(raw: Record<string, YtDlpSubtitleTrack[]> | undefined, opts: { isAutomaticCaptions: boolean; site: Site }): SubtitleMap {
   if (!raw) return {};
@@ -124,13 +125,21 @@ export function mapFormats(formats: readonly YtDlpFormat[]): FormatOption[] {
   return sortFormatsByQuality(mapped);
 }
 
-function categorizeProbeError(msg: string): string {
-  const m = msg.toLowerCase();
-  if (/sign in to confirm|confirm you'?re not a bot|\bbot\b|http error 403|\b403\b/.test(m)) return 'bot_detected';
-  if (/unsupported url|is not a supported (?:site|url)|no extractor matches/.test(m)) return 'unsupported_site';
-  if (/json (?:parse|decode)|unexpected token|schema validation|invalid json/.test(m)) return 'parse';
-  if (/\b(?:timed? out|timeout|econn(?:reset|refused|aborted)|enotfound|getaddrinfo|network is unreachable)\b/.test(m)) return 'network';
-  return 'unknown';
+// Probe-specific operational categories that aren't a yt-dlp stderr kind:
+// 'cancelled' (user-driven), 'content_unavailable' (zero formats / empty
+// playlist), 'redirect_loop' (extractor redirected too many times). All other
+// failures carry a `YtDlpErrorKind`. This union is the analytics
+// `error_category` value.
+type ProbeFailureCategory = YtDlpErrorKind | 'cancelled' | 'content_unavailable' | 'redirect_loop';
+
+// `Unsupported URL` is emitted by yt-dlp before any extraction begins; it
+// doesn't match any of the post-extraction stderr patterns. Detect it here so
+// the user gets the right copy + CTA.
+function classifyProbeFailure(rawError: string): YtDlpErrorKind {
+  if (/unsupported url|is not a supported (?:site|url)|no extractor matches/i.test(rawError)) {
+    return 'unsupportedUrl';
+  }
+  return classifyYtDlpStderr(rawError).kind;
 }
 
 function detectProbeDegradationSignals(stderr: string): ProbeSignal[] {
@@ -322,7 +331,7 @@ export class ProbeService {
         result_kind: result.kind
       });
     };
-    const emitFailure = (errorCategory: string): void => {
+    const emitFailure = (errorCategory: ProbeFailureCategory): void => {
       trackMain('probe_failed', {
         duration_bucket: probeDurationBucket(Date.now() - startMs),
         error_category: errorCategory,
@@ -384,7 +393,7 @@ export class ProbeService {
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown probing error';
       logger.error('Probe failure', { message, url });
-      emitFailure(controller.signal.aborted ? 'cancelled' : categorizeProbeError(message));
+      emitFailure(controller.signal.aborted ? 'cancelled' : classifyProbeFailure(message));
       return fail(createAppError('download', message));
     } finally {
       this.inFlight.delete(controller);
@@ -452,7 +461,6 @@ export class ProbeService {
 
     if (result.kind !== 'success') {
       const code = result.kind === 'exit-error' ? result.exitCode : null;
-      const ytSignal = result.kind === 'exit-error' ? result.signal : null;
       const rawError = result.kind === 'exit-error' ? result.rawError : result.error.message;
       // Distinguish caller-driven cancellation from a genuine yt-dlp failure
       // so analytics + UI don't treat it as an error.
@@ -463,11 +471,15 @@ export class ProbeService {
           errorCategory: 'cancelled'
         };
       }
-      logger.error('yt-dlp probe failed', { attempt, code, url, signal: ytSignal });
+      // yt-dlp's exit-error kind is anchored to its stderr classifier; for
+      // probe-time failures we additionally recognize 'unsupportedUrl' which
+      // yt-dlp emits before extraction begins.
+      const probeKind = classifyProbeFailure(rawError ?? '');
+      logger.error('yt-dlp probe failed', { attempt, code, url, kind: probeKind });
       return {
         kind: 'failure',
-        error: createAppError('download', rawError ?? 'Probing failed', undefined, true, ytSignal ?? undefined),
-        errorCategory: categorizeProbeError(rawError ?? '')
+        error: createAppError('download', rawError ?? 'Probing failed', undefined, true, probeKind),
+        errorCategory: probeKind
       };
     }
 

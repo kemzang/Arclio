@@ -454,7 +454,11 @@ const uz = {
       geoBlocked: 'Bu video sizning mintaqangizda mavjud emas.',
       outOfDiskSpace: "Disk xotirasi yetarli emas. Bo'sh joy ajrating va qayta urinib ko'ring.",
       unsupportedUrl: "Bu video URL manzilga o'xshamaydi. YouTube video, Short yoki pleylist havolasini joylashtiring.",
-      chunkTransferFailure: "Server yuklab olishni o'rtasida uzib qo'ydi va yt-dlp qayta urinishlardan so'ng voz kechdi. Bu odatda eng katta video formatlarida (4K HDR / yuqori bitreytli VP9) uchraydi. Qayta urining, tarmoq/VPN almashtiring yoki pastroq ruxsat formatini tanlang."
+      chunkTransferFailure: "Server yuklab olishni o'rtasida uzib qo'ydi va yt-dlp qayta urinishlardan so'ng voz kechdi. Bu odatda eng katta video formatlarida (4K HDR / yuqori bitreytli VP9) uchraydi. Qayta urining, tarmoq/VPN almashtiring yoki pastroq ruxsat formatini tanlang.",
+      postprocessFailure: "yt-dlp yuklab olishni tugatdi, biroq keyingi qayta ishlash (birlashtirish / mux / o'girish) muvaffaqiyatsiz tugadi. Ko'pincha bu ffmpeg ning vaqtinchalik muammosi — qayta urining, agar davom etsa, boshqa format kombinatsiyasini sinab ko'ring.",
+      parse: "Saytdan kelgan javobni tahlil qilib bo'lmadi. yt-dlp ekstraktori eskirib qolgan bo'lishi mumkin. Arroxy ishga tushganda yt-dlp ni avtomatik yangilaydi — bir necha daqiqadan so'ng tuzatish kelgach qayta urinib ko'ring.",
+      network: "Tarmoq xatosi. Aloqangizni tekshiring va qayta urining.",
+      unknown: "Yuklab olish muvaffaqiyatsiz tugadi. Quyidagi xom natijani ko'ring."
     }
   },
   presets: {

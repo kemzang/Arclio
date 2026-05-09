@@ -1,12 +1,12 @@
 import type en from './locales/en.js';
-import { SUPPORTED_LANGS as LANGS, type SupportedLang as Lang, type YtdlpErrorKey as YtdlpErrorKeyAlias } from '../schemas.js';
+import { SUPPORTED_LANGS as LANGS, type SupportedLang as Lang, type YtDlpErrorKind as YtDlpErrorKindAlias } from '../schemas.js';
 
 // Re-export so existing imports of `@shared/i18n/types` and `@shared/i18n`
 // continue to work; canonical definitions live in shared/schemas.ts.
 export type SupportedLang = Lang;
 export const SUPPORTED_LANGS = LANGS;
 
-export type YtdlpErrorKey = YtdlpErrorKeyAlias;
+export type YtDlpErrorKind = YtDlpErrorKindAlias;
 
 // Order = alphabetical by native endonym (Latin block first via Unicode collation,
 // then non-Latin scripts in Unicode order). Drives the language picker UI.
@@ -34,9 +34,12 @@ export const LANGUAGE_NATIVE_NAMES: Record<SupportedLang, string> = {
   ja: '日本語'
 };
 
+// `kind` is always populated — `'unknown'` covers the unmatched-stderr fallback.
+// `raw` is the verbatim stderr (or message) the renderer surfaces directly when
+// the kind has no i18n template.
 export interface LocalizedError {
-  key: YtdlpErrorKey | null;
-  rawMessage?: string;
+  kind: YtDlpErrorKind;
+  raw: string;
 }
 
 export type EnTranslation = typeof en;

@@ -1,8 +1,10 @@
 import { z } from 'zod';
 import { isValidSubfolder, SUBFOLDER_NAME_MAX } from './subfolder.js';
 import { AUDIO_CONVERT_TARGETS, type AudioConvertTarget } from './audioTargets.js';
+import { YT_DLP_ERROR_KINDS, type YtDlpErrorKind } from './ytdlp/errors.js';
 
 export type { AudioConvertTarget };
+export type { YtDlpErrorKind };
 
 // Enum schemas — single source of truth. Types below are inferred so adding
 // or removing a value never requires hand-editing a parallel union.
@@ -67,9 +69,7 @@ export type CookiesBrowser = z.infer<typeof cookiesBrowserSchema>;
 export const queueItemStatusSchema = z.enum(['pending', 'downloading', 'paused', 'done', 'error', 'cancelled']);
 export type QueueItemStatus = z.infer<typeof queueItemStatusSchema>;
 
-export const ytdlpErrorKeySchema = z.enum(['botBlock', 'ipBlock', 'rateLimit', 'ageRestricted', 'unavailable', 'geoBlocked', 'outOfDiskSpace', 'unsupportedUrl', 'chunkTransferFailure']);
-export type YtdlpErrorKey = z.infer<typeof ytdlpErrorKeySchema>;
-export const YTDLP_ERROR_KEYS = ytdlpErrorKeySchema.options;
+const ytDlpErrorKindSchema = z.enum(YT_DLP_ERROR_KINDS);
 
 // Reified queue-status names for use in equality checks. Exact mirror of the schema.
 export const QUEUE_STATUS = {
@@ -304,8 +304,8 @@ export const updateSettingsSchema = z
 // Queue item schema — used by both queueSave IPC handler and queueStore.load
 // to reject corrupted persistence (manual edits, partial writes).
 const localizedErrorSchema = z.object({
-  key: ytdlpErrorKeySchema.nullable(),
-  rawMessage: z.string().optional()
+  kind: ytDlpErrorKindSchema,
+  raw: z.string()
 });
 
 const statusSnapshotSchema = z.object({

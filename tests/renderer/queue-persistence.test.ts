@@ -237,7 +237,7 @@ describe('Queue persistence — store behavior', () => {
 
     it('calls save when retryQueueItem() resets a failed item', async () => {
       useAppStore.setState({
-        queue: [makeItem({ id: 'err', status: 'error', error: { key: null, rawMessage: 'oops' } })]
+        queue: [makeItem({ id: 'err', status: 'error', error: { kind: 'unknown', raw: 'oops' } })]
       });
 
       await useAppStore.getState().retryQueueItem('err');
@@ -262,7 +262,7 @@ describe('Queue persistence — store behavior', () => {
       await useAppStore.getState().startItemDownload('fail-start');
 
       expect(useAppStore.getState().queue[0].status).toBe('error');
-      expect(useAppStore.getState().queue[0].error?.rawMessage).toBe('kaboom');
+      expect(useAppStore.getState().queue[0].error?.raw).toBe('kaboom');
       expect(saveMock).toHaveBeenCalled();
       const lastSavedItems = saveMock.mock.calls.at(-1)?.[0] as {
         id: string;
@@ -350,14 +350,14 @@ describe('Queue persistence — store behavior', () => {
         stage: 'error',
         statusKey: 'ytdlpExitCode',
         params: { code: 1 },
-        error: { key: 'botBlock', rawMessage: 'Sign in required' },
+        error: { kind: 'botBlock', raw: 'Sign in required' },
         at: new Date().toISOString()
       });
       await new Promise((r) => setTimeout(r, 20));
 
       expect(saveMock).toHaveBeenCalled();
       expect(useAppStore.getState().queue[0].status).toBe('error');
-      expect(useAppStore.getState().queue[0].error?.key).toBe('botBlock');
+      expect(useAppStore.getState().queue[0].error?.kind).toBe('botBlock');
     });
   });
 
@@ -369,7 +369,7 @@ describe('Queue persistence — store behavior', () => {
 
     it('removes done, cancelled, and error items, keeps pending', () => {
       useAppStore.setState({
-        queue: [makeItem({ id: 'p', status: 'pending' }), makeItem({ id: 'd', status: 'done', progressPercent: 100 }), makeItem({ id: 'e', status: 'error', error: { key: null, rawMessage: 'oops' } }), makeItem({ id: 'c', status: 'cancelled' })]
+        queue: [makeItem({ id: 'p', status: 'pending' }), makeItem({ id: 'd', status: 'done', progressPercent: 100 }), makeItem({ id: 'e', status: 'error', error: { kind: 'unknown', raw: 'oops' } }), makeItem({ id: 'c', status: 'cancelled' })]
       });
 
       useAppStore.getState().clearCompleted();

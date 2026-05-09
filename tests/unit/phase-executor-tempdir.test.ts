@@ -41,7 +41,7 @@ function makeCtx(activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
     active: makeActive(activeOverrides),
     ytDlp: {} as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ key: null }),
+    emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'unknown', raw: '' }),
     attachYtDlpProcess: vi.fn(),
     safeConsume: vi.fn(),
     cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
@@ -58,7 +58,7 @@ function stubPhase(outcome: PhaseOutcome): Phase {
 describe('PhaseExecutor — temp dir cleanup', () => {
   it('calls cleanupTempDir on hard-failed', async () => {
     const ctx = makeCtx();
-    const error: LocalizedError = { key: 'outOfDiskSpace' };
+    const error: LocalizedError = { kind: 'outOfDiskSpace', raw: '' };
     const phase = stubPhase({ kind: 'hard-failed', error });
 
     await new PhaseExecutor().run(ctx, [phase]);
@@ -115,7 +115,7 @@ describe('PhaseExecutor — temp dir cleanup', () => {
       order.push('finalize');
     });
 
-    const phase = stubPhase({ kind: 'hard-failed', error: { key: null } });
+    const phase = stubPhase({ kind: 'hard-failed', error: { kind: 'unknown', raw: '' } });
     await new PhaseExecutor().run(ctx, [phase]);
 
     expect(order).toEqual(['cleanup', 'finalize']);

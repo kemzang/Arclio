@@ -13,10 +13,9 @@ import { STATUS_KEY } from '@shared/schemas.js';
 import type { CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOutput, RecentJob, StartDownloadInput, StartDownloadOutput, StatusEvent, StatusKey } from '@shared/types.js';
 import type { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
 import { YtDlp, type YtDlpResult } from './YtDlp.js';
-import { isPostprocessFailure } from '@main/utils/ytdlpErrors.js';
+import { isPostprocessFailure } from '@shared/ytdlp/errors.js';
 import { checkDiskSpace } from '@main/utils/diskSpace.js';
 import type { ActiveDownload, PausedDownload } from './phases/index.js';
-import { categorizeDownloadError } from './download/errorCategory.js';
 import { killActiveProcesses } from './download/processControl.js';
 import { cleanupPartFiles, cleanupTempDirByPath } from './download/cleanup.js';
 import { ProgressParser } from './download/progressParser.js';
@@ -187,7 +186,7 @@ export class DownloadService extends EventEmitter {
       void this.runPhases(active).catch(async (error) => {
         const message = error instanceof Error ? error.message : 'Unknown phase failure';
         logger.error('Download phase threw unexpectedly', { jobId: job.id, message });
-        const payload: LocalizedError = { key: null, rawMessage: message };
+        const payload: LocalizedError = { kind: 'unknown', raw: message };
         this.emitStatus(job.id, 'error', STATUS_KEY.unknownStartupFailure, undefined, payload);
         await this.finalize(job, 'failed', payload);
       });
@@ -195,7 +194,7 @@ export class DownloadService extends EventEmitter {
       return ok({ job });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown download startup failure';
-      const payload: LocalizedError = { key: null, rawMessage: message };
+      const payload: LocalizedError = { kind: 'unknown', raw: message };
       this.emitStatus(job.id, 'error', STATUS_KEY.unknownStartupFailure, undefined, payload);
       await this.finalize(job, 'failed', payload);
       return fail(createAppError('download', message));
@@ -254,21 +253,19 @@ export class DownloadService extends EventEmitter {
   private async emitYtdlpFailure(job: DownloadJob, result: Exclude<YtDlpResult, { kind: 'success' }>): Promise<LocalizedError> {
     const jobId = job.id;
     if (result.kind === 'spawn-error') {
-      const payload: LocalizedError = { key: null, rawMessage: result.error.message };
+      const payload: LocalizedError = { kind: 'unknown', raw: result.error.message };
       this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpProcessError, { error: result.error.message }, payload);
       return payload;
     }
     // yt-dlp masks ffmpeg's stderr in non-verbose mode, so an ENOSPC during
     // merge surfaces only as "Postprocessing: Conversion failed!". Probe the
-    // output dir on unclassified postprocess failures and upgrade the signal.
-    let signal = result.signal;
-    if (!signal && isPostprocessFailure(result.rawError)) {
+    // output dir on a postprocess failure and upgrade the kind to
+    // outOfDiskSpace if the probe confirms ENOSPC.
+    let kind = result.errorKind;
+    if (kind === 'postprocessFailure' && isPostprocessFailure(result.rawError)) {
       const probe = await checkDiskSpace(job.outputDir, undefined);
-      // Only reclassify as outOfDiskSpace when statfs succeeded *and* reports
-      // free < required. probe.error means we couldn't check (bad path,
-      // permission, NFS unmount) — that's not evidence of ENOSPC.
       if (!probe.ok && probe.error === undefined && probe.freeBytes !== undefined) {
-        signal = 'outOfDiskSpace';
+        kind = 'outOfDiskSpace';
         logger.info('Reclassified postprocess failure as outOfDiskSpace', {
           jobId,
           outputDir: job.outputDir,
@@ -283,12 +280,10 @@ export class DownloadService extends EventEmitter {
       }
     }
     const payload: LocalizedError = {
-      key: signal,
-      rawMessage: result.rawError ?? undefined
+      kind,
+      raw: result.rawError ?? ''
     };
-    if (signal) {
-      this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpExitCode, { code: result.exitCode }, payload);
-    } else if (result.rawError) {
+    if (kind === 'unknown' && result.rawError) {
       this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpProcessError, { error: result.rawError }, payload);
     } else {
       this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpExitCode, { code: result.exitCode }, payload);
@@ -446,7 +441,7 @@ export class DownloadService extends EventEmitter {
     } else {
       trackMain('download_failed', {
         duration_bucket: downloadDurationBucket(durationMs),
-        error_category: categorizeDownloadError(error?.rawMessage ?? ''),
+        error_category: error?.kind ?? 'unknown',
         ...(job.expectedBytes != null ? { size_bucket: sizeBucket(job.expectedBytes) } : {})
       });
     }

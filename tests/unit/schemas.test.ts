@@ -180,13 +180,13 @@ describe('queueArraySchema', () => {
     expect(queueArraySchema.safeParse([{ ...valid, job: { kind: 'magic-format' } }]).success).toBe(false);
   });
 
-  it('rejects when error.key is not a known YtdlpErrorKey', () => {
+  it('rejects when error.kind is not a known YtDlpErrorKind', () => {
     expect(
       queueArraySchema.safeParse([
         {
           ...valid,
           status: 'error',
-          error: { key: 'totallyMadeUp', rawMessage: 'oops' }
+          error: { kind: 'totallyMadeUp', raw: 'oops' }
         }
       ]).success
     ).toBe(false);

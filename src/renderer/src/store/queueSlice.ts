@@ -301,7 +301,7 @@ export function createQueueSlice(set: SetState, get: GetState, scheduler: JobSch
       const result = await window.appApi.downloads.start(buildStartInput(item));
 
       if (!result.ok) {
-        const errorPayload: LocalizedError = { key: null, rawMessage: result.error.message };
+        const errorPayload: LocalizedError = { kind: 'unknown', raw: result.error.message };
         updateQueueItem(set, itemId, { status: QUEUE_STATUS.error, error: errorPayload });
         saveQueue(get);
         return;
@@ -391,7 +391,7 @@ export function createQueueSlice(set: SetState, get: GetState, scheduler: JobSch
       const result = await window.appApi.downloads.start(buildStartInput(item));
 
       if (!result.ok) {
-        const errorPayload: LocalizedError = { key: null, rawMessage: result.error.message };
+        const errorPayload: LocalizedError = { kind: 'unknown', raw: result.error.message };
         updateQueueItem(set, itemId, { status: QUEUE_STATUS.error, error: errorPayload });
         saveQueue(get);
         return;

@@ -1,7 +1,8 @@
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
 import log from 'electron-log/main.js';
 import { spawnYtDlp } from '@main/utils/process.js';
-import { classifyStderr, extractLastError, type StderrSignal } from '@main/utils/ytdlpErrors.js';
+import { classifyYtDlpStderr, extractLastError } from '@shared/ytdlp/errors.js';
+import type { YtDlpErrorKind } from '@shared/ytdlp/errors.js';
 import { resolveCookies, type ResolvedCookies } from './cookiesResolver.js';
 import { nonEmpty } from '@shared/format.js';
 import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath.js';
@@ -104,7 +105,10 @@ export type YtDlpResult =
   | {
       kind: 'exit-error';
       exitCode: number;
-      signal: StderrSignal | null;
+      // Closed taxonomy. Always populated — `'unknown'` covers the
+      // unmatched-stderr fallback. `rawError` carries the verbatim message
+      // the renderer should show when no i18n template applies.
+      errorKind: YtDlpErrorKind;
       rawError: string | null;
       stdout: string;
       stderr: string;
@@ -175,7 +179,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
     return Promise.resolve({
       kind: 'exit-error',
       exitCode: -1,
-      signal: null,
+      errorKind: 'unknown',
       rawError: 'Cancelled',
       stdout: '',
       stderr: ''
@@ -213,7 +217,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
           finish({
             kind: 'exit-error',
             exitCode: -1,
-            signal: null,
+            errorKind: 'unknown',
             rawError: 'Probe timed out',
             stdout,
             stderr
@@ -236,7 +240,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
           finish({
             kind: 'exit-error',
             exitCode: -1,
-            signal: null,
+            errorKind: 'unknown',
             rawError: 'Cancelled',
             stdout,
             stderr
@@ -276,7 +280,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
       finish({
         kind: 'exit-error',
         exitCode: code ?? -1,
-        signal: classifyStderr(stderr),
+        errorKind: classifyYtDlpStderr(stderr).kind,
         rawError: extractLastError(stderr),
         stdout,
         stderr
@@ -313,7 +317,7 @@ async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
     return invokeOnce(opts, { kind: 'fallback' });
   }
 
-  if (result.kind !== 'exit-error' || result.signal !== 'botBlock') return result;
+  if (result.kind !== 'exit-error' || result.errorKind !== 'botBlock') return result;
 
   opts.signal?.onAttempt?.(1);
   try {
@@ -323,7 +327,7 @@ async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
     return invokeOnce(opts, { kind: 'fallback' });
   }
 
-  if (result.kind !== 'exit-error' || result.signal !== 'botBlock') return result;
+  if (result.kind !== 'exit-error' || result.errorKind !== 'botBlock') return result;
 
   opts.signal?.onAttempt?.(2);
   return invokeOnce(opts, { kind: 'fallback' });

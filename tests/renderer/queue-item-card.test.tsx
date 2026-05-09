@@ -105,7 +105,7 @@ describe('QueueItemCard — progress display', () => {
 
 describe('QueueItemCard — error state', () => {
   it('shows raw error message when status is error', () => {
-    render(<QueueItemCard item={makeItem({ status: 'error', error: { key: null, rawMessage: 'oops' } })} />);
+    render(<QueueItemCard item={makeItem({ status: 'error', error: { kind: 'unknown', raw: 'oops' } })} />);
     expect(screen.getByTestId('queue-error-msg')).toHaveTextContent('oops');
   });
 

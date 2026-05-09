@@ -55,13 +55,13 @@ describe('QueueStore', () => {
     const item = makeItem({
       id: 'c',
       status: 'error',
-      error: { key: null, rawMessage: 'Network error' }
+      error: { kind: 'unknown', raw: 'Network error' }
     });
     await store.save([item]);
 
     const loaded = await loadOk(store);
     expect(loaded[0].status).toBe('error');
-    expect(loaded[0].error?.rawMessage).toBe('Network error');
+    expect(loaded[0].error?.raw).toBe('Network error');
   });
 
   it('normalizes downloading → pending and resets progress', async () => {

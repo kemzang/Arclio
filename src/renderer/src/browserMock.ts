@@ -75,7 +75,7 @@ if (!('appApi' in window)) {
           stage: 'error',
           statusKey: 'ytdlpExitCode',
           params: { code: 1 },
-          error: { key: 'botBlock', rawMessage: "Sign in to confirm you're not a bot" },
+          error: { kind: 'botBlock', raw: "Sign in to confirm you're not a bot" },
           at: new Date().toISOString()
         })
       );

@@ -453,7 +453,11 @@ const en = {
       geoBlocked: 'This video is not available in your region.',
       outOfDiskSpace: 'Not enough disk space. Free up space and retry.',
       unsupportedUrl: "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites.",
-      chunkTransferFailure: 'The server kept cutting the download mid-stream and yt-dlp gave up after retrying. This usually hits the largest video formats (4K HDR / high-bitrate VP9). Retry, switch network/VPN, or pick a lower-resolution format.'
+      chunkTransferFailure: 'The server kept cutting the download mid-stream and yt-dlp gave up after retrying. This usually hits the largest video formats (4K HDR / high-bitrate VP9). Retry, switch network/VPN, or pick a lower-resolution format.',
+      postprocessFailure: 'yt-dlp finished downloading but post-processing (merge / mux / convert) failed. Often this is a transient ffmpeg issue — retry, and if it persists try a different format combination.',
+      parse: "Couldn't parse the response from the site. yt-dlp's extractor may have drifted. Arroxy auto-updates yt-dlp on launch — retry in a few minutes once the fix ships.",
+      network: 'Network error. Check your connection and retry.',
+      unknown: 'Download failed. See the raw output below.'
     }
   },
   presets: {

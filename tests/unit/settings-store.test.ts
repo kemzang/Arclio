@@ -52,7 +52,7 @@ describe('settings and recent stores', () => {
       outputDir: '/tmp',
       status: 'failed',
       finishedAt: '2024-01-02T00:00:00.000Z',
-      error: { key: null, rawMessage: 'boom' }
+      error: { kind: 'unknown', raw: 'boom' }
     });
 
     const list = await store.list();

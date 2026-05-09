@@ -8,20 +8,21 @@ import uk from '@shared/i18n/locales/uk.js';
 import ja from '@shared/i18n/locales/ja.js';
 import zh from '@shared/i18n/locales/zh.js';
 import hi from '@shared/i18n/locales/hi.js';
-import { YTDLP_ERROR_KEYS, STATUS_KEY } from '@shared/schemas.js';
+import { STATUS_KEY } from '@shared/schemas.js';
+import { YT_DLP_ERROR_KINDS } from '@shared/ytdlp/errors.js';
 import type { LocaleResource } from '@shared/i18n/types.js';
 
 const LOCALES: Record<string, LocaleResource> = { en, es, fr, de, ru, uk, ja, zh, hi };
 
 describe('i18n contract', () => {
-  it('every locale has a string for every YtdlpErrorKey', () => {
+  it('every locale has a string for every YtDlpErrorKind', () => {
     for (const [name, resource] of Object.entries(LOCALES)) {
       const ytdlp = (resource as LocaleResource & { errors?: { ytdlp?: Record<string, string> } }).errors?.ytdlp ?? {};
-      for (const key of YTDLP_ERROR_KEYS) {
-        const value = ytdlp[key];
-        expect(value, `${name} locale missing errors.ytdlp.${key}`).toBeDefined();
-        expect(typeof value, `${name}.errors.ytdlp.${key} not string`).toBe('string');
-        expect((value ?? '').length, `${name}.errors.ytdlp.${key} is empty`).toBeGreaterThan(0);
+      for (const kind of YT_DLP_ERROR_KINDS) {
+        const value = ytdlp[kind];
+        expect(value, `${name} locale missing errors.ytdlp.${kind}`).toBeDefined();
+        expect(typeof value, `${name}.errors.ytdlp.${kind} not string`).toBe('string');
+        expect((value ?? '').length, `${name}.errors.ytdlp.${kind} is empty`).toBeGreaterThan(0);
       }
     }
   });

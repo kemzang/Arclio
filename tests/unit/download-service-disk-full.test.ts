@@ -74,11 +74,11 @@ describe('DownloadService — postprocess ENOSPC reclassification', () => {
 
     const finalized = recentJobsStore.push.mock.calls[0]?.[0];
     expect(finalized?.status).toBe('failed');
-    expect(finalized?.error?.key).toBe('outOfDiskSpace');
-    expect(finalized?.error?.rawMessage).toContain('Conversion failed');
+    expect(finalized?.error?.kind).toBe('outOfDiskSpace');
+    expect(finalized?.error?.raw).toContain('Conversion failed');
   });
 
-  it('keeps key=null when "Conversion failed" surfaces but disk has plenty of free space', async () => {
+  it('keeps kind=postprocessFailure when "Conversion failed" surfaces but disk has plenty of free space', async () => {
     vi.mocked(checkDiskSpace)
       .mockResolvedValueOnce({ ok: true, freeBytes: 50_000_000_000, requiredBytes: 200 * 1024 * 1024 })
       .mockResolvedValueOnce({ ok: true, freeBytes: 50_000_000_000, requiredBytes: 200 * 1024 * 1024 });
@@ -90,7 +90,9 @@ describe('DownloadService — postprocess ENOSPC reclassification', () => {
     await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce(), { timeout: 5000 });
 
     const finalized = recentJobsStore.push.mock.calls[0]?.[0];
-    expect(finalized?.error?.key).toBeNull();
+    // Postprocess failure stays as postprocessFailure when disk probe shows
+    // plenty of free space (no upgrade to outOfDiskSpace).
+    expect(finalized?.error?.kind).toBe('postprocessFailure');
   });
 
   it('does not run the post-failure disk probe for unrelated errors', async () => {
@@ -106,6 +108,6 @@ describe('DownloadService — postprocess ENOSPC reclassification', () => {
     // Only the preflight call — no post-failure probe.
     expect(vi.mocked(checkDiskSpace)).toHaveBeenCalledTimes(1);
     const finalized = recentJobsStore.push.mock.calls[0]?.[0];
-    expect(finalized?.error?.key).toBe('ipBlock');
+    expect(finalized?.error?.kind).toBe('ipBlock');
   });
 });

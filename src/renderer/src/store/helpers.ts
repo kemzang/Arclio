@@ -121,8 +121,10 @@ export function formatStatus(snapshot: StatusSnapshot | null): string {
 
 export function formatLocalizedError(error: LocalizedError | null): string {
   if (!error) return '';
-  if (error.key) return i18next.t(`errors.ytdlp.${error.key}` as const);
-  return error.rawMessage ?? '';
+  // For 'unknown', prefer the verbatim raw stderr so the user sees something
+  // concrete rather than a generic localized fallback.
+  if (error.kind === 'unknown') return error.raw || i18next.t('errors.ytdlp.unknown' as const);
+  return i18next.t(`errors.ytdlp.${error.kind}` as const);
 }
 
 export function formatError(error: AppError | null): string {

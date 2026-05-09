@@ -41,7 +41,7 @@ function makeCtx(activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
     active: makeActive(activeOverrides),
     ytDlp: {} as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ key: null }),
+    emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'unknown', raw: '' }),
     attachYtDlpProcess: vi.fn(),
     safeConsume: vi.fn(),
     cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
@@ -105,7 +105,7 @@ describe('PhaseExecutor', () => {
 
   it('hard-failed → finalizes failed with error payload, no emitStatus', async () => {
     const ctx = makeCtx();
-    const error: LocalizedError = { key: 'botBlock' };
+    const error: LocalizedError = { kind: 'botBlock', raw: '' };
     const phase = stubPhase({ kind: 'hard-failed', error });
 
     await new PhaseExecutor().run(ctx, [phase]);

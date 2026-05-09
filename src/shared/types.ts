@@ -9,7 +9,7 @@ export type { PreparedJob } from './preparedJob.js';
 export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection, CookiesMode, CookiesBrowser } from './schemas.js';
 
 export type { StatusKey } from './schemas.js';
-export type { LocalizedError, YtdlpErrorKey } from './i18n/types.js';
+export type { LocalizedError, YtDlpErrorKind } from './i18n/types.js';
 
 import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey, CookiesMode, CookiesBrowser } from './schemas.js';
 
@@ -20,7 +20,7 @@ export interface AppError {
   message: string;
   details?: string;
   recoverable?: boolean;
-  localizedKey?: import('./schemas.js').YtdlpErrorKey;
+  localizedKey?: import('./schemas.js').YtDlpErrorKind;
 }
 
 // Mode-independent prefs and infrastructure config. Anything that applies

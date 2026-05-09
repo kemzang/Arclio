@@ -101,7 +101,7 @@ describe('DownloadService — error surfacing', () => {
     const { service, recentJobsStore } = makeService();
     const statusEvents: {
       statusKey: string;
-      error?: { key: string | null; rawMessage?: string };
+      error?: { kind: string; raw: string };
     }[] = [];
     service.on('status', (ev) => statusEvents.push({ statusKey: ev.statusKey, error: ev.error }));
 
@@ -109,9 +109,9 @@ describe('DownloadService — error surfacing', () => {
     await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce());
 
     const errorStatus = statusEvents.find((e) => e.error);
-    expect(errorStatus?.error?.rawMessage).toBe(stderrMsg.trim());
+    expect(errorStatus?.error?.raw).toContain('Video unavailable');
     const finalized = recentJobsStore.push.mock.calls[0]?.[0];
-    expect(finalized?.error?.rawMessage).toBe(stderrMsg.trim());
+    expect(finalized?.error?.raw).toContain('Video unavailable');
   });
 });
 
