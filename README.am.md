@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="የ Arroxy መሸፈኛ" width="180" />
 
-# Arroxy — ነፃ ምን ኮድ ያለው YouTube አውራጅ ለ Windows, macOS እና Linux
+# Arroxy — ነፃ ምን ኮድ ያለው YouTube (+ 2000 ጣቢያ) አውራጅ ለ Windows, macOS እና Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **አንብብ በ:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · **አማርኛ** · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![ስሪት](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![ግንባታ](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![ድር ጣቢያ](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![ፈቃድ](https://img.shields.io/badge/license-MIT-green) ![ሥርዓቶች](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![ቋንቋዎች](https://img.shields.io/badge/i18n-21_languages-blue)
 
-ማንኛውንም YouTube ቪዲዮ፣ Short፣ ወይም የድምፅ ትራክ በዋናው ጥራት ያውርዱ — እስከ 4K HDR በ60 fps፣ ወይም MP3 / AAC / Opus። በ Windows፣ macOS፣ እና Linux ላይ አካባቢያዊ ሆኖ ይሠራል። **ምንም ማስታወቂያ፣ ምንም ግባ፣ ምንም ብሮውዘር ኩኪ፣ ምንም Google ሂሳብ አልተያያዘም።**
+ቪዲዮዎች፣ Shorts፣ ሙዚቃ፣ ቻናሎች፣ ፖድካስቶች ወይም የድምፅ ትራኮች ከ**YouTube እና ከ2000+ ተደገፉ ጣቢያዎች** ያውርዱ — እስከ 4K HDR በ60 fps፣ ወይም MP3 / AAC / Opus። በ Windows፣ macOS፣ እና Linux ላይ አካባቢያዊ ሆኖ ይሠራል። **ምንም ማስታወቂያ፣ ምንም ብዝሃ ሸቀጥ፣ ምንም ተጨማሪ ሽያጭ።**
 
 [**↓ የቅርብ ጊዜ ስሪት አውርድ**](../../releases/latest) &nbsp;·&nbsp; [**ድር ጣቢያ**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -68,7 +68,7 @@ Arroxy ለአንድ ነገር ብቻ ተሠርቷል: URL ይለጥፉ፣ ንጹ
 
 ### የሥራ ፍሰት
 
-- **ማንኛውንም የYouTube URL ለጥፍ** — ቪዲዮዎች፣ Shorts እና playlists ይደገፋሉ፤ playlist ሙሉውን አውርድ ወይም መጀመሪያ የተወሰኑ ቪዲዮዎችን ምረጥ
+- **ማንኛውንም ሊንክ ለጥፍ** — YouTube ቪዲዮዎች፣ Shorts፣ ቻናሎች፣ ፕሌይሊስቶች፣ ፖድካስቶች እና YouTube Music፣ እናም yt-dlp ከሚደግፋቸው 2000+ ሌሎች ጣቢያዎች፤ playlist ሙሉውን አውርድ ወይም መጀመሪያ የተወሰኑ ቪዲዮዎችን ምረጥ
 - **ብዙ ማውረድ ወረፋ** — ብዙ ማውረዶችን አንድ ጊዜ ይከታተሉ
 - **ክሊፕቦርድ ክትትል** — YouTube ሊንክ ቅዱ እና Arroxy ወደ አፕ ሲመለሱ URL ን አውቶሜቲክ ይሙላሉ (በ Advanced settings ውስጥ ያብሩ/ያጥፉ)
 - **URL ን ራስ ሰር ያጥሩ** — ትራኪንግ ፓራሜትሮችን (`si`፣ `pp`፣ `utm_*`፣ `fbclid`፣ `gclid`) ያስወግዳሉ እና `youtube.com/redirect` ሊንኮችን ያሰናስሉ
@@ -81,6 +81,13 @@ Arroxy ለአንድ ነገር ብቻ ተሠርቷል: URL ይለጥፉ፣ ንጹ
 - ከቪዲዮ ጎን ያቆዩ፣ ወደ `.mkv` ያካቱ፣ ወይም ወደ `Subtitles/` ንዑስ አቃፊ ያዘጋጁ
 - **SponsorBlock** — ስፖንሰሮችን፣ ምዕራፍ ምልክቶችን፣ ወደፊት ምዕራፎችን፣ ራስ ሰር ማስታወቂያዎችን ዝለሉ ወይም ምዕራፍ ምልክት ያድርጉ
 - **የተካተተ ሜታዳታ** — ርዕስ፣ የሰቀሉ ቀን፣ ቻናል፣ ዝርዝር፣ አናት ስእል፣ እና ምዕራፍ ምልክቶች ወደ ፋይሉ ተጽፈዋል
+
+### YouTube + 2000 ጣቢያዎች
+
+- **YouTube ሙሉ** — ቪዲዮዎች፣ Shorts፣ ቻናሎች፣ ፕሌይሊስቶች፣ YouTube Music እና ፖድካስቶች እንደ ቀዳሚ ምንጮች ይታሰባሉ
+- **2000+ ሌሎች ጣቢያዎች** yt-dlp አማካኝነት — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org እና ሌሎች ብዙ
+- **ኦዲዮ ብቻ እና ጽሑፍ ርዕሶች** ሁሉም ተደጋፊ ጣቢያዎች ላይ ይሠራሉ፣ YouTube ብቻ ሳይሆን
+- ጣቢያ ሲቀይር yt-dlp በሳምንት ውስጥ ማሻሻያዎችን ይልካሉ፣ Arroxy ደግሞ ሲጀምር binary ን ራስ-ሰር ያዘምናሉ
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="URL ይለጥፉ" />

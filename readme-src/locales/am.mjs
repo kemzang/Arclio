@@ -71,7 +71,7 @@ bun run dist:win     # cross-compile Windows portable exe
 
 export const am = {
   icon_alt: "የ Arroxy መሸፈኛ",
-  title: "Arroxy — ነፃ ምን ኮድ ያለው YouTube አውራጅ ለ Windows, macOS እና Linux",
+  title: "Arroxy — ነፃ ምን ኮድ ያለው YouTube (+ 2000 ጣቢያ) አውራጅ ለ Windows, macOS እና Linux",
   read_in_label: "አንብብ በ:",
   badge_release_alt: "ስሪት",
   badge_build_alt: "ግንባታ",
@@ -80,7 +80,7 @@ export const am = {
   badge_i18n_alt: "ቋንቋዎች",
   badge_website_alt: "ድር ጣቢያ",
   hero_desc:
-    "ማንኛውንም YouTube ቪዲዮ፣ Short፣ ወይም የድምፅ ትራክ በዋናው ጥራት ያውርዱ — እስከ 4K HDR በ60 fps፣ ወይም MP3 / AAC / Opus። በ Windows፣ macOS፣ እና Linux ላይ አካባቢያዊ ሆኖ ይሠራል። **ምንም ማስታወቂያ፣ ምንም ግባ፣ ምንም ብሮውዘር ኩኪ፣ ምንም Google ሂሳብ አልተያያዘም።**",
+    "ቪዲዮዎች፣ Shorts፣ ሙዚቃ፣ ቻናሎች፣ ፖድካስቶች ወይም የድምፅ ትራኮች ከ**YouTube እና ከ2000+ ተደገፉ ጣቢያዎች** ያውርዱ — እስከ 4K HDR በ60 fps፣ ወይም MP3 / AAC / Opus። በ Windows፣ macOS፣ እና Linux ላይ አካባቢያዊ ሆኖ ይሠራል። **ምንም ማስታወቂያ፣ ምንም ብዝሃ ሸቀጥ፣ ምንም ተጨማሪ ሽያጭ።**",
   cta_latest: "↓ የቅርብ ጊዜ ስሪት አውርድ",
   cta_website: "ድር ጣቢያ",
   demo_alt: "የ Arroxy ማሳያ",
@@ -116,7 +116,7 @@ export const am = {
   feat_privacy_3: "ፋይሎች ወደ መረጡት አቃፊ ቀጥታ ተቀምጠዋል",
   feat_workflow_h3: "የሥራ ፍሰት",
   feat_workflow_1:
-    "**ማንኛውንም የYouTube URL ለጥፍ** — ቪዲዮዎች፣ Shorts እና playlists ይደገፋሉ፤ playlist ሙሉውን አውርድ ወይም መጀመሪያ የተወሰኑ ቪዲዮዎችን ምረጥ",
+    "**ማንኛውንም ሊንክ ለጥፍ** — YouTube ቪዲዮዎች፣ Shorts፣ ቻናሎች፣ ፕሌይሊስቶች፣ ፖድካስቶች እና YouTube Music፣ እናም yt-dlp ከሚደግፋቸው 2000+ ሌሎች ጣቢያዎች፤ playlist ሙሉውን አውርድ ወይም መጀመሪያ የተወሰኑ ቪዲዮዎችን ምረጥ",
   feat_workflow_2:
     "**ብዙ ማውረድ ወረፋ** — ብዙ ማውረዶችን አንድ ጊዜ ይከታተሉ",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const am = {
     "**SponsorBlock** — ስፖንሰሮችን፣ ምዕራፍ ምልክቶችን፣ ወደፊት ምዕራፎችን፣ ራስ ሰር ማስታወቂያዎችን ዝለሉ ወይም ምዕራፍ ምልክት ያድርጉ",
   feat_post_4:
     "**የተካተተ ሜታዳታ** — ርዕስ፣ የሰቀሉ ቀን፣ ቻናል፣ ዝርዝር፣ አናት ስእል፣ እና ምዕራፍ ምልክቶች ወደ ፋይሉ ተጽፈዋል",
+  feat_sites_h3: "YouTube + 2000 ጣቢያዎች",
+  feat_sites_1:
+    "**YouTube ሙሉ** — ቪዲዮዎች፣ Shorts፣ ቻናሎች፣ ፕሌይሊስቶች፣ YouTube Music እና ፖድካስቶች እንደ ቀዳሚ ምንጮች ይታሰባሉ",
+  feat_sites_2:
+    "**2000+ ሌሎች ጣቢያዎች** yt-dlp አማካኝነት — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org እና ሌሎች ብዙ",
+  feat_sites_3:
+    "**ኦዲዮ ብቻ እና ጽሑፍ ርዕሶች** ሁሉም ተደጋፊ ጣቢያዎች ላይ ይሠራሉ፣ YouTube ብቻ ሳይሆን",
+  feat_sites_4:
+    "ጣቢያ ሲቀይር yt-dlp በሳምንት ውስጥ ማሻሻያዎችን ይልካሉ፣ Arroxy ደግሞ ሲጀምር binary ን ራስ-ሰር ያዘምናሉ",
   shot1_alt: "URL ይለጥፉ",
   shot2_alt: "ጥራትዎን ይምረጡ",
   shot3_alt: "የሚቀምጡበት ቦታ ይምረጡ",

@@ -90,6 +90,8 @@ const ru = {
       heading: 'Элементы Playlist',
       itemCount_one: '{{count}} видео',
       itemCount_other: '{{count}} видео',
+      itemCountAudio_one: '{{count}} трек',
+      itemCountAudio_other: '{{count}} треков',
       selectAll: 'Выбрать все',
       selectNone: 'Снять выбор',
       rangeFrom: 'С',
@@ -123,17 +125,25 @@ const ru = {
       fetchFormats: 'Получить форматы',
       features: {
         heading: 'Что умеет скачивать Arroxy',
-        video: {
-          title: 'Видео',
-          desc: 'Любое разрешение вплоть до 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Видео',
+          channel: 'Каналы',
+          playlist: 'Плейлисты',
+          short: 'Shorts',
+          music: 'Музыка',
+          podcast: 'Подкасты'
         },
-        playlist: {
-          title: 'Плейлисты',
-          desc: 'Мультивыбор элементов плейлиста'
+        anySite: {
+          heading: '2000+ сайтов',
+          video: 'Видео',
+          videoPlaylist: 'Видеоплейлисты',
+          musicPlaylist: 'Музыкальные плейлисты'
         },
-        audio: {
-          title: 'Аудио',
-          desc: 'Оригинальный поток или конвертация в MP3/M4A'
+        always: {
+          heading: 'Всегда доступно',
+          audioOnly: 'Только аудио',
+          subtitles: 'Субтитры'
         }
       },
       mascotIdle: 'Кинь мне ссылку YouTube (видео или Shorts) — нажми «Получить форматы», и я возьмусь за дело ✨',
@@ -251,10 +261,12 @@ const ru = {
       audioOnlyOption: 'Только аудио (без видео)',
       mascot: 'Лучшее + лучшее = максимальное качество. Я бы выбрал так!',
       sniffing: 'Ищу для тебя лучшие форматы…',
-      loadingHint: 'Обычно занимает секунду',
+      loadingHint: 'Подождите, пока завершится проверка — плейлисты и поиски могут занять некоторое время.',
       loadingAria: 'Загрузка форматов',
       sizeUnknown: 'Размер неизвестен',
       total: 'Всего',
+      keepAudio: 'Оставить как есть',
+      keepAudioMeta: 'Встроенное аудио',
       convert: {
         label: 'Конвертировать',
         uncompressed: 'Конвертировать · без сжатия',
@@ -280,6 +292,10 @@ const ru = {
         currentModeBrowser: 'Браузер',
         explanationFile: 'Файл cookies может быть пустым, устаревшим или в неверном формате (yt-dlp ожидает Netscape cookies.txt). Попробуй заново экспортировать cookies, выбрать другой файл, переключиться в режим «Браузер» или отключить cookies.',
         explanationBrowser: 'Cookies читаются напрямую из браузера. Если браузер сейчас открыт, его база cookies может быть заблокирована (семейство Chromium). Браузер также должен быть авторизован на YouTube. Попробуй закрыть браузер, переключиться на другой браузер, перейти в режим «Файл» или отключить cookies.',
+        needsCookies: {
+          heading: 'Этот сайт требует авторизации',
+          body: 'yt-dlp не смог получить доступ к этому видео без аутентификации. Настрой cookies в расширенных настройках — укажи браузер, в котором ты уже вошёл, или импортируй файл cookies.txt.'
+        },
         openSettingsCta: 'Открыть настройки cookies',
         dpapi: {
           heading: 'Cookies Chrome заблокированы шифрованием Windows',
@@ -354,15 +370,16 @@ const ru = {
       labelPreset: 'Пресет',
       labelItems: 'Видео',
       itemsValue_one: '{{count}} из {{total}} видео',
-      itemsValue_other: '{{count}} из {{total}} видео'
+      itemsValue_other: '{{count}} из {{total}} видео',
+      itemsValueAudio_one: '{{count}} из {{total}} трека',
+      itemsValueAudio_other: '{{count}} из {{total}} треков'
     },
     error: {
       icon: 'Ошибка'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Загрузка…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Загрузка…'
   },
   queue: {
     header: 'Очередь загрузок',
@@ -435,7 +452,8 @@ const ru = {
       unavailable: 'Видео недоступно — оно может быть приватным, удалённым или ограниченным по региону.',
       geoBlocked: 'Это видео недоступно в твоём регионе.',
       outOfDiskSpace: 'Недостаточно места на диске. Освободи место и повтори попытку.',
-      unsupportedUrl: 'Это не похоже на ссылку на видео. Вставь ссылку на YouTube-видео, Short или плейлист.'
+      unsupportedUrl: 'Это не похоже на ссылку на видео. Вставь ссылку на YouTube-видео, Short или плейлист.',
+      chunkTransferFailure: 'Сервер постоянно обрывал загрузку на полпути, и yt-dlp сдался после нескольких попыток. Чаще всего это случается с самыми тяжёлыми форматами (4K HDR / высокобитрейтный VP9). Попробуй повторить, сменить сеть или VPN, либо выбери формат с меньшим разрешением.'
     }
   },
   presets: {
@@ -512,12 +530,12 @@ const ru = {
   share: {
     title: 'Поделиться Arroxy',
     description: 'Arroxy — бесплатный проект с открытым кодом. Рекомендуя его, ты помогаешь другим узнать о нём.',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'Скопировать ссылку',
+    copied: 'Скопировано!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Поделиться Arroxy',
+    footerLabel: 'Поделиться',
+    shareAction: 'Поделиться Arroxy',
     inlineCard: {
       body: 'Нравится Arroxy? Поделись с тем, кому это может пригодиться.',
       dismiss: 'Скрыть предложение поделиться'

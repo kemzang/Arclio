@@ -1,5 +1,5 @@
 import { playlistPresetSpec } from './playlistPresets.js';
-import type { EmbedOptions, JobSource, PreparedJob, SponsorBlockOptions, SubtitleOptions } from './preparedJob.js';
+import type { EmbedOptions, ExtractorIdentity, PreparedJob, SponsorBlockOptions, SubtitleOptions } from './preparedJob.js';
 import type { AudioConvert, PlaylistPreset, Preset, SponsorBlockCategory, SponsorBlockMode } from './schemas.js';
 
 // Pure builder. Lives in `src/shared/` (not renderer) so future QueueStore
@@ -9,9 +9,8 @@ import type { AudioConvert, PlaylistPreset, Preset, SponsorBlockCategory, Sponso
 // (single mode) or playlist entry context (playlist mode) and hands the DTO
 // here. Keeping the builder DTO-shaped lets unit tests cover every kind in
 // isolation without spinning up the zustand store.
-export interface PrepareJobInput {
+export interface PrepareJobInput extends ExtractorIdentity {
   mode: 'single' | 'playlist';
-  source: JobSource;
   // single-mode inputs (set when mode === 'single')
   formatId?: string;
   audioConvert?: AudioConvert;
@@ -30,6 +29,7 @@ export interface PrepareJobInput {
 export function prepareJob(input: PrepareJobInput): PreparedJob {
   const sponsorBlock = toSponsorBlockOptions(input.sponsorBlockMode, input.sponsorBlockCategories);
   const subtitles = input.subtitles && input.subtitles.languages.length > 0 ? input.subtitles : undefined;
+  const identity: ExtractorIdentity = { extractor: input.extractor, extractorKey: input.extractorKey };
 
   if (input.mode === 'playlist') {
     if (!input.playlistPreset) throw new Error('prepareJob: playlist mode requires playlistPreset');
@@ -37,7 +37,7 @@ export function prepareJob(input: PrepareJobInput): PreparedJob {
     const spec = playlistPresetSpec(input.playlistPreset);
     return {
       kind: 'playlist-preset',
-      source: input.source,
+      ...identity,
       preset: input.playlistPreset,
       formatSelector: spec.formatSelector,
       audioConvert: spec.audioConvert,
@@ -53,13 +53,13 @@ export function prepareJob(input: PrepareJobInput): PreparedJob {
 
   if (input.activePreset === 'subtitle-only' || (!hasMedia && hasSubs)) {
     if (!subtitles) throw new Error('prepareJob: subtitle-only requires non-empty subtitle languages');
-    return { kind: 'subtitle-only', source: input.source, subtitles };
+    return { kind: 'subtitle-only', ...identity, subtitles };
   }
 
   if (input.audioConvert) {
     return {
       kind: 'audio-convert',
-      source: input.source,
+      ...identity,
       audioConvert: input.audioConvert,
       preset: input.activePreset ?? 'custom',
       subtitles,
@@ -71,7 +71,7 @@ export function prepareJob(input: PrepareJobInput): PreparedJob {
   if (!input.formatId) throw new Error('prepareJob: single-format requires formatId');
   return {
     kind: 'single-format',
-    source: input.source,
+    ...identity,
     formatId: input.formatId,
     preset: input.activePreset ?? 'custom',
     subtitles,

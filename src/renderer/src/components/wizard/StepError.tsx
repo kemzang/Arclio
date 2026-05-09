@@ -4,9 +4,10 @@ import { formatError, useAppStore } from '../../store/useAppStore.js';
 import { Button } from '../ui/button.js';
 import { BotWallNotice } from './format/BotWallNotice.js';
 import { CookiesErrorAlert } from './format/CookiesErrorAlert.js';
+import { isCookiesNeededError } from './format/cookiesErrorPatterns.js';
 
-// Mirrors the bot-category patterns in `FormatProbeService` so a hard-fail
-// probe surfaces the same cookies CTA users see for a degraded probe.
+// Mirrors the bot-category patterns in `ProbeService` so a hard-fail probe
+// surfaces the same cookies CTA users see for a degraded probe.
 function isBotWallError(message: string): boolean {
   return /sign in to confirm you'?re not a bot/i.test(message) || /HTTP Error 429\b|too many requests/i.test(message);
 }
@@ -16,7 +17,13 @@ export function StepError(): JSX.Element {
   const { wizardError, settings, retry, reset } = useAppStore();
   const message = formatError(wizardError);
   const showBotWallNotice = wizardError ? isBotWallError(wizardError.message) || (wizardError.details ? isBotWallError(wizardError.details) : false) : false;
-  const showCookiesAlert = (settings?.common?.cookiesMode ?? 'off') !== 'off';
+  const cookiesEnabled = (settings?.common?.cookiesMode ?? 'off') !== 'off';
+  // When cookies are off but the error itself signals "auth required" / "use
+  // --cookies", fire the alert anyway so the user has a one-click route to the
+  // cookies block on the URL step. Previously the alert only rendered when
+  // cookies were already on, leaving cookies-off users staring at a raw error.
+  const errorSuggestsCookies = wizardError ? isCookiesNeededError(wizardError.message) || isCookiesNeededError(wizardError.details) : false;
+  const showCookiesAlert = cookiesEnabled || errorSuggestsCookies;
 
   return (
     <div className="wizard-step flex flex-col items-center gap-4 py-4 text-center" data-testid="step-error">
@@ -29,7 +36,7 @@ export function StepError(): JSX.Element {
       {showBotWallNotice || showCookiesAlert ? (
         <div className="w-full max-w-md text-start flex flex-col gap-2">
           {showBotWallNotice ? <BotWallNotice forceShow /> : null}
-          {showCookiesAlert ? <CookiesErrorAlert /> : null}
+          {showCookiesAlert ? <CookiesErrorAlert forceShowCookiesOff={errorSuggestsCookies} /> : null}
         </div>
       ) : null}
       <div className="flex gap-2">

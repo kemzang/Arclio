@@ -71,7 +71,7 @@ bun run dist:win     # Windows portable exe ni cross-kompilyatsiya qilish
 
 export const uz = {
   icon_alt: "Arroxy maskoti",
-  title: "Arroxy — Windows, macOS va Linux uchun Bepul Ochiq Manbali YouTube Yuklovchi",
+  title: "Arroxy — Windows, macOS va Linux uchun Bepul Ochiq Manbali YouTube (+ 2000 sayt) Yuklovchi",
   read_in_label: "O'qing:",
   badge_release_alt: "Reliz",
   badge_build_alt: "Qurish",
@@ -80,7 +80,7 @@ export const uz = {
   badge_i18n_alt: "Tillar",
   badge_website_alt: "Veb-sayt",
   hero_desc:
-    "Istalgan YouTube videosini, Shortni yoki audio treklarni original sifatda yuklab oling — 60 fps da 4K HDR gacha yoki MP3 / AAC / Opus sifatida. Windows, macOS va Linuxda mahalliy ishlaydi. **Reklamalar yo'q, kirish yo'q, brauzer kukilari yo'q, Google hisob bog'liq emas.**",
+    "**YouTube va 2000+ qo'llab-quvvatlanadigan saytlardan** videolar, Shorts, musiqa, kanallar, podkastlar yoki audio treklarni yuklab oling — 60 fps da 4K HDR gacha yoki MP3 / AAC / Opus sifatida. Windows, macOS va Linuxda mahalliy ishlaydi. **Reklamalar yo'q, keraksiz narsalar yo'q, qo'shimcha taklif yo'q.**",
   cta_latest: "↓ Oxirgi Relizni Yuklab Olish",
   cta_website: "Veb-sayt",
   demo_alt: "Arroxy demosi",
@@ -116,7 +116,7 @@ export const uz = {
   feat_privacy_3: "Fayllar siz tanlagan papkaga to'g'ridan-to'g'ri saqlanadi",
   feat_workflow_h3: "Ish oqimi",
   feat_workflow_1:
-    "**Istalgan YouTube URL manzilini joylang** — videolar, Shorts va playlistlar qo‘llab-quvvatlanadi; butun playlistni yuklab oling yoki avval aniq videolarni tanlang",
+    "**Istalgan havolani joylashtiring** — YouTube videolari, Shorts, kanallar, pleylistlar, podkastlar va Musiqa, hamda yt-dlp qo’llab-quvvatlaydigan 2000+ boshqa saytlar; butun pleylistni yuklab oling yoki avval aniq videolarni tanlang",
   feat_workflow_2:
     "**Ko'p yuklab olish navbati** — bir nechta yuklamalarni parallel kuzatib boring",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const uz = {
     "**SponsorBlock** — homiylar, kirishlar, xotimalar, o'z reklamalarini o'tkazib yuborish yoki bo'limga belgilash",
   feat_post_4:
     "**Joylashtirilgan metadata** — sarlavha, yuklash sanasi, kanal, tavsif, miniatyura va bob belgilari faylga yoziladi",
+  feat_sites_h3: "YouTube + 2000 sayt",
+  feat_sites_1:
+    "**YouTube to'liq** — Videolar, Shorts, Kanallar, Pleylistlar, YouTube Music va Podkastlar birinchi darajali manbalar sifatida ishlaydi",
+  feat_sites_2:
+    "**2000+ boshqa saytlar** yt-dlp orqali — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org va boshqalar",
+  feat_sites_3:
+    "**Faqat audio va subtitrlar** har qanday qo'llab-quvvatlanadigan saytda ishlaydi, nafaqat YouTube'da",
+  feat_sites_4:
+    "Sayt o'zgarsa, yt-dlp har hafta tuzatishlar chiqaradi va Arroxy ishga tushganda binarni avtomatik yangilaydi",
   shot1_alt: "URL'ni joylashtirish",
   shot2_alt: "Sifatni tanlash",
   shot3_alt: "Saqlash joyini tanlash",

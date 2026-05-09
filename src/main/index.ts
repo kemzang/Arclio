@@ -13,8 +13,7 @@ import { setupAnalytics, setAnalyticsEnabled, trackCrashDetectedOncePerSession, 
 import { detectInstallChannel } from '@main/installChannel.js';
 import { BinaryManager } from '@main/services/BinaryManager.js';
 import { DownloadService } from '@main/services/DownloadService.js';
-import { FormatProbeService } from '@main/services/FormatProbeService.js';
-import { PlaylistProbeService } from '@main/services/PlaylistProbeService.js';
+import { ProbeService } from '@main/services/ProbeService.js';
 import { TokenService } from '@main/services/TokenService.js';
 import { YtDlp } from '@main/services/YtDlp.js';
 import { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
@@ -168,8 +167,7 @@ if (hasSingleInstanceLock) {
     const tokenService = new TokenService(tokenProvider);
     const ytDlp = new YtDlp(binaryManager, tokenService, settingsStore);
     const downloadService = new DownloadService(ytDlp, recentJobsStore, isMockBackend);
-    const formatProbeService = new FormatProbeService(ytDlp, isMockBackend);
-    const playlistProbeService = new PlaylistProbeService(ytDlp, isMockBackend);
+    const probeService = new ProbeService(ytDlp, isMockBackend);
 
     // Headless smoke mode — exercises PoT scrape + 3-attempt ladder against
     // real YouTube using production services, then exits. No window created.
@@ -179,7 +177,7 @@ if (hasSingleInstanceLock) {
         url: smokeUrl,
         binaryManager,
         tokenService,
-        formatProbeService
+        probeService
       });
       tokenService.dispose();
       exitWithCode(code);
@@ -310,8 +308,7 @@ if (hasSingleInstanceLock) {
       mainWindow,
       binaryManager,
       downloadService,
-      formatProbeService,
-      playlistProbeService,
+      probeService,
       settingsStore,
       queueStore,
       tokenService,

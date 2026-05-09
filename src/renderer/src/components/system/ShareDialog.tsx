@@ -28,7 +28,7 @@ import IconHatena from '~icons/simple-icons/hatenabookmark';
 import IconNaver from '~icons/simple-icons/naver';
 import IconSkype from '~icons/logos/skype';
 import IconPocket from '~icons/simple-icons/pocket';
-import IconBuffer from '~icons/logos/buffer';
+import IconBuffer from '~icons/simple-icons/buffer';
 import IconDiaspora from '~icons/simple-icons/diaspora';
 import IconViber from '~icons/simple-icons/viber';
 
@@ -54,7 +54,7 @@ function openExternal(url: string): void {
 }
 
 const SOCIAL_DESTINATIONS: SocialDestination[] = [
-  { id: 'twitter', label: 'X', Icon: IconX, color: '#000000', buildUrl: (u, m) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(m)}&url=${encodeURIComponent(u)}` },
+  { id: 'twitter', label: 'X', Icon: IconX, buildUrl: (u, m) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(m)}&url=${encodeURIComponent(u)}` },
   { id: 'facebook', label: 'Facebook', Icon: IconFacebook, buildUrl: (u) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}` },
   { id: 'whatsapp', label: 'WhatsApp', Icon: IconWhatsapp, buildUrl: (u, m) => `https://wa.me/?text=${encodeURIComponent(`${m} ${u}`)}` },
   { id: 'telegram', label: 'Telegram', Icon: IconTelegram, buildUrl: (u, m) => `https://t.me/share/url?url=${encodeURIComponent(u)}&text=${encodeURIComponent(m)}` },
@@ -68,7 +68,7 @@ const SOCIAL_DESTINATIONS: SocialDestination[] = [
   { id: 'tumblr', label: 'Tumblr', Icon: IconTumblr, buildUrl: (u, m) => `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${encodeURIComponent(u)}&caption=${encodeURIComponent(m)}` },
   { id: 'hackernews', label: 'Hacker News', Icon: IconHackernews, color: '#FF6600', buildUrl: (u, m) => `https://news.ycombinator.com/submitlink?u=${encodeURIComponent(u)}&t=${encodeURIComponent(m)}` },
   { id: 'bluesky', label: 'Bluesky', Icon: IconBluesky, color: '#1185FE', buildUrl: (u, m) => `https://bsky.app/intent/compose?text=${encodeURIComponent(`${m} ${u}`)}` },
-  { id: 'threads', label: 'Threads', Icon: IconThreads, color: '#000000', buildUrl: (u, m) => `https://www.threads.net/intent/post?text=${encodeURIComponent(`${m} ${u}`)}` },
+  { id: 'threads', label: 'Threads', Icon: IconThreads, buildUrl: (u, m) => `https://www.threads.net/intent/post?text=${encodeURIComponent(`${m} ${u}`)}` },
   { id: 'mastodon', label: 'Mastodon', Icon: IconMastodon, buildUrl: (u, m) => `https://mastodonshare.com/?text=${encodeURIComponent(m)}&url=${encodeURIComponent(u)}` },
   { id: 'qq', label: 'QQ', Icon: IconQQ, color: '#1EBAFC', buildUrl: (u, m) => `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(u)}&title=${encodeURIComponent(m)}` },
   { id: 'qzone', label: 'QQ空间', Icon: IconQzone, color: '#FFCE00', buildUrl: (u, m) => `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${encodeURIComponent(u)}&title=${encodeURIComponent(m)}` },
@@ -77,8 +77,8 @@ const SOCIAL_DESTINATIONS: SocialDestination[] = [
   { id: 'naver', label: '네이버', Icon: IconNaver, color: '#03C75A', buildUrl: (u, m) => `https://share.naver.com/web/shareView?url=${encodeURIComponent(u)}&title=${encodeURIComponent(m)}` },
   { id: 'skype', label: 'Skype', Icon: IconSkype, buildUrl: (u, m) => `https://web.skype.com/share?url=${encodeURIComponent(u)}&text=${encodeURIComponent(m)}` },
   { id: 'pocket', label: 'Pocket', Icon: IconPocket, color: '#EF4056', buildUrl: (u, m) => `https://getpocket.com/edit?url=${encodeURIComponent(u)}&title=${encodeURIComponent(m)}` },
-  { id: 'buffer', label: 'Buffer', Icon: IconBuffer, buildUrl: (u, m) => `https://buffer.com/add?url=${encodeURIComponent(u)}&text=${encodeURIComponent(m)}` },
-  { id: 'diaspora', label: 'Diaspora', Icon: IconDiaspora, color: '#000000', buildUrl: (u, m) => `https://share.diasporafoundation.org/?title=${encodeURIComponent(m)}&url=${encodeURIComponent(u)}` },
+  { id: 'buffer', label: 'Buffer', Icon: IconBuffer, color: '#168EEA', buildUrl: (u, m) => `https://buffer.com/add?url=${encodeURIComponent(u)}&text=${encodeURIComponent(m)}` },
+  { id: 'diaspora', label: 'Diaspora', Icon: IconDiaspora, buildUrl: (u, m) => `https://share.diasporafoundation.org/?title=${encodeURIComponent(m)}&url=${encodeURIComponent(u)}` },
   { id: 'viber', label: 'Viber', Icon: IconViber, color: '#7360F2', buildUrl: (u, m) => `viber://forward?text=${encodeURIComponent(`${m} ${u}`)}` }
 ];
 
@@ -148,7 +148,7 @@ export function ShareDialog(): JSX.Element {
             const Icon = dest.Icon;
             return (
               <button key={dest.id} type="button" onClick={() => handleSocial(dest)} className="flex flex-col items-center justify-center gap-1 rounded-md border border-border bg-background p-2 hover:bg-muted transition-colors" data-testid={`share-dest-${dest.id}`} title={dest.label}>
-                <span className="flex h-7 w-7 items-center justify-center" style={dest.color ? { color: dest.color } : undefined}>
+                <span className="flex h-7 w-7 items-center justify-center text-foreground" style={dest.color ? { color: dest.color } : undefined}>
                   <Icon width={20} height={20} />
                 </span>
                 <span className="text-[11px] text-muted-foreground truncate w-full text-center">{dest.label}</span>

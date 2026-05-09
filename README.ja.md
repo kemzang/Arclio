@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy マスコット" width="180" />
 
-# Arroxy — Windows・macOS・Linux 向け無料オープンソース YouTube ダウンローダー
+# Arroxy — Windows・macOS・Linux 向け無料オープンソース YouTube（+ 2000 サイト）ダウンローダー
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **言語：** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · **日本語**
 
 [![リリース](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![ビルド](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![ウェブサイト](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![ライセンス](https://img.shields.io/badge/license-MIT-green) ![プラットフォーム](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![対応言語](https://img.shields.io/badge/i18n-21_languages-blue)
 
-YouTube の動画・Shorts・音声トラックをオリジナル品質でダウンロード — 最大 4K HDR 60fps、または MP3 / AAC / Opus として。Windows、macOS、Linux でローカル動作。**広告なし、ログインなし、ブラウザ Cookie なし、Google アカウント連携なし。**
+**YouTube と 2000 以上の対応サイト**から動画・Shorts・音楽・チャンネル・ポッドキャスト・音声トラックをダウンロード — 最大 4K HDR 60fps、または MP3 / AAC / Opus として。Windows、macOS、Linux でローカル動作。**広告なし、余計なものなし、アップセルなし。**
 
 [**↓ 最新リリースをダウンロード**](../../releases/latest) &nbsp;·&nbsp; [**ウェブサイト**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -70,7 +70,7 @@ Arroxy はひとつのことのために作られています：URL を貼って
 
 ### ワークフロー
 
-- **YouTube URL を貼り付け** — 動画、Shorts、プレイリストに対応。プレイリスト全体をダウンロードすることも、先に個別の動画を選ぶこともできます
+- **任意のリンクを貼り付け** — YouTube の動画・Shorts・チャンネル・プレイリスト・ポッドキャスト・Music に加え、yt-dlp が対応する 2000 以上のサイトにも対応。プレイリスト全体をダウンロードすることも、先に個別の動画を選ぶこともできます
 - **複数ダウンロードキュー** — 複数のダウンロードを並行して追跡
 - **クリップボード監視** — YouTube リンクをコピーすると、アプリにフォーカスを戻したときに Arroxy が URL を自動入力（詳細設定でトグル切替可能）
 - **URL 自動クリーンアップ** — トラッキングパラメータ（`si`、`pp`、`utm_*`、`fbclid`、`gclid`）を除去し、`youtube.com/redirect` リンクを展開
@@ -83,6 +83,13 @@ Arroxy はひとつのことのために作られています：URL を貼って
 - 動画の隣に保存、`.mkv` に埋め込み、または `Subtitles/` サブフォルダに整理
 - **SponsorBlock** — スポンサー、イントロ、アウトロ、自己宣伝をスキップまたはチャプターマーク
 - **埋め込みメタデータ** — タイトル、アップロード日、チャンネル、説明、サムネイル、チャプターマーカーをファイルに書き込み
+
+### YouTube + 2000 サイト
+
+- **YouTube、フル対応** — 動画・Shorts・チャンネル・プレイリスト・YouTube Music・ポッドキャストをファーストクラスのソースとして処理
+- **2000 以上の他サイト** via yt-dlp — Vimeo、Twitch、Twitter/X、TikTok、SoundCloud、Bandcamp、Bilibili、BBC iPlayer、archive.org など多数
+- **音声のみと字幕**は YouTube だけでなく、すべての対応サイトで機能します
+- サイトが変更されても、yt-dlp は毎週修正をリリースし、Arroxy は起動時にバイナリを自動更新します
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="URL を貼る" />

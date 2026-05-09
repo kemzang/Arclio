@@ -1,5 +1,5 @@
 import type { StoreApi } from 'zustand';
-import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, GetFormatsOutput, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types.js';
+import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, ProbeDegradationReason, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types.js';
 import type { AudioSelection } from '@shared/schemas.js';
 import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 export type { AudioSelection };
@@ -22,7 +22,15 @@ export interface WizardSlice {
   wizardThumbnail: string;
   wizardDuration?: number;
   wizardFormats: FormatOption[];
-  wizardFormatsDegraded: NonNullable<GetFormatsOutput['degraded']> | null;
+  wizardFormatsDegraded: { reasons: ProbeDegradationReason[] } | null;
+  // yt-dlp's IE_NAME for the URL just probed (e.g. 'youtube', 'vimeo'). Used to
+  // gate YT-only UI (SponsorBlock step, ban warning) and threaded into PreparedJob
+  // so the download path can branch identically.
+  wizardExtractor: string;
+  wizardExtractorKey: string;
+  // The webpage URL the extractor reports — used to render "Cookies for {host}"
+  // dynamically. Empty pre-probe.
+  wizardWebpageUrl: string;
   // Transient flag set when the user navigates to the URL step from the
   // CookiesErrorAlert's "Open cookies settings" link. `StepUrlInput` reads
   // it on mount, expands the advanced section, scrolls the cookies block
@@ -54,13 +62,17 @@ export interface WizardSlice {
   wizardEmbedThumbnail: boolean;
   wizardWriteDescription: boolean;
   wizardWriteThumbnail: boolean;
-  // Playlist mode — populated when the URL probe routes through
-  // getPlaylistItems instead of getFormats.
+  // Playlist mode — populated when the URL probe returns _type: 'playlist' or
+  // 'multi_video' from yt-dlp.
   playlistItems: PlaylistEntry[];
   selectedPlaylistItemIds: string[];
   playlistTitle: string;
   playlistId: string;
+  playlistIsMultiVideo: boolean;
   playlistProbeLoading: boolean;
+  // Mixed YouTube URLs (?v=X&list=Y) — wizard intercepts pre-probe and asks
+  // the user "video or playlist?" so Radio/Mix lists don't auto-route to
+  // playlist enumeration.
   mixedUrlPromptOpen: boolean;
   mixedUrlPending: string | null;
   cookiesConfigDialogIssue: IncompleteCookiesConfigIssue | null;

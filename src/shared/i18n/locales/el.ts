@@ -90,6 +90,8 @@ const el = {
       heading: 'Στοιχεία playlist',
       itemCount_one: '{{count}} βίντεο',
       itemCount_other: '{{count}} βίντεο',
+      itemCountAudio_one: '{{count}} κομμάτι',
+      itemCountAudio_other: '{{count}} κομμάτια',
       selectAll: 'Επιλογή όλων',
       selectNone: 'Αποεπιλογή όλων',
       rangeFrom: 'Από',
@@ -123,17 +125,25 @@ const el = {
       fetchFormats: 'Φόρτωση μορφών',
       features: {
         heading: 'Τι μπορεί να κατεβάσει το Arroxy',
-        video: {
-          title: 'Βίντεο',
-          desc: 'Επέλεξε οποιαδήποτε ανάλυση έως 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Βίντεο',
+          channel: 'Κανάλια',
+          playlist: 'Playlist',
+          short: 'Shorts',
+          music: 'Μουσική',
+          podcast: 'Podcast'
         },
-        playlist: {
-          title: 'Playlist',
-          desc: 'Πολλαπλή επιλογή στοιχείων playlist'
+        anySite: {
+          heading: '2000+ ιστότοποι',
+          video: 'Βίντεο',
+          videoPlaylist: 'Playlist βίντεο',
+          musicPlaylist: 'Playlist μουσικής'
         },
-        audio: {
-          title: 'Ήχος',
-          desc: 'Πρωτότυπη ροή ή μετατροπή MP3/M4A'
+        always: {
+          heading: 'Πάντα διαθέσιμο',
+          audioOnly: 'Μόνο ήχοι',
+          subtitles: 'Υπότιτλοι'
         }
       },
       mascotIdle: 'Ρίξε μου έναν σύνδεσμο YouTube (βίντεο ή Short) — μετά πάτα «Φόρτωση μορφών» ✨',
@@ -251,10 +261,12 @@ const el = {
       audioOnlyOption: 'Μόνο ήχος (χωρίς βίντεο)',
       mascot: 'Καλύτερο + Καλύτερο = μέγιστη ποιότητα. Αυτό θα διάλεγα!',
       sniffing: 'Ανακαλύπτω τις καλύτερες μορφές για σένα…',
-      loadingHint: 'Συνήθως παίρνει ένα δευτερόλεπτο',
+      loadingHint: 'Περίμενε μέχρι να ολοκληρωθεί η ανίχνευση — οι playlist και οι αναζητήσεις μπορεί να πάρουν λίγη ώρα.',
       loadingAria: 'Φόρτωση μορφών',
       sizeUnknown: 'Άγνωστο μέγεθος',
       total: 'Σύνολο',
+      keepAudio: 'Διατήρηση ως έχει',
+      keepAudioMeta: 'Ενσωματωμένος ήχος',
       convert: {
         label: 'Μετατροπή',
         uncompressed: 'Μετατροπή · αμετάβλητο',
@@ -281,6 +293,10 @@ const el = {
         explanationFile: 'Το αρχείο cookies μπορεί να είναι κενό, ληγμένο ή σε λάθος μορφή (το yt-dlp αναμένει Netscape cookies.txt). Δοκίμασε να εξάγεις ξανά τα cookies, να επιλέξεις διαφορετικό αρχείο, να μεταβείς σε λειτουργία προγράμματος περιήγησης ή να απενεργοποιήσεις τα cookies.',
         explanationBrowser: 'Τα cookies διαβάζονται απευθείας από το πρόγραμμα περιήγησης. Αν τρέχει αυτή τη στιγμή, η βάση δεδομένων cookies μπορεί να είναι κλειδωμένη (οικογένεια Chromium). Το πρόγραμμα περιήγησης πρέπει επίσης να είναι συνδεδεμένο στο YouTube. Δοκίμασε να το κλείσεις, να χρησιμοποιήσεις διαφορετικό πρόγραμμα, να μεταβείς σε λειτουργία αρχείου ή να απενεργοποιήσεις τα cookies.',
         openSettingsCta: 'Άνοιγμα ρυθμίσεων cookies',
+        needsCookies: {
+          heading: 'Αυτός ο ιστότοπος απαιτεί σύνδεση',
+          body: 'Το yt-dlp δεν μπόρεσε να αποκτήσει πρόσβαση σε αυτό το βίντεο χωρίς έλεγχο ταυτότητας. Ρύθμισε τα cookies στις ρυθμίσεις για προχωρημένους — επίλεξε πρόγραμμα περιήγησης στο οποίο είσαι ήδη συνδεδεμένος, ή εισήγαγε αρχείο cookies.txt.'
+        },
         dpapi: {
           heading: 'Τα cookies του Chrome αποκλείστηκαν από την κρυπτογράφηση των Windows',
           explanation: 'Το Chrome 127 και νεότερες εκδόσεις κρυπτογραφούν τα cookies με τρόπο που άλλες εφαρμογές δεν μπορούν να διαβάσουν στα Windows. Δοκίμασε μία από τις παρακάτω λύσεις.',
@@ -290,7 +306,7 @@ const el = {
           fixFileBody: 'Εξήγαγε τα cookies από το Chrome με ένα επέκταση προγράμματος περιήγησης, μετά άλλαξε αυτή την εφαρμογή σε λειτουργία Αρχείο και επέλεξε το εξαχθέν αρχείο.',
           fixUnsafeLabel: 'Εκκίνηση Chrome με απενεργοποιημένο App-Bound Encryption',
           fixUnsafeBody: 'Πρόσθεσε --disable-features=LockProfileCookieDatabase στη συντόμευση εκκίνησης του Chrome. Προειδοποίηση: αυτό ακυρώνει τα προηγουμένως κρυπτογραφημένα cookies, οπότε θα αποσυνδεθείς από κάθε ιστότοπο και θα χρειαστεί να συνδεθείς ξανά.',
-          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+          docsLinkLabel: 'yt-dlp τεκμηρίωση (ζήτημα #10927)'
         }
       }
     },
@@ -346,7 +362,7 @@ const el = {
       audioOnly: 'Μόνο ήχος',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Ξεκινά όταν ολοκληρωθούν άλλες λήψεις — αποκτά πλήρες εύρος ζώνης',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'Κατέβασέ το! ↓',
       pullItTooltip: 'Ξεκινά αμέσως — εκτελείται παράλληλα με άλλες ενεργές λήψεις',
       playlistBatch_one: '{{count}} βίντεο · {{title}}',
       playlistBatch_other: '{{count}} βίντεο · {{title}}',
@@ -354,15 +370,16 @@ const el = {
       labelPreset: 'Προεπιλογή',
       labelItems: 'Στοιχεία',
       itemsValue_one: '{{count}} από {{total}} βίντεο',
-      itemsValue_other: '{{count}} από {{total}} βίντεο'
+      itemsValue_other: '{{count}} από {{total}} βίντεο',
+      itemsValueAudio_one: '{{count}} από {{total}} κομμάτι',
+      itemsValueAudio_other: '{{count}} από {{total}} κομμάτια'
     },
     error: {
       icon: 'Σφάλμα'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Φόρτωση…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Φόρτωση…'
   },
   queue: {
     header: 'Ουρά λήψεων',
@@ -435,7 +452,8 @@ const el = {
       unavailable: 'Αυτό το βίντεο δεν είναι διαθέσιμο — μπορεί να είναι ιδιωτικό, διαγραμμένο ή κλειδωμένο ανά περιοχή.',
       geoBlocked: 'Αυτό το βίντεο δεν είναι διαθέσιμο στην περιοχή σου.',
       outOfDiskSpace: 'Δεν υπάρχει αρκετός χώρος στο δίσκο. Ελευθέρωσε χώρο και δοκίμασε ξανά.',
-      unsupportedUrl: 'Αυτό δεν μοιάζει με URL βίντεο. Επικόλλησε έναν σύνδεσμο YouTube βίντεο, Short ή playlist.'
+      unsupportedUrl: 'Αυτό δεν μοιάζει με URL βίντεο. Επικόλλησε έναν σύνδεσμο YouTube βίντεο, Short ή playlist.',
+      chunkTransferFailure: 'Ο διακομιστής διέκοπτε συνεχώς τη λήψη στη μέση και το yt-dlp τα παράτησε μετά από επανειλημμένες προσπάθειες. Αυτό συμβαίνει συνήθως με τα μεγαλύτερα φορμά βίντεο (4K HDR / VP9 υψηλού ρυθμού μετάδοσης). Δοκίμασε ξανά, άλλαξε δίκτυο/VPN ή επέλεξε χαμηλότερη ανάλυση.'
     }
   },
   presets: {
@@ -474,7 +492,7 @@ const el = {
   formatLabel: {
     audioOnly: 'Μόνο ήχος',
     audioFallback: 'Ήχος',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'Μόνο ήχος · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -512,19 +530,19 @@ const el = {
   share: {
     title: 'Μοιράσου το Arroxy',
     description: 'Το Arroxy είναι δωρεάν και ανοιχτού κώδικα. Η κοινοποίηση βοηθά περισσότερους να το ανακαλύψουν.',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'Αντιγραφή συνδέσμου',
+    copied: 'Αντιγράφηκε!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Κοινή χρήση Arroxy',
+    footerLabel: 'Κοινή χρήση',
+    shareAction: 'Κοινή χρήση Arroxy',
     inlineCard: {
       body: 'Σου αρέσει το Arroxy; Μοιράσου το με κάποιον που μπορεί να το βρει χρήσιμο.',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'Απόρριψη πρότασης κοινοποίησης'
     },
     highValueBanner: {
       body: 'Σου αρέσει το Arroxy; Βοήθησε άλλους να το ανακαλύψουν.',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'Απόρριψη πρότασης κοινοποίησης'
     }
   }
 } as const;

@@ -161,4 +161,7 @@ export const am = {
   faq_q9: "ይህ ሕጋዊ ነው?",
   faq_a9:
     "ለግል አጠቃቀም ቪዲዮዎችን ማውረድ ብዙ ፍርድ ቤቶች ውስጥ በአጠቃላይ ተቀባይነት አለው። የ YouTube የአገልግሎት ውሎችን እና የአካባቢ ሕጎችን ማክበር ኃላፊነትዎ ነው።",
+
+  f13_h: "YouTube + 2000 ጣቢያዎች",
+  f13_p: "ከ YouTube ባሻገር፣ Arroxy ከ yt-dlp በሚደገፉ 2000+ ጣቢያዎች ይጎትታል — Vimeo፣ Twitch፣ Twitter/X፣ TikTok፣ SoundCloud፣ Bandcamp፣ Bilibili፣ BBC iPlayer፣ archive.org፣ እና ብዙ ሌሎች። የድምጽ ብቻ እና ንዑስ ጽሑፎች በሁሉም ቦታ ይሰራሉ፣ በYouTube ላይ ብቻ አይደለም።",
 };

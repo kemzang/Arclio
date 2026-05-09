@@ -3,7 +3,7 @@
 
 # {{title}}
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **{{read_in_label}}** {{LANG_NAV}}
 
@@ -83,6 +83,13 @@
 - {{feat_post_2}}
 - {{feat_post_3}}
 - {{feat_post_4}}
+
+### {{feat_sites_h3}}
+
+- {{feat_sites_1}}
+- {{feat_sites_2}}
+- {{feat_sites_3}}
+- {{feat_sites_4}}
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="{{shot1_alt}}" />

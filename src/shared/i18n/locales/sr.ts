@@ -90,6 +90,8 @@ const sr = {
       heading: 'Ставке плејлисте',
       itemCount_one: '{{count}} видео',
       itemCount_other: '{{count}} видеа',
+      itemCountAudio_one: '{{count}} нумера',
+      itemCountAudio_other: '{{count}} нумера',
       selectAll: 'Изабери све',
       selectNone: 'Поништи избор',
       rangeFrom: 'Од',
@@ -123,17 +125,25 @@ const sr = {
       fetchFormats: 'Учитај формате',
       features: {
         heading: 'Шта Arroxy може да преузме',
-        video: {
-          title: 'Видеа',
-          desc: 'Изабери резолуцију до 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Видеа',
+          channel: 'Канали',
+          playlist: 'Плејлисте',
+          short: 'Shorts',
+          music: 'Музика',
+          podcast: 'Подкасти'
         },
-        playlist: {
-          title: 'Плејлисте',
-          desc: 'Вишеструки избор ставки плејлисте'
+        anySite: {
+          heading: '2000+ сајтова',
+          video: 'Видеа',
+          videoPlaylist: 'Видео плејлисте',
+          musicPlaylist: 'Музичке плејлисте'
         },
-        audio: {
-          title: 'Звук',
-          desc: 'Оригинални стрим или конверзија у MP3/M4A'
+        always: {
+          heading: 'Увек доступно',
+          audioOnly: 'Само звук',
+          subtitles: 'Титлови'
         }
       },
       mascotIdle: 'Убаци YouTube линк (видео или Short) — па кликни „Учитај формате" и крећемо ✨',
@@ -251,10 +261,12 @@ const sr = {
       audioOnlyOption: 'Само звук (без видеа)',
       mascot: 'Најбоље + Најбоље = максималан квалитет. То бих ја изабрао!',
       sniffing: 'Тражим најбоље формате за тебе…',
-      loadingHint: 'Обично траје секунду',
+      loadingHint: 'Сачекајте да провера заврши — листе за репродукцију и претраге могу потрајати.',
       loadingAria: 'Учитавање формата',
       sizeUnknown: 'Величина непозната',
       total: 'Укупно',
+      keepAudio: 'Задржи као јесте',
+      keepAudioMeta: 'Уграђени звук',
       convert: {
         label: 'Конвертуј',
         uncompressed: 'Конвертуј · некомпресовано',
@@ -280,6 +292,10 @@ const sr = {
         currentModeBrowser: 'Прегледач',
         explanationFile: 'Твоја датотека cookies можда је празна, истекла или у погрешном формату (yt-dlp очекује Netscape cookies.txt). Покушај поново да извезеш cookies, изабери другу датотеку, пређи у режим „Прегледач" или искључи cookies.',
         explanationBrowser: 'Cookies се читају директно из прегледача. Ако је прегледач тренутно покренут, његова база cookies може бити закључана (Chromium породица). Прегледач такође мора бити пријављен на YouTube. Покушај затворити прегледач, пређи на другачији прегледач, пређи у режим „Датотека" или искључи cookies.',
+        needsCookies: {
+          heading: 'Овај сајт захтева пријаву',
+          body: 'yt-dlp није могао да приступи овом видеу без аутентификације. Подеси cookies у напредним подешавањима — одреди прегледач у ком си већ пријављен или увези cookies.txt датотеку.'
+        },
         openSettingsCta: 'Отвори подешавања cookies',
         dpapi: {
           heading: 'Chrome cookies блокиран Windows шифровањем',
@@ -346,7 +362,7 @@ const sr = {
       audioOnly: 'Само звук',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Покреће се када друга преузимања заврше — добија пун пропусни опсег',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'Преузми! ↓',
       pullItTooltip: 'Покреће се одмах — ради упоредо са другим активним преузимањима',
       playlistBatch_one: '{{count}} видео · {{title}}',
       playlistBatch_other: '{{count}} видеа · {{title}}',
@@ -354,15 +370,16 @@ const sr = {
       labelPreset: 'Поставка',
       labelItems: 'Ставке',
       itemsValue_one: '{{count}} од {{total}} видеа',
-      itemsValue_other: '{{count}} од {{total}} видеа'
+      itemsValue_other: '{{count}} од {{total}} видеа',
+      itemsValueAudio_one: '{{count}} од {{total}} нумере',
+      itemsValueAudio_other: '{{count}} од {{total}} нумера'
     },
     error: {
       icon: 'Грешка'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Учитавање…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Учитавање…'
   },
   queue: {
     header: 'Ред за преузимање',
@@ -435,7 +452,8 @@ const sr = {
       unavailable: 'Овај видео није доступан — можда је приватан, обрисан или ограничен по региону.',
       geoBlocked: 'Овај видео није доступан у твом региону.',
       outOfDiskSpace: 'Нема довољно простора на диску. Ослободи простор и покушај поново.',
-      unsupportedUrl: 'Ово не изгледа као URL видеа. Налепи линк за YouTube видео, Short или плејлисту.'
+      unsupportedUrl: 'Ово не изгледа као URL видеа. Налепи линк за YouTube видео, Short или плејлисту.',
+      chunkTransferFailure: 'Сервер је стално прекидао преузимање насред потока, а yt-dlp се предао после неколико покушаја. Ово се најчешће дешава са највећим видео форматима (4K HDR / VP9 високог битрејта). Покушај поново, промени мрежу или VPN, или изабери формат нижег квалитета.'
     }
   },
   presets: {
@@ -474,7 +492,7 @@ const sr = {
   formatLabel: {
     audioOnly: 'Само звук',
     audioFallback: 'Звук',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'Само звук · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -512,12 +530,12 @@ const sr = {
   share: {
     title: 'Подели Arroxy',
     description: 'Arroxy је бесплатан и отвореног кода. Дељењем помажеш другима да га открију.',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'Копирај линк',
+    copied: 'Копирано!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Подели Arroxy',
+    footerLabel: 'Подели',
+    shareAction: 'Подели Arroxy',
     inlineCard: {
       body: 'Свиђа ти се Arroxy? Подели га с неким коме би могао бити користан.',
       dismiss: 'Одбаци предлог за дељење'

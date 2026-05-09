@@ -12,7 +12,7 @@ import { FormatFooter } from './format/FormatFooter.js';
 
 export function StepFormatSelect(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardFormats, formatsLoading, wizardTitle, wizardThumbnail, wizardDuration, selectedVideoFormatId, audioSelection, activePreset, setSelectedVideoFormatId, setAudioSelection, setPreset, advance, back } = useAppStore();
+  const { wizardFormats, formatsLoading, wizardTitle, wizardThumbnail, wizardDuration, wizardWebpageUrl, selectedVideoFormatId, audioSelection, activePreset, setSelectedVideoFormatId, setAudioSelection, setPreset, advance, back } = useAppStore();
   const view = useFormatSelectionView();
 
   if (formatsLoading) {
@@ -52,7 +52,7 @@ export function StepFormatSelect(): JSX.Element {
 
   return (
     <div className="wizard-step flex flex-col gap-3" data-testid="step-formats">
-      <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={view.currentResolutionLabel} />
+      <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={view.currentResolutionLabel} webpageUrl={wizardWebpageUrl} />
 
       <PresetStrip activePreset={activePreset} onSelect={setPreset} />
 

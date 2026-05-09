@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Mascota de Arroxy" width="180" />
 
-# Arroxy — Descargador gratuito de YouTube de código abierto para Windows, macOS y Linux
+# Arroxy — Descargador gratuito de YouTube (+ 2000 sitios) de código abierto para Windows, macOS y Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Leer en:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · **Español** · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Versión](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Compilación](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Sitio web](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Licencia](https://img.shields.io/badge/license-MIT-green) ![Plataformas](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Idiomas](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Descarga cualquier video, Short o pista de audio de YouTube en calidad original — hasta 4K HDR a 60 fps, o como MP3 / AAC / Opus. Se ejecuta localmente en Windows, macOS y Linux. **Sin anuncios, sin inicio de sesión, sin cookies del navegador, sin cuenta de Google vinculada.**
+Descarga videos, Shorts, música, canales, podcasts o pistas de audio de **YouTube y más de 2000 sitios compatibles** — hasta 4K HDR a 60 fps, o como MP3 / AAC / Opus. Se ejecuta localmente en Windows, macOS y Linux. **Sin anuncios, sin bloatware, sin ventas adicionales.**
 
 [**↓ Descargar la última versión**](../../releases/latest) &nbsp;·&nbsp; [**Sitio web**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -70,7 +70,7 @@ Arroxy está diseñado para una sola cosa: pega una URL y obtén un archivo loca
 
 ### Flujo de trabajo
 
-- **Pega cualquier URL de YouTube** — compatible con videos, Shorts y playlists; descarga toda la playlist o elige primero videos concretos
+- **Pega cualquier enlace** — videos de YouTube, Shorts, canales, playlists, podcasts y Music, más 2000+ sitios compatibles con yt-dlp; descarga toda la playlist o elige primero videos concretos
 - **Cola de múltiples descargas** — sigue varias descargas en paralelo
 - **Monitoreo del portapapeles** — copia un enlace de YouTube y Arroxy rellena automáticamente la URL al volver a enfocar la app (actívalo en la Configuración avanzada)
 - **Limpieza automática de URLs** — elimina parámetros de seguimiento (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) y desempaqueta los enlaces `youtube.com/redirect`
@@ -83,6 +83,13 @@ Arroxy está diseñado para una sola cosa: pega una URL y obtén un archivo loca
 - Guárdalos junto al video, incrústalos en `.mkv` u organízalos en una subcarpeta `Subtitles/`
 - **SponsorBlock** — omite o marca como capítulos patrocinadores, intros, outros y autopromociones
 - **Metadatos incrustados** — título, fecha de subida, canal, descripción, miniatura y marcadores de capítulo escritos en el archivo
+
+### YouTube + 2000 sitios
+
+- **YouTube, al completo** — Videos, Shorts, Canales, Playlists, YouTube Music y Podcasts tratados como fuentes de primera clase
+- **Más de 2000 sitios adicionales** via yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org y muchos más
+- **Solo audio y subtítulos** funcionan en todos los sitios compatibles, no solo en YouTube
+- Si un sitio cambia, yt-dlp publica correcciones semanalmente y Arroxy actualiza el binario automáticamente al iniciar
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="Pega una URL" />

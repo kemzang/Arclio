@@ -90,6 +90,8 @@ const my = {
       heading: 'Playlist အကြောင်းအရာများ',
       itemCount_one: '{{count}} ဗီဒီယို',
       itemCount_other: '{{count}} ဗီဒီယိုများ',
+      itemCountAudio_one: '{{count}} ခု သီချင်း',
+      itemCountAudio_other: '{{count}} ခု သီချင်းများ',
       selectAll: 'အားလုံးရွေးမည်',
       selectNone: 'အားလုံးဖြုတ်မည်',
       rangeFrom: 'မှ',
@@ -123,17 +125,25 @@ const my = {
       fetchFormats: 'ဖော်မတ်များရယူမည်',
       features: {
         heading: 'Arroxy ဆွဲထုတ်နိုင်သည်',
-        video: {
-          title: 'ဗီဒီယို',
-          desc: '4K အထိ မည်သည့် resolution မဆို ရွေးနိုင်'
+        youtube: {
+          heading: 'YouTube',
+          video: 'ဗီဒီယိုများ',
+          channel: 'Channel များ',
+          playlist: 'Playlist များ',
+          short: 'Shorts',
+          music: 'တေးဂီတ',
+          podcast: 'Podcast များ'
         },
-        playlist: {
-          title: 'Playlist',
-          desc: 'Playlist မှ အကြောင်းအရာများ များစွာ ရွေးနိုင်'
+        anySite: {
+          heading: '2000+ ဝဘ်ဆိုဒ်',
+          video: 'ဗီဒီယိုများ',
+          videoPlaylist: 'ဗီဒီယို playlist များ',
+          musicPlaylist: 'တေးဂီတ playlist များ'
         },
-        audio: {
-          title: 'အသံ',
-          desc: 'မူရင်း stream သို့မဟုတ် MP3/M4A ပြောင်းနိုင်'
+        always: {
+          heading: 'အမြဲ ရရှိနိုင်',
+          audioOnly: 'အသံသာများ',
+          subtitles: 'စာတန်းထိုးများ'
         }
       },
       mascotIdle: 'YouTube လင့်ခ်တစ်ခု (ဗီဒီယို သို့ Short) ထည့်ပြီး "ဖော်မတ်များရယူမည်" နှိပ်ပါ — ကျွန်ုပ်စတင်ပြီပဲ ✨',
@@ -251,10 +261,12 @@ const my = {
       audioOnlyOption: 'အသံသာ (ဗီဒီယိုမပါ)',
       mascot: 'အကောင်းဆုံး + အကောင်းဆုံး = အမြင့်ဆုံးအရည်အသွေး။ ကျွန်ုပ်ရွေးမည်!',
       sniffing: 'သင့်အတွက် အကောင်းဆုံးဖော်မတ်များ ရှာနေသည်…',
-      loadingHint: 'များသောအားဖြင့် တစ်စက္ကန့်ခန့်ကြာသည်',
+      loadingHint: 'စစ်ဆေးမှုပြီးဆုံးသည်အထိ ကျေးဇူးပြု၍ စောင့်ပါ — playlist များနှင့် ရှာဖွေမှုများ အချိန်ယူနိုင်သည်။',
       loadingAria: 'ဖော်မတ်များဖွင့်နေသည်',
       sizeUnknown: 'အရွယ်အစားမသိ',
       total: 'စုစုပေါင်း',
+      keepAudio: 'မပြောင်းဘဲ ထားမည်',
+      keepAudioMeta: 'ပါဝင်သောအသံ',
       convert: {
         label: 'ပြောင်းရန်',
         uncompressed: 'ပြောင်းရန် · ချုံ့မထားသော',
@@ -281,6 +293,10 @@ const my = {
         explanationFile: 'Cookies ဖိုင်သည် ဗလာဖြစ်နေ၊ သက်တမ်းကုန်နေ သို့မဟုတ် မှားသောဖော်မတ်ဖြစ်နေနိုင်သည် (yt-dlp သည် Netscape cookies.txt ကိုသာ လက်ခံသည်)။ Cookies ကို ထပ်မံ export လုပ်ကြည့်ပါ၊ ဖိုင်အခြားတစ်ခုရွေးကြည့်ပါ၊ Browser မုဒ်သို့ပြောင်းကြည့်ပါ၊ သို့မဟုတ် cookies ပိတ်ကြည့်ပါ။',
         explanationBrowser: 'Cookies ကို browser မှ တိုက်ရိုက်ဖတ်သည်။ Browser ယခုဖွင့်ထားပါက၊ cookie database ကို ပိတ်ဆို့ထားနိုင်သည် (Chromium မျိုးနွယ်)။ Browser သည် YouTube သို့ login ဝင်ထားရမည်ဖြစ်သည်။ Browser ပိတ်ကြည့်ပါ၊ Browser အခြားတစ်ခုသို့ ပြောင်းကြည့်ပါ၊ ဖိုင်မုဒ်သို့ ပြောင်းကြည့်ပါ သို့မဟုတ် cookies ပိတ်ကြည့်ပါ။',
         openSettingsCta: 'Cookies ဆက်တင် ဖွင့်မည်',
+        needsCookies: {
+          heading: 'ဤဝဘ်ဆိုဒ်တွင် အကောင့်ဝင်ရမည်',
+          body: 'yt-dlp သည် အတည်ပြုမှုမပါဘဲ ဤဗီဒီယိုကို ဖွင့်၍မရပါ။ အဆင့်မြင့်ဆက်တင်တွင် cookies တပ်ဆင်ပါ — သင်အကောင့်ဝင်ထားသော browser တစ်ခုသို့ ညွှန်ပါ၊ သို့မဟုတ် cookies.txt ဖိုင်တင်သွင်းပါ။'
+        },
         dpapi: {
           heading: 'Windows ကုဒ်ဝှက်မှုကြောင့် Chrome cookies ပိတ်ဆို့ခံရသည်',
           explanation: 'Chrome 127 နှင့် ၎င်းနောက်ပိုင်းဗားရှင်းများသည် Windows တွင် အခြား app များ မဖတ်နိုင်သောနည်းဖြင့် cookies များကို ကုဒ်ဝှက်ထားသည်။ အောက်ပါ ဖြေရှင်းနည်းများထဲမှ တစ်ခုကို ကြိုးစားပါ။',
@@ -290,7 +306,7 @@ const my = {
           fixFileBody: 'Chrome မှ browser extension ဖြင့် cookies ထုတ်ယူပြီး ဤ app ကို File မုဒ်သို့ ပြောင်းကာ ထုတ်ယူထားသောဖိုင်ကို ရွေးပါ။',
           fixUnsafeLabel: 'App-Bound Encryption ပိတ်ထား၍ Chrome ဖွင့်မည်',
           fixUnsafeBody: 'Chrome ၏ launch shortcut တွင် --disable-features=LockProfileCookieDatabase ထည့်ပါ။ သတိပေးချက်: ဤနည်းသည် ယခင်ကုဒ်ဝှက်ထားသော cookies များကို ပျက်ကွက်စေသောကြောင့် ဝဘ်ဆိုဒ်အားလုံးမှ logout ဖြစ်ပြီး ပြန်လည် login ဝင်ရမည်ဖြစ်သည်။',
-          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+          docsLinkLabel: 'yt-dlp စာတမ်းများ (ပြဿနာ #10927)'
         }
       }
     },
@@ -346,7 +362,7 @@ const my = {
       audioOnly: 'အသံသာ',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'အခြားဒေါင်းလုဒ်များပြီးဆုံးလျှင်စတင်မည် — အပြည့်အဝ bandwidth ရမည်',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'ဆွဲထုတ်မည်! ↓',
       pullItTooltip: 'ချက်ချင်းစတင်မည် — အခြားဒေါင်းလုဒ်များနှင့်အတူ အပြိုင်လုပ်မည်',
       playlistBatch_one: '{{count}} ဗီဒီယို · {{title}}',
       playlistBatch_other: '{{count}} ဗီဒီယိုများ · {{title}}',
@@ -354,15 +370,16 @@ const my = {
       labelPreset: 'Preset',
       labelItems: 'အကြောင်းအရာ',
       itemsValue_one: '{{total}} ခုမှ {{count}} ဗီဒီယို',
-      itemsValue_other: '{{total}} ခုမှ {{count}} ဗီဒီယိုများ'
+      itemsValue_other: '{{total}} ခုမှ {{count}} ဗီဒီယိုများ',
+      itemsValueAudio_one: '{{total}} ခုမှ {{count}} သီချင်း',
+      itemsValueAudio_other: '{{total}} ခုမှ {{count}} သီချင်းများ'
     },
     error: {
       icon: 'အမှား'
     }
   },
   videoCard: {
-    titlePlaceholder: 'ဖွင့်နေသည်…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'ဖွင့်နေသည်…'
   },
   queue: {
     header: 'ဒေါင်းလုဒ် Queue',
@@ -435,7 +452,8 @@ const my = {
       unavailable: 'ဤဗီဒီယိုမရနိုင်ပါ — ကိုယ်ပိုင်၊ ဖျက်ထား သို့ ဒေသကန့်သတ်ဖြစ်နိုင်သည်။',
       geoBlocked: 'ဤဗီဒီယိုသည် သင့်ဒေသတွင် မရနိုင်ပါ။',
       outOfDiskSpace: 'Disk နေရာမလုံလောက်ပါ။ နေရာလွတ်ပြီး ထပ်ကြိုးစားပါ။',
-      unsupportedUrl: 'ဤ URL သည် ဗီဒီယို URL မဟုတ်ပုံရပါ။ YouTube ဗီဒီယို၊ Short သို့မဟုတ် playlist လင့်ခ်တစ်ခု ထည့်ပါ။'
+      unsupportedUrl: 'ဤ URL သည် ဗီဒီယို URL မဟုတ်ပုံရပါ။ YouTube ဗီဒီယို၊ Short သို့မဟုတ် playlist လင့်ခ်တစ်ခု ထည့်ပါ။',
+      chunkTransferFailure: 'ဆာဗာသည် ဒေါင်းလုဒ်လုပ်နေစဉ် အကြိမ်ကြိမ် ဖြတ်တောက်နေပြီး yt-dlp သည် ထပ်ကြိုးစားပြီးနောက် လက်လျှော့သွားသည်။ ၎င်းသည် အများအားဖြင့် အကြီးဆုံးဗီဒီယိုဖော်မတ်များ (4K HDR / bitrate မြင့် VP9) တွင် ဖြစ်တတ်သည်။ ထပ်ကြိုးစားပါ၊ network/VPN ပြောင်းပါ၊ သို့မဟုတ် resolution နိမ့်သောဖော်မတ်ကို ရွေးချယ်ပါ။'
     }
   },
   presets: {
@@ -474,7 +492,7 @@ const my = {
   formatLabel: {
     audioOnly: 'အသံသာ',
     audioFallback: 'အသံ',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'အသံသာ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -512,19 +530,19 @@ const my = {
   share: {
     title: 'Arroxy မျှဝေမည်',
     description: 'Arroxy သည် အခမဲ့ နှင့် ဖွင့်ရင်းမြစ်ဖြစ်သည်။ မျှဝေခြင်းသည် လူပိုများ ၎င်းကို ရှာဖွေတွေ့ရှိနိုင်ရန် ကူညီသည်။',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'လင့်ကိုကူးယူရန်',
+    copied: 'ကူးယူပြီး!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Arroxy ကိုမျှဝေရန်',
+    footerLabel: 'မျှဝေရန်',
+    shareAction: 'Arroxy ကိုမျှဝေရန်',
     inlineCard: {
       body: 'Arroxy ကို နှစ်သက်ပါသလား? အသုံးဝင်နိုင်သော သူတစ်ဦးနှင့် မျှဝေပါ။',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'မျှဝေရန်အကြံပြုချက် ပယ်ဖျက်မည်'
     },
     highValueBanner: {
       body: 'Arroxy ကို နှစ်သက်ပါသလား? အခြားသူများ ရှာဖွေတွေ့ရှိနိုင်ရန် ကူညီပါ။',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'မျှဝေရန်အကြံပြုချက် ပယ်ဖျက်မည်'
     }
   }
 } as const;

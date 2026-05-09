@@ -37,7 +37,7 @@ class FakeDownloadService extends EventEmitter {
 
 function makeDeps() {
   const downloadService = new FakeDownloadService();
-  const formatProbeService = { getFormats: vi.fn() };
+  const probeService = { probe: vi.fn() };
   const mainWindow = {
     isDestroyed: vi.fn().mockReturnValue(false),
     webContents: { send: vi.fn() },
@@ -69,8 +69,7 @@ function makeDeps() {
   return {
     mainWindow: mainWindow as never,
     downloadService: downloadService as never,
-    formatProbeService: formatProbeService as never,
-    playlistProbeService: { getPlaylistItems: vi.fn() } as never,
+    probeService: probeService as never,
     settingsStore: settingsStore as never,
     queueStore: queueStore as never,
     binaryManager: {
@@ -82,7 +81,7 @@ function makeDeps() {
     tokenService: { warmUp: vi.fn() } as never,
     languageRef: languageRef as never,
     clipboardWatcher: clipboardWatcher as never,
-    _raw: { downloadService, formatProbeService, mainWindow, queueStore, settingsStore, languageRef, clipboardWatcher }
+    _raw: { downloadService, probeService, mainWindow, queueStore, settingsStore, languageRef, clipboardWatcher }
   };
 }
 
@@ -258,14 +257,14 @@ describe('registerIpcHandlers', () => {
         error: null,
         finishedAt: null,
         downloadJobId: null,
-        job: { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false } }
+        job: { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false } }
       };
       const result = (await handler(null, [validItem])) as { ok: boolean };
       expect(result.ok).toBe(true);
       expect(deps._raw.queueStore.save).toHaveBeenCalledOnce();
     });
 
-    it('downloads:getFormats rejects incomplete cookies config before probing', async () => {
+    it('downloads:probe rejects incomplete cookies config before probing', async () => {
       const deps = makeDeps();
       deps._raw.settingsStore.get.mockResolvedValue({
         common: {
@@ -280,7 +279,7 @@ describe('registerIpcHandlers', () => {
       });
       registerIpcHandlers(deps);
 
-      const handler = findCall(IPC_CHANNELS.downloadsGetFormats)!.fn;
+      const handler = findCall(IPC_CHANNELS.downloadsProbe)!.fn;
       const result = (await handler(null, { url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' })) as {
         ok: boolean;
         error?: { code: string; message: string };
@@ -288,7 +287,7 @@ describe('registerIpcHandlers', () => {
 
       expect(result.ok).toBe(false);
       expect(result.error).toMatchObject({ code: 'validation', message: 'Pick a file to use cookies' });
-      expect(deps._raw.formatProbeService.getFormats).not.toHaveBeenCalled();
+      expect(deps._raw.probeService.probe).not.toHaveBeenCalled();
     });
 
     it('downloads:start rejects incomplete cookies config before starting downloads', async () => {
@@ -311,7 +310,7 @@ describe('registerIpcHandlers', () => {
         outputDir: '/tmp',
         job: {
           kind: 'single-format',
-          source: 'youtube',
+          extractor: 'youtube', extractorKey: 'Youtube',
           formatId: '137+251',
           preset: 'custom',
           sponsorBlock: { mode: 'off' },

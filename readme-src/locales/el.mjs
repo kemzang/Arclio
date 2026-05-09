@@ -71,7 +71,7 @@ bun run dist:win     # cross-compile Windows portable exe
 
 export const el = {
   icon_alt: "Μασκότ Arroxy",
-  title: "Arroxy — Δωρεάν Ανοιχτού Κώδικα Λήψη YouTube για Windows, macOS & Linux",
+  title: "Arroxy — Δωρεάν Ανοιχτού Κώδικα Λήψη YouTube (+ 2000 ιστοτόπους) για Windows, macOS & Linux",
   read_in_label: "Διαβάστε στα:",
   badge_release_alt: "Έκδοση",
   badge_build_alt: "Build",
@@ -80,7 +80,7 @@ export const el = {
   badge_i18n_alt: "Γλώσσες",
   badge_website_alt: "Ιστότοπος",
   hero_desc:
-    "Κατεβάστε οποιοδήποτε βίντεο YouTube, Short ή ηχητικό κομμάτι σε αρχική ποιότητα — έως 4K HDR στα 60 fps, ή ως MP3 / AAC / Opus. Εκτελείται τοπικά σε Windows, macOS και Linux. **Χωρίς διαφημίσεις, χωρίς σύνδεση, χωρίς cookies προγράμματος περιήγησης, χωρίς συνδεδεμένο λογαριασμό Google.**",
+    "Κατεβάστε βίντεο, Shorts, μουσική, κανάλια, podcasts ή ηχητικά κομμάτια από το **YouTube και 2000+ υποστηριζόμενους ιστοτόπους** — έως 4K HDR στα 60 fps, ή ως MP3 / AAC / Opus. Εκτελείται τοπικά σε Windows, macOS και Linux. **Χωρίς διαφημίσεις, χωρίς bloat, χωρίς upsells.**",
   cta_latest: "↓ Λήψη Τελευταίας Έκδοσης",
   cta_website: "Ιστότοπος",
   demo_alt: "Demo του Arroxy",
@@ -116,7 +116,7 @@ export const el = {
   feat_privacy_3: "Αρχεία αποθηκευμένα απευθείας στον φάκελο που επιλέγετε",
   feat_workflow_h3: "Ροή εργασίας",
   feat_workflow_1:
-    "**Επικόλλησε οποιοδήποτε URL YouTube** — υποστηρίζονται βίντεο, Shorts και playlists· κατέβασε ολόκληρη την playlist ή διάλεξε πρώτα συγκεκριμένα βίντεο",
+    "**Επικόλλησε οποιοδήποτε σύνδεσμο** — βίντεο YouTube, Shorts, κανάλια, playlists, podcasts και Music, καθώς και 2000+ άλλους ιστοτόπους που υποστηρίζει το yt-dlp· κατέβασε ολόκληρη την playlist ή διάλεξε πρώτα συγκεκριμένα βίντεο",
   feat_workflow_2:
     "**Ουρά πολλαπλών λήψεων** — παρακολούθηση αρκετών λήψεων παράλληλα",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const el = {
     "**SponsorBlock** — παράλειψη ή επισήμανση κεφαλαίου για χορηγούς, εισαγωγές, εξόδους, αυτο-προωθήσεις",
   feat_post_4:
     "**Ενσωματωμένα μεταδεδομένα** — τίτλος, ημερομηνία μεταφόρτωσης, κανάλι, περιγραφή, μικρογραφία και δείκτες κεφαλαίων γραμμένα στο αρχείο",
+  feat_sites_h3: "YouTube + 2000 ιστοτόποι",
+  feat_sites_1:
+    "**YouTube, πλήρως** — βίντεο, Shorts, κανάλια, playlists, YouTube Music και podcasts χειρίζονται ως πρωτεύουσες πηγές",
+  feat_sites_2:
+    "**2000+ άλλοι ιστοτόποι** μέσω yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org και πολλοί άλλοι",
+  feat_sites_3:
+    "**Μόνο ήχος και υπότιτλοι** λειτουργούν σε κάθε υποστηριζόμενο ιστοτόπο, όχι μόνο στο YouTube",
+  feat_sites_4:
+    "Αν ένας ιστοτόπος αλλάξει, το yt-dlp παρέχει διορθώσεις εβδομαδιαία και το Arroxy ενημερώνει αυτόματα το εκτελέσιμο κατά την εκκίνηση",
   shot1_alt: "Επικόλληση URL",
   shot2_alt: "Επιλογή ποιότητας",
   shot3_alt: "Επιλογή τοποθεσίας αποθήκευσης",

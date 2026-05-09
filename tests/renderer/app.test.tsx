@@ -35,19 +35,19 @@ describe('App renderer', () => {
   it('renders the app heading and URL input', async () => {
     render(<App />);
     expect(await screen.findByTestId('title-bar')).toHaveTextContent('Arroxy');
-    expect(await screen.findByPlaceholderText(/youtube\.com/i)).toBeInTheDocument();
+    expect(await screen.findByPlaceholderText(/^https/i)).toBeInTheDocument();
   });
 
   it('advances to format step after submitting URL', async () => {
     render(<App />);
 
-    const input = await screen.findByPlaceholderText(/youtube\.com/i);
+    const input = await screen.findByPlaceholderText(/^https/i);
     fireEvent.change(input, { target: { value: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' } });
 
     fireEvent.click(screen.getByTestId('btn-find-formats'));
 
     await waitFor(() => {
-      expect(mockAppApi.downloads.getFormats).toHaveBeenCalledWith(expect.objectContaining({ url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' }));
+      expect(mockAppApi.downloads.probe).toHaveBeenCalledWith(expect.objectContaining({ url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' }));
     });
   });
 

@@ -24,7 +24,7 @@ function matchLocation(dir: string, locations: Location[]): string {
 
 export function StepFolderConfirm(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardOutputDir, wizardThumbnail, wizardTitle, wizardDuration, commonPaths, advance, back, setWizardOutputDir, wizardSubfolderEnabled, wizardSubfolderName, setWizardSubfolderEnabled, setWizardSubfolderName } = useAppStore();
+  const { wizardOutputDir, wizardThumbnail, wizardTitle, wizardDuration, wizardWebpageUrl, commonPaths, advance, back, setWizardOutputDir, wizardSubfolderEnabled, wizardSubfolderName, setWizardSubfolderEnabled, setWizardSubfolderName } = useAppStore();
 
   const { presets, custom, locations } = useMemo(() => {
     const presets: Location[] = (
@@ -120,7 +120,7 @@ export function StepFolderConfirm(): JSX.Element {
 
   return (
     <div className="wizard-step flex flex-col gap-4" data-testid="step-folder">
-      <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} />
+      <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} webpageUrl={wizardWebpageUrl} />
 
       <div className="flex flex-col gap-1.5">
         <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.folder.heading')}</p>

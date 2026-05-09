@@ -27,9 +27,14 @@ function redactProxy(url: string | undefined): string | null {
   }
 }
 
+// 'auto' lets yt-dlp's extractor decide for ambiguous URLs (mixed video+playlist).
+// 'video' forces single-video resolution (--no-playlist); 'playlist' forces
+// playlist enumeration (--yes-playlist). Renderer surfaces a disambiguation
+// prompt for mixed YouTube URLs and passes the user's choice through.
+export type ProbePlaylistMode = 'auto' | 'video' | 'playlist';
+
 export type YtDlpRequest =
-  | { kind: 'probe'; url: string }
-  | { kind: 'playlist-probe'; url: string }
+  | { kind: 'probe'; url: string; playlistMode?: ProbePlaylistMode }
   | {
       kind: 'subtitle';
       url: string;
@@ -110,7 +115,20 @@ function buildPotExtractorArgs(token: string, visitorData: string): string {
   return `youtube:po_token=web.gvs+${token}${visitor}`;
 }
 
-type RetryStrategy = { kind: 'pot'; reMint: boolean } | { kind: 'fallback' };
+// Inline host check — unified probe runs before we know the extractor identity,
+// so we use URL host as the gating signal. For YouTube we run the 3-tier PoT
+// ladder; for everything else we run a single attempt with no YouTube-specific
+// --extractor-args (no PoT mint, no HiddenWindow scrape, no retry).
+function isYouTubeHostUrl(url: string): boolean {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === 'youtu.be' || host === 'youtube.com' || host.endsWith('.youtube.com');
+  } catch {
+    return false;
+  }
+}
+
+type RetryStrategy = { kind: 'pot'; reMint: boolean } | { kind: 'fallback' } | { kind: 'noExtractorArgs' };
 
 // Probes (--dump-json) should never legitimately take this long. Without a
 // timeout, a stalled yt-dlp run (e.g. extractor giving up but not exiting)
@@ -131,14 +149,16 @@ interface InvokeOptions {
 }
 
 async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise<YtDlpResult> {
-  let extractorArgs: string;
+  const extractorArgsArr: string[] = [];
   if (strategy.kind === 'pot') {
     if (strategy.reMint) opts.tokenService.invalidateCache();
     const { token, visitorData } = await opts.tokenService.mintTokenForUrl(opts.url);
-    extractorArgs = buildPotExtractorArgs(token, visitorData);
-  } else {
-    extractorArgs = PLAYER_CLIENT_FALLBACK;
+    extractorArgsArr.push('--extractor-args', buildPotExtractorArgs(token, visitorData));
+  } else if (strategy.kind === 'fallback') {
+    extractorArgsArr.push('--extractor-args', PLAYER_CLIENT_FALLBACK);
   }
+  // 'noExtractorArgs' → no --extractor-args flag at all. yt-dlp runs vanilla
+  // for non-YouTube extractors.
 
   const cookiesArgs = opts.cookies?.kind === 'file' ? ['--cookies', opts.cookies.path] : opts.cookies?.kind === 'browser' ? ['--cookies-from-browser', opts.cookies.browser] : [];
   const proxyArgs = opts.proxyUrl ? ['--proxy', opts.proxyUrl] : [];
@@ -146,7 +166,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
   // client. With deno bundled, we point yt-dlp at it explicitly so it doesn't
   // silently fall back to JS-free clients (where our web.gvs PoT is unused).
   const jsRuntimeArgs = opts.denoPath ? ['--js-runtimes', `deno:${opts.denoPath}`] : [];
-  const args = ['--extractor-args', extractorArgs, ...cookiesArgs, ...proxyArgs, ...jsRuntimeArgs, ...opts.args];
+  const args = [...extractorArgsArr, ...cookiesArgs, ...proxyArgs, ...jsRuntimeArgs, ...opts.args];
 
   ytDlpLog.info('spawn', {
     attempt: strategy.kind,
@@ -215,6 +235,8 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
           kind: 'success',
           stdout,
           stderr,
+          // 'fallback' is the YouTube degraded-success path (no PoT). The non-YouTube
+          // vanilla path ('noExtractorArgs') is not a fallback — the user sees nothing.
           usedExtractorFallback: strategy.kind === 'fallback'
         });
         return;
@@ -231,14 +253,22 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
   });
 }
 
-// 3-attempt ladder:
+// 3-attempt ladder (YouTube only):
 //   0. PoT token  → if botBlock, retry
 //   1. Re-mint PoT → if still botBlock, fall back
 //   2. No PoT, player_client=default,-web,-web_safari  (final attempt)
 //
 // If the *first* PoT mint throws (provider unavailable, scrape broke), we
 // skip the PoT path entirely and go straight to step 2.
+//
+// Non-YouTube URLs run a single attempt with no --extractor-args. Skipping the
+// PoT mint avoids gratuitous HiddenWindow scrapes for sites where the token
+// would be ignored.
 async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
+  if (!isYouTubeHostUrl(opts.url)) {
+    return invokeOnce(opts, { kind: 'noExtractorArgs' });
+  }
+
   opts.signal?.onAttempt?.(0);
   let result: YtDlpResult;
   try {
@@ -285,7 +315,14 @@ function buildVideoArgs(req: Extract<YtDlpRequest, { kind: 'video' | 'video+embe
   // Resume from any .part file left by a prior interrupted run (network drop,
   // hard kill, etc.). Cancel paths explicitly call cleanupPartFiles() so a
   // user-cancelled download starts fresh.
-  if (!skipDownload) args.push('--continue');
+  if (!skipDownload) {
+    // YouTube serves big VP9/AV1 itags (315/337/313, 4K HDR ~1GB) over a
+    // ranged HTTP that frequently truncates mid-body, surfacing as
+    // "X bytes read, Y more expected. Retrying ...". Splitting into 10MB
+    // ranges sidesteps the truncation. Doubled retry budgets cover the
+    // long tail when YT throttles a chunk hard.
+    args.push('--continue', '--http-chunk-size', '10M', '--retries', '20', '--fragment-retries', '20');
+  }
 
   const forcesMkv = req.kind === 'video+embed' && req.subtitleLanguages.length > 0;
   // Audio-only conversion is mutually exclusive with subtitle embedding (no
@@ -351,13 +388,21 @@ function buildVideoArgs(req: Extract<YtDlpRequest, { kind: 'video' | 'video+embe
 
 export function buildArgs(req: YtDlpRequest): { args: string[]; subtitleFormat?: SubtitleFormat } {
   switch (req.kind) {
-    case 'probe':
-      return { args: ['--dump-json', '--no-playlist', req.url] };
-    case 'playlist-probe':
-      // --flat-playlist returns NDJSON of entries; --no-playlist would defeat
-      // enumeration entirely. --yes-playlist makes the intent explicit so
-      // mixed video+playlist URLs always expand here.
-      return { args: ['--dump-json', '--flat-playlist', '--yes-playlist', req.url] };
+    case 'probe': {
+      // --dump-single-json: one JSON document per URL regardless of content type.
+      // --flat-playlist: for playlists, returns flat entries (id+title+url) instead
+      //   of expanding each entry. For non-playlist URLs it's a no-op — yt-dlp
+      //   still returns full video info (formats, subs, etc.).
+      // --playlist-end: cap enumeration for channels / search / playlists.
+      //   Big channels (5000+ uploads) would otherwise hang the probe and
+      //   produce JSON the renderer can't paginate. 500 is a generous ceiling
+      //   for a single-screen picker.
+      // playlistMode disambiguates mixed YouTube URLs (?v=X&list=Y): yt-dlp's
+      //   default routes Radio/Mix to playlist, which is rarely user intent.
+      const modeFlag = req.playlistMode === 'video' ? ['--no-playlist'] : req.playlistMode === 'playlist' ? ['--yes-playlist'] : [];
+      const capFlag = req.playlistMode === 'video' ? [] : ['--playlist-end', '500'];
+      return { args: ['--dump-single-json', '--flat-playlist', ...modeFlag, ...capFlag, req.url] };
+    }
     case 'subtitle':
       return { args: buildSubtitleArgs(req), subtitleFormat: effectiveSubtitleFormat(req) };
     case 'video':
@@ -400,7 +445,7 @@ export class YtDlp {
     const cookies = resolveCookies(settings);
     const proxyUrl = nonEmpty(settings.common?.proxyUrl?.trim());
     const { args, subtitleFormat } = buildArgs(req);
-    const isProbe = req.kind === 'probe' || req.kind === 'playlist-probe';
+    const isProbe = req.kind === 'probe';
     const result = await invokeWithRetry({
       url: req.url,
       ytDlpPath: this._ytDlpPath!,

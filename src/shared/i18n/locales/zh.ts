@@ -90,6 +90,8 @@ const zh = {
       heading: 'Playlist 视频',
       itemCount_one: '{{count}} 个视频',
       itemCount_other: '{{count}} 个视频',
+      itemCountAudio_one: '{{count}} 首曲目',
+      itemCountAudio_other: '{{count}} 首曲目',
       selectAll: '全选',
       selectNone: '取消全选',
       rangeFrom: '从',
@@ -123,17 +125,25 @@ const zh = {
       fetchFormats: '获取格式',
       features: {
         heading: 'Arroxy 能下载什么',
-        video: {
-          title: '视频',
-          desc: '可选任意分辨率，最高 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: '视频',
+          channel: '频道',
+          playlist: '播放列表',
+          short: 'Shorts',
+          music: '音乐',
+          podcast: '播客'
         },
-        playlist: {
-          title: '播放列表',
-          desc: '多选播放列表中的视频'
+        anySite: {
+          heading: '2000+ 个网站',
+          video: '视频',
+          videoPlaylist: '视频播放列表',
+          musicPlaylist: '音乐播放列表'
         },
-        audio: {
-          title: '音频',
-          desc: '原始流或转换为 MP3/M4A'
+        always: {
+          heading: '始终可用',
+          audioOnly: '纯音频',
+          subtitles: '字幕'
         }
       },
       mascotIdle: '丢一个 YouTube 链接给我(视频或 Shorts 都行)— 点「获取格式」我就开始干活 ✨',
@@ -251,10 +261,12 @@ const zh = {
       audioOnlyOption: '仅音频(无视频)',
       mascot: '最佳画质 + 最佳音质 = 最高质量。我会选这个!',
       sniffing: '正在为你寻找最佳格式…',
-      loadingHint: '通常只需一秒',
+      loadingHint: '请等待探测完成，播放列表和搜索可能需要一些时间。',
       loadingAria: '正在加载格式',
       sizeUnknown: '大小未知',
       total: '总计',
+      keepAudio: '保持原样',
+      keepAudioMeta: '内置音频',
       convert: {
         label: '转换',
         uncompressed: '转换 · 无损',
@@ -280,6 +292,10 @@ const zh = {
         currentModeBrowser: '浏览器',
         explanationFile: '你的 cookies 文件可能为空、已过期或格式不正确（yt-dlp 需要 Netscape cookies.txt 格式）。请尝试重新导出 cookies、选择其他文件、切换到浏览器模式或关闭 cookies。',
         explanationBrowser: 'Cookies 直接从浏览器读取。如果浏览器当前正在运行，其 cookie 数据库可能已被锁定（Chromium-family）。浏览器还必须已登录 YouTube。请尝试关闭浏览器、切换到其他浏览器、切换到文件模式或关闭 cookies。',
+        needsCookies: {
+          heading: '此网站需要登录',
+          body: 'yt-dlp 无法在未经认证的情况下访问此视频。请在高级设置中配置 cookies——指向你已登录的浏览器，或导入 cookies.txt 文件。'
+        },
         openSettingsCta: '打开 cookies 设置',
         dpapi: {
           heading: 'Chrome Cookies 被 Windows 加密阻止',
@@ -354,15 +370,16 @@ const zh = {
       labelPreset: '预设',
       labelItems: '项目',
       itemsValue_one: '{{total}} 个视频中的 {{count}} 个',
-      itemsValue_other: '{{total}} 个视频中的 {{count}} 个'
+      itemsValue_other: '{{total}} 个视频中的 {{count}} 个',
+      itemsValueAudio_one: '{{total}} 首曲目中的 {{count}} 首',
+      itemsValueAudio_other: '{{total}} 首曲目中的 {{count}} 首'
     },
     error: {
       icon: '错误'
     }
   },
   videoCard: {
-    titlePlaceholder: '加载中…',
-    domain: 'youtube.com'
+    titlePlaceholder: '加载中…'
   },
   queue: {
     header: '下载队列',
@@ -435,7 +452,8 @@ const zh = {
       unavailable: '该视频不可用 — 可能是私有、已删除或受地区限制。',
       geoBlocked: '该视频在你所在的地区不可用。',
       outOfDiskSpace: '磁盘空间不足。请清理空间后重试。',
-      unsupportedUrl: '这看起来不像视频链接。请粘贴 YouTube 视频、Short 或播放列表的链接。'
+      unsupportedUrl: '这看起来不像视频链接。请粘贴 YouTube 视频、Short 或播放列表的链接。',
+      chunkTransferFailure: '服务器在传输过程中反复中断下载，yt-dlp 多次重试后放弃。此问题通常出现在最大的视频格式（4K HDR / 高码率 VP9）上。请重试、切换网络或 VPN，或选择分辨率较低的格式。'
     }
   },
   presets: {
@@ -512,12 +530,12 @@ const zh = {
   share: {
     title: '分享 Arroxy',
     description: 'Arroxy 免费且开源。分享它可以帮助更多人发现它。',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: '复制链接',
+    copied: '已复制！',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: '分享 Arroxy',
+    footerLabel: '分享',
+    shareAction: '分享 Arroxy',
     inlineCard: {
       body: '喜欢 Arroxy 吗？把它分享给可能觉得有用的人吧。',
       dismiss: '关闭分享建议'

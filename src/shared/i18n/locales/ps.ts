@@ -90,6 +90,8 @@ const ps = {
       heading: 'د Playlist توکي',
       itemCount_one: '{{count}} ویډیو',
       itemCount_other: '{{count}} ویډیوګانې',
+      itemCountAudio_one: '{{count}} ټریک',
+      itemCountAudio_other: '{{count}} ټریکونه',
       selectAll: 'ټول غوره کړئ',
       selectNone: 'هیڅ غوره مه کوئ',
       rangeFrom: 'له',
@@ -123,17 +125,25 @@ const ps = {
       fetchFormats: 'بڼې ترلاسه کړه',
       features: {
         heading: 'Arroxy څه ډاونلوډ کولی شي',
-        video: {
-          title: 'ویډیوګانې',
-          desc: 'تر 4K پورې هر ریزولوشن غوره کړئ'
+        youtube: {
+          heading: 'YouTube',
+          video: 'ویډیوګانې',
+          channel: 'چینلونه',
+          playlist: 'Playlistونه',
+          short: 'Shorts',
+          music: 'موسیقي',
+          podcast: 'Podcastونه'
         },
-        playlist: {
-          title: 'Playlistونه',
-          desc: 'له Playlist نه ډیر توکي غوره کړئ'
+        anySite: {
+          heading: '2000+ سایټونه',
+          video: 'ویډیوګانې',
+          videoPlaylist: 'د ویډیو Playlistونه',
+          musicPlaylist: 'د موسیقۍ Playlistونه'
         },
-        audio: {
-          title: 'غږ',
-          desc: 'اصلي سټریم یا MP3/M4A بدلول'
+        always: {
+          heading: 'تل شتون لري',
+          audioOnly: 'یوازې غږونه',
+          subtitles: 'ژباړلیکونه'
         }
       },
       mascotIdle: 'یو YouTube لینک (ویډیو یا Short) راکړئ — بیا "بڼې ترلاسه کړه" کلیک وکړئ او زه کار پیل کوم ✨',
@@ -251,10 +261,12 @@ const ps = {
       audioOnlyOption: 'یوازې غږ (ویډیو نشته)',
       mascot: 'بهترین + بهترین = اعظمي کیفیت. زه به دا غوره کړم!',
       sniffing: 'ستاسو لپاره غوره بڼې لټوم…',
-      loadingHint: 'معمولاً یوه ثانیه وخت نیسي',
+      loadingHint: 'مهرباني وکړئ انتظار وکړئ تر پلټنه پای ته ورسیږي — Playlistونه او لټونونه ممکن یو څه وخت ونیسي.',
       loadingAria: 'بڼې بارول',
       sizeUnknown: 'اندازه نامعلومه',
       total: 'ټول',
+      keepAudio: 'لکه چې دی وساتئ',
+      keepAudioMeta: 'ورته غږ',
       convert: {
         label: 'بدلول',
         uncompressed: 'بدلول · غیر فشارشوی',
@@ -281,6 +293,10 @@ const ps = {
         explanationFile: 'ستاسو د کوکیزو فایل ممکن خالي، پخوانی، یا د غلط بڼې وي (yt-dlp Netscape cookies.txt تمه لري). هڅه وکړئ کوکیز بیا صادر کړئ، بل فایل غوره کړئ، د براوزر حالت ته بدل شئ، یا کوکیز بند کړئ.',
         explanationBrowser: 'کوکیز مستقیم له براوزر نه لوستل کیږي. که براوزر اوس مهال چلیږي، د کوکیزو ډیټابیس ممکن بند وي (Chromium کورنۍ). براوزر باید YouTube ته ننوتلی وي. هڅه وکړئ براوزر وتړئ، بل براوزر ته بدل شئ، د فایل حالت ته بدل شئ، یا کوکیز بند کړئ.',
         openSettingsCta: 'د کوکیزو تنظیمات پرانیستل',
+        needsCookies: {
+          heading: 'دا سایټ ننوتل ته اړتیا لري',
+          body: 'yt-dlp پرته د تصدیق نه دا ویډیو ته لاسرسی نه شو کولی. د پرمختللو تنظیماتو کې کوکیز تنظیم کړئ — هغه براوزر ته اشاره وکړئ چې مو ورسره ننوتلي یئ، یا یو cookies.txt فایل واردوئ.'
+        },
         dpapi: {
           heading: 'Chrome کوکیز د Windows د کوډ کولو لخوا بند شوي',
           explanation: 'Chrome 127 او نوي نسخې کوکیز داسې کوډ کوي چې نور اپلیکیشنونه یې د Windows کې لوستلی نشي. لاندې یو له حلونو هڅه وکړئ.',
@@ -290,7 +306,7 @@ const ps = {
           fixFileBody: 'د براوزر د توسیع سره له Chrome نه کوکیز صادر کړئ، بیا دا اپلیکیشن د فایل حالت ته بدل کړئ او صادر شوی فایل غوره کړئ.',
           fixUnsafeLabel: 'Chrome د App-Bound Encryption غیر فعاله سره پیل کړئ',
           fixUnsafeBody: 'د Chrome د پیل شارټ کټ کې --disable-features=LockProfileCookieDatabase اضافه کړئ. خبرداری: دا مخکې کوډ شوي کوکیز باطلوي، نو تاسو به له هر سایټ وتلئ او بیا ننوتل ضروري دي.',
-          docsLinkLabel: 'yt-dlp اسناد (issue #10927)'
+          docsLinkLabel: 'yt-dlp اسناد (مسئله #10927)'
         }
       }
     },
@@ -346,7 +362,7 @@ const ps = {
       audioOnly: 'یوازې غږ',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'کله چې نور ډاونلوډونه پای ته ورسیږي پیل کیږي — بشپړ بینډوډت ترلاسه کوي',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'راکش یې کړه! ↓',
       pullItTooltip: 'سمدلاسه پیل کیږي — د نورو فعالو ډاونلوډونو سره یوځای چلیږي',
       playlistBatch_one: '{{count}} ویډیو · {{title}}',
       playlistBatch_other: '{{count}} ویډیوګانې · {{title}}',
@@ -354,15 +370,16 @@ const ps = {
       labelPreset: 'Preset',
       labelItems: 'توکي',
       itemsValue_one: '{{count}} له {{total}} ویډیو',
-      itemsValue_other: '{{count}} له {{total}} ویډیوګانې'
+      itemsValue_other: '{{count}} له {{total}} ویډیوګانې',
+      itemsValueAudio_one: '{{count}} له {{total}} ټریک',
+      itemsValueAudio_other: '{{count}} له {{total}} ټریکونه'
     },
     error: {
       icon: 'تیروتنه'
     }
   },
   videoCard: {
-    titlePlaceholder: 'بارول…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'بارول…'
   },
   queue: {
     header: 'د ډاونلوډ کتار',
@@ -435,7 +452,8 @@ const ps = {
       unavailable: 'دا ویډیو شتون نلري — ممکن شخصي، حذف شوې، یا سیمه بنده وي.',
       geoBlocked: 'دا ویډیو ستاسو سیمه کې شتون نلري.',
       outOfDiskSpace: 'د ډیسک کافي ځای نشته. ځای خالي کړئ او بیا هڅه وکړئ.',
-      unsupportedUrl: 'دا د ویډیو URL نه ښکاري. یو YouTube ویډیو، Short، یا Playlist لینک ولیکئ.'
+      unsupportedUrl: 'دا د ویډیو URL نه ښکاري. یو YouTube ویډیو، Short، یا Playlist لینک ولیکئ.',
+      chunkTransferFailure: 'سرور د ډاونلوډ پرمهال وصل کول پرې کاوه او yt-dlp د بیا هڅولو وروسته مو پریښود. دا معمولاً د ترټولو لوی ویډیو فارمیټونو (4K HDR / لوړ بیټ ریټ VP9) سره پیښیږي. بیا هڅه وکړئ، شبکه/VPN بدل کړئ، یا ټیټ ریزولوشن فارمیټ غوره کړئ.'
     }
   },
   presets: {
@@ -474,7 +492,7 @@ const ps = {
   formatLabel: {
     audioOnly: 'یوازې غږ',
     audioFallback: 'غږ',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'یوازې غږ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -512,12 +530,12 @@ const ps = {
   share: {
     title: 'Arroxy شریک کړئ',
     description: 'Arroxy وړیا او خلاص سرچینه دی. شریکول نورو خلکو سره مرسته کوي چې ومومي.',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'لینک کاپي کړئ',
+    copied: 'کاپي شو!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Arroxy شریک کړئ',
+    footerLabel: 'شریک کړئ',
+    shareAction: 'Arroxy شریک کړئ',
     inlineCard: {
       body: 'ایا Arroxy خوند درکوي؟ له چا سره یې شریک کړئ چې ممکن ورته ګټور وي.',
       dismiss: 'د شریکولو وړاندیز رد کړئ'

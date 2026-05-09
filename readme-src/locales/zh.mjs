@@ -71,7 +71,7 @@ bun run dist:win     # 交叉编译 Windows 便携版 exe
 
 export const zh = {
   icon_alt: "Arroxy 吉祥物",
-  title: "Arroxy — 免费开源 YouTube 下载器，支持 Windows、macOS 和 Linux",
+  title: "Arroxy — 免费开源 YouTube（+ 2000 个网站）下载器，支持 Windows、macOS 和 Linux",
   read_in_label: "阅读语言：",
   badge_release_alt: "发布",
   badge_build_alt: "构建",
@@ -80,7 +80,7 @@ export const zh = {
   badge_i18n_alt: "语言",
   badge_website_alt: "官网",
   hero_desc:
-    "下载任意 YouTube 视频、Shorts 或音轨，保留原始画质 — 最高 4K HDR 60 fps，或导出为 MP3 / AAC / Opus。在 Windows、macOS 和 Linux 本地运行。**无广告、无登录、无浏览器 Cookie、无 Google 账号绑定。**",
+    "从 **YouTube 和 2000+ 个支持的网站**下载视频、Shorts、音乐、频道、播客或音轨 — 最高 4K HDR 60 fps，或导出为 MP3 / AAC / Opus。在 Windows、macOS 和 Linux 本地运行。**无广告、无冗余、无追加销售。**",
   cta_latest: "↓ 下载最新版本",
   cta_website: "官网",
   demo_alt: "Arroxy 演示",
@@ -117,7 +117,7 @@ export const zh = {
   feat_privacy_3: "文件直接保存到你选择的文件夹",
   feat_workflow_h3: "工作流",
   feat_workflow_1:
-    "**粘贴任意 YouTube 链接** — 支持视频、Shorts 和播放列表；可下载整个播放列表，也可先挑选具体视频",
+    "**粘贴任意链接** — YouTube 视频、Shorts、频道、播放列表、播客和 Music，以及 yt-dlp 支持的 2000+ 个其他网站；可下载整个播放列表，也可先挑选具体视频",
   feat_workflow_2:
     "**多任务下载队列** — 并行跟踪多个下载",
   feat_workflow_3:
@@ -137,6 +137,15 @@ export const zh = {
     "**SponsorBlock** — 跳过或章节标记赞助商、片头、片尾、自我推广片段",
   feat_post_4:
     "**嵌入元数据** — 标题、上传日期、频道、描述、封面图和章节标记写入文件",
+  feat_sites_h3: "YouTube + 2000 个网站",
+  feat_sites_1:
+    "**YouTube，全面支持** — 视频、Shorts、频道、播放列表、YouTube Music 和播客作为一等来源处理",
+  feat_sites_2:
+    "**通过 yt-dlp 支持 2000+ 个其他网站** — Vimeo、Twitch、Twitter/X、TikTok、SoundCloud、Bandcamp、Bilibili、BBC iPlayer、archive.org 等众多网站",
+  feat_sites_3:
+    "**仅音频和字幕**在所有支持的网站上均可使用，不限于 YouTube",
+  feat_sites_4:
+    "若某个网站发生变化，yt-dlp 每周发布修复，Arroxy 在启动时自动更新二进制文件",
   shot1_alt: "粘贴 URL",
   shot2_alt: "选择画质",
   shot3_alt: "选择保存位置",

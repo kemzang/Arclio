@@ -67,7 +67,7 @@ export type CookiesBrowser = z.infer<typeof cookiesBrowserSchema>;
 export const queueItemStatusSchema = z.enum(['pending', 'downloading', 'paused', 'done', 'error', 'cancelled']);
 export type QueueItemStatus = z.infer<typeof queueItemStatusSchema>;
 
-export const ytdlpErrorKeySchema = z.enum(['botBlock', 'ipBlock', 'rateLimit', 'ageRestricted', 'unavailable', 'geoBlocked', 'outOfDiskSpace', 'unsupportedUrl']);
+export const ytdlpErrorKeySchema = z.enum(['botBlock', 'ipBlock', 'rateLimit', 'ageRestricted', 'unavailable', 'geoBlocked', 'outOfDiskSpace', 'unsupportedUrl', 'chunkTransferFailure']);
 export type YtdlpErrorKey = z.infer<typeof ytdlpErrorKeySchema>;
 export const YTDLP_ERROR_KEYS = ytdlpErrorKeySchema.options;
 
@@ -118,47 +118,22 @@ export const ZOOM_STEP = 0.05;
 // Hard cap on subtitle languages per download — protects against argv length blow-up.
 export const MAX_SUBTITLE_LANGUAGES = 50;
 
-const youtubeHostRegex = /(^|\.)(youtube\.com|youtu\.be)$/i;
-
-function isYouTubeHostname(hostname: string): boolean {
-  return youtubeHostRegex.test(hostname);
-}
-
-export function isYouTubeUrl(input: string): boolean {
-  try {
-    return isYouTubeHostname(new URL(input).hostname);
-  } catch {
-    return false;
-  }
-}
-
-const youtubeUrlSchema = z
-  .string()
+// Permissive http(s) URL schema. Multi-site support means we can't pre-filter
+// by host — yt-dlp itself decides whether the URL is supported (via extractor
+// match) and surfaces "Unsupported URL" via stderr if not.
+const webUrlSchema = z
   .url('URL must be valid')
-  .superRefine((value, ctx) => {
-    try {
-      const parsed = new URL(value);
-      if (!isYouTubeHostname(parsed.hostname)) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Only YouTube URLs are supported' });
-      }
-    } catch {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'URL parsing failed' });
-    }
-  });
+  .refine((value) => /^https?:\/\//i.test(value), { message: 'Only http/https URLs are supported' });
 
-export const getFormatsSchema = z.object({
-  url: youtubeUrlSchema
-});
-
-export const getPlaylistItemsSchema = z.object({
-  url: youtubeUrlSchema
+export const probeSchema = z.object({
+  url: webUrlSchema,
+  playlistMode: z.enum(['auto', 'video', 'playlist']).optional()
 });
 
 // PreparedJob discriminated-union schema. Type aliases live in
 // `./preparedJob`; the runtime validator lives here so callers that already
 // import from `@shared/schemas` get one source of truth and the import graph
 // stays acyclic.
-const jobSourceSchema = z.enum(['youtube', 'generic']);
 
 const subtitleOptionsSchema = z.object({
   languages: z.array(z.string()),
@@ -179,10 +154,18 @@ const embedOptionsSchema = z.object({
 
 const presetOrCustomSchema = z.union([presetSchema, z.literal('custom')]);
 
+// Each variant carries the yt-dlp `extractor` + `extractor_key` strings that
+// were observed at probe time. These plumb through to download jobs so the
+// download path can branch on extractor without re-probing.
+const extractorIdentitySchema = {
+  extractor: z.string(),
+  extractorKey: z.string()
+};
+
 export const preparedJobSchema = z.discriminatedUnion('kind', [
   z.object({
     kind: z.literal('single-format'),
-    source: jobSourceSchema,
+    ...extractorIdentitySchema,
     formatId: z.string().min(1),
     preset: presetOrCustomSchema,
     subtitles: subtitleOptionsSchema.optional(),
@@ -192,7 +175,7 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
   }),
   z.object({
     kind: z.literal('audio-convert'),
-    source: jobSourceSchema,
+    ...extractorIdentitySchema,
     audioConvert: audioConvertSchema,
     preset: presetOrCustomSchema,
     subtitles: subtitleOptionsSchema.optional(),
@@ -201,7 +184,7 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
   }),
   z.object({
     kind: z.literal('playlist-preset'),
-    source: jobSourceSchema,
+    ...extractorIdentitySchema,
     preset: playlistPresetSchema,
     formatSelector: z.string().min(1).optional(),
     audioConvert: audioConvertSchema.optional(),
@@ -212,13 +195,13 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
   }),
   z.object({
     kind: z.literal('subtitle-only'),
-    source: jobSourceSchema,
+    ...extractorIdentitySchema,
     subtitles: subtitleOptionsSchema
   })
 ]);
 
 export const startDownloadSchema = z.object({
-  url: youtubeUrlSchema,
+  url: webUrlSchema,
   outputDir: z.string().min(1).optional(),
   cookiesMode: cookiesModeSchema.optional(),
   job: preparedJobSchema
@@ -337,52 +320,7 @@ export const queueItemSchema = z.object({
 
 export const queueArraySchema = z.array(queueItemSchema);
 
-// Loose schema for yt-dlp `--dump-json` output. Only fields the app actually
-// reads are validated; unknown fields pass through unchecked because yt-dlp's
-// schema is huge and we don't own it.
-//
-// yt-dlp emits explicit `null` (not just absence) for unknown values —
-// `filesize` when the size header was missing, `fps`/`abr` for the wrong
-// stream type, `duration` on live streams, etc. We normalize `null` →
-// `undefined` at this boundary via `preprocess` so consumers see one
-// absent-value sentinel and the inferred properties stay genuinely
-// optional (a `.transform()` would mark them required-but-undefinable).
-const nullToUndef = (v: unknown): unknown => (v === null ? undefined : v);
-const optStr = z.preprocess(nullToUndef, z.string().optional());
-const optNum = z.preprocess(nullToUndef, z.number().optional());
-
-const ytDlpFormatSchema = z
-  .object({
-    format_id: optStr,
-    ext: optStr,
-    resolution: optStr,
-    format_note: optStr,
-    fps: optNum,
-    abr: optNum,
-    filesize: optNum,
-    vcodec: optStr,
-    acodec: optStr,
-    dynamic_range: optStr
-  })
-  .passthrough();
-
-const ytDlpSubtitleTrackSchema = z
-  .object({
-    ext: optStr,
-    name: optStr
-  })
-  .passthrough();
-
-export const ytDlpInfoSchema = z
-  .object({
-    formats: z.preprocess(nullToUndef, z.array(ytDlpFormatSchema).optional()),
-    title: optStr,
-    thumbnail: optStr,
-    duration: optNum,
-    subtitles: z.preprocess(nullToUndef, z.record(z.string(), z.array(ytDlpSubtitleTrackSchema)).optional()),
-    automatic_captions: z.preprocess(nullToUndef, z.record(z.string(), z.array(ytDlpSubtitleTrackSchema)).optional())
-  })
-  .passthrough();
-
-export type YtDlpInfo = z.infer<typeof ytDlpInfoSchema>;
-export type YtDlpSubtitleTrack = z.infer<typeof ytDlpSubtitleTrackSchema>;
+// yt-dlp info_dict shape lives in `./ytdlp/infoDict.ts` — the spec port that
+// validates `--dump-single-json` output. Schemas here are app-internal contracts
+// (settings, prefs, queue items); yt-dlp's contract is its own thing.
+export { infoDictSchema, type YtDlpFormat, type YtDlpSubtitleTrack, type InfoDict } from './ytdlp/infoDict.js';

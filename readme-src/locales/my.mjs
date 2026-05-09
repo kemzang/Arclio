@@ -71,7 +71,7 @@ bun run dist:win     # Windows portable exe cross-compile
 
 export const my = {
   icon_alt: "Arroxy မုဒ်ကော့",
-  title: "Arroxy — Windows, macOS နှင့် Linux အတွက် အခမဲ့ Open-Source YouTube Downloader",
+  title: "Arroxy — Windows, macOS နှင့် Linux အတွက် အခမဲ့ Open-Source YouTube (+ ၂၀၀၀ ဆိုဒ်) Downloader",
   read_in_label: "ဘာသာဖြင့် ဖတ်ရှုရန်:",
   badge_release_alt: "Release",
   badge_build_alt: "Build",
@@ -80,10 +80,10 @@ export const my = {
   badge_i18n_alt: "ဘာသာစကားများ",
   badge_website_alt: "ဝဘ်ဆိုက်",
   hero_desc:
-    "မည်သည့် YouTube ဗီဒီယို၊ Short သို့မဟုတ် audio track ကိုမဆို မူလအရည်အသွေးဖြင့် ဒေါင်းလုဒ်ဆွဲပါ — 60 fps တွင် 4K HDR အထိ၊ သို့မဟုတ် MP3 / AAC / Opus အဖြစ်။ Windows, macOS နှင့် Linux တွင် သင့်ကွန်ပျူတာပေါ်တွင်သာ run ပါသည်။ **ကြော်ငြာမပါ၊ login မလိုအပ်၊ browser cookie မလိုအပ်၊ Google account ချိတ်ဆက်မှုမပါ။**",
+    "**YouTube နှင့် ၂၀၀၀+ ထောက်ပံ့သောဆိုဒ်များ** မှ ဗီဒီယိုများ၊ Shorts၊ သီချင်းများ၊ channel များ၊ podcast များ သို့မဟုတ် audio track များကို ဒေါင်းလုဒ်ဆွဲပါ — 60 fps တွင် 4K HDR အထိ၊ သို့မဟုတ် MP3 / AAC / Opus အဖြစ်။ Windows, macOS နှင့် Linux တွင် သင့်ကွန်ပျူတာပေါ်တွင်သာ run ပါသည်။ **ကြော်ငြာမပါ၊ bloat မပါ၊ upsell မပါ။**",
   cta_latest: "↓ နောက်ဆုံး Release ကို ဒေါင်းလုဒ်ဆွဲပါ",
   cta_website: "ဝဘ်ဆိုက်",
-  demo_alt: "Arroxy demo",
+  demo_alt: "Arroxy ပြသချက်",
   star_cta: "Arroxy သည် သင့်အချိန်ကို သက်သာစေပါက ⭐ တစ်ချက်က အခြားသူများ ရှာတွေ့ရန် ကူညီပါသည်။",
   ai_notice: "",
   toc_heading: "မာတိကာ",
@@ -92,7 +92,7 @@ export const my = {
   dl_h2: "ဒေါင်းလုဒ်",
   privacy_h2: "ကိုယ်ရေးကိုယ်တာ",
   faq_h2: "မေးလေ့ရှိသောမေးခွန်းများ",
-  roadmap_h2: "Roadmap",
+  roadmap_h2: "လမ်းပြမြေပုံ",
   tech_h2: "တည်ဆောက်ထားသောနည်းပညာ",
   why_intro: "အသုံးများဆုံး alternatives များနှင့် side-by-side နှိုင်းယှဉ်ချက်:",
   why_r1: "အခမဲ့၊ premium tier မပါ",
@@ -116,7 +116,7 @@ export const my = {
   feat_privacy_3: "သင်ရွေးချယ်သောဖိုဒါတွင် ဖိုင်များကို တိုက်ရိုက်သိမ်းဆည်းသည်",
   feat_workflow_h3: "Workflow",
   feat_workflow_1:
-    "**YouTube URL မည်သည့်လင့်ခ်မဆို paste လုပ်ပါ** — video, Shorts နှင့် playlist များကို support လုပ်ထားပြီး playlist တစ်ခုလုံးကို download လုပ်နိုင်သလို သင်ရွေးထားသော video များကိုသာ အရင်ရွေးပြီး download လုပ်နိုင်သည်",
+    "**မည်သည့်လင့်ခ်မဆို paste လုပ်ပါ** — YouTube video များ၊ Shorts၊ channel များ၊ playlist များ၊ podcast များနှင့် Music၊ ထို့အပြင် yt-dlp ထောက်ပံ့သော ၂၀၀၀+ အခြားဆိုဒ်များ; playlist တစ်ခုလုံးကို download လုပ်နိုင်သလို သင်ရွေးထားသော video များကိုသာ အရင်ရွေးပြီး download လုပ်နိုင်သည်",
   feat_workflow_2:
     "**Multi-download queue** — downloads များစွာကို တပြိုင်တည်း ခြေရာခံပါ",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const my = {
     "**SponsorBlock** — sponsors, intros, outros, self-promos ကို ကျော်ပြီး chapter-mark လုပ်ပါ",
   feat_post_4:
     "**Embedded metadata** — ခေါင်းစဉ်၊ upload date, channel, description, thumbnail နှင့် chapter markers တို့ကို ဖိုင်ထဲသို့ ရေးသွင်းသည်",
+  feat_sites_h3: "YouTube + ၂၀၀၀ ဆိုဒ်",
+  feat_sites_1:
+    "**YouTube၊ အပြည့်အဝ** — Videos, Shorts, Channels, Playlists, YouTube Music နှင့် Podcasts တို့ကို ပထမတန်းစား ရင်းမြစ်များအဖြစ် ကိုင်တွယ်သည်",
+  feat_sites_2:
+    "**၂၀၀၀+ အခြားဆိုဒ်များ** yt-dlp မှတဆင့် — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org နှင့် အခြားအများကြီး",
+  feat_sites_3:
+    "**အသံသာနှင့် subtitle များ** ထောက်ပံ့သောဆိုဒ်တိုင်းတွင် အလုပ်လုပ်သည်၊ YouTube တွင်သာမဟုတ်",
+  feat_sites_4:
+    "ဆိုဒ်တစ်ခု ပြောင်းလဲပါက yt-dlp သည် အပတ်တိုင်း fix များ ထုတ်ပြီး Arroxy သည် launch တွင် binary ကို auto-update လုပ်သည်",
   shot1_alt: "URL တစ်ခု Paste လုပ်ပါ",
   shot2_alt: "သင့်အရည်အသွေးကို ရွေးချယ်ပါ",
   shot3_alt: "သိမ်းဆည်းမည့်နေရာကို ရွေးချယ်ပါ",
@@ -299,18 +308,18 @@ export const my = {
   plan_r1_name: "**Playlist နှင့် channel ဒေါင်းလုဒ်များ**",
   plan_r1_desc:
     "Playlist သို့မဟုတ် channel URL ကို paste လုပ်ပါ; date သို့မဟုတ် count filters ဖြင့် ဗီဒီယိုများအားလုံးကို queue ထည့်ပါ",
-  plan_r2_name: "**Batch URL input**",
+  plan_r2_name: "**Batch URL ထည့်သွင်းမှု**",
   plan_r2_desc: "URLs များစွာကို တစ်ကြိမ်တည်း paste လုပ်ပြီး တစ်ကြိမ်တည်း run ပါ",
   plan_r3_name: "**Format ပြောင်းလဲခြင်း**",
   plan_r3_desc: "သီးခြား tool မလိုဘဲ downloads ကို MP3, WAV, FLAC သို့ ပြောင်းလဲပါ",
-  plan_r4_name: "**Custom filename templates**",
+  plan_r4_name: "**ကိုယ်ပိုင် filename ပုံစံများ**",
   plan_r4_desc:
     "ဖိုင်များကို ခေါင်းစဉ်၊ uploader, date, resolution ဖြင့် နာမည်ပေးပြီး live preview ဖြင့်",
   plan_r5_name: "**ဒေါင်းလုဒ်ချိန်သတ်မှတ်ခြင်း**",
   plan_r5_desc: "သတ်မှတ်ချိန်တွင် queue ကို စတင်ပါ (ညဘက် runs)",
-  plan_r6_name: "**Speed limits**",
+  plan_r6_name: "**အမြန်နှုန်း ကန့်သတ်ချက်**",
   plan_r6_desc: "ဒေါင်းလုဒ်များသည် သင့် connection ကို မပြည့်လျှံစေရန် bandwidth ကို cap လုပ်ပါ",
-  plan_r7_name: "**Clip trimming**",
+  plan_r7_name: "**Clip ဖြတ်တောက်ခြင်း**",
   plan_r7_desc: "start/end time ဖြင့် segment တစ်ခုသာ ဒေါင်းလုဒ်ဆွဲပါ",
   plan_cta:
     "လုပ်ဆောင်ချက်တစ်ခု ကြံဆထားပါသလား? [Request တင်ပါ](../../issues) — community input က ဦးစားပေးမှုကို ပုံဖော်သည်။",

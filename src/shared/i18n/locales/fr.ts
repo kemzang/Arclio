@@ -90,6 +90,8 @@ const fr = {
       heading: 'Éléments de la Playlist',
       itemCount_one: '{{count}} vidéo',
       itemCount_other: '{{count}} vidéos',
+      itemCountAudio_one: '{{count}} piste',
+      itemCountAudio_other: '{{count}} pistes',
       selectAll: 'Tout sélectionner',
       selectNone: 'Tout désélectionner',
       rangeFrom: 'De',
@@ -123,17 +125,25 @@ const fr = {
       fetchFormats: 'Récupérer les formats',
       features: {
         heading: "Ce qu'Arroxy peut récupérer",
-        video: {
-          title: 'Vidéos',
-          desc: "Choisis n'importe quelle résolution jusqu'à 4K"
+        youtube: {
+          heading: 'YouTube',
+          video: 'Vidéos',
+          channel: 'Chaînes',
+          playlist: 'Playlists',
+          short: 'Shorts',
+          music: 'Musique',
+          podcast: 'Podcasts'
         },
-        playlist: {
-          title: 'Playlists',
-          desc: "Sélectionne plusieurs éléments d'une playlist"
+        anySite: {
+          heading: '2000+ sites',
+          video: 'Vidéos',
+          videoPlaylist: 'Playlists vidéo',
+          musicPlaylist: 'Playlists musicales'
         },
-        audio: {
-          title: 'Audio',
-          desc: 'Flux original ou convertir en MP3/M4A'
+        always: {
+          heading: 'Toujours disponible',
+          audioOnly: 'Audio uniquement',
+          subtitles: 'Sous-titres'
         }
       },
       mascotIdle: "Lance-moi un lien YouTube (vidéo ou Short) — clique sur « Récupérer les formats » et je m'occupe du reste ✨",
@@ -247,11 +257,13 @@ const fr = {
       audio: 'Audio',
       noAudio: 'Sans audio',
       videoOnly: 'Vidéo seule',
+      keepAudio: 'Garder tel quel',
+      keepAudioMeta: 'Audio intégré',
       audioOnly: 'Audio seul',
       audioOnlyOption: 'Audio seul (sans vidéo)',
       mascot: 'Meilleur + meilleur = qualité max. Je choisirais ça !',
       sniffing: 'Recherche des meilleurs formats pour toi…',
-      loadingHint: 'Ça prend généralement une seconde',
+      loadingHint: 'Veuillez patienter pendant l’analyse — les playlists et les recherches peuvent prendre un moment.',
       loadingAria: 'Chargement des formats',
       sizeUnknown: 'Taille inconnue',
       total: 'Total',
@@ -281,6 +293,10 @@ const fr = {
         explanationFile: 'Votre fichier de cookies est peut-être vide, expiré ou dans un mauvais format (yt-dlp attend un Netscape cookies.txt). Essayez de ré-exporter les cookies, de choisir un autre fichier, de passer en mode Navigateur ou de désactiver les cookies.',
         explanationBrowser: "Les cookies sont lus directement depuis le navigateur. Si le navigateur est en cours d'exécution, sa base de données de cookies est peut-être verrouillée (famille Chromium). Le navigateur doit également être connecté à YouTube. Essayez de fermer le navigateur, d'en choisir un autre, de passer en mode Fichier ou de désactiver les cookies.",
         openSettingsCta: 'Ouvrir les paramètres des cookies',
+        needsCookies: {
+          heading: 'Ce site nécessite une connexion',
+          body: "yt-dlp n'a pas pu accéder à cette vidéo sans authentification. Configure les cookies dans les paramètres avancés — pointe-les vers un navigateur auquel tu es déjà connecté, ou importe un fichier cookies.txt."
+        },
         dpapi: {
           heading: 'Cookies Chrome bloqués par le chiffrement Windows',
           explanation: "Chrome 127 et versions ultérieures chiffrent les cookies d'une façon que les autres applications ne peuvent pas lire sur Windows. Essayez l'une des solutions ci-dessous.",
@@ -354,15 +370,16 @@ const fr = {
       labelPreset: 'Qualité',
       labelItems: 'Éléments',
       itemsValue_one: '{{count}} sur {{total}} vidéo',
-      itemsValue_other: '{{count}} sur {{total}} vidéos'
+      itemsValue_other: '{{count}} sur {{total}} vidéos',
+      itemsValueAudio_one: '{{count}} sur {{total}} piste',
+      itemsValueAudio_other: '{{count}} sur {{total}} pistes'
     },
     error: {
       icon: 'Erreur'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Chargement…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Chargement…'
   },
   queue: {
     header: 'File de téléchargement',
@@ -435,7 +452,8 @@ const fr = {
       unavailable: "Cette vidéo n'est pas disponible — elle est peut-être privée, supprimée ou restreinte par région.",
       geoBlocked: "Cette vidéo n'est pas disponible dans ta région.",
       outOfDiskSpace: "Espace disque insuffisant. Libère de l'espace et réessaie.",
-      unsupportedUrl: 'Ça ne ressemble pas à une URL de vidéo. Colle un lien vers une vidéo YouTube, un Short ou une playlist.'
+      unsupportedUrl: 'Ça ne ressemble pas à une URL de vidéo. Colle un lien vers une vidéo YouTube, un Short ou une playlist.',
+      chunkTransferFailure: "Le serveur a interrompu le téléchargement en cours de route à plusieurs reprises et yt-dlp a abandonné après plusieurs tentatives. Cela touche généralement les formats vidéo les plus lourds (4K HDR / VP9 haut débit). Réessaie, change de réseau/VPN ou sélectionne un format de résolution inférieure."
     }
   },
   presets: {
@@ -512,19 +530,19 @@ const fr = {
   share: {
     title: 'Partager Arroxy',
     description: 'Arroxy est gratuit et open-source. Le partager aide davantage de personnes à le découvrir.',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'Copier le lien',
+    copied: 'Copié !',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Partager Arroxy',
+    footerLabel: 'Partager',
+    shareAction: 'Partager Arroxy',
     inlineCard: {
       body: "Tu apprécies Arroxy ? Partage-le avec quelqu'un qui pourrait le trouver utile.",
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'Fermer la suggestion de partage'
     },
     highValueBanner: {
       body: "Tu apprécies Arroxy ? Aide d'autres personnes à le découvrir.",
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'Fermer la suggestion de partage'
     }
   }
 } as const;

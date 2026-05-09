@@ -1,6 +1,6 @@
 import type { Result } from './result.js';
 import type { SupportedLang } from './i18n/types.js';
-import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, GetFormatsInput, GetFormatsOutput, GetPlaylistItemsInput, GetPlaylistItemsOutput, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProgressEvent, QueueItem, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types.js';
+import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProbeInput, ProbeResult, ProgressEvent, QueueItem, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types.js';
 
 export interface SettingsPatch {
   common?: Partial<CommonSettings>;
@@ -24,8 +24,7 @@ export interface AppApi {
   };
   window: WindowApi;
   downloads: {
-    getFormats(input: GetFormatsInput): Promise<Result<GetFormatsOutput>>;
-    getPlaylistItems(input: GetPlaylistItemsInput): Promise<Result<GetPlaylistItemsOutput>>;
+    probe(input: ProbeInput): Promise<Result<ProbeResult>>;
     start(input: StartDownloadInput): Promise<Result<StartDownloadOutput>>;
     cancel(input?: CancelDownloadInput): Promise<Result<CancelDownloadOutput>>;
     pause(input?: PauseDownloadInput): Promise<Result<PauseDownloadOutput>>;

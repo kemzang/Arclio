@@ -5,8 +5,9 @@ import { preparedJobSchema, type EmbedOptions } from '@shared/preparedJob.js';
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const EMBED_ALL: EmbedOptions = { chapters: true, metadata: true, thumbnail: true, description: true, thumbnailSidecar: true };
 
-const BASE: Pick<PrepareJobInput, 'source' | 'sponsorBlockMode' | 'sponsorBlockCategories' | 'embed'> = {
-  source: 'youtube',
+const BASE: Pick<PrepareJobInput, 'extractor' | 'extractorKey' | 'sponsorBlockMode' | 'sponsorBlockCategories' | 'embed'> = {
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
   sponsorBlockMode: 'off',
   sponsorBlockCategories: [],
   embed: EMBED_OFF
@@ -18,7 +19,7 @@ describe('prepareJob', () => {
       const job = prepareJob({ ...BASE, mode: 'single', formatId: '137+140', activePreset: null });
       expect(job).toEqual({
         kind: 'single-format',
-        source: 'youtube',
+        extractor: 'youtube', extractorKey: 'Youtube',
         formatId: '137+140',
         preset: 'custom',
         subtitles: undefined,
@@ -72,7 +73,7 @@ describe('prepareJob', () => {
       });
       expect(job).toEqual({
         kind: 'audio-convert',
-        source: 'youtube',
+        extractor: 'youtube', extractorKey: 'Youtube',
         audioConvert: { target: 'mp3', bitrateKbps: 192 },
         preset: 'audio-only',
         subtitles: undefined,
@@ -99,7 +100,7 @@ describe('prepareJob', () => {
       });
       expect(job).toEqual({
         kind: 'subtitle-only',
-        source: 'youtube',
+        extractor: 'youtube', extractorKey: 'Youtube',
         subtitles: { languages: ['en'], mode: 'sidecar', format: 'srt', writeAuto: false }
       });
       expect(preparedJobSchema.safeParse(job).success).toBe(true);
@@ -138,7 +139,7 @@ describe('prepareJob', () => {
       });
       expect(job).toEqual({
         kind: 'playlist-preset',
-        source: 'youtube',
+        extractor: 'youtube', extractorKey: 'Youtube',
         preset: 'video-1080p',
         formatSelector: 'bestvideo[height<=1080]+bestaudio/best[height<=1080]',
         audioConvert: undefined,

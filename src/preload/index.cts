@@ -25,8 +25,7 @@ const api: AppApi = {
     }
   },
   downloads: {
-    getFormats: (input) => ipcRenderer.invoke(IPC_CHANNELS.downloadsGetFormats, input),
-    getPlaylistItems: (input) => ipcRenderer.invoke(IPC_CHANNELS.downloadsGetPlaylistItems, input),
+    probe: (input) => ipcRenderer.invoke(IPC_CHANNELS.downloadsProbe, input),
     start: (input) => ipcRenderer.invoke(IPC_CHANNELS.downloadsStart, input),
     cancel: (input = {}) => ipcRenderer.invoke(IPC_CHANNELS.downloadsCancel, input),
     pause: (input = {}) => ipcRenderer.invoke(IPC_CHANNELS.downloadsPause, input),

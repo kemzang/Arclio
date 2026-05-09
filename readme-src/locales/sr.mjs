@@ -71,7 +71,7 @@ bun run dist:win     # cross-compile Windows portable exe
 
 export const sr = {
   icon_alt: "Arroxy маскота",
-  title: "Arroxy — Бесплатни open-source YouTube преузимач за Windows, macOS и Linux",
+  title: "Arroxy — Бесплатни open-source YouTube (+ 2000 сајтова) преузимач за Windows, macOS и Linux",
   read_in_label: "Читај на:",
   badge_release_alt: "Издање",
   badge_build_alt: "Изградња",
@@ -80,7 +80,7 @@ export const sr = {
   badge_i18n_alt: "Језици",
   badge_website_alt: "Веб-сајт",
   hero_desc:
-    "Преузмите било који YouTube видео, Short или аудио снимак у оригиналном квалитету — до 4K HDR при 60 fps, или као MP3 / AAC / Opus. Ради локално на Windows-у, macOS-у и Linux-у. **Без реклама, без пријаве, без колачића претраживача, без повезаног Google налога.**",
+    "Преузимајте видео снимке, Shorts, музику, каналe, подкасте или аудио записе са **YouTube-а и 2000+ подржаних сајтова** — до 4K HDR при 60 fps, или у MP3 / AAC / Opus формату. Ради локално на Windows-у, macOS-у и Linux-у. **Без реклама, без непотребног, без додатне продаје.**",
   cta_latest: "↓ Преузмите најновије издање",
   cta_website: "Веб-сајт",
   demo_alt: "Arroxy демонстрација",
@@ -116,7 +116,7 @@ export const sr = {
   feat_privacy_3: "Фајлови се чувају директно у фасциклу коју одаберете",
   feat_workflow_h3: "Радни ток",
   feat_workflow_1:
-    "**Nalepi bilo koji YouTube URL** — podržani su video snimci, Shorts i plejliste; preuzmi celu plejlistu ili prvo izaberi određene video snimke",
+    "**Налепи bilo koji линк** — YouTube видео снимци, Shorts, канали, пlejliste, подкасти и Музика, плус 2000+ других сajтова које yt-dlp подржава; преузми цelu plejlistu или прво изабери одређене video snimke",
   feat_workflow_2:
     "**Ред за вишеструко преузимање** — пратите неколико преузимања истовремено",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const sr = {
     "**SponsorBlock** — прескочи или означи поглављима спонзоре, интра, аутра, самопромоције",
   feat_post_4:
     "**Уграђени метаподаци** — наслов, датум учитавања, канал, опис, минијатура и маркери поглавља уписани у фајл",
+  feat_sites_h3: "YouTube + 2000 сајтова",
+  feat_sites_1:
+    "**YouTube — у потпуности** — видео снимци, Shorts, канали, пlejliste, YouTube Music и подкасти обрађени као извори прве класе",
+  feat_sites_2:
+    "**2000+ других сajтова** преко yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org и многи други",
+  feat_sites_3:
+    "**Само аудио и титлови** раде на свaком подржаном сaјту, не само на YouTube-у",
+  feat_sites_4:
+    "Ако сajт промени нешто, yt-dlp испоручује исправке недељно, а Arroxy аутоматски ажурира бинарни фajл при покретању",
   shot1_alt: "Налепите URL",
   shot2_alt: "Изаберите квалитет",
   shot3_alt: "Одаберите где да сачувате",

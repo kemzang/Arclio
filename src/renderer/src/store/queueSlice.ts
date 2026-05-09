@@ -5,6 +5,7 @@ import { buildAudioConvertPayload, buildFormatId, buildFormatLabel, generateId, 
 import { effectiveOutputDir } from '@renderer/lib/path.js';
 import { joinSubfolder, safeFolderName } from '@shared/subfolder.js';
 import { prepareJob } from '@shared/prepareJob.js';
+import { isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
 import type { EmbedOptions, SubtitleOptions } from '@shared/preparedJob.js';
 import { isHeld } from '@shared/queueItem.js';
 import i18next from 'i18next';
@@ -67,7 +68,8 @@ function buildQueueItem(get: GetState): QueueItem | null {
 
   const job = prepareJob({
     mode: 'single',
-    source: 'youtube',
+    extractor: state.wizardExtractor,
+    extractorKey: state.wizardExtractorKey,
     formatId,
     audioConvert,
     activePreset,
@@ -122,7 +124,8 @@ function buildPlaylistQueueItem(entry: PlaylistEntry, get: GetState, playlistGro
 
   const job = prepareJob({
     mode: 'playlist',
-    source: 'youtube',
+    extractor: state.wizardExtractor,
+    extractorKey: state.wizardExtractorKey,
     playlistPreset: selectedPlaylistPreset,
     outputTemplate,
     sponsorBlockMode: state.wizardSponsorBlockMode,
@@ -158,9 +161,14 @@ function buildStartInput(item: QueueItem): StartDownloadInput {
 }
 
 async function persistFormatPrefs(set: SetState, get: GetState): Promise<void> {
-  const { selectedVideoFormatId, activePreset, audioSelection, wizardFormats, wizardSubtitleLanguages, settings, wizardMode, selectedPlaylistPreset } = get();
+  const { selectedVideoFormatId, activePreset, audioSelection, wizardFormats, wizardSubtitleLanguages, settings, wizardMode, selectedPlaylistPreset, wizardExtractor } = get();
   if (!settings) return;
   const inPlaylist = wizardMode === 'playlist';
+  // Single-mode persisted prefs are scoped to YouTube. Non-YT runs skip the
+  // `single.*` patch so a Vimeo/PornHub formatId or "YouTube Music" subfolder
+  // doesn't leak into the next YouTube probe. Common prefs (sponsorblock mode,
+  // embed flags) stay global since they're pure intent.
+  const persistSingleScope = isYouTubeExtractor(wizardExtractor);
 
   const common = {
     lastSponsorBlockMode: get().wizardSponsorBlockMode,
@@ -181,6 +189,14 @@ async function persistFormatPrefs(set: SetState, get: GetState): Promise<void> {
       lastPlaylistSubfolder: get().wizardSubfolderName.trim()
     };
     const result = await window.appApi.settings.update({ common, playlist });
+    if (result.ok) set({ settings: result.data });
+    return;
+  }
+
+  if (!persistSingleScope) {
+    // Non-YT: only persist common prefs (global intent). Skip single.*
+    // entirely so the saved bag stays YT-shaped.
+    const result = await window.appApi.settings.update({ common });
     if (result.ok) set({ settings: result.data });
     return;
   }
@@ -410,7 +426,7 @@ export function createQueueSlice(set: SetState, get: GetState, scheduler: JobSch
 
     clearCompleted: () => {
       set((state) => ({
-        queue: state.queue.filter((i) => i.status !== QUEUE_STATUS.done && i.status !== QUEUE_STATUS.cancelled)
+        queue: state.queue.filter((i) => i.status !== QUEUE_STATUS.done && i.status !== QUEUE_STATUS.cancelled && i.status !== QUEUE_STATUS.error)
       }));
       saveQueue(get);
     },

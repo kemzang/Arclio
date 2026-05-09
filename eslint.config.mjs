@@ -116,6 +116,7 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-deprecated': 'error',
       'no-empty': ['error', { allowEmptyCatch: true }],
       'no-debugger': 'error',
     }

@@ -90,6 +90,8 @@ const ur = {
       heading: 'Playlist آئٹمز',
       itemCount_one: '{{count}} ویڈیو',
       itemCount_other: '{{count}} ویڈیوز',
+      itemCountAudio_one: '{{count}} ٹریک',
+      itemCountAudio_other: '{{count}} ٹریکس',
       selectAll: 'سب منتخب کریں',
       selectNone: 'کوئی نہیں منتخب کریں',
       rangeFrom: 'سے',
@@ -123,17 +125,25 @@ const ur = {
       fetchFormats: 'فارمیٹس لائیں',
       features: {
         heading: 'Arroxy کیا لا سکتا ہے',
-        video: {
-          title: 'ویڈیوز',
-          desc: '4K تک کوئی بھی ریزولوشن منتخب کریں'
+        youtube: {
+          heading: 'YouTube',
+          video: 'ویڈیوز',
+          channel: 'چینلز',
+          playlist: 'پلے لسٹس',
+          short: 'Shorts',
+          music: 'موسیقی',
+          podcast: 'پوڈکاسٹ'
         },
-        playlist: {
-          title: 'پلے لسٹس',
-          desc: 'پلے لسٹ سے متعدد آئٹمز منتخب کریں'
+        anySite: {
+          heading: '2000+ سائٹس',
+          video: 'ویڈیوز',
+          videoPlaylist: 'ویڈیو پلے لسٹس',
+          musicPlaylist: 'میوزک پلے لسٹس'
         },
-        audio: {
-          title: 'آڈیو',
-          desc: 'اصل سٹریم یا MP3/M4A کنورژن'
+        always: {
+          heading: 'ہمیشہ دستیاب',
+          audioOnly: 'صرف آڈیو',
+          subtitles: 'سب ٹائٹلز'
         }
       },
       mascotIdle: 'مجھے YouTube کا لنک دیں (ویڈیو یا Short) — پھر "فارمیٹس لائیں" دبائیں اور میں کام شروع کر دوں گا ✨',
@@ -251,10 +261,12 @@ const ur = {
       audioOnlyOption: 'صرف آڈیو (کوئی ویڈیو نہیں)',
       mascot: 'بیسٹ + بیسٹ = زیادہ سے زیادہ کوالٹی۔ میں یہی منتخب کروں گا!',
       sniffing: 'آپ کے لیے بہترین فارمیٹس ڈھونڈ رہا ہوں…',
-      loadingHint: 'عام طور پر ایک سیکنڈ لگتا ہے',
+      loadingHint: 'براہ کرم پروبنگ مکمل ہونے تک انتظار کریں — پلے لسٹس اور تلاش میں کچھ وقت لگ سکتا ہے۔',
       loadingAria: 'فارمیٹس لوڈ ہو رہے ہیں',
       sizeUnknown: 'سائز نامعلوم',
       total: 'کل',
+      keepAudio: 'جیسا ہے ویسا رکھیں',
+      keepAudioMeta: 'بلٹ اِن آڈیو',
       convert: {
         label: 'کنورٹ کریں',
         uncompressed: 'کنورٹ کریں · غیر کمپریسڈ',
@@ -281,6 +293,10 @@ const ur = {
         explanationFile: 'آپ کی cookies فائل خالی، میعاد ختم، یا غلط فارمیٹ میں ہو سکتی ہے (yt-dlp Netscape cookies.txt کی توقع رکھتا ہے)۔ cookies دوبارہ ایکسپورٹ کریں، مختلف فائل منتخب کریں، براؤزر موڈ پر سوئچ کریں، یا cookies بند کر دیں۔',
         explanationBrowser: 'Cookies براہ راست براؤزر سے پڑھی جاتی ہیں۔ اگر براؤزر ابھی چل رہا ہے تو اس کا cookie ڈیٹا بیس لاک ہو سکتا ہے (Chromium-family)۔ براؤزر کا YouTube میں سائن اِن ہونا بھی ضروری ہے۔ براؤزر بند کریں، کوئی مختلف براؤزر آزمائیں، فائل موڈ پر سوئچ کریں، یا cookies بند کر دیں۔',
         openSettingsCta: 'Cookies سیٹنگز کھولیں',
+        needsCookies: {
+          heading: 'اس سائٹ کو سائن اِن ضروری ہے',
+          body: 'yt-dlp تصدیق کے بغیر اس ویڈیو تک رسائی حاصل نہیں کر سکا۔ ایڈوانسڈ سیٹنگز میں cookies ترتیب دیں — کسی ایسے براؤزر کی طرف اشارہ کریں جس میں آپ پہلے سے سائن اِن ہوں، یا cookies.txt فائل درآمد کریں۔'
+        },
         dpapi: {
           heading: 'Chrome cookies ونڈوز انکرپشن کے ذریعے بلاک ہیں',
           explanation: 'Chrome 127 اور اس سے نئے ورژن cookies کو اس طرح انکرپٹ کرتے ہیں کہ دوسری ایپس Windows پر انہیں پڑھ نہیں سکتیں۔ نیچے دیے گئے حلوں میں سے ایک آزمائیں۔',
@@ -354,15 +370,16 @@ const ur = {
       labelPreset: 'پریسیٹ',
       labelItems: 'آئٹمز',
       itemsValue_one: '{{total}} میں سے {{count}} ویڈیو',
-      itemsValue_other: '{{total}} میں سے {{count}} ویڈیوز'
+      itemsValue_other: '{{total}} میں سے {{count}} ویڈیوز',
+      itemsValueAudio_one: '{{total}} میں سے {{count}} ٹریک',
+      itemsValueAudio_other: '{{total}} میں سے {{count}} ٹریکس'
     },
     error: {
       icon: 'خرابی'
     }
   },
   videoCard: {
-    titlePlaceholder: 'لوڈ ہو رہا ہے…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'لوڈ ہو رہا ہے…'
   },
   queue: {
     header: 'ڈاؤن لوڈ قطار',
@@ -435,7 +452,8 @@ const ur = {
       unavailable: 'یہ ویڈیو دستیاب نہیں — ہو سکتا ہے پرائیویٹ، ڈیلیٹ، یا ریجن لاکڈ ہو۔',
       geoBlocked: 'یہ ویڈیو آپ کے ریجن میں دستیاب نہیں۔',
       outOfDiskSpace: 'ڈسک میں کافی جگہ نہیں۔ جگہ خالی کر کے دوبارہ کوشش کریں۔',
-      unsupportedUrl: 'یہ ویڈیو URL نہیں لگتا۔ YouTube ویڈیو، Short، یا پلے لسٹ کا لنک پیسٹ کریں۔'
+      unsupportedUrl: 'یہ ویڈیو URL نہیں لگتا۔ YouTube ویڈیو، Short، یا پلے لسٹ کا لنک پیسٹ کریں۔',
+      chunkTransferFailure: 'سرور بار بار ڈاؤن لوڈ درمیان میں کاٹتا رہا اور yt-dlp نے کئی بار کوشش کے بعد ہار مان لی۔ یہ عموماً سب سے بڑے ویڈیو فارمیٹس (4K HDR / زیادہ بٹ ریٹ VP9) میں ہوتا ہے۔ دوبارہ کوشش کریں، نیٹ ورک/VPN تبدیل کریں، یا کم ریزولیوشن فارمیٹ چنیں۔'
     }
   },
   presets: {
@@ -512,12 +530,12 @@ const ur = {
   share: {
     title: 'Arroxy شیئر کریں',
     description: 'Arroxy مفت اور اوپن سورس ہے۔ شیئر کرنے سے زیادہ لوگ اسے دریافت کر سکتے ہیں۔',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'لنک کاپی کریں',
+    copied: 'کاپی ہو گیا!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Arroxy شیئر کریں',
+    footerLabel: 'شیئر کریں',
+    shareAction: 'Arroxy شیئر کریں',
     inlineCard: {
       body: 'Arroxy پسند آ رہا ہے؟ کسی ایسے شخص کے ساتھ شیئر کریں جسے یہ مفید لگ سکتا ہو۔',
       dismiss: 'شیئر کی تجویز برخاست کریں'

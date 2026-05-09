@@ -11,13 +11,13 @@ const SB_OFF: SponsorBlockOptions = { mode: 'off' };
 
 function makeJob(sb: SponsorBlockOptions, subtitleLanguages?: string[]): PreparedJob {
   if (subtitleLanguages?.length) {
-    return { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF, subtitles: { languages: subtitleLanguages, mode: 'sidecar', format: 'srt', writeAuto: false } };
+    return { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF, subtitles: { languages: subtitleLanguages, mode: 'sidecar', format: 'srt', writeAuto: false } };
   }
-  return { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF };
+  return { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF };
 }
 
 function makeSubtitleOnlyJob(_sb: SponsorBlockOptions): PreparedJob {
-  return { kind: 'subtitle-only', source: 'youtube', subtitles: { languages: ['en'], mode: 'sidecar', format: 'srt', writeAuto: false } };
+  return { kind: 'subtitle-only', extractor: 'youtube', extractorKey: 'Youtube', subtitles: { languages: ['en'], mode: 'sidecar', format: 'srt', writeAuto: false } };
 }
 
 vi.mock('@main/utils/process', async (importOriginal) => {

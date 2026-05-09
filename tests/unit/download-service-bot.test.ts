@@ -6,7 +6,7 @@ import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/pre
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };
-const DEFAULT_JOB: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
+const DEFAULT_JOB: PreparedJob = { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
 
 vi.mock('@main/utils/process', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@main/utils/process.js')>();

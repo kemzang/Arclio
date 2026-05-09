@@ -21,8 +21,7 @@ const mockAppApi = {
     onMaximizedChange: vi.fn().mockReturnValue(() => undefined)
   },
   downloads: {
-    getFormats: vi.fn().mockResolvedValue(ok({ formats: [], title: '', thumbnail: '' })),
-    getPlaylistItems: vi.fn().mockResolvedValue(ok({ playlistId: '', playlistTitle: '', entries: [] })),
+    probe: vi.fn().mockResolvedValue(ok({ kind: 'video' as const, extractor: 'youtube', extractorKey: 'Youtube', webpageUrl: '', formats: [], title: '', thumbnail: '', subtitles: {}, automaticCaptions: {}, isLive: false, hasDrm: false })),
     start: vi.fn(),
     cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
     pause: vi.fn().mockResolvedValue(ok({ paused: true })),

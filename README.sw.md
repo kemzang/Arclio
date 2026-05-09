@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Nembo ya Arroxy" width="180" />
 
-# Arroxy — Kipakuzi Bure cha YouTube cha Chanzo Wazi kwa Windows, macOS na Linux
+# Arroxy — Kipakuzi Bure cha Chanzo Wazi cha YouTube (+ Tovuti 2000) kwa Windows, macOS na Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Soma kwa:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · **Kiswahili** · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Toleo](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Ujenzi](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Tovuti](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Leseni](https://img.shields.io/badge/license-MIT-green) ![Majukwaa](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Lugha](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Pakua video yoyote ya YouTube, Short, au wimbo wa sauti kwa ubora wa asili — hadi 4K HDR kwa fps 60, au kama MP3 / AAC / Opus. Inafanya kazi mahali hapo kwenye Windows, macOS, na Linux. **Hakuna matangazo, hakuna kuingia, hakuna vidakuzi vya kivinjari, hakuna akaunti ya Google iliyounganishwa.**
+Pakua video, Shorts, muziki, vituo, podikasti, au nyimbo za sauti kutoka **YouTube na tovuti 2000+ zinazotumika** — hadi 4K HDR kwa fps 60, au kama MP3 / AAC / Opus. Inafanya kazi mahali hapo kwenye Windows, macOS, na Linux. **Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada.**
 
 [**↓ Pakua Toleo la Hivi Karibuni**](../../releases/latest) &nbsp;·&nbsp; [**Tovuti**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -68,7 +68,7 @@ Arroxy imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Ha
 
 ### Mtiririko wa kazi
 
-- **Bandika URL yoyote ya YouTube** — video, Shorts na playlist zinaungwa mkono; pakua playlist nzima au chagua video maalum kwanza
+- **Bandika kiungo chochote** — video za YouTube, Shorts, vituo, orodha za kucheza, podikasti na Muziki, pamoja na tovuti 2000+ zinazoungwa mkono na yt-dlp; pakua orodha nzima ya kucheza au chagua video maalum kwanza
 - **Foleni ya upakuaji wa pamoja** — fuatilia maudhui kadhaa yanayopakuliwa wakati huo huo
 - **Ufuatiliaji wa ubao wa kunakili** — nakili kiungo cha YouTube na Arroxy itajaza URL kiotomatiki ukirejesha umakini kwenye programu (washa/zima katika mipangilio ya Kina)
 - **Usafi wa URL kiotomatiki** — huondoa vigezo vya ufuatiliaji (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) na kufungua viungo vya `youtube.com/redirect`
@@ -81,6 +81,13 @@ Arroxy imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Ha
 - Hifadhi karibu na video, ingiza ndani ya `.mkv`, au panga katika folda ndogo ya `Subtitles/`
 - **SponsorBlock** — ruka au weka alama za sehemu kwenye wadhamini, utangulizi, mwisho, matangazo binafsi
 - **Metadata iliyowekwa** — kichwa, tarehe ya kupakia, chaneli, maelezo, picha ndogo, na alama za sura zimeandikwa ndani ya faili
+
+### YouTube + Tovuti 2000
+
+- **YouTube kamili** — Video, Shorts, Vituo, Orodha za Kucheza, YouTube Music na Podikasti zinashughulikiwa kama vyanzo vya daraja la kwanza
+- **Tovuti 2000+ nyingine** kupitia yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org na nyingi zaidi
+- **Sauti pekee na manukuu** yanafanya kazi kwenye kila tovuti inayoungwa mkono, si YouTube peke yake
+- Tovuti ikibadilika, yt-dlp hutoa marekebisho kila wiki na Arroxy husasisha binary kiotomatiki wakati wa uzinduzi
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="Bandika URL" />

@@ -262,7 +262,7 @@ describe('dedupeSubtitleFiles', () => {
     const parsed = '1\n00:00:00,000 --> 00:00:01,500\nhello\nworld';
     vi.mocked(readFile).mockResolvedValue(original);
 
-    await dedupeSubtitleFiles(['/tmp/video.en.srt'], JOB_ID, () => false);
+    await dedupeSubtitleFiles(['/tmp/video.en.srt'], 'youtube', JOB_ID, () => false);
 
     expect(readFile).toHaveBeenCalledWith('/tmp/video.en.srt', 'utf8');
     // dedupeSrt will produce different content → writeFile should be called
@@ -274,14 +274,14 @@ describe('dedupeSubtitleFiles', () => {
     const original = 'WEBVTT\n\n00:00:00.000 --> 00:00:01.000\nhello\n\n00:00:00.500 --> 00:00:01.500\nhello world\n';
     vi.mocked(readFile).mockResolvedValue(original);
 
-    await dedupeSubtitleFiles(['/tmp/video.en.vtt'], JOB_ID, () => false);
+    await dedupeSubtitleFiles(['/tmp/video.en.vtt'], 'youtube', JOB_ID, () => false);
 
     expect(readFile).toHaveBeenCalledWith('/tmp/video.en.vtt', 'utf8');
     expect(writeFile).toHaveBeenCalled();
   });
 
   it('unknown extension → skipped silently, no read/write', async () => {
-    await dedupeSubtitleFiles(['/tmp/video.en.ass'], JOB_ID, () => false);
+    await dedupeSubtitleFiles(['/tmp/video.en.ass'], 'youtube', JOB_ID, () => false);
 
     expect(readFile).not.toHaveBeenCalled();
     expect(writeFile).not.toHaveBeenCalled();
@@ -292,7 +292,7 @@ describe('dedupeSubtitleFiles', () => {
     const content = '1\n00:00:00,000 --> 00:00:01,000\nhello';
     vi.mocked(readFile).mockResolvedValue(content);
 
-    await dedupeSubtitleFiles(['/tmp/video.en.srt'], JOB_ID, () => false);
+    await dedupeSubtitleFiles(['/tmp/video.en.srt'], 'youtube', JOB_ID, () => false);
 
     expect(writeFile).not.toHaveBeenCalled();
   });
@@ -300,13 +300,13 @@ describe('dedupeSubtitleFiles', () => {
   it('read error → logged and swallowed, never throws', async () => {
     vi.mocked(readFile).mockRejectedValue(new Error('ENOENT'));
 
-    await expect(dedupeSubtitleFiles(['/tmp/missing.srt'], JOB_ID, () => false)).resolves.toBeUndefined();
+    await expect(dedupeSubtitleFiles(['/tmp/missing.srt'], 'youtube', JOB_ID, () => false)).resolves.toBeUndefined();
   });
 
   it('shouldAbort() true before file → that file is skipped', async () => {
     vi.mocked(readFile).mockResolvedValue('content');
 
-    await dedupeSubtitleFiles(['/tmp/video.en.srt', '/tmp/video.ja.srt'], JOB_ID, () => true);
+    await dedupeSubtitleFiles(['/tmp/video.en.srt', '/tmp/video.ja.srt'], 'youtube', JOB_ID, () => true);
 
     expect(readFile).not.toHaveBeenCalled();
   });
@@ -314,7 +314,7 @@ describe('dedupeSubtitleFiles', () => {
   it('processes multiple files', async () => {
     vi.mocked(readFile).mockResolvedValue('1\n00:00:00,000 --> 00:00:01,000\nhello');
 
-    await dedupeSubtitleFiles(['/tmp/video.en.srt', '/tmp/video.ja.srt'], JOB_ID, () => false);
+    await dedupeSubtitleFiles(['/tmp/video.en.srt', '/tmp/video.ja.srt'], 'youtube', JOB_ID, () => false);
 
     expect(readFile).toHaveBeenCalledTimes(2);
   });

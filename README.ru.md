@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Маскот Arroxy" width="180" />
 
-# Arroxy — бесплатный загрузчик YouTube с открытым исходным кодом для Windows, macOS и Linux
+# Arroxy — бесплатный загрузчик YouTube (+ 2000 сайтов) с открытым исходным кодом для Windows, macOS и Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Язык:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · **Русский** · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Релиз](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Сборка](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Сайт](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Лицензия](https://img.shields.io/badge/license-MIT-green) ![Платформы](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Языки](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Скачивайте любое видео YouTube, Shorts или аудиодорожку в оригинальном качестве — до 4K HDR при 60 fps или в виде MP3 / AAC / Opus. Работает локально на Windows, macOS и Linux. **Без рекламы, без логина, без кук браузера, без привязки к аккаунту Google.**
+Скачивайте видео, Shorts, музыку, каналы, подкасты или аудиодорожки с **YouTube и 2000+ поддерживаемых сайтов** — до 4K HDR при 60 fps или в виде MP3 / AAC / Opus. Работает локально на Windows, macOS и Linux. **Без рекламы, без лишнего, без допродаж.**
 
 [**↓ Скачать последний релиз**](../../releases/latest) &nbsp;·&nbsp; [**Сайт**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -70,7 +70,7 @@ Arroxy создан для одного: вставьте URL — получит
 
 ### Рабочий процесс
 
-- **Вставь любую ссылку YouTube** — поддерживаются видео, Shorts и плейлисты; скачай весь плейлист или сначала выбери нужные видео
+- **Вставь любую ссылку** — YouTube-видео, Shorts, каналы, плейлисты, подкасты и Музыку, а также 2000+ других сайтов, которые поддерживает yt-dlp; скачай весь плейлист или сначала выбери нужные видео
 - **Очередь загрузок** — следите за несколькими загрузками одновременно
 - **Мониторинг буфера обмена** — скопируйте YouTube-ссылку, и Arroxy автоматически заполнит URL при следующем переключении на приложение (включается в расширенных настройках)
 - **Автоочистка URL** — удаляет трекинговые параметры (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) и разворачивает ссылки `youtube.com/redirect`
@@ -83,6 +83,13 @@ Arroxy создан для одного: вставьте URL — получит
 - Сохранение рядом с видео, встраивание в `.mkv` или размещение в подпапке `Subtitles/`
 - **SponsorBlock** — пропуск или разметка спонсорских вставок, вступлений, концовок, самопиара
 - **Встроенные метаданные** — название, дата загрузки, канал, описание, обложка и маркеры глав записываются в файл
+
+### YouTube + 2000 сайтов
+
+- **YouTube — в полном объёме** — видео, Shorts, каналы, плейлисты, YouTube Music и подкасты обрабатываются как первоклассные источники
+- **2000+ других сайтов** через yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org и многие другие
+- **Только аудио и субтитры** работают на каждом поддерживаемом сайте, а не только на YouTube
+- Если сайт меняется, yt-dlp выпускает исправления еженедельно, а Arroxy обновляет бинарный файл при запуске
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="Вставьте URL" />

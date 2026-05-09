@@ -21,7 +21,7 @@ export function SmartDrawer(): JSX.Element {
   const pauseAll = useAppStore((s) => s.pauseAll);
   const cancelAll = useAppStore((s) => s.cancelAll);
   const interJobSleepEndsAt = useAppStore((s) => s.interJobSleepEndsAt);
-  const shareHighValueBannerDismissed = useAppStore((s) => s.settings?.common.shareHighValueBannerDismissed ?? false);
+  const shareHighValueBannerDismissed = useAppStore((s) => s.settings?.common?.shareHighValueBannerDismissed ?? false);
   const openShareDialog = useAppStore((s) => s.openShareDialog);
   const setShareHighValueBannerDismissed = useAppStore((s) => s.setShareHighValueBannerDismissed);
 
@@ -48,7 +48,7 @@ export function SmartDrawer(): JSX.Element {
   const activeItems = useMemo(() => queue.filter((i) => i.status === 'downloading'), [queue]);
   const activeCount = activeItems.length;
   const totalCount = queue.length;
-  const hasCompleted = useMemo(() => queue.some((i) => i.status === 'done' || i.status === 'cancelled'), [queue]);
+  const hasCompleted = useMemo(() => queue.some((i) => i.status === 'done' || i.status === 'cancelled' || i.status === 'error'), [queue]);
   const hasDownloading = activeCount > 0;
   const hasInFlight = useMemo(() => queue.some((i) => i.status === 'downloading' || i.status === 'paused' || i.status === 'pending'), [queue]);
 

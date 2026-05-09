@@ -16,7 +16,7 @@ describe('Queue store — phase status transitions', () => {
       downloads: {
         start: vi.fn(),
         cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
-        getFormats: vi.fn(),
+        probe: vi.fn(),
         pause: vi.fn().mockResolvedValue(ok({ paused: true }))
       },
       settings: {

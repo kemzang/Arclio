@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Μασκότ Arroxy" width="180" />
 
-# Arroxy — Δωρεάν Ανοιχτού Κώδικα Λήψη YouTube για Windows, macOS & Linux
+# Arroxy — Δωρεάν Ανοιχτού Κώδικα Λήψη YouTube (+ 2000 ιστοτόπους) για Windows, macOS & Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Διαβάστε στα:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · **Ελληνικά** · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Έκδοση](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Build](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Ιστότοπος](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Άδεια](https://img.shields.io/badge/license-MIT-green) ![Πλατφόρμες](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Γλώσσες](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Κατεβάστε οποιοδήποτε βίντεο YouTube, Short ή ηχητικό κομμάτι σε αρχική ποιότητα — έως 4K HDR στα 60 fps, ή ως MP3 / AAC / Opus. Εκτελείται τοπικά σε Windows, macOS και Linux. **Χωρίς διαφημίσεις, χωρίς σύνδεση, χωρίς cookies προγράμματος περιήγησης, χωρίς συνδεδεμένο λογαριασμό Google.**
+Κατεβάστε βίντεο, Shorts, μουσική, κανάλια, podcasts ή ηχητικά κομμάτια από το **YouTube και 2000+ υποστηριζόμενους ιστοτόπους** — έως 4K HDR στα 60 fps, ή ως MP3 / AAC / Opus. Εκτελείται τοπικά σε Windows, macOS και Linux. **Χωρίς διαφημίσεις, χωρίς bloat, χωρίς upsells.**
 
 [**↓ Λήψη Τελευταίας Έκδοσης**](../../releases/latest) &nbsp;·&nbsp; [**Ιστότοπος**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -68,7 +68,7 @@
 
 ### Ροή εργασίας
 
-- **Επικόλλησε οποιοδήποτε URL YouTube** — υποστηρίζονται βίντεο, Shorts και playlists· κατέβασε ολόκληρη την playlist ή διάλεξε πρώτα συγκεκριμένα βίντεο
+- **Επικόλλησε οποιοδήποτε σύνδεσμο** — βίντεο YouTube, Shorts, κανάλια, playlists, podcasts και Music, καθώς και 2000+ άλλους ιστοτόπους που υποστηρίζει το yt-dlp· κατέβασε ολόκληρη την playlist ή διάλεξε πρώτα συγκεκριμένα βίντεο
 - **Ουρά πολλαπλών λήψεων** — παρακολούθηση αρκετών λήψεων παράλληλα
 - **Παρακολούθηση πρόχειρου** — αντιγράψτε έναν σύνδεσμο YouTube και το Arroxy συμπληρώνει αυτόματα το URL όταν εστιάζετε ξανά στην εφαρμογή (εναλλαγή στις Σύνθετες ρυθμίσεις)
 - **Αυτόματη εκκαθάριση URL** — αφαιρεί παραμέτρους παρακολούθησης (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) και ξετυλίγει συνδέσμους `youtube.com/redirect`
@@ -81,6 +81,13 @@
 - Αποθήκευση δίπλα στο βίντεο, ενσωμάτωση σε `.mkv`, ή οργάνωση σε υποφάκελο `Subtitles/`
 - **SponsorBlock** — παράλειψη ή επισήμανση κεφαλαίου για χορηγούς, εισαγωγές, εξόδους, αυτο-προωθήσεις
 - **Ενσωματωμένα μεταδεδομένα** — τίτλος, ημερομηνία μεταφόρτωσης, κανάλι, περιγραφή, μικρογραφία και δείκτες κεφαλαίων γραμμένα στο αρχείο
+
+### YouTube + 2000 ιστοτόποι
+
+- **YouTube, πλήρως** — βίντεο, Shorts, κανάλια, playlists, YouTube Music και podcasts χειρίζονται ως πρωτεύουσες πηγές
+- **2000+ άλλοι ιστοτόποι** μέσω yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org και πολλοί άλλοι
+- **Μόνο ήχος και υπότιτλοι** λειτουργούν σε κάθε υποστηριζόμενο ιστοτόπο, όχι μόνο στο YouTube
+- Αν ένας ιστοτόπος αλλάξει, το yt-dlp παρέχει διορθώσεις εβδομαδιαία και το Arroxy ενημερώνει αυτόματα το εκτελέσιμο κατά την εκκίνηση
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="Επικόλληση URL" />

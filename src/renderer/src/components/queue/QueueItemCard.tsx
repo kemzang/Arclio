@@ -67,7 +67,7 @@ export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
 
   return (
     <li className={cn('flex items-start gap-2.5 py-2 px-2 rounded-md border bg-card/60 transition-[border-color,box-shadow]', subsFailed ? SUBS_FAILED_BORDER : STATUS_BORDER[status])} data-testid={`queue-card-${item.id}`} data-status={status}>
-      <div className="shrink-0 w-12 h-[27px] rounded overflow-hidden bg-secondary mt-0.5">{item.thumbnail ? <img src={item.thumbnail} alt="" aria-hidden crossOrigin="anonymous" className="w-full h-full object-cover block" /> : <div className="thumb-shimmer w-full h-full" aria-hidden />}</div>
+      <div className="shrink-0 w-12 h-[27px] rounded overflow-hidden bg-secondary mt-0.5">{item.thumbnail ? <img src={item.thumbnail} alt="" aria-hidden referrerPolicy="no-referrer" className="w-full h-full object-cover block" /> : <div className="thumb-shimmer w-full h-full" aria-hidden />}</div>
 
       <div className="flex-1 min-w-0 flex flex-col gap-0.5">
         <p className="text-[13px] font-medium text-foreground truncate leading-snug" data-testid="queue-title">

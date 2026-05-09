@@ -71,7 +71,7 @@ bun run dist:win     # mkusanyiko wa msalaba kwa Windows portable exe
 
 export const sw = {
   icon_alt: "Nembo ya Arroxy",
-  title: "Arroxy — Kipakuzi Bure cha YouTube cha Chanzo Wazi kwa Windows, macOS na Linux",
+  title: "Arroxy — Kipakuzi Bure cha Chanzo Wazi cha YouTube (+ Tovuti 2000) kwa Windows, macOS na Linux",
   read_in_label: "Soma kwa:",
   badge_release_alt: "Toleo",
   badge_build_alt: "Ujenzi",
@@ -80,7 +80,7 @@ export const sw = {
   badge_i18n_alt: "Lugha",
   badge_website_alt: "Tovuti",
   hero_desc:
-    "Pakua video yoyote ya YouTube, Short, au wimbo wa sauti kwa ubora wa asili — hadi 4K HDR kwa fps 60, au kama MP3 / AAC / Opus. Inafanya kazi mahali hapo kwenye Windows, macOS, na Linux. **Hakuna matangazo, hakuna kuingia, hakuna vidakuzi vya kivinjari, hakuna akaunti ya Google iliyounganishwa.**",
+    "Pakua video, Shorts, muziki, vituo, podikasti, au nyimbo za sauti kutoka **YouTube na tovuti 2000+ zinazotumika** — hadi 4K HDR kwa fps 60, au kama MP3 / AAC / Opus. Inafanya kazi mahali hapo kwenye Windows, macOS, na Linux. **Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada.**",
   cta_latest: "↓ Pakua Toleo la Hivi Karibuni",
   cta_website: "Tovuti",
   demo_alt: "Demo ya Arroxy",
@@ -116,7 +116,7 @@ export const sw = {
   feat_privacy_3: "Faili zimehifadhiwa moja kwa moja kwenye folda unayochagua",
   feat_workflow_h3: "Mtiririko wa kazi",
   feat_workflow_1:
-    "**Bandika URL yoyote ya YouTube** — video, Shorts na playlist zinaungwa mkono; pakua playlist nzima au chagua video maalum kwanza",
+    "**Bandika kiungo chochote** — video za YouTube, Shorts, vituo, orodha za kucheza, podikasti na Muziki, pamoja na tovuti 2000+ zinazoungwa mkono na yt-dlp; pakua orodha nzima ya kucheza au chagua video maalum kwanza",
   feat_workflow_2:
     "**Foleni ya upakuaji wa pamoja** — fuatilia maudhui kadhaa yanayopakuliwa wakati huo huo",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const sw = {
     "**SponsorBlock** — ruka au weka alama za sehemu kwenye wadhamini, utangulizi, mwisho, matangazo binafsi",
   feat_post_4:
     "**Metadata iliyowekwa** — kichwa, tarehe ya kupakia, chaneli, maelezo, picha ndogo, na alama za sura zimeandikwa ndani ya faili",
+  feat_sites_h3: "YouTube + Tovuti 2000",
+  feat_sites_1:
+    "**YouTube kamili** — Video, Shorts, Vituo, Orodha za Kucheza, YouTube Music na Podikasti zinashughulikiwa kama vyanzo vya daraja la kwanza",
+  feat_sites_2:
+    "**Tovuti 2000+ nyingine** kupitia yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org na nyingi zaidi",
+  feat_sites_3:
+    "**Sauti pekee na manukuu** yanafanya kazi kwenye kila tovuti inayoungwa mkono, si YouTube peke yake",
+  feat_sites_4:
+    "Tovuti ikibadilika, yt-dlp hutoa marekebisho kila wiki na Arroxy husasisha binary kiotomatiki wakati wa uzinduzi",
   shot1_alt: "Bandika URL",
   shot2_alt: "Chagua ubora wako",
   shot3_alt: "Chagua mahali pa kuhifadhi",

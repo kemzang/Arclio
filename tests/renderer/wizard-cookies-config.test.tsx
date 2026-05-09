@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { StepUrlInput } from '@renderer/components/wizard/StepUrlInput.js';
 import { useAppStore } from '@renderer/store/useAppStore.js';
@@ -9,8 +9,6 @@ import type { AppSettings } from '@shared/types.js';
 import { ok } from '../shared/fixtures.js';
 
 const SINGLE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-const PLAYLIST_URL = 'https://www.youtube.com/playlist?list=PLabc';
-const MIXED_URL = 'https://www.youtube.com/watch?v=abc&list=PLabc';
 
 let mockApi: AppApi;
 
@@ -44,6 +42,9 @@ function resetStore(settings: AppSettings): void {
     wizardDuration: undefined,
     wizardFormats: [],
     wizardFormatsDegraded: null,
+    wizardExtractor: '',
+    wizardExtractorKey: '',
+    wizardWebpageUrl: '',
     advancedAutoOpen: false,
     selectedVideoFormatId: '',
     audioSelection: { kind: 'none' },
@@ -71,8 +72,7 @@ function resetStore(settings: AppSettings): void {
     selectedPlaylistItemIds: [],
     playlistTitle: '',
     playlistId: '',
-    mixedUrlPromptOpen: false,
-    mixedUrlPending: null,
+    playlistIsMultiVideo: false,
     cookiesConfigDialogIssue: null,
     selectedPlaylistPreset: null,
     queue: [],
@@ -91,7 +91,6 @@ beforeEach(() => {
     };
     return ok(next);
   });
-  mockApi.downloads.getPlaylistItems = vi.fn().mockResolvedValue(ok({ playlistId: 'PLabc', playlistTitle: 'Test Playlist', entries: [] }));
   window.appApi = mockApi;
   window.platform = 'linux';
   resetStore(buildSettings());
@@ -106,7 +105,7 @@ describe('incomplete cookies config guard', () => {
     fireEvent.click(screen.getByTestId('btn-find-formats'));
 
     expect(await screen.findByTestId('cookies-config-dialog')).toBeInTheDocument();
-    expect(mockApi.downloads.getFormats).not.toHaveBeenCalled();
+    expect(mockApi.downloads.probe).not.toHaveBeenCalled();
     expect(useAppStore.getState().wizardStep).toBe('url');
     expect(useAppStore.getState().cookiesConfigDialogIssue).toBe('file-missing-path');
   });
@@ -119,7 +118,7 @@ describe('incomplete cookies config guard', () => {
     fireEvent.click(screen.getByTestId('btn-find-formats'));
 
     expect(await screen.findByTestId('cookies-config-dialog')).toBeInTheDocument();
-    expect(mockApi.downloads.getFormats).not.toHaveBeenCalled();
+    expect(mockApi.downloads.probe).not.toHaveBeenCalled();
     expect(useAppStore.getState().cookiesConfigDialogIssue).toBe('browser-missing-selection');
   });
 
@@ -159,14 +158,14 @@ describe('incomplete cookies config guard', () => {
       expect(screen.queryByTestId('cookies-config-dialog')).not.toBeInTheDocument();
     });
     expect(useAppStore.getState().cookiesConfigDialogIssue).toBeNull();
-    expect(mockApi.downloads.getFormats).not.toHaveBeenCalled();
+    expect(mockApi.downloads.probe).not.toHaveBeenCalled();
 
     fireEvent.click(screen.getByTestId('btn-find-formats'));
 
     expect(await screen.findByTestId('cookies-config-dialog')).toBeInTheDocument();
     expect(useAppStore.getState().cookiesConfigDialogIssue).toBe('file-missing-path');
     expect(useAppStore.getState().wizardStep).toBe('url');
-    expect(mockApi.downloads.getFormats).not.toHaveBeenCalled();
+    expect(mockApi.downloads.probe).not.toHaveBeenCalled();
   });
 
   it('clears the dialog issue when dismissed via ESC and keeps submit blocked', async () => {
@@ -184,33 +183,6 @@ describe('incomplete cookies config guard', () => {
     });
     expect(useAppStore.getState().cookiesConfigDialogIssue).toBeNull();
     expect(useAppStore.getState().wizardStep).toBe('url');
-    expect(mockApi.downloads.getFormats).not.toHaveBeenCalled();
-  });
-
-  it('does not block playlist URLs with incomplete cookies config', async () => {
-    resetStore(buildSettings({ cookiesMode: 'file', cookiesPath: '' }));
-
-    useAppStore.getState().setWizardUrl(PLAYLIST_URL);
-    await useAppStore.getState().submitUrl();
-
-    expect(mockApi.downloads.getPlaylistItems).toHaveBeenCalledWith({ url: PLAYLIST_URL });
-    expect(useAppStore.getState().cookiesConfigDialogIssue).toBeNull();
-    expect(useAppStore.getState().wizardStep).toBe('playlistItems');
-  });
-
-  it('blocks the mixed-url single-video branch before probing', async () => {
-    resetStore(buildSettings({ cookiesMode: 'browser' }));
-
-    useAppStore.getState().setWizardUrl(MIXED_URL);
-    await useAppStore.getState().submitUrl();
-    expect(useAppStore.getState().mixedUrlPromptOpen).toBe(true);
-
-    await act(async () => {
-      await useAppStore.getState().dismissMixedPrompt('video');
-    });
-
-    expect(useAppStore.getState().mixedUrlPromptOpen).toBe(false);
-    expect(useAppStore.getState().cookiesConfigDialogIssue).toBe('browser-missing-selection');
-    expect(mockApi.downloads.getFormats).not.toHaveBeenCalled();
+    expect(mockApi.downloads.probe).not.toHaveBeenCalled();
   });
 });

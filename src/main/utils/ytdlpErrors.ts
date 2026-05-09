@@ -17,7 +17,11 @@ const ERROR_PATTERNS: Record<StderrSignal, RegExp> = {
   ageRestricted: /this video is age.?restricted|sign in to confirm your age/i,
   unavailable: /private video|this video is unavailable|video has been removed/i,
   geoBlocked: /not available in your country|geo.?restricted/i,
-  outOfDiskSpace: /no space left on device|there is not enough space on the disk|disk quota exceeded|not enough storage/i
+  outOfDiskSpace: /no space left on device|there is not enough space on the disk|disk quota exceeded|not enough storage/i,
+  // YouTube ranged-HTTP truncation: server closes connection mid-body,
+  // yt-dlp retries up to N then gives up. The final ERROR: line is often
+  // empty for this case — match the [download] line directly.
+  chunkTransferFailure: /Giving up after \d+ retries|\d+ bytes read, \d+ more expected/i
 };
 
 // Iteration order is the declaration order of the keys above; in practice
@@ -25,8 +29,17 @@ const ERROR_PATTERNS: Record<StderrSignal, RegExp> = {
 const PATTERN_ENTRIES = Object.entries(ERROR_PATTERNS) as [StderrSignal, RegExp][];
 
 export function extractLastError(stderr: string): string | null {
-  const matches = stderr.match(/ERROR:.*$/gm);
-  return matches ? matches[matches.length - 1].trim() : null;
+  const errorMatches = stderr.match(/ERROR:.*$/gm);
+  const lastError = errorMatches ? errorMatches[errorMatches.length - 1].trim() : null;
+  // yt-dlp sometimes emits a bare "ERROR:" with no message after the
+  // downloader exhausts its retries. Fall back to the most recent
+  // [download] line that actually describes the failure so the user
+  // sees something better than "ERROR:".
+  if (!lastError || /^ERROR:\s*$/.test(lastError)) {
+    const downloadMatches = stderr.match(/\[download\] Got error:.*Giving up after \d+ retries.*$/gm) ?? stderr.match(/\[download\] Got error:.*$/gm);
+    if (downloadMatches) return downloadMatches[downloadMatches.length - 1].trim();
+  }
+  return lastError;
 }
 
 export function classifyStderr(stderr: string): StderrSignal | null {

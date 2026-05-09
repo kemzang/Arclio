@@ -71,7 +71,7 @@ bun run dist:win     # cross-compile Windows portable exe
 
 export const en = {
   icon_alt: "Arroxy mascot",
-  title: "Arroxy — Free Open-Source YouTube Downloader for Windows, macOS & Linux",
+  title: "Arroxy — Free Open-Source YouTube (+ 2000 sites) Downloader for Windows, macOS & Linux",
   read_in_label: "Read in:",
   badge_release_alt: "Release",
   badge_build_alt: "Build",
@@ -80,7 +80,7 @@ export const en = {
   badge_i18n_alt: "Languages",
   badge_website_alt: "Website",
   hero_desc:
-    "Download any YouTube video, Short, or audio track in original quality — up to 4K HDR at 60 fps, or as MP3 / AAC / Opus. Runs locally on Windows, macOS, and Linux. **No ads, no bloat, no upsells.**",
+    "Download videos, Shorts, music, channels, podcasts, or audio tracks from **YouTube and 2000+ supported sites** — up to 4K HDR at 60 fps, or as MP3 / AAC / Opus. Runs locally on Windows, macOS, and Linux. **No ads, no bloat, no upsells.**",
   cta_latest: "↓ Download Latest Release",
   cta_website: "Website",
   demo_alt: "Arroxy demo",
@@ -116,7 +116,7 @@ export const en = {
   feat_privacy_3: "Files saved straight to the folder you choose",
   feat_workflow_h3: "Workflow",
   feat_workflow_1:
-    "**Paste any YouTube URL** — videos, Shorts, and playlists supported; download the whole playlist or pick specific videos first",
+    "**Paste any link** — YouTube videos, Shorts, channels, playlists, podcasts, and Music, plus 2000+ other sites yt-dlp supports; download the whole playlist or pick specific videos first",
   feat_workflow_2:
     "**Multi-download queue** — track several downloads in parallel",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const en = {
     "**SponsorBlock** — skip or chapter-mark sponsors, intros, outros, self-promos",
   feat_post_4:
     "**Embedded metadata** — title, upload date, channel, description, thumbnail, and chapter markers written into the file",
+  feat_sites_h3: "YouTube + 2000 sites",
+  feat_sites_1:
+    "**YouTube, in full** — Videos, Shorts, Channels, Playlists, YouTube Music, and Podcasts handled as first-class sources",
+  feat_sites_2:
+    "**2000+ other sites** via yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org, and many more",
+  feat_sites_3:
+    "**Audio-only and subtitles** work across every supported site, not just YouTube",
+  feat_sites_4:
+    "If a site changes, yt-dlp ships fixes weekly and Arroxy auto-updates the binary on launch",
   shot1_alt: "Paste a URL",
   shot2_alt: "Pick your quality",
   shot3_alt: "Choose where to save",

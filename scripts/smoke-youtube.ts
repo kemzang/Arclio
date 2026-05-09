@@ -23,7 +23,8 @@ import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { ytDlpInfoSchema } from '../src/shared/schemas.js';
+import { infoDictSchema } from '../src/shared/schemas.js';
+import { isPlaylistLike, type VideoInfo } from '../src/shared/ytdlp/infoDict.js';
 import { resolveSmokeUrl } from './smoke-shared.js';
 
 const PLAYER_CLIENT_FALLBACK = 'youtube:player_client=default,-web,-web_safari';
@@ -145,7 +146,7 @@ async function runStrategy(
     };
   }
 
-  const schemaResult = ytDlpInfoSchema.safeParse(parsed);
+  const schemaResult = infoDictSchema.safeParse(parsed);
   if (!schemaResult.success) {
     return {
       name,
@@ -155,12 +156,16 @@ async function runStrategy(
     };
   }
 
+  const info = schemaResult.data;
+  const formatCount = isPlaylistLike(info) ? info.entries.length : ((info as VideoInfo).formats?.length ?? 0);
+  const title = (info as VideoInfo).title ?? '(no title)';
+
   return {
     name,
     passed: true,
     durationMs: r.durationMs,
-    formatCount: schemaResult.data.formats?.length ?? 0,
-    title: schemaResult.data.title ?? '(no title)',
+    formatCount,
+    title,
   };
 }
 

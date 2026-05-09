@@ -1,8 +1,7 @@
 import type { BrowserWindow } from 'electron';
 import type { SupportedLang } from '@shared/i18n/types.js';
 import type { DownloadService } from '@main/services/DownloadService.js';
-import type { FormatProbeService } from '@main/services/FormatProbeService.js';
-import type { PlaylistProbeService } from '@main/services/PlaylistProbeService.js';
+import type { ProbeService } from '@main/services/ProbeService.js';
 import type { BinaryManager } from '@main/services/BinaryManager.js';
 import type { TokenService } from '@main/services/TokenService.js';
 import type { SettingsStore } from '@main/stores/SettingsStore.js';
@@ -22,8 +21,7 @@ import { registerDiagnosticsHandlers } from './diagnosticsHandlers.js';
 export interface IpcDependencies {
   mainWindow: BrowserWindow;
   downloadService: DownloadService;
-  formatProbeService: FormatProbeService;
-  playlistProbeService: PlaylistProbeService;
+  probeService: ProbeService;
   settingsStore: SettingsStore;
   queueStore: QueueStore;
   binaryManager: BinaryManager;
@@ -33,12 +31,12 @@ export interface IpcDependencies {
 }
 
 export function registerIpcHandlers(deps: IpcDependencies): void {
-  const { mainWindow, downloadService, formatProbeService, playlistProbeService, settingsStore, queueStore, binaryManager, tokenService, languageRef, clipboardWatcher } = deps;
+  const { mainWindow, downloadService, probeService, settingsStore, queueStore, binaryManager, tokenService, languageRef, clipboardWatcher } = deps;
 
   const warmupService = new WarmupService({ binaryManager, tokenService, window: mainWindow });
   registerAppHandlers({ warmupService, languageRef });
   registerWindowHandlers(mainWindow);
-  registerDownloadHandlers({ downloadService, formatProbeService, playlistProbeService, settingsStore });
+  registerDownloadHandlers({ downloadService, probeService, settingsStore });
   registerSettingsHandlers({ settingsStore, clipboardWatcher });
   registerFileHandlers(mainWindow, binaryManager);
   registerQueueHandlers(queueStore);

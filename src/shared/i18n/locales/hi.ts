@@ -90,6 +90,8 @@ const hi = {
       heading: 'Playlist आइटम',
       itemCount_one: '{{count}} वीडियो',
       itemCount_other: '{{count}} वीडियो',
+      itemCountAudio_one: '{{count}} ट्रैक',
+      itemCountAudio_other: '{{count}} ट्रैक',
       selectAll: 'सभी चुनें',
       selectNone: 'कोई नहीं चुनें',
       rangeFrom: 'से',
@@ -123,17 +125,25 @@ const hi = {
       fetchFormats: 'फ़ॉर्मेट लाएँ',
       features: {
         heading: 'Arroxy क्या डाउनलोड कर सकता है',
-        video: {
-          title: 'वीडियो',
-          desc: '4K तक कोई भी रिज़ॉल्यूशन चुनें'
+        youtube: {
+          heading: 'YouTube',
+          video: 'वीडियो',
+          channel: 'चैनल',
+          playlist: 'Playlist',
+          short: 'Shorts',
+          music: 'संगीत',
+          podcast: 'Podcast'
         },
-        playlist: {
-          title: 'Playlist',
-          desc: 'Playlist से कई आइटम चुनें'
+        anySite: {
+          heading: '2000+ साइटें',
+          video: 'वीडियो',
+          videoPlaylist: 'वीडियो playlist',
+          musicPlaylist: 'संगीत playlist'
         },
-        audio: {
-          title: 'ऑडियो',
-          desc: 'मूल स्ट्रीम या MP3/M4A कनवर्शन'
+        always: {
+          heading: 'हमेशा उपलब्ध',
+          audioOnly: 'केवल ऑडियो',
+          subtitles: 'उपशीर्षक'
         }
       },
       mascotIdle: 'मुझे YouTube का लिंक भेजो (वीडियो या Short) — फिर "फ़ॉर्मेट लाएँ" दबाओ और मैं काम पर लग जाऊँगा ✨',
@@ -251,10 +261,12 @@ const hi = {
       audioOnlyOption: 'सिर्फ़ ऑडियो (वीडियो नहीं)',
       mascot: 'सबसे अच्छा + सबसे अच्छा = बेहतरीन क्वालिटी। मैं तो यही चुनूँगा!',
       sniffing: 'आपके लिए बेहतरीन फ़ॉर्मेट ढूँढ रहा हूँ…',
-      loadingHint: 'आमतौर पर एक सेकंड लगता है',
+      loadingHint: 'कृपया प्रतीक्षा करें जब तक जाँच पूरी न हो जाए — playlist और खोज में थोड़ा अधिक समय लग सकता है।',
       loadingAria: 'फ़ॉर्मेट लोड हो रहे हैं',
       sizeUnknown: 'साइज़ अज्ञात',
       total: 'कुल',
+      keepAudio: 'जैसा है वैसा रखें',
+      keepAudioMeta: 'बिल्ट-इन ऑडियो',
       convert: {
         label: 'कनवर्ट करें',
         uncompressed: 'कनवर्ट करें · असंपीड़ित',
@@ -281,6 +293,10 @@ const hi = {
         explanationFile: 'आपकी कुकी फ़ाइल खाली, एक्सपायर्ड या गलत फ़ॉर्मेट में हो सकती है (yt-dlp को Netscape cookies.txt चाहिए)। कुकी फिर से एक्सपोर्ट करें, कोई अलग फ़ाइल चुनें, ब्राउज़र मोड पर जाएँ, या कुकी बंद कर दें।',
         explanationBrowser: 'कुकी सीधे ब्राउज़र से पढ़ी जाती हैं। अगर ब्राउज़र अभी चल रहा है, तो उसका कुकी डेटाबेस लॉक हो सकता है (Chromium परिवार)। ब्राउज़र में YouTube पर लॉग इन भी होना ज़रूरी है। ब्राउज़र बंद करके देखें, कोई दूसरा ब्राउज़र आज़माएँ, फ़ाइल मोड पर जाएँ, या कुकी बंद कर दें।',
         openSettingsCta: 'कुकी सेटिंग्स खोलें',
+        needsCookies: {
+          heading: 'इस साइट के लिए साइन-इन ज़रूरी है',
+          body: 'yt-dlp प्रमाणीकरण के बिना इस वीडियो तक नहीं पहुँच सका। उन्नत सेटिंग्स में कुकी कॉन्फ़िगर करें — किसी ऐसे ब्राउज़र पर पॉइंट करें जिसमें आप पहले से साइन इन हैं, या cookies.txt फ़ाइल इम्पोर्ट करें।'
+        },
         dpapi: {
           heading: 'Chrome कुकी Windows एन्क्रिप्शन से ब्लॉक हैं',
           explanation: 'Chrome 127 और उसके बाद के वर्शन कुकी को इस तरह एन्क्रिप्ट करते हैं कि Windows पर दूसरे ऐप उन्हें नहीं पढ़ सकते। नीचे दिए गए किसी एक समाधान को आज़माएँ।',
@@ -290,7 +306,7 @@ const hi = {
           fixFileBody: 'Chrome से किसी ब्राउज़र एक्सटेंशन के ज़रिए कुकी एक्सपोर्ट करें, फिर इस ऐप को File मोड पर स्विच करें और एक्सपोर्ट की गई फ़ाइल चुनें।',
           fixUnsafeLabel: 'App-Bound Encryption बंद करके Chrome लॉन्च करें',
           fixUnsafeBody: 'Chrome के लॉन्च शॉर्टकट में --disable-features=LockProfileCookieDatabase जोड़ें। चेतावनी: इससे पहले से एन्क्रिप्टेड कुकी अमान्य हो जाएंगी, इसलिए आप हर साइट से साइन आउट हो जाएंगे और फिर से लॉग इन करना होगा।',
-          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+          docsLinkLabel: 'yt-dlp दस्तावेज़ (समस्या #10927)'
         }
       }
     },
@@ -354,15 +370,16 @@ const hi = {
       labelPreset: 'प्रीसेट',
       labelItems: 'आइटम',
       itemsValue_one: '{{total}} में से {{count}} वीडियो',
-      itemsValue_other: '{{total}} में से {{count}} वीडियो'
+      itemsValue_other: '{{total}} में से {{count}} वीडियो',
+      itemsValueAudio_one: '{{total}} में से {{count}} ट्रैक',
+      itemsValueAudio_other: '{{total}} में से {{count}} ट्रैक'
     },
     error: {
       icon: 'त्रुटि'
     }
   },
   videoCard: {
-    titlePlaceholder: 'लोड हो रहा है…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'लोड हो रहा है…'
   },
   queue: {
     header: 'डाउनलोड क़तार',
@@ -435,7 +452,8 @@ const hi = {
       unavailable: 'यह वीडियो उपलब्ध नहीं — हो सकता है यह निजी, हटाया गया या क्षेत्र-प्रतिबंधित हो।',
       geoBlocked: 'यह वीडियो आपके क्षेत्र में उपलब्ध नहीं है।',
       outOfDiskSpace: 'डिस्क में पर्याप्त जगह नहीं है। जगह खाली करें और पुनः प्रयास करें।',
-      unsupportedUrl: 'यह कोई वीडियो URL नहीं लगता। कोई YouTube वीडियो, Short, या playlist लिंक पेस्ट करें।'
+      unsupportedUrl: 'यह कोई वीडियो URL नहीं लगता। कोई YouTube वीडियो, Short, या playlist लिंक पेस्ट करें।',
+      chunkTransferFailure: 'सर्वर बार-बार डाउनलोड बीच में काट रहा था और yt-dlp बार-बार कोशिश के बाद हार मान गया। यह आमतौर पर सबसे बड़े वीडियो फॉर्मेट (4K HDR / हाई-बिटरेट VP9) पर होता है। फिर से कोशिश करें, नेटवर्क/VPN बदलें, या कम रिज़ॉल्यूशन का फॉर्मेट चुनें।'
     }
   },
   presets: {
@@ -512,19 +530,19 @@ const hi = {
   share: {
     title: 'Arroxy शेयर करें',
     description: 'Arroxy मुफ़्त और ओपन-सोर्स है। शेयर करने से और लोग इसे खोज सकते हैं।',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'लिंक कॉपी करें',
+    copied: 'कॉपी किया!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Arroxy साझा करें',
+    footerLabel: 'साझा करें',
+    shareAction: 'Arroxy साझा करें',
     inlineCard: {
       body: 'Arroxy पसंद आ रहा है? किसी ऐसे व्यक्ति के साथ शेयर करें जिसे यह उपयोगी लग सकता है।',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'शेयर सुझाव हटाएँ'
     },
     highValueBanner: {
       body: 'Arroxy पसंद आ रहा है? दूसरों को भी इसे खोजने में मदद करें।',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'शेयर सुझाव हटाएँ'
     }
   }
 } as const;

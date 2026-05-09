@@ -90,6 +90,8 @@ const vi = {
       heading: 'Các mục Playlist',
       itemCount_one: '{{count}} video',
       itemCount_other: '{{count}} video',
+      itemCountAudio_one: '{{count}} bản nhạc',
+      itemCountAudio_other: '{{count}} bản nhạc',
       selectAll: 'Chọn tất cả',
       selectNone: 'Bỏ chọn tất cả',
       rangeFrom: 'Từ',
@@ -123,17 +125,25 @@ const vi = {
       fetchFormats: 'Tải định dạng',
       features: {
         heading: 'Arroxy có thể tải gì',
-        video: {
-          title: 'Video',
-          desc: 'Chọn độ phân giải bất kỳ lên đến 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Video',
+          channel: 'Kênh',
+          playlist: 'Danh sách phát',
+          short: 'Shorts',
+          music: 'Nhạc',
+          podcast: 'Podcast'
         },
-        playlist: {
-          title: 'Danh sách phát',
-          desc: 'Chọn nhiều mục từ một playlist'
+        anySite: {
+          heading: '2000+ trang web',
+          video: 'Video',
+          videoPlaylist: 'Danh sách phát video',
+          musicPlaylist: 'Danh sách phát nhạc'
         },
-        audio: {
-          title: 'Âm thanh',
-          desc: 'Luồng gốc hoặc chuyển đổi MP3/M4A'
+        always: {
+          heading: 'Luôn có sẵn',
+          audioOnly: 'Chỉ âm thanh',
+          subtitles: 'Phụ đề'
         }
       },
       mascotIdle: 'Dán cho tôi một liên kết YouTube (video hoặc YouTube Shorts) — rồi nhấn "Tải định dạng" và tôi sẽ bắt tay vào việc ✨',
@@ -251,10 +261,12 @@ const vi = {
       audioOnlyOption: 'Chỉ âm thanh (không có video)',
       mascot: 'Tốt nhất + Tốt nhất = chất lượng cao nhất. Tôi sẽ chọn cái đó!',
       sniffing: 'Đang tìm định dạng tốt nhất cho bạn…',
-      loadingHint: 'Thường mất một chút thời gian',
+      loadingHint: 'Vui lòng chờ cho đến khi quá trình kiểm tra hoàn tất — playlist và tìm kiếm có thể mất một lúc.',
       loadingAria: 'Đang tải định dạng',
       sizeUnknown: 'Không biết kích thước',
       total: 'Tổng cộng',
+      keepAudio: 'Giữ nguyên',
+      keepAudioMeta: 'Âm thanh tích hợp',
       convert: {
         label: 'Chuyển đổi',
         uncompressed: 'Chuyển đổi · không nén',
@@ -281,6 +293,10 @@ const vi = {
         explanationFile: 'Tệp cookies của bạn có thể trống, đã hết hạn hoặc sai định dạng (yt-dlp yêu cầu Netscape cookies.txt). Hãy thử xuất lại cookies, chọn tệp khác, chuyển sang chế độ Trình duyệt hoặc tắt cookies.',
         explanationBrowser: 'Cookies được đọc trực tiếp từ trình duyệt. Nếu trình duyệt đang mở, cơ sở dữ liệu cookies có thể bị khóa (Chromium-family). Trình duyệt cũng phải đã đăng nhập vào YouTube. Hãy thử đóng trình duyệt, chuyển sang trình duyệt khác, chuyển sang chế độ Tệp hoặc tắt cookies.',
         openSettingsCta: 'Mở cài đặt cookies',
+        needsCookies: {
+          heading: 'Trang web này yêu cầu đăng nhập',
+          body: 'yt-dlp không thể truy cập video này mà không xác thực. Hãy cấu hình cookies trong cài đặt nâng cao — trỏ đến trình duyệt bạn đã đăng nhập, hoặc nhập tệp cookies.txt.'
+        },
         dpapi: {
           heading: 'Cookies của Chrome bị chặn bởi mã hóa Windows',
           explanation: 'Chrome 127 trở lên mã hóa cookies theo cách mà các ứng dụng khác không thể đọc trên Windows. Hãy thử một trong các cách khắc phục bên dưới.',
@@ -348,21 +364,22 @@ const vi = {
       addToQueueTooltip: 'Bắt đầu khi các tải xuống khác hoàn tất — sử dụng toàn bộ băng thông',
       pullIt: 'Tải về! ↓',
       pullItTooltip: 'Bắt đầu ngay lập tức — chạy song song với các tải xuống đang hoạt động',
-      playlistBatch_one: '{{count}} video · {{title}}',
-      playlistBatch_other: '{{count}} video · {{title}}',
+      playlistBatch_one: '{{count}} đoạn video · {{title}}',
+      playlistBatch_other: '{{count}} đoạn video · {{title}}',
       labelPlaylist: 'Danh sách phát',
       labelPreset: 'Cài đặt sẵn',
       labelItems: 'Mục',
       itemsValue_one: '{{count}} trong {{total}} video',
-      itemsValue_other: '{{count}} trong {{total}} video'
+      itemsValue_other: '{{count}} trong {{total}} video',
+      itemsValueAudio_one: '{{count}} trong {{total}} bản nhạc',
+      itemsValueAudio_other: '{{count}} trong {{total}} bản nhạc'
     },
     error: {
       icon: 'Lỗi'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Đang tải…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Đang tải…'
   },
   queue: {
     header: 'Hàng đợi tải xuống',
@@ -435,7 +452,8 @@ const vi = {
       unavailable: 'Video này không khả dụng — có thể là riêng tư, đã bị xóa hoặc bị chặn theo khu vực.',
       geoBlocked: 'Video này không có sẵn ở khu vực của bạn.',
       outOfDiskSpace: 'Không đủ dung lượng đĩa. Hãy giải phóng dung lượng rồi thử lại.',
-      unsupportedUrl: 'Đây không giống như URL video. Hãy dán liên kết video YouTube, Short hoặc danh sách phát.'
+      unsupportedUrl: 'Đây không giống như URL video. Hãy dán liên kết video YouTube, Short hoặc danh sách phát.',
+      chunkTransferFailure: 'Máy chủ liên tục ngắt kết nối giữa chừng và yt-dlp đã bỏ cuộc sau nhiều lần thử lại. Lỗi này thường xảy ra với các định dạng video lớn nhất (4K HDR / VP9 bitrate cao). Hãy thử lại, đổi mạng/VPN, hoặc chọn định dạng độ phân giải thấp hơn.'
     }
   },
   presets: {
@@ -512,12 +530,12 @@ const vi = {
   share: {
     title: 'Chia sẻ Arroxy',
     description: 'Arroxy miễn phí và mã nguồn mở. Chia sẻ giúp nhiều người hơn khám phá ra nó.',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'Sao chép liên kết',
+    copied: 'Đã sao chép!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Chia sẻ Arroxy',
+    footerLabel: 'Chia sẻ',
+    shareAction: 'Chia sẻ Arroxy',
     inlineCard: {
       body: 'Bạn thích Arroxy không? Hãy chia sẻ với ai đó có thể thấy nó hữu ích.',
       dismiss: 'Bỏ qua gợi ý chia sẻ'

@@ -21,9 +21,13 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
     downloads: {
       start: vi.fn().mockResolvedValue(ok({ job: { id: 'job-1', url: '', outputDir: '/tmp', status: 'running', createdAt: '', updatedAt: '' } })),
       cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
-      getFormats: vi.fn(),
-      getPlaylistItems: vi.fn().mockResolvedValue(
+      probe: vi.fn().mockResolvedValue(
         ok({
+          kind: 'playlist' as const,
+          extractor: 'youtube:tab',
+          extractorKey: 'YoutubeTab',
+          webpageUrl: 'https://www.youtube.com/playlist?list=PL123',
+          isMultiVideo: false,
           playlistId: 'PL123',
           playlistTitle: 'Playlist',
           entries: PLAYLIST_ENTRIES
@@ -94,9 +98,11 @@ beforeEach(() => {
     playlistTitle: '',
     playlistId: '',
     playlistProbeLoading: false,
-    mixedUrlPromptOpen: false,
-    mixedUrlPending: null,
+    playlistIsMultiVideo: false,
     selectedPlaylistPreset: null,
+    wizardExtractor: '',
+    wizardExtractorKey: '',
+    wizardWebpageUrl: '',
     queue: [],
     drawerOpen: false,
     showQueueTip: false,

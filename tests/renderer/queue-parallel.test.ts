@@ -43,7 +43,7 @@ describe('Queue parallel/sequential download behavior', () => {
       downloads: {
         start: startMock,
         cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
-        getFormats: vi.fn()
+        probe: vi.fn()
       },
       settings: {
         get: vi.fn().mockResolvedValue(ok({ common: { defaultOutputDir: '/tmp', rememberLastOutputDir: false, clipboardWatchEnabled: false }, single: {}, playlist: {} })),

@@ -32,7 +32,7 @@ function makeJob(): DownloadJob {
 
 const BASE_JOB: PreparedJob = {
   kind: 'single-format',
-  source: 'youtube',
+  extractor: 'youtube', extractorKey: 'Youtube',
   formatId: 'bv+ba',
   preset: 'custom',
   sponsorBlock: SB_OFF,
@@ -149,10 +149,10 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
     });
     await SidecarSubsPhase(false).run(ctx);
 
-    const shouldAbort = vi.mocked(dedupeSubtitleFiles).mock.calls[0][2];
-    expect(shouldAbort()).toBe(false);
+    const shouldAbort = vi.mocked(dedupeSubtitleFiles).mock.calls[0][3];
+    expect(shouldAbort?.()).toBe(false);
     ctx.active.cancelRequested = true;
-    expect(shouldAbort()).toBe(true);
+    expect(shouldAbort?.()).toBe(true);
   });
 
   it('embedAfter=false → muxSubtitlesIntoVideo not called', async () => {

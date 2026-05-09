@@ -16,11 +16,12 @@ const LOCALES: Record<string, LocaleResource> = { en, es, fr, de, ru, uk, ja, zh
 describe('i18n contract', () => {
   it('every locale has a string for every YtdlpErrorKey', () => {
     for (const [name, resource] of Object.entries(LOCALES)) {
-      const ytdlp = (resource as LocaleResource & { errors: { ytdlp: Record<string, string> } }).errors.ytdlp;
+      const ytdlp = (resource as LocaleResource & { errors?: { ytdlp?: Record<string, string> } }).errors?.ytdlp ?? {};
       for (const key of YTDLP_ERROR_KEYS) {
-        expect(ytdlp[key], `${name} locale missing errors.ytdlp.${key}`).toBeDefined();
-        expect(typeof ytdlp[key], `${name}.errors.ytdlp.${key} not string`).toBe('string');
-        expect(ytdlp[key].length, `${name}.errors.ytdlp.${key} is empty`).toBeGreaterThan(0);
+        const value = ytdlp[key];
+        expect(value, `${name} locale missing errors.ytdlp.${key}`).toBeDefined();
+        expect(typeof value, `${name}.errors.ytdlp.${key} not string`).toBe('string');
+        expect((value ?? '').length, `${name}.errors.ytdlp.${key} is empty`).toBeGreaterThan(0);
       }
     }
   });

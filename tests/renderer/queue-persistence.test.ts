@@ -23,7 +23,7 @@ describe('Queue persistence — store behavior', () => {
       downloads: {
         start: startMock,
         cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
-        getFormats: vi.fn(),
+        probe: vi.fn(),
         pause: vi.fn().mockResolvedValue(ok({ paused: true })),
         resume: vi.fn().mockResolvedValue(ok({ resumed: false }))
       },
@@ -367,7 +367,7 @@ describe('Queue persistence — store behavior', () => {
       useAppStore.setState({ initialized: true });
     });
 
-    it('removes done and cancelled items, keeps pending and error', () => {
+    it('removes done, cancelled, and error items, keeps pending', () => {
       useAppStore.setState({
         queue: [makeItem({ id: 'p', status: 'pending' }), makeItem({ id: 'd', status: 'done', progressPercent: 100 }), makeItem({ id: 'e', status: 'error', error: { key: null, rawMessage: 'oops' } }), makeItem({ id: 'c', status: 'cancelled' })]
       });
@@ -376,7 +376,7 @@ describe('Queue persistence — store behavior', () => {
 
       const ids = useAppStore.getState().queue.map((i) => i.id);
       expect(ids).toContain('p');
-      expect(ids).toContain('e');
+      expect(ids).not.toContain('e');
       expect(ids).not.toContain('d');
       expect(ids).not.toContain('c');
     });

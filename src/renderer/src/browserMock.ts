@@ -1,7 +1,15 @@
 import type { AppApi } from '@shared/api.js';
 import type { AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent } from '@shared/types.js';
-import { isYouTubeUrl } from '@shared/schemas.js';
 import { defaultAppSettings } from '@shared/constants.js';
+
+function looksLikeUrl(input: string): boolean {
+  try {
+    const u = new URL(input);
+    return u.protocol === 'http:' || u.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
 
 if (!('appApi' in window)) {
   const statusListeners = new Set<(e: StatusEvent) => void>();
@@ -166,14 +174,37 @@ if (!('appApi' in window)) {
     },
 
     downloads: {
-      getFormats: async (input) => {
+      probe: async (input) => {
         await delay(1400);
 
-        // Reject anything the real shared validator would reject.
-        if (!isYouTubeUrl(input.url)) {
+        if (!looksLikeUrl(input.url)) {
+          return { ok: false, error: { code: 'validation', message: 'Not a valid http(s) URL', recoverable: true } };
+        }
+
+        // Mock playlist branch — append `?playlist=1` to a URL to drive the
+        // playlist UI flow.
+        if (/[?&]playlist=1\b/.test(input.url)) {
+          const entries = Array.from({ length: 12 }, (_, i) => ({
+            id: `mock${i + 1}`,
+            url: `https://www.youtube.com/watch?v=mock${i + 1}`,
+            title: `Mock playlist item ${i + 1} — ${i % 3 === 0 ? 'a longer title that should ellipsize gracefully when the row is narrow' : 'short title'}`,
+            thumbnail: i % 5 === 0 ? '' : 'https://i.ytimg.com/vi/jfKfPfyJRdk/mqdefault.jpg',
+            duration: 90 + i * 47,
+            playlistIndex: i + 1
+          }));
           return {
-            ok: false,
-            error: { code: 'validation', message: 'Not a valid YouTube URL', recoverable: true }
+            ok: true,
+            data: {
+              kind: 'playlist',
+              extractor: 'youtube:tab',
+              extractorKey: 'YoutubeTab',
+              webpageUrl: input.url,
+              isAudioOnlySource: false,
+              isMultiVideo: false,
+              playlistId: 'PLmock_browser',
+              playlistTitle: 'Mock Browser Playlist',
+              entries
+            }
           };
         }
 
@@ -201,6 +232,14 @@ if (!('appApi' in window)) {
         return {
           ok: true,
           data: {
+            kind: 'video',
+            extractor: 'youtube',
+            extractorKey: 'Youtube',
+            webpageUrl: input.url,
+            isAudioOnlySource: false,
+            isLive: false,
+            hasDrm: false,
+            duration: 60 * 60 * 24,
             title: 'Mock Video — Lo-fi Hip Hop Radio 24/7',
             thumbnail: 'https://i.ytimg.com/vi/jfKfPfyJRdk/hqdefault.jpg',
             ...(simulateBotWall ? { degraded: { reasons: ['botWall' as const] } } : {}),
@@ -332,36 +371,13 @@ if (!('appApi' in window)) {
             },
             // Note: in real yt-dlp output, `automatic_captions` includes BOTH the actual
             // generated track (key ends with `-orig`) AND many on-demand translation
-            // options (e.g. `hy`, `eu`). FormatProbeService filters the latter — the mock
-            // simulates post-filter state, so only `-orig` entries are present here.
+            // options (e.g. `hy`, `eu`). ProbeService filters the latter for YouTube — the
+            // mock simulates post-filter state, so only `-orig` entries are present here.
             automaticCaptions: {
               'en-orig': [{ ext: 'vtt', name: 'English (auto)' }]
             }
           }
         };
-      },
-
-      getPlaylistItems: async (input) => {
-        await delay(1200);
-        if (!isYouTubeUrl(input.url)) {
-          return { ok: false, error: { code: 'validation', message: 'Not a valid YouTube URL', recoverable: true } } as const;
-        }
-        const entries = Array.from({ length: 12 }, (_, i) => ({
-          id: `mock${i + 1}`,
-          url: `https://www.youtube.com/watch?v=mock${i + 1}`,
-          title: `Mock playlist item ${i + 1} — ${i % 3 === 0 ? 'a longer title that should ellipsize gracefully when the row is narrow' : 'short title'}`,
-          thumbnail: i % 5 === 0 ? '' : 'https://i.ytimg.com/vi/jfKfPfyJRdk/mqdefault.jpg',
-          duration: 90 + i * 47,
-          playlistIndex: i + 1
-        }));
-        return {
-          ok: true,
-          data: {
-            playlistId: 'PLmock_browser',
-            playlistTitle: 'Mock Browser Playlist',
-            entries
-          }
-        } as const;
       },
 
       start: (input) => {

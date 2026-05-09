@@ -71,7 +71,7 @@ bun run dist:win     # compilation croisée exe portable Windows
 
 export const fr = {
   icon_alt: "Mascotte Arroxy",
-  title: "Arroxy — Téléchargeur YouTube gratuit et open source pour Windows, macOS & Linux",
+  title: "Arroxy — Téléchargeur YouTube (+ 2000 sites) gratuit et open source pour Windows, macOS & Linux",
   read_in_label: "Lire en :",
   badge_release_alt: "Version",
   badge_build_alt: "Build",
@@ -80,7 +80,7 @@ export const fr = {
   badge_i18n_alt: "Langues",
   badge_website_alt: "Site web",
   hero_desc:
-    "Télécharge n'importe quelle vidéo YouTube, Short ou piste audio en qualité originale — jusqu'à 4K HDR à 60 fps, ou en MP3 / AAC / Opus. Fonctionne en local sur Windows, macOS et Linux. **Pas de pub, pas de connexion, pas de cookies de navigateur, pas de compte Google lié.**",
+    "Télécharge des vidéos, Shorts, musiques, chaînes, podcasts ou pistes audio depuis **YouTube et plus de 2000 sites supportés** — jusqu'à 4K HDR à 60 fps, ou en MP3 / AAC / Opus. Fonctionne en local sur Windows, macOS et Linux. **Pas de pub, pas de superflu, pas d'upsell.**",
   cta_latest: "↓ Télécharger la dernière version",
   cta_website: "Site web",
   demo_alt: "Démo Arroxy",
@@ -117,7 +117,7 @@ export const fr = {
   feat_privacy_3: "Fichiers enregistrés directement dans le dossier que tu choisis",
   feat_workflow_h3: "Flux de travail",
   feat_workflow_1:
-    "**Colle n'importe quelle URL YouTube** — vidéos, Shorts et playlists pris en charge ; télécharge toute la playlist ou choisis d'abord des vidéos précises",
+    "**Colle n'importe quel lien** — vidéos YouTube, Shorts, chaînes, playlists, podcasts et Music, plus 2000+ autres sites supportés par yt-dlp ; télécharge toute la playlist ou choisis d'abord des vidéos précises",
   feat_workflow_2:
     "**File de téléchargement multi** — suivi de plusieurs téléchargements en parallèle",
   feat_workflow_3:
@@ -137,6 +137,15 @@ export const fr = {
     "**SponsorBlock** — passe ou marque les sponsors, intros, outros, autopromos en chapitres",
   feat_post_4:
     "**Métadonnées intégrées** — titre, date de mise en ligne, chaîne, description, miniature et marqueurs de chapitres écrits dans le fichier",
+  feat_sites_h3: "YouTube + 2000 sites",
+  feat_sites_1:
+    "**YouTube, en entier** — Vidéos, Shorts, Chaînes, Playlists, YouTube Music et Podcasts traités comme des sources de premier rang",
+  feat_sites_2:
+    "**2000+ autres sites** via yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org et bien plus encore",
+  feat_sites_3:
+    "**L'audio seul et les sous-titres** fonctionnent sur chaque site supporté, pas seulement YouTube",
+  feat_sites_4:
+    "Si un site change, yt-dlp publie des correctifs chaque semaine et Arroxy met à jour le binaire automatiquement au lancement",
   shot1_alt: "Coller une URL",
   shot2_alt: "Choisir la qualité",
   shot3_alt: "Choisir où enregistrer",

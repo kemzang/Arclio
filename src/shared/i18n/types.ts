@@ -41,6 +41,16 @@ export interface LocalizedError {
 
 export type EnTranslation = typeof en;
 
-type WidenStrings<T> = T extends string ? string : T extends readonly (infer U)[] ? readonly WidenStrings<U>[] : { readonly [K in keyof T]: WidenStrings<T[K]> };
+// Non-en locales are allowed to be partial — when a key is missing, i18next
+// falls back to the en value at runtime. Parity is enforced for public-facing
+// content (readme/landing build scripts), but UI strings are added en-first
+// and translations fan out incrementally, so we don't enforce structural parity
+// in TypeScript. Every leaf is widened to `string` so any translation is
+// structurally valid; every nested key is optional.
+type DeepPartialStringLeaves<T> = T extends string
+  ? string
+  : T extends readonly (infer U)[]
+    ? readonly DeepPartialStringLeaves<U>[]
+    : { readonly [K in keyof T]?: DeepPartialStringLeaves<T[K]> };
 
-export type LocaleResource = WidenStrings<EnTranslation>;
+export type LocaleResource = DeepPartialStringLeaves<EnTranslation>;

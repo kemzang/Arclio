@@ -174,15 +174,53 @@ export interface PlaylistEntry {
   playlistIndex: number;
 }
 
-export interface GetPlaylistItemsInput {
+export type ProbePlaylistMode = 'auto' | 'video' | 'playlist';
+
+export interface ProbeInput {
   url: string;
+  // Disambiguates mixed YouTube URLs (?v=X&list=Y). 'auto' lets yt-dlp's
+  // extractor decide; 'video' forces single-video resolution; 'playlist'
+  // forces playlist enumeration.
+  playlistMode?: ProbePlaylistMode;
 }
 
-export interface GetPlaylistItemsOutput {
+export type ProbeDegradationReason = 'botWall' | 'extractor';
+
+interface ProbeCommon {
+  extractor: string;
+  extractorKey: string;
+  webpageUrl: string;
+  // True when the extractor only ever returns audio content (Bandcamp,
+  // SoundCloud, QQMusic, Mixcloud, etc.). Renderer uses this to default the
+  // wizard to audio-only mode without making the user override the format
+  // picker every time. See `isAudioOnlySource()` in shared/ytdlp.
+  isAudioOnlySource: boolean;
+}
+
+export interface VideoProbeResult extends ProbeCommon {
+  kind: 'video';
+  formats: FormatOption[];
+  title: string;
+  thumbnail: string;
+  duration?: number;
+  subtitles: SubtitleMap;
+  automaticCaptions: SubtitleMap;
+  isLive: boolean;
+  hasDrm: boolean;
+  availability?: string;
+  ageLimit?: number;
+  degraded?: { reasons: ProbeDegradationReason[] };
+}
+
+export interface PlaylistProbeResult extends ProbeCommon {
+  kind: 'playlist';
+  isMultiVideo: boolean;
   playlistId: string;
   playlistTitle: string;
   entries: PlaylistEntry[];
 }
+
+export type ProbeResult = VideoProbeResult | PlaylistProbeResult;
 
 export type DownloadStage = 'setup' | 'token' | 'download' | 'done' | 'error';
 
@@ -287,22 +325,6 @@ export interface StartDownloadInput {
 
 export interface StartDownloadOutput {
   job: DownloadJob;
-}
-
-export interface GetFormatsInput {
-  url: string;
-}
-
-export type ProbeDegradationReason = 'botWall' | 'extractor';
-
-export interface GetFormatsOutput {
-  formats: FormatOption[];
-  title: string;
-  thumbnail: string;
-  duration?: number;
-  subtitles: SubtitleMap;
-  automaticCaptions: SubtitleMap;
-  degraded?: { reasons: ProbeDegradationReason[] };
 }
 
 export interface CancelDownloadInput {

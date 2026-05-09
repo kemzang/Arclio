@@ -5,12 +5,12 @@
 // keep inline tags like <em>. Everything else is HTML-escaped.
 
 export const uz = {
-  title: "Arroxy — Bepul 4K YouTube Yuklab Oluvchi, Kirish Talab Qilinmaydi",
+  title: "Arroxy — Bepul 4K YouTube + 2000 Sayt Yuklovchi, Kirish Talab Qilinmaydi",
   description:
-    "Windows, macOS va Linux uchun bepul, MIT litsenziyali ish stoli YouTube yuklab oluvchi. Google hisobisiz, brauzer cookie'larisiz yoki hech qanday kirishsiz 4K HDR da 60 fps gacha video yuklab oling.",
-  og_title: "Arroxy — Bepul 4K YouTube Yuklab Oluvchi, Kirish Talab Qilinmaydi",
+    "Windows, macOS va Linux uchun YouTube va 2000+ qo'llab-quvvatlanadigan saytlar uchun bepul, MIT litsenziyali ish stoli yuklovchi. Videolarni 4K HDR da 60 fps gacha yuklab oling. Reklamalar yo'q, keraksiz narsalar yo'q, qo'shimcha taklif yo'q.",
+  og_title: "Arroxy — Bepul 4K YouTube + 2000 Sayt Yuklovchi, Kirish Talab Qilinmaydi",
   og_description:
-    "Bepul 4K YouTube yuklab oluvchi. Cookie yo'q, kirish yo'q, buzilgan seanslar yo'q. MIT litsenziyali. Windows · macOS · Linux.",
+    "YouTube va 2000+ sayt uchun bepul 4K yuklovchi. Reklamalar yo'q, keraksiz narsalar yo'q, qo'shimcha taklif yo'q. MIT litsenziyali. Windows · macOS · Linux.",
 
   nav_features: "Imkoniyatlar",
   nav_screenshots: "Skrinshotlar",
@@ -19,12 +19,12 @@ export const uz = {
   nav_download: "Yuklab olish",
 
   hero_eyebrow: "Open Source · MIT · Faol ishlab chiqilmoqda",
-  hero_h1_a: "Bepul 4K YouTube yuklab oluvchi.",
-  hero_h1_b: "Cookie yo'q. Kirish yo'q. Buzilgan seanslar yo'q.",
+  hero_h1_a: "Bepul 4K YouTube (+ 2000 sayt) yuklovchi.",
+  hero_h1_b: "Reklamalar yo'q, keraksiz narsalar yo'q, qo'shimcha taklif yo'q.",
   hero_tagline:
-    "Arroxy — Windows, macOS va Linux uchun bepul, MIT litsenziyali ish stoli YouTube yuklab oluvchi. Google hisobi, brauzer cookie'lari yoki hech qanday kirish so'ramasdan — 4K HDR da 60 fps gacha video yuklab oladi.",
+    "Arroxy — Windows, macOS va Linux uchun YouTube va 2000+ qo'llab-quvvatlanadigan saytlar uchun bepul, MIT litsenziyali ish stoli yuklovchi. Videolarni 4K HDR da 60 fps gacha yuklab oladi. Reklamalar yo'q, keraksiz narsalar yo'q, qo'shimcha taklif yo'q — URL joylashtiring va boshlang.",
   pill_no_tracking: "Kuzatuv yo'q",
-  pill_no_account: "Google hisobi kerak emas",
+  pill_no_account: "Reklamalar yo'q",
   pill_open_source: "Ochiq manba (MIT)",
   hero_trust: "GitHub'da har bir satrni tekshiring.",
   cta_download_os: "OT uchun yuklab oling",
@@ -61,13 +61,13 @@ export const uz = {
   features_h2: "Kutganingizning hammasi, hech qanday murakkabliksiz.",
   features_sub: "URL manzilini joylashtiring, sifat tanlang, yuklab olishni bosing. Hammasi shu.",
   f1_h: "4K UHD gacha",
-  f1_p: "2160p, 1440p, 1080p, 720p — YouTube taklif qiladigan har bir aniqlik, shuningdek faqat audio uchun MP3, M4A/AAC, Opus va WAV ga o‘tkazish.",
+  f1_p: "2160p, 1440p, 1080p, 720p — YouTube va boshqa qo’llab-quvvatlanadigan saytlar taklif qiladigan har bir aniqlik, shuningdek faqat audio uchun MP3, M4A/AAC, Opus va WAV ga o’tkazish.",
   f2_h: "60 fps va HDR saqlanadi",
   f2_p: "Yuqori kadrlar tezligi va HDR oqimlari YouTube kodlashi bo'yicha aynan shunday keladi — sifat yo'qotilmaydi.",
   f3_h: "Playlistlar ham",
   f3_p: "Playlist URL manzilini joylang, butun ro‘yxatni yuklab oling yoki Arroxy navbatga qo‘shishidan oldin faqat kerakli videolarni belgilang.",
   f4_h: "Avtomatik yangilanishlar",
-  f4_p: "Arroxy yt-dlp’ni dolzarb saqlaydi, ffmpeg esa ilova ichida keladi — YouTube’ning har bir o‘zgarishi bilan ishlaydi.",
+  f4_p: "Arroxy yt-dlp’ni dolzarb saqlaydi va ffmpeg ilovaning ichida keladi — YouTube va boshqa saytlar o’zgarishi bilan har hafta tuzatishlar chiqaradi.",
   f5_h: "21 til",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — tilingizni avtomatik aniqlaydi.",
   f6_h: "Ko'p platformali",
@@ -77,9 +77,9 @@ export const uz = {
   f8_h: "SponsorBlock o'rnatilgan",
   f8_p: "Homiy segmentlar, intro, outro, o'z-o'zini reklama va boshqalarni o'tkazib yuboring yoki belgilang — FFmpeg bilan qirqing yoki faqat bo'limlar qo'shing. Sizning tanlovingiz, har bir toifa uchun.",
   f9_h: "Clipboard'dan avtoto'ldirish",
-  f9_p: "Istalgan joyda YouTube havolasini nusxalang va Arroxy qaytib o'tganingizda uni darhol aniqlaydi — tasdiqlash so'rovi sizni nazoratda saqlaydi. Kengaytirilgan sozlamalarda yoqing yoki o'chiring.",
+  f9_p: "Istalgan joyda qo'llab-quvvatlanadigan havolani nusxalang va Arroxy qaytib o'tganingizda uni darhol aniqlaydi — tasdiqlash so'rovi sizni nazoratda saqlaydi. Kengaytirilgan sozlamalarda yoqing yoki o'chiring.",
   f10_h: "URLlarni avtomatik tozalash",
-  f10_p: "Kuzatuv parametrlari (si, pp, feature, utm_*, fbclid, gclid va boshqalar) joylashtirilgan YouTube havolalaridan avtomatik olib tashlanadi, youtube.com/redirect o'ramlari ochiladi — URL maydoni har doim kanonik havolani ko'rsatadi.",
+  f10_p: "Kuzatuv parametrlari (si, pp, feature, utm_*, fbclid, gclid va boshqalar) joylashtirilgan havolalardan avtomatik olib tashlanadi va youtube.com/redirect o'ramlari ochiladi — URL maydoni har doim kanonik havolani ko'rsatadi.",
   f11_h: "Tizim paneliga yashirinadi",
   f11_p: "Oynani yopish Arroxy'ni tizim paneline joylashtiradi. Yuklamalar fonda davom etadi — oynani qaytarish uchun tizim paneli belgisini bosing yoki tizim paneli menyusidan chiqing.",
   f12_h: "Joylashtirilgan metadata va muqova",
@@ -92,20 +92,20 @@ export const uz = {
   shot3_alt: "Qayerga saqlashni tanlang",
   shot4_alt: "Parallel yuklamalar",
   shot5_alt: "Subtitr bosqichi — tillar, format va saqlash rejimini tanlang",
-  og_image_alt: "Arroxy ilova belgisi — YouTube videolarini 4K sifatda yuklab olish uchun ish stoli ilovasi.",
+  og_image_alt: "Arroxy ilova belgisi — YouTube va 2000+ boshqa saytlardan 4K sifatda yuklab olish uchun ish stoli ilovasi.",
 
   privacy_eyebrow: "Maxfiylik",
   privacy_h2_html: "Arroxy nima <em>qilmaydi</em>.",
   privacy_sub:
-    "Ko'pgina YouTube yuklab oluvchilar oxir-oqibat cookie'laringizni so'raydi. Arroxy hech qachon so'ramaydi.",
+    "100% mahalliy qayta ishlash. Reklamalar yo'q, qo'shimcha takliflar yo'q, uchinchi tomon serverlari yo'q — fayllar to'g'ridan-to'g'ri yt-dlp dan diskinggizga boradi.",
   p1_h: "Kirish talab qilinmaydi",
-  p1_p: "Google hisobi yo'q. Muddati tugaydigan seanslar yo'q. Hisobingiz belgilanish xavfi nol.",
-  p2_h: "Cookie yo'q",
-  p2_p: "Arroxy har qanday brauzer so'raydigan tokenlarni so'raydi. Hech narsa eksport qilinmaydi, hech narsa saqlanmaydi.",
+  p1_p: "Standart rejim Google hisobi yoki kirishsiz ishlaydi. Kengaytirilgan sozlamalarda yosh chegaralangan yoki faqat a'zolar uchun kontentlar uchun ixtiyoriy cookie qo'llab-quvvatlash mavjud — standart bo'yicha o'chirilgan.",
+  p2_h: "Faqat mahalliy fayllar",
+  p2_p: "Fayllar to'g'ridan-to'g'ri yt-dlp dan siz tanlagan papkaga boradi. Hech narsa masofaviy server orqali yo'naltirilmaydi.",
   p3_h: "Anonim telemetriya",
   p3_p: "OpenPanel orqali anonim telemetriya — har bir o‘rnatish uchun tasodifiy ID ishga tushirishlar, versiyalar, OS va nosozliklarni sanashga yordam beradi; URL, sarlavha, fayl yo‘li, hisob ma’lumoti, fingerprinting yoki shaxsiy ma’lumot yo‘q. Yuklamalaringiz, tarixingiz va fayllaringiz hech qachon qurilmangizdan chiqmaydi.",
-  p4_h: "Uchinchi tomon serverlari yo'q",
-  p4_p: "Butun jarayon yt-dlp + ffmpeg orqali mahalliy tarzda ishlaydi. Fayllar hech qachon masofaviy serverga tegmaydi.",
+  p4_h: "Reklamalar yo'q, qo'shimcha takliflar yo'q",
+  p4_p: "MIT litsenziyali. Premium daraja yo'q, imkoniyat cheklovlari yo'q, banner reklamalar yo'q, manipulyativ usullar yo'q. Butun jarayon yt-dlp + ffmpeg orqali mahalliy tarzda ishlaydi.",
 
   install_eyebrow: "O'rnatish",
   install_h2: "Kanalingizni tanlang.",
@@ -136,7 +136,7 @@ export const uz = {
   faq_h2: "Ko'p so'raladigan savollar",
   faq_q1: "Qanday video sifatlarini yuklab olishim mumkin?",
   faq_a1:
-    "YouTube taklif qiladigan hamma narsa — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p va faqat audio. Yuqori kadr tezligidagi oqimlar (60 fps, 120 fps) va HDR kontent o‘z holicha saqlanadi. Arroxy mavjud bo‘lgan har bir formatni ko‘rsatadi, jumladan faqat audio yuklab olishlar uchun MP3, M4A/AAC, Opus va WAV ga o‘tkazish imkonini ham.",
+    "YouTube va boshqa qo’llab-quvvatlanadigan saytlar taklif qiladigan hamma narsa — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p va faqat audio. Yuqori kadr tezligidagi oqimlar (60 fps, 120 fps) va HDR kontent o’z holicha saqlanadi. Arroxy mavjud bo’lgan har bir formatni ko’rsatadi, jumladan faqat audio yuklab olishlar uchun MP3, M4A/AAC, Opus va WAV ga o’tkazish imkonini ham.",
   faq_q2: "Haqiqatan ham bepulmi?",
   faq_a2: "Ha. MIT litsenziyasi. Premium daraja yo'q, imkoniyatlar cheklanmagan.",
   faq_q3: "Arroxy qanday tillarda mavjud?",
@@ -147,13 +147,13 @@ export const uz = {
     "Yo‘q. yt-dlp birinchi ishga tushirishda avtomatik yuklab olinadi va kompyuteringizda keshlanadi; ffmpeg va ffprobe ilova bilan birga keladi. Undan keyin qo‘shimcha sozlash shart emas.",
   faq_q5: "YouTube biror narsa o'zgartirsa ham ishlaydimiw?",
   faq_a5:
-    "Ha — va Arroxy'ning ikkita bardoshlilik qatlami bor. Birinchidan, yt-dlp eng faol saqlanadigan ochiq manba vositalaridan biri — YouTube o'zgarishlaridan soatlar ichida yangilanadi. Ikkinchidan, Arroxy cookie'lar yoki Google hisobingizga umuman tayanmaydi, shuning uchun muddati tugaydigan seans ham, almashtiriladigan hisob ma'lumotlari ham yo'q. Bu kombinatsiya uni eksport qilingan brauzer cookie'lariga tayanadigan vositalardan sezilarli darajada barqarorroq qiladi.",
+    "Ha — va Arroxy'ning ikkita bardoshlilik qatlami bor. Birinchidan, yt-dlp eng faol saqlanadigan ochiq manba vositalaridan biri — YouTube jumladan har qanday qo'llab-quvvatlanadigan sayt o'zgarishidan soatlar ichida yangilanadi. Ikkinchidan, Arroxy cookie'lar yoki Google hisobingizga umuman tayanmaydi, shuning uchun muddati tugaydigan seans ham, almashtiriladigan hisob ma'lumotlari ham yo'q. Bu kombinatsiya uni eksport qilingan brauzer cookie'lariga tayanadigan vositalardan sezilarli darajada barqarorroq qiladi.",
   faq_q6: "Pleylistlarni yuklab olish mumkinmi?",
   faq_a6:
     "Ha. Playlist URL manzilini joylang, barcha videolarni yoki faqat keraklilarini tanlang, va Arroxy ularni bitta to‘plam sifatida navbatga qo‘shadi. Butun kanalni to‘plam holida yuklab olish hali qo‘llab-quvvatlanmaydi.",
   faq_q7: "Bu YouTube hisobim yoki cookie'larimni talab qiladimi?",
   faq_a7:
-    "Yo'q — va bu juda muhim. YouTube yangilanishidan keyin ishlamay qolgan ko'pgina vositalar brauzeringizning YouTube cookie'larini eksport qilishni taklif qiladi. Bu yechim YouTube seanslarni ~30 daqiqada bir aylantirganida buziladi va yt-dlp'ning o'z hujjatlari bu Google hisobingizning belgilanishiga olib kelishi mumkinligi haqida ogohlantiradi. Arroxy hech qachon cookie'lar yoki hisob ma'lumotlaridan foydalanmaydi. Kirish yo'q. Bog'langan hisob yo'q. Muddati tugaydigan narsa yo'q, taqiqlanadigan narsa yo'q.",
+    "Standart bo'yicha yo'q — Arroxy hisob, kirish yoki cookie eksportisiz ishlaydi. Kengaytirilgan sozlamalarda autentifikatsiya talab qiladigan kontent uchun ixtiyoriy cookie qo'llab-quvvatlash mavjud (fayl yoki brauzerdan import), masalan, yosh chegaralangan yoki faqat a'zolar uchun videolar. Standart bo'yicha o'chirilgan. Agar yoqsangiz, yt-dlp hujjatlari cookie asosidagi avtomatlashtirishning Google hisobini belgilashi mumkinligi haqida ogohlantiradi, shuning uchun bir martalik hisob xavfsizroq tanlovdir.",
   faq_q8:
     'macOS "ilova shikastlangan" yoki "ochib bo\'lmaydi" deyapti — nima qilishim kerak?',
   faq_a8:
@@ -161,4 +161,7 @@ export const uz = {
   faq_q9: "Bu qonuniymi?",
   faq_a9:
     "Videolarni shaxsiy foydalanish uchun yuklab olish ko'pgina davlatlarda odatda qabul qilingan. YouTube Xizmat ko'rsatish shartlariga va mahalliy qonunlarga rioya qilish sizning mas'uliyatingiz.",
+
+  f13_h: "YouTube + 2000 sayt",
+  f13_p: "YouTube dan tashqari, Arroxy yt-dlp qo'llab-quvvatlaydigan 2000+ saytdan yuklab oladi — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org va boshqalar. Faqat audio va subtitrlar hamma joyda ishlaydi, nafaqat YouTube'da.",
 };

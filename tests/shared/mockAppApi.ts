@@ -44,8 +44,13 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
       onMaximizedChange: vi.fn().mockReturnValue(() => undefined)
     },
     downloads: {
-      getFormats: vi.fn().mockResolvedValue(
+      probe: vi.fn().mockResolvedValue(
         ok({
+          kind: 'video' as const,
+          extractor: 'youtube',
+          extractorKey: 'Youtube',
+          webpageUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+          isAudioOnlySource: false,
           formats: [
             {
               formatId: '22',
@@ -58,10 +63,13 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
             }
           ],
           title: 'Test Video',
-          thumbnail: ''
+          thumbnail: '',
+          subtitles: {},
+          automaticCaptions: {},
+          isLive: false,
+          hasDrm: false
         })
       ),
-      getPlaylistItems: vi.fn().mockResolvedValue(ok({ playlistId: 'PLtest', playlistTitle: 'Test Playlist', entries: [] })),
       start: vi.fn().mockResolvedValue(
         ok({
           job: {

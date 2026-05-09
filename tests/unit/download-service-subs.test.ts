@@ -39,11 +39,11 @@ const SB_OFF: SponsorBlockOptions = { mode: 'off' };
 
 function makeJob(opts: { formatId?: string; subtitles?: { languages: string[]; writeAuto?: boolean; mode?: SubtitleMode; format?: SubtitleFormat } } = {}): PreparedJob {
   if (!opts.formatId && opts.subtitles) {
-    return { kind: 'subtitle-only', source: 'youtube', subtitles: { languages: opts.subtitles.languages, mode: opts.subtitles.mode ?? 'sidecar', format: opts.subtitles.format ?? 'srt', writeAuto: opts.subtitles.writeAuto ?? false } };
+    return { kind: 'subtitle-only', extractor: 'youtube', extractorKey: 'Youtube', subtitles: { languages: opts.subtitles.languages, mode: opts.subtitles.mode ?? 'sidecar', format: opts.subtitles.format ?? 'srt', writeAuto: opts.subtitles.writeAuto ?? false } };
   }
   return {
     kind: 'single-format',
-    source: 'youtube',
+    extractor: 'youtube', extractorKey: 'Youtube',
     formatId: opts.formatId ?? '137+251',
     preset: 'custom',
     sponsorBlock: SB_OFF,

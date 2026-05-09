@@ -5,12 +5,12 @@
 // keep inline tags like <em>. Everything else is HTML-escaped.
 
 export const de = {
-  title: "Arroxy — Kostenloser 4K YouTube-Downloader, kein Login erforderlich",
+  title: "Arroxy — Kostenloser 4K YouTube + 2000 Seiten Downloader, kein Login erforderlich",
   description:
-    "Kostenloser, MIT-lizenzierter Desktop-YouTube-Downloader für Windows, macOS und Linux. Videos in bis zu 4K HDR mit 60 fps herunterladen — ohne Google-Konto, Browser-Cookies oder Login.",
-  og_title: "Arroxy — Kostenloser 4K YouTube-Downloader, kein Login erforderlich",
+    "Kostenloser, MIT-lizenzierter Desktop-Downloader für YouTube und 2000+ unterstützte Seiten auf Windows, macOS und Linux. Videos in bis zu 4K HDR mit 60 fps herunterladen. Keine Werbung, kein Bloat, kein Upselling.",
+  og_title: "Arroxy — Kostenloser 4K YouTube + 2000 Seiten Downloader, kein Login erforderlich",
   og_description:
-    "Kostenloser 4K YouTube-Downloader. Keine Cookies, kein Login, keine abgelaufenen Sitzungen. MIT-lizenziert. Windows · macOS · Linux.",
+    "Kostenloser 4K Downloader für YouTube und 2000+ Seiten. Keine Werbung, kein Bloat, kein Upselling. MIT-lizenziert. Windows · macOS · Linux.",
 
   nav_features: "Funktionen",
   nav_screenshots: "Screenshots",
@@ -19,13 +19,13 @@ export const de = {
   nav_download: "Download",
 
   hero_eyebrow: "Open Source · MIT · Aktive Entwicklung",
-  hero_h1_a: "Kostenloser 4K YouTube-Downloader.",
-  hero_h1_b: "Keine Cookies. Kein Login. Keine abgelaufenen Sitzungen.",
+  hero_h1_a: "Kostenloser 4K YouTube (+ 2000 Seiten) Downloader.",
+  hero_h1_b: "Keine Werbung, kein Bloat, kein Upselling.",
   hero_tagline:
-    "Arroxy ist ein kostenloser, MIT-lizenzierter Desktop-YouTube-Downloader für Windows, macOS und Linux. Videos werden in bis zu 4K HDR mit 60 fps heruntergeladen — ohne je nach einem Google-Konto, Browser-Cookies oder einem Login zu fragen.",
+    "Arroxy ist ein kostenloser, MIT-lizenzierter Desktop-Downloader für YouTube und 2000+ unterstützte Seiten auf Windows, macOS und Linux. Videos in bis zu 4K HDR mit 60 fps. Keine Werbung, kein Bloat, kein Upselling — einfach eine URL einfügen und loslegen.",
   hero_trust: "Jede Zeile auf GitHub prüfen.",
   pill_no_tracking: "Kein Tracking",
-  pill_no_account: "Kein Google-Konto",
+  pill_no_account: "Keine Werbung",
   pill_open_source: "Open Source (MIT)",
   cta_download_os: "Für dein Betriebssystem herunterladen",
   cta_view_github: "Auf GitHub ansehen",
@@ -61,13 +61,13 @@ export const de = {
   features_h2: "Alles, was du erwartest — ganz ohne Reibung.",
   features_sub: "URL einfügen, Qualität wählen, Download klicken. Mehr nicht.",
   f1_h: "Bis zu 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — jede Auflösung, die YouTube anbietet, plus reine Audio-Konvertierung in MP3, M4A/AAC, Opus und WAV.",
+  f1_p: "2160p, 1440p, 1080p, 720p — jede Auflösung, die YouTube und andere unterstützte Seiten anbieten, plus reine Audio-Konvertierung in MP3, M4A/AAC, Opus und WAV.",
   f2_h: "60 fps & HDR erhalten",
   f2_p: "High-Framerate- und HDR-Streams kommen genau so durch, wie YouTube sie kodiert — ohne Qualitätsverlust.",
   f3_h: "Auch Playlists",
   f3_p: "Füge eine Playlist-URL ein, lade die ganze Liste herunter oder markiere nur die Videos, die du willst, bevor Arroxy sie in die Warteschlange legt.",
   f4_h: "Auto-Updates",
-  f4_p: "Arroxy hält yt-dlp aktuell und liefert ffmpeg in der App mit — funktioniert nach jeder YouTube-Änderung.",
+  f4_p: "Arroxy hält yt-dlp aktuell und liefert ffmpeg in der App mit — liefert wöchentlich Fixes, wenn sich YouTube und andere Seiten ändern.",
   f5_h: "21 Sprachen",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — erkennt deine automatisch.",
   f6_h: "Plattformübergreifend",
@@ -77,9 +77,9 @@ export const de = {
   f8_h: "SponsorBlock integriert",
   f8_p: "Überspringe oder markiere Sponsor-Segmente, Intros, Outros, Eigenwerbung und mehr — schneide sie mit FFmpeg heraus oder füge einfach Kapitel hinzu. Deine Wahl, pro Kategorie.",
   f9_h: "Automatisches Ausfüllen aus Zwischenablage",
-  f9_p: "Kopiere einen YouTube-Link irgendwo und Arroxy erkennt ihn beim nächsten Wechsel zur App — ein Bestätigungsdialog hält dich in Kontrolle. In den Erweiterten Einstellungen ein- oder ausschalten.",
+  f9_p: "Kopiere einen beliebigen unterstützten Link irgendwo und Arroxy erkennt ihn im Moment, in dem du zurückwechselst — ein Bestätigungsdialog hält dich in Kontrolle. In den Erweiterten Einstellungen ein- oder ausschalten.",
   f10_h: "URLs automatisch bereinigen",
-  f10_p: "Tracking-Parameter (si, pp, feature, utm_*, fbclid, gclid und mehr) werden automatisch aus eingefügten YouTube-Links entfernt, und youtube.com/redirect-Wrapper werden aufgelöst — das URL-Feld zeigt immer den kanonischen Link.",
+  f10_p: "Tracking-Parameter (si, pp, feature, utm_*, fbclid, gclid und mehr) werden automatisch aus eingefügten Links entfernt, und youtube.com/redirect-Wrapper werden aufgelöst — das URL-Feld zeigt immer den kanonischen Link.",
   f11_h: "In den Tray minimieren",
   f11_p: "Das Schließen des Fensters versteckt Arroxy im System-Tray. Downloads laufen im Hintergrund weiter — klicke auf das Tray-Symbol, um das Fenster zurückzubringen, oder beende die App über das Tray-Menü.",
   f12_h: "Eingebettete Metadaten & Cover",
@@ -92,20 +92,20 @@ export const de = {
   shot3_alt: "Speicherort wählen",
   shot4_alt: "Parallele Downloads",
   shot5_alt: "Untertitel-Schritt — Sprachen, Format und Speichermodus wählen",
-  og_image_alt: "Arroxy App-Icon — Desktop-App zum Herunterladen von YouTube-Videos in 4K.",
+  og_image_alt: "Arroxy App-Icon — Desktop-App zum Herunterladen von YouTube und 2000+ anderen Seiten in 4K.",
 
   privacy_eyebrow: "Privatsphäre",
   privacy_h2_html: "Was Arroxy <em>nicht</em> tut.",
   privacy_sub:
-    "Die meisten YouTube-Downloader fragen irgendwann nach deinen Cookies. Arroxy niemals.",
-  p1_h: "Kein Login",
-  p1_p: "Kein Google-Konto. Keine ablaufenden Sitzungen. Null Risiko, dass dein Konto markiert wird.",
-  p2_h: "Keine Cookies",
-  p2_p: "Arroxy fordert dieselben Tokens an wie jeder Browser. Nichts exportiert, nichts gespeichert.",
+    "100% lokale Verarbeitung. Keine Werbung, kein Upselling, keine Drittanbieter-Server — Dateien gehen direkt von yt-dlp auf deine Festplatte.",
+  p1_h: "Kein Login erforderlich",
+  p1_p: "Der Standardmodus funktioniert ohne Google-Konto oder Login. In den Erweiterten Einstellungen steht optionale Cookie-Unterstützung für alters- oder mitgliedschaftsbeschränkte Inhalte zur Verfügung — standardmäßig deaktiviert.",
+  p2_h: "Nur lokale Dateien",
+  p2_p: "Dateien gehen direkt von yt-dlp in den Ordner, den du auswählst. Nichts wird über einen Remote-Server geleitet.",
   p3_h: "Anonyme Telemetrie",
   p3_p: "Anonyme Telemetrie über OpenPanel — eine zufällige ID pro Installation hilft, Starts, Versionen, Betriebssysteme und Abstürze zu zählen; keine URLs, Titel, Dateipfade, Kontodaten, Fingerprinting oder personenbezogenen Daten. Deine Downloads, dein Verlauf und deine Dateien verlassen nie dein Gerät.",
-  p4_h: "Keine Drittanbieter-Server",
-  p4_p: "Die ganze Pipeline läuft lokal über yt-dlp + ffmpeg. Dateien berühren nie einen Remote-Server.",
+  p4_h: "Keine Werbung, kein Upselling",
+  p4_p: "MIT-lizenziert. Keine Premium-Stufe, keine Funktionsbarrieren, keine Bannerwerbung, keine Dark Patterns. Die gesamte Pipeline läuft lokal über yt-dlp + ffmpeg.",
 
   install_eyebrow: "Installation",
   install_h2: "Wähle deinen Kanal.",
@@ -136,7 +136,7 @@ export const de = {
   faq_h2: "Häufig gestellte Fragen",
   faq_q1: "Welche Videoqualitäten kann ich herunterladen?",
   faq_a1:
-    "Alles, was YouTube anbietet — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p und Audio-only. Streams mit hoher Bildrate (60 fps, 120 fps) und HDR-Inhalte bleiben unverändert erhalten. Arroxy zeigt jedes verfügbare Format, inklusive MP3-, M4A/AAC-, Opus- und WAV-Konvertierung für reine Audio-Downloads.",
+    "Alles, was YouTube und andere unterstützte Seiten anbieten — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p und Audio-only. Streams mit hoher Bildrate (60 fps, 120 fps) und HDR-Inhalte bleiben unverändert erhalten. Arroxy zeigt jedes verfügbare Format, inklusive MP3-, M4A/AAC-, Opus- und WAV-Konvertierung für reine Audio-Downloads.",
   faq_q2: "Ist es wirklich kostenlos?",
   faq_a2:
     "Ja. MIT-Lizenz. Keine Premium-Stufe, keine versteckten Funktionsbarrieren.",
@@ -148,13 +148,13 @@ export const de = {
     "Nein. yt-dlp wird beim ersten Start automatisch heruntergeladen und auf deinem Rechner gecacht; ffmpeg und ffprobe werden mit der App geliefert. Danach ist keine weitere Einrichtung nötig.",
   faq_q5: "Funktioniert es weiter, wenn YouTube etwas ändert?",
   faq_a5:
-    "Ja — und Arroxy hat zwei Resilienzschichten. Erstens: yt-dlp ist eines der am aktivsten gepflegten Open-Source-Tools überhaupt — es wird innerhalb von Stunden nach YouTube-Änderungen aktualisiert. Zweitens: Arroxy verlässt sich überhaupt nicht auf Cookies oder dein Google-Konto, also gibt's keine Session, die abläuft, und keine Anmeldedaten, die rotiert werden müssen. Diese Kombination macht es deutlich stabiler als Tools, die auf exportierte Browser-Cookies angewiesen sind.",
+    "Ja — und Arroxy hat zwei Resilienzschichten. Erstens: yt-dlp ist eines der am aktivsten gepflegten Open-Source-Tools überhaupt — es wird innerhalb von Stunden nach Änderungen an unterstützten Seiten, einschließlich YouTube, aktualisiert. Zweitens: Arroxy verlässt sich überhaupt nicht auf Cookies oder dein Google-Konto, also gibt's keine Session, die abläuft, und keine Anmeldedaten, die rotiert werden müssen. Diese Kombination macht es deutlich stabiler als Tools, die auf exportierte Browser-Cookies angewiesen sind.",
   faq_q6: "Kann ich Playlists herunterladen?",
   faq_a6:
     "Ja. Füge eine Playlist-URL ein, wähle alle Videos oder nur die aus, die du willst, und Arroxy stellt sie als einen Batch in die Warteschlange. Ganze Kanäle im Batch werden noch nicht unterstützt.",
   faq_q7: "Braucht es mein YouTube-Konto oder Cookies?",
   faq_a7:
-    "Nein — und das ist wichtiger, als es klingt. Die meisten Tools, die nach einem YouTube-Update aufhören zu funktionieren, weisen dich an, deine Browser-Cookies zu exportieren. Dieser Workaround bricht alle ~30 Minuten zusammen, wenn YouTube Sessions rotiert, und yt-dlps eigene Doku warnt, dass das dein Google-Konto markieren kann. Arroxy nutzt nie Cookies oder Anmeldedaten. Kein Login. Kein verknüpftes Konto. Nichts läuft ab, nichts wird gesperrt.",
+    "Standardmäßig nein — Arroxy funktioniert ohne Konto, Login oder Cookie-Export. In den Erweiterten Einstellungen steht optionale Cookie-Unterstützung (Datei oder Browser-Import) für Inhalte zur Verfügung, die eine Authentifizierung erfordern, z. B. altersbeschränkte oder Mitglieder-only-Videos. Standardmäßig deaktiviert. Wenn du sie aktivierst, warnt yt-dlps eigene Dokumentation, dass Cookie-basierte Automatisierung ein Google-Konto markieren kann — ein Wegwerf-Konto ist die sicherere Wahl.",
   faq_q8:
     'macOS sagt „die App ist beschädigt" oder „kann nicht geöffnet werden" — was tun?',
   faq_a8:
@@ -162,4 +162,7 @@ export const de = {
   faq_q9: "Ist das legal?",
   faq_a9:
     "Das Herunterladen von Videos zur persönlichen Nutzung ist in den meisten Rechtsordnungen allgemein akzeptiert. Du bist verantwortlich, die YouTube-AGB und deine lokalen Gesetze einzuhalten.",
+
+  f13_h: "YouTube + 2000 Seiten",
+  f13_p: "Neben YouTube lädt Arroxy von 2000+ Seiten, die yt-dlp unterstützt — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org und viele mehr. Nur Audio und Untertitel funktionieren überall, nicht nur auf YouTube.",
 };

@@ -90,6 +90,8 @@ const bn = {
       heading: 'Playlist আইটেম',
       itemCount_one: '{{count}}টি ভিডিও',
       itemCount_other: '{{count}}টি ভিডিও',
+      itemCountAudio_one: '{{count}}টি ট্র্যাক',
+      itemCountAudio_other: '{{count}}টি ট্র্যাক',
       selectAll: 'সব নির্বাচন করুন',
       selectNone: 'কোনোটি নির্বাচন করবেন না',
       rangeFrom: 'থেকে',
@@ -123,17 +125,25 @@ const bn = {
       fetchFormats: 'ফরম্যাট আনুন',
       features: {
         heading: 'Arroxy যা নামাতে পারে',
-        video: {
-          title: 'ভিডিও',
-          desc: '4K পর্যন্ত যেকোনো রেজোলিউশন বেছে নিন'
+        youtube: {
+          heading: 'YouTube',
+          video: 'ভিডিও',
+          channel: 'চ্যানেল',
+          playlist: 'Playlist',
+          short: 'Shorts',
+          music: 'মিউজিক',
+          podcast: 'Podcast'
         },
-        playlist: {
-          title: 'Playlist',
-          desc: 'Playlist থেকে একাধিক আইটেম নির্বাচন করুন'
+        anySite: {
+          heading: '2000+ সাইট',
+          video: 'ভিডিও',
+          videoPlaylist: 'ভিডিও playlist',
+          musicPlaylist: 'মিউজিক playlist'
         },
-        audio: {
-          title: 'অডিও',
-          desc: 'মূল স্ট্রিম বা MP3/M4A রূপান্তর'
+        always: {
+          heading: 'সবসময় উপলব্ধ',
+          audioOnly: 'শুধু অডিও',
+          subtitles: 'সাবটাইটেল'
         }
       },
       mascotIdle: 'একটি YouTube লিংক দিন (ভিডিও বা Short) — তারপর "ফরম্যাট আনুন" ক্লিক করুন, আমি কাজ শুরু করব ✨',
@@ -251,10 +261,12 @@ const bn = {
       audioOnlyOption: 'শুধু অডিও (ভিডিও ছাড়া)',
       mascot: 'সেরা + সেরা = সর্বোচ্চ মান। আমি এটাই বেছে নিতাম!',
       sniffing: 'আপনার জন্য সেরা ফরম্যাট খুঁজছি…',
-      loadingHint: 'সাধারণত এক সেকেন্ড লাগে',
+      loadingHint: 'প্রোবিং শেষ হওয়া পর্যন্ত অপেক্ষা করুন — প্লেলিস্ট ও অনুসন্ধানে একটু বেশি সময় লাগতে পারে।',
       loadingAria: 'ফরম্যাট লোড হচ্ছে',
       sizeUnknown: 'আকার অজানা',
       total: 'মোট',
+      keepAudio: 'যেমন আছে রাখুন',
+      keepAudioMeta: 'বিল্ট-ইন অডিও',
       convert: {
         label: 'কনভার্ট করুন',
         uncompressed: 'কনভার্ট · আনকম্প্রেসড',
@@ -281,6 +293,10 @@ const bn = {
         explanationFile: 'আপনার কুকিজ ফাইলটি খালি, মেয়াদ শেষ বা ভুল ফরম্যাটে থাকতে পারে (yt-dlp Netscape cookies.txt আশা করে)। কুকিজ পুনরায় এক্সপোর্ট করুন, ভিন্ন ফাইল বেছে নিন, ব্রাউজার মোডে স্যুইচ করুন, অথবা কুকিজ বন্ধ করে দেখুন।',
         explanationBrowser: 'কুকিজ সরাসরি ব্রাউজার থেকে পড়া হয়। ব্রাউজার এখন চলছে থাকলে, এর কুকি ডেটাবেস লক থাকতে পারে (Chromium-পরিবার)। ব্রাউজারটি YouTube-এ সাইন ইন থাকতে হবে। ব্রাউজার বন্ধ করুন, ভিন্ন ব্রাউজারে স্যুইচ করুন, ফাইল মোডে স্যুইচ করুন, অথবা কুকিজ বন্ধ করে দেখুন।',
         openSettingsCta: 'কুকিজ সেটিংস খুলুন',
+        needsCookies: {
+          heading: 'এই সাইটে সাইন-ইন প্রয়োজন',
+          body: 'yt-dlp প্রমাণীকরণ ছাড়া এই ভিডিওতে অ্যাক্সেস করতে পারেনি। উন্নত সেটিংসে কুকিজ কনফিগার করুন — আপনি ইতিমধ্যে সাইন ইন করা কোনো ব্রাউজার দিন, বা cookies.txt ফাইল আমদানি করুন।'
+        },
         dpapi: {
           heading: 'Windows এনক্রিপশন দ্বারা Chrome কুকিজ ব্লক হয়েছে',
           explanation: 'Chrome 127 এবং পরবর্তী সংস্করণ Windows-এ কুকিজ এমনভাবে এনক্রিপ্ট করে যা অন্য অ্যাপ পড়তে পারে না। নিচের যেকোনো একটি সমাধান চেষ্টা করুন।',
@@ -290,7 +306,7 @@ const bn = {
           fixFileBody: 'Chrome থেকে ব্রাউজার এক্সটেনশন দিয়ে কুকিজ এক্সপোর্ট করুন, তারপর এই অ্যাপটি File মোডে পরিবর্তন করে এক্সপোর্ট করা ফাইলটি বেছে নিন।',
           fixUnsafeLabel: 'App-Bound Encryption নিষ্ক্রিয় করে Chrome চালু করুন',
           fixUnsafeBody: 'Chrome-এর লঞ্চ শর্টকাটে --disable-features=LockProfileCookieDatabase যোগ করুন। সতর্কতা: এটি আগে এনক্রিপ্ট করা কুকিজ অকার্যকর করে দেয়, তাই আপনি প্রতিটি সাইট থেকে লগ আউট হয়ে যাবেন এবং আবার লগ ইন করতে হবে।',
-          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+          docsLinkLabel: 'yt-dlp ডকস (ইস্যু #10927)'
         }
       }
     },
@@ -346,7 +362,7 @@ const bn = {
       audioOnly: 'শুধু অডিও',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'অন্য ডাউনলোড শেষ হলে শুরু হবে — পুরো ব্যান্ডউইথ পাবে',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'নামিয়ে নিন! ↓',
       pullItTooltip: 'এখনই শুরু হবে — অন্য সক্রিয় ডাউনলোডের সাথে চলবে',
       playlistBatch_one: '{{count}}টি ভিডিও · {{title}}',
       playlistBatch_other: '{{count}}টি ভিডিও · {{title}}',
@@ -354,15 +370,16 @@ const bn = {
       labelPreset: 'প্রিসেট',
       labelItems: 'আইটেম',
       itemsValue_one: '{{total}}-এর মধ্যে {{count}}টি ভিডিও',
-      itemsValue_other: '{{total}}-এর মধ্যে {{count}}টি ভিডিও'
+      itemsValue_other: '{{total}}-এর মধ্যে {{count}}টি ভিডিও',
+      itemsValueAudio_one: '{{total}}-এর মধ্যে {{count}}টি ট্র্যাক',
+      itemsValueAudio_other: '{{total}}-এর মধ্যে {{count}}টি ট্র্যাক'
     },
     error: {
       icon: 'ত্রুটি'
     }
   },
   videoCard: {
-    titlePlaceholder: 'লোড হচ্ছে…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'লোড হচ্ছে…'
   },
   queue: {
     header: 'ডাউনলোড কিউ',
@@ -435,7 +452,8 @@ const bn = {
       unavailable: 'এই ভিডিওটি পাওয়া যাচ্ছে না — এটি ব্যক্তিগত, মুছে ফেলা বা অঞ্চল-লক হতে পারে।',
       geoBlocked: 'এই ভিডিওটি আপনার অঞ্চলে পাওয়া যায় না।',
       outOfDiskSpace: 'পর্যাপ্ত ডিস্ক স্পেস নেই। জায়গা খালি করে আবার চেষ্টা করুন।',
-      unsupportedUrl: 'এটি ভিডিও URL মনে হচ্ছে না। একটি YouTube ভিডিও, Short, বা playlist লিংক পেস্ট করুন।'
+      unsupportedUrl: 'এটি ভিডিও URL মনে হচ্ছে না। একটি YouTube ভিডিও, Short, বা playlist লিংক পেস্ট করুন।',
+      chunkTransferFailure: 'সার্ভার বারবার ডাউনলোড মাঝপথে কেটে দিচ্ছিল এবং yt-dlp বারবার চেষ্টার পর হাল ছেড়ে দিয়েছে। এটি সাধারণত সবচেয়ে বড় ভিডিও ফরম্যাটে (4K HDR / উচ্চ বিটরেট VP9) হয়। আবার চেষ্টা করুন, নেটওয়ার্ক/VPN বদলান, অথবা কম রেজোলিউশনের ফরম্যাট বেছে নিন।'
     }
   },
   presets: {
@@ -474,7 +492,7 @@ const bn = {
   formatLabel: {
     audioOnly: 'শুধু অডিও',
     audioFallback: 'অডিও',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'শুধু অডিও · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -512,19 +530,19 @@ const bn = {
   share: {
     title: 'Arroxy শেয়ার করুন',
     description: 'Arroxy বিনামূল্যে এবং ওপেন-সোর্স। শেয়ার করলে আরও বেশি মানুষ এটি আবিষ্কার করতে পারবেন।',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'লিঙ্ক কপি করুন',
+    copied: 'কপি হয়েছে!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Arroxy শেয়ার করুন',
+    footerLabel: 'শেয়ার',
+    shareAction: 'Arroxy শেয়ার করুন',
     inlineCard: {
       body: 'Arroxy পছন্দ হচ্ছে? এমন কাউকে শেয়ার করুন যে উপকৃত হতে পারেন।',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'শেয়ার পরামর্শ বাতিল করুন'
     },
     highValueBanner: {
       body: 'Arroxy পছন্দ হচ্ছে? অন্যদের আবিষ্কার করতে সাহায্য করুন।',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'শেয়ার পরামর্শ বাতিল করুন'
     }
   }
 } as const;

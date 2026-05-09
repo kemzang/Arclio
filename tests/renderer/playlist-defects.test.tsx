@@ -22,7 +22,7 @@ function buildMockApi(settingsUpdateMock?: ReturnType<typeof vi.fn>) {
     downloads: {
       start: vi.fn().mockResolvedValue(ok({ job: { id: 'job-1', url: '', outputDir: '/tmp', status: 'running', createdAt: '', updatedAt: '' } })),
       cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
-      getFormats: vi.fn(),
+      probe: vi.fn(),
       pause: vi.fn().mockResolvedValue(ok({ paused: true })),
       resume: vi.fn().mockResolvedValue(ok({ resumed: true }))
     },
@@ -56,7 +56,7 @@ function resetStore() {
     initialized: false,
     initializing: false,
     settings: { defaultOutputDir: '/tmp', rememberLastOutputDir: false },
-    wizardStep: 'confirm',
+    wizardStep: 'confirm', wizardExtractor: 'youtube',
     wizardMode: 'single',
     formatsLoading: false,
     wizardUrl: '',
@@ -104,7 +104,7 @@ describe('D1/D3 — StepConfirm playlist-mode rendering', () => {
   function setPlaylistConfirmState() {
     useAppStore.setState({
       wizardMode: 'playlist',
-      wizardStep: 'confirm',
+      wizardStep: 'confirm', wizardExtractor: 'youtube',
       playlistTitle: 'My Playlist',
       playlistItems: PLAYLIST_ENTRIES,
       selectedPlaylistItemIds: ['p1', 'p2'],

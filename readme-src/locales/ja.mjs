@@ -71,7 +71,7 @@ bun run dist:win     # Windows ポータブル exe のクロスコンパイル
 
 export const ja = {
   icon_alt: "Arroxy マスコット",
-  title: "Arroxy — Windows・macOS・Linux 向け無料オープンソース YouTube ダウンローダー",
+  title: "Arroxy — Windows・macOS・Linux 向け無料オープンソース YouTube（+ 2000 サイト）ダウンローダー",
   read_in_label: "言語：",
   badge_release_alt: "リリース",
   badge_build_alt: "ビルド",
@@ -80,7 +80,7 @@ export const ja = {
   badge_i18n_alt: "対応言語",
   badge_website_alt: "ウェブサイト",
   hero_desc:
-    "YouTube の動画・Shorts・音声トラックをオリジナル品質でダウンロード — 最大 4K HDR 60fps、または MP3 / AAC / Opus として。Windows、macOS、Linux でローカル動作。**広告なし、ログインなし、ブラウザ Cookie なし、Google アカウント連携なし。**",
+    "**YouTube と 2000 以上の対応サイト**から動画・Shorts・音楽・チャンネル・ポッドキャスト・音声トラックをダウンロード — 最大 4K HDR 60fps、または MP3 / AAC / Opus として。Windows、macOS、Linux でローカル動作。**広告なし、余計なものなし、アップセルなし。**",
   cta_latest: "↓ 最新リリースをダウンロード",
   cta_website: "ウェブサイト",
   demo_alt: "Arroxy デモ",
@@ -117,7 +117,7 @@ export const ja = {
   feat_privacy_3: "選択したフォルダに直接ファイルを保存",
   feat_workflow_h3: "ワークフロー",
   feat_workflow_1:
-    "**YouTube URL を貼り付け** — 動画、Shorts、プレイリストに対応。プレイリスト全体をダウンロードすることも、先に個別の動画を選ぶこともできます",
+    "**任意のリンクを貼り付け** — YouTube の動画・Shorts・チャンネル・プレイリスト・ポッドキャスト・Music に加え、yt-dlp が対応する 2000 以上のサイトにも対応。プレイリスト全体をダウンロードすることも、先に個別の動画を選ぶこともできます",
   feat_workflow_2:
     "**複数ダウンロードキュー** — 複数のダウンロードを並行して追跡",
   feat_workflow_3:
@@ -137,6 +137,15 @@ export const ja = {
     "**SponsorBlock** — スポンサー、イントロ、アウトロ、自己宣伝をスキップまたはチャプターマーク",
   feat_post_4:
     "**埋め込みメタデータ** — タイトル、アップロード日、チャンネル、説明、サムネイル、チャプターマーカーをファイルに書き込み",
+  feat_sites_h3: "YouTube + 2000 サイト",
+  feat_sites_1:
+    "**YouTube、フル対応** — 動画・Shorts・チャンネル・プレイリスト・YouTube Music・ポッドキャストをファーストクラスのソースとして処理",
+  feat_sites_2:
+    "**2000 以上の他サイト** via yt-dlp — Vimeo、Twitch、Twitter/X、TikTok、SoundCloud、Bandcamp、Bilibili、BBC iPlayer、archive.org など多数",
+  feat_sites_3:
+    "**音声のみと字幕**は YouTube だけでなく、すべての対応サイトで機能します",
+  feat_sites_4:
+    "サイトが変更されても、yt-dlp は毎週修正をリリースし、Arroxy は起動時にバイナリを自動更新します",
   shot1_alt: "URL を貼る",
   shot2_alt: "画質を選ぶ",
   shot3_alt: "保存先を選ぶ",

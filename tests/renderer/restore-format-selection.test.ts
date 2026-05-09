@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
-import { restoreFormatSelection } from '@renderer/store/wizardSlice.js';
+import { applyPreset, restoreFormatSelection } from '@renderer/store/wizardSlice.js';
 import type { AppSettings, FormatOption, SinglePrefs } from '@shared/types.js';
 
 const FORMATS: FormatOption[] = [
@@ -63,9 +63,84 @@ describe('restoreFormatSelection — audio persistence', () => {
     expect(result.audioSelection).toEqual({ kind: 'convert-lossy', target: 'mp3', bitrateKbps: 256 });
   });
 
-  it("persisted 'none' restores as 'none' even with a video preset", () => {
+  it("persisted 'none' upgrades to first native audio when new source has separable audio", () => {
+    // `none` from a previous probe is ambiguous: could mean "user picked
+    // video-only" OR "previous source was muxed-only and we serialized the
+    // keep-as-is default as none". The latter is far more common, and
+    // silently downloading a video-only file is a worse failure mode than
+    // re-picking native audio. So when separable audio exists we auto-upgrade.
     const result = restoreFormatSelection(FORMATS, settingsWith({ lastPreset: 'best-quality', lastAudioSelection: { kind: 'none' } }));
-    expect(result.audioSelection).toEqual({ kind: 'none' });
+    expect(result.audioSelection).toEqual({ kind: 'native', formatId: '140' });
     expect(result.videoFormatId).toBe('137');
+  });
+
+  it("persisted 'none' carries through when new source is also muxed-only", () => {
+    const muxedFormats = [
+      { formatId: '1080p', label: '1080p muxed', ext: 'mp4', resolution: '1080p', isVideoOnly: false, isAudioOnly: false },
+      { formatId: '720p', label: '720p muxed', ext: 'mp4', resolution: '720p', isVideoOnly: false, isAudioOnly: false }
+    ];
+    const result = restoreFormatSelection(muxedFormats, settingsWith({ lastPreset: 'best-quality', lastAudioSelection: { kind: 'none' } }));
+    expect(result.audioSelection).toEqual({ kind: 'none' });
+  });
+});
+
+const MUXED_FORMATS: FormatOption[] = [
+  { formatId: '1080p', label: '1080p muxed', ext: 'mp4', resolution: '1080p', isVideoOnly: false, isAudioOnly: false },
+  { formatId: '720p', label: '720p muxed', ext: 'mp4', resolution: '720p', isVideoOnly: false, isAudioOnly: false },
+  { formatId: '480p', label: '480p muxed', ext: 'mp4', resolution: '480p', isVideoOnly: false, isAudioOnly: false }
+];
+
+describe('applyPreset — muxed-source default audio', () => {
+  // Twitch HLS, PornHub progressive, etc — every video format is muxed (audio
+  // embedded in the same stream). Pairing those with a separate native audio
+  // pick double-tracks the audio. Default for muxed sources must be `none`
+  // (= "Keep as-is"), letting the embedded audio stay.
+
+  it("best-quality + muxed-only → audio.kind === 'none'", () => {
+    const r = applyPreset('best-quality', MUXED_FORMATS);
+    expect(r.audioSelection.kind).toBe('none');
+    expect(r.videoFormatId).toBe('1080p');
+  });
+
+  it("balanced + muxed-only → audio.kind === 'none'", () => {
+    const r = applyPreset('balanced', MUXED_FORMATS);
+    expect(r.audioSelection.kind).toBe('none');
+  });
+
+  it("small-file + muxed-only → audio.kind === 'none'", () => {
+    const r = applyPreset('small-file', MUXED_FORMATS);
+    expect(r.audioSelection.kind).toBe('none');
+    expect(r.videoFormatId).toBe('480p');
+  });
+
+  it('best-quality + separable audio → picks bestAudio native', () => {
+    const r = applyPreset('best-quality', FORMATS);
+    expect(r.audioSelection).toEqual({ kind: 'native', formatId: '140' });
+  });
+
+  it('audio-only preset is unaffected — always picks native audio when available', () => {
+    const r1 = applyPreset('audio-only', FORMATS);
+    expect(r1.audioSelection).toEqual({ kind: 'native', formatId: '140' });
+    expect(r1.videoFormatId).toBe('');
+    // Muxed-only source has no separable audio → audio-only falls to {kind:'none'}.
+    const r2 = applyPreset('audio-only', MUXED_FORMATS);
+    expect(r2.audioSelection).toEqual({ kind: 'none' });
+  });
+});
+
+describe('reviveAudio — convert-* selections carry verbatim across source types', () => {
+  it('convert-lossy carries through verbatim when source has separable audio', () => {
+    const result = restoreFormatSelection(FORMATS, settingsWith({ lastAudioSelection: { kind: 'convert-lossy', target: 'mp3', bitrateKbps: 256 }, lastPreset: 'audio-only' }));
+    expect(result.audioSelection).toEqual({ kind: 'convert-lossy', target: 'mp3', bitrateKbps: 256 });
+  });
+
+  it('convert-lossy carries through verbatim on muxed-only source', () => {
+    const result = restoreFormatSelection(MUXED_FORMATS, settingsWith({ lastAudioSelection: { kind: 'convert-lossy', target: 'opus', bitrateKbps: 192 }, lastPreset: 'audio-only' }));
+    expect(result.audioSelection).toEqual({ kind: 'convert-lossy', target: 'opus', bitrateKbps: 192 });
+  });
+
+  it('convert-lossless (wav) carries through verbatim', () => {
+    const result = restoreFormatSelection(FORMATS, settingsWith({ lastAudioSelection: { kind: 'convert-lossless', target: 'wav' }, lastPreset: 'audio-only' }));
+    expect(result.audioSelection).toEqual({ kind: 'convert-lossless', target: 'wav' });
   });
 });

@@ -2,14 +2,19 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { useAppStore } from '@renderer/store/useAppStore.js';
-import type { GetFormatsOutput, StatusEvent } from '@shared/types.js';
+import type { ProbeResult, StatusEvent } from '@shared/types.js';
 import { ok } from '../shared/fixtures.js';
 import { buildAppSettings } from '../shared/settingsFixtures.js';
 import { DEFAULTS } from '@shared/constants.js';
 
 const YOUTUBE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 
-const PROBE_RESULT: GetFormatsOutput = {
+const PROBE_RESULT: ProbeResult = {
+  kind: 'video',
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
+  webpageUrl: YOUTUBE_URL,
+  isAudioOnlySource: false,
   formats: [
     {
       formatId: '22',
@@ -35,7 +40,9 @@ const PROBE_RESULT: GetFormatsOutput = {
   thumbnail: '',
   duration: 120,
   subtitles: {},
-  automaticCaptions: {}
+  automaticCaptions: {},
+  isLive: false,
+  hasDrm: false
 };
 
 function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
@@ -58,7 +65,7 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
         })
       ),
       cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
-      getFormats: vi.fn().mockResolvedValue(ok(PROBE_RESULT)),
+      probe: vi.fn().mockResolvedValue(ok(PROBE_RESULT)),
       pause: vi.fn().mockResolvedValue(ok({ paused: true }))
     },
     settings: {

@@ -15,6 +15,9 @@ export function isHeld(item: QueueItem): boolean {
 export function isHighValueDownload(item: QueueItem): boolean {
   if (item.status !== 'done') return false;
   if (item.playlistGroupId) return true;
+  // Defensive: queue items persisted before job-shape migrations may lack a
+  // typed job. Treat absent job as low-value rather than crashing the banner.
+  if (!item.job) return false;
   switch (item.job.kind) {
     case 'audio-convert':
     case 'subtitle-only':

@@ -79,7 +79,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
             lastStatus: { key: event.statusKey, params: event.params }
           });
           saveQueue(get);
-          const prevCount = get().settings?.common.successfulDownloadCount ?? 0;
+          const prevCount = get().settings?.common?.successfulDownloadCount ?? 0;
           const nextCount = prevCount + 1;
           commonPatch(get, set, { successfulDownloadCount: nextCount });
           if (SHARE_MILESTONES.includes(nextCount)) {

@@ -92,7 +92,7 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
       if (subResult.usedExtractorFallback) active.usedExtractorFallback = true;
 
       if (subs.writeAuto) {
-        await dedupeSubtitleFiles(active.subtitlePaths, job.id, () => active.cancelRequested);
+        await dedupeSubtitleFiles(active.subtitlePaths, preparedJob.extractor, job.id, () => active.cancelRequested);
       }
 
       if (embedAfter) await runEmbedMux(ctx);

@@ -69,14 +69,24 @@ describe('ClipboardWatcher', () => {
     expect(win.send).not.toHaveBeenCalled();
   });
 
-  it('sends nothing when clipboard has non-YouTube text', () => {
+  it('sends nothing when clipboard has non-URL text', () => {
     const reader = { readText: vi.fn().mockReturnValue('') };
     const win = makeWindow();
     const watcher = new ClipboardWatcher(win, 800, reader);
     watcher.setEnabled(true);
-    reader.readText.mockReturnValue('https://example.com');
+    reader.readText.mockReturnValue('not a url');
     vi.advanceTimersByTime(800);
     expect(win.send).not.toHaveBeenCalled();
+  });
+
+  it('forwards arbitrary http(s) URLs (multi-site support)', () => {
+    const reader = { readText: vi.fn().mockReturnValue('') };
+    const win = makeWindow();
+    const watcher = new ClipboardWatcher(win, 800, reader);
+    watcher.setEnabled(true);
+    reader.readText.mockReturnValue('https://vimeo.com/12345');
+    vi.advanceTimersByTime(800);
+    expect(win.send).toHaveBeenCalledExactlyOnceWith('events:clipboardUrl', 'https://vimeo.com/12345');
   });
 
   it('sends the channel with a YouTube URL on detection', () => {

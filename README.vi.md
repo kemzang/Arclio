@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Linh vật Arroxy" width="180" />
 
-# Arroxy — Trình tải video YouTube miễn phí và mã nguồn mở cho Windows, macOS & Linux
+# Arroxy — Trình tải YouTube (+ 2000 trang) miễn phí và mã nguồn mở cho Windows, macOS & Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Đọc bằng:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · **Tiếng Việt** · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Phiên bản](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Build](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Trang web](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Giấy phép](https://img.shields.io/badge/license-MIT-green) ![Nền tảng](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Ngôn ngữ](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Tải xuống bất kỳ video YouTube, Short hay bản nhạc nào ở chất lượng gốc — lên tới 4K HDR ở 60 fps, hoặc dưới dạng MP3 / AAC / Opus. Chạy hoàn toàn cục bộ trên Windows, macOS và Linux. **Không quảng cáo, không đăng nhập, không cookie trình duyệt, không liên kết tài khoản Google.**
+Tải xuống video, Shorts, nhạc, kênh, podcast hoặc bản nhạc từ **YouTube và hơn 2000 trang được hỗ trợ** — lên tới 4K HDR ở 60 fps, hoặc dưới dạng MP3 / AAC / Opus. Chạy hoàn toàn cục bộ trên Windows, macOS và Linux. **Không quảng cáo, không phồng to, không bán thêm.**
 
 [**↓ Tải phiên bản mới nhất**](../../releases/latest) &nbsp;·&nbsp; [**Trang web**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -68,7 +68,7 @@ Arroxy được xây dựng cho một mục đích duy nhất: dán URL, nhận 
 
 ### Quy trình làm việc
 
-- **Dán bất kỳ URL YouTube nào** — hỗ trợ video, Shorts và playlist; tải toàn bộ playlist hoặc chọn trước những video cụ thể
+- **Dán bất kỳ liên kết nào** — video YouTube, Shorts, kênh, playlist, podcast và YouTube Music, cùng hơn 2000 trang mà yt-dlp hỗ trợ; tải toàn bộ playlist hoặc chọn trước những video cụ thể
 - **Hàng đợi tải xuống nhiều luồng** — theo dõi nhiều lượt tải song song
 - **Theo dõi clipboard** — sao chép liên kết YouTube và Arroxy tự điền URL khi bạn chuyển lại ứng dụng (bật/tắt trong Cài đặt nâng cao)
 - **Tự làm sạch URL** — loại bỏ các tham số theo dõi (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) và mở gói các liên kết `youtube.com/redirect`
@@ -81,6 +81,13 @@ Arroxy được xây dựng cho một mục đích duy nhất: dán URL, nhận 
 - Lưu cùng thư mục video, nhúng vào `.mkv`, hoặc sắp xếp vào thư mục con `Subtitles/`
 - **SponsorBlock** — bỏ qua hoặc đánh dấu chương cho các đoạn quảng cáo, intro, outro, tự quảng bá
 - **Siêu dữ liệu nhúng** — tiêu đề, ngày tải lên, kênh, mô tả, thumbnail và điểm đánh dấu chương được ghi vào file
+
+### YouTube + 2000 trang
+
+- **YouTube đầy đủ** — Video, Shorts, Kênh, Playlist, YouTube Music và Podcast được hỗ trợ như nguồn hạng nhất
+- **Hơn 2000 trang khác** qua yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org và nhiều hơn nữa
+- **Chỉ âm thanh và phụ đề** hoạt động trên mọi trang được hỗ trợ, không chỉ YouTube
+- Nếu một trang thay đổi, yt-dlp phát hành bản sửa lỗi hàng tuần và Arroxy tự động cập nhật nhị phân khi khởi động
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="Dán URL" />

@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy maskoti" width="180" />
 
-# Arroxy — Windows, macOS va Linux uchun Bepul Ochiq Manbali YouTube Yuklovchi
+# Arroxy — Windows, macOS va Linux uchun Bepul Ochiq Manbali YouTube (+ 2000 sayt) Yuklovchi
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **O'qing:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · **O'zbekcha** · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Reliz](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Qurish](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Veb-sayt](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Litsenziya](https://img.shields.io/badge/license-MIT-green) ![Platformalar](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Tillar](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Istalgan YouTube videosini, Shortni yoki audio treklarni original sifatda yuklab oling — 60 fps da 4K HDR gacha yoki MP3 / AAC / Opus sifatida. Windows, macOS va Linuxda mahalliy ishlaydi. **Reklamalar yo'q, kirish yo'q, brauzer kukilari yo'q, Google hisob bog'liq emas.**
+**YouTube va 2000+ qo'llab-quvvatlanadigan saytlardan** videolar, Shorts, musiqa, kanallar, podkastlar yoki audio treklarni yuklab oling — 60 fps da 4K HDR gacha yoki MP3 / AAC / Opus sifatida. Windows, macOS va Linuxda mahalliy ishlaydi. **Reklamalar yo'q, keraksiz narsalar yo'q, qo'shimcha taklif yo'q.**
 
 [**↓ Oxirgi Relizni Yuklab Olish**](../../releases/latest) &nbsp;·&nbsp; [**Veb-sayt**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -68,7 +68,7 @@ Arroxy bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl olin
 
 ### Ish oqimi
 
-- **Istalgan YouTube URL manzilini joylang** — videolar, Shorts va playlistlar qo‘llab-quvvatlanadi; butun playlistni yuklab oling yoki avval aniq videolarni tanlang
+- **Istalgan havolani joylashtiring** — YouTube videolari, Shorts, kanallar, pleylistlar, podkastlar va Musiqa, hamda yt-dlp qo’llab-quvvatlaydigan 2000+ boshqa saytlar; butun pleylistni yuklab oling yoki avval aniq videolarni tanlang
 - **Ko'p yuklab olish navbati** — bir nechta yuklamalarni parallel kuzatib boring
 - **Bufer kuzatish** — YouTube havolasini nusxalang va Arroxy ilovaga qaytganingizda URL'ni avtomatik to'ldiradi (Kengaytirilgan sozlamalarda o'chirish/yoqish mumkin)
 - **URL'larni avtomatik tozalash** — kuzatish parametrlarini olib tashlaydi (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) va `youtube.com/redirect` havolalarini ochadi
@@ -81,6 +81,13 @@ Arroxy bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl olin
 - Video yoniga saqlash, `.mkv` ichiga joylashtirish yoki `Subtitles/` pastki papkasiga tartibga solish
 - **SponsorBlock** — homiylar, kirishlar, xotimalar, o'z reklamalarini o'tkazib yuborish yoki bo'limga belgilash
 - **Joylashtirilgan metadata** — sarlavha, yuklash sanasi, kanal, tavsif, miniatyura va bob belgilari faylga yoziladi
+
+### YouTube + 2000 sayt
+
+- **YouTube to'liq** — Videolar, Shorts, Kanallar, Pleylistlar, YouTube Music va Podkastlar birinchi darajali manbalar sifatida ishlaydi
+- **2000+ boshqa saytlar** yt-dlp orqali — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org va boshqalar
+- **Faqat audio va subtitrlar** har qanday qo'llab-quvvatlanadigan saytda ishlaydi, nafaqat YouTube'da
+- Sayt o'zgarsa, yt-dlp har hafta tuzatishlar chiqaradi va Arroxy ishga tushganda binarni avtomatik yangilaydi
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="URL'ni joylashtirish" />

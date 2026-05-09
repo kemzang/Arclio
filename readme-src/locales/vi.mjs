@@ -71,7 +71,7 @@ bun run dist:win     # biên dịch chéo Windows portable exe
 
 export const vi = {
   icon_alt: "Linh vật Arroxy",
-  title: "Arroxy — Trình tải video YouTube miễn phí và mã nguồn mở cho Windows, macOS & Linux",
+  title: "Arroxy — Trình tải YouTube (+ 2000 trang) miễn phí và mã nguồn mở cho Windows, macOS & Linux",
   read_in_label: "Đọc bằng:",
   badge_release_alt: "Phiên bản",
   badge_build_alt: "Build",
@@ -80,7 +80,7 @@ export const vi = {
   badge_i18n_alt: "Ngôn ngữ",
   badge_website_alt: "Trang web",
   hero_desc:
-    "Tải xuống bất kỳ video YouTube, Short hay bản nhạc nào ở chất lượng gốc — lên tới 4K HDR ở 60 fps, hoặc dưới dạng MP3 / AAC / Opus. Chạy hoàn toàn cục bộ trên Windows, macOS và Linux. **Không quảng cáo, không đăng nhập, không cookie trình duyệt, không liên kết tài khoản Google.**",
+    "Tải xuống video, Shorts, nhạc, kênh, podcast hoặc bản nhạc từ **YouTube và hơn 2000 trang được hỗ trợ** — lên tới 4K HDR ở 60 fps, hoặc dưới dạng MP3 / AAC / Opus. Chạy hoàn toàn cục bộ trên Windows, macOS và Linux. **Không quảng cáo, không phồng to, không bán thêm.**",
   cta_latest: "↓ Tải phiên bản mới nhất",
   cta_website: "Trang web",
   demo_alt: "Demo Arroxy",
@@ -116,7 +116,7 @@ export const vi = {
   feat_privacy_3: "File được lưu thẳng vào thư mục bạn chọn",
   feat_workflow_h3: "Quy trình làm việc",
   feat_workflow_1:
-    "**Dán bất kỳ URL YouTube nào** — hỗ trợ video, Shorts và playlist; tải toàn bộ playlist hoặc chọn trước những video cụ thể",
+    "**Dán bất kỳ liên kết nào** — video YouTube, Shorts, kênh, playlist, podcast và YouTube Music, cùng hơn 2000 trang mà yt-dlp hỗ trợ; tải toàn bộ playlist hoặc chọn trước những video cụ thể",
   feat_workflow_2:
     "**Hàng đợi tải xuống nhiều luồng** — theo dõi nhiều lượt tải song song",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const vi = {
     "**SponsorBlock** — bỏ qua hoặc đánh dấu chương cho các đoạn quảng cáo, intro, outro, tự quảng bá",
   feat_post_4:
     "**Siêu dữ liệu nhúng** — tiêu đề, ngày tải lên, kênh, mô tả, thumbnail và điểm đánh dấu chương được ghi vào file",
+  feat_sites_h3: "YouTube + 2000 trang",
+  feat_sites_1:
+    "**YouTube đầy đủ** — Video, Shorts, Kênh, Playlist, YouTube Music và Podcast được hỗ trợ như nguồn hạng nhất",
+  feat_sites_2:
+    "**Hơn 2000 trang khác** qua yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org và nhiều hơn nữa",
+  feat_sites_3:
+    "**Chỉ âm thanh và phụ đề** hoạt động trên mọi trang được hỗ trợ, không chỉ YouTube",
+  feat_sites_4:
+    "Nếu một trang thay đổi, yt-dlp phát hành bản sửa lỗi hàng tuần và Arroxy tự động cập nhật nhị phân khi khởi động",
   shot1_alt: "Dán URL",
   shot2_alt: "Chọn chất lượng",
   shot3_alt: "Chọn nơi lưu",

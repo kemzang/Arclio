@@ -90,6 +90,8 @@ const de = {
       heading: 'Playlist-Elemente',
       itemCount_one: '{{count}} video',
       itemCount_other: '{{count}} videos',
+      itemCountAudio_one: '{{count}} Titel',
+      itemCountAudio_other: '{{count}} Titel',
       selectAll: 'Alle auswählen',
       selectNone: 'Keine auswählen',
       rangeFrom: 'Von',
@@ -123,17 +125,25 @@ const de = {
       fetchFormats: 'Formate abrufen',
       features: {
         heading: 'Was Arroxy laden kann',
-        video: {
-          title: 'Videos',
-          desc: 'Beliebige Auflösung bis zu 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Videos',
+          channel: 'Kanäle',
+          playlist: 'Playlists',
+          short: 'Shorts',
+          music: 'Musik',
+          podcast: 'Podcasts'
         },
-        playlist: {
-          title: 'Playlists',
-          desc: 'Mehrere Elemente einer Playlist wählen'
+        anySite: {
+          heading: '2000+ Seiten',
+          video: 'Videos',
+          videoPlaylist: 'Video-Playlists',
+          musicPlaylist: 'Musik-Playlists'
         },
-        audio: {
-          title: 'Audio',
-          desc: 'Originalstream oder MP3/M4A konvertieren'
+        always: {
+          heading: 'Immer verfügbar',
+          audioOnly: 'Nur Audio',
+          subtitles: 'Untertitel'
         }
       },
       mascotIdle: 'Wirf mir einen YouTube-Link rüber (Video oder Short) — klick dann auf „Formate abrufen" und ich leg los ✨',
@@ -247,11 +257,13 @@ const de = {
       audio: 'Audio',
       noAudio: 'Kein Audio',
       videoOnly: 'Nur Video',
+      keepAudio: 'So belassen',
+      keepAudioMeta: 'Integriertes Audio',
       audioOnly: 'Nur Audio',
       audioOnlyOption: 'Nur Audio (kein Video)',
       mascot: 'Beste + beste = maximale Qualität. Das würde ich nehmen!',
       sniffing: 'Suche die besten Formate für dich…',
-      loadingHint: 'Dauert meist nur eine Sekunde',
+      loadingHint: 'Bitte warten, bis die Analyse abgeschlossen ist — Playlists und Suchen können etwas dauern.',
       loadingAria: 'Formate werden geladen',
       sizeUnknown: 'Größe unbekannt',
       total: 'Gesamt',
@@ -281,6 +293,10 @@ const de = {
         explanationFile: 'Deine Cookies-Datei könnte leer, abgelaufen oder im falschen Format vorliegen (yt-dlp erwartet Netscape cookies.txt). Versuche, die Cookies neu zu exportieren, eine andere Datei auszuwählen, in den Browser-Modus zu wechseln oder Cookies zu deaktivieren.',
         explanationBrowser: 'Cookies werden direkt aus dem Browser gelesen. Wenn der Browser gerade läuft, ist die Cookie-Datenbank möglicherweise gesperrt (Chromium-Familie). Der Browser muss zudem bei YouTube angemeldet sein. Versuche, den Browser zu schließen, zu einem anderen Browser zu wechseln, in den Datei-Modus zu wechseln oder Cookies zu deaktivieren.',
         openSettingsCta: 'Cookies-Einstellungen öffnen',
+        needsCookies: {
+          heading: 'Diese Seite erfordert eine Anmeldung',
+          body: 'yt-dlp konnte ohne Authentifizierung nicht auf dieses Video zugreifen. Konfiguriere Cookies in den erweiterten Einstellungen — verweise auf einen Browser, in dem du bereits angemeldet bist, oder importiere eine cookies.txt-Datei.'
+        },
         dpapi: {
           heading: 'Chrome-Cookies durch Windows-Verschlüsselung blockiert',
           explanation: 'Chrome 127 und neuer verschlüsselt Cookies auf eine Weise, die andere Apps unter Windows nicht lesen können. Probiere einen der folgenden Workarounds.',
@@ -354,15 +370,16 @@ const de = {
       labelPreset: 'Voreinstellung',
       labelItems: 'Elemente',
       itemsValue_one: '{{count}} von {{total}} Video',
-      itemsValue_other: '{{count}} von {{total}} Videos'
+      itemsValue_other: '{{count}} von {{total}} Videos',
+      itemsValueAudio_one: '{{count}} von {{total}} Titel',
+      itemsValueAudio_other: '{{count}} von {{total}} Titeln'
     },
     error: {
       icon: 'Fehler'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Wird geladen…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Wird geladen…'
   },
   queue: {
     header: 'Download-Warteschlange',
@@ -435,7 +452,8 @@ const de = {
       unavailable: 'Dieses Video ist nicht verfügbar — möglicherweise privat, gelöscht oder regional gesperrt.',
       geoBlocked: 'Dieses Video ist in deiner Region nicht verfügbar.',
       outOfDiskSpace: 'Nicht genug Speicherplatz. Gib Speicher frei und versuche es erneut.',
-      unsupportedUrl: 'Das sieht nicht wie eine Video-URL aus. Füge einen YouTube-Video-, Short- oder Playlist-Link ein.'
+      unsupportedUrl: 'Das sieht nicht wie eine Video-URL aus. Füge einen YouTube-Video-, Short- oder Playlist-Link ein.',
+      chunkTransferFailure: 'Der Server hat den Download wiederholt mittendrin abgebrochen und yt-dlp hat nach mehreren Versuchen aufgegeben. Das betrifft meist die größten Videoformate (4K HDR / VP9 mit hoher Bitrate). Versuche es erneut, wechsle das Netzwerk/VPN oder wähle eine niedrigere Auflösung.'
     }
   },
   presets: {
@@ -512,19 +530,19 @@ const de = {
   share: {
     title: 'Arroxy teilen',
     description: 'Arroxy ist kostenlos und Open-Source. Durch das Teilen helfen mehr Menschen, es zu entdecken.',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'Link kopieren',
+    copied: 'Kopiert!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Arroxy teilen',
+    footerLabel: 'Teilen',
+    shareAction: 'Arroxy teilen',
     inlineCard: {
       body: 'Gefällt dir Arroxy? Teile es mit jemandem, dem es nützlich sein könnte.',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'Teilen-Vorschlag schließen'
     },
     highValueBanner: {
       body: 'Gefällt dir Arroxy? Hilf anderen, es zu entdecken.',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'Teilen-Vorschlag schließen'
     }
   }
 } as const;

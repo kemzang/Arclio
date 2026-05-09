@@ -71,7 +71,7 @@ bun run dist:win     # Windows پورٹیبل exe کراس کمپائل
 
 export const ur = {
   icon_alt: "Arroxy ماسکٹ",
-  title: "Arroxy — Windows، macOS اور Linux کے لیے مفت اوپن سورس YouTube ڈاؤن لوڈر",
+  title: "Arroxy — Windows، macOS اور Linux کے لیے مفت اوپن سورس YouTube (+ 2000 سائٹس) ڈاؤن لوڈر",
   read_in_label: "زبان:",
   badge_release_alt: "ریلیز",
   badge_build_alt: "بلڈ",
@@ -80,7 +80,7 @@ export const ur = {
   badge_i18n_alt: "زبانیں",
   badge_website_alt: "ویب سائٹ",
   hero_desc:
-    "کوئی بھی YouTube ویڈیو، Short یا آڈیو ٹریک اصل کوالٹی میں ڈاؤن لوڈ کریں — 60 fps پر 4K HDR تک، یا MP3 / AAC / Opus کے طور پر۔ Windows، macOS اور Linux پر مقامی طور پر چلتا ہے۔ **کوئی اشتہارات نہیں، کوئی لاگ ان نہیں، کوئی براؤزر کوکیز نہیں، کوئی Google اکاؤنٹ منسلک نہیں۔**",
+    "**YouTube اور 2000+ معاون سائٹس** سے ویڈیوز، Shorts، موسیقی، چینلز، پوڈکاسٹ یا آڈیو ٹریک ڈاؤن لوڈ کریں — 60 fps پر 4K HDR تک، یا MP3 / AAC / Opus کے طور پر۔ Windows، macOS اور Linux پر مقامی طور پر چلتا ہے۔ **کوئی اشتہارات نہیں، کوئی بلوٹ نہیں، کوئی اپ سیلز نہیں۔**",
   cta_latest: "↓ تازہ ترین ریلیز ڈاؤن لوڈ کریں",
   cta_website: "ویب سائٹ",
   demo_alt: "Arroxy ڈیمو",
@@ -117,7 +117,7 @@ export const ur = {
   feat_privacy_3: "فائلیں سیدھی آپ کے منتخب کردہ فولڈر میں محفوظ",
   feat_workflow_h3: "ورک فلو",
   feat_workflow_1:
-    "**کوئی بھی YouTube URL پیسٹ کریں** — ویڈیوز، Shorts اور playlists سپورٹڈ ہیں؛ پوری playlist ڈاؤن لوڈ کریں یا پہلے مخصوص ویڈیوز منتخب کریں",
+    "**کوئی بھی لنک پیسٹ کریں** — YouTube ویڈیوز، Shorts، چینلز، پلے لسٹس، پوڈکاسٹ اور Music، نیز 2000+ دیگر سائٹس جو yt-dlp سپورٹ کرتا ہے؛ پوری playlist ڈاؤن لوڈ کریں یا پہلے مخصوص ویڈیوز منتخب کریں",
   feat_workflow_2:
     "**ملٹی ڈاؤن لوڈ قطار** — کئی ڈاؤن لوڈز کو متوازی طور پر ٹریک کریں",
   feat_workflow_3:
@@ -137,6 +137,15 @@ export const ur = {
     "**SponsorBlock** — اسپانسرز، انٹروز، آؤٹروز اور سیلف پروموز کو سکپ کریں یا چیپٹر مارک کریں",
   feat_post_4:
     "**ایمبیڈڈ میٹا ڈیٹا** — ٹائٹل، اپ لوڈ کی تاریخ، چینل، تفصیل، تھمب نیل اور چیپٹر مارکرز فائل میں لکھے جاتے ہیں",
+  feat_sites_h3: "YouTube + 2000 سائٹس",
+  feat_sites_1:
+    "**YouTube، مکمل** — Videos، Shorts، Channels، Playlists، YouTube Music اور Podcasts کو فرسٹ-کلاس ذرائع کے طور پر ہینڈل کیا جاتا ہے",
+  feat_sites_2:
+    "**2000+ دیگر سائٹس** yt-dlp کے ذریعے — Vimeo، Twitch، Twitter/X، TikTok، SoundCloud، Bandcamp، Bilibili، BBC iPlayer، archive.org اور بہت کچھ",
+  feat_sites_3:
+    "**صرف آڈیو اور سب ٹائٹلز** ہر معاون سائٹ پر کام کرتے ہیں، نہ صرف YouTube پر",
+  feat_sites_4:
+    "اگر کوئی سائٹ بدلتی ہے تو yt-dlp ہر ہفتے فکس جاری کرتا ہے اور Arroxy لانچ پر بائنری خودکار طور پر اپ ڈیٹ کرتا ہے",
   shot1_alt: "URL پیسٹ کریں",
   shot2_alt: "اپنی کوالٹی منتخب کریں",
   shot3_alt: "محفوظ کرنے کی جگہ منتخب کریں",

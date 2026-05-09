@@ -90,6 +90,8 @@ const sw = {
       heading: 'Vipande vya Playlist',
       itemCount_one: '{{count}} video',
       itemCount_other: '{{count}} video',
+      itemCountAudio_one: '{{count}} wimbo',
+      itemCountAudio_other: '{{count}} nyimbo',
       selectAll: 'Chagua yote',
       selectNone: 'Futa uchaguzi wote',
       rangeFrom: 'Kutoka',
@@ -122,17 +124,25 @@ const sw = {
       fetchFormats: 'Pata maumbo',
       features: {
         heading: 'Arroxy inaweza kupakua nini',
-        video: {
-          title: 'Video',
-          desc: 'Chagua azimio lolote hadi 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Video',
+          channel: 'Vituo',
+          playlist: 'Playlists',
+          short: 'Shorts',
+          music: 'Muziki',
+          podcast: 'Podcasts'
         },
-        playlist: {
-          title: 'Playlists',
-          desc: 'Chagua vipande vingi kutoka playlist'
+        anySite: {
+          heading: 'Tovuti 2000+',
+          video: 'Video',
+          videoPlaylist: 'Playlists za video',
+          musicPlaylist: 'Playlists za muziki'
         },
-        audio: {
-          title: 'Sauti',
-          desc: 'Mkondo wa asili au badilisha MP3/M4A'
+        always: {
+          heading: 'Daima inapatikana',
+          audioOnly: 'Sauti peke yake',
+          subtitles: 'Manukuu'
         }
       },
       mascotIdle: 'Nipe kiungo cha YouTube (video au Short) — kisha bonyeza "Pata maumbo" nami nitaanza kazi ✨',
@@ -246,11 +256,13 @@ const sw = {
       audio: 'Sauti',
       noAudio: 'Hakuna sauti',
       videoOnly: 'Video peke yake',
+      keepAudio: 'Acha kama ilivyo',
+      keepAudioMeta: 'Sauti iliyojengwa ndani',
       audioOnly: 'Sauti peke yake',
       audioOnlyOption: 'Sauti peke yake (bila video)',
       mascot: 'Bora + Bora = ubora wa juu zaidi. Ningechagua hivyo!',
       sniffing: 'Natafuta maumbo bora kwako…',
-      loadingHint: 'Kawaida huchukua sekunde moja',
+      loadingHint: 'Tafadhali subiri hadi uchunguzi ukamilike — orodha za kuimba na utafutaji vinaweza kuchukua muda.',
       loadingAria: 'Inapakia maumbo',
       sizeUnknown: 'Ukubwa haujulikani',
       total: 'Jumla',
@@ -280,6 +292,10 @@ const sw = {
         explanationFile: 'Faili yako ya vidakuzi inaweza kuwa tupu, imeisha muda wake, au iko katika umbizo lisilo sahihi (yt-dlp inategemea Netscape cookies.txt). Jaribu kusafirisha vidakuzi tena, chagua faili tofauti, ubadilishe hadi hali ya Kivinjari, au uzime vidakuzi.',
         explanationBrowser: 'Vidakuzi vinasomwa moja kwa moja kutoka kwenye kivinjari. Ikiwa kivinjari kinaendesha sasa hivi, hifadhidata yake ya vidakuzi inaweza kufungwa (familia ya Chromium). Kivinjari pia lazima kiingie katika YouTube. Jaribu kufunga kivinjari, ubadilishe hadi kivinjari tofauti, ubadilishe hadi hali ya Faili, au uzime vidakuzi.',
         openSettingsCta: 'Fungua mipangilio ya vidakuzi',
+        needsCookies: {
+          heading: 'Tovuti hii inahitaji kuingia',
+          body: 'yt-dlp haikuweza kufikia video hii bila uthibitisho. Sanidi vidakuzi katika mipangilio ya hali ya juu — ielekeza kwenye kivinjari unachoingia tayari, au ingiza faili ya cookies.txt.'
+        },
         dpapi: {
           heading: 'Vidakuzi vya Chrome vimezuiwa na usimbaji fiche wa Windows',
           explanation: 'Chrome 127 na toleo jipya zaidi husimba fiche vidakuzi kwa njia ambayo programu nyingine haziwezi kusoma kwenye Windows. Jaribu moja ya masuluhisho yaliyo hapa chini.',
@@ -345,23 +361,24 @@ const sw = {
       audioOnly: 'Sauti peke yake',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Inaanza vipakuzi vingine vikishamaliza — inapata upanuzi kamili',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'Pakua sasa! ↓',
       pullItTooltip: 'Inaanza mara moja — inafanya kazi pamoja na vipakuzi vingine vinavyofanya kazi',
-      playlistBatch_one: '{{count}} video · {{title}}',
-      playlistBatch_other: '{{count}} video · {{title}}',
+      playlistBatch_one: '{{count}} kipande · {{title}}',
+      playlistBatch_other: '{{count}} vipande · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Mpangilio',
       labelItems: 'Vipande',
       itemsValue_one: '{{count}} kati ya {{total}} video',
-      itemsValue_other: '{{count}} kati ya {{total}} video'
+      itemsValue_other: '{{count}} kati ya {{total}} video',
+      itemsValueAudio_one: '{{count}} kati ya {{total}} wimbo',
+      itemsValueAudio_other: '{{count}} kati ya {{total}} nyimbo'
     },
     error: {
       icon: 'Hitilafu'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Inapakia…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Inapakia…'
   },
   queue: {
     header: 'Foleni ya Kupakua',
@@ -434,7 +451,8 @@ const sw = {
       unavailable: 'Video hii haipatikani — inaweza kuwa ya kibinafsi, imefutwa, au imezuiwa kwa mkoa.',
       geoBlocked: 'Video hii haipatikani katika eneo lako.',
       outOfDiskSpace: 'Nafasi ya diski haitoshi. Futa nafasi na ujaribu tena.',
-      unsupportedUrl: 'Hii haionekani kama URL ya video. Bandika kiungo cha video ya YouTube, Short, au playlist.'
+      unsupportedUrl: 'Hii haionekani kama URL ya video. Bandika kiungo cha video ya YouTube, Short, au playlist.',
+      chunkTransferFailure: 'Seva ilikatiza upakuaji mara kwa mara na yt-dlp ilikata tamaa baada ya kujaribu tena. Hii hutokea zaidi kwa muundo mkubwa wa video (4K HDR / VP9 ya bitrate ya juu). Jaribu tena, badilisha mtandao/VPN, au chagua muundo wa ubora wa chini.'
     }
   },
   presets: {
@@ -473,7 +491,7 @@ const sw = {
   formatLabel: {
     audioOnly: 'Sauti peke yake',
     audioFallback: 'Sauti',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'Sauti peke yake · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -511,12 +529,12 @@ const sw = {
   share: {
     title: 'Shiriki Arroxy',
     description: 'Arroxy ni ya bure na chanzo wazi. Kushiriki husaidia watu wengi zaidi kuigundua.',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'Nakili kiungo',
+    copied: 'Imenakiliwa!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Shiriki Arroxy',
+    footerLabel: 'Shiriki',
+    shareAction: 'Shiriki Arroxy',
     inlineCard: {
       body: 'Unafurahia Arroxy? Shiriki na mtu anayeweza kuifaidika.',
       dismiss: 'Funga pendekezo la kushiriki'

@@ -161,4 +161,7 @@ export const ar = {
   faq_q9: "هل هذا قانوني؟",
   faq_a9:
     "تحميل مقاطع الفيديو للاستخدام الشخصي مقبول عموماً في معظم الولايات القضائية. أنت مسؤول عن الامتثال لشروط خدمة يوتيوب وقوانين بلدك.",
+
+  f13_h: "YouTube + 2000 موقع",
+  f13_p: "إلى جانب YouTube، يقوم Arroxy بالتنزيل من أكثر من 2000 موقع يدعمها yt-dlp — Vimeo، Twitch، Twitter/X، TikTok، SoundCloud، Bandcamp، Bilibili، BBC iPlayer، archive.org، وغيرها الكثير. الصوت فقط والترجمات تعمل في كل مكان، وليس فقط على YouTube.",
 };

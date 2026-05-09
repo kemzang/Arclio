@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy mascot" width="180" />
 
-# Arroxy — Buufataa YouTube Bilisaa fi Madda Banaa Windows, macOS & Linux
+# Arroxy — Buufataa YouTube (+ Saayitii 2000) Bilisaa fi Madda Banaa Windows, macOS & Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Afaan:** **Afaan Oromoo** · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Baasii](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Ijaarsaa](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Marsariitii](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Hayyama](https://img.shields.io/badge/license-MIT-green) ![Platformoota](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Afaanonni](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Viidiyoo YouTube, Short, ykn sagalee kamiyyuu qulqullina jalqabaatiin buusi — hanga 4K HDR 60 fps, ykn MP3 / AAC / Opus. Windows, macOS, fi Linux irratti naannoo kee keessatti hojeta. **Beeksisni hin jiru, seensuu hin barbaachisu, kuukkii biraawzaraa hin fayyadamu, akkaawuntii Google waliin hin hidhu.**
+Viidiyoo, Shorts, muuziqaa, chaanaalota, podkaastota, ykn sagalee **YouTube fi saayitiiwwan 2000+** irraa buufi — hanga 4K HDR 60 fps, ykn MP3 / AAC / Opus. Windows, macOS, fi Linux irratti naannoo kee keessatti hojeta. **Beeksisni hin jiru, wanti dabalataa hin jiru, gurguurtaan dabalaataa hin jiru.**
 
 [**↓ Baasii Haaraa Buusi**](../../releases/latest) &nbsp;·&nbsp; [**Marsariitii**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -68,7 +68,7 @@ Arroxy waan tokko qofaaf ijaarame: URL maxxansi, faayila naannoo qulqulluu argad
 
 ### Hojii hordoffii
 
-- **URL YouTube kamiyyuu maxxansi** — viidiyoowwan, Shorts fi playlist ni deeggara; playlist guutuu buufadhu yookaan dura viidiyoowwan filataman qofa filadhu
+- **Liinkii kamiyyuu maxxansi** — viidiyoowwan YouTube, Shorts, chaanaalota, playlistoota, podkaastota fi Muuziqaa, fi saayitiiwwan 2000+ yt-dlp deeggaru; playlist guutuu buufadhu yookaan dura viidiyoowwan filataman qofa filadhu
 - **Queue buufannoo heddu** — buufannoota heddu walitti aanee hordofi
 - **Eegaa clipboard** — link YouTube koppiisi Arroxy URL of-hordofaa guutu yeroo app deebi'itu (Advanced settings keessatti jijjiiri)
 - **URL of-qulqulleessa** — params hordoffii (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) haqa fi linkiiwwan `youtube.com/redirect` bana
@@ -81,6 +81,13 @@ Arroxy waan tokko qofaaf ijaarame: URL maxxansi, faayila naannoo qulqulluu argad
 - Viidiyoo cinaa kuusi, `.mkv` keessatti maksi, ykn foldara `Subtitles/` keessatti qindeessi
 - **SponsorBlock** — beeksisa, seensa, xumura, of-daldala naanna'i ykn boqonnaa godhi
 - **Metadata makame** — mata-duree, guyyaa olkaa'uu, chaanaalii, ibsaa, suuraafi boqonnaa mallattoota faayila keessatti barreessa
+
+### YouTube + Saayitii 2000
+
+- **YouTube guutummaatti** — Viidiyoowwan, Shorts, Chaanaalota, Playlistoota, YouTube Music fi Podkaastota madda sadarkaa jalqabaa ta'aniin hojjetamu
+- **Saayitiiwwan 2000+ biroo** yt-dlp fayyadamuudhaan — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org fi kanneen biroo heddu
+- **Audio qofa fi subtitle** saayitii deeggara hunda irratti hojjeta, YouTube qofa irratti miti
+- Saayitiin yoo jijjiirames, yt-dlp torban hunda sirreessa erga, Arroxy immoo binary-n yeroo eegaluu ofumaan haaromsa
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="URL maxxansi" />

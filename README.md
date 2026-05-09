@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy mascot" width="180" />
 
-# Arroxy — Free Open-Source YouTube Downloader for Windows, macOS & Linux
+# Arroxy — Free Open-Source YouTube (+ 2000 sites) Downloader for Windows, macOS & Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Read in:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · **English** · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Release](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Build](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Website](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![License](https://img.shields.io/badge/license-MIT-green) ![Platforms](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Languages](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Download any YouTube video, Short, or audio track in original quality — up to 4K HDR at 60 fps, or as MP3 / AAC / Opus. Runs locally on Windows, macOS, and Linux. **No ads, no bloat, no upsells.**
+Download videos, Shorts, music, channels, podcasts, or audio tracks from **YouTube and 2000+ supported sites** — up to 4K HDR at 60 fps, or as MP3 / AAC / Opus. Runs locally on Windows, macOS, and Linux. **No ads, no bloat, no upsells.**
 
 [**↓ Download Latest Release**](../../releases/latest) &nbsp;·&nbsp; [**Website**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -68,7 +68,7 @@ Arroxy is built for one thing: paste a URL, get a clean local file. No accounts,
 
 ### Workflow
 
-- **Paste any YouTube URL** — videos, Shorts, and playlists supported; download the whole playlist or pick specific videos first
+- **Paste any link** — YouTube videos, Shorts, channels, playlists, podcasts, and Music, plus 2000+ other sites yt-dlp supports; download the whole playlist or pick specific videos first
 - **Multi-download queue** — track several downloads in parallel
 - **Clipboard watch** — copy a YouTube link and Arroxy auto-fills the URL when you refocus the app (toggle in Advanced settings)
 - **Auto-clean URLs** — strips tracking params (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) and unwraps `youtube.com/redirect` links
@@ -81,6 +81,13 @@ Arroxy is built for one thing: paste a URL, get a clean local file. No accounts,
 - Save next to the video, embed into `.mkv`, or organize into a `Subtitles/` subfolder
 - **SponsorBlock** — skip or chapter-mark sponsors, intros, outros, self-promos
 - **Embedded metadata** — title, upload date, channel, description, thumbnail, and chapter markers written into the file
+
+### YouTube + 2000 sites
+
+- **YouTube, in full** — Videos, Shorts, Channels, Playlists, YouTube Music, and Podcasts handled as first-class sources
+- **2000+ other sites** via yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org, and many more
+- **Audio-only and subtitles** work across every supported site, not just YouTube
+- If a site changes, yt-dlp ships fixes weekly and Arroxy auto-updates the binary on launch
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="Paste a URL" />

@@ -71,7 +71,7 @@ bun run dist:win     # Windows portable exe cross-compile
 
 export const om = {
   icon_alt: "Arroxy mascot",
-  title: "Arroxy — Buufataa YouTube Bilisaa fi Madda Banaa Windows, macOS & Linux",
+  title: "Arroxy — Buufataa YouTube (+ Saayitii 2000) Bilisaa fi Madda Banaa Windows, macOS & Linux",
   read_in_label: "Afaan:",
   badge_release_alt: "Baasii",
   badge_build_alt: "Ijaarsaa",
@@ -80,7 +80,7 @@ export const om = {
   badge_i18n_alt: "Afaanonni",
   badge_website_alt: "Marsariitii",
   hero_desc:
-    "Viidiyoo YouTube, Short, ykn sagalee kamiyyuu qulqullina jalqabaatiin buusi — hanga 4K HDR 60 fps, ykn MP3 / AAC / Opus. Windows, macOS, fi Linux irratti naannoo kee keessatti hojeta. **Beeksisni hin jiru, seensuu hin barbaachisu, kuukkii biraawzaraa hin fayyadamu, akkaawuntii Google waliin hin hidhu.**",
+    "Viidiyoo, Shorts, muuziqaa, chaanaalota, podkaastota, ykn sagalee **YouTube fi saayitiiwwan 2000+** irraa buufi — hanga 4K HDR 60 fps, ykn MP3 / AAC / Opus. Windows, macOS, fi Linux irratti naannoo kee keessatti hojeta. **Beeksisni hin jiru, wanti dabalataa hin jiru, gurguurtaan dabalaataa hin jiru.**",
   cta_latest: "↓ Baasii Haaraa Buusi",
   cta_website: "Marsariitii",
   demo_alt: "Arroxy demo",
@@ -116,7 +116,7 @@ export const om = {
   feat_privacy_3: "Faayiloonni kallattiin foldera filatteen seenu",
   feat_workflow_h3: "Hojii hordoffii",
   feat_workflow_1:
-    "**URL YouTube kamiyyuu maxxansi** — viidiyoowwan, Shorts fi playlist ni deeggara; playlist guutuu buufadhu yookaan dura viidiyoowwan filataman qofa filadhu",
+    "**Liinkii kamiyyuu maxxansi** — viidiyoowwan YouTube, Shorts, chaanaalota, playlistoota, podkaastota fi Muuziqaa, fi saayitiiwwan 2000+ yt-dlp deeggaru; playlist guutuu buufadhu yookaan dura viidiyoowwan filataman qofa filadhu",
   feat_workflow_2:
     "**Queue buufannoo heddu** — buufannoota heddu walitti aanee hordofi",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const om = {
     "**SponsorBlock** — beeksisa, seensa, xumura, of-daldala naanna'i ykn boqonnaa godhi",
   feat_post_4:
     "**Metadata makame** — mata-duree, guyyaa olkaa'uu, chaanaalii, ibsaa, suuraafi boqonnaa mallattoota faayila keessatti barreessa",
+  feat_sites_h3: "YouTube + Saayitii 2000",
+  feat_sites_1:
+    "**YouTube guutummaatti** — Viidiyoowwan, Shorts, Chaanaalota, Playlistoota, YouTube Music fi Podkaastota madda sadarkaa jalqabaa ta'aniin hojjetamu",
+  feat_sites_2:
+    "**Saayitiiwwan 2000+ biroo** yt-dlp fayyadamuudhaan — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org fi kanneen biroo heddu",
+  feat_sites_3:
+    "**Audio qofa fi subtitle** saayitii deeggara hunda irratti hojjeta, YouTube qofa irratti miti",
+  feat_sites_4:
+    "Saayitiin yoo jijjiirames, yt-dlp torban hunda sirreessa erga, Arroxy immoo binary-n yeroo eegaluu ofumaan haaromsa",
   shot1_alt: "URL maxxansi",
   shot2_alt: "Qulqullina filadhu",
   shot3_alt: "Bakka olkaa'uu filadhu",

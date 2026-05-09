@@ -35,7 +35,7 @@ const ALLOWED: Record<string, readonly string[]> = {
   app_started: ['install_channel', 'platform_arch', 'is_first_run'],
   update_available: ['to_version', 'install_channel'],
   update_install_clicked: ['install_channel'],
-  format_probed: ['duration_bucket', 'error_category', 'bot_wall', 'cookies_mode'],
+  format_probed: ['duration_bucket', 'error_category', 'bot_wall', 'cookies_mode', 'result_kind'],
   download_started: ['preset', 'has_subtitles', 'has_sponsorblock', 'cookies_mode', 'embed_metadata', 'embed_thumbnail'],
   download_finished: ['outcome', 'duration_bucket', 'size_bucket', 'error_category'],
   tray_close_chosen: ['choice', 'remember'],

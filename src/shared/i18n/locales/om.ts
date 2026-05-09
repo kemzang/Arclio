@@ -90,6 +90,8 @@ const om = {
       heading: 'Wantoota Playlist',
       itemCount_one: '{{count}} viidiyoo',
       itemCount_other: '{{count}} viidiyoowwan',
+      itemCountAudio_one: '{{count}} weellaa',
+      itemCountAudio_other: '{{count}} weellaalee',
       selectAll: 'Hunda filadhu',
       selectNone: 'Tokkollee hin filin',
       rangeFrom: 'Irraa',
@@ -122,17 +124,25 @@ const om = {
       fetchFormats: 'Foormaatii fidi',
       features: {
         heading: "Arroxy maal buufachuu danda'a",
-        video: {
-          title: 'Viidiyoowwan',
-          desc: 'Hanga 4K firiimii barbaadde filadhu'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Viidiyoowwan',
+          channel: 'Channelota',
+          playlist: 'Playlists',
+          short: 'Shorts',
+          music: 'Muuziqaa',
+          podcast: 'Podcastota'
         },
-        playlist: {
-          title: 'Playlists',
-          desc: 'Wantota playlist irraa filadhu'
+        anySite: {
+          heading: 'Gareewwan 2000+',
+          video: 'Viidiyoowwan',
+          videoPlaylist: 'Playlist viidiyoo',
+          musicPlaylist: 'Playlist muuziqaa'
         },
-        audio: {
-          title: 'Sagalee',
-          desc: 'Tarreessa uumamaa ykn MP3/M4A jijjiiri'
+        always: {
+          heading: 'Yeroo hundaa ni argama',
+          audioOnly: 'Sagalee qofa',
+          subtitles: 'Axxiinni'
         }
       },
       mascotIdle: 'Liinkii YouTube naaf ergi (viidiyoo ykn Short) — achiin "Foormaatii fidi" cuqaasi ✨',
@@ -250,10 +260,12 @@ const om = {
       audioOnlyOption: 'Sagalee qofa (viidiyoo hin jiru)',
       mascot: "Caalmaa + Caalmaa = qulqullina ol'aanaa. Sana filadha!",
       sniffing: 'Foormaatii caalmaa si barbaachisu barbaaduun jira…',
-      loadingHint: "Yeroo baay'ee sekoondii fudhata",
+      loadingHint: "Qorannoon xumuramuu hanga eegtu — playlist fi barbaacha yeroo fudhachuu danda'a.",
       loadingAria: "Foormaatii fe'amaa jira",
       sizeUnknown: "Bal'inni hin beekamne",
       total: 'Waliigala',
+      keepAudio: 'Akka jirutti eegi',
+      keepAudioMeta: 'Sagalee keessoo',
       convert: {
         label: 'Jijjiiri',
         uncompressed: 'Jijjiiri · cuqxaa hin taane',
@@ -280,6 +292,10 @@ const om = {
         explanationFile: "Faayilin cookies kee duwwaa, yeroon darbee, ykn foormaatii dogoggoraa ta'uu danda'a (yt-dlp Netscape cookies.txt eega). Cookies irra deebi'ii ergi, faayilii biraa filadhu, Browser haala jijjiiri, ykn cookies dhaabbi.",
         explanationBrowser: "Cookies browser irraa kallattiin dubbifama. Browser yoo amma hojjechaa jiraate, kuusaa cookies isaa cufamuu danda'a (Chromium-gosa). Browser YouTube keessattis seenuu qaba. Browser cufadhu, browser biraa jijjiiri, Faayilii haala jijjiiri, ykn cookies dhaabbi.",
         openSettingsCta: "Qindaa'inoota cookies bani",
+        needsCookies: {
+          heading: 'Gareewwan kun seensa gaafata',
+          body: "yt-dlp viidiyoo kana mirkaneessuu malee argachuu hin danda'u. Qindaa'inoota ammayyaa keessatti cookies qopheessi — browser seenite irra qeensi, ykn faayilii cookies.txt galchi."
+        },
         dpapi: {
           heading: "Cookies Chrome'ii farsimaa Windows'n cufame",
           explanation: "Chrome 127 fi itti aanu cookies'a appoonii biroon Windows irratti dubbisuu hin dandeenye ta'een farsima. Furmaata armaan gadii keessaa tokko yaali.",
@@ -289,7 +305,7 @@ const om = {
           fixFileBody: 'Cookies Chrome irraa extension browser waliin ergi, achiin app kana haala Faayilii jijjiiri achiin faayilii ergame filadhu.',
           fixUnsafeLabel: 'App-Bound Encryption dhaabbatee Chrome jalqabi',
           fixUnsafeBody: "--disable-features=LockProfileCookieDatabase gabaabduu jalqabbii Chrome'tti dabaluu. Akeekkachiisa: kunis cookies duraan farsimaman haquu waan taasiseef gareewwan hundarraa ba'uuf fi deebisanii seenuuf dirqisiifama.",
-          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+          docsLinkLabel: 'yt-dlp sanadoota (dhimma #10927)'
         }
       }
     },
@@ -345,7 +361,7 @@ const om = {
       audioOnly: 'Sagalee qofa',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Daawniloodoonni biroo xumuramu booda jalqaba — bandwidth guutuu argata',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'Buusi! ↓',
       pullItTooltip: 'Immediately jalqaba — daawniloodoonni biroo waliin hojjeta',
       playlistBatch_one: '{{count}} viidiyoo · {{title}}',
       playlistBatch_other: '{{count}} viidiyoowwan · {{title}}',
@@ -353,15 +369,16 @@ const om = {
       labelPreset: 'Preset',
       labelItems: 'Wantota',
       itemsValue_one: '{{count}} fi {{total}} keessaa viidiyoo',
-      itemsValue_other: '{{count}} fi {{total}} keessaa viidiyoowwan'
+      itemsValue_other: '{{count}} fi {{total}} keessaa viidiyoowwan',
+      itemsValueAudio_one: '{{count}} fi {{total}} keessaa weellaa',
+      itemsValueAudio_other: '{{count}} fi {{total}} keessaa weellaalee'
     },
     error: {
       icon: 'Dogoggora'
     }
   },
   videoCard: {
-    titlePlaceholder: "Fe'amaa jira…",
-    domain: 'youtube.com'
+    titlePlaceholder: "Fe'amaa jira…"
   },
   queue: {
     header: 'Tartiiba Daawniloodii',
@@ -434,7 +451,8 @@ const om = {
       unavailable: "Viidiyoon kun hin argamu — dhuunfaa, haqame, ykn naannoo-cufaa ta'uu mala.",
       geoBlocked: 'Viidiyoon kun naanno kee keessatti hin argamu.',
       outOfDiskSpace: "Bakki disikii gahaa hin jiru. Bakka duwwaa godhi achiin irra deebi'i.",
-      unsupportedUrl: 'Kunis URL viidiyoo fakkaata miti. YouTube viidiyoo, Short, ykn playlist liinkii maxxansi.'
+      unsupportedUrl: 'Kunis URL viidiyoo fakkaata miti. YouTube viidiyoo, Short, ykn playlist liinkii maxxansi.',
+      chunkTransferFailure: 'Sarvarri buufannaa giddu-galeessatti kuteera, yt-dlp irra deebi\'uun yaale booddee kufe. Kun baay\'inaan foormaatii viidiyoo guddoo (4K HDR / VP9 bitrate olaanaa) irratti mul\'ata. Irra deebi\'i, network/VPN jijjiiri, ykn foormaatii qulqullina xiqqaa ta\'e filadhu.'
     }
   },
   presets: {
@@ -473,7 +491,7 @@ const om = {
   formatLabel: {
     audioOnly: 'Sagalee qofa',
     audioFallback: 'Sagalee',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'Sagalee qofa · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -511,12 +529,12 @@ const om = {
   share: {
     title: 'Arroxy Qoodi',
     description: "Arroxy bilisaa fi madda-banaadha. Qoodun namoota baay'ee argachuu ni gargaara.",
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'Hidhata garagalchi',
+    copied: 'Garagalfame!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Arroxy qoodi',
+    footerLabel: 'Qoodi',
+    shareAction: 'Arroxy qoodi',
     inlineCard: {
       body: "Arroxy si gammachiisaa jiraa? Namaa faayidaa qabu ta'uu danda'u wajjin qoodi.",
       dismiss: 'Yaada qooduu haqdhaabi'

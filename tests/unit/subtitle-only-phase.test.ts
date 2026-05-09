@@ -28,7 +28,7 @@ function makeJob(): DownloadJob {
 }
 
 const BASE_SUBS = { languages: ['en'], mode: 'sidecar' as const, format: 'srt' as const, writeAuto: false };
-const BASE_JOB: PreparedJob = { kind: 'subtitle-only', source: 'youtube', subtitles: BASE_SUBS };
+const BASE_JOB: PreparedJob = { kind: 'subtitle-only', extractor: 'youtube', extractorKey: 'Youtube', subtitles: BASE_SUBS };
 
 const BASE_INPUT: StartDownloadInput = {
   url: 'https://www.youtube.com/watch?v=test',
@@ -133,10 +133,10 @@ describe('SubtitleOnlyPhase', () => {
     });
     await SubtitleOnlyPhase.run(ctx);
 
-    const shouldAbort = vi.mocked(dedupeSubtitleFiles).mock.calls[0][2];
-    expect(shouldAbort()).toBe(false);
+    const shouldAbort = vi.mocked(dedupeSubtitleFiles).mock.calls[0][3];
+    expect(shouldAbort?.()).toBe(false);
     ctx.active.cancelRequested = true;
-    expect(shouldAbort()).toBe(true);
+    expect(shouldAbort?.()).toBe(true);
   });
 
   it('cancelled after run → returns cancelled', async () => {

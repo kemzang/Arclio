@@ -71,7 +71,7 @@ bun run dist:win     # د Windows پورټیبل exe کراس-کمپایل
 
 export const ps = {
   icon_alt: "د Arroxy ماسکوټ",
-  title: "Arroxy — د Windows، macOS او Linux لپاره وړیا خلاصه سرچینه YouTube ډاونلوډر",
+  title: "Arroxy — د Windows، macOS او Linux لپاره وړیا خلاصه سرچینه YouTube (+ ۲۰۰۰ سایټونه) ډاونلوډر",
   read_in_label: "پدې ژبه ولولئ:",
   badge_release_alt: "خپرونه",
   badge_build_alt: "جوړونه",
@@ -80,7 +80,7 @@ export const ps = {
   badge_i18n_alt: "ژبې",
   badge_website_alt: "ویب پاڼه",
   hero_desc:
-    "هر YouTube ویډیو، Short، یا اوډیو ټریک د اصلي کیفیت سره ډاونلوډ کړئ — تر 4K HDR پورې د 60 fps سره، یا د MP3 / AAC / Opus په توګه. د Windows، macOS، او Linux پر سیستم ځایي چلیږي. **هیڅ اعلانات، هیڅ ننوتل، هیڅ براوزر کوکیز، هیڅ د ګوګل اکاونټ لینک نه دی.**",
+    "له **YouTube او ۲۰۰۰+ ملاتړ شویو سایټونو** نه ویډیوګانې، Shorts، موسیقي، چینلونه، پوډکاسټونه، یا اوډیو ټریکونه ډاونلوډ کړئ — تر 4K HDR پورې د 60 fps سره، یا د MP3 / AAC / Opus په توګه. د Windows، macOS، او Linux پر سیستم ځایي چلیږي. **هیڅ اعلانات، هیڅ بلوټ، هیڅ اضافي پلورنه نه ده.**",
   cta_latest: "↓ وروستۍ خپرونه ډاونلوډ کړئ",
   cta_website: "ویب پاڼه",
   demo_alt: "د Arroxy ډیمو",
@@ -116,7 +116,7 @@ export const ps = {
   feat_privacy_3: "فایلونه مستقیما هغه فولډر ته خوندي کیږي چې تاسو انتخاب کوئ",
   feat_workflow_h3: "کاري جریان",
   feat_workflow_1:
-    "**هر YouTube URL پیسټ کړئ** — ویډیوګانې، Shorts او playlists ملاتړ کېږي؛ ټول playlist ډاونلوډ کړئ یا لومړی ټاکلې ویډیوګانې وټاکئ",
+    "**هر لینک پیسټ کړئ** — YouTube ویډیوګانې، Shorts، چینلونه، پلیلیسټونه، پوډکاسټونه او Music، او همدارنګه ۲۰۰۰+ نور سایټونه چې yt-dlp یې ملاتړ کوي؛ ټول playlist ډاونلوډ کړئ یا لومړی ټاکلې ویډیوګانې وټاکئ",
   feat_workflow_2:
     "**د ډیری ډاونلوډونو کیو** — ډیری ډاونلوډونه سره سره تعقیب کړئ",
   feat_workflow_3:
@@ -136,6 +136,15 @@ export const ps = {
     "**SponsorBlock** — سپانسران، شمولې، وتلو، ځان-سپارښتنې پریږدئ یا د فصل نښه ورکړئ",
   feat_post_4:
     "**ځای پر ځای شوي میټاډاټا** — سرلیک، د اپلوډ نیټه، چینل، توضیح، تصویر، او د فصل نښانونه فایل ته لیکل کیږي",
+  feat_sites_h3: "YouTube + ۲۰۰۰ سایټونه",
+  feat_sites_1:
+    "**YouTube، بشپړ** — Videos، Shorts، Channels، Playlists، YouTube Music، او Podcasts د لومړي ټولګي سرچینو په توګه اداره کیږي",
+  feat_sites_2:
+    "**۲۰۰۰+ نور سایټونه** د yt-dlp له لارې — Vimeo، Twitch، Twitter/X، TikTok، SoundCloud، Bandcamp، Bilibili، BBC iPlayer، archive.org، او ډیر نور",
+  feat_sites_3:
+    "**یوازې اوډیو او ساب ټایټلونه** د هر ملاتړ شوي سایټ پر مهال کار کوي، نه یوازې YouTube",
+  feat_sites_4:
+    "که یو سایټ بدل شي، yt-dlp اونیزه فکسونه لیږدوي او Arroxy د پیلولو پر مهال بائنري اوتومات تازه کوي",
   shot1_alt: "یو URL پیسټ کړئ",
   shot2_alt: "خپل کیفیت غوره کړئ",
   shot3_alt: "د خوندي کولو ځای غوره کړئ",

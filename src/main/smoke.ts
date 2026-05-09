@@ -3,7 +3,7 @@
 //   - HiddenWindowTokenProvider (the bevasrs.wpc scrape)
 //   - TokenService            (warmUp + mint cache)
 //   - BinaryManager           (real yt-dlp binary)
-//   - FormatProbeService      (full 3-attempt ladder via runYtDlp)
+//   - ProbeService            (full 3-attempt ladder via runYtDlp)
 //
 // Triggered by setting ARROXY_SMOKE_URL. Skips creating the main window;
 // reports to stdout; exits cleanly.
@@ -11,14 +11,14 @@
 import { app } from 'electron';
 import { nonEmpty } from '@shared/format.js';
 import type { BinaryManager } from './services/BinaryManager.js';
-import type { FormatProbeService } from './services/FormatProbeService.js';
+import type { ProbeService } from './services/ProbeService.js';
 import type { TokenService } from './services/TokenService.js';
 
 interface SmokeDeps {
   url: string;
   binaryManager: BinaryManager;
   tokenService: TokenService;
-  formatProbeService: FormatProbeService;
+  probeService: ProbeService;
 }
 
 const GREEN = '\x1b[32m';
@@ -38,7 +38,7 @@ function fail(label: string, detail: string): void {
 }
 
 export async function runSmokeMode(deps: SmokeDeps): Promise<number> {
-  const { url, binaryManager, tokenService, formatProbeService } = deps;
+  const { url, binaryManager, tokenService, probeService } = deps;
 
   out('Smoke test — Electron, real yt-dlp, real YouTube');
   out(`  url: ${url}`);
@@ -70,16 +70,21 @@ export async function runSmokeMode(deps: SmokeDeps): Promise<number> {
     failures++;
   }
 
-  // 3. Format probe — full 3-attempt ladder, real yt-dlp spawn, real network.
+  // 3. Probe — full 3-attempt ladder, real yt-dlp spawn, real network.
   //    On a healthy day this hits attempt 0 (PoT) and succeeds. If PoT mint
   //    failed above, the runner catches it and uses player_client fallback.
   const probeStart = Date.now();
-  const probe = await formatProbeService.getFormats(url);
+  const probe = await probeService.probe(url);
   if (probe.ok) {
-    pass('format probe (full ladder)', `${probe.data.formats.length} formats  in ${Date.now() - probeStart}ms`);
-    pass('  └ schema parses', probe.data.title || '(no title)');
+    if (probe.data.kind === 'video') {
+      pass('probe (full ladder)', `${probe.data.formats.length} formats  in ${Date.now() - probeStart}ms`);
+      pass('  └ schema parses', probe.data.title || '(no title)');
+    } else {
+      pass('probe (full ladder)', `${probe.data.entries.length} playlist entries  in ${Date.now() - probeStart}ms`);
+      pass('  └ schema parses', probe.data.playlistTitle || '(no title)');
+    }
   } else {
-    fail('format probe (full ladder)', probe.error.message);
+    fail('probe (full ladder)', probe.error.message);
     failures++;
   }
 

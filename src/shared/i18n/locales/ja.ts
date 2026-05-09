@@ -90,6 +90,8 @@ const ja = {
       heading: 'Playlist アイテム',
       itemCount_one: '{{count}} 本の動画',
       itemCount_other: '{{count}} 本の動画',
+      itemCountAudio_one: '{{count}} 曲',
+      itemCountAudio_other: '{{count}} 曲',
       selectAll: 'すべて選択',
       selectNone: 'すべて解除',
       rangeFrom: '開始',
@@ -123,17 +125,25 @@ const ja = {
       fetchFormats: '形式を取得',
       features: {
         heading: 'Arroxyで取得できるもの',
-        video: {
-          title: '動画',
-          desc: '4Kまで好きな解像度を選べる'
+        youtube: {
+          heading: 'YouTube',
+          video: '動画',
+          channel: 'チャンネル',
+          playlist: 'プレイリスト',
+          short: 'Shorts',
+          music: '音楽',
+          podcast: 'ポッドキャスト'
         },
-        playlist: {
-          title: 'プレイリスト',
-          desc: 'プレイリストから複数選択'
+        anySite: {
+          heading: '2000以上のサイト',
+          video: '動画',
+          videoPlaylist: '動画プレイリスト',
+          musicPlaylist: '音楽プレイリスト'
         },
-        audio: {
-          title: '音声',
-          desc: 'オリジナルストリームまたはMP3/M4A変換'
+        always: {
+          heading: 'いつでも利用可能',
+          audioOnly: '音声のみ',
+          subtitles: '字幕'
         }
       },
       mascotIdle: 'YouTubeのリンクを貼ってね (動画でもShortsでもOK) — 「形式を取得」を押せばすぐ取りかかるよ ✨',
@@ -251,10 +261,12 @@ const ja = {
       audioOnlyOption: '音声のみ (動画なし)',
       mascot: '最高 + 最高 = 最高画質。これを選ぶよ!',
       sniffing: 'あなたに最適な形式を探しています…',
-      loadingHint: '通常は1秒ほどで完了',
+      loadingHint: '解析が完了するまでお待ちください。プレイリストや検索には時間がかかる場合があります。',
       loadingAria: '形式を読み込み中',
       sizeUnknown: 'サイズ不明',
       total: '合計',
+      keepAudio: 'そのまま保持',
+      keepAudioMeta: '内蔵音声',
       convert: {
         label: '変換',
         uncompressed: '変換 · 非圧縮',
@@ -280,6 +292,10 @@ const ja = {
         currentModeBrowser: 'ブラウザ',
         explanationFile: 'Cookieファイルが空・期限切れ・または形式が正しくない可能性があります (yt-dlp は Netscape cookies.txt を期待しています)。Cookieを再エクスポートするか、別のファイルを選ぶか、ブラウザモードに切り替えるか、Cookieをオフにしてみてください。',
         explanationBrowser: 'Cookieはブラウザから直接読み込まれます。ブラウザが起動中の場合、Cookieデータベースがロックされている可能性があります (Chromiumファミリー)。ブラウザがYouTubeにサインインしている必要もあります。ブラウザを閉じる、別のブラウザに切り替える、ファイルモードに変更する、またはCookieをオフにしてみてください。',
+        needsCookies: {
+          heading: 'このサイトはサインインが必要です',
+          body: 'yt-dlpは認証なしでこの動画にアクセスできませんでした。詳細設定でCookieを設定してください — すでにサインイン済みのブラウザを指定するか、cookies.txtファイルをインポートしてください。'
+        },
         openSettingsCta: 'Cookie設定を開く',
         dpapi: {
           heading: 'ChromeのCookieがWindowsの暗号化によりブロックされています',
@@ -354,15 +370,16 @@ const ja = {
       labelPreset: 'プリセット',
       labelItems: '件数',
       itemsValue_one: '全{{total}}本中{{count}}本',
-      itemsValue_other: '全{{total}}本中{{count}}本'
+      itemsValue_other: '全{{total}}本中{{count}}本',
+      itemsValueAudio_one: '全{{total}}曲中{{count}}曲',
+      itemsValueAudio_other: '全{{total}}曲中{{count}}曲'
     },
     error: {
       icon: 'エラー'
     }
   },
   videoCard: {
-    titlePlaceholder: '読み込み中…',
-    domain: 'youtube.com'
+    titlePlaceholder: '読み込み中…'
   },
   queue: {
     header: 'ダウンロードキュー',
@@ -435,7 +452,8 @@ const ja = {
       unavailable: 'この動画は利用できません — 非公開、削除済み、または地域制限の可能性があります。',
       geoBlocked: 'この動画はあなたの地域では視聴できません。',
       outOfDiskSpace: 'ディスク容量が不足しています。空き容量を増やして再試行してください。',
-      unsupportedUrl: '動画のURLではないようです。YouTube動画、Short、またはプレイリストのリンクを貼り付けてください。'
+      unsupportedUrl: '動画のURLではないようです。YouTube動画、Short、またはプレイリストのリンクを貼り付けてください。',
+      chunkTransferFailure: 'サーバーがストリームの途中で接続を何度も切断し、yt-dlpは再試行を繰り返した末に断念しました。最も大きなビデオフォーマット（4K HDR / 高ビットレート VP9）で起こりやすい問題です。再試行するか、ネットワークまたは VPN を切り替えるか、解像度の低いフォーマットを選択してください。'
     }
   },
   presets: {
@@ -512,19 +530,19 @@ const ja = {
   share: {
     title: 'Arroxyをシェア',
     description: 'Arroxyは無料でオープンソースです。シェアすることでより多くの人に届けることができます。',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'リンクをコピー',
+    copied: 'コピーしました！',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'Arroxy を共有',
+    footerLabel: '共有',
+    shareAction: 'Arroxy を共有',
     inlineCard: {
       body: 'Arroxyを気に入ってくれてる? 役に立ちそうな人にシェアしてみて。',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'シェアの提案を閉じる'
     },
     highValueBanner: {
       body: 'Arroxyを気に入ってくれてる? ほかの人にも見つけてもらおう。',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'シェアの提案を閉じる'
     }
   }
 } as const;

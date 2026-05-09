@@ -9,8 +9,8 @@ vi.mock('electron', () => ({
   ipcMain: { handle: vi.fn(), removeHandler: vi.fn() }
 }));
 
-vi.mock('electron-updater', () => ({
-  autoUpdater: {
+vi.mock('electron-updater', () => {
+  const au = {
     autoDownload: true,
     autoInstallOnAppQuit: true,
     on: vi.fn(),
@@ -19,8 +19,9 @@ vi.mock('electron-updater', () => ({
     checkForUpdates: vi.fn().mockResolvedValue(undefined),
     downloadUpdate: vi.fn().mockResolvedValue(undefined),
     quitAndInstall: vi.fn()
-  }
-}));
+  };
+  return { default: { autoUpdater: au }, autoUpdater: au };
+});
 
 vi.mock('@main/installChannel', () => ({
   detectInstallChannel: vi.fn().mockReturnValue('direct')
@@ -105,8 +106,8 @@ describe('registerUpdaterHandlers', () => {
       },
       ipcMain: { handle: vi.fn(), removeHandler: vi.fn() }
     }));
-    vi.doMock('electron-updater', () => ({
-      autoUpdater: {
+    vi.doMock('electron-updater', () => {
+      const au = {
         autoDownload: true,
         autoInstallOnAppQuit: true,
         on: vi.fn(),
@@ -115,8 +116,9 @@ describe('registerUpdaterHandlers', () => {
         checkForUpdates: vi.fn().mockResolvedValue(undefined),
         downloadUpdate: vi.fn().mockResolvedValue(undefined),
         quitAndInstall: vi.fn()
-      }
-    }));
+      };
+      return { default: { autoUpdater: au }, autoUpdater: au };
+    });
     const { registerUpdaterHandlers: registerWithScoop } = await import('@main/ipc/registerUpdaterHandlers.js');
     const { autoUpdater: scopedAutoUpdater } = await import('electron-updater');
 
@@ -149,8 +151,8 @@ describe('registerUpdaterHandlers', () => {
       },
       ipcMain: { handle: vi.fn(), removeHandler: vi.fn() }
     }));
-    vi.doMock('electron-updater', () => ({
-      autoUpdater: {
+    vi.doMock('electron-updater', () => {
+      const au = {
         autoDownload: true,
         autoInstallOnAppQuit: true,
         on: vi.fn(),
@@ -159,8 +161,9 @@ describe('registerUpdaterHandlers', () => {
         checkForUpdates: vi.fn().mockResolvedValue(undefined),
         downloadUpdate: vi.fn().mockResolvedValue(undefined),
         quitAndInstall: vi.fn()
-      }
-    }));
+      };
+      return { default: { autoUpdater: au }, autoUpdater: au };
+    });
     const { registerUpdaterHandlers: registerWithFlatpak } = await import('@main/ipc/registerUpdaterHandlers.js');
     const { autoUpdater: scopedAutoUpdater } = await import('electron-updater');
 
@@ -284,8 +287,8 @@ describe('registerUpdaterHandlers', () => {
         },
         ipcMain: { handle: vi.fn(), removeHandler: vi.fn() }
       }));
-      vi.doMock('electron-updater', () => ({
-        autoUpdater: {
+      vi.doMock('electron-updater', () => {
+        const au = {
           autoDownload: true,
           autoInstallOnAppQuit: true,
           on: vi.fn(),
@@ -294,8 +297,9 @@ describe('registerUpdaterHandlers', () => {
           checkForUpdates: vi.fn().mockResolvedValue(undefined),
           downloadUpdate: vi.fn().mockResolvedValue(undefined),
           quitAndInstall: vi.fn()
-        }
-      }));
+        };
+        return { default: { autoUpdater: au }, autoUpdater: au };
+      });
       const { registerUpdaterHandlers: register } = await import('@main/ipc/registerUpdaterHandlers.js');
       const { autoUpdater: scopedAutoUpdater } = await import('electron-updater');
       const { ipcMain: scopedIpcMain } = await import('electron');

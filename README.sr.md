@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy маскота" width="180" />
 
-# Arroxy — Бесплатни open-source YouTube преузимач за Windows, macOS и Linux
+# Arroxy — Бесплатни open-source YouTube (+ 2000 сајтова) преузимач за Windows, macOS и Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Читај на:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · **Српски** · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Издање](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Изградња](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Веб-сајт](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Лиценца](https://img.shields.io/badge/license-MIT-green) ![Платформе](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Језици](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Преузмите било који YouTube видео, Short или аудио снимак у оригиналном квалитету — до 4K HDR при 60 fps, или као MP3 / AAC / Opus. Ради локално на Windows-у, macOS-у и Linux-у. **Без реклама, без пријаве, без колачића претраживача, без повезаног Google налога.**
+Преузимајте видео снимке, Shorts, музику, каналe, подкасте или аудио записе са **YouTube-а и 2000+ подржаних сајтова** — до 4K HDR при 60 fps, или у MP3 / AAC / Opus формату. Ради локално на Windows-у, macOS-у и Linux-у. **Без реклама, без непотребног, без додатне продаје.**
 
 [**↓ Преузмите најновије издање**](../../releases/latest) &nbsp;·&nbsp; [**Веб-сајт**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -68,7 +68,7 @@ Arroxy је направљен за једну ствар: налепите URL,
 
 ### Радни ток
 
-- **Nalepi bilo koji YouTube URL** — podržani su video snimci, Shorts i plejliste; preuzmi celu plejlistu ili prvo izaberi određene video snimke
+- **Налепи bilo koji линк** — YouTube видео снимци, Shorts, канали, пlejliste, подкасти и Музика, плус 2000+ других сajтова које yt-dlp подржава; преузми цelu plejlistu или прво изабери одређене video snimke
 - **Ред за вишеструко преузимање** — пратите неколико преузимања истовремено
 - **Праћење клипборда** — копирајте YouTube линк и Arroxy аутоматски попуњава URL кад се вратите у апликацију (укључиво у напредним подешавањима)
 - **Аутоматско чишћење URL-ова** — уклања параметре праћења (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) и распакује `youtube.com/redirect` линкове
@@ -81,6 +81,13 @@ Arroxy је направљен за једну ствар: налепите URL,
 - Чувај поред видеа, уграђај у `.mkv`, или организуј у потфасциклу `Subtitles/`
 - **SponsorBlock** — прескочи или означи поглављима спонзоре, интра, аутра, самопромоције
 - **Уграђени метаподаци** — наслов, датум учитавања, канал, опис, минијатура и маркери поглавља уписани у фајл
+
+### YouTube + 2000 сајтова
+
+- **YouTube — у потпуности** — видео снимци, Shorts, канали, пlejliste, YouTube Music и подкасти обрађени као извори прве класе
+- **2000+ других сajтова** преко yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org и многи други
+- **Само аудио и титлови** раде на свaком подржаном сaјту, не само на YouTube-у
+- Ако сajт промени нешто, yt-dlp испоручује исправке недељно, а Arroxy аутоматски ажурира бинарни фajл при покретању
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="Налепите URL" />

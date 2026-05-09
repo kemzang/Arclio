@@ -47,7 +47,7 @@ export const SubtitleOnlyPhase: Phase = {
     if (result.usedExtractorFallback) active.usedExtractorFallback = true;
 
     if (subtitles.writeAuto) {
-      await dedupeSubtitleFiles(active.subtitlePaths, job.id, () => active.cancelRequested);
+      await dedupeSubtitleFiles(active.subtitlePaths, preparedJob.extractor, job.id, () => active.cancelRequested);
     }
 
     return { kind: 'completed' };

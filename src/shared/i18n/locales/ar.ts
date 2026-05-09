@@ -90,6 +90,8 @@ const ar = {
       heading: 'عناصر القائمة',
       itemCount_one: '{{count}} فيديو',
       itemCount_other: '{{count}} مقاطع فيديو',
+      itemCountAudio_one: '{{count}} مقطع صوتي',
+      itemCountAudio_other: '{{count}} مقاطع صوتية',
       selectAll: 'تحديد الكل',
       selectNone: 'إلغاء تحديد الكل',
       rangeFrom: 'من',
@@ -123,17 +125,25 @@ const ar = {
       fetchFormats: 'جلب الصيغ',
       features: {
         heading: 'ما الذي يستطيع Arroxy سحبه',
-        video: {
-          title: 'مقاطع فيديو',
-          desc: 'اختر أي دقة حتى 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'مقاطع فيديو',
+          channel: 'القنوات',
+          playlist: 'قوائم التشغيل',
+          short: 'Shorts',
+          music: 'الموسيقى',
+          podcast: 'البودكاست'
         },
-        playlist: {
-          title: 'قوائم التشغيل',
-          desc: 'اختر عناصر متعددة من قائمة'
+        anySite: {
+          heading: '2000+ موقع',
+          video: 'مقاطع فيديو',
+          videoPlaylist: 'قوائم تشغيل الفيديو',
+          musicPlaylist: 'قوائم تشغيل الموسيقى'
         },
-        audio: {
-          title: 'صوت',
-          desc: 'المقطع الأصلي أو تحويل MP3/M4A'
+        always: {
+          heading: 'دائماً متاح',
+          audioOnly: 'الصوت فقط',
+          subtitles: 'الترجمات'
         }
       },
       mascotIdle: 'أرسل لي رابط YouTube (فيديو أو Short) — ثم اضغط "جلب الصيغ" وسأبدأ العمل ✨',
@@ -251,10 +261,12 @@ const ar = {
       audioOnlyOption: 'صوت فقط (بدون فيديو)',
       mascot: 'الأفضل + الأفضل = أقصى جودة. هذا ما كنت سأختاره!',
       sniffing: 'جارٍ البحث عن أفضل الصيغ لك…',
-      loadingHint: 'عادةً يستغرق ثانية',
+      loadingHint: 'يُرجى الانتظار حتى تنتهي عملية الفحص — قوائم التشغيل والبحث قد تستغرق بعض الوقت.',
       loadingAria: 'جارٍ تحميل الصيغ',
       sizeUnknown: 'الحجم غير معروف',
       total: 'الإجمالي',
+      keepAudio: 'إبقاؤه كما هو',
+      keepAudioMeta: 'الصوت المضمّن',
       convert: {
         label: 'تحويل',
         uncompressed: 'تحويل · غير مضغوط',
@@ -281,6 +293,10 @@ const ar = {
         explanationFile: 'ملف الكوكيز قد يكون فارغاً أو منتهي الصلاحية أو بتنسيق خاطئ (يتوقع yt-dlp ملف Netscape cookies.txt). جرّب إعادة تصدير الكوكيز، أو اختيار ملف مختلف، أو التبديل إلى وضع المتصفح، أو إيقاف الكوكيز.',
         explanationBrowser: 'تُقرأ الكوكيز مباشرةً من المتصفح. إذا كان المتصفح يعمل حالياً، فقد تكون قاعدة بيانات الكوكيز مقفلة (متصفحات عائلة Chromium). يجب أن يكون المتصفح مسجّل الدخول إلى YouTube. جرّب إغلاق المتصفح، أو التبديل إلى متصفح مختلف، أو التبديل إلى وضع الملف، أو إيقاف الكوكيز.',
         openSettingsCta: 'فتح إعدادات الكوكيز',
+        needsCookies: {
+          heading: 'هذا الموقع يتطلب تسجيل الدخول',
+          body: 'تعذّر على yt-dlp الوصول إلى هذا الفيديو بدون مصادقة. أعدّ الكوكيز في الإعدادات المتقدمة — وجّههم نحو متصفح سجّلت الدخول إليه مسبقاً، أو استورد ملف cookies.txt.'
+        },
         dpapi: {
           heading: 'كوكيز Chrome محجوبة بسبب تشفير Windows',
           explanation: 'يُشفّر Chrome 127 والإصدارات الأحدث الكوكيز بطريقة لا تستطيع التطبيقات الأخرى قراءتها على Windows. جرّب أحد الحلول البديلة أدناه.',
@@ -346,7 +362,7 @@ const ar = {
       audioOnly: 'صوت فقط',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'يبدأ عند انتهاء التنزيلات الأخرى — يحصل على كامل عرض النطاق',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'اسحبه! ↓',
       pullItTooltip: 'يبدأ فوراً — يعمل جنباً إلى جنب مع التنزيلات النشطة الأخرى',
       playlistBatch_one: '{{count}} فيديو · {{title}}',
       playlistBatch_other: '{{count}} مقاطع فيديو · {{title}}',
@@ -354,15 +370,16 @@ const ar = {
       labelPreset: 'الإعداد المسبق',
       labelItems: 'العناصر',
       itemsValue_one: '{{count}} من {{total}} فيديو',
-      itemsValue_other: '{{count}} من {{total}} مقاطع فيديو'
+      itemsValue_other: '{{count}} من {{total}} مقاطع فيديو',
+      itemsValueAudio_one: '{{count}} من {{total}} مقطع صوتي',
+      itemsValueAudio_other: '{{count}} من {{total}} مقاطع صوتية'
     },
     error: {
       icon: 'خطأ'
     }
   },
   videoCard: {
-    titlePlaceholder: 'جارٍ التحميل…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'جارٍ التحميل…'
   },
   queue: {
     header: 'قائمة التنزيل',
@@ -435,7 +452,8 @@ const ar = {
       unavailable: 'هذا الفيديو غير متاح — قد يكون خاصاً أو محذوفاً أو مقيّداً بالمنطقة.',
       geoBlocked: 'هذا الفيديو غير متاح في منطقتك.',
       outOfDiskSpace: 'مساحة القرص غير كافية. أفرغ مساحة وأعد المحاولة.',
-      unsupportedUrl: 'لا يبدو هذا رابط فيديو. الصق رابط فيديو YouTube أو Short أو قائمة تشغيل.'
+      unsupportedUrl: 'لا يبدو هذا رابط فيديو. الصق رابط فيديو YouTube أو Short أو قائمة تشغيل.',
+      chunkTransferFailure: 'استمر الخادم في قطع التنزيل في منتصفه وتخلى yt-dlp بعد محاولات متعددة. يحدث هذا عادةً مع أكبر صيغ الفيديو (4K HDR / VP9 عالي معدل البت). أعد المحاولة، أو غيّر الشبكة/VPN، أو اختر صيغة بدقة أقل.'
     }
   },
   presets: {
@@ -474,7 +492,7 @@ const ar = {
   formatLabel: {
     audioOnly: 'صوت فقط',
     audioFallback: 'صوت',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'صوت فقط · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -512,19 +530,19 @@ const ar = {
   share: {
     title: 'مشاركة Arroxy',
     description: 'Arroxy مجاني ومفتوح المصدر. مشاركته تساعد المزيد من الأشخاص على اكتشافه.',
-    copyLink: 'Copy link',
-    copied: 'Copied!',
+    copyLink: 'نسخ الرابط',
+    copied: 'تم النسخ!',
     defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
-    footerTooltip: 'Share Arroxy',
-    footerLabel: 'Share',
-    shareAction: 'Share Arroxy',
+    footerTooltip: 'مشاركة Arroxy',
+    footerLabel: 'مشاركة',
+    shareAction: 'مشاركة Arroxy',
     inlineCard: {
       body: 'هل تستمتع بـ Arroxy؟ شاركه مع شخص قد يجده مفيداً.',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'إغلاق اقتراح المشاركة'
     },
     highValueBanner: {
       body: 'هل تستمتع بـ Arroxy؟ ساعد الآخرين على اكتشافه.',
-      dismiss: 'Dismiss share suggestion'
+      dismiss: 'إغلاق اقتراح المشاركة'
     }
   }
 } as const;
