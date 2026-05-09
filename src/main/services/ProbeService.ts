@@ -325,7 +325,7 @@ export class ProbeService {
       });
     };
     const emitFailure = (errorCategory: string): void => {
-      trackMain('format_probed', {
+      trackMain('probe_failed', {
         duration_bucket: probeDurationBucket(Date.now() - startMs),
         error_category: errorCategory,
         cookies_mode: cookiesMode

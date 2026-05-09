@@ -61,15 +61,46 @@ describe('OpenPanel track delegation', () => {
     expect(trackMock).toHaveBeenCalledWith('binary_setup_failed', { binary: 'ytdlp', phase: 'download_failed', code: 'ARX-001' });
   });
 
-  it('emits download_finished as a single event regardless of outcome', () => {
+  it('emits download_finished for successful downloads', () => {
     setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
     setAnalyticsEnabled(true);
-    trackMain('download_finished', { outcome: 'success', duration_bucket: '<30s', size_bucket: '<50MB' });
+    trackMain('download_finished', { duration_bucket: '<30s', size_bucket: '<50MB' });
     expect(trackMock).toHaveBeenCalledTimes(1);
-    trackMock.mockClear();
-    trackMain('download_finished', { outcome: 'error', error_category: 'disk_full' });
+    expect(trackMock).toHaveBeenCalledWith('download_finished', { duration_bucket: '<30s', size_bucket: '<50MB' });
+  });
+
+  it('emits download_cancelled for user-cancelled downloads', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
+    setAnalyticsEnabled(true);
+    trackMain('download_cancelled', { duration_bucket: '30s-2m' });
     expect(trackMock).toHaveBeenCalledTimes(1);
-    expect(trackMock).toHaveBeenCalledWith('download_finished', { outcome: 'error', error_category: 'disk_full' });
+    expect(trackMock).toHaveBeenCalledWith('download_cancelled', { duration_bucket: '30s-2m' });
+  });
+
+  it('emits download_failed for failed downloads with error_category', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
+    setAnalyticsEnabled(true);
+    trackMain('download_failed', { duration_bucket: '<30s', size_bucket: '50-500MB', error_category: 'disk_full' });
+    expect(trackMock).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledWith('download_failed', { duration_bucket: '<30s', size_bucket: '50-500MB', error_category: 'disk_full' });
+  });
+
+  it('emits probe_failed for probe errors with error_category', () => {
+    setupAnalytics('client-id', 'client-secret', false, 'install-id-test');
+    setAnalyticsEnabled(true);
+    trackMain('probe_failed', { duration_bucket: '<2s', error_category: 'bot_detected', cookies_mode: 'off' });
+    expect(trackMock).toHaveBeenCalledTimes(1);
+    expect(trackMock).toHaveBeenCalledWith('probe_failed', { duration_bucket: '<2s', error_category: 'bot_detected', cookies_mode: 'off' });
+  });
+
+  it('rejects error_category on format_probed in dev mode', () => {
+    setupAnalytics(undefined, undefined, true, 'install-id-test');
+    expect(() => trackMain('format_probed', { error_category: 'bot_detected' } as any)).toThrow(/prop "error_category" not allowed/);
+  });
+
+  it('rejects outcome on download_finished in dev mode', () => {
+    setupAnalytics(undefined, undefined, true, 'install-id-test');
+    expect(() => trackMain('download_finished', { outcome: 'success' } as any)).toThrow(/prop "outcome" not allowed/);
   });
 
   it('emits app_started normally', () => {

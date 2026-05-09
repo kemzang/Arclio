@@ -518,13 +518,22 @@ export class DownloadService extends EventEmitter {
     job.updatedAt = nowIso();
 
     const durationMs = new Date(job.updatedAt).getTime() - new Date(job.createdAt).getTime();
-    const outcome = status === 'completed' ? 'success' : status === 'cancelled' ? 'cancelled' : 'error';
-    trackMain('download_finished', {
-      outcome,
-      duration_bucket: downloadDurationBucket(durationMs),
-      ...(status !== 'cancelled' && job.expectedBytes != null ? { size_bucket: sizeBucket(job.expectedBytes) } : {}),
-      ...(outcome === 'error' ? { error_category: categorizeDownloadError(error?.rawMessage ?? '') } : {})
-    });
+    if (status === 'completed') {
+      trackMain('download_finished', {
+        duration_bucket: downloadDurationBucket(durationMs),
+        ...(job.expectedBytes != null ? { size_bucket: sizeBucket(job.expectedBytes) } : {})
+      });
+    } else if (status === 'cancelled') {
+      trackMain('download_cancelled', {
+        duration_bucket: downloadDurationBucket(durationMs)
+      });
+    } else {
+      trackMain('download_failed', {
+        duration_bucket: downloadDurationBucket(durationMs),
+        error_category: categorizeDownloadError(error?.rawMessage ?? ''),
+        ...(job.expectedBytes != null ? { size_bucket: sizeBucket(job.expectedBytes) } : {})
+      });
+    }
 
     const recent: RecentJob = {
       id: job.id,
