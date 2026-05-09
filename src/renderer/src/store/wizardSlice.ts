@@ -48,8 +48,23 @@ export function rewriteYouTubeChannelRoot(url: string): string {
   }
 }
 import type { AppState, GetState, SetState, WizardMode, WizardSlice, WizardStep } from './types.js';
-import { presetProducesMedia, presetProducesVideo } from '@shared/presetTraits.js';
-import { STEPS, shouldSkip, type VisibleStep } from '../components/wizard/stepNavigation.js';
+import { type VisibleStep } from '../components/wizard/stepNavigation.js';
+import { nextStep, type NavContext } from '../components/wizard/nextStep.js';
+
+// Build the NavContext required by nextStep from the current wizard slice state.
+// Centralized so advance/back/skipSubtitles can't drift from each other.
+function navCtx(state: AppState): NavContext {
+  const hasSubtitles = Object.keys(state.wizardSubtitles).length > 0 || Object.keys(state.wizardAutomaticCaptions).length > 0;
+  return {
+    activePreset: state.activePreset,
+    wizardMode: state.wizardMode,
+    selectedPlaylistPreset: state.selectedPlaylistPreset,
+    wizardExtractor: state.wizardExtractor,
+    hasSubtitles,
+    wizardSubtitleSkipped: state.wizardSubtitleSkipped,
+    retryOrigin: state.wizardErrorOrigin === 'formats' ? 'formats' : null
+  };
+}
 
 function pickWizardSnapshot(state: AppState): Record<string, unknown> {
   return {
@@ -374,32 +389,18 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
 
     advance: () => {
       const state = get();
-      const { wizardStep, activePreset, wizardMode, selectedPlaylistPreset, wizardExtractor, wizardSubtitles, wizardAutomaticCaptions } = state;
-      const hasSubtitles = Object.keys(wizardSubtitles).length > 0 || Object.keys(wizardAutomaticCaptions).length > 0;
-      const i = STEPS.indexOf(wizardStep as VisibleStep);
-      if (i < 0 || i >= STEPS.length - 1) return;
-      let nextIdx = i + 1;
-      while (nextIdx < STEPS.length - 1 && shouldSkip(STEPS[nextIdx], { activePreset, wizardMode, selectedPlaylistPreset, wizardExtractor, hasSubtitles })) {
-        nextIdx++;
-      }
-      const target = STEPS[nextIdx] ?? STEPS[STEPS.length - 1];
+      const target = nextStep(state.wizardStep as VisibleStep, navCtx(state), 'forward');
+      if (!target) return;
       set({ wizardStep: target });
-      logStep('advance', wizardStep, target, pickWizardSnapshot(get()));
+      logStep('advance', state.wizardStep, target, pickWizardSnapshot(get()));
     },
 
     back: () => {
       const state = get();
-      const { wizardStep, activePreset, wizardMode, selectedPlaylistPreset, wizardExtractor, wizardSubtitles, wizardAutomaticCaptions } = state;
-      const hasSubtitles = Object.keys(wizardSubtitles).length > 0 || Object.keys(wizardAutomaticCaptions).length > 0;
-      const i = STEPS.indexOf(wizardStep as VisibleStep);
-      if (i <= 0) return;
-      let prevIdx = i - 1;
-      while (prevIdx > 0 && shouldSkip(STEPS[prevIdx], { activePreset, wizardMode, selectedPlaylistPreset, wizardExtractor, hasSubtitles })) {
-        prevIdx--;
-      }
-      const target = STEPS[prevIdx] ?? STEPS[0];
+      const target = nextStep(state.wizardStep as VisibleStep, navCtx(state), 'backward');
+      if (!target) return;
       set({ wizardStep: target, ...(target === 'subtitles' && { wizardSubtitleSkipped: false }) });
-      logStep('back', wizardStep, target, pickWizardSnapshot(get()));
+      logStep('back', state.wizardStep, target, pickWizardSnapshot(get()));
     },
 
     reset: () => {
@@ -525,16 +526,15 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
     setWizardSubfolderName: (name) => set({ wizardSubfolderName: name }),
 
     skipSubtitles: () => {
-      const { wizardStep, activePreset } = get();
-      const i = STEPS.indexOf(wizardStep as VisibleStep);
-      if (i < STEPS.length - 1) {
-        let nextIdx = i + 1;
-        if (STEPS[nextIdx] === 'sponsorblock' && activePreset && !presetProducesVideo(activePreset)) nextIdx++;
-        if (STEPS[nextIdx] === 'output' && activePreset && !presetProducesMedia(activePreset)) nextIdx++;
-        const target = STEPS[nextIdx] ?? STEPS[STEPS.length - 1];
-        set({ wizardSubtitleSkipped: true, wizardStep: target });
-        logStep('skipSubtitles', wizardStep, target, pickWizardSnapshot(get()));
-      }
+      // Mark skipped first so nextStep treats `subtitles` as ineligible —
+      // the rest of the routing reuses the same eligibility table as
+      // advance(), so SponsorBlock + output skip rules can't drift.
+      set({ wizardSubtitleSkipped: true });
+      const state = get();
+      const target = nextStep(state.wizardStep as VisibleStep, navCtx(state), 'forward');
+      if (!target) return;
+      set({ wizardStep: target });
+      logStep('skipSubtitles', state.wizardStep, target, pickWizardSnapshot(get()));
     },
 
     setSponsorBlockMode: (mode) => set({ wizardSponsorBlockMode: mode }),
