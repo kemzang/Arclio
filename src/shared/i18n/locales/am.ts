@@ -441,7 +441,8 @@ const am = {
     ytdlpProcessError: 'yt-dlp ሂደት ስህተት: {{error}}',
     ytdlpExitCode: 'yt-dlp በኮድ {{code}} ወጥቷል',
     downloadingBinary: '{{name}} ሁለዮሽ ፋይል እያወረዱ…',
-    unknownStartupFailure: 'ያልታወቀ ዳውንሎድ መጀመሪያ ወደቀ'
+    unknownStartupFailure: 'ያልታወቀ ዳውንሎድ መጀመሪያ ወደቀ',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

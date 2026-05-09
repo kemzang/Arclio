@@ -15,6 +15,11 @@ const logger = log.scope('probe');
 
 type ProbeSignalCategory = 'extractor' | 'bot';
 
+// Patterns sourced from yt-dlp's stderr emit sites — verified against
+// yt-dlp/yt_dlp/extractor/youtube/_video.py and yt-dlp/yt_dlp/downloader/common.py
+// (search the repo for each exact string). yt-dlp wording occasionally changes
+// across releases; if a probe stops triggering the degradation retry path,
+// re-grep yt-dlp main and update these patterns.
 const PROBE_DEGRADATION_SIGNALS: readonly { label: string; pattern: RegExp; category: ProbeSignalCategory }[] = [
   { label: 'n challenge solving failed', pattern: /n challenge solving failed/i, category: 'extractor' },
   { label: 'Some formats may be missing', pattern: /some formats may be missing/i, category: 'extractor' },
@@ -350,20 +355,26 @@ export class ProbeService {
       if (isPlaylistLike(info)) {
         mapped = buildPlaylistProbeResult(info, url);
         if (mapped.kind === 'playlist' && mapped.entries.length === 0) {
-          emitFailure('parse');
+          // Empty playlist isn't a JSON parse failure — extractor produced a
+          // valid container with no entries (private playlist, members-only,
+          // geo-blocked, exhausted page). Categorize accordingly so analytics
+          // and any user-facing copy can distinguish the cause.
+          emitFailure('content_unavailable');
           return fail(createAppError('download', 'Playlist returned no entries'));
         }
       } else if (isUrlRedirect(info)) {
         // Hit redirect-depth cap. Surface the URL error rather than guess.
-        emitFailure('parse');
+        emitFailure('redirect_loop');
         return fail(createAppError('download', 'Probe redirected too many times'));
       } else {
         const video = info;
         const degraded = deriveDegraded(final.degradationSignals);
         mapped = buildVideoProbeResult(video, url, degraded);
         if (mapped.kind === 'video' && mapped.formats.length === 0 && mapped.subtitles && Object.keys(mapped.subtitles).length === 0 && Object.keys(mapped.automaticCaptions).length === 0) {
-          // Empty video shape with no formats — usually a degraded/blocked probe.
-          emitFailure('parse');
+          // Valid extractor response with zero formats + zero subs + zero
+          // auto-captions — geo-block, age-gate, members-only, or live-not-yet.
+          // Not a parse failure; the JSON shape was fine.
+          emitFailure('content_unavailable');
           return fail(createAppError('download', 'Probe returned no formats'));
         }
       }

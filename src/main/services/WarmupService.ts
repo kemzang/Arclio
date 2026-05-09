@@ -129,14 +129,21 @@ export class WarmupService {
     // resolves with whichever fires first.
     const budgetSignal = (): AbortSignal => AbortSignal.any([userSignal, AbortSignal.timeout(PER_BINARY_BUDGET_MS)]);
 
-    const [ytDlpDiag, ffmpegPair, denoDiag] = await Promise.all([
+    const [ytDlpDiag, ffmpegPair, denoDiag, tokenStatus] = await Promise.all([
       binaryManager.resolveYtDlp({ onProgress: emit, signal: budgetSignal() }),
       binaryManager.resolveFFmpegPair({ onProgress: emit, signal: budgetSignal() }),
       binaryManager.resolveDeno({ onProgress: emit, signal: budgetSignal() }),
       tokenService.warmUp().catch((err) => {
-        logger.warn('Token warmup failed', { error: err instanceof Error ? err.message : String(err) });
+        const reason = err instanceof Error ? err.message : String(err);
+        logger.warn('Token warmup threw', { error: reason });
+        return { ready: false, reason } as const;
       })
     ]);
+    if (!tokenStatus.ready) {
+      // Surface in a single info line so log review reveals "all binaries
+      // resolved but PoT didn't pre-warm — slow probes expected on YT".
+      logger.info('Token service did not pre-warm; first YT probe will mint on demand', { reason: tokenStatus.reason });
+    }
     flushAll();
 
     const dependencies: Record<DependencyId, DependencyDiagnostic> = {

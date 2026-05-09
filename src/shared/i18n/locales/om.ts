@@ -440,7 +440,8 @@ const om = {
     ytdlpProcessError: 'Dogoggora prosessii yt-dlp: {{error}}',
     ytdlpExitCode: 'yt-dlp koodii {{code}} wajjin bahe',
     downloadingBinary: 'Faayilii binaryii {{name}} buufaa jira…',
-    unknownStartupFailure: 'Daawniloodii jalqabbii hin beekamne kufee'
+    unknownStartupFailure: 'Daawniloodii jalqabbii hin beekamne kufee',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

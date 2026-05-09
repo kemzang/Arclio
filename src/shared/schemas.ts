@@ -104,7 +104,8 @@ export const STATUS_KEY = {
   ytdlpProcessError: 'ytdlpProcessError',
   ytdlpExitCode: 'ytdlpExitCode',
   downloadingBinary: 'downloadingBinary',
-  unknownStartupFailure: 'unknownStartupFailure'
+  unknownStartupFailure: 'unknownStartupFailure',
+  diskSpaceInsufficient: 'diskSpaceInsufficient'
 } as const;
 export type StatusKey = (typeof STATUS_KEY)[keyof typeof STATUS_KEY];
 
@@ -280,11 +281,19 @@ const playlistPrefsPatchSchema = z.object({
   lastPlaylistSubfolder: subfolderNameSchema.optional()
 });
 
-export const updateSettingsSchema = z.object({
-  common: commonSettingsPatchSchema.optional(),
-  single: singlePrefsPatchSchema.optional(),
-  playlist: playlistPrefsPatchSchema.optional()
-});
+export const updateSettingsSchema = z
+  .object({
+    common: commonSettingsPatchSchema.optional(),
+    single: singlePrefsPatchSchema.optional(),
+    playlist: playlistPrefsPatchSchema.optional()
+  })
+  .refine(
+    (patch) => {
+      const hasField = (sub: Record<string, unknown> | undefined): boolean => sub !== undefined && Object.values(sub).some((v) => v !== undefined);
+      return hasField(patch.common) || hasField(patch.single) || hasField(patch.playlist);
+    },
+    { message: 'settings:update payload must contain at least one defined field' }
+  );
 
 // Queue item schema — used by both queueSave IPC handler and queueStore.load
 // to reject corrupted persistence (manual edits, partial writes).

@@ -202,6 +202,11 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
           } catch {
             /* already exited */
           }
+          // Detach buffered listeners — the dead proc will eventually fire
+          // 'close' (the settled guard absorbs it), but until GC the closure
+          // captures stdout/stderr buffers we no longer need.
+          proc.stdout.removeAllListeners('data');
+          proc.stderr.removeAllListeners('data');
           finish({
             kind: 'exit-error',
             exitCode: -1,

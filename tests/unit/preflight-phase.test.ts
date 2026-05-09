@@ -109,7 +109,9 @@ describe('PreflightPhase', () => {
     const ctx = makeCtx();
     const phase = PreflightPhase(400_000_000);
     await phase.run(ctx);
-    expect(ctx.emitStatus).toHaveBeenCalledWith('error', expect.any(String), undefined, expect.objectContaining({ key: 'outOfDiskSpace' }));
+    // Localized status key with GB-formatted required/free params; payload still
+    // carries the actionable yt-dlp error key for downstream classification.
+    expect(ctx.emitStatus).toHaveBeenCalledWith('error', 'diskSpaceInsufficient', expect.objectContaining({ required: expect.any(String), free: expect.any(String) }), expect.objectContaining({ key: 'outOfDiskSpace' }));
   });
 
   it('calls checkDiskSpace with the job outputDir', async () => {

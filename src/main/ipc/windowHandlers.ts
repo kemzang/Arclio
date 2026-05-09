@@ -13,5 +13,6 @@ export function registerWindowHandlers(mainWindow: BrowserWindow): void {
   handleRaw(IPC_CHANNELS.windowClose, () => {
     mainWindow.close();
   });
-  handleRaw(IPC_CHANNELS.windowIsMaximized, () => mainWindow.isMaximized());
+  // eslint-disable-next-line @typescript-eslint/require-await -- preload calls invoke() and awaits a Promise; explicit async pins the contract so a future sync refactor is a compile error rather than a silent typing drift.
+  handleRaw(IPC_CHANNELS.windowIsMaximized, async () => mainWindow.isMaximized());
 }

@@ -16,14 +16,35 @@ let unbindWarmupProgress: (() => void) | null = null;
 const SHARE_MILESTONES: readonly number[] = [3, 25, 100];
 
 function commonPatch(get: GetState, set: SetState, patch: Partial<AppSettings['common']>): void {
-  const current = get().settings;
-  if (current) {
-    set({ settings: { ...current, common: { ...current.common, ...patch } } });
+  const previous = get().settings;
+  if (previous) {
+    set({ settings: { ...previous, common: { ...previous.common, ...patch } } });
   }
   void window.appApi.settings.update({ common: patch }).then((result) => {
-    if (!result.ok) notify.settingsSaveFailed('share', result.error);
-    else set({ settings: result.data });
+    if (!result.ok) {
+      // Revert optimistic update — UI was showing patched value, but the
+      // canonical state on disk never changed. Without rollback, renderer
+      // and main process diverge until next initialize().
+      if (previous) set({ settings: previous });
+      notify.settingsSaveFailed('share', result.error);
+      return;
+    }
+    set({ settings: result.data });
   });
+}
+
+// Shared pattern for setCookiesPath/setProxyUrl/...: optimistic update, IPC
+// patch, on failure revert to the value captured before the patch.
+async function applyCommonPatchAsync(get: GetState, set: SetState, label: string, patch: Partial<AppSettings['common']>): Promise<void> {
+  const previous = get().settings;
+  if (previous) set({ settings: { ...previous, common: { ...previous.common, ...patch } } });
+  const result = await window.appApi.settings.update({ common: patch });
+  if (!result.ok) {
+    if (previous) set({ settings: previous });
+    notify.settingsSaveFailed(label, result.error);
+    return;
+  }
+  set({ settings: result.data });
 }
 
 function openShareDialogInternal(set: SetState, trigger: ShareTrigger): void {
@@ -279,80 +300,31 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
     },
 
     setCookiesPath: async (path) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, cookiesPath: path } } });
-      const result = await window.appApi.settings.update({ common: { cookiesPath: path } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('cookiesPath', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'cookiesPath', { cookiesPath: path });
     },
 
     setCookiesMode: async (mode) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, cookiesMode: mode } } });
-      const result = await window.appApi.settings.update({ common: { cookiesMode: mode } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('cookiesMode', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'cookiesMode', { cookiesMode: mode });
     },
 
     setCookiesBrowser: async (browser) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, cookiesBrowser: browser } } });
-      const result = await window.appApi.settings.update({ common: { cookiesBrowser: browser } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('cookiesBrowser', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'cookiesBrowser', { cookiesBrowser: browser });
     },
 
     setProxyUrl: async (url) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, proxyUrl: url } } });
-      const result = await window.appApi.settings.update({ common: { proxyUrl: url } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('proxyUrl', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'proxyUrl', { proxyUrl: url });
     },
 
     setClipboardWatchEnabled: async (enabled) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, clipboardWatchEnabled: enabled } } });
-      const result = await window.appApi.settings.update({ common: { clipboardWatchEnabled: enabled } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('clipboardWatchEnabled', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'clipboardWatchEnabled', { clipboardWatchEnabled: enabled });
     },
 
     setCloseBehavior: async (value) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, closeBehavior: value } } });
-      const result = await window.appApi.settings.update({ common: { closeBehavior: value } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('closeBehavior', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'closeBehavior', { closeBehavior: value });
     },
 
     setAnalyticsEnabled: async (enabled) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, analyticsEnabled: enabled } } });
-      const result = await window.appApi.settings.update({ common: { analyticsEnabled: enabled } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('analyticsEnabled', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'analyticsEnabled', { analyticsEnabled: enabled });
     },
 
     openShareDialog: (trigger) => {
@@ -365,26 +337,12 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
 
     setShareInlineCardDismissed: async () => {
       track('share_inline_card_dismissed');
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, shareInlineCardDismissed: true } } });
-      const result = await window.appApi.settings.update({ common: { shareInlineCardDismissed: true } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('shareInlineCardDismissed', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'shareInlineCardDismissed', { shareInlineCardDismissed: true });
     },
 
     setShareHighValueBannerDismissed: async () => {
       track('share_prompt_dismissed', { via: 'high-value-inline' });
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, shareHighValueBannerDismissed: true } } });
-      const result = await window.appApi.settings.update({ common: { shareHighValueBannerDismissed: true } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('shareHighValueBannerDismissed', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'shareHighValueBannerDismissed', { shareHighValueBannerDismissed: true });
     }
   };
 }

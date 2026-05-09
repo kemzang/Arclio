@@ -441,7 +441,8 @@ const ar = {
     ytdlpProcessError: 'خطأ في عملية yt-dlp: {{error}}',
     ytdlpExitCode: 'خرج yt-dlp بالرمز {{code}}',
     downloadingBinary: 'جارٍ تنزيل ثنائي {{name}}…',
-    unknownStartupFailure: 'فشل غير معروف في بدء التنزيل'
+    unknownStartupFailure: 'فشل غير معروف في بدء التنزيل',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

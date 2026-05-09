@@ -11,6 +11,13 @@ vi.mock('@main/utils/process', async (importOriginal) => {
   return { ...actual, spawnYtDlp: vi.fn(), spawnFFmpeg: vi.fn() };
 });
 
+// PreflightPhase calls statfs against the outputDir; tests use placeholders
+// like `/downloads` that may not exist on the runner. Bypass the check so the
+// phases under test (subtitle args, subfolder mode) actually run.
+vi.mock('@main/utils/diskSpace', () => ({
+  checkDiskSpace: vi.fn().mockResolvedValue({ ok: true, freeBytes: 1e12, requiredBytes: 0 })
+}));
+
 import { spawnYtDlp, spawnFFmpeg } from '@main/utils/process.js';
 
 beforeEach(() => {

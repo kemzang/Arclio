@@ -441,7 +441,8 @@ const ru = {
     ytdlpProcessError: 'Ошибка процесса yt-dlp: {{error}}',
     ytdlpExitCode: 'yt-dlp завершился с кодом {{code}}',
     downloadingBinary: 'Загрузка бинарника {{name}}…',
-    unknownStartupFailure: 'Неизвестная ошибка при запуске загрузки'
+    unknownStartupFailure: 'Неизвестная ошибка при запуске загрузки',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

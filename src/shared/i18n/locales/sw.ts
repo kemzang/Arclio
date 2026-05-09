@@ -440,7 +440,8 @@ const sw = {
     ytdlpProcessError: 'Hitilafu ya mchakato wa yt-dlp: {{error}}',
     ytdlpExitCode: 'yt-dlp ilitoka na msimbo {{code}}',
     downloadingBinary: 'Inapakua binary ya {{name}}…',
-    unknownStartupFailure: 'Kushindwa kwa kuanzisha pasijulikane'
+    unknownStartupFailure: 'Kushindwa kwa kuanzisha pasijulikane',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

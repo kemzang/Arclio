@@ -441,7 +441,8 @@ const bn = {
     ytdlpProcessError: 'yt-dlp প্রক্রিয়া ত্রুটি: {{error}}',
     ytdlpExitCode: 'yt-dlp {{code}} কোড দিয়ে বন্ধ হয়েছে',
     downloadingBinary: '{{name}} বাইনারি ডাউনলোড হচ্ছে…',
-    unknownStartupFailure: 'অজানা ডাউনলোড স্টার্টআপ ব্যর্থতা'
+    unknownStartupFailure: 'অজানা ডাউনলোড স্টার্টআপ ব্যর্থতা',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

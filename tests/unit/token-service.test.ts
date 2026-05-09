@@ -52,13 +52,32 @@ describe('TokenService.warmUp', () => {
     expect(result.token).toBe('token-xyz');
   });
 
-  it('swallows errors silently when provider throws', async () => {
+  it('reports ready=false with reason when provider throws (non-fatal)', async () => {
     const provider = makeProvider({
       ensureReady: vi.fn().mockRejectedValue(new Error('Network error'))
     });
     const service = new TokenService(provider);
 
-    await expect(service.warmUp()).resolves.toBeUndefined();
+    const status = await service.warmUp();
+    expect(status.ready).toBe(false);
+    expect(status.reason).toContain('Network error');
+  });
+
+  it('reports ready=true on successful warm-up', async () => {
+    const provider = makeProvider();
+    const service = new TokenService(provider);
+
+    const status = await service.warmUp();
+    expect(status.ready).toBe(true);
+  });
+
+  it('reports ready=false with no-visitor-data when visitorData is empty', async () => {
+    const provider = makeProvider({ getVisitorData: vi.fn().mockResolvedValue('') });
+    const service = new TokenService(provider);
+
+    const status = await service.warmUp();
+    expect(status.ready).toBe(false);
+    expect(status.reason).toBe('no-visitor-data');
   });
 });
 

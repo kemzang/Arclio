@@ -441,7 +441,8 @@ const vi = {
     ytdlpProcessError: 'Lỗi tiến trình yt-dlp: {{error}}',
     ytdlpExitCode: 'yt-dlp thoát với mã {{code}}',
     downloadingBinary: 'Đang tải xuống tệp nhị phân {{name}}…',
-    unknownStartupFailure: 'Lỗi khởi động tải xuống không xác định'
+    unknownStartupFailure: 'Lỗi khởi động tải xuống không xác định',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

@@ -441,7 +441,8 @@ const zh = {
     ytdlpProcessError: 'yt-dlp 进程错误: {{error}}',
     ytdlpExitCode: 'yt-dlp 以代码 {{code}} 退出',
     downloadingBinary: '正在下载二进制 {{name}}…',
-    unknownStartupFailure: '启动下载时出现未知错误'
+    unknownStartupFailure: '启动下载时出现未知错误',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

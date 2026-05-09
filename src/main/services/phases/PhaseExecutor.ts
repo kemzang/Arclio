@@ -16,7 +16,12 @@ export class PhaseExecutor {
           await ctx.finalize('completed');
           return;
         case 'hard-failed':
+          // Symmetrical with 'cancelled': a failed download leaves orphan
+          // .part / .ytdl / fragment files in outputDir. Without this, every
+          // failed attempt accumulates partial files the user has to clean
+          // up manually.
           await ctx.cleanupTempDir();
+          await ctx.cleanupPartFiles(ctx.active.job.outputDir);
           await ctx.finalize('failed', out.error);
           return;
         case 'cancelled':
@@ -26,6 +31,17 @@ export class PhaseExecutor {
           await ctx.finalize('cancelled');
           return;
         case 'paused':
+          // Cancel may have landed between phase setting `pauseRequested` and
+          // returning the paused outcome. If so, treat as cancelled — finalize
+          // and clean up rather than stranding the job in pausedJobs with
+          // already-killed processes.
+          if (ctx.active.cancelRequested) {
+            await ctx.cleanupTempDir();
+            await ctx.cleanupPartFiles(ctx.active.job.outputDir);
+            ctx.emitStatus('error', STATUS_KEY.cancelled);
+            await ctx.finalize('cancelled');
+            return;
+          }
           ctx.moveToPaused();
           return;
       }

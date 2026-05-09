@@ -440,7 +440,8 @@ const es = {
     ytdlpProcessError: 'Error en el proceso yt-dlp: {{error}}',
     ytdlpExitCode: 'yt-dlp terminó con código {{code}}',
     downloadingBinary: 'Descargando binario {{name}}…',
-    unknownStartupFailure: 'Fallo desconocido al iniciar la descarga'
+    unknownStartupFailure: 'Fallo desconocido al iniciar la descarga',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

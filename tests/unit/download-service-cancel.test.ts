@@ -43,7 +43,7 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe('pendingCancelCount', () => {
+describe('runningJobCount', () => {
   it('is 0 after cancel() even while process has not yet closed', async () => {
     const stubs = makeStubs();
     const fakeProc = new FakeProcess(); // never fires close
@@ -53,13 +53,13 @@ describe('pendingCancelCount', () => {
 
     await svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB });
     expect(svc.activeCount).toBe(1);
-    expect(svc.pendingCancelCount).toBe(1);
+    expect(svc.runningJobCount).toBe(1);
 
     await svc.cancel();
     // SIGKILL sent but close event not yet fired — job still in activeJobs
     expect(svc.activeCount).toBe(1);
-    // cancelRequested is true so pendingCancelCount should be 0
-    expect(svc.pendingCancelCount).toBe(0);
+    // cancelRequested is true so runningJobCount should be 0
+    expect(svc.runningJobCount).toBe(0);
   });
 
   it('counts only jobs that have not been cancelled', async () => {
@@ -74,13 +74,13 @@ describe('pendingCancelCount', () => {
 
     const [r1] = await Promise.all([svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB }), svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB })]);
 
-    expect(svc.pendingCancelCount).toBe(2);
+    expect(svc.runningJobCount).toBe(2);
 
     const jobId1 = r1.ok ? r1.data.job.id : '';
     await svc.cancel(jobId1);
 
     expect(svc.activeCount).toBe(2); // both still in map (no close event)
-    expect(svc.pendingCancelCount).toBe(1); // only one cancelled
+    expect(svc.runningJobCount).toBe(1); // only one cancelled
   });
 });
 

@@ -1,4 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
+import { mkdir, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { DownloadService } from '@main/services/DownloadService.js';
 import { YtDlp } from '@main/services/YtDlp.js';
 import type { DownloadJob } from '@shared/types.js';
@@ -170,18 +173,23 @@ describe('DownloadService (mock mode)', () => {
     expect(pausedJobs.has(jobId)).toBe(false);
   });
 
-  it('resume() restores tempDir from PausedDownload onto the new ActiveDownload', async () => {
+  it('resume() restores tempDir from PausedDownload onto the new ActiveDownload when dir still exists', async () => {
     const { service } = makeService();
+
+    // Resume validates the preserved tempDir exists on disk; create one in
+    // the OS temp tree so the stat() check succeeds.
+    const outputDir = await mkdir(join(tmpdir(), `arroxy-resume-${Date.now()}`), { recursive: true }).then((p) => p ?? join(tmpdir(), `arroxy-resume-${Date.now()}`));
+    const tempDir = join(outputDir, '.arroxy-temp', 'paused-w');
+    await mkdir(tempDir, { recursive: true });
 
     const pausedJob: DownloadJob = {
       id: 'paused-with-tempdir',
       url: 'https://youtube.com/watch?v=tdir',
-      outputDir: '/tmp/tdir-out',
+      outputDir,
       status: 'running',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
-    const tempDir = '/tmp/tdir-out/.arroxy-temp/paused-w';
     interface PausedDownload {
       job: DownloadJob;
       input: { url: string; outputDir: string; job: PreparedJob };
@@ -197,12 +205,51 @@ describe('DownloadService (mock mode)', () => {
       tempDir
     });
 
+    try {
+      const resumeResult = await service.resume(pausedJob.id);
+      expect(resumeResult.ok).toBe(true);
+
+      const activeJobs = (service as unknown as { activeJobs: Map<string, ActiveDownload> }).activeJobs;
+      const active = activeJobs.get(pausedJob.id);
+      expect(active?.tempDir).toBe(tempDir);
+    } finally {
+      await rm(outputDir, { recursive: true, force: true });
+    }
+  });
+
+  it('resume() drops tempDir when the preserved path no longer exists', async () => {
+    const { service } = makeService();
+
+    const pausedJob: DownloadJob = {
+      id: 'paused-missing-tempdir',
+      url: 'https://youtube.com/watch?v=mtd',
+      outputDir: '/tmp/mtd-out',
+      status: 'running',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    const ghostTempDir = '/tmp/mtd-out/.arroxy-temp/never-existed';
+    interface PausedDownload {
+      job: DownloadJob;
+      input: { url: string; outputDir: string; job: PreparedJob };
+      tempDir?: string;
+    }
+    interface ActiveDownload {
+      job: DownloadJob;
+      tempDir?: string;
+    }
+    (service as unknown as { pausedJobs: Map<string, PausedDownload> }).pausedJobs.set(pausedJob.id, {
+      job: pausedJob,
+      input: { url: pausedJob.url, outputDir: pausedJob.outputDir, job: DEFAULT_JOB },
+      tempDir: ghostTempDir
+    });
+
     const resumeResult = await service.resume(pausedJob.id);
     expect(resumeResult.ok).toBe(true);
 
     const activeJobs = (service as unknown as { activeJobs: Map<string, ActiveDownload> }).activeJobs;
     const active = activeJobs.get(pausedJob.id);
-    expect(active?.tempDir).toBe(tempDir);
+    expect(active?.tempDir).toBeUndefined();
   });
 
   it('resume() returns { resumed: false } for unknown jobId (renderer falls back to start)', async () => {

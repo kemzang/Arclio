@@ -441,7 +441,8 @@ const ja = {
     ytdlpProcessError: 'yt-dlpプロセスエラー: {{error}}',
     ytdlpExitCode: 'yt-dlpがコード{{code}}で終了しました',
     downloadingBinary: 'バイナリ {{name}} をダウンロード中…',
-    unknownStartupFailure: 'ダウンロード開始時に不明なエラーが発生しました'
+    unknownStartupFailure: 'ダウンロード開始時に不明なエラーが発生しました',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

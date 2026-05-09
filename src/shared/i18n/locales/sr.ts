@@ -441,7 +441,8 @@ const sr = {
     ytdlpProcessError: 'Грешка yt-dlp процеса: {{error}}',
     ytdlpExitCode: 'yt-dlp је завршио са кодом {{code}}',
     downloadingBinary: 'Преузимање {{name}} бинарне датотеке…',
-    unknownStartupFailure: 'Непозната грешка при покретању преузимања'
+    unknownStartupFailure: 'Непозната грешка при покретању преузимања',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

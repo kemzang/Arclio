@@ -441,7 +441,8 @@ const my = {
     ytdlpProcessError: 'yt-dlp လုပ်ငန်းစဉ်အမှား: {{error}}',
     ytdlpExitCode: 'yt-dlp သည် code {{code}} ဖြင့်ထွက်သွားသည်',
     downloadingBinary: '{{name}} binary ဒေါင်းလုဒ်လုပ်နေသည်…',
-    unknownStartupFailure: 'မသိသောဒေါင်းလုဒ်စတင်မှုပျက်ကွက်မှု'
+    unknownStartupFailure: 'မသိသောဒေါင်းလုဒ်စတင်မှုပျက်ကွက်မှု',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

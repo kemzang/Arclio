@@ -30,11 +30,13 @@ import IconSkype from '~icons/logos/skype';
 import IconPocket from '~icons/simple-icons/pocket';
 import IconBuffer from '~icons/simple-icons/buffer';
 import IconDiaspora from '~icons/simple-icons/diaspora';
-import IconViber from '~icons/simple-icons/viber';
 
 const SHARE_URL = 'https://arroxy.orionus.dev';
 
-type DestinationId = 'copy' | 'twitter' | 'facebook' | 'whatsapp' | 'telegram' | 'reddit' | 'linkedin' | 'email' | 'line' | 'kakao' | 'weibo' | 'pinterest' | 'tumblr' | 'hackernews' | 'bluesky' | 'threads' | 'mastodon' | 'qq' | 'qzone' | 'douban' | 'hatena' | 'naver' | 'skype' | 'pocket' | 'buffer' | 'diaspora' | 'viber';
+// Viber dropped: viber://forward URL is rejected by shell.openExternal's
+// http(s)-only allowlist (fileHandlers.ts), so the button silently did nothing.
+// Restoring it would require whitelisting viber:// in the IPC layer.
+type DestinationId = 'copy' | 'twitter' | 'facebook' | 'whatsapp' | 'telegram' | 'reddit' | 'linkedin' | 'email' | 'line' | 'kakao' | 'weibo' | 'pinterest' | 'tumblr' | 'hackernews' | 'bluesky' | 'threads' | 'mastodon' | 'qq' | 'qzone' | 'douban' | 'hatena' | 'naver' | 'skype' | 'pocket' | 'buffer' | 'diaspora';
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -78,15 +80,14 @@ const SOCIAL_DESTINATIONS: SocialDestination[] = [
   { id: 'skype', label: 'Skype', Icon: IconSkype, buildUrl: (u, m) => `https://web.skype.com/share?url=${encodeURIComponent(u)}&text=${encodeURIComponent(m)}` },
   { id: 'pocket', label: 'Pocket', Icon: IconPocket, color: '#EF4056', buildUrl: (u, m) => `https://getpocket.com/edit?url=${encodeURIComponent(u)}&title=${encodeURIComponent(m)}` },
   { id: 'buffer', label: 'Buffer', Icon: IconBuffer, color: '#168EEA', buildUrl: (u, m) => `https://buffer.com/add?url=${encodeURIComponent(u)}&text=${encodeURIComponent(m)}` },
-  { id: 'diaspora', label: 'Diaspora', Icon: IconDiaspora, buildUrl: (u, m) => `https://share.diasporafoundation.org/?title=${encodeURIComponent(m)}&url=${encodeURIComponent(u)}` },
-  { id: 'viber', label: 'Viber', Icon: IconViber, color: '#7360F2', buildUrl: (u, m) => `viber://forward?text=${encodeURIComponent(`${m} ${u}`)}` }
+  { id: 'diaspora', label: 'Diaspora', Icon: IconDiaspora, buildUrl: (u, m) => `https://share.diasporafoundation.org/?title=${encodeURIComponent(m)}&url=${encodeURIComponent(u)}` }
 ];
 
 // Rough global-popularity rank for the social destinations grid. Copy is the
 // primary action above the grid and not part of this list. Ordering is a
 // best-effort default; the dialog still surfaces every destination — less
 // popular ones simply appear later in the responsive grid.
-const POPULARITY_ORDER: Exclude<DestinationId, 'copy'>[] = ['facebook', 'whatsapp', 'twitter', 'linkedin', 'reddit', 'pinterest', 'telegram', 'viber', 'threads', 'bluesky', 'mastodon', 'email', 'hackernews', 'tumblr', 'pocket', 'buffer', 'skype', 'line', 'weibo', 'qq', 'qzone', 'naver', 'kakao', 'hatena', 'douban', 'diaspora'];
+const POPULARITY_ORDER: Exclude<DestinationId, 'copy'>[] = ['facebook', 'whatsapp', 'twitter', 'linkedin', 'reddit', 'pinterest', 'telegram', 'threads', 'bluesky', 'mastodon', 'email', 'hackernews', 'tumblr', 'pocket', 'buffer', 'skype', 'line', 'weibo', 'qq', 'qzone', 'naver', 'kakao', 'hatena', 'douban', 'diaspora'];
 
 export function ShareDialog(): JSX.Element {
   const { t } = useTranslation();

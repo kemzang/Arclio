@@ -75,16 +75,24 @@ describe('checkDiskSpace', () => {
     expect(result.requiredBytes).toBe(1_500_000_000);
   });
 
-  it('returns ok=true and does not throw when statfs throws ENOENT', async () => {
+  it('returns ok=false with `error` set when statfs throws ENOENT', async () => {
+    // Distinguish "checked and passed" (ok:true, no error) from "couldn't
+    // check" (ok:false, error message present). Callers that need to be
+    // lenient (post-hoc disk probe) can inspect `error` and decide whether
+    // to use the verdict or skip it.
     vi.mocked(statfs).mockRejectedValue(Object.assign(new Error('no such file'), { code: 'ENOENT' }));
     const result = await checkDiskSpace('/nonexistent/dir', 1_000_000_000);
-    expect(result.ok).toBe(true);
+    expect(result.ok).toBe(false);
+    expect(result.error).toContain('no such file');
+    expect(result.freeBytes).toBeUndefined();
   });
 
-  it('returns ok=true and does not throw when statfs throws EACCES', async () => {
+  it('returns ok=false with `error` set when statfs throws EACCES', async () => {
     vi.mocked(statfs).mockRejectedValue(Object.assign(new Error('permission denied'), { code: 'EACCES' }));
     const result = await checkDiskSpace('/protected/dir', 1_000_000_000);
-    expect(result.ok).toBe(true);
+    expect(result.ok).toBe(false);
+    expect(result.error).toContain('permission denied');
+    expect(result.freeBytes).toBeUndefined();
   });
 
   it('returns freeBytes from statfs (bsize × bavail)', async () => {

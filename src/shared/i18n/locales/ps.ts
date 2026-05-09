@@ -441,7 +441,8 @@ const ps = {
     ytdlpProcessError: 'yt-dlp پروسه تیروتنه: {{error}}',
     ytdlpExitCode: 'yt-dlp د {{code}} کوډ سره وتلو',
     downloadingBinary: '{{name}} بائنري ډاونلوډیږي…',
-    unknownStartupFailure: 'نامعلومه د پیل ناکامي'
+    unknownStartupFailure: 'نامعلومه د پیل ناکامي',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

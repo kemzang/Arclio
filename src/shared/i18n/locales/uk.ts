@@ -441,7 +441,8 @@ const uk = {
     ytdlpProcessError: 'Помилка процесу yt-dlp: {{error}}',
     ytdlpExitCode: 'yt-dlp завершився з кодом {{code}}',
     downloadingBinary: 'Завантаження бінарника {{name}}…',
-    unknownStartupFailure: 'Невідома помилка під час запуску завантаження'
+    unknownStartupFailure: 'Невідома помилка під час запуску завантаження',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

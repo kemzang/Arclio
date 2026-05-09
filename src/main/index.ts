@@ -216,11 +216,11 @@ if (hasSingleInstanceLock) {
     let tray: TrayManager | null = null;
 
     async function warnActiveDownloadsThenQuit(): Promise<void> {
-      if (downloadService.pendingCancelCount === 0) {
+      if (downloadService.runningJobCount === 0) {
         app.quit();
         return;
       }
-      const count = downloadService.pendingCancelCount;
+      const count = downloadService.runningJobCount;
       const lang = languageRef.current;
       const { response } = await dialog.showMessageBox(mainWindow, {
         type: 'warning',
@@ -238,8 +238,8 @@ if (hasSingleInstanceLock) {
     mainWindow.on('close', (event) => {
       if (process.platform === 'darwin' || tray === null) {
         // Original behavior: warn if downloads active, then let the close proceed → app.quit()
-        if (downloadService.pendingCancelCount === 0) return;
-        const count = downloadService.pendingCancelCount;
+        if (downloadService.runningJobCount === 0) return;
+        const count = downloadService.runningJobCount;
         const lang = languageRef.current;
         const choice = dialog.showMessageBoxSync(mainWindow, {
           type: 'warning',
@@ -271,7 +271,7 @@ if (hasSingleInstanceLock) {
         }
 
         // 'ask': no active downloads → nothing to keep alive, just quit
-        if (downloadService.pendingCancelCount === 0) {
+        if (downloadService.runningJobCount === 0) {
           app.quit();
           return;
         }

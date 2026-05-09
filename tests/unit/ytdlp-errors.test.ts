@@ -8,8 +8,11 @@ describe('extractLastError', () => {
     expect(extractLastError(stderr)).toBe('ERROR: [youtube] abc: Sign in to confirm');
   });
 
-  it('returns null when no ERROR: line present', () => {
-    expect(extractLastError('WARNING: some warning\n[download] 50%')).toBeNull();
+  it('falls back to last non-empty stderr line when no ERROR: prefix found', () => {
+    // yt-dlp / urllib can emit failures (Connection reset, network unreachable)
+    // on stderr without ERROR: or [download] prefix. extractLastError surfaces
+    // the last non-empty line so the user sees something concrete.
+    expect(extractLastError('WARNING: some warning\n[download] 50%')).toBe('[download] 50%');
   });
 
   it('returns the last of multiple ERROR: lines', () => {
@@ -110,20 +113,29 @@ describe('classifyStderr', () => {
 });
 
 describe('isPostprocessFailure', () => {
+  // Real input to isPostprocessFailure is the output of extractLastError, which
+  // preserves the "ERROR:" prefix. The pattern is anchored on that prefix to
+  // avoid matching titles or filenames that happen to contain phrases like
+  // "Conversion failed".
   it('matches yt-dlp Postprocessing wrapper', () => {
     expect(isPostprocessFailure('ERROR: Postprocessing: Conversion failed!')).toBe(true);
   });
 
-  it('matches generic Conversion failed', () => {
-    expect(isPostprocessFailure('Conversion failed!')).toBe(true);
+  it('matches an ERROR: Conversion failed line', () => {
+    expect(isPostprocessFailure('ERROR: Conversion failed!')).toBe(true);
   });
 
-  it('matches ffmpeg muxer error string', () => {
-    expect(isPostprocessFailure('Error muxing a packet')).toBe(true);
+  it('matches an ERROR: ffmpeg muxer error line', () => {
+    expect(isPostprocessFailure('ERROR: Error muxing a packet')).toBe(true);
   });
 
-  it('matches ffmpeg writer error string', () => {
-    expect(isPostprocessFailure('Error writing trailer')).toBe(true);
+  it('matches an ERROR: ffmpeg writer error line', () => {
+    expect(isPostprocessFailure('ERROR: Error writing trailer')).toBe(true);
+  });
+
+  it('does NOT match phrases without the ERROR: prefix (e.g. video titles)', () => {
+    expect(isPostprocessFailure('Conversion failed!')).toBe(false);
+    expect(isPostprocessFailure('Error muxing a packet')).toBe(false);
   });
 
   it('returns false for unrelated errors', () => {

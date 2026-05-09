@@ -38,6 +38,12 @@ export function extractLastError(stderr: string): string | null {
   if (!lastError || /^ERROR:\s*$/.test(lastError)) {
     const downloadMatches = stderr.match(/\[download\] Got error:.*Giving up after \d+ retries.*$/gm) ?? stderr.match(/\[download\] Got error:.*$/gm);
     if (downloadMatches) return downloadMatches[downloadMatches.length - 1].trim();
+    // Last resort: yt-dlp / urllib can emit failures (Connection reset,
+    // network unreachable) on stderr without ERROR: or [download] prefix.
+    // Return the last non-empty line so the user sees *something* concrete
+    // rather than the generic "Probing failed" fallback at the call site.
+    const lines = stderr.split(/\r?\n/).filter((l) => l.trim().length > 0);
+    if (lines.length > 0) return lines[lines.length - 1].trim();
   }
   return lastError;
 }
@@ -54,7 +60,11 @@ export function classifyStderr(stderr: string): StderrSignal | null {
 // The actual cause (commonly ENOSPC) never reaches our regex classifier. Any
 // ERROR line matching this pattern is a hint to do a post-hoc disk-space probe
 // against the output dir before giving up on classification.
-const POSTPROCESS_FAILURE_PATTERN = /Postprocessing:|Conversion failed|Error (?:writing|muxing|merging)|ffmpeg (?:exited|failed)/i;
+//
+// Anchored on `ERROR:` to avoid matching titles or filenames that happen to
+// contain "Conversion failed" (e.g. a tutorial video about failed conversions
+// would otherwise trigger a false-positive disk-space probe).
+const POSTPROCESS_FAILURE_PATTERN = /ERROR:\s*(?:Postprocessing:|Conversion failed|Error (?:writing|muxing|merging)|ffmpeg (?:exited|failed))/i;
 
 export function isPostprocessFailure(rawError: string | null): boolean {
   return rawError !== null && POSTPROCESS_FAILURE_PATTERN.test(rawError);

@@ -27,7 +27,7 @@ function fakeBinaryManager(opts: { ytDlp: 'runnable' | 'failed'; ffmpeg: 'runnab
   } as unknown as BinaryManager;
 }
 
-const noopToken = { warmUp: vi.fn().mockResolvedValue(undefined) } as unknown as TokenService;
+const noopToken = { warmUp: vi.fn().mockResolvedValue({ ready: true }) } as unknown as TokenService;
 
 afterEach(() => {
   vi.restoreAllMocks();

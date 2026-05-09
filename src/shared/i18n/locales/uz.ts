@@ -441,7 +441,8 @@ const uz = {
     ytdlpProcessError: 'yt-dlp jarayon xatosi: {{error}}',
     ytdlpExitCode: 'yt-dlp {{code}} kodi bilan chiqdi',
     downloadingBinary: '{{name}} ikkilik fayli yuklanmoqda…',
-    unknownStartupFailure: "Noma'lum yuklama ishga tushirish xatosi"
+    unknownStartupFailure: "Noma'lum yuklama ishga tushirish xatosi",
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

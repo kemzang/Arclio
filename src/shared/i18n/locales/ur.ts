@@ -441,7 +441,8 @@ const ur = {
     ytdlpProcessError: 'yt-dlp پراسیس ایرر: {{error}}',
     ytdlpExitCode: 'yt-dlp کوڈ {{code}} کے ساتھ ختم ہوا',
     downloadingBinary: '{{name}} بائنری ڈاؤن لوڈ ہو رہی ہے…',
-    unknownStartupFailure: 'نامعلوم ڈاؤن لوڈ اسٹارٹ اپ ناکامی'
+    unknownStartupFailure: 'نامعلوم ڈاؤن لوڈ اسٹارٹ اپ ناکامی',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

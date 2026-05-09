@@ -33,16 +33,19 @@ export class TokenService {
 
   constructor(private readonly provider: TokenProvider) {}
 
-  async warmUp(): Promise<void> {
+  async warmUp(): Promise<{ ready: boolean; reason?: string }> {
     try {
       await this.provider.ensureReady();
       const visitorData = await this.provider.getVisitorData();
-      if (!visitorData) return;
+      if (!visitorData) return { ready: false, reason: 'no-visitor-data' };
       const token = await this.provider.mintToken(visitorData);
       this.cache = { token, visitorData, mintedAt: Date.now() };
       logger.info('PO token pre-warmed');
+      return { ready: true };
     } catch (err) {
-      logger.warn('Token warm-up failed (non-fatal)', { error: unknownToMessage(err) });
+      const reason = unknownToMessage(err);
+      logger.warn('Token warm-up failed (non-fatal)', { error: reason });
+      return { ready: false, reason };
     } finally {
       this.provider.releaseWindow();
     }

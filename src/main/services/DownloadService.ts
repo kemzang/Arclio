@@ -1,6 +1,6 @@
 import { EventEmitter } from 'node:events';
 import { randomUUID } from 'node:crypto';
-import { readdir, unlink, rm, rmdir } from 'node:fs/promises';
+import { readdir, stat, unlink, rm, rmdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { trackMain, downloadDurationBucket, sizeBucket } from '@main/services/analytics.js';
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
@@ -70,7 +70,7 @@ export class DownloadService extends EventEmitter {
     return this.activeJobs.size;
   }
 
-  get pendingCancelCount(): number {
+  get runningJobCount(): number {
     let count = 0;
     for (const active of this.activeJobs.values()) {
       if (!active.cancelRequested && !active.pauseRequested) count++;
@@ -134,13 +134,31 @@ export class DownloadService extends EventEmitter {
     const { job, input } = paused;
     job.status = 'running';
     job.updatedAt = nowIso();
+    // Validate the preserved tempDir still exists. OS tmp cleaners, NFS
+    // unmounts, and manual deletes can wipe it between pause and resume.
+    // Setting tempDir to undefined makes VideoPhase's setupTempDir() recreate
+    // it fresh — partial download is lost, but the job runs cleanly instead
+    // of failing with an opaque ENOENT inside yt-dlp.
+    let resumedTempDir = paused.tempDir;
+    if (resumedTempDir) {
+      try {
+        const s = await stat(resumedTempDir);
+        if (!s.isDirectory()) resumedTempDir = undefined;
+      } catch {
+        logger.info('Resume: preserved tempDir missing — restarting fresh', {
+          jobId: job.id,
+          tempDir: paused.tempDir
+        });
+        resumedTempDir = undefined;
+      }
+    }
     const active: ActiveDownload = {
       job,
       input,
       cancelRequested: false,
       pauseRequested: false,
       subtitlePaths: [],
-      tempDir: paused.tempDir
+      tempDir: resumedTempDir
     };
     this.activeJobs.set(job.id, active);
     logger.info('Resuming download', { jobId: job.id });
@@ -208,6 +226,14 @@ export class DownloadService extends EventEmitter {
       cleanupTempDir: () => this.cleanupTempDir(active),
       finalize: (status, err?) => this.finalize(job, status, err),
       moveToPaused: () => {
+        // Cancel may have landed between pauseRequested and the phase reaching
+        // this callback. Honor the more recent intent: don't park a job in
+        // pausedJobs after cancel was requested — processes are already dead
+        // and finalize() will run via the cancelled outcome.
+        if (active.cancelRequested) {
+          logger.info('moveToPaused skipped — cancel requested mid-pause', { jobId: job.id });
+          return;
+        }
         this.activeJobs.delete(job.id);
         this.pausedJobs.set(job.id, { job, input, tempDir: active.tempDir });
         logger.info('Download paused — temp dir preserved', {
@@ -249,12 +275,21 @@ export class DownloadService extends EventEmitter {
     let signal = result.signal;
     if (!signal && isPostprocessFailure(result.rawError)) {
       const probe = await checkDiskSpace(job.outputDir, undefined);
-      if (!probe.ok) {
+      // Only reclassify as outOfDiskSpace when statfs succeeded *and* reports
+      // free < required. probe.error means we couldn't check (bad path,
+      // permission, NFS unmount) — that's not evidence of ENOSPC.
+      if (!probe.ok && probe.error === undefined && probe.freeBytes !== undefined) {
         signal = 'outOfDiskSpace';
         logger.info('Reclassified postprocess failure as outOfDiskSpace', {
           jobId,
           outputDir: job.outputDir,
           freeBytes: probe.freeBytes
+        });
+      } else if (probe.error !== undefined) {
+        logger.info('Postprocess failure: disk probe inconclusive', {
+          jobId,
+          outputDir: job.outputDir,
+          probeError: probe.error
         });
       }
     }
@@ -329,7 +364,7 @@ export class DownloadService extends EventEmitter {
       return ok({ paused: true });
     }
 
-    if (!active.ytDlpProcess) {
+    if (!active.ytDlpProcess && !active.ffmpegProcess) {
       logger.info('pause() called but job has no process yet', {
         jobId: active.job.id
       });
@@ -337,8 +372,17 @@ export class DownloadService extends EventEmitter {
     }
 
     active.pauseRequested = true;
-    killProcessTree(active.ytDlpProcess, 'SIGTERM');
-    logger.info('SIGTERM sent to yt-dlp process', { jobId: active.job.id });
+    if (active.ytDlpProcess) {
+      killProcessTree(active.ytDlpProcess, 'SIGTERM');
+      logger.info('SIGTERM sent to yt-dlp process', { jobId: active.job.id });
+    }
+    // Pause may land mid-mux (SidecarSubsPhase.runEmbedMux). Without killing
+    // ffmpeg too, the mux completes after the user thinks they paused — output
+    // file gets clobbered by a half-paused job state.
+    if (active.ffmpegProcess) {
+      active.ffmpegProcess.kill('SIGTERM');
+      logger.info('SIGTERM sent to ffmpeg process', { jobId: active.job.id });
+    }
     return ok({ paused: true });
   }
 

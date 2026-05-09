@@ -441,7 +441,8 @@ const el = {
     ytdlpProcessError: 'Σφάλμα διαδικασίας yt-dlp: {{error}}',
     ytdlpExitCode: 'Το yt-dlp έγινε έξοδος με κωδικό {{code}}',
     downloadingBinary: 'Λήψη δυαδικού {{name}}…',
-    unknownStartupFailure: 'Άγνωστη αποτυχία εκκίνησης λήψης'
+    unknownStartupFailure: 'Άγνωστη αποτυχία εκκίνησης λήψης',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {

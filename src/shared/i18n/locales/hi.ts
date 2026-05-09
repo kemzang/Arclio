@@ -441,7 +441,8 @@ const hi = {
     ytdlpProcessError: 'yt-dlp प्रक्रिया त्रुटि: {{error}}',
     ytdlpExitCode: 'yt-dlp कोड {{code}} के साथ बंद हो गया',
     downloadingBinary: '{{name}} बाइनरी डाउनलोड हो रही है…',
-    unknownStartupFailure: 'डाउनलोड शुरू करने में अज्ञात त्रुटि'
+    unknownStartupFailure: 'डाउनलोड शुरू करने में अज्ञात त्रुटि',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {
