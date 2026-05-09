@@ -560,6 +560,10 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
     // they just submitted. `advancedAutoOpen` is consumed by `StepUrlInput`
     // on mount.
     openCookiesSettings: () => {
+      // Cancel any in-flight probe — leaving the formats step abandons it,
+      // and a stalled YouTube fallback chain can otherwise keep the spinner
+      // bound and emit results into a step the user already left.
+      void window.appApi.downloads.probeCancel();
       set({ wizardStep: 'url', wizardError: null, wizardErrorOrigin: null, advancedAutoOpen: true, cookiesConfigDialogIssue: null });
     },
 

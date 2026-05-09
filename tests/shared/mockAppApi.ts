@@ -44,6 +44,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
       onMaximizedChange: vi.fn().mockReturnValue(() => undefined)
     },
     downloads: {
+      probeCancel: vi.fn().mockResolvedValue(undefined),
       probe: vi.fn().mockResolvedValue(
         ok({
           kind: 'video' as const,

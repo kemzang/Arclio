@@ -8,7 +8,8 @@ import { humanSize } from '@shared/format.js';
 import type { FormatOption, PlaylistEntry, ProbePlaylistMode, ProbeResult, ProbeDegradationReason, SubtitleMap } from '@shared/types.js';
 import { LIVE_CHAT_LANG } from '@shared/constants.js';
 import { infoDictSchema, isPlaylistLike, isUrlRedirect, type InfoDict, type PlaylistInfo, type MultiVideoInfo, type VideoInfo, type YtDlpFormat, type YtDlpSubtitleTrack } from '@shared/ytdlp/infoDict.js';
-import { isAudioOnlySource, isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
+import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
+import { siteForExtractor, type Site } from '@shared/sites/index.js';
 import { YtDlp } from './YtDlp.js';
 
 const logger = log.scope('probe');
@@ -46,18 +47,17 @@ interface ProbeAttemptSuccess {
 
 type ProbeAttemptResult = { kind: 'success'; data: ProbeAttemptSuccess } | { kind: 'failure'; error: ReturnType<typeof createAppError>; errorCategory: string };
 
-function sanitizeSubtitleMap(raw: Record<string, YtDlpSubtitleTrack[]> | undefined, opts: { isAutomaticCaptions: boolean; isYouTube: boolean }): SubtitleMap {
+function sanitizeSubtitleMap(raw: Record<string, YtDlpSubtitleTrack[]> | undefined, opts: { isAutomaticCaptions: boolean; site: Site }): SubtitleMap {
   if (!raw) return {};
   const result: SubtitleMap = {};
+  // Site adapter decides whether auto-caption keys must end in `-orig`. YouTube
+  // bundles real generated tracks with on-demand translation options under the
+  // same map; only `-orig` are real. Other sites emit auto-captions under bare
+  // lang codes — applying the filter would discard every track.
+  const requireOrig = opts.isAutomaticCaptions && opts.site.autoCaptionRequiresOrigSuffix;
   for (const [lang, tracks] of Object.entries(raw)) {
     if (lang === LIVE_CHAT_LANG) continue;
-    // YouTube bundles real auto-captions and on-demand translation options into
-    // the same map. Only keys ending in `-orig` are real generated tracks —
-    // everything else is a translation request that YouTube generates live and
-    // rate-limits aggressively. Other extractors (Vimeo, etc.) emit auto-captions
-    // under bare lang codes with no -orig suffix, so the filter would discard
-    // every track.
-    if (opts.isAutomaticCaptions && opts.isYouTube && !lang.endsWith('-orig')) continue;
+    if (requireOrig && !lang.endsWith('-orig')) continue;
     const valid = tracks
       .filter((t): t is YtDlpSubtitleTrack & { ext: string } => typeof t.ext === 'string' && t.ext.length > 0)
       .map((t) => ({
@@ -160,35 +160,15 @@ function untitledLabel(playlistIndex: number): string {
   return `Untitled · #${playlistIndex}`;
 }
 
-// YouTube browse-id prefixes carry semantic info that the flat-playlist enum
-// loses by emitting empty titles. When title is missing for an entry, derive
-// a category hint from the id prefix so the row says e.g. "Channel · UCxxx"
-// instead of just the raw id. Doesn't replace a real title — only used as
-// fallback for entries yt-dlp couldn't title.
-function youtubeIdHint(id: string): string | null {
-  if (id.startsWith('UC') && id.length === 24) return `Channel · ${id}`;
-  if (id.startsWith('VLPL') || id.startsWith('VLOLAK')) return `Playlist · ${id.slice(2)}`;
-  if (id.startsWith('VLRD')) return `Mix · ${id.slice(2)}`;
-  if (id.startsWith('VL')) return `Playlist · ${id.slice(2)}`;
-  if (id.startsWith('MPRE')) return `Album · ${id}`;
-  if (id.startsWith('MPSPPL')) return `Search playlist · ${id}`;
-  if (id.startsWith('MPLAUC') || id.startsWith('MPSP')) return `Section · ${id}`;
-  return null;
+// Browse-id playlist hints + nested-container detection now live on the Site
+// adapter (src/shared/sites/youtube.ts). For non-YouTube sites these methods
+// are absent and the helpers below short-circuit cleanly.
+function siteHintForId(site: Site, id: string): string | null {
+  return site.hintForPlaylistId ? site.hintForPlaylistId(id) : null;
 }
 
-// Heterogeneous YouTube search / music-search results mix actual videos with
-// nested containers (channels, playlists, albums, mixes). The wizard's "pick
-// videos from a list" model breaks for nested entries — selecting a Channel
-// row would silently download hundreds of videos. We classify each entry by
-// its YouTube browse-id prefix and drop containers when at least one real
-// video is present in the same result set. If results are entirely nested
-// (no videos at all), we keep them so the picker isn't empty.
-function isYouTubeNestedContainer(id: string): boolean {
-  if (id.startsWith('UC') && id.length === 24) return true; // channel
-  if (id.startsWith('VL')) return true; // playlist / mix / radio
-  if (id.startsWith('MPRE')) return true; // album / release
-  if (id.startsWith('MPSPPL') || id.startsWith('MPSP') || id.startsWith('MPLAUC')) return true; // sections
-  return false;
+function siteIsNestedContainer(site: Site, id: string): boolean {
+  return site.isNestedContainer ? site.isNestedContainer({ id }) : false;
 }
 
 function buildEntryUrl(entry: InfoDict): string | null {
@@ -200,7 +180,7 @@ function buildEntryUrl(entry: InfoDict): string | null {
   return null;
 }
 
-function mapPlaylistEntries(entries: readonly InfoDict[], jobUrl: string): PlaylistEntry[] {
+function mapPlaylistEntries(entries: readonly InfoDict[], jobUrl: string, site: Site): PlaylistEntry[] {
   // First pass: detect whether the result set contains any real video entry
   // (id without a known container prefix). If yes, the heterogeneous-result
   // case applies and we'll filter containers out below. If no (all nested),
@@ -208,7 +188,7 @@ function mapPlaylistEntries(entries: readonly InfoDict[], jobUrl: string): Playl
   let hasVideoEntries = false;
   for (const entry of entries) {
     const id = typeof (entry as VideoInfo).id === 'string' ? (entry as VideoInfo).id! : '';
-    if (id && !isYouTubeNestedContainer(id)) {
+    if (id && !siteIsNestedContainer(site, id)) {
       hasVideoEntries = true;
       break;
     }
@@ -236,24 +216,16 @@ function mapPlaylistEntries(entries: readonly InfoDict[], jobUrl: string): Playl
     // wizard's "pick videos" model. If the set is entirely nested (no
     // videos at all — pure music-category search), we keep everything so
     // the picker isn't empty.
-    if (hasVideoEntries && idStr && isYouTubeNestedContainer(idStr)) {
+    if (hasVideoEntries && idStr && siteIsNestedContainer(site, idStr)) {
       droppedContainerCount++;
       fallbackIndex++;
       continue;
     }
-    // Fallback chain: explicit title → YT id-prefix hint → raw id → URL tail.
-    // Some extractors (youtube:music:search_url, generic search results) emit
-    // empty titles for entries that are themselves nested playlists/channels.
-    // An empty row tells the user nothing — derive a category hint from
-    // YouTube's browse-id prefix so each row is at least distinguishable.
+    // Fallback chain: explicit title → site-specific id hint → neutral
+    // placeholder. The id hint is YouTube-only today (browse-id prefixes);
+    // generic sites return null and fall through to the placeholder.
     const rawTitle = typeof v.title === 'string' ? v.title.trim() : '';
-    // Title fallback chain:
-    //   1. real title (from yt-dlp's flat enum)
-    //   2. YouTube browse-id semantic hint ("Channel · UCxxx", "Album · MPRE…")
-    //   3. neutral placeholder ("Untitled · #N") — preferred over raw IDs
-    //      or URL fragments, which are noisy and unhelpful when many entries
-    //      lack titles (Last.fm playlists, generic search, etc).
-    const idHint = idStr ? youtubeIdHint(idStr) : null;
+    const idHint = idStr ? siteHintForId(site, idStr) : null;
     const title = rawTitle.length > 0 ? rawTitle : (idHint ?? untitledLabel(playlistIndex));
     out.push({
       id: typeof v.id === 'string' && v.id.length > 0 ? v.id : url,
@@ -277,7 +249,7 @@ function mapPlaylistEntries(entries: readonly InfoDict[], jobUrl: string): Playl
 
 function buildVideoProbeResult(info: VideoInfo, jobUrl: string, degraded: { reasons: ProbeDegradationReason[] } | undefined): ProbeResult {
   const extractor = info.extractor ?? '';
-  const isYouTube = isYouTubeExtractor(extractor);
+  const site = siteForExtractor(extractor);
   return {
     kind: 'video',
     extractor,
@@ -288,8 +260,8 @@ function buildVideoProbeResult(info: VideoInfo, jobUrl: string, degraded: { reas
     title: info.title ?? '',
     thumbnail: info.thumbnail ?? '',
     duration: typeof info.duration === 'number' ? Math.round(info.duration) : undefined,
-    subtitles: sanitizeSubtitleMap(info.subtitles, { isAutomaticCaptions: false, isYouTube }),
-    automaticCaptions: sanitizeSubtitleMap(info.automatic_captions, { isAutomaticCaptions: true, isYouTube }),
+    subtitles: sanitizeSubtitleMap(info.subtitles, { isAutomaticCaptions: false, site }),
+    automaticCaptions: sanitizeSubtitleMap(info.automatic_captions, { isAutomaticCaptions: true, site }),
     isLive: info.is_live === true || info.live_status === 'is_live' || info.live_status === 'is_upcoming',
     hasDrm: info.has_drm === true,
     availability: typeof info.availability === 'string' ? info.availability : undefined,
@@ -300,6 +272,7 @@ function buildVideoProbeResult(info: VideoInfo, jobUrl: string, degraded: { reas
 
 function buildPlaylistProbeResult(info: PlaylistInfo | MultiVideoInfo, jobUrl: string): ProbeResult {
   const extractor = info.extractor ?? '';
+  const site = siteForExtractor(extractor);
   return {
     kind: 'playlist',
     extractor,
@@ -309,15 +282,35 @@ function buildPlaylistProbeResult(info: PlaylistInfo | MultiVideoInfo, jobUrl: s
     isMultiVideo: info._type === 'multi_video',
     playlistId: info.playlist_id ?? info.id ?? '',
     playlistTitle: info.playlist_title ?? info.title ?? '',
-    entries: mapPlaylistEntries(info.entries, jobUrl)
+    entries: mapPlaylistEntries(info.entries, jobUrl, site)
   };
 }
 
 export class ProbeService {
+  // Tracks every in-flight probe's controller so cancelInFlight() can abort
+  // them all at once. probe() registers + deregisters its controller.
+  private inFlight = new Set<AbortController>();
+
   constructor(
     private readonly ytDlp: YtDlp,
     private readonly mockMode = false
   ) {}
+
+  // Abort every in-flight probe. Renderer calls this when the user changes the
+  // wizard URL, navigates away, or otherwise abandons a slow fetch — without
+  // it, a stalled YouTube fallback chain (~60s) keeps the UI spinner blocked.
+  cancelInFlight(): void {
+    if (this.inFlight.size === 0) return;
+    logger.info('Cancelling in-flight probes', { count: this.inFlight.size });
+    for (const ctrl of this.inFlight) {
+      try {
+        ctrl.abort();
+      } catch {
+        /* already aborted */
+      }
+    }
+    this.inFlight.clear();
+  }
 
   async probe(url: string, cookiesMode: 'off' | 'file' | 'browser' = 'off', playlistMode: ProbePlaylistMode = 'auto'): Promise<Result<ProbeResult>> {
     const startMs = Date.now();
@@ -337,12 +330,18 @@ export class ProbeService {
       });
     };
 
+    const controller = new AbortController();
+    this.inFlight.add(controller);
     try {
       if (this.mockMode) return ok(buildMockProbeResult(url));
 
       logger.info('Probe started', { url });
 
-      const probeResult = await this.probeWithRedirectFollow(url, playlistMode);
+      const probeResult = await this.probeWithRedirectFollow(url, playlistMode, controller.signal);
+      if (controller.signal.aborted) {
+        emitFailure('cancelled');
+        return fail(createAppError('download', 'Probe cancelled'));
+      }
       if (probeResult.kind === 'failure') {
         emitFailure(probeResult.errorCategory);
         return fail(probeResult.error);
@@ -385,18 +384,21 @@ export class ProbeService {
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown probing error';
       logger.error('Probe failure', { message, url });
-      emitFailure(categorizeProbeError(message));
+      emitFailure(controller.signal.aborted ? 'cancelled' : categorizeProbeError(message));
       return fail(createAppError('download', message));
+    } finally {
+      this.inFlight.delete(controller);
     }
   }
 
   // Loop over `_type: 'url' / 'url_transparent'` redirects up to depth 1 to
   // follow extractor redirects (e.g. Bandcamp track → resolved video). Anything
   // deeper is a misbehaving extractor — bail rather than loop.
-  private async probeWithRedirectFollow(url: string, playlistMode: ProbePlaylistMode): Promise<ProbeAttemptResult> {
+  private async probeWithRedirectFollow(url: string, playlistMode: ProbePlaylistMode, signal: AbortSignal): Promise<ProbeAttemptResult> {
     let currentUrl = url;
     for (let depth = 0; depth <= 1; depth++) {
-      const attempt = await this.runProbeWithDegradationRetry(currentUrl, playlistMode);
+      if (signal.aborted) return { kind: 'failure', error: createAppError('download', 'Probe cancelled'), errorCategory: 'cancelled' };
+      const attempt = await this.runProbeWithDegradationRetry(currentUrl, playlistMode, signal);
       if (attempt.kind === 'failure') return attempt;
       const info = attempt.data.info;
       if (!isUrlRedirect(info)) return attempt;
@@ -407,20 +409,21 @@ export class ProbeService {
     }
     // Fell through both attempts; return whatever we got — caller surfaces as
     // 'redirected too many times' if still a url_redirect.
-    return this.runProbeWithDegradationRetry(currentUrl, playlistMode);
+    return this.runProbeWithDegradationRetry(currentUrl, playlistMode, signal);
   }
 
-  private async runProbeWithDegradationRetry(url: string, playlistMode: ProbePlaylistMode): Promise<ProbeAttemptResult> {
-    const initial = await this.runProbeAttempt(url, 'initial', playlistMode);
+  private async runProbeWithDegradationRetry(url: string, playlistMode: ProbePlaylistMode, signal: AbortSignal): Promise<ProbeAttemptResult> {
+    const initial = await this.runProbeAttempt(url, 'initial', playlistMode, signal);
     if (initial.kind === 'failure') return initial;
     if (initial.data.degradationSignals.length === 0) return initial;
+    if (signal.aborted) return initial;
 
     logger.info('Probe degraded-success — retrying', {
       url,
       degradationSignals: initial.data.degradationSignals
     });
 
-    const retry = await this.runProbeAttempt(url, 'retry', playlistMode);
+    const retry = await this.runProbeAttempt(url, 'retry', playlistMode, signal);
     if (retry.kind === 'failure') {
       logger.info('Probe retry failed; using initial degraded result', { url });
       return initial;
@@ -433,11 +436,12 @@ export class ProbeService {
     return retryFormatCount > initialFormatCount ? retry : initial;
   }
 
-  private async runProbeAttempt(url: string, attempt: ProbeAttemptName, playlistMode: ProbePlaylistMode): Promise<ProbeAttemptResult> {
+  private async runProbeAttempt(url: string, attempt: ProbeAttemptName, playlistMode: ProbePlaylistMode, signal: AbortSignal): Promise<ProbeAttemptResult> {
     const source = attempt === 'retry' ? 'yt-dlp-probe-retry' : 'yt-dlp-probe';
     const result = await this.ytDlp.run(
       { kind: 'probe', url, playlistMode },
       {
+        abortSignal: signal,
         onStderr: (chunk) => {
           for (const line of splitStderrLines(chunk)) {
             logger.info(line, { source });
@@ -448,12 +452,21 @@ export class ProbeService {
 
     if (result.kind !== 'success') {
       const code = result.kind === 'exit-error' ? result.exitCode : null;
-      const signal = result.kind === 'exit-error' ? result.signal : null;
+      const ytSignal = result.kind === 'exit-error' ? result.signal : null;
       const rawError = result.kind === 'exit-error' ? result.rawError : result.error.message;
-      logger.error('yt-dlp probe failed', { attempt, code, url, signal });
+      // Distinguish caller-driven cancellation from a genuine yt-dlp failure
+      // so analytics + UI don't treat it as an error.
+      if (signal.aborted || rawError === 'Cancelled') {
+        return {
+          kind: 'failure',
+          error: createAppError('download', 'Probe cancelled'),
+          errorCategory: 'cancelled'
+        };
+      }
+      logger.error('yt-dlp probe failed', { attempt, code, url, signal: ytSignal });
       return {
         kind: 'failure',
-        error: createAppError('download', rawError ?? 'Probing failed', undefined, true, signal ?? undefined),
+        error: createAppError('download', rawError ?? 'Probing failed', undefined, true, ytSignal ?? undefined),
         errorCategory: categorizeProbeError(rawError ?? '')
       };
     }

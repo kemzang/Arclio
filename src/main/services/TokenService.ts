@@ -33,12 +33,16 @@ export class TokenService {
 
   constructor(private readonly provider: TokenProvider) {}
 
-  async warmUp(): Promise<{ ready: boolean; reason?: string }> {
+  async warmUp(signal?: AbortSignal): Promise<{ ready: boolean; reason?: string }> {
+    if (signal?.aborted) return { ready: false, reason: 'cancelled' };
     try {
       await this.provider.ensureReady();
+      if (signal?.aborted) return { ready: false, reason: 'cancelled' };
       const visitorData = await this.provider.getVisitorData();
+      if (signal?.aborted) return { ready: false, reason: 'cancelled' };
       if (!visitorData) return { ready: false, reason: 'no-visitor-data' };
       const token = await this.provider.mintToken(visitorData);
+      if (signal?.aborted) return { ready: false, reason: 'cancelled' };
       this.cache = { token, visitorData, mintedAt: Date.now() };
       logger.info('PO token pre-warmed');
       return { ready: true };

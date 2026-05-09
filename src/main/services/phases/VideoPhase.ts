@@ -1,7 +1,7 @@
 import { mkdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { STATUS_KEY } from '@shared/schemas.js';
-import { isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
+import { siteForExtractor } from '@shared/sites/index.js';
 import type { YtDlpRequest } from '../YtDlp.js';
 import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
@@ -31,11 +31,12 @@ export function VideoPhase(embed: boolean): Phase {
       const tempDir = await setupTempDir(job.outputDir, job.id, active.tempDir != null);
       if (tempDir) active.tempDir = tempDir;
 
-      // SponsorBlock is a YouTube-only crowdsourced segment database — passing
-      // --sponsorblock-* flags to yt-dlp for non-YouTube URLs is harmless but
-      // wasted. The wizard hides the SponsorBlock step for non-YT, so this is
-      // a defense-in-depth gate.
-      const sbConfig = isYouTubeExtractor(preparedJob.extractor) && preparedJob.sponsorBlock.mode !== 'off' ? { mode: preparedJob.sponsorBlock.mode, categories: preparedJob.sponsorBlock.categories } : undefined;
+      // SponsorBlock applicability is owned by the Site adapter — currently
+      // YouTube-only. Passing the flag for non-YouTube extractors is harmless
+      // but wasted; the wizard hides the SponsorBlock step on non-supporting
+      // sites and this is the defense-in-depth gate.
+      const site = siteForExtractor(preparedJob.extractor);
+      const sbConfig = site.supportsSponsorBlock && preparedJob.sponsorBlock.mode !== 'off' ? { mode: preparedJob.sponsorBlock.mode, categories: preparedJob.sponsorBlock.categories } : undefined;
 
       const formatId = preparedJob.kind === 'single-format' ? preparedJob.formatId : undefined;
       const formatSelector = preparedJob.kind === 'playlist-preset' ? preparedJob.formatSelector : undefined;

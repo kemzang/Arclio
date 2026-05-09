@@ -264,8 +264,14 @@ const commonSettingsPatchSchema = z.object({
     .optional()
 });
 
+// Convention for *patch* schemas: every field is `.optional()` only — never
+// `.nullable()`. A patch is "fields the caller wants to change"; "absent" is
+// the same signal as "no change", so adding `.nullable()` introduces a third
+// state ("explicitly clear") that the merge logic in SettingsStore.deepMerge
+// doesn't actually distinguish from undefined. Stay in lockstep with
+// commonSettingsPatchSchema and playlistPrefsPatchSchema.
 const singlePrefsPatchSchema = z.object({
-  lastPreset: presetSchema.nullable().optional(),
+  lastPreset: presetSchema.optional(),
   lastVideoResolution: z.string().optional(),
   lastAudioSelection: audioSelectionSchema.optional(),
   lastSubtitleLanguages: z.array(z.string()).optional(),

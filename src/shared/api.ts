@@ -25,6 +25,7 @@ export interface AppApi {
   window: WindowApi;
   downloads: {
     probe(input: ProbeInput): Promise<Result<ProbeResult>>;
+    probeCancel(): Promise<void>;
     start(input: StartDownloadInput): Promise<Result<StartDownloadOutput>>;
     cancel(input?: CancelDownloadInput): Promise<Result<CancelDownloadOutput>>;
     pause(input?: PauseDownloadInput): Promise<Result<PauseDownloadOutput>>;

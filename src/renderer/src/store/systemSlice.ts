@@ -72,7 +72,10 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
     warmupRunning: false,
     warmupProgress: null,
     settings: null,
-    language: pickLanguage(navigator.language),
+    // Guard `navigator` so vitest's node-env tests (e.g. format-selection-view)
+    // can construct the store at module-load time without DOM globals.
+    // initialize() reassigns from settingsResult.common.language anyway.
+    language: typeof navigator !== 'undefined' ? pickLanguage(navigator.language) : pickLanguage('en'),
     commonPaths: undefined,
     shareDialogOpen: false,
     shareDialogTrigger: null,

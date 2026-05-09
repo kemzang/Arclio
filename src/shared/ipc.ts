@@ -6,6 +6,7 @@ export const IPC_CHANNELS = {
   downloadsPause: 'downloads:pause',
   downloadsResume: 'downloads:resume',
   downloadsProbe: 'downloads:probe',
+  downloadsProbeCancel: 'downloads:probeCancel',
   chooseFolder: 'dialog:chooseFolder',
   chooseFile: 'dialog:chooseFile',
   settingsGet: 'settings:get',

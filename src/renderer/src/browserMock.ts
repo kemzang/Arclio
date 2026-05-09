@@ -174,6 +174,9 @@ if (!('appApi' in window)) {
     },
 
     downloads: {
+      probeCancel: async () => {
+        /* no-op in browser */
+      },
       probe: async (input) => {
         await delay(1400);
 

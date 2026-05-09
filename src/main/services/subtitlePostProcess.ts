@@ -12,7 +12,7 @@ import { dedupeSrt } from './srtDedupe.js';
 import { dedupeVtt } from './vttDedupe.js';
 import { spawnFFmpeg } from '@main/utils/process.js';
 import { detectSubtitleLang, EMBED_CONTAINER_EXT } from '@shared/subtitlePath.js';
-import { isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
+import { siteForExtractor } from '@shared/sites/index.js';
 
 export const logger = log.scope('subs');
 
@@ -70,16 +70,14 @@ function buildSubtitleEmbedArgs(opts: { videoPath: string; subtitleTracks: { pat
   return args;
 }
 
-// YouTube auto-captions arrive as rolling cues — each cue duplicates the
-// previous + 1 word. Run pure-TS dedupe on each .srt / .vtt we wrote.
-// Failures are logged and swallowed: dedupe glitches must never lose a video.
+// Auto-caption rolling-cue dedupe — only YouTube emits captions where each
+// cue duplicates the previous + 1 word. Other extractors emit conventional
+// cues; running the dedupe on them would corrupt content with legitimate
+// phrase repeats. The Site adapter owns the gating.
 //
-// Other extractors (Vimeo, Twitch, etc.) emit conventional cues — running the
-// dedupe on them would corrupt content with legitimate phrase repeats. Gate
-// on extractor identity so the rolling-cue heuristic only touches YouTube
-// auto-caption files.
+// Failures are logged and swallowed: dedupe glitches must never lose a video.
 export async function dedupeSubtitleFiles(paths: readonly string[], extractor: string, jobId: string, shouldAbort: () => boolean): Promise<void> {
-  if (!isYouTubeExtractor(extractor)) return;
+  if (!siteForExtractor(extractor).needsAutoCaptionDedupe) return;
   await Promise.all(
     paths.map(async (path) => {
       if (shouldAbort()) return;

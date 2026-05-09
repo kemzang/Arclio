@@ -7,7 +7,7 @@ import { cancelDownloadSchema, pauseResumeSchema, probeSchema, resumeSchema, sta
 import type { DownloadService } from '@main/services/DownloadService.js';
 import type { ProbeService } from '@main/services/ProbeService.js';
 import type { SettingsStore } from '@main/stores/SettingsStore.js';
-import { handle } from './utils.js';
+import { handle, handleRaw } from './utils.js';
 
 interface DownloadHandlerDeps {
   downloadService: DownloadService;
@@ -28,6 +28,13 @@ export function registerDownloadHandlers(deps: DownloadHandlerDeps): void {
     const validationFailure = getCookiesValidationFailure(settings);
     if (validationFailure) return validationFailure;
     return probeService.probe(url, settings.common.cookiesMode ?? 'off', playlistMode ?? 'auto');
+  });
+
+  // Renderer fires this when the user changes URL or navigates away from a
+  // probe in progress. Cancels every in-flight probe so the spinner never
+  // blocks behind a stale 60s YouTube fallback chain.
+  handleRaw(IPC_CHANNELS.downloadsProbeCancel, () => {
+    probeService.cancelInFlight();
   });
 
   handle(IPC_CHANNELS.downloadsStart, startDownloadSchema, async (data) => {

@@ -74,8 +74,10 @@ export interface BinaryOverrides {
 }
 
 // Single-video flow prefs. Restored when the user enters the format-probe path.
+// All fields are `?:` only — see singlePrefsPatchSchema in schemas.ts for why
+// patch shapes never use null (no third state beyond present/absent).
 export interface SinglePrefs {
-  lastPreset?: Preset | null;
+  lastPreset?: Preset;
   lastVideoResolution?: string;
   lastAudioSelection?: AudioSelection;
   lastSubtitleLanguages?: string[];

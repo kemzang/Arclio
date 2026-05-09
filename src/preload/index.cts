@@ -26,6 +26,7 @@ const api: AppApi = {
   },
   downloads: {
     probe: (input) => ipcRenderer.invoke(IPC_CHANNELS.downloadsProbe, input),
+    probeCancel: () => ipcRenderer.invoke(IPC_CHANNELS.downloadsProbeCancel),
     start: (input) => ipcRenderer.invoke(IPC_CHANNELS.downloadsStart, input),
     cancel: (input = {}) => ipcRenderer.invoke(IPC_CHANNELS.downloadsCancel, input),
     pause: (input = {}) => ipcRenderer.invoke(IPC_CHANNELS.downloadsPause, input),

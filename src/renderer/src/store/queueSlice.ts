@@ -207,7 +207,10 @@ async function persistFormatPrefs(set: SetState, get: GetState): Promise<void> {
   // otherwise an empty selection (or a Skip Subs click) would wipe the saved list.
   const single = {
     lastVideoResolution: videoResolution,
-    lastPreset: activePreset,
+    // SinglePrefs patch convention: undefined means "leave unchanged".
+    // activePreset can be null in-memory (no preset selected); coerce to
+    // undefined so the patch is a no-op rather than introducing a third state.
+    ...(activePreset !== null ? { lastPreset: activePreset } : {}),
     lastAudioSelection: audioSelection,
     ...(wizardSubtitleLanguages.length > 0
       ? {

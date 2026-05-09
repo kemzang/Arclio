@@ -22,6 +22,7 @@ const mockAppApi = {
   },
   downloads: {
     probe: vi.fn().mockResolvedValue(ok({ kind: 'video' as const, extractor: 'youtube', extractorKey: 'Youtube', webpageUrl: '', formats: [], title: '', thumbnail: '', subtitles: {}, automaticCaptions: {}, isLive: false, hasDrm: false })),
+    probeCancel: vi.fn().mockResolvedValue(undefined),
     start: vi.fn(),
     cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
     pause: vi.fn().mockResolvedValue(ok({ paused: true })),

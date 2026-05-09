@@ -133,7 +133,10 @@ export class WarmupService {
       binaryManager.resolveYtDlp({ onProgress: emit, signal: budgetSignal() }),
       binaryManager.resolveFFmpegPair({ onProgress: emit, signal: budgetSignal() }),
       binaryManager.resolveDeno({ onProgress: emit, signal: budgetSignal() }),
-      tokenService.warmUp().catch((err) => {
+      // Plumb userSignal so cancel() interrupts the HiddenWindow scrape and
+      // mint round-trip — without this, cancelling a slow probe/scrape leaves
+      // the token warmup running until natural completion.
+      tokenService.warmUp(userSignal).catch((err) => {
         const reason = err instanceof Error ? err.message : String(err);
         logger.warn('Token warmup threw', { error: reason });
         return { ready: false, reason } as const;

@@ -5,6 +5,7 @@ import { classifyStderr, extractLastError, type StderrSignal } from '@main/utils
 import { resolveCookies, type ResolvedCookies } from './cookiesResolver.js';
 import { nonEmpty } from '@shared/format.js';
 import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath.js';
+import { siteForUrl } from '@shared/sites/index.js';
 import type { SubtitleFormat, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, StatusKey, AudioConvert } from '@shared/types.js';
 import { resolveEmbedPolicy } from '@shared/embedPolicy.js';
 import type { BinaryManager } from './BinaryManager.js';
@@ -86,6 +87,9 @@ export interface YtDlpSignal {
   onSpawn?: (proc: ChildProcessWithoutNullStreams) => void;
   onStdout?: (chunk: string) => void;
   onStderr?: (chunk: string) => void;
+  // Caller-driven cancellation. When aborted, in-flight yt-dlp processes are
+  // SIGKILLed and the run resolves with an exit-error (rawError: 'Cancelled').
+  abortSignal?: AbortSignal;
 }
 
 export type YtDlpResult =
@@ -113,19 +117,6 @@ const PLAYER_CLIENT_FALLBACK = 'youtube:player_client=default,-web,-web_safari';
 function buildPotExtractorArgs(token: string, visitorData: string): string {
   const visitor = visitorData ? `;visitor_data=${visitorData}` : '';
   return `youtube:po_token=web.gvs+${token}${visitor}`;
-}
-
-// Inline host check — unified probe runs before we know the extractor identity,
-// so we use URL host as the gating signal. For YouTube we run the 3-tier PoT
-// ladder; for everything else we run a single attempt with no YouTube-specific
-// --extractor-args (no PoT mint, no HiddenWindow scrape, no retry).
-function isYouTubeHostUrl(url: string): boolean {
-  try {
-    const host = new URL(url).hostname.toLowerCase();
-    return host === 'youtu.be' || host === 'youtube.com' || host.endsWith('.youtube.com');
-  } catch {
-    return false;
-  }
 }
 
 type RetryStrategy = { kind: 'pot'; reMint: boolean } | { kind: 'fallback' } | { kind: 'noExtractorArgs' };
@@ -179,6 +170,17 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
     args
   });
 
+  const abortSignal = opts.signal?.abortSignal;
+  if (abortSignal?.aborted) {
+    return Promise.resolve({
+      kind: 'exit-error',
+      exitCode: -1,
+      signal: null,
+      rawError: 'Cancelled',
+      stdout: '',
+      stderr: ''
+    });
+  }
   return new Promise<YtDlpResult>((resolve) => {
     const proc = spawnYtDlp(opts.ytDlpPath, args, opts.ffmpegPath);
     let stdout = '';
@@ -189,6 +191,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
       if (settled) return;
       settled = true;
       if (timer) clearTimeout(timer);
+      if (abortSignal && onAbort) abortSignal.removeEventListener('abort', onAbort);
       resolve(result);
     };
 
@@ -217,6 +220,30 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
           });
         }, opts.timeoutMs)
       : null;
+
+    // Caller-driven cancel — kill the child and resolve with a Cancelled
+    // exit-error so the wider probe pipeline can categorize and exit cleanly
+    // rather than waiting for natural completion.
+    const onAbort = abortSignal
+      ? (): void => {
+          try {
+            proc.kill('SIGKILL');
+          } catch {
+            /* already exited */
+          }
+          proc.stdout.removeAllListeners('data');
+          proc.stderr.removeAllListeners('data');
+          finish({
+            kind: 'exit-error',
+            exitCode: -1,
+            signal: null,
+            rawError: 'Cancelled',
+            stdout,
+            stderr
+          });
+        }
+      : null;
+    if (abortSignal && onAbort) abortSignal.addEventListener('abort', onAbort, { once: true });
 
     opts.signal?.onSpawn?.(proc);
 
@@ -270,7 +297,10 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 // PoT mint avoids gratuitous HiddenWindow scrapes for sites where the token
 // would be ignored.
 async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
-  if (!isYouTubeHostUrl(opts.url)) {
+  // Site adapter resolves PoT applicability from the URL hostname. The unified
+  // probe pipeline runs before extractor identity is known, so URL-based
+  // routing stays the conservative pre-probe signal.
+  if (!siteForUrl(opts.url).needsPotToken) {
     return invokeOnce(opts, { kind: 'noExtractorArgs' });
   }
 
