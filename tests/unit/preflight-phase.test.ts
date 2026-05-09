@@ -28,17 +28,23 @@ function makeCtx(outputDir = '/output'): PhaseContext {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
+  const controller = new AbortController();
   const active: ActiveDownload = {
     job,
     input,
+    controller,
+    signal: controller.signal,
     cancelRequested: false,
     pauseRequested: false,
-    subtitlePaths: []
+    subtitlePaths: [],
+    disposables: []
   };
   return {
     active,
+    signal: active.signal,
     ytDlp: {} as never,
     emitStatus: vi.fn(),
+    register: () => undefined,
     emitYtdlpFailure: vi.fn(),
     attachYtDlpProcess: vi.fn(),
     safeConsume: vi.fn(),

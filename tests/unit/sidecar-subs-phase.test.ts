@@ -51,10 +51,13 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
   return {
     job: makeJob(),
     input: BASE_INPUT,
+    controller: new AbortController(),
+    get signal(): AbortSignal { return this.controller.signal; },
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: ['/tmp/video.en.srt'],
     mediaPath: '/tmp/video.mp4',
+    disposables: [],
     ...overrides
   };
 }
@@ -63,6 +66,8 @@ function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload
   const runMock = vi.fn().mockResolvedValue(runResult);
   return {
     active: makeActive(activeOverrides),
+    signal: new AbortController().signal,
+    register: () => undefined,
     ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
     emitStatus: vi.fn(),
     emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'unknown', raw: '' }),

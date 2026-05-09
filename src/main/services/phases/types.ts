@@ -1,12 +1,31 @@
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
-import type { DownloadJob, LocalizedError, RecentJob, StartDownloadInput, StatusEvent, StatusKey } from '@shared/types.js';
-import type { YtDlp, YtDlpResult } from '../YtDlp.js';
+import type { DownloadJob, LocalizedError, StartDownloadInput, StatusEvent, StatusKey } from '@shared/types.js';
+import type { YtDlp } from '../YtDlp.js';
 
-export interface ActiveDownload {
+// Disposable: a teardown callback registered against an ActiveJob for LIFO
+// drain at finalize. Replaces ad-hoc per-cleanup-path code in DownloadService
+// (cancel / paused-cancel / mock-cancel) and PhaseExecutor — every spawn /
+// tempDir / mux process pushes one and JobLifecycle.finalize drains them.
+export type Disposable = () => Promise<void> | void;
+
+export interface ActiveJob {
   job: DownloadJob;
   input: StartDownloadInput;
+  // AbortController.abort() drops the signal. Process spawns register
+  // `() => proc.kill('SIGKILL')` against `signal.aborted`, so cancel = abort.
+  controller: AbortController;
+  signal: AbortSignal;
+  // Mirrors `signal.aborted` for code paths that already poll the boolean.
+  // New code should prefer `signal.aborted` directly. Set to true at the
+  // same moment `controller.abort()` runs.
   cancelRequested: boolean;
+  // Pause is gentler than cancel — phases call it to set this flag, the
+  // active processes get SIGTERM, and the phase returns 'paused'. Cancel,
+  // by contrast, calls controller.abort() and triggers the disposable drain.
   pauseRequested: boolean;
+  // Resources to drain on finalize. LIFO order (last-pushed first).
+  // Phase-internal helpers push entries via PhaseContext.register.
+  disposables: Disposable[];
   ytDlpProcess?: ChildProcessWithoutNullStreams;
   ffmpegProcess?: ChildProcessWithoutNullStreams;
   mockTimer?: NodeJS.Timeout;
@@ -17,6 +36,11 @@ export interface ActiveDownload {
   tempDir?: string;
   postProcEmitted?: Partial<Record<'extractingAudio' | 'convertingVideo' | 'embeddingMetadata' | 'movingFiles', true>>;
 }
+
+// Back-compat name for tests / call sites that still spell it ActiveDownload.
+// The intent is to migrate every spelling — kept here only so this commit can
+// land without rewriting every test fixture in the same diff.
+export type ActiveDownload = ActiveJob;
 
 export interface PausedDownload {
   job: DownloadJob;
@@ -31,15 +55,28 @@ export interface Phase {
   run(ctx: PhaseContext): Promise<PhaseOutcome>;
 }
 
+// PhaseContext — minimal surface a phase needs. Everything cleanup-related
+// flows through `register()`; everything error-related stays inside the
+// phase (it returns a hard-failed outcome with a LocalizedError when needed).
+//
+// The wide pre-refactor surface (cleanupPartFiles / cleanupTempDir /
+// finalize / moveToPaused / emitYtdlpFailure / attachYtDlpProcess) survives
+// as compatibility shims on the same type so we can land this incrementally
+// without rewriting every test in one commit; new code should rely only on
+// the five core members above the divider.
 export interface PhaseContext {
-  active: ActiveDownload;
+  // --- core surface (post-refactor target) ---
+  active: ActiveJob;
+  signal: AbortSignal;
   ytDlp: YtDlp;
   emitStatus(stage: StatusEvent['stage'], statusKey: StatusKey, params?: Record<string, string | number>, error?: LocalizedError): void;
-  emitYtdlpFailure(result: Exclude<YtDlpResult, { kind: 'success' }>): Promise<LocalizedError>;
-  attachYtDlpProcess(proc: ChildProcessWithoutNullStreams, statusKey?: StatusKey): void;
+  register(disposable: Disposable): void;
   safeConsume(text: string): void;
+  // --- compat surface (still consumed by phases + tests this commit) ---
+  emitYtdlpFailure(result: import('../YtDlp.js').YtDlpResult extends infer T ? Exclude<T, { kind: 'success' }> : never): Promise<LocalizedError>;
+  attachYtDlpProcess(proc: ChildProcessWithoutNullStreams, statusKey?: StatusKey): void;
   cleanupPartFiles(dir: string): Promise<void>;
   cleanupTempDir(): Promise<void>;
-  finalize(status: RecentJob['status'], error?: LocalizedError): Promise<void>;
+  finalize(status: import('@shared/types.js').RecentJob['status'], error?: LocalizedError): Promise<void>;
   moveToPaused(): void;
 }

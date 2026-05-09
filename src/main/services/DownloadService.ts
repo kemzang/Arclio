@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { stat } from 'node:fs/promises';
 import { type ChildProcessWithoutNullStreams } from 'node:child_process';
 import log from 'electron-log/main.js';
-import { trackMain, downloadDurationBucket, sizeBucket } from '@main/services/analytics.js';
+import { trackMain } from '@main/services/analytics.js';
 import { phasesFor, PhaseExecutor } from './phases/index.js';
 import type { PhaseContext } from './phases/index.js';
 import { nowIso } from '@main/utils/clock.js';
@@ -19,6 +19,7 @@ import type { ActiveDownload, PausedDownload } from './phases/index.js';
 import { killActiveProcesses } from './download/processControl.js';
 import { cleanupPartFiles, cleanupTempDirByPath } from './download/cleanup.js';
 import { ProgressParser } from './download/progressParser.js';
+import { JobLifecycle } from './JobLifecycle.js';
 
 const logger = log.scope('downloads');
 
@@ -34,6 +35,7 @@ export class DownloadService extends EventEmitter {
   private pausedJobs = new Map<string, PausedDownload>();
   private readonly maxConcurrent: number;
   private readonly progressParser: ProgressParser;
+  private readonly lifecycle: JobLifecycle;
 
   constructor(
     private readonly ytDlp: YtDlp,
@@ -47,6 +49,7 @@ export class DownloadService extends EventEmitter {
       (jobId, stage, statusKey, params, error) => this.emitStatus(jobId, stage, statusKey, params, error),
       (event) => this.emit('progress', event)
     );
+    this.lifecycle = new JobLifecycle(this.recentJobsStore);
   }
 
   get activeCount(): number {
@@ -82,12 +85,16 @@ export class DownloadService extends EventEmitter {
       createdAt: now,
       updatedAt: now
     };
+    const controller = new AbortController();
     const active: ActiveDownload = {
       job,
       input,
+      controller,
+      signal: controller.signal,
       cancelRequested: false,
       pauseRequested: false,
-      subtitlePaths: []
+      subtitlePaths: [],
+      disposables: []
     };
     this.activeJobs.set(job.id, active);
     logger.info('Download job created', {
@@ -140,13 +147,17 @@ export class DownloadService extends EventEmitter {
         resumedTempDir = undefined;
       }
     }
+    const controller = new AbortController();
     const active: ActiveDownload = {
       job,
       input,
+      controller,
+      signal: controller.signal,
       cancelRequested: false,
       pauseRequested: false,
       subtitlePaths: [],
-      tempDir: resumedTempDir
+      tempDir: resumedTempDir,
+      disposables: []
     };
     this.activeJobs.set(job.id, active);
     logger.info('Resuming download', { jobId: job.id });
@@ -205,8 +216,10 @@ export class DownloadService extends EventEmitter {
     const { job, input } = active;
     const ctx: PhaseContext = {
       active,
+      signal: active.signal,
       ytDlp: this.ytDlp,
       emitStatus: (stage, statusKey, params?, error?) => this.emitStatus(job.id, stage, statusKey, params, error),
+      register: (disposable) => active.disposables.push(disposable),
       emitYtdlpFailure: (result) => this.emitYtdlpFailure(job, result),
       attachYtDlpProcess: (proc, statusKey?) => this.attachYtDlpProcess(active, proc, statusKey),
       safeConsume: (text) => this.safeConsume(active, text),
@@ -367,6 +380,11 @@ export class DownloadService extends EventEmitter {
 
   private async cancelOne(active: ActiveDownload): Promise<Result<CancelDownloadOutput>> {
     active.cancelRequested = true;
+    // controller.abort() drops the AbortSignal; any in-flight ytDlp.run that
+    // received `signal: active.signal` will SIGKILL its child and resolve
+    // with a Cancelled exit-error. Mirrors the cancelRequested flag for code
+    // paths that already poll the boolean.
+    active.controller.abort();
 
     if (active.ytDlpProcess || active.ffmpegProcess) {
       logger.info('Sending SIGKILL to active processes', { jobId: active.job.id });
@@ -422,41 +440,13 @@ export class DownloadService extends EventEmitter {
   }
 
   private async finalize(job: DownloadJob, status: RecentJob['status'], error?: LocalizedError): Promise<void> {
-    logger.info('Job finalized', { jobId: job.id, status, ...(error && { error }) });
+    const active = this.activeJobs.get(job.id);
     this.activeJobs.delete(job.id);
-
-    job.status = status;
-    job.updatedAt = nowIso();
-
-    const durationMs = new Date(job.updatedAt).getTime() - new Date(job.createdAt).getTime();
-    if (status === 'completed') {
-      trackMain('download_finished', {
-        duration_bucket: downloadDurationBucket(durationMs),
-        ...(job.expectedBytes != null ? { size_bucket: sizeBucket(job.expectedBytes) } : {})
-      });
-    } else if (status === 'cancelled') {
-      trackMain('download_cancelled', {
-        duration_bucket: downloadDurationBucket(durationMs)
-      });
-    } else {
-      trackMain('download_failed', {
-        duration_bucket: downloadDurationBucket(durationMs),
-        error_category: error?.kind ?? 'unknown',
-        ...(job.expectedBytes != null ? { size_bucket: sizeBucket(job.expectedBytes) } : {})
-      });
-    }
-
-    const recent: RecentJob = {
-      id: job.id,
-      url: job.url,
-      outputDir: job.outputDir,
-      formatId: job.formatId,
-      status,
-      finishedAt: job.updatedAt,
-      error
-    };
-
-    await this.recentJobsStore.push(recent);
+    // Drain LIFO disposables (process kills, tempDir removals, watchdog
+    // timers) before writing the RecentJob entry. Per-disposable failures
+    // log + continue; a stuck cleanup can't block finalize.
+    if (active) await this.lifecycle.drain(active);
+    await this.lifecycle.finalize(job, status, error);
   }
 
   private startMockDownload(jobId: string): void {

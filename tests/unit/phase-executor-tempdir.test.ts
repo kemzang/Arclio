@@ -29,9 +29,12 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
   return {
     job: makeJob(),
     input,
+    controller: new AbortController(),
+    get signal(): AbortSignal { return this.controller.signal; },
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
+    disposables: [],
     ...overrides
   };
 }
@@ -39,6 +42,8 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
 function makeCtx(activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
   return {
     active: makeActive(activeOverrides),
+    signal: new AbortController().signal,
+    register: () => undefined,
     ytDlp: {} as never,
     emitStatus: vi.fn(),
     emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'unknown', raw: '' }),

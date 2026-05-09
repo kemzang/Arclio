@@ -45,9 +45,12 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
   return {
     job: makeJob(),
     input: BASE_INPUT,
+    controller: new AbortController(),
+    get signal(): AbortSignal { return this.controller.signal; },
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
+    disposables: [],
     ...overrides
   };
 }
@@ -62,6 +65,8 @@ function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload
 
   const ctx: PhaseContext = {
     active: makeActive(activeOverrides),
+    signal: new AbortController().signal,
+    register: () => undefined,
     ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
     emitStatus: vi.fn(),
     emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'botBlock', raw: '' }),
@@ -219,6 +224,8 @@ describe('VideoPhase — cancel / pause', () => {
     });
     const ctx: PhaseContext = {
       active: makeActive({ cancelRequested: false }),
+      signal: new AbortController().signal,
+      register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
       emitYtdlpFailure: vi.fn(),
@@ -243,6 +250,8 @@ describe('VideoPhase — cancel / pause', () => {
     const runMock = vi.fn().mockImplementation(async () => SUCCESS);
     const ctx: PhaseContext = {
       active: makeActive({ pauseRequested: false }),
+      signal: new AbortController().signal,
+      register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
       emitYtdlpFailure: vi.fn(),
@@ -279,8 +288,11 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
     job.outputDir = outputDir;
     const input: StartDownloadInput = { ...BASE_INPUT, outputDir, job: BASE_JOB };
     const runMock = vi.fn().mockResolvedValue(SUCCESS);
+    const realController = new AbortController();
     const ctx: PhaseContext = {
-      active: { job, input, cancelRequested: false, pauseRequested: false, subtitlePaths: [], ...activeOverrides },
+      active: { job, input, controller: realController, signal: realController.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: [], ...activeOverrides },
+      signal: realController.signal,
+      register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
       emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'botBlock', raw: '' }),
@@ -340,6 +352,8 @@ describe('VideoPhase — signal callbacks', () => {
     });
     const ctx: PhaseContext = {
       active: makeActive(),
+      signal: new AbortController().signal,
+      register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
       emitYtdlpFailure: vi.fn(),
@@ -364,6 +378,8 @@ describe('VideoPhase — signal callbacks', () => {
     });
     const ctx: PhaseContext = {
       active: makeActive(),
+      signal: new AbortController().signal,
+      register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
       emitYtdlpFailure: vi.fn(),
@@ -388,6 +404,8 @@ describe('VideoPhase — signal callbacks', () => {
     });
     const ctx: PhaseContext = {
       active: makeActive(),
+      signal: new AbortController().signal,
+      register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
       emitYtdlpFailure: vi.fn(),
@@ -412,6 +430,8 @@ describe('VideoPhase — signal callbacks', () => {
     });
     const ctx: PhaseContext = {
       active: makeActive(),
+      signal: new AbortController().signal,
+      register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
       emitYtdlpFailure: vi.fn(),
