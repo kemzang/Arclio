@@ -456,7 +456,7 @@ const vi = {
       unsupportedUrl: 'Đây không giống như URL video. Hãy dán liên kết video YouTube, Short hoặc danh sách phát.',
       chunkTransferFailure: 'Máy chủ liên tục ngắt kết nối giữa chừng và yt-dlp đã bỏ cuộc sau nhiều lần thử lại. Lỗi này thường xảy ra với các định dạng video lớn nhất (4K HDR / VP9 bitrate cao). Hãy thử lại, đổi mạng/VPN, hoặc chọn định dạng độ phân giải thấp hơn.',
       postprocessFailure: 'yt-dlp đã tải xong nhưng quá trình xử lý hậu kỳ (gộp / mux / chuyển đổi) bị lỗi. Thường đây là sự cố tạm thời của ffmpeg — hãy thử lại, và nếu vẫn lỗi thì thử một tổ hợp định dạng khác.',
-      parse: "Không thể phân tích phản hồi từ trang web. Bộ trích xuất của yt-dlp có thể đã lỗi thời. Arroxy tự động cập nhật yt-dlp khi khởi chạy — hãy thử lại sau vài phút khi bản sửa lỗi được phát hành.",
+      parse: 'Không thể phân tích phản hồi từ trang web. Bộ trích xuất của yt-dlp có thể đã lỗi thời. Arroxy tự động cập nhật yt-dlp khi khởi chạy — hãy thử lại sau vài phút khi bản sửa lỗi được phát hành.',
       network: 'Lỗi mạng. Hãy kiểm tra kết nối và thử lại.',
       unknown: 'Tải xuống thất bại. Xem đầu ra thô bên dưới.'
     }

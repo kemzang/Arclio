@@ -1,22 +1,27 @@
 import { execFile } from 'node:child_process';
-import { createHash } from 'node:crypto';
-import fs, { constants as fsConstants } from 'node:fs';
+import { constants as fsConstants } from 'node:fs';
 import fsPromises from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { app } from 'electron';
 import extractZip from 'extract-zip';
-import got, { type Method } from 'got';
+import got from 'got';
 import log from 'electron-log/main.js';
 
 const execFileAsync = promisify(execFile);
+
 import { trackMain } from '@main/services/analytics.js';
-import { FAILURE_CODE, type BinaryOverrides, type DependencyAttempt, type DependencyDiagnostic, type DependencyFailure, type DependencyFailureKind, type DependencyId, type DependencySource, type StatusKey, type WarmupProgressEvent } from '@shared/types.js';
+import { FAILURE_CODE, type BinaryOverrides, type DependencyAttempt, type DependencyDiagnostic, type DependencyFailure, type DependencyId, type DependencySource, type StatusKey } from '@shared/types.js';
+import { probeArgs, probeBinary, whereOnPath, classifyProbeError, cancelError, PROBE_TIMEOUT_MS } from './binary/BinaryProbe.js';
+import { classifyDownloadError, downloadFile, downloadText, parseShaLine, parseStandaloneSha256, parsePowerShellFileHash, parseTagFromLocation, sha256ForFile, wrapDownloadProgressEmitter, parseContentRangeStart, resolvePartialResponseMode, HTTP_HEADERS, HTTP_RETRY, HTTP_TIMEOUT, type DownloadProgressCallback, type ProgressEmitter } from './binary/BinaryDownloader.js';
+
+function stringifyHeader(header: string | string[] | undefined): string | null {
+  if (!header) return null;
+  return Array.isArray(header) ? (header[0] ?? null) : header;
+}
 
 type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | number>) => void;
-type DownloadProgressCallback = (downloaded: number, total: number | undefined) => void;
-type ProgressEmitter = (event: WarmupProgressEvent) => void;
 
 type RemoteVersionLookup = { tag: string; reason: null } | { tag: null; reason: string };
 
@@ -27,102 +32,6 @@ interface ResolveOptions {
   onStatus?: StatusReporter;
   onProgress?: ProgressEmitter;
   signal?: AbortSignal;
-}
-
-const PROBE_TIMEOUT_MS = 10_000;
-
-function isAbortError(err: unknown): boolean {
-  if (!(err instanceof Error)) return false;
-  return err.name === 'AbortError' || (err as { code?: string }).code === 'ABORT_ERR';
-}
-
-// Cancellation errors must keep their AbortError marker so classifyDownloadError
-// → 'timeout'. A plain `new Error('Cancelled')` reads as a generic download_failed.
-function cancelError(message = 'Cancelled'): Error {
-  const err = new Error(message);
-  err.name = 'AbortError';
-  return err;
-}
-
-function abortFailure(message: string): DependencyFailure {
-  return { kind: 'timeout', message, osCode: 'CANCELLED' };
-}
-
-function probeArgs(id: DependencyId): string[] {
-  if (id === 'ffmpeg' || id === 'ffprobe') return ['-version'];
-  return ['--version'];
-}
-
-function classifyProbeError(err: NodeJS.ErrnoException, stderr?: string): DependencyFailure {
-  const code = err.code;
-  const msg = err.message ?? String(err);
-  const errno = (err as { errno?: number }).errno;
-  const killed = (err as { killed?: boolean }).killed;
-  if (killed || code === 'ETIMEDOUT') return { kind: 'timeout', message: msg, osCode: code };
-  if (code === 'ENOENT') return { kind: 'spawn_failed', message: msg, osCode: code };
-  if (code === 'EACCES' || code === 'EPERM') return { kind: 'permission_denied', message: msg, osCode: code };
-  const blob = `${msg} ${stderr ?? ''}`;
-  if (process.platform === 'win32' && /SmartScreen|Defender|virus|threat|0x800704EC|0x80070424/i.test(blob)) {
-    return { kind: 'blocked_or_quarantined', message: msg, osCode: code };
-  }
-  if (process.platform === 'win32' && (code === 'UNKNOWN' || errno === -4094)) {
-    return { kind: 'blocked_or_quarantined', message: msg, osCode: code };
-  }
-  return { kind: 'bad_exit_code', message: msg, osCode: code };
-}
-
-async function probeBinary(filePath: string, args: string[], timeoutMs: number = PROBE_TIMEOUT_MS, signal?: AbortSignal): Promise<{ ok: true; output: string } | { ok: false; failure: DependencyFailure }> {
-  if (signal?.aborted) return { ok: false, failure: abortFailure('Cancelled before probe') };
-  // BtbN's Linux shared ffmpeg/ffprobe build expects libav*.so.* siblings in
-  // the executable's own directory. Inject LD_LIBRARY_PATH so probing the
-  // bundled binary works the same way spawnYtDlp/spawnFFmpeg do at runtime.
-  const env = process.platform === 'linux' ? { ...process.env, LD_LIBRARY_PATH: path.dirname(filePath) + (process.env.LD_LIBRARY_PATH ? path.delimiter + process.env.LD_LIBRARY_PATH : '') } : undefined;
-  return new Promise((resolve) => {
-    let settled = false;
-    const child = execFile(filePath, args, { timeout: timeoutMs, windowsHide: true, maxBuffer: 1024 * 1024, signal, env }, (err, stdout, stderr) => {
-      if (settled) return;
-      settled = true;
-      if (err) {
-        if (isAbortError(err)) {
-          resolve({ ok: false, failure: abortFailure('Probe cancelled') });
-          return;
-        }
-        resolve({ ok: false, failure: classifyProbeError(err as NodeJS.ErrnoException, stderr) });
-        return;
-      }
-      const output = (stdout || stderr || '').trim();
-      if (!output) {
-        resolve({ ok: false, failure: { kind: 'bad_exit_code', message: 'Empty version output' } });
-        return;
-      }
-      resolve({ ok: true, output });
-    });
-    child.once('error', (err) => {
-      if (settled) return;
-      settled = true;
-      if (isAbortError(err)) {
-        resolve({ ok: false, failure: abortFailure('Probe cancelled') });
-        return;
-      }
-      resolve({ ok: false, failure: classifyProbeError(err) });
-    });
-  });
-}
-
-// Discover binaries on PATH. On Windows uses `where.exe`; on POSIX uses `which`.
-// Returns absolute paths in PATH order. Empty array on failure.
-async function whereOnPath(name: string, signal?: AbortSignal): Promise<string[]> {
-  try {
-    const tool = process.platform === 'win32' ? 'where' : 'which';
-    const args = process.platform === 'win32' ? [name] : ['-a', name];
-    const { stdout } = await execFileAsync(tool, args, { windowsHide: true, signal });
-    return stdout
-      .split(/\r?\n/)
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0);
-  } catch {
-    return [];
-  }
 }
 
 function errorMessage(err: unknown): string {
@@ -149,14 +58,6 @@ function failedDiagnostic(id: DependencyId, attempts: DependencyAttempt[]): Depe
   };
 }
 
-function classifyDownloadError(err: unknown): DependencyFailureKind {
-  if (isAbortError(err)) return 'timeout';
-  const msg = err instanceof Error ? err.message.toLowerCase() : '';
-  if (msg.includes('checksum')) return 'hash_failed';
-  if (msg.includes('archive') || msg.includes('did not contain') || msg.includes('extract')) return 'extract_failed';
-  return 'download_failed';
-}
-
 function makeDownloadProgress(id: DependencyId, source: DependencySource, onProgress: ProgressEmitter | undefined): DownloadProgressCallback | undefined {
   if (!onProgress) return undefined;
   return (downloaded, total): void => {
@@ -165,207 +66,6 @@ function makeDownloadProgress(id: DependencyId, source: DependencySource, onProg
 }
 
 const logger = log.scope('binary');
-
-type PartialResponseMode = 'fresh' | 'append' | 'discard-and-retry';
-
-class RestartFreshDownloadError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'RestartFreshDownloadError';
-  }
-}
-
-function wrapDownloadProgressEmitter(cb: DownloadProgressCallback | undefined): ProgressEmitter | undefined {
-  if (!cb) return undefined;
-  return (event): void => {
-    if (event.phase === 'downloading' && typeof event.bytesDownloaded === 'number') {
-      cb(event.bytesDownloaded, event.totalBytes);
-    }
-  };
-}
-
-function parseShaLine(content: string, fileName: string): string | null {
-  const lines = content.split(/\r?\n/);
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed) continue;
-
-    // Accept formats like: "<sha>  <filename>"
-    const parts = trimmed.split(/\s+/);
-    const shaCandidate = parts[0];
-    const assetCandidate = parts[parts.length - 1];
-
-    if (assetCandidate === fileName && /^[a-fA-F0-9]{64}$/.test(shaCandidate)) {
-      return shaCandidate.toLowerCase();
-    }
-  }
-  return null;
-}
-
-// Single-line plain-hex SHA used by deno's Linux/Mac sha256sum sibling.
-// Falls back to any 64-hex token in the body (covers labelled forms).
-function parseStandaloneSha256(content: string): string | null {
-  const firstToken = content.trim().split(/\s+/)[0] ?? '';
-  if (/^[a-fA-F0-9]{64}$/.test(firstToken)) return firstToken.toLowerCase();
-  const labelled = /\b([a-fA-F0-9]{64})\b/.exec(content);
-  return labelled ? labelled[1].toLowerCase() : null;
-}
-
-// Deno Windows .sha256sum uses multi-line "Hash : <64-hex>" PowerShell
-// format. Linux/Mac use parseStandaloneSha256 instead.
-function parsePowerShellFileHash(content: string): string | null {
-  const match = /^\s*Hash\s*:\s*([a-fA-F0-9]{64})\s*$/m.exec(content);
-  return match ? match[1].toLowerCase() : null;
-}
-
-// Network plumbing handled by `got`: per-phase timeouts (DNS/TCP/TLS/header/idle/total),
-// jittered exponential backoff, automatic redirect handling with retry on transient
-// HTTP errors (408/429/5xx) and network errors (ECONNRESET/ETIMEDOUT/EAI_AGAIN/...).
-// Replaces the bespoke https.get plumbing which had a single 30s blunt-instrument
-// inactivity timer and no internal retry — this fragility was the root cause of
-// `binary_setup_failed` events on slow/lossy user connections (esp. ffprobe + deno).
-const HTTP_HEADERS: Record<string, string> = { 'user-agent': 'arroxy/1.0' };
-const HTTP_RETRY = {
-  limit: 5,
-  methods: ['GET'] as Method[],
-  statusCodes: [408, 413, 429, 500, 502, 503, 504],
-  errorCodes: ['ETIMEDOUT', 'ECONNRESET', 'EADDRINUSE', 'ECONNREFUSED', 'EPIPE', 'ENOTFOUND', 'ENETUNREACH', 'EAI_AGAIN'],
-  calculateDelay: ({ computedValue }: { computedValue: number }): number => (computedValue === 0 ? 0 : Math.min(60_000, computedValue) + Math.floor(Math.random() * 500))
-};
-const HTTP_TIMEOUT = {
-  lookup: 5_000,
-  connect: 10_000,
-  secureConnect: 10_000,
-  socket: 60_000,
-  response: 30_000,
-  send: 60_000,
-  request: 600_000
-};
-
-async function downloadText(url: string, signal?: AbortSignal): Promise<string> {
-  const res = await got(url, {
-    headers: HTTP_HEADERS,
-    retry: HTTP_RETRY,
-    timeout: HTTP_TIMEOUT,
-    followRedirect: true,
-    signal
-  });
-  return res.body;
-}
-
-function stringifyHeader(header: string | string[] | undefined): string | null {
-  if (!header) return null;
-  return Array.isArray(header) ? (header[0] ?? null) : header;
-}
-
-const RELEASE_TAG_LOCATION = /\/releases\/tag\/([^/?#]+)/;
-
-function parseTagFromLocation(location: string | string[] | undefined): string | null {
-  const value = stringifyHeader(location);
-  if (!value) return null;
-  const match = RELEASE_TAG_LOCATION.exec(value);
-  return match ? decodeURIComponent(match[1]) : null;
-}
-
-function parseContentRangeStart(header: string | string[] | undefined): number | null {
-  const value = Array.isArray(header) ? header[0] : header;
-  if (!value) return null;
-  const match = /^bytes\s+(\d+)-\d+\/(?:\d+|\*)$/i.exec(value.trim());
-  return match ? Number(match[1]) : null;
-}
-
-function resolvePartialResponseMode(startByte: number, statusCode: number | undefined, contentRange: string | string[] | undefined): PartialResponseMode {
-  if (startByte === 0) return 'fresh';
-  if (statusCode === 416) return 'discard-and-retry';
-  if (statusCode !== 206) return 'fresh';
-
-  const resumedFrom = parseContentRangeStart(contentRange);
-  if (resumedFrom !== null && resumedFrom !== startByte) {
-    return 'discard-and-retry';
-  }
-
-  return 'append';
-}
-
-// Range-resume: if `${destination}.part` exists from a previous interrupted
-// attempt, resume via `Range: bytes=<size>-`. If the server responds 200
-// (no range support) instead of 206, truncate and start fresh.
-async function downloadFile(url: string, destination: string, onProgress?: DownloadProgressCallback, allowPartialRetry = true, signal?: AbortSignal): Promise<void> {
-  if (signal?.aborted) throw cancelError();
-  await fsPromises.mkdir(path.dirname(destination), { recursive: true });
-
-  const partPath = `${destination}.part`;
-  let startByte = 0;
-  try {
-    const stat = await fsPromises.stat(partPath);
-    if (stat.isFile() && stat.size > 0) startByte = stat.size;
-  } catch {
-    // no partial file
-  }
-
-  const headers: Record<string, string> = { ...HTTP_HEADERS };
-  if (startByte > 0) headers.range = `bytes=${startByte}-`;
-
-  const stream = got.stream(url, {
-    headers,
-    retry: HTTP_RETRY,
-    timeout: HTTP_TIMEOUT,
-    followRedirect: true,
-    signal
-  });
-
-  try {
-    await new Promise<void>((resolve, reject) => {
-      let out: fs.WriteStream | null = null;
-      let settled = false;
-      const finish = (err?: Error): void => {
-        if (settled) return;
-        settled = true;
-        if (err) reject(err);
-        else resolve();
-      };
-
-      stream.once('response', (res: { statusCode?: number; headers: Record<string, string | string[] | undefined> }) => {
-        const mode = resolvePartialResponseMode(startByte, res.statusCode, res.headers['content-range']);
-        if (mode === 'discard-and-retry') {
-          stream.destroy(new RestartFreshDownloadError(`Discarding stale partial for ${path.basename(destination)}`));
-          return;
-        }
-
-        out = fs.createWriteStream(partPath, { flags: mode === 'append' ? 'a' : 'w' });
-        out.on('error', finish);
-        stream.pipe(out);
-        out.on('finish', () => finish());
-      });
-      stream.on('downloadProgress', ({ transferred, total }: { transferred: number; total: number }) => {
-        onProgress?.(startByte + transferred, total > 0 ? startByte + total : undefined);
-      });
-      stream.once('error', (err: Error) => finish(err));
-    });
-  } catch (err) {
-    if (allowPartialRetry && err instanceof RestartFreshDownloadError) {
-      logger.warn('Stale partial detected, retrying binary download from byte 0', {
-        destination,
-        startByte
-      });
-      await fsPromises.rm(partPath, { force: true });
-      return downloadFile(url, destination, onProgress, false, signal);
-    }
-    throw err;
-  }
-
-  await fsPromises.rename(partPath, destination);
-}
-
-async function sha256ForFile(filePath: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const hash = createHash('sha256');
-    const stream = fs.createReadStream(filePath);
-    stream.on('data', (chunk) => hash.update(chunk));
-    stream.on('error', reject);
-    stream.on('end', () => resolve(hash.digest('hex').toLowerCase()));
-  });
-}
 
 // Upstream sources still reached at runtime. ffmpeg + ffprobe are no longer
 // here — they ship via electron-builder extraResources (see fetch-embedded.sh

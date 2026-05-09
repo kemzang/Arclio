@@ -455,7 +455,7 @@ const sw = {
       unsupportedUrl: 'Hii haionekani kama URL ya video. Bandika kiungo cha video ya YouTube, Short, au playlist.',
       chunkTransferFailure: 'Seva ilikatiza upakuaji mara kwa mara na yt-dlp ilikata tamaa baada ya kujaribu tena. Hii hutokea zaidi kwa muundo mkubwa wa video (4K HDR / VP9 ya bitrate ya juu). Jaribu tena, badilisha mtandao/VPN, au chagua muundo wa ubora wa chini.',
       postprocessFailure: 'yt-dlp ilimaliza kupakua lakini uchakataji wa baadaye (kuunganisha / mux / kubadilisha) ulishindwa. Mara nyingi hili ni tatizo la muda la ffmpeg — jaribu tena, na ikiendelea, jaribu mchanganyiko tofauti wa muundo.',
-      parse: "Haikuwezekana kuchanganua jibu kutoka tovuti. Kichanganuzi cha yt-dlp kinaweza kuwa kimepitwa na wakati. Arroxy huboresha yt-dlp kiotomatiki wakati wa uzinduzi — jaribu tena baada ya dakika chache marekebisho yatakapowasili.",
+      parse: 'Haikuwezekana kuchanganua jibu kutoka tovuti. Kichanganuzi cha yt-dlp kinaweza kuwa kimepitwa na wakati. Arroxy huboresha yt-dlp kiotomatiki wakati wa uzinduzi — jaribu tena baada ya dakika chache marekebisho yatakapowasili.',
       network: 'Hitilafu ya mtandao. Angalia muunganisho wako na ujaribu tena.',
       unknown: 'Upakuaji umeshindwa. Tazama matokeo ghafi hapa chini.'
     }

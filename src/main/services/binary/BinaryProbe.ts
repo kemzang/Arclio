@@ -1,0 +1,105 @@
+import { execFile } from 'node:child_process';
+import path from 'node:path';
+import { promisify } from 'node:util';
+import type { DependencyFailure, DependencyId } from '@shared/types.js';
+
+const execFileAsync = promisify(execFile);
+
+export const PROBE_TIMEOUT_MS = 10_000;
+
+export function isAbortError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  return err.name === 'AbortError' || (err as { code?: string }).code === 'ABORT_ERR';
+}
+
+// Cancellation errors must keep their AbortError marker so classifyDownloadError
+// → 'timeout'. A plain `new Error('Cancelled')` reads as a generic download_failed.
+export function cancelError(message = 'Cancelled'): Error {
+  const err = new Error(message);
+  err.name = 'AbortError';
+  return err;
+}
+
+function abortFailure(message: string): DependencyFailure {
+  return { kind: 'timeout', message, osCode: 'CANCELLED' };
+}
+
+export function probeArgs(id: DependencyId): string[] {
+  if (id === 'ffmpeg' || id === 'ffprobe') return ['-version'];
+  return ['--version'];
+}
+
+export function classifyProbeError(err: NodeJS.ErrnoException, stderr?: string): DependencyFailure {
+  const code = err.code;
+  const msg = err.message ?? String(err);
+  const errno = (err as { errno?: number }).errno;
+  const killed = (err as { killed?: boolean }).killed;
+  if (killed || code === 'ETIMEDOUT') return { kind: 'timeout', message: msg, osCode: code };
+  if (code === 'ENOENT') return { kind: 'spawn_failed', message: msg, osCode: code };
+  if (code === 'EACCES' || code === 'EPERM') return { kind: 'permission_denied', message: msg, osCode: code };
+  const blob = `${msg} ${stderr ?? ''}`;
+  if (process.platform === 'win32' && /SmartScreen|Defender|virus|threat|0x800704EC|0x80070424/i.test(blob)) {
+    return { kind: 'blocked_or_quarantined', message: msg, osCode: code };
+  }
+  if (process.platform === 'win32' && (code === 'UNKNOWN' || errno === -4094)) {
+    return { kind: 'blocked_or_quarantined', message: msg, osCode: code };
+  }
+  return { kind: 'bad_exit_code', message: msg, osCode: code };
+}
+
+// Spawn a binary, run its --version probe, and classify failures. Pure I/O —
+// no policy. Version-comparison + acceptability decisions live in
+// BinaryResolver (the strategy chain inside BinaryManager).
+export async function probeBinary(filePath: string, args: string[], timeoutMs: number = PROBE_TIMEOUT_MS, signal?: AbortSignal): Promise<{ ok: true; output: string } | { ok: false; failure: DependencyFailure }> {
+  if (signal?.aborted) return { ok: false, failure: abortFailure('Cancelled before probe') };
+  // BtbN's Linux shared ffmpeg/ffprobe build expects libav*.so.* siblings in
+  // the executable's own directory. Inject LD_LIBRARY_PATH so probing the
+  // bundled binary works the same way spawnYtDlp/spawnFFmpeg do at runtime.
+  const env = process.platform === 'linux' ? { ...process.env, LD_LIBRARY_PATH: path.dirname(filePath) + (process.env.LD_LIBRARY_PATH ? path.delimiter + process.env.LD_LIBRARY_PATH : '') } : undefined;
+  return new Promise((resolve) => {
+    let settled = false;
+    const child = execFile(filePath, args, { timeout: timeoutMs, windowsHide: true, maxBuffer: 1024 * 1024, signal, env }, (err, stdout, stderr) => {
+      if (settled) return;
+      settled = true;
+      if (err) {
+        if (isAbortError(err)) {
+          resolve({ ok: false, failure: abortFailure('Probe cancelled') });
+          return;
+        }
+        resolve({ ok: false, failure: classifyProbeError(err as NodeJS.ErrnoException, stderr) });
+        return;
+      }
+      const output = (stdout || stderr || '').trim();
+      if (!output) {
+        resolve({ ok: false, failure: { kind: 'bad_exit_code', message: 'Empty version output' } });
+        return;
+      }
+      resolve({ ok: true, output });
+    });
+    child.once('error', (err) => {
+      if (settled) return;
+      settled = true;
+      if (isAbortError(err)) {
+        resolve({ ok: false, failure: abortFailure('Probe cancelled') });
+        return;
+      }
+      resolve({ ok: false, failure: classifyProbeError(err) });
+    });
+  });
+}
+
+// Discover binaries on PATH. On Windows uses `where.exe`; on POSIX uses `which`.
+// Returns absolute paths in PATH order. Empty array on failure.
+export async function whereOnPath(name: string, signal?: AbortSignal): Promise<string[]> {
+  try {
+    const tool = process.platform === 'win32' ? 'where' : 'which';
+    const args = process.platform === 'win32' ? [name] : ['-a', name];
+    const { stdout } = await execFileAsync(tool, args, { windowsHide: true, signal });
+    return stdout
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+  } catch {
+    return [];
+  }
+}
