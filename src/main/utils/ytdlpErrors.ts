@@ -48,3 +48,14 @@ export function classifyStderr(stderr: string): StderrSignal | null {
   }
   return null;
 }
+
+// yt-dlp swallows ffmpeg's stderr in non-verbose mode and only emits a single
+// "ERROR: Postprocessing: Conversion failed!" line when merge/embed fails.
+// The actual cause (commonly ENOSPC) never reaches our regex classifier. Any
+// ERROR line matching this pattern is a hint to do a post-hoc disk-space probe
+// against the output dir before giving up on classification.
+const POSTPROCESS_FAILURE_PATTERN = /Postprocessing:|Conversion failed|Error (?:writing|muxing|merging)|ffmpeg (?:exited|failed)/i;
+
+export function isPostprocessFailure(rawError: string | null): boolean {
+  return rawError !== null && POSTPROCESS_FAILURE_PATTERN.test(rawError);
+}

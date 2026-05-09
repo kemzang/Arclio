@@ -75,15 +75,29 @@ describe('PreflightPhase', () => {
     }
   });
 
-  it('returns continue when expectedBytes is undefined (live stream)', async () => {
+  it('returns continue when expectedBytes is undefined and free space exceeds floor', async () => {
     vi.mocked(checkDiskSpace).mockResolvedValue({
       ok: true,
-      freeBytes: undefined,
-      requiredBytes: undefined
+      freeBytes: 5_000_000_000,
+      requiredBytes: 200 * 1024 * 1024
     });
     const phase = PreflightPhase(undefined);
     const outcome = await phase.run(makeCtx());
     expect(outcome.kind).toBe('continue');
+  });
+
+  it('still trips when expectedBytes undefined but free space is below floor', async () => {
+    vi.mocked(checkDiskSpace).mockResolvedValue({
+      ok: false,
+      freeBytes: 50 * 1024 * 1024,
+      requiredBytes: 200 * 1024 * 1024
+    });
+    const phase = PreflightPhase(undefined);
+    const outcome = await phase.run(makeCtx());
+    expect(outcome.kind).toBe('hard-failed');
+    if (outcome.kind === 'hard-failed') {
+      expect(outcome.error.key).toBe('outOfDiskSpace');
+    }
   });
 
   it('emits an error status on insufficient space', async () => {

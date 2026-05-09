@@ -6,12 +6,10 @@ export interface DiskSpaceResult {
   requiredBytes: number | undefined;
 }
 
-export async function checkDiskSpace(dir: string, expectedBytes: number | undefined, marginFactor = 1.5): Promise<DiskSpaceResult> {
-  if (expectedBytes === undefined) {
-    return { ok: true, freeBytes: undefined, requiredBytes: undefined };
-  }
+const DEFAULT_MIN_FREE_BYTES = 200 * 1024 * 1024;
 
-  const requiredBytes = expectedBytes * marginFactor;
+export async function checkDiskSpace(dir: string, expectedBytes: number | undefined, marginFactor = 1.5, minFreeBytes = DEFAULT_MIN_FREE_BYTES): Promise<DiskSpaceResult> {
+  const requiredBytes = expectedBytes !== undefined ? Math.max(expectedBytes * marginFactor, minFreeBytes) : minFreeBytes;
 
   try {
     const stats = await statfs(dir);

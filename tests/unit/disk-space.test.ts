@@ -35,11 +35,32 @@ describe('checkDiskSpace', () => {
     expect(result.requiredBytes).toBeGreaterThan(result.freeBytes!);
   });
 
-  it('returns ok=true when expectedBytes is undefined (live stream skip)', async () => {
-    // statfs should not even be called
+  it('still probes when expectedBytes undefined and uses minFreeBytes floor', async () => {
+    mockStatfs(50 * 1024 * 1024); // 50 MB free, below 200 MB default floor
+    const result = await checkDiskSpace('/some/dir', undefined);
+    expect(statfs).toHaveBeenCalled();
+    expect(result.ok).toBe(false);
+    expect(result.requiredBytes).toBe(200 * 1024 * 1024);
+  });
+
+  it('returns ok=true when expectedBytes undefined and free space exceeds floor', async () => {
+    mockStatfs(5 * 1024 * 1024 * 1024); // 5 GB free
     const result = await checkDiskSpace('/some/dir', undefined);
     expect(result.ok).toBe(true);
-    expect(statfs).not.toHaveBeenCalled();
+  });
+
+  it('requiredBytes uses max(expectedBytes×margin, minFreeBytes) — floor wins for tiny expected', async () => {
+    mockStatfs(0);
+    // 10 MB expected × 1.5 = 15 MB, floor 200 MB wins
+    const result = await checkDiskSpace('/some/dir', 10 * 1024 * 1024);
+    expect(result.requiredBytes).toBe(200 * 1024 * 1024);
+  });
+
+  it('respects custom minFreeBytes', async () => {
+    mockStatfs(150 * 1024 * 1024); // 150 MB free
+    const result = await checkDiskSpace('/some/dir', undefined, 1.5, 100 * 1024 * 1024);
+    expect(result.ok).toBe(true); // 150 MB > 100 MB floor
+    expect(result.requiredBytes).toBe(100 * 1024 * 1024);
   });
 
   it('requiredBytes = expectedBytes × marginFactor', async () => {
@@ -67,10 +88,6 @@ describe('checkDiskSpace', () => {
   });
 
   it('returns freeBytes from statfs (bsize × bavail)', async () => {
-    vi.mocked(statfs).mockResolvedValue({ bsize: 512, bavail: 1000 } as never);
-    await checkDiskSpace('/dir', undefined);
-    // skip = true so freeBytes isn't computed from statfs, but with expectedBytes:
-    vi.clearAllMocks();
     vi.mocked(statfs).mockResolvedValue({ bsize: 512, bavail: 1000 } as never);
     const r2 = await checkDiskSpace('/dir', 9999);
     expect(r2.freeBytes).toBe(512 * 1000); // 512_000

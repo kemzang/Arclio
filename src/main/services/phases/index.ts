@@ -34,6 +34,9 @@ export function strategyFor(job: PreparedJob): StrategyKind {
 
 export function phasesFor(input: StartDownloadInput): Phase[] {
   const { job } = input;
+  // expectedBytes only known for single-format probes. Other kinds (audio-convert,
+  // playlist-preset, subtitle-only) still run preflight against the floor in
+  // checkDiskSpace so a near-full disk gets caught before yt-dlp spawns.
   const expectedBytes = job.kind === 'single-format' ? job.expectedBytes : undefined;
   return [PreflightPhase(expectedBytes), ...PHASES[strategyFor(job)]];
 }

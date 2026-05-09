@@ -41,7 +41,7 @@ export const SubtitleOnlyPhase: Phase = {
 
     if (result.kind !== 'success') {
       logger.warn('subtitle-only fetch failed', { jobId: job.id, kind: result.kind });
-      return { kind: 'hard-failed', error: ctx.emitYtdlpFailure(result) };
+      return { kind: 'hard-failed', error: await ctx.emitYtdlpFailure(result) };
     }
 
     if (result.usedExtractorFallback) active.usedExtractorFallback = true;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { extractLastError, classifyStderr } from '@main/utils/ytdlpErrors.js';
+import { extractLastError, classifyStderr, isPostprocessFailure } from '@main/utils/ytdlpErrors.js';
 import { YTDLP_ERROR_KEYS } from '@shared/schemas.js';
 
 describe('extractLastError', () => {
@@ -109,6 +109,33 @@ describe('classifyStderr', () => {
   });
 });
 
+describe('isPostprocessFailure', () => {
+  it('matches yt-dlp Postprocessing wrapper', () => {
+    expect(isPostprocessFailure('ERROR: Postprocessing: Conversion failed!')).toBe(true);
+  });
+
+  it('matches generic Conversion failed', () => {
+    expect(isPostprocessFailure('Conversion failed!')).toBe(true);
+  });
+
+  it('matches ffmpeg muxer error string', () => {
+    expect(isPostprocessFailure('Error muxing a packet')).toBe(true);
+  });
+
+  it('matches ffmpeg writer error string', () => {
+    expect(isPostprocessFailure('Error writing trailer')).toBe(true);
+  });
+
+  it('returns false for unrelated errors', () => {
+    expect(isPostprocessFailure('HTTP Error 403: Forbidden')).toBe(false);
+    expect(isPostprocessFailure('Sign in to confirm')).toBe(false);
+  });
+
+  it('returns false for null', () => {
+    expect(isPostprocessFailure(null)).toBe(false);
+  });
+});
+
 describe('YtdlpErrorKey ↔ classifyStderr contract', () => {
   // Every stderr-emitting key must be reachable by classifyStderr — guards
   // against adding a key without wiring its regex pattern. Client-side keys
@@ -124,7 +151,8 @@ describe('YtdlpErrorKey ↔ classifyStderr contract', () => {
       ageRestricted: 'This video is age-restricted',
       unavailable: 'This video is unavailable',
       geoBlocked: 'This video is not available in your country',
-      outOfDiskSpace: 'No space left on device'
+      outOfDiskSpace: 'No space left on device',
+      chunkTransferFailure: '[download] Got error: Giving up after 10 retries'
     };
     for (const key of YTDLP_ERROR_KEYS) {
       if (NON_STDERR_KEYS.has(key)) continue;

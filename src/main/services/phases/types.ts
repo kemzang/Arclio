@@ -35,7 +35,7 @@ export interface PhaseContext {
   active: ActiveDownload;
   ytDlp: YtDlp;
   emitStatus(stage: StatusEvent['stage'], statusKey: StatusKey, params?: Record<string, string | number>, error?: LocalizedError): void;
-  emitYtdlpFailure(result: Exclude<YtDlpResult, { kind: 'success' }>): LocalizedError;
+  emitYtdlpFailure(result: Exclude<YtDlpResult, { kind: 'success' }>): Promise<LocalizedError>;
   attachYtDlpProcess(proc: ChildProcessWithoutNullStreams, statusKey?: StatusKey): void;
   safeConsume(text: string): void;
   cleanupPartFiles(dir: string): Promise<void>;

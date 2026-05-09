@@ -5,10 +5,10 @@ import { isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
 import type { YtDlpRequest } from '../YtDlp.js';
 import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
-async function setupTempDir(outputDir: string, jobId: string): Promise<string | undefined> {
+async function setupTempDir(outputDir: string, jobId: string, preserve: boolean): Promise<string | undefined> {
   const tempDir = join(outputDir, '.arroxy-temp', jobId.slice(0, 8));
   try {
-    await rm(tempDir, { recursive: true, force: true });
+    if (!preserve) await rm(tempDir, { recursive: true, force: true });
     await mkdir(tempDir, { recursive: true });
     return tempDir;
   } catch {
@@ -28,7 +28,7 @@ export function VideoPhase(embed: boolean): Phase {
         throw new Error('invariant: VideoPhase reached with subtitle-only job');
       }
 
-      const tempDir = await setupTempDir(job.outputDir, job.id);
+      const tempDir = await setupTempDir(job.outputDir, job.id, active.tempDir != null);
       if (tempDir) active.tempDir = tempDir;
 
       // SponsorBlock is a YouTube-only crowdsourced segment database — passing
@@ -98,7 +98,7 @@ export function VideoPhase(embed: boolean): Phase {
       if (active.cancelRequested) return { kind: 'cancelled' };
 
       if (result.kind !== 'success') {
-        return { kind: 'hard-failed', error: ctx.emitYtdlpFailure(result) };
+        return { kind: 'hard-failed', error: await ctx.emitYtdlpFailure(result) };
       }
 
       if (result.usedExtractorFallback) active.usedExtractorFallback = true;

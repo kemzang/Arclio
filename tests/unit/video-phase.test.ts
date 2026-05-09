@@ -1,5 +1,8 @@
 import { EventEmitter } from 'node:events';
-import { describe, expect, it, vi } from 'vitest';
+import { mkdtemp, mkdir, writeFile, rm, access } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { VideoPhase } from '@main/services/phases/VideoPhase.js';
 import { STATUS_KEY } from '@shared/schemas.js';
 import type { PhaseContext, ActiveDownload } from '@main/services/phases/types.js';
@@ -257,6 +260,74 @@ describe('VideoPhase — cancel / pause', () => {
 
     const outcome = await VideoPhase(false).run(ctx);
     expect(outcome.kind).toBe('paused');
+  });
+});
+
+describe('VideoPhase — temp dir lifecycle (real fs)', () => {
+  let outputDir: string;
+
+  beforeEach(async () => {
+    outputDir = await mkdtemp(join(tmpdir(), 'arroxy-vp-'));
+  });
+
+  afterEach(async () => {
+    await rm(outputDir, { recursive: true, force: true });
+  });
+
+  function makeRealCtx(activeOverrides: Partial<ActiveDownload>): PhaseContext & { runMock: ReturnType<typeof vi.fn> } {
+    const job = makeJob();
+    job.outputDir = outputDir;
+    const input: StartDownloadInput = { ...BASE_INPUT, outputDir, job: BASE_JOB };
+    const runMock = vi.fn().mockResolvedValue(SUCCESS);
+    const ctx: PhaseContext = {
+      active: { job, input, cancelRequested: false, pauseRequested: false, subtitlePaths: [], ...activeOverrides },
+      ytDlp: { run: runMock } as never,
+      emitStatus: vi.fn(),
+      emitYtdlpFailure: vi.fn().mockReturnValue({ key: 'botBlock' }),
+      attachYtDlpProcess: vi.fn(),
+      safeConsume: vi.fn(),
+      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
+      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
+      finalize: vi.fn().mockResolvedValue(undefined),
+      moveToPaused: vi.fn()
+    };
+    return Object.assign(ctx, { runMock });
+  }
+
+  it('fresh start (active.tempDir undefined) → wipes existing temp dir contents', async () => {
+    const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8));
+    await mkdir(expectedTempDir, { recursive: true });
+    const stalePart = join(expectedTempDir, 'leftover.f137.webm.part');
+    await writeFile(stalePart, 'stale');
+
+    const ctx = makeRealCtx({});
+    await VideoPhase(false).run(ctx);
+
+    await expect(access(stalePart)).rejects.toThrow();
+    expect(ctx.active.tempDir).toBe(expectedTempDir);
+  });
+
+  it('resume (active.tempDir already set) → preserves .part file in temp dir', async () => {
+    const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8));
+    await mkdir(expectedTempDir, { recursive: true });
+    const partFile = join(expectedTempDir, 'video.f337.webm.part');
+    await writeFile(partFile, 'partial-bytes');
+
+    const ctx = makeRealCtx({ tempDir: expectedTempDir });
+    await VideoPhase(false).run(ctx);
+
+    await expect(access(partFile)).resolves.toBeUndefined();
+    expect(ctx.active.tempDir).toBe(expectedTempDir);
+  });
+
+  it('resume with missing temp dir → mkdir recreates it without throwing', async () => {
+    const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8));
+
+    const ctx = makeRealCtx({ tempDir: expectedTempDir });
+    const outcome = await VideoPhase(false).run(ctx);
+
+    expect(outcome.kind).toBe('continue');
+    await expect(access(expectedTempDir)).resolves.toBeUndefined();
   });
 });
 

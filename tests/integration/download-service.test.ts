@@ -170,6 +170,41 @@ describe('DownloadService (mock mode)', () => {
     expect(pausedJobs.has(jobId)).toBe(false);
   });
 
+  it('resume() restores tempDir from PausedDownload onto the new ActiveDownload', async () => {
+    const { service } = makeService();
+
+    const pausedJob: DownloadJob = {
+      id: 'paused-with-tempdir',
+      url: 'https://youtube.com/watch?v=tdir',
+      outputDir: '/tmp/tdir-out',
+      status: 'running',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    const tempDir = '/tmp/tdir-out/.arroxy-temp/paused-w';
+    interface PausedDownload {
+      job: DownloadJob;
+      input: { url: string; outputDir: string; job: PreparedJob };
+      tempDir?: string;
+    }
+    interface ActiveDownload {
+      job: DownloadJob;
+      tempDir?: string;
+    }
+    (service as unknown as { pausedJobs: Map<string, PausedDownload> }).pausedJobs.set(pausedJob.id, {
+      job: pausedJob,
+      input: { url: pausedJob.url, outputDir: pausedJob.outputDir, job: DEFAULT_JOB },
+      tempDir
+    });
+
+    const resumeResult = await service.resume(pausedJob.id);
+    expect(resumeResult.ok).toBe(true);
+
+    const activeJobs = (service as unknown as { activeJobs: Map<string, ActiveDownload> }).activeJobs;
+    const active = activeJobs.get(pausedJob.id);
+    expect(active?.tempDir).toBe(tempDir);
+  });
+
   it('resume() returns { resumed: false } for unknown jobId (renderer falls back to start)', async () => {
     const { service } = makeService();
     const result = await service.resume('does-not-exist');

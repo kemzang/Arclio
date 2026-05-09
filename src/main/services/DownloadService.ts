@@ -17,6 +17,8 @@ import { STATUS_KEY } from '@shared/schemas.js';
 import type { CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOutput, ProgressEvent, RecentJob, StartDownloadInput, StartDownloadOutput, StatusEvent, StatusKey } from '@shared/types.js';
 import type { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
 import { YtDlp, type YtDlpResult } from './YtDlp.js';
+import { isPostprocessFailure } from '@main/utils/ytdlpErrors.js';
+import { checkDiskSpace } from '@main/utils/diskSpace.js';
 import type { ActiveDownload, PausedDownload } from './phases/index.js';
 
 const logger = log.scope('downloads');
@@ -137,7 +139,8 @@ export class DownloadService extends EventEmitter {
       input,
       cancelRequested: false,
       pauseRequested: false,
-      subtitlePaths: []
+      subtitlePaths: [],
+      tempDir: paused.tempDir
     };
     this.activeJobs.set(job.id, active);
     logger.info('Resuming download', { jobId: job.id });
@@ -198,7 +201,7 @@ export class DownloadService extends EventEmitter {
       active,
       ytDlp: this.ytDlp,
       emitStatus: (stage, statusKey, params?, error?) => this.emitStatus(job.id, stage, statusKey, params, error),
-      emitYtdlpFailure: (result) => this.emitYtdlpFailure(job.id, result),
+      emitYtdlpFailure: (result) => this.emitYtdlpFailure(job, result),
       attachYtDlpProcess: (proc, statusKey?) => this.attachYtDlpProcess(active, proc, statusKey),
       safeConsume: (text) => this.safeConsume(active, text),
       cleanupPartFiles: (dir) => this.cleanupPartFiles(dir),
@@ -233,17 +236,33 @@ export class DownloadService extends EventEmitter {
     }
   }
 
-  private emitYtdlpFailure(jobId: string, result: Exclude<YtDlpResult, { kind: 'success' }>): LocalizedError {
+  private async emitYtdlpFailure(job: DownloadJob, result: Exclude<YtDlpResult, { kind: 'success' }>): Promise<LocalizedError> {
+    const jobId = job.id;
     if (result.kind === 'spawn-error') {
       const payload: LocalizedError = { key: null, rawMessage: result.error.message };
       this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpProcessError, { error: result.error.message }, payload);
       return payload;
     }
+    // yt-dlp masks ffmpeg's stderr in non-verbose mode, so an ENOSPC during
+    // merge surfaces only as "Postprocessing: Conversion failed!". Probe the
+    // output dir on unclassified postprocess failures and upgrade the signal.
+    let signal = result.signal;
+    if (!signal && isPostprocessFailure(result.rawError)) {
+      const probe = await checkDiskSpace(job.outputDir, undefined);
+      if (!probe.ok) {
+        signal = 'outOfDiskSpace';
+        logger.info('Reclassified postprocess failure as outOfDiskSpace', {
+          jobId,
+          outputDir: job.outputDir,
+          freeBytes: probe.freeBytes
+        });
+      }
+    }
     const payload: LocalizedError = {
-      key: result.signal,
+      key: signal,
       rawMessage: result.rawError ?? undefined
     };
-    if (result.signal) {
+    if (signal) {
       this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpExitCode, { code: result.exitCode }, payload);
     } else if (result.rawError) {
       this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpProcessError, { error: result.rawError }, payload);
