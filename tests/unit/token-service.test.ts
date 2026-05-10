@@ -33,7 +33,7 @@ describe('TokenService.warmUp', () => {
 
     // Cache should be populated — subsequent mintTokenForUrl does NOT call provider again
     const result = await service.mintTokenForUrl('https://youtube.com/watch?v=test');
-    expect(result).toEqual({ token: 'token-xyz', visitorData: 'visitor-abc' });
+    expect(result).toEqual({ token: 'token-xyz', visitorData: 'visitor-abc', fromCache: true });
     // mintToken was called once (by warmUp) and not again (cache hit)
     expect(provider.mintToken).toHaveBeenCalledOnce();
   });
@@ -94,7 +94,7 @@ describe('TokenService.mintTokenForUrl', () => {
     };
 
     const result = await service.mintTokenForUrl('https://youtube.com/watch?v=x');
-    expect(result).toEqual({ token: 'cached-token', visitorData: 'cached-visitor' });
+    expect(result).toEqual({ token: 'cached-token', visitorData: 'cached-visitor', fromCache: true });
     expect(provider.mintToken).not.toHaveBeenCalled();
     expect(provider.ensureReady).not.toHaveBeenCalled();
   });
