@@ -1,5 +1,8 @@
 import { create } from 'zustand';
-import { createWizardSlice } from './wizardSlice.js';
+import { createProbeOrchestratorSlice } from './wizard/probeOrchestrator.js';
+import { createFormatPickerSlice } from './wizard/formatPicker.js';
+import { createOutputConfigSlice } from './wizard/outputConfig.js';
+import { createWizardDialogsSlice } from './wizard/wizardDialogs.js';
 import { createQueueSlice } from './queueSlice.js';
 import { createUiSlice } from './uiSlice.js';
 import { createSystemSlice } from './systemSlice.js';
@@ -11,7 +14,10 @@ export const useAppStore = create<AppState>()((set, get) => {
   return {
     ...createSystemSlice(set, get, scheduler),
     ...createUiSlice(set, get),
-    ...createWizardSlice(set, get),
+    ...createProbeOrchestratorSlice(set, get),
+    ...createFormatPickerSlice(set, get),
+    ...createOutputConfigSlice(set, get),
+    ...createWizardDialogsSlice(set, get),
     ...createQueueSlice(set, get, scheduler)
   };
 });

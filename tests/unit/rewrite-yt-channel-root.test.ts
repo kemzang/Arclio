@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
-import { rewriteYouTubeChannelRoot, isMixedYouTubeUrl } from '@renderer/store/wizardSlice.js';
+import { rewriteYouTubeChannelRoot, isMixedYouTubeUrl } from '@renderer/store/wizard/probeOrchestrator.js';
 
 describe('rewriteYouTubeChannelRoot — appends /videos to bare channel-root URLs', () => {
   it('rewrites /@handle → /@handle/videos', () => {

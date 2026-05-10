@@ -130,13 +130,63 @@ from the skip / error step lands on the right destination instead of
 bouncing back into subtitles.
 **Where defined:** `src/renderer/src/components/wizard/nextStep.ts`.
 
-## FormatPicker (module)
+## FormatPicker
 
-Pure helpers for the wizard's post-probe selection logic: `applyPreset`,
-`restoreFormatSelection`, `restoreSubtitleSelection`, `reviveAudio`,
-`audioForVideoPick`. Inputs `FormatOption[]` + `AppSettings`; outputs
-plain selection objects the slice drops in via `set()`. No I/O.
-**Where defined:** `src/renderer/src/store/wizard/formatPicker.ts`.
+Two parts in `src/renderer/src/store/wizard/formatPicker.ts`:
+
+- **Pure helpers** — `applyPreset`, `restoreFormatSelection`,
+  `restoreSubtitleSelection`. Inputs `FormatOption[]` + `AppSettings`;
+  outputs plain selection objects. No I/O.
+- **Slice** — `createFormatPickerSlice` owns `wizardFormats`,
+  `selectedVideoFormatId`, `audioSelection`, `lastConvertBitrate`,
+  `activePreset`, plus the subtitle pools (`wizardSubtitles`,
+  `wizardAutomaticCaptions`, `wizardSubtitleLanguages`,
+  `wizardSubtitleSkipped`, `wizardSubtitleMode`, `wizardSubtitleFormat`)
+  and their setters. The probe pipeline writes the format/subtitle pools
+  via shared `set()` after probe success.
+
+## ProbeOrchestrator
+
+Renderer slice that owns the URL → probe → format-step pipeline plus the
+wizard step graph and playlist enumeration. Holds `wizardStep`,
+`wizardUrl`, `wizardExtractor`, `wizardError`, the playlist fields, and
+the navigation actions (`advance`/`back`/`skipSubtitles`/`reset`).
+Cross-slice writes through `set()` are intentional — probe success
+populates format pools, subtitle pools, output prefs, and dialog flags
+in one transition. **Where defined:**
+`src/renderer/src/store/wizard/probeOrchestrator.ts`.
+
+## OutputConfig
+
+Renderer slice owning "where + how the file lands": `wizardOutputDir`,
+`wizardSubfolderEnabled`/`Name`, SponsorBlock mode + categories, embed
+flags. **Where defined:**
+`src/renderer/src/store/wizard/outputConfig.ts`.
+
+## WizardDialogs
+
+Renderer slice for transient modal flags: `mixedUrlPromptOpen`,
+`mixedUrlPending`, `advancedAutoOpen`, `cookiesConfigDialogIssue`. All
+session-only; reset to defaults by `WizardCommands.resetAll`.
+**Where defined:**
+`src/renderer/src/store/wizard/wizardDialogs.ts`.
+
+## WizardCommands
+
+Cross-slice orchestrator helpers — currently `resetAll(set)` (applied
+via the `reset` action on `ProbeOrchestrator`). Future deep-link /
+snapshot replay code lands here.
+**Where defined:** `src/renderer/src/store/wizard/commands.ts`.
+
+## FormatPrefsPersistence
+
+Bridge between wizard state and SettingsStore. Reads format / audio /
+subtitle / output / embed / sponsorblock fields across the four wizard
+slices and writes the right shape into the `common` / `single` /
+`playlist` Settings buckets via IPC. Lives in the wizard module (not
+QueueSlice) because the inputs are wizard-owned, even though the firing
+point is queue-submit / start / retry. **Where defined:**
+`src/renderer/src/store/wizard/persistFormatPrefs.ts`.
 
 ---
 

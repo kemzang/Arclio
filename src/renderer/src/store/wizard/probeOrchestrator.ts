@@ -1,9 +1,24 @@
+// ProbeOrchestrator slice — owns the URL → probe → format-step pipeline,
+// the wizard step graph, and playlist enumeration. Reads format / subtitle /
+// output / dialog fields owned by other slices but is the entry point for
+// every probe-driven mutation. `reset` lives here too — wizardStep is the
+// canonical "where the wizard is" field.
+//
+// Cross-slice writes through `set()` are intentional: the probe pipeline
+// updates format pools, subtitle pools, output prefs, and dialog flags in
+// one transition so the UI never sees a half-updated wizard.
+
 import { DEFAULTS } from '@shared/constants.js';
 import { DEFAULT_AUDIO_BITRATE } from '@shared/schemas.js';
 import type { AppSettings, FormatOption, PlaylistEntry, PlaylistPreset, ProbePlaylistMode, ProbeResult, SubtitleMap, WizardTransition } from '@shared/types.js';
 import { getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 import { cleanUrl } from '@shared/cleanUrl.js';
 import { isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
+import { applyPreset, restoreFormatSelection, restoreSubtitleSelection } from './formatPicker.js';
+import { WizardCommands } from './commands.js';
+import type { AppState, GetState, SetState, ProbeOrchestratorSlice, WizardMode, WizardStep } from '../types.js';
+import { type VisibleStep } from '../../components/wizard/stepNavigation.js';
+import { nextStep, type NavContext } from '../../components/wizard/nextStep.js';
 
 // Detect YouTube URLs that carry both `v=` (single video) and `list=` (playlist).
 // yt-dlp's default for these routes Radio/Mix lists to playlist enumeration;
@@ -47,12 +62,7 @@ export function rewriteYouTubeChannelRoot(url: string): string {
     return url;
   }
 }
-import type { AppState, GetState, SetState, WizardMode, WizardSlice, WizardStep } from './types.js';
-import { type VisibleStep } from '../components/wizard/stepNavigation.js';
-import { nextStep, type NavContext } from '../components/wizard/nextStep.js';
 
-// Build the NavContext required by nextStep from the current wizard slice state.
-// Centralized so advance/back/skipSubtitles can't drift from each other.
 function navCtx(state: AppState): NavContext {
   const hasSubtitles = Object.keys(state.wizardSubtitles).length > 0 || Object.keys(state.wizardAutomaticCaptions).length > 0;
   return {
@@ -97,13 +107,6 @@ function logStep(transition: WizardTransition, fromStep: WizardStep, toStep: Wiz
   window.appApi.diagnostics.logWizardStep({ transition, fromStep, toStep, snapshot });
 }
 
-// Pure post-probe selection helpers live in `./wizard/formatPicker.js` —
-// re-exported here so callers (components + tests) that still import from
-// `wizardSlice` keep working. New callers should import directly from the
-// formatPicker module.
-export { applyPreset, restoreFormatSelection } from './wizard/formatPicker.js';
-import { applyPreset, restoreFormatSelection, restoreSubtitleSelection } from './wizard/formatPicker.js';
-
 function restoreCommonWizardPrefs(settings: AppSettings | null): Pick<AppState, 'wizardSponsorBlockMode' | 'wizardSponsorBlockCategories' | 'wizardEmbedChapters' | 'wizardEmbedMetadata' | 'wizardEmbedThumbnail' | 'wizardWriteDescription' | 'wizardWriteThumbnail'> {
   return {
     wizardSponsorBlockMode: settings?.common?.lastSponsorBlockMode ?? DEFAULTS.sponsorBlockMode,
@@ -116,28 +119,44 @@ function restoreCommonWizardPrefs(settings: AppSettings | null): Pick<AppState, 
   };
 }
 
-const RESET_STATE = {
+// Full wizard reset state — owned conceptually by the four slices but applied
+// in one set() call so the UI never sees a half-reset wizard. Per-slice reset
+// constants live with their slice file; this is the union for the orchestrator.
+export const RESET_WIZARD_STATE = {
+  // probe + step nav
   wizardStep: 'url' as WizardStep,
   wizardMode: 'single' as WizardMode,
   wizardUrl: '',
   wizardTitle: '',
   wizardThumbnail: '',
   wizardDuration: undefined as number | undefined,
-  wizardFormats: [] as FormatOption[],
   wizardFormatsDegraded: null,
   wizardExtractor: '',
   wizardExtractorKey: '',
   wizardWebpageUrl: '',
-  advancedAutoOpen: false,
   formatsLoading: false,
   wizardError: null,
   wizardErrorOrigin: null,
+  playlistItems: [] as PlaylistEntry[],
+  selectedPlaylistItemIds: [] as string[],
+  playlistTitle: '',
+  playlistId: '',
+  playlistIsMultiVideo: false,
+  playlistProbeLoading: false,
+  selectedPlaylistPreset: null as PlaylistPreset | null,
+  // formatPicker
+  wizardFormats: [] as FormatOption[],
+  selectedVideoFormatId: '',
+  audioSelection: { kind: 'none' as const },
+  lastConvertBitrate: DEFAULT_AUDIO_BITRATE,
+  activePreset: null,
   wizardSubtitles: {} as SubtitleMap,
   wizardAutomaticCaptions: {} as SubtitleMap,
   wizardSubtitleLanguages: [] as string[],
   wizardSubtitleSkipped: false,
   wizardSubtitleMode: DEFAULTS.subtitleMode,
   wizardSubtitleFormat: DEFAULTS.subtitleFormat,
+  // outputConfig
   wizardSponsorBlockMode: DEFAULTS.sponsorBlockMode,
   wizardSponsorBlockCategories: DEFAULTS.sponsorBlockCategories,
   wizardEmbedChapters: DEFAULTS.embedChapters,
@@ -147,16 +166,11 @@ const RESET_STATE = {
   wizardWriteThumbnail: DEFAULTS.writeThumbnail,
   wizardSubfolderEnabled: false,
   wizardSubfolderName: '',
-  playlistItems: [] as PlaylistEntry[],
-  selectedPlaylistItemIds: [] as string[],
-  playlistTitle: '',
-  playlistId: '',
-  playlistIsMultiVideo: false,
-  playlistProbeLoading: false,
+  // dialogs
+  advancedAutoOpen: false,
   mixedUrlPromptOpen: false,
   mixedUrlPending: null as string | null,
-  cookiesConfigDialogIssue: null,
-  selectedPlaylistPreset: null as PlaylistPreset | null
+  cookiesConfigDialogIssue: null
 } as const;
 
 function maybeBlockIncompleteCookiesConfig(url: string, set: SetState, get: GetState): boolean {
@@ -253,8 +267,6 @@ function applyPlaylistProbeResult(probe: Extract<ProbeResult, { kind: 'playlist'
     wizardFormats: [],
     wizardFormatsDegraded: null,
     ...restoreCommonWizardPrefs(settings),
-    // Mode-scoped prefs: playlist preset + playlist subfolder are persisted
-    // under their own keys so they survive single-mode runs in between.
     selectedPlaylistPreset,
     wizardSubfolderEnabled: settings?.playlist?.lastPlaylistSubfolderEnabled ?? false,
     wizardSubfolderName: settings?.playlist?.lastPlaylistSubfolder ?? ''
@@ -263,10 +275,6 @@ function applyPlaylistProbeResult(probe: Extract<ProbeResult, { kind: 'playlist'
 
 async function runProbe(url: string, playlistMode: ProbePlaylistMode, set: SetState, get: GetState): Promise<void> {
   const fromStep = get().wizardStep;
-  // Step into 'formats' immediately so StepFormatSelect renders its
-  // formatsLoading spinner UX. Probe result will route to 'playlistItems' or
-  // stay on 'formats' once it lands; until then the spinner is the user's
-  // feedback that the probe is in flight.
   const initialStep: WizardStep = playlistMode === 'playlist' ? 'playlistItems' : 'formats';
   set({
     wizardUrl: url,
@@ -317,14 +325,28 @@ async function runProbe(url: string, playlistMode: ProbePlaylistMode, set: SetSt
   }
 }
 
-export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
+export function createProbeOrchestratorSlice(set: SetState, get: GetState): ProbeOrchestratorSlice {
   return {
-    ...RESET_STATE,
-    selectedVideoFormatId: '',
-    audioSelection: { kind: 'none' },
-    lastConvertBitrate: DEFAULT_AUDIO_BITRATE,
-    activePreset: null,
-    wizardOutputDir: '',
+    wizardStep: RESET_WIZARD_STATE.wizardStep,
+    wizardMode: RESET_WIZARD_STATE.wizardMode,
+    wizardUrl: RESET_WIZARD_STATE.wizardUrl,
+    wizardTitle: RESET_WIZARD_STATE.wizardTitle,
+    wizardThumbnail: RESET_WIZARD_STATE.wizardThumbnail,
+    wizardDuration: RESET_WIZARD_STATE.wizardDuration,
+    wizardFormatsDegraded: RESET_WIZARD_STATE.wizardFormatsDegraded,
+    wizardExtractor: RESET_WIZARD_STATE.wizardExtractor,
+    wizardExtractorKey: RESET_WIZARD_STATE.wizardExtractorKey,
+    wizardWebpageUrl: RESET_WIZARD_STATE.wizardWebpageUrl,
+    formatsLoading: RESET_WIZARD_STATE.formatsLoading,
+    wizardError: RESET_WIZARD_STATE.wizardError,
+    wizardErrorOrigin: RESET_WIZARD_STATE.wizardErrorOrigin,
+    playlistItems: RESET_WIZARD_STATE.playlistItems,
+    selectedPlaylistItemIds: RESET_WIZARD_STATE.selectedPlaylistItemIds,
+    playlistTitle: RESET_WIZARD_STATE.playlistTitle,
+    playlistId: RESET_WIZARD_STATE.playlistId,
+    playlistIsMultiVideo: RESET_WIZARD_STATE.playlistIsMultiVideo,
+    playlistProbeLoading: RESET_WIZARD_STATE.playlistProbeLoading,
+    selectedPlaylistPreset: RESET_WIZARD_STATE.selectedPlaylistPreset,
 
     setWizardUrl: (url) => set({ wizardUrl: url }),
 
@@ -345,20 +367,12 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
       const pending = get().mixedUrlPending;
       set({ mixedUrlPromptOpen: false, mixedUrlPending: null });
       if (!pending) return;
-      // 'video' uses the original URL with --no-playlist; 'playlist' uses
-      // --yes-playlist. Either way the URL stays as the user pasted it —
-      // yt-dlp interprets the ambiguity via the flag, so we don't need to
-      // strip v= or list= ourselves.
       if (choice === 'video') {
         if (maybeBlockIncompleteCookiesConfig(pending, set, get)) return;
         await runProbe(pending, 'video', set, get);
       } else {
         await runProbe(pending, 'playlist', set, get);
       }
-    },
-
-    dismissCookiesConfigDialog: () => {
-      set({ cookiesConfigDialogIssue: null });
     },
 
     setPlaylistItemSelected: (id, checked) =>
@@ -403,128 +417,6 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
       logStep('back', state.wizardStep, target, pickWizardSnapshot(get()));
     },
 
-    reset: () => {
-      const fromStep = get().wizardStep;
-      set(RESET_STATE);
-      logStep('reset', fromStep, 'url', pickWizardSnapshot(get()));
-    },
-
-    retry: async () => {
-      const { wizardErrorOrigin, wizardStep } = get();
-      if (wizardErrorOrigin === 'formats') {
-        set({ wizardStep: 'formats', formatsLoading: true, wizardError: null });
-        logStep('retry', wizardStep, 'formats', pickWizardSnapshot(get()));
-        await get().submitUrl();
-      }
-    },
-
-    // Re-run the format probe against the currently-active URL without
-    // resetting the wizard. Used by `<BotWallNotice>` so a user who changed
-    // network mid-session can re-spin without navigating back to the URL step.
-    retryFormatProbe: async () => {
-      const { wizardUrl } = get();
-      if (!wizardUrl) return;
-      set({ formatsLoading: true, wizardFormatsDegraded: null });
-      // Retry preserves the wizard's current mode rather than re-prompting:
-      // user has already disambiguated once.
-      const playlistMode: ProbePlaylistMode = get().wizardMode === 'playlist' ? 'playlist' : 'auto';
-      await runProbe(wizardUrl, playlistMode, set, get);
-    },
-
-    // Switch cookies mode to whichever is configured (file > browser),
-    // persist via the system slice setter, then re-run the format probe.
-    // No-op if neither path nor browser is configured — the banner doesn't
-    // expose this action in that case.
-    retryProbeWithCookies: async () => {
-      const settings = get().settings;
-      const path = settings?.common.cookiesPath?.trim();
-      const browser = settings?.common.cookiesBrowser;
-      const targetMode: 'file' | 'browser' | null = path ? 'file' : browser ? 'browser' : null;
-      if (!targetMode) return;
-      await get().setCookiesMode(targetMode);
-      await get().retryFormatProbe();
-    },
-
-    // Used by `<CookiesErrorAlert>` on the wizard error step to send the
-    // user back to the URL step's cookies block without losing the URL
-    // they just submitted. `advancedAutoOpen` is consumed by `StepUrlInput`
-    // on mount.
-    openCookiesSettings: () => {
-      // Cancel any in-flight probe — leaving the formats step abandons it,
-      // and a stalled YouTube fallback chain can otherwise keep the spinner
-      // bound and emit results into a step the user already left.
-      void window.appApi.downloads.probeCancel();
-      set({ wizardStep: 'url', wizardError: null, wizardErrorOrigin: null, advancedAutoOpen: true, cookiesConfigDialogIssue: null });
-    },
-
-    setAdvancedAutoOpen: (open) => {
-      set({ advancedAutoOpen: open });
-    },
-
-    setWizardOutputDir: async (dir, persist = true) => {
-      set({ wizardOutputDir: dir });
-      if (persist) await window.appApi.settings.update({ common: { defaultOutputDir: dir } });
-    },
-
-    // Invariant: (video !== '') && (audio.kind === 'convert-lossy' | 'convert-lossless') is invalid —
-    // convert (-x) is mutually exclusive with video+audio merging.
-    // Reconcile here instead of relying on the UI to prevent it.
-    setSelectedVideoFormatId: (id) =>
-      set((state) => {
-        const reconcileAudio = id !== '' && (state.audioSelection.kind === 'convert-lossy' || state.audioSelection.kind === 'convert-lossless');
-        if (!reconcileAudio) {
-          return { selectedVideoFormatId: id, activePreset: id === '' ? 'audio-only' : null };
-        }
-        const bestAudio = state.wizardFormats.find((f) => f.isAudioOnly)?.formatId ?? null;
-        return {
-          selectedVideoFormatId: id,
-          activePreset: null,
-          audioSelection: bestAudio === null ? { kind: 'none' } : { kind: 'native', formatId: bestAudio }
-        };
-      }),
-    setAudioSelection: (sel) =>
-      set((state) => {
-        // Symmetric guard: picking a convert target while a video is selected
-        // clears the video to audio-only — the user's intent is "I want this
-        // audio-converted file", and convert can't be merged with video.
-        const clearVideo = (sel.kind === 'convert-lossy' || sel.kind === 'convert-lossless') && state.selectedVideoFormatId !== '';
-        return {
-          audioSelection: sel,
-          selectedVideoFormatId: clearVideo ? '' : state.selectedVideoFormatId,
-          activePreset: clearVideo || state.selectedVideoFormatId === '' ? 'audio-only' : null,
-          // Keep the user's bitrate choice sticky across mp3/m4a/opus toggles.
-          lastConvertBitrate: sel.kind === 'convert-lossy' ? sel.bitrateKbps : state.lastConvertBitrate
-        };
-      }),
-
-    setPreset: (p) => {
-      const { wizardFormats } = get();
-      const { videoFormatId, audioSelection } = applyPreset(p, wizardFormats);
-      set({
-        activePreset: p,
-        selectedVideoFormatId: videoFormatId,
-        audioSelection
-      });
-    },
-
-    toggleSubtitleLanguage: (lang) =>
-      set((state) => ({
-        wizardSubtitleLanguages: state.wizardSubtitleLanguages.includes(lang) ? state.wizardSubtitleLanguages.filter((l) => l !== lang) : [...state.wizardSubtitleLanguages, lang]
-      })),
-
-    setSubtitleMode: (mode) => set({ wizardSubtitleMode: mode }),
-    setSubtitleFormat: (format) => set({ wizardSubtitleFormat: format }),
-
-    chooseWizardFolder: async () => {
-      const result = await window.appApi.dialog.chooseFolder();
-      if (!result.ok || !result.data.path) return;
-      set({ wizardOutputDir: result.data.path });
-      await window.appApi.settings.update({ common: { defaultOutputDir: result.data.path } });
-    },
-
-    setWizardSubfolderEnabled: (enabled) => set({ wizardSubfolderEnabled: enabled }),
-    setWizardSubfolderName: (name) => set({ wizardSubfolderName: name }),
-
     skipSubtitles: () => {
       // Mark skipped first so nextStep treats `subtitles` as ineligible —
       // the rest of the routing reuses the same eligibility table as
@@ -537,17 +429,45 @@ export function createWizardSlice(set: SetState, get: GetState): WizardSlice {
       logStep('skipSubtitles', state.wizardStep, target, pickWizardSnapshot(get()));
     },
 
-    setSponsorBlockMode: (mode) => set({ wizardSponsorBlockMode: mode }),
+    reset: () => {
+      const fromStep = get().wizardStep;
+      WizardCommands.resetAll(set);
+      logStep('reset', fromStep, 'url', pickWizardSnapshot(get()));
+    },
 
-    toggleSponsorBlockCategory: (cat) =>
-      set((state) => ({
-        wizardSponsorBlockCategories: state.wizardSponsorBlockCategories.includes(cat) ? state.wizardSponsorBlockCategories.filter((c) => c !== cat) : [...state.wizardSponsorBlockCategories, cat]
-      })),
+    retry: async () => {
+      const { wizardErrorOrigin, wizardStep } = get();
+      if (wizardErrorOrigin === 'formats') {
+        set({ wizardStep: 'formats', formatsLoading: true, wizardError: null });
+        logStep('retry', wizardStep, 'formats', pickWizardSnapshot(get()));
+        await get().submitUrl();
+      }
+    },
 
-    setEmbedChapters: (v) => set({ wizardEmbedChapters: v }),
-    setEmbedMetadata: (v) => set({ wizardEmbedMetadata: v }),
-    setEmbedThumbnail: (v) => set({ wizardEmbedThumbnail: v }),
-    setWriteDescription: (v) => set({ wizardWriteDescription: v }),
-    setWriteThumbnail: (v) => set({ wizardWriteThumbnail: v })
+    retryFormatProbe: async () => {
+      const { wizardUrl } = get();
+      if (!wizardUrl) return;
+      set({ formatsLoading: true, wizardFormatsDegraded: null });
+      const playlistMode: ProbePlaylistMode = get().wizardMode === 'playlist' ? 'playlist' : 'auto';
+      await runProbe(wizardUrl, playlistMode, set, get);
+    },
+
+    retryProbeWithCookies: async () => {
+      const settings = get().settings;
+      const path = settings?.common.cookiesPath?.trim();
+      const browser = settings?.common.cookiesBrowser;
+      const targetMode: 'file' | 'browser' | null = path ? 'file' : browser ? 'browser' : null;
+      if (!targetMode) return;
+      await get().setCookiesMode(targetMode);
+      await get().retryFormatProbe();
+    },
+
+    openCookiesSettings: () => {
+      // Cancel any in-flight probe — leaving the formats step abandons it,
+      // and a stalled YouTube fallback chain can otherwise keep the spinner
+      // bound and emit results into a step the user already left.
+      void window.appApi.downloads.probeCancel();
+      set({ wizardStep: 'url', wizardError: null, wizardErrorOrigin: null, advancedAutoOpen: true, cookiesConfigDialogIssue: null });
+    }
   };
 }

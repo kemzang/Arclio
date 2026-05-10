@@ -1,15 +1,16 @@
-// Pure helpers for the wizard's format/audio/subtitle picker. Extracted from
-// `wizardSlice.ts` so the post-probe selection logic — preset application,
-// audio revival, subtitle restoration — has its own testable seam without
-// the rest of the slice's coupling.
+// FormatPicker — pure post-probe selection helpers + the slice that owns
+// format / audio / subtitle / preset state.
 //
-// No I/O, no IPC, no logging. Inputs are FormatOption[] + AppSettings;
-// outputs are plain selection objects the caller drops onto the slice via
-// `set()`. Existing callers in `wizardSlice.ts` re-export from this module so
-// imports like `import { applyPreset } from './wizardSlice.js'` keep working
-// for tests and components that haven't migrated yet.
+// The pure helpers (applyPreset, restoreFormatSelection, restoreSubtitleSelection)
+// are I/O-free: inputs are FormatOption[] + AppSettings, outputs are plain
+// selection objects the caller drops on the slice via `set()`. The slice
+// (createFormatPickerSlice) wires those helpers to actions plus subtitle
+// language toggling and bitrate stickiness.
 
+import { DEFAULTS } from '@shared/constants.js';
+import { DEFAULT_AUDIO_BITRATE } from '@shared/schemas.js';
 import type { AppSettings, AudioSelection, FormatOption, Preset, SubtitleMap } from '@shared/types.js';
+import type { FormatPickerSlice, GetState, SetState } from '../types.js';
 
 function groupedNonAudioFormats(formats: FormatOption[]): { resolution: string; formatId: string }[] {
   const seen = new Set<string>();
@@ -124,4 +125,70 @@ export function restoreSubtitleSelection(subtitles: SubtitleMap | undefined, aut
   const available = new Set([...Object.keys(subtitles ?? {}), ...Object.keys(automaticCaptions ?? {})]);
   const languages = (settings?.single?.lastSubtitleLanguages ?? []).filter((l) => available.has(l));
   return { languages };
+}
+
+export function createFormatPickerSlice(set: SetState, get: GetState): FormatPickerSlice {
+  return {
+    wizardFormats: [],
+    selectedVideoFormatId: '',
+    audioSelection: { kind: 'none' },
+    lastConvertBitrate: DEFAULT_AUDIO_BITRATE,
+    activePreset: null,
+    wizardSubtitles: {},
+    wizardAutomaticCaptions: {},
+    wizardSubtitleLanguages: [],
+    wizardSubtitleSkipped: false,
+    wizardSubtitleMode: DEFAULTS.subtitleMode,
+    wizardSubtitleFormat: DEFAULTS.subtitleFormat,
+
+    // Invariant: (video !== '') && (audio.kind === 'convert-lossy' | 'convert-lossless') is invalid —
+    // convert (-x) is mutually exclusive with video+audio merging. Reconcile here
+    // instead of relying on the UI to prevent it.
+    setSelectedVideoFormatId: (id) =>
+      set((state) => {
+        const reconcileAudio = id !== '' && (state.audioSelection.kind === 'convert-lossy' || state.audioSelection.kind === 'convert-lossless');
+        if (!reconcileAudio) {
+          return { selectedVideoFormatId: id, activePreset: id === '' ? 'audio-only' : null };
+        }
+        const bestAudio = state.wizardFormats.find((f) => f.isAudioOnly)?.formatId ?? null;
+        return {
+          selectedVideoFormatId: id,
+          activePreset: null,
+          audioSelection: bestAudio === null ? { kind: 'none' } : { kind: 'native', formatId: bestAudio }
+        };
+      }),
+
+    setAudioSelection: (sel) =>
+      set((state) => {
+        // Symmetric guard: picking a convert target while a video is selected
+        // clears the video to audio-only — the user's intent is "I want this
+        // audio-converted file", and convert can't be merged with video.
+        const clearVideo = (sel.kind === 'convert-lossy' || sel.kind === 'convert-lossless') && state.selectedVideoFormatId !== '';
+        return {
+          audioSelection: sel,
+          selectedVideoFormatId: clearVideo ? '' : state.selectedVideoFormatId,
+          activePreset: clearVideo || state.selectedVideoFormatId === '' ? 'audio-only' : null,
+          // Keep the user's bitrate choice sticky across mp3/m4a/opus toggles.
+          lastConvertBitrate: sel.kind === 'convert-lossy' ? sel.bitrateKbps : state.lastConvertBitrate
+        };
+      }),
+
+    setPreset: (p) => {
+      const { wizardFormats } = get();
+      const { videoFormatId, audioSelection } = applyPreset(p, wizardFormats);
+      set({
+        activePreset: p,
+        selectedVideoFormatId: videoFormatId,
+        audioSelection
+      });
+    },
+
+    toggleSubtitleLanguage: (lang) =>
+      set((state) => ({
+        wizardSubtitleLanguages: state.wizardSubtitleLanguages.includes(lang) ? state.wizardSubtitleLanguages.filter((l) => l !== lang) : [...state.wizardSubtitleLanguages, lang]
+      })),
+
+    setSubtitleMode: (mode) => set({ wizardSubtitleMode: mode }),
+    setSubtitleFormat: (format) => set({ wizardSubtitleFormat: format })
+  };
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { applyPreset } from '@renderer/store/wizardSlice.js';
+import { applyPreset } from '@renderer/store/wizard/formatPicker.js';
 import { buildFormatId, buildAudioConvertPayload } from '@renderer/store/helpers.js';
 import { strategyFor } from '@main/services/phases/index.js';
 import { prepareJob } from '@shared/prepareJob.js';

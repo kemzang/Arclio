@@ -24,11 +24,7 @@ export interface YtDlpFailureClassification {
   params?: Record<string, string | number>;
 }
 
-export async function classifyYtDlpFailure(
-  result: Exclude<YtDlpResult, { kind: 'success' }>,
-  outputDir: string,
-  jobId: string
-): Promise<YtDlpFailureClassification> {
+export async function classifyYtDlpFailure(result: Exclude<YtDlpResult, { kind: 'success' }>, outputDir: string, jobId: string): Promise<YtDlpFailureClassification> {
   if (result.kind === 'spawn-error') {
     const payload: LocalizedError = { kind: 'unknown', raw: result.error.message };
     return {

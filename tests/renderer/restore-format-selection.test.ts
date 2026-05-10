@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
-import { applyPreset, restoreFormatSelection } from '@renderer/store/wizardSlice.js';
+import { applyPreset, restoreFormatSelection } from '@renderer/store/wizard/formatPicker.js';
 import type { AppSettings, FormatOption, SinglePrefs } from '@shared/types.js';
 
 const FORMATS: FormatOption[] = [
