@@ -111,8 +111,22 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
       onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
-      save: vi.fn().mockResolvedValue(ok({ saved: true as const })),
-      load: vi.fn().mockResolvedValue(ok([]))
+      cmd: {
+        add: vi.fn().mockResolvedValue(ok({ ids: [] as string[] })),
+        start: vi.fn().mockResolvedValue(ok(undefined)),
+        pause: vi.fn().mockResolvedValue(ok(undefined)),
+        resume: vi.fn().mockResolvedValue(ok(undefined)),
+        cancel: vi.fn().mockResolvedValue(ok(undefined)),
+        retry: vi.fn().mockResolvedValue(ok(undefined)),
+        clearCompleted: vi.fn().mockResolvedValue(ok(undefined)),
+        remove: vi.fn().mockResolvedValue(ok(undefined))
+      },
+      events: {
+        onSnapshot: vi.fn().mockReturnValue(() => undefined),
+        onAdded: vi.fn().mockReturnValue(() => undefined),
+        onUpdated: vi.fn().mockReturnValue(() => undefined),
+        onRemoved: vi.fn().mockReturnValue(() => undefined)
+      }
     },
     updater: {
       onUpdateAvailable: vi.fn().mockReturnValue(() => undefined),

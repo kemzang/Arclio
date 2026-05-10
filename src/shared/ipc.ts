@@ -22,8 +22,22 @@ export const IPC_CHANNELS = {
   windowClose: 'window:close',
   windowIsMaximized: 'window:isMaximized',
   windowMaximizedChange: 'window:maximizedChange',
-  queueSave: 'queue:save',
-  queueLoad: 'queue:load',
+  // Queue commands — renderer → main. The QueueService on main is the
+  // queue-of-record; renderer mutations are forbidden.
+  queueCmdAdd: 'queue:cmd:add',
+  queueCmdStart: 'queue:cmd:start',
+  queueCmdPause: 'queue:cmd:pause',
+  queueCmdResume: 'queue:cmd:resume',
+  queueCmdCancel: 'queue:cmd:cancel',
+  queueCmdRetry: 'queue:cmd:retry',
+  queueCmdClearCompleted: 'queue:cmd:clearCompleted',
+  queueCmdRemove: 'queue:cmd:remove',
+  // Queue events — main → renderer. `snapshot` fires once on window create
+  // (initial hydration); the others stream incremental diffs.
+  queueEventSnapshot: 'queue:event:snapshot',
+  queueEventAdded: 'queue:event:added',
+  queueEventUpdated: 'queue:event:updated',
+  queueEventRemoved: 'queue:event:removed',
   updaterAvailable: 'updater:available',
   updaterInstall: 'updater:install',
   eventsClipboardUrl: 'events:clipboardUrl',

@@ -44,7 +44,7 @@ describe('SmartDrawer header summary', () => {
     setQueue([
       makeItem({
         id: 'q1',
-        status: 'downloading',
+        status: 'running',
         progressPercent: 42,
         progressDetail: null,
         lastStatus: { key: 'mergingFormats', params: {} }
@@ -62,7 +62,7 @@ describe('SmartDrawer header summary', () => {
     setQueue([
       makeItem({
         id: 'q1',
-        status: 'downloading',
+        status: 'running',
         progressPercent: 25,
         progressDetail: '1.2 MiB/s · ETA 00:30',
         lastStatus: { key: 'downloadingMedia', params: {} }
@@ -76,13 +76,13 @@ describe('SmartDrawer header summary', () => {
     setQueue([
       makeItem({
         id: 'q1',
-        status: 'downloading',
+        status: 'running',
         progressPercent: 40,
         lastStatus: { key: 'mergingFormats', params: {} }
       }),
       makeItem({
         id: 'q2',
-        status: 'downloading',
+        status: 'running',
         progressPercent: 60,
         lastStatus: { key: 'downloadingMedia', params: {} }
       })
@@ -100,19 +100,19 @@ describe('SmartDrawer header summary', () => {
     setQueue([
       makeItem({
         id: 'q1',
-        status: 'downloading',
+        status: 'running',
         progressPercent: 30,
         lastStatus: { key: 'mergingFormats', params: {} }
       }),
       makeItem({
         id: 'q2',
-        status: 'downloading',
+        status: 'running',
         progressPercent: 60,
         lastStatus: { key: 'downloadingMedia', params: {} }
       }),
       makeItem({
         id: 'q3',
-        status: 'downloading',
+        status: 'running',
         progressPercent: 90,
         lastStatus: { key: 'fetchingSubtitles', params: {} }
       })

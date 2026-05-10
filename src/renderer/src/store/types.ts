@@ -138,18 +138,20 @@ export interface WizardDialogsSlice {
   dismissCookiesConfigDialog: () => void;
 }
 
+// Renderer's queue slice is a read-only projection of QueueService (main).
+// Actions are thin IPC shims; the queue array hydrates from `queue:event:snapshot`
+// on init and updates via the four diff events. Local mutations are forbidden.
 export interface QueueSlice {
   queue: QueueItem[];
 
   addToQueue: () => Promise<void>;
   addAndDownloadImmediately: () => Promise<void>;
-  startItemDownload: (itemId: string) => Promise<void>;
   cancelItemDownload: (itemId: string) => Promise<void>;
   pauseItemDownload: (itemId: string) => Promise<void>;
   resumeItemDownload: (itemId: string) => Promise<void>;
-  removeQueueItem: (itemId: string) => void;
+  removeQueueItem: (itemId: string) => Promise<void>;
   retryQueueItem: (itemId: string) => Promise<void>;
-  clearCompleted: () => void;
+  clearCompleted: () => Promise<void>;
   pauseAll: () => Promise<void>;
   cancelAll: () => Promise<void>;
   openItemFolder: (itemId: string) => Promise<void>;

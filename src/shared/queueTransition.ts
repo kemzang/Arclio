@@ -1,29 +1,39 @@
 // Pure transition function for queue items. Single source of truth for the
 // queue state machine: every status change goes through `transition(item, evt)`
-// instead of being assigned ad-hoc across queueSlice / systemSlice /
-// jobScheduler. Closed `QueueEvent` union — the exhaustive switch becomes a
-// compile error if a new event kind appears.
+// instead of being assigned ad-hoc. Closed `QueueEvent` union — the
+// exhaustive switch becomes a compile error if a new event kind appears.
 //
-// Lives in `src/shared` (not `src/main`) so the renderer slice can call it
-// directly today; future refactors that move queue authority to main can
-// reuse the same function on the QueueService side without copy-paste.
+// Lives in `src/shared` (not `src/main`) so QueueService on main and any
+// renderer-side projection can call it identically.
 
 import type { LocalizedError, QueueItem } from './types.js';
 import { QUEUE_STATUS } from './schemas.js';
 
 // Closed union of state-change signals. Mapped 1:1 from DownloadService /
-// systemSlice events (which are themselves rendered from yt-dlp lifecycle).
-export type QueueEvent = { kind: 'started'; downloadJobId: string } | { kind: 'progress'; percent: number; detail?: string | null } | { kind: 'paused' } | { kind: 'resumed' } | { kind: 'failed'; error: LocalizedError; lastStatusKey?: import('./schemas.js').StatusKey; params?: Record<string, string | number> } | { kind: 'completed'; lastStatusKey?: import('./schemas.js').StatusKey; params?: Record<string, string | number>; finishedAt: string } | { kind: 'cancelled' } | { kind: 'retry-reset' };
+// QueueService events.
+//
+// `paused-held` and `paused-active` are split because the source-of-truth for
+// "did a job ever spawn?" lives at the call site (QueueService.pause checks
+// item.status before deciding which event to fire).
+export type QueueEvent =
+  | { kind: 'started'; lastJobId: string }
+  | { kind: 'progress'; percent: number; detail?: string | null }
+  | { kind: 'paused-active'; tempDir?: string }
+  | { kind: 'paused-held' }
+  | { kind: 'resumed' }
+  | { kind: 'failed'; error: LocalizedError; lastStatusKey?: import('./schemas.js').StatusKey; params?: Record<string, string | number> }
+  | { kind: 'completed'; lastStatusKey?: import('./schemas.js').StatusKey; params?: Record<string, string | number>; finishedAt: string }
+  | { kind: 'cancelled' }
+  | { kind: 'retry-reset' };
 
-// Pure (item, event) -> item. No I/O, no IPC, no logging. Caller produces a
-// new item; existing references stay valid until they overwrite their slot.
+// Pure (item, event) -> item. No I/O, no IPC, no logging.
 export function transition(item: QueueItem, evt: QueueEvent): QueueItem {
   switch (evt.kind) {
     case 'started':
       return {
         ...item,
-        status: QUEUE_STATUS.downloading,
-        downloadJobId: evt.downloadJobId,
+        status: QUEUE_STATUS.running,
+        lastJobId: evt.lastJobId,
         error: null,
         progressPercent: 0,
         progressDetail: null
@@ -34,16 +44,28 @@ export function transition(item: QueueItem, evt: QueueEvent): QueueItem {
         progressPercent: evt.percent,
         ...(evt.detail !== undefined ? { progressDetail: evt.detail } : {})
       };
-    case 'paused':
-      return { ...item, status: QUEUE_STATUS.paused, progressDetail: null };
+    case 'paused-active':
+      return {
+        ...item,
+        status: QUEUE_STATUS.pausedActive,
+        progressDetail: null,
+        ...(evt.tempDir !== undefined ? { tempDir: evt.tempDir } : {})
+      };
+    case 'paused-held':
+      return {
+        ...item,
+        status: QUEUE_STATUS.pausedHeld,
+        progressDetail: null
+      };
     case 'resumed':
-      return { ...item, status: QUEUE_STATUS.downloading, error: null };
+      return { ...item, status: QUEUE_STATUS.running, error: null };
     case 'failed':
       return {
         ...item,
         status: QUEUE_STATUS.error,
         error: evt.error,
-        downloadJobId: null,
+        lastJobId: undefined,
+        tempDir: undefined,
         ...(evt.lastStatusKey ? { lastStatus: { key: evt.lastStatusKey, params: evt.params } } : {})
       };
     case 'completed':
@@ -52,11 +74,17 @@ export function transition(item: QueueItem, evt: QueueEvent): QueueItem {
         status: QUEUE_STATUS.done,
         progressPercent: 100,
         finishedAt: evt.finishedAt,
-        downloadJobId: null,
+        lastJobId: undefined,
+        tempDir: undefined,
         ...(evt.lastStatusKey ? { lastStatus: { key: evt.lastStatusKey, params: evt.params } } : {})
       };
     case 'cancelled':
-      return { ...item, status: QUEUE_STATUS.cancelled, downloadJobId: null };
+      return {
+        ...item,
+        status: QUEUE_STATUS.cancelled,
+        lastJobId: undefined,
+        tempDir: undefined
+      };
     case 'retry-reset':
       return {
         ...item,
@@ -65,15 +93,14 @@ export function transition(item: QueueItem, evt: QueueEvent): QueueItem {
         progressPercent: 0,
         progressDetail: null,
         finishedAt: null,
-        downloadJobId: null
+        lastJobId: undefined,
+        tempDir: undefined
       };
   }
 }
 
 // Predicate: is this event illegal in the current state? Returns null when
-// the transition is allowed; otherwise returns a short reason string. Used by
-// the renderer slice to log + ignore stale events (e.g. a status event that
-// arrives after the user already cancelled).
+// the transition is allowed; otherwise returns a short reason string.
 export function illegalTransition(item: QueueItem, evt: QueueEvent): string | null {
   if (item.status === QUEUE_STATUS.cancelled) {
     if (evt.kind === 'progress' || evt.kind === 'completed' || evt.kind === 'failed') {

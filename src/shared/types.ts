@@ -162,9 +162,9 @@ export interface QueueItem {
   lastStatus: StatusSnapshot | null;
   error: LocalizedError | null;
   finishedAt: string | null;
-  downloadJobId: string | null;
   playlistGroupId?: string;
-  // Persisted resume context for paused-active items — see schema for details.
+  // Persisted resume context. `lastJobId` set iff status ∈ {running,
+  // paused-active}; `tempDir` set iff paused-active mid-download.
   tempDir?: string;
   lastJobId?: string;
   job: PreparedJob;

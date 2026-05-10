@@ -82,8 +82,22 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
       onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
-      save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),
-      load: vi.fn().mockResolvedValue({ ok: true, data: [] })
+      cmd: {
+        add: vi.fn().mockResolvedValue({ ok: true, data: { ids: [] } }),
+        start: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        pause: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        resume: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        cancel: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        retry: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        clearCompleted: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        remove: vi.fn().mockResolvedValue({ ok: true, data: undefined })
+      },
+      events: {
+        onSnapshot: vi.fn().mockReturnValue(() => undefined),
+        onAdded: vi.fn().mockReturnValue(() => undefined),
+        onUpdated: vi.fn().mockReturnValue(() => undefined),
+        onRemoved: vi.fn().mockReturnValue(() => undefined)
+      }
     },
     updater: {
       onUpdateAvailable: vi.fn().mockReturnValue(() => undefined),
@@ -216,7 +230,7 @@ describe('SponsorBlock wizard slice — queue serialization', () => {
       await useAppStore.getState().addToQueue();
     });
 
-    const queue = useAppStore.getState().queue;
+    const queue = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? [];
     expect(queue).toHaveLength(1);
     const job = queue[0].job;
     const sb = 'sponsorBlock' in job ? job.sponsorBlock : null;
@@ -264,7 +278,7 @@ describe('SponsorBlock wizard slice — download invocation', () => {
       await useAppStore.getState().addToQueue();
     });
 
-    const startCall = api.downloads.start.mock.calls[0]?.[0];
+    const startCall = api.queue.cmd.add.mock.calls[0]?.[0]?.[0];
     const startJob = startCall?.job;
     const startSb = startJob && 'sponsorBlock' in startJob ? startJob.sponsorBlock : null;
     expect(startSb?.mode).toBe('remove');
@@ -284,7 +298,7 @@ describe('SponsorBlock wizard slice — download invocation', () => {
       await useAppStore.getState().addToQueue();
     });
 
-    const startCall = api.downloads.start.mock.calls[0]?.[0];
+    const startCall = api.queue.cmd.add.mock.calls[0]?.[0]?.[0];
     const startJob = startCall?.job;
     const startSb = startJob && 'sponsorBlock' in startJob ? startJob.sponsorBlock : null;
     expect(startSb?.mode).toBe('off');

@@ -1,4 +1,4 @@
-import type { DownloadJob, QueueItem } from '@shared/types.js';
+import type { QueueItem } from '@shared/types.js';
 import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 import { queueItemSchema } from '@shared/schemas.js';
 
@@ -29,7 +29,6 @@ export function makeItem(overrides: Partial<QueueItem> & Pick<QueueItem, 'id' | 
     lastStatus: null,
     error: null,
     finishedAt: null,
-    downloadJobId: null,
     job: DEFAULT_JOB,
     ...overrides
   };
@@ -42,13 +41,3 @@ export function makeItem(overrides: Partial<QueueItem> & Pick<QueueItem, 'id' | 
   return parsed.data;
 }
 
-export function makeJob(id: string): DownloadJob {
-  return {
-    id,
-    url: '',
-    outputDir: '/tmp',
-    status: 'running',
-    createdAt: '',
-    updatedAt: ''
-  };
-}

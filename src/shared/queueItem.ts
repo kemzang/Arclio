@@ -1,12 +1,5 @@
 import type { QueueItem } from './types.js';
 
-// "Held" = an item the user paused while it was still pending. It never had
-// a downloadJobId because no main-process job was ever spawned for it. UI
-// treats it as queue-only (removable, no progress bar, no cancel-IPC).
-export function isHeld(item: QueueItem): boolean {
-  return item.status === 'paused' && !item.downloadJobId;
-}
-
 // True when a completed item represents a "high-value" download — used to
 // gate the passive share banner in SmartDrawer. High value = anything the
 // user explicitly opted into beyond a default single-format pull: 4K,

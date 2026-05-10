@@ -66,7 +66,11 @@ export type CookiesMode = z.infer<typeof cookiesModeSchema>;
 export const cookiesBrowserSchema = z.enum(['firefox', 'chromium', 'chrome', 'brave', 'edge', 'safari', 'vivaldi']);
 export type CookiesBrowser = z.infer<typeof cookiesBrowserSchema>;
 
-export const queueItemStatusSchema = z.enum(['pending', 'downloading', 'paused', 'done', 'error', 'cancelled']);
+// QueueItemStatus is now a 7-value union with paused split. paused-held is
+// "queued + waiting + never spawned a job" (resume = transition to pending).
+// paused-active is "had a running job, user paused it" (resume = re-spawn,
+// possibly across an app restart via persisted tempDir + lastJobId).
+export const queueItemStatusSchema = z.enum(['pending', 'running', 'paused-held', 'paused-active', 'done', 'error', 'cancelled']);
 export type QueueItemStatus = z.infer<typeof queueItemStatusSchema>;
 
 const ytDlpErrorKindSchema = z.enum(YT_DLP_ERROR_KINDS);
@@ -74,12 +78,13 @@ const ytDlpErrorKindSchema = z.enum(YT_DLP_ERROR_KINDS);
 // Reified queue-status names for use in equality checks. Exact mirror of the schema.
 export const QUEUE_STATUS = {
   pending: 'pending',
-  downloading: 'downloading',
-  paused: 'paused',
+  running: 'running',
+  pausedHeld: 'paused-held',
+  pausedActive: 'paused-active',
   done: 'done',
   error: 'error',
   cancelled: 'cancelled'
-} as const satisfies Record<QueueItemStatus, QueueItemStatus>;
+} as const satisfies Record<string, QueueItemStatus>;
 
 // Status keys emitted by DownloadService and consumed by the renderer for i18n.
 // Defined as a const object so call-sites can reference STATUS_KEY.X — typos
@@ -326,11 +331,12 @@ export const queueItemSchema = z.object({
   lastStatus: statusSnapshotSchema.nullable(),
   error: localizedErrorSchema.nullable(),
   finishedAt: z.string().nullable(),
-  downloadJobId: z.string().nullable(),
   playlistGroupId: z.string().min(1).optional(),
-  // Persisted resume context for paused-active items. Survives app restart
-  // so the resumed yt-dlp run can target the same tempDir / .part files.
-  // Both undefined for held-pending items (they never spawned a job yet).
+  // Persisted resume context. `lastJobId` is set iff status ∈ {running,
+  // paused-active}; `tempDir` is set iff status === 'paused-active' and the
+  // job was paused mid-download. `tempDir` survives app restart so the
+  // resumed yt-dlp run can target the same .part files. Both undefined for
+  // paused-held items (they never spawned a job yet).
   tempDir: z.string().min(1).optional(),
   lastJobId: z.string().min(1).optional(),
   job: preparedJobSchema

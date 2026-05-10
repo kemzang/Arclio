@@ -20,12 +20,12 @@ import { JobLifecycle } from './JobLifecycle.js';
 
 const logger = log.scope('downloads');
 
-// Max concurrent downloads — defense-in-depth at the service boundary. The
-// renderer's job scheduler already serializes one-at-a-time, but a buggy IPC
-// burst or a future change to that policy could otherwise spawn N parallel
-// yt-dlp + ffmpeg processes and thrash a 4-core machine. Tunable via the
-// constructor for tests and (eventually) a settings override.
-const DEFAULT_MAX_CONCURRENT_DOWNLOADS = 4;
+// Max concurrent downloads — defense-in-depth at the service boundary.
+// QueueService applies its own cap (default 1); this is a backstop that
+// catches buggy IPC bursts or future policy changes that could otherwise
+// spawn N parallel yt-dlp + ffmpeg processes. Tunable via the constructor
+// for tests.
+const DEFAULT_MAX_CONCURRENT_DOWNLOADS = 1;
 
 export class DownloadService extends EventEmitter {
   private activeJobs = new Map<string, ActiveDownload>();

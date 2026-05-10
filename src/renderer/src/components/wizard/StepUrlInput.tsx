@@ -36,7 +36,7 @@ export function StepUrlInput(): JSX.Element {
   const { t } = useTranslation();
   const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl, cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings, openShareDialog, setShareInlineCardDismissed } = useAppStore();
   const inputRef = useRef<HTMLInputElement>(null);
-  const hasActiveDownloads = queue.some((i) => i.status === 'downloading');
+  const hasActiveDownloads = queue.some((i) => i.status === 'running');
   const [pendingClipboardUrl, setPendingClipboardUrl] = useState<string | null>(null);
 
   const shareCardVisible = !(settings?.common?.shareInlineCardDismissed ?? false);
@@ -65,7 +65,7 @@ export function StepUrlInput(): JSX.Element {
   useEffect(() => {
     inputRef.current?.focus();
     const { queue } = useAppStore.getState();
-    if (!queue.some((i) => i.status === 'downloading')) {
+    if (!queue.some((i) => i.status === 'running')) {
       track('wizard_started');
     }
   }, []);

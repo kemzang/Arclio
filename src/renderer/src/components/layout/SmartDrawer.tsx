@@ -45,12 +45,12 @@ export function SmartDrawer(): JSX.Element {
   // First pending item: the one the scheduler will pick when the inter-job
   // sleep window elapses. Surface the countdown on its card.
   const nextPendingId = useMemo(() => orderedQueue.find((i) => i.status === 'pending')?.id ?? null, [orderedQueue]);
-  const activeItems = useMemo(() => queue.filter((i) => i.status === 'downloading'), [queue]);
+  const activeItems = useMemo(() => queue.filter((i) => i.status === 'running'), [queue]);
   const activeCount = activeItems.length;
   const totalCount = queue.length;
   const hasCompleted = useMemo(() => queue.some((i) => i.status === 'done' || i.status === 'cancelled' || i.status === 'error'), [queue]);
   const hasDownloading = activeCount > 0;
-  const hasInFlight = useMemo(() => queue.some((i) => i.status === 'downloading' || i.status === 'paused' || i.status === 'pending'), [queue]);
+  const hasInFlight = useMemo(() => queue.some((i) => i.status === 'running' || i.status === 'paused-active' || i.status === 'paused-held' || i.status === 'pending'), [queue]);
 
   const aggregatePercent = useMemo(() => (activeItems.length === 0 ? 0 : activeItems.reduce((sum, i) => sum + i.progressPercent, 0) / activeItems.length), [activeItems]);
   const headerProgress = activeCount === 1 ? activeItems[0].progressPercent : aggregatePercent;
@@ -135,7 +135,7 @@ export function SmartDrawer(): JSX.Element {
               data-testid="btn-clear-completed"
               onClick={(e) => {
                 e.stopPropagation();
-                clearCompleted();
+                void clearCompleted();
               }}
               className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-0.5 rounded hover:bg-accent"
               title={t('queue.clearTitle')}

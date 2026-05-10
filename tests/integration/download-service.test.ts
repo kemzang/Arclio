@@ -30,7 +30,10 @@ function makeService() {
   const recentJobsStore = { push: vi.fn().mockResolvedValue(undefined) };
   const settingsStore = { get: vi.fn().mockResolvedValue({}) };
   const ytDlp = new YtDlp(binaryManager as never, tokenService as never, settingsStore as never);
-  const service = new DownloadService(ytDlp, recentJobsStore as never, true);
+  // Use maxConcurrent=4 to exercise the legacy multi-job assumptions in this
+  // integration suite (concurrent start, multi-job cancel-by-id). QueueService
+  // applies the cap=1 policy in production.
+  const service = new DownloadService(ytDlp, recentJobsStore as never, true, 4);
   return { service, recentJobsStore };
 }
 

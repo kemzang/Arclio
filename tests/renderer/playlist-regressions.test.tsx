@@ -50,8 +50,22 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
       onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
-      save: vi.fn().mockResolvedValue(ok({ saved: true })),
-      load: vi.fn().mockResolvedValue(ok([]))
+      cmd: {
+        add: vi.fn().mockResolvedValue(ok({ ids: [] })),
+        start: vi.fn().mockResolvedValue(ok(undefined)),
+        pause: vi.fn().mockResolvedValue(ok(undefined)),
+        resume: vi.fn().mockResolvedValue(ok(undefined)),
+        cancel: vi.fn().mockResolvedValue(ok(undefined)),
+        retry: vi.fn().mockResolvedValue(ok(undefined)),
+        clearCompleted: vi.fn().mockResolvedValue(ok(undefined)),
+        remove: vi.fn().mockResolvedValue(ok(undefined))
+      },
+      events: {
+        onSnapshot: vi.fn().mockReturnValue(() => undefined),
+        onAdded: vi.fn().mockReturnValue(() => undefined),
+        onUpdated: vi.fn().mockReturnValue(() => undefined),
+        onRemoved: vi.fn().mockReturnValue(() => undefined)
+      }
     },
     diagnostics: { logWizardStep: vi.fn() }
   };
@@ -181,7 +195,7 @@ describe('playlist regressions', () => {
       await useAppStore.getState().addToQueue();
     });
 
-    const templates = useAppStore.getState().queue.map((item) => (item.job.kind === 'playlist-preset' ? item.job.outputTemplate : null));
+    const templates = (vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? []).map((item) => (item.job.kind === 'playlist-preset' ? item.job.outputTemplate : null));
 
     expect(templates).toEqual(['009 - %(title)s.%(ext)s', '010 - %(title)s.%(ext)s', '100 - %(title)s.%(ext)s']);
   });

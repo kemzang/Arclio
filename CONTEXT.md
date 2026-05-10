@@ -50,9 +50,30 @@ emit analytics (`download_finished`/`_cancelled`/`_failed`), persist to
 ## QueueEvent
 
 Closed union of state-change signals over a `QueueItem`: `started`,
-`progress`, `paused`, `resumed`, `failed`, `completed`, `cancelled`,
-`retry-reset`. Drives the pure `transition` function.
+`progress`, `paused-active`, `paused-held`, `resumed`, `failed`,
+`completed`, `cancelled`, `retry-reset`. Drives the pure `transition`
+function.
 **Where defined:** `src/shared/queueTransition.ts`.
+
+## QueueService
+
+Authoritative queue-of-record on main. Owns the in-memory queue array,
+applies the cap=1 scheduler (with 3-second inter-job sleep), persists
+via `QueueStore`, and projects state to the renderer via four IPC
+events: `queue:event:snapshot` (initial hydration on window create),
+plus `Added` / `Updated` / `Removed` (incremental diffs). All commands
+flow renderer → main via `queue:cmd:*` channels (8 commands: add,
+start, pause, resume, cancel, retry, clearCompleted, remove).
+**Where defined:** `src/main/services/QueueService.ts`.
+
+## QueueStatus
+
+The 7-value status union: `pending` | `running` | `paused-held` |
+`paused-active` | `done` | `error` | `cancelled`. `paused-held` is "in
+queue, never spawned a job" (resume = back to pending). `paused-active`
+is "had a running job, user paused" (resume = re-spawn, possibly
+across an app restart via persisted `tempDir` + `lastJobId`).
+**Where defined:** `src/shared/schemas.ts` (`queueItemStatusSchema`).
 
 ## transition
 

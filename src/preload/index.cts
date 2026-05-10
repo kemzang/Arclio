@@ -80,8 +80,46 @@ const api: AppApi = {
     }
   },
   queue: {
-    save: (items: QueueItem[]) => ipcRenderer.invoke(IPC_CHANNELS.queueSave, items),
-    load: () => ipcRenderer.invoke(IPC_CHANNELS.queueLoad)
+    cmd: {
+      add: (items: QueueItem[]) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdAdd, items),
+      start: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdStart, input),
+      pause: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdPause, input),
+      resume: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdResume, input),
+      cancel: (input: { itemId: string | null }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdCancel, input),
+      retry: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdRetry, input),
+      clearCompleted: () => ipcRenderer.invoke(IPC_CHANNELS.queueCmdClearCompleted),
+      remove: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdRemove, input)
+    },
+    events: {
+      onSnapshot: (listener) => {
+        const wrapped = (_: Electron.IpcRendererEvent, items: QueueItem[]): void => listener(items);
+        ipcRenderer.on(IPC_CHANNELS.queueEventSnapshot, wrapped);
+        return () => {
+          ipcRenderer.removeListener(IPC_CHANNELS.queueEventSnapshot, wrapped);
+        };
+      },
+      onAdded: (listener) => {
+        const wrapped = (_: Electron.IpcRendererEvent, event: { items: QueueItem[]; atIdx: number }): void => listener(event);
+        ipcRenderer.on(IPC_CHANNELS.queueEventAdded, wrapped);
+        return () => {
+          ipcRenderer.removeListener(IPC_CHANNELS.queueEventAdded, wrapped);
+        };
+      },
+      onUpdated: (listener) => {
+        const wrapped = (_: Electron.IpcRendererEvent, event: { item: QueueItem }): void => listener(event);
+        ipcRenderer.on(IPC_CHANNELS.queueEventUpdated, wrapped);
+        return () => {
+          ipcRenderer.removeListener(IPC_CHANNELS.queueEventUpdated, wrapped);
+        };
+      },
+      onRemoved: (listener) => {
+        const wrapped = (_: Electron.IpcRendererEvent, event: { itemId: string }): void => listener(event);
+        ipcRenderer.on(IPC_CHANNELS.queueEventRemoved, wrapped);
+        return () => {
+          ipcRenderer.removeListener(IPC_CHANNELS.queueEventRemoved, wrapped);
+        };
+      }
+    }
   },
   updater: {
     onUpdateAvailable: (listener) => {

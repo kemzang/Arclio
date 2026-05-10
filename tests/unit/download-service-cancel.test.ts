@@ -70,7 +70,7 @@ describe('runningJobCount', () => {
       .mockReturnValueOnce(proc1 as never)
       .mockReturnValueOnce(proc2 as never);
 
-    const svc = new DownloadService(stubs.ytDlp, stubs.recentJobsStore as never);
+    const svc = new DownloadService(stubs.ytDlp, stubs.recentJobsStore as never, false, 2);
 
     const [r1] = await Promise.all([svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB }), svc.start({ url: URL, outputDir: '/tmp', job: DEFAULT_JOB })]);
 

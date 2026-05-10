@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { nextMonotonicPercent, ProgressFormatter } from '@renderer/store/progress.js';
+import { nextMonotonicPercent, ProgressFormatter } from '@shared/progressFormat.js';
 
 describe('progress ui helpers', () => {
   it('keeps percent monotonic', () => {

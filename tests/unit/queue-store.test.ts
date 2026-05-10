@@ -64,14 +64,14 @@ describe('QueueStore', () => {
     expect(loaded[0].error?.raw).toBe('Network error');
   });
 
-  it('normalizes downloading → pending and resets progress', async () => {
+  it('demotes running → pending and clears progress + lastJobId on save (process did not survive)', async () => {
     const [store] = await tempStore();
     const item = makeItem({
       id: 'd',
-      status: 'downloading',
+      status: 'running',
       progressPercent: 67,
       progressDetail: '4.5MiB/s ETA 00:10',
-      downloadJobId: 'job-xyz'
+      lastJobId: 'job-xyz'
     });
     await store.save([item]);
 
@@ -79,25 +79,33 @@ describe('QueueStore', () => {
     expect(loaded[0].status).toBe('pending');
     expect(loaded[0].progressPercent).toBe(0);
     expect(loaded[0].progressDetail).toBeNull();
-    expect(loaded[0].downloadJobId).toBeNull();
+    expect(loaded[0].lastJobId).toBeUndefined();
   });
 
-  it('keeps paused status and resets progress (user-paused survives reload)', async () => {
+  it('preserves paused-active status + tempDir + lastJobId across save (resume context survives)', async () => {
     const [store] = await tempStore();
     const item = makeItem({
       id: 'e',
-      status: 'paused',
+      status: 'paused-active',
       progressPercent: 40,
-      progressDetail: '1.2MiB/s',
-      downloadJobId: 'job-abc'
+      tempDir: '/tmp/.arroxy-temp/abc',
+      lastJobId: 'job-abc'
     });
     await store.save([item]);
 
     const loaded = await loadOk(store);
-    expect(loaded[0].status).toBe('paused');
-    expect(loaded[0].progressPercent).toBe(0);
-    expect(loaded[0].progressDetail).toBeNull();
-    expect(loaded[0].downloadJobId).toBeNull();
+    expect(loaded[0].status).toBe('paused-active');
+    expect(loaded[0].tempDir).toBe('/tmp/.arroxy-temp/abc');
+    expect(loaded[0].lastJobId).toBe('job-abc');
+  });
+
+  it('preserves paused-held status (held items have no job context)', async () => {
+    const [store] = await tempStore();
+    const item = makeItem({ id: 'h', status: 'paused-held' });
+    await store.save([item]);
+    const loaded = await loadOk(store);
+    expect(loaded[0].status).toBe('paused-held');
+    expect(loaded[0].lastJobId).toBeUndefined();
   });
 
   it('excludes cancelled items from save', async () => {
@@ -107,15 +115,6 @@ describe('QueueStore', () => {
     const loaded = await loadOk(store);
     expect(loaded).toHaveLength(1);
     expect(loaded[0].id).toBe('keep');
-  });
-
-  it('always sets downloadJobId to null on load', async () => {
-    const [store, dir] = await tempStore();
-    const raw = [makeItem({ id: 'f', status: 'pending', downloadJobId: 'stale-job' })];
-    await fs.writeFile(path.join(dir, 'queue.json'), JSON.stringify({ items: raw }), 'utf-8');
-
-    const loaded = await loadOk(store);
-    expect(loaded[0].downloadJobId).toBeNull();
   });
 
   it('overwrites previous save on subsequent saves', async () => {
@@ -146,5 +145,91 @@ describe('QueueStore', () => {
       expect(result.error.code).toBe('validation');
       expect(result.error.message).toMatch(/corrupted/i);
     }
+  });
+});
+
+describe('QueueStore — beta migration', () => {
+  it('migrates old downloading status → pending', async () => {
+    const [store, dir] = await tempStore();
+    const legacy = {
+      items: [
+        {
+          id: 'x',
+          url: 'https://yt/x',
+          title: 'x',
+          thumbnail: '',
+          outputDir: '/tmp',
+          formatLabel: 'Best',
+          status: 'downloading',
+          progressPercent: 50,
+          progressDetail: '1MiB/s',
+          lastStatus: null,
+          error: null,
+          finishedAt: null,
+          downloadJobId: 'job-old',
+          job: { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '22', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false } }
+        }
+      ]
+    };
+    await fs.writeFile(path.join(dir, 'queue.json'), JSON.stringify(legacy), 'utf-8');
+    const loaded = await loadOk(store);
+    expect(loaded[0].status).toBe('pending');
+    expect(loaded[0].progressPercent).toBe(0);
+    expect((loaded[0] as unknown as Record<string, unknown>).downloadJobId).toBeUndefined();
+  });
+
+  it('migrates old paused (with downloadJobId) → paused-held + strips downloadJobId', async () => {
+    const [store, dir] = await tempStore();
+    const legacy = {
+      items: [
+        {
+          id: 'y',
+          url: 'https://yt/y',
+          title: 'y',
+          thumbnail: '',
+          outputDir: '/tmp',
+          formatLabel: 'Best',
+          status: 'paused',
+          progressPercent: 30,
+          progressDetail: 'speed',
+          lastStatus: null,
+          error: null,
+          finishedAt: null,
+          downloadJobId: 'job-stale',
+          job: { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '22', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false } }
+        }
+      ]
+    };
+    await fs.writeFile(path.join(dir, 'queue.json'), JSON.stringify(legacy), 'utf-8');
+    const loaded = await loadOk(store);
+    expect(loaded[0].status).toBe('paused-held');
+    expect(loaded[0].progressPercent).toBe(0);
+    expect((loaded[0] as unknown as Record<string, unknown>).downloadJobId).toBeUndefined();
+  });
+
+  it('migrates beta error shape { key, rawMessage } → { kind, raw }', async () => {
+    const [store, dir] = await tempStore();
+    const legacy = {
+      items: [
+        {
+          id: 'z',
+          url: 'https://yt/z',
+          title: 'z',
+          thumbnail: '',
+          outputDir: '/tmp',
+          formatLabel: 'Best',
+          status: 'error',
+          progressPercent: 0,
+          progressDetail: null,
+          lastStatus: null,
+          error: { key: 'botBlock', rawMessage: 'sign in to confirm' },
+          finishedAt: null,
+          job: { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '22', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false } }
+        }
+      ]
+    };
+    await fs.writeFile(path.join(dir, 'queue.json'), JSON.stringify(legacy), 'utf-8');
+    const loaded = await loadOk(store);
+    expect(loaded[0].error).toEqual({ kind: 'botBlock', raw: 'sign in to confirm' });
   });
 });

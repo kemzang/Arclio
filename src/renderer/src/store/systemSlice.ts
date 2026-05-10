@@ -1,17 +1,16 @@
-import type { AppSettings, DependencyId, QueueItem, SubtitleFormat, SubtitleMode } from '@shared/types.js';
-import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas.js';
+import type { AppSettings, DependencyId } from '@shared/types.js';
+import { QUEUE_STATUS } from '@shared/schemas.js';
 import { DEFAULTS } from '@shared/constants.js';
 import { i18next, pickLanguage, isRtl } from '@shared/i18n/index.js';
-import { nextMonotonicPercent, ProgressFormatter } from './progress.js';
-import { progressFormatters, saveQueue, updateQueueItem } from './queueSlice.js';
-import type { JobScheduler } from './jobScheduler.js';
 import type { GetState, SetState, ShareTrigger, SystemSlice } from './types.js';
 import { notify } from '../lib/notify.js';
 import { track } from '../lib/analytics.js';
 
-let unbindStatus: (() => void) | null = null;
-let unbindProgress: (() => void) | null = null;
 let unbindWarmupProgress: (() => void) | null = null;
+let unbindQueueSnapshot: (() => void) | null = null;
+let unbindQueueAdded: (() => void) | null = null;
+let unbindQueueUpdated: (() => void) | null = null;
+let unbindQueueRemoved: (() => void) | null = null;
 
 const SHARE_MILESTONES: readonly number[] = [3, 25, 100];
 
@@ -63,7 +62,7 @@ function makeBinaryOverridePatch(id: DependencyId, path: string | undefined): { 
   return { common: { binaryOverrides: { [OVERRIDE_KEY[id]]: path } } };
 }
 
-export function createSystemSlice(set: SetState, get: GetState, scheduler: JobScheduler): SystemSlice {
+export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
   return {
     initialized: false,
     initializing: false,
@@ -84,79 +83,42 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       if (get().initialized || get().initializing) return;
       set({ initializing: true });
 
-      // Detach any prior bindings (defense for a future re-init flow).
-      unbindStatus?.();
-      unbindProgress?.();
-      scheduler.reset();
+      // Detach prior queue projection bindings (defense for a future re-init flow).
+      unbindQueueSnapshot?.();
+      unbindQueueAdded?.();
+      unbindQueueUpdated?.();
+      unbindQueueRemoved?.();
 
-      unbindStatus = window.appApi.events.onStatus((event) => {
-        const item = get().queue.find((i) => i.downloadJobId === event.jobId);
-        if (!item) return;
-
-        if (event.stage === 'done') {
-          progressFormatters.delete(event.jobId);
-          updateQueueItem(set, item.id, {
-            status: QUEUE_STATUS.done,
-            progressPercent: 100,
-            finishedAt: new Date().toISOString(),
-            downloadJobId: null,
-            lastStatus: { key: event.statusKey, params: event.params }
-          });
-          saveQueue(get);
+      // Queue projection: hydrate from initial snapshot, then apply diffs.
+      // QueueService on main is the queue-of-record; this slice is a read-only
+      // mirror of `service.snapshot()` + the four diff event streams.
+      unbindQueueSnapshot = window.appApi.queue.events.onSnapshot((items) => {
+        set({ queue: items });
+      });
+      unbindQueueAdded = window.appApi.queue.events.onAdded(({ items, atIdx }) => {
+        set((state) => {
+          const next = [...state.queue];
+          next.splice(atIdx, 0, ...items);
+          return { queue: next };
+        });
+      });
+      unbindQueueUpdated = window.appApi.queue.events.onUpdated(({ item }) => {
+        const prev = get().queue.find((i) => i.id === item.id);
+        set((state) => ({
+          queue: state.queue.map((i) => (i.id === item.id ? item : i))
+        }));
+        // Milestone tracking — fires when a queue item transitions to `done`.
+        if (prev && prev.status !== QUEUE_STATUS.done && item.status === QUEUE_STATUS.done) {
           const prevCount = get().settings?.common?.successfulDownloadCount ?? 0;
           const nextCount = prevCount + 1;
           commonPatch(get, set, { successfulDownloadCount: nextCount });
           if (SHARE_MILESTONES.includes(nextCount)) {
             openShareDialogInternal(set, 'milestone');
           }
-          scheduler.notifyJobFinished();
-        } else if (event.stage === 'error') {
-          progressFormatters.delete(event.jobId);
-          updateQueueItem(set, item.id, {
-            status: QUEUE_STATUS.error,
-            error: event.error ?? { kind: 'unknown', raw: '' },
-            lastStatus: { key: event.statusKey, params: event.params },
-            downloadJobId: null
-          });
-          saveQueue(get);
-          scheduler.notifyJobFinished();
-        } else {
-          // Phase transitions (merge, fetch subs, sleep) supersede stale download-speed
-          // progress detail — clear it so the phase status text becomes visible.
-          const isPhaseTransition = event.statusKey === STATUS_KEY.mergingFormats || event.statusKey === STATUS_KEY.fetchingSubtitles || event.statusKey === STATUS_KEY.sleepingBetweenRequests || event.statusKey === STATUS_KEY.extractingAudio || event.statusKey === STATUS_KEY.convertingVideo || event.statusKey === STATUS_KEY.embeddingMetadata || event.statusKey === STATUS_KEY.movingFiles;
-          // yt-dlp emits per-file percent (0→100% for each sub, then video, then audio).
-          // Reset the bar when a new file becomes the active download target so the
-          // first sub's instant 100% doesn't peg it for the rest of the job.
-          const isFileBoundary = event.statusKey === STATUS_KEY.downloadingMedia || event.statusKey === STATUS_KEY.fetchingSubtitles;
-          // Postprocess phases (audio extract, video convert, embed metadata, move
-          // files) emit no `[download] N%` lines, so the progress throttle in
-          // DownloadEventBridge frequently drops the final 100% event and leaves
-          // the bar at 99.x. Snap to 100 once postprocess starts — the data
-          // download is finished by definition.
-          const isPostProcessPhase = event.statusKey === STATUS_KEY.extractingAudio || event.statusKey === STATUS_KEY.convertingVideo || event.statusKey === STATUS_KEY.embeddingMetadata || event.statusKey === STATUS_KEY.movingFiles;
-          updateQueueItem(set, item.id, {
-            lastStatus: { key: event.statusKey, params: event.params },
-            ...(isPhaseTransition ? { progressDetail: null } : {}),
-            ...(isFileBoundary ? { progressPercent: 0 } : {}),
-            ...(isPostProcessPhase ? { progressPercent: 100 } : {})
-          });
         }
       });
-
-      unbindProgress = window.appApi.events.onProgress((event) => {
-        const item = get().queue.find((i) => i.downloadJobId === event.jobId);
-        if (!item) return;
-
-        let formatter = progressFormatters.get(event.jobId);
-        if (!formatter) {
-          formatter = new ProgressFormatter();
-          progressFormatters.set(event.jobId, formatter);
-        }
-        const detail = formatter.update(event.line);
-        updateQueueItem(set, item.id, {
-          progressPercent: nextMonotonicPercent(item.progressPercent, event.percent),
-          ...(detail !== null ? { progressDetail: detail } : {})
-        });
+      unbindQueueRemoved = window.appApi.queue.events.onRemoved(({ itemId }) => {
+        set((state) => ({ queue: state.queue.filter((i) => i.id !== itemId) }));
       });
 
       // The warmup-progress listener stays bound for the lifetime of the
@@ -172,14 +134,7 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       set({ warmupRunning: true });
       const settingsPromise = window.appApi.settings.get();
       const warmUpPromise = window.appApi.app.warmUp();
-      const queuePromise = window.appApi.queue.load();
-
-      const [settingsResult, warmUpResult, queueResult] = await Promise.all([settingsPromise, warmUpPromise, queuePromise]);
-
-      const savedQueue = queueResult.ok ? queueResult.data : [];
-      if (!queueResult.ok) {
-        console.error('[queue] load failed — starting with empty queue', queueResult.error);
-      }
+      const [settingsResult, warmUpResult] = await Promise.all([settingsPromise, warmUpPromise]);
 
       if (settingsResult.ok) {
         const common = settingsResult.data.common ?? ({} as AppSettings['common']);
@@ -199,31 +154,13 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
           commonPaths: common.commonPaths,
           uiZoom: zoom,
           uiTheme: theme,
-          language: nextLanguage
+          language: nextLanguage,
+          drawerOpen: settingsResult.data.common?.drawerOpen ?? false
         });
       }
 
       const warmupDiagnostics = warmUpResult.ok ? warmUpResult.data.dependencies : null;
       const warmupBlocking = warmUpResult.ok ? warmUpResult.data.blockingFailures : [];
-
-      if (savedQueue.length > 0) {
-        type StoredItem = (typeof savedQueue)[number] & {
-          subtitleLanguages?: string[];
-          writeAutoSubs?: boolean;
-          subtitleMode?: SubtitleMode;
-          subtitleFormat?: SubtitleFormat;
-        };
-        const migratedQueue: QueueItem[] = (savedQueue as StoredItem[]).map((item) => ({
-          ...item,
-          subtitleLanguages: item.subtitleLanguages ?? [],
-          writeAutoSubs: item.writeAutoSubs ?? false,
-          subtitleMode: item.subtitleMode ?? DEFAULTS.subtitleMode,
-          subtitleFormat: item.subtitleFormat ?? DEFAULTS.subtitleFormat
-        }));
-        const restoredDrawerOpen = settingsResult.ok ? (settingsResult.data.common?.drawerOpen ?? false) : false;
-        set({ queue: migratedQueue, drawerOpen: restoredDrawerOpen });
-        await scheduler.notifyItemAdded();
-      }
 
       set({ initialized: true, initializing: false, warmupRunning: false, warmupDiagnostics, warmupBlocking });
     },

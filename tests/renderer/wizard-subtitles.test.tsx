@@ -84,8 +84,22 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}, probeResu
       onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
-      save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),
-      load: vi.fn().mockResolvedValue({ ok: true, data: [] })
+      cmd: {
+        add: vi.fn().mockResolvedValue({ ok: true, data: { ids: [] } }),
+        start: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        pause: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        resume: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        cancel: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        retry: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        clearCompleted: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        remove: vi.fn().mockResolvedValue({ ok: true, data: undefined })
+      },
+      events: {
+        onSnapshot: vi.fn().mockReturnValue(() => undefined),
+        onAdded: vi.fn().mockReturnValue(() => undefined),
+        onUpdated: vi.fn().mockReturnValue(() => undefined),
+        onRemoved: vi.fn().mockReturnValue(() => undefined)
+      }
     },
     updater: {
       onUpdateAvailable: vi.fn().mockReturnValue(() => undefined),
@@ -158,7 +172,7 @@ describe('Subtitle-only preset', () => {
 
     await useAppStore.getState().addToQueue();
 
-    const item = useAppStore.getState().queue[0];
+    const item = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0][0][0];
     expect(item.job.kind).toBe('subtitle-only');
     expect(item.job.kind === 'subtitle-only' ? item.job.subtitles.languages : []).toEqual(['en']);
   });
@@ -174,8 +188,8 @@ describe('Subtitle-only preset', () => {
 
     await useAppStore.getState().addAndDownloadImmediately();
 
-    expect(api.downloads.start).toHaveBeenCalledOnce();
-    const call = api.downloads.start.mock.calls[0][0];
+    expect(api.queue.cmd.add).toHaveBeenCalledOnce();
+    const call = api.queue.cmd.add.mock.calls[0][0][0];
     expect(call.job.kind).toBe('subtitle-only');
     expect(call.job.kind === 'subtitle-only' ? call.job.subtitles.languages : []).toEqual(['en']);
   });
@@ -298,7 +312,7 @@ describe('Wizard subtitle step — store behavior', () => {
 
     await useAppStore.getState().addToQueue();
 
-    const queue = useAppStore.getState().queue;
+    const queue = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? [];
     expect(queue).toHaveLength(1);
     expect(queue[0].job.subtitles?.languages).toEqual(['en', 'es']);
     expect(queue[0].job.subtitles?.writeAuto).toBe(false);
@@ -326,7 +340,7 @@ describe('Wizard subtitle step — store behavior', () => {
 
     await useAppStore.getState().addToQueue();
 
-    const queue = useAppStore.getState().queue;
+    const queue = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? [];
     expect(queue[0].job.subtitles?.writeAuto).toBe(true);
   });
 
@@ -352,7 +366,7 @@ describe('Wizard subtitle step — store behavior', () => {
 
     await useAppStore.getState().addAndDownloadImmediately();
 
-    const startCall = vi.mocked(window.appApi.downloads.start).mock.calls[0][0];
+    const startCall = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0][0][0];
     expect(startCall.job.subtitles?.languages).toEqual(['en']);
     expect(startCall.job.subtitles?.writeAuto).toBe(false);
   });
@@ -437,7 +451,7 @@ describe('Wizard subtitle step — store behavior', () => {
 
     await useAppStore.getState().addToQueue();
 
-    const item = useAppStore.getState().queue[0];
+    const item = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0][0][0];
     expect(item.job.subtitles?.mode).toBe('subfolder');
     expect(item.job.subtitles?.format).toBe('vtt');
   });
@@ -466,7 +480,7 @@ describe('Wizard subtitle step — store behavior', () => {
 
     await useAppStore.getState().addAndDownloadImmediately();
 
-    const startCall = vi.mocked(window.appApi.downloads.start).mock.calls[0][0];
+    const startCall = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0][0][0];
     expect(startCall.job.subtitles?.mode).toBe('embed');
     expect(startCall.job.subtitles?.format).toBe('ass');
   });

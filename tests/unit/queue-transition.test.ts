@@ -21,73 +21,85 @@ function makeItem(overrides: Partial<QueueItem> = {}): QueueItem {
     lastStatus: null,
     error: null,
     finishedAt: null,
-    downloadJobId: null,
     job: PREPARED,
     ...overrides
   };
 }
 
 describe('transition', () => {
-  it('started → status=downloading + clears error + records jobId', () => {
+  it('started → status=running + clears error + records lastJobId', () => {
     const start = makeItem({ status: 'pending', error: { kind: 'unknown', raw: 'prev' } });
-    const next = transition(start, { kind: 'started', downloadJobId: 'job-9' });
-    expect(next.status).toBe('downloading');
-    expect(next.downloadJobId).toBe('job-9');
+    const next = transition(start, { kind: 'started', lastJobId: 'job-9' });
+    expect(next.status).toBe('running');
+    expect(next.lastJobId).toBe('job-9');
     expect(next.error).toBeNull();
   });
 
   it('progress updates percent + detail without changing status', () => {
-    const start = makeItem({ status: 'downloading', progressPercent: 10 });
+    const start = makeItem({ status: 'running', progressPercent: 10 });
     const next = transition(start, { kind: 'progress', percent: 47, detail: '1.4 MiB/s' });
     expect(next.progressPercent).toBe(47);
     expect(next.progressDetail).toBe('1.4 MiB/s');
-    expect(next.status).toBe('downloading');
+    expect(next.status).toBe('running');
   });
 
-  it('paused → status=paused + clears progressDetail', () => {
-    const start = makeItem({ status: 'downloading', progressDetail: '1.4 MiB/s' });
-    const next = transition(start, { kind: 'paused' });
-    expect(next.status).toBe('paused');
+  it('paused-active → status=paused-active + clears progressDetail + records tempDir', () => {
+    const start = makeItem({ status: 'running', progressDetail: '1.4 MiB/s' });
+    const next = transition(start, { kind: 'paused-active', tempDir: '/tmp/.arroxy-temp/x' });
+    expect(next.status).toBe('paused-active');
+    expect(next.progressDetail).toBeNull();
+    expect(next.tempDir).toBe('/tmp/.arroxy-temp/x');
+  });
+
+  it('paused-held → status=paused-held + clears progressDetail', () => {
+    const start = makeItem({ status: 'pending' });
+    const next = transition(start, { kind: 'paused-held' });
+    expect(next.status).toBe('paused-held');
     expect(next.progressDetail).toBeNull();
   });
 
-  it('resumed → status=downloading + clears error', () => {
-    const start = makeItem({ status: 'paused', error: { kind: 'network', raw: 'fail' } });
+  it('resumed → status=running + clears error', () => {
+    const start = makeItem({ status: 'paused-active', error: { kind: 'network', raw: 'fail' } });
     const next = transition(start, { kind: 'resumed' });
-    expect(next.status).toBe('downloading');
+    expect(next.status).toBe('running');
     expect(next.error).toBeNull();
   });
 
-  it('failed → status=error + records error + clears jobId', () => {
-    const start = makeItem({ status: 'downloading', downloadJobId: 'job-9' });
+  it('failed → status=error + records error + clears lastJobId/tempDir', () => {
+    const start = makeItem({ status: 'running', lastJobId: 'job-9', tempDir: '/tmp/x' });
     const next = transition(start, { kind: 'failed', error: { kind: 'botBlock', raw: 'sign-in' } });
     expect(next.status).toBe('error');
     expect(next.error?.kind).toBe('botBlock');
-    expect(next.downloadJobId).toBeNull();
+    expect(next.lastJobId).toBeUndefined();
+    expect(next.tempDir).toBeUndefined();
   });
 
-  it('completed → status=done + percent=100 + finishedAt', () => {
-    const start = makeItem({ status: 'downloading', progressPercent: 99 });
+  it('completed → status=done + percent=100 + finishedAt + clears lastJobId/tempDir', () => {
+    const start = makeItem({ status: 'running', progressPercent: 99, lastJobId: 'job-9' });
     const finishedAt = '2026-05-09T12:00:00.000Z';
     const next = transition(start, { kind: 'completed', finishedAt });
     expect(next.status).toBe('done');
     expect(next.progressPercent).toBe(100);
     expect(next.finishedAt).toBe(finishedAt);
+    expect(next.lastJobId).toBeUndefined();
   });
 
-  it('cancelled → status=cancelled + clears jobId', () => {
-    const start = makeItem({ status: 'downloading', downloadJobId: 'job-9' });
+  it('cancelled → status=cancelled + clears lastJobId/tempDir', () => {
+    const start = makeItem({ status: 'running', lastJobId: 'job-9', tempDir: '/tmp/x' });
     const next = transition(start, { kind: 'cancelled' });
     expect(next.status).toBe('cancelled');
-    expect(next.downloadJobId).toBeNull();
+    expect(next.lastJobId).toBeUndefined();
+    expect(next.tempDir).toBeUndefined();
   });
 
-  it('retry-reset → status=pending + clears error/finishedAt', () => {
-    const start = makeItem({ status: 'error', error: { kind: 'unknown', raw: 'fail' }, finishedAt: 'before' });
+  it('retry-reset → status=pending + clears error/finishedAt/lastJobId/tempDir', () => {
+    const start = makeItem({ status: 'error', error: { kind: 'unknown', raw: 'fail' }, finishedAt: 'before', lastJobId: 'job-old', tempDir: '/tmp/old' });
     const next = transition(start, { kind: 'retry-reset' });
     expect(next.status).toBe('pending');
     expect(next.error).toBeNull();
     expect(next.finishedAt).toBeNull();
+    expect(next.lastJobId).toBeUndefined();
+    expect(next.tempDir).toBeUndefined();
   });
 });
 
@@ -111,7 +123,7 @@ describe('illegalTransition', () => {
   });
 
   it('allows normal progression on running items', () => {
-    const running = makeItem({ status: 'downloading' });
+    const running = makeItem({ status: 'running' });
     expect(illegalTransition(running, { kind: 'progress', percent: 50 })).toBeNull();
     expect(illegalTransition(running, { kind: 'completed', finishedAt: 'now' })).toBeNull();
   });

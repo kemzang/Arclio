@@ -480,8 +480,22 @@ if (!('appApi' in window)) {
     },
 
     queue: {
-      save: () => Promise.resolve({ ok: true, data: { saved: true } } as const),
-      load: () => Promise.resolve({ ok: true, data: [] } as const)
+      cmd: {
+        add: () => Promise.resolve({ ok: true, data: { ids: [] } } as const),
+        start: () => Promise.resolve({ ok: true, data: undefined } as const),
+        pause: () => Promise.resolve({ ok: true, data: undefined } as const),
+        resume: () => Promise.resolve({ ok: true, data: undefined } as const),
+        cancel: () => Promise.resolve({ ok: true, data: undefined } as const),
+        retry: () => Promise.resolve({ ok: true, data: undefined } as const),
+        clearCompleted: () => Promise.resolve({ ok: true, data: undefined } as const),
+        remove: () => Promise.resolve({ ok: true, data: undefined } as const)
+      },
+      events: {
+        onSnapshot: () => () => undefined,
+        onAdded: () => () => undefined,
+        onUpdated: () => () => undefined,
+        onRemoved: () => () => undefined
+      }
     },
 
     updater: {

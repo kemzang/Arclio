@@ -55,8 +55,22 @@ export interface AppApi {
     onWarmupProgress(listener: (event: WarmupProgressEvent) => void): () => void;
   };
   queue: {
-    save(items: QueueItem[]): Promise<Result<{ saved: true }>>;
-    load(): Promise<Result<QueueItem[]>>;
+    cmd: {
+      add(items: QueueItem[]): Promise<Result<{ ids: string[] }>>;
+      start(input: { itemId: string }): Promise<Result<void>>;
+      pause(input: { itemId: string }): Promise<Result<void>>;
+      resume(input: { itemId: string }): Promise<Result<void>>;
+      cancel(input: { itemId: string | null }): Promise<Result<void>>;
+      retry(input: { itemId: string }): Promise<Result<void>>;
+      clearCompleted(): Promise<Result<void>>;
+      remove(input: { itemId: string }): Promise<Result<void>>;
+    };
+    events: {
+      onSnapshot(listener: (items: QueueItem[]) => void): () => void;
+      onAdded(listener: (event: { items: QueueItem[]; atIdx: number }) => void): () => void;
+      onUpdated(listener: (event: { item: QueueItem }) => void): () => void;
+      onRemoved(listener: (event: { itemId: string }) => void): () => void;
+    };
   };
   updater: {
     onUpdateAvailable(listener: (info: UpdateAvailablePayload) => void): () => void;

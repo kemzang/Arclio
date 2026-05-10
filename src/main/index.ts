@@ -13,6 +13,7 @@ import { setupAnalytics, setAnalyticsEnabled, trackCrashDetectedOncePerSession, 
 import { detectInstallChannel } from '@main/installChannel.js';
 import { BinaryManager } from '@main/services/BinaryManager.js';
 import { DownloadService } from '@main/services/DownloadService.js';
+import { QueueService } from '@main/services/QueueService.js';
 import { ProbeService } from '@main/services/ProbeService.js';
 import { TokenService } from '@main/services/TokenService.js';
 import { YtDlp } from '@main/services/YtDlp.js';
@@ -168,6 +169,8 @@ if (hasSingleInstanceLock) {
     const ytDlp = new YtDlp(binaryManager, tokenService, settingsStore);
     const downloadService = new DownloadService(ytDlp, recentJobsStore, isMockBackend);
     const probeService = new ProbeService(ytDlp, isMockBackend);
+    const queueService = new QueueService(queueStore, downloadService);
+    await queueService.init();
 
     // Headless smoke mode — exercises PoT scrape + 3-attempt ladder against
     // real YouTube using production services, then exits. No window created.
@@ -310,7 +313,7 @@ if (hasSingleInstanceLock) {
       downloadService,
       probeService,
       settingsStore,
-      queueStore,
+      queueService,
       tokenService,
       languageRef,
       clipboardWatcher

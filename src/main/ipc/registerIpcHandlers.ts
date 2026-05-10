@@ -5,9 +5,10 @@ import type { ProbeService } from '@main/services/ProbeService.js';
 import type { BinaryManager } from '@main/services/BinaryManager.js';
 import type { TokenService } from '@main/services/TokenService.js';
 import type { SettingsStore } from '@main/stores/SettingsStore.js';
-import type { QueueStore } from '@main/stores/QueueStore.js';
+import type { QueueService } from '@main/services/QueueService.js';
 import type { ClipboardWatcher } from '@main/services/ClipboardWatcher.js';
 import { DownloadEventBridge } from '@main/services/DownloadEventBridge.js';
+import { QueueEventBridge } from '@main/services/QueueEventBridge.js';
 import { WarmupService } from '@main/services/WarmupService.js';
 import { registerAppHandlers } from './appHandlers.js';
 import { registerWindowHandlers } from './windowHandlers.js';
@@ -23,7 +24,7 @@ export interface IpcDependencies {
   downloadService: DownloadService;
   probeService: ProbeService;
   settingsStore: SettingsStore;
-  queueStore: QueueStore;
+  queueService: QueueService;
   binaryManager: BinaryManager;
   tokenService: TokenService;
   languageRef: { current: SupportedLang };
@@ -31,7 +32,7 @@ export interface IpcDependencies {
 }
 
 export function registerIpcHandlers(deps: IpcDependencies): void {
-  const { mainWindow, downloadService, probeService, settingsStore, queueStore, binaryManager, tokenService, languageRef, clipboardWatcher } = deps;
+  const { mainWindow, downloadService, probeService, settingsStore, queueService, binaryManager, tokenService, languageRef, clipboardWatcher } = deps;
 
   const warmupService = new WarmupService({ binaryManager, tokenService, window: mainWindow });
   registerAppHandlers({ warmupService, languageRef });
@@ -39,9 +40,10 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
   registerDownloadHandlers({ downloadService, probeService, settingsStore });
   registerSettingsHandlers({ settingsStore, clipboardWatcher });
   registerFileHandlers(mainWindow, binaryManager);
-  registerQueueHandlers(queueStore);
+  registerQueueHandlers(queueService);
   registerAnalyticsHandlers();
   registerDiagnosticsHandlers();
 
   new DownloadEventBridge(downloadService, mainWindow).attach();
+  new QueueEventBridge(queueService, mainWindow).attach();
 }
