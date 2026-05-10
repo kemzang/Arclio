@@ -3,8 +3,7 @@ const ru = {
     back: 'Назад',
     continue: 'Продолжить',
     retry: 'Повторить',
-    startOver: 'Начать заново',
-    loading: 'Загрузка…'
+    startOver: 'Начать заново'
   },
   app: {
     feedback: 'Обратная связь',
@@ -34,7 +33,6 @@ const ru = {
     greeting: 'Привет, с возвращением!',
     warmup: 'Arroxy запускается…',
     downloading: 'Загрузка {{binary}}…',
-    warning: 'Настройка не завершена — некоторые функции могут не работать',
     warmupFailedNoDiag: 'Настройка завершилась ошибкой. Открой журнал настройки для подробностей.'
   },
   repair: {
@@ -102,15 +100,13 @@ const ru = {
       noSelection: 'Выбери хотя бы одно видео, чтобы продолжить',
       loadingItems: 'Загрузка Playlist…',
       thumbnailAlt: 'Превью видео',
-      continue: 'Продолжить',
       durationUnknown: 'прямой эфир'
     },
     playlistPresets: {
       heading: 'Выбери качество для пакетной загрузки',
       subhead: 'Каждое видео независимо подбирает подходящий уровень качества — неоднородные плейлисты работают без сюрпризов.',
       itemCount_one: '{{count}} элемент',
-      itemCount_other: '{{count}} элементов',
-      continue: 'Продолжить'
+      itemCount_other: '{{count}} элементов'
     },
     mixedPrompt: {
       title: 'Эта ссылка — часть Playlist',
@@ -199,14 +195,10 @@ const ru = {
       }
     },
     subtitles: {
-      heading: 'Субтитры',
       autoBadge: 'Авто',
-      hint: 'Файлы будут сохранены рядом с видео',
       noLanguages: 'Для этого видео субтитры недоступны',
       skip: 'Пропустить',
       skipSubs: 'Пропустить для этого видео',
-      selectAll: 'Выбрать все',
-      deselectAll: 'Снять все',
       mascot: 'Ноль, один или несколько — решать тебе ✨',
       searchPlaceholder: 'Поиск языков…',
       noMatches: 'Языки не найдены',
@@ -282,8 +274,7 @@ const ru = {
         bodyDisabled: 'Cookies настроены, но отключены. Включи их и повтори, чтобы получить полный список, или смени сеть и повтори.',
         bodyEnabled: 'Даже с cookies YouTube ограничил этот запрос. Попробуй позже или смени сеть.',
         retryCta: 'Повторить',
-        enableRetryCta: 'Включить cookies и повторить',
-        openSettingsCta: 'Открыть расширенные настройки'
+        enableRetryCta: 'Включить cookies и повторить'
       },
       cookiesError: {
         heading: 'Возможная причина — cookies',
@@ -364,8 +355,6 @@ const ru = {
       addToQueueTooltip: 'Стартует, когда завершатся другие загрузки — на полной скорости',
       pullIt: 'Качаем! ↓',
       pullItTooltip: 'Запускается сразу — параллельно с другими активными загрузками',
-      playlistBatch_one: '{{count}} видео · {{title}}',
-      playlistBatch_other: '{{count}} видео · {{title}}',
       labelPlaylist: 'Плейлист',
       labelPreset: 'Пресет',
       labelItems: 'Видео',
@@ -373,9 +362,6 @@ const ru = {
       itemsValue_other: '{{count}} из {{total}} видео',
       itemsValueAudio_one: '{{count}} из {{total}} трека',
       itemsValueAudio_other: '{{count}} из {{total}} треков'
-    },
-    error: {
-      icon: 'Ошибка'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const ru = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Конвертировать в MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Только аудио',
     audioFallback: 'Аудио',
     audioOnlyDot: 'Только аудио · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

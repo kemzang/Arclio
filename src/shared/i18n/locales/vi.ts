@@ -3,8 +3,7 @@ const vi = {
     back: 'Quay lại',
     continue: 'Tiếp tục',
     retry: 'Thử lại',
-    startOver: 'Bắt đầu lại',
-    loading: 'Đang tải…'
+    startOver: 'Bắt đầu lại'
   },
   app: {
     feedback: 'Phản hồi',
@@ -34,7 +33,6 @@ const vi = {
     greeting: 'Xin chào, chào mừng bạn quay lại!',
     warmup: 'Arroxy đang khởi động…',
     downloading: 'Đang tải xuống {{binary}}…',
-    warning: 'Thiết lập chưa hoàn tất — một số tính năng có thể không hoạt động',
     warmupFailedNoDiag: 'Thiết lập thất bại. Mở nhật ký thiết lập để xem chi tiết.'
   },
   repair: {
@@ -102,15 +100,13 @@ const vi = {
       noSelection: 'Chọn ít nhất một video để tiếp tục',
       loadingItems: 'Đang tải Playlist…',
       thumbnailAlt: 'Hình thu nhỏ video',
-      continue: 'Tiếp tục',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Chọn chất lượng cho lô',
       subhead: 'Mỗi video tự xử lý cấp độ đã chọn một cách độc lập — danh sách phát không đồng nhất hoạt động mượt mà.',
       itemCount_one: '{{count}} mục',
-      itemCount_other: '{{count}} mục',
-      continue: 'Tiếp tục'
+      itemCount_other: '{{count}} mục'
     },
     mixedPrompt: {
       title: 'Liên kết này có Playlist',
@@ -199,14 +195,10 @@ const vi = {
       }
     },
     subtitles: {
-      heading: 'Phụ đề',
       autoBadge: 'Tự động',
-      hint: 'Các tệp phụ đề sẽ được lưu cạnh video',
       noLanguages: 'Không có phụ đề nào cho video này',
       skip: 'Bỏ qua',
       skipSubs: 'Bỏ qua cho video này',
-      selectAll: 'Chọn tất cả',
-      deselectAll: 'Bỏ chọn tất cả',
       mascot: 'Chọn không, một hay nhiều — hoàn toàn tùy bạn ✨',
       searchPlaceholder: 'Tìm ngôn ngữ…',
       noMatches: 'Không tìm thấy ngôn ngữ nào',
@@ -282,8 +274,7 @@ const vi = {
         bodyDisabled: 'Cookies đã được cấu hình nhưng đang tắt. Bật lên và thử lại để có danh sách đầy đủ, hoặc đổi mạng và thử lại.',
         bodyEnabled: 'Ngay cả với cookies, YouTube vẫn giới hạn lần kiểm tra này. Hãy thử lại sau hoặc đổi mạng.',
         retryCta: 'Thử lại',
-        enableRetryCta: 'Bật cookies và thử lại',
-        openSettingsCta: 'Mở cài đặt nâng cao'
+        enableRetryCta: 'Bật cookies và thử lại'
       },
       cookiesError: {
         heading: 'Cookies có thể là nguyên nhân',
@@ -364,8 +355,6 @@ const vi = {
       addToQueueTooltip: 'Bắt đầu khi các tải xuống khác hoàn tất — sử dụng toàn bộ băng thông',
       pullIt: 'Tải về! ↓',
       pullItTooltip: 'Bắt đầu ngay lập tức — chạy song song với các tải xuống đang hoạt động',
-      playlistBatch_one: '{{count}} đoạn video · {{title}}',
-      playlistBatch_other: '{{count}} đoạn video · {{title}}',
       labelPlaylist: 'Danh sách phát',
       labelPreset: 'Cài đặt sẵn',
       labelItems: 'Mục',
@@ -373,9 +362,6 @@ const vi = {
       itemsValue_other: '{{count}} trong {{total}} video',
       itemsValueAudio_one: '{{count}} trong {{total}} bản nhạc',
       itemsValueAudio_other: '{{count}} trong {{total}} bản nhạc'
-    },
-    error: {
-      icon: 'Lỗi'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const vi = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Chuyển đổi sang MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Chỉ âm thanh',
     audioFallback: 'Âm thanh',
     audioOnlyDot: 'Chỉ âm thanh · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

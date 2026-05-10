@@ -3,8 +3,7 @@ const ar = {
     back: 'رجوع',
     continue: 'متابعة',
     retry: 'إعادة المحاولة',
-    startOver: 'البدء من جديد',
-    loading: 'جارٍ التحميل…'
+    startOver: 'البدء من جديد'
   },
   app: {
     feedback: 'ملاحظات',
@@ -34,7 +33,6 @@ const ar = {
     greeting: 'مرحباً، أهلاً بعودتك!',
     warmup: 'Arroxy يستعد…',
     downloading: 'جارٍ تنزيل {{binary}}…',
-    warning: 'الإعداد غير مكتمل — قد لا تعمل بعض الميزات',
     warmupFailedNoDiag: 'فشل الإعداد. افتح سجل الإعداد للاطلاع على التفاصيل.'
   },
   repair: {
@@ -102,15 +100,13 @@ const ar = {
       noSelection: 'حدد فيديو واحداً على الأقل للمتابعة',
       loadingItems: 'جارٍ جلب القائمة…',
       thumbnailAlt: 'صورة مصغرة للفيديو',
-      continue: 'متابعة',
       durationUnknown: 'مباشر'
     },
     playlistPresets: {
       heading: 'اختر الجودة للدفعة',
       subhead: 'يحل كل فيديو المستوى المختار بشكل مستقل — قوائم التشغيل غير المتجانسة تعمل بدون مفاجآت.',
       itemCount_one: '{{count}} عنصر',
-      itemCount_other: '{{count}} عناصر',
-      continue: 'متابعة'
+      itemCount_other: '{{count}} عناصر'
     },
     mixedPrompt: {
       title: 'هذا الرابط يحتوي على Playlist',
@@ -199,14 +195,10 @@ const ar = {
       }
     },
     subtitles: {
-      heading: 'الترجمات',
       autoBadge: 'تلقائي',
-      hint: 'ستُحفظ الملفات الجانبية بجانب الفيديو',
       noLanguages: 'لا توجد ترجمات متاحة لهذا الفيديو',
       skip: 'تخطي',
       skipSubs: 'تخطي لهذا الفيديو',
-      selectAll: 'تحديد الكل',
-      deselectAll: 'إلغاء تحديد الكل',
       mascot: 'اختر صفراً أو واحداً أو أكثر — الأمر يعود لك تماماً ✨',
       searchPlaceholder: 'البحث عن لغات…',
       noMatches: 'لا توجد لغات مطابقة',
@@ -282,8 +274,7 @@ const ar = {
         bodyDisabled: 'الكوكيز مضبوطة لكنها معطّلة. فعّلها وأعد المحاولة للحصول على القائمة الكاملة، أو غيّر الشبكة وأعد المحاولة.',
         bodyEnabled: 'حتى مع الكوكيز، قيّد YouTube هذا الفحص. حاول لاحقاً أو بدّل الشبكة.',
         retryCta: 'إعادة المحاولة',
-        enableRetryCta: 'تفعيل الكوكيز وإعادة المحاولة',
-        openSettingsCta: 'فتح الإعدادات المتقدمة'
+        enableRetryCta: 'تفعيل الكوكيز وإعادة المحاولة'
       },
       cookiesError: {
         heading: 'ربما تكون الكوكيز هي السبب',
@@ -364,8 +355,6 @@ const ar = {
       addToQueueTooltip: 'يبدأ عند انتهاء التنزيلات الأخرى — يحصل على كامل عرض النطاق',
       pullIt: 'اسحبه! ↓',
       pullItTooltip: 'يبدأ فوراً — يعمل جنباً إلى جنب مع التنزيلات النشطة الأخرى',
-      playlistBatch_one: '{{count}} فيديو · {{title}}',
-      playlistBatch_other: '{{count}} مقاطع فيديو · {{title}}',
       labelPlaylist: 'قائمة التشغيل',
       labelPreset: 'الإعداد المسبق',
       labelItems: 'العناصر',
@@ -373,9 +362,6 @@ const ar = {
       itemsValue_other: '{{count}} من {{total}} مقاطع فيديو',
       itemsValueAudio_one: '{{count}} من {{total}} مقطع صوتي',
       itemsValueAudio_other: '{{count}} من {{total}} مقاطع صوتية'
-    },
-    error: {
-      icon: 'خطأ'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const ar = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'تحويل إلى MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'صوت فقط',
     audioFallback: 'صوت',
     audioOnlyDot: 'صوت فقط · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

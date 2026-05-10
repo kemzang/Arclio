@@ -3,8 +3,7 @@ const my = {
     back: 'နောက်သို့',
     continue: 'ဆက်လက်သွားမည်',
     retry: 'ထပ်မံကြိုးစားမည်',
-    startOver: 'အစကနေပြန်စမည်',
-    loading: 'ဖွင့်နေသည်…'
+    startOver: 'အစကနေပြန်စမည်'
   },
   app: {
     feedback: 'အကြံပြုချက်',
@@ -34,7 +33,6 @@ const my = {
     greeting: 'ဟေး၊ ကြိုဆိုပါသည်!',
     warmup: 'Arroxy ပြင်ဆင်နေသည်…',
     downloading: '{{binary}} ဒေါင်းလုဒ်လုပ်နေသည်…',
-    warning: 'တပ်ဆင်မှုမပြည့်စုံသေးပါ — အချို့လုပ်ဆောင်ချက်များ အလုပ်မလုပ်နိုင်ပါ',
     warmupFailedNoDiag: 'တပ်ဆင်မှုမအောင်မြင်ပါ။ အသေးစိတ်ကြည့်ရန် setup log ဖွင့်ပါ။'
   },
   repair: {
@@ -102,15 +100,13 @@ const my = {
       noSelection: 'ဆက်လက်ရန် ဗီဒီယိုတစ်ခုအနည်းဆုံးရွေးပါ',
       loadingItems: 'Playlist ရယူနေသည်…',
       thumbnailAlt: 'ဗီဒီယို thumbnail',
-      continue: 'ဆက်လက်သွားမည်',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Batch အတွက် အရည်အသွေးရွေးပါ',
       subhead: 'ဗီဒီယိုတစ်ခုချင်းစီသည် ရွေးချယ်ထားသော tier အတိုင်း သီးခြားဖြေရှင်းသည် — မတူညီသော playlist များ အဆင်မပြေမှုမရှိဘဲ အလုပ်လုပ်သည်။',
       itemCount_one: '{{count}} ခု',
-      itemCount_other: '{{count}} ခု',
-      continue: 'ဆက်လက်သွားမည်'
+      itemCount_other: '{{count}} ခု'
     },
     mixedPrompt: {
       title: 'ဤလင့်ခ်တွင် Playlist ပါဝင်သည်',
@@ -199,14 +195,10 @@ const my = {
       }
     },
     subtitles: {
-      heading: 'စာတန်းထိုး',
       autoBadge: 'အလိုအလျောက်',
-      hint: 'Sidecar ဖိုင်များကို ဗီဒီယိုနဘေးတွင် သိမ်းမည်',
       noLanguages: 'ဤဗီဒီယိုအတွက် စာတန်းထိုးမရှိပါ',
       skip: 'ကျော်သွားမည်',
       skipSubs: 'ဤဗီဒီယိုအတွက် ကျော်သွားမည်',
-      selectAll: 'အားလုံးရွေးမည်',
-      deselectAll: 'အားလုံးဖြုတ်မည်',
       mascot: 'သုည၊ တစ်ခု သို့ မည်မျှမဆိုရွေးနိုင်သည် — သင့်ဆန္ဒအတိုင်း ✨',
       searchPlaceholder: 'ဘာသာစကားရှာဖွေမည်…',
       noMatches: 'ကိုက်ညီသောဘာသာစကားမရှိပါ',
@@ -282,8 +274,7 @@ const my = {
         bodyDisabled: 'Cookies တပ်ဆင်ထားသော်လည်း ပိတ်ထားသည်။ ပြည့်စုံသောစာရင်းရရှိရန် ဖွင့်ပြီး ထပ်ကြိုးစားပါ၊ သို့မဟုတ် network ပြောင်းပြီး ထပ်ကြိုးစားပါ။',
         bodyEnabled: 'Cookies ပါသော်လည်း YouTube မှ ဤစစ်ဆေးမှုကို ကန့်သတ်ပြီ။ နောက်မှ ထပ်ကြိုးစားပါ သို့မဟုတ် network ပြောင်းပါ။',
         retryCta: 'ထပ်ကြိုးစားမည်',
-        enableRetryCta: 'Cookies ဖွင့်ပြီး ထပ်ကြိုးစားမည်',
-        openSettingsCta: 'အဆင့်မြင့်ဆက်တင် ဖွင့်မည်'
+        enableRetryCta: 'Cookies ဖွင့်ပြီး ထပ်ကြိုးစားမည်'
       },
       cookiesError: {
         heading: 'Cookies သည် အကြောင်းရင်းဖြစ်နိုင်သည်',
@@ -364,8 +355,6 @@ const my = {
       addToQueueTooltip: 'အခြားဒေါင်းလုဒ်များပြီးဆုံးလျှင်စတင်မည် — အပြည့်အဝ bandwidth ရမည်',
       pullIt: 'ဆွဲထုတ်မည်! ↓',
       pullItTooltip: 'ချက်ချင်းစတင်မည် — အခြားဒေါင်းလုဒ်များနှင့်အတူ အပြိုင်လုပ်မည်',
-      playlistBatch_one: '{{count}} ဗီဒီယို · {{title}}',
-      playlistBatch_other: '{{count}} ဗီဒီယိုများ · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Preset',
       labelItems: 'အကြောင်းအရာ',
@@ -373,9 +362,6 @@ const my = {
       itemsValue_other: '{{total}} ခုမှ {{count}} ဗီဒီယိုများ',
       itemsValueAudio_one: '{{total}} ခုမှ {{count}} သီချင်း',
       itemsValueAudio_other: '{{total}} ခုမှ {{count}} သီချင်းများ'
-    },
-    error: {
-      icon: 'အမှား'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const my = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps သို့ ပြောင်းမည်' }
   },
   formatLabel: {
-    audioOnly: 'အသံသာ',
     audioFallback: 'အသံ',
     audioOnlyDot: 'အသံသာ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

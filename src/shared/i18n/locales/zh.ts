@@ -3,8 +3,7 @@ const zh = {
     back: '返回',
     continue: '继续',
     retry: '重试',
-    startOver: '重新开始',
-    loading: '加载中…'
+    startOver: '重新开始'
   },
   app: {
     feedback: '反馈',
@@ -34,7 +33,6 @@ const zh = {
     greeting: '嘿,欢迎回来!',
     warmup: 'Arroxy 正在启动…',
     downloading: '正在下载 {{binary}}…',
-    warning: '初始化未完成 — 部分功能可能无法使用',
     warmupFailedNoDiag: '初始化失败。打开设置日志查看详情。'
   },
   repair: {
@@ -102,15 +100,13 @@ const zh = {
       noSelection: '请至少选择一个视频以继续',
       loadingItems: '正在获取 Playlist…',
       thumbnailAlt: '视频缩略图',
-      continue: '继续',
       durationUnknown: '直播'
     },
     playlistPresets: {
       heading: '选择批量下载画质',
       subhead: '每个视频独立匹配所选画质档位——混合内容的播放列表也能正常处理，无意外。',
       itemCount_one: '{{count}} 项',
-      itemCount_other: '{{count}} 项',
-      continue: '继续'
+      itemCount_other: '{{count}} 项'
     },
     mixedPrompt: {
       title: '此链接包含 Playlist',
@@ -199,14 +195,10 @@ const zh = {
       }
     },
     subtitles: {
-      heading: '字幕',
       autoBadge: '自动',
-      hint: '字幕文件将保存在视频旁边',
       noLanguages: '该视频没有字幕',
       skip: '跳过',
       skipSubs: '本视频跳过',
-      selectAll: '全选',
-      deselectAll: '取消全选',
       mascot: '选零个、一个或多个 — 完全由你决定 ✨',
       searchPlaceholder: '搜索语言…',
       noMatches: '没有匹配的语言',
@@ -282,8 +274,7 @@ const zh = {
         bodyDisabled: 'Cookies 已配置但未启用。启用后重试可获取完整列表，或更换网络后重试。',
         bodyEnabled: '即使使用了 cookies，YouTube 仍然限制了本次探测。请稍后重试或更换网络。',
         retryCta: '重试',
-        enableRetryCta: '启用 cookies 并重试',
-        openSettingsCta: '打开高级设置'
+        enableRetryCta: '启用 cookies 并重试'
       },
       cookiesError: {
         heading: 'Cookies 可能是原因所在',
@@ -364,8 +355,6 @@ const zh = {
       addToQueueTooltip: '其他下载完成后开始 — 享受全部带宽',
       pullIt: '开始下载! ↓',
       pullItTooltip: '立即开始 — 与其他活动下载并行运行',
-      playlistBatch_one: '{{count}} 个视频 · {{title}}',
-      playlistBatch_other: '{{count}} 个视频 · {{title}}',
       labelPlaylist: '播放列表',
       labelPreset: '预设',
       labelItems: '项目',
@@ -373,9 +362,6 @@ const zh = {
       itemsValue_other: '{{total}} 个视频中的 {{count}} 个',
       itemsValueAudio_one: '{{total}} 首曲目中的 {{count}} 首',
       itemsValueAudio_other: '{{total}} 首曲目中的 {{count}} 首'
-    },
-    error: {
-      icon: '错误'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const zh = {
     'audio-mp3': { label: 'Audio (MP3)', desc: '转换为 MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: '仅音频',
     audioFallback: '音频',
     audioOnlyDot: '仅音频 · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

@@ -3,8 +3,7 @@ const en = {
     back: 'Back',
     continue: 'Continue',
     retry: 'Retry',
-    startOver: 'Start over',
-    loading: 'Loading…'
+    startOver: 'Start over'
   },
   app: {
     feedback: 'Feedback',
@@ -34,7 +33,6 @@ const en = {
     greeting: 'Hey, welcome back!',
     warmup: 'Arroxy is warming up…',
     downloading: 'Downloading {{binary}}…',
-    warning: 'Setup incomplete — some features may not work',
     warmupFailedNoDiag: 'Setup failed. Open the setup log for details.'
   },
   repair: {
@@ -90,8 +88,7 @@ const en = {
       heading: 'Pick quality for the batch',
       subhead: 'Each video resolves the chosen tier independently — heterogeneous playlists work without surprises.',
       itemCount_one: '{{count}} item',
-      itemCount_other: '{{count}} items',
-      continue: 'Continue'
+      itemCount_other: '{{count}} items'
     },
     playlist: {
       heading: 'Playlist items',
@@ -109,7 +106,6 @@ const en = {
       noSelection: 'Select at least one video to continue',
       loadingItems: 'Fetching playlist…',
       thumbnailAlt: 'Video thumbnail',
-      continue: 'Continue',
       durationUnknown: 'live'
     },
     mixedPrompt: {
@@ -198,14 +194,10 @@ const en = {
       }
     },
     subtitles: {
-      heading: 'Subtitles',
       autoBadge: 'Auto',
-      hint: 'Sidecar files will be saved next to the video',
       noLanguages: 'No subtitles available for this video',
       skip: 'Skip',
       skipSubs: 'Skip for this video',
-      selectAll: 'Select all',
-      deselectAll: 'Deselect all',
       mascot: 'Pick zero, one, or many — totally up to you ✨',
       searchPlaceholder: 'Search languages…',
       noMatches: 'No languages match',
@@ -281,8 +273,7 @@ const en = {
         bodyDisabled: 'Cookies are configured but turned off. Enable them and retry to get the full list, or change network and retry.',
         bodyEnabled: 'Even with cookies, YouTube limited this probe. Try again later or switch network.',
         retryCta: 'Retry',
-        enableRetryCta: 'Enable cookies and retry',
-        openSettingsCta: 'Open advanced settings'
+        enableRetryCta: 'Enable cookies and retry'
       },
       cookiesError: {
         heading: 'Cookies might be the cause',
@@ -358,13 +349,13 @@ const en = {
       labelSize: 'Size',
       sizeUnknown: 'Unknown',
       nothingToDownload: 'Subtitles only preset is active but no subtitle language is selected — nothing will be downloaded.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed skipped — output container does not support it.',
+      subtitleEmbedAudioOnly: 'Subtitle embed changed to sidecar — audio tracks do not support embedded subtitle streams.',
       audioOnly: 'Audio only',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Starts when other downloads finish — gets full bandwidth',
       pullIt: 'Pull it! ↓',
       pullItTooltip: 'Starts immediately — runs alongside other active downloads',
-      playlistBatch_one: '{{count}} video · {{title}}',
-      playlistBatch_other: '{{count}} videos · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Preset',
       labelItems: 'Items',
@@ -372,9 +363,6 @@ const en = {
       itemsValue_other: '{{count}} of {{total}} videos',
       itemsValueAudio_one: '{{count}} of {{total}} track',
       itemsValueAudio_other: '{{count}} of {{total}} tracks'
-    },
-    error: {
-      icon: 'Error'
     }
   },
   videoCard: {
@@ -492,7 +480,6 @@ const en = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Convert to MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Audio only',
     audioFallback: 'Audio',
     audioOnlyDot: 'Audio only · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

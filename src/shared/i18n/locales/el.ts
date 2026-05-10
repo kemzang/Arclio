@@ -3,8 +3,7 @@ const el = {
     back: 'Πίσω',
     continue: 'Συνέχεια',
     retry: 'Επανάληψη',
-    startOver: 'Επανεκκίνηση',
-    loading: 'Φόρτωση…'
+    startOver: 'Επανεκκίνηση'
   },
   app: {
     feedback: 'Σχόλια',
@@ -34,7 +33,6 @@ const el = {
     greeting: 'Καλώς ήρθες πάλι!',
     warmup: 'Το Arroxy ξεκινά…',
     downloading: 'Λήψη {{binary}}…',
-    warning: 'Η ρύθμιση δεν ολοκληρώθηκε — ορισμένες λειτουργίες μπορεί να μην λειτουργούν',
     warmupFailedNoDiag: 'Η ρύθμιση απέτυχε. Άνοιξε το αρχείο καταγραφής ρύθμισης για λεπτομέρειες.'
   },
   repair: {
@@ -102,15 +100,13 @@ const el = {
       noSelection: 'Επέλεξε τουλάχιστον ένα βίντεο για να συνεχίσεις',
       loadingItems: 'Φόρτωση playlist…',
       thumbnailAlt: 'Μικρογραφία βίντεο',
-      continue: 'Συνέχεια',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Επιλογή ποιότητας για την ομαδική λήψη',
       subhead: 'Κάθε βίντεο επιλύει το επιλεγμένο επίπεδο ανεξάρτητα — οι ανομοιογενείς playlist λειτουργούν χωρίς εκπλήξεις.',
       itemCount_one: '{{count}} στοιχείο',
-      itemCount_other: '{{count}} στοιχεία',
-      continue: 'Συνέχεια'
+      itemCount_other: '{{count}} στοιχεία'
     },
     mixedPrompt: {
       title: 'Αυτός ο σύνδεσμος έχει playlist',
@@ -199,14 +195,10 @@ const el = {
       }
     },
     subtitles: {
-      heading: 'Υπότιτλοι',
       autoBadge: 'Αυτόματο',
-      hint: 'Τα αρχεία sidecar θα αποθηκευτούν δίπλα στο βίντεο',
       noLanguages: 'Δεν υπάρχουν υπότιτλοι για αυτό το βίντεο',
       skip: 'Παράλειψη',
       skipSubs: 'Παράλειψη για αυτό το βίντεο',
-      selectAll: 'Επιλογή όλων',
-      deselectAll: 'Αποεπιλογή όλων',
       mascot: 'Επέλεξε μηδέν, έναν ή πολλούς — εξαρτάται από σένα ✨',
       searchPlaceholder: 'Αναζήτηση γλωσσών…',
       noMatches: 'Δεν βρέθηκαν γλώσσες',
@@ -282,8 +274,7 @@ const el = {
         bodyDisabled: 'Τα cookies είναι ρυθμισμένα αλλά απενεργοποιημένα. Ενεργοποίησέ τα και δοκίμασε ξανά για πλήρη λίστα, ή άλλαξε δίκτυο.',
         bodyEnabled: 'Ακόμα και με cookies, το YouTube περιόρισε αυτή την ανίχνευση. Δοκίμασε αργότερα ή άλλαξε δίκτυο.',
         retryCta: 'Επανάληψη',
-        enableRetryCta: 'Ενεργοποίηση cookies και επανάληψη',
-        openSettingsCta: 'Άνοιγμα ρυθμίσεων για προχωρημένους'
+        enableRetryCta: 'Ενεργοποίηση cookies και επανάληψη'
       },
       cookiesError: {
         heading: 'Τα cookies μπορεί να φταίνε',
@@ -364,8 +355,6 @@ const el = {
       addToQueueTooltip: 'Ξεκινά όταν ολοκληρωθούν άλλες λήψεις — αποκτά πλήρες εύρος ζώνης',
       pullIt: 'Κατέβασέ το! ↓',
       pullItTooltip: 'Ξεκινά αμέσως — εκτελείται παράλληλα με άλλες ενεργές λήψεις',
-      playlistBatch_one: '{{count}} βίντεο · {{title}}',
-      playlistBatch_other: '{{count}} βίντεο · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Προεπιλογή',
       labelItems: 'Στοιχεία',
@@ -373,9 +362,6 @@ const el = {
       itemsValue_other: '{{count}} από {{total}} βίντεο',
       itemsValueAudio_one: '{{count}} από {{total}} κομμάτι',
       itemsValueAudio_other: '{{count}} από {{total}} κομμάτια'
-    },
-    error: {
-      icon: 'Σφάλμα'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const el = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Μετατροπή σε MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Μόνο ήχος',
     audioFallback: 'Ήχος',
     audioOnlyDot: 'Μόνο ήχος · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

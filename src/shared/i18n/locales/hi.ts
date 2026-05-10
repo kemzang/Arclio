@@ -3,8 +3,7 @@ const hi = {
     back: 'वापस',
     continue: 'जारी रखें',
     retry: 'फिर से कोशिश करें',
-    startOver: 'फिर से शुरू करें',
-    loading: 'लोड हो रहा है…'
+    startOver: 'फिर से शुरू करें'
   },
   app: {
     feedback: 'प्रतिक्रिया',
@@ -34,7 +33,6 @@ const hi = {
     greeting: 'अरे, फिर से स्वागत है!',
     warmup: 'Arroxy तैयार हो रहा है…',
     downloading: '{{binary}} डाउनलोड हो रहा है…',
-    warning: 'सेटअप अधूरा है — कुछ सुविधाएँ काम नहीं कर सकतीं',
     warmupFailedNoDiag: 'सेटअप विफल हो गया। विवरण के लिए सेटअप लॉग खोलें।'
   },
   repair: {
@@ -102,15 +100,13 @@ const hi = {
       noSelection: 'जारी रखने के लिए कम से कम एक वीडियो चुनें',
       loadingItems: 'Playlist लाया जा रहा है…',
       thumbnailAlt: 'वीडियो थंबनेल',
-      continue: 'जारी रखें',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'बैच के लिए गुणवत्ता चुनें',
       subhead: 'हर वीडियो चुनी गई श्रेणी के अनुसार स्वतंत्र रूप से रेज़ॉल्व होता है — मिश्रित Playlist बिना किसी परेशानी के काम करती है।',
       itemCount_one: '{{count}} आइटम',
-      itemCount_other: '{{count}} आइटम',
-      continue: 'जारी रखें'
+      itemCount_other: '{{count}} आइटम'
     },
     mixedPrompt: {
       title: 'इस लिंक में एक Playlist है',
@@ -199,14 +195,10 @@ const hi = {
       }
     },
     subtitles: {
-      heading: 'उपशीर्षक',
       autoBadge: 'स्वतः',
-      hint: 'फ़ाइलें वीडियो के पास ही सहेजी जाएंगी',
       noLanguages: 'इस वीडियो के लिए कोई उपशीर्षक उपलब्ध नहीं है',
       skip: 'छोड़ें',
       skipSubs: 'इस वीडियो के लिए छोड़ें',
-      selectAll: 'सभी चुनें',
-      deselectAll: 'सभी हटाएं',
       mascot: 'शून्य, एक या कई — पूरी तरह आप पर निर्भर है ✨',
       searchPlaceholder: 'भाषाएँ खोजें…',
       noMatches: 'कोई भाषा नहीं मिली',
@@ -282,8 +274,7 @@ const hi = {
         bodyDisabled: 'कुकी कॉन्फ़िगर हैं लेकिन बंद हैं। पूरी सूची पाने के लिए उन्हें चालू करके पुनः प्रयास करें, या नेटवर्क बदलकर पुनः प्रयास करें।',
         bodyEnabled: 'कुकी के साथ भी YouTube ने इस जाँच को सीमित किया। बाद में पुनः प्रयास करें या नेटवर्क बदलें।',
         retryCta: 'पुनः प्रयास',
-        enableRetryCta: 'कुकी चालू करके पुनः प्रयास करें',
-        openSettingsCta: 'उन्नत सेटिंग्स खोलें'
+        enableRetryCta: 'कुकी चालू करके पुनः प्रयास करें'
       },
       cookiesError: {
         heading: 'कुकी इसकी वजह हो सकती है',
@@ -364,8 +355,6 @@ const hi = {
       addToQueueTooltip: 'दूसरी डाउनलोड पूरी होने पर शुरू होगा — पूरी बैंडविड्थ मिलेगी',
       pullIt: 'खींच लो! ↓',
       pullItTooltip: 'तुरंत शुरू — बाक़ी सक्रिय डाउनलोड के साथ-साथ चलेगा',
-      playlistBatch_one: '{{count}} वीडियो · {{title}}',
-      playlistBatch_other: '{{count}} वीडियो · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'प्रीसेट',
       labelItems: 'आइटम',
@@ -373,9 +362,6 @@ const hi = {
       itemsValue_other: '{{total}} में से {{count}} वीडियो',
       itemsValueAudio_one: '{{total}} में से {{count}} ट्रैक',
       itemsValueAudio_other: '{{total}} में से {{count}} ट्रैक'
-    },
-    error: {
-      icon: 'त्रुटि'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const hi = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps में कनवर्ट करें' }
   },
   formatLabel: {
-    audioOnly: 'सिर्फ़ ऑडियो',
     audioFallback: 'ऑडियो',
     audioOnlyDot: 'सिर्फ़ ऑडियो · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

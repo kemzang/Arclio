@@ -3,8 +3,7 @@ const bn = {
     back: 'পেছনে',
     continue: 'চালিয়ে যান',
     retry: 'আবার চেষ্টা করুন',
-    startOver: 'নতুন করে শুরু করুন',
-    loading: 'লোড হচ্ছে…'
+    startOver: 'নতুন করে শুরু করুন'
   },
   app: {
     feedback: 'মতামত',
@@ -34,7 +33,6 @@ const bn = {
     greeting: 'স্বাগতম, আবার এলেন!',
     warmup: 'Arroxy প্রস্তুত হচ্ছে…',
     downloading: '{{binary}} ডাউনলোড হচ্ছে…',
-    warning: 'সেটআপ অসম্পূর্ণ — কিছু ফিচার কাজ নাও করতে পারে',
     warmupFailedNoDiag: 'সেটআপ ব্যর্থ হয়েছে। বিস্তারিত জানতে সেটআপ লগ খুলুন।'
   },
   repair: {
@@ -102,15 +100,13 @@ const bn = {
       noSelection: 'চালিয়ে যেতে কমপক্ষে একটি ভিডিও নির্বাচন করুন',
       loadingItems: 'Playlist আনা হচ্ছে…',
       thumbnailAlt: 'ভিডিও থাম্বনেইল',
-      continue: 'চালিয়ে যান',
       durationUnknown: 'লাইভ'
     },
     playlistPresets: {
       heading: 'ব্যাচের জন্য মান বেছে নিন',
       subhead: 'প্রতিটি ভিডিও স্বাধীনভাবে বেছে নেওয়া স্তর অনুযায়ী রেজোলিউশন করে — বৈচিত্র্যময় playlist অবাক করা ছাড়াই কাজ করে।',
       itemCount_one: '{{count}}টি আইটেম',
-      itemCount_other: '{{count}}টি আইটেম',
-      continue: 'চালিয়ে যান'
+      itemCount_other: '{{count}}টি আইটেম'
     },
     mixedPrompt: {
       title: 'এই লিংকে একটি Playlist আছে',
@@ -199,14 +195,10 @@ const bn = {
       }
     },
     subtitles: {
-      heading: 'সাবটাইটেল',
       autoBadge: 'অটো',
-      hint: 'সাইডকার ফাইল ভিডিওর পাশে সেভ হবে',
       noLanguages: 'এই ভিডিওর জন্য কোনো সাবটাইটেল নেই',
       skip: 'বাদ দিন',
       skipSubs: 'এই ভিডিওর জন্য বাদ দিন',
-      selectAll: 'সব নির্বাচন করুন',
-      deselectAll: 'সব বাতিল করুন',
       mascot: 'শূন্য, একটি বা অনেকগুলো বেছে নিন — সম্পূর্ণ আপনার উপর ✨',
       searchPlaceholder: 'ভাষা খুঁজুন…',
       noMatches: 'কোনো ভাষা মেলেনি',
@@ -282,8 +274,7 @@ const bn = {
         bodyDisabled: 'কুকিজ কনফিগার করা আছে কিন্তু বন্ধ। সম্পূর্ণ তালিকা পেতে চালু করে আবার চেষ্টা করুন, অথবা নেটওয়ার্ক পরিবর্তন করে আবার চেষ্টা করুন।',
         bodyEnabled: 'কুকিজ থাকলেও YouTube এই প্রোব সীমাবদ্ধ করেছে। পরে আবার চেষ্টা করুন বা নেটওয়ার্ক পরিবর্তন করুন।',
         retryCta: 'আবার চেষ্টা করুন',
-        enableRetryCta: 'কুকিজ চালু করে আবার চেষ্টা করুন',
-        openSettingsCta: 'উন্নত সেটিংস খুলুন'
+        enableRetryCta: 'কুকিজ চালু করে আবার চেষ্টা করুন'
       },
       cookiesError: {
         heading: 'কুকিজ কারণ হতে পারে',
@@ -364,8 +355,6 @@ const bn = {
       addToQueueTooltip: 'অন্য ডাউনলোড শেষ হলে শুরু হবে — পুরো ব্যান্ডউইথ পাবে',
       pullIt: 'নামিয়ে নিন! ↓',
       pullItTooltip: 'এখনই শুরু হবে — অন্য সক্রিয় ডাউনলোডের সাথে চলবে',
-      playlistBatch_one: '{{count}}টি ভিডিও · {{title}}',
-      playlistBatch_other: '{{count}}টি ভিডিও · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'প্রিসেট',
       labelItems: 'আইটেম',
@@ -373,9 +362,6 @@ const bn = {
       itemsValue_other: '{{total}}-এর মধ্যে {{count}}টি ভিডিও',
       itemsValueAudio_one: '{{total}}-এর মধ্যে {{count}}টি ট্র্যাক',
       itemsValueAudio_other: '{{total}}-এর মধ্যে {{count}}টি ট্র্যাক'
-    },
-    error: {
-      icon: 'ত্রুটি'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const bn = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps-এ কনভার্ট করুন' }
   },
   formatLabel: {
-    audioOnly: 'শুধু অডিও',
     audioFallback: 'অডিও',
     audioOnlyDot: 'শুধু অডিও · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

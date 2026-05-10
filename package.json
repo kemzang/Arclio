@@ -45,6 +45,7 @@
     "check:readme": "bun readme-src/build.mjs --strict",
     "check:landing": "bun landing-src/build.mjs",
     "check:app": "bun scripts/check-app-i18n.ts --strict",
+    "check:app:unused": "bun scripts/check-app-i18n-unused.ts",
     "check:i18n": "bun run check:readme && bun run check:landing && bun run check:app",
     "build:docs": "bun run build:readme && bun run build:landing && bun run build:blog",
     "smoke": "bun scripts/smoke-youtube.ts",

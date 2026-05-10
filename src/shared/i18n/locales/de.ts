@@ -3,8 +3,7 @@ const de = {
     back: 'Zurück',
     continue: 'Weiter',
     retry: 'Erneut versuchen',
-    startOver: 'Von vorn beginnen',
-    loading: 'Wird geladen…'
+    startOver: 'Von vorn beginnen'
   },
   app: {
     feedback: 'Feedback',
@@ -34,7 +33,6 @@ const de = {
     greeting: 'Hey, schön dich wiederzusehen!',
     warmup: 'Arroxy wärmt sich auf…',
     downloading: '{{binary}} wird heruntergeladen…',
-    warning: 'Einrichtung unvollständig — einige Funktionen funktionieren möglicherweise nicht',
     warmupFailedNoDiag: 'Einrichtung fehlgeschlagen. Öffne das Einrichtungsprotokoll für Details.'
   },
   repair: {
@@ -102,15 +100,13 @@ const de = {
       noSelection: 'Wähle mindestens ein Video aus, um fortzufahren',
       loadingItems: 'Playlist wird geladen…',
       thumbnailAlt: 'Video-Vorschaubild',
-      continue: 'Weiter',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Qualität für den Stapel wählen',
       subhead: 'Jedes Video löst die gewählte Stufe unabhängig auf — heterogene Playlists funktionieren ohne Überraschungen.',
       itemCount_one: '{{count}} Element',
-      itemCount_other: '{{count}} Elemente',
-      continue: 'Weiter'
+      itemCount_other: '{{count}} Elemente'
     },
     mixedPrompt: {
       title: 'Dieser Link enthält eine Playlist',
@@ -199,14 +195,10 @@ const de = {
       }
     },
     subtitles: {
-      heading: 'Untertitel',
       autoBadge: 'Auto',
-      hint: 'Dateien werden neben dem Video gespeichert',
       noLanguages: 'Keine Untertitel für dieses Video verfügbar',
       skip: 'Überspringen',
       skipSubs: 'Für dieses Video überspringen',
-      selectAll: 'Alle auswählen',
-      deselectAll: 'Alle abwählen',
       mascot: 'Wähle null, einen oder mehrere — ganz wie du möchtest ✨',
       searchPlaceholder: 'Sprachen suchen…',
       noMatches: 'Keine Sprachen gefunden',
@@ -282,8 +274,7 @@ const de = {
         bodyDisabled: 'Cookies sind konfiguriert, aber deaktiviert. Aktiviere sie und versuche es erneut für die vollständige Liste, oder wechsle das Netzwerk.',
         bodyEnabled: 'Auch mit Cookies hat YouTube diese Abfrage eingeschränkt. Versuche es später erneut oder wechsle das Netzwerk.',
         retryCta: 'Erneut versuchen',
-        enableRetryCta: 'Cookies aktivieren und erneut versuchen',
-        openSettingsCta: 'Erweiterte Einstellungen öffnen'
+        enableRetryCta: 'Cookies aktivieren und erneut versuchen'
       },
       cookiesError: {
         heading: 'Cookies könnten die Ursache sein',
@@ -364,8 +355,6 @@ const de = {
       addToQueueTooltip: 'Startet, wenn andere Downloads fertig sind — volle Bandbreite',
       pullIt: "Hol's rein! ↓",
       pullItTooltip: 'Startet sofort — läuft parallel zu anderen aktiven Downloads',
-      playlistBatch_one: '{{count}} Video · {{title}}',
-      playlistBatch_other: '{{count}} Videos · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Voreinstellung',
       labelItems: 'Elemente',
@@ -373,9 +362,6 @@ const de = {
       itemsValue_other: '{{count}} von {{total}} Videos',
       itemsValueAudio_one: '{{count}} von {{total}} Titel',
       itemsValueAudio_other: '{{count}} von {{total}} Titeln'
-    },
-    error: {
-      icon: 'Fehler'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const de = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'In MP3 192 kbps umwandeln' }
   },
   formatLabel: {
-    audioOnly: 'Nur Audio',
     audioFallback: 'Audio',
     audioOnlyDot: 'Nur Audio · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

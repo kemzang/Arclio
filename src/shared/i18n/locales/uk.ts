@@ -3,8 +3,7 @@ const uk = {
     back: 'Назад',
     continue: 'Продовжити',
     retry: 'Повторити',
-    startOver: 'Почати спочатку',
-    loading: 'Завантаження…'
+    startOver: 'Почати спочатку'
   },
   app: {
     feedback: "Зворотний зв'язок",
@@ -34,7 +33,6 @@ const uk = {
     greeting: 'Привіт, з поверненням!',
     warmup: 'Arroxy розігрівається…',
     downloading: 'Завантаження {{binary}}…',
-    warning: 'Налаштування не завершено — деякі функції можуть не працювати',
     warmupFailedNoDiag: 'Налаштування не вдалося. Відкрий журнал налаштування для деталей.'
   },
   repair: {
@@ -102,15 +100,13 @@ const uk = {
       noSelection: 'Вибери хоча б одне відео, щоб продовжити',
       loadingItems: 'Завантаження Playlist…',
       thumbnailAlt: 'Мініатюра відео',
-      continue: 'Продовжити',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Вибери якість для пакетного завантаження',
       subhead: 'Кожне відео самостійно підбирає відповідний рівень якості — неоднорідні плейлисти працюють без сюрпризів.',
       itemCount_one: '{{count}} елемент',
-      itemCount_other: '{{count}} елементів',
-      continue: 'Продовжити'
+      itemCount_other: '{{count}} елементів'
     },
     mixedPrompt: {
       title: 'Це посилання з Playlist',
@@ -199,14 +195,10 @@ const uk = {
       }
     },
     subtitles: {
-      heading: 'Субтитри',
       autoBadge: 'Авто',
-      hint: 'Файли буде збережено поряд із відео',
       noLanguages: 'Для цього відео субтитри недоступні',
       skip: 'Пропустити',
       skipSubs: 'Пропустити для цього відео',
-      selectAll: 'Вибрати всі',
-      deselectAll: 'Зняти вибір',
       mascot: 'Нуль, одну або кілька мов — вирішуй сам ✨',
       searchPlaceholder: 'Пошук мов…',
       noMatches: 'Мови не знайдено',
@@ -282,8 +274,7 @@ const uk = {
         bodyDisabled: 'Cookies налаштовані, але вимкнені. Увімкни їх і спробуй ще раз, щоб отримати повний список, або зміни мережу та повтори.',
         bodyEnabled: 'Навіть з cookies YouTube обмежив цей запит. Спробуй пізніше або зміни мережу.',
         retryCta: 'Повторити',
-        enableRetryCta: 'Увімкнути cookies і повторити',
-        openSettingsCta: 'Відкрити розширені налаштування'
+        enableRetryCta: 'Увімкнути cookies і повторити'
       },
       cookiesError: {
         heading: 'Причина може бути в cookies',
@@ -364,8 +355,6 @@ const uk = {
       addToQueueTooltip: 'Запуститься, коли завершаться інші завантаження — на повній швидкості',
       pullIt: 'Качаємо! ↓',
       pullItTooltip: 'Запускається миттєво — паралельно з іншими активними завантаженнями',
-      playlistBatch_one: '{{count}} відео · {{title}}',
-      playlistBatch_other: '{{count}} відео · {{title}}',
       labelPlaylist: 'Плейлист',
       labelPreset: 'Пресет',
       labelItems: 'Елементи',
@@ -373,9 +362,6 @@ const uk = {
       itemsValue_other: '{{count}} з {{total}} відео',
       itemsValueAudio_one: '{{count}} з {{total}} треку',
       itemsValueAudio_other: '{{count}} з {{total}} треків'
-    },
-    error: {
-      icon: 'Помилка'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const uk = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Конвертувати в MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Тільки аудіо',
     audioFallback: 'Аудіо',
     audioOnlyDot: 'Тільки аудіо · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

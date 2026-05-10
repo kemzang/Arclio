@@ -3,8 +3,7 @@ const om = {
     back: 'Duubatti',
     continue: 'Itti fufi',
     retry: "Irra deebi'i",
-    startOver: "Jalqabbii irra deebi'i",
-    loading: "Fe'amaa jira…"
+    startOver: "Jalqabbii irra deebi'i"
   },
   app: {
     feedback: 'Yaada',
@@ -34,7 +33,6 @@ const om = {
     greeting: 'Baga nagaan deebitee!',
     warmup: "Arroxy qophaa'aa jira…",
     downloading: '{{binary}} buufatamaa jira…',
-    warning: "Qindaa'inni hin xumuramne — feetii tokko tokko hojjechuu dhiisuu dandanda'u",
     warmupFailedNoDiag: "Qindaa'inni hin milkoofne. Bal'ina argachuuf galmee qindaa'inaa bani."
   },
   repair: {
@@ -102,15 +100,13 @@ const om = {
       noSelection: 'Itti fufuuf viidiyoo tokko yoo xiqqaate filadhu',
       loadingItems: 'Playlist fidaa jira…',
       thumbnailAlt: 'Thumbnail viidiyoo',
-      continue: 'Itti fufi',
       durationUnknown: 'kallattii'
     },
     playlistPresets: {
       heading: 'Kutaa gurmuu barbaadi',
       subhead: 'Viidiyoon hundi sadarkaa filatame ofumaan qorata — playlist garagaraa sodaa malee hojjeta.',
       itemCount_one: '{{count}} wanta',
-      itemCount_other: '{{count}} wantota',
-      continue: 'Itti fufi'
+      itemCount_other: '{{count}} wantota'
     },
     mixedPrompt: {
       title: 'Liinkin kun Playlist qaba',
@@ -198,14 +194,10 @@ const om = {
       }
     },
     subtitles: {
-      heading: 'Axxiinni',
       autoBadge: 'Ofumaa',
-      hint: 'Faayiloonni saidikaar viidiyoo cinaa ni kuufamu',
       noLanguages: 'Viidiyoo kanaaf axxiinni hin jiru',
       skip: 'Irri cabi',
       skipSubs: 'Viidiyoo kana irra cabi',
-      selectAll: 'Hunda filadhu',
-      deselectAll: 'Hunda filatame haquu',
       mascot: "Tokko, lama ykn baay'ee filadhu — si irratti hundaa'a ✨",
       searchPlaceholder: 'Afaanota barbaadi…',
       noMatches: 'Afaan hin argatamne',
@@ -281,8 +273,7 @@ const om = {
         bodyDisabled: "Cookies qindaa'eera garuu dhaabbe jira. Tarreessa guutuu argachuuf cookies dandeessii achiin irra deebi'i, ykn netwoorkii jijjiiri achiin irra deebi'i.",
         bodyEnabled: "Cookies waliin illee, YouTube qorannoo kana daangeessee jira. Booda irra deebi'i ykn netwoorkii jijjiiri.",
         retryCta: "Irra deebi'i",
-        enableRetryCta: "Cookies dandeessii achiin irra deebi'i",
-        openSettingsCta: "Qindaa'inoota ammayyaa bani"
+        enableRetryCta: "Cookies dandeessii achiin irra deebi'i"
       },
       cookiesError: {
         heading: "Cookies sababa ta'uu danda'a",
@@ -363,8 +354,6 @@ const om = {
       addToQueueTooltip: 'Daawniloodoonni biroo xumuramu booda jalqaba — bandwidth guutuu argata',
       pullIt: 'Buusi! ↓',
       pullItTooltip: 'Immediately jalqaba — daawniloodoonni biroo waliin hojjeta',
-      playlistBatch_one: '{{count}} viidiyoo · {{title}}',
-      playlistBatch_other: '{{count}} viidiyoowwan · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Preset',
       labelItems: 'Wantota',
@@ -372,9 +361,6 @@ const om = {
       itemsValue_other: '{{count}} fi {{total}} keessaa viidiyoowwan',
       itemsValueAudio_one: '{{count}} fi {{total}} keessaa weellaa',
       itemsValueAudio_other: '{{count}} fi {{total}} keessaa weellaalee'
-    },
-    error: {
-      icon: 'Dogoggora'
     }
   },
   videoCard: {
@@ -492,7 +478,6 @@ const om = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps tti jijjiiri' }
   },
   formatLabel: {
-    audioOnly: 'Sagalee qofa',
     audioFallback: 'Sagalee',
     audioOnlyDot: 'Sagalee qofa · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

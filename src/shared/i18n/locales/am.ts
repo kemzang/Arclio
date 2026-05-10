@@ -3,8 +3,7 @@ const am = {
     back: 'ተመለስ',
     continue: 'ቀጥል',
     retry: 'እንደገና ሞክር',
-    startOver: 'ከመጀመሪያ ጀምር',
-    loading: 'በመጫን ላይ…'
+    startOver: 'ከመጀመሪያ ጀምር'
   },
   app: {
     feedback: 'አስተያየት',
@@ -34,7 +33,6 @@ const am = {
     greeting: 'እንኳን ደህና መጡ!',
     warmup: 'Arroxy እየሞቀ ነው…',
     downloading: '{{binary}} እየወረደ ነው…',
-    warning: 'ማዋቀር አልተጠናቀቀም — አንዳንድ ባህሪያት ላይሰሩ ይችላሉ',
     warmupFailedNoDiag: 'ማዋቀር አልተሳካም። ዝርዝሮችን ለማየት የማዋቀሪያ ምዝግብ ፋይሉን ይክፈቱ።'
   },
   repair: {
@@ -102,15 +100,13 @@ const am = {
       noSelection: 'ለመቀጠል ቢያንስ አንድ ቪዲዮ ምረጥ',
       loadingItems: 'Playlist እየጫኑ…',
       thumbnailAlt: 'የቪዲዮ ድንክ ምስል',
-      continue: 'ቀጥል',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'ለቡድኑ ጥራት ይምረጡ',
       subhead: 'እያንዳንዱ ቪዲዮ የተመረጠውን ደረጃ ራሱን ችሎ ይፈታል — የተለያዩ playlists ያለ ችግር ይሰራሉ።',
       itemCount_one: '{{count}} ንጥል',
-      itemCount_other: '{{count}} ንጥሎች',
-      continue: 'ቀጥል'
+      itemCount_other: '{{count}} ንጥሎች'
     },
     mixedPrompt: {
       title: 'ይህ ሊንክ Playlist አለው',
@@ -199,14 +195,10 @@ const am = {
       }
     },
     subtitles: {
-      heading: 'ንዑስ ርዕሶች',
       autoBadge: 'ራስ-ሰር',
-      hint: 'ሳይድካር ፋይሎች ከቪዲዮው ጎን ይቀመጣሉ',
       noLanguages: 'ለዚህ ቪዲዮ ምንም ንዑስ ርዕሶች የሉም',
       skip: 'ዝለለ',
       skipSubs: 'ለዚህ ቪዲዮ ዝለለ',
-      selectAll: 'ሁሉ ምረጥ',
-      deselectAll: 'ሁሉ ምርጫ ሰርዝ',
       mascot: 'ዜሮ፣ አንድ ወይም ብዙ ምረጥ — ፈጽሞ ለእርስዎ ✨',
       searchPlaceholder: 'ቋንቋዎችን ፈልግ…',
       noMatches: 'ምንም ቋንቋ አልተዛመደም',
@@ -282,8 +274,7 @@ const am = {
         bodyDisabled: 'Cookies ተዘጋጅቷል ነገር ግን ጠፍ ነው። ያስቡ እና እንደገና ሞክሩ፣ ወይም አውታረ መረብ ቀይሩ።',
         bodyEnabled: 'Cookies ቢኖርም YouTube ይህን ምርምር ገደበ። ቆይቶ ዳግም ሞክሩ ወይም አውታረ መረብ ቀይሩ።',
         retryCta: 'እንደገና ሞክር',
-        enableRetryCta: 'Cookies አስቻል እና እንደገና ሞክር',
-        openSettingsCta: 'ከፍተኛ ቅንብሮችን ክፈት'
+        enableRetryCta: 'Cookies አስቻል እና እንደገና ሞክር'
       },
       cookiesError: {
         heading: 'Cookies ምክንያቱ ሊሆን ይችላል',
@@ -364,8 +355,6 @@ const am = {
       addToQueueTooltip: 'ሌሎች ዳውንሎዶች ሲጠናቀቁ ይጀምራል — ሙሉ ባንድዊድዝ ያገኛል',
       pullIt: 'ሳቡት! ↓',
       pullItTooltip: 'ወዲያው ይጀምራል — ከሌሎች ዳውንሎዶች ጋር ይሰራል',
-      playlistBatch_one: '{{count}} ቪዲዮ · {{title}}',
-      playlistBatch_other: '{{count}} ቪዲዮዎች · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'ቅድመ-ቅንብር',
       labelItems: 'ቁጥር',
@@ -373,9 +362,6 @@ const am = {
       itemsValue_other: '{{count}} ከ {{total}} ቪዲዮዎች',
       itemsValueAudio_one: '{{count}} ከ {{total}} ዘፈን',
       itemsValueAudio_other: '{{count}} ከ {{total}} ዘፈኖች'
-    },
-    error: {
-      icon: 'ስህተት'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const am = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'ወደ MP3 192 kbps ቀይር' }
   },
   formatLabel: {
-    audioOnly: 'ድምጽ ብቻ',
     audioFallback: 'ድምጽ',
     audioOnlyDot: 'ድምጽ ብቻ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

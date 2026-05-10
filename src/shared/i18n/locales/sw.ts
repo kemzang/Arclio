@@ -3,8 +3,7 @@ const sw = {
     back: 'Rudi',
     continue: 'Endelea',
     retry: 'Jaribu tena',
-    startOver: 'Anza upya',
-    loading: 'Inapakia…'
+    startOver: 'Anza upya'
   },
   app: {
     feedback: 'Maoni',
@@ -34,7 +33,6 @@ const sw = {
     greeting: 'Hujambo, karibu tena!',
     warmup: 'Arroxy inajipanga…',
     downloading: 'Inapakua {{binary}}…',
-    warning: 'Usanidi haukukamilika — baadhi ya vipengele vinaweza visifanye kazi',
     warmupFailedNoDiag: 'Usanidi umeshindwa. Fungua kumbukumbu ya usanidi kwa maelezo zaidi.'
   },
   repair: {
@@ -102,15 +100,13 @@ const sw = {
       noSelection: 'Chagua angalau video moja ili kuendelea',
       loadingItems: 'Inapata Playlist…',
       thumbnailAlt: 'Picha ndogo ya video',
-      continue: 'Endelea',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Chagua ubora wa kundi',
       subhead: 'Kila video inatatua kiwango kilichochaguliwa kwa kujitegemea — playlists tofauti hufanya kazi bila mshangao.',
       itemCount_one: '{{count}} kipande',
-      itemCount_other: '{{count}} vipande',
-      continue: 'Endelea'
+      itemCount_other: '{{count}} vipande'
     },
     mixedPrompt: {
       title: 'Kiungo hiki kina Playlist',
@@ -198,14 +194,10 @@ const sw = {
       }
     },
     subtitles: {
-      heading: 'Manukuu',
       autoBadge: 'Otomatiki',
-      hint: 'Faili za sidecar zitahifadhiwa karibu na video',
       noLanguages: 'Hakuna manukuu yanayopatikana kwa video hii',
       skip: 'Ruka',
       skipSubs: 'Ruka kwa video hii',
-      selectAll: 'Chagua yote',
-      deselectAll: 'Futa uchaguzi wote',
       mascot: 'Chagua sufuri, moja, au mengi — inategemea wewe kabisa ✨',
       searchPlaceholder: 'Tafuta lugha…',
       noMatches: 'Hakuna lugha zinazolingana',
@@ -281,8 +273,7 @@ const sw = {
         bodyDisabled: 'Vidakuzi vimesanidiwa lakini vimezimwa. Viwashe na ujaribu tena kupata orodha kamili, au badilisha mtandao na ujaribu tena.',
         bodyEnabled: 'Hata na vidakuzi, YouTube ilipunguza uchunguzi huu. Jaribu tena baadaye au badilisha mtandao.',
         retryCta: 'Jaribu tena',
-        enableRetryCta: 'Washa vidakuzi na ujaribu tena',
-        openSettingsCta: 'Fungua mipangilio ya hali ya juu'
+        enableRetryCta: 'Washa vidakuzi na ujaribu tena'
       },
       cookiesError: {
         heading: 'Vidakuzi vinaweza kuwa sababu',
@@ -363,8 +354,6 @@ const sw = {
       addToQueueTooltip: 'Inaanza vipakuzi vingine vikishamaliza — inapata upanuzi kamili',
       pullIt: 'Pakua sasa! ↓',
       pullItTooltip: 'Inaanza mara moja — inafanya kazi pamoja na vipakuzi vingine vinavyofanya kazi',
-      playlistBatch_one: '{{count}} kipande · {{title}}',
-      playlistBatch_other: '{{count}} vipande · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Mpangilio',
       labelItems: 'Vipande',
@@ -372,9 +361,6 @@ const sw = {
       itemsValue_other: '{{count}} kati ya {{total}} video',
       itemsValueAudio_one: '{{count}} kati ya {{total}} wimbo',
       itemsValueAudio_other: '{{count}} kati ya {{total}} nyimbo'
-    },
-    error: {
-      icon: 'Hitilafu'
     }
   },
   videoCard: {
@@ -492,7 +478,6 @@ const sw = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Badilisha kuwa MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Sauti peke yake',
     audioFallback: 'Sauti',
     audioOnlyDot: 'Sauti peke yake · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

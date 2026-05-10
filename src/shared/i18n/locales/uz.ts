@@ -3,8 +3,7 @@ const uz = {
     back: 'Orqaga',
     continue: 'Davom etish',
     retry: 'Qayta urinish',
-    startOver: 'Qaytadan boshlash',
-    loading: 'Yuklanmoqda…'
+    startOver: 'Qaytadan boshlash'
   },
   app: {
     feedback: 'Fikr-mulohaza',
@@ -34,7 +33,6 @@ const uz = {
     greeting: 'Xush kelibsiz, qayta keldingiz!',
     warmup: 'Arroxy ishga tayyorlanmoqda…',
     downloading: '{{binary}} yuklanmoqda…',
-    warning: "Sozlash yakunlanmagan — ba'zi funksiyalar ishlamasligi mumkin",
     warmupFailedNoDiag: 'Sozlash muvaffaqiyatsiz yakunlandi. Tafsilotlar uchun sozlash jurnalini oching.'
   },
   repair: {
@@ -102,15 +100,13 @@ const uz = {
       noSelection: 'Davom etish uchun kamida bitta videoni tanlang',
       loadingItems: 'Playlist yuklanmoqda…',
       thumbnailAlt: 'Video muqovasi',
-      continue: 'Davom etish',
       durationUnknown: 'jonli'
     },
     playlistPresets: {
       heading: 'Paket uchun sifatni tanlang',
       subhead: 'Har bir video tanlangan darajani mustaqil ravishda hal qiladi — turli xil playlistlar muammosiz ishlaydi.',
       itemCount_one: '{{count}} ta element',
-      itemCount_other: '{{count}} ta element',
-      continue: 'Davom etish'
+      itemCount_other: '{{count}} ta element'
     },
     mixedPrompt: {
       title: 'Bu havola Playlist ga tegishli',
@@ -199,14 +195,10 @@ const uz = {
       }
     },
     subtitles: {
-      heading: 'Subtitrlar',
       autoBadge: 'Avto',
-      hint: 'Yordamchi fayllar videoning yoniga saqlanadi',
       noLanguages: 'Bu video uchun subtitrlar mavjud emas',
       skip: "O'tkazib yuborish",
       skipSubs: "Bu video uchun o'tkazib yuborish",
-      selectAll: 'Hammasini tanlash',
-      deselectAll: 'Hammasini bekor qilish',
       mascot: "Nol, bir yoki ko'p tanlang — bu sizga bog'liq ✨",
       searchPlaceholder: 'Tillarni qidirish…',
       noMatches: 'Mos til topilmadi',
@@ -282,8 +274,7 @@ const uz = {
         bodyDisabled: "Cookies sozlangan, lekin o'chirilgan. To'liq ro'yxat uchun ularni yoqing va qayta urinib ko'ring, yoki tarmoqni o'zgartirin.",
         bodyEnabled: "Cookies bilan ham YouTube bu tekshiruvni chekladi. Keyinroq urinib ko'ring yoki tarmoqni o'zgartiring.",
         retryCta: 'Qayta urinish',
-        enableRetryCta: 'Cookiesni yoqish va qayta urinish',
-        openSettingsCta: 'Kengaytirilgan sozlamalarni ochish'
+        enableRetryCta: 'Cookiesni yoqish va qayta urinish'
       },
       cookiesError: {
         heading: "Sabab cookies bo'lishi mumkin",
@@ -364,8 +355,6 @@ const uz = {
       addToQueueTooltip: "Boshqa yuklamalar tugaganda boshlanadi — to'liq tarmoq kengligini oladi",
       pullIt: 'Yuklab ol! ↓',
       pullItTooltip: 'Darhol boshlanadi — boshqa faol yuklamalar bilan parallel ishlaydi',
-      playlistBatch_one: '{{count}} ta video · {{title}}',
-      playlistBatch_other: '{{count}} ta video · {{title}}',
       labelPlaylist: 'Pleylist',
       labelPreset: 'Sozlama',
       labelItems: 'Elementlar',
@@ -373,9 +362,6 @@ const uz = {
       itemsValue_other: '{{total}} ta videoning {{count}} tasi',
       itemsValueAudio_one: '{{total}} ta trekning {{count}} tasi',
       itemsValueAudio_other: '{{total}} ta trekning {{count}} tasi'
-    },
-    error: {
-      icon: 'Xato'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const uz = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps ga konvertatsiya qilish' }
   },
   formatLabel: {
-    audioOnly: 'Faqat audio',
     audioFallback: 'Audio',
     audioOnlyDot: 'Faqat audio · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

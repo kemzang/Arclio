@@ -3,8 +3,7 @@ const sr = {
     back: 'Назад',
     continue: 'Настави',
     retry: 'Покушај поново',
-    startOver: 'Почни испочетка',
-    loading: 'Учитавање…'
+    startOver: 'Почни испочетка'
   },
   app: {
     feedback: 'Повратна информација',
@@ -34,7 +33,6 @@ const sr = {
     greeting: 'Добродошао/ла назад!',
     warmup: 'Arroxy се покреће…',
     downloading: 'Преузимање {{binary}}…',
-    warning: 'Подешавање није завршено — неке функције можда неће радити',
     warmupFailedNoDiag: 'Подешавање није успело. Отвори дневник подешавања за детаље.'
   },
   repair: {
@@ -102,15 +100,13 @@ const sr = {
       noSelection: 'Изабери барем један видео да би наставио/ла',
       loadingItems: 'Преузимање плејлисте…',
       thumbnailAlt: 'Сличица видеа',
-      continue: 'Настави',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Изабери квалитет за групно преузимање',
       subhead: 'Свaki видео самостално проналази одговарајући ниво квалитета — хетерогене плејлисте раде без изненађења.',
       itemCount_one: '{{count}} ставка',
-      itemCount_other: '{{count}} ставки',
-      continue: 'Настави'
+      itemCount_other: '{{count}} ставки'
     },
     mixedPrompt: {
       title: 'Овај линк је из плејлисте',
@@ -199,14 +195,10 @@ const sr = {
       }
     },
     subtitles: {
-      heading: 'Титлови',
       autoBadge: 'Аутоматски',
-      hint: 'Sidecar датотеке биће сачуване поред видеа',
       noLanguages: 'Нема доступних титлова за овај видео',
       skip: 'Прескочи',
       skipSubs: 'Прескочи за овај видео',
-      selectAll: 'Изабери све',
-      deselectAll: 'Поништи избор свих',
       mascot: 'Изабери нула, један или много — потпуно је на теби ✨',
       searchPlaceholder: 'Претражи језике…',
       noMatches: 'Нема пронађених језика',
@@ -282,8 +274,7 @@ const sr = {
         bodyDisabled: 'Cookies су подешени али искључени. Укључи их и покушај поново за потпун списак, или промени мрежу и покушај поново.',
         bodyEnabled: 'Чак и са cookies, YouTube је ограничио ову проверу. Покушај касније или промени мрежу.',
         retryCta: 'Покушај поново',
-        enableRetryCta: 'Укључи cookies и покушај поново',
-        openSettingsCta: 'Отвори напредна подешавања'
+        enableRetryCta: 'Укључи cookies и покушај поново'
       },
       cookiesError: {
         heading: 'Cookies могу бити узрок',
@@ -364,8 +355,6 @@ const sr = {
       addToQueueTooltip: 'Покреће се када друга преузимања заврше — добија пун пропусни опсег',
       pullIt: 'Преузми! ↓',
       pullItTooltip: 'Покреће се одмах — ради упоредо са другим активним преузимањима',
-      playlistBatch_one: '{{count}} видео · {{title}}',
-      playlistBatch_other: '{{count}} видеа · {{title}}',
       labelPlaylist: 'Плејлиста',
       labelPreset: 'Поставка',
       labelItems: 'Ставке',
@@ -373,9 +362,6 @@ const sr = {
       itemsValue_other: '{{count}} од {{total}} видеа',
       itemsValueAudio_one: '{{count}} од {{total}} нумере',
       itemsValueAudio_other: '{{count}} од {{total}} нумера'
-    },
-    error: {
-      icon: 'Грешка'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const sr = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Конвертуј у MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Само звук',
     audioFallback: 'Звук',
     audioOnlyDot: 'Само звук · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

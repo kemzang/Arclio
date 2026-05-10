@@ -3,8 +3,7 @@ const ps = {
     back: 'شاته',
     continue: 'دوام ورکړه',
     retry: 'بیا هڅه وکړه',
-    startOver: 'له سره پیل کړه',
-    loading: 'بارول…'
+    startOver: 'له سره پیل کړه'
   },
   app: {
     feedback: 'نظر',
@@ -34,7 +33,6 @@ const ps = {
     greeting: 'سلام، ښه راغلاست!',
     warmup: 'Arroxy چمتو کیږي…',
     downloading: '{{binary}} ډاونلوډ کیږي…',
-    warning: 'نصب ناپوره دی — ځینې ځانګړتیاوې ممکن کار ونکړي',
     warmupFailedNoDiag: 'نصب ناکام شو. د توضیحاتو لپاره د نصب لاګ خلاص کړئ.'
   },
   repair: {
@@ -102,15 +100,13 @@ const ps = {
       noSelection: 'دوام کولو لپاره لږترلږه یو ویډیو غوره کړئ',
       loadingItems: 'Playlist ترلاسه کیږي…',
       thumbnailAlt: 'د ویډیو تھمبنیل',
-      continue: 'دوام ورکړه',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'د بیچ لپاره کیفیت وټاکئ',
       subhead: 'هر ویډیو خپلواکه د غوره شوي کچې سره حل کوي — مخلوط Playlist ونه بیا پرته له مشکل کار کوي.',
       itemCount_one: '{{count}} توکی',
-      itemCount_other: '{{count}} توکي',
-      continue: 'دوام ورکړه'
+      itemCount_other: '{{count}} توکي'
     },
     mixedPrompt: {
       title: 'دا لینک یو Playlist لري',
@@ -199,14 +195,10 @@ const ps = {
       }
     },
     subtitles: {
-      heading: 'ژباړلیکونه',
       autoBadge: 'اتوماتیک',
-      hint: 'د سایډکار فایلونه به د ویډیو سره یوځای خوندي شي',
       noLanguages: 'د دې ویډیو لپاره هیڅ ژباړلیک شتون نلري',
       skip: 'پریږدئ',
       skipSubs: 'د دې ویډیو لپاره پریږدئ',
-      selectAll: 'ټول غوره کړئ',
-      deselectAll: 'غیر انتخاب کړئ',
       mascot: 'صفر، یو، یا ډیر غوره کړئ — بشپړ ستاسو خوښه ده ✨',
       searchPlaceholder: 'ژبې لټول…',
       noMatches: 'هیڅ ژبه سره برابره نه ده',
@@ -282,8 +274,7 @@ const ps = {
         bodyDisabled: 'کوکیز تنظیم شوي خو بند دي. د بشپړ لیست لپاره کوکیز فعال کړئ او بیا هڅه وکړئ، یا شبکه بدله کړئ او بیا هڅه وکړئ.',
         bodyEnabled: 'حتی د کوکیزو سره، YouTube دا پلټنه محدوده کړه. وروسته بیا هڅه وکړئ یا شبکه بدله کړئ.',
         retryCta: 'بیا هڅه وکړئ',
-        enableRetryCta: 'کوکیز فعال کړئ او بیا هڅه وکړئ',
-        openSettingsCta: 'پرمختللي تنظیمات پرانیستل'
+        enableRetryCta: 'کوکیز فعال کړئ او بیا هڅه وکړئ'
       },
       cookiesError: {
         heading: 'کوکیز ممکن لامل وي',
@@ -364,8 +355,6 @@ const ps = {
       addToQueueTooltip: 'کله چې نور ډاونلوډونه پای ته ورسیږي پیل کیږي — بشپړ بینډوډت ترلاسه کوي',
       pullIt: 'راکش یې کړه! ↓',
       pullItTooltip: 'سمدلاسه پیل کیږي — د نورو فعالو ډاونلوډونو سره یوځای چلیږي',
-      playlistBatch_one: '{{count}} ویډیو · {{title}}',
-      playlistBatch_other: '{{count}} ویډیوګانې · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Preset',
       labelItems: 'توکي',
@@ -373,9 +362,6 @@ const ps = {
       itemsValue_other: '{{count}} له {{total}} ویډیوګانې',
       itemsValueAudio_one: '{{count}} له {{total}} ټریک',
       itemsValueAudio_other: '{{count}} له {{total}} ټریکونه'
-    },
-    error: {
-      icon: 'تیروتنه'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const ps = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps ته بدلول' }
   },
   formatLabel: {
-    audioOnly: 'یوازې غږ',
     audioFallback: 'غږ',
     audioOnlyDot: 'یوازې غږ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

@@ -3,8 +3,7 @@ const ja = {
     back: '戻る',
     continue: '続行',
     retry: '再試行',
-    startOver: '最初からやり直す',
-    loading: '読み込み中…'
+    startOver: '最初からやり直す'
   },
   app: {
     feedback: 'フィードバック',
@@ -34,7 +33,6 @@ const ja = {
     greeting: 'やあ、おかえり!',
     warmup: 'Arroxyを起動中…',
     downloading: '{{binary}} をダウンロード中…',
-    warning: 'セットアップが未完了 — 一部の機能が動作しない可能性があります',
     warmupFailedNoDiag: 'セットアップに失敗しました。セットアップログを開いて詳細を確認してください。'
   },
   repair: {
@@ -102,15 +100,13 @@ const ja = {
       noSelection: '続行するには少なくとも1本の動画を選択してください',
       loadingItems: 'Playlist を取得中…',
       thumbnailAlt: '動画サムネイル',
-      continue: '続行',
       durationUnknown: 'ライブ'
     },
     playlistPresets: {
       heading: 'バッチの画質を選択',
       subhead: '各動画が選択した画質ティアを独立して解決します — 異なる動画が混在するPlaylistも問題なく処理できます。',
       itemCount_one: '{{count}} 件',
-      itemCount_other: '{{count}} 件',
-      continue: '続行'
+      itemCount_other: '{{count}} 件'
     },
     mixedPrompt: {
       title: 'このリンクは Playlist に含まれています',
@@ -199,14 +195,10 @@ const ja = {
       }
     },
     subtitles: {
-      heading: '字幕',
       autoBadge: '自動',
-      hint: '字幕ファイルは動画と同じフォルダに保存されます',
       noLanguages: 'この動画には字幕がありません',
       skip: 'スキップ',
       skipSubs: 'この動画ではスキップ',
-      selectAll: 'すべて選択',
-      deselectAll: 'すべて解除',
       mascot: 'ゼロでも、一つでも、複数でも — お好みで ✨',
       searchPlaceholder: '言語を検索…',
       noMatches: '言語が見つかりません',
@@ -282,8 +274,7 @@ const ja = {
         bodyDisabled: 'Cookieは設定されていますが無効になっています。有効にして再試行すると完全な一覧を取得できます。または、ネットワークを変えて再試行してください。',
         bodyEnabled: 'Cookieを使用していても、YouTubeがこの取得を制限しました。しばらくしてから再試行するか、ネットワークを切り替えてください。',
         retryCta: '再試行',
-        enableRetryCta: 'Cookieを有効にして再試行',
-        openSettingsCta: '詳細設定を開く'
+        enableRetryCta: 'Cookieを有効にして再試行'
       },
       cookiesError: {
         heading: 'Cookieが原因かもしれません',
@@ -364,8 +355,6 @@ const ja = {
       addToQueueTooltip: '他のダウンロードが終わってから開始 — 帯域幅をフル活用',
       pullIt: '取得! ↓',
       pullItTooltip: 'すぐ開始 — 他のアクティブなダウンロードと並行実行',
-      playlistBatch_one: '{{count}} 本 · {{title}}',
-      playlistBatch_other: '{{count}} 本 · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'プリセット',
       labelItems: '件数',
@@ -373,9 +362,6 @@ const ja = {
       itemsValue_other: '全{{total}}本中{{count}}本',
       itemsValueAudio_one: '全{{total}}曲中{{count}}曲',
       itemsValueAudio_other: '全{{total}}曲中{{count}}曲'
-    },
-    error: {
-      icon: 'エラー'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const ja = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps に変換' }
   },
   formatLabel: {
-    audioOnly: '音声のみ',
     audioFallback: '音声',
     audioOnlyDot: '音声のみ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

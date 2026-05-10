@@ -3,8 +3,7 @@ const ur = {
     back: 'واپس',
     continue: 'جاری رکھیں',
     retry: 'دوبارہ کوشش کریں',
-    startOver: 'دوبارہ شروع کریں',
-    loading: 'لوڈ ہو رہا ہے…'
+    startOver: 'دوبارہ شروع کریں'
   },
   app: {
     feedback: 'فیڈبیک',
@@ -34,7 +33,6 @@ const ur = {
     greeting: 'ارے، خوش آمدید!',
     warmup: 'Arroxy تیار ہو رہا ہے…',
     downloading: '{{binary}} ڈاؤن لوڈ ہو رہا ہے…',
-    warning: 'سیٹ اپ مکمل نہیں — کچھ فیچرز کام نہ کریں',
     warmupFailedNoDiag: 'سیٹ اپ ناکام ہوا۔ تفصیلات کے لیے سیٹ اپ لاگ کھولیں۔'
   },
   repair: {
@@ -102,15 +100,13 @@ const ur = {
       noSelection: 'جاری رکھنے کے لیے کم از کم ایک ویڈیو منتخب کریں',
       loadingItems: 'Playlist لائی جا رہی ہے…',
       thumbnailAlt: 'ویڈیو تھمب نیل',
-      continue: 'جاری رکھیں',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'بیچ کے لیے کوالٹی منتخب کریں',
       subhead: 'ہر ویڈیو منتخب درجے کو آزادانہ طور پر حل کرتی ہے — مختلف قسم کی playlists بغیر کسی پریشانی کے کام کرتی ہیں۔',
       itemCount_one: '{{count}} آئٹم',
-      itemCount_other: '{{count}} آئٹمز',
-      continue: 'جاری رکھیں'
+      itemCount_other: '{{count}} آئٹمز'
     },
     mixedPrompt: {
       title: 'اس لنک میں Playlist ہے',
@@ -199,14 +195,10 @@ const ur = {
       }
     },
     subtitles: {
-      heading: 'سب ٹائٹلز',
       autoBadge: 'آٹو',
-      hint: 'سائڈ کار فائلیں ویڈیو کے ساتھ محفوظ ہوں گی',
       noLanguages: 'اس ویڈیو کے لیے کوئی سب ٹائٹلز دستیاب نہیں',
       skip: 'چھوڑیں',
       skipSubs: 'اس ویڈیو کے لیے چھوڑیں',
-      selectAll: 'سب منتخب کریں',
-      deselectAll: 'سب غیر منتخب کریں',
       mascot: 'صفر، ایک، یا کئی منتخب کریں — مکمل آپ کی مرضی ✨',
       searchPlaceholder: 'زبانیں تلاش کریں…',
       noMatches: 'کوئی زبان میچ نہیں ہوئی',
@@ -282,8 +274,7 @@ const ur = {
         bodyDisabled: 'Cookies ترتیب دی گئی ہیں لیکن بند ہیں۔ مکمل فہرست کے لیے انہیں فعال کریں اور دوبارہ کوشش کریں، یا نیٹ ورک تبدیل کر کے دوبارہ کوشش کریں۔',
         bodyEnabled: 'Cookies کے ساتھ بھی YouTube نے یہ پروب محدود کی۔ بعد میں دوبارہ کوشش کریں یا نیٹ ورک تبدیل کریں۔',
         retryCta: 'دوبارہ کوشش کریں',
-        enableRetryCta: 'Cookies فعال کریں اور دوبارہ کوشش کریں',
-        openSettingsCta: 'ایڈوانسڈ سیٹنگز کھولیں'
+        enableRetryCta: 'Cookies فعال کریں اور دوبارہ کوشش کریں'
       },
       cookiesError: {
         heading: 'Cookies وجہ ہو سکتی ہیں',
@@ -364,8 +355,6 @@ const ur = {
       addToQueueTooltip: 'دوسرے ڈاؤن لوڈز ختم ہونے پر شروع ہو گا — مکمل بینڈوڈتھ ملے گی',
       pullIt: 'لے آؤ! ↓',
       pullItTooltip: 'فوراً شروع ہو گا — دوسرے ایکٹو ڈاؤن لوڈز کے ساتھ چلے گا',
-      playlistBatch_one: '{{count}} ویڈیو · {{title}}',
-      playlistBatch_other: '{{count}} ویڈیوز · {{title}}',
       labelPlaylist: 'پلے لسٹ',
       labelPreset: 'پریسیٹ',
       labelItems: 'آئٹمز',
@@ -373,9 +362,6 @@ const ur = {
       itemsValue_other: '{{total}} میں سے {{count}} ویڈیوز',
       itemsValueAudio_one: '{{total}} میں سے {{count}} ٹریک',
       itemsValueAudio_other: '{{total}} میں سے {{count}} ٹریکس'
-    },
-    error: {
-      icon: 'خرابی'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const ur = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps میں کنورٹ کریں' }
   },
   formatLabel: {
-    audioOnly: 'صرف آڈیو',
     audioFallback: 'آڈیو',
     audioOnlyDot: 'صرف آڈیو · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'

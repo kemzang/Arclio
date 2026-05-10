@@ -3,8 +3,7 @@ const fr = {
     back: 'Retour',
     continue: 'Continuer',
     retry: 'Réessayer',
-    startOver: 'Recommencer',
-    loading: 'Chargement…'
+    startOver: 'Recommencer'
   },
   app: {
     feedback: 'Commentaires',
@@ -34,7 +33,6 @@ const fr = {
     greeting: 'Salut, content de te revoir !',
     warmup: 'Arroxy se prépare…',
     downloading: 'Téléchargement de {{binary}}…',
-    warning: 'Configuration incomplète — certaines fonctions pourraient ne pas marcher',
     warmupFailedNoDiag: 'Échec de la configuration. Ouvre le journal de configuration pour plus de détails.'
   },
   repair: {
@@ -102,15 +100,13 @@ const fr = {
       noSelection: 'Sélectionnez au moins une vidéo pour continuer',
       loadingItems: 'Récupération de la Playlist…',
       thumbnailAlt: 'Miniature de la vidéo',
-      continue: 'Continuer',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Choisir la qualité pour le lot',
       subhead: 'Chaque vidéo résout le niveau choisi indépendamment — les playlists hétérogènes fonctionnent sans surprise.',
       itemCount_one: '{{count}} élément',
-      itemCount_other: '{{count}} éléments',
-      continue: 'Continuer'
+      itemCount_other: '{{count}} éléments'
     },
     mixedPrompt: {
       title: 'Ce lien contient une Playlist',
@@ -199,14 +195,10 @@ const fr = {
       }
     },
     subtitles: {
-      heading: 'Sous-titres',
       autoBadge: 'Auto',
-      hint: 'Les fichiers seront enregistrés à côté de la vidéo',
       noLanguages: 'Aucun sous-titre disponible pour cette vidéo',
       skip: 'Ignorer',
       skipSubs: 'Ignorer pour cette vidéo',
-      selectAll: 'Tout sélectionner',
-      deselectAll: 'Tout désélectionner',
       mascot: "Zéro, un ou plusieurs — c'est vous qui choisissez ✨",
       searchPlaceholder: 'Rechercher des langues…',
       noMatches: 'Aucune langue ne correspond',
@@ -282,8 +274,7 @@ const fr = {
         bodyDisabled: 'Les cookies sont configurés mais désactivés. Activez-les et réessayez pour obtenir la liste complète, ou changez de réseau et réessayez.',
         bodyEnabled: 'Même avec les cookies, YouTube a limité cette analyse. Réessayez plus tard ou changez de réseau.',
         retryCta: 'Réessayer',
-        enableRetryCta: 'Activer les cookies et réessayer',
-        openSettingsCta: 'Ouvrir les paramètres avancés'
+        enableRetryCta: 'Activer les cookies et réessayer'
       },
       cookiesError: {
         heading: 'Les cookies pourraient être en cause',
@@ -364,8 +355,6 @@ const fr = {
       addToQueueTooltip: 'Démarre quand les autres téléchargements terminent — bande passante complète',
       pullIt: 'Récupère-le ! ↓',
       pullItTooltip: 'Démarre tout de suite — en parallèle des autres téléchargements actifs',
-      playlistBatch_one: '{{count}} vidéo · {{title}}',
-      playlistBatch_other: '{{count}} vidéos · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Qualité',
       labelItems: 'Éléments',
@@ -373,9 +362,6 @@ const fr = {
       itemsValue_other: '{{count}} sur {{total}} vidéos',
       itemsValueAudio_one: '{{count}} sur {{total}} piste',
       itemsValueAudio_other: '{{count}} sur {{total}} pistes'
-    },
-    error: {
-      icon: 'Erreur'
     }
   },
   videoCard: {
@@ -493,7 +479,6 @@ const fr = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Convertir en MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Audio seul',
     audioFallback: 'Audio',
     audioOnlyDot: 'Audio seul · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
