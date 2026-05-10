@@ -9,11 +9,21 @@ import type { PluginOption } from 'vite';
 const require = createRequire(import.meta.url);
 const { version } = require('./package.json') as { version: string };
 
+// Vite's alias plugin rewrites `@shared/...` / `@preload/...` to the absolute
+// resolved path before the `external` callback runs. On POSIX hosts the path
+// starts with `/` and matches the relative-import branch. On Windows it is
+// `D:\\...` / `C:/...` — those must be treated as internal too, otherwise the
+// bundler keeps them as raw `require('D:\\a\\...')` calls that no other
+// machine can resolve. CI runner path `D:\\a\\<repo>\\<repo>\\src\\...` was
+// the original failure mode (Arroxy v0.3.2-beta.6 release).
+const WINDOWS_ABS_PATH = /^[a-zA-Z]:[\\/]/;
+
 export function isExternalMainBuildImport(id: string): boolean {
   if (id === 'electron' || id.startsWith('electron/')) return true;
   if (id.startsWith('node:')) return true;
   if (id.startsWith('@main/') || id.startsWith('@shared/')) return false;
   if (/^[./]/.test(id)) return false;
+  if (WINDOWS_ABS_PATH.test(id)) return false;
   return false;
 }
 
@@ -22,6 +32,7 @@ export function isExternalPreloadBuildImport(id: string): boolean {
   if (id.startsWith('node:')) return true;
   if (id.startsWith('@preload/') || id.startsWith('@shared/')) return false;
   if (/^[./]/.test(id)) return false;
+  if (WINDOWS_ABS_PATH.test(id)) return false;
   return true;
 }
 

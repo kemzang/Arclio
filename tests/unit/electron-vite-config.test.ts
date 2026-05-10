@@ -23,4 +23,18 @@ describe('electron.vite.config', () => {
     expect(isExternalPreloadBuildImport('./relative-module')).toBe(false);
     expect(isExternalPreloadBuildImport('electron-log/main')).toBe(true);
   });
+
+  // Regression: alias plugin rewrites `@shared/...` to an absolute path before
+  // the external callback fires. On Windows that surfaces as `D:\\...` /
+  // `C:/...`. Treating those as external left raw `require('D:\\a\\...')`
+  // calls in the bundled preload, breaking every downstream machine
+  // (CI-built v0.3.2-beta.6 portable failed with `module not found:
+  // D:\\a\\Arroxy\\Arroxy\\src\\shared/ipc.js`).
+  it('treats Windows absolute paths as internal', () => {
+    expect(isExternalPreloadBuildImport('D:\\a\\Arroxy\\Arroxy\\src\\shared\\ipc.js')).toBe(false);
+    expect(isExternalPreloadBuildImport('D:/a/Arroxy/Arroxy/src/shared/ipc.js')).toBe(false);
+    expect(isExternalPreloadBuildImport('C:\\Users\\anton\\projects\\yt-download-ui\\src\\preload\\createPreloadApi.ts')).toBe(false);
+    expect(isExternalMainBuildImport('D:\\a\\Arroxy\\Arroxy\\src\\shared\\types.ts')).toBe(false);
+    expect(isExternalMainBuildImport('C:/Users/anton/projects/yt-download-ui/src/main/index.ts')).toBe(false);
+  });
 });
