@@ -61,6 +61,7 @@ export interface ProbeOrchestratorSlice {
   advance: () => void;
   back: () => void;
   skipSubtitles: () => void;
+  skipToConfirm: () => void;
   reset: () => void;
   retry: () => Promise<void>;
   retryFormatProbe: () => Promise<void>;

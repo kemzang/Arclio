@@ -12,7 +12,7 @@ import { FormatFooter } from './format/FormatFooter.js';
 
 export function StepFormatSelect(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardFormats, formatsLoading, wizardTitle, wizardThumbnail, wizardDuration, wizardWebpageUrl, selectedVideoFormatId, audioSelection, activePreset, setSelectedVideoFormatId, setAudioSelection, setPreset, advance, back } = useAppStore();
+  const { wizardFormats, formatsLoading, wizardTitle, wizardThumbnail, wizardDuration, wizardWebpageUrl, selectedVideoFormatId, audioSelection, activePreset, setSelectedVideoFormatId, setAudioSelection, setPreset, advance, back, skipToConfirm } = useAppStore();
   const view = useFormatSelectionView();
 
   if (formatsLoading) {
@@ -63,7 +63,7 @@ export function StepFormatSelect(): JSX.Element {
         <AudioColumn formats={wizardFormats} audioSelection={audioSelection} onSelect={setAudioSelection} />
       </div>
 
-      <FormatFooter onBack={back} onContinue={advance} />
+      <FormatFooter onBack={back} onContinue={advance} onSkipToConfirm={skipToConfirm} />
     </div>
   );
 }

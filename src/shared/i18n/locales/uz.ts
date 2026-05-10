@@ -259,6 +259,8 @@ const uz = {
       loadingAria: 'Formatlar yuklanmoqda',
       sizeUnknown: "Hajm noma'lum",
       total: 'Jami',
+      skipToConfirm: "Tasdiqlashga o'tish",
+      skipToConfirmTooltip: "Qolgan barcha qadamlar uchun saqlangan sozlamalaringizdan foydalanadi. Biror sozlamani o'zgartirish uchun, qadamma-qadam davom eting — tanlovingiz keyingi safar saqlanadi.",
       convert: {
         label: 'Konvertatsiya qilish',
         uncompressed: 'Konvertatsiya · siqilmagan',

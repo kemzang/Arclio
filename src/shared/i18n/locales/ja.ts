@@ -257,6 +257,8 @@ const ja = {
       loadingAria: '形式を読み込み中',
       sizeUnknown: 'サイズ不明',
       total: '合計',
+      skipToConfirm: '確認へスキップ',
+      skipToConfirmTooltip: '残りのすべてのステップに保存済みの設定を使用します。設定を変更するには、ステップごとに進んでください — 選択内容は次回のために保存されます。',
       keepAudio: 'そのまま保持',
       keepAudioMeta: '内蔵音声',
       convert: {

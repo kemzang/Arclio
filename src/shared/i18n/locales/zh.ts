@@ -257,6 +257,8 @@ const zh = {
       loadingAria: '正在加载格式',
       sizeUnknown: '大小未知',
       total: '总计',
+      skipToConfirm: '跳至确认',
+      skipToConfirmTooltip: '使用您保存的偏好设置完成所有剩余步骤。若要更改某项设置，请逐步继续操作——您的选择将在下次保存。',
       keepAudio: '保持原样',
       keepAudioMeta: '内置音频',
       convert: {

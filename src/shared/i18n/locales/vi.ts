@@ -257,6 +257,8 @@ const vi = {
       loadingAria: 'Đang tải định dạng',
       sizeUnknown: 'Không biết kích thước',
       total: 'Tổng cộng',
+      skipToConfirm: 'Bỏ qua đến xác nhận',
+      skipToConfirmTooltip: 'Sử dụng tùy chọn đã lưu của bạn cho tất cả các bước còn lại. Để thay đổi một cài đặt, hãy tiếp tục từng bước — lựa chọn của bạn sẽ được lưu cho lần sau.',
       keepAudio: 'Giữ nguyên',
       keepAudioMeta: 'Âm thanh tích hợp',
       convert: {

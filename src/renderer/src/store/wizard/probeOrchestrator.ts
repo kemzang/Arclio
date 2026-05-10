@@ -371,6 +371,12 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
       logStep('skipSubtitles', state.wizardStep, target, pickWizardSnapshot(get()));
     },
 
+    skipToConfirm: () => {
+      const fromStep = get().wizardStep;
+      set({ wizardStep: 'confirm' });
+      logStep('skipToConfirm', fromStep, 'confirm', pickWizardSnapshot(get()));
+    },
+
     reset: () => {
       const fromStep = get().wizardStep;
       WizardCommands.resetAll(set);

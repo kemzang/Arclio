@@ -258,6 +258,8 @@ const sw = {
       loadingAria: 'Inapakia maumbo',
       sizeUnknown: 'Ukubwa haujulikani',
       total: 'Jumla',
+      skipToConfirm: 'Ruka hadi uthibitisho',
+      skipToConfirmTooltip: 'Inatumia mapendeleo yako yaliyohifadhiwa kwa hatua zote zilizobaki. Ili kubadilisha mipangilio, endelea hatua kwa hatua badala yake — chaguo lako litahifadhiwa kwa wakati ujao.',
       convert: {
         label: 'Badilisha',
         uncompressed: 'Badilisha · isiyoshinikizwa',

@@ -136,8 +136,8 @@ export function StepConfirm(): JSX.Element {
         </p>
       )}
 
-      <div className="flex items-center gap-2 sticky bottom-0 bg-background py-3 -mx-6 px-6 border-t border-border/50">
-        <Button variant="ghost" type="button" onClick={back} data-testid="btn-back" className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground mr-auto">
+      <div className="flex items-center justify-end gap-2 sticky bottom-0 bg-background py-3 -mx-6 px-6 border-t border-border/50">
+        <Button variant="ghost" type="button" onClick={back} data-testid="btn-back" className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
           {t('common.back')}
         </Button>
         <Tooltip>

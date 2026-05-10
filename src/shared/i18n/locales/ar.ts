@@ -257,6 +257,8 @@ const ar = {
       loadingAria: 'جارٍ تحميل الصيغ',
       sizeUnknown: 'الحجم غير معروف',
       total: 'الإجمالي',
+      skipToConfirm: 'تخطَّ إلى التأكيد',
+      skipToConfirmTooltip: 'يستخدم تفضيلاتك المحفوظة لجميع الخطوات المتبقية. لتغيير إعداد ما، تابع خطوةً بخطوة — وسيُحفظ اختيارك للمرة القادمة.',
       keepAudio: 'إبقاؤه كما هو',
       keepAudioMeta: 'الصوت المضمّن',
       convert: {

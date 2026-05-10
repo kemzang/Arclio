@@ -256,6 +256,8 @@ const om = {
       loadingAria: "Foormaatii fe'amaa jira",
       sizeUnknown: "Bal'inni hin beekamne",
       total: 'Waliigala',
+      skipToConfirm: "Mirkaneessaatti ce'i",
+      skipToConfirmTooltip: "Filannoowwan kee kan olkaawaman tarkaanfiiwwan hafan hundaaf fayyadama. Qindaa'ina jijjiiruf, tarkaanfii tarkaanfiin itti fufii — filannoon kee yeroo itti aanuuf olkaawama.",
       keepAudio: 'Akka jirutti eegi',
       keepAudioMeta: 'Sagalee keessoo',
       convert: {

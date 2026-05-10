@@ -259,6 +259,8 @@ const de = {
       loadingAria: 'Formate werden geladen',
       sizeUnknown: 'Größe unbekannt',
       total: 'Gesamt',
+      skipToConfirm: 'Zur Bestätigung überspringen',
+      skipToConfirmTooltip: 'Verwendet deine gespeicherten Einstellungen für alle verbleibenden Schritte. Um eine Einstellung zu ändern, fahre stattdessen Schritt für Schritt fort – deine Wahl wird für das nächste Mal gespeichert.',
       convert: {
         label: 'Konvertieren',
         uncompressed: 'Konvertieren · unkomprimiert',

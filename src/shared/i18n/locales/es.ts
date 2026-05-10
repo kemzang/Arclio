@@ -258,6 +258,8 @@ const es = {
       loadingAria: 'Cargando formatos',
       sizeUnknown: 'Tamaño desconocido',
       total: 'Total',
+      skipToConfirm: 'Saltar a confirmar',
+      skipToConfirmTooltip: 'Usa tus preferencias guardadas para todos los pasos restantes. Para cambiar una opción, continúa paso a paso — tu elección se guardará para la próxima vez.',
       convert: {
         label: 'Convertir',
         uncompressed: 'Convertir · sin compresión',

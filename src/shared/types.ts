@@ -368,7 +368,7 @@ export type UpdateInstallResult = { ok: true } | { ok: false; error: string };
 
 export type WizardStepName = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
 
-export type WizardTransition = 'submitUrl' | 'advance' | 'back' | 'skipSubtitles' | 'retry' | 'reset';
+export type WizardTransition = 'submitUrl' | 'advance' | 'back' | 'skipSubtitles' | 'skipToConfirm' | 'retry' | 'reset';
 
 export interface WizardStepSnapshot {
   transition: WizardTransition;

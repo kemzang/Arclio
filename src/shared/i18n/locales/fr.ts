@@ -259,6 +259,8 @@ const fr = {
       loadingAria: 'Chargement des formats',
       sizeUnknown: 'Taille inconnue',
       total: 'Total',
+      skipToConfirm: 'Passer à la confirmation',
+      skipToConfirmTooltip: 'Utilise tes préférences enregistrées pour toutes les étapes restantes. Pour modifier un réglage, continue étape par étape — ton choix sera sauvegardé pour la prochaine fois.',
       convert: {
         label: 'Convertir',
         uncompressed: 'Convertir · non compressé',

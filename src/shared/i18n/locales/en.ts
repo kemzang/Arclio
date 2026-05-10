@@ -258,6 +258,8 @@ const en = {
       loadingAria: 'Loading formats',
       sizeUnknown: 'Size unknown',
       total: 'Total',
+      skipToConfirm: 'Skip to confirm',
+      skipToConfirmTooltip: 'Uses your saved preferences for all remaining steps. To change a setting, continue step by step instead — your choice will be saved for next time.',
       convert: {
         label: 'Convert',
         uncompressed: 'Convert · uncompressed',

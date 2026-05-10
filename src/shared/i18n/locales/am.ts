@@ -257,6 +257,8 @@ const am = {
       loadingAria: 'ቅርጸቶችን በመጫን ላይ',
       sizeUnknown: 'መጠን አይታወቅም',
       total: 'ጠቅላላ',
+      skipToConfirm: 'ወደ ማረጋገጫ ዝለል',
+      skipToConfirmTooltip: 'ለቀሩት ሁሉም ደረጃዎች የተቀመጡ ምርጫዎችዎን ይጠቀማል። አንድ ቅንብር ለመለወጥ ደረጃ በደረጃ ቀጥሉ — ምርጫዎ ለሚቀጥለው ጊዜ ይቀመጣል።',
       keepAudio: 'እንዳለ ቀጥል',
       keepAudioMeta: 'ቀደም ሲል የተካተተ ድምጽ',
       convert: {

@@ -8,9 +8,10 @@ import { Separator } from '../../ui/separator.js';
 interface FormatFooterProps {
   onBack: () => void;
   onContinue: () => void;
+  onSkipToConfirm: () => void;
 }
 
-export function FormatFooter({ onBack, onContinue }: FormatFooterProps): JSX.Element {
+export function FormatFooter({ onBack, onContinue, onSkipToConfirm }: FormatFooterProps): JSX.Element {
   const { t } = useTranslation();
   const { mode, selectedFilesize, canContinue } = useFormatSelectionView();
   return (
@@ -36,6 +37,9 @@ export function FormatFooter({ onBack, onContinue }: FormatFooterProps): JSX.Ele
           </Button>
           <Button type="button" onClick={onContinue} disabled={!canContinue} className="shadow-[0_4px_14px_var(--brand-glow)]">
             {t('common.continue')}
+          </Button>
+          <Button type="button" onClick={onSkipToConfirm} title={t('wizard.formats.skipToConfirmTooltip')} className="shadow-[0_4px_14px_var(--brand-glow)]">
+            {t('wizard.formats.skipToConfirm')}
           </Button>
         </div>
       </div>
