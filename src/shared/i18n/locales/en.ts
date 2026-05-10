@@ -378,6 +378,8 @@ const en = {
     clearTitle: 'Clear completed downloads',
     pauseAll: 'Pause all',
     pauseAllTitle: 'Pause all active downloads',
+    resumeFirst: 'Resume',
+    resumeFirstTitle: 'Resume first paused download',
     cancelAll: 'Cancel all',
     cancelAllTitle: 'Cancel all active and pending downloads',
     tip: 'Your download is queued below — open anytime to track progress.',
@@ -500,6 +502,7 @@ const en = {
       message_other: '{{count}} downloads in progress',
       detail: 'Closing will cancel all active downloads.',
       confirm: 'Cancel Downloads & Quit',
+      pause: 'Pause Downloads & Quit',
       keep: 'Keep Downloading'
     },
     closeToTray: {
