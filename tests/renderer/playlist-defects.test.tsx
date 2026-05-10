@@ -228,4 +228,3 @@ describe('D2 — persistFormatPrefs mode-keyed', () => {
     expect(patch).not.toHaveProperty('playlist');
   });
 });
-
