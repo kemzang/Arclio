@@ -44,6 +44,7 @@ export const SubtitleOnlyPhase: Phase = {
       }
     );
 
+    if (active.pauseRequested) return { kind: 'paused' };
     if (active.cancelRequested) return { kind: 'cancelled' };
 
     if (result.kind !== 'success') {

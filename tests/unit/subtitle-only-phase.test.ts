@@ -141,6 +141,25 @@ describe('SubtitleOnlyPhase', () => {
     expect(shouldAbort?.()).toBe(true);
   });
 
+  it('pauseRequested after run → returns paused (not hard-failed)', async () => {
+    const active = makeActive({ cancelRequested: false });
+    const runMock = vi.fn().mockImplementationOnce(async () => {
+      active.pauseRequested = true;
+      return EXIT_ERROR; // SIGTERM makes yt-dlp exit non-zero
+    });
+    const ctx: PhaseContext = {
+      active,
+      signal: active.signal,
+      register: () => undefined,
+      ytDlp: { run: runMock } as never,
+      emitStatus: vi.fn(),
+      safeConsume: vi.fn()
+    };
+
+    const outcome = await SubtitleOnlyPhase.run(ctx);
+    expect(outcome.kind).toBe('paused');
+  });
+
   it('cancelled after run → returns cancelled', async () => {
     const ctx: PhaseContext = {
       active: makeActive({ cancelRequested: false }),

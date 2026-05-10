@@ -89,6 +89,7 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
         }
       );
 
+      if (active.pauseRequested) return { kind: 'paused' };
       if (subResult.kind !== 'success') {
         logger.warn('Subtitle fetch failed — video already saved', {
           jobId: job.id,
@@ -104,7 +105,10 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
         await dedupeSubtitleFiles(active.subtitlePaths, preparedJob.extractor, job.id, () => active.cancelRequested);
       }
 
-      if (embedAfter) await runEmbedMux(ctx);
+      if (embedAfter) {
+        await runEmbedMux(ctx);
+        if (active.pauseRequested) return { kind: 'paused' };
+      }
 
       return { kind: 'completed' };
     }

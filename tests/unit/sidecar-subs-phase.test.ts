@@ -162,6 +162,24 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
     await SidecarSubsPhase(false).run(makeCtx(SUCCESS));
     expect(muxSubtitlesIntoVideo).not.toHaveBeenCalled();
   });
+
+  it('pauseRequested during subtitle fetch → returns paused (not soft-failed)', async () => {
+    const active = makeActive({ cancelRequested: false });
+    const runMock = vi.fn().mockImplementationOnce(async () => {
+      active.pauseRequested = true;
+      return EXIT_ERROR; // SIGTERM makes yt-dlp exit non-zero
+    });
+    const ctx: PhaseContext = {
+      active,
+      signal: active.signal,
+      register: (d) => active.disposables.push(d),
+      ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
+      emitStatus: vi.fn(),
+      safeConsume: vi.fn()
+    };
+    const outcome = await SidecarSubsPhase(false).run(ctx);
+    expect(outcome.kind).toBe('paused');
+  });
 });
 
 describe('SidecarSubsPhase(embedAfter=true)', () => {
@@ -229,6 +247,26 @@ describe('SidecarSubsPhase(embedAfter=true)', () => {
     const outcome = await SidecarSubsPhase(true).run(ctx);
     expect(muxSubtitlesIntoVideo).not.toHaveBeenCalled();
     expect(outcome.kind).toBe('completed');
+  });
+
+  it('pauseRequested during embed mux → returns paused (not completed)', async () => {
+    const active = makeActive({ cancelRequested: false, mediaPath: '/tmp/video.mp4', subtitlePaths: ['/tmp/video.en.srt'] });
+    const runMock = vi.fn().mockResolvedValue(SUCCESS);
+    vi.mocked(muxSubtitlesIntoVideo).mockImplementationOnce(async (opts) => {
+      opts.onSpawn({ kill: vi.fn() } as never);
+      active.pauseRequested = true;
+      return { ok: true, outputPath: '/tmp/video.mkv' };
+    });
+    const ctx: PhaseContext = {
+      active,
+      signal: active.signal,
+      register: (d) => active.disposables.push(d),
+      ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
+      emitStatus: vi.fn(),
+      safeConsume: vi.fn()
+    };
+    const outcome = await SidecarSubsPhase(true).run(ctx);
+    expect(outcome.kind).toBe('paused');
   });
 
   it('emits mergingFormats before mux', async () => {
