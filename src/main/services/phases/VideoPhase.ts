@@ -7,8 +7,8 @@ import { classifyYtDlpFailure } from '../download/errorClassification.js';
 import { cleanupPartFiles, cleanupTempDirByPath } from '../download/cleanup.js';
 import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
-async function setupTempDir(outputDir: string, jobId: string, preserve: boolean): Promise<string | undefined> {
-  const tempDir = join(outputDir, '.arroxy-temp', jobId.slice(0, 8));
+async function setupTempDir(outputDir: string, jobId: string, preserve: boolean, overridePath?: string): Promise<string | undefined> {
+  const tempDir = overridePath ?? join(outputDir, '.arroxy-temp', jobId.slice(0, 8));
   try {
     if (!preserve) await rm(tempDir, { recursive: true, force: true });
     await mkdir(tempDir, { recursive: true });
@@ -30,7 +30,7 @@ export function VideoPhase(embed: boolean): Phase {
         throw new Error('invariant: VideoPhase reached with subtitle-only job');
       }
 
-      const tempDir = await setupTempDir(job.outputDir, job.id, active.tempDir != null);
+      const tempDir = await setupTempDir(job.outputDir, job.id, active.tempDir != null, active.tempDir);
       if (tempDir) {
         active.tempDir = tempDir;
         // Register tempDir + .part-files cleanup. Disposables drain on

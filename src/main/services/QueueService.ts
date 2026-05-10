@@ -162,11 +162,7 @@ export class QueueService extends EventEmitter {
       }
     }
 
-    // Fresh start — tempDir is preserved on the QueueItem so DownloadService
-    // can be plumbed to use it, but the start() path doesn't accept tempDir
-    // today. yt-dlp's --continue will pick up the .part file in outputDir if
-    // the user didn't move it.
-    const startResult = await this.downloadService.start({ url: item.url, outputDir: item.outputDir, job: item.job });
+    const startResult = await this.downloadService.start({ url: item.url, outputDir: item.outputDir, job: item.job, tempDir: item.tempDir });
     if (!startResult.ok) {
       this.applyEvent(itemId, { kind: 'failed', error: { kind: 'unknown', raw: startResult.error.message } });
       return fail(startResult.error);

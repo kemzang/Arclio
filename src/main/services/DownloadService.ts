@@ -91,6 +91,7 @@ export class DownloadService extends EventEmitter {
       cancelRequested: false,
       pauseRequested: false,
       subtitlePaths: [],
+      tempDir: input.tempDir,
       disposables: []
     };
     this.activeJobs.set(job.id, active);

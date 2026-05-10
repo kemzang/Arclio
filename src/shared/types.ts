@@ -326,6 +326,7 @@ export interface StartDownloadInput {
   outputDir?: string;
   cookiesMode?: CookiesMode;
   job: PreparedJob;
+  tempDir?: string;
 }
 
 export interface StartDownloadOutput {

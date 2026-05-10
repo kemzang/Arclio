@@ -103,6 +103,40 @@ describe('QueueService — downloadService listener path', () => {
   });
 });
 
+describe('resume — cross-restart path', () => {
+  it('passes tempDir from QueueItem to downloadService.start() when no in-memory paused job exists', async () => {
+    const { qs, ds } = makeService();
+    const savedTempDir = '/tmp/arroxy-test/072a2c22';
+
+    qs.add([makeItem({ id: 'r-1', status: 'paused-active', lastJobId: 'old-job-id', tempDir: savedTempDir })]);
+
+    // Simulate cross-restart: DownloadService has no memory of the old job.
+    ds.resume.mockResolvedValue(ok({ resumed: false }));
+    ds.start.mockResolvedValue(ok({ job: { id: 'new-job-id', url: '', outputDir: '/tmp', status: 'running', createdAt: '', updatedAt: '' } }));
+
+    await qs.resume('r-1');
+
+    expect(ds.start).toHaveBeenCalledOnce();
+    const callArg = ds.start.mock.calls[0][0] as { tempDir?: string };
+    expect(callArg.tempDir).toBe(savedTempDir);
+  });
+
+  it('does not pass tempDir when QueueItem has none (paused-active without tempDir)', async () => {
+    const { qs, ds } = makeService();
+
+    qs.add([makeItem({ id: 'r-2', status: 'paused-active', lastJobId: 'old-job-id-2' })]);
+
+    ds.resume.mockResolvedValue(ok({ resumed: false }));
+    ds.start.mockResolvedValue(ok({ job: { id: 'new-job-id-2', url: '', outputDir: '/tmp', status: 'running', createdAt: '', updatedAt: '' } }));
+
+    await qs.resume('r-2');
+
+    expect(ds.start).toHaveBeenCalledOnce();
+    const callArg = ds.start.mock.calls[0][0] as { tempDir?: string };
+    expect(callArg.tempDir).toBeUndefined();
+  });
+});
+
 describe('pauseAll', () => {
   it('pauses all running items', async () => {
     const { qs, ds } = makeService();
