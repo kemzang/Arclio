@@ -1,6 +1,6 @@
 {
   "name": "arroxy",
-  "version": "0.3.2-beta.8",
+  "version": "0.3.2-beta.9",
   "description": "Arroxy - YouTube downloader app",
   "type": "module",
   "main": "out/main/index.js",
@@ -23,6 +23,8 @@
     "dist:win:dir": "bun run clean && bun run build && electron-builder --win dir --publish never",
     "dist:mac": "bun run clean && bun run build && electron-builder --mac --publish never",
     "dist:mac:dir": "bun run clean && bun run build && electron-builder --mac dir --publish never",
+    "dist:mac:x64:dir": "bun run clean && bun run build && electron-builder --mac dir --arch x64 --publish never",
+    "dist:mac:arm64:dir": "bun run clean && bun run build && electron-builder --mac dir --arch arm64 --publish never",
     "dist:linux": "bun run clean && bun run build && ELECTRON_BUILDER_COMPRESSION_LEVEL=5 electron-builder --linux --publish never",
     "dist:linux:dir": "bun run clean && bun run build && electron-builder --linux dir --publish never",
     "dist:release": "bun run clean && bun run build && electron-builder --publish always",
