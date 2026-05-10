@@ -135,12 +135,10 @@ function maybeBlockIncompleteCookiesConfig(url: string, set: SetState, get: GetS
 function applyVideoProbeResult(probe: Extract<ProbeResult, { kind: 'video' }>, set: SetState, get: GetState): void {
   const settings = get().settings;
   const { formats, title, thumbnail, duration, subtitles, automaticCaptions, degraded } = probe;
-  // Single-mode persisted prefs (`lastPreset`, `lastVideoResolution`,
-  // `lastAudioSelection`, `lastSubtitleLanguages`, `lastSubtitleMode/Format`,
-  // `lastSubfolder*`) are scoped to YouTube. Non-YT extractors get fresh
-  // defaults so a YT formatId / 1080p resolution / "YouTube Music" subfolder
-  // doesn't leak into a Vimeo/PornHub/etc. probe. Common prefs (embed flags,
-  // sponsorblock mode, output dir) stay global since they're pure intent.
+  // Format/audio/subtitle/preset prefs are scoped to YouTube. Non-YT extractors
+  // get fresh defaults so a YT formatId / 1080p resolution doesn't leak into a
+  // Vimeo/PornHub/etc. probe. Subfolder + common prefs (embed flags, sponsorblock
+  // mode, output dir) are global intent and apply to all extractors.
   const persistApplies = isYouTubeExtractor(probe.extractor);
   const scopedSettings = persistApplies ? settings : null;
   let { videoFormatId, audioSelection, preset } = restoreFormatSelection(formats, scopedSettings);
@@ -176,8 +174,8 @@ function applyVideoProbeResult(probe: Extract<ProbeResult, { kind: 'video' }>, s
     wizardSubtitleMode: scopedSettings?.single?.lastSubtitleMode ?? DEFAULTS.subtitleMode,
     wizardSubtitleFormat: scopedSettings?.single?.lastSubtitleFormat ?? DEFAULTS.subtitleFormat,
     ...restoreCommonWizardPrefs(settings),
-    wizardSubfolderEnabled: scopedSettings?.single?.lastSubfolderEnabled ?? false,
-    wizardSubfolderName: scopedSettings?.single?.lastSubfolder ?? '',
+    wizardSubfolderEnabled: settings?.single?.lastSubfolderEnabled ?? false,
+    wizardSubfolderName: settings?.single?.lastSubfolder ?? '',
     formatsLoading: false,
     playlistProbeLoading: false,
     playlistItems: [],

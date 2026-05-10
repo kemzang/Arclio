@@ -106,7 +106,7 @@ describe('persist scope — WRITE side', () => {
     expect(lastPatch).toHaveProperty('single');
   });
 
-  it('non-YouTube run writes ONLY common (single skipped to prevent contamination)', async () => {
+  it('non-YouTube run writes common + subfolder fields only (format/audio/subtitle skipped to prevent contamination)', async () => {
     const updateMock = vi.fn().mockImplementation(async () => ok(buildAppSettings({})));
     const api = buildMockAppApi({ settings: buildAppSettings({}) });
     api.settings.update = updateMock;
@@ -121,7 +121,13 @@ describe('persist scope — WRITE side', () => {
     expect(updateMock).toHaveBeenCalled();
     const lastPatch = updateMock.mock.calls[updateMock.mock.calls.length - 1][0];
     expect(lastPatch).toHaveProperty('common');
-    expect(lastPatch).not.toHaveProperty('single');
+    // single must exist but contain only subfolder fields — no format/audio/subtitle contamination
+    expect(lastPatch).toHaveProperty('single');
+    expect(lastPatch.single).toHaveProperty('lastSubfolderEnabled');
+    expect(lastPatch.single).toHaveProperty('lastSubfolder');
+    expect(lastPatch.single).not.toHaveProperty('lastPreset');
+    expect(lastPatch.single).not.toHaveProperty('lastAudioSelection');
+    expect(lastPatch.single).not.toHaveProperty('lastVideoResolution');
   });
 });
 
@@ -136,6 +142,19 @@ describe('persist scope — READ side', () => {
     await useAppStore.getState().submitUrl();
 
     expect(useAppStore.getState().activePreset).toBe('audio-only');
+  });
+
+  it('non-YouTube probe restores persisted subfolder settings', async () => {
+    const api = buildMockAppApi({ settings: buildAppSettings({ lastSubfolderEnabled: true, lastSubfolder: 'Music' }) });
+    api.downloads.probe = vi.fn().mockResolvedValue(ok(buildVideoProbe('vimeo')));
+    window.appApi = api;
+
+    await useAppStore.getState().initialize();
+    useAppStore.getState().setWizardUrl('https://vimeo.com/123');
+    await useAppStore.getState().submitUrl();
+
+    expect(useAppStore.getState().wizardSubfolderEnabled).toBe(true);
+    expect(useAppStore.getState().wizardSubfolderName).toBe('Music');
   });
 
   it('non-YouTube probe ignores persisted lastPreset (fresh defaults)', async () => {

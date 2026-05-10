@@ -59,7 +59,12 @@ export function applyPreset(preset: Preset, formats: FormatOption[]): { videoFor
     const videoFormatId = grouped[0]?.formatId ?? '';
     return { videoFormatId, audioSelection: audioForVideoPick(videoFormatId, formats, bestAudio) };
   }
-  if (preset === 'audio-only') return { videoFormatId: '', audioSelection: nativeAudio(bestAudio) };
+  if (preset === 'audio-only') {
+    if (bestAudio !== null) return { videoFormatId: '', audioSelection: nativeAudio(bestAudio) };
+    // Muxed-only source: no separable audio streams. Default to converting the
+    // embedded track — native 'none' would land on the disabled "No audio" row.
+    return { videoFormatId: '', audioSelection: { kind: 'convert-lossy', target: 'mp3', bitrateKbps: DEFAULT_AUDIO_BITRATE } };
+  }
   if (preset === 'subtitle-only') return { videoFormatId: '', audioSelection: { kind: 'none' } };
   if (preset === 'balanced') {
     const target = grouped.find((g) => {

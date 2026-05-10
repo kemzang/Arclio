@@ -82,14 +82,13 @@ describe('preset pipeline → strategy', () => {
     expect(strategyFor(job)).toBe('video');
   });
 
-  it('audio-only preset with no audio formats: applyPreset returns no media selection', () => {
+  it('audio-only preset with no native audio formats (muxed-only source): defaults to mp3 convert', () => {
     const formatsNoAudio = MOCK_FORMATS.filter((f) => !f.isAudioOnly);
     const { videoFormatId, audioSelection } = applyPreset('audio-only', formatsNoAudio);
-    expect(audioSelection.kind).toBe('none');
+    expect(videoFormatId).toBe('');
+    expect(audioSelection).toEqual({ kind: 'convert-lossy', target: 'mp3', bitrateKbps: 192 });
     expect(buildFormatId(videoFormatId, audioSelection)).toBeUndefined();
-    expect(buildAudioConvertPayload(audioSelection)).toBeUndefined();
-    // prepareJob enforces media intent structurally: it would throw rather than
-    // silently produce a subtitle-only job for an audio-only preset.
+    expect(buildAudioConvertPayload(audioSelection)).toEqual({ target: 'mp3', bitrateKbps: 192 });
   });
 });
 

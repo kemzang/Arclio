@@ -118,13 +118,14 @@ describe('applyPreset — muxed-source default audio', () => {
     expect(r.audioSelection).toEqual({ kind: 'native', formatId: '140' });
   });
 
-  it('audio-only preset is unaffected — always picks native audio when available', () => {
+  it('audio-only preset picks native audio when available; falls back to mp3 convert on muxed-only source', () => {
     const r1 = applyPreset('audio-only', FORMATS);
     expect(r1.audioSelection).toEqual({ kind: 'native', formatId: '140' });
     expect(r1.videoFormatId).toBe('');
-    // Muxed-only source has no separable audio → audio-only falls to {kind:'none'}.
+    // Muxed-only source has no separable audio → default to convert-lossy/mp3
+    // so the audio-only mode always has a valid (non-disabled) option selected.
     const r2 = applyPreset('audio-only', MUXED_FORMATS);
-    expect(r2.audioSelection).toEqual({ kind: 'none' });
+    expect(r2.audioSelection).toEqual({ kind: 'convert-lossy', target: 'mp3', bitrateKbps: 192 });
   });
 });
 

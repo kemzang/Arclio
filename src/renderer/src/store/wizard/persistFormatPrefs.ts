@@ -43,9 +43,13 @@ export async function persistFormatPrefs(set: SetState, get: GetState): Promise<
   }
 
   if (!persistSingleScope) {
-    // Non-YT: only persist common prefs (global intent). Skip single.*
-    // entirely so the saved bag stays YT-shaped.
-    const result = await window.appApi.settings.update({ common });
+    // Non-YT: persist common prefs + destination folder. Skip format/audio/
+    // subtitle fields so YT-shaped prefs stay clean.
+    const single = {
+      lastSubfolderEnabled: get().wizardSubfolderEnabled,
+      lastSubfolder: get().wizardSubfolderName.trim()
+    };
+    const result = await window.appApi.settings.update({ common, single });
     if (result.ok) set({ settings: result.data });
     return;
   }
