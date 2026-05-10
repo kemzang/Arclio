@@ -191,7 +191,7 @@ function applyPlaylistProbeResult(probe: Extract<ProbeResult, { kind: 'playlist'
   // Audio-only sources skip the persisted video preset and default straight
   // to `audio-best` — the user came to a music host, video presets would be
   // wrong (and yt-dlp would reject a video preset for audio-only entries).
-  const persistedPreset = settings?.playlist?.lastPlaylistPreset ?? null;
+  const persistedPreset = settings?.playlist?.lastPlaylistPreset ?? 'video-best';
   const selectedPlaylistPreset: PlaylistPreset | null = probe.isAudioOnlySource ? 'audio-best' : persistedPreset;
   set({
     wizardStep: 'playlistItems',

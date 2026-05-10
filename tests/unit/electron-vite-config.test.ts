@@ -1,9 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  isExternalMainBuildImport,
-  isExternalPreloadBuildImport
-} from '../../electron.vite.config.js';
+import { isExternalMainBuildImport, isExternalPreloadBuildImport } from '../../electron.vite.config.js';
 
 describe('electron.vite.config', () => {
   it('bundles main-process npm dependencies while keeping electron and node builtins external', () => {
