@@ -1,11 +1,16 @@
 // @vitest-environment node
 
 import { describe, it, expect, vi } from 'vitest';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 import { EventEmitter } from 'node:events';
 import { QueueService } from '@main/services/QueueService.js';
-import type { QueueStore } from '@main/stores/QueueStore.js';
+import { QueueStore } from '@main/stores/QueueStore.js';
 import type { DownloadService } from '@main/services/DownloadService.js';
 import type { StatusEvent, ProgressEvent } from '@shared/types.js';
+import { ok, fail } from '@shared/result.js';
+import { createAppError } from '@main/utils/errorFactory.js';
 import { makeItem } from '../shared/fixtures.js';
 
 class FakeDownloadService extends EventEmitter {
@@ -77,5 +82,61 @@ describe('QueueService — downloadService listener path', () => {
 
     const [item] = qs.snapshot();
     expect(item.progressPercent).toBe(67);
+  });
+
+  it('cancel-all removes a running item from persisted restart state', async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'queue-service-'));
+    const store = new QueueStore(dir);
+    const ds = new FakeDownloadService();
+    ds.cancel.mockResolvedValue({ ok: true, data: { cancelled: true } });
+    const qs = new QueueService(store, ds as unknown as DownloadService);
+
+    qs.add([makeItem({ id: 'q-cancel', status: 'running', lastJobId: 'job-cancel' })]);
+
+    const result = await qs.cancel(null);
+
+    expect(result.ok).toBe(true);
+    const reloaded = await store.load();
+    expect(reloaded.ok).toBe(true);
+    if (!reloaded.ok) return;
+    expect(reloaded.data).toEqual([]);
+  });
+});
+
+describe('pauseAll', () => {
+  it('pauses all running items', async () => {
+    const { qs, ds } = makeService();
+    const a = makeItem({ id: 'a', status: 'running', lastJobId: 'job-a' });
+    const b = makeItem({ id: 'b', status: 'running', lastJobId: 'job-b' });
+    const c = makeItem({ id: 'c', status: 'pending' });
+    // eslint-disable-next-line @typescript-eslint/dot-notation
+    qs['items'] = [a, b, c];
+
+    ds.pause.mockResolvedValue(ok({ paused: true, tempDir: '/tmp/x' }));
+    await qs.pauseAll();
+
+    expect(qs.snapshot().find((i) => i.id === 'a')?.status).toBe('paused-active');
+    expect(qs.snapshot().find((i) => i.id === 'b')?.status).toBe('paused-active');
+    expect(qs.snapshot().find((i) => i.id === 'c')?.status).toBe('pending'); // untouched
+  });
+
+  it('continues pausing remaining items when one fails', async () => {
+    const { qs, ds } = makeService();
+    const a = makeItem({ id: 'a', status: 'running', lastJobId: 'job-a' });
+    const b = makeItem({ id: 'b', status: 'running', lastJobId: 'job-b' });
+    // eslint-disable-next-line @typescript-eslint/dot-notation
+    qs['items'] = [a, b];
+
+    let callCount = 0;
+    ds.pause = vi.fn().mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return Promise.resolve(fail(createAppError('unknown', 'pause failed')));
+      return Promise.resolve(ok({ paused: true, tempDir: '/tmp/y' }));
+    });
+
+    await qs.pauseAll();
+
+    expect(qs.snapshot().find((i) => i.id === 'a')?.status).toBe('running'); // failed, stays running
+    expect(qs.snapshot().find((i) => i.id === 'b')?.status).toBe('paused-active');
   });
 });

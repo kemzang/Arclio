@@ -122,6 +122,13 @@ export class QueueService extends EventEmitter {
     return ok(undefined);
   }
 
+  async pauseAll(): Promise<void> {
+    const running = this.items.filter((i) => i.status === QUEUE_STATUS.running);
+    for (const item of running) {
+      await this.pause(item.id);
+    }
+  }
+
   async resume(itemId: string): Promise<Result<void>> {
     const item = this.findItem(itemId);
     if (!item) return fail(createAppError('validation', `queue item ${itemId} not found`));
