@@ -60,13 +60,7 @@ function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload
     register: () => undefined,
     ytDlp: { run: runMock, ffmpegPath: null } as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'unknown', raw: '' }),
-    attachYtDlpProcess: vi.fn(),
-    safeConsume: vi.fn(),
-    cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-    cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-    finalize: vi.fn().mockResolvedValue(undefined),
-    moveToPaused: vi.fn()
+    safeConsume: vi.fn()
   };
 }
 
@@ -100,11 +94,12 @@ describe('SubtitleOnlyPhase', () => {
     expect(outcome.kind).toBe('completed');
   });
 
-  it('failure → hard-failed (no video to fall back to)', async () => {
+  it('failure → hard-failed with classified error payload', async () => {
     const ctx = makeCtx(EXIT_ERROR);
     const outcome = await SubtitleOnlyPhase.run(ctx);
     expect(outcome.kind).toBe('hard-failed');
-    expect(ctx.emitYtdlpFailure).toHaveBeenCalledOnce();
+    if (outcome.kind === 'hard-failed') expect(outcome.error.kind).toBe('unknown');
+    expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('error', expect.any(String), expect.any(Object), expect.objectContaining({ kind: 'unknown' }));
   });
 
   it('success with usedExtractorFallback → sets active.usedExtractorFallback', async () => {
@@ -153,13 +148,7 @@ describe('SubtitleOnlyPhase', () => {
       register: () => undefined,
       ytDlp: {} as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
     const runMock = vi.fn().mockImplementationOnce(async () => {
       ctx.active.cancelRequested = true;
@@ -183,13 +172,7 @@ describe('SubtitleOnlyPhase', () => {
       register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await SubtitleOnlyPhase.run(ctx);
@@ -209,13 +192,7 @@ describe('SubtitleOnlyPhase', () => {
       register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await SubtitleOnlyPhase.run(ctx);
@@ -223,29 +200,27 @@ describe('SubtitleOnlyPhase', () => {
     expect(vi.mocked(ctx.emitStatus)).not.toHaveBeenCalled();
   });
 
-  it('onSpawn → calls attachYtDlpProcess with proc and fetchingSubtitles', async () => {
-    const fakeProc = {};
+  it('onSpawn → assigns process, registers SIGKILL disposable, emits fetchingSubtitles', async () => {
+    const fakeProc = { kill: vi.fn() };
     const runMock = vi.fn().mockImplementation(async (_req, signal) => {
       signal?.onSpawn?.(fakeProc);
       return SUCCESS;
     });
+    const active = makeActive();
+    const registerSpy = vi.fn((d: () => void | Promise<void>) => active.disposables.push(d));
     const ctx: PhaseContext = {
-      active: makeActive(),
-      signal: new AbortController().signal,
-      register: () => undefined,
+      active,
+      signal: active.signal,
+      register: registerSpy,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await SubtitleOnlyPhase.run(ctx);
 
-    expect(ctx.attachYtDlpProcess).toHaveBeenCalledWith(fakeProc, STATUS_KEY.fetchingSubtitles);
+    expect(active.ytDlpProcess).toBe(fakeProc);
+    expect(registerSpy).toHaveBeenCalled();
+    expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('download', STATUS_KEY.fetchingSubtitles);
   });
 });

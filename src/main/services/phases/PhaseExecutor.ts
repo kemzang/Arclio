@@ -1,60 +1,44 @@
 import { STATUS_KEY } from '@shared/schemas.js';
-import type { Phase, PhaseContext } from './types.js';
+import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
+// Drives the phase chain. Returns the resolved outcome up to the caller
+// (DownloadService) — cleanup, finalize, and pause-park live there now,
+// driven by the outcome via JobLifecycle. The executor only emits the
+// terminal status events that ride the outcome (done/cancelled/extractor
+// fallback notice) so phases stay focused on their pipeline step.
 export class PhaseExecutor {
-  async run(ctx: PhaseContext, phases: Phase[]): Promise<void> {
+  async run(ctx: PhaseContext, phases: Phase[]): Promise<PhaseOutcome> {
     for (const phase of phases) {
       const out = await phase.run(ctx);
       switch (out.kind) {
         case 'continue':
           continue;
         case 'completed':
-          await this.complete(ctx);
-          return;
+          this.emitCompletion(ctx);
+          return out;
         case 'soft-failed':
           ctx.emitStatus('done', out.status);
-          await ctx.finalize('completed');
-          return;
+          return out;
         case 'hard-failed':
-          // Symmetrical with 'cancelled': a failed download leaves orphan
-          // .part / .ytdl / fragment files in outputDir. Without this, every
-          // failed attempt accumulates partial files the user has to clean
-          // up manually.
-          await ctx.cleanupTempDir();
-          await ctx.cleanupPartFiles(ctx.active.job.outputDir);
-          await ctx.finalize('failed', out.error);
-          return;
+          // Phase already emitted the error status with the LocalizedError.
+          return out;
         case 'cancelled':
-          await ctx.cleanupTempDir();
-          await ctx.cleanupPartFiles(ctx.active.job.outputDir);
           ctx.emitStatus('error', STATUS_KEY.cancelled);
-          await ctx.finalize('cancelled');
-          return;
+          return out;
         case 'paused':
-          // Cancel may have landed between phase setting `pauseRequested` and
-          // returning the paused outcome. If so, treat as cancelled — finalize
-          // and clean up rather than stranding the job in pausedJobs with
-          // already-killed processes.
-          if (ctx.active.cancelRequested) {
-            await ctx.cleanupTempDir();
-            await ctx.cleanupPartFiles(ctx.active.job.outputDir);
-            ctx.emitStatus('error', STATUS_KEY.cancelled);
-            await ctx.finalize('cancelled');
-            return;
-          }
-          ctx.moveToPaused();
-          return;
+          // DownloadService inspects active.cancelRequested to decide whether
+          // to park the job (paused) or treat as cancelled (drain + finalize).
+          return out;
       }
     }
-    await this.complete(ctx);
+    this.emitCompletion(ctx);
+    return { kind: 'completed' };
   }
 
-  private async complete(ctx: PhaseContext): Promise<void> {
-    await ctx.cleanupTempDir();
+  private emitCompletion(ctx: PhaseContext): void {
     if (ctx.active.usedExtractorFallback) {
       ctx.emitStatus('download', STATUS_KEY.usedExtractorFallback);
     }
     ctx.emitStatus('done', STATUS_KEY.complete);
-    await ctx.finalize('completed');
   }
 }

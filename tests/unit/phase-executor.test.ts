@@ -48,13 +48,7 @@ function makeCtx(activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
     register: () => undefined,
     ytDlp: {} as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'unknown', raw: '' }),
-    attachYtDlpProcess: vi.fn(),
-    safeConsume: vi.fn(),
-    cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-    cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-    finalize: vi.fn().mockResolvedValue(undefined),
-    moveToPaused: vi.fn()
+    safeConsume: vi.fn()
   };
 }
 
@@ -63,32 +57,32 @@ function stubPhase(outcome: PhaseOutcome): Phase {
 }
 
 describe('PhaseExecutor', () => {
-  it('continue → next phase runs; all continue → complete() at end', async () => {
+  it('continue → next phase runs; all continue → completed at end', async () => {
     const ctx = makeCtx();
     const phase1 = stubPhase({ kind: 'continue' });
     const phase2 = stubPhase({ kind: 'continue' });
 
-    await new PhaseExecutor().run(ctx, [phase1, phase2]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase1, phase2]);
 
     expect(phase1.run).toHaveBeenCalledOnce();
     expect(phase2.run).toHaveBeenCalledOnce();
-    expect(ctx.finalize).toHaveBeenCalledWith('completed');
+    expect(outcome.kind).toBe('completed');
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('done', STATUS_KEY.complete);
   });
 
-  it('completed → complete() called, subsequent phases skipped', async () => {
+  it('completed → returns completed, subsequent phases skipped', async () => {
     const ctx = makeCtx();
     const phase1 = stubPhase({ kind: 'completed' });
     const phase2 = stubPhase({ kind: 'continue' });
 
-    await new PhaseExecutor().run(ctx, [phase1, phase2]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase1, phase2]);
 
     expect(phase2.run).not.toHaveBeenCalled();
-    expect(ctx.finalize).toHaveBeenCalledWith('completed');
+    expect(outcome.kind).toBe('completed');
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('done', STATUS_KEY.complete);
   });
 
-  it('complete() with usedExtractorFallback → emits usedExtractorFallback before complete', async () => {
+  it('completion with usedExtractorFallback → emits usedExtractorFallback before complete', async () => {
     const ctx = makeCtx({ usedExtractorFallback: true });
 
     await new PhaseExecutor().run(ctx, []);
@@ -100,54 +94,55 @@ describe('PhaseExecutor', () => {
     expect(completeIdx).toBeGreaterThan(fallbackIdx);
   });
 
-  it('soft-failed → emits status on done stage, finalizes completed', async () => {
+  it('soft-failed → emits status on done stage, returns soft-failed', async () => {
     const ctx = makeCtx();
     const phase = stubPhase({ kind: 'soft-failed', status: STATUS_KEY.subtitlesFailed });
 
-    await new PhaseExecutor().run(ctx, [phase]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase]);
 
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('done', STATUS_KEY.subtitlesFailed);
-    expect(ctx.finalize).toHaveBeenCalledWith('completed');
+    expect(outcome.kind).toBe('soft-failed');
   });
 
-  it('hard-failed → finalizes failed with error payload, no emitStatus', async () => {
+  it('hard-failed → returns hard-failed with error payload, no emitStatus from executor', async () => {
     const ctx = makeCtx();
     const error: LocalizedError = { kind: 'botBlock', raw: '' };
     const phase = stubPhase({ kind: 'hard-failed', error });
 
-    await new PhaseExecutor().run(ctx, [phase]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase]);
 
-    expect(ctx.finalize).toHaveBeenCalledWith('failed', error);
+    expect(outcome.kind).toBe('hard-failed');
+    if (outcome.kind === 'hard-failed') expect(outcome.error).toEqual(error);
+    // Executor itself does not emit — phase already emitted with the LocalizedError.
     expect(vi.mocked(ctx.emitStatus)).not.toHaveBeenCalled();
   });
 
-  it('cancelled → cleanupPartFiles called with outputDir, emits cancelled, finalizes cancelled', async () => {
+  it('cancelled → emits cancelled status, returns cancelled', async () => {
     const ctx = makeCtx();
     const phase = stubPhase({ kind: 'cancelled' });
 
-    await new PhaseExecutor().run(ctx, [phase]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase]);
 
-    expect(ctx.cleanupPartFiles).toHaveBeenCalledWith('/tmp');
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('error', STATUS_KEY.cancelled);
-    expect(ctx.finalize).toHaveBeenCalledWith('cancelled');
+    expect(outcome.kind).toBe('cancelled');
   });
 
-  it('paused → moveToPaused called, finalize not called', async () => {
+  it('paused → returns paused, no terminal emitStatus', async () => {
     const ctx = makeCtx();
     const phase = stubPhase({ kind: 'paused' });
 
-    await new PhaseExecutor().run(ctx, [phase]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase]);
 
-    expect(ctx.moveToPaused).toHaveBeenCalledOnce();
-    expect(ctx.finalize).not.toHaveBeenCalled();
+    expect(outcome.kind).toBe('paused');
+    expect(vi.mocked(ctx.emitStatus)).not.toHaveBeenCalled();
   });
 
-  it('empty phase array → complete() called', async () => {
+  it('empty phase array → returns completed', async () => {
     const ctx = makeCtx();
 
-    await new PhaseExecutor().run(ctx, []);
+    const outcome = await new PhaseExecutor().run(ctx, []);
 
-    expect(ctx.finalize).toHaveBeenCalledWith('completed');
+    expect(outcome.kind).toBe('completed');
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('done', STATUS_KEY.complete);
   });
 

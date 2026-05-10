@@ -59,24 +59,13 @@ export interface Phase {
 // flows through `register()`; everything error-related stays inside the
 // phase (it returns a hard-failed outcome with a LocalizedError when needed).
 //
-// The wide pre-refactor surface (cleanupPartFiles / cleanupTempDir /
-// finalize / moveToPaused / emitYtdlpFailure / attachYtDlpProcess) survives
-// as compatibility shims on the same type so we can land this incrementally
-// without rewriting every test in one commit; new code should rely only on
-// the five core members above the divider.
+// Cleanup, finalize, and pause-park decisions live in DownloadService /
+// JobLifecycle, driven by the PhaseOutcome returned from PhaseExecutor.
 export interface PhaseContext {
-  // --- core surface (post-refactor target) ---
   active: ActiveJob;
   signal: AbortSignal;
   ytDlp: YtDlp;
   emitStatus(stage: StatusEvent['stage'], statusKey: StatusKey, params?: Record<string, string | number>, error?: LocalizedError): void;
   register(disposable: Disposable): void;
   safeConsume(text: string): void;
-  // --- compat surface (still consumed by phases + tests this commit) ---
-  emitYtdlpFailure(result: import('../YtDlp.js').YtDlpResult extends infer T ? Exclude<T, { kind: 'success' }> : never): Promise<LocalizedError>;
-  attachYtDlpProcess(proc: ChildProcessWithoutNullStreams, statusKey?: StatusKey): void;
-  cleanupPartFiles(dir: string): Promise<void>;
-  cleanupTempDir(): Promise<void>;
-  finalize(status: import('@shared/types.js').RecentJob['status'], error?: LocalizedError): Promise<void>;
-  moveToPaused(): void;
 }

@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 import { PhaseExecutor } from '@main/services/phases/PhaseExecutor.js';
+import { JobLifecycle } from '@main/services/JobLifecycle.js';
 import { STATUS_KEY } from '@shared/schemas.js';
-import type { Phase, PhaseContext, PhaseOutcome, ActiveDownload } from '@main/services/phases/types.js';
+import type { Phase, PhaseContext, PhaseOutcome, ActiveDownload, Disposable } from '@main/services/phases/types.js';
 import type { DownloadJob, LocalizedError, StartDownloadInput } from '@shared/types.js';
 import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 
@@ -21,18 +22,13 @@ function makeJob(id = 'job-1'): DownloadJob {
 }
 
 function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
-  const input: StartDownloadInput = {
-    url: 'https://www.youtube.com/watch?v=test',
-    outputDir: '/tmp',
-    job: DEFAULT_JOB
-  };
+  const input: StartDownloadInput = { url: 'https://www.youtube.com/watch?v=test', outputDir: '/tmp', job: DEFAULT_JOB };
+  const controller = new AbortController();
   return {
     job: makeJob(),
     input,
-    controller: new AbortController(),
-    get signal(): AbortSignal {
-      return this.controller.signal;
-    },
+    controller,
+    signal: controller.signal,
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
@@ -41,90 +37,121 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
   };
 }
 
-function makeCtx(activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
+function makeCtx(active: ActiveDownload): PhaseContext {
   return {
-    active: makeActive(activeOverrides),
-    signal: new AbortController().signal,
-    register: () => undefined,
+    active,
+    signal: active.signal,
+    register: (d) => active.disposables.push(d),
     ytDlp: {} as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'unknown', raw: '' }),
-    attachYtDlpProcess: vi.fn(),
-    safeConsume: vi.fn(),
-    cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-    cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-    finalize: vi.fn().mockResolvedValue(undefined),
-    moveToPaused: vi.fn()
+    safeConsume: vi.fn()
   };
 }
 
-function stubPhase(outcome: PhaseOutcome): Phase {
-  return { kind: 'stub', run: vi.fn().mockResolvedValue(outcome) };
+function stubPhase(outcome: PhaseOutcome, beforeReturn?: (ctx: PhaseContext) => void): Phase {
+  return {
+    kind: 'stub',
+    run: vi.fn().mockImplementation(async (ctx: PhaseContext) => {
+      beforeReturn?.(ctx);
+      return outcome;
+    })
+  };
 }
 
-describe('PhaseExecutor — temp dir cleanup', () => {
-  it('calls cleanupTempDir on hard-failed', async () => {
-    const ctx = makeCtx();
+// PhaseExecutor returns the resolved outcome; cleanup is now the caller's
+// responsibility (DownloadService routes outcomes through JobLifecycle.drain).
+// These tests verify the contract at both seams.
+
+describe('PhaseExecutor — outcome propagation', () => {
+  it('hard-failed outcome propagates with error payload', async () => {
+    const ctx = makeCtx(makeActive());
     const error: LocalizedError = { kind: 'outOfDiskSpace', raw: '' };
     const phase = stubPhase({ kind: 'hard-failed', error });
 
-    await new PhaseExecutor().run(ctx, [phase]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase]);
 
-    expect(ctx.cleanupTempDir).toHaveBeenCalledOnce();
-    expect(ctx.finalize).toHaveBeenCalledWith('failed', error);
+    expect(outcome.kind).toBe('hard-failed');
+    if (outcome.kind === 'hard-failed') expect(outcome.error).toEqual(error);
   });
 
-  it('calls cleanupTempDir on cancelled', async () => {
-    const ctx = makeCtx();
+  it('cancelled outcome — executor emits cancelled status', async () => {
+    const ctx = makeCtx(makeActive());
     const phase = stubPhase({ kind: 'cancelled' });
 
-    await new PhaseExecutor().run(ctx, [phase]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase]);
 
-    expect(ctx.cleanupTempDir).toHaveBeenCalledOnce();
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('error', STATUS_KEY.cancelled);
+    expect(outcome.kind).toBe('cancelled');
   });
 
-  it('calls cleanupTempDir on successful completion', async () => {
-    const ctx = makeCtx();
+  it('completed outcome — executor emits done/complete', async () => {
+    const ctx = makeCtx(makeActive());
     const phase = stubPhase({ kind: 'completed' });
 
-    await new PhaseExecutor().run(ctx, [phase]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase]);
 
-    expect(ctx.cleanupTempDir).toHaveBeenCalledOnce();
-    expect(ctx.finalize).toHaveBeenCalledWith('completed');
+    expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('done', STATUS_KEY.complete);
+    expect(outcome.kind).toBe('completed');
   });
 
-  it('calls cleanupTempDir on all-continue → complete', async () => {
-    const ctx = makeCtx();
-
-    await new PhaseExecutor().run(ctx, [stubPhase({ kind: 'continue' })]);
-
-    expect(ctx.cleanupTempDir).toHaveBeenCalledOnce();
-  });
-
-  it('does NOT call cleanupTempDir on paused', async () => {
-    const ctx = makeCtx();
+  it('paused outcome — no terminal emitStatus, disposables untouched', async () => {
+    const active = makeActive();
+    const cleanup = vi.fn();
+    active.disposables.push(cleanup);
+    const ctx = makeCtx(active);
     const phase = stubPhase({ kind: 'paused' });
 
-    await new PhaseExecutor().run(ctx, [phase]);
+    const outcome = await new PhaseExecutor().run(ctx, [phase]);
 
-    expect(ctx.cleanupTempDir).not.toHaveBeenCalled();
-    expect(ctx.moveToPaused).toHaveBeenCalledOnce();
+    expect(outcome.kind).toBe('paused');
+    expect(vi.mocked(ctx.emitStatus)).not.toHaveBeenCalled();
+    expect(cleanup).not.toHaveBeenCalled();
+    expect(active.disposables).toHaveLength(1);
+  });
+});
+
+describe('JobLifecycle.drain — disposables', () => {
+  it('drains LIFO (last pushed, first run)', async () => {
+    const recentJobsStore = { push: vi.fn() } as never;
+    const lifecycle = new JobLifecycle(recentJobsStore);
+    const order: string[] = [];
+    const active = makeActive();
+    const a: Disposable = () => {
+      order.push('a');
+    };
+    const b: Disposable = () => {
+      order.push('b');
+    };
+    const c: Disposable = () => {
+      order.push('c');
+    };
+    active.disposables.push(a, b, c);
+
+    await lifecycle.drain(active);
+
+    expect(order).toEqual(['c', 'b', 'a']);
+    expect(active.disposables).toHaveLength(0);
   });
 
-  it('cleanupTempDir is called before finalize on hard-failed', async () => {
-    const ctx = makeCtx();
+  it('one disposable throwing does not block the next', async () => {
+    const recentJobsStore = { push: vi.fn() } as never;
+    const lifecycle = new JobLifecycle(recentJobsStore);
     const order: string[] = [];
-    vi.mocked(ctx.cleanupTempDir).mockImplementation(async () => {
-      order.push('cleanup');
-    });
-    vi.mocked(ctx.finalize).mockImplementation(async () => {
-      order.push('finalize');
-    });
+    const active = makeActive();
+    active.disposables.push(
+      () => {
+        order.push('a');
+      },
+      () => {
+        throw new Error('b broke');
+      },
+      () => {
+        order.push('c');
+      }
+    );
 
-    const phase = stubPhase({ kind: 'hard-failed', error: { kind: 'unknown', raw: '' } });
-    await new PhaseExecutor().run(ctx, [phase]);
+    await lifecycle.drain(active);
 
-    expect(order).toEqual(['cleanup', 'finalize']);
+    expect(order).toEqual(['c', 'a']);
   });
 });

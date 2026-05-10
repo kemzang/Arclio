@@ -3,6 +3,8 @@ import { join } from 'node:path';
 import { STATUS_KEY } from '@shared/schemas.js';
 import { siteForExtractor } from '@shared/sites/index.js';
 import type { YtDlpRequest } from '../YtDlp.js';
+import { classifyYtDlpFailure } from '../download/errorClassification.js';
+import { cleanupPartFiles, cleanupTempDirByPath } from '../download/cleanup.js';
 import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
 async function setupTempDir(outputDir: string, jobId: string, preserve: boolean): Promise<string | undefined> {
@@ -29,7 +31,15 @@ export function VideoPhase(embed: boolean): Phase {
       }
 
       const tempDir = await setupTempDir(job.outputDir, job.id, active.tempDir != null);
-      if (tempDir) active.tempDir = tempDir;
+      if (tempDir) {
+        active.tempDir = tempDir;
+        // Register tempDir + .part-files cleanup. Disposables drain on
+        // finalize for completed / soft-failed / hard-failed / cancelled
+        // outcomes; on `paused`, JobLifecycle skips the drain so resume can
+        // pick up the .part files.
+        ctx.register(() => cleanupTempDirByPath(tempDir));
+        ctx.register(() => cleanupPartFiles(job.outputDir));
+      }
 
       // SponsorBlock applicability is owned by the Site adapter — currently
       // YouTube-only. Passing the flag for non-YouTube extractors is harmless
@@ -90,7 +100,13 @@ export function VideoPhase(embed: boolean): Phase {
         // a few seconds on extractor work and thumbnail conversion first.
         // The first `[download] Destination:` line in consumeProgress emits
         // the accurate status when the actual data download begins.
-        onSpawn: (proc) => ctx.attachYtDlpProcess(proc),
+        onSpawn: (proc) => {
+          active.ytDlpProcess = proc;
+          if (active.cancelRequested) proc.kill('SIGKILL');
+          ctx.register(() => {
+            proc.kill('SIGKILL');
+          });
+        },
         onStdout: (text) => ctx.safeConsume(text),
         onStderr: (text) => ctx.safeConsume(text)
       });
@@ -99,7 +115,9 @@ export function VideoPhase(embed: boolean): Phase {
       if (active.cancelRequested) return { kind: 'cancelled' };
 
       if (result.kind !== 'success') {
-        return { kind: 'hard-failed', error: await ctx.emitYtdlpFailure(result) };
+        const { payload, statusKey, params } = await classifyYtDlpFailure(result, job.outputDir, job.id);
+        ctx.emitStatus('error', statusKey, params, payload);
+        return { kind: 'hard-failed', error: payload };
       }
 
       if (result.usedExtractorFallback) active.usedExtractorFallback = true;

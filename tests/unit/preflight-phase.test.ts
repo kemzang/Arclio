@@ -45,13 +45,7 @@ function makeCtx(outputDir = '/output'): PhaseContext {
     ytDlp: {} as never,
     emitStatus: vi.fn(),
     register: () => undefined,
-    emitYtdlpFailure: vi.fn(),
-    attachYtDlpProcess: vi.fn(),
-    safeConsume: vi.fn(),
-    cleanupPartFiles: vi.fn(),
-    cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-    finalize: vi.fn(),
-    moveToPaused: vi.fn()
+    safeConsume: vi.fn()
   };
 }
 

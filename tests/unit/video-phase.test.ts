@@ -71,13 +71,7 @@ function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload
     register: () => undefined,
     ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'botBlock', raw: '' }),
-    attachYtDlpProcess: vi.fn(),
-    safeConsume: vi.fn(),
-    cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-    cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-    finalize: vi.fn().mockResolvedValue(undefined),
-    moveToPaused: vi.fn()
+    safeConsume: vi.fn()
   };
   return Object.assign(ctx, { runMock });
 }
@@ -123,11 +117,12 @@ describe('VideoPhase(embed=false)', () => {
     expect(ctx.active.usedExtractorFallback).toBe(true);
   });
 
-  it('exit-error → hard-failed with emitYtdlpFailure result', async () => {
+  it('exit-error → hard-failed with classified error payload', async () => {
     const ctx = makeCtx(EXIT_ERROR);
     const outcome = await VideoPhase(false).run(ctx);
     expect(outcome.kind).toBe('hard-failed');
-    expect(ctx.emitYtdlpFailure).toHaveBeenCalledOnce();
+    if (outcome.kind === 'hard-failed') expect(outcome.error.kind).toBe('botBlock');
+    expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('error', expect.any(String), expect.any(Object), expect.objectContaining({ kind: 'botBlock' }));
   });
 });
 
@@ -230,13 +225,7 @@ describe('VideoPhase — cancel / pause', () => {
       register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
     // Set cancelRequested during the run
     runMock.mockImplementationOnce(async () => {
@@ -256,13 +245,7 @@ describe('VideoPhase — cancel / pause', () => {
       register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
     runMock.mockImplementationOnce(async () => {
       ctx.active.pauseRequested = true;
@@ -297,13 +280,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
       register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'botBlock', raw: '' }),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
     return Object.assign(ctx, { runMock });
   }
@@ -358,13 +335,7 @@ describe('VideoPhase — signal callbacks', () => {
       register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await VideoPhase(false).run(ctx);
@@ -384,13 +355,7 @@ describe('VideoPhase — signal callbacks', () => {
       register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await VideoPhase(false).run(ctx);
@@ -398,30 +363,29 @@ describe('VideoPhase — signal callbacks', () => {
     expect(vi.mocked(ctx.emitStatus)).not.toHaveBeenCalled();
   });
 
-  it('onSpawn → calls attachYtDlpProcess with proc (no preemptive status)', async () => {
-    const fakeProc = new EventEmitter();
+  it('onSpawn → assigns process to active and registers SIGKILL disposable (no preemptive status)', async () => {
+    const fakeProc = Object.assign(new EventEmitter(), { kill: vi.fn() });
     const runMock = vi.fn().mockImplementation(async (_req, signal) => {
       signal?.onSpawn?.(fakeProc as never);
       return SUCCESS;
     });
+    const active = makeActive();
+    const registerSpy = vi.fn((d: () => void | Promise<void>) => active.disposables.push(d));
     const ctx: PhaseContext = {
-      active: makeActive(),
-      signal: new AbortController().signal,
-      register: () => undefined,
+      active,
+      signal: active.signal,
+      register: registerSpy,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await VideoPhase(false).run(ctx);
 
-    expect(ctx.attachYtDlpProcess).toHaveBeenCalledWith(fakeProc);
+    expect(active.ytDlpProcess).toBe(fakeProc);
+    expect(registerSpy).toHaveBeenCalled();
+    // No preemptive status emit on spawn (token attempts only).
+    expect(vi.mocked(ctx.emitStatus)).not.toHaveBeenCalledWith('download', expect.anything());
   });
 
   it('onStdout/onStderr → calls safeConsume', async () => {
@@ -436,13 +400,7 @@ describe('VideoPhase — signal callbacks', () => {
       register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await VideoPhase(false).run(ctx);

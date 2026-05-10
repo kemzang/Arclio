@@ -1,20 +1,17 @@
 import { EventEmitter } from 'node:events';
 import { randomUUID } from 'node:crypto';
 import { stat } from 'node:fs/promises';
-import { type ChildProcessWithoutNullStreams } from 'node:child_process';
 import log from 'electron-log/main.js';
 import { trackMain } from '@main/services/analytics.js';
 import { phasesFor, PhaseExecutor } from './phases/index.js';
-import type { PhaseContext } from './phases/index.js';
+import type { PhaseContext, PhaseOutcome } from './phases/index.js';
 import { nowIso } from '@main/utils/clock.js';
 import { createAppError } from '@main/utils/errorFactory.js';
 import { fail, ok, type Result } from '@shared/result.js';
 import { STATUS_KEY } from '@shared/schemas.js';
 import type { CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOutput, RecentJob, StartDownloadInput, StartDownloadOutput, StatusEvent, StatusKey } from '@shared/types.js';
 import type { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
-import { YtDlp, type YtDlpResult } from './YtDlp.js';
-import { isPostprocessFailure } from '@shared/ytdlp/errors.js';
-import { checkDiskSpace } from '@main/utils/diskSpace.js';
+import { YtDlp } from './YtDlp.js';
 import type { ActiveDownload, PausedDownload } from './phases/index.js';
 import { killActiveProcesses } from './download/processControl.js';
 import { cleanupPartFiles, cleanupTempDirByPath } from './download/cleanup.js';
@@ -220,19 +217,33 @@ export class DownloadService extends EventEmitter {
       ytDlp: this.ytDlp,
       emitStatus: (stage, statusKey, params?, error?) => this.emitStatus(job.id, stage, statusKey, params, error),
       register: (disposable) => active.disposables.push(disposable),
-      emitYtdlpFailure: (result) => this.emitYtdlpFailure(job, result),
-      attachYtDlpProcess: (proc, statusKey?) => this.attachYtDlpProcess(active, proc, statusKey),
-      safeConsume: (text) => this.safeConsume(active, text),
-      cleanupPartFiles: (dir) => this.cleanupPartFiles(dir),
-      cleanupTempDir: () => this.cleanupTempDir(active),
-      finalize: (status, err?) => this.finalize(job, status, err),
-      moveToPaused: () => {
-        // Cancel may have landed between pauseRequested and the phase reaching
-        // this callback. Honor the more recent intent: don't park a job in
-        // pausedJobs after cancel was requested — processes are already dead
-        // and finalize() will run via the cancelled outcome.
+      safeConsume: (text) => this.safeConsume(active, text)
+    };
+    const outcome = await new PhaseExecutor().run(ctx, phasesFor(input));
+    await this.handleOutcome(active, outcome);
+  }
+
+  private async handleOutcome(active: ActiveDownload, outcome: PhaseOutcome): Promise<void> {
+    const { job, input } = active;
+    switch (outcome.kind) {
+      case 'completed':
+      case 'soft-failed':
+        await this.finalize(job, 'completed');
+        return;
+      case 'hard-failed':
+        await this.finalize(job, 'failed', outcome.error);
+        return;
+      case 'cancelled':
+        await this.finalize(job, 'cancelled');
+        return;
+      case 'paused':
+        // Cancel may have landed between pauseRequested and the phase
+        // returning the paused outcome. Honor the more recent intent: drain
+        // and finalize as cancelled rather than parking a job whose
+        // processes are already dead.
         if (active.cancelRequested) {
-          logger.info('moveToPaused skipped — cancel requested mid-pause', { jobId: job.id });
+          this.emitStatus(job.id, 'error', STATUS_KEY.cancelled);
+          await this.finalize(job, 'cancelled');
           return;
         }
         this.activeJobs.delete(job.id);
@@ -241,15 +252,13 @@ export class DownloadService extends EventEmitter {
           jobId: job.id,
           tempDir: active.tempDir
         });
-      }
-    };
-    await new PhaseExecutor().run(ctx, phasesFor(input));
-  }
-
-  private attachYtDlpProcess(active: ActiveDownload, proc: ChildProcessWithoutNullStreams, statusKey?: StatusKey): void {
-    if (statusKey) this.emitStatus(active.job.id, 'download', statusKey);
-    active.ytDlpProcess = proc;
-    if (active.cancelRequested) proc.kill('SIGKILL');
+        return;
+      case 'continue':
+        // Should not surface here — PhaseExecutor consumes 'continue' by
+        // moving to the next phase. Treat as completed defensively.
+        await this.finalize(job, 'completed');
+        return;
+    }
   }
 
   private safeConsume(active: ActiveDownload, text: string): void {
@@ -261,47 +270,6 @@ export class DownloadService extends EventEmitter {
         message: err instanceof Error ? err.message : String(err)
       });
     }
-  }
-
-  private async emitYtdlpFailure(job: DownloadJob, result: Exclude<YtDlpResult, { kind: 'success' }>): Promise<LocalizedError> {
-    const jobId = job.id;
-    if (result.kind === 'spawn-error') {
-      const payload: LocalizedError = { kind: 'unknown', raw: result.error.message };
-      this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpProcessError, { error: result.error.message }, payload);
-      return payload;
-    }
-    // yt-dlp masks ffmpeg's stderr in non-verbose mode, so an ENOSPC during
-    // merge surfaces only as "Postprocessing: Conversion failed!". Probe the
-    // output dir on a postprocess failure and upgrade the kind to
-    // outOfDiskSpace if the probe confirms ENOSPC.
-    let kind = result.errorKind;
-    if (kind === 'postprocessFailure' && isPostprocessFailure(result.rawError)) {
-      const probe = await checkDiskSpace(job.outputDir, undefined);
-      if (!probe.ok && probe.error === undefined && probe.freeBytes !== undefined) {
-        kind = 'outOfDiskSpace';
-        logger.info('Reclassified postprocess failure as outOfDiskSpace', {
-          jobId,
-          outputDir: job.outputDir,
-          freeBytes: probe.freeBytes
-        });
-      } else if (probe.error !== undefined) {
-        logger.info('Postprocess failure: disk probe inconclusive', {
-          jobId,
-          outputDir: job.outputDir,
-          probeError: probe.error
-        });
-      }
-    }
-    const payload: LocalizedError = {
-      kind,
-      raw: result.rawError ?? ''
-    };
-    if (kind === 'unknown' && result.rawError) {
-      this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpProcessError, { error: result.rawError }, payload);
-    } else {
-      this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpExitCode, { code: result.exitCode }, payload);
-    }
-    return payload;
   }
 
   async cancel(jobId?: string): Promise<Result<CancelDownloadOutput>> {
@@ -411,10 +379,6 @@ export class DownloadService extends EventEmitter {
 
   async cleanupPartFiles(outputDir: string): Promise<void> {
     await cleanupPartFiles(outputDir);
-  }
-
-  private async cleanupTempDir(active: ActiveDownload): Promise<void> {
-    if (active.tempDir) await cleanupTempDirByPath(active.tempDir);
   }
 
   private async cleanupTempDirByPath(tempDir: string): Promise<void> {

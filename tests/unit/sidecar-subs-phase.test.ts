@@ -66,19 +66,14 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
 
 function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
   const runMock = vi.fn().mockResolvedValue(runResult);
+  const active = makeActive(activeOverrides);
   return {
-    active: makeActive(activeOverrides),
-    signal: new AbortController().signal,
-    register: () => undefined,
+    active,
+    signal: active.signal,
+    register: (d) => active.disposables.push(d),
     ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ kind: 'unknown', raw: '' }),
-    attachYtDlpProcess: vi.fn(),
-    safeConsume: vi.fn(),
-    cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-    cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-    finalize: vi.fn().mockResolvedValue(undefined),
-    moveToPaused: vi.fn()
+    safeConsume: vi.fn()
   };
 }
 

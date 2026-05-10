@@ -36,6 +36,9 @@ async function runEmbedMux(ctx: PhaseContext): Promise<void> {
     onSpawn: (proc) => {
       active.ffmpegProcess = proc;
       if (active.cancelRequested) proc.kill('SIGKILL');
+      ctx.register(() => {
+        proc.kill('SIGKILL');
+      });
     },
     jobId: job.id
   });
@@ -74,7 +77,13 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
           writeAutoSubs: subs.writeAuto
         },
         {
-          onSpawn: (proc) => ctx.attachYtDlpProcess(proc),
+          onSpawn: (proc) => {
+            active.ytDlpProcess = proc;
+            if (active.cancelRequested) proc.kill('SIGKILL');
+            ctx.register(() => {
+              proc.kill('SIGKILL');
+            });
+          },
           onStdout: (text) => ctx.safeConsume(text),
           onStderr: (text) => ctx.safeConsume(text)
         }
