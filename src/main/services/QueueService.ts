@@ -126,9 +126,12 @@ export class QueueService extends EventEmitter {
     const running = this.items.filter((i) => i.status === QUEUE_STATUS.running);
     for (const item of running) {
       try {
-        await this.pause(item.id);
-      } catch {
-        // best-effort: continue pausing remaining items
+        const result = await this.pause(item.id);
+        if (!result.ok) {
+          logger.warn('pauseAll: failed to pause item', { itemId: item.id, error: result.error.message });
+        }
+      } catch (err) {
+        logger.warn('pauseAll: unexpected error pausing item', { itemId: item.id, error: err instanceof Error ? err.message : String(err) });
       }
     }
   }

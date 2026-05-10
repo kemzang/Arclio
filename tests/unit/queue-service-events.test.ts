@@ -106,11 +106,11 @@ describe('QueueService — downloadService listener path', () => {
 describe('pauseAll', () => {
   it('pauses all running items', async () => {
     const { qs, ds } = makeService();
-    const a = makeItem({ id: 'a', status: 'running', lastJobId: 'job-a' });
-    const b = makeItem({ id: 'b', status: 'running', lastJobId: 'job-b' });
-    const c = makeItem({ id: 'c', status: 'pending' });
-    // eslint-disable-next-line @typescript-eslint/dot-notation
-    qs['items'] = [a, b, c];
+    qs.add([
+      makeItem({ id: 'a', status: 'running', lastJobId: 'job-a' }),
+      makeItem({ id: 'b', status: 'running', lastJobId: 'job-b' }),
+      makeItem({ id: 'c', status: 'pending' }),
+    ]);
 
     ds.pause.mockResolvedValue(ok({ paused: true, tempDir: '/tmp/x' }));
     await qs.pauseAll();
@@ -122,10 +122,10 @@ describe('pauseAll', () => {
 
   it('continues pausing remaining items when one fails', async () => {
     const { qs, ds } = makeService();
-    const a = makeItem({ id: 'a', status: 'running', lastJobId: 'job-a' });
-    const b = makeItem({ id: 'b', status: 'running', lastJobId: 'job-b' });
-    // eslint-disable-next-line @typescript-eslint/dot-notation
-    qs['items'] = [a, b];
+    qs.add([
+      makeItem({ id: 'a', status: 'running', lastJobId: 'job-a' }),
+      makeItem({ id: 'b', status: 'running', lastJobId: 'job-b' }),
+    ]);
 
     let callCount = 0;
     ds.pause = vi.fn().mockImplementation(() => {
@@ -142,10 +142,10 @@ describe('pauseAll', () => {
 
   it('continues pausing remaining items when one throws', async () => {
     const { qs, ds } = makeService();
-    const a = makeItem({ id: 'a', status: 'running', lastJobId: 'job-a' });
-    const b = makeItem({ id: 'b', status: 'running', lastJobId: 'job-b' });
-    // eslint-disable-next-line @typescript-eslint/dot-notation
-    qs['items'] = [a, b];
+    qs.add([
+      makeItem({ id: 'a', status: 'running', lastJobId: 'job-a' }),
+      makeItem({ id: 'b', status: 'running', lastJobId: 'job-b' }),
+    ]);
 
     let callCount = 0;
     ds.pause = vi.fn().mockImplementation(() => {
