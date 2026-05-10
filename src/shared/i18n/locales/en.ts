@@ -500,7 +500,7 @@ const en = {
     quitWithActiveDownloads: {
       message_one: '{{count}} download in progress',
       message_other: '{{count}} downloads in progress',
-      detail: 'Closing will cancel all active downloads.',
+      detail: 'Pause to resume later, or cancel to discard progress.',
       confirm: 'Cancel Downloads & Quit',
       pause: 'Pause Downloads & Quit',
       keep: 'Keep Downloading'

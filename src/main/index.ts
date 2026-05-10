@@ -228,11 +228,7 @@ if (hasSingleInstanceLock) {
       const lang = languageRef.current;
       const { response } = await dialog.showMessageBox(mainWindow, {
         type: 'warning',
-        buttons: [
-          mainT(lang, 'dialogs.quitWithActiveDownloads.pause'),
-          mainT(lang, 'dialogs.quitWithActiveDownloads.confirm'),
-          mainT(lang, 'dialogs.quitWithActiveDownloads.keep')
-        ],
+        buttons: [mainT(lang, 'dialogs.quitWithActiveDownloads.pause'), mainT(lang, 'dialogs.quitWithActiveDownloads.confirm'), mainT(lang, 'dialogs.quitWithActiveDownloads.keep')],
         defaultId: 2,
         cancelId: 2,
         message: mainT(lang, `dialogs.quitWithActiveDownloads.${pluralKey('message', count)}`, { count }),
@@ -370,7 +366,7 @@ if (hasSingleInstanceLock) {
       tray?.destroy();
       tray = null;
       clipboardWatcher.dispose();
-      if (downloadService.activeCount === 0) {
+      if (downloadService.runningJobCount === 0) {
         tokenService.dispose();
         log.info('App shutting down');
         return;
