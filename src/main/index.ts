@@ -26,6 +26,7 @@ import { MockTokenProvider } from '@main/token/providers/MockTokenProvider.js';
 import { defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT } from '@shared/constants.js';
 import { runSmokeMode, readSmokeUrl, exitWithCode } from '@main/smoke.js';
 import { cancelQueueBeforeExit } from '@main/shutdown.js';
+import { decideCloseAction, decideRendererCrashAction } from '@main/windowLifecycle.js';
 import { registerPreloadDiagnostics, resolveMainWindowPreloadPath } from '@main/preloadDiagnostics.js';
 import contextMenu from 'electron-context-menu';
 import windowStateKeeper from 'electron-window-state';
@@ -247,35 +248,40 @@ if (hasSingleInstanceLock) {
     }
 
     mainWindow.on('close', (event) => {
-      if (process.platform === 'darwin' || tray === null) {
+      const hasTray = tray !== null;
+
+      if (process.platform === 'darwin' || !hasTray) {
+        // No tray: allow if idle, else intercept and warn
         if (downloadService.runningJobCount === 0) return;
         event.preventDefault();
         void warnActiveDownloadsThenQuit();
         return;
       }
 
-      // Tray mode: intercept every close; decide async based on persisted behavior
+      // Tray present: always intercept; read persisted behavior async
       event.preventDefault();
       void settingsStore.get().then(async (settings) => {
-        const closeBehavior = settings.common.closeBehavior ?? 'ask';
+        const action = decideCloseAction({
+          platform: process.platform,
+          hasTray,
+          closeBehavior: settings.common.closeBehavior ?? 'ask',
+          runningCount: downloadService.runningJobCount
+        });
 
-        if (closeBehavior === 'tray') {
+        if (action === 'hide') {
           mainWindow.hide();
           return;
         }
-
-        if (closeBehavior === 'quit') {
+        if (action === 'quit-direct') {
+          app.quit();
+          return;
+        }
+        if (action === 'warn-and-quit') {
           await warnActiveDownloadsThenQuit();
           return;
         }
 
-        // 'ask': no active downloads → nothing to keep alive, just quit
-        if (downloadService.runningJobCount === 0) {
-          app.quit();
-          return;
-        }
-
-        // 'ask': active downloads present — offer the first-time tray dialog
+        // 'ask-tray': active downloads present — offer the first-time tray dialog
         const lang = languageRef.current;
         const { response, checkboxChecked } = await dialog.showMessageBox(mainWindow, {
           type: 'question',
@@ -320,12 +326,13 @@ if (hasSingleInstanceLock) {
     app.on('render-process-gone', (_event, webContents, details) => {
       log.error(`Renderer process gone: reason=${details.reason} exitCode=${details.exitCode}`);
       if (details.reason === 'clean-exit') return;
+      const isMainWindow = webContents === mainWindow.webContents;
       trackCrashDetectedOncePerSession({
         kind: 'renderer',
-        windowRole: webContents === mainWindow.webContents ? 'main-window' : 'auxiliary-window',
+        windowRole: isMainWindow ? 'main-window' : 'auxiliary-window',
         reason: details.reason
       });
-      if (webContents !== mainWindow.webContents) return;
+      if (!isMainWindow) return;
       const lang = languageRef.current;
       const opts = {
         type: 'error' as const,
@@ -336,7 +343,8 @@ if (hasSingleInstanceLock) {
         detail: mainT(lang, 'dialogs.rendererCrashed.detail', { reason: details.reason })
       };
       void (mainWindow.isDestroyed() ? dialog.showMessageBox(opts) : dialog.showMessageBox(mainWindow, opts)).then(({ response }) => {
-        if (response === 0 && !mainWindow.isDestroyed()) mainWindow.reload();
+        const action = decideRendererCrashAction({ reason: details.reason, isMainWindow: true, dialogResponse: response });
+        if (action === 'reload' && !mainWindow.isDestroyed()) mainWindow.reload();
         else app.quit();
       });
     });
