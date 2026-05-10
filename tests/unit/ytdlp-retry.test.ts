@@ -61,8 +61,8 @@ describe('YtDlp — retry ladder', () => {
 
   it('bot-block then success: invalidateCache called, attempt 1 uses new token', async () => {
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, BOT_STDERR) as never)
-      .mockReturnValueOnce(makeFakeProcess(0) as never);
+      .mockImplementationOnce(() => makeFakeProcess(1, BOT_STDERR) as never)
+      .mockImplementationOnce(() => makeFakeProcess(0) as never);
 
     const { ytDlp, tokenService } = makeYtDlp();
     tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'old-tok', visitorData: 'vd', fromCache: false }).mockResolvedValueOnce({ token: 'new-tok', visitorData: 'vd', fromCache: false });
@@ -81,9 +81,9 @@ describe('YtDlp — retry ladder', () => {
 
   it('two bot-blocks → attempt 2 uses player_client fallback, usedExtractorFallback=true', async () => {
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, BOT_STDERR) as never)
-      .mockReturnValueOnce(makeFakeProcess(1, BOT_STDERR) as never)
-      .mockReturnValueOnce(makeFakeProcess(0) as never);
+      .mockImplementationOnce(() => makeFakeProcess(1, BOT_STDERR) as never)
+      .mockImplementationOnce(() => makeFakeProcess(1, BOT_STDERR) as never)
+      .mockImplementationOnce(() => makeFakeProcess(0) as never);
 
     const { ytDlp, tokenService } = makeYtDlp();
 
@@ -116,8 +116,8 @@ describe('YtDlp — retry ladder', () => {
 
   it('re-mint throws → falls back to player_client fallback', async () => {
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, BOT_STDERR) as never)
-      .mockReturnValueOnce(makeFakeProcess(0) as never);
+      .mockImplementationOnce(() => makeFakeProcess(1, BOT_STDERR) as never)
+      .mockImplementationOnce(() => makeFakeProcess(0) as never);
 
     const { ytDlp, tokenService } = makeYtDlp();
     tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'tok', visitorData: 'vd', fromCache: false }).mockRejectedValueOnce(new Error('re-mint failed'));

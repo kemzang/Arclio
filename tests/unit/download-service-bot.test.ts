@@ -120,8 +120,8 @@ describe('DownloadService — bot-block retry', () => {
     const botStderr = "ERROR: [youtube] abc: Sign in to confirm you're not a bot.";
 
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, botStderr) as never) // first attempt fails
-      .mockReturnValueOnce(makeFakeProcess(0) as never); // retry succeeds
+      .mockImplementationOnce(() => makeFakeProcess(1, botStderr) as never) // first attempt fails
+      .mockImplementationOnce(() => makeFakeProcess(0) as never); // retry succeeds
 
     const { service, tokenService, recentJobsStore } = makeService();
     tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'old-token', visitorData: 'old-visitor' }).mockResolvedValueOnce({ token: 'new-token', visitorData: 'new-visitor' });
@@ -147,9 +147,9 @@ describe('DownloadService — bot-block retry', () => {
     const botStderr = "ERROR: [youtube] abc: Sign in to confirm you're not a bot.";
 
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, botStderr) as never)
-      .mockReturnValueOnce(makeFakeProcess(1, botStderr) as never)
-      .mockReturnValueOnce(makeFakeProcess(0) as never);
+      .mockImplementationOnce(() => makeFakeProcess(1, botStderr) as never)
+      .mockImplementationOnce(() => makeFakeProcess(1, botStderr) as never)
+      .mockImplementationOnce(() => makeFakeProcess(0) as never);
 
     const { service, tokenService, recentJobsStore } = makeService();
 
