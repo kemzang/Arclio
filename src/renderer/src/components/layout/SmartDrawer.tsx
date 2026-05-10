@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { useEffect, useMemo, useRef } from 'react';
-import { ChevronDown, Inbox, Pause, Share2, Trash2, X } from 'lucide-react';
+import { ChevronDown, Inbox, Pause, Play, Share2, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { isHighValueDownload } from '@shared/queueItem.js';
 import { useAppStore, formatStatus } from '../../store/useAppStore.js';
@@ -19,6 +19,7 @@ export function SmartDrawer(): JSX.Element {
   const dismissQueueTip = useAppStore((s) => s.dismissQueueTip);
   const clearCompleted = useAppStore((s) => s.clearCompleted);
   const pauseAll = useAppStore((s) => s.pauseAll);
+  const resumeFirst = useAppStore((s) => s.resumeFirst);
   const cancelAll = useAppStore((s) => s.cancelAll);
   const shareHighValueBannerDismissed = useAppStore((s) => s.settings?.common?.shareHighValueBannerDismissed ?? false);
   const openShareDialog = useAppStore((s) => s.openShareDialog);
@@ -35,6 +36,10 @@ export function SmartDrawer(): JSX.Element {
   const totalCount = queue.length;
   const hasCompleted = useMemo(() => queue.some((i) => i.status === 'done' || i.status === 'cancelled' || i.status === 'error'), [queue]);
   const hasDownloading = activeCount > 0;
+  const hasPaused = useMemo(
+    () => queue.some((i) => i.status === 'paused-active' || i.status === 'paused-held'),
+    [queue]
+  );
   const hasInFlight = useMemo(() => queue.some((i) => i.status === 'running' || i.status === 'paused-active' || i.status === 'paused-held' || i.status === 'pending'), [queue]);
 
   const aggregatePercent = useMemo(() => (activeItems.length === 0 ? 0 : activeItems.reduce((sum, i) => sum + i.progressPercent, 0) / activeItems.length), [activeItems]);
@@ -97,6 +102,21 @@ export function SmartDrawer(): JSX.Element {
             >
               <Pause size={10} />
               {t('queue.pauseAll')}
+            </button>
+          )}
+          {hasPaused && (
+            <button
+              type="button"
+              data-testid="btn-resume-first"
+              onClick={(e) => {
+                e.stopPropagation();
+                void resumeFirst();
+              }}
+              className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-0.5 rounded hover:bg-accent"
+              title={t('queue.resumeFirstTitle')}
+            >
+              <Play size={10} />
+              {t('queue.resumeFirst')}
             </button>
           )}
           {hasInFlight && (

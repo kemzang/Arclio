@@ -153,6 +153,7 @@ export interface QueueSlice {
   retryQueueItem: (itemId: string) => Promise<void>;
   clearCompleted: () => Promise<void>;
   pauseAll: () => Promise<void>;
+  resumeFirst: () => Promise<void>;
   cancelAll: () => Promise<void>;
   openItemFolder: (itemId: string) => Promise<void>;
   openItemUrl: (itemId: string) => void;
