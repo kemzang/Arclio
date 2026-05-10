@@ -125,7 +125,11 @@ export class QueueService extends EventEmitter {
   async pauseAll(): Promise<void> {
     const running = this.items.filter((i) => i.status === QUEUE_STATUS.running);
     for (const item of running) {
-      await this.pause(item.id);
+      try {
+        await this.pause(item.id);
+      } catch {
+        // best-effort: continue pausing remaining items
+      }
     }
   }
 

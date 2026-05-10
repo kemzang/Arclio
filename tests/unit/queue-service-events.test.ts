@@ -139,4 +139,24 @@ describe('pauseAll', () => {
     expect(qs.snapshot().find((i) => i.id === 'a')?.status).toBe('running'); // failed, stays running
     expect(qs.snapshot().find((i) => i.id === 'b')?.status).toBe('paused-active');
   });
+
+  it('continues pausing remaining items when one throws', async () => {
+    const { qs, ds } = makeService();
+    const a = makeItem({ id: 'a', status: 'running', lastJobId: 'job-a' });
+    const b = makeItem({ id: 'b', status: 'running', lastJobId: 'job-b' });
+    // eslint-disable-next-line @typescript-eslint/dot-notation
+    qs['items'] = [a, b];
+
+    let callCount = 0;
+    ds.pause = vi.fn().mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return Promise.reject(new Error('unexpected throw'));
+      return Promise.resolve(ok({ paused: true, tempDir: '/tmp/z' }));
+    });
+
+    await qs.pauseAll();
+
+    expect(qs.snapshot().find((i) => i.id === 'a')?.status).toBe('running');
+    expect(qs.snapshot().find((i) => i.id === 'b')?.status).toBe('paused-active');
+  });
 });
