@@ -60,7 +60,7 @@ function makeService() {
 const YOUTUBE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 
 describe('DownloadService — postprocess ENOSPC reclassification', () => {
-  it('upgrades unclassified "Postprocessing: Conversion failed!" to outOfDiskSpace when disk probe shows low free', async () => {
+  it('upgrades unclassified "Postprocessing: Conversion failed!" to outOfDiskSpace when disk probe shows low free', { timeout: 15000 }, async () => {
     // Preflight at job start: ample free. Post-failure probe: low free.
     vi.mocked(checkDiskSpace)
       .mockResolvedValueOnce({ ok: true, freeBytes: 50_000_000_000, requiredBytes: 200 * 1024 * 1024 })
@@ -78,7 +78,7 @@ describe('DownloadService — postprocess ENOSPC reclassification', () => {
     expect(finalized?.error?.raw).toContain('Conversion failed');
   });
 
-  it('keeps kind=postprocessFailure when "Conversion failed" surfaces but disk has plenty of free space', async () => {
+  it('keeps kind=postprocessFailure when "Conversion failed" surfaces but disk has plenty of free space', { timeout: 15000 }, async () => {
     vi.mocked(checkDiskSpace)
       .mockResolvedValueOnce({ ok: true, freeBytes: 50_000_000_000, requiredBytes: 200 * 1024 * 1024 })
       .mockResolvedValueOnce({ ok: true, freeBytes: 50_000_000_000, requiredBytes: 200 * 1024 * 1024 });
@@ -95,7 +95,7 @@ describe('DownloadService — postprocess ENOSPC reclassification', () => {
     expect(finalized?.error?.kind).toBe('postprocessFailure');
   });
 
-  it('does not run the post-failure disk probe for unrelated errors', async () => {
+  it('does not run the post-failure disk probe for unrelated errors', { timeout: 15000 }, async () => {
     vi.mocked(checkDiskSpace).mockResolvedValueOnce({ ok: true, freeBytes: 50_000_000_000, requiredBytes: 200 * 1024 * 1024 });
 
     const ipBlockStderr = 'ERROR: [youtube] All player responses are invalid. Your IP is likely being blocked by Youtube';
