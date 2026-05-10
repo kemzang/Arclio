@@ -699,16 +699,19 @@ describe('YtDlp — extractor-args shape', () => {
     const ytDlp = makeYtDlp({ token: 'MYTOKEN', visitorData: 'MYVISITOR' });
     await ytDlp.run({ kind: 'probe', url: URL });
     const args = getArgs();
-    expect(args[0]).toBe('--extractor-args');
-    expect(args[1]).toBe('youtube:po_token=web.gvs+MYTOKEN;visitor_data=MYVISITOR');
+    const i = args.indexOf('--extractor-args');
+    expect(i).toBeGreaterThanOrEqual(0);
+    expect(args[i + 1]).toBe('youtube:po_token=web.gvs+MYTOKEN;visitor_data=MYVISITOR');
   });
 
   it('empty visitorData → omits ;visitor_data= segment', async () => {
     const ytDlp = makeYtDlp({ token: 'MYTOKEN', visitorData: '' });
     await ytDlp.run({ kind: 'probe', url: URL });
     const args = getArgs();
-    expect(args[1]).toBe('youtube:po_token=web.gvs+MYTOKEN');
-    expect(args[1]).not.toContain('visitor_data');
+    const i = args.indexOf('--extractor-args');
+    expect(i).toBeGreaterThanOrEqual(0);
+    expect(args[i + 1]).toBe('youtube:po_token=web.gvs+MYTOKEN');
+    expect(args[i + 1]).not.toContain('visitor_data');
   });
 });
 
