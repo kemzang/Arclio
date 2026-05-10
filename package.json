@@ -33,7 +33,7 @@
     "format:check": "prettier --check src tests",
     "knip": "knip",
     "knip:test-only": "node scripts/find-test-only-exports.mjs",
-    "check": "bun run lint && bun run typecheck && bun run knip && bun run madge",
+    "check": "bun run lint && bun run typecheck && bun run knip && bun run madge && bun run test",
     "madge": "madge --circular --extensions ts,tsx src/",
     "test": "vitest run",
     "test:watch": "vitest",
