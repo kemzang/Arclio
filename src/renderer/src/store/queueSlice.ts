@@ -230,9 +230,7 @@ export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
     },
 
     resumeFirst: async () => {
-      const first = get().queue.find(
-        (i) => i.status === QUEUE_STATUS.pausedActive || i.status === QUEUE_STATUS.pausedHeld
-      );
+      const first = get().queue.find((i) => i.status === QUEUE_STATUS.pausedActive || i.status === QUEUE_STATUS.pausedHeld);
       if (!first) return;
       await window.appApi.queue.cmd.resume({ itemId: first.id });
     },

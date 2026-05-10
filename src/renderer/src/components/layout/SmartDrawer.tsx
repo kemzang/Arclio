@@ -36,10 +36,7 @@ export function SmartDrawer(): JSX.Element {
   const totalCount = queue.length;
   const hasCompleted = useMemo(() => queue.some((i) => i.status === 'done' || i.status === 'cancelled' || i.status === 'error'), [queue]);
   const hasDownloading = activeCount > 0;
-  const hasPaused = useMemo(
-    () => queue.some((i) => i.status === 'paused-active' || i.status === 'paused-held'),
-    [queue]
-  );
+  const hasPaused = useMemo(() => queue.some((i) => i.status === 'paused-active' || i.status === 'paused-held'), [queue]);
   const hasInFlight = useMemo(() => queue.some((i) => i.status === 'running' || i.status === 'paused-active' || i.status === 'paused-held' || i.status === 'pending'), [queue]);
 
   const aggregatePercent = useMemo(() => (activeItems.length === 0 ? 0 : activeItems.reduce((sum, i) => sum + i.progressPercent, 0) / activeItems.length), [activeItems]);
