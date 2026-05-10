@@ -13,6 +13,8 @@ import { effectiveOutputDir } from '@renderer/lib/path.js';
 import { joinSubfolder, safeFolderName } from '@shared/subfolder.js';
 import { prepareJob } from '@shared/prepareJob.js';
 import type { EmbedOptions, SubtitleOptions } from '@shared/preparedJob.js';
+import { sanitizeJobOptions } from '@shared/sanitizeJobOptions.js';
+import { resolveOutputContainer } from './wizard/resolveContainer.js';
 import i18next from 'i18next';
 import type { GetState, SetState, QueueSlice } from './types.js';
 import { persistFormatPrefs } from './wizard/persistFormatPrefs.js';
@@ -45,7 +47,6 @@ function buildQueueItem(get: GetState): QueueItem | null {
 
   const subtitleLanguages = state.wizardSubtitleSkipped ? [] : state.wizardSubtitleLanguages;
   const writeAutoSubs = subtitleLanguages.some((l) => !!state.wizardAutomaticCaptions[l] && !state.wizardSubtitles[l]);
-  const subtitles: SubtitleOptions | undefined = subtitleLanguages.length > 0 ? { languages: subtitleLanguages, mode: state.wizardSubtitleMode, format: state.wizardSubtitleFormat, writeAuto: writeAutoSubs } : undefined;
   const embed: EmbedOptions = {
     chapters: state.wizardEmbedChapters,
     metadata: state.wizardEmbedMetadata,
@@ -53,6 +54,19 @@ function buildQueueItem(get: GetState): QueueItem | null {
     description: state.wizardWriteDescription,
     thumbnailSidecar: state.wizardWriteThumbnail
   };
+
+  const resolvedContainer = resolveOutputContainer(selectedVideoFormatId, audioSelection, state.wizardSubtitleMode, wizardFormats, activePreset);
+  const { overrides } = sanitizeJobOptions({
+    isSubtitleOnly: activePreset === 'subtitle-only',
+    hasVideoTrack: selectedVideoFormatId !== '',
+    resolvedOutputContainer: resolvedContainer,
+    subtitleMode: state.wizardSubtitleMode,
+    subtitleLanguages,
+    embed,
+    sponsorBlockMode: state.wizardSponsorBlockMode
+  });
+
+  const subtitles: SubtitleOptions | undefined = subtitleLanguages.length > 0 ? { languages: subtitleLanguages, mode: overrides.subtitleMode, format: state.wizardSubtitleFormat, writeAuto: writeAutoSubs } : undefined;
 
   const job = prepareJob({
     mode: 'single',
@@ -63,9 +77,9 @@ function buildQueueItem(get: GetState): QueueItem | null {
     activePreset,
     expectedBytes,
     subtitles,
-    sponsorBlockMode: state.wizardSponsorBlockMode,
+    sponsorBlockMode: overrides.sponsorBlockMode,
     sponsorBlockCategories: state.wizardSponsorBlockCategories,
-    embed
+    embed: overrides.embed
   });
 
   return {

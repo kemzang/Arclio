@@ -5,6 +5,8 @@ import { useAppStore, presetLabel, resolveAudioLabel, resolveVideoResolution } f
 import { formatHomeRelativePath } from '@renderer/lib/utils.js';
 import { effectiveOutputDir } from '@renderer/lib/path.js';
 import { resolveSubtitleLabel, SUBTITLE_MODE_I18N_KEYS } from '../../lib/subtitleLabel.js';
+import { sanitizeJobOptions } from '@shared/sanitizeJobOptions.js';
+import { resolveOutputContainer } from '../../store/wizard/resolveContainer.js';
 import { Button } from '../ui/button.js';
 import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip.js';
 import { VideoSummaryCard } from '../shared/VideoSummaryCard.js';
@@ -14,7 +16,11 @@ import loveImg from '../../assets/Love.png';
 
 export function StepConfirm(): JSX.Element {
   const { t, i18n } = useTranslation();
-  const { wizardTitle, wizardThumbnail, wizardDuration, wizardWebpageUrl, wizardOutputDir, selectedVideoFormatId, audioSelection, activePreset, wizardFormats, wizardSubtitleLanguages, wizardSubtitleMode, wizardSubtitleFormat, wizardSubtitles, wizardAutomaticCaptions, wizardSubtitleSkipped, commonPaths, wizardSubfolderEnabled, wizardSubfolderName, addToQueue, addAndDownloadImmediately, back, playlistItems, selectedPlaylistItemIds, selectedPlaylistPreset, playlistTitle, wizardMode, wizardExtractor } = useAppStore();
+  const CONFLICT_LABELS: Record<string, string> = {
+    thumbnailEmbedNotSupported: t('wizard.confirm.thumbnailEmbedNotSupported'),
+    subtitleEmbedAudioOnly: t('wizard.confirm.subtitleEmbedAudioOnly')
+  };
+  const { wizardTitle, wizardThumbnail, wizardDuration, wizardWebpageUrl, wizardOutputDir, selectedVideoFormatId, audioSelection, activePreset, wizardFormats, wizardSubtitleLanguages, wizardSubtitleMode, wizardSubtitleFormat, wizardSubtitles, wizardAutomaticCaptions, wizardSubtitleSkipped, commonPaths, wizardSubfolderEnabled, wizardSubfolderName, addToQueue, addAndDownloadImmediately, back, playlistItems, selectedPlaylistItemIds, selectedPlaylistPreset, playlistTitle, wizardMode, wizardExtractor, wizardEmbedChapters, wizardEmbedMetadata, wizardEmbedThumbnail, wizardWriteDescription, wizardWriteThumbnail, wizardSponsorBlockMode } = useAppStore();
   const inPlaylist = wizardMode === 'playlist';
 
   const effectiveSubtitleLanguages = wizardSubtitleSkipped ? [] : wizardSubtitleLanguages;
@@ -65,6 +71,23 @@ export function StepConfirm(): JSX.Element {
 
   const hasNothingSelected = inPlaylist ? !selectedPlaylistPreset || selectedPlaylistItemIds.length === 0 : selectedVideoFormatId === '' && audioSelection.kind === 'none' && effectiveSubtitleLanguages.length === 0;
 
+  // Only surface conflicts the user actively created through visible wizard steps.
+  // subtitle-only skips the output + sponsorblock steps, so those options are never
+  // shown to the user — silently sanitized in buildQueueItem but not displayed here.
+  const USER_VISIBLE_CONFLICTS: ReadonlySet<string> = new Set(['thumbnailEmbedNotSupported', 'subtitleEmbedAudioOnly']);
+  const { conflicts: allConflicts } = !inPlaylist
+    ? sanitizeJobOptions({
+        isSubtitleOnly: activePreset === 'subtitle-only',
+        hasVideoTrack: selectedVideoFormatId !== '',
+        resolvedOutputContainer: resolveOutputContainer(selectedVideoFormatId, audioSelection, wizardSubtitleMode, wizardFormats, activePreset),
+        subtitleMode: wizardSubtitleMode,
+        subtitleLanguages: effectiveSubtitleLanguages,
+        embed: { chapters: wizardEmbedChapters, metadata: wizardEmbedMetadata, thumbnail: wizardEmbedThumbnail, description: wizardWriteDescription, thumbnailSidecar: wizardWriteThumbnail },
+        sponsorBlockMode: wizardSponsorBlockMode
+      })
+    : { conflicts: [] };
+  const conflicts = allConflicts.filter((c) => USER_VISIBLE_CONFLICTS.has(c.code));
+
   return (
     <div className="wizard-step flex flex-col gap-4" data-testid="step-confirm">
       {!inPlaylist && <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={selectedVideoFormatId !== '' ? videoResolution : undefined} webpageUrl={wizardWebpageUrl} />}
@@ -95,6 +118,17 @@ export function StepConfirm(): JSX.Element {
           </tbody>
         </table>
       </div>
+
+      {conflicts.length > 0 && (
+        <ul className="space-y-1" data-testid="confirm-conflicts">
+          {conflicts.map((c) => (
+            <li key={c.code} className="flex items-start gap-1.5 text-xs text-amber-500 dark:text-amber-400/90 px-1">
+              <span className="shrink-0 mt-px">⚠</span>
+              <span>{CONFLICT_LABELS[c.code]}</span>
+            </li>
+          ))}
+        </ul>
+      )}
 
       {hasNothingSelected && (
         <p className="text-xs text-muted-foreground text-center px-2" data-testid="nothing-to-download-note">

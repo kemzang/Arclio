@@ -35,6 +35,11 @@ function nativeAudio(formatId: string | null): AudioSelection {
 // audio stream double-tracks the audio (yt-dlp downloads both then ffmpeg
 // merges, ending with dual audio or worse). The right default is `none` =
 // keep as-is — the muxed stream already has audio.
+//
+// Muxed detection is format-driven, not preset-driven: every preset and the
+// manual resolution selector call this function, so 1080p+ muxed sources (rare
+// on YouTube, common on Twitch/other hosts) are handled correctly regardless of
+// which preset is active.
 function audioForVideoPick(videoFormatId: string, formats: FormatOption[], fallbackAudioId: string | null): AudioSelection {
   const f = formats.find((x) => x.formatId === videoFormatId);
   const isMuxed = !!f && !f.isVideoOnly && !f.isAudioOnly;
