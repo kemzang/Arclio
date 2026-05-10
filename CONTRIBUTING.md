@@ -6,14 +6,16 @@ This document covers the essentials. If anything is unclear, open an issue and a
 
 ---
 
-## Branching model
+### Branching model
 
 Arroxy uses two long-lived branches:
 
-| Branch | Purpose |
-|--------|---------|
-| **`main`** | Stable releases only. Every commit on `main` is reachable from a `vX.Y.Z` tag. **Do not target PRs at `main`.** |
-| **`dev`** | Active development. Beta tags (`vX.Y.Z-beta.N`) are cut from here. **All PRs target `dev`.** |
+| Branch     | Purpose                                                                                                                 |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **`main`** | Stable releases only. Every commit on `main` corresponds to released code. Do not open PRs against `main`.              |
+| **`dev`**  | Active development and integration. All features, fixes, and beta releases land here first. Open all PRs against `dev`. |
+
+This keeps `main` aligned with shipped releases and avoids review/merge conflicts caused by targeting the release branch instead of the development branch.
 
 If you accidentally target `main`, GitHub lets you change the base branch on an open PR — click "Edit" next to the title and switch the base to `dev`.
 
@@ -82,7 +84,7 @@ For a fresh-Windows-box bootstrap, see `scripts/build/build-windows.ps1`.
 
 ## Commit & PR conventions
 
-- **Conventional Commits.** Subject ≤ ~70 chars: `fix(scope): …`, `feat(scope): …`, `refactor: …`, `build: …`, `docs: …`. Body explains the *why*, not the *what*.
+- **Conventional Commits.** Subject ≤ ~70 chars: `fix(scope): …`, `feat(scope): …`, `refactor: …`, `build: …`, `docs: …`. Body explains the _why_, not the _what_.
 - **No AI attribution.** Do **not** add `Co-Authored-By: Claude …` trailers or `🤖 Generated with …` footers to commits or PR bodies. Write as if authored solely by yourself.
 - **Small, separable commits.** If your PR has two unrelated concerns, make them two commits — reviewers may take one and not the other.
 - **Sign your commits** if your Git identity is set up for it. Not required.
