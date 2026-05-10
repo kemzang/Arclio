@@ -11,7 +11,8 @@ interface CancelOutput {
 function makeDeps(queueCancelResult: Result<CancelOutput> = ok({ cancelled: true })) {
   return {
     queueService: {
-      cancel: vi.fn().mockResolvedValue(queueCancelResult)
+      cancel: vi.fn().mockResolvedValue(queueCancelResult),
+      pauseAll: vi.fn().mockResolvedValue(undefined)
     },
     tokenService: {
       dispose: vi.fn()

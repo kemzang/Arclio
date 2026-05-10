@@ -228,34 +228,30 @@ if (hasSingleInstanceLock) {
       const lang = languageRef.current;
       const { response } = await dialog.showMessageBox(mainWindow, {
         type: 'warning',
-        buttons: [mainT(lang, 'dialogs.quitWithActiveDownloads.confirm'), mainT(lang, 'dialogs.quitWithActiveDownloads.keep')],
-        defaultId: 1,
-        cancelId: 1,
-        message: mainT(lang, `dialogs.quitWithActiveDownloads.${pluralKey('message', count)}`, {
-          count
-        }),
+        buttons: [
+          mainT(lang, 'dialogs.quitWithActiveDownloads.pause'),
+          mainT(lang, 'dialogs.quitWithActiveDownloads.confirm'),
+          mainT(lang, 'dialogs.quitWithActiveDownloads.keep')
+        ],
+        defaultId: 2,
+        cancelId: 2,
+        message: mainT(lang, `dialogs.quitWithActiveDownloads.${pluralKey('message', count)}`, { count }),
         detail: mainT(lang, 'dialogs.quitWithActiveDownloads.detail')
       });
-      if (response === 0) app.quit();
+      if (response === 0) {
+        await queueService.pauseAll();
+        app.quit();
+      } else if (response === 1) {
+        app.quit();
+      }
+      // response === 2: keep downloading — do nothing
     }
 
     mainWindow.on('close', (event) => {
       if (process.platform === 'darwin' || tray === null) {
-        // Original behavior: warn if downloads active, then let the close proceed → app.quit()
         if (downloadService.runningJobCount === 0) return;
-        const count = downloadService.runningJobCount;
-        const lang = languageRef.current;
-        const choice = dialog.showMessageBoxSync(mainWindow, {
-          type: 'warning',
-          buttons: [mainT(lang, 'dialogs.quitWithActiveDownloads.confirm'), mainT(lang, 'dialogs.quitWithActiveDownloads.keep')],
-          defaultId: 1,
-          cancelId: 1,
-          message: mainT(lang, `dialogs.quitWithActiveDownloads.${pluralKey('message', count)}`, {
-            count
-          }),
-          detail: mainT(lang, 'dialogs.quitWithActiveDownloads.detail')
-        });
-        if (choice === 1) event.preventDefault();
+        event.preventDefault();
+        void warnActiveDownloadsThenQuit();
         return;
       }
 

@@ -2,6 +2,7 @@ import type { Result } from '@shared/result.js';
 
 interface ShutdownQueueService {
   cancel: (itemId: string | null) => Promise<Result<unknown>>;
+  pauseAll: () => Promise<void>;
 }
 
 interface ShutdownTokenService {
