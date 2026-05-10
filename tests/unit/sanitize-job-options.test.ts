@@ -44,20 +44,24 @@ describe('sanitizeJobOptions', () => {
 
   describe('thumbnailEmbedNotSupported', () => {
     it('thumbnail=true on webm container → conflict, thumbnail cleared', () => {
-      const result = sanitizeJobOptions(makeInput({
-        resolvedOutputContainer: 'webm',
-        embed: { chapters: false, metadata: false, thumbnail: true, description: false, thumbnailSidecar: false }
-      }));
+      const result = sanitizeJobOptions(
+        makeInput({
+          resolvedOutputContainer: 'webm',
+          embed: { chapters: false, metadata: false, thumbnail: true, description: false, thumbnailSidecar: false }
+        })
+      );
       expect(result.conflicts).toContainEqual({ code: 'thumbnailEmbedNotSupported' });
       expect(result.overrides.embed.thumbnail).toBe(false);
     });
 
     it('thumbnail=true on opus container → conflict', () => {
       // opus IS in the supported set
-      const result = sanitizeJobOptions(makeInput({
-        resolvedOutputContainer: 'opus',
-        embed: { chapters: false, metadata: false, thumbnail: true, description: false, thumbnailSidecar: false }
-      }));
+      const result = sanitizeJobOptions(
+        makeInput({
+          resolvedOutputContainer: 'opus',
+          embed: { chapters: false, metadata: false, thumbnail: true, description: false, thumbnailSidecar: false }
+        })
+      );
       expect(result.conflicts).toHaveLength(0);
     });
 
@@ -69,30 +73,36 @@ describe('sanitizeJobOptions', () => {
 
   describe('subtitleEmbedAudioOnly', () => {
     it('audio-only + subtitleMode embed + languages set → conflict, mode→sidecar', () => {
-      const result = sanitizeJobOptions(makeInput({
-        hasVideoTrack: false,
-        subtitleMode: 'embed',
-        subtitleLanguages: ['en']
-      }));
+      const result = sanitizeJobOptions(
+        makeInput({
+          hasVideoTrack: false,
+          subtitleMode: 'embed',
+          subtitleLanguages: ['en']
+        })
+      );
       expect(result.conflicts).toContainEqual({ code: 'subtitleEmbedAudioOnly' });
       expect(result.overrides.subtitleMode).toBe('sidecar');
     });
 
     it('audio-only + subtitleMode embed + no languages → no conflict', () => {
-      const result = sanitizeJobOptions(makeInput({
-        hasVideoTrack: false,
-        subtitleMode: 'embed',
-        subtitleLanguages: []
-      }));
+      const result = sanitizeJobOptions(
+        makeInput({
+          hasVideoTrack: false,
+          subtitleMode: 'embed',
+          subtitleLanguages: []
+        })
+      );
       expect(result.conflicts).toHaveLength(0);
     });
 
     it('video + subtitleMode embed + languages → no conflict', () => {
-      const result = sanitizeJobOptions(makeInput({
-        hasVideoTrack: true,
-        subtitleMode: 'embed',
-        subtitleLanguages: ['en']
-      }));
+      const result = sanitizeJobOptions(
+        makeInput({
+          hasVideoTrack: true,
+          subtitleMode: 'embed',
+          subtitleLanguages: ['en']
+        })
+      );
       expect(result.conflicts).toHaveLength(0);
     });
   });
@@ -111,28 +121,34 @@ describe('sanitizeJobOptions', () => {
     });
 
     it('embedOptionsNoMedia: isSubtitleOnly + thumbnail=true → conflict, thumbnail cleared', () => {
-      const result = sanitizeJobOptions(makeInput({
-        isSubtitleOnly: true,
-        embed: { chapters: false, metadata: false, thumbnail: true, description: false, thumbnailSidecar: false }
-      }));
+      const result = sanitizeJobOptions(
+        makeInput({
+          isSubtitleOnly: true,
+          embed: { chapters: false, metadata: false, thumbnail: true, description: false, thumbnailSidecar: false }
+        })
+      );
       expect(result.conflicts).toContainEqual({ code: 'embedOptionsNoMedia' });
       expect(result.overrides.embed.thumbnail).toBe(false);
     });
 
     it('embedOptionsNoMedia: isSubtitleOnly + chapters=true → conflict, chapters cleared', () => {
-      const result = sanitizeJobOptions(makeInput({
-        isSubtitleOnly: true,
-        embed: { chapters: true, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false }
-      }));
+      const result = sanitizeJobOptions(
+        makeInput({
+          isSubtitleOnly: true,
+          embed: { chapters: true, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false }
+        })
+      );
       expect(result.conflicts).toContainEqual({ code: 'embedOptionsNoMedia' });
       expect(result.overrides.embed.chapters).toBe(false);
     });
 
     it('embedOptionsNoMedia: isSubtitleOnly + metadata=true → conflict, metadata cleared', () => {
-      const result = sanitizeJobOptions(makeInput({
-        isSubtitleOnly: true,
-        embed: { chapters: false, metadata: true, thumbnail: false, description: false, thumbnailSidecar: false }
-      }));
+      const result = sanitizeJobOptions(
+        makeInput({
+          isSubtitleOnly: true,
+          embed: { chapters: false, metadata: true, thumbnail: false, description: false, thumbnailSidecar: false }
+        })
+      );
       expect(result.conflicts).toContainEqual({ code: 'embedOptionsNoMedia' });
       expect(result.overrides.embed.metadata).toBe(false);
     });
@@ -158,12 +174,14 @@ describe('sanitizeJobOptions', () => {
 
   describe('multiple conflicts', () => {
     it('subtitle-only + all embed options on + embed mode → all 3 subtitle-only conflict codes', () => {
-      const result = sanitizeJobOptions(makeInput({
-        isSubtitleOnly: true,
-        subtitleMode: 'embed',
-        sponsorBlockMode: 'remove',
-        embed: { chapters: true, metadata: true, thumbnail: true, description: false, thumbnailSidecar: false }
-      }));
+      const result = sanitizeJobOptions(
+        makeInput({
+          isSubtitleOnly: true,
+          subtitleMode: 'embed',
+          sponsorBlockMode: 'remove',
+          embed: { chapters: true, metadata: true, thumbnail: true, description: false, thumbnailSidecar: false }
+        })
+      );
       const codes = result.conflicts.map((c) => c.code);
       expect(codes).toContain('embedOptionsNoMedia');
       expect(codes).toContain('sponsorBlockNoMedia');
