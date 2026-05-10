@@ -8,30 +8,31 @@ import type { QueueItem } from '@shared/types.js';
 import type { QueueService } from './QueueService.js';
 
 export class QueueEventBridge {
+  private onAdded?: (e: { items: QueueItem[]; atIdx: number }) => void;
+  private onUpdated?: (e: { item: QueueItem }) => void;
+  private onRemoved?: (e: { itemId: string }) => void;
+
   constructor(
     private readonly queueService: QueueService,
     private readonly window: BrowserWindow
   ) {}
 
   attach(): void {
-    this.queueService.removeAllListeners('added');
-    this.queueService.removeAllListeners('updated');
-    this.queueService.removeAllListeners('removed');
+    // Remove only our own prior handlers — preserves any external listeners.
+    if (this.onAdded) this.queueService.off('added', this.onAdded);
+    if (this.onUpdated) this.queueService.off('updated', this.onUpdated);
+    if (this.onRemoved) this.queueService.off('removed', this.onRemoved);
 
     // Initial snapshot — hydrates the renderer projection on window create.
     this.send(IPC_CHANNELS.queueEventSnapshot, this.queueService.snapshot());
 
-    this.queueService.on('added', (event: { items: QueueItem[]; atIdx: number }) => {
-      this.send(IPC_CHANNELS.queueEventAdded, event);
-    });
+    this.onAdded = (e) => this.send(IPC_CHANNELS.queueEventAdded, e);
+    this.onUpdated = (e) => this.send(IPC_CHANNELS.queueEventUpdated, e);
+    this.onRemoved = (e) => this.send(IPC_CHANNELS.queueEventRemoved, e);
 
-    this.queueService.on('updated', (event: { item: QueueItem }) => {
-      this.send(IPC_CHANNELS.queueEventUpdated, event);
-    });
-
-    this.queueService.on('removed', (event: { itemId: string }) => {
-      this.send(IPC_CHANNELS.queueEventRemoved, event);
-    });
+    this.queueService.on('added', this.onAdded);
+    this.queueService.on('updated', this.onUpdated);
+    this.queueService.on('removed', this.onRemoved);
   }
 
   private send(channel: string, payload: unknown): void {
