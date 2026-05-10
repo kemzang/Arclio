@@ -403,7 +403,7 @@ const om = {
       resume: 'Itti fufi',
       cancel: 'Haqi',
       remove: 'Balleessi'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

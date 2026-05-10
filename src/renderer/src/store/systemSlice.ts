@@ -134,7 +134,9 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
       set({ warmupRunning: true });
       const settingsPromise = window.appApi.settings.get();
       const warmUpPromise = window.appApi.app.warmUp();
-      const [settingsResult, warmUpResult] = await Promise.all([settingsPromise, warmUpPromise]);
+      const snapshotPromise = window.appApi.queue.cmd.getSnapshot();
+      const [settingsResult, warmUpResult, snapshotResult] = await Promise.all([settingsPromise, warmUpPromise, snapshotPromise]);
+      if (snapshotResult.ok) set({ queue: snapshotResult.data });
 
       if (settingsResult.ok) {
         const common = settingsResult.data.common ?? ({} as AppSettings['common']);

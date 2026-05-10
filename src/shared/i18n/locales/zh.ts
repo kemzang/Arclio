@@ -404,7 +404,7 @@ const zh = {
       resume: '继续',
       cancel: '取消',
       remove: '移除'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

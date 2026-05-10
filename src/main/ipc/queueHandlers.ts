@@ -62,6 +62,10 @@ export function registerQueueHandlers(queueService: QueueService): void {
     }
   });
 
+  handleRaw(IPC_CHANNELS.queueCmdGetSnapshot, () => {
+    return Promise.resolve(ok(queueService.snapshot()));
+  });
+
   handleRaw(IPC_CHANNELS.queueCmdClearCompleted, () => {
     try {
       const result = queueService.clearCompleted();

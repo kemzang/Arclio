@@ -404,7 +404,7 @@ const ur = {
       resume: 'دوبارہ شروع کریں',
       cancel: 'منسوخ کریں',
       remove: 'ہٹائیں'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

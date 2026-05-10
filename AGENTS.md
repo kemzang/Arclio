@@ -90,15 +90,29 @@ Rarely-needed deep-dive references that bloat this file (e.g. the YouTube bot-pr
 
 ## Post-Task Checks
 
-After completing any implementation task, run these three checks in order and fix all errors before reporting done:
+After completing any implementation task, run this single command and fix all errors before reporting done:
 
 ```bash
-bun run lint       # ESLint — no warnings promoted to errors
-bun run typecheck  # tsc --noEmit — zero type errors
-bun run knip       # dead exports / unused files — zero issues
+bun run check   # lint + typecheck + knip + madge (circular imports)
 ```
 
-Do not skip a check because you didn't touch that area. A change in one file can break types or introduce dead code elsewhere.
+Do not skip. A change in one file can break types, introduce dead code, or create circular imports elsewhere.
+
+### On-demand hygiene checks
+
+```bash
+bun run madge           # circular imports — exit 1 if any found
+bun run knip:test-only  # src/ files imported only from tests/ — potential dead production code
+```
+
+Run `madge` after any refactor that moves modules or changes import boundaries. Run `knip:test-only` when reviewing whether a helper belongs in `src/` or `tests/`.
+
+### Dev workflow
+
+```bash
+bun run dev        # normal dev start
+bun run dev:fresh  # clear main.log then start (cross-platform)
+```
 
 ### Test runner
 

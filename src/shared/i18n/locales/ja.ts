@@ -404,7 +404,7 @@ const ja = {
       resume: '再開',
       cancel: 'キャンセル',
       remove: '削除'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

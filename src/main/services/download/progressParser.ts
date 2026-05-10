@@ -88,7 +88,7 @@ export class ProgressParser {
         jobId,
         line,
         at: nowIso(),
-        percent: active.currentFileKind === 'subtitle' ? undefined : parsePercentFromLine(line)
+        percent: active.currentFileKind === 'subtitle' && active.input.job.kind !== 'subtitle-only' ? undefined : parsePercentFromLine(line)
       };
       this.emitProgress(event);
     }

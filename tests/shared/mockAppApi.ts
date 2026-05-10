@@ -113,6 +113,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
     queue: {
       cmd: {
         add: vi.fn().mockResolvedValue(ok({ ids: [] as string[] })),
+        getSnapshot: vi.fn().mockResolvedValue(ok([] as import('@shared/types.js').QueueItem[])),
         start: vi.fn().mockResolvedValue(ok(undefined)),
         pause: vi.fn().mockResolvedValue(ok(undefined)),
         resume: vi.fn().mockResolvedValue(ok(undefined)),

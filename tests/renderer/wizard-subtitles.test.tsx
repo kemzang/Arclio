@@ -86,6 +86,7 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}, probeResu
     queue: {
       cmd: {
         add: vi.fn().mockResolvedValue({ ok: true, data: { ids: [] } }),
+        getSnapshot: vi.fn().mockResolvedValue({ ok: true, data: [] }),
         start: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
         pause: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
         resume: vi.fn().mockResolvedValue({ ok: true, data: undefined }),

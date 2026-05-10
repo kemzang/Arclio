@@ -94,7 +94,7 @@ export function transition(item: QueueItem, evt: QueueEvent): QueueItem {
 // the transition is allowed; otherwise returns a short reason string.
 export function illegalTransition(item: QueueItem, evt: QueueEvent): string | null {
   if (item.status === QUEUE_STATUS.cancelled) {
-    if (evt.kind === 'progress' || evt.kind === 'completed' || evt.kind === 'failed') {
+    if (evt.kind !== 'cancelled' && evt.kind !== 'retry-reset') {
       return `event ${evt.kind} on cancelled item is a stale signal`;
     }
   }

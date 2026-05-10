@@ -31,6 +31,9 @@ export interface IpcDependencies {
   clipboardWatcher: ClipboardWatcher;
 }
 
+let activeDownloadBridge: DownloadEventBridge | null = null;
+let activeQueueBridge: QueueEventBridge | null = null;
+
 export function registerIpcHandlers(deps: IpcDependencies): void {
   const { mainWindow, downloadService, probeService, settingsStore, queueService, binaryManager, tokenService, languageRef, clipboardWatcher } = deps;
 
@@ -44,6 +47,11 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
   registerAnalyticsHandlers();
   registerDiagnosticsHandlers();
 
-  new DownloadEventBridge(downloadService, mainWindow).attach();
-  new QueueEventBridge(queueService, mainWindow).attach();
+  activeDownloadBridge?.detach();
+  activeDownloadBridge = new DownloadEventBridge(downloadService, mainWindow);
+  activeDownloadBridge.attach();
+
+  activeQueueBridge?.detach();
+  activeQueueBridge = new QueueEventBridge(queueService, mainWindow);
+  activeQueueBridge.attach();
 }

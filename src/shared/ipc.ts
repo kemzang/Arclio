@@ -25,6 +25,7 @@ export const IPC_CHANNELS = {
   // Queue commands — renderer → main. The QueueService on main is the
   // queue-of-record; renderer mutations are forbidden.
   queueCmdAdd: 'queue:cmd:add',
+  queueCmdGetSnapshot: 'queue:cmd:getSnapshot',
   queueCmdStart: 'queue:cmd:start',
   queueCmdPause: 'queue:cmd:pause',
   queueCmdResume: 'queue:cmd:resume',

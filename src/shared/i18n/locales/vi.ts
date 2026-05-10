@@ -404,7 +404,7 @@ const vi = {
       resume: 'Tiếp tục',
       cancel: 'Hủy',
       remove: 'Xóa'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

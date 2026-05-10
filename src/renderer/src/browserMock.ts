@@ -482,6 +482,7 @@ if (!('appApi' in window)) {
     queue: {
       cmd: {
         add: () => Promise.resolve({ ok: true, data: { ids: [] } } as const),
+        getSnapshot: () => Promise.resolve({ ok: true, data: [] } as const),
         start: () => Promise.resolve({ ok: true, data: undefined } as const),
         pause: () => Promise.resolve({ ok: true, data: undefined } as const),
         resume: () => Promise.resolve({ ok: true, data: undefined } as const),

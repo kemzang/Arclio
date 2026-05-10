@@ -404,7 +404,7 @@ const my = {
       resume: 'ဆက်လုပ်မည်',
       cancel: 'ပယ်ဖျက်မည်',
       remove: 'ဖျက်မည်'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

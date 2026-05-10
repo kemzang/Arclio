@@ -404,7 +404,7 @@ const ps = {
       resume: 'دوام',
       cancel: 'لغوه کول',
       remove: 'لیرې کول'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

@@ -57,6 +57,7 @@ export interface AppApi {
   queue: {
     cmd: {
       add(items: QueueItem[]): Promise<Result<{ ids: string[] }>>;
+      getSnapshot(): Promise<Result<QueueItem[]>>;
       start(input: { itemId: string }): Promise<Result<void>>;
       pause(input: { itemId: string }): Promise<Result<void>>;
       resume(input: { itemId: string }): Promise<Result<void>>;

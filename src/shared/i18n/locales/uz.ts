@@ -404,7 +404,7 @@ const uz = {
       resume: 'Davom ettirish',
       cancel: 'Bekor qilish',
       remove: "O'chirish"
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

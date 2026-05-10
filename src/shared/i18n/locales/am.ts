@@ -404,7 +404,7 @@ const am = {
       resume: 'ቀጥል',
       cancel: 'ሰርዝ',
       remove: 'አስወግድ'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

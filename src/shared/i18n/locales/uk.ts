@@ -404,7 +404,7 @@ const uk = {
       resume: 'Продовжити',
       cancel: 'Скасувати',
       remove: 'Видалити'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

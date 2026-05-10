@@ -7,15 +7,12 @@
 
 import { STEPS, STEP_APPLICABLE, type StepContext, type VisibleStep } from './stepNavigation.js';
 
-// Inputs to nextStep. Extends StepContext with two re-entry signals:
+// Inputs to nextStep. Extends StepContext with one re-entry signal:
 //   - wizardSubtitleSkipped — true when the user clicked "Skip" on the
 //     subtitles step. The graph treats `subtitles` as not-applicable so a
 //     subsequent `advance()` from `formats` doesn't bounce back into it.
-//   - retryOrigin — set by the error step when the user clicks Retry. Lets
-//     re-entry land on the right step instead of restarting from `url`.
 export interface NavContext extends StepContext {
   wizardSubtitleSkipped: boolean;
-  retryOrigin?: 'formats' | null;
 }
 
 function applicable(step: VisibleStep, ctx: NavContext): boolean {

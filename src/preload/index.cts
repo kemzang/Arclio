@@ -82,6 +82,7 @@ const api: AppApi = {
   queue: {
     cmd: {
       add: (items: QueueItem[]) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdAdd, items),
+      getSnapshot: () => ipcRenderer.invoke(IPC_CHANNELS.queueCmdGetSnapshot),
       start: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdStart, input),
       pause: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdPause, input),
       resume: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdResume, input),

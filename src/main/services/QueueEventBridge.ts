@@ -1,7 +1,3 @@
-// QueueEventBridge — wires QueueService events to the renderer window.
-// Sends an initial snapshot on attach (hydration), then streams added /
-// updated / removed events as QueueService mutates the queue.
-
 import type { BrowserWindow } from 'electron';
 import { IPC_CHANNELS } from '@shared/ipc.js';
 import type { QueueItem } from '@shared/types.js';
@@ -18,12 +14,11 @@ export class QueueEventBridge {
   ) {}
 
   attach(): void {
-    // Remove only our own prior handlers — preserves any external listeners.
+    // off() instead of removeAllListeners() — preserves any external listeners.
     if (this.onAdded) this.queueService.off('added', this.onAdded);
     if (this.onUpdated) this.queueService.off('updated', this.onUpdated);
     if (this.onRemoved) this.queueService.off('removed', this.onRemoved);
 
-    // Initial snapshot — hydrates the renderer projection on window create.
     this.send(IPC_CHANNELS.queueEventSnapshot, this.queueService.snapshot());
 
     this.onAdded = (e) => this.send(IPC_CHANNELS.queueEventAdded, e);
@@ -33,6 +28,15 @@ export class QueueEventBridge {
     this.queueService.on('added', this.onAdded);
     this.queueService.on('updated', this.onUpdated);
     this.queueService.on('removed', this.onRemoved);
+  }
+
+  detach(): void {
+    if (this.onAdded) this.queueService.off('added', this.onAdded);
+    if (this.onUpdated) this.queueService.off('updated', this.onUpdated);
+    if (this.onRemoved) this.queueService.off('removed', this.onRemoved);
+    this.onAdded = undefined;
+    this.onUpdated = undefined;
+    this.onRemoved = undefined;
   }
 
   private send(channel: string, payload: unknown): void {

@@ -404,7 +404,7 @@ const el = {
       resume: 'Συνέχεια',
       cancel: 'Ακύρωση',
       remove: 'Κατάργηση'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

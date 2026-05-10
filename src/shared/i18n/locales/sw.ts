@@ -403,7 +403,7 @@ const sw = {
       resume: 'Endelea',
       cancel: 'Ghairi',
       remove: 'Ondoa'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

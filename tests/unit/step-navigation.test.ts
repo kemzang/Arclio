@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { STEP_APPLICABLE, STEPS, shouldSkip, type StepContext } from '@renderer/components/wizard/stepNavigation.js';
+import { nextStep, type NavContext } from '@renderer/components/wizard/nextStep.js';
 
 // Step gating predicates are pure — exercise them directly without spinning
 // up the wizard. Covers Cycle 10 (subtitle empty-pool skip) plus regression
@@ -46,6 +47,36 @@ describe('sponsorblock step gating — YouTube-only', () => {
 
   it('hidden for YouTube extractor on audio-only preset (no video to mark)', () => {
     expect(shouldSkip('sponsorblock', { ...baseCtx, wizardExtractor: 'youtube', activePreset: 'audio-only' })).toBe(true);
+  });
+});
+
+const baseNavCtx: NavContext = {
+  activePreset: null,
+  wizardMode: 'single',
+  selectedPlaylistPreset: null,
+  wizardExtractor: '',
+  hasSubtitles: false,
+  wizardSubtitleSkipped: false
+};
+
+describe('nextStep traversal', () => {
+  it('single mode: forward from url skips playlist steps to formats', () => {
+    expect(nextStep('url', baseNavCtx, 'forward')).toBe('formats');
+  });
+
+  it('forward from formats skips subtitles when wizardSubtitleSkipped is true', () => {
+    const ctx = { ...baseNavCtx, wizardSubtitleSkipped: true };
+    const result = nextStep('formats', ctx, 'forward');
+    expect(result).not.toBe('subtitles');
+  });
+
+  it('forward from formats stops at subtitles when hasSubtitles is true', () => {
+    const ctx = { ...baseNavCtx, hasSubtitles: true };
+    expect(nextStep('formats', ctx, 'forward')).toBe('subtitles');
+  });
+
+  it('backward from formats returns url', () => {
+    expect(nextStep('formats', baseNavCtx, 'backward')).toBe('url');
   });
 });
 

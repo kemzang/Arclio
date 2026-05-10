@@ -80,8 +80,12 @@ export class QueueService extends EventEmitter {
     if (item.status !== QUEUE_STATUS.pending) {
       return fail(createAppError('validation', `cannot start item in status ${item.status}`));
     }
+    // Claim the scheduler slot synchronously before the await so concurrent
+    // maybeStartNext() calls don't see kind === 'idle' and spawn a second job.
+    this.scheduler = { kind: 'running', jobId: '' };
     const result = await this.downloadService.start({ url: item.url, outputDir: item.outputDir, job: item.job });
     if (!result.ok) {
+      this.scheduler = { kind: 'idle' };
       this.applyEvent(itemId, { kind: 'failed', error: { kind: 'unknown', raw: result.error.message } });
       return fail(result.error);
     }
@@ -263,6 +267,8 @@ export class QueueService extends EventEmitter {
     // Phase transition — surface as a non-status update so the UI can show
     // "Merging…", "Embedding metadata…", etc. We don't transition status here;
     // we just update lastStatus + progressDetail.
+    // Skip for terminal states — a cancelled/done item must not be mutated by stale phase events.
+    if (item.status === QUEUE_STATUS.cancelled || item.status === QUEUE_STATUS.done) return;
     this.updateItem(item.id, (prev) => ({
       ...prev,
       lastStatus: { key: event.statusKey, params: event.params },

@@ -404,7 +404,7 @@ const hi = {
       resume: 'फिर से शुरू',
       cancel: 'रद्द करें',
       remove: 'हटाएँ'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

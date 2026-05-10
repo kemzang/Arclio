@@ -404,7 +404,7 @@ const bn = {
       resume: 'চালিয়ে যান',
       cancel: 'বাতিল',
       remove: 'সরান'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

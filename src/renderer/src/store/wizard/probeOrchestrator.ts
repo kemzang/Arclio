@@ -9,14 +9,13 @@
 // one transition so the UI never sees a half-updated wizard.
 
 import { DEFAULTS } from '@shared/constants.js';
-import { DEFAULT_AUDIO_BITRATE } from '@shared/schemas.js';
-import type { AppSettings, FormatOption, PlaylistEntry, PlaylistPreset, ProbePlaylistMode, ProbeResult, SubtitleMap, WizardTransition } from '@shared/types.js';
+import type { AppSettings, PlaylistPreset, ProbePlaylistMode, ProbeResult, WizardTransition } from '@shared/types.js';
 import { getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 import { cleanUrl } from '@shared/cleanUrl.js';
 import { isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
 import { applyPreset, restoreFormatSelection, restoreSubtitleSelection } from './formatPicker.js';
-import { WizardCommands } from './commands.js';
-import type { AppState, GetState, SetState, ProbeOrchestratorSlice, WizardMode, WizardStep } from '../types.js';
+import { WizardCommands, RESET_WIZARD_STATE } from './commands.js';
+import type { AppState, GetState, SetState, ProbeOrchestratorSlice, WizardStep } from '../types.js';
 import { type VisibleStep } from '../../components/wizard/stepNavigation.js';
 import { nextStep, type NavContext } from '../../components/wizard/nextStep.js';
 
@@ -71,8 +70,7 @@ function navCtx(state: AppState): NavContext {
     selectedPlaylistPreset: state.selectedPlaylistPreset,
     wizardExtractor: state.wizardExtractor,
     hasSubtitles,
-    wizardSubtitleSkipped: state.wizardSubtitleSkipped,
-    retryOrigin: state.wizardErrorOrigin === 'formats' ? 'formats' : null
+    wizardSubtitleSkipped: state.wizardSubtitleSkipped
   };
 }
 
@@ -118,60 +116,6 @@ function restoreCommonWizardPrefs(settings: AppSettings | null): Pick<AppState, 
     wizardWriteThumbnail: settings?.common?.writeThumbnail ?? DEFAULTS.writeThumbnail
   };
 }
-
-// Full wizard reset state — owned conceptually by the four slices but applied
-// in one set() call so the UI never sees a half-reset wizard. Per-slice reset
-// constants live with their slice file; this is the union for the orchestrator.
-export const RESET_WIZARD_STATE = {
-  // probe + step nav
-  wizardStep: 'url' as WizardStep,
-  wizardMode: 'single' as WizardMode,
-  wizardUrl: '',
-  wizardTitle: '',
-  wizardThumbnail: '',
-  wizardDuration: undefined as number | undefined,
-  wizardFormatsDegraded: null,
-  wizardExtractor: '',
-  wizardExtractorKey: '',
-  wizardWebpageUrl: '',
-  formatsLoading: false,
-  wizardError: null,
-  wizardErrorOrigin: null,
-  playlistItems: [] as PlaylistEntry[],
-  selectedPlaylistItemIds: [] as string[],
-  playlistTitle: '',
-  playlistId: '',
-  playlistIsMultiVideo: false,
-  playlistProbeLoading: false,
-  selectedPlaylistPreset: null as PlaylistPreset | null,
-  // formatPicker
-  wizardFormats: [] as FormatOption[],
-  selectedVideoFormatId: '',
-  audioSelection: { kind: 'none' as const },
-  lastConvertBitrate: DEFAULT_AUDIO_BITRATE,
-  activePreset: null,
-  wizardSubtitles: {} as SubtitleMap,
-  wizardAutomaticCaptions: {} as SubtitleMap,
-  wizardSubtitleLanguages: [] as string[],
-  wizardSubtitleSkipped: false,
-  wizardSubtitleMode: DEFAULTS.subtitleMode,
-  wizardSubtitleFormat: DEFAULTS.subtitleFormat,
-  // outputConfig
-  wizardSponsorBlockMode: DEFAULTS.sponsorBlockMode,
-  wizardSponsorBlockCategories: DEFAULTS.sponsorBlockCategories,
-  wizardEmbedChapters: DEFAULTS.embedChapters,
-  wizardEmbedMetadata: DEFAULTS.embedMetadata,
-  wizardEmbedThumbnail: DEFAULTS.embedThumbnail,
-  wizardWriteDescription: DEFAULTS.writeDescription,
-  wizardWriteThumbnail: DEFAULTS.writeThumbnail,
-  wizardSubfolderEnabled: false,
-  wizardSubfolderName: '',
-  // dialogs
-  advancedAutoOpen: false,
-  mixedUrlPromptOpen: false,
-  mixedUrlPending: null as string | null,
-  cookiesConfigDialogIssue: null
-} as const;
 
 function maybeBlockIncompleteCookiesConfig(url: string, set: SetState, get: GetState): boolean {
   const issue = getIncompleteCookiesConfigIssue(get().settings?.common);

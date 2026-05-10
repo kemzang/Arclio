@@ -404,7 +404,7 @@ const fr = {
       resume: 'Reprendre',
       cancel: 'Annuler',
       remove: 'Supprimer'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',

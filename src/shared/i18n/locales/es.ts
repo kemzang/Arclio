@@ -403,7 +403,7 @@ const es = {
       resume: 'Reanudar',
       cancel: 'Cancelar',
       remove: 'Quitar'
-    },
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
