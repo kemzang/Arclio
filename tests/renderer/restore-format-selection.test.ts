@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
-import { applyPreset, restoreFormatSelection } from '@renderer/store/wizard/formatPicker.js';
+import { applyPreset, restoreFormatSelection, restoreSubtitleSelection } from '@renderer/store/wizard/formatPicker.js';
 import type { AppSettings, FormatOption, SinglePrefs } from '@shared/types.js';
 
 const FORMATS: FormatOption[] = [
@@ -143,5 +143,45 @@ describe('reviveAudio — convert-* selections carry verbatim across source type
   it('convert-lossless (wav) carries through verbatim', () => {
     const result = restoreFormatSelection(FORMATS, settingsWith({ lastAudioSelection: { kind: 'convert-lossless', target: 'wav' }, lastPreset: 'audio-only' }));
     expect(result.audioSelection).toEqual({ kind: 'convert-lossless', target: 'wav' });
+  });
+});
+
+describe('restoreSubtitleSelection', () => {
+  const SUBTITLES = { en: [{ ext: 'vtt' }], es: [{ ext: 'vtt' }] };
+  const AUTO_CAPTIONS = { 'de-orig': [{ ext: 'vtt' }] };
+
+  it('returns empty languages when no settings', () => {
+    const result = restoreSubtitleSelection(SUBTITLES, AUTO_CAPTIONS, null);
+    expect(result.languages).toEqual([]);
+  });
+
+  it('returns only languages that are available in subtitles or auto-captions', () => {
+    const result = restoreSubtitleSelection(SUBTITLES, AUTO_CAPTIONS, settingsWith({ lastSubtitleLanguages: ['en', 'fr'] }));
+    expect(result.languages).toEqual(['en']);
+  });
+
+  it('preserves order from persisted languages, filtered to available', () => {
+    const result = restoreSubtitleSelection(SUBTITLES, AUTO_CAPTIONS, settingsWith({ lastSubtitleLanguages: ['es', 'en'] }));
+    expect(result.languages).toEqual(['es', 'en']);
+  });
+
+  it('picks up languages from auto-captions pool', () => {
+    const result = restoreSubtitleSelection(SUBTITLES, AUTO_CAPTIONS, settingsWith({ lastSubtitleLanguages: ['de-orig'] }));
+    expect(result.languages).toEqual(['de-orig']);
+  });
+
+  it('returns empty when persisted languages are all unavailable', () => {
+    const result = restoreSubtitleSelection(SUBTITLES, AUTO_CAPTIONS, settingsWith({ lastSubtitleLanguages: ['ja', 'zh'] }));
+    expect(result.languages).toEqual([]);
+  });
+
+  it('returns empty when subtitles and automaticCaptions are both undefined', () => {
+    const result = restoreSubtitleSelection(undefined, undefined, settingsWith({ lastSubtitleLanguages: ['en'] }));
+    expect(result.languages).toEqual([]);
+  });
+
+  it('returns empty when persisted list is empty', () => {
+    const result = restoreSubtitleSelection(SUBTITLES, AUTO_CAPTIONS, settingsWith({ lastSubtitleLanguages: [] }));
+    expect(result.languages).toEqual([]);
   });
 });

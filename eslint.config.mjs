@@ -9,7 +9,7 @@ import security from 'eslint-plugin-security';
 
 export default tseslint.config(
   {
-    ignores: ['dist', 'out', 'node_modules', 'dist-electron', 'playwright-report', 'test-results', 'refs', 'landing-src', 'readme-src']
+    ignores: ['dist', 'out', 'node_modules', 'dist-electron', 'playwright-report', 'test-results', 'refs', 'landing-src', 'readme-src', '.electron-user-data']
   },
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
