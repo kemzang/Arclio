@@ -84,7 +84,7 @@ export type YtDlpRequest =
     };
 
 export interface YtDlpSignal {
-  onAttempt?: (attempt: 0 | 1 | 2) => void;
+  onMinting?: (attempt: 0 | 1) => void;
   onSpawn?: (proc: ChildProcessWithoutNullStreams) => void;
   onStdout?: (chunk: string) => void;
   onStderr?: (chunk: string) => void;
@@ -147,7 +147,8 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
   const extractorArgsArr: string[] = [];
   if (strategy.kind === 'pot') {
     if (strategy.reMint) opts.tokenService.invalidateCache();
-    const { token, visitorData } = await opts.tokenService.mintTokenForUrl(opts.url);
+    const { token, visitorData, fromCache } = await opts.tokenService.mintTokenForUrl(opts.url);
+    if (!fromCache) opts.signal?.onMinting?.(strategy.reMint ? 1 : 0);
     extractorArgsArr.push('--extractor-args', buildPotExtractorArgs(token, visitorData));
   } else if (strategy.kind === 'fallback') {
     extractorArgsArr.push('--extractor-args', PLAYER_CLIENT_FALLBACK);
@@ -316,28 +317,23 @@ async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
     return invokeOnce(opts, { kind: 'noExtractorArgs' });
   }
 
-  opts.signal?.onAttempt?.(0);
   let result: YtDlpResult;
   try {
     result = await invokeOnce(opts, { kind: 'pot', reMint: false });
   } catch {
-    opts.signal?.onAttempt?.(2);
     return invokeOnce(opts, { kind: 'fallback' });
   }
 
   if (result.kind !== 'exit-error' || result.errorKind !== 'botBlock') return result;
 
-  opts.signal?.onAttempt?.(1);
   try {
     result = await invokeOnce(opts, { kind: 'pot', reMint: true });
   } catch {
-    opts.signal?.onAttempt?.(2);
     return invokeOnce(opts, { kind: 'fallback' });
   }
 
   if (result.kind !== 'exit-error' || result.errorKind !== 'botBlock') return result;
 
-  opts.signal?.onAttempt?.(2);
   return invokeOnce(opts, { kind: 'fallback' });
 }
 

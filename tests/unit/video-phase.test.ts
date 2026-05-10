@@ -60,7 +60,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
 function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload> = {}): PhaseContext & { runMock: ReturnType<typeof vi.fn> } {
   const runMock = vi.fn().mockImplementation((_req, signal) => {
     return Promise.resolve(runResult).then((r) => {
-      signal?.onAttempt?.(0);
+      signal?.onMinting?.(0);
       return r;
     });
   });
@@ -323,10 +323,10 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 });
 
 describe('VideoPhase — signal callbacks', () => {
-  it('onAttempt(0) → emits mintingToken; onAttempt(1) → emits remintingToken', async () => {
+  it('onMinting(0) → emits mintingToken; onMinting(1) → emits remintingToken', async () => {
     const runMock = vi.fn().mockImplementation(async (_req, signal) => {
-      signal?.onAttempt?.(0);
-      signal?.onAttempt?.(1);
+      signal?.onMinting?.(0);
+      signal?.onMinting?.(1);
       return SUCCESS;
     });
     const ctx: PhaseContext = {
@@ -344,11 +344,8 @@ describe('VideoPhase — signal callbacks', () => {
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('token', STATUS_KEY.remintingToken);
   });
 
-  it('onAttempt(2) → does not emit any status (fallback is silent)', async () => {
-    const runMock = vi.fn().mockImplementation(async (_req, signal) => {
-      signal?.onAttempt?.(2);
-      return SUCCESS;
-    });
+  it('fallback attempt → does not emit any status (onMinting never fires for fallback)', async () => {
+    const runMock = vi.fn().mockImplementation(async (_req, _signal) => SUCCESS);
     const ctx: PhaseContext = {
       active: makeActive(),
       signal: new AbortController().signal,

@@ -92,8 +92,7 @@ export function VideoPhase(embed: boolean): Phase {
             };
 
       const result = await ytDlp.run(req, {
-        onAttempt: (attempt) => {
-          if (attempt === 2) return;
+        onMinting: (attempt) => {
           ctx.emitStatus('token', attempt === 0 ? STATUS_KEY.mintingToken : STATUS_KEY.remintingToken);
         },
         // Don't preemptively emit downloadingMedia on spawn — yt-dlp spends

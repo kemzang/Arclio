@@ -28,8 +28,7 @@ export const SubtitleOnlyPhase: Phase = {
         writeAutoSubs: subtitles.writeAuto
       },
       {
-        onAttempt: (attempt) => {
-          if (attempt === 2) return;
+        onMinting: (attempt) => {
           ctx.emitStatus('token', attempt === 0 ? STATUS_KEY.mintingToken : STATUS_KEY.remintingToken);
         },
         onSpawn: (proc) => {

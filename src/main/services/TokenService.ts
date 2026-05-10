@@ -59,9 +59,9 @@ export class TokenService {
     this.cache = null;
   }
 
-  async mintTokenForUrl(url: string): Promise<{ token: string; visitorData: string }> {
+  async mintTokenForUrl(url: string): Promise<{ token: string; visitorData: string; fromCache: boolean }> {
     if (this.cache && Date.now() - this.cache.mintedAt < TTL_MS) {
-      return { token: this.cache.token, visitorData: this.cache.visitorData };
+      return { token: this.cache.token, visitorData: this.cache.visitorData, fromCache: true };
     }
 
     try {
@@ -72,7 +72,7 @@ export class TokenService {
       logger.info('Minting PO token', { bindingLength: binding.length });
       const token = await this.provider.mintToken(binding);
       this.cache = { token, visitorData, mintedAt: Date.now() };
-      return { token, visitorData };
+      return { token, visitorData, fromCache: false };
     } finally {
       this.provider.releaseWindow();
     }

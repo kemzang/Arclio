@@ -160,10 +160,10 @@ describe('SubtitleOnlyPhase', () => {
     expect(outcome.kind).toBe('cancelled');
   });
 
-  it('onAttempt(0) → emits mintingToken; onAttempt(1) → emits remintingToken', async () => {
+  it('onMinting(0) → emits mintingToken; onMinting(1) → emits remintingToken', async () => {
     const runMock = vi.fn().mockImplementation(async (_req, signal) => {
-      signal?.onAttempt?.(0);
-      signal?.onAttempt?.(1);
+      signal?.onMinting?.(0);
+      signal?.onMinting?.(1);
       return SUCCESS;
     });
     const ctx: PhaseContext = {
@@ -181,11 +181,8 @@ describe('SubtitleOnlyPhase', () => {
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('token', STATUS_KEY.remintingToken);
   });
 
-  it('onAttempt(2) → no status emitted', async () => {
-    const runMock = vi.fn().mockImplementation(async (_req, signal) => {
-      signal?.onAttempt?.(2);
-      return SUCCESS;
-    });
+  it('no onMinting call → no token status emitted', async () => {
+    const runMock = vi.fn().mockImplementation(async (_req, _signal) => SUCCESS);
     const ctx: PhaseContext = {
       active: makeActive(),
       signal: new AbortController().signal,
