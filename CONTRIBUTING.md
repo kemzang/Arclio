@@ -42,10 +42,10 @@ bun run dev          # runs the Electron app against the Vite renderer
 For pure-renderer / UI work without the Electron shell:
 
 ```bash
-npx vite src/renderer --port 5173
+npx vite src/renderer --port 5173 --mode browser-mock
 ```
 
-The renderer's `browserMock.ts` stubs `window.appApi` so the wizard, queue, and update banner all simulate without a backend.
+The renderer's `browserMock.ts` stubs `window.appApi` only in explicit `browser-mock` mode so the wizard, queue, and update banner all simulate without a backend. Electron dev and packaged builds use the real preload bridge.
 
 ## Required pre-PR checks
 

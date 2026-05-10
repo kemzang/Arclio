@@ -223,11 +223,21 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
     },
 
     openBinariesDir: async () => {
-      await window.appApi.shell.openBinariesDir();
+      try {
+        const result = await window.appApi.shell.openBinariesDir();
+        if (!result.ok) notify.shellActionFailed('shell.openBinariesDir', result.error);
+      } catch (err) {
+        notify.shellActionFailed('shell.openBinariesDir', err);
+      }
     },
 
     openLogs: async () => {
-      await window.appApi.logs.openDir();
+      try {
+        const result = await window.appApi.logs.openDir();
+        if (!result.ok) notify.shellActionFailed('logs.openDir', result.error);
+      } catch (err) {
+        notify.shellActionFailed('logs.openDir', err);
+      }
     },
 
     setLanguage: (lang) => {

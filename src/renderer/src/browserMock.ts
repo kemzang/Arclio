@@ -1,6 +1,30 @@
 import type { AppApi } from '@shared/api.js';
-import type { AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent } from '@shared/types.js';
+import type { AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent } from '@shared/types.js';
 import { defaultAppSettings } from '@shared/constants.js';
+import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas.js';
+
+const BROWSER_MOCK_LAUNCH_MODES = ['ready', 'cold-loading', 'cold-error'] as const;
+export type BrowserMockLaunchMode = (typeof BROWSER_MOCK_LAUNCH_MODES)[number];
+const BROWSER_MOCK_LAUNCH_STORAGE_KEY = 'arroxy:browserMockLaunch';
+
+function isBrowserMockLaunchMode(value: string | null): value is BrowserMockLaunchMode {
+  return value != null && (BROWSER_MOCK_LAUNCH_MODES as readonly string[]).includes(value);
+}
+
+export function parseBrowserMockLaunchMode(search: string, storageValue: string | null): BrowserMockLaunchMode {
+  const queryValue = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search).get('mockLaunch');
+  if (isBrowserMockLaunchMode(queryValue)) return queryValue;
+  if (isBrowserMockLaunchMode(storageValue)) return storageValue;
+  return 'ready';
+}
+
+function readBrowserMockLaunchMode(): BrowserMockLaunchMode {
+  try {
+    return parseBrowserMockLaunchMode(window.location.search, window.localStorage.getItem(BROWSER_MOCK_LAUNCH_STORAGE_KEY));
+  } catch {
+    return 'ready';
+  }
+}
 
 function looksLikeUrl(input: string): boolean {
   try {
@@ -11,12 +35,21 @@ function looksLikeUrl(input: string): boolean {
   }
 }
 
-if (!('appApi' in window)) {
+export function installBrowserMock(): void {
+  if ('appApi' in window) return;
+
   const statusListeners = new Set<(e: StatusEvent) => void>();
   const progressListeners = new Set<(e: ProgressEvent) => void>();
   const updateListeners = new Set<(info: UpdateAvailablePayload) => void>();
   const warmupProgressListeners = new Set<(e: WarmupProgressEvent) => void>();
+  const queueSnapshotListeners = new Set<(items: QueueItem[]) => void>();
+  const queueAddedListeners = new Set<(event: { items: QueueItem[]; atIdx: number }) => void>();
+  const queueUpdatedListeners = new Set<(event: { item: QueueItem }) => void>();
+  const queueRemovedListeners = new Set<(event: { itemId: string }) => void>();
+  const queueItems: QueueItem[] = [];
+  let queueRunning = false;
   let warmupCallCount = 0;
+  const launchMode = readBrowserMockLaunchMode();
 
   setTimeout(() => {
     // Flip installChannel to 'scoop' / 'homebrew' / 'winget' to preview those banner states
@@ -102,27 +135,76 @@ if (!('appApi' in window)) {
     statusListeners.forEach((l) => l({ jobId: id, stage: 'done', statusKey: 'complete', at: new Date().toISOString() }));
   }
 
+  function emitQueueUpdated(item: QueueItem): void {
+    queueUpdatedListeners.forEach((listener) => listener({ item }));
+  }
+
+  function setQueueItem(nextItem: QueueItem): void {
+    const index = queueItems.findIndex((item) => item.id === nextItem.id);
+    if (index < 0) return;
+    queueItems[index] = nextItem;
+    emitQueueUpdated(nextItem);
+  }
+
+  function removeQueueItem(itemId: string): void {
+    const index = queueItems.findIndex((item) => item.id === itemId);
+    if (index < 0) return;
+    queueItems.splice(index, 1);
+    queueRemovedListeners.forEach((listener) => listener({ itemId }));
+  }
+
+  function maybeStartNextQueueItem(): void {
+    if (queueRunning) return;
+    const next = queueItems.find((item) => item.status === QUEUE_STATUS.pending);
+    if (!next) return;
+    queueRunning = true;
+    void simulateQueueItem(next);
+  }
+
+  async function simulateQueueItem(item: QueueItem): Promise<void> {
+    let current: QueueItem = {
+      ...item,
+      status: QUEUE_STATUS.running,
+      progressPercent: 0,
+      progressDetail: 'Starting yt-dlp',
+      lastStatus: { key: STATUS_KEY.startingYtdlp }
+    };
+    setQueueItem(current);
+
+    const steps = [8, 21, 38, 54, 71, 88, 100];
+    for (const percent of steps) {
+      await delay(250);
+      const stillCurrent = queueItems.find((candidate) => candidate.id === item.id);
+      if (stillCurrent?.status !== QUEUE_STATUS.running) {
+        queueRunning = false;
+        maybeStartNextQueueItem();
+        return;
+      }
+      current = {
+        ...stillCurrent,
+        progressPercent: percent,
+        progressDetail: percent >= 100 ? 'Finalizing' : `Downloading ${percent}%`,
+        lastStatus: { key: percent >= 100 ? STATUS_KEY.complete : STATUS_KEY.startingYtdlp }
+      };
+      setQueueItem(current);
+    }
+
+    const finished: QueueItem = {
+      ...current,
+      status: QUEUE_STATUS.done,
+      progressPercent: 100,
+      progressDetail: null,
+      lastStatus: { key: STATUS_KEY.complete },
+      finishedAt: new Date().toISOString()
+    };
+    setQueueItem(finished);
+    queueRunning = false;
+    maybeStartNextQueueItem();
+  }
+
   const mock: AppApi = {
     app: {
       warmUp: async (input) => {
-        const binaries: { name: DependencyId; size: number }[] = [
-          { name: 'yt-dlp', size: 12 * 1024 * 1024 },
-          { name: 'ffmpeg', size: 80 * 1024 * 1024 },
-          { name: 'ffprobe', size: 30 * 1024 * 1024 },
-          { name: 'deno', size: 95 * 1024 * 1024 }
-        ];
-        for (const { name, size } of binaries) {
-          const steps = 10;
-          for (let i = 1; i <= steps; i++) {
-            await delay(120);
-            warmupProgressListeners.forEach((l) => l({ binary: name, phase: 'downloading', bytesDownloaded: Math.round((size / steps) * i), totalBytes: size }));
-          }
-          warmupProgressListeners.forEach((l) => l({ binary: name, phase: 'done', bytesDownloaded: size, totalBytes: size }));
-        }
-
-        // First call simulates a quarantined yt-dlp so the renderer's
-        // RepairPanel is exercised in dev. force=true (called by repair flow)
-        // returns a clean success.
         warmupCallCount += 1;
         const force = input?.force === true;
         const allRunnable: Record<DependencyId, DependencyDiagnostic> = {
@@ -132,7 +214,24 @@ if (!('appApi' in window)) {
           deno: { id: 'deno', state: 'runnable', source: { kind: 'managed', channel: 'default', url: 'mock' }, resolvedPath: '/mock/deno', attempts: [] }
         };
 
-        if (!force && warmupCallCount === 1) {
+        if (launchMode !== 'ready') {
+          const binaries: { name: DependencyId; size: number }[] = [
+            { name: 'yt-dlp', size: 12 * 1024 * 1024 },
+            { name: 'ffmpeg', size: 80 * 1024 * 1024 },
+            { name: 'ffprobe', size: 30 * 1024 * 1024 },
+            { name: 'deno', size: 95 * 1024 * 1024 }
+          ];
+          for (const { name, size } of binaries) {
+            const steps = 10;
+            for (let i = 1; i <= steps; i++) {
+              await delay(120);
+              warmupProgressListeners.forEach((l) => l({ binary: name, phase: 'downloading', bytesDownloaded: Math.round((size / steps) * i), totalBytes: size }));
+            }
+            warmupProgressListeners.forEach((l) => l({ binary: name, phase: 'done', bytesDownloaded: size, totalBytes: size }));
+          }
+        }
+
+        if (launchMode === 'cold-error' && !force && warmupCallCount === 1) {
           const blocked: Record<DependencyId, DependencyDiagnostic> = {
             ...allRunnable,
             'yt-dlp': {
@@ -481,21 +580,71 @@ if (!('appApi' in window)) {
 
     queue: {
       cmd: {
-        add: () => Promise.resolve({ ok: true, data: { ids: [] } } as const),
-        getSnapshot: () => Promise.resolve({ ok: true, data: [] } as const),
-        start: () => Promise.resolve({ ok: true, data: undefined } as const),
-        pause: () => Promise.resolve({ ok: true, data: undefined } as const),
-        resume: () => Promise.resolve({ ok: true, data: undefined } as const),
-        cancel: () => Promise.resolve({ ok: true, data: undefined } as const),
+        add: (items) => {
+          const atIdx = queueItems.length;
+          queueItems.push(...items);
+          queueAddedListeners.forEach((listener) => listener({ items, atIdx }));
+          maybeStartNextQueueItem();
+          return Promise.resolve({ ok: true, data: { ids: items.map((item) => item.id) } } as const);
+        },
+        getSnapshot: () => Promise.resolve({ ok: true, data: [...queueItems] } as const),
+        start: ({ itemId }) => {
+          const item = queueItems.find((candidate) => candidate.id === itemId);
+          if (item && item.status !== QUEUE_STATUS.done && item.status !== QUEUE_STATUS.cancelled) {
+            setQueueItem({ ...item, status: QUEUE_STATUS.pending });
+            maybeStartNextQueueItem();
+          }
+          return Promise.resolve({ ok: true, data: undefined } as const);
+        },
+        pause: ({ itemId }) => {
+          const item = queueItems.find((candidate) => candidate.id === itemId);
+          if (item?.status === QUEUE_STATUS.running) setQueueItem({ ...item, status: QUEUE_STATUS.pausedActive });
+          else if (item?.status === QUEUE_STATUS.pending) setQueueItem({ ...item, status: QUEUE_STATUS.pausedHeld });
+          return Promise.resolve({ ok: true, data: undefined } as const);
+        },
+        resume: ({ itemId }) => {
+          const item = queueItems.find((candidate) => candidate.id === itemId);
+          if (item?.status === QUEUE_STATUS.pausedActive || item?.status === QUEUE_STATUS.pausedHeld) {
+            setQueueItem({ ...item, status: QUEUE_STATUS.pending });
+            maybeStartNextQueueItem();
+          }
+          return Promise.resolve({ ok: true, data: undefined } as const);
+        },
+        cancel: ({ itemId }) => {
+          const targets = itemId === null ? [...queueItems] : queueItems.filter((item) => item.id === itemId);
+          targets.forEach((item) => setQueueItem({ ...item, status: QUEUE_STATUS.cancelled, progressDetail: null, finishedAt: new Date().toISOString() }));
+          return Promise.resolve({ ok: true, data: undefined } as const);
+        },
         retry: () => Promise.resolve({ ok: true, data: undefined } as const),
-        clearCompleted: () => Promise.resolve({ ok: true, data: undefined } as const),
-        remove: () => Promise.resolve({ ok: true, data: undefined } as const)
+        clearCompleted: () => {
+          queueItems
+            .filter((item) => item.status === QUEUE_STATUS.done)
+            .map((item) => item.id)
+            .forEach(removeQueueItem);
+          return Promise.resolve({ ok: true, data: undefined } as const);
+        },
+        remove: ({ itemId }) => {
+          removeQueueItem(itemId);
+          return Promise.resolve({ ok: true, data: undefined } as const);
+        }
       },
       events: {
-        onSnapshot: () => () => undefined,
-        onAdded: () => () => undefined,
-        onUpdated: () => () => undefined,
-        onRemoved: () => () => undefined
+        onSnapshot: (listener) => {
+          queueSnapshotListeners.add(listener);
+          return () => queueSnapshotListeners.delete(listener);
+        },
+        onAdded: (listener) => {
+          queueAddedListeners.add(listener);
+          return () => queueAddedListeners.delete(listener);
+        },
+        onUpdated: (listener) => {
+          queueUpdatedListeners.add(listener);
+          return () => queueUpdatedListeners.delete(listener);
+        },
+        onRemoved: (listener) => {
+          queueRemovedListeners.add(listener);
+          return () => queueRemovedListeners.delete(listener);
+        }
       }
     },
 

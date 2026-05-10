@@ -11,7 +11,7 @@ vi.mock('electron', () => ({
     getPath: vi.fn().mockReturnValue('/tmp')
   },
   dialog: { showOpenDialog: vi.fn() },
-  shell: { openPath: vi.fn(), openExternal: vi.fn().mockResolvedValue(undefined) },
+  shell: { openPath: vi.fn(), openExternal: vi.fn().mockResolvedValue(undefined), showItemInFolder: vi.fn() },
   ipcMain: {
     handle: vi.fn().mockImplementation((channel: string, fn: (e: unknown, p: unknown) => unknown) => {
       handleCalls.push({ channel, fn });

@@ -128,10 +128,10 @@ Run the renderer standalone via Vite for fast visual iteration; full Electron vi
 
 ```bash
 # From project root — uses src/renderer/vite.config.mjs (aliases + Tailwind + React)
-npx vite src/renderer --port 5173
+npx vite src/renderer --port 5173 --mode browser-mock
 ```
 
-The renderer's `browserMock.ts` (imported in `main.tsx`) stubs `window.appApi` with simulated downloads, formats, settings — no Electron needed.
+The renderer's `browserMock.ts` stubs `window.appApi` with simulated downloads, formats, settings when Vite runs in explicit `browser-mock` mode — no Electron needed. Electron dev and packaged builds must use the real preload bridge.
 
 ### MCP workflow
 
@@ -181,7 +181,7 @@ async (page) => {
 - Step 3 (Save): radio picker; "Custom…" returns a random mock path
 - Step 4 (Confirm): "Pull it! ↓" triggers simulated download
 - Drawer: click "Download Queue" header to expand; progress updates every 500ms
-- Update banner: fires after 3s with `{ version: '1.2.0', currentVersion: '0.0.1', installChannel: 'direct' }`. Edit `browserMock.ts` to preview other channel UX (`scoop`/`homebrew` = copy-cmd; `winget` = install button on any platform).
+- Update banner in `browser-mock` mode: fires after 3s with `{ version: '1.2.0', currentVersion: '0.0.1', installChannel: 'direct' }`. Edit `browserMock.ts` to preview other channel UX (`scoop`/`homebrew` = copy-cmd; `winget` = install button on any platform).
 
 ---
 
@@ -235,7 +235,7 @@ On Linux, electron-updater's default updater is `AppImageUpdater` (no `package-t
 
 ### IPC + types
 
-IPC channel names live in `IPC_CHANNELS` (`@shared/ipc`); payload types (`InstallChannel`, `UpdateAvailablePayload`) live in `@shared/types`. `resolveAction` is the pure helper at `src/renderer/src/components/updateBannerAction.ts` — extracted from `UpdateBanner.tsx` so the component file only exports a component (react-refresh requirement). Renderer dev mock at `src/renderer/src/browserMock.ts` simulates an `updater:available` event after 3s.
+IPC channel names live in `IPC_CHANNELS` (`@shared/ipc`); payload types (`InstallChannel`, `UpdateAvailablePayload`) live in `@shared/types`. `resolveAction` is the pure helper at `src/renderer/src/components/updateBannerAction.ts` — extracted from `UpdateBanner.tsx` so the component file only exports a component (react-refresh requirement). Renderer `browser-mock` mode at `src/renderer/src/browserMock.ts` simulates an `updater:available` event after 3s.
 
 ---
 

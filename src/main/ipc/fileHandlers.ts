@@ -61,7 +61,12 @@ export function registerFileHandlers(mainWindow: BrowserWindow, binaryManager: B
 
   handleRaw(IPC_CHANNELS.logsOpenDir, async () => {
     try {
-      const logsDir = path.dirname(log.transports.file.getFile().path);
+      const logPath = log.transports.file.getFile().path;
+      if (process.platform === 'win32') {
+        shell.showItemInFolder(logPath);
+        return ok({ opened: true });
+      }
+      const logsDir = path.dirname(logPath);
       const response = await shell.openPath(logsDir);
       if (response) return toIpcFailure(response);
       return ok({ opened: true });

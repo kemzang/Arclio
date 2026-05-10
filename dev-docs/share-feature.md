@@ -253,8 +253,8 @@ Translated via the `translate` skill across all 20 non-en locales when keys chan
 
 - **Concurrent triggers.** If a milestone fires while a manual surface is already open, the milestone path overwrites `{ open: true, trigger: 'milestone' }`. Acceptable — `openShareDialogInternal` is idempotent and the timestamp write is a single optimistic patch.
 - **Settings race.** `commonPatch()` does an optimistic local `set()` and a fire-and-forget `settings.update()`. If the update fails, local state stays ahead of disk. Acceptable trade-off for share fields — no critical data loss, and `notify.settingsSaveFailed('share', err)` logs the failure.
-- **`window.open` vs `shell.openExternal`.** Renderer `window.open` doesn't trigger Electron's external browser by default. All destinations route through IPC. The browser-mode dev mock in `src/renderer/src/browserMock.ts` polyfills `shell.openExternal` to call `window.open`, so dev-server testing still works.
-- **Mock state in dev.** The renderer dev server uses `browserMock.ts` to stub `window.appApi`. Settings mutations there don't survive page reload — full Electron run is required to verify persistence.
+- **`window.open` vs `shell.openExternal`.** Renderer `window.open` doesn't trigger Electron's external browser by default. All destinations route through IPC. The explicit `browser-mock` dev mode in `src/renderer/src/browserMock.ts` polyfills `shell.openExternal` to call `window.open`, so dev-server testing still works.
+- **Mock state in dev.** The renderer dev server uses `browserMock.ts` to stub `window.appApi` only when Vite runs with `--mode browser-mock`. Settings mutations there don't survive page reload — full Electron run is required to verify persistence.
 - **Impression dedup.** All `_impression` events use a component-local `useRef<boolean>` so React StrictMode double-invokes and re-renders don't cause double-counting. A new mount of the component (drawer collapse/expand, queue-item unmount) re-arms the ref, which is intentional — a re-mounted card is a fresh visual exposure.
 - **High-value detection narrowness.** `isHighValueDownload` returns `false` for plain single-format SD/HD downloads with no subs/SponsorBlock — so the banner does NOT spam the drawer after every successful pull. It only surfaces after the user has actually exercised a feature beyond the default path.
 
@@ -271,7 +271,7 @@ All three must exit clean. Currently they do.
 Renderer-only Playwright walk-through (per `CLAUDE.md`):
 
 ```bash
-npx vite src/renderer --port 5173
+npx vite src/renderer --port 5173 --mode browser-mock
 ```
 
 Drive in a browser via the Playwright MCP tools or manually:

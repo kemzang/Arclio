@@ -12,7 +12,7 @@ vi.mock('electron', () => ({
     getPath: vi.fn().mockReturnValue('/tmp')
   },
   dialog: { showOpenDialog: vi.fn() },
-  shell: { openPath: vi.fn(), openExternal: vi.fn() },
+  shell: { openPath: vi.fn(), openExternal: vi.fn(), showItemInFolder: vi.fn() },
   ipcMain: {
     handle: vi.fn().mockImplementation((channel: string, fn: (e: unknown, payload: unknown) => unknown) => {
       handleCalls.push({ channel, fn });
@@ -27,6 +27,7 @@ vi.mock('electron', () => ({
 
 import { registerIpcHandlers } from '@main/ipc/registerIpcHandlers.js';
 import { IPC_CHANNELS } from '@shared/ipc.js';
+import { shell } from 'electron';
 
 class FakeDownloadService extends EventEmitter {
   start = vi.fn();
@@ -356,6 +357,26 @@ describe('registerIpcHandlers', () => {
       expect(result.ok).toBe(false);
       expect(result.error).toMatchObject({ code: 'validation', message: 'Pick a browser to use cookies' });
       expect(deps._raw.downloadService.start).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('file handlers', () => {
+    it('logs:openDir reveals main.log in Explorer on Windows', async () => {
+      const originalPlatform = Object.getOwnPropertyDescriptor(process, 'platform')!;
+      Object.defineProperty(process, 'platform', { value: 'win32', configurable: true });
+      try {
+        const deps = makeDeps();
+        registerIpcHandlers(deps);
+
+        const handler = findCall(IPC_CHANNELS.logsOpenDir)!.fn;
+        const result = (await handler(null, undefined)) as { ok: boolean };
+
+        expect(result.ok).toBe(true);
+        expect(shell.showItemInFolder).toHaveBeenCalledWith('/tmp/logs/main.log');
+        expect(shell.openPath).not.toHaveBeenCalled();
+      } finally {
+        Object.defineProperty(process, 'platform', originalPlatform);
+      }
     });
   });
 });

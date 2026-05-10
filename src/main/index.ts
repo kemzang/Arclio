@@ -26,6 +26,7 @@ import { MockTokenProvider } from '@main/token/providers/MockTokenProvider.js';
 import { defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT } from '@shared/constants.js';
 import { runSmokeMode, readSmokeUrl, exitWithCode } from '@main/smoke.js';
 import { cancelQueueBeforeExit } from '@main/shutdown.js';
+import { registerPreloadDiagnostics, resolveMainWindowPreloadPath } from '@main/preloadDiagnostics.js';
 import contextMenu from 'electron-context-menu';
 import windowStateKeeper from 'electron-window-state';
 
@@ -90,6 +91,7 @@ if (!hasSingleInstanceLock) {
 
 function createMainWindow(): BrowserWindow {
   const winState = windowStateKeeper({ defaultWidth: WINDOW_DEFAULT_WIDTH, defaultHeight: WINDOW_DEFAULT_HEIGHT });
+  const preloadPath = resolveMainWindowPreloadPath(import.meta.dirname);
 
   const window = new BrowserWindow({
     x: winState.x,
@@ -103,12 +105,13 @@ function createMainWindow(): BrowserWindow {
     titleBarStyle: 'hidden',
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(import.meta.dirname, '../preload/index.cjs'),
+      preload: preloadPath,
       contextIsolation: true,
       nodeIntegration: false
     }
   });
 
+  registerPreloadDiagnostics(window, preloadPath);
   winState.manage(window);
 
   window.on('maximize', () => window.webContents.send(IPC_CHANNELS.windowMaximizedChange, true));
