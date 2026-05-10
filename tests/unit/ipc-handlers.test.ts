@@ -131,6 +131,25 @@ describe('registerIpcHandlers', () => {
       expect(ds.listenerCount('status')).toBe(1);
       expect(ds.listenerCount('progress')).toBe(1);
     });
+
+    it('pre-existing DownloadService listeners survive bridge re-attachment', () => {
+      const deps = makeDeps();
+      const ds = deps._raw.downloadService;
+      const received: string[] = [];
+      ds.on('status', () => received.push('survivor'));
+
+      registerIpcHandlers(deps);
+      registerIpcHandlers(deps);
+
+      ds.emit('status', {
+        jobId: 'j1',
+        stage: 'done',
+        statusKey: 'complete',
+        at: new Date().toISOString()
+      });
+
+      expect(received).toContain('survivor');
+    });
   });
 
   describe('progress throttle', () => {
