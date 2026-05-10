@@ -74,7 +74,7 @@ For a fresh-Windows-box bootstrap, see `scripts/build/build-windows.ps1`.
 ## Coding conventions
 
 - **TypeScript-strict.** No `any` / `unknown` without justification.
-- **Naming.** Reuse the domain glossary in [`CONTEXT.md`](CONTEXT.md) (Job / ActiveJob / Phase / JobLifecycle / BinaryManager / NavContext / FormatPicker / etc.). Don't introduce parallel vocabularies.
+- **Naming.** Reuse the domain glossary in [`CLAUDE.md`](CLAUDE.md) → "Domain Glossary" section (Job / ActiveJob / Phase / JobLifecycle / BinaryManager / NavContext / FormatPicker / etc.). Don't introduce parallel vocabularies.
 - **Architecture.** Renderer should not know how main fetches; main should not know which component renders. IPC channel names live in `src/shared/ipc.ts`; payload types live in `src/shared/types.ts`.
 - **Comments.** Don't restate what code already says. Comment when WHY is non-obvious — a hidden constraint, an OS-specific quirk, a workaround for a specific bug.
 - **No backwards-compat shims.** Delete old code rather than aliasing or re-exporting.
