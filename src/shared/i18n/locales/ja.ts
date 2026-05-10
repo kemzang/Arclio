@@ -405,8 +405,6 @@ const ja = {
       cancel: 'キャンセル',
       remove: '削除'
     },
-    interJobSleep_one: '次のダウンロードは{{count}}秒後に開始',
-    interJobSleep_other: '次のダウンロードは{{count}}秒後に開始'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

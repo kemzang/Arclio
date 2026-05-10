@@ -405,8 +405,6 @@ const ru = {
       cancel: 'Отменить',
       remove: 'Удалить'
     },
-    interJobSleep_one: 'Следующая загрузка начнётся через {{count}}с',
-    interJobSleep_other: 'Следующая загрузка начнётся через {{count}}с'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

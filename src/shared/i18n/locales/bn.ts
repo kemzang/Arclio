@@ -405,8 +405,6 @@ const bn = {
       cancel: 'বাতিল',
       remove: 'সরান'
     },
-    interJobSleep_one: 'পরবর্তী ডাউনলোড {{count}} সেকেন্ডে শুরু হবে',
-    interJobSleep_other: 'পরবর্তী ডাউনলোড {{count}} সেকেন্ডে শুরু হবে'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

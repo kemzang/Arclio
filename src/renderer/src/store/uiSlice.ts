@@ -8,7 +8,6 @@ export function createUiSlice(set: SetState, _get: GetState): UiSlice {
     uiTheme: DEFAULTS.uiTheme,
     drawerOpen: false,
     showQueueTip: false,
-    interJobSleepEndsAt: null,
     aboutDialogOpen: false,
 
     setDrawerOpen: (open) => {

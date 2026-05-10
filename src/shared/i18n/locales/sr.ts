@@ -405,8 +405,6 @@ const sr = {
       cancel: 'Откажи',
       remove: 'Уклони'
     },
-    interJobSleep_one: 'Следеће преузимање почиње за {{count}}с',
-    interJobSleep_other: 'Следеће преузимање почиње за {{count}}с'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

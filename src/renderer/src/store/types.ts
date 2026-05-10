@@ -163,7 +163,6 @@ export interface UiSlice {
   uiTheme: UiTheme;
   drawerOpen: boolean;
   showQueueTip: boolean;
-  interJobSleepEndsAt: number | null;
   aboutDialogOpen: boolean;
 
   setDrawerOpen: (open: boolean) => void;

@@ -405,8 +405,6 @@ const ar = {
       cancel: 'إلغاء',
       remove: 'إزالة'
     },
-    interJobSleep_one: 'التنزيل التالي يبدأ خلال {{count}} ثانية',
-    interJobSleep_other: 'التنزيل التالي يبدأ خلال {{count}} ثوانٍ'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

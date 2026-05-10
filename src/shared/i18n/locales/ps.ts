@@ -405,8 +405,6 @@ const ps = {
       cancel: 'لغوه کول',
       remove: 'لیرې کول'
     },
-    interJobSleep_one: 'راتلونکی ډاونلوډ {{count}} ثانیو کې پیل کیږي',
-    interJobSleep_other: 'راتلونکی ډاونلوډ {{count}} ثانیو کې پیل کیږي'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

@@ -405,8 +405,6 @@ const my = {
       cancel: 'ပယ်ဖျက်မည်',
       remove: 'ဖျက်မည်'
     },
-    interJobSleep_one: 'နောက်ဒေါင်းလုဒ် {{count}}s တွင်စမည်',
-    interJobSleep_other: 'နောက်ဒေါင်းလုဒ် {{count}}s တွင်စမည်'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

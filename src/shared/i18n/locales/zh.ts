@@ -405,8 +405,6 @@ const zh = {
       cancel: '取消',
       remove: '移除'
     },
-    interJobSleep_one: '下一个下载将在 {{count}} 秒后开始',
-    interJobSleep_other: '下一个下载将在 {{count}} 秒后开始'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

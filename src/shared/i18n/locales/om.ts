@@ -404,8 +404,6 @@ const om = {
       cancel: 'Haqi',
       remove: 'Balleessi'
     },
-    interJobSleep_one: 'Daawniloodiin ittaanu sekoondii {{count}} booda jalqaba',
-    interJobSleep_other: 'Daawniloodiin ittaanu sekoondii {{count}} booda jalqaba'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

@@ -404,8 +404,6 @@ const es = {
       cancel: 'Cancelar',
       remove: 'Quitar'
     },
-    interJobSleep_one: 'La próxima descarga empieza en {{count}}s',
-    interJobSleep_other: 'La próxima descarga empieza en {{count}}s'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

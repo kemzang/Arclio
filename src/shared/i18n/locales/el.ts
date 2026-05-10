@@ -405,8 +405,6 @@ const el = {
       cancel: 'Ακύρωση',
       remove: 'Κατάργηση'
     },
-    interJobSleep_one: 'Η επόμενη λήψη ξεκινά σε {{count}}δ',
-    interJobSleep_other: 'Η επόμενη λήψη ξεκινά σε {{count}}δ'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

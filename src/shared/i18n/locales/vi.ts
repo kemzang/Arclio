@@ -405,8 +405,6 @@ const vi = {
       cancel: 'Hủy',
       remove: 'Xóa'
     },
-    interJobSleep_one: 'Lượt tải tiếp bắt đầu sau {{count}}s',
-    interJobSleep_other: 'Lượt tải tiếp bắt đầu sau {{count}}s'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

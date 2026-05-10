@@ -405,8 +405,6 @@ const ur = {
       cancel: 'منسوخ کریں',
       remove: 'ہٹائیں'
     },
-    interJobSleep_one: 'اگلا ڈاؤن لوڈ {{count}} سیکنڈ میں شروع ہوگا',
-    interJobSleep_other: 'اگلا ڈاؤن لوڈ {{count}} سیکنڈ میں شروع ہوگا'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

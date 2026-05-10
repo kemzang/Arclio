@@ -52,6 +52,7 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
     queue: {
       cmd: {
         add: vi.fn().mockResolvedValue(ok({ ids: [] })),
+        getSnapshot: vi.fn().mockResolvedValue(ok([])),
         start: vi.fn().mockResolvedValue(ok(undefined)),
         pause: vi.fn().mockResolvedValue(ok(undefined)),
         resume: vi.fn().mockResolvedValue(ok(undefined)),
@@ -119,8 +120,7 @@ beforeEach(() => {
     wizardWebpageUrl: '',
     queue: [],
     drawerOpen: false,
-    showQueueTip: false,
-    interJobSleepEndsAt: null
+    showQueueTip: false
   } as never);
 });
 

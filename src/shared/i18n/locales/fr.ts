@@ -405,8 +405,6 @@ const fr = {
       cancel: 'Annuler',
       remove: 'Supprimer'
     },
-    interJobSleep_one: 'Prochain téléchargement dans {{count}}s',
-    interJobSleep_other: 'Prochain téléchargement dans {{count}}s'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

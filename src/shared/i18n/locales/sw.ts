@@ -404,8 +404,6 @@ const sw = {
       cancel: 'Ghairi',
       remove: 'Ondoa'
     },
-    interJobSleep_one: 'Upakuaji unaofuata unaanza baada ya sekunde {{count}}',
-    interJobSleep_other: 'Upakuaji unaofuata unaanza baada ya sekunde {{count}}'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

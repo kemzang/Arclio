@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronDown, Hourglass, Inbox, Pause, Share2, Trash2, X } from 'lucide-react';
+import { useEffect, useMemo, useRef } from 'react';
+import { ChevronDown, Inbox, Pause, Share2, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { isHighValueDownload } from '@shared/queueItem.js';
 import { useAppStore, formatStatus } from '../../store/useAppStore.js';
@@ -20,21 +20,9 @@ export function SmartDrawer(): JSX.Element {
   const clearCompleted = useAppStore((s) => s.clearCompleted);
   const pauseAll = useAppStore((s) => s.pauseAll);
   const cancelAll = useAppStore((s) => s.cancelAll);
-  const interJobSleepEndsAt = useAppStore((s) => s.interJobSleepEndsAt);
   const shareHighValueBannerDismissed = useAppStore((s) => s.settings?.common?.shareHighValueBannerDismissed ?? false);
   const openShareDialog = useAppStore((s) => s.openShareDialog);
   const setShareHighValueBannerDismissed = useAppStore((s) => s.setShareHighValueBannerDismissed);
-
-  // Tick every 250ms while sleep window active so the countdown ticks down
-  // without re-rendering the whole drawer at 60fps.
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => {
-    if (!interJobSleepEndsAt) return;
-    const id = setInterval(() => setNow(Date.now()), 250);
-    return () => clearInterval(id);
-  }, [interJobSleepEndsAt]);
-  const sleepRemainingSec = interJobSleepEndsAt ? Math.max(0, Math.ceil((interJobSleepEndsAt - now) / 1000)) : 0;
-  const showSleepBanner = !!interJobSleepEndsAt && sleepRemainingSec > 0;
 
   const orderedQueue = useMemo(() => {
     const finished = (s: string): boolean => s === 'done' || s === 'cancelled';
@@ -42,9 +30,6 @@ export function SmartDrawer(): JSX.Element {
     const done = queue.filter((i) => finished(i.status));
     return [...active, ...done];
   }, [queue]);
-  // First pending item: the one the scheduler will pick when the inter-job
-  // sleep window elapses. Surface the countdown on its card.
-  const nextPendingId = useMemo(() => orderedQueue.find((i) => i.status === 'pending')?.id ?? null, [orderedQueue]);
   const activeItems = useMemo(() => queue.filter((i) => i.status === 'running'), [queue]);
   const activeCount = activeItems.length;
   const totalCount = queue.length;
@@ -164,12 +149,6 @@ export function SmartDrawer(): JSX.Element {
       </button>
 
       <div className="drawer-body" style={{ maxHeight: drawerOpen ? '16rem' : '0px' }} data-testid="drawer-body">
-        {showSleepBanner && (
-          <div className="px-4 py-1.5 text-[11px] font-mono text-[var(--color-status-paused)] bg-[var(--color-status-paused-glow)]/10 border-b border-border flex items-center gap-1.5" data-testid="inter-job-sleep-banner">
-            <Hourglass size={11} className="animate-pulse shrink-0" />
-            <span>{t('queue.interJobSleep', { count: sleepRemainingSec })}</span>
-          </div>
-        )}
         {showShareBanner && (
           <div className="bg-muted/40 border-b border-border flex items-stretch" data-testid="share-high-value-banner">
             <button type="button" onClick={() => openShareDialog('high-value-inline')} className="flex-1 flex items-center gap-2 px-3 py-1.5 text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors text-left cursor-pointer" data-testid="share-high-value-banner-action">
@@ -189,7 +168,7 @@ export function SmartDrawer(): JSX.Element {
                 <span>{t('queue.empty')}</span>
               </li>
             ) : (
-              orderedQueue.map((item) => <QueueItemCard key={item.id} item={item} sleepRemainingSec={item.id === nextPendingId && showSleepBanner ? sleepRemainingSec : undefined} />)
+              orderedQueue.map((item) => <QueueItemCard key={item.id} item={item} />)
             )}
           </ul>
         </ScrollArea>

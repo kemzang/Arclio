@@ -405,8 +405,6 @@ const uk = {
       cancel: 'Скасувати',
       remove: 'Видалити'
     },
-    interJobSleep_one: 'Наступне завантаження розпочнеться через {{count}}с',
-    interJobSleep_other: 'Наступне завантаження розпочнеться через {{count}}с'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

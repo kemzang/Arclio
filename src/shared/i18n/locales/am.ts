@@ -405,8 +405,6 @@ const am = {
       cancel: 'ሰርዝ',
       remove: 'አስወግድ'
     },
-    interJobSleep_one: 'ቀጣዩ ዳውንሎድ በ{{count}} ሰከንድ ይጀምራል',
-    interJobSleep_other: 'ቀጣዩ ዳውንሎድ በ{{count}} ሰከንዶች ይጀምራል'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

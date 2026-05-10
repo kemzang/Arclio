@@ -405,8 +405,6 @@ const hi = {
       cancel: 'रद्द करें',
       remove: 'हटाएँ'
     },
-    interJobSleep_one: 'अगली डाउनलोड {{count}}s में शुरू होगी',
-    interJobSleep_other: 'अगली डाउनलोड {{count}}s में शुरू होगी'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

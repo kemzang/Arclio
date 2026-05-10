@@ -23,9 +23,6 @@ const PHASE_ICON: Partial<Record<StatusKey, ReactNode>> = {
 
 interface Props {
   item: QueueItem;
-  // When set + the item is pending, render a "starts in Ns" hint so the user
-  // knows which item is on deck during the inter-job sleep window.
-  sleepRemainingSec?: number;
 }
 
 const STATUS_BORDER: Record<QueueItemStatus, string> = {
@@ -42,7 +39,7 @@ const STATUS_BORDER: Record<QueueItemStatus, string> = {
 // since both convey "completed but not perfect".
 const SUBS_FAILED_BORDER = 'border-s-2 border-s-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-paused-glow)]';
 
-export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
+export function QueueItemCard({ item }: Props): JSX.Element {
   const { t, i18n } = useTranslation();
   const { cancelItemDownload, pauseItemDownload, resumeItemDownload, removeQueueItem, retryQueueItem, openItemFolder, openItemUrl } = useAppStore();
 
@@ -81,12 +78,6 @@ export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
               {t('queue.item.doneAt', {
                 time: new Date(item.finishedAt).toLocaleTimeString(i18n.language)
               })}
-            </span>
-          )}
-          {status === 'pending' && sleepRemainingSec !== undefined && sleepRemainingSec > 0 && (
-            <span className="text-[var(--color-status-paused)] inline-flex items-center gap-1" data-testid="queue-item-sleep-hint">
-              <Hourglass size={11} className="animate-pulse" />
-              {t('queue.interJobSleep', { count: sleepRemainingSec })}
             </span>
           )}
         </p>

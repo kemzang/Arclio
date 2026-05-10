@@ -405,8 +405,6 @@ const uz = {
       cancel: 'Bekor qilish',
       remove: "O'chirish"
     },
-    interJobSleep_one: 'Keyingi yuklama {{count}} soniyada boshlanadi',
-    interJobSleep_other: 'Keyingi yuklama {{count}} soniyada boshlanadi'
   },
   update: {
     appVersion: 'Arroxy {{version}}',

@@ -404,8 +404,6 @@ const en = {
       cancel: 'Cancel',
       remove: 'Remove'
     },
-    interJobSleep_one: 'Next download starts in {{count}}s',
-    interJobSleep_other: 'Next download starts in {{count}}s'
   },
   update: {
     appVersion: 'Arroxy {{version}}',
