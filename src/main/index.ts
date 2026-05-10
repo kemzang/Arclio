@@ -25,6 +25,7 @@ import { HiddenWindowTokenProvider } from '@main/token/providers/HiddenWindowTok
 import { MockTokenProvider } from '@main/token/providers/MockTokenProvider.js';
 import { defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT } from '@shared/constants.js';
 import { runSmokeMode, readSmokeUrl, exitWithCode } from '@main/smoke.js';
+import { cancelQueueBeforeExit } from '@main/shutdown.js';
 import contextMenu from 'electron-context-menu';
 import windowStateKeeper from 'electron-window-state';
 
@@ -379,10 +380,14 @@ if (hasSingleInstanceLock) {
         return;
       }
       event.preventDefault();
-      void downloadService.cancel().finally(() => {
-        tokenService.dispose();
-        log.info('App shutting down');
-        app.exit(0); // must use exit(), not quit() — quit() re-emits before-quit causing infinite loop
+      void cancelQueueBeforeExit({
+        queueService,
+        tokenService,
+        logInfo: (message, meta) => {
+          if (meta) log.info(message, meta);
+          else log.info(message);
+        },
+        exit: (code) => app.exit(code) // must use exit(), not quit() — quit() re-emits before-quit causing infinite loop
       });
     });
   });
