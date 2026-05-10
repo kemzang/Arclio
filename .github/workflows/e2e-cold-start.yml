@@ -1,0 +1,94 @@
+name: E2E Cold Start
+
+on:
+  push:
+    branches: [main, dev]
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  cold-start:
+    name: Cold start (${{ matrix.label }})
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - os: windows-latest
+            label: windows
+            build_cmd: bun run dist:win:dir
+          - os: macos-13
+            label: macos-x64
+            build_cmd: bun run clean && bun run build && electron-builder --mac dir --arch x64 --publish never
+          - os: macos-latest
+            label: macos-arm64
+            build_cmd: bun run clean && bun run build && electron-builder --mac dir --arch arm64 --publish never
+          - os: ubuntu-latest
+            label: linux
+            build_cmd: bun run dist:linux:dir
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ matrix.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ matrix.os }}-bun-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build unpacked app
+        shell: bash
+        env:
+          BUILD_CMD: ${{ matrix.build_cmd }}
+          OPENPANEL_CLIENT_ID: ${{ secrets.OPENPANEL_CLIENT_ID }}
+          OPENPANEL_CLIENT_SECRET: ${{ secrets.OPENPANEL_CLIENT_SECRET }}
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: bash -c "$BUILD_CMD"
+
+      - name: Locate packaged executable
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "macOS" ]; then
+            exe=$(find dist -name "Arroxy" -path "*/MacOS/Arroxy" 2>/dev/null | head -1)
+          elif [ "$RUNNER_OS" = "Windows" ]; then
+            exe="dist/win-unpacked/Arroxy.exe"
+          else
+            exe="dist/linux-unpacked/arroxy"
+          fi
+          echo "PACKAGED_EXE=$GITHUB_WORKSPACE/$exe" >> "$GITHUB_ENV"
+
+      - name: Install Playwright browsers
+        run: bunx playwright install chromium --with-deps
+
+      - name: Run cold-start E2E
+        shell: bash
+        env:
+          ARROXY_COLD_TMPDIR: ${{ runner.temp }}
+          ARROXY_LOG_ARCHIVE: ${{ runner.temp }}/arroxy-cold-logs
+        run: |
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            xvfb-run -a bunx playwright test tests/e2e/cold-start.spec.ts --config playwright.config.ts
+          else
+            bunx playwright test tests/e2e/cold-start.spec.ts --config playwright.config.ts
+          fi
+
+      - name: Upload warmup log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cold-start-logs-${{ matrix.label }}
+          path: ${{ runner.temp }}/arroxy-cold-logs/main.log
+          if-no-files-found: ignore
+          retention-days: 7

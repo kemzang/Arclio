@@ -3,8 +3,14 @@ import os from 'node:os';
 import fs from 'node:fs';
 import { expect, test, _electron as electron } from '@playwright/test';
 
-// On CI this is set by the workflow; locally point at a built win-unpacked dir.
-const WIN_UNPACKED_EXE = process.env.WIN_UNPACKED_EXE ?? path.join(process.cwd(), 'dist', 'win-unpacked', 'Arroxy.exe');
+function defaultExePath(): string {
+  if (process.platform === 'win32') return path.join(process.cwd(), 'dist', 'win-unpacked', 'Arroxy.exe');
+  if (process.platform === 'darwin') return path.join(process.cwd(), 'dist', 'mac-arm64', 'Arroxy.app', 'Contents', 'MacOS', 'Arroxy');
+  return path.join(process.cwd(), 'dist', 'linux-unpacked', 'arroxy');
+}
+
+// On CI this is set by the workflow; locally falls back to the platform's default unpacked path.
+const PACKAGED_EXE = process.env.PACKAGED_EXE ?? defaultExePath();
 
 const WARMUP_TIMEOUT_MS = 12 * 60 * 1000; // yt-dlp + deno cold download
 
@@ -20,7 +26,7 @@ test('packaged exe: downloads binaries, completes warmup, shows wizard', async (
   delete baseEnv.ELECTRON_RUN_AS_NODE;
 
   const app = await electron.launch({
-    executablePath: WIN_UNPACKED_EXE,
+    executablePath: PACKAGED_EXE,
     env: {
       ...baseEnv,
       ELECTRON_USER_DATA: userDataDir
@@ -48,6 +54,17 @@ test('packaged exe: downloads binaries, completes warmup, shows wizard', async (
     await expect(page.locator('[data-testid="url-input"]')).toBeVisible({ timeout: 5_000 });
   } finally {
     await app.close();
+
+    // Copy main.log before cleanup so the CI artifact step can upload it.
+    const logArchive = process.env.ARROXY_LOG_ARCHIVE;
+    if (logArchive) {
+      const src = path.join(userDataDir, 'logs', 'main.log');
+      if (fs.existsSync(src)) {
+        fs.mkdirSync(logArchive, { recursive: true });
+        fs.copyFileSync(src, path.join(logArchive, 'main.log'));
+      }
+    }
+
     fs.rmSync(userDataDir, { recursive: true, force: true });
   }
 });
