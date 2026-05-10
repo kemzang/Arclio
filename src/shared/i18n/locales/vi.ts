@@ -177,7 +177,7 @@ const vi = {
         enabledButNoBrowser: 'Chọn một trình duyệt để dùng cookies',
         banWarning: 'YouTube có thể gắn cờ — và đôi khi cấm — các tài khoản có cookies được yt-dlp sử dụng. Hãy dùng tài khoản phụ khi có thể.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'Lấy cookies.txt TRÊN MÁY (Chrome)'
       },
       proxy: {
         label: 'URL Proxy',
@@ -350,6 +350,8 @@ const vi = {
       labelSize: 'Kích thước',
       sizeUnknown: 'Không xác định',
       nothingToDownload: 'Cài đặt chỉ phụ đề đang hoạt động nhưng chưa chọn ngôn ngữ phụ đề nào — sẽ không có gì được tải xuống.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed bị bỏ qua — container đầu ra không hỗ trợ tính năng này.',
+      subtitleEmbedAudioOnly: 'Subtitle embed đã chuyển sang sidecar — các track âm thanh không hỗ trợ luồng phụ đề được nhúng.',
       audioOnly: 'Chỉ âm thanh',
       addToQueue: '+ Hàng đợi',
       addToQueueTooltip: 'Bắt đầu khi các tải xuống khác hoàn tất — sử dụng toàn bộ băng thông',
@@ -426,7 +428,7 @@ const vi = {
     ytdlpExitCode: 'yt-dlp thoát với mã {{code}}',
     downloadingBinary: 'Đang tải xuống tệp nhị phân {{name}}…',
     unknownStartupFailure: 'Lỗi khởi động tải xuống không xác định',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'Không đủ dung lượng đĩa — cần {{required}}, chỉ còn {{free}}'
   },
   errors: {
     ytdlp: {

@@ -176,7 +176,7 @@ const om = {
         enabledButNoBrowser: 'Cookies fayyadamuuf browser filadhu',
         banWarning: "YouTube akkawntoota cookies yt-dlp waliin fayyadaman mallatteessuu fi yeroo tokko tokko dhowwuu danda'a. Yoo danda'ame akkawuntii yeroo fayyadami.",
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt LOCALLY argadhu (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -349,6 +349,8 @@ const om = {
       labelSize: "Bal'ina",
       sizeUnknown: 'Hin beekamne',
       nothingToDownload: 'Qophiin axxiinni qofa hojjechaa jira garuu afaan hin filamine — waan buufamu hin jiru.',
+      thumbnailEmbedNotSupported: "Thumbnail embed ni dhiifame — container bu'aa embed hin deeggarre.",
+      subtitleEmbedAudioOnly: 'Subtitle embed gara sidecar jijjiirameera — tarreewwan sagalee tartiiba subtitle embed hin deeggaran.',
       audioOnly: 'Sagalee qofa',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Daawniloodoonni biroo xumuramu booda jalqaba — bandwidth guutuu argata',
@@ -425,7 +427,7 @@ const om = {
     ytdlpExitCode: 'yt-dlp koodii {{code}} wajjin bahe',
     downloadingBinary: 'Faayilii binaryii {{name}} buufaa jira…',
     unknownStartupFailure: 'Daawniloodii jalqabbii hin beekamne kufee',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'Bakki kuusaa gahaa miti — {{required}} barbaachisa, {{free}} qofa jira'
   },
   errors: {
     ytdlp: {

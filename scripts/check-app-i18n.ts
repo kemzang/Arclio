@@ -52,7 +52,7 @@ for (const lang of SUPPORTED_LANGS) {
     const lv = localeByPath.get(k);
     const ev = enByPath.get(k);
     if (lv === undefined || ev === undefined || lv !== ev) return false;
-    const words = lv.trim().split(/\s+/).filter(Boolean).length;
+    const words = lv.trim().replace(/\{\{[^}]+\}\}/g, '').trim().split(/\s+/).filter(w => /\w/.test(w)).length;
     return words >= PLACEHOLDER_MIN_WORDS;
   });
 

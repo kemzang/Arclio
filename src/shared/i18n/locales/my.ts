@@ -177,7 +177,7 @@ const my = {
         enabledButNoBrowser: 'ကွတ်ကီးသုံးရန် browser ရွေးပါ',
         banWarning: 'yt-dlp မှ cookies သုံးသော account များကို YouTube မှ ပြဿနာတက်စေနိုင်သည် — ဖြစ်နိုင်လျှင် စမ်းသပ် account တစ်ခုသုံးပါ။',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt ကို ဒေသတွင်း ရယူရန် (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const my = {
       labelSize: 'အရွယ်အစား',
       sizeUnknown: 'မသိ',
       nothingToDownload: 'စာတန်းထိုးသာ preset ဖွင့်ထားသော်လည်း စာတန်းထိုးဘာသာစကားမရွေးရသေးပါ — ဘာမျှဒေါင်းလုဒ်မဖြစ်ပါ။',
+      thumbnailEmbedNotSupported: 'Thumbnail embed ကို ကျော်လိုက်သည် — ထွက်ပေါ်မည့် container မှ ၎င်းကို မထောက်ပံ့ပါ။',
+      subtitleEmbedAudioOnly: 'စာတန်းထိုး embed ကို sidecar သို့ ပြောင်းလဲပြီ — အသံ track များသည် embedded စာတန်းထိုး stream များကို မထောက်ပံ့ပါ။',
       audioOnly: 'အသံသာ',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'အခြားဒေါင်းလုဒ်များပြီးဆုံးလျှင်စတင်မည် — အပြည့်အဝ bandwidth ရမည်',
@@ -426,7 +428,7 @@ const my = {
     ytdlpExitCode: 'yt-dlp သည် code {{code}} ဖြင့်ထွက်သွားသည်',
     downloadingBinary: '{{name}} binary ဒေါင်းလုဒ်လုပ်နေသည်…',
     unknownStartupFailure: 'မသိသောဒေါင်းလုဒ်စတင်မှုပျက်ကွက်မှု',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'disk နေရာ မလုံလောက်ပါ — {{required}} လိုအပ်သည်၊ {{free}} သာ ရရှိနိုင်သည်'
   },
   errors: {
     ytdlp: {

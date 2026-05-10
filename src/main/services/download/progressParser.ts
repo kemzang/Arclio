@@ -69,7 +69,6 @@ export class ProgressParser {
         active.mediaPath = moveMatch[2];
       }
 
-      // eslint-disable-next-line security/detect-unsafe-regex -- bounded: \d+ is constrained by yt-dlp output line length
       const sleepMatch = /Sleeping (\d+(?:\.\d+)?) seconds/.exec(line);
       if (sleepMatch) {
         const seconds = Math.round(parseFloat(sleepMatch[1]));

@@ -177,7 +177,7 @@ const el = {
         enabledButNoBrowser: 'Επέλεξε πρόγραμμα περιήγησης για χρήση cookies',
         banWarning: 'Το YouTube μπορεί να επισημάνει — και μερικές φορές να αποκλείσει — λογαριασμούς των οποίων τα cookies χρησιμοποιούνται από το yt-dlp. Χρησιμοποίησε έναν εφεδρικό λογαριασμό αν είναι δυνατόν.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'Λήψη cookies.txt ΤΟΠΙΚΑ (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const el = {
       labelSize: 'Μέγεθος',
       sizeUnknown: 'Άγνωστο',
       nothingToDownload: 'Η προεπιλογή «μόνο υπότιτλοι» είναι ενεργή αλλά δεν έχει επιλεγεί γλώσσα — τίποτα δεν θα ληφθεί.',
+      thumbnailEmbedNotSupported: 'Το Thumbnail embed παραλείφθηκε — το container εξόδου δεν το υποστηρίζει.',
+      subtitleEmbedAudioOnly: 'Το embed υποτίτλων άλλαξε σε sidecar — τα κομμάτια ήχου δεν υποστηρίζουν ενσωματωμένες ροές υποτίτλων.',
       audioOnly: 'Μόνο ήχος',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Ξεκινά όταν ολοκληρωθούν άλλες λήψεις — αποκτά πλήρες εύρος ζώνης',
@@ -426,7 +428,7 @@ const el = {
     ytdlpExitCode: 'Το yt-dlp έγινε έξοδος με κωδικό {{code}}',
     downloadingBinary: 'Λήψη δυαδικού {{name}}…',
     unknownStartupFailure: 'Άγνωστη αποτυχία εκκίνησης λήψης',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'Ανεπαρκής χώρος δίσκου — απαιτούνται {{required}}, διαθέσιμα μόνο {{free}}'
   },
   errors: {
     ytdlp: {

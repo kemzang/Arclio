@@ -177,7 +177,7 @@ const ps = {
         enabledButNoBrowser: 'د کوکیزو کارولو لپاره یو براوزر غوره کړئ',
         banWarning: 'YouTube ممکن هغه حسابونه چې د yt-dlp لخوا د کوکیزو لپاره کارول کیږي بنده کړي — کله چې ممکنه وي یو لنډمهاله حساب وکاروئ.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt ځایی ترلاسه کړئ (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const ps = {
       labelSize: 'اندازه',
       sizeUnknown: 'نامعلومه',
       nothingToDownload: 'یوازې د ژباړلیکونو پریسټ فعال دی خو هیڅ د ژباړلیک ژبه غوره نه ده شوې — هیڅ شی ډاونلوډ نه کیږي.',
+      thumbnailEmbedNotSupported: 'د Thumbnail embed پریښودل شو — د محصول container یې نه ملاتړي.',
+      subtitleEmbedAudioOnly: 'د ژباړلیک embed sidecar ته بدل شو — د غږ ټریکونه د embed شوو ژباړلیک سټریمونو ملاتړ نه کوي.',
       audioOnly: 'یوازې غږ',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'کله چې نور ډاونلوډونه پای ته ورسیږي پیل کیږي — بشپړ بینډوډت ترلاسه کوي',
@@ -426,7 +428,7 @@ const ps = {
     ytdlpExitCode: 'yt-dlp د {{code}} کوډ سره وتلو',
     downloadingBinary: '{{name}} بائنري ډاونلوډیږي…',
     unknownStartupFailure: 'نامعلومه د پیل ناکامي',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'د ډیسک ځای کافي نه دی — {{required}} ته اړتیا ده، یوازې {{free}} شتون لري'
   },
   errors: {
     ytdlp: {

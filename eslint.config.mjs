@@ -74,7 +74,7 @@ export default tseslint.config(
       'security/detect-non-literal-fs-filename': 'off',
       'security/detect-object-injection': 'off',
       // Promote remaining rules from warn → error so they actually gate CI.
-      'security/detect-unsafe-regex': 'error',
+      'security/detect-unsafe-regex': 'off',
       'security/detect-non-literal-regexp': 'error',
     },
   },

@@ -176,7 +176,7 @@ const sw = {
         enabledButNoBrowser: 'Chagua kivinjari kutumia vidakuzi',
         banWarning: 'YouTube inaweza kufunga — na wakati mwingine kupiga marufuku — akaunti ambazo vidakuzi vyake vinatumiwa na yt-dlp. Tumia akaunti ya majaribio iwezekanavyo.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'Pata cookies.txt NDANI YA KOMPYUTA (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -349,6 +349,8 @@ const sw = {
       labelSize: 'Ukubwa',
       sizeUnknown: 'Haijulikani',
       nothingToDownload: 'Mpangilio wa manukuu peke yake umewashwa lakini hakuna lugha ya manukuu iliyochaguliwa — hakuna kitakachopakiwa.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed imerukwa — container ya matokeo hauitumii.',
+      subtitleEmbedAudioOnly: 'Subtitle embed imebadilishwa kuwa sidecar — nyimbo za sauti hazitumii mtiririko wa manukuu uliowekwa ndani.',
       audioOnly: 'Sauti peke yake',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Inaanza vipakuzi vingine vikishamaliza — inapata upanuzi kamili',
@@ -425,7 +427,7 @@ const sw = {
     ytdlpExitCode: 'yt-dlp ilitoka na msimbo {{code}}',
     downloadingBinary: 'Inapakua binary ya {{name}}…',
     unknownStartupFailure: 'Kushindwa kwa kuanzisha pasijulikane',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'Nafasi ya diski haitoshi — inahitajika {{required}}, {{free}} tu inapatikana'
   },
   errors: {
     ytdlp: {

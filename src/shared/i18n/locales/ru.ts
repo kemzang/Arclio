@@ -177,7 +177,7 @@ const ru = {
         enabledButNoBrowser: 'Выбери браузер, чтобы использовать cookies',
         banWarning: 'YouTube может пометить — и иногда забанить — аккаунты, чьи cookies использует yt-dlp. По возможности используй одноразовый аккаунт.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'Получить cookies.txt ЛОКАЛЬНО (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const ru = {
       labelSize: 'Размер',
       sizeUnknown: 'Неизвестно',
       nothingToDownload: 'Пресет «Только субтитры» активен, но язык субтитров не выбран — ничего не будет скачано.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed пропущен — выходной container не поддерживает это.',
+      subtitleEmbedAudioOnly: 'Subtitle embed заменён на sidecar — аудиодорожки не поддерживают встроенные потоки субтитров.',
       audioOnly: 'Только аудио',
       addToQueue: '+ В очередь',
       addToQueueTooltip: 'Стартует, когда завершатся другие загрузки — на полной скорости',
@@ -426,7 +428,7 @@ const ru = {
     ytdlpExitCode: 'yt-dlp завершился с кодом {{code}}',
     downloadingBinary: 'Загрузка бинарника {{name}}…',
     unknownStartupFailure: 'Неизвестная ошибка при запуске загрузки',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'Недостаточно места на диске — нужно {{required}}, доступно только {{free}}'
   },
   errors: {
     ytdlp: {

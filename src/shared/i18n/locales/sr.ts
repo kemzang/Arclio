@@ -177,7 +177,7 @@ const sr = {
         enabledButNoBrowser: 'Изабери прегледач да би користио/ла cookies',
         banWarning: 'YouTube може да означи — а понекад и забрани — налоге чији cookies користи yt-dlp. Ако је могуће, користи привремени налог.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'Преузми cookies.txt ЛОКАЛНО (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const sr = {
       labelSize: 'Величина',
       sizeUnknown: 'Непознато',
       nothingToDownload: 'Поставка „само титлови" је активна, али није изабран ниједан језик — ништа неће бити преузето.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed је прескочен — излазни container то не подржава.',
+      subtitleEmbedAudioOnly: 'Subtitle embed је промењен у sidecar — аудио стазе не подржавају уграђене токове титлова.',
       audioOnly: 'Само звук',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Покреће се када друга преузимања заврше — добија пун пропусни опсег',
@@ -426,7 +428,7 @@ const sr = {
     ytdlpExitCode: 'yt-dlp је завршио са кодом {{code}}',
     downloadingBinary: 'Преузимање {{name}} бинарне датотеке…',
     unknownStartupFailure: 'Непозната грешка при покретању преузимања',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'Нема довољно простора на диску — потребно {{required}}, доступно само {{free}}'
   },
   errors: {
     ytdlp: {

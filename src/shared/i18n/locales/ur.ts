@@ -177,7 +177,7 @@ const ur = {
         enabledButNoBrowser: 'cookies استعمال کرنے کے لیے براؤزر منتخب کریں',
         banWarning: 'YouTube ان اکاؤنٹس کو فلیگ — اور کبھی کبھار بین — کر سکتا ہے جن کے cookies yt-dlp کے ساتھ استعمال ہوں۔ ممکن ہو تو ٹمپریری اکاؤنٹ استعمال کریں۔',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt مقامی طور پر حاصل کریں (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const ur = {
       labelSize: 'سائز',
       sizeUnknown: 'نامعلوم',
       nothingToDownload: 'صرف سب ٹائٹلز پری سیٹ ایکٹیو ہے لیکن کوئی سب ٹائٹل زبان منتخب نہیں — کچھ ڈاؤن لوڈ نہیں ہو گا۔',
+      thumbnailEmbedNotSupported: 'Thumbnail embed چھوڑ دیا گیا — آؤٹ پٹ container اسے سپورٹ نہیں کرتا۔',
+      subtitleEmbedAudioOnly: 'Subtitle embed کو sidecar میں تبدیل کر دیا گیا — آڈیو ٹریکس اندرونی subtitle سٹریمز کو سپورٹ نہیں کرتے۔',
       audioOnly: 'صرف آڈیو',
       addToQueue: '+ قطار',
       addToQueueTooltip: 'دوسرے ڈاؤن لوڈز ختم ہونے پر شروع ہو گا — مکمل بینڈوڈتھ ملے گی',
@@ -426,7 +428,7 @@ const ur = {
     ytdlpExitCode: 'yt-dlp کوڈ {{code}} کے ساتھ ختم ہوا',
     downloadingBinary: '{{name}} بائنری ڈاؤن لوڈ ہو رہی ہے…',
     unknownStartupFailure: 'نامعلوم ڈاؤن لوڈ اسٹارٹ اپ ناکامی',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'ڈسک میں کافی جگہ نہیں — {{required}} درکار ہے، صرف {{free}} دستیاب ہے'
   },
   errors: {
     ytdlp: {

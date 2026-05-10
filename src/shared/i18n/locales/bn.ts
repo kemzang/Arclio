@@ -177,7 +177,7 @@ const bn = {
         enabledButNoBrowser: 'কুকিজ ব্যবহার করতে একটি ব্রাউজার বেছে নিন',
         banWarning: 'YouTube অ্যাকাউন্ট ফ্ল্যাগ — এমনকি ব্যান — করতে পারে যদি সেই অ্যাকাউন্টের কুকিজ yt-dlp ব্যবহার করে। সম্ভব হলে অস্থায়ী অ্যাকাউন্ট ব্যবহার করুন।',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt স্থানীয়ভাবে পান (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const bn = {
       labelSize: 'আকার',
       sizeUnknown: 'অজানা',
       nothingToDownload: 'শুধু সাবটাইটেল প্রিসেট চালু আছে কিন্তু কোনো সাবটাইটেল ভাষা নির্বাচিত হয়নি — কিছু ডাউনলোড হবে না।',
+      thumbnailEmbedNotSupported: 'Thumbnail embed বাদ দেওয়া হয়েছে — আউটপুট container এটি সমর্থন করে না।',
+      subtitleEmbedAudioOnly: 'সাবটাইটেল embed পরিবর্তন করে sidecar করা হয়েছে — অডিও ট্র্যাক embedded সাবটাইটেল স্ট্রিম সমর্থন করে না।',
       audioOnly: 'শুধু অডিও',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'অন্য ডাউনলোড শেষ হলে শুরু হবে — পুরো ব্যান্ডউইথ পাবে',
@@ -426,7 +428,7 @@ const bn = {
     ytdlpExitCode: 'yt-dlp {{code}} কোড দিয়ে বন্ধ হয়েছে',
     downloadingBinary: '{{name}} বাইনারি ডাউনলোড হচ্ছে…',
     unknownStartupFailure: 'অজানা ডাউনলোড স্টার্টআপ ব্যর্থতা',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'পর্যাপ্ত ডিস্ক স্থান নেই — {{required}} প্রয়োজন, মাত্র {{free}} পাওয়া যাচ্ছে'
   },
   errors: {
     ytdlp: {

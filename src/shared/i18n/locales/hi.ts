@@ -177,7 +177,7 @@ const hi = {
         enabledButNoBrowser: 'कुकी उपयोग करने के लिए ब्राउज़र चुनें',
         banWarning: 'चेतावनी: yt-dlp जिन कुकी का उपयोग करता है, उनसे जुड़े अकाउंट को YouTube फ़्लैग — और कभी-कभी बैन — कर सकता है। हो सके तो डिस्पोज़ेबल अकाउंट का उपयोग करें।',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt स्थानीय रूप से प्राप्त करें (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const hi = {
       labelSize: 'साइज़',
       sizeUnknown: 'अज्ञात',
       nothingToDownload: 'केवल उपशीर्षक प्रीसेट सक्रिय है लेकिन कोई भाषा नहीं चुनी गई — कुछ भी डाउनलोड नहीं होगा।',
+      thumbnailEmbedNotSupported: 'Thumbnail embed छोड़ दिया गया — आउटपुट container इसे सपोर्ट नहीं करता।',
+      subtitleEmbedAudioOnly: 'उपशीर्षक embed को sidecar में बदल दिया गया — ऑडियो ट्रैक embedded उपशीर्षक स्ट्रीम को सपोर्ट नहीं करते।',
       audioOnly: 'सिर्फ़ ऑडियो',
       addToQueue: '+ क़तार',
       addToQueueTooltip: 'दूसरी डाउनलोड पूरी होने पर शुरू होगा — पूरी बैंडविड्थ मिलेगी',
@@ -426,7 +428,7 @@ const hi = {
     ytdlpExitCode: 'yt-dlp कोड {{code}} के साथ बंद हो गया',
     downloadingBinary: '{{name}} बाइनरी डाउनलोड हो रही है…',
     unknownStartupFailure: 'डाउनलोड शुरू करने में अज्ञात त्रुटि',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'पर्याप्त डिस्क स्थान नहीं है — {{required}} चाहिए, केवल {{free}} उपलब्ध है'
   },
   errors: {
     ytdlp: {

@@ -177,7 +177,7 @@ const zh = {
         enabledButNoBrowser: '请选择一个浏览器以使用 Cookie',
         banWarning: '提醒: yt-dlp 使用的 Cookie 对应账号可能被 YouTube 标记,有时甚至被封禁。建议尽量使用临时小号。',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: '本地获取 cookies.txt (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const zh = {
       labelSize: '大小',
       sizeUnknown: '未知',
       nothingToDownload: '「仅字幕」预设已启用，但未选择任何字幕语言 — 不会下载任何内容。',
+      thumbnailEmbedNotSupported: 'Thumbnail embed 已跳过 — 输出 container 不支持此功能。',
+      subtitleEmbedAudioOnly: 'Subtitle embed 已改为 sidecar — 纯音频轨道不支持嵌入字幕流。',
       audioOnly: '仅音频',
       addToQueue: '+ 队列',
       addToQueueTooltip: '其他下载完成后开始 — 享受全部带宽',
@@ -426,7 +428,7 @@ const zh = {
     ytdlpExitCode: 'yt-dlp 以代码 {{code}} 退出',
     downloadingBinary: '正在下载二进制 {{name}}…',
     unknownStartupFailure: '启动下载时出现未知错误',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: '磁盘空间不足 — 需要 {{required}}，当前仅剩 {{free}}'
   },
   errors: {
     ytdlp: {

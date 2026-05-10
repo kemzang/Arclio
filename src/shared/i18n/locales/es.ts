@@ -176,7 +176,7 @@ const es = {
         enabledButNoBrowser: 'Elige un navegador para usar cookies',
         banWarning: 'YouTube puede marcar — y a veces banear — cuentas cuyas cookies usa yt-dlp. Usa una cuenta desechable cuando puedas.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'Obtener cookies.txt LOCALMENTE (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -349,6 +349,8 @@ const es = {
       labelSize: 'Tamaño',
       sizeUnknown: 'Desconocido',
       nothingToDownload: 'El ajuste preestablecido Solo subtítulos está activo pero no hay ningún idioma de subtítulos seleccionado — no se descargará nada.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed omitido — el container de salida no lo admite.',
+      subtitleEmbedAudioOnly: 'Subtitle embed cambiado a sidecar — las pistas de audio no admiten streams de subtítulos embebidos.',
       audioOnly: 'Solo audio',
       addToQueue: '+ Cola',
       addToQueueTooltip: 'Empieza cuando terminen otras descargas — usa todo el ancho de banda',
@@ -425,7 +427,7 @@ const es = {
     ytdlpExitCode: 'yt-dlp terminó con código {{code}}',
     downloadingBinary: 'Descargando binario {{name}}…',
     unknownStartupFailure: 'Fallo desconocido al iniciar la descarga',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'Espacio en disco insuficiente — se necesitan {{required}}, solo hay {{free}} disponibles'
   },
   errors: {
     ytdlp: {

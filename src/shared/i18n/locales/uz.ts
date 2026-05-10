@@ -177,7 +177,7 @@ const uz = {
         enabledButNoBrowser: 'Cookiesdan foydalanish uchun brauzer tanlang',
         banWarning: "YouTube — va ba'zida — yt-dlp cookieslaridan foydalanadigan hisoblarni belgilashi yoki taqiqlashi mumkin. Iloji bo'lsa vaqtinchalik hisob ishlating.",
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt ni LOKAL olish (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const uz = {
       labelSize: 'Hajm',
       sizeUnknown: "Noma'lum",
       nothingToDownload: 'Faqat subtitrlar oldindan sozlamasi faol, lekin hech qanday subtitrl tili tanlanmagan — hech narsa yuklanmaydi.',
+      thumbnailEmbedNotSupported: "Thumbnail embed o'tkazib yuborildi — chiqish container uni qo'llab-quvvatlamaydi.",
+      subtitleEmbedAudioOnly: "Subtitle embed sidecar ga o'zgartirildi — audio treklari ichki subtitle oqimlarini qo'llab-quvvatlamaydi.",
       audioOnly: 'Faqat audio',
       addToQueue: '+ Queue',
       addToQueueTooltip: "Boshqa yuklamalar tugaganda boshlanadi — to'liq tarmoq kengligini oladi",
@@ -426,7 +428,7 @@ const uz = {
     ytdlpExitCode: 'yt-dlp {{code}} kodi bilan chiqdi',
     downloadingBinary: '{{name}} ikkilik fayli yuklanmoqda…',
     unknownStartupFailure: "Noma'lum yuklama ishga tushirish xatosi",
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'Disk xotirasi yetarli emas — {{required}} kerak, faqat {{free}} mavjud'
   },
   errors: {
     ytdlp: {

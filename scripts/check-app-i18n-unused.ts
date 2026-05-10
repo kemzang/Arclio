@@ -59,7 +59,7 @@ function* walkTs(dir: string): Generator<string> {
 }
 
 // Collect every quoted string that looks like a dot-path key.
-// Matches 'foo.bar.baz' and `foo.bar.baz` (non-template literals only — no ${).
+// Matches 'foo.bar.baz' and "foo.bar.baz" (non-template literals only — no ${).
 const KEY_PATTERN = /(?<![`$])['"]([a-zA-Z][a-zA-Z0-9_]*(?:\.[a-zA-Z][a-zA-Z0-9_]*){1,})['"]/g;
 
 // pluralKey('base', count) is a project helper that emits `base_one` / `base_other`
@@ -94,6 +94,7 @@ for (const { path } of enLeaves) {
   if (DYNAMIC_PREFIXES.some((p) => path.startsWith(p))) continue;
   if (staticRefs.has(path)) continue;
   // Plural variant: check if base key, sibling, or pluralKey('base') call accounts for it
+  // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
   const pluralMatch = path.match(PLURAL_SUFFIX);
   if (pluralMatch) {
     const base = path.slice(0, path.length - pluralMatch[0].length);

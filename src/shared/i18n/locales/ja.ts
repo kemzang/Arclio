@@ -177,7 +177,7 @@ const ja = {
         enabledButNoBrowser: 'Cookieを使うにはブラウザを選択してください',
         banWarning: '注意: yt-dlpがCookieで使うアカウントは、YouTube側でフラグが立てられたり、稀にBANされることがあります。可能なら使い捨てアカウントを使ってください。',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt をローカルで取得 (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const ja = {
       labelSize: 'サイズ',
       sizeUnknown: '不明',
       nothingToDownload: '字幕のみプリセットが有効ですが字幕言語が選択されていません — 何もダウンロードされません。',
+      thumbnailEmbedNotSupported: 'Thumbnail embed をスキップしました — 出力 container がこの機能をサポートしていません。',
+      subtitleEmbedAudioOnly: 'Subtitle embed を sidecar に変更しました — 音声トラックには字幕ストリームの埋め込みをサポートしていません。',
       audioOnly: '音声のみ',
       addToQueue: '+ キュー',
       addToQueueTooltip: '他のダウンロードが終わってから開始 — 帯域幅をフル活用',
@@ -426,7 +428,7 @@ const ja = {
     ytdlpExitCode: 'yt-dlpがコード{{code}}で終了しました',
     downloadingBinary: 'バイナリ {{name}} をダウンロード中…',
     unknownStartupFailure: 'ダウンロード開始時に不明なエラーが発生しました',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'ディスク空き容量が不足しています — {{required}} 必要ですが、空きは {{free}} のみです'
   },
   errors: {
     ytdlp: {

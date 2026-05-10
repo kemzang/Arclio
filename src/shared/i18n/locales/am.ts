@@ -177,7 +177,7 @@ const am = {
         enabledButNoBrowser: 'cookies ለመጠቀም አሳሽ ምረጥ',
         banWarning: 'YouTube cookies ያለ yt-dlp ጥቅም ላይ ሲውሉ መለያዎችን ሊያግድ ይችላል። የሚጥሉ መለያ ይጠቀሙ።',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt በቦታህ ላይ ሰበሰብ (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const am = {
       labelSize: 'መጠን',
       sizeUnknown: 'አይታወቅም',
       nothingToDownload: 'ንዑስ ርዕስ ብቻ ቅድመ-ቅንብር ነቅቷል ነገር ግን ምንም ቋንቋ አልተመረጠም — ምንም አይዳውንሎድም።',
+      thumbnailEmbedNotSupported: 'Thumbnail embed ተዘሏል — የውፅዓት container አይደግፈውም።',
+      subtitleEmbedAudioOnly: 'Subtitle embed ወደ sidecar ተቀይሯል — የድምጽ ትራኮች ውስጣዊ subtitle ዥረቶችን አይደግፉም።',
       audioOnly: 'ድምጽ ብቻ',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'ሌሎች ዳውንሎዶች ሲጠናቀቁ ይጀምራል — ሙሉ ባንድዊድዝ ያገኛል',
@@ -426,7 +428,7 @@ const am = {
     ytdlpExitCode: 'yt-dlp በኮድ {{code}} ወጥቷል',
     downloadingBinary: '{{name}} ሁለዮሽ ፋይል እያወረዱ…',
     unknownStartupFailure: 'ያልታወቀ ዳውንሎድ መጀመሪያ ወደቀ',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'በቂ የዲስክ ቦታ የለም — {{required}} ያስፈልጋል፣ {{free}} ብቻ አለ'
   },
   errors: {
     ytdlp: {

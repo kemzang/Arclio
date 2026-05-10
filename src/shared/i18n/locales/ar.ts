@@ -177,7 +177,7 @@ const ar = {
         enabledButNoBrowser: 'اختر متصفحاً لاستخدام الكوكيز',
         banWarning: 'قد يُعلّم YouTube — وأحياناً يحظر — الحسابات التي يستخدم yt-dlp كوكيزها. استخدم حساباً مؤقتاً إن أمكن.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'احصل على cookies.txt محلياً (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -350,6 +350,8 @@ const ar = {
       labelSize: 'الحجم',
       sizeUnknown: 'غير معروف',
       nothingToDownload: 'الإعداد المسبق "ترجمات فقط" مفعّل ولكن لم يتم اختيار أي لغة ترجمة — لن يتم تنزيل أي شيء.',
+      thumbnailEmbedNotSupported: 'تم تخطي Thumbnail embed — لا يدعمه container الإخراج.',
+      subtitleEmbedAudioOnly: 'تم تغيير Subtitle embed إلى sidecar — مسارات الصوت لا تدعم مسارات الترجمة المضمّنة.',
       audioOnly: 'صوت فقط',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'يبدأ عند انتهاء التنزيلات الأخرى — يحصل على كامل عرض النطاق',
@@ -426,7 +428,7 @@ const ar = {
     ytdlpExitCode: 'خرج yt-dlp بالرمز {{code}}',
     downloadingBinary: 'جارٍ تنزيل ثنائي {{name}}…',
     unknownStartupFailure: 'فشل غير معروف في بدء التنزيل',
-    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
+    diskSpaceInsufficient: 'مساحة القرص غير كافية — تحتاج {{required}}، والمتاح فقط {{free}}'
   },
   errors: {
     ytdlp: {
