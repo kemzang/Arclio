@@ -13,6 +13,7 @@ env:
 jobs:
   cold-start:
     name: Cold start (${{ matrix.label }})
+    if: ${{ !matrix.manual_only || github.event_name == 'workflow_dispatch' }}
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -24,6 +25,7 @@ jobs:
           - os: macos-13
             label: macos-x64
             build_cmd: bun run dist:mac:x64:dir
+            manual_only: true
           - os: macos-latest
             label: macos-arm64
             build_cmd: bun run dist:mac:arm64:dir
