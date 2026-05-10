@@ -9,6 +9,22 @@ import type { PluginOption } from 'vite';
 const require = createRequire(import.meta.url);
 const { version } = require('./package.json') as { version: string };
 
+export function isExternalMainBuildImport(id: string): boolean {
+  if (id === 'electron' || id.startsWith('electron/')) return true;
+  if (id.startsWith('node:')) return true;
+  if (id.startsWith('@main/') || id.startsWith('@shared/')) return false;
+  if (/^[./]/.test(id)) return false;
+  return false;
+}
+
+export function isExternalPreloadBuildImport(id: string): boolean {
+  if (id === 'electron' || id.startsWith('electron/')) return true;
+  if (id.startsWith('node:')) return true;
+  if (id.startsWith('@preload/') || id.startsWith('@shared/')) return false;
+  if (/^[./]/.test(id)) return false;
+  return true;
+}
+
 export default defineConfig(({ mode }) => {
   // Inline OpenPanel credentials from .env at build time. Without this,
   // process.env.OPENPANEL_CLIENT_ID is undefined in the packaged app (no
@@ -35,17 +51,15 @@ export default defineConfig(({ mode }) => {
       build: {
         externalizeDeps: true,
         rollupOptions: {
-          // Workaround: electron-vite's preset auto-externalizes `electron` +
-          // node:builtins + package.json deps, but rolldown re-bundles all of
-          // them once `output.format` is overridden (the merge clobbers the
-          // preset's `external` array). Re-asserting via a function — confirmed
-          // empirically: drops main bundle from ~2.4 MB (got inlined) to ~750 KB.
-          external: (id): boolean => {
-            if (id.startsWith('node:')) return true;
-            if (id.startsWith('@main/') || id.startsWith('@shared/')) return false;
-            if (/^[./]/.test(id)) return false;
-            return true;
-          },
+          // Keep the main bundle self-contained for native ESM on Windows.
+          // Electron's main process uses Node's ESM loader, which resolves
+          // modules as URLs. When npm deps stay external, packaged asar
+          // resolution can surface raw `D:\\...` paths on Windows; Node then
+          // rejects them with ERR_UNSUPPORTED_ESM_URL_SCHEME because they are
+          // not valid `file://` URLs. Bundling npm deps removes those runtime
+          // bare-import resolutions entirely. Only `electron` and `node:*`
+          // stay external because the runtime owns them.
+          external: (id): boolean => isExternalMainBuildImport(id),
           output: { format: 'es', entryFileNames: '[name].js' }
         }
       }
@@ -76,13 +90,7 @@ export default defineConfig(({ mode }) => {
           // an explicit external the bundler inlines `node_modules/electron`
           // (the npm postinstall shim, NOT the runtime electron module),
           // breaking ipcRenderer/contextBridge at preload load time.
-          external: (id): boolean => {
-            if (id === 'electron' || id.startsWith('electron/')) return true;
-            if (id.startsWith('node:')) return true;
-            if (id.startsWith('@preload/') || id.startsWith('@shared/')) return false;
-            if (/^[./]/.test(id)) return false;
-            return true;
-          },
+          external: (id): boolean => isExternalPreloadBuildImport(id),
           output: {
             format: 'cjs',
             entryFileNames: '[name].cjs'
