@@ -65,9 +65,7 @@ describe('DownloadEventBridge', () => {
 
       (ds as unknown as EventEmitter).emit('status', doneStatus());
 
-      const calls = vi.mocked(win.webContents.send).mock.calls.filter(
-        ([ch]) => ch === IPC_CHANNELS.eventsStatus
-      );
+      const calls = vi.mocked(win.webContents.send).mock.calls.filter(([ch]) => ch === IPC_CHANNELS.eventsStatus);
       expect(calls).toHaveLength(1);
     });
 
@@ -101,9 +99,7 @@ describe('DownloadEventBridge', () => {
       now += 60; // 110ms from first
       (ds as unknown as EventEmitter).emit('progress', progressEvent('j1', 30));
 
-      const sends = vi.mocked(win.webContents.send).mock.calls.filter(
-        ([ch]) => ch === IPC_CHANNELS.eventsProgress
-      );
+      const sends = vi.mocked(win.webContents.send).mock.calls.filter(([ch]) => ch === IPC_CHANNELS.eventsProgress);
       expect(sends).toHaveLength(2);
     });
 
@@ -120,9 +116,7 @@ describe('DownloadEventBridge', () => {
       now += 50;
       (ds as unknown as EventEmitter).emit('progress', progressEvent('j2', 10)); // different jobId — not throttled
 
-      const sends = vi.mocked(win.webContents.send).mock.calls.filter(
-        ([ch]) => ch === IPC_CHANNELS.eventsProgress
-      );
+      const sends = vi.mocked(win.webContents.send).mock.calls.filter(([ch]) => ch === IPC_CHANNELS.eventsProgress);
       expect(sends).toHaveLength(2);
     });
 
@@ -140,9 +134,7 @@ describe('DownloadEventBridge', () => {
       now += 10; // still within 100ms, but throttle was reset
       (ds as unknown as EventEmitter).emit('progress', progressEvent('j1', 60));
 
-      const sends = vi.mocked(win.webContents.send).mock.calls.filter(
-        ([ch]) => ch === IPC_CHANNELS.eventsProgress
-      );
+      const sends = vi.mocked(win.webContents.send).mock.calls.filter(([ch]) => ch === IPC_CHANNELS.eventsProgress);
       expect(sends).toHaveLength(2);
     });
 
@@ -160,9 +152,7 @@ describe('DownloadEventBridge', () => {
       now += 10;
       (ds as unknown as EventEmitter).emit('progress', progressEvent('j1', 60));
 
-      const sends = vi.mocked(win.webContents.send).mock.calls.filter(
-        ([ch]) => ch === IPC_CHANNELS.eventsProgress
-      );
+      const sends = vi.mocked(win.webContents.send).mock.calls.filter(([ch]) => ch === IPC_CHANNELS.eventsProgress);
       expect(sends).toHaveLength(2);
     });
   });
@@ -187,7 +177,7 @@ describe('DownloadEventBridge', () => {
       const bridge = new DownloadEventBridge(ds, win);
       bridge.attach();
 
-      let now = 1_000_000;
+      const now = 1_000_000;
       vi.spyOn(Date, 'now').mockImplementation(() => now);
 
       expect(() => {
