@@ -24,6 +24,7 @@ Format: `**Term** — definition. \`path\``. Add an entry when extracting a new 
 - **JobLifecycle** — single coordinator for end-of-job: drain disposables, emit analytics (`download_finished`/`_cancelled`/`_failed`), persist to `RecentJobsStore`. `src/main/services/JobLifecycle.ts`.
 - **QueueEvent** — closed union of state-change signals over a `QueueItem`: `started`, `progress`, `paused-active`, `paused-held`, `resumed`, `failed`, `completed`, `cancelled`, `retry-reset`. Drives `transition`. `src/shared/queueTransition.ts`.
 - **QueueService** — authoritative queue-of-record on main. Owns the in-memory array, applies cap=1 scheduler (3s inter-job sleep), persists via `QueueStore`, projects to renderer via 4 IPC events: `queue:event:snapshot` (initial hydration), `Added`/`Updated`/`Removed` (incremental diffs). 8 commands flow renderer → main via `queue:cmd:*`: add, start, pause, resume, cancel, retry, clearCompleted, remove. `src/main/services/QueueService.ts`.
+- **QueueStore** — persists the queue to `queue.json` in the user-data dir. On close: `downloading`/`paused-active` → `pending`, `cancelled` excluded. On launch: `initialize()` loads it, auto-opens drawer if non-empty, calls `maybeStartNext()`. `src/main/stores/QueueStore.ts`.
 - **QueueStatus** — 7-value union: `pending` | `running` | `paused-held` | `paused-active` | `done` | `error` | `cancelled`. `paused-held` = in queue, never spawned (resume → pending). `paused-active` = had a running job, user paused (resume → re-spawn, possibly across an app restart via persisted `tempDir` + `lastJobId`). `src/shared/schemas.ts` (`queueItemStatusSchema`).
 - **transition** — pure exhaustive `(QueueItem, QueueEvent) → QueueItem` switch. No I/O. New event kind without a case = compile error. `illegalTransition` guards stale signals (progress/completed/failed on a cancelled item, anything on a done item except retry). `src/shared/queueTransition.ts`.
 - **YtDlpErrorKind** — closed enum of yt-dlp failure categories: `botBlock`, `ipBlock`, `rateLimit`, `ageRestricted`, `unavailable`, `geoBlocked`, `outOfDiskSpace`, `chunkTransferFailure`, `postprocessFailure`, `unsupportedUrl`, `parse`, `network`, `unknown`. Drives both analytics (`error_category` label) and i18n key lookup. Every yt-dlp failure plumbs through `classifyYtDlpStderr(stderr)` → `{ kind, raw }`; UI keys i18n off `kind`, falls through to `raw` for `'unknown'`. ProbeService adds `unsupportedUrl` for the pre-extraction signal yt-dlp emits before any pattern would match. `src/shared/ytdlp/errors.ts`.
@@ -51,6 +52,12 @@ Format: `**Term** — definition. \`path\``. Add an entry when extracting a new 
 ## Working Conventions
 
 **No backward compatibility** — Do not prioritize migration paths, backward compatibility shims, or preserving existing implementations. Existing code can be discarded or restructured without ceremony. Skip any "keep for compat" hedging. Delete old types, old components, old state fields without re-exporting or aliasing. Refactor aggressively. No deprecation notices or transitional layers.
+
+**schemas.ts is SSOT for all enum types.** Pattern: `z.enum([...])` → `type Foo = z.infer<…>` → `const FOOS = fooSchema.options`. Don't redeclare as TS union literals. `QUEUE_STATUS` / `STATUS_KEY` live in `schemas.ts` (not `constants.ts`). `DEFAULTS` lives in `constants.ts`.
+
+**TDD for non-trivial changes.** Write failing tests first, implement minimally, then refactor. Skip only for typo fixes and single-line edits.
+
+**Translation gate.** Edit `en` locale only first. Do not dispatch the `translate` skill or per-locale agents until the user explicitly approves the English copy. Plan approval is not translation authority.
 
 ---
 
@@ -92,6 +99,12 @@ bun run knip       # dead exports / unused files — zero issues
 ```
 
 Do not skip a check because you didn't touch that area. A change in one file can break types or introduce dead code elsewhere.
+
+### Test runner
+
+Use `bun run test` (vitest), **not** `bun test` (Bun's built-in runner ignores vitest config and per-file `// @vitest-environment` directives). For a single file: `bunx vitest run --project node <path>` or `--project jsdom <path>` from repo root.
+
+When adding idempotent IPC registration (`ipcMain.removeHandler()`, `autoUpdater.removeAllListeners()`), add the method as `vi.fn()` to the matching `vi.mock('electron')` / `vi.mock('electron-updater')` blocks — otherwise tests fail at module-load with `TypeError: X is not a function`.
 
 ---
 
@@ -164,6 +177,28 @@ Config (style, aliases, icon library, CSS entry) lives in `components.json`. Run
 
 **Do not add Radix.** This project does **not** use `@radix-ui/*` — the `base-nova` registry doesn't depend on Radix primitives. Don't add Radix deps or assume Radix is available.
 
+**Install via CLI:** `npx shadcn@latest add <component>` (style: `base-nova`). Never hand-roll `@base-ui/react/*` wrappers. After install, modify freely to match app style.
+
+---
+
+## Brand / Visual
+
+**Font:** Poppins (`@fontsource/poppins`, weights 400/500/600/700). Don't reintroduce Outfit or Geist.
+
+**CSS tokens** (`src/renderer/src/styles.css`): `--border-strong` (darker border), `--text-subtle` (muted label), dark mode `--border: hsla(0,0%,100%,0.07)`.
+
+**Glow patterns:** primary buttons `shadow-[0_4px_14px_var(--brand-glow)]`, active radio `shadow-[0_0_0_2px_var(--brand-dim)]`, section labels `text-[9px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]`, back/ghost buttons `border-[1.5px] border-[var(--border-strong)]`.
+
+---
+
+## Subtitle Pipeline
+
+Two-phase download: (1) video + audio with `--no-write-subs --no-write-auto-subs`; (2) subs only if phase 1 exits 0 and `subtitleLanguages` non-empty (`--skip-download --write-subs --sub-langs <langs>`). Phase 2 failure is **soft** — emit `subtitlesFailed`, finalize as `completed`; video is kept. Embed mode is the exception: subs ride phase 1.
+
+`FormatProbeService.sanitizeSubtitleMap()` filters `automatic_captions` to `-orig` keys only (actual cached auto-captions). Without this, hundreds of live-translation-request keys appear and hit rate limits.
+
+Container format is NOT a subtitle concern: `subtitleMode === 'embed'` passes `--merge-output-format mkv`; sidecar/subfolder pass nothing.
+
 ---
 
 ## In-App Update Notifications
@@ -210,6 +245,8 @@ Tag w/ semver pre-release suffix (e.g. `v0.4.0-beta.1`):
 - Winget skipped automatically — `release_to_winget.yml` triggers on `released` event which excludes pre-releases by GitHub API design.
 - Manually download the artifact from the GitHub Release page to validate.
 - When ready: bump to plain semver (`v0.4.0`), tag annotated, push.
+
+**NSIS installer:** pin `electron-builder ≥ 26.9.0` (26.8.x has a `multiUser.nsh:35` buffer over-read on cold-heap). Drop `build/installer.nsh`. Any future custom NSIS `Page custom` callback must open with `${If} ${Silent} \n Abort \n ${EndIf}`.
 
 ### Pre-release checks
 
