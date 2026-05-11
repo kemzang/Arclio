@@ -191,11 +191,8 @@ describe('D2 — persistFormatPrefs mode-keyed', () => {
 
     expect(update).toHaveBeenCalledOnce();
     const patch = update.mock.calls[0][0];
-    expect(patch.playlist).toEqual({
-      lastPlaylistPreset: 'audio-mp3',
-      lastPlaylistSubfolderEnabled: true,
-      lastPlaylistSubfolder: 'PlaylistFolder'
-    });
+    expect(patch.playlist).toEqual({ lastPlaylistPreset: 'audio-mp3' });
+    expect(patch.common).toMatchObject({ lastSubfolderEnabled: true, lastSubfolder: 'PlaylistFolder' });
     expect(patch).not.toHaveProperty('single');
   });
 
@@ -220,11 +217,8 @@ describe('D2 — persistFormatPrefs mode-keyed', () => {
 
     expect(update).toHaveBeenCalledOnce();
     const patch = update.mock.calls[0][0];
-    expect(patch.single).toMatchObject({
-      lastPreset: 'best-quality',
-      lastSubfolder: 'SingleFolder',
-      lastSubfolderEnabled: true
-    });
+    expect(patch.single).toMatchObject({ lastPreset: 'best-quality' });
+    expect(patch.common).toMatchObject({ lastSubfolder: 'SingleFolder', lastSubfolderEnabled: true });
     expect(patch).not.toHaveProperty('playlist');
   });
 });

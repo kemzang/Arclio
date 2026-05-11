@@ -5,16 +5,16 @@ import type { SettingsPatch } from '@shared/api.js';
 
 export type { SettingsPatch };
 
-const COMMON_FLAT_KEYS = ['defaultOutputDir', 'rememberLastOutputDir', 'uiZoom', 'uiTheme', 'language', 'commonPaths', 'cookiesPath', 'cookiesMode', 'cookiesBrowser', 'proxyUrl', 'clipboardWatchEnabled', 'closeBehavior', 'embedChapters', 'embedMetadata', 'embedThumbnail', 'writeDescription', 'writeThumbnail', 'lastSponsorBlockMode', 'lastSponsorBlockCategories', 'analyticsEnabled', 'firstRunCompleted', 'drawerOpen', 'installId'] as const;
+const COMMON_FLAT_KEYS = ['defaultOutputDir', 'rememberLastOutputDir', 'uiZoom', 'uiTheme', 'language', 'commonPaths', 'cookiesPath', 'cookiesMode', 'cookiesBrowser', 'proxyUrl', 'clipboardWatchEnabled', 'closeBehavior', 'embedChapters', 'embedMetadata', 'embedThumbnail', 'writeDescription', 'writeThumbnail', 'lastSponsorBlockMode', 'lastSponsorBlockCategories', 'analyticsEnabled', 'firstRunCompleted', 'drawerOpen', 'installId', 'lastSubfolderEnabled', 'lastSubfolder'] as const;
 
 // Legacy keys retained only so the flat-to-nested migration can pick them up
 // from old settings files. The values are normalized in `migrateCookiesMode`
 // and the legacy keys are stripped from the persisted shape.
 const LEGACY_COMMON_FLAT_KEYS = ['cookiesEnabled'] as const;
 
-const SINGLE_FLAT_KEYS = ['lastPreset', 'lastVideoResolution', 'lastSubtitleLanguages', 'lastSubtitleMode', 'lastSubtitleFormat', 'lastSubfolderEnabled', 'lastSubfolder'] as const;
+const SINGLE_FLAT_KEYS = ['lastPreset', 'lastVideoResolution', 'lastSubtitleLanguages', 'lastSubtitleMode', 'lastSubtitleFormat'] as const;
 
-const PLAYLIST_FLAT_KEYS = ['lastPlaylistPreset', 'lastPlaylistSubfolderEnabled', 'lastPlaylistSubfolder'] as const;
+const PLAYLIST_FLAT_KEYS = ['lastPlaylistPreset'] as const;
 
 function pickKeys<K extends string>(src: Record<string, unknown>, keys: readonly K[]): Partial<Record<K, unknown>> {
   const out: Partial<Record<K, unknown>> = {};

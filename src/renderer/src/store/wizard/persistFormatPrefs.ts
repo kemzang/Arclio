@@ -26,16 +26,14 @@ export async function persistFormatPrefs(set: SetState, get: GetState): Promise<
     embedMetadata: get().wizardEmbedMetadata,
     embedThumbnail: get().wizardEmbedThumbnail,
     writeDescription: get().wizardWriteDescription,
-    writeThumbnail: get().wizardWriteThumbnail
+    writeThumbnail: get().wizardWriteThumbnail,
+    lastSubfolderEnabled: get().wizardSubfolderEnabled,
+    lastSubfolder: get().wizardSubfolderName.trim()
   };
 
-  // Mode-scoped persistence: playlist settings live under their own slot so a
-  // playlist run doesn't clobber single-mode preset/subfolder, and vice versa.
   if (inPlaylist) {
     const playlist = {
-      ...(selectedPlaylistPreset ? { lastPlaylistPreset: selectedPlaylistPreset } : {}),
-      lastPlaylistSubfolderEnabled: get().wizardSubfolderEnabled,
-      lastPlaylistSubfolder: get().wizardSubfolderName.trim()
+      ...(selectedPlaylistPreset ? { lastPlaylistPreset: selectedPlaylistPreset } : {})
     };
     const result = await window.appApi.settings.update({ common, playlist });
     if (result.ok) set({ settings: result.data });
@@ -43,13 +41,7 @@ export async function persistFormatPrefs(set: SetState, get: GetState): Promise<
   }
 
   if (!persistSingleScope) {
-    // Non-YT: persist common prefs + destination folder. Skip format/audio/
-    // subtitle fields so YT-shaped prefs stay clean.
-    const single = {
-      lastSubfolderEnabled: get().wizardSubfolderEnabled,
-      lastSubfolder: get().wizardSubfolderName.trim()
-    };
-    const result = await window.appApi.settings.update({ common, single });
+    const result = await window.appApi.settings.update({ common });
     if (result.ok) set({ settings: result.data });
     return;
   }
@@ -71,9 +63,7 @@ export async function persistFormatPrefs(set: SetState, get: GetState): Promise<
           lastSubtitleMode: get().wizardSubtitleMode,
           lastSubtitleFormat: get().wizardSubtitleFormat
         }
-      : {}),
-    lastSubfolderEnabled: get().wizardSubfolderEnabled,
-    lastSubfolder: get().wizardSubfolderName.trim()
+      : {})
   };
   const result = await window.appApi.settings.update({ common, single });
   if (result.ok) {

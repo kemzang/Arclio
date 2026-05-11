@@ -13,7 +13,7 @@ const AUDIO_PRESETS: PlaylistPreset[] = ['audio-best', 'audio-mp3'];
 
 export function StepPlaylistPresets(): JSX.Element {
   const { t } = useTranslation();
-  const { selectedPlaylistPreset, setPlaylistPreset, advance, back, selectedPlaylistItemIds } = useAppStore();
+  const { selectedPlaylistPreset, setPlaylistPreset, advance, back, skipToConfirm, selectedPlaylistItemIds } = useAppStore();
 
   function renderItem(p: PlaylistPreset): JSX.Element {
     const selected = selectedPlaylistPreset === p;
@@ -65,6 +65,9 @@ export function StepPlaylistPresets(): JSX.Element {
           </Button>
           <Button type="button" disabled={selectedPlaylistPreset === null} onClick={advance} className="shadow-[0_4px_14px_var(--brand-glow)]">
             {t('common.continue')}
+          </Button>
+          <Button type="button" disabled={selectedPlaylistPreset === null} onClick={skipToConfirm} title={t('wizard.formats.skipToConfirmTooltip')} className="shadow-[0_4px_14px_var(--brand-glow)]">
+            {t('wizard.formats.skipToConfirm')}
           </Button>
         </div>
       </div>

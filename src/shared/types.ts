@@ -28,6 +28,8 @@ export interface AppError {
 export interface CommonSettings {
   defaultOutputDir: string;
   rememberLastOutputDir: boolean;
+  lastSubfolderEnabled?: boolean;
+  lastSubfolder?: string;
   // Stable per-install random UUID used as the OpenPanel `profileId`. No PII —
   // this is a random anonymous identifier, not derived from the user. Generated
   // lazily by SettingsStore on first launch when missing.
@@ -83,16 +85,11 @@ export interface SinglePrefs {
   lastSubtitleLanguages?: string[];
   lastSubtitleMode?: SubtitleMode;
   lastSubtitleFormat?: SubtitleFormat;
-  lastSubfolderEnabled?: boolean;
-  lastSubfolder?: string;
 }
 
-// Playlist flow prefs. Kept separate so a playlist run doesn't clobber the
-// single-mode preset/subfolder, and vice versa.
+// Playlist flow prefs.
 export interface PlaylistPrefs {
   lastPlaylistPreset?: import('./schemas.js').PlaylistPreset;
-  lastPlaylistSubfolderEnabled?: boolean;
-  lastPlaylistSubfolder?: string;
 }
 
 export interface AppSettings {

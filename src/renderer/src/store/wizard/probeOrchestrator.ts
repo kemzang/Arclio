@@ -174,8 +174,8 @@ function applyVideoProbeResult(probe: Extract<ProbeResult, { kind: 'video' }>, s
     wizardSubtitleMode: scopedSettings?.single?.lastSubtitleMode ?? DEFAULTS.subtitleMode,
     wizardSubtitleFormat: scopedSettings?.single?.lastSubtitleFormat ?? DEFAULTS.subtitleFormat,
     ...restoreCommonWizardPrefs(settings),
-    wizardSubfolderEnabled: settings?.single?.lastSubfolderEnabled ?? false,
-    wizardSubfolderName: settings?.single?.lastSubfolder ?? '',
+    wizardSubfolderEnabled: settings?.common?.lastSubfolderEnabled ?? false,
+    wizardSubfolderName: settings?.common?.lastSubfolder ?? '',
     formatsLoading: false,
     playlistProbeLoading: false,
     playlistItems: [],
@@ -210,8 +210,8 @@ function applyPlaylistProbeResult(probe: Extract<ProbeResult, { kind: 'playlist'
     wizardFormatsDegraded: null,
     ...restoreCommonWizardPrefs(settings),
     selectedPlaylistPreset,
-    wizardSubfolderEnabled: settings?.playlist?.lastPlaylistSubfolderEnabled ?? false,
-    wizardSubfolderName: settings?.playlist?.lastPlaylistSubfolder ?? ''
+    wizardSubfolderEnabled: settings?.common?.lastSubfolderEnabled ?? false,
+    wizardSubfolderName: settings?.common?.lastSubfolder ?? ''
   });
 }
 

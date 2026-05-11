@@ -266,7 +266,9 @@ const commonSettingsPatchSchema = z.object({
       deno: z.string().min(1).optional()
     })
     .partial()
-    .optional()
+    .optional(),
+  lastSubfolderEnabled: z.boolean().optional(),
+  lastSubfolder: subfolderNameSchema.optional()
 });
 
 // Convention for *patch* schemas: every field is `.optional()` only — never
@@ -281,15 +283,11 @@ const singlePrefsPatchSchema = z.object({
   lastAudioSelection: audioSelectionSchema.optional(),
   lastSubtitleLanguages: z.array(z.string()).optional(),
   lastSubtitleMode: subtitleModeSchema.optional(),
-  lastSubtitleFormat: subtitleFormatSchema.optional(),
-  lastSubfolderEnabled: z.boolean().optional(),
-  lastSubfolder: subfolderNameSchema.optional()
+  lastSubtitleFormat: subtitleFormatSchema.optional()
 });
 
 const playlistPrefsPatchSchema = z.object({
-  lastPlaylistPreset: playlistPresetSchema.optional(),
-  lastPlaylistSubfolderEnabled: z.boolean().optional(),
-  lastPlaylistSubfolder: subfolderNameSchema.optional()
+  lastPlaylistPreset: playlistPresetSchema.optional()
 });
 
 export const updateSettingsSchema = z

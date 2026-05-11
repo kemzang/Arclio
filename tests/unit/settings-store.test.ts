@@ -108,7 +108,6 @@ describe('settings and recent stores', () => {
         lastPreset: 'best-quality',
         lastSubfolder: 'old-subfolder',
         lastPlaylistPreset: 'video-1080p',
-        lastPlaylistSubfolderEnabled: true,
         cookiesEnabled: true,
         cookiesPath: '/legacy/cookies.txt'
       }),
@@ -123,9 +122,8 @@ describe('settings and recent stores', () => {
     expect(settings.common.cookiesMode).toBe('file');
     expect((settings.common as unknown as { cookiesEnabled?: boolean }).cookiesEnabled).toBeUndefined();
     expect(settings.single.lastPreset).toBe('best-quality');
-    expect(settings.single.lastSubfolder).toBe('old-subfolder');
+    expect(settings.common.lastSubfolder).toBe('old-subfolder');
     expect(settings.playlist.lastPlaylistPreset).toBe('video-1080p');
-    expect(settings.playlist.lastPlaylistSubfolderEnabled).toBe(true);
 
     // After migration the file holds only the nested shape — flat keys gone.
     const persisted = JSON.parse(await fs.readFile(path.join(userData, 'settings.json'), 'utf-8'));

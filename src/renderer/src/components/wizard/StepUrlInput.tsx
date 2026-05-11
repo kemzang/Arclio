@@ -101,6 +101,12 @@ export function StepUrlInput(): JSX.Element {
     inputRef.current?.focus();
   }
 
+  async function handleFetchClipboard(): Promise<void> {
+    if (pendingClipboardUrl) setWizardUrl(pendingClipboardUrl);
+    setPendingClipboardUrl(null);
+    await submitUrl();
+  }
+
   function handleDisableClipboard(): void {
     void setClipboardWatchEnabled(false);
     setPendingClipboardUrl(null);
@@ -323,7 +329,7 @@ export function StepUrlInput(): JSX.Element {
         </div>
       </details>
 
-      <ClipboardConfirmDialog open={pendingClipboardUrl !== null && initialized} url={pendingClipboardUrl} onUse={handleConfirmClipboard} onDisable={handleDisableClipboard} onCancel={handleCancelClipboard} />
+      <ClipboardConfirmDialog open={pendingClipboardUrl !== null && initialized} url={pendingClipboardUrl} onUse={handleConfirmClipboard} onFetch={() => void handleFetchClipboard()} onDisable={handleDisableClipboard} onCancel={handleCancelClipboard} />
       <IncompleteCookiesConfigDialog issue={cookiesConfigDialogIssue} onDismiss={dismissCookiesConfigDialog} onOpenSettings={openCookiesSettings} />
     </div>
   );

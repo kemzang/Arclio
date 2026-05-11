@@ -135,8 +135,8 @@ describe('playlist regressions', () => {
       lastSponsorBlockMode: 'mark',
       lastSponsorBlockCategories: ['intro'],
       lastPlaylistPreset: 'audio-mp3',
-      lastPlaylistSubfolderEnabled: true,
-      lastPlaylistSubfolder: 'Saved Folder'
+      lastSubfolderEnabled: true,
+      lastSubfolder: 'Saved Folder'
     });
     window.appApi = api as never;
 

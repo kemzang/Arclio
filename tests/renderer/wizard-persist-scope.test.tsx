@@ -106,7 +106,7 @@ describe('persist scope — WRITE side', () => {
     expect(lastPatch).toHaveProperty('single');
   });
 
-  it('non-YouTube run writes common + subfolder fields only (format/audio/subtitle skipped to prevent contamination)', async () => {
+  it('non-YouTube run writes common only — no single patch (format/audio/subtitle/subfolder not contaminated)', async () => {
     const updateMock = vi.fn().mockImplementation(async () => ok(buildAppSettings({})));
     const api = buildMockAppApi({ settings: buildAppSettings({}) });
     api.settings.update = updateMock;
@@ -121,13 +121,9 @@ describe('persist scope — WRITE side', () => {
     expect(updateMock).toHaveBeenCalled();
     const lastPatch = updateMock.mock.calls[updateMock.mock.calls.length - 1][0];
     expect(lastPatch).toHaveProperty('common');
-    // single must exist but contain only subfolder fields — no format/audio/subtitle contamination
-    expect(lastPatch).toHaveProperty('single');
-    expect(lastPatch.single).toHaveProperty('lastSubfolderEnabled');
-    expect(lastPatch.single).toHaveProperty('lastSubfolder');
-    expect(lastPatch.single).not.toHaveProperty('lastPreset');
-    expect(lastPatch.single).not.toHaveProperty('lastAudioSelection');
-    expect(lastPatch.single).not.toHaveProperty('lastVideoResolution');
+    expect(lastPatch.common).toHaveProperty('lastSubfolderEnabled');
+    expect(lastPatch.common).toHaveProperty('lastSubfolder');
+    expect(lastPatch).not.toHaveProperty('single');
   });
 });
 
