@@ -5,7 +5,7 @@ import { useAppStore } from '../../store/useAppStore.js';
 import { Button } from '../ui/button.js';
 import { Checkbox } from '../ui/checkbox.js';
 import { Input } from '../ui/input.js';
-import { Separator } from '../ui/separator.js';
+import { WizardFooter } from './WizardFooter.js';
 import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
 
 function formatDuration(seconds: number | undefined, liveLabel: string): string {
@@ -117,17 +117,14 @@ export function StepPlaylistItems(): JSX.Element {
         </>
       )}
 
-      <div className="sticky bottom-0 -mx-6 px-6 bg-background z-10">
-        <Separator className="bg-border/50 -mx-6 w-auto my-1.5" />
-        <div className="flex items-center justify-end py-3 -mx-6 px-6 gap-2">
-          <Button variant="ghost" type="button" onClick={back} className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
-            {t('common.back')}
-          </Button>
-          <Button type="button" disabled={!canContinue} onClick={() => void confirmPlaylistSelection()} className="shadow-[0_4px_14px_var(--brand-glow)]">
-            {t('common.continue')}
-          </Button>
-        </div>
-      </div>
+      <WizardFooter>
+        <Button variant="ghost" type="button" onClick={back} className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
+          {t('common.back')}
+        </Button>
+        <Button type="button" disabled={!canContinue} onClick={() => void confirmPlaylistSelection()} className="shadow-[0_4px_14px_var(--brand-glow)]">
+          {t('common.continue')}
+        </Button>
+      </WizardFooter>
     </div>
   );
 }

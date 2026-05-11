@@ -2,7 +2,7 @@ import { useState, useMemo, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '../../store/useAppStore.js';
 import { Button } from '../ui/button.js';
-import { Separator } from '../ui/separator.js';
+import { WizardFooter } from './WizardFooter.js';
 import { RadioOption } from '../ui/radio-option.js';
 import { Switch } from '../ui/switch.js';
 import { Input } from '../ui/input.js';
@@ -139,15 +139,14 @@ export function StepFolderConfirm(): JSX.Element {
         {wizardSubfolderEnabled && wizardSubfolderName.trim() !== '' && !isValidSubfolder(wizardSubfolderName) && <p className="ml-[42px] text-[12px] text-destructive">{t('wizard.folder.subfolder.invalid')}</p>}
       </div>
 
-      <Separator className="bg-border/50 -mx-6 w-auto" />
-      <div className="flex justify-end gap-2 sticky bottom-0 bg-background py-3 -mx-6 px-6">
+      <WizardFooter>
         <Button variant="ghost" type="button" onClick={back} className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
           {t('common.back')}
         </Button>
         <Button type="button" onClick={advance} disabled={!wizardOutputDir || (wizardSubfolderEnabled && wizardSubfolderName.trim() !== '' && !isValidSubfolder(wizardSubfolderName))} className="shadow-[0_4px_14px_var(--brand-glow)] disabled:shadow-none">
           {t('common.continue')}
         </Button>
-      </div>
+      </WizardFooter>
     </div>
   );
 }

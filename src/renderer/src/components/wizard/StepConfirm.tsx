@@ -9,6 +9,7 @@ import { sanitizeJobOptions } from '@shared/sanitizeJobOptions.js';
 import { resolveOutputContainer } from '../../store/wizard/resolveContainer.js';
 import { Button } from '../ui/button.js';
 import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip.js';
+import { WizardFooter } from './WizardFooter.js';
 import { VideoSummaryCard } from '../shared/VideoSummaryCard.js';
 import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
 import { playlistPresetSpec } from '@shared/playlistPresets.js';
@@ -136,7 +137,7 @@ export function StepConfirm(): JSX.Element {
         </p>
       )}
 
-      <div className="flex items-center justify-end gap-2 sticky bottom-0 bg-background py-3 -mx-6 px-6 border-t border-border/50">
+      <WizardFooter>
         <Button variant="ghost" type="button" onClick={back} data-testid="btn-back" className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
           {t('common.back')}
         </Button>
@@ -153,14 +154,14 @@ export function StepConfirm(): JSX.Element {
         <Tooltip>
           <TooltipTrigger
             render={(props) => (
-              <Button {...props} type="button" size="lg" onClick={() => void addAndDownloadImmediately()} data-testid="btn-download-now" disabled={hasNothingSelected} className="shadow-[0_4px_14px_var(--brand-glow)]">
+              <Button {...props} type="button" onClick={() => void addAndDownloadImmediately()} data-testid="btn-download-now" disabled={hasNothingSelected} className="shadow-[0_4px_14px_var(--brand-glow)] pl-4 pr-3 min-w-[96px]">
                 {t('wizard.confirm.pullIt')}
               </Button>
             )}
           />
           <TooltipContent>{t('wizard.confirm.pullItTooltip')}</TooltipContent>
         </Tooltip>
-      </div>
+      </WizardFooter>
     </div>
   );
 }

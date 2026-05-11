@@ -32,7 +32,7 @@ export function WizardPanel(): JSX.Element {
   }, [activeIndex]);
 
   return (
-    <section className={cn('px-6 py-3 min-h-full flex flex-col', isBackward ? 'wizard-backward' : 'wizard-forward')} data-testid="wizard-panel">
+    <section className={cn('px-6 pt-3 min-h-full flex flex-col', isBackward ? 'wizard-backward' : 'wizard-forward')} data-testid="wizard-panel">
       {wizardStep !== 'error' && (
         <div className="flex items-center mb-4" aria-hidden data-testid="step-indicator">
           {visibleSteps.map((stepKey, i) => {
