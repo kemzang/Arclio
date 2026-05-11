@@ -74,16 +74,6 @@
     <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Arroxy","applicationCategory":"MultimediaApplication","operatingSystem":"Windows, macOS, Linux","description":"免费、MIT 许可的桌面下载器，支持 YouTube 和 2000+ 个网站，覆盖 Windows、macOS 和 Linux。最高可下载 4K HDR 60 fps 的视频。无广告、无冗余、无追加销售。","inLanguage":"zh","url":"https://arroxy.orionus.dev/zh/","image":"https://arroxy.orionus.dev/assets/icon.png","license":"https://opensource.org/licenses/MIT","downloadUrl":"https://github.com/antonio-orionus/Arroxy/releases/latest","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI"}},{"@context":"https://schema.org","@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI","sameAs":["https://x.com/OrionusAI","https://github.com/antonio-orionus"]}]</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"zh","mainEntity":[{"@type":"Question","name":"能下载哪些画质？","acceptedAnswer":{"@type":"Answer","text":"凡是 YouTube 和其他支持网站提供的都可以——4K UHD（2160p）、1440p QHD、1080p Full HD、720p、480p、360p，以及仅音频。高帧率流（60 fps、120 fps）和 HDR 内容都会原样保留。Arroxy 会显示所有可用格式，包括仅音频下载时可转换为 MP3、M4A/AAC、Opus 和 WAV。"}},{"@type":"Question","name":"真的免费吗？","acceptedAnswer":{"@type":"Answer","text":"真的。MIT 许可证。没有付费版、没有功能门槛。"}},{"@type":"Question","name":"Arroxy 支持哪些语言？","acceptedAnswer":{"@type":"Answer","text":"开箱即用支持二十一种：English、Español（西班牙语）、Deutsch（德语）、Français（法语）、日本語（日语）、中文、Русский（俄语）、Українська（乌克兰语）、हिन्दी（印地语）、Afaan Oromoo、Kiswahili、O'zbekcha（乌兹别克语）、Tiếng Việt（越南语）、አማርኛ（阿姆哈拉语）、العربية（阿拉伯语）、اردو（乌尔都语）、پښتو（普什图语）、বাংলা（孟加拉语）、မြန်မာဘာသာ（缅甸语）、Ελληνικά（希腊语）和 Српски（塞尔维亚语）。Arroxy 在首次启动时自动检测系统语言，随时可在工具栏的语言选择器中切换。翻译以纯 TypeScript 对象的形式存放在 src/shared/i18n/locales/ — 在 GitHub 上发个 PR 即可贡献。"}},{"@type":"Question","name":"需要装别的东西吗？","acceptedAnswer":{"@type":"Answer","text":"不需要。yt-dlp 会在首次启动时自动下载并缓存到你的机器上；ffmpeg 和 ffprobe 随应用一起提供。之后无需任何额外配置。"}},{"@type":"Question","name":"如果 YouTube 改了什么，还能用吗？","acceptedAnswer":{"@type":"Answer","text":"能——Arroxy 有两层保障。第一，yt-dlp 是社区里最活跃维护的开源工具之一——包括 YouTube 在内的支持网站一变，几小时内就更新。第二，Arroxy 完全不依赖 Cookie 或你的 Google 账号，所以没有会话过期，没有凭据要轮换。这两点结合让它比依赖浏览器导出 Cookie 的工具稳定得多。"}},{"@type":"Question","name":"能下播放列表吗？","acceptedAnswer":{"@type":"Answer","text":"可以。粘贴播放列表链接后，选择全部视频或只选你想要的那些，Arroxy 会把它们作为一个批次加入队列。整频道批量下载暂未支持。"}},{"@type":"Question","name":"需要我的 YouTube 账号或 Cookie 吗？","acceptedAnswer":{"@type":"Answer","text":"默认不需要——Arroxy 无需账号、登录或导出 Cookie 即可使用。高级设置中提供可选的 Cookie 支持（文件或浏览器导入），用于需要身份验证的内容，例如年龄限制或仅会员视频。默认关闭。如果你启用它，yt-dlp 自己的文档警告基于 Cookie 的自动化可能导致 Google 账号被标记，因此使用一次性账号是更安全的选择。"}},{"@type":"Question","name":"macOS 提示 \"应用已损坏\" 或 \"无法打开\" — 怎么办？","acceptedAnswer":{"@type":"Answer","text":"这是 macOS Gatekeeper 在拦截未签名应用 — 并不是真的损坏。README 里有 macOS 首次启动的分步指引。"}},{"@type":"Question","name":"这合法吗？","acceptedAnswer":{"@type":"Answer","text":"为个人使用下载视频，在大多数地区一般是被接受的。你需要自己负责遵守 YouTube 的服务条款和当地法律。"}}]}</script>
 
-    <script>
-      window.op = window.op || function(...args){(window.op.q=window.op.q||[]).push(args);};
-      window.op('init', {
-        clientId: '33d59339-35ce-4394-b19e-036347830c5d',
-        trackScreenViews: true,
-        trackOutgoingLinks: true,
-        trackAttributes: true,
-      });
-    </script>
-    <script src="https://openpanel.dev/op1.js" defer async></script>
 
     <style>
       :root {
@@ -283,15 +273,21 @@
         cursor: pointer;
         border: 1px solid transparent;
       }
+      @keyframes btn-glow {
+        0%, 100% { box-shadow: 0 0 0 1px hsl(220 100% 70% / 0.3), 0 12px 30px var(--brand-glow); }
+        50%       { box-shadow: 0 0 0 1px hsl(220 100% 75% / 0.55), 0 18px 42px var(--brand-glow), 0 0 18px hsl(220 100% 65% / 0.35); }
+      }
       .btn-primary {
         background: var(--brand);
         color: white;
         box-shadow: 0 0 0 1px hsl(220 100% 70% / 0.3), 0 12px 30px var(--brand-glow);
+        animation: btn-glow 2.4s ease-in-out infinite;
       }
       .btn-primary:hover {
         background: var(--brand-hover);
         transform: translateY(-2px);
         box-shadow: 0 0 0 1px hsl(220 100% 75% / 0.45), 0 20px 40px var(--brand-glow);
+        animation: none;
       }
       .btn-secondary {
         background: var(--bg-card);
@@ -331,13 +327,29 @@
       }
       a.hero-trust:hover { color: var(--brand-hover); }
       a.hero-trust:hover::after { transform: translateX(3px); }
+      @keyframes star-pulse {
+        0%, 100% { filter: drop-shadow(0 0 3px hsl(45 100% 65% / 0.55)); }
+        50%       { filter: drop-shadow(0 0 7px hsl(45 100% 65% / 0.9)); }
+      }
       .hero-eyebrow.is-live {
+        display: inline-flex;
+        align-items: center;
         text-transform: none;
         letter-spacing: 0.02em;
         font-size: 13px;
       }
-      .hero-eyebrow.is-live .star { color: hsl(45 100% 65%); }
-      .hero-eyebrow.is-live .sep { opacity: 0.5; margin: 0 6px; }
+      .hero-eyebrow.is-live .star {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: hsl(45 100% 65%);
+        animation: star-pulse 2.4s ease-in-out infinite;
+      }
+      .hero-eyebrow.is-live .star svg {
+        flex-shrink: 0;
+        vertical-align: middle;
+      }
+      .hero-eyebrow.is-live .sep { opacity: 0.4; margin: 0 8px; }
 
       .hero-grid > .demo-wrap { margin-top: 48px; }
       @media (min-width: 1024px) {
@@ -798,7 +810,7 @@
         <div id="mobile-notice" style="display:none">
           <p class="mobile-notice-text">Arroxy 是适用于 Windows、macOS 和 Linux 的桌面应用。</p>
           <p class="mobile-notice-sub">请在电脑上访问此页面进行下载。</p>
-          <button class="btn btn-secondary" id="mobile-copy-btn" data-copy-url="https://arroxy.orionus.dev/zh/" data-track="mobile-copy-link">复制页面链接</button>
+          <button class="btn btn-primary" id="mobile-copy-btn" data-copy-url="https://arroxy.orionus.dev/zh/" data-track="mobile-copy-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>复制页面链接</button>
         </div>
 
         <div class="cta-row" id="download">
@@ -1239,9 +1251,11 @@
           }
           if (!stars && !timeStr) return;
           const parts = [];
-          if (stars) parts.push(`<span class="star">★</span> ${stars}`);
+          if (stars) parts.push(`<span class="star"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${stars}</span>`);
           if (timeStr) parts.push(`Updated ${timeStr}`);
-          parts.push('Open source on GitHub');
+          const ghIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" style="flex-shrink:0;vertical-align:middle"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
+          parts.push(`<span style="display:inline-flex;align-items:center;gap:5px">${ghIcon}Open source on GitHub</span>`);
+          // eyebrow content is fully hardcoded — no user input reaches innerHTML
           eyebrow.innerHTML = parts.join('<span class="sep">·</span>');
           eyebrow.classList.add('is-live');
         }

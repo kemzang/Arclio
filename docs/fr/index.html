@@ -74,16 +74,6 @@
     <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Arroxy","applicationCategory":"MultimediaApplication","operatingSystem":"Windows, macOS, Linux","description":"Téléchargeur de bureau gratuit sous licence MIT pour YouTube et plus de 2000 sites supportés sur Windows, macOS et Linux. Téléchargez des vidéos jusqu'en 4K HDR à 60 fps. Pas de pub, pas de superflu, pas d'upsell.","inLanguage":"fr","url":"https://arroxy.orionus.dev/fr/","image":"https://arroxy.orionus.dev/assets/icon.png","license":"https://opensource.org/licenses/MIT","downloadUrl":"https://github.com/antonio-orionus/Arroxy/releases/latest","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI"}},{"@context":"https://schema.org","@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI","sameAs":["https://x.com/OrionusAI","https://github.com/antonio-orionus"]}]</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"fr","mainEntity":[{"@type":"Question","name":"Quelles qualités de vidéo puis-je télécharger ?","acceptedAnswer":{"@type":"Answer","text":"Tout ce que YouTube et les autres sites supportés proposent — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p et audio seul. Les flux haut framerate (60 fps, 120 fps) et le HDR sont préservés tels quels. Arroxy te montre tous les formats disponibles, y compris la conversion en MP3, M4A/AAC, Opus et WAV pour les téléchargements audio seuls."}},{"@type":"Question","name":"C'est vraiment gratuit ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Licence MIT. Pas de version premium, pas de fonctions verrouillées."}},{"@type":"Question","name":"Dans quelles langues Arroxy est-il disponible ?","acceptedAnswer":{"@type":"Answer","text":"Vingt-et-une, prêtes à l'emploi : English, Español (espagnol), Deutsch (allemand), Français, 日本語 (japonais), 中文 (chinois), Русский (russe), Українська (ukrainien), हिन्दी (hindi), Afaan Oromoo, Kiswahili, O'zbekcha (ouzbek), Tiếng Việt (vietnamien), አማርኛ (amharique), العربية (arabe), اردو (ourdou), پښتو (pachto), বাংলা (bengali), မြန်မာဘာသာ (birman), Ελληνικά (grec) et Српски (serbe). Arroxy détecte la langue de ton système d'exploitation au premier lancement et tu peux changer à tout moment depuis le sélecteur de langue dans la barre d'outils. Les traductions sont de simples objets TypeScript dans src/shared/i18n/locales/ — ouvre une PR sur GitHub pour contribuer."}},{"@type":"Question","name":"Faut-il installer quelque chose ?","acceptedAnswer":{"@type":"Answer","text":"Non. yt-dlp est téléchargé automatiquement au premier lancement et mis en cache sur ta machine ; ffmpeg et ffprobe sont inclus dans l’app. Après ça, aucune configuration supplémentaire."}},{"@type":"Question","name":"Est-ce que ça continuera de marcher si YouTube change quelque chose ?","acceptedAnswer":{"@type":"Answer","text":"Oui — et Arroxy a deux couches de résilience. Premièrement, yt-dlp est l'un des outils open source les plus activement maintenus — il est mis à jour dans les heures qui suivent les changements sur les sites supportés, YouTube inclus. Deuxièmement, Arroxy ne dépend pas du tout des cookies ni de ton compte Google, donc aucune session n'expire et aucun identifiant à renouveler. Cette combinaison le rend bien plus stable que les outils dépendant de cookies de navigateur exportés."}},{"@type":"Question","name":"Puis-je télécharger des playlists ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Colle l'URL d'une playlist, sélectionne toutes les vidéos ou seulement celles que tu veux, et Arroxy les met en file comme un seul lot. Les téléchargements par lot de chaînes entières ne sont pas encore pris en charge."}},{"@type":"Question","name":"A-t-il besoin de mon compte YouTube ou de cookies ?","acceptedAnswer":{"@type":"Answer","text":"Par défaut, non — Arroxy fonctionne sans compte, connexion ni export de cookies. Le support optionnel des cookies est disponible dans les Paramètres avancés (fichier ou import depuis navigateur) pour les contenus nécessitant une authentification, comme les vidéos à restriction d'âge ou réservées aux membres. Désactivé par défaut. Si tu l'actives, la doc de yt-dlp prévient que l'automatisation par cookies peut signaler un compte Google — un compte jetable est le choix le plus sûr."}},{"@type":"Question","name":"macOS dit « l'application est endommagée » ou « ne peut pas être ouverte » — que faire ?","acceptedAnswer":{"@type":"Answer","text":"C'est Gatekeeper de macOS qui bloque une app non signée — pas un vrai dommage. Le README contient la marche à suivre pour le premier lancement sur macOS."}},{"@type":"Question","name":"C'est légal ?","acceptedAnswer":{"@type":"Answer","text":"Télécharger des vidéos pour un usage personnel est généralement accepté dans la plupart des juridictions. Tu es responsable de respecter les Conditions d'Utilisation de YouTube et les lois de ton pays."}}]}</script>
 
-    <script>
-      window.op = window.op || function(...args){(window.op.q=window.op.q||[]).push(args);};
-      window.op('init', {
-        clientId: '33d59339-35ce-4394-b19e-036347830c5d',
-        trackScreenViews: true,
-        trackOutgoingLinks: true,
-        trackAttributes: true,
-      });
-    </script>
-    <script src="https://openpanel.dev/op1.js" defer async></script>
 
     <style>
       :root {
@@ -283,15 +273,21 @@
         cursor: pointer;
         border: 1px solid transparent;
       }
+      @keyframes btn-glow {
+        0%, 100% { box-shadow: 0 0 0 1px hsl(220 100% 70% / 0.3), 0 12px 30px var(--brand-glow); }
+        50%       { box-shadow: 0 0 0 1px hsl(220 100% 75% / 0.55), 0 18px 42px var(--brand-glow), 0 0 18px hsl(220 100% 65% / 0.35); }
+      }
       .btn-primary {
         background: var(--brand);
         color: white;
         box-shadow: 0 0 0 1px hsl(220 100% 70% / 0.3), 0 12px 30px var(--brand-glow);
+        animation: btn-glow 2.4s ease-in-out infinite;
       }
       .btn-primary:hover {
         background: var(--brand-hover);
         transform: translateY(-2px);
         box-shadow: 0 0 0 1px hsl(220 100% 75% / 0.45), 0 20px 40px var(--brand-glow);
+        animation: none;
       }
       .btn-secondary {
         background: var(--bg-card);
@@ -331,13 +327,29 @@
       }
       a.hero-trust:hover { color: var(--brand-hover); }
       a.hero-trust:hover::after { transform: translateX(3px); }
+      @keyframes star-pulse {
+        0%, 100% { filter: drop-shadow(0 0 3px hsl(45 100% 65% / 0.55)); }
+        50%       { filter: drop-shadow(0 0 7px hsl(45 100% 65% / 0.9)); }
+      }
       .hero-eyebrow.is-live {
+        display: inline-flex;
+        align-items: center;
         text-transform: none;
         letter-spacing: 0.02em;
         font-size: 13px;
       }
-      .hero-eyebrow.is-live .star { color: hsl(45 100% 65%); }
-      .hero-eyebrow.is-live .sep { opacity: 0.5; margin: 0 6px; }
+      .hero-eyebrow.is-live .star {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: hsl(45 100% 65%);
+        animation: star-pulse 2.4s ease-in-out infinite;
+      }
+      .hero-eyebrow.is-live .star svg {
+        flex-shrink: 0;
+        vertical-align: middle;
+      }
+      .hero-eyebrow.is-live .sep { opacity: 0.4; margin: 0 8px; }
 
       .hero-grid > .demo-wrap { margin-top: 48px; }
       @media (min-width: 1024px) {
@@ -798,7 +810,7 @@
         <div id="mobile-notice" style="display:none">
           <p class="mobile-notice-text">Arroxy est une application de bureau pour Windows, macOS et Linux.</p>
           <p class="mobile-notice-sub">Ouvrez cette page sur votre ordinateur pour télécharger.</p>
-          <button class="btn btn-secondary" id="mobile-copy-btn" data-copy-url="https://arroxy.orionus.dev/fr/" data-track="mobile-copy-link">Copier le lien</button>
+          <button class="btn btn-primary" id="mobile-copy-btn" data-copy-url="https://arroxy.orionus.dev/fr/" data-track="mobile-copy-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Copier le lien</button>
         </div>
 
         <div class="cta-row" id="download">
@@ -1239,9 +1251,11 @@
           }
           if (!stars && !timeStr) return;
           const parts = [];
-          if (stars) parts.push(`<span class="star">★</span> ${stars}`);
+          if (stars) parts.push(`<span class="star"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${stars}</span>`);
           if (timeStr) parts.push(`Updated ${timeStr}`);
-          parts.push('Open source on GitHub');
+          const ghIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" style="flex-shrink:0;vertical-align:middle"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
+          parts.push(`<span style="display:inline-flex;align-items:center;gap:5px">${ghIcon}Open source on GitHub</span>`);
+          // eyebrow content is fully hardcoded — no user input reaches innerHTML
           eyebrow.innerHTML = parts.join('<span class="sep">·</span>');
           eyebrow.classList.add('is-live');
         }

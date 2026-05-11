@@ -74,16 +74,6 @@
     <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Arroxy","applicationCategory":"MultimediaApplication","operatingSystem":"Windows, macOS, Linux","description":"Phần mềm tải máy tính để bàn miễn phí, giấy phép MIT dành cho YouTube và hơn 2000 trang được hỗ trợ trên Windows, macOS và Linux. Tải video lên tới 4K HDR ở 60 fps. Không quảng cáo, không phồng to, không bán thêm.","inLanguage":"vi","url":"https://arroxy.orionus.dev/vi/","image":"https://arroxy.orionus.dev/assets/icon.png","license":"https://opensource.org/licenses/MIT","downloadUrl":"https://github.com/antonio-orionus/Arroxy/releases/latest","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI"}},{"@context":"https://schema.org","@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI","sameAs":["https://x.com/OrionusAI","https://github.com/antonio-orionus"]}]</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"vi","mainEntity":[{"@type":"Question","name":"Tôi có thể tải video ở những chất lượng nào?","acceptedAnswer":{"@type":"Answer","text":"Bất cứ thứ gì YouTube và các trang được hỗ trợ khác cung cấp — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p và chỉ âm thanh. Luồng tốc độ khung hình cao (60 fps, 120 fps) và nội dung HDR được giữ nguyên. Arroxy hiển thị mọi định dạng khả dụng, bao gồm chuyển đổi sang MP3, M4A/AAC, Opus và WAV cho các lượt tải chỉ âm thanh."}},{"@type":"Question","name":"Thực sự miễn phí không?","acceptedAnswer":{"@type":"Answer","text":"Có. Giấy phép MIT. Không có gói cao cấp, không có tính năng bị khóa."}},{"@type":"Question","name":"Arroxy có sẵn bằng những ngôn ngữ nào?","acceptedAnswer":{"@type":"Answer","text":"Hai mươi mốt ngôn ngữ, có sẵn ngay khi cài đặt: English, Español (Tây Ban Nha), Deutsch (Đức), Français (Pháp), 日本語 (Nhật), 中文 (Trung Quốc), Русский (Nga), Українська (Ukraine), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Việt Nam), አማርኛ (Amharic), العربية (Ả Rập), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Miến Điện), Ελληνικά (Hy Lạp) và Српски (Serbia). Arroxy tự động phát hiện ngôn ngữ hệ điều hành của bạn khi khởi động lần đầu và bạn có thể chuyển đổi bất cứ lúc nào từ bộ chọn ngôn ngữ trên thanh công cụ. Các bản dịch được lưu dưới dạng đối tượng TypeScript thuần trong src/shared/i18n/locales/ — mở PR trên GitHub để đóng góp."}},{"@type":"Question","name":"Tôi có cần cài đặt thêm gì không?","acceptedAnswer":{"@type":"Answer","text":"Không. yt-dlp được tải xuống tự động khi khởi động lần đầu và được lưu vào bộ nhớ đệm trên máy của bạn; ffmpeg và ffprobe đi kèm với ứng dụng. Sau đó, không cần thiết lập thêm gì."}},{"@type":"Question","name":"Nó có tiếp tục hoạt động nếu YouTube thay đổi gì đó không?","acceptedAnswer":{"@type":"Answer","text":"Có — và Arroxy có hai lớp khả năng chống chịu. Thứ nhất, yt-dlp là một trong những công cụ mã nguồn mở được duy trì tích cực nhất — nó cập nhật trong vài giờ sau bất kỳ thay đổi nào của trang được hỗ trợ, bao gồm YouTube. Thứ hai, Arroxy hoàn toàn không phụ thuộc vào cookie hay tài khoản Google của bạn, vì vậy không có phiên nào hết hạn và không có thông tin đăng nhập nào cần xoay vòng. Sự kết hợp đó khiến nó ổn định hơn đáng kể so với các công cụ phụ thuộc vào cookie trình duyệt được xuất ra."}},{"@type":"Question","name":"Tôi có thể tải playlist không?","acceptedAnswer":{"@type":"Answer","text":"Có. Dán URL playlist, chọn tất cả video hoặc chỉ những video bạn muốn, và Arroxy sẽ xếp chúng thành một lô duy nhất. Tải hàng loạt cả kênh vẫn chưa được hỗ trợ."}},{"@type":"Question","name":"Nó có cần tài khoản YouTube hay cookie của tôi không?","acceptedAnswer":{"@type":"Answer","text":"Mặc định là không — Arroxy hoạt động mà không cần tài khoản, đăng nhập hay xuất cookie. Hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao (tệp hoặc nhập từ trình duyệt) cho nội dung yêu cầu xác thực, chẳng hạn như video giới hạn độ tuổi hoặc chỉ dành cho thành viên. Tắt theo mặc định. Nếu bật, tài liệu của yt-dlp cảnh báo rằng tự động hóa dựa trên cookie có thể gắn cờ tài khoản Google, vì vậy tài khoản dùng một lần là lựa chọn an toàn hơn."}},{"@type":"Question","name":"macOS báo \"ứng dụng bị hỏng\" hoặc \"không thể mở\" — tôi phải làm gì?","acceptedAnswer":{"@type":"Answer","text":"Đây là Gatekeeper của macOS đang chặn một ứng dụng chưa được ký — không phải hư hỏng thực sự. README có hướng dẫn từng bước để khởi động lần đầu trên macOS."}},{"@type":"Question","name":"Điều này có hợp pháp không?","acceptedAnswer":{"@type":"Answer","text":"Tải video để sử dụng cá nhân thường được chấp nhận ở hầu hết các quốc gia. Bạn có trách nhiệm tuân thủ Điều khoản Dịch vụ của YouTube và luật pháp địa phương."}}]}</script>
 
-    <script>
-      window.op = window.op || function(...args){(window.op.q=window.op.q||[]).push(args);};
-      window.op('init', {
-        clientId: '33d59339-35ce-4394-b19e-036347830c5d',
-        trackScreenViews: true,
-        trackOutgoingLinks: true,
-        trackAttributes: true,
-      });
-    </script>
-    <script src="https://openpanel.dev/op1.js" defer async></script>
 
     <style>
       :root {
@@ -283,15 +273,21 @@
         cursor: pointer;
         border: 1px solid transparent;
       }
+      @keyframes btn-glow {
+        0%, 100% { box-shadow: 0 0 0 1px hsl(220 100% 70% / 0.3), 0 12px 30px var(--brand-glow); }
+        50%       { box-shadow: 0 0 0 1px hsl(220 100% 75% / 0.55), 0 18px 42px var(--brand-glow), 0 0 18px hsl(220 100% 65% / 0.35); }
+      }
       .btn-primary {
         background: var(--brand);
         color: white;
         box-shadow: 0 0 0 1px hsl(220 100% 70% / 0.3), 0 12px 30px var(--brand-glow);
+        animation: btn-glow 2.4s ease-in-out infinite;
       }
       .btn-primary:hover {
         background: var(--brand-hover);
         transform: translateY(-2px);
         box-shadow: 0 0 0 1px hsl(220 100% 75% / 0.45), 0 20px 40px var(--brand-glow);
+        animation: none;
       }
       .btn-secondary {
         background: var(--bg-card);
@@ -331,13 +327,29 @@
       }
       a.hero-trust:hover { color: var(--brand-hover); }
       a.hero-trust:hover::after { transform: translateX(3px); }
+      @keyframes star-pulse {
+        0%, 100% { filter: drop-shadow(0 0 3px hsl(45 100% 65% / 0.55)); }
+        50%       { filter: drop-shadow(0 0 7px hsl(45 100% 65% / 0.9)); }
+      }
       .hero-eyebrow.is-live {
+        display: inline-flex;
+        align-items: center;
         text-transform: none;
         letter-spacing: 0.02em;
         font-size: 13px;
       }
-      .hero-eyebrow.is-live .star { color: hsl(45 100% 65%); }
-      .hero-eyebrow.is-live .sep { opacity: 0.5; margin: 0 6px; }
+      .hero-eyebrow.is-live .star {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: hsl(45 100% 65%);
+        animation: star-pulse 2.4s ease-in-out infinite;
+      }
+      .hero-eyebrow.is-live .star svg {
+        flex-shrink: 0;
+        vertical-align: middle;
+      }
+      .hero-eyebrow.is-live .sep { opacity: 0.4; margin: 0 8px; }
 
       .hero-grid > .demo-wrap { margin-top: 48px; }
       @media (min-width: 1024px) {
@@ -798,7 +810,7 @@
         <div id="mobile-notice" style="display:none">
           <p class="mobile-notice-text">Arroxy là ứng dụng máy tính để bàn cho Windows, macOS và Linux.</p>
           <p class="mobile-notice-sub">Hãy truy cập trang này trên máy tính của bạn để tải xuống.</p>
-          <button class="btn btn-secondary" id="mobile-copy-btn" data-copy-url="https://arroxy.orionus.dev/vi/" data-track="mobile-copy-link">Sao chép liên kết trang</button>
+          <button class="btn btn-primary" id="mobile-copy-btn" data-copy-url="https://arroxy.orionus.dev/vi/" data-track="mobile-copy-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Sao chép liên kết trang</button>
         </div>
 
         <div class="cta-row" id="download">
@@ -1239,9 +1251,11 @@
           }
           if (!stars && !timeStr) return;
           const parts = [];
-          if (stars) parts.push(`<span class="star">★</span> ${stars}`);
+          if (stars) parts.push(`<span class="star"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${stars}</span>`);
           if (timeStr) parts.push(`Updated ${timeStr}`);
-          parts.push('Open source on GitHub');
+          const ghIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" style="flex-shrink:0;vertical-align:middle"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
+          parts.push(`<span style="display:inline-flex;align-items:center;gap:5px">${ghIcon}Open source on GitHub</span>`);
+          // eyebrow content is fully hardcoded — no user input reaches innerHTML
           eyebrow.innerHTML = parts.join('<span class="sep">·</span>');
           eyebrow.classList.add('is-live');
         }

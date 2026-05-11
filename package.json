@@ -12,6 +12,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "bun run embed:fetch:host && ELECTRON_DISABLE_SANDBOX=1 electron-vite dev",
+    "landing:dev": "bunx serve docs --listen 4000",
     "dev:fresh": "node scripts/clear-logs.mjs && bun run dev",
     "embed:fetch:host": "bash scripts/build/fetch-embedded.sh $(node -e \"console.log(process.platform)\") $(node -e \"console.log(process.arch === 'arm64' ? 'arm64' : 'x64')\")",
     "clean": "rm -rf dist out",
