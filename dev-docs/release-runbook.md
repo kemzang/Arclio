@@ -33,6 +33,43 @@ bun run release:beta
 
 Download the prerelease artifacts from GitHub Releases and smoke-test the app.
 
+## Small maintainer fix: skip the final beta
+
+For a tiny maintainer-owned fix, such as UI polish that is already on `dev`, the final beta artifact can be skipped. Do not use this path for dependency bumps, binary/download pipeline changes, installer changes, public docs/landing changes, or anything that needs artifact smoke-testing before users see it.
+
+First make sure the latest `dev` checks are green:
+
+```bash
+gh run list --branch dev --limit 5
+```
+
+Then fast-forward `main` to `dev` and strip the beta suffix on `main`:
+
+```bash
+git checkout main
+git pull origin main
+git merge --ff-only origin/dev
+
+# edit package.json: 0.3.3-beta.1 -> 0.3.3
+bun run check
+git commit -am "release: 0.3.3"
+git push origin main
+```
+
+Do not tag yet. Wait for the required `main` checks on the stable version-bump commit, then verify and cut the stable tag:
+
+```bash
+gh run list --branch main --limit 10
+bash scripts/release.sh stable --verify-only
+bun run release:stable
+```
+
+After the stable release is cut, resume `dev` for the next beta line:
+
+```bash
+bun run release:resume-dev
+```
+
 ## 2. Open / update the release-candidate PR
 
 Open a `dev -> main` PR, or reuse the existing release-candidate PR.
