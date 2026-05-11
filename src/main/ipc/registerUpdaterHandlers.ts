@@ -1,10 +1,12 @@
 import { app, ipcMain, type BrowserWindow } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log/main';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { detectInstallChannel } from '@main/installChannel';
-import { trackMain } from '@main/services/analytics';
-import type { InstallChannel, UpdateAvailablePayload, UpdateInstallResult } from '@shared/types';
+import electronUpdater from 'electron-updater';
+
+const { autoUpdater } = electronUpdater;
+import log from 'electron-log/main.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { detectInstallChannel } from '@main/installChannel.js';
+import { trackMain } from '@main/services/analytics.js';
+import type { InstallChannel, UpdateAvailablePayload, UpdateInstallResult } from '@shared/types.js';
 
 // Channels where the in-app installer should not run — either because an
 // external package manager owns updates (scoop/homebrew) or because the

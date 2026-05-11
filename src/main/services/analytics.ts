@@ -35,13 +35,25 @@ const ALLOWED: Record<string, readonly string[]> = {
   app_started: ['install_channel', 'platform_arch', 'is_first_run'],
   update_available: ['to_version', 'install_channel'],
   update_install_clicked: ['install_channel'],
-  format_probed: ['duration_bucket', 'error_category', 'bot_wall', 'cookies_mode'],
+  format_probed: ['duration_bucket', 'bot_wall', 'cookies_mode', 'result_kind'],
+  probe_failed: ['duration_bucket', 'error_category', 'cookies_mode'],
   download_started: ['preset', 'has_subtitles', 'has_sponsorblock', 'cookies_mode', 'embed_metadata', 'embed_thumbnail'],
-  download_finished: ['outcome', 'duration_bucket', 'size_bucket', 'error_category'],
+  download_finished: ['duration_bucket', 'size_bucket'],
+  download_cancelled: ['duration_bucket'],
+  download_failed: ['duration_bucket', 'size_bucket', 'error_category'],
   tray_close_chosen: ['choice', 'remember'],
   binary_setup_failed: ['binary', 'phase', 'code'],
   crash_detected: ['type', 'reason'],
-  wizard_started: []
+  wizard_started: [],
+  share_dialog_opened: ['via'],
+  share_dialog_closed: ['via', 'clicked'],
+  share_destination_clicked: ['destination'],
+  share_link_copied: [],
+  share_inline_card_impression: [],
+  share_inline_card_clicked: [],
+  share_inline_card_dismissed: [],
+  share_prompt_impression: ['via'],
+  share_prompt_dismissed: ['via']
 };
 
 const MAX_STR = 32;

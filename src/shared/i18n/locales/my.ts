@@ -3,8 +3,7 @@ const my = {
     back: 'နောက်သို့',
     continue: 'ဆက်လက်သွားမည်',
     retry: 'ထပ်မံကြိုးစားမည်',
-    startOver: 'အစကနေပြန်စမည်',
-    loading: 'ဖွင့်နေသည်…'
+    startOver: 'အစကနေပြန်စမည်'
   },
   app: {
     feedback: 'အကြံပြုချက်',
@@ -14,6 +13,15 @@ const my = {
     debugCopyTitle: 'အမှားရှာဖွေရေးအချက်အလက်ကူးယူမည် (Electron, OS, Chrome ဗားရှင်းများ)',
     zoomIn: 'ချဲ့မည်',
     zoomOut: 'ချုံ့မည်'
+  },
+  about: {
+    button: 'အကြောင်း',
+    openTitle: 'Arroxy အကြောင်း',
+    tagline: 'Desktop အတွက် မြန်ဆန်သော ဗီဒီယို နှင့် အသံ ဒေါင်းလုဒ်တူး။',
+    websiteLink: 'ဝက်ဘ်ဆိုက်',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT လိုင်စင် · Antonio Orionus မှ',
+    thirdPartyNotices: 'တတိယပါတီ သတိပေးချက်များ ကြည့်မည်'
   },
   titleBar: {
     close: 'ပိတ်မည်',
@@ -25,7 +33,6 @@ const my = {
     greeting: 'ဟေး၊ ကြိုဆိုပါသည်!',
     warmup: 'Arroxy ပြင်ဆင်နေသည်…',
     downloading: '{{binary}} ဒေါင်းလုဒ်လုပ်နေသည်…',
-    warning: 'တပ်ဆင်မှုမပြည့်စုံသေးပါ — အချို့လုပ်ဆောင်ချက်များ အလုပ်မလုပ်နိုင်ပါ',
     warmupFailedNoDiag: 'တပ်ဆင်မှုမအောင်မြင်ပါ။ အသေးစိတ်ကြည့်ရန် setup log ဖွင့်ပါ။'
   },
   repair: {
@@ -81,6 +88,8 @@ const my = {
       heading: 'Playlist အကြောင်းအရာများ',
       itemCount_one: '{{count}} ဗီဒီယို',
       itemCount_other: '{{count}} ဗီဒီယိုများ',
+      itemCountAudio_one: '{{count}} ခု သီချင်း',
+      itemCountAudio_other: '{{count}} ခု သီချင်းများ',
       selectAll: 'အားလုံးရွေးမည်',
       selectNone: 'အားလုံးဖြုတ်မည်',
       rangeFrom: 'မှ',
@@ -91,15 +100,13 @@ const my = {
       noSelection: 'ဆက်လက်ရန် ဗီဒီယိုတစ်ခုအနည်းဆုံးရွေးပါ',
       loadingItems: 'Playlist ရယူနေသည်…',
       thumbnailAlt: 'ဗီဒီယို thumbnail',
-      continue: 'ဆက်လက်သွားမည်',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Batch အတွက် အရည်အသွေးရွေးပါ',
       subhead: 'ဗီဒီယိုတစ်ခုချင်းစီသည် ရွေးချယ်ထားသော tier အတိုင်း သီးခြားဖြေရှင်းသည် — မတူညီသော playlist များ အဆင်မပြေမှုမရှိဘဲ အလုပ်လုပ်သည်။',
       itemCount_one: '{{count}} ခု',
-      itemCount_other: '{{count}} ခု',
-      continue: 'ဆက်လက်သွားမည်'
+      itemCount_other: '{{count}} ခု'
     },
     mixedPrompt: {
       title: 'ဤလင့်ခ်တွင် Playlist ပါဝင်သည်',
@@ -114,17 +121,25 @@ const my = {
       fetchFormats: 'ဖော်မတ်များရယူမည်',
       features: {
         heading: 'Arroxy ဆွဲထုတ်နိုင်သည်',
-        video: {
-          title: 'ဗီဒီယို',
-          desc: '4K အထိ မည်သည့် resolution မဆို ရွေးနိုင်'
+        youtube: {
+          heading: 'YouTube',
+          video: 'ဗီဒီယိုများ',
+          channel: 'Channel များ',
+          playlist: 'Playlist များ',
+          short: 'Shorts',
+          music: 'တေးဂီတ',
+          podcast: 'Podcast များ'
         },
-        playlist: {
-          title: 'Playlist',
-          desc: 'Playlist မှ အကြောင်းအရာများ များစွာ ရွေးနိုင်'
+        anySite: {
+          heading: '2000+ ဝဘ်ဆိုဒ်',
+          video: 'ဗီဒီယိုများ',
+          videoPlaylist: 'ဗီဒီယို playlist များ',
+          musicPlaylist: 'တေးဂီတ playlist များ'
         },
-        audio: {
-          title: 'အသံ',
-          desc: 'မူရင်း stream သို့မဟုတ် MP3/M4A ပြောင်းနိုင်'
+        always: {
+          heading: 'အမြဲ ရရှိနိုင်',
+          audioOnly: 'အသံသာများ',
+          subtitles: 'စာတန်းထိုးများ'
         }
       },
       mascotIdle: 'YouTube လင့်ခ်တစ်ခု (ဗီဒီယို သို့ Short) ထည့်ပြီး "ဖော်မတ်များရယူမည်" နှိပ်ပါ — ကျွန်ုပ်စတင်ပြီပဲ ✨',
@@ -162,7 +177,7 @@ const my = {
         enabledButNoBrowser: 'ကွတ်ကီးသုံးရန် browser ရွေးပါ',
         banWarning: 'yt-dlp မှ cookies သုံးသော account များကို YouTube မှ ပြဿနာတက်စေနိုင်သည် — ဖြစ်နိုင်လျှင် စမ်းသပ် account တစ်ခုသုံးပါ။',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt ကို ဒေသတွင်း ရယူရန် (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const my = {
       }
     },
     subtitles: {
-      heading: 'စာတန်းထိုး',
       autoBadge: 'အလိုအလျောက်',
-      hint: 'Sidecar ဖိုင်များကို ဗီဒီယိုနဘေးတွင် သိမ်းမည်',
       noLanguages: 'ဤဗီဒီယိုအတွက် စာတန်းထိုးမရှိပါ',
       skip: 'ကျော်သွားမည်',
       skipSubs: 'ဤဗီဒီယိုအတွက် ကျော်သွားမည်',
-      selectAll: 'အားလုံးရွေးမည်',
-      deselectAll: 'အားလုံးဖြုတ်မည်',
       mascot: 'သုည၊ တစ်ခု သို့ မည်မျှမဆိုရွေးနိုင်သည် — သင့်ဆန္ဒအတိုင်း ✨',
       searchPlaceholder: 'ဘာသာစကားရှာဖွေမည်…',
       noMatches: 'ကိုက်ညီသောဘာသာစကားမရှိပါ',
@@ -242,10 +253,14 @@ const my = {
       audioOnlyOption: 'အသံသာ (ဗီဒီယိုမပါ)',
       mascot: 'အကောင်းဆုံး + အကောင်းဆုံး = အမြင့်ဆုံးအရည်အသွေး။ ကျွန်ုပ်ရွေးမည်!',
       sniffing: 'သင့်အတွက် အကောင်းဆုံးဖော်မတ်များ ရှာနေသည်…',
-      loadingHint: 'များသောအားဖြင့် တစ်စက္ကန့်ခန့်ကြာသည်',
+      loadingHint: 'စစ်ဆေးမှုပြီးဆုံးသည်အထိ ကျေးဇူးပြု၍ စောင့်ပါ — playlist များနှင့် ရှာဖွေမှုများ အချိန်ယူနိုင်သည်။',
       loadingAria: 'ဖော်မတ်များဖွင့်နေသည်',
       sizeUnknown: 'အရွယ်အစားမသိ',
+      skipToConfirm: 'အတည်ပြုသို့ ကျော်သွားရန်',
+      skipToConfirmTooltip: 'ကျန်ရှိသော အဆင့်များအားလုံးအတွက် သင်၏ သိမ်းဆည်းထားသော နှစ်သက်မှုများကို အသုံးပြုသည်။ ဆက်တင်တစ်ခုကို ပြောင်းလဲရန်၊ ယင်းအစား အဆင့်ဆင့် ဆက်လက်သွားပါ — သင်၏ ရွေးချယ်မှုကို နောက်တစ်ကြိမ်အတွက် သိမ်းဆည်းမည်။',
       total: 'စုစုပေါင်း',
+      keepAudio: 'မပြောင်းဘဲ ထားမည်',
+      keepAudioMeta: 'ပါဝင်သောအသံ',
       convert: {
         label: 'ပြောင်းရန်',
         uncompressed: 'ပြောင်းရန် · ချုံ့မထားသော',
@@ -261,8 +276,7 @@ const my = {
         bodyDisabled: 'Cookies တပ်ဆင်ထားသော်လည်း ပိတ်ထားသည်။ ပြည့်စုံသောစာရင်းရရှိရန် ဖွင့်ပြီး ထပ်ကြိုးစားပါ၊ သို့မဟုတ် network ပြောင်းပြီး ထပ်ကြိုးစားပါ။',
         bodyEnabled: 'Cookies ပါသော်လည်း YouTube မှ ဤစစ်ဆေးမှုကို ကန့်သတ်ပြီ။ နောက်မှ ထပ်ကြိုးစားပါ သို့မဟုတ် network ပြောင်းပါ။',
         retryCta: 'ထပ်ကြိုးစားမည်',
-        enableRetryCta: 'Cookies ဖွင့်ပြီး ထပ်ကြိုးစားမည်',
-        openSettingsCta: 'အဆင့်မြင့်ဆက်တင် ဖွင့်မည်'
+        enableRetryCta: 'Cookies ဖွင့်ပြီး ထပ်ကြိုးစားမည်'
       },
       cookiesError: {
         heading: 'Cookies သည် အကြောင်းရင်းဖြစ်နိုင်သည်',
@@ -272,6 +286,10 @@ const my = {
         explanationFile: 'Cookies ဖိုင်သည် ဗလာဖြစ်နေ၊ သက်တမ်းကုန်နေ သို့မဟုတ် မှားသောဖော်မတ်ဖြစ်နေနိုင်သည် (yt-dlp သည် Netscape cookies.txt ကိုသာ လက်ခံသည်)။ Cookies ကို ထပ်မံ export လုပ်ကြည့်ပါ၊ ဖိုင်အခြားတစ်ခုရွေးကြည့်ပါ၊ Browser မုဒ်သို့ပြောင်းကြည့်ပါ၊ သို့မဟုတ် cookies ပိတ်ကြည့်ပါ။',
         explanationBrowser: 'Cookies ကို browser မှ တိုက်ရိုက်ဖတ်သည်။ Browser ယခုဖွင့်ထားပါက၊ cookie database ကို ပိတ်ဆို့ထားနိုင်သည် (Chromium မျိုးနွယ်)။ Browser သည် YouTube သို့ login ဝင်ထားရမည်ဖြစ်သည်။ Browser ပိတ်ကြည့်ပါ၊ Browser အခြားတစ်ခုသို့ ပြောင်းကြည့်ပါ၊ ဖိုင်မုဒ်သို့ ပြောင်းကြည့်ပါ သို့မဟုတ် cookies ပိတ်ကြည့်ပါ။',
         openSettingsCta: 'Cookies ဆက်တင် ဖွင့်မည်',
+        needsCookies: {
+          heading: 'ဤဝဘ်ဆိုဒ်တွင် အကောင့်ဝင်ရမည်',
+          body: 'yt-dlp သည် အတည်ပြုမှုမပါဘဲ ဤဗီဒီယိုကို ဖွင့်၍မရပါ။ အဆင့်မြင့်ဆက်တင်တွင် cookies တပ်ဆင်ပါ — သင်အကောင့်ဝင်ထားသော browser တစ်ခုသို့ ညွှန်ပါ၊ သို့မဟုတ် cookies.txt ဖိုင်တင်သွင်းပါ။'
+        },
         dpapi: {
           heading: 'Windows ကုဒ်ဝှက်မှုကြောင့် Chrome cookies ပိတ်ဆို့ခံရသည်',
           explanation: 'Chrome 127 နှင့် ၎င်းနောက်ပိုင်းဗားရှင်းများသည် Windows တွင် အခြား app များ မဖတ်နိုင်သောနည်းဖြင့် cookies များကို ကုဒ်ဝှက်ထားသည်။ အောက်ပါ ဖြေရှင်းနည်းများထဲမှ တစ်ခုကို ကြိုးစားပါ။',
@@ -281,7 +299,7 @@ const my = {
           fixFileBody: 'Chrome မှ browser extension ဖြင့် cookies ထုတ်ယူပြီး ဤ app ကို File မုဒ်သို့ ပြောင်းကာ ထုတ်ယူထားသောဖိုင်ကို ရွေးပါ။',
           fixUnsafeLabel: 'App-Bound Encryption ပိတ်ထား၍ Chrome ဖွင့်မည်',
           fixUnsafeBody: 'Chrome ၏ launch shortcut တွင် --disable-features=LockProfileCookieDatabase ထည့်ပါ။ သတိပေးချက်: ဤနည်းသည် ယခင်ကုဒ်ဝှက်ထားသော cookies များကို ပျက်ကွက်စေသောကြောင့် ဝဘ်ဆိုဒ်အားလုံးမှ logout ဖြစ်ပြီး ပြန်လည် login ဝင်ရမည်ဖြစ်သည်။',
-          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+          docsLinkLabel: 'yt-dlp စာတမ်းများ (ပြဿနာ #10927)'
         }
       }
     },
@@ -334,26 +352,24 @@ const my = {
       labelSize: 'အရွယ်အစား',
       sizeUnknown: 'မသိ',
       nothingToDownload: 'စာတန်းထိုးသာ preset ဖွင့်ထားသော်လည်း စာတန်းထိုးဘာသာစကားမရွေးရသေးပါ — ဘာမျှဒေါင်းလုဒ်မဖြစ်ပါ။',
+      thumbnailEmbedNotSupported: 'Thumbnail embed ကို ကျော်လိုက်သည် — ထွက်ပေါ်မည့် container မှ ၎င်းကို မထောက်ပံ့ပါ။',
+      subtitleEmbedAudioOnly: 'စာတန်းထိုး embed ကို sidecar သို့ ပြောင်းလဲပြီ — အသံ track များသည် embedded စာတန်းထိုး stream များကို မထောက်ပံ့ပါ။',
       audioOnly: 'အသံသာ',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'အခြားဒေါင်းလုဒ်များပြီးဆုံးလျှင်စတင်မည် — အပြည့်အဝ bandwidth ရမည်',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'ဆွဲထုတ်မည်! ↓',
       pullItTooltip: 'ချက်ချင်းစတင်မည် — အခြားဒေါင်းလုဒ်များနှင့်အတူ အပြိုင်လုပ်မည်',
-      playlistBatch_one: '{{count}} ဗီဒီယို · {{title}}',
-      playlistBatch_other: '{{count}} ဗီဒီယိုများ · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Preset',
       labelItems: 'အကြောင်းအရာ',
       itemsValue_one: '{{total}} ခုမှ {{count}} ဗီဒီယို',
-      itemsValue_other: '{{total}} ခုမှ {{count}} ဗီဒီယိုများ'
-    },
-    error: {
-      icon: 'အမှား'
+      itemsValue_other: '{{total}} ခုမှ {{count}} ဗီဒီယိုများ',
+      itemsValueAudio_one: '{{total}} ခုမှ {{count}} သီချင်း',
+      itemsValueAudio_other: '{{total}} ခုမှ {{count}} သီချင်းများ'
     }
   },
   videoCard: {
-    titlePlaceholder: 'ဖွင့်နေသည်…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'ဖွင့်နေသည်…'
   },
   queue: {
     header: 'ဒေါင်းလုဒ် Queue',
@@ -378,9 +394,7 @@ const my = {
       resume: 'ဆက်လုပ်မည်',
       cancel: 'ပယ်ဖျက်မည်',
       remove: 'ဖျက်မည်'
-    },
-    interJobSleep_one: 'နောက်ဒေါင်းလုဒ် {{count}}s တွင်စမည်',
-    interJobSleep_other: 'နောက်ဒေါင်းလုဒ် {{count}}s တွင်စမည်'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const my = {
     ytdlpProcessError: 'yt-dlp လုပ်ငန်းစဉ်အမှား: {{error}}',
     ytdlpExitCode: 'yt-dlp သည် code {{code}} ဖြင့်ထွက်သွားသည်',
     downloadingBinary: '{{name}} binary ဒေါင်းလုဒ်လုပ်နေသည်…',
-    unknownStartupFailure: 'မသိသောဒေါင်းလုဒ်စတင်မှုပျက်ကွက်မှု'
+    unknownStartupFailure: 'မသိသောဒေါင်းလုဒ်စတင်မှုပျက်ကွက်မှု',
+    diskSpaceInsufficient: 'disk နေရာ မလုံလောက်ပါ — {{required}} လိုအပ်သည်၊ {{free}} သာ ရရှိနိုင်သည်'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const my = {
       unavailable: 'ဤဗီဒီယိုမရနိုင်ပါ — ကိုယ်ပိုင်၊ ဖျက်ထား သို့ ဒေသကန့်သတ်ဖြစ်နိုင်သည်။',
       geoBlocked: 'ဤဗီဒီယိုသည် သင့်ဒေသတွင် မရနိုင်ပါ။',
       outOfDiskSpace: 'Disk နေရာမလုံလောက်ပါ။ နေရာလွတ်ပြီး ထပ်ကြိုးစားပါ။',
-      unsupportedUrl: 'ဤ URL သည် ဗီဒီယို URL မဟုတ်ပုံရပါ။ YouTube ဗီဒီယို၊ Short သို့မဟုတ် playlist လင့်ခ်တစ်ခု ထည့်ပါ။'
+      unsupportedUrl: 'ဤ URL သည် ဗီဒီယို URL မဟုတ်ပုံရပါ။ YouTube ဗီဒီယို၊ Short သို့မဟုတ် playlist လင့်ခ်တစ်ခု ထည့်ပါ။',
+      chunkTransferFailure: 'ဆာဗာသည် ဒေါင်းလုဒ်လုပ်နေစဉ် အကြိမ်ကြိမ် ဖြတ်တောက်နေပြီး yt-dlp သည် ထပ်ကြိုးစားပြီးနောက် လက်လျှော့သွားသည်။ ၎င်းသည် အများအားဖြင့် အကြီးဆုံးဗီဒီယိုဖော်မတ်များ (4K HDR / bitrate မြင့် VP9) တွင် ဖြစ်တတ်သည်။ ထပ်ကြိုးစားပါ၊ network/VPN ပြောင်းပါ၊ သို့မဟုတ် resolution နိမ့်သောဖော်မတ်ကို ရွေးချယ်ပါ။',
+      postprocessFailure: 'yt-dlp ဒေါင်းလုဒ်လုပ်ခြင်းကို ပြီးစီးခဲ့သော်လည်း post-processing (merge / mux / convert) မအောင်မြင်ပါ။ ၎င်းသည် ခဏတာ ffmpeg ပြဿနာဖြစ်တတ်ပါသည် — ထပ်ကြိုးစားကြည့်ပါ၊ ဆက်လက်ဖြစ်နေပါက ဖော်မတ်ပေါင်းစပ်မှု အခြားတစ်ခုကို စမ်းကြည့်ပါ။',
+      parse: 'ဆိုက်မှ တုံ့ပြန်ချက်ကို parse မလုပ်နိုင်ပါ။ yt-dlp ၏ extractor သည် ခေတ်နောက်ကျနေပြီ ဖြစ်နိုင်သည်။ Arroxy သည် launch လုပ်သည့်အခါ yt-dlp ကို အလိုအလျောက် update လုပ်ပါသည် — ပြင်ဆင်မှု ထွက်ရှိပြီးနောက် မိနစ်အနည်းငယ်အကြာတွင် ထပ်ကြိုးစားကြည့်ပါ။',
+      network: 'Network အမှား။ သင့်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်ကြိုးစားပါ။',
+      unknown: 'ဒေါင်းလုဒ်မအောင်မြင်ပါ။ အောက်ပါ raw output ကို ကြည့်ပါ။'
     }
   },
   presets: {
@@ -463,9 +483,8 @@ const my = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps သို့ ပြောင်းမည်' }
   },
   formatLabel: {
-    audioOnly: 'အသံသာ',
     audioFallback: 'အသံ',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'အသံသာ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -498,6 +517,24 @@ const my = {
       detail: 'Renderer လုပ်ငန်းစဉ် ပျက်ကွက်သွားပါသည် ({{reason}})။ ထပ်မံကြိုးစားရန် ပြန်ဖွင့်ပါ။',
       reload: 'ပြန်ဖွင့်မည်',
       quit: 'ထွက်မည်'
+    }
+  },
+  share: {
+    title: 'Arroxy မျှဝေမည်',
+    description: 'Arroxy သည် အခမဲ့ နှင့် ဖွင့်ရင်းမြစ်ဖြစ်သည်။ မျှဝေခြင်းသည် လူပိုများ ၎င်းကို ရှာဖွေတွေ့ရှိနိုင်ရန် ကူညီသည်။',
+    copyLink: 'လင့်ကိုကူးယူရန်',
+    copied: 'ကူးယူပြီး!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Arroxy ကိုမျှဝေရန်',
+    footerLabel: 'မျှဝေရန်',
+    shareAction: 'Arroxy ကိုမျှဝေရန်',
+    inlineCard: {
+      body: 'Arroxy ကို နှစ်သက်ပါသလား? အသုံးဝင်နိုင်သော သူတစ်ဦးနှင့် မျှဝေပါ။',
+      dismiss: 'မျှဝေရန်အကြံပြုချက် ပယ်ဖျက်မည်'
+    },
+    highValueBanner: {
+      body: 'Arroxy ကို နှစ်သက်ပါသလား? အခြားသူများ ရှာဖွေတွေ့ရှိနိုင်ရန် ကူညီပါ။',
+      dismiss: 'မျှဝေရန်အကြံပြုချက် ပယ်ဖျက်မည်'
     }
   }
 } as const;

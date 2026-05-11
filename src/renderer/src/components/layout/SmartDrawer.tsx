@@ -1,12 +1,14 @@
 import type { JSX } from 'react';
-import { useEffect, useMemo, useState } from 'react';
-import { ChevronDown, Hourglass, Inbox, Pause, Trash2, X } from 'lucide-react';
+import { useEffect, useMemo, useRef } from 'react';
+import { ChevronDown, Inbox, Pause, Play, Share2, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore, formatStatus } from '../../store/useAppStore';
-import { QueueItemCard } from '../queue/QueueItemCard';
-import { QueueTipNudge } from '../queue/QueueTipNudge';
-import { Badge } from '../ui/badge';
-import { ScrollArea } from '../ui/scroll-area';
+import { isHighValueDownload } from '@shared/queueItem.js';
+import { useAppStore, formatStatus } from '../../store/useAppStore.js';
+import { QueueItemCard } from '../queue/QueueItemCard.js';
+import { QueueTipNudge } from '../queue/QueueTipNudge.js';
+import { Badge } from '../ui/badge.js';
+import { ScrollArea } from '../ui/scroll-area.js';
+import { track } from '../../lib/analytics.js';
 
 export function SmartDrawer(): JSX.Element {
   const { t } = useTranslation();
@@ -17,19 +19,11 @@ export function SmartDrawer(): JSX.Element {
   const dismissQueueTip = useAppStore((s) => s.dismissQueueTip);
   const clearCompleted = useAppStore((s) => s.clearCompleted);
   const pauseAll = useAppStore((s) => s.pauseAll);
+  const resumeFirst = useAppStore((s) => s.resumeFirst);
   const cancelAll = useAppStore((s) => s.cancelAll);
-  const interJobSleepEndsAt = useAppStore((s) => s.interJobSleepEndsAt);
-
-  // Tick every 250ms while sleep window active so the countdown ticks down
-  // without re-rendering the whole drawer at 60fps.
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => {
-    if (!interJobSleepEndsAt) return;
-    const id = setInterval(() => setNow(Date.now()), 250);
-    return () => clearInterval(id);
-  }, [interJobSleepEndsAt]);
-  const sleepRemainingSec = interJobSleepEndsAt ? Math.max(0, Math.ceil((interJobSleepEndsAt - now) / 1000)) : 0;
-  const showSleepBanner = !!interJobSleepEndsAt && sleepRemainingSec > 0;
+  const shareHighValueBannerDismissed = useAppStore((s) => s.settings?.common?.shareHighValueBannerDismissed ?? false);
+  const openShareDialog = useAppStore((s) => s.openShareDialog);
+  const setShareHighValueBannerDismissed = useAppStore((s) => s.setShareHighValueBannerDismissed);
 
   const orderedQueue = useMemo(() => {
     const finished = (s: string): boolean => s === 'done' || s === 'cancelled';
@@ -37,18 +31,26 @@ export function SmartDrawer(): JSX.Element {
     const done = queue.filter((i) => finished(i.status));
     return [...active, ...done];
   }, [queue]);
-  // First pending item: the one the scheduler will pick when the inter-job
-  // sleep window elapses. Surface the countdown on its card.
-  const nextPendingId = useMemo(() => orderedQueue.find((i) => i.status === 'pending')?.id ?? null, [orderedQueue]);
-  const activeItems = useMemo(() => queue.filter((i) => i.status === 'downloading'), [queue]);
+  const activeItems = useMemo(() => queue.filter((i) => i.status === 'running'), [queue]);
   const activeCount = activeItems.length;
   const totalCount = queue.length;
-  const hasCompleted = useMemo(() => queue.some((i) => i.status === 'done' || i.status === 'cancelled'), [queue]);
+  const hasCompleted = useMemo(() => queue.some((i) => i.status === 'done' || i.status === 'cancelled' || i.status === 'error'), [queue]);
   const hasDownloading = activeCount > 0;
-  const hasInFlight = useMemo(() => queue.some((i) => i.status === 'downloading' || i.status === 'paused' || i.status === 'pending'), [queue]);
+  const hasPaused = useMemo(() => queue.some((i) => i.status === 'paused-active' || i.status === 'paused-held'), [queue]);
+  const hasInFlight = useMemo(() => queue.some((i) => i.status === 'running' || i.status === 'paused-active' || i.status === 'paused-held' || i.status === 'pending'), [queue]);
 
   const aggregatePercent = useMemo(() => (activeItems.length === 0 ? 0 : activeItems.reduce((sum, i) => sum + i.progressPercent, 0) / activeItems.length), [activeItems]);
   const headerProgress = activeCount === 1 ? activeItems[0].progressPercent : aggregatePercent;
+
+  const hasHighValueCompletion = useMemo(() => queue.some(isHighValueDownload), [queue]);
+  const showShareBanner = hasHighValueCompletion && !shareHighValueBannerDismissed;
+  const bannerImpressionFiredRef = useRef(false);
+  useEffect(() => {
+    if (showShareBanner && !bannerImpressionFiredRef.current) {
+      bannerImpressionFiredRef.current = true;
+      track('share_prompt_impression', { via: 'high-value-inline' });
+    }
+  }, [showShareBanner]);
 
   let headerSummary: string | null = null;
   if (activeCount === 1) {
@@ -99,6 +101,21 @@ export function SmartDrawer(): JSX.Element {
               {t('queue.pauseAll')}
             </button>
           )}
+          {hasPaused && (
+            <button
+              type="button"
+              data-testid="btn-resume-first"
+              onClick={(e) => {
+                e.stopPropagation();
+                void resumeFirst();
+              }}
+              className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-0.5 rounded hover:bg-accent"
+              title={t('queue.resumeFirstTitle')}
+            >
+              <Play size={10} />
+              {t('queue.resumeFirst')}
+            </button>
+          )}
           {hasInFlight && (
             <button
               type="button"
@@ -120,7 +137,7 @@ export function SmartDrawer(): JSX.Element {
               data-testid="btn-clear-completed"
               onClick={(e) => {
                 e.stopPropagation();
-                clearCompleted();
+                void clearCompleted();
               }}
               className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-0.5 rounded hover:bg-accent"
               title={t('queue.clearTitle')}
@@ -149,10 +166,15 @@ export function SmartDrawer(): JSX.Element {
       </button>
 
       <div className="drawer-body" style={{ maxHeight: drawerOpen ? '16rem' : '0px' }} data-testid="drawer-body">
-        {showSleepBanner && (
-          <div className="px-4 py-1.5 text-[11px] font-mono text-[var(--color-status-paused)] bg-[var(--color-status-paused-glow)]/10 border-b border-border flex items-center gap-1.5" data-testid="inter-job-sleep-banner">
-            <Hourglass size={11} className="animate-pulse shrink-0" />
-            <span>{t('queue.interJobSleep', { count: sleepRemainingSec })}</span>
+        {showShareBanner && (
+          <div className="bg-muted/40 border-b border-border flex items-stretch" data-testid="share-high-value-banner">
+            <button type="button" onClick={() => openShareDialog('high-value-inline')} className="flex-1 flex items-center gap-2 px-3 py-1.5 text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors text-left cursor-pointer" data-testid="share-high-value-banner-action">
+              <Share2 size={11} className="shrink-0 text-[var(--brand)]" />
+              <span className="flex-1 truncate">{t('share.highValueBanner.body')}</span>
+            </button>
+            <button type="button" aria-label={t('share.highValueBanner.dismiss')} className="text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors w-7 inline-flex items-center justify-center cursor-pointer" onClick={() => void setShareHighValueBannerDismissed()} data-testid="share-high-value-banner-dismiss">
+              <X size={11} />
+            </button>
           </div>
         )}
         <ScrollArea className="h-64">
@@ -163,7 +185,7 @@ export function SmartDrawer(): JSX.Element {
                 <span>{t('queue.empty')}</span>
               </li>
             ) : (
-              orderedQueue.map((item) => <QueueItemCard key={item.id} item={item} sleepRemainingSec={item.id === nextPendingId && showSleepBanner ? sleepRemainingSec : undefined} />)
+              orderedQueue.map((item) => <QueueItemCard key={item.id} item={item} />)
             )}
           </ul>
         </ScrollArea>

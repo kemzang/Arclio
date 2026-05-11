@@ -1,8 +1,8 @@
 import { app, ipcMain } from 'electron';
 import type { ZodType } from 'zod';
-import { createAppError, unknownToMessage } from '@main/utils/errorFactory';
-import { fail, type Result } from '@shared/result';
-import type { AppError, CommonPaths } from '@shared/types';
+import { createAppError, unknownToMessage } from '@main/utils/errorFactory.js';
+import { fail, type Result } from '@shared/result.js';
+import type { AppError, CommonPaths } from '@shared/types.js';
 
 function zodToError(errorMessage: string): AppError {
   return createAppError('validation', errorMessage);

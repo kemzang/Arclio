@@ -1,18 +1,18 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '../../store/useAppStore';
-import { useFormatSelectionView } from '../../store/formatSelectionView';
-import { VideoSummaryCard } from '../shared/VideoSummaryCard';
+import { useAppStore } from '../../store/useAppStore.js';
+import { useFormatSelectionView } from '../../store/formatSelectionView.js';
+import { VideoSummaryCard } from '../shared/VideoSummaryCard.js';
 import downloadingImg from '../../assets/Downloading.png';
-import { PresetStrip } from './format/PresetStrip';
-import { VideoColumn } from './format/VideoColumn';
-import { BotWallNotice } from './format/BotWallNotice';
-import { AudioColumn } from './format/AudioColumn';
-import { FormatFooter } from './format/FormatFooter';
+import { PresetStrip } from './format/PresetStrip.js';
+import { VideoColumn } from './format/VideoColumn.js';
+import { BotWallNotice } from './format/BotWallNotice.js';
+import { AudioColumn } from './format/AudioColumn.js';
+import { FormatFooter } from './format/FormatFooter.js';
 
 export function StepFormatSelect(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardFormats, formatsLoading, wizardTitle, wizardThumbnail, wizardDuration, selectedVideoFormatId, audioSelection, activePreset, setSelectedVideoFormatId, setAudioSelection, setPreset, advance, back } = useAppStore();
+  const { wizardFormats, formatsLoading, wizardTitle, wizardThumbnail, wizardDuration, wizardWebpageUrl, selectedVideoFormatId, audioSelection, activePreset, setSelectedVideoFormatId, setAudioSelection, setPreset, advance, back, skipToConfirm } = useAppStore();
   const view = useFormatSelectionView();
 
   if (formatsLoading) {
@@ -52,7 +52,7 @@ export function StepFormatSelect(): JSX.Element {
 
   return (
     <div className="wizard-step flex flex-col gap-3" data-testid="step-formats">
-      <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={view.currentResolutionLabel} />
+      <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={view.currentResolutionLabel} webpageUrl={wizardWebpageUrl} />
 
       <PresetStrip activePreset={activePreset} onSelect={setPreset} />
 
@@ -63,7 +63,7 @@ export function StepFormatSelect(): JSX.Element {
         <AudioColumn formats={wizardFormats} audioSelection={audioSelection} onSelect={setAudioSelection} />
       </div>
 
-      <FormatFooter onBack={back} onContinue={advance} />
+      <FormatFooter onBack={back} onContinue={advance} onSkipToConfirm={skipToConfirm} />
     </div>
   );
 }

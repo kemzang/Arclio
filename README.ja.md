@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy マスコット" width="180" />
 
-# Arroxy — Windows・macOS・Linux 向け無料オープンソース YouTube ダウンローダー
+# Arroxy — Windows・macOS・Linux 向け無料オープンソース YouTube（+ 2000 サイト）ダウンローダー
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **言語：** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · **日本語**
 
 [![リリース](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![ビルド](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![ウェブサイト](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![ライセンス](https://img.shields.io/badge/license-MIT-green) ![プラットフォーム](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![対応言語](https://img.shields.io/badge/i18n-21_languages-blue)
 
-YouTube の動画・Shorts・音声トラックをオリジナル品質でダウンロード — 最大 4K HDR 60fps、または MP3 / AAC / Opus として。Windows、macOS、Linux でローカル動作。**広告なし、ログインなし、ブラウザ Cookie なし、Google アカウント連携なし。**
+**YouTube と 2000 以上の対応サイト**から動画・Shorts・音楽・チャンネル・ポッドキャスト・音声トラックをダウンロード — 最大 4K HDR 60fps、または MP3 / AAC / Opus として。Windows、macOS、Linux でローカル動作。**広告なし、余計なものなし、アップセルなし。**
 
 [**↓ 最新リリースをダウンロード**](../../releases/latest) &nbsp;·&nbsp; [**ウェブサイト**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -26,7 +26,6 @@ Arroxy が役に立ったなら、⭐ で他のユーザーへの周知を助け
 ## 目次
 
 - [なぜ Arroxy？](#why)
-- [Cookie なし、ログインなし、アカウント連携なし](#no-cookies)
 - [機能](#features)
 - [ダウンロード](#download)
 - [プライバシー](#privacy)
@@ -54,19 +53,6 @@ Arroxy はひとつのことのために作られています：URL を貼って
 
 ---
 
-## <a id="no-cookies"></a>Cookie なし、ログインなし、アカウント連携なし
-
-これはデスクトップ向け YouTube ダウンローダーが壊れる最も一般的な原因であり、Arroxy が存在する主な理由です。
-
-YouTube が bot 検出を更新すると、多くのツールはブラウザの YouTube Cookie を回避策としてエクスポートするよう求めます。これには 2 つの問題があります：
-
-1. エクスポートされたセッションは通常 30 分ほどで失効するため、常に再エクスポートが必要です。
-2. yt-dlp の公式ドキュメントでは、[Cookie ベースの自動化が Google アカウントにフラグを立てる可能性がある](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) と警告しています。
-
-**Arroxy は Cookie、ログイン、資格情報を一切求めません。** YouTube が任意のブラウザに提供する公開トークンのみを使用します。Google の身元に紐付くものなし、失効するものなし、ローテートするものなし。
-
----
-
 ## <a id="features"></a>機能
 
 ### 画質・フォーマット
@@ -84,7 +70,7 @@ YouTube が bot 検出を更新すると、多くのツールはブラウザの 
 
 ### ワークフロー
 
-- **YouTube URL を貼り付け** — 動画、Shorts、プレイリストに対応。プレイリスト全体をダウンロードすることも、先に個別の動画を選ぶこともできます
+- **任意のリンクを貼り付け** — YouTube の動画・Shorts・チャンネル・プレイリスト・ポッドキャスト・Music に加え、yt-dlp が対応する 2000 以上のサイトにも対応。プレイリスト全体をダウンロードすることも、先に個別の動画を選ぶこともできます
 - **複数ダウンロードキュー** — 複数のダウンロードを並行して追跡
 - **クリップボード監視** — YouTube リンクをコピーすると、アプリにフォーカスを戻したときに Arroxy が URL を自動入力（詳細設定でトグル切替可能）
 - **URL 自動クリーンアップ** — トラッキングパラメータ（`si`、`pp`、`utm_*`、`fbclid`、`gclid`）を除去し、`youtube.com/redirect` リンクを展開
@@ -97,6 +83,13 @@ YouTube が bot 検出を更新すると、多くのツールはブラウザの 
 - 動画の隣に保存、`.mkv` に埋め込み、または `Subtitles/` サブフォルダに整理
 - **SponsorBlock** — スポンサー、イントロ、アウトロ、自己宣伝をスキップまたはチャプターマーク
 - **埋め込みメタデータ** — タイトル、アップロード日、チャンネル、説明、サムネイル、チャプターマーカーをファイルに書き込み
+
+### YouTube + 2000 サイト
+
+- **YouTube、フル対応** — 動画・Shorts・チャンネル・プレイリスト・YouTube Music・ポッドキャストをファーストクラスのソースとして処理
+- **2000 以上の他サイト** via yt-dlp — Vimeo、Twitch、Twitter/X、TikTok、SoundCloud、Bandcamp、Bilibili、BBC iPlayer、archive.org など多数
+- **音声のみと字幕**は YouTube だけでなく、すべての対応サイトで機能します
+- サイトが変更されても、yt-dlp は毎週修正をリリースし、Arroxy は起動時にバイナリを自動更新します
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="URL を貼る" />
@@ -120,65 +113,66 @@ YouTube が bot 検出を更新すると、多くのツールはブラウザの 
 
 [**最新リリースを入手 →**](../../releases/latest)
 
-### パッケージマネージャー経由でインストール
+### <a id="why-warning"></a>警告が表示される理由
 
-| チャンネル | コマンド                                                                                |
-| ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+Arroxy はオープンソースで MIT ライセンスのソフトウェアです。Windows および macOS のビルドは**コード署名されていません** — Apple Developer ID と Windows EV のコード署名証明書はそれぞれ年間数百ドルかかり、個人プロジェクトでは自己負担になります。署名がない場合、Windows SmartScreen と macOS Gatekeeper は初回起動時に警告を表示します。これらの警告は*OS が発行元を認識していない*ことを意味するものであり、Arroxy がマルウェアであることを示すものではありません。
 
-<details>
-<summary><strong>Windows：インストーラ vs ポータブル</strong></summary>
+自分で Arroxy を検証する 3 つの方法（厳密さの高い順）：
 
-|               | NSIS インストーラ | ポータブル `.exe` |
-| ------------- | :----------------------: | :---------------------: |
-| インストール必要 | はい  | いいえ — どこからでも実行可能  |
-| 自動アップデート | ✅ アプリ内  | ❌ 手動ダウンロード  |
-| 起動速度 | ✅ 速い  | ⚠️ コールドスタートが遅め  |
-| スタートメニューに追加 |            ✅            |           ❌            |
-| 簡単アンインストール |            ✅            | ❌ ファイルを削除するだけ  |
+- **ソースコードを読む。** すべての行は [GitHub](https://github.com/antonio-orionus/Arroxy) にあり、[ソースからビルド](#tech)することもできます。
+- **SHA256 を確認する。** ダウンロードしたファイルを公開済みの [`SHA256SUMS`](../../releases/latest) と照合してください — 下記の[ダウンロードの検証](#verify)を参照。
+- **サードパーティのスキャンを実行する。** [VirusTotal](https://www.virustotal.com) にファイルをアップロード。
 
-**おすすめ：** 自動アップデートと高速起動には NSIS インストーラを使用。インストール不要・レジストリ非変更のオプションにはポータブル `.exe` を使用。
-
-**Windows SmartScreen の警告**
+### <a id="windows-first-launch"></a>Windows 初回起動
 
 初回起動時に **«Windows protected your PC»** または **«Unknown publisher»** が表示されることがあります。これは `Arroxy-Setup-*.exe` と `Arroxy-Portable-*.exe` の両方に該当します。Arroxy は無料のオープンソースソフトウェアであり、Windows ビルドには有料の証明書によるコード署名がないため、SmartScreen がフラグを立てます。これは Arroxy が危険であることを**自動的に**意味するわけではありません。続行するには：
+
+<div align="center">
+  <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted" />
+  <img src="build/win-smartscreen-run-anyway.png" width="46%" alt="SmartScreen dialog after expanding More info, showing the "Run anyway" button" />
+</div>
 
 1. **More info** をクリック。
 2. **Run anyway** をクリック。
 
+#### Windows Defender がファイルをフラグまたは削除した場合
+
+Defender のヒューリスティックは、署名されていない NSIS インストーラーや Electron のポータブル版を不審として検出することがあります。Defender が `Arroxy-Setup-*.exe` または `Arroxy-Portable-*.exe` を隔離した場合は、**Windows Security → Virus & threat protection → Protection history** から復元し、**Manage settings → Add or remove exclusions** で Arroxy の実行ファイルを許可リストに追加してください。SmartScreen と同様に、トリガーとなるのは発行元署名の欠如であり、マルウェアの検出ではありません。
+
 > Arroxy は必ず公式の GitHub Releases ページからダウンロードしてください。他のウェブサイトから入手したファイルや、誰かから送られてきたファイルは削除し、公式ソースから新しいコピーをダウンロードしてください。ソースコードは公開されているため、ご自身で確認したり、Arroxy をビルドしたりすることも可能です。
 
-</details>
+### <a id="macos-first-launch"></a>macOS 初回起動
 
-<details>
-<summary><strong>macOS の初回起動</strong></summary>
+Arroxy はまだ macOS 向けのコード署名が行われていないため、Gatekeeper が初回起動をブロックします。許可する方法は macOS のバージョンによって異なります — Sequoia 15 では旧来の右クリック → 開く による回避策が制限されました。
 
-Arroxy はまだコード署名されていないため、初回起動時に macOS Gatekeeper が警告を表示します。これは想定内の動作であり、ファイルが破損しているわけではありません。
+#### macOS Sequoia 15 以降（現行）
 
-**システム設定を使う方法（推奨）：**
+Sequoia 15 以降では、右クリック → 開く では多くの隔離済みアプリの Gatekeeper をバイパスできなくなりました。代わりにシステム設定パネルを使用してください：
 
-1. Arroxy のアプリアイコンを右クリックして **開く** を選択。
-2. 警告ダイアログが表示されたら **キャンセル** をクリック（*ゴミ箱に入れる* は押さない）。
-3. **システム設定 → プライバシーとセキュリティ** を開く。
-4. **セキュリティ** セクションまでスクロール。*"Arroxy は確認済みの開発元のものではないためブロックされました"* と表示されています。
-5. **このまま開く** をクリックし、パスワードまたは Touch ID で確認。
+1. マウントした DMG から `Arroxy.app` を `/Applications` にドラッグ。
+2. Arroxy をダブルクリックするとブロックダイアログが表示されます — **Done** をクリック（*Move to Trash* はクリックしない）。
+3. **System Settings → Privacy & Security** を開き、**Security** セクションまでスクロール。*"Arroxy was blocked to protect your Mac"*（または同様のメッセージ）が表示されます。
+4. **Open Anyway** をクリックし、パスワードまたは Touch ID で確認後、`/Applications` から Arroxy を再起動してください。
 
-手順 5 のあとは Arroxy が通常通り開き、警告は二度と表示されません。
+#### macOS Sonoma 14 以前
 
-**ターミナルを使う方法（上級者向け）：**
+1. マウントした DMG から `Arroxy.app` を `/Applications` にドラッグ。
+2. `/Applications` 内の `Arroxy.app` を右クリック（または Control-クリック）して **Open** を選択。
+3. 警告ダイアログに **Open** ボタンが表示されます — クリックして確認。Arroxy が正常に開き、以後警告は表示されません。
+
+#### "App is damaged" または Gatekeeper の継続的なブロック — Terminal による修正
+
+macOS が *"Arroxy is damaged and can't be opened"* と表示する場合、または上記の手順でブロックが解除できない場合、原因は DMG の隔離属性です（一部のブラウザや macOS 自体のトランスロケーション動作が設定します）。インストール済みアプリからその属性を削除してください：
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/Arroxy.app
 ```
 
+**Apple Silicon vs Intel：** M シリーズ Mac（M1 / M2 / M3 / M4）では `arm64` DMG をダウンロード。Intel Mac では `x64` DMG をダウンロード。誤ったビルドも Rosetta 経由で動作しますが、速度は明らかに遅くなります。
+
 > macOS ビルドは Apple Silicon と Intel の CI ランナーで生成されます。問題が発生した場合は [issue を開いて](../../issues) ください — macOS ユーザーからのフィードバックが macOS のテストサイクルを積極的に形成します。
 
-</details>
-
-<details>
-<summary><strong>Linux の初回起動</strong></summary>
+### <a id="linux-first-launch"></a>Linux 初回起動
 
 AppImage はインストール不要で直接実行できます。ファイルを実行可能としてマークするだけです。
 
@@ -204,12 +198,68 @@ sudo dnf install -y fuse-libs
 sudo pacman -S fuse2
 ```
 
+**省略可能なデスクトップ統合：** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) を一度インストールしておくと、ダブルクリックした AppImage が自動的にランチャーメニューに登録されます — `.desktop` ファイルの手動作成は不要です。
+
 **Flatpak（サンドボックス版）：** 同じリリースページから `Arroxy-*.flatpak` をダウンロード。
 
 ```bash
 flatpak install --user Arroxy-*.flatpak
 flatpak run io.github.antonio_orionus.Arroxy
 ```
+
+<details>
+<summary><strong><a id="verify"></a>ダウンロードの検証（SHA256）</strong></summary>
+
+各リリースではバイナリと一緒に `SHA256SUMS` ファイルが公開されています。ダウンロードが転送中に破損または改ざんされていないことを確認するには、ファイルをローカルでハッシュ計算し、`SHA256SUMS` の該当行と照合してください。最新リリースページを開き → **Assets** → `SHA256SUMS` をダウンロード。
+
+**Windows (PowerShell or Command Prompt):**
+
+```powershell
+certutil -hashfile Arroxy-Setup-<version>.exe SHA256
+```
+
+**macOS (Terminal):**
+
+```bash
+shasum -a 256 Arroxy-<version>-arm64.dmg
+```
+
+**Linux (Terminal):**
+
+```bash
+sha256sum Arroxy-*.AppImage
+```
+
+サードパーティのマルウェアスキャンを希望する場合は、[VirusTotal](https://www.virustotal.com) にファイルをアップロードしてください。マイナーなエンジンによる汎用ヒューリスティックの数件の検出は、署名されていない Electron アプリでは通常の範囲内です。主要エンジンによる広範な検出があれば、それは本物の懸念事項です。
+
+</details>
+
+<details>
+<summary><strong>パッケージマネージャー経由でインストール</strong></summary>
+
+パッケージマネージャーを使っている場合は、手動ダウンロードのステップを省略できます。
+
+| チャンネル | コマンド                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------------- |
+| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
+| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
+| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+| Flatpak            | `flatpak install --user Arroxy-*.flatpak`                                                         |
+
+</details>
+
+<details>
+<summary><strong>Windows：インストーラ vs ポータブル</strong></summary>
+
+|               | NSIS インストーラ | ポータブル `.exe` |
+| ------------- | :----------------------: | :---------------------: |
+| インストール必要 | はい  | いいえ — どこからでも実行可能  |
+| 自動アップデート | ✅ アプリ内  | ❌ 手動ダウンロード  |
+| 起動速度 | ✅ 速い  | ⚠️ コールドスタートが遅め  |
+| スタートメニューに追加 |            ✅            |           ❌            |
+| 簡単アンインストール |            ✅            | ❌ ファイルを削除するだけ  |
+
+**おすすめ：** 自動アップデートと高速起動には NSIS インストーラを使用。インストール不要・レジストリ非変更のオプションにはポータブル `.exe` を使用。
 
 </details>
 
@@ -235,10 +285,10 @@ YouTube が提供するすべて：4K UHD（2160p）、1440p、1080p、720p、48
 はい。形式メニューで*音声のみ*を選び、MP3、M4A/AAC、Opus、WAV を選択できます。
 
 **YouTube アカウントや Cookie が必要ですか？**
-いいえ。Arroxy は YouTube が任意のブラウザに提供する公開トークンのみを使用します。Cookie なし、ログインなし、資格情報の保存なし。なぜこれが重要なのかは [Cookie なし、ログインなし、アカウント連携なし](#no-cookies) を参照してください。
+デフォルトでは不要です — Arroxy は YouTube アカウント、ログイン、Cookie のエクスポートなしで動作します。年齢制限付きやメンバー限定動画など、認証が必要なコンテンツのために、詳細設定にオプションの Cookie サポート（Cookies source: file or browser）が用意されています。デフォルトはオフです。有効化する場合、yt-dlp の wiki は [Cookie ベースの自動化が Google アカウントにフラグを立てる可能性がある](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) と注意しています。その場合は使い捨てアカウントの利用が安全です。
 
 **YouTube が変更したら使えなくなりますか？**
-2 段階の耐性があります：yt-dlp は YouTube の変更から数時間以内に更新され、Arroxy は 30 分ごとに失効する Cookie に依存しません。これにより、ブラウザのセッションエクスポートに依存するツールよりも明らかに安定しています。
+yt-dlp は起動時に自動更新され、YouTube に変更があれば Arroxy も迅速に修正をリリースします。万が一問題が発生した場合は、フォールバックとして詳細設定にオプションの Cookie サポートが用意されています。
 
 **Arroxy は何言語に対応していますか？**
 21 言語に標準対応：English、Español（スペイン語）、Deutsch（ドイツ語）、Français（フランス語）、日本語、中文（中国語）、Русский（ロシア語）、Українська（ウクライナ語）、हिन्दी（ヒンディー語）、Afaan Oromoo、Kiswahili、O'zbekcha（ウズベク語）、Tiếng Việt（ベトナム語）、አማርኛ（アムハラ語）、العربية（アラビア語）、اردو（ウルドゥー語）、پښتو（パシュトー語）、বাংলা（ベンガル語）、မြန်မာဘာသာ（ビルマ語）、Ελληνικά（ギリシャ語）、Српски（セルビア語）。Arroxy は初回起動時に OS の言語を自動検出し、ツールバーの言語選択でいつでも切り替え可能です。翻訳は src/shared/i18n/locales/ 内の素の TypeScript オブジェクトとして管理されているので、GitHub で PR を開いて貢献できます。
@@ -250,7 +300,7 @@ YouTube が提供するすべて：4K UHD（2160p）、1440p、1080p、720p、48
 はい、プレイリストは対応しています。プレイリスト URL を貼り付けたあと、一覧全体をキューに入れることも、選んだ動画だけを入れることもできます。チャンネル全体の一括ダウンロードはまだ未対応です。
 
 **macOS で「アプリが壊れている」と表示される — どうすれば？**
-それは macOS Gatekeeper が未署名のアプリをブロックしているもので、実際の破損ではありません。修正方法は [macOS の初回起動](#download) セクションを参照してください。
+それは macOS Gatekeeper が未署名のアプリをブロックしているもので、実際の破損ではありません。["App is damaged" — Terminal による修正](#macos-first-launch) を参照してください — 1 行の `xattr` コマンドで解決できます。
 
 **YouTube の動画をダウンロードするのは合法ですか？**
 個人的・私的利用については、ほとんどの法域で一般的に容認されています。YouTube の[利用規約](https://www.youtube.com/t/terms)およびあなたの地域の著作権法への準拠はあなた自身の責任です。

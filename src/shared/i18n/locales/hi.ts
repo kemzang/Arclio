@@ -3,8 +3,7 @@ const hi = {
     back: 'वापस',
     continue: 'जारी रखें',
     retry: 'फिर से कोशिश करें',
-    startOver: 'फिर से शुरू करें',
-    loading: 'लोड हो रहा है…'
+    startOver: 'फिर से शुरू करें'
   },
   app: {
     feedback: 'प्रतिक्रिया',
@@ -14,6 +13,15 @@ const hi = {
     debugCopyTitle: 'डिबग जानकारी कॉपी करें (Electron, OS, Chrome वर्शन)',
     zoomIn: 'ज़ूम इन',
     zoomOut: 'ज़ूम आउट'
+  },
+  about: {
+    button: 'जानकारी',
+    openTitle: 'Arroxy के बारे में',
+    tagline: 'डेस्कटॉप के लिए तेज़ और सरल वीडियो और ऑडियो डाउनलोडर।',
+    websiteLink: 'वेबसाइट',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT लाइसेंस · Antonio Orionus द्वारा',
+    thirdPartyNotices: 'तृतीय-पक्ष सूचनाएँ देखें'
   },
   titleBar: {
     close: 'बंद करें',
@@ -25,7 +33,6 @@ const hi = {
     greeting: 'अरे, फिर से स्वागत है!',
     warmup: 'Arroxy तैयार हो रहा है…',
     downloading: '{{binary}} डाउनलोड हो रहा है…',
-    warning: 'सेटअप अधूरा है — कुछ सुविधाएँ काम नहीं कर सकतीं',
     warmupFailedNoDiag: 'सेटअप विफल हो गया। विवरण के लिए सेटअप लॉग खोलें।'
   },
   repair: {
@@ -81,6 +88,8 @@ const hi = {
       heading: 'Playlist आइटम',
       itemCount_one: '{{count}} वीडियो',
       itemCount_other: '{{count}} वीडियो',
+      itemCountAudio_one: '{{count}} ट्रैक',
+      itemCountAudio_other: '{{count}} ट्रैक',
       selectAll: 'सभी चुनें',
       selectNone: 'कोई नहीं चुनें',
       rangeFrom: 'से',
@@ -91,15 +100,13 @@ const hi = {
       noSelection: 'जारी रखने के लिए कम से कम एक वीडियो चुनें',
       loadingItems: 'Playlist लाया जा रहा है…',
       thumbnailAlt: 'वीडियो थंबनेल',
-      continue: 'जारी रखें',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'बैच के लिए गुणवत्ता चुनें',
       subhead: 'हर वीडियो चुनी गई श्रेणी के अनुसार स्वतंत्र रूप से रेज़ॉल्व होता है — मिश्रित Playlist बिना किसी परेशानी के काम करती है।',
       itemCount_one: '{{count}} आइटम',
-      itemCount_other: '{{count}} आइटम',
-      continue: 'जारी रखें'
+      itemCount_other: '{{count}} आइटम'
     },
     mixedPrompt: {
       title: 'इस लिंक में एक Playlist है',
@@ -114,17 +121,25 @@ const hi = {
       fetchFormats: 'फ़ॉर्मेट लाएँ',
       features: {
         heading: 'Arroxy क्या डाउनलोड कर सकता है',
-        video: {
-          title: 'वीडियो',
-          desc: '4K तक कोई भी रिज़ॉल्यूशन चुनें'
+        youtube: {
+          heading: 'YouTube',
+          video: 'वीडियो',
+          channel: 'चैनल',
+          playlist: 'Playlist',
+          short: 'Shorts',
+          music: 'संगीत',
+          podcast: 'Podcast'
         },
-        playlist: {
-          title: 'Playlist',
-          desc: 'Playlist से कई आइटम चुनें'
+        anySite: {
+          heading: '2000+ साइटें',
+          video: 'वीडियो',
+          videoPlaylist: 'वीडियो playlist',
+          musicPlaylist: 'संगीत playlist'
         },
-        audio: {
-          title: 'ऑडियो',
-          desc: 'मूल स्ट्रीम या MP3/M4A कनवर्शन'
+        always: {
+          heading: 'हमेशा उपलब्ध',
+          audioOnly: 'केवल ऑडियो',
+          subtitles: 'उपशीर्षक'
         }
       },
       mascotIdle: 'मुझे YouTube का लिंक भेजो (वीडियो या Short) — फिर "फ़ॉर्मेट लाएँ" दबाओ और मैं काम पर लग जाऊँगा ✨',
@@ -162,7 +177,7 @@ const hi = {
         enabledButNoBrowser: 'कुकी उपयोग करने के लिए ब्राउज़र चुनें',
         banWarning: 'चेतावनी: yt-dlp जिन कुकी का उपयोग करता है, उनसे जुड़े अकाउंट को YouTube फ़्लैग — और कभी-कभी बैन — कर सकता है। हो सके तो डिस्पोज़ेबल अकाउंट का उपयोग करें।',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt स्थानीय रूप से प्राप्त करें (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const hi = {
       }
     },
     subtitles: {
-      heading: 'उपशीर्षक',
       autoBadge: 'स्वतः',
-      hint: 'फ़ाइलें वीडियो के पास ही सहेजी जाएंगी',
       noLanguages: 'इस वीडियो के लिए कोई उपशीर्षक उपलब्ध नहीं है',
       skip: 'छोड़ें',
       skipSubs: 'इस वीडियो के लिए छोड़ें',
-      selectAll: 'सभी चुनें',
-      deselectAll: 'सभी हटाएं',
       mascot: 'शून्य, एक या कई — पूरी तरह आप पर निर्भर है ✨',
       searchPlaceholder: 'भाषाएँ खोजें…',
       noMatches: 'कोई भाषा नहीं मिली',
@@ -242,10 +253,14 @@ const hi = {
       audioOnlyOption: 'सिर्फ़ ऑडियो (वीडियो नहीं)',
       mascot: 'सबसे अच्छा + सबसे अच्छा = बेहतरीन क्वालिटी। मैं तो यही चुनूँगा!',
       sniffing: 'आपके लिए बेहतरीन फ़ॉर्मेट ढूँढ रहा हूँ…',
-      loadingHint: 'आमतौर पर एक सेकंड लगता है',
+      loadingHint: 'कृपया प्रतीक्षा करें जब तक जाँच पूरी न हो जाए — playlist और खोज में थोड़ा अधिक समय लग सकता है।',
       loadingAria: 'फ़ॉर्मेट लोड हो रहे हैं',
       sizeUnknown: 'साइज़ अज्ञात',
+      skipToConfirm: 'सीधे पुष्टि पर जाएँ',
+      skipToConfirmTooltip: 'सभी शेष चरणों के लिए आपकी सहेजी गई प्राथमिकताओं का उपयोग करता है। कोई सेटिंग बदलने के लिए, इसके बजाय चरण दर चरण आगे बढ़ें — आपकी पसंद अगली बार के लिए सहेजी जाएगी।',
       total: 'कुल',
+      keepAudio: 'जैसा है वैसा रखें',
+      keepAudioMeta: 'बिल्ट-इन ऑडियो',
       convert: {
         label: 'कनवर्ट करें',
         uncompressed: 'कनवर्ट करें · असंपीड़ित',
@@ -261,8 +276,7 @@ const hi = {
         bodyDisabled: 'कुकी कॉन्फ़िगर हैं लेकिन बंद हैं। पूरी सूची पाने के लिए उन्हें चालू करके पुनः प्रयास करें, या नेटवर्क बदलकर पुनः प्रयास करें।',
         bodyEnabled: 'कुकी के साथ भी YouTube ने इस जाँच को सीमित किया। बाद में पुनः प्रयास करें या नेटवर्क बदलें।',
         retryCta: 'पुनः प्रयास',
-        enableRetryCta: 'कुकी चालू करके पुनः प्रयास करें',
-        openSettingsCta: 'उन्नत सेटिंग्स खोलें'
+        enableRetryCta: 'कुकी चालू करके पुनः प्रयास करें'
       },
       cookiesError: {
         heading: 'कुकी इसकी वजह हो सकती है',
@@ -272,6 +286,10 @@ const hi = {
         explanationFile: 'आपकी कुकी फ़ाइल खाली, एक्सपायर्ड या गलत फ़ॉर्मेट में हो सकती है (yt-dlp को Netscape cookies.txt चाहिए)। कुकी फिर से एक्सपोर्ट करें, कोई अलग फ़ाइल चुनें, ब्राउज़र मोड पर जाएँ, या कुकी बंद कर दें।',
         explanationBrowser: 'कुकी सीधे ब्राउज़र से पढ़ी जाती हैं। अगर ब्राउज़र अभी चल रहा है, तो उसका कुकी डेटाबेस लॉक हो सकता है (Chromium परिवार)। ब्राउज़र में YouTube पर लॉग इन भी होना ज़रूरी है। ब्राउज़र बंद करके देखें, कोई दूसरा ब्राउज़र आज़माएँ, फ़ाइल मोड पर जाएँ, या कुकी बंद कर दें।',
         openSettingsCta: 'कुकी सेटिंग्स खोलें',
+        needsCookies: {
+          heading: 'इस साइट के लिए साइन-इन ज़रूरी है',
+          body: 'yt-dlp प्रमाणीकरण के बिना इस वीडियो तक नहीं पहुँच सका। उन्नत सेटिंग्स में कुकी कॉन्फ़िगर करें — किसी ऐसे ब्राउज़र पर पॉइंट करें जिसमें आप पहले से साइन इन हैं, या cookies.txt फ़ाइल इम्पोर्ट करें।'
+        },
         dpapi: {
           heading: 'Chrome कुकी Windows एन्क्रिप्शन से ब्लॉक हैं',
           explanation: 'Chrome 127 और उसके बाद के वर्शन कुकी को इस तरह एन्क्रिप्ट करते हैं कि Windows पर दूसरे ऐप उन्हें नहीं पढ़ सकते। नीचे दिए गए किसी एक समाधान को आज़माएँ।',
@@ -281,7 +299,7 @@ const hi = {
           fixFileBody: 'Chrome से किसी ब्राउज़र एक्सटेंशन के ज़रिए कुकी एक्सपोर्ट करें, फिर इस ऐप को File मोड पर स्विच करें और एक्सपोर्ट की गई फ़ाइल चुनें।',
           fixUnsafeLabel: 'App-Bound Encryption बंद करके Chrome लॉन्च करें',
           fixUnsafeBody: 'Chrome के लॉन्च शॉर्टकट में --disable-features=LockProfileCookieDatabase जोड़ें। चेतावनी: इससे पहले से एन्क्रिप्टेड कुकी अमान्य हो जाएंगी, इसलिए आप हर साइट से साइन आउट हो जाएंगे और फिर से लॉग इन करना होगा।',
-          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+          docsLinkLabel: 'yt-dlp दस्तावेज़ (समस्या #10927)'
         }
       }
     },
@@ -334,26 +352,24 @@ const hi = {
       labelSize: 'साइज़',
       sizeUnknown: 'अज्ञात',
       nothingToDownload: 'केवल उपशीर्षक प्रीसेट सक्रिय है लेकिन कोई भाषा नहीं चुनी गई — कुछ भी डाउनलोड नहीं होगा।',
+      thumbnailEmbedNotSupported: 'Thumbnail embed छोड़ दिया गया — आउटपुट container इसे सपोर्ट नहीं करता।',
+      subtitleEmbedAudioOnly: 'उपशीर्षक embed को sidecar में बदल दिया गया — ऑडियो ट्रैक embedded उपशीर्षक स्ट्रीम को सपोर्ट नहीं करते।',
       audioOnly: 'सिर्फ़ ऑडियो',
       addToQueue: '+ क़तार',
       addToQueueTooltip: 'दूसरी डाउनलोड पूरी होने पर शुरू होगा — पूरी बैंडविड्थ मिलेगी',
       pullIt: 'खींच लो! ↓',
       pullItTooltip: 'तुरंत शुरू — बाक़ी सक्रिय डाउनलोड के साथ-साथ चलेगा',
-      playlistBatch_one: '{{count}} वीडियो · {{title}}',
-      playlistBatch_other: '{{count}} वीडियो · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'प्रीसेट',
       labelItems: 'आइटम',
       itemsValue_one: '{{total}} में से {{count}} वीडियो',
-      itemsValue_other: '{{total}} में से {{count}} वीडियो'
-    },
-    error: {
-      icon: 'त्रुटि'
+      itemsValue_other: '{{total}} में से {{count}} वीडियो',
+      itemsValueAudio_one: '{{total}} में से {{count}} ट्रैक',
+      itemsValueAudio_other: '{{total}} में से {{count}} ट्रैक'
     }
   },
   videoCard: {
-    titlePlaceholder: 'लोड हो रहा है…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'लोड हो रहा है…'
   },
   queue: {
     header: 'डाउनलोड क़तार',
@@ -378,9 +394,7 @@ const hi = {
       resume: 'फिर से शुरू',
       cancel: 'रद्द करें',
       remove: 'हटाएँ'
-    },
-    interJobSleep_one: 'अगली डाउनलोड {{count}}s में शुरू होगी',
-    interJobSleep_other: 'अगली डाउनलोड {{count}}s में शुरू होगी'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const hi = {
     ytdlpProcessError: 'yt-dlp प्रक्रिया त्रुटि: {{error}}',
     ytdlpExitCode: 'yt-dlp कोड {{code}} के साथ बंद हो गया',
     downloadingBinary: '{{name}} बाइनरी डाउनलोड हो रही है…',
-    unknownStartupFailure: 'डाउनलोड शुरू करने में अज्ञात त्रुटि'
+    unknownStartupFailure: 'डाउनलोड शुरू करने में अज्ञात त्रुटि',
+    diskSpaceInsufficient: 'पर्याप्त डिस्क स्थान नहीं है — {{required}} चाहिए, केवल {{free}} उपलब्ध है'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const hi = {
       unavailable: 'यह वीडियो उपलब्ध नहीं — हो सकता है यह निजी, हटाया गया या क्षेत्र-प्रतिबंधित हो।',
       geoBlocked: 'यह वीडियो आपके क्षेत्र में उपलब्ध नहीं है।',
       outOfDiskSpace: 'डिस्क में पर्याप्त जगह नहीं है। जगह खाली करें और पुनः प्रयास करें।',
-      unsupportedUrl: 'यह कोई वीडियो URL नहीं लगता। कोई YouTube वीडियो, Short, या playlist लिंक पेस्ट करें।'
+      unsupportedUrl: 'यह कोई वीडियो URL नहीं लगता। कोई YouTube वीडियो, Short, या playlist लिंक पेस्ट करें।',
+      chunkTransferFailure: 'सर्वर बार-बार डाउनलोड बीच में काट रहा था और yt-dlp बार-बार कोशिश के बाद हार मान गया। यह आमतौर पर सबसे बड़े वीडियो फॉर्मेट (4K HDR / हाई-बिटरेट VP9) पर होता है। फिर से कोशिश करें, नेटवर्क/VPN बदलें, या कम रिज़ॉल्यूशन का फॉर्मेट चुनें।',
+      postprocessFailure: 'yt-dlp ने डाउनलोड पूरा कर लिया लेकिन post-processing (merge / mux / convert) विफल रहा। अक्सर यह एक अस्थायी ffmpeg समस्या होती है — फिर से कोशिश करें, और अगर समस्या बनी रहे तो कोई दूसरा फॉर्मेट कॉम्बिनेशन आज़माएँ।',
+      parse: 'साइट से मिले रिस्पॉन्स को पार्स नहीं किया जा सका। yt-dlp का extractor पुराना पड़ गया हो सकता है। Arroxy लॉन्च होने पर yt-dlp को स्वचालित रूप से अपडेट करता है — कुछ मिनटों में फिक्स आने पर पुनः प्रयास करें।',
+      network: 'नेटवर्क त्रुटि। अपना कनेक्शन जाँचें और पुनः प्रयास करें।',
+      unknown: 'डाउनलोड विफल। नीचे raw output देखें।'
     }
   },
   presets: {
@@ -463,7 +483,6 @@ const hi = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps में कनवर्ट करें' }
   },
   formatLabel: {
-    audioOnly: 'सिर्फ़ ऑडियो',
     audioFallback: 'ऑडियो',
     audioOnlyDot: 'सिर्फ़ ऑडियो · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
@@ -498,6 +517,24 @@ const hi = {
       detail: 'रेंडरर प्रक्रिया क्रैश हो गई ({{reason}})। पुनः प्रयास करने के लिए रीलोड करें।',
       reload: 'रीलोड करें',
       quit: 'बाहर निकलें'
+    }
+  },
+  share: {
+    title: 'Arroxy शेयर करें',
+    description: 'Arroxy मुफ़्त और ओपन-सोर्स है। शेयर करने से और लोग इसे खोज सकते हैं।',
+    copyLink: 'लिंक कॉपी करें',
+    copied: 'कॉपी किया!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Arroxy साझा करें',
+    footerLabel: 'साझा करें',
+    shareAction: 'Arroxy साझा करें',
+    inlineCard: {
+      body: 'Arroxy पसंद आ रहा है? किसी ऐसे व्यक्ति के साथ शेयर करें जिसे यह उपयोगी लग सकता है।',
+      dismiss: 'शेयर सुझाव हटाएँ'
+    },
+    highValueBanner: {
+      body: 'Arroxy पसंद आ रहा है? दूसरों को भी इसे खोजने में मदद करें।',
+      dismiss: 'शेयर सुझाव हटाएँ'
     }
   }
 } as const;

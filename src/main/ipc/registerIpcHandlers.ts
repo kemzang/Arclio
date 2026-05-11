@@ -1,49 +1,57 @@
 import type { BrowserWindow } from 'electron';
-import type { SupportedLang } from '@shared/i18n/types';
-import type { DownloadService } from '@main/services/DownloadService';
-import type { FormatProbeService } from '@main/services/FormatProbeService';
-import type { PlaylistProbeService } from '@main/services/PlaylistProbeService';
-import type { BinaryManager } from '@main/services/BinaryManager';
-import type { TokenService } from '@main/services/TokenService';
-import type { SettingsStore } from '@main/stores/SettingsStore';
-import type { QueueStore } from '@main/stores/QueueStore';
-import type { ClipboardWatcher } from '@main/services/ClipboardWatcher';
-import { DownloadEventBridge } from '@main/services/DownloadEventBridge';
-import { WarmupService } from '@main/services/WarmupService';
-import { registerAppHandlers } from './appHandlers';
-import { registerWindowHandlers } from './windowHandlers';
-import { registerDownloadHandlers } from './downloadHandlers';
-import { registerSettingsHandlers } from './settingsHandlers';
-import { registerFileHandlers } from './fileHandlers';
-import { registerQueueHandlers } from './queueHandlers';
-import { registerAnalyticsHandlers } from './analyticsHandlers';
-import { registerDiagnosticsHandlers } from './diagnosticsHandlers';
+import type { SupportedLang } from '@shared/i18n/types.js';
+import type { DownloadService } from '@main/services/DownloadService.js';
+import type { ProbeService } from '@main/services/ProbeService.js';
+import type { BinaryManager } from '@main/services/BinaryManager.js';
+import type { TokenService } from '@main/services/TokenService.js';
+import type { SettingsStore } from '@main/stores/SettingsStore.js';
+import type { QueueService } from '@main/services/QueueService.js';
+import type { ClipboardWatcher } from '@main/services/ClipboardWatcher.js';
+import { DownloadEventBridge } from '@main/services/DownloadEventBridge.js';
+import { QueueEventBridge } from '@main/services/QueueEventBridge.js';
+import { WarmupService } from '@main/services/WarmupService.js';
+import { registerAppHandlers } from './appHandlers.js';
+import { registerWindowHandlers } from './windowHandlers.js';
+import { registerDownloadHandlers } from './downloadHandlers.js';
+import { registerSettingsHandlers } from './settingsHandlers.js';
+import { registerFileHandlers } from './fileHandlers.js';
+import { registerQueueHandlers } from './queueHandlers.js';
+import { registerAnalyticsHandlers } from './analyticsHandlers.js';
+import { registerDiagnosticsHandlers } from './diagnosticsHandlers.js';
 
 export interface IpcDependencies {
   mainWindow: BrowserWindow;
   downloadService: DownloadService;
-  formatProbeService: FormatProbeService;
-  playlistProbeService: PlaylistProbeService;
+  probeService: ProbeService;
   settingsStore: SettingsStore;
-  queueStore: QueueStore;
+  queueService: QueueService;
   binaryManager: BinaryManager;
   tokenService: TokenService;
   languageRef: { current: SupportedLang };
   clipboardWatcher: ClipboardWatcher;
 }
 
+let activeDownloadBridge: DownloadEventBridge | null = null;
+let activeQueueBridge: QueueEventBridge | null = null;
+
 export function registerIpcHandlers(deps: IpcDependencies): void {
-  const { mainWindow, downloadService, formatProbeService, playlistProbeService, settingsStore, queueStore, binaryManager, tokenService, languageRef, clipboardWatcher } = deps;
+  const { mainWindow, downloadService, probeService, settingsStore, queueService, binaryManager, tokenService, languageRef, clipboardWatcher } = deps;
 
   const warmupService = new WarmupService({ binaryManager, tokenService, window: mainWindow });
   registerAppHandlers({ warmupService, languageRef });
   registerWindowHandlers(mainWindow);
-  registerDownloadHandlers({ downloadService, formatProbeService, playlistProbeService, settingsStore });
+  registerDownloadHandlers({ downloadService, probeService, settingsStore });
   registerSettingsHandlers({ settingsStore, clipboardWatcher });
   registerFileHandlers(mainWindow, binaryManager);
-  registerQueueHandlers(queueStore);
+  registerQueueHandlers(queueService);
   registerAnalyticsHandlers();
   registerDiagnosticsHandlers();
 
-  new DownloadEventBridge(downloadService, mainWindow).attach();
+  activeDownloadBridge?.detach();
+  activeDownloadBridge = new DownloadEventBridge(downloadService, mainWindow);
+  activeDownloadBridge.attach();
+
+  activeQueueBridge?.detach();
+  activeQueueBridge = new QueueEventBridge(queueService, mainWindow);
+  activeQueueBridge.attach();
 }

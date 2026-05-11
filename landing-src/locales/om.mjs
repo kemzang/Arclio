@@ -161,4 +161,7 @@ export const om = {
   faq_q9: "Seeraan alaa dha?",
   faq_a9:
     "Viidiyoo fayyadama dhuunfaaf buufachuun biyyoota hedduu keessatti akkuma jirutti fudhatama. Haala Tajaajila YouTube fi seerota naannoo keetii hordofuuf itti gaafatamni kee irratti jira.",
+
+  f13_h: "YouTube + sayitii 2000",
+  f13_p: "YouTube cinaatti, Arroxy sayitii 2000+ kan yt-dlp deggeru irraa fida — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org fi kanneen biroo hedduu. Sagalee qofaa fi sabtaayitiloonni iddoo hundatti hojjetu, YouTube qofa irratti miti.",
 };

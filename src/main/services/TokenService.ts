@@ -1,10 +1,24 @@
-import log from 'electron-log/main';
-import { parseVideoId } from '@shared/url';
-import { nonEmpty } from '@shared/format';
-import { unknownToMessage } from '@main/utils/errorFactory';
-import type { TokenProvider } from '@main/token/TokenProvider';
+import log from 'electron-log/main.js';
+import { nonEmpty } from '@shared/format.js';
+import { unknownToMessage } from '@main/utils/errorFactory.js';
+import type { TokenProvider } from '@main/token/TokenProvider.js';
 
 const logger = log.scope('token');
+
+// Inline YT video-ID extractor — only call site that ever needed url.ts. The
+// PoT scrape only runs against YouTube URLs (gated by isYouTubeExtractor at
+// download-time), so this function only ever sees youtube.com / youtu.be hosts.
+function parseYouTubeVideoId(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+    if (host === 'youtu.be') return parsed.pathname.slice(1).split('?')[0] || null;
+    if (host.endsWith('youtube.com')) return parsed.searchParams.get('v');
+    return null;
+  } catch {
+    return null;
+  }
+}
 
 const TTL_MS = 5 * 60 * 60 * 1_000; // 5 hours — within ~6 h token lifetime
 
@@ -19,16 +33,23 @@ export class TokenService {
 
   constructor(private readonly provider: TokenProvider) {}
 
-  async warmUp(): Promise<void> {
+  async warmUp(signal?: AbortSignal): Promise<{ ready: boolean; reason?: string }> {
+    if (signal?.aborted) return { ready: false, reason: 'cancelled' };
     try {
       await this.provider.ensureReady();
+      if (signal?.aborted) return { ready: false, reason: 'cancelled' };
       const visitorData = await this.provider.getVisitorData();
-      if (!visitorData) return;
+      if (signal?.aborted) return { ready: false, reason: 'cancelled' };
+      if (!visitorData) return { ready: false, reason: 'no-visitor-data' };
       const token = await this.provider.mintToken(visitorData);
+      if (signal?.aborted) return { ready: false, reason: 'cancelled' };
       this.cache = { token, visitorData, mintedAt: Date.now() };
       logger.info('PO token pre-warmed');
+      return { ready: true };
     } catch (err) {
-      logger.warn('Token warm-up failed (non-fatal)', { error: unknownToMessage(err) });
+      const reason = unknownToMessage(err);
+      logger.warn('Token warm-up failed (non-fatal)', { error: reason });
+      return { ready: false, reason };
     } finally {
       this.provider.releaseWindow();
     }
@@ -38,20 +59,20 @@ export class TokenService {
     this.cache = null;
   }
 
-  async mintTokenForUrl(url: string): Promise<{ token: string; visitorData: string }> {
+  async mintTokenForUrl(url: string): Promise<{ token: string; visitorData: string; fromCache: boolean }> {
     if (this.cache && Date.now() - this.cache.mintedAt < TTL_MS) {
-      return { token: this.cache.token, visitorData: this.cache.visitorData };
+      return { token: this.cache.token, visitorData: this.cache.visitorData, fromCache: true };
     }
 
     try {
       await this.provider.ensureReady();
       const visitorData = await this.provider.getVisitorData();
-      const binding = nonEmpty(visitorData) ?? parseVideoId(url) ?? url;
+      const binding = nonEmpty(visitorData) ?? parseYouTubeVideoId(url) ?? url;
 
       logger.info('Minting PO token', { bindingLength: binding.length });
       const token = await this.provider.mintToken(binding);
       this.cache = { token, visitorData, mintedAt: Date.now() };
-      return { token, visitorData };
+      return { token, visitorData, fromCache: false };
     } finally {
       this.provider.releaseWindow();
     }

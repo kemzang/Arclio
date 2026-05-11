@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { FAILURE_CODE } from '@shared/types';
+import { FAILURE_CODE } from '@shared/types.js';
 
 // Stability snapshot. These ARX-### codes are a public contract: users see
 // them in the repair UI and search for them ("ARX-006 SmartScreen") online.

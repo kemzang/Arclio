@@ -12,7 +12,7 @@ const { ctorMock, trackMock } = vi.hoisted(() => {
 
 vi.mock('@openpanel/sdk', () => ({ OpenPanel: ctorMock }));
 
-import { setAnalyticsEnabled, setupAnalytics, trackCrashDetectedOncePerSession } from '@main/services/analytics';
+import { setAnalyticsEnabled, setupAnalytics, trackCrashDetectedOncePerSession } from '@main/services/analytics.js';
 
 beforeEach(() => {
   vi.clearAllMocks();

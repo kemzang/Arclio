@@ -30,13 +30,9 @@ runtime-cache/
 *.tar.gz
 
 # Claude Code / agent metadata
-.agents/
-.claude/
 .playwright-mcp/
 skills-lock.json
 docs/my
-AGENTS.md
-CLAUDE.md
 # Flatpak build artifacts (relative to flatpak/ subdir, or repo root if built from there)
 flatpak/.flatpak-builder/
 flatpak/builddir/

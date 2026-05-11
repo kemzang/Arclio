@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { App } from '@renderer/App';
-import { useAppStore } from '@renderer/store/useAppStore';
-import type { AppApi } from '@shared/api';
-import type { UpdateAvailablePayload } from '@shared/types';
-import { ok } from '../shared/fixtures';
+import { App } from '@renderer/App.js';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import type { AppApi } from '@shared/api.js';
+import type { UpdateAvailablePayload } from '@shared/types.js';
+import { ok } from '../shared/fixtures.js';
 
 type UpdateListener = (info: UpdateAvailablePayload) => void;
 
@@ -28,7 +28,7 @@ function makeApi(
       onMaximizedChange: vi.fn().mockReturnValue(() => undefined)
     },
     downloads: {
-      getFormats: vi.fn().mockResolvedValue(ok({ formats: [], title: '', thumbnail: '' })),
+      probe: vi.fn().mockResolvedValue(ok({ kind: 'video' as const, extractor: 'youtube', extractorKey: 'Youtube', webpageUrl: '', formats: [], title: '', thumbnail: '', subtitles: {}, automaticCaptions: {}, isLive: false, hasDrm: false })),
       start: vi.fn(),
       cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
       pause: vi.fn().mockResolvedValue(ok({ paused: true }))
@@ -50,8 +50,23 @@ function makeApi(
       onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
-      save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),
-      load: vi.fn().mockResolvedValue({ ok: true, data: [] })
+      cmd: {
+        add: vi.fn().mockResolvedValue({ ok: true, data: { ids: [] } }),
+        getSnapshot: vi.fn().mockResolvedValue({ ok: true, data: [] }),
+        start: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        pause: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        resume: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        cancel: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        retry: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        clearCompleted: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        remove: vi.fn().mockResolvedValue({ ok: true, data: undefined })
+      },
+      events: {
+        onSnapshot: vi.fn().mockReturnValue(() => undefined),
+        onAdded: vi.fn().mockReturnValue(() => undefined),
+        onUpdated: vi.fn().mockReturnValue(() => undefined),
+        onRemoved: vi.fn().mockReturnValue(() => undefined)
+      }
     },
     updater: {
       onUpdateAvailable: overrides.onUpdateAvailable ?? (() => () => undefined),

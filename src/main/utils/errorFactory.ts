@@ -1,7 +1,7 @@
-import type { AppError, AppErrorCode } from '@shared/types';
-import type { YtdlpErrorKey } from '@shared/schemas';
+import type { AppError, AppErrorCode } from '@shared/types.js';
+import type { YtDlpErrorKind } from '@shared/schemas.js';
 
-export function createAppError(code: AppErrorCode, message: string, details?: string, recoverable = true, localizedKey?: YtdlpErrorKey): AppError {
+export function createAppError(code: AppErrorCode, message: string, details?: string, recoverable = true, localizedKey?: YtDlpErrorKind): AppError {
   return { code, message, details, recoverable, localizedKey };
 }
 

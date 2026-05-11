@@ -1,10 +1,10 @@
-import type { StartDownloadInput } from '@shared/types';
-import type { PreparedJob } from '@shared/preparedJob';
-import { VideoPhase } from './VideoPhase';
-import { SubtitleOnlyPhase } from './SubtitleOnlyPhase';
-import { SidecarSubsPhase } from './SidecarSubsPhase';
-import { PreflightPhase } from './PreflightPhase';
-import type { Phase } from './types';
+import type { StartDownloadInput } from '@shared/types.js';
+import type { PreparedJob } from '@shared/preparedJob.js';
+import { VideoPhase } from './VideoPhase.js';
+import { SubtitleOnlyPhase } from './SubtitleOnlyPhase.js';
+import { SidecarSubsPhase } from './SidecarSubsPhase.js';
+import { PreflightPhase } from './PreflightPhase.js';
+import type { Phase } from './types.js';
 
 export type StrategyKind = 'subtitle-only' | 'video' | 'video+sidecar' | 'video+embed' | 'video+embed+auto';
 
@@ -34,9 +34,12 @@ export function strategyFor(job: PreparedJob): StrategyKind {
 
 export function phasesFor(input: StartDownloadInput): Phase[] {
   const { job } = input;
+  // expectedBytes only known for single-format probes. Other kinds (audio-convert,
+  // playlist-preset, subtitle-only) still run preflight against the floor in
+  // checkDiskSpace so a near-full disk gets caught before yt-dlp spawns.
   const expectedBytes = job.kind === 'single-format' ? job.expectedBytes : undefined;
   return [PreflightPhase(expectedBytes), ...PHASES[strategyFor(job)]];
 }
 
-export { PhaseExecutor } from './PhaseExecutor';
-export type { Phase, PhaseContext, PhaseOutcome, ActiveDownload, PausedDownload } from './types';
+export { PhaseExecutor } from './PhaseExecutor.js';
+export type { Phase, PhaseContext, PhaseOutcome, ActiveDownload, PausedDownload } from './types.js';

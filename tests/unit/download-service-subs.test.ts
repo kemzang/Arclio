@@ -3,15 +3,22 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { DownloadService } from '@main/services/DownloadService';
-import { YtDlp } from '@main/services/YtDlp';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
 
 vi.mock('@main/utils/process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@main/utils/process')>();
+  const actual = await importOriginal<typeof import('@main/utils/process.js')>();
   return { ...actual, spawnYtDlp: vi.fn(), spawnFFmpeg: vi.fn() };
 });
 
-import { spawnYtDlp, spawnFFmpeg } from '@main/utils/process';
+// PreflightPhase calls statfs against the outputDir; tests use placeholders
+// like `/downloads` that may not exist on the runner. Bypass the check so the
+// phases under test (subtitle args, subfolder mode) actually run.
+vi.mock('@main/utils/diskSpace', () => ({
+  checkDiskSpace: vi.fn().mockResolvedValue({ ok: true, freeBytes: 1e12, requiredBytes: 0 })
+}));
+
+import { spawnYtDlp, spawnFFmpeg } from '@main/utils/process.js';
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -30,20 +37,21 @@ function makeFakeProcess(exitCode: number, stderr = '') {
   return proc;
 }
 
-import type { StatusEvent, StatusKey } from '@shared/types';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
-import type { SubtitleMode, SubtitleFormat } from '@shared/schemas';
+import type { StatusEvent, StatusKey } from '@shared/types.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
+import type { SubtitleMode, SubtitleFormat } from '@shared/schemas.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };
 
 function makeJob(opts: { formatId?: string; subtitles?: { languages: string[]; writeAuto?: boolean; mode?: SubtitleMode; format?: SubtitleFormat } } = {}): PreparedJob {
   if (!opts.formatId && opts.subtitles) {
-    return { kind: 'subtitle-only', source: 'youtube', subtitles: { languages: opts.subtitles.languages, mode: opts.subtitles.mode ?? 'sidecar', format: opts.subtitles.format ?? 'srt', writeAuto: opts.subtitles.writeAuto ?? false } };
+    return { kind: 'subtitle-only', extractor: 'youtube', extractorKey: 'Youtube', subtitles: { languages: opts.subtitles.languages, mode: opts.subtitles.mode ?? 'sidecar', format: opts.subtitles.format ?? 'srt', writeAuto: opts.subtitles.writeAuto ?? false } };
   }
   return {
     kind: 'single-format',
-    source: 'youtube',
+    extractor: 'youtube',
+    extractorKey: 'Youtube',
     formatId: opts.formatId ?? '137+251',
     preset: 'custom',
     sponsorBlock: SB_OFF,

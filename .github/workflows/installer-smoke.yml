@@ -13,11 +13,7 @@ name: Windows Installer
 
 on:
   pull_request:
-    paths:
-      - 'build/*.nsh'
-      - 'package.json'
-      - 'bun.lock'
-      - '.github/workflows/installer-smoke.yml'
+    branches: [main]
   push:
     branches: [main]
     paths:

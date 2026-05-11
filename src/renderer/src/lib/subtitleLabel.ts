@@ -1,5 +1,5 @@
-import type { SubtitleMap, SubtitleMode } from '@shared/types';
-import { LIVE_CHAT_LANG } from '@shared/constants';
+import type { SubtitleMap, SubtitleMode } from '@shared/types.js';
+import { LIVE_CHAT_LANG } from '@shared/constants.js';
 
 export const SUBTITLE_MODE_I18N_KEYS = {
   sidecar: 'wizard.subtitles.saveMode.sidecar',

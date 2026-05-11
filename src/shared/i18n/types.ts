@@ -1,12 +1,12 @@
-import type en from './locales/en';
-import { SUPPORTED_LANGS as LANGS, type SupportedLang as Lang, type YtdlpErrorKey as YtdlpErrorKeyAlias } from '../schemas';
+import type en from './locales/en.js';
+import { SUPPORTED_LANGS as LANGS, type SupportedLang as Lang, type YtDlpErrorKind as YtDlpErrorKindAlias } from '../schemas.js';
 
 // Re-export so existing imports of `@shared/i18n/types` and `@shared/i18n`
 // continue to work; canonical definitions live in shared/schemas.ts.
 export type SupportedLang = Lang;
 export const SUPPORTED_LANGS = LANGS;
 
-export type YtdlpErrorKey = YtdlpErrorKeyAlias;
+export type YtDlpErrorKind = YtDlpErrorKindAlias;
 
 // Order = alphabetical by native endonym (Latin block first via Unicode collation,
 // then non-Latin scripts in Unicode order). Drives the language picker UI.
@@ -34,13 +34,22 @@ export const LANGUAGE_NATIVE_NAMES: Record<SupportedLang, string> = {
   ja: '日本語'
 };
 
+// `kind` is always populated — `'unknown'` covers the unmatched-stderr fallback.
+// `raw` is the verbatim stderr (or message) the renderer surfaces directly when
+// the kind has no i18n template.
 export interface LocalizedError {
-  key: YtdlpErrorKey | null;
-  rawMessage?: string;
+  kind: YtDlpErrorKind;
+  raw: string;
 }
 
 export type EnTranslation = typeof en;
 
-type WidenStrings<T> = T extends string ? string : T extends readonly (infer U)[] ? readonly WidenStrings<U>[] : { readonly [K in keyof T]: WidenStrings<T[K]> };
+// Non-en locales are allowed to be partial — when a key is missing, i18next
+// falls back to the en value at runtime. Parity is enforced for public-facing
+// content (readme/landing build scripts), but UI strings are added en-first
+// and translations fan out incrementally, so we don't enforce structural parity
+// in TypeScript. Every leaf is widened to `string` so any translation is
+// structurally valid; every nested key is optional.
+type DeepPartialStringLeaves<T> = T extends string ? string : T extends readonly (infer U)[] ? readonly DeepPartialStringLeaves<U>[] : { readonly [K in keyof T]?: DeepPartialStringLeaves<T[K]> };
 
-export type LocaleResource = WidenStrings<EnTranslation>;
+export type LocaleResource = DeepPartialStringLeaves<EnTranslation>;

@@ -1,7 +1,7 @@
 // SRT deduplication for YouTube auto-captions.
 // Algorithm lives in cueDedupe.ts; cue parsing is inlined here.
 
-import { dedupeCues, msToTimecodeParts, timecodeToMs, type Cue } from './cueDedupe';
+import { dedupeCues, msToTimecodeParts, timecodeToMs, type Cue } from './cueDedupe.js';
 
 const SRT_TIMECODE_RE = /^(\d+):(\d+):(\d+),(\d+) --> (\d+):(\d+):(\d+),(\d+)/;
 const INDEX_LINE_RE = /^\d+$/;

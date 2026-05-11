@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, act, fireEvent, screen } from '@testing-library/react';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { StepUrlInput } from '@renderer/components/wizard/StepUrlInput';
-import { buildMockAppApi } from '../shared/mockAppApi';
-import type { AppApi } from '@shared/api';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { StepUrlInput } from '@renderer/components/wizard/StepUrlInput.js';
+import { buildMockAppApi } from '../shared/mockAppApi.js';
+import type { AppApi } from '@shared/api.js';
 
 let mockApi: AppApi;
 let clipboardUnsub: () => void;
@@ -106,6 +106,24 @@ describe('wizard clipboard confirm dialog', () => {
 
     expect(useAppStore.getState().wizardUrl).toBe(FRESH_URL);
     expect(screen.queryByTestId('clipboard-confirm-dialog')).not.toBeInTheDocument();
+  });
+
+  it('"Fetch Formats" applies the URL, closes the dialog, and calls submitUrl', async () => {
+    const submitSpy = vi.fn().mockResolvedValue(undefined);
+    useAppStore.setState({ submitUrl: submitSpy } as Partial<ReturnType<typeof useAppStore.getState>>);
+
+    render(<StepUrlInput />);
+    act(() => {
+      clipboardListener!(FRESH_URL);
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('clipboard-confirm-fetch'));
+    });
+
+    expect(useAppStore.getState().wizardUrl).toBe(FRESH_URL);
+    expect(screen.queryByTestId('clipboard-confirm-dialog')).not.toBeInTheDocument();
+    expect(submitSpy).toHaveBeenCalledTimes(1);
   });
 
   it('"Cancel" closes without touching wizardUrl', () => {

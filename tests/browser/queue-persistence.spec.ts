@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
-// All tests use the renderer dev server with browserMock.ts.
+// All tests use the renderer dev server in explicit browser-mock mode.
 // The mock's queue.load() returns [] (no persistence), so these tests
 // exercise the UI by completing a full download flow and then verifying
 // the "Clear completed" button and drawer behavior.
@@ -10,7 +11,18 @@ test.beforeEach(async ({ page }) => {
   await page.waitForSelector('[data-testid="app-root"]');
 });
 
-async function addToQueue(page: import('@playwright/test').Page) {
+async function clickStepButtonIfPresent(page: Page, testId: string, buttonName: string, timeout = 2_000): Promise<boolean> {
+  const step = page.getByTestId(testId);
+  try {
+    await step.waitFor({ state: 'visible', timeout });
+  } catch {
+    return false;
+  }
+  await step.getByRole('button', { name: buttonName }).click();
+  return true;
+}
+
+async function addToQueue(page: Page) {
   // Step 1: enter URL
   await page.fill('[data-testid="url-input"]', 'https://www.youtube.com/watch?v=test123');
   await page.getByTestId('btn-find-formats').click();
@@ -19,15 +31,21 @@ async function addToQueue(page: import('@playwright/test').Page) {
   await page.waitForSelector('[data-testid="step-formats"]', { timeout: 5_000 });
   await page.getByRole('button', { name: 'Continue' }).click();
 
+  // The mock probe includes subtitles and YouTube metadata, so the current
+  // wizard graph visits subtitles, SponsorBlock, and output before folder.
+  await clickStepButtonIfPresent(page, 'step-subtitles', 'Skip for this video');
+  await clickStepButtonIfPresent(page, 'step-sponsorblock', 'Continue');
+  await clickStepButtonIfPresent(page, 'step-output', 'Continue');
+
   // Step 3: confirm folder
   await page.waitForSelector('[data-testid="step-folder"]', { timeout: 2_000 });
-  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByTestId('step-folder').getByRole('button', { name: 'Continue' }).click();
 
   // Step 4: queue the download
   await page.waitForSelector('[data-testid="step-confirm"]', { timeout: 2_000 });
 }
 
-async function completeOneDownload(page: import('@playwright/test').Page) {
+async function completeOneDownload(page: Page) {
   await addToQueue(page);
   await page.getByTestId('btn-download-now').click();
 

@@ -3,8 +3,7 @@ const ur = {
     back: 'واپس',
     continue: 'جاری رکھیں',
     retry: 'دوبارہ کوشش کریں',
-    startOver: 'دوبارہ شروع کریں',
-    loading: 'لوڈ ہو رہا ہے…'
+    startOver: 'دوبارہ شروع کریں'
   },
   app: {
     feedback: 'فیڈبیک',
@@ -14,6 +13,15 @@ const ur = {
     debugCopyTitle: 'ڈیبگ معلومات کاپی کریں (Electron, OS, Chrome ورژنز)',
     zoomIn: 'زوم اِن',
     zoomOut: 'زوم آؤٹ'
+  },
+  about: {
+    button: 'کے بارے میں',
+    openTitle: 'Arroxy کے بارے میں',
+    tagline: 'ڈیسک ٹاپ کے لیے تیز اور آسان ویڈیو اور آڈیو ڈاؤن لوڈر۔',
+    websiteLink: 'ویب سائٹ',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT لائسنس · از Antonio Orionus',
+    thirdPartyNotices: 'فریق ثالث کے نوٹس دیکھیں'
   },
   titleBar: {
     close: 'بند کریں',
@@ -25,7 +33,6 @@ const ur = {
     greeting: 'ارے، خوش آمدید!',
     warmup: 'Arroxy تیار ہو رہا ہے…',
     downloading: '{{binary}} ڈاؤن لوڈ ہو رہا ہے…',
-    warning: 'سیٹ اپ مکمل نہیں — کچھ فیچرز کام نہ کریں',
     warmupFailedNoDiag: 'سیٹ اپ ناکام ہوا۔ تفصیلات کے لیے سیٹ اپ لاگ کھولیں۔'
   },
   repair: {
@@ -81,6 +88,8 @@ const ur = {
       heading: 'Playlist آئٹمز',
       itemCount_one: '{{count}} ویڈیو',
       itemCount_other: '{{count}} ویڈیوز',
+      itemCountAudio_one: '{{count}} ٹریک',
+      itemCountAudio_other: '{{count}} ٹریکس',
       selectAll: 'سب منتخب کریں',
       selectNone: 'کوئی نہیں منتخب کریں',
       rangeFrom: 'سے',
@@ -91,15 +100,13 @@ const ur = {
       noSelection: 'جاری رکھنے کے لیے کم از کم ایک ویڈیو منتخب کریں',
       loadingItems: 'Playlist لائی جا رہی ہے…',
       thumbnailAlt: 'ویڈیو تھمب نیل',
-      continue: 'جاری رکھیں',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'بیچ کے لیے کوالٹی منتخب کریں',
       subhead: 'ہر ویڈیو منتخب درجے کو آزادانہ طور پر حل کرتی ہے — مختلف قسم کی playlists بغیر کسی پریشانی کے کام کرتی ہیں۔',
       itemCount_one: '{{count}} آئٹم',
-      itemCount_other: '{{count}} آئٹمز',
-      continue: 'جاری رکھیں'
+      itemCount_other: '{{count}} آئٹمز'
     },
     mixedPrompt: {
       title: 'اس لنک میں Playlist ہے',
@@ -114,17 +121,25 @@ const ur = {
       fetchFormats: 'فارمیٹس لائیں',
       features: {
         heading: 'Arroxy کیا لا سکتا ہے',
-        video: {
-          title: 'ویڈیوز',
-          desc: '4K تک کوئی بھی ریزولوشن منتخب کریں'
+        youtube: {
+          heading: 'YouTube',
+          video: 'ویڈیوز',
+          channel: 'چینلز',
+          playlist: 'پلے لسٹس',
+          short: 'Shorts',
+          music: 'موسیقی',
+          podcast: 'پوڈکاسٹ'
         },
-        playlist: {
-          title: 'پلے لسٹس',
-          desc: 'پلے لسٹ سے متعدد آئٹمز منتخب کریں'
+        anySite: {
+          heading: '2000+ سائٹس',
+          video: 'ویڈیوز',
+          videoPlaylist: 'ویڈیو پلے لسٹس',
+          musicPlaylist: 'میوزک پلے لسٹس'
         },
-        audio: {
-          title: 'آڈیو',
-          desc: 'اصل سٹریم یا MP3/M4A کنورژن'
+        always: {
+          heading: 'ہمیشہ دستیاب',
+          audioOnly: 'صرف آڈیو',
+          subtitles: 'سب ٹائٹلز'
         }
       },
       mascotIdle: 'مجھے YouTube کا لنک دیں (ویڈیو یا Short) — پھر "فارمیٹس لائیں" دبائیں اور میں کام شروع کر دوں گا ✨',
@@ -162,7 +177,7 @@ const ur = {
         enabledButNoBrowser: 'cookies استعمال کرنے کے لیے براؤزر منتخب کریں',
         banWarning: 'YouTube ان اکاؤنٹس کو فلیگ — اور کبھی کبھار بین — کر سکتا ہے جن کے cookies yt-dlp کے ساتھ استعمال ہوں۔ ممکن ہو تو ٹمپریری اکاؤنٹ استعمال کریں۔',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt مقامی طور پر حاصل کریں (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const ur = {
       }
     },
     subtitles: {
-      heading: 'سب ٹائٹلز',
       autoBadge: 'آٹو',
-      hint: 'سائڈ کار فائلیں ویڈیو کے ساتھ محفوظ ہوں گی',
       noLanguages: 'اس ویڈیو کے لیے کوئی سب ٹائٹلز دستیاب نہیں',
       skip: 'چھوڑیں',
       skipSubs: 'اس ویڈیو کے لیے چھوڑیں',
-      selectAll: 'سب منتخب کریں',
-      deselectAll: 'سب غیر منتخب کریں',
       mascot: 'صفر، ایک، یا کئی منتخب کریں — مکمل آپ کی مرضی ✨',
       searchPlaceholder: 'زبانیں تلاش کریں…',
       noMatches: 'کوئی زبان میچ نہیں ہوئی',
@@ -242,10 +253,14 @@ const ur = {
       audioOnlyOption: 'صرف آڈیو (کوئی ویڈیو نہیں)',
       mascot: 'بیسٹ + بیسٹ = زیادہ سے زیادہ کوالٹی۔ میں یہی منتخب کروں گا!',
       sniffing: 'آپ کے لیے بہترین فارمیٹس ڈھونڈ رہا ہوں…',
-      loadingHint: 'عام طور پر ایک سیکنڈ لگتا ہے',
+      loadingHint: 'براہ کرم پروبنگ مکمل ہونے تک انتظار کریں — پلے لسٹس اور تلاش میں کچھ وقت لگ سکتا ہے۔',
       loadingAria: 'فارمیٹس لوڈ ہو رہے ہیں',
       sizeUnknown: 'سائز نامعلوم',
       total: 'کل',
+      skipToConfirm: 'تصدیق تک جائیں',
+      skipToConfirmTooltip: 'باقی تمام مراحل کے لیے آپ کی محفوظ ترجیحات استعمال کرتا ہے۔ کوئی ترتیب تبدیل کرنے کے لیے، قدم بہ قدم جاری رکھیں — آپ کا انتخاب اگلی بار کے لیے محفوظ ہو جائے گا۔',
+      keepAudio: 'جیسا ہے ویسا رکھیں',
+      keepAudioMeta: 'بلٹ اِن آڈیو',
       convert: {
         label: 'کنورٹ کریں',
         uncompressed: 'کنورٹ کریں · غیر کمپریسڈ',
@@ -261,8 +276,7 @@ const ur = {
         bodyDisabled: 'Cookies ترتیب دی گئی ہیں لیکن بند ہیں۔ مکمل فہرست کے لیے انہیں فعال کریں اور دوبارہ کوشش کریں، یا نیٹ ورک تبدیل کر کے دوبارہ کوشش کریں۔',
         bodyEnabled: 'Cookies کے ساتھ بھی YouTube نے یہ پروب محدود کی۔ بعد میں دوبارہ کوشش کریں یا نیٹ ورک تبدیل کریں۔',
         retryCta: 'دوبارہ کوشش کریں',
-        enableRetryCta: 'Cookies فعال کریں اور دوبارہ کوشش کریں',
-        openSettingsCta: 'ایڈوانسڈ سیٹنگز کھولیں'
+        enableRetryCta: 'Cookies فعال کریں اور دوبارہ کوشش کریں'
       },
       cookiesError: {
         heading: 'Cookies وجہ ہو سکتی ہیں',
@@ -272,6 +286,10 @@ const ur = {
         explanationFile: 'آپ کی cookies فائل خالی، میعاد ختم، یا غلط فارمیٹ میں ہو سکتی ہے (yt-dlp Netscape cookies.txt کی توقع رکھتا ہے)۔ cookies دوبارہ ایکسپورٹ کریں، مختلف فائل منتخب کریں، براؤزر موڈ پر سوئچ کریں، یا cookies بند کر دیں۔',
         explanationBrowser: 'Cookies براہ راست براؤزر سے پڑھی جاتی ہیں۔ اگر براؤزر ابھی چل رہا ہے تو اس کا cookie ڈیٹا بیس لاک ہو سکتا ہے (Chromium-family)۔ براؤزر کا YouTube میں سائن اِن ہونا بھی ضروری ہے۔ براؤزر بند کریں، کوئی مختلف براؤزر آزمائیں، فائل موڈ پر سوئچ کریں، یا cookies بند کر دیں۔',
         openSettingsCta: 'Cookies سیٹنگز کھولیں',
+        needsCookies: {
+          heading: 'اس سائٹ کو سائن اِن ضروری ہے',
+          body: 'yt-dlp تصدیق کے بغیر اس ویڈیو تک رسائی حاصل نہیں کر سکا۔ ایڈوانسڈ سیٹنگز میں cookies ترتیب دیں — کسی ایسے براؤزر کی طرف اشارہ کریں جس میں آپ پہلے سے سائن اِن ہوں، یا cookies.txt فائل درآمد کریں۔'
+        },
         dpapi: {
           heading: 'Chrome cookies ونڈوز انکرپشن کے ذریعے بلاک ہیں',
           explanation: 'Chrome 127 اور اس سے نئے ورژن cookies کو اس طرح انکرپٹ کرتے ہیں کہ دوسری ایپس Windows پر انہیں پڑھ نہیں سکتیں۔ نیچے دیے گئے حلوں میں سے ایک آزمائیں۔',
@@ -334,26 +352,24 @@ const ur = {
       labelSize: 'سائز',
       sizeUnknown: 'نامعلوم',
       nothingToDownload: 'صرف سب ٹائٹلز پری سیٹ ایکٹیو ہے لیکن کوئی سب ٹائٹل زبان منتخب نہیں — کچھ ڈاؤن لوڈ نہیں ہو گا۔',
+      thumbnailEmbedNotSupported: 'Thumbnail embed چھوڑ دیا گیا — آؤٹ پٹ container اسے سپورٹ نہیں کرتا۔',
+      subtitleEmbedAudioOnly: 'Subtitle embed کو sidecar میں تبدیل کر دیا گیا — آڈیو ٹریکس اندرونی subtitle سٹریمز کو سپورٹ نہیں کرتے۔',
       audioOnly: 'صرف آڈیو',
       addToQueue: '+ قطار',
       addToQueueTooltip: 'دوسرے ڈاؤن لوڈز ختم ہونے پر شروع ہو گا — مکمل بینڈوڈتھ ملے گی',
       pullIt: 'لے آؤ! ↓',
       pullItTooltip: 'فوراً شروع ہو گا — دوسرے ایکٹو ڈاؤن لوڈز کے ساتھ چلے گا',
-      playlistBatch_one: '{{count}} ویڈیو · {{title}}',
-      playlistBatch_other: '{{count}} ویڈیوز · {{title}}',
       labelPlaylist: 'پلے لسٹ',
       labelPreset: 'پریسیٹ',
       labelItems: 'آئٹمز',
       itemsValue_one: '{{total}} میں سے {{count}} ویڈیو',
-      itemsValue_other: '{{total}} میں سے {{count}} ویڈیوز'
-    },
-    error: {
-      icon: 'خرابی'
+      itemsValue_other: '{{total}} میں سے {{count}} ویڈیوز',
+      itemsValueAudio_one: '{{total}} میں سے {{count}} ٹریک',
+      itemsValueAudio_other: '{{total}} میں سے {{count}} ٹریکس'
     }
   },
   videoCard: {
-    titlePlaceholder: 'لوڈ ہو رہا ہے…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'لوڈ ہو رہا ہے…'
   },
   queue: {
     header: 'ڈاؤن لوڈ قطار',
@@ -378,9 +394,7 @@ const ur = {
       resume: 'دوبارہ شروع کریں',
       cancel: 'منسوخ کریں',
       remove: 'ہٹائیں'
-    },
-    interJobSleep_one: 'اگلا ڈاؤن لوڈ {{count}} سیکنڈ میں شروع ہوگا',
-    interJobSleep_other: 'اگلا ڈاؤن لوڈ {{count}} سیکنڈ میں شروع ہوگا'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const ur = {
     ytdlpProcessError: 'yt-dlp پراسیس ایرر: {{error}}',
     ytdlpExitCode: 'yt-dlp کوڈ {{code}} کے ساتھ ختم ہوا',
     downloadingBinary: '{{name}} بائنری ڈاؤن لوڈ ہو رہی ہے…',
-    unknownStartupFailure: 'نامعلوم ڈاؤن لوڈ اسٹارٹ اپ ناکامی'
+    unknownStartupFailure: 'نامعلوم ڈاؤن لوڈ اسٹارٹ اپ ناکامی',
+    diskSpaceInsufficient: 'ڈسک میں کافی جگہ نہیں — {{required}} درکار ہے، صرف {{free}} دستیاب ہے'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const ur = {
       unavailable: 'یہ ویڈیو دستیاب نہیں — ہو سکتا ہے پرائیویٹ، ڈیلیٹ، یا ریجن لاکڈ ہو۔',
       geoBlocked: 'یہ ویڈیو آپ کے ریجن میں دستیاب نہیں۔',
       outOfDiskSpace: 'ڈسک میں کافی جگہ نہیں۔ جگہ خالی کر کے دوبارہ کوشش کریں۔',
-      unsupportedUrl: 'یہ ویڈیو URL نہیں لگتا۔ YouTube ویڈیو، Short، یا پلے لسٹ کا لنک پیسٹ کریں۔'
+      unsupportedUrl: 'یہ ویڈیو URL نہیں لگتا۔ YouTube ویڈیو، Short، یا پلے لسٹ کا لنک پیسٹ کریں۔',
+      chunkTransferFailure: 'سرور بار بار ڈاؤن لوڈ درمیان میں کاٹتا رہا اور yt-dlp نے کئی بار کوشش کے بعد ہار مان لی۔ یہ عموماً سب سے بڑے ویڈیو فارمیٹس (4K HDR / زیادہ بٹ ریٹ VP9) میں ہوتا ہے۔ دوبارہ کوشش کریں، نیٹ ورک/VPN تبدیل کریں، یا کم ریزولیوشن فارمیٹ چنیں۔',
+      postprocessFailure: 'yt-dlp نے ڈاؤن لوڈ مکمل کر لیا لیکن پوسٹ پروسیسنگ (مرج / mux / تبدیلی) ناکام رہی۔ اکثر یہ ffmpeg کا عارضی مسئلہ ہوتا ہے — دوبارہ کوشش کریں، اور اگر برقرار رہے تو مختلف فارمیٹ کا مجموعہ آزمائیں۔',
+      parse: 'سائٹ کا جواب پارس نہیں ہو سکا۔ ممکن ہے yt-dlp کا ایکسٹریکٹر پرانا ہو گیا ہو۔ Arroxy لانچ پر yt-dlp کو خودکار اپڈیٹ کرتا ہے — چند منٹ بعد دوبارہ کوشش کریں جب فکس آ جائے۔',
+      network: 'نیٹ ورک کی خرابی۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔',
+      unknown: 'ڈاؤن لوڈ ناکام ہو گیا۔ نیچے خام آؤٹ پٹ دیکھیں۔'
     }
   },
   presets: {
@@ -463,7 +483,6 @@ const ur = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps میں کنورٹ کریں' }
   },
   formatLabel: {
-    audioOnly: 'صرف آڈیو',
     audioFallback: 'آڈیو',
     audioOnlyDot: 'صرف آڈیو · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
@@ -498,6 +517,24 @@ const ur = {
       detail: 'رینڈرر پراسیس کریش ہو گیا ({{reason}})۔ دوبارہ کوشش کرنے کے لیے ری لوڈ کریں۔',
       reload: 'ری لوڈ',
       quit: 'بند کریں'
+    }
+  },
+  share: {
+    title: 'Arroxy شیئر کریں',
+    description: 'Arroxy مفت اور اوپن سورس ہے۔ شیئر کرنے سے زیادہ لوگ اسے دریافت کر سکتے ہیں۔',
+    copyLink: 'لنک کاپی کریں',
+    copied: 'کاپی ہو گیا!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Arroxy شیئر کریں',
+    footerLabel: 'شیئر کریں',
+    shareAction: 'Arroxy شیئر کریں',
+    inlineCard: {
+      body: 'Arroxy پسند آ رہا ہے؟ کسی ایسے شخص کے ساتھ شیئر کریں جسے یہ مفید لگ سکتا ہو۔',
+      dismiss: 'شیئر کی تجویز برخاست کریں'
+    },
+    highValueBanner: {
+      body: 'Arroxy پسند آ رہا ہے؟ دوسروں کو اسے دریافت کرنے میں مدد کریں۔',
+      dismiss: 'شیئر کی تجویز برخاست کریں'
     }
   }
 } as const;

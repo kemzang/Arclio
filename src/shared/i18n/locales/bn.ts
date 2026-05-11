@@ -3,8 +3,7 @@ const bn = {
     back: 'পেছনে',
     continue: 'চালিয়ে যান',
     retry: 'আবার চেষ্টা করুন',
-    startOver: 'নতুন করে শুরু করুন',
-    loading: 'লোড হচ্ছে…'
+    startOver: 'নতুন করে শুরু করুন'
   },
   app: {
     feedback: 'মতামত',
@@ -14,6 +13,15 @@ const bn = {
     debugCopyTitle: 'ডিবাগ তথ্য কপি করুন (Electron, OS, Chrome সংস্করণ)',
     zoomIn: 'জুম ইন',
     zoomOut: 'জুম আউট'
+  },
+  about: {
+    button: 'সম্পর্কে',
+    openTitle: 'Arroxy সম্পর্কে',
+    tagline: 'ডেস্কটপের জন্য দ্রুত ও সহজ ভিডিও ও অডিও ডাউনলোডার।',
+    websiteLink: 'ওয়েবসাইট',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT লাইসেন্স · Antonio Orionus দ্বারা',
+    thirdPartyNotices: 'তৃতীয়-পক্ষ নোটিশ দেখুন'
   },
   titleBar: {
     close: 'বন্ধ করুন',
@@ -25,7 +33,6 @@ const bn = {
     greeting: 'স্বাগতম, আবার এলেন!',
     warmup: 'Arroxy প্রস্তুত হচ্ছে…',
     downloading: '{{binary}} ডাউনলোড হচ্ছে…',
-    warning: 'সেটআপ অসম্পূর্ণ — কিছু ফিচার কাজ নাও করতে পারে',
     warmupFailedNoDiag: 'সেটআপ ব্যর্থ হয়েছে। বিস্তারিত জানতে সেটআপ লগ খুলুন।'
   },
   repair: {
@@ -81,6 +88,8 @@ const bn = {
       heading: 'Playlist আইটেম',
       itemCount_one: '{{count}}টি ভিডিও',
       itemCount_other: '{{count}}টি ভিডিও',
+      itemCountAudio_one: '{{count}}টি ট্র্যাক',
+      itemCountAudio_other: '{{count}}টি ট্র্যাক',
       selectAll: 'সব নির্বাচন করুন',
       selectNone: 'কোনোটি নির্বাচন করবেন না',
       rangeFrom: 'থেকে',
@@ -91,15 +100,13 @@ const bn = {
       noSelection: 'চালিয়ে যেতে কমপক্ষে একটি ভিডিও নির্বাচন করুন',
       loadingItems: 'Playlist আনা হচ্ছে…',
       thumbnailAlt: 'ভিডিও থাম্বনেইল',
-      continue: 'চালিয়ে যান',
       durationUnknown: 'লাইভ'
     },
     playlistPresets: {
       heading: 'ব্যাচের জন্য মান বেছে নিন',
       subhead: 'প্রতিটি ভিডিও স্বাধীনভাবে বেছে নেওয়া স্তর অনুযায়ী রেজোলিউশন করে — বৈচিত্র্যময় playlist অবাক করা ছাড়াই কাজ করে।',
       itemCount_one: '{{count}}টি আইটেম',
-      itemCount_other: '{{count}}টি আইটেম',
-      continue: 'চালিয়ে যান'
+      itemCount_other: '{{count}}টি আইটেম'
     },
     mixedPrompt: {
       title: 'এই লিংকে একটি Playlist আছে',
@@ -114,17 +121,25 @@ const bn = {
       fetchFormats: 'ফরম্যাট আনুন',
       features: {
         heading: 'Arroxy যা নামাতে পারে',
-        video: {
-          title: 'ভিডিও',
-          desc: '4K পর্যন্ত যেকোনো রেজোলিউশন বেছে নিন'
+        youtube: {
+          heading: 'YouTube',
+          video: 'ভিডিও',
+          channel: 'চ্যানেল',
+          playlist: 'Playlist',
+          short: 'Shorts',
+          music: 'মিউজিক',
+          podcast: 'Podcast'
         },
-        playlist: {
-          title: 'Playlist',
-          desc: 'Playlist থেকে একাধিক আইটেম নির্বাচন করুন'
+        anySite: {
+          heading: '2000+ সাইট',
+          video: 'ভিডিও',
+          videoPlaylist: 'ভিডিও playlist',
+          musicPlaylist: 'মিউজিক playlist'
         },
-        audio: {
-          title: 'অডিও',
-          desc: 'মূল স্ট্রিম বা MP3/M4A রূপান্তর'
+        always: {
+          heading: 'সবসময় উপলব্ধ',
+          audioOnly: 'শুধু অডিও',
+          subtitles: 'সাবটাইটেল'
         }
       },
       mascotIdle: 'একটি YouTube লিংক দিন (ভিডিও বা Short) — তারপর "ফরম্যাট আনুন" ক্লিক করুন, আমি কাজ শুরু করব ✨',
@@ -162,7 +177,7 @@ const bn = {
         enabledButNoBrowser: 'কুকিজ ব্যবহার করতে একটি ব্রাউজার বেছে নিন',
         banWarning: 'YouTube অ্যাকাউন্ট ফ্ল্যাগ — এমনকি ব্যান — করতে পারে যদি সেই অ্যাকাউন্টের কুকিজ yt-dlp ব্যবহার করে। সম্ভব হলে অস্থায়ী অ্যাকাউন্ট ব্যবহার করুন।',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt স্থানীয়ভাবে পান (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const bn = {
       }
     },
     subtitles: {
-      heading: 'সাবটাইটেল',
       autoBadge: 'অটো',
-      hint: 'সাইডকার ফাইল ভিডিওর পাশে সেভ হবে',
       noLanguages: 'এই ভিডিওর জন্য কোনো সাবটাইটেল নেই',
       skip: 'বাদ দিন',
       skipSubs: 'এই ভিডিওর জন্য বাদ দিন',
-      selectAll: 'সব নির্বাচন করুন',
-      deselectAll: 'সব বাতিল করুন',
       mascot: 'শূন্য, একটি বা অনেকগুলো বেছে নিন — সম্পূর্ণ আপনার উপর ✨',
       searchPlaceholder: 'ভাষা খুঁজুন…',
       noMatches: 'কোনো ভাষা মেলেনি',
@@ -242,10 +253,14 @@ const bn = {
       audioOnlyOption: 'শুধু অডিও (ভিডিও ছাড়া)',
       mascot: 'সেরা + সেরা = সর্বোচ্চ মান। আমি এটাই বেছে নিতাম!',
       sniffing: 'আপনার জন্য সেরা ফরম্যাট খুঁজছি…',
-      loadingHint: 'সাধারণত এক সেকেন্ড লাগে',
+      loadingHint: 'প্রোবিং শেষ হওয়া পর্যন্ত অপেক্ষা করুন — প্লেলিস্ট ও অনুসন্ধানে একটু বেশি সময় লাগতে পারে।',
       loadingAria: 'ফরম্যাট লোড হচ্ছে',
       sizeUnknown: 'আকার অজানা',
+      skipToConfirm: 'নিশ্চিতে যান',
+      skipToConfirmTooltip: 'বাকি সকল ধাপের জন্য আপনার সংরক্ষিত পছন্দ ব্যবহার করে। কোনো সেটিং পরিবর্তন করতে, পরিবর্তে ধাপে ধাপে এগিয়ে যান — আপনার পছন্দ পরের বার সংরক্ষিত হবে।',
       total: 'মোট',
+      keepAudio: 'যেমন আছে রাখুন',
+      keepAudioMeta: 'বিল্ট-ইন অডিও',
       convert: {
         label: 'কনভার্ট করুন',
         uncompressed: 'কনভার্ট · আনকম্প্রেসড',
@@ -261,8 +276,7 @@ const bn = {
         bodyDisabled: 'কুকিজ কনফিগার করা আছে কিন্তু বন্ধ। সম্পূর্ণ তালিকা পেতে চালু করে আবার চেষ্টা করুন, অথবা নেটওয়ার্ক পরিবর্তন করে আবার চেষ্টা করুন।',
         bodyEnabled: 'কুকিজ থাকলেও YouTube এই প্রোব সীমাবদ্ধ করেছে। পরে আবার চেষ্টা করুন বা নেটওয়ার্ক পরিবর্তন করুন।',
         retryCta: 'আবার চেষ্টা করুন',
-        enableRetryCta: 'কুকিজ চালু করে আবার চেষ্টা করুন',
-        openSettingsCta: 'উন্নত সেটিংস খুলুন'
+        enableRetryCta: 'কুকিজ চালু করে আবার চেষ্টা করুন'
       },
       cookiesError: {
         heading: 'কুকিজ কারণ হতে পারে',
@@ -272,6 +286,10 @@ const bn = {
         explanationFile: 'আপনার কুকিজ ফাইলটি খালি, মেয়াদ শেষ বা ভুল ফরম্যাটে থাকতে পারে (yt-dlp Netscape cookies.txt আশা করে)। কুকিজ পুনরায় এক্সপোর্ট করুন, ভিন্ন ফাইল বেছে নিন, ব্রাউজার মোডে স্যুইচ করুন, অথবা কুকিজ বন্ধ করে দেখুন।',
         explanationBrowser: 'কুকিজ সরাসরি ব্রাউজার থেকে পড়া হয়। ব্রাউজার এখন চলছে থাকলে, এর কুকি ডেটাবেস লক থাকতে পারে (Chromium-পরিবার)। ব্রাউজারটি YouTube-এ সাইন ইন থাকতে হবে। ব্রাউজার বন্ধ করুন, ভিন্ন ব্রাউজারে স্যুইচ করুন, ফাইল মোডে স্যুইচ করুন, অথবা কুকিজ বন্ধ করে দেখুন।',
         openSettingsCta: 'কুকিজ সেটিংস খুলুন',
+        needsCookies: {
+          heading: 'এই সাইটে সাইন-ইন প্রয়োজন',
+          body: 'yt-dlp প্রমাণীকরণ ছাড়া এই ভিডিওতে অ্যাক্সেস করতে পারেনি। উন্নত সেটিংসে কুকিজ কনফিগার করুন — আপনি ইতিমধ্যে সাইন ইন করা কোনো ব্রাউজার দিন, বা cookies.txt ফাইল আমদানি করুন।'
+        },
         dpapi: {
           heading: 'Windows এনক্রিপশন দ্বারা Chrome কুকিজ ব্লক হয়েছে',
           explanation: 'Chrome 127 এবং পরবর্তী সংস্করণ Windows-এ কুকিজ এমনভাবে এনক্রিপ্ট করে যা অন্য অ্যাপ পড়তে পারে না। নিচের যেকোনো একটি সমাধান চেষ্টা করুন।',
@@ -281,7 +299,7 @@ const bn = {
           fixFileBody: 'Chrome থেকে ব্রাউজার এক্সটেনশন দিয়ে কুকিজ এক্সপোর্ট করুন, তারপর এই অ্যাপটি File মোডে পরিবর্তন করে এক্সপোর্ট করা ফাইলটি বেছে নিন।',
           fixUnsafeLabel: 'App-Bound Encryption নিষ্ক্রিয় করে Chrome চালু করুন',
           fixUnsafeBody: 'Chrome-এর লঞ্চ শর্টকাটে --disable-features=LockProfileCookieDatabase যোগ করুন। সতর্কতা: এটি আগে এনক্রিপ্ট করা কুকিজ অকার্যকর করে দেয়, তাই আপনি প্রতিটি সাইট থেকে লগ আউট হয়ে যাবেন এবং আবার লগ ইন করতে হবে।',
-          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+          docsLinkLabel: 'yt-dlp ডকস (ইস্যু #10927)'
         }
       }
     },
@@ -334,26 +352,24 @@ const bn = {
       labelSize: 'আকার',
       sizeUnknown: 'অজানা',
       nothingToDownload: 'শুধু সাবটাইটেল প্রিসেট চালু আছে কিন্তু কোনো সাবটাইটেল ভাষা নির্বাচিত হয়নি — কিছু ডাউনলোড হবে না।',
+      thumbnailEmbedNotSupported: 'Thumbnail embed বাদ দেওয়া হয়েছে — আউটপুট container এটি সমর্থন করে না।',
+      subtitleEmbedAudioOnly: 'সাবটাইটেল embed পরিবর্তন করে sidecar করা হয়েছে — অডিও ট্র্যাক embedded সাবটাইটেল স্ট্রিম সমর্থন করে না।',
       audioOnly: 'শুধু অডিও',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'অন্য ডাউনলোড শেষ হলে শুরু হবে — পুরো ব্যান্ডউইথ পাবে',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'নামিয়ে নিন! ↓',
       pullItTooltip: 'এখনই শুরু হবে — অন্য সক্রিয় ডাউনলোডের সাথে চলবে',
-      playlistBatch_one: '{{count}}টি ভিডিও · {{title}}',
-      playlistBatch_other: '{{count}}টি ভিডিও · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'প্রিসেট',
       labelItems: 'আইটেম',
       itemsValue_one: '{{total}}-এর মধ্যে {{count}}টি ভিডিও',
-      itemsValue_other: '{{total}}-এর মধ্যে {{count}}টি ভিডিও'
-    },
-    error: {
-      icon: 'ত্রুটি'
+      itemsValue_other: '{{total}}-এর মধ্যে {{count}}টি ভিডিও',
+      itemsValueAudio_one: '{{total}}-এর মধ্যে {{count}}টি ট্র্যাক',
+      itemsValueAudio_other: '{{total}}-এর মধ্যে {{count}}টি ট্র্যাক'
     }
   },
   videoCard: {
-    titlePlaceholder: 'লোড হচ্ছে…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'লোড হচ্ছে…'
   },
   queue: {
     header: 'ডাউনলোড কিউ',
@@ -378,9 +394,7 @@ const bn = {
       resume: 'চালিয়ে যান',
       cancel: 'বাতিল',
       remove: 'সরান'
-    },
-    interJobSleep_one: 'পরবর্তী ডাউনলোড {{count}} সেকেন্ডে শুরু হবে',
-    interJobSleep_other: 'পরবর্তী ডাউনলোড {{count}} সেকেন্ডে শুরু হবে'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const bn = {
     ytdlpProcessError: 'yt-dlp প্রক্রিয়া ত্রুটি: {{error}}',
     ytdlpExitCode: 'yt-dlp {{code}} কোড দিয়ে বন্ধ হয়েছে',
     downloadingBinary: '{{name}} বাইনারি ডাউনলোড হচ্ছে…',
-    unknownStartupFailure: 'অজানা ডাউনলোড স্টার্টআপ ব্যর্থতা'
+    unknownStartupFailure: 'অজানা ডাউনলোড স্টার্টআপ ব্যর্থতা',
+    diskSpaceInsufficient: 'পর্যাপ্ত ডিস্ক স্থান নেই — {{required}} প্রয়োজন, মাত্র {{free}} পাওয়া যাচ্ছে'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const bn = {
       unavailable: 'এই ভিডিওটি পাওয়া যাচ্ছে না — এটি ব্যক্তিগত, মুছে ফেলা বা অঞ্চল-লক হতে পারে।',
       geoBlocked: 'এই ভিডিওটি আপনার অঞ্চলে পাওয়া যায় না।',
       outOfDiskSpace: 'পর্যাপ্ত ডিস্ক স্পেস নেই। জায়গা খালি করে আবার চেষ্টা করুন।',
-      unsupportedUrl: 'এটি ভিডিও URL মনে হচ্ছে না। একটি YouTube ভিডিও, Short, বা playlist লিংক পেস্ট করুন।'
+      unsupportedUrl: 'এটি ভিডিও URL মনে হচ্ছে না। একটি YouTube ভিডিও, Short, বা playlist লিংক পেস্ট করুন।',
+      chunkTransferFailure: 'সার্ভার বারবার ডাউনলোড মাঝপথে কেটে দিচ্ছিল এবং yt-dlp বারবার চেষ্টার পর হাল ছেড়ে দিয়েছে। এটি সাধারণত সবচেয়ে বড় ভিডিও ফরম্যাটে (4K HDR / উচ্চ বিটরেট VP9) হয়। আবার চেষ্টা করুন, নেটওয়ার্ক/VPN বদলান, অথবা কম রেজোলিউশনের ফরম্যাট বেছে নিন।',
+      postprocessFailure: 'yt-dlp ডাউনলোড শেষ করেছে কিন্তু post-processing (merge / mux / convert) ব্যর্থ হয়েছে। প্রায়ই এটি একটি সাময়িক ffmpeg সমস্যা — আবার চেষ্টা করুন, এবং সমস্যা চলতে থাকলে অন্য একটি ফরম্যাট কম্বিনেশন চেষ্টা করুন।',
+      parse: 'সাইট থেকে আসা রেসপন্স পার্স করা যায়নি। yt-dlp এর extractor পুরোনো হয়ে গেছে হতে পারে। Arroxy চালু হওয়ার সময় yt-dlp স্বয়ংক্রিয়ভাবে আপডেট করে — কয়েক মিনিট পর ফিক্স আসলে আবার চেষ্টা করুন।',
+      network: 'নেটওয়ার্ক ত্রুটি। আপনার সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন।',
+      unknown: 'ডাউনলোড ব্যর্থ। নিচে raw output দেখুন।'
     }
   },
   presets: {
@@ -463,9 +483,8 @@ const bn = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps-এ কনভার্ট করুন' }
   },
   formatLabel: {
-    audioOnly: 'শুধু অডিও',
     audioFallback: 'অডিও',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'শুধু অডিও · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -498,6 +517,24 @@ const bn = {
       detail: 'রেন্ডারার প্রক্রিয়া ক্র্যাশ হয়েছে ({{reason}})। আবার চেষ্টা করতে পুনরায় লোড করুন।',
       reload: 'পুনরায় লোড করুন',
       quit: 'বন্ধ করুন'
+    }
+  },
+  share: {
+    title: 'Arroxy শেয়ার করুন',
+    description: 'Arroxy বিনামূল্যে এবং ওপেন-সোর্স। শেয়ার করলে আরও বেশি মানুষ এটি আবিষ্কার করতে পারবেন।',
+    copyLink: 'লিঙ্ক কপি করুন',
+    copied: 'কপি হয়েছে!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Arroxy শেয়ার করুন',
+    footerLabel: 'শেয়ার',
+    shareAction: 'Arroxy শেয়ার করুন',
+    inlineCard: {
+      body: 'Arroxy পছন্দ হচ্ছে? এমন কাউকে শেয়ার করুন যে উপকৃত হতে পারেন।',
+      dismiss: 'শেয়ার পরামর্শ বাতিল করুন'
+    },
+    highValueBanner: {
+      body: 'Arroxy পছন্দ হচ্ছে? অন্যদের আবিষ্কার করতে সাহায্য করুন।',
+      dismiss: 'শেয়ার পরামর্শ বাতিল করুন'
     }
   }
 } as const;

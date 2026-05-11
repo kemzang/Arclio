@@ -1,15 +1,16 @@
-import type { DownloadJob, QueueItem } from '@shared/types';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
-import { queueItemSchema } from '@shared/schemas';
+import type { QueueItem } from '@shared/types.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
+import { queueItemSchema } from '@shared/schemas.js';
 
-export { ok } from '@shared/result';
+export { ok } from '@shared/result.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };
 
 const DEFAULT_JOB: PreparedJob = {
   kind: 'single-format',
-  source: 'youtube',
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
   formatId: '137+251',
   preset: 'custom',
   sponsorBlock: SB_OFF,
@@ -28,7 +29,6 @@ export function makeItem(overrides: Partial<QueueItem> & Pick<QueueItem, 'id' | 
     lastStatus: null,
     error: null,
     finishedAt: null,
-    downloadJobId: null,
     job: DEFAULT_JOB,
     ...overrides
   };
@@ -39,15 +39,4 @@ export function makeItem(overrides: Partial<QueueItem> & Pick<QueueItem, 'id' | 
     throw new Error(`makeItem fixture invalid: ${parsed.error.issues[0]?.message ?? 'schema mismatch'}`);
   }
   return parsed.data;
-}
-
-export function makeJob(id: string): DownloadJob {
-  return {
-    id,
-    url: '',
-    outputDir: '/tmp',
-    status: 'running',
-    createdAt: '',
-    updatedAt: ''
-  };
 }

@@ -1,7 +1,8 @@
-import { STATUS_KEY } from '@shared/schemas';
-import { DEFAULTS } from '@shared/constants';
-import { dedupeSubtitleFiles, logger } from '../subtitlePostProcess';
-import type { Phase, PhaseContext, PhaseOutcome } from './types';
+import { STATUS_KEY } from '@shared/schemas.js';
+import { DEFAULTS } from '@shared/constants.js';
+import { dedupeSubtitleFiles, logger } from '../subtitlePostProcess.js';
+import { classifyYtDlpFailure } from '../download/errorClassification.js';
+import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
 export const SubtitleOnlyPhase: Phase = {
   kind: 'subtitle-only',
@@ -27,27 +28,36 @@ export const SubtitleOnlyPhase: Phase = {
         writeAutoSubs: subtitles.writeAuto
       },
       {
-        onAttempt: (attempt) => {
-          if (attempt === 2) return;
+        onMinting: (attempt) => {
           ctx.emitStatus('token', attempt === 0 ? STATUS_KEY.mintingToken : STATUS_KEY.remintingToken);
         },
-        onSpawn: (proc) => ctx.attachYtDlpProcess(proc, STATUS_KEY.fetchingSubtitles),
+        onSpawn: (proc) => {
+          active.ytDlpProcess = proc;
+          if (active.cancelRequested) proc.kill('SIGKILL');
+          ctx.register(() => {
+            proc.kill('SIGKILL');
+          });
+          ctx.emitStatus('download', STATUS_KEY.fetchingSubtitles);
+        },
         onStdout: (text) => ctx.safeConsume(text),
         onStderr: (text) => ctx.safeConsume(text)
       }
     );
 
+    if (active.pauseRequested) return { kind: 'paused' };
     if (active.cancelRequested) return { kind: 'cancelled' };
 
     if (result.kind !== 'success') {
       logger.warn('subtitle-only fetch failed', { jobId: job.id, kind: result.kind });
-      return { kind: 'hard-failed', error: ctx.emitYtdlpFailure(result) };
+      const { payload, statusKey, params } = await classifyYtDlpFailure(result, job.outputDir, job.id);
+      ctx.emitStatus('error', statusKey, params, payload);
+      return { kind: 'hard-failed', error: payload };
     }
 
     if (result.usedExtractorFallback) active.usedExtractorFallback = true;
 
     if (subtitles.writeAuto) {
-      await dedupeSubtitleFiles(active.subtitlePaths, job.id, () => active.cancelRequested);
+      await dedupeSubtitleFiles(active.subtitlePaths, preparedJob.extractor, job.id, () => active.cancelRequested);
     }
 
     return { kind: 'completed' };

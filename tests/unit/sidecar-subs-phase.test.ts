@@ -1,13 +1,13 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { SidecarSubsPhase } from '@main/services/phases/SidecarSubsPhase';
-import { STATUS_KEY } from '@shared/schemas';
-import type { PhaseContext, ActiveDownload } from '@main/services/phases/types';
-import type { DownloadJob, StartDownloadInput } from '@shared/types';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+import { SidecarSubsPhase } from '@main/services/phases/SidecarSubsPhase.js';
+import { STATUS_KEY } from '@shared/schemas.js';
+import type { PhaseContext, ActiveDownload } from '@main/services/phases/types.js';
+import type { DownloadJob, StartDownloadInput } from '@shared/types.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };
-import type { YtDlpResult } from '@main/services/YtDlp';
+import type { YtDlpResult } from '@main/services/YtDlp.js';
 
 vi.mock('@main/services/subtitlePostProcess', () => ({
   dedupeSubtitleFiles: vi.fn().mockResolvedValue(undefined),
@@ -15,7 +15,7 @@ vi.mock('@main/services/subtitlePostProcess', () => ({
   logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() }
 }));
 
-import { dedupeSubtitleFiles, muxSubtitlesIntoVideo } from '@main/services/subtitlePostProcess';
+import { dedupeSubtitleFiles, muxSubtitlesIntoVideo } from '@main/services/subtitlePostProcess.js';
 
 beforeEach(() => vi.clearAllMocks());
 
@@ -32,7 +32,8 @@ function makeJob(): DownloadJob {
 
 const BASE_JOB: PreparedJob = {
   kind: 'single-format',
-  source: 'youtube',
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
   formatId: 'bv+ba',
   preset: 'custom',
   sponsorBlock: SB_OFF,
@@ -50,27 +51,29 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
   return {
     job: makeJob(),
     input: BASE_INPUT,
+    controller: new AbortController(),
+    get signal(): AbortSignal {
+      return this.controller.signal;
+    },
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: ['/tmp/video.en.srt'],
     mediaPath: '/tmp/video.mp4',
+    disposables: [],
     ...overrides
   };
 }
 
 function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
   const runMock = vi.fn().mockResolvedValue(runResult);
+  const active = makeActive(activeOverrides);
   return {
-    active: makeActive(activeOverrides),
+    active,
+    signal: active.signal,
+    register: (d) => active.disposables.push(d),
     ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ key: null }),
-    attachYtDlpProcess: vi.fn(),
-    safeConsume: vi.fn(),
-    cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-    cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-    finalize: vi.fn().mockResolvedValue(undefined),
-    moveToPaused: vi.fn()
+    safeConsume: vi.fn()
   };
 }
 
@@ -83,7 +86,7 @@ const SUCCESS: YtDlpResult = {
 const EXIT_ERROR: YtDlpResult = {
   kind: 'exit-error',
   exitCode: 1,
-  signal: null,
+  errorKind: 'unknown',
   rawError: 'fail',
   stdout: '',
   stderr: ''
@@ -149,15 +152,33 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
     });
     await SidecarSubsPhase(false).run(ctx);
 
-    const shouldAbort = vi.mocked(dedupeSubtitleFiles).mock.calls[0][2];
-    expect(shouldAbort()).toBe(false);
+    const shouldAbort = vi.mocked(dedupeSubtitleFiles).mock.calls[0][3];
+    expect(shouldAbort?.()).toBe(false);
     ctx.active.cancelRequested = true;
-    expect(shouldAbort()).toBe(true);
+    expect(shouldAbort?.()).toBe(true);
   });
 
   it('embedAfter=false → muxSubtitlesIntoVideo not called', async () => {
     await SidecarSubsPhase(false).run(makeCtx(SUCCESS));
     expect(muxSubtitlesIntoVideo).not.toHaveBeenCalled();
+  });
+
+  it('pauseRequested during subtitle fetch → returns paused (not soft-failed)', async () => {
+    const active = makeActive({ cancelRequested: false });
+    const runMock = vi.fn().mockImplementationOnce(async () => {
+      active.pauseRequested = true;
+      return EXIT_ERROR; // SIGTERM makes yt-dlp exit non-zero
+    });
+    const ctx: PhaseContext = {
+      active,
+      signal: active.signal,
+      register: (d) => active.disposables.push(d),
+      ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
+      emitStatus: vi.fn(),
+      safeConsume: vi.fn()
+    };
+    const outcome = await SidecarSubsPhase(false).run(ctx);
+    expect(outcome.kind).toBe('paused');
   });
 });
 
@@ -226,6 +247,26 @@ describe('SidecarSubsPhase(embedAfter=true)', () => {
     const outcome = await SidecarSubsPhase(true).run(ctx);
     expect(muxSubtitlesIntoVideo).not.toHaveBeenCalled();
     expect(outcome.kind).toBe('completed');
+  });
+
+  it('pauseRequested during embed mux → returns paused (not completed)', async () => {
+    const active = makeActive({ cancelRequested: false, mediaPath: '/tmp/video.mp4', subtitlePaths: ['/tmp/video.en.srt'] });
+    const runMock = vi.fn().mockResolvedValue(SUCCESS);
+    vi.mocked(muxSubtitlesIntoVideo).mockImplementationOnce(async (opts) => {
+      opts.onSpawn({ kill: vi.fn() } as never);
+      active.pauseRequested = true;
+      return { ok: true, outputPath: '/tmp/video.mkv' };
+    });
+    const ctx: PhaseContext = {
+      active,
+      signal: active.signal,
+      register: (d) => active.disposables.push(d),
+      ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
+      emitStatus: vi.fn(),
+      safeConsume: vi.fn()
+    };
+    const outcome = await SidecarSubsPhase(true).run(ctx);
+    expect(outcome.kind).toBe('paused');
   });
 
   it('emits mergingFormats before mux', async () => {

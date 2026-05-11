@@ -3,8 +3,7 @@ const zh = {
     back: '返回',
     continue: '继续',
     retry: '重试',
-    startOver: '重新开始',
-    loading: '加载中…'
+    startOver: '重新开始'
   },
   app: {
     feedback: '反馈',
@@ -14,6 +13,15 @@ const zh = {
     debugCopyTitle: '复制调试信息(Electron、操作系统、Chrome 版本)',
     zoomIn: '放大',
     zoomOut: '缩小'
+  },
+  about: {
+    button: '关于',
+    openTitle: '关于 Arroxy',
+    tagline: '快速易用的桌面视频与音频下载工具。',
+    websiteLink: '官网',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT 许可证 · 作者 Antonio Orionus',
+    thirdPartyNotices: '查看第三方声明'
   },
   titleBar: {
     close: '关闭',
@@ -25,7 +33,6 @@ const zh = {
     greeting: '嘿,欢迎回来!',
     warmup: 'Arroxy 正在启动…',
     downloading: '正在下载 {{binary}}…',
-    warning: '初始化未完成 — 部分功能可能无法使用',
     warmupFailedNoDiag: '初始化失败。打开设置日志查看详情。'
   },
   repair: {
@@ -81,6 +88,8 @@ const zh = {
       heading: 'Playlist 视频',
       itemCount_one: '{{count}} 个视频',
       itemCount_other: '{{count}} 个视频',
+      itemCountAudio_one: '{{count}} 首曲目',
+      itemCountAudio_other: '{{count}} 首曲目',
       selectAll: '全选',
       selectNone: '取消全选',
       rangeFrom: '从',
@@ -91,15 +100,13 @@ const zh = {
       noSelection: '请至少选择一个视频以继续',
       loadingItems: '正在获取 Playlist…',
       thumbnailAlt: '视频缩略图',
-      continue: '继续',
       durationUnknown: '直播'
     },
     playlistPresets: {
       heading: '选择批量下载画质',
       subhead: '每个视频独立匹配所选画质档位——混合内容的播放列表也能正常处理，无意外。',
       itemCount_one: '{{count}} 项',
-      itemCount_other: '{{count}} 项',
-      continue: '继续'
+      itemCount_other: '{{count}} 项'
     },
     mixedPrompt: {
       title: '此链接包含 Playlist',
@@ -114,17 +121,25 @@ const zh = {
       fetchFormats: '获取格式',
       features: {
         heading: 'Arroxy 能下载什么',
-        video: {
-          title: '视频',
-          desc: '可选任意分辨率，最高 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: '视频',
+          channel: '频道',
+          playlist: '播放列表',
+          short: 'Shorts',
+          music: '音乐',
+          podcast: '播客'
         },
-        playlist: {
-          title: '播放列表',
-          desc: '多选播放列表中的视频'
+        anySite: {
+          heading: '2000+ 个网站',
+          video: '视频',
+          videoPlaylist: '视频播放列表',
+          musicPlaylist: '音乐播放列表'
         },
-        audio: {
-          title: '音频',
-          desc: '原始流或转换为 MP3/M4A'
+        always: {
+          heading: '始终可用',
+          audioOnly: '纯音频',
+          subtitles: '字幕'
         }
       },
       mascotIdle: '丢一个 YouTube 链接给我(视频或 Shorts 都行)— 点「获取格式」我就开始干活 ✨',
@@ -162,7 +177,7 @@ const zh = {
         enabledButNoBrowser: '请选择一个浏览器以使用 Cookie',
         banWarning: '提醒: yt-dlp 使用的 Cookie 对应账号可能被 YouTube 标记,有时甚至被封禁。建议尽量使用临时小号。',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: '本地获取 cookies.txt (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const zh = {
       }
     },
     subtitles: {
-      heading: '字幕',
       autoBadge: '自动',
-      hint: '字幕文件将保存在视频旁边',
       noLanguages: '该视频没有字幕',
       skip: '跳过',
       skipSubs: '本视频跳过',
-      selectAll: '全选',
-      deselectAll: '取消全选',
       mascot: '选零个、一个或多个 — 完全由你决定 ✨',
       searchPlaceholder: '搜索语言…',
       noMatches: '没有匹配的语言',
@@ -242,10 +253,14 @@ const zh = {
       audioOnlyOption: '仅音频(无视频)',
       mascot: '最佳画质 + 最佳音质 = 最高质量。我会选这个!',
       sniffing: '正在为你寻找最佳格式…',
-      loadingHint: '通常只需一秒',
+      loadingHint: '请等待探测完成，播放列表和搜索可能需要一些时间。',
       loadingAria: '正在加载格式',
       sizeUnknown: '大小未知',
       total: '总计',
+      skipToConfirm: '跳至确认',
+      skipToConfirmTooltip: '使用您保存的偏好设置完成所有剩余步骤。若要更改某项设置，请逐步继续操作——您的选择将在下次保存。',
+      keepAudio: '保持原样',
+      keepAudioMeta: '内置音频',
       convert: {
         label: '转换',
         uncompressed: '转换 · 无损',
@@ -261,8 +276,7 @@ const zh = {
         bodyDisabled: 'Cookies 已配置但未启用。启用后重试可获取完整列表，或更换网络后重试。',
         bodyEnabled: '即使使用了 cookies，YouTube 仍然限制了本次探测。请稍后重试或更换网络。',
         retryCta: '重试',
-        enableRetryCta: '启用 cookies 并重试',
-        openSettingsCta: '打开高级设置'
+        enableRetryCta: '启用 cookies 并重试'
       },
       cookiesError: {
         heading: 'Cookies 可能是原因所在',
@@ -271,6 +285,10 @@ const zh = {
         currentModeBrowser: '浏览器',
         explanationFile: '你的 cookies 文件可能为空、已过期或格式不正确（yt-dlp 需要 Netscape cookies.txt 格式）。请尝试重新导出 cookies、选择其他文件、切换到浏览器模式或关闭 cookies。',
         explanationBrowser: 'Cookies 直接从浏览器读取。如果浏览器当前正在运行，其 cookie 数据库可能已被锁定（Chromium-family）。浏览器还必须已登录 YouTube。请尝试关闭浏览器、切换到其他浏览器、切换到文件模式或关闭 cookies。',
+        needsCookies: {
+          heading: '此网站需要登录',
+          body: 'yt-dlp 无法在未经认证的情况下访问此视频。请在高级设置中配置 cookies——指向你已登录的浏览器，或导入 cookies.txt 文件。'
+        },
         openSettingsCta: '打开 cookies 设置',
         dpapi: {
           heading: 'Chrome Cookies 被 Windows 加密阻止',
@@ -334,26 +352,24 @@ const zh = {
       labelSize: '大小',
       sizeUnknown: '未知',
       nothingToDownload: '「仅字幕」预设已启用，但未选择任何字幕语言 — 不会下载任何内容。',
+      thumbnailEmbedNotSupported: 'Thumbnail embed 已跳过 — 输出 container 不支持此功能。',
+      subtitleEmbedAudioOnly: 'Subtitle embed 已改为 sidecar — 纯音频轨道不支持嵌入字幕流。',
       audioOnly: '仅音频',
       addToQueue: '+ 队列',
       addToQueueTooltip: '其他下载完成后开始 — 享受全部带宽',
       pullIt: '开始下载! ↓',
       pullItTooltip: '立即开始 — 与其他活动下载并行运行',
-      playlistBatch_one: '{{count}} 个视频 · {{title}}',
-      playlistBatch_other: '{{count}} 个视频 · {{title}}',
       labelPlaylist: '播放列表',
       labelPreset: '预设',
       labelItems: '项目',
       itemsValue_one: '{{total}} 个视频中的 {{count}} 个',
-      itemsValue_other: '{{total}} 个视频中的 {{count}} 个'
-    },
-    error: {
-      icon: '错误'
+      itemsValue_other: '{{total}} 个视频中的 {{count}} 个',
+      itemsValueAudio_one: '{{total}} 首曲目中的 {{count}} 首',
+      itemsValueAudio_other: '{{total}} 首曲目中的 {{count}} 首'
     }
   },
   videoCard: {
-    titlePlaceholder: '加载中…',
-    domain: 'youtube.com'
+    titlePlaceholder: '加载中…'
   },
   queue: {
     header: '下载队列',
@@ -378,9 +394,7 @@ const zh = {
       resume: '继续',
       cancel: '取消',
       remove: '移除'
-    },
-    interJobSleep_one: '下一个下载将在 {{count}} 秒后开始',
-    interJobSleep_other: '下一个下载将在 {{count}} 秒后开始'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const zh = {
     ytdlpProcessError: 'yt-dlp 进程错误: {{error}}',
     ytdlpExitCode: 'yt-dlp 以代码 {{code}} 退出',
     downloadingBinary: '正在下载二进制 {{name}}…',
-    unknownStartupFailure: '启动下载时出现未知错误'
+    unknownStartupFailure: '启动下载时出现未知错误',
+    diskSpaceInsufficient: '磁盘空间不足 — 需要 {{required}}，当前仅剩 {{free}}'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const zh = {
       unavailable: '该视频不可用 — 可能是私有、已删除或受地区限制。',
       geoBlocked: '该视频在你所在的地区不可用。',
       outOfDiskSpace: '磁盘空间不足。请清理空间后重试。',
-      unsupportedUrl: '这看起来不像视频链接。请粘贴 YouTube 视频、Short 或播放列表的链接。'
+      unsupportedUrl: '这看起来不像视频链接。请粘贴 YouTube 视频、Short 或播放列表的链接。',
+      chunkTransferFailure: '服务器在传输过程中反复中断下载，yt-dlp 多次重试后放弃。此问题通常出现在最大的视频格式（4K HDR / 高码率 VP9）上。请重试、切换网络或 VPN，或选择分辨率较低的格式。',
+      postprocessFailure: 'yt-dlp 已完成下载，但后处理（合并 / mux / 转换）失败。这通常是 ffmpeg 的临时问题——请重试，如果仍然失败，请尝试其他格式组合。',
+      parse: '无法解析网站的响应。yt-dlp 的提取器可能已过时。Arroxy 会在启动时自动更新 yt-dlp——请几分钟后再重试，等待修复发布。',
+      network: '网络错误。请检查你的连接并重试。',
+      unknown: '下载失败。请查看下方的原始输出。'
     }
   },
   presets: {
@@ -463,7 +483,6 @@ const zh = {
     'audio-mp3': { label: 'Audio (MP3)', desc: '转换为 MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: '仅音频',
     audioFallback: '音频',
     audioOnlyDot: '仅音频 · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
@@ -498,6 +517,24 @@ const zh = {
       detail: '渲染进程崩溃（{{reason}}）。请重新加载以重试。',
       reload: '重新加载',
       quit: '退出'
+    }
+  },
+  share: {
+    title: '分享 Arroxy',
+    description: 'Arroxy 免费且开源。分享它可以帮助更多人发现它。',
+    copyLink: '复制链接',
+    copied: '已复制！',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: '分享 Arroxy',
+    footerLabel: '分享',
+    shareAction: '分享 Arroxy',
+    inlineCard: {
+      body: '喜欢 Arroxy 吗？把它分享给可能觉得有用的人吧。',
+      dismiss: '关闭分享建议'
+    },
+    highValueBanner: {
+      body: '喜欢 Arroxy 吗？帮助其他人发现它。',
+      dismiss: '关闭分享建议'
     }
   }
 } as const;

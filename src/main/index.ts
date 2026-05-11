@@ -2,29 +2,32 @@ import path from 'node:path';
 import fs from 'node:fs';
 import os from 'node:os';
 import { app, BrowserWindow, dialog } from 'electron';
-import log from 'electron-log/main';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { TrayManager } from '@main/services/TrayManager';
-import { mainT, pluralKey } from '@main/i18n';
-import { pickLanguage } from '@shared/i18n';
-import { registerIpcHandlers } from '@main/ipc/registerIpcHandlers';
-import { registerUpdaterHandlers } from '@main/ipc/registerUpdaterHandlers';
-import { setupAnalytics, setAnalyticsEnabled, trackCrashDetectedOncePerSession, trackMain } from '@main/services/analytics';
-import { detectInstallChannel } from '@main/installChannel';
-import { BinaryManager } from '@main/services/BinaryManager';
-import { DownloadService } from '@main/services/DownloadService';
-import { FormatProbeService } from '@main/services/FormatProbeService';
-import { PlaylistProbeService } from '@main/services/PlaylistProbeService';
-import { TokenService } from '@main/services/TokenService';
-import { YtDlp } from '@main/services/YtDlp';
-import { RecentJobsStore } from '@main/stores/RecentJobsStore';
-import { SettingsStore } from '@main/stores/SettingsStore';
-import { QueueStore } from '@main/stores/QueueStore';
-import { ClipboardWatcher, watcherWindowFromBrowserWindow } from '@main/services/ClipboardWatcher';
-import { HiddenWindowTokenProvider } from '@main/token/providers/HiddenWindowTokenProvider';
-import { MockTokenProvider } from '@main/token/providers/MockTokenProvider';
-import { defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT } from '@shared/constants';
-import { runSmokeMode, readSmokeUrl, exitWithCode } from '@main/smoke';
+import log from 'electron-log/main.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { TrayManager } from '@main/services/TrayManager.js';
+import { mainT, pluralKey } from '@main/i18n.js';
+import { pickLanguage } from '@shared/i18n/index.js';
+import { registerIpcHandlers } from '@main/ipc/registerIpcHandlers.js';
+import { registerUpdaterHandlers } from '@main/ipc/registerUpdaterHandlers.js';
+import { setupAnalytics, setAnalyticsEnabled, trackCrashDetectedOncePerSession, trackMain } from '@main/services/analytics.js';
+import { detectInstallChannel } from '@main/installChannel.js';
+import { BinaryManager } from '@main/services/BinaryManager.js';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { QueueService } from '@main/services/QueueService.js';
+import { ProbeService } from '@main/services/ProbeService.js';
+import { TokenService } from '@main/services/TokenService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
+import { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
+import { SettingsStore } from '@main/stores/SettingsStore.js';
+import { QueueStore } from '@main/stores/QueueStore.js';
+import { ClipboardWatcher, watcherWindowFromBrowserWindow } from '@main/services/ClipboardWatcher.js';
+import { HiddenWindowTokenProvider } from '@main/token/providers/HiddenWindowTokenProvider.js';
+import { MockTokenProvider } from '@main/token/providers/MockTokenProvider.js';
+import { defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT } from '@shared/constants.js';
+import { runSmokeMode, readSmokeUrl, exitWithCode } from '@main/smoke.js';
+import { cancelQueueBeforeExit } from '@main/shutdown.js';
+import { decideCloseAction, decideRendererCrashAction } from '@main/windowLifecycle.js';
+import { registerPreloadDiagnostics, resolveMainWindowPreloadPath } from '@main/preloadDiagnostics.js';
 import contextMenu from 'electron-context-menu';
 import windowStateKeeper from 'electron-window-state';
 
@@ -74,6 +77,13 @@ try {
   log.warn('argv.json read failed', err);
 }
 
+// Sandbox every BrowserWindow without per-window opt-in. Matches vscode +
+// element-desktop. Must run before BrowserWindow construction; safe to call
+// pre-`whenReady`. contextIsolation + nodeIntegration:false stay declared on
+// each BrowserWindow because they're orthogonal guarantees that
+// app.enableSandbox() does not subsume.
+app.enableSandbox();
+
 const hasSingleInstanceLock = app.requestSingleInstanceLock();
 
 if (!hasSingleInstanceLock) {
@@ -82,6 +92,7 @@ if (!hasSingleInstanceLock) {
 
 function createMainWindow(): BrowserWindow {
   const winState = windowStateKeeper({ defaultWidth: WINDOW_DEFAULT_WIDTH, defaultHeight: WINDOW_DEFAULT_HEIGHT });
+  const preloadPath = resolveMainWindowPreloadPath(import.meta.dirname);
 
   const window = new BrowserWindow({
     x: winState.x,
@@ -95,13 +106,13 @@ function createMainWindow(): BrowserWindow {
     titleBarStyle: 'hidden',
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, '../preload/index.js'),
+      preload: preloadPath,
       contextIsolation: true,
-      nodeIntegration: false,
-      sandbox: true
+      nodeIntegration: false
     }
   });
 
+  registerPreloadDiagnostics(window, preloadPath);
   winState.manage(window);
 
   window.on('maximize', () => window.webContents.send(IPC_CHANNELS.windowMaximizedChange, true));
@@ -115,7 +126,7 @@ function createMainWindow(): BrowserWindow {
   if (process.env.ELECTRON_RENDERER_URL) {
     void window.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
-    void window.loadFile(path.join(__dirname, '../renderer/index.html'));
+    void window.loadFile(path.join(import.meta.dirname, '../renderer/index.html'));
   }
 
   return window;
@@ -162,8 +173,9 @@ if (hasSingleInstanceLock) {
     const tokenService = new TokenService(tokenProvider);
     const ytDlp = new YtDlp(binaryManager, tokenService, settingsStore);
     const downloadService = new DownloadService(ytDlp, recentJobsStore, isMockBackend);
-    const formatProbeService = new FormatProbeService(ytDlp, isMockBackend);
-    const playlistProbeService = new PlaylistProbeService(ytDlp, isMockBackend);
+    const probeService = new ProbeService(ytDlp, isMockBackend);
+    const queueService = new QueueService(queueStore, downloadService);
+    await queueService.init();
 
     // Headless smoke mode — exercises PoT scrape + 3-attempt ladder against
     // real YouTube using production services, then exits. No window created.
@@ -173,7 +185,7 @@ if (hasSingleInstanceLock) {
         url: smokeUrl,
         binaryManager,
         tokenService,
-        formatProbeService
+        probeService
       });
       tokenService.dispose();
       exitWithCode(code);
@@ -212,67 +224,64 @@ if (hasSingleInstanceLock) {
     let tray: TrayManager | null = null;
 
     async function warnActiveDownloadsThenQuit(): Promise<void> {
-      if (downloadService.pendingCancelCount === 0) {
+      if (downloadService.runningJobCount === 0) {
         app.quit();
         return;
       }
-      const count = downloadService.pendingCancelCount;
+      const count = downloadService.runningJobCount;
       const lang = languageRef.current;
       const { response } = await dialog.showMessageBox(mainWindow, {
         type: 'warning',
-        buttons: [mainT(lang, 'dialogs.quitWithActiveDownloads.confirm'), mainT(lang, 'dialogs.quitWithActiveDownloads.keep')],
-        defaultId: 1,
-        cancelId: 1,
-        message: mainT(lang, `dialogs.quitWithActiveDownloads.${pluralKey('message', count)}`, {
-          count
-        }),
+        buttons: [mainT(lang, 'dialogs.quitWithActiveDownloads.pause'), mainT(lang, 'dialogs.quitWithActiveDownloads.confirm'), mainT(lang, 'dialogs.quitWithActiveDownloads.keep')],
+        defaultId: 2,
+        cancelId: 2,
+        message: mainT(lang, `dialogs.quitWithActiveDownloads.${pluralKey('message', count)}`, { count }),
         detail: mainT(lang, 'dialogs.quitWithActiveDownloads.detail')
       });
-      if (response === 0) app.quit();
+      if (response === 0) {
+        await queueService.pauseAll();
+        app.quit();
+      } else if (response === 1) {
+        app.quit();
+      }
+      // response === 2: keep downloading — do nothing
     }
 
     mainWindow.on('close', (event) => {
-      if (process.platform === 'darwin' || tray === null) {
-        // Original behavior: warn if downloads active, then let the close proceed → app.quit()
-        if (downloadService.pendingCancelCount === 0) return;
-        const count = downloadService.pendingCancelCount;
-        const lang = languageRef.current;
-        const choice = dialog.showMessageBoxSync(mainWindow, {
-          type: 'warning',
-          buttons: [mainT(lang, 'dialogs.quitWithActiveDownloads.confirm'), mainT(lang, 'dialogs.quitWithActiveDownloads.keep')],
-          defaultId: 1,
-          cancelId: 1,
-          message: mainT(lang, `dialogs.quitWithActiveDownloads.${pluralKey('message', count)}`, {
-            count
-          }),
-          detail: mainT(lang, 'dialogs.quitWithActiveDownloads.detail')
-        });
-        if (choice === 1) event.preventDefault();
+      const hasTray = tray !== null;
+
+      if (process.platform === 'darwin' || !hasTray) {
+        // No tray: allow if idle, else intercept and warn
+        if (downloadService.runningJobCount === 0) return;
+        event.preventDefault();
+        void warnActiveDownloadsThenQuit();
         return;
       }
 
-      // Tray mode: intercept every close; decide async based on persisted behavior
+      // Tray present: always intercept; read persisted behavior async
       event.preventDefault();
       void settingsStore.get().then(async (settings) => {
-        const closeBehavior = settings.common.closeBehavior ?? 'ask';
+        const action = decideCloseAction({
+          platform: process.platform,
+          hasTray,
+          closeBehavior: settings.common.closeBehavior ?? 'ask',
+          runningCount: downloadService.runningJobCount
+        });
 
-        if (closeBehavior === 'tray') {
+        if (action === 'hide') {
           mainWindow.hide();
           return;
         }
-
-        if (closeBehavior === 'quit') {
+        if (action === 'quit-direct') {
+          app.quit();
+          return;
+        }
+        if (action === 'warn-and-quit') {
           await warnActiveDownloadsThenQuit();
           return;
         }
 
-        // 'ask': no active downloads → nothing to keep alive, just quit
-        if (downloadService.pendingCancelCount === 0) {
-          app.quit();
-          return;
-        }
-
-        // 'ask': active downloads present — offer the first-time tray dialog
+        // 'ask-tray': active downloads present — offer the first-time tray dialog
         const lang = languageRef.current;
         const { response, checkboxChecked } = await dialog.showMessageBox(mainWindow, {
           type: 'question',
@@ -304,10 +313,9 @@ if (hasSingleInstanceLock) {
       mainWindow,
       binaryManager,
       downloadService,
-      formatProbeService,
-      playlistProbeService,
+      probeService,
       settingsStore,
-      queueStore,
+      queueService,
       tokenService,
       languageRef,
       clipboardWatcher
@@ -318,12 +326,13 @@ if (hasSingleInstanceLock) {
     app.on('render-process-gone', (_event, webContents, details) => {
       log.error(`Renderer process gone: reason=${details.reason} exitCode=${details.exitCode}`);
       if (details.reason === 'clean-exit') return;
+      const isMainWindow = webContents === mainWindow.webContents;
       trackCrashDetectedOncePerSession({
         kind: 'renderer',
-        windowRole: webContents === mainWindow.webContents ? 'main-window' : 'auxiliary-window',
+        windowRole: isMainWindow ? 'main-window' : 'auxiliary-window',
         reason: details.reason
       });
-      if (webContents !== mainWindow.webContents) return;
+      if (!isMainWindow) return;
       const lang = languageRef.current;
       const opts = {
         type: 'error' as const,
@@ -334,7 +343,8 @@ if (hasSingleInstanceLock) {
         detail: mainT(lang, 'dialogs.rendererCrashed.detail', { reason: details.reason })
       };
       void (mainWindow.isDestroyed() ? dialog.showMessageBox(opts) : dialog.showMessageBox(mainWindow, opts)).then(({ response }) => {
-        if (response === 0 && !mainWindow.isDestroyed()) mainWindow.reload();
+        const action = decideRendererCrashAction({ reason: details.reason, isMainWindow: true, dialogResponse: response });
+        if (action === 'reload' && !mainWindow.isDestroyed()) mainWindow.reload();
         else app.quit();
       });
     });
@@ -367,16 +377,20 @@ if (hasSingleInstanceLock) {
       tray?.destroy();
       tray = null;
       clipboardWatcher.dispose();
-      if (downloadService.activeCount === 0) {
+      if (downloadService.runningJobCount === 0) {
         tokenService.dispose();
         log.info('App shutting down');
         return;
       }
       event.preventDefault();
-      void downloadService.cancel().finally(() => {
-        tokenService.dispose();
-        log.info('App shutting down');
-        app.exit(0); // must use exit(), not quit() — quit() re-emits before-quit causing infinite loop
+      void cancelQueueBeforeExit({
+        queueService,
+        tokenService,
+        logInfo: (message, meta) => {
+          if (meta) log.info(message, meta);
+          else log.info(message);
+        },
+        exit: (code) => app.exit(code) // must use exit(), not quit() — quit() re-emits before-quit causing infinite loop
       });
     });
   });

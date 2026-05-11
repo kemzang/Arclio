@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { parseSpeedBps, parseEtaSeconds, formatEta, ProgressFormatter, nextMonotonicPercent } from '../../src/renderer/src/store/progress';
+import { parseSpeedBps, parseEtaSeconds, formatEta, ProgressFormatter, nextMonotonicPercent } from '../../src/shared/progressFormat.js';
 
 describe('parseSpeedBps', () => {
   it('parses MiB/s', () => {

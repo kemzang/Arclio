@@ -1,13 +1,28 @@
-import './browserMock';
-import 'electron-log/renderer';
+import 'electron-log/renderer.js';
 import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from './App';
-import { initI18n, pickLanguage, isRtl } from '@shared/i18n';
-import { useAppStore } from './store/useAppStore';
+import { App } from './App.js';
+import { initI18n, pickLanguage, isRtl } from '@shared/i18n/index.js';
+import { useAppStore } from './store/useAppStore.js';
+import { ensureAppBridge, isElectronUserAgent, renderBridgeFailure } from './bootstrapBridge.js';
 import './styles.css';
 
 async function bootstrap(): Promise<void> {
+  const mode = import.meta.env.MODE;
+  const userAgent = navigator.userAgent;
+
+  if (!('appApi' in window) && import.meta.env.MODE === 'browser-mock' && !isElectronUserAgent(userAgent)) {
+    const { installBrowserMock } = await import('./browserMock.js');
+    installBrowserMock();
+  }
+
+  await ensureAppBridge({
+    mode,
+    userAgent,
+    hasAppApi: () => 'appApi' in window,
+    installBrowserMock: () => undefined
+  });
+
   let lang = pickLanguage(navigator.language);
   const result = await window.appApi.settings.get();
   if (result.ok && result.data.common.language) {
@@ -32,4 +47,7 @@ async function bootstrap(): Promise<void> {
   );
 }
 
-void bootstrap();
+void bootstrap().catch((error: unknown) => {
+  console.error(error);
+  renderBridgeFailure(document.getElementById('root'), error);
+});

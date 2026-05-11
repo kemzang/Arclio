@@ -1,17 +1,17 @@
-import type { LocalizedError } from './i18n/types';
-import type { PreparedJob } from './preparedJob';
+import type { LocalizedError } from './i18n/types.js';
+import type { PreparedJob } from './preparedJob.js';
 
-export type { PreparedJob } from './preparedJob';
+export type { PreparedJob } from './preparedJob.js';
 
 // Re-export the enum types whose canonical definition lives in `schemas.ts`
 // (where they're z.enum schemas). Importing from `@shared/types` continues to
 // work for callers that don't care about the schema vs type distinction.
-export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection, CookiesMode, CookiesBrowser } from './schemas';
+export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection, CookiesMode, CookiesBrowser } from './schemas.js';
 
-export type { StatusKey } from './schemas';
-export type { LocalizedError, YtdlpErrorKey } from './i18n/types';
+export type { StatusKey } from './schemas.js';
+export type { LocalizedError, YtDlpErrorKind } from './i18n/types.js';
 
-import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey, CookiesMode, CookiesBrowser } from './schemas';
+import type { AudioSelection, Preset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey, CookiesMode, CookiesBrowser } from './schemas.js';
 
 export type AppErrorCode = 'validation' | 'token' | 'binary' | 'download' | 'ipc' | 'unknown';
 
@@ -20,7 +20,7 @@ export interface AppError {
   message: string;
   details?: string;
   recoverable?: boolean;
-  localizedKey?: import('./schemas').YtdlpErrorKey;
+  localizedKey?: import('./schemas.js').YtDlpErrorKind;
 }
 
 // Mode-independent prefs and infrastructure config. Anything that applies
@@ -28,6 +28,8 @@ export interface AppError {
 export interface CommonSettings {
   defaultOutputDir: string;
   rememberLastOutputDir: boolean;
+  lastSubfolderEnabled?: boolean;
+  lastSubfolder?: string;
   // Stable per-install random UUID used as the OpenPanel `profileId`. No PII —
   // this is a random anonymous identifier, not derived from the user. Generated
   // lazily by SettingsStore on first launch when missing.
@@ -61,6 +63,9 @@ export interface CommonSettings {
   firstRunCompleted?: boolean;
   drawerOpen?: boolean;
   binaryOverrides?: BinaryOverrides;
+  successfulDownloadCount?: number;
+  shareInlineCardDismissed?: boolean;
+  shareHighValueBannerDismissed?: boolean;
 }
 
 export interface BinaryOverrides {
@@ -71,23 +76,20 @@ export interface BinaryOverrides {
 }
 
 // Single-video flow prefs. Restored when the user enters the format-probe path.
+// All fields are `?:` only — see singlePrefsPatchSchema in schemas.ts for why
+// patch shapes never use null (no third state beyond present/absent).
 export interface SinglePrefs {
-  lastPreset?: Preset | null;
+  lastPreset?: Preset;
   lastVideoResolution?: string;
   lastAudioSelection?: AudioSelection;
   lastSubtitleLanguages?: string[];
   lastSubtitleMode?: SubtitleMode;
   lastSubtitleFormat?: SubtitleFormat;
-  lastSubfolderEnabled?: boolean;
-  lastSubfolder?: string;
 }
 
-// Playlist flow prefs. Kept separate so a playlist run doesn't clobber the
-// single-mode preset/subfolder, and vice versa.
+// Playlist flow prefs.
 export interface PlaylistPrefs {
-  lastPlaylistPreset?: import('./schemas').PlaylistPreset;
-  lastPlaylistSubfolderEnabled?: boolean;
-  lastPlaylistSubfolder?: string;
+  lastPlaylistPreset?: import('./schemas.js').PlaylistPreset;
 }
 
 export interface AppSettings {
@@ -151,14 +153,17 @@ export interface QueueItem {
   thumbnail: string;
   outputDir: string;
   formatLabel: string;
-  status: import('./schemas').QueueItemStatus;
+  status: import('./schemas.js').QueueItemStatus;
   progressPercent: number;
   progressDetail: string | null;
   lastStatus: StatusSnapshot | null;
   error: LocalizedError | null;
   finishedAt: string | null;
-  downloadJobId: string | null;
   playlistGroupId?: string;
+  // Persisted resume context. `lastJobId` set iff status ∈ {running,
+  // paused-active}; `tempDir` set iff paused-active mid-download.
+  tempDir?: string;
+  lastJobId?: string;
   job: PreparedJob;
 }
 
@@ -171,15 +176,53 @@ export interface PlaylistEntry {
   playlistIndex: number;
 }
 
-export interface GetPlaylistItemsInput {
+export type ProbePlaylistMode = 'auto' | 'video' | 'playlist';
+
+export interface ProbeInput {
   url: string;
+  // Disambiguates mixed YouTube URLs (?v=X&list=Y). 'auto' lets yt-dlp's
+  // extractor decide; 'video' forces single-video resolution; 'playlist'
+  // forces playlist enumeration.
+  playlistMode?: ProbePlaylistMode;
 }
 
-export interface GetPlaylistItemsOutput {
+export type ProbeDegradationReason = 'botWall' | 'extractor';
+
+interface ProbeCommon {
+  extractor: string;
+  extractorKey: string;
+  webpageUrl: string;
+  // True when the extractor only ever returns audio content (Bandcamp,
+  // SoundCloud, QQMusic, Mixcloud, etc.). Renderer uses this to default the
+  // wizard to audio-only mode without making the user override the format
+  // picker every time. See `isAudioOnlySource()` in shared/ytdlp.
+  isAudioOnlySource: boolean;
+}
+
+export interface VideoProbeResult extends ProbeCommon {
+  kind: 'video';
+  formats: FormatOption[];
+  title: string;
+  thumbnail: string;
+  duration?: number;
+  subtitles: SubtitleMap;
+  automaticCaptions: SubtitleMap;
+  isLive: boolean;
+  hasDrm: boolean;
+  availability?: string;
+  ageLimit?: number;
+  degraded?: { reasons: ProbeDegradationReason[] };
+}
+
+export interface PlaylistProbeResult extends ProbeCommon {
+  kind: 'playlist';
+  isMultiVideo: boolean;
   playlistId: string;
   playlistTitle: string;
   entries: PlaylistEntry[];
 }
+
+export type ProbeResult = VideoProbeResult | PlaylistProbeResult;
 
 export type DownloadStage = 'setup' | 'token' | 'download' | 'done' | 'error';
 
@@ -280,26 +323,11 @@ export interface StartDownloadInput {
   outputDir?: string;
   cookiesMode?: CookiesMode;
   job: PreparedJob;
+  tempDir?: string;
 }
 
 export interface StartDownloadOutput {
   job: DownloadJob;
-}
-
-export interface GetFormatsInput {
-  url: string;
-}
-
-export type ProbeDegradationReason = 'botWall' | 'extractor';
-
-export interface GetFormatsOutput {
-  formats: FormatOption[];
-  title: string;
-  thumbnail: string;
-  duration?: number;
-  subtitles: SubtitleMap;
-  automaticCaptions: SubtitleMap;
-  degraded?: { reasons: ProbeDegradationReason[] };
 }
 
 export interface CancelDownloadInput {
@@ -316,6 +344,11 @@ export interface PauseDownloadInput {
 
 export interface PauseDownloadOutput {
   paused: boolean;
+  // Persisted resume context — set when paused = true. Renderer writes both
+  // back onto the QueueItem so a later resume after restart can re-spawn
+  // yt-dlp pointed at the same `.part` files instead of starting fresh.
+  tempDir?: string;
+  jobId?: string;
 }
 
 export type InstallChannel = 'direct' | 'winget' | 'scoop' | 'homebrew' | 'flatpak' | 'portable';
@@ -332,7 +365,7 @@ export type UpdateInstallResult = { ok: true } | { ok: false; error: string };
 
 export type WizardStepName = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
 
-export type WizardTransition = 'submitUrl' | 'advance' | 'back' | 'skipSubtitles' | 'retry' | 'reset';
+export type WizardTransition = 'submitUrl' | 'advance' | 'back' | 'skipSubtitles' | 'skipToConfirm' | 'retry' | 'reset';
 
 export interface WizardStepSnapshot {
   transition: WizardTransition;

@@ -1,19 +1,18 @@
-import { useEffect, useRef, useState, type JSX } from 'react';
-import { ArrowRight, AlertTriangle, X, Video, ListVideo, Music } from 'lucide-react';
+import { useEffect, useRef, useState, type JSX, type ReactNode } from 'react';
+import { ArrowRight, AlertTriangle, Share2, X, Video, ListVideo, Music, Tv, Smartphone, Mic, Globe, ListMusic, AudioLines, Captions } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '../../store/useAppStore';
-import { track } from '@renderer/lib/analytics';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { Switch } from '../ui/switch';
-import { RadioOption } from '../ui/radio-option';
-import { Item, ItemGroup, ItemMedia, ItemContent, ItemTitle, ItemDescription } from '../ui/item';
-import { MascotBubble } from '../shared/MascotBubble';
-import { ClipboardConfirmDialog } from '../shared/ClipboardConfirmDialog';
-import { IncompleteCookiesConfigDialog } from './IncompleteCookiesConfigDialog';
-import { formatHomeRelativePath } from '@renderer/lib/utils';
-import { cleanYoutubeUrl } from '@shared/url';
-import type { CookiesBrowser, CookiesMode } from '@shared/types';
+import { useAppStore } from '../../store/useAppStore.js';
+import { track } from '@renderer/lib/analytics.js';
+import { Input } from '../ui/input.js';
+import { Button } from '../ui/button.js';
+import { Switch } from '../ui/switch.js';
+import { RadioOption } from '../ui/radio-option.js';
+import { MascotBubble } from '../shared/MascotBubble.js';
+import { ClipboardConfirmDialog } from '../shared/ClipboardConfirmDialog.js';
+import { IncompleteCookiesConfigDialog } from './IncompleteCookiesConfigDialog.js';
+import { formatHomeRelativePath } from '@renderer/lib/utils.js';
+import { cleanUrl } from '@shared/cleanUrl.js';
+import type { CookiesBrowser, CookiesMode } from '@shared/types.js';
 import hiImg from '../../assets/Hi.png';
 import downloadingImg from '../../assets/Downloading.png';
 
@@ -35,11 +34,24 @@ const COOKIES_CHROME_URL = 'https://chromewebstore.google.com/detail/get-cookies
 
 export function StepUrlInput(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl, cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings } = useAppStore();
+  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl, cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings, openShareDialog, setShareInlineCardDismissed } = useAppStore();
   const inputRef = useRef<HTMLInputElement>(null);
-  const hasActiveDownloads = queue.some((i) => i.status === 'downloading');
+  const hasActiveDownloads = queue.some((i) => i.status === 'running');
   const [pendingClipboardUrl, setPendingClipboardUrl] = useState<string | null>(null);
 
+  const shareCardVisible = !(settings?.common?.shareInlineCardDismissed ?? false);
+  const shareCardImpressionFiredRef = useRef(false);
+  useEffect(() => {
+    if (shareCardVisible && !shareCardImpressionFiredRef.current) {
+      shareCardImpressionFiredRef.current = true;
+      track('share_inline_card_impression');
+    }
+  }, [shareCardVisible]);
+
+  function handleShareInlineCardClick(): void {
+    track('share_inline_card_clicked');
+    openShareDialog('wizard-card');
+  }
   const cookiesPath = settings?.common?.cookiesPath ?? '';
   const cookiesMode: CookiesMode = settings?.common?.cookiesMode ?? 'off';
   const cookiesBrowser = settings?.common?.cookiesBrowser;
@@ -53,7 +65,7 @@ export function StepUrlInput(): JSX.Element {
   useEffect(() => {
     inputRef.current?.focus();
     const { queue } = useAppStore.getState();
-    if (!queue.some((i) => i.status === 'downloading')) {
+    if (!queue.some((i) => i.status === 'running')) {
       track('wizard_started');
     }
   }, []);
@@ -79,7 +91,7 @@ export function StepUrlInput(): JSX.Element {
       const { wizardUrl: currentUrl, formatsLoading } = useAppStore.getState();
       if (currentUrl) return;
       if (formatsLoading) return;
-      setPendingClipboardUrl(cleanYoutubeUrl(url));
+      setPendingClipboardUrl(cleanUrl(url));
     });
   }, []);
 
@@ -87,6 +99,12 @@ export function StepUrlInput(): JSX.Element {
     if (pendingClipboardUrl) setWizardUrl(pendingClipboardUrl);
     setPendingClipboardUrl(null);
     inputRef.current?.focus();
+  }
+
+  async function handleFetchClipboard(): Promise<void> {
+    if (pendingClipboardUrl) setWizardUrl(pendingClipboardUrl);
+    setPendingClipboardUrl(null);
+    await submitUrl();
   }
 
   function handleDisableClipboard(): void {
@@ -111,7 +129,7 @@ export function StepUrlInput(): JSX.Element {
 
   function handlePaste(e: React.ClipboardEvent<HTMLInputElement>): void {
     const pasted = e.clipboardData.getData('text');
-    const cleaned = cleanYoutubeUrl(pasted);
+    const cleaned = cleanUrl(pasted);
     if (cleaned === pasted) return;
     e.preventDefault();
     const input = e.currentTarget;
@@ -130,55 +148,60 @@ export function StepUrlInput(): JSX.Element {
 
   return (
     <div className="wizard-step flex flex-col gap-4" data-testid="step-url">
-      <MascotBubble image={hasActiveDownloads ? downloadingImg : hiImg} message={hasActiveDownloads ? t('wizard.url.mascotBusy') : t('wizard.url.mascotIdle')} />
-      <div className="flex flex-col gap-1.5">
-        <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.url.heading')}</p>
-        <div className="flex gap-2">
-          <div className="relative flex-1">
-            <Input ref={inputRef} type="url" className={`h-10 ${wizardUrl.trim() ? 'pe-9' : ''}`} value={wizardUrl} onChange={(e) => setWizardUrl(e.target.value)} onKeyDown={handleKeyDown} onPaste={handlePaste} placeholder={t('wizard.url.placeholder')} spellCheck={false} data-testid="url-input" />
-            {wizardUrl.trim() ? (
-              <button type="button" onClick={handleClearUrl} aria-label={t('wizard.url.clearAria')} data-testid="url-clear" className="absolute end-1.5 top-1/2 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-muted hover:text-foreground transition-colors">
-                <X size={14} />
-              </button>
-            ) : null}
+      <div className="flex items-center gap-3">
+        <MascotBubble image={hasActiveDownloads ? downloadingImg : hiImg} message={hasActiveDownloads ? t('wizard.url.mascotBusy') : t('wizard.url.mascotIdle')} className="w-[30%] shrink-0" />
+        <div className="flex flex-col gap-1.5 flex-1 min-w-0">
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.url.heading')}</p>
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Input ref={inputRef} type="url" className={`h-10 ${wizardUrl.trim() ? 'pe-9' : ''}`} value={wizardUrl} onChange={(e) => setWizardUrl(e.target.value)} onKeyDown={handleKeyDown} onPaste={handlePaste} placeholder={t('wizard.url.placeholder')} spellCheck={false} data-testid="url-input" />
+              {wizardUrl.trim() ? (
+                <button type="button" onClick={handleClearUrl} aria-label={t('wizard.url.clearAria')} data-testid="url-clear" className="absolute end-1.5 top-1/2 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-muted hover:text-foreground transition-colors">
+                  <X size={14} />
+                </button>
+              ) : null}
+            </div>
+            <Button type="button" size="lg" onClick={() => void submitUrl()} disabled={!wizardUrl.trim()} data-testid="btn-find-formats" className="shadow-[0_4px_14px_var(--brand-glow)] disabled:shadow-none gap-2">
+              {t('wizard.url.fetchFormats')} <ArrowRight size={16} className="rtl:rotate-180" />
+            </Button>
           </div>
-          <Button type="button" size="lg" onClick={() => void submitUrl()} disabled={!wizardUrl.trim()} data-testid="btn-find-formats" className="shadow-[0_4px_14px_var(--brand-glow)] disabled:shadow-none gap-2">
-            {t('wizard.url.fetchFormats')} <ArrowRight size={16} className="rtl:rotate-180" />
-          </Button>
         </div>
       </div>
 
-      <div className="flex flex-col gap-2" data-testid="features">
+      {shareCardVisible && (
+        <div className="flex items-center gap-2 rounded-md border border-[var(--border-strong)] bg-card/40 px-3 py-2" data-testid="share-inline-card">
+          <button type="button" onClick={handleShareInlineCardClick} className="flex-1 inline-flex items-center gap-2 text-start text-[13px] text-foreground hover:text-foreground/80 transition-colors" data-testid="share-inline-card-body">
+            <Share2 size={14} className="shrink-0 text-[var(--brand)]" aria-hidden />
+            <span className="flex-1">{t('share.inlineCard.body')}</span>
+          </button>
+          <button type="button" onClick={() => void setShareInlineCardDismissed()} aria-label={t('share.inlineCard.dismiss')} title={t('share.inlineCard.dismiss')} data-testid="share-inline-card-dismiss" className="inline-flex h-6 w-6 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-muted hover:text-foreground transition-colors">
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
+      <div className="flex flex-col gap-3" data-testid="features">
         <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.url.features.heading')}</p>
-        <ItemGroup className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-          <Item variant="muted" className="items-start">
-            <ItemMedia variant="icon">
-              <Video />
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>{t('wizard.url.features.video.title')}</ItemTitle>
-              <ItemDescription>{t('wizard.url.features.video.desc')}</ItemDescription>
-            </ItemContent>
-          </Item>
-          <Item variant="muted" className="items-start">
-            <ItemMedia variant="icon">
-              <ListVideo />
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>{t('wizard.url.features.playlist.title')}</ItemTitle>
-              <ItemDescription>{t('wizard.url.features.playlist.desc')}</ItemDescription>
-            </ItemContent>
-          </Item>
-          <Item variant="muted" className="items-start">
-            <ItemMedia variant="icon">
-              <Music />
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>{t('wizard.url.features.audio.title')}</ItemTitle>
-              <ItemDescription>{t('wizard.url.features.audio.desc')}</ItemDescription>
-            </ItemContent>
-          </Item>
-        </ItemGroup>
+
+        <FeatureSection heading={t('wizard.url.features.youtube.heading')}>
+          <FeatureChip icon={<Video size={14} />} label={t('wizard.url.features.youtube.video')} />
+          <FeatureChip icon={<Tv size={14} />} label={t('wizard.url.features.youtube.channel')} />
+          <FeatureChip icon={<ListVideo size={14} />} label={t('wizard.url.features.youtube.playlist')} />
+          <FeatureChip icon={<Smartphone size={14} />} label={t('wizard.url.features.youtube.short')} />
+          <FeatureChip icon={<Music size={14} />} label={t('wizard.url.features.youtube.music')} />
+          <FeatureChip icon={<Mic size={14} />} label={t('wizard.url.features.youtube.podcast')} />
+        </FeatureSection>
+
+        <FeatureSection heading={t('wizard.url.features.anySite.heading')}>
+          <FeatureChip icon={<Globe size={14} />} label={t('wizard.url.features.anySite.video')} />
+          <FeatureChip icon={<ListVideo size={14} />} label={t('wizard.url.features.anySite.videoPlaylist')} />
+          <FeatureChip icon={<ListMusic size={14} />} label={t('wizard.url.features.anySite.musicPlaylist')} />
+        </FeatureSection>
+
+        <FeatureSection heading={t('wizard.url.features.always.heading')}>
+          <FeatureChip icon={<AudioLines size={14} />} label={t('wizard.url.features.always.audioOnly')} />
+          <FeatureChip icon={<Captions size={14} />} label={t('wizard.url.features.always.subtitles')} />
+        </FeatureSection>
       </div>
 
       <details className="group rounded-md border border-[var(--border-strong)] bg-card/40" data-testid="advanced-section">
@@ -306,8 +329,30 @@ export function StepUrlInput(): JSX.Element {
         </div>
       </details>
 
-      <ClipboardConfirmDialog open={pendingClipboardUrl !== null && initialized} url={pendingClipboardUrl} onUse={handleConfirmClipboard} onDisable={handleDisableClipboard} onCancel={handleCancelClipboard} />
+      <ClipboardConfirmDialog open={pendingClipboardUrl !== null && initialized} url={pendingClipboardUrl} onUse={handleConfirmClipboard} onFetch={() => void handleFetchClipboard()} onDisable={handleDisableClipboard} onCancel={handleCancelClipboard} />
       <IncompleteCookiesConfigDialog issue={cookiesConfigDialogIssue} onDismiss={dismissCookiesConfigDialog} onOpenSettings={openCookiesSettings} />
     </div>
+  );
+}
+
+function FeatureSection({ heading, children }: { heading: string; children: ReactNode }): JSX.Element {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <p className="text-[11px] font-medium text-[var(--text-subtle)]">{heading}</p>
+      <div className="flex flex-wrap gap-1.5" role="list">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function FeatureChip({ icon, label }: { icon: ReactNode; label: string }): JSX.Element {
+  return (
+    <span role="listitem" className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-strong)] bg-card/40 px-2.5 py-1 text-[12px] text-foreground">
+      <span aria-hidden className="text-[var(--text-subtle)]">
+        {icon}
+      </span>
+      {label}
+    </span>
   );
 }

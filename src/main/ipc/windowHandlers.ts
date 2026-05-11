@@ -1,6 +1,6 @@
 import type { BrowserWindow } from 'electron';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { handleRaw } from './utils';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { handleRaw } from './utils.js';
 
 export function registerWindowHandlers(mainWindow: BrowserWindow): void {
   handleRaw(IPC_CHANNELS.windowMinimize, () => {
@@ -13,5 +13,6 @@ export function registerWindowHandlers(mainWindow: BrowserWindow): void {
   handleRaw(IPC_CHANNELS.windowClose, () => {
     mainWindow.close();
   });
-  handleRaw(IPC_CHANNELS.windowIsMaximized, () => mainWindow.isMaximized());
+  // eslint-disable-next-line @typescript-eslint/require-await -- preload calls invoke() and awaits a Promise; explicit async pins the contract so a future sync refactor is a compile error rather than a silent typing drift.
+  handleRaw(IPC_CHANNELS.windowIsMaximized, async () => mainWindow.isMaximized());
 }

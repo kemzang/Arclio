@@ -1,6 +1,6 @@
 import type { JSX, ReactNode, KeyboardEvent } from 'react';
-import { cn } from '@renderer/lib/utils';
-import { RadioDot } from './radio-dot';
+import { cn } from '@renderer/lib/utils.js';
+import { RadioDot } from './radio-dot.js';
 
 interface Props {
   label: ReactNode;

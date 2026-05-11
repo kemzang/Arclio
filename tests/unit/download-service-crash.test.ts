@@ -1,20 +1,20 @@
 import { EventEmitter } from 'node:events';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { BinaryManager } from '@main/services/BinaryManager';
-import type { TokenService } from '@main/services/TokenService';
-import type { RecentJobsStore } from '@main/stores/RecentJobsStore';
+import type { BinaryManager } from '@main/services/BinaryManager.js';
+import type { TokenService } from '@main/services/TokenService.js';
+import type { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
 
 // Must be top-level (Vitest hoists vi.mock calls)
 vi.mock('@main/utils/process');
 
-import { spawnYtDlp } from '@main/utils/process';
-import { DownloadService } from '@main/services/DownloadService';
-import { YtDlp } from '@main/services/YtDlp';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+import { spawnYtDlp } from '@main/utils/process.js';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };
-const DEFAULT_JOB: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: 'x', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
+const DEFAULT_JOB: PreparedJob = { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: 'x', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
 
 class FakeProcess extends EventEmitter {
   stdout = new EventEmitter();

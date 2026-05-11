@@ -3,8 +3,7 @@ const ps = {
     back: 'شاته',
     continue: 'دوام ورکړه',
     retry: 'بیا هڅه وکړه',
-    startOver: 'له سره پیل کړه',
-    loading: 'بارول…'
+    startOver: 'له سره پیل کړه'
   },
   app: {
     feedback: 'نظر',
@@ -14,6 +13,15 @@ const ps = {
     debugCopyTitle: 'د ډیبګ معلومات کاپي کړئ (Electron، OS، Chrome نسخې)',
     zoomIn: 'لویول',
     zoomOut: 'کوچنیول'
+  },
+  about: {
+    button: 'د اړوند',
+    openTitle: 'د Arroxy اړوند',
+    tagline: 'د ډیسکټاپ لپاره چټک او اسانه ویډیو او غږ ډاونلوډر.',
+    websiteLink: 'ویب پاڼه',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT جواز · د Antonio Orionus لخوا',
+    thirdPartyNotices: 'د دریم ډلې خبرتیاوې وګورئ'
   },
   titleBar: {
     close: 'تړل',
@@ -25,7 +33,6 @@ const ps = {
     greeting: 'سلام، ښه راغلاست!',
     warmup: 'Arroxy چمتو کیږي…',
     downloading: '{{binary}} ډاونلوډ کیږي…',
-    warning: 'نصب ناپوره دی — ځینې ځانګړتیاوې ممکن کار ونکړي',
     warmupFailedNoDiag: 'نصب ناکام شو. د توضیحاتو لپاره د نصب لاګ خلاص کړئ.'
   },
   repair: {
@@ -81,6 +88,8 @@ const ps = {
       heading: 'د Playlist توکي',
       itemCount_one: '{{count}} ویډیو',
       itemCount_other: '{{count}} ویډیوګانې',
+      itemCountAudio_one: '{{count}} ټریک',
+      itemCountAudio_other: '{{count}} ټریکونه',
       selectAll: 'ټول غوره کړئ',
       selectNone: 'هیڅ غوره مه کوئ',
       rangeFrom: 'له',
@@ -91,15 +100,13 @@ const ps = {
       noSelection: 'دوام کولو لپاره لږترلږه یو ویډیو غوره کړئ',
       loadingItems: 'Playlist ترلاسه کیږي…',
       thumbnailAlt: 'د ویډیو تھمبنیل',
-      continue: 'دوام ورکړه',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'د بیچ لپاره کیفیت وټاکئ',
       subhead: 'هر ویډیو خپلواکه د غوره شوي کچې سره حل کوي — مخلوط Playlist ونه بیا پرته له مشکل کار کوي.',
       itemCount_one: '{{count}} توکی',
-      itemCount_other: '{{count}} توکي',
-      continue: 'دوام ورکړه'
+      itemCount_other: '{{count}} توکي'
     },
     mixedPrompt: {
       title: 'دا لینک یو Playlist لري',
@@ -114,17 +121,25 @@ const ps = {
       fetchFormats: 'بڼې ترلاسه کړه',
       features: {
         heading: 'Arroxy څه ډاونلوډ کولی شي',
-        video: {
-          title: 'ویډیوګانې',
-          desc: 'تر 4K پورې هر ریزولوشن غوره کړئ'
+        youtube: {
+          heading: 'YouTube',
+          video: 'ویډیوګانې',
+          channel: 'چینلونه',
+          playlist: 'Playlistونه',
+          short: 'Shorts',
+          music: 'موسیقي',
+          podcast: 'Podcastونه'
         },
-        playlist: {
-          title: 'Playlistونه',
-          desc: 'له Playlist نه ډیر توکي غوره کړئ'
+        anySite: {
+          heading: '2000+ سایټونه',
+          video: 'ویډیوګانې',
+          videoPlaylist: 'د ویډیو Playlistونه',
+          musicPlaylist: 'د موسیقۍ Playlistونه'
         },
-        audio: {
-          title: 'غږ',
-          desc: 'اصلي سټریم یا MP3/M4A بدلول'
+        always: {
+          heading: 'تل شتون لري',
+          audioOnly: 'یوازې غږونه',
+          subtitles: 'ژباړلیکونه'
         }
       },
       mascotIdle: 'یو YouTube لینک (ویډیو یا Short) راکړئ — بیا "بڼې ترلاسه کړه" کلیک وکړئ او زه کار پیل کوم ✨',
@@ -162,7 +177,7 @@ const ps = {
         enabledButNoBrowser: 'د کوکیزو کارولو لپاره یو براوزر غوره کړئ',
         banWarning: 'YouTube ممکن هغه حسابونه چې د yt-dlp لخوا د کوکیزو لپاره کارول کیږي بنده کړي — کله چې ممکنه وي یو لنډمهاله حساب وکاروئ.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt ځایی ترلاسه کړئ (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const ps = {
       }
     },
     subtitles: {
-      heading: 'ژباړلیکونه',
       autoBadge: 'اتوماتیک',
-      hint: 'د سایډکار فایلونه به د ویډیو سره یوځای خوندي شي',
       noLanguages: 'د دې ویډیو لپاره هیڅ ژباړلیک شتون نلري',
       skip: 'پریږدئ',
       skipSubs: 'د دې ویډیو لپاره پریږدئ',
-      selectAll: 'ټول غوره کړئ',
-      deselectAll: 'غیر انتخاب کړئ',
       mascot: 'صفر، یو، یا ډیر غوره کړئ — بشپړ ستاسو خوښه ده ✨',
       searchPlaceholder: 'ژبې لټول…',
       noMatches: 'هیڅ ژبه سره برابره نه ده',
@@ -242,10 +253,14 @@ const ps = {
       audioOnlyOption: 'یوازې غږ (ویډیو نشته)',
       mascot: 'بهترین + بهترین = اعظمي کیفیت. زه به دا غوره کړم!',
       sniffing: 'ستاسو لپاره غوره بڼې لټوم…',
-      loadingHint: 'معمولاً یوه ثانیه وخت نیسي',
+      loadingHint: 'مهرباني وکړئ انتظار وکړئ تر پلټنه پای ته ورسیږي — Playlistونه او لټونونه ممکن یو څه وخت ونیسي.',
       loadingAria: 'بڼې بارول',
       sizeUnknown: 'اندازه نامعلومه',
+      skipToConfirm: 'تایید ته پریږدئ',
+      skipToConfirmTooltip: 'ستاسو خوندي کړل شوي غوره توبونه د ټولو پاتې مرحلو لپاره کاروي. د ترتیب بدلولو لپاره، پرځای یې ګام پر ګام دوام وکړئ — ستاسو انتخاب به د راتلونکي ځل لپاره خوندي شي.',
       total: 'ټول',
+      keepAudio: 'لکه چې دی وساتئ',
+      keepAudioMeta: 'ورته غږ',
       convert: {
         label: 'بدلول',
         uncompressed: 'بدلول · غیر فشارشوی',
@@ -261,8 +276,7 @@ const ps = {
         bodyDisabled: 'کوکیز تنظیم شوي خو بند دي. د بشپړ لیست لپاره کوکیز فعال کړئ او بیا هڅه وکړئ، یا شبکه بدله کړئ او بیا هڅه وکړئ.',
         bodyEnabled: 'حتی د کوکیزو سره، YouTube دا پلټنه محدوده کړه. وروسته بیا هڅه وکړئ یا شبکه بدله کړئ.',
         retryCta: 'بیا هڅه وکړئ',
-        enableRetryCta: 'کوکیز فعال کړئ او بیا هڅه وکړئ',
-        openSettingsCta: 'پرمختللي تنظیمات پرانیستل'
+        enableRetryCta: 'کوکیز فعال کړئ او بیا هڅه وکړئ'
       },
       cookiesError: {
         heading: 'کوکیز ممکن لامل وي',
@@ -272,6 +286,10 @@ const ps = {
         explanationFile: 'ستاسو د کوکیزو فایل ممکن خالي، پخوانی، یا د غلط بڼې وي (yt-dlp Netscape cookies.txt تمه لري). هڅه وکړئ کوکیز بیا صادر کړئ، بل فایل غوره کړئ، د براوزر حالت ته بدل شئ، یا کوکیز بند کړئ.',
         explanationBrowser: 'کوکیز مستقیم له براوزر نه لوستل کیږي. که براوزر اوس مهال چلیږي، د کوکیزو ډیټابیس ممکن بند وي (Chromium کورنۍ). براوزر باید YouTube ته ننوتلی وي. هڅه وکړئ براوزر وتړئ، بل براوزر ته بدل شئ، د فایل حالت ته بدل شئ، یا کوکیز بند کړئ.',
         openSettingsCta: 'د کوکیزو تنظیمات پرانیستل',
+        needsCookies: {
+          heading: 'دا سایټ ننوتل ته اړتیا لري',
+          body: 'yt-dlp پرته د تصدیق نه دا ویډیو ته لاسرسی نه شو کولی. د پرمختللو تنظیماتو کې کوکیز تنظیم کړئ — هغه براوزر ته اشاره وکړئ چې مو ورسره ننوتلي یئ، یا یو cookies.txt فایل واردوئ.'
+        },
         dpapi: {
           heading: 'Chrome کوکیز د Windows د کوډ کولو لخوا بند شوي',
           explanation: 'Chrome 127 او نوي نسخې کوکیز داسې کوډ کوي چې نور اپلیکیشنونه یې د Windows کې لوستلی نشي. لاندې یو له حلونو هڅه وکړئ.',
@@ -281,7 +299,7 @@ const ps = {
           fixFileBody: 'د براوزر د توسیع سره له Chrome نه کوکیز صادر کړئ، بیا دا اپلیکیشن د فایل حالت ته بدل کړئ او صادر شوی فایل غوره کړئ.',
           fixUnsafeLabel: 'Chrome د App-Bound Encryption غیر فعاله سره پیل کړئ',
           fixUnsafeBody: 'د Chrome د پیل شارټ کټ کې --disable-features=LockProfileCookieDatabase اضافه کړئ. خبرداری: دا مخکې کوډ شوي کوکیز باطلوي، نو تاسو به له هر سایټ وتلئ او بیا ننوتل ضروري دي.',
-          docsLinkLabel: 'yt-dlp اسناد (issue #10927)'
+          docsLinkLabel: 'yt-dlp اسناد (مسئله #10927)'
         }
       }
     },
@@ -334,26 +352,24 @@ const ps = {
       labelSize: 'اندازه',
       sizeUnknown: 'نامعلومه',
       nothingToDownload: 'یوازې د ژباړلیکونو پریسټ فعال دی خو هیڅ د ژباړلیک ژبه غوره نه ده شوې — هیڅ شی ډاونلوډ نه کیږي.',
+      thumbnailEmbedNotSupported: 'د Thumbnail embed پریښودل شو — د محصول container یې نه ملاتړي.',
+      subtitleEmbedAudioOnly: 'د ژباړلیک embed sidecar ته بدل شو — د غږ ټریکونه د embed شوو ژباړلیک سټریمونو ملاتړ نه کوي.',
       audioOnly: 'یوازې غږ',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'کله چې نور ډاونلوډونه پای ته ورسیږي پیل کیږي — بشپړ بینډوډت ترلاسه کوي',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'راکش یې کړه! ↓',
       pullItTooltip: 'سمدلاسه پیل کیږي — د نورو فعالو ډاونلوډونو سره یوځای چلیږي',
-      playlistBatch_one: '{{count}} ویډیو · {{title}}',
-      playlistBatch_other: '{{count}} ویډیوګانې · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Preset',
       labelItems: 'توکي',
       itemsValue_one: '{{count}} له {{total}} ویډیو',
-      itemsValue_other: '{{count}} له {{total}} ویډیوګانې'
-    },
-    error: {
-      icon: 'تیروتنه'
+      itemsValue_other: '{{count}} له {{total}} ویډیوګانې',
+      itemsValueAudio_one: '{{count}} له {{total}} ټریک',
+      itemsValueAudio_other: '{{count}} له {{total}} ټریکونه'
     }
   },
   videoCard: {
-    titlePlaceholder: 'بارول…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'بارول…'
   },
   queue: {
     header: 'د ډاونلوډ کتار',
@@ -378,9 +394,7 @@ const ps = {
       resume: 'دوام',
       cancel: 'لغوه کول',
       remove: 'لیرې کول'
-    },
-    interJobSleep_one: 'راتلونکی ډاونلوډ {{count}} ثانیو کې پیل کیږي',
-    interJobSleep_other: 'راتلونکی ډاونلوډ {{count}} ثانیو کې پیل کیږي'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const ps = {
     ytdlpProcessError: 'yt-dlp پروسه تیروتنه: {{error}}',
     ytdlpExitCode: 'yt-dlp د {{code}} کوډ سره وتلو',
     downloadingBinary: '{{name}} بائنري ډاونلوډیږي…',
-    unknownStartupFailure: 'نامعلومه د پیل ناکامي'
+    unknownStartupFailure: 'نامعلومه د پیل ناکامي',
+    diskSpaceInsufficient: 'د ډیسک ځای کافي نه دی — {{required}} ته اړتیا ده، یوازې {{free}} شتون لري'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const ps = {
       unavailable: 'دا ویډیو شتون نلري — ممکن شخصي، حذف شوې، یا سیمه بنده وي.',
       geoBlocked: 'دا ویډیو ستاسو سیمه کې شتون نلري.',
       outOfDiskSpace: 'د ډیسک کافي ځای نشته. ځای خالي کړئ او بیا هڅه وکړئ.',
-      unsupportedUrl: 'دا د ویډیو URL نه ښکاري. یو YouTube ویډیو، Short، یا Playlist لینک ولیکئ.'
+      unsupportedUrl: 'دا د ویډیو URL نه ښکاري. یو YouTube ویډیو، Short، یا Playlist لینک ولیکئ.',
+      chunkTransferFailure: 'سرور د ډاونلوډ پرمهال وصل کول پرې کاوه او yt-dlp د بیا هڅولو وروسته مو پریښود. دا معمولاً د ترټولو لوی ویډیو فارمیټونو (4K HDR / لوړ بیټ ریټ VP9) سره پیښیږي. بیا هڅه وکړئ، شبکه/VPN بدل کړئ، یا ټیټ ریزولوشن فارمیټ غوره کړئ.',
+      postprocessFailure: 'yt-dlp ډاونلوډ بشپړ کړ خو وروستی پروسس (یوځای کول / mux / بدلون) ناکام شو. ډیری وختونه دا د ffmpeg لنډمهاله ستونزه ده — بیا هڅه وکړئ، او که دوام ولري، بل فارمیټ ترکیب وازمویئ.',
+      parse: 'د سایټ ځواب پارس نه شو. د yt-dlp استخراج کوونکی ممکن لرې شوی وي. Arroxy په پیلیدو سره yt-dlp په اتومات ډول تازه کوي — څو دقیقې وروسته بیا هڅه وکړئ کله چې اصلاح راشي.',
+      network: 'د شبکې تېروتنه. خپله اړیکه وګورئ او بیا هڅه وکړئ.',
+      unknown: 'ډاونلوډ ناکام شو. لاندې خام محصول وګورئ.'
     }
   },
   presets: {
@@ -463,9 +483,8 @@ const ps = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps ته بدلول' }
   },
   formatLabel: {
-    audioOnly: 'یوازې غږ',
     audioFallback: 'غږ',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'یوازې غږ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -498,6 +517,24 @@ const ps = {
       detail: 'د رینډرر پروسه کریش شوه ({{reason}}). بیا هڅه کولو لپاره بیا بار کړئ.',
       reload: 'بیا بار کړئ',
       quit: 'وتل'
+    }
+  },
+  share: {
+    title: 'Arroxy شریک کړئ',
+    description: 'Arroxy وړیا او خلاص سرچینه دی. شریکول نورو خلکو سره مرسته کوي چې ومومي.',
+    copyLink: 'لینک کاپي کړئ',
+    copied: 'کاپي شو!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Arroxy شریک کړئ',
+    footerLabel: 'شریک کړئ',
+    shareAction: 'Arroxy شریک کړئ',
+    inlineCard: {
+      body: 'ایا Arroxy خوند درکوي؟ له چا سره یې شریک کړئ چې ممکن ورته ګټور وي.',
+      dismiss: 'د شریکولو وړاندیز رد کړئ'
+    },
+    highValueBanner: {
+      body: 'ایا Arroxy خوند درکوي؟ نورو خلکو سره مرسته وکړئ چې ومومي.',
+      dismiss: 'د شریکولو وړاندیز رد کړئ'
     }
   }
 } as const;

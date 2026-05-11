@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { buildArgs, type YtDlpRequest } from '@main/services/YtDlp';
-import type { AudioConvert, SubtitleFormat, SubtitleMode } from '@shared/types';
+import { buildArgs, type YtDlpRequest } from '@main/services/YtDlp.js';
+import type { AudioConvert, SubtitleFormat, SubtitleMode } from '@shared/types.js';
 
 const AUDIO_CONVERTS: AudioConvert[] = [{ target: 'wav' }, { target: 'mp3', bitrateKbps: 128 }, { target: 'mp3', bitrateKbps: 192 }, { target: 'mp3', bitrateKbps: 320 }, { target: 'm4a', bitrateKbps: 192 }, { target: 'opus', bitrateKbps: 128 }];
 

@@ -28,7 +28,11 @@ export function spawnYtDlp(binaryPath: string, args: string[], ffmpegPath: strin
 export function spawnFFmpeg(binaryPath: string, args: string[]): ChildProcessWithoutNullStreams {
   return spawn(binaryPath, args, {
     env: envWithFfmpegPaths(binaryPath),
-    windowsHide: true
+    windowsHide: true,
+    // Same group-leader trick as spawnYtDlp so killProcessTree's process-group
+    // kill reaches any subprocesses ffmpeg might fork (rare but possible with
+    // hardware-accelerated codecs that fan out to vendor helpers).
+    detached: process.platform !== 'win32'
   });
 }
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { INSTALL_CHANNELS, type InstallChannel } from '@shared/types';
-import { resolveAction, type Action } from '@renderer/components/system/updateBannerAction';
+import { INSTALL_CHANNELS, type InstallChannel } from '@shared/types.js';
+import { resolveAction, type Action } from '@renderer/components/system/updateBannerAction.js';
 
 // Guardrail: this test exercises every member of the InstallChannel union
 // against resolveAction on every supported platform. If a new channel is added

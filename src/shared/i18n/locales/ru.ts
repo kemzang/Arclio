@@ -3,8 +3,7 @@ const ru = {
     back: 'Назад',
     continue: 'Продолжить',
     retry: 'Повторить',
-    startOver: 'Начать заново',
-    loading: 'Загрузка…'
+    startOver: 'Начать заново'
   },
   app: {
     feedback: 'Обратная связь',
@@ -14,6 +13,15 @@ const ru = {
     debugCopyTitle: 'Скопировать отладочную информацию (версии Electron, ОС, Chrome)',
     zoomIn: 'Увеличить',
     zoomOut: 'Уменьшить'
+  },
+  about: {
+    button: 'О программе',
+    openTitle: 'О программе Arroxy',
+    tagline: 'Быстрый и удобный загрузчик видео и аудио для рабочего стола.',
+    websiteLink: 'Сайт',
+    githubLink: 'GitHub',
+    licenseLine: 'Лицензия MIT · by Antonio Orionus',
+    thirdPartyNotices: 'Просмотреть уведомления о сторонних компонентах'
   },
   titleBar: {
     close: 'Закрыть',
@@ -25,7 +33,6 @@ const ru = {
     greeting: 'Привет, с возвращением!',
     warmup: 'Arroxy запускается…',
     downloading: 'Загрузка {{binary}}…',
-    warning: 'Настройка не завершена — некоторые функции могут не работать',
     warmupFailedNoDiag: 'Настройка завершилась ошибкой. Открой журнал настройки для подробностей.'
   },
   repair: {
@@ -81,6 +88,8 @@ const ru = {
       heading: 'Элементы Playlist',
       itemCount_one: '{{count}} видео',
       itemCount_other: '{{count}} видео',
+      itemCountAudio_one: '{{count}} трек',
+      itemCountAudio_other: '{{count}} треков',
       selectAll: 'Выбрать все',
       selectNone: 'Снять выбор',
       rangeFrom: 'С',
@@ -91,15 +100,13 @@ const ru = {
       noSelection: 'Выбери хотя бы одно видео, чтобы продолжить',
       loadingItems: 'Загрузка Playlist…',
       thumbnailAlt: 'Превью видео',
-      continue: 'Продолжить',
       durationUnknown: 'прямой эфир'
     },
     playlistPresets: {
       heading: 'Выбери качество для пакетной загрузки',
       subhead: 'Каждое видео независимо подбирает подходящий уровень качества — неоднородные плейлисты работают без сюрпризов.',
       itemCount_one: '{{count}} элемент',
-      itemCount_other: '{{count}} элементов',
-      continue: 'Продолжить'
+      itemCount_other: '{{count}} элементов'
     },
     mixedPrompt: {
       title: 'Эта ссылка — часть Playlist',
@@ -114,17 +121,25 @@ const ru = {
       fetchFormats: 'Получить форматы',
       features: {
         heading: 'Что умеет скачивать Arroxy',
-        video: {
-          title: 'Видео',
-          desc: 'Любое разрешение вплоть до 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Видео',
+          channel: 'Каналы',
+          playlist: 'Плейлисты',
+          short: 'Shorts',
+          music: 'Музыка',
+          podcast: 'Подкасты'
         },
-        playlist: {
-          title: 'Плейлисты',
-          desc: 'Мультивыбор элементов плейлиста'
+        anySite: {
+          heading: '2000+ сайтов',
+          video: 'Видео',
+          videoPlaylist: 'Видеоплейлисты',
+          musicPlaylist: 'Музыкальные плейлисты'
         },
-        audio: {
-          title: 'Аудио',
-          desc: 'Оригинальный поток или конвертация в MP3/M4A'
+        always: {
+          heading: 'Всегда доступно',
+          audioOnly: 'Только аудио',
+          subtitles: 'Субтитры'
         }
       },
       mascotIdle: 'Кинь мне ссылку YouTube (видео или Shorts) — нажми «Получить форматы», и я возьмусь за дело ✨',
@@ -162,7 +177,7 @@ const ru = {
         enabledButNoBrowser: 'Выбери браузер, чтобы использовать cookies',
         banWarning: 'YouTube может пометить — и иногда забанить — аккаунты, чьи cookies использует yt-dlp. По возможности используй одноразовый аккаунт.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'Получить cookies.txt ЛОКАЛЬНО (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const ru = {
       }
     },
     subtitles: {
-      heading: 'Субтитры',
       autoBadge: 'Авто',
-      hint: 'Файлы будут сохранены рядом с видео',
       noLanguages: 'Для этого видео субтитры недоступны',
       skip: 'Пропустить',
       skipSubs: 'Пропустить для этого видео',
-      selectAll: 'Выбрать все',
-      deselectAll: 'Снять все',
       mascot: 'Ноль, один или несколько — решать тебе ✨',
       searchPlaceholder: 'Поиск языков…',
       noMatches: 'Языки не найдены',
@@ -242,10 +253,14 @@ const ru = {
       audioOnlyOption: 'Только аудио (без видео)',
       mascot: 'Лучшее + лучшее = максимальное качество. Я бы выбрал так!',
       sniffing: 'Ищу для тебя лучшие форматы…',
-      loadingHint: 'Обычно занимает секунду',
+      loadingHint: 'Подождите, пока завершится проверка — плейлисты и поиски могут занять некоторое время.',
       loadingAria: 'Загрузка форматов',
       sizeUnknown: 'Размер неизвестен',
       total: 'Всего',
+      skipToConfirm: 'Перейти к подтверждению',
+      skipToConfirmTooltip: 'Использует сохранённые настройки для всех оставшихся шагов. Чтобы изменить параметр, продолжайте пошагово — ваш выбор будет сохранён на следующий раз.',
+      keepAudio: 'Оставить как есть',
+      keepAudioMeta: 'Встроенное аудио',
       convert: {
         label: 'Конвертировать',
         uncompressed: 'Конвертировать · без сжатия',
@@ -261,8 +276,7 @@ const ru = {
         bodyDisabled: 'Cookies настроены, но отключены. Включи их и повтори, чтобы получить полный список, или смени сеть и повтори.',
         bodyEnabled: 'Даже с cookies YouTube ограничил этот запрос. Попробуй позже или смени сеть.',
         retryCta: 'Повторить',
-        enableRetryCta: 'Включить cookies и повторить',
-        openSettingsCta: 'Открыть расширенные настройки'
+        enableRetryCta: 'Включить cookies и повторить'
       },
       cookiesError: {
         heading: 'Возможная причина — cookies',
@@ -271,6 +285,10 @@ const ru = {
         currentModeBrowser: 'Браузер',
         explanationFile: 'Файл cookies может быть пустым, устаревшим или в неверном формате (yt-dlp ожидает Netscape cookies.txt). Попробуй заново экспортировать cookies, выбрать другой файл, переключиться в режим «Браузер» или отключить cookies.',
         explanationBrowser: 'Cookies читаются напрямую из браузера. Если браузер сейчас открыт, его база cookies может быть заблокирована (семейство Chromium). Браузер также должен быть авторизован на YouTube. Попробуй закрыть браузер, переключиться на другой браузер, перейти в режим «Файл» или отключить cookies.',
+        needsCookies: {
+          heading: 'Этот сайт требует авторизации',
+          body: 'yt-dlp не смог получить доступ к этому видео без аутентификации. Настрой cookies в расширенных настройках — укажи браузер, в котором ты уже вошёл, или импортируй файл cookies.txt.'
+        },
         openSettingsCta: 'Открыть настройки cookies',
         dpapi: {
           heading: 'Cookies Chrome заблокированы шифрованием Windows',
@@ -334,26 +352,24 @@ const ru = {
       labelSize: 'Размер',
       sizeUnknown: 'Неизвестно',
       nothingToDownload: 'Пресет «Только субтитры» активен, но язык субтитров не выбран — ничего не будет скачано.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed пропущен — выходной container не поддерживает это.',
+      subtitleEmbedAudioOnly: 'Subtitle embed заменён на sidecar — аудиодорожки не поддерживают встроенные потоки субтитров.',
       audioOnly: 'Только аудио',
       addToQueue: '+ В очередь',
       addToQueueTooltip: 'Стартует, когда завершатся другие загрузки — на полной скорости',
       pullIt: 'Качаем! ↓',
       pullItTooltip: 'Запускается сразу — параллельно с другими активными загрузками',
-      playlistBatch_one: '{{count}} видео · {{title}}',
-      playlistBatch_other: '{{count}} видео · {{title}}',
       labelPlaylist: 'Плейлист',
       labelPreset: 'Пресет',
       labelItems: 'Видео',
       itemsValue_one: '{{count}} из {{total}} видео',
-      itemsValue_other: '{{count}} из {{total}} видео'
-    },
-    error: {
-      icon: 'Ошибка'
+      itemsValue_other: '{{count}} из {{total}} видео',
+      itemsValueAudio_one: '{{count}} из {{total}} трека',
+      itemsValueAudio_other: '{{count}} из {{total}} треков'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Загрузка…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Загрузка…'
   },
   queue: {
     header: 'Очередь загрузок',
@@ -378,9 +394,7 @@ const ru = {
       resume: 'Продолжить',
       cancel: 'Отменить',
       remove: 'Удалить'
-    },
-    interJobSleep_one: 'Следующая загрузка начнётся через {{count}}с',
-    interJobSleep_other: 'Следующая загрузка начнётся через {{count}}с'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const ru = {
     ytdlpProcessError: 'Ошибка процесса yt-dlp: {{error}}',
     ytdlpExitCode: 'yt-dlp завершился с кодом {{code}}',
     downloadingBinary: 'Загрузка бинарника {{name}}…',
-    unknownStartupFailure: 'Неизвестная ошибка при запуске загрузки'
+    unknownStartupFailure: 'Неизвестная ошибка при запуске загрузки',
+    diskSpaceInsufficient: 'Недостаточно места на диске — нужно {{required}}, доступно только {{free}}'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const ru = {
       unavailable: 'Видео недоступно — оно может быть приватным, удалённым или ограниченным по региону.',
       geoBlocked: 'Это видео недоступно в твоём регионе.',
       outOfDiskSpace: 'Недостаточно места на диске. Освободи место и повтори попытку.',
-      unsupportedUrl: 'Это не похоже на ссылку на видео. Вставь ссылку на YouTube-видео, Short или плейлист.'
+      unsupportedUrl: 'Это не похоже на ссылку на видео. Вставь ссылку на YouTube-видео, Short или плейлист.',
+      chunkTransferFailure: 'Сервер постоянно обрывал загрузку на полпути, и yt-dlp сдался после нескольких попыток. Чаще всего это случается с самыми тяжёлыми форматами (4K HDR / высокобитрейтный VP9). Попробуй повторить, сменить сеть или VPN, либо выбери формат с меньшим разрешением.',
+      postprocessFailure: 'yt-dlp скачал файл, но пост-обработка (склейка / mux / конвертация) завершилась ошибкой. Обычно это временная проблема ffmpeg — повтори попытку, а если ошибка не уходит, попробуй другое сочетание форматов.',
+      parse: 'Не удалось разобрать ответ сайта. Возможно, экстрактор yt-dlp устарел. Arroxy автоматически обновляет yt-dlp при запуске — повтори попытку через несколько минут, как только выйдет исправление.',
+      network: 'Сетевая ошибка. Проверь подключение и повтори попытку.',
+      unknown: 'Загрузка не удалась. Смотри необработанный вывод ниже.'
     }
   },
   presets: {
@@ -463,7 +483,6 @@ const ru = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Конвертировать в MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Только аудио',
     audioFallback: 'Аудио',
     audioOnlyDot: 'Только аудио · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
@@ -498,6 +517,24 @@ const ru = {
       detail: 'Процесс отрисовки завершился аварийно ({{reason}}). Перезагрузи, чтобы попробовать снова.',
       reload: 'Перезагрузить',
       quit: 'Выйти'
+    }
+  },
+  share: {
+    title: 'Поделиться Arroxy',
+    description: 'Arroxy — бесплатный проект с открытым кодом. Рекомендуя его, ты помогаешь другим узнать о нём.',
+    copyLink: 'Скопировать ссылку',
+    copied: 'Скопировано!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Поделиться Arroxy',
+    footerLabel: 'Поделиться',
+    shareAction: 'Поделиться Arroxy',
+    inlineCard: {
+      body: 'Нравится Arroxy? Поделись с тем, кому это может пригодиться.',
+      dismiss: 'Скрыть предложение поделиться'
+    },
+    highValueBanner: {
+      body: 'Нравится Arroxy? Помоги другим его найти.',
+      dismiss: 'Скрыть предложение поделиться'
     }
   }
 } as const;

@@ -1,8 +1,8 @@
 import { afterEach, describe, it, expect, vi } from 'vitest';
-import { WarmupService } from '@main/services/WarmupService';
-import type { BinaryManager } from '@main/services/BinaryManager';
-import type { TokenService } from '@main/services/TokenService';
-import type { DependencyDiagnostic, DependencyId } from '@shared/types';
+import { WarmupService } from '@main/services/WarmupService.js';
+import type { BinaryManager } from '@main/services/BinaryManager.js';
+import type { TokenService } from '@main/services/TokenService.js';
+import type { DependencyDiagnostic, DependencyId } from '@shared/types.js';
 
 function diag(id: DependencyId, state: DependencyDiagnostic['state']): DependencyDiagnostic {
   return {
@@ -27,7 +27,7 @@ function fakeBinaryManager(opts: { ytDlp: 'runnable' | 'failed'; ffmpeg: 'runnab
   } as unknown as BinaryManager;
 }
 
-const noopToken = { warmUp: vi.fn().mockResolvedValue(undefined) } as unknown as TokenService;
+const noopToken = { warmUp: vi.fn().mockResolvedValue({ ready: true }) } as unknown as TokenService;
 
 afterEach(() => {
   vi.restoreAllMocks();

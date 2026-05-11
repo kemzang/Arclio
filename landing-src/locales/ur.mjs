@@ -161,4 +161,7 @@ export const ur = {
   faq_q9: "کیا یہ قانونی ہے؟",
   faq_a9:
     "ذاتی استعمال کے لیے ویڈیوز ڈاؤن لوڈ کرنا زیادہ تر دائرہ اختیار میں عام طور پر قبول کیا جاتا ہے۔ آپ YouTube کی Terms of Service اور اپنے مقامی قوانین کی تعمیل کے ذمہ دار ہیں۔",
+
+  f13_h: "YouTube + 2000 سائٹس",
+  f13_p: "YouTube کے علاوہ، Arroxy 2000+ سائٹس سے ڈاؤن لوڈ کرتا ہے جنہیں yt-dlp سپورٹ کرتا ہے — Vimeo، Twitch، Twitter/X، TikTok، SoundCloud، Bandcamp، Bilibili، BBC iPlayer، archive.org اور بہت سی دیگر۔ صرف آڈیو اور سب ٹائٹل ہر جگہ کام کرتے ہیں، صرف YouTube پر نہیں۔",
 };

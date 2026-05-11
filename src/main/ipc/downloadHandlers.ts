@@ -1,19 +1,17 @@
-import log from 'electron-log/main';
-import { createAppError } from '@main/utils/errorFactory';
-import { cookiesConfigIssueMessage, getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { fail, type Result } from '@shared/result';
-import { cancelDownloadSchema, getFormatsSchema, getPlaylistItemsSchema, pauseResumeSchema, resumeSchema, startDownloadSchema } from '@shared/schemas';
-import type { DownloadService } from '@main/services/DownloadService';
-import type { FormatProbeService } from '@main/services/FormatProbeService';
-import type { PlaylistProbeService } from '@main/services/PlaylistProbeService';
-import type { SettingsStore } from '@main/stores/SettingsStore';
-import { handle } from './utils';
+import log from 'electron-log/main.js';
+import { createAppError } from '@main/utils/errorFactory.js';
+import { cookiesConfigIssueMessage, getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { fail, type Result } from '@shared/result.js';
+import { cancelDownloadSchema, pauseResumeSchema, probeSchema, resumeSchema, startDownloadSchema } from '@shared/schemas.js';
+import type { DownloadService } from '@main/services/DownloadService.js';
+import type { ProbeService } from '@main/services/ProbeService.js';
+import type { SettingsStore } from '@main/stores/SettingsStore.js';
+import { handle, handleRaw } from './utils.js';
 
 interface DownloadHandlerDeps {
   downloadService: DownloadService;
-  formatProbeService: FormatProbeService;
-  playlistProbeService: PlaylistProbeService;
+  probeService: ProbeService;
   settingsStore: SettingsStore;
 }
 
@@ -23,16 +21,21 @@ function getCookiesValidationFailure(settings: Awaited<ReturnType<SettingsStore[
 }
 
 export function registerDownloadHandlers(deps: DownloadHandlerDeps): void {
-  const { downloadService, formatProbeService, playlistProbeService, settingsStore } = deps;
+  const { downloadService, probeService, settingsStore } = deps;
 
-  handle(IPC_CHANNELS.downloadsGetFormats, getFormatsSchema, async ({ url }) => {
+  handle(IPC_CHANNELS.downloadsProbe, probeSchema, async ({ url, playlistMode }) => {
     const settings = await settingsStore.get();
     const validationFailure = getCookiesValidationFailure(settings);
     if (validationFailure) return validationFailure;
-    return formatProbeService.getFormats(url, settings.common.cookiesMode ?? 'off');
+    return probeService.probe(url, settings.common.cookiesMode ?? 'off', playlistMode ?? 'auto');
   });
 
-  handle(IPC_CHANNELS.downloadsGetPlaylistItems, getPlaylistItemsSchema, ({ url }) => playlistProbeService.getPlaylistItems(url));
+  // Renderer fires this when the user changes URL or navigates away from a
+  // probe in progress. Cancels every in-flight probe so the spinner never
+  // blocks behind a stale 60s YouTube fallback chain.
+  handleRaw(IPC_CHANNELS.downloadsProbeCancel, () => {
+    probeService.cancelInFlight();
+  });
 
   handle(IPC_CHANNELS.downloadsStart, startDownloadSchema, async (data) => {
     const settings = await settingsStore.get();

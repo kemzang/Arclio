@@ -1,8 +1,10 @@
 import { z } from 'zod';
-import { isValidSubfolder, SUBFOLDER_NAME_MAX } from './subfolder';
-import { AUDIO_CONVERT_TARGETS, type AudioConvertTarget } from './audioTargets';
+import { isValidSubfolder, SUBFOLDER_NAME_MAX } from './subfolder.js';
+import { AUDIO_CONVERT_TARGETS, type AudioConvertTarget } from './audioTargets.js';
+import { YT_DLP_ERROR_KINDS, type YtDlpErrorKind } from './ytdlp/errors.js';
 
 export type { AudioConvertTarget };
+export type { YtDlpErrorKind };
 
 // Enum schemas — single source of truth. Types below are inferred so adding
 // or removing a value never requires hand-editing a parallel union.
@@ -64,22 +66,25 @@ export type CookiesMode = z.infer<typeof cookiesModeSchema>;
 export const cookiesBrowserSchema = z.enum(['firefox', 'chromium', 'chrome', 'brave', 'edge', 'safari', 'vivaldi']);
 export type CookiesBrowser = z.infer<typeof cookiesBrowserSchema>;
 
-export const queueItemStatusSchema = z.enum(['pending', 'downloading', 'paused', 'done', 'error', 'cancelled']);
+// QueueItemStatus is now a 7-value union with paused split. paused-held is
+// "queued + waiting + never spawned a job" (resume = transition to pending).
+// paused-active is "had a running job, user paused it" (resume = re-spawn,
+// possibly across an app restart via persisted tempDir + lastJobId).
+export const queueItemStatusSchema = z.enum(['pending', 'running', 'paused-held', 'paused-active', 'done', 'error', 'cancelled']);
 export type QueueItemStatus = z.infer<typeof queueItemStatusSchema>;
 
-export const ytdlpErrorKeySchema = z.enum(['botBlock', 'ipBlock', 'rateLimit', 'ageRestricted', 'unavailable', 'geoBlocked', 'outOfDiskSpace', 'unsupportedUrl']);
-export type YtdlpErrorKey = z.infer<typeof ytdlpErrorKeySchema>;
-export const YTDLP_ERROR_KEYS = ytdlpErrorKeySchema.options;
+const ytDlpErrorKindSchema = z.enum(YT_DLP_ERROR_KINDS);
 
 // Reified queue-status names for use in equality checks. Exact mirror of the schema.
 export const QUEUE_STATUS = {
   pending: 'pending',
-  downloading: 'downloading',
-  paused: 'paused',
+  running: 'running',
+  pausedHeld: 'paused-held',
+  pausedActive: 'paused-active',
   done: 'done',
   error: 'error',
   cancelled: 'cancelled'
-} as const satisfies Record<QueueItemStatus, QueueItemStatus>;
+} as const satisfies Record<string, QueueItemStatus>;
 
 // Status keys emitted by DownloadService and consumed by the renderer for i18n.
 // Defined as a const object so call-sites can reference STATUS_KEY.X — typos
@@ -104,7 +109,8 @@ export const STATUS_KEY = {
   ytdlpProcessError: 'ytdlpProcessError',
   ytdlpExitCode: 'ytdlpExitCode',
   downloadingBinary: 'downloadingBinary',
-  unknownStartupFailure: 'unknownStartupFailure'
+  unknownStartupFailure: 'unknownStartupFailure',
+  diskSpaceInsufficient: 'diskSpaceInsufficient'
 } as const;
 export type StatusKey = (typeof STATUS_KEY)[keyof typeof STATUS_KEY];
 
@@ -118,47 +124,20 @@ export const ZOOM_STEP = 0.05;
 // Hard cap on subtitle languages per download — protects against argv length blow-up.
 export const MAX_SUBTITLE_LANGUAGES = 50;
 
-const youtubeHostRegex = /(^|\.)(youtube\.com|youtu\.be)$/i;
+// Permissive http(s) URL schema. Multi-site support means we can't pre-filter
+// by host — yt-dlp itself decides whether the URL is supported (via extractor
+// match) and surfaces "Unsupported URL" via stderr if not.
+const webUrlSchema = z.url('URL must be valid').refine((value) => /^https?:\/\//i.test(value), { message: 'Only http/https URLs are supported' });
 
-function isYouTubeHostname(hostname: string): boolean {
-  return youtubeHostRegex.test(hostname);
-}
-
-export function isYouTubeUrl(input: string): boolean {
-  try {
-    return isYouTubeHostname(new URL(input).hostname);
-  } catch {
-    return false;
-  }
-}
-
-const youtubeUrlSchema = z
-  .string()
-  .url('URL must be valid')
-  .superRefine((value, ctx) => {
-    try {
-      const parsed = new URL(value);
-      if (!isYouTubeHostname(parsed.hostname)) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Only YouTube URLs are supported' });
-      }
-    } catch {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'URL parsing failed' });
-    }
-  });
-
-export const getFormatsSchema = z.object({
-  url: youtubeUrlSchema
-});
-
-export const getPlaylistItemsSchema = z.object({
-  url: youtubeUrlSchema
+export const probeSchema = z.object({
+  url: webUrlSchema,
+  playlistMode: z.enum(['auto', 'video', 'playlist']).optional()
 });
 
 // PreparedJob discriminated-union schema. Type aliases live in
 // `./preparedJob`; the runtime validator lives here so callers that already
 // import from `@shared/schemas` get one source of truth and the import graph
 // stays acyclic.
-const jobSourceSchema = z.enum(['youtube', 'generic']);
 
 const subtitleOptionsSchema = z.object({
   languages: z.array(z.string()),
@@ -179,10 +158,18 @@ const embedOptionsSchema = z.object({
 
 const presetOrCustomSchema = z.union([presetSchema, z.literal('custom')]);
 
+// Each variant carries the yt-dlp `extractor` + `extractor_key` strings that
+// were observed at probe time. These plumb through to download jobs so the
+// download path can branch on extractor without re-probing.
+const extractorIdentitySchema = {
+  extractor: z.string(),
+  extractorKey: z.string()
+};
+
 export const preparedJobSchema = z.discriminatedUnion('kind', [
   z.object({
     kind: z.literal('single-format'),
-    source: jobSourceSchema,
+    ...extractorIdentitySchema,
     formatId: z.string().min(1),
     preset: presetOrCustomSchema,
     subtitles: subtitleOptionsSchema.optional(),
@@ -192,7 +179,7 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
   }),
   z.object({
     kind: z.literal('audio-convert'),
-    source: jobSourceSchema,
+    ...extractorIdentitySchema,
     audioConvert: audioConvertSchema,
     preset: presetOrCustomSchema,
     subtitles: subtitleOptionsSchema.optional(),
@@ -201,7 +188,7 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
   }),
   z.object({
     kind: z.literal('playlist-preset'),
-    source: jobSourceSchema,
+    ...extractorIdentitySchema,
     preset: playlistPresetSchema,
     formatSelector: z.string().min(1).optional(),
     audioConvert: audioConvertSchema.optional(),
@@ -212,13 +199,13 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
   }),
   z.object({
     kind: z.literal('subtitle-only'),
-    source: jobSourceSchema,
+    ...extractorIdentitySchema,
     subtitles: subtitleOptionsSchema
   })
 ]);
 
 export const startDownloadSchema = z.object({
-  url: youtubeUrlSchema,
+  url: webUrlSchema,
   outputDir: z.string().min(1).optional(),
   cookiesMode: cookiesModeSchema.optional(),
   job: preparedJobSchema
@@ -268,6 +255,9 @@ const commonSettingsPatchSchema = z.object({
   analyticsEnabled: z.boolean().optional(),
   firstRunCompleted: z.boolean().optional(),
   drawerOpen: z.boolean().optional(),
+  successfulDownloadCount: z.number().int().nonnegative().optional(),
+  shareInlineCardDismissed: z.boolean().optional(),
+  shareHighValueBannerDismissed: z.boolean().optional(),
   binaryOverrides: z
     .object({
       ytDlp: z.string().min(1).optional(),
@@ -276,37 +266,49 @@ const commonSettingsPatchSchema = z.object({
       deno: z.string().min(1).optional()
     })
     .partial()
-    .optional()
-});
-
-const singlePrefsPatchSchema = z.object({
-  lastPreset: presetSchema.nullable().optional(),
-  lastVideoResolution: z.string().optional(),
-  lastAudioSelection: audioSelectionSchema.optional(),
-  lastSubtitleLanguages: z.array(z.string()).optional(),
-  lastSubtitleMode: subtitleModeSchema.optional(),
-  lastSubtitleFormat: subtitleFormatSchema.optional(),
+    .optional(),
   lastSubfolderEnabled: z.boolean().optional(),
   lastSubfolder: subfolderNameSchema.optional()
 });
 
-const playlistPrefsPatchSchema = z.object({
-  lastPlaylistPreset: playlistPresetSchema.optional(),
-  lastPlaylistSubfolderEnabled: z.boolean().optional(),
-  lastPlaylistSubfolder: subfolderNameSchema.optional()
+// Convention for *patch* schemas: every field is `.optional()` only — never
+// `.nullable()`. A patch is "fields the caller wants to change"; "absent" is
+// the same signal as "no change", so adding `.nullable()` introduces a third
+// state ("explicitly clear") that the merge logic in SettingsStore.deepMerge
+// doesn't actually distinguish from undefined. Stay in lockstep with
+// commonSettingsPatchSchema and playlistPrefsPatchSchema.
+const singlePrefsPatchSchema = z.object({
+  lastPreset: presetSchema.optional(),
+  lastVideoResolution: z.string().optional(),
+  lastAudioSelection: audioSelectionSchema.optional(),
+  lastSubtitleLanguages: z.array(z.string()).optional(),
+  lastSubtitleMode: subtitleModeSchema.optional(),
+  lastSubtitleFormat: subtitleFormatSchema.optional()
 });
 
-export const updateSettingsSchema = z.object({
-  common: commonSettingsPatchSchema.optional(),
-  single: singlePrefsPatchSchema.optional(),
-  playlist: playlistPrefsPatchSchema.optional()
+const playlistPrefsPatchSchema = z.object({
+  lastPlaylistPreset: playlistPresetSchema.optional()
 });
+
+export const updateSettingsSchema = z
+  .object({
+    common: commonSettingsPatchSchema.optional(),
+    single: singlePrefsPatchSchema.optional(),
+    playlist: playlistPrefsPatchSchema.optional()
+  })
+  .refine(
+    (patch) => {
+      const hasField = (sub: Record<string, unknown> | undefined): boolean => sub !== undefined && Object.values(sub).some((v) => v !== undefined);
+      return hasField(patch.common) || hasField(patch.single) || hasField(patch.playlist);
+    },
+    { message: 'settings:update payload must contain at least one defined field' }
+  );
 
 // Queue item schema — used by both queueSave IPC handler and queueStore.load
 // to reject corrupted persistence (manual edits, partial writes).
 const localizedErrorSchema = z.object({
-  key: ytdlpErrorKeySchema.nullable(),
-  rawMessage: z.string().optional()
+  kind: ytDlpErrorKindSchema,
+  raw: z.string()
 });
 
 const statusSnapshotSchema = z.object({
@@ -327,59 +329,20 @@ export const queueItemSchema = z.object({
   lastStatus: statusSnapshotSchema.nullable(),
   error: localizedErrorSchema.nullable(),
   finishedAt: z.string().nullable(),
-  downloadJobId: z.string().nullable(),
   playlistGroupId: z.string().min(1).optional(),
+  // Persisted resume context. `lastJobId` is set iff status ∈ {running,
+  // paused-active}; `tempDir` is set iff status === 'paused-active' and the
+  // job was paused mid-download. `tempDir` survives app restart so the
+  // resumed yt-dlp run can target the same .part files. Both undefined for
+  // paused-held items (they never spawned a job yet).
+  tempDir: z.string().min(1).optional(),
+  lastJobId: z.string().min(1).optional(),
   job: preparedJobSchema
 });
 
 export const queueArraySchema = z.array(queueItemSchema);
 
-// Loose schema for yt-dlp `--dump-json` output. Only fields the app actually
-// reads are validated; unknown fields pass through unchecked because yt-dlp's
-// schema is huge and we don't own it.
-//
-// yt-dlp emits explicit `null` (not just absence) for unknown values —
-// `filesize` when the size header was missing, `fps`/`abr` for the wrong
-// stream type, `duration` on live streams, etc. We normalize `null` →
-// `undefined` at this boundary via `preprocess` so consumers see one
-// absent-value sentinel and the inferred properties stay genuinely
-// optional (a `.transform()` would mark them required-but-undefinable).
-const nullToUndef = (v: unknown): unknown => (v === null ? undefined : v);
-const optStr = z.preprocess(nullToUndef, z.string().optional());
-const optNum = z.preprocess(nullToUndef, z.number().optional());
-
-const ytDlpFormatSchema = z
-  .object({
-    format_id: optStr,
-    ext: optStr,
-    resolution: optStr,
-    format_note: optStr,
-    fps: optNum,
-    abr: optNum,
-    filesize: optNum,
-    vcodec: optStr,
-    acodec: optStr,
-    dynamic_range: optStr
-  })
-  .passthrough();
-
-const ytDlpSubtitleTrackSchema = z
-  .object({
-    ext: optStr,
-    name: optStr
-  })
-  .passthrough();
-
-export const ytDlpInfoSchema = z
-  .object({
-    formats: z.preprocess(nullToUndef, z.array(ytDlpFormatSchema).optional()),
-    title: optStr,
-    thumbnail: optStr,
-    duration: optNum,
-    subtitles: z.preprocess(nullToUndef, z.record(z.string(), z.array(ytDlpSubtitleTrackSchema)).optional()),
-    automatic_captions: z.preprocess(nullToUndef, z.record(z.string(), z.array(ytDlpSubtitleTrackSchema)).optional())
-  })
-  .passthrough();
-
-export type YtDlpInfo = z.infer<typeof ytDlpInfoSchema>;
-export type YtDlpSubtitleTrack = z.infer<typeof ytDlpSubtitleTrackSchema>;
+// yt-dlp info_dict shape lives in `./ytdlp/infoDict.ts` — the spec port that
+// validates `--dump-single-json` output. Schemas here are app-internal contracts
+// (settings, prefs, queue items); yt-dlp's contract is its own thing.
+export { infoDictSchema, type YtDlpFormat, type YtDlpSubtitleTrack, type InfoDict } from './ytdlp/infoDict.js';

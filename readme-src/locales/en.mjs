@@ -71,7 +71,7 @@ bun run dist:win     # cross-compile Windows portable exe
 
 export const en = {
   icon_alt: "Arroxy mascot",
-  title: "Arroxy — Free Open-Source YouTube Downloader for Windows, macOS & Linux",
+  title: "Arroxy — Free Open-Source YouTube (+ 2000 sites) Downloader for Windows, macOS & Linux",
   read_in_label: "Read in:",
   badge_release_alt: "Release",
   badge_build_alt: "Build",
@@ -80,7 +80,7 @@ export const en = {
   badge_i18n_alt: "Languages",
   badge_website_alt: "Website",
   hero_desc:
-    "Download any YouTube video, Short, or audio track in original quality — up to 4K HDR at 60 fps, or as MP3 / AAC / Opus. Runs locally on Windows, macOS, and Linux. **No ads, no login, no browser cookies, no Google account linked.**",
+    "Download videos, Shorts, music, channels, podcasts, or audio tracks from **YouTube and 2000+ supported sites** — up to 4K HDR at 60 fps, or as MP3 / AAC / Opus. Runs locally on Windows, macOS, and Linux. **No ads, no bloat, no upsells.**",
   cta_latest: "↓ Download Latest Release",
   cta_website: "Website",
   demo_alt: "Arroxy demo",
@@ -88,7 +88,6 @@ export const en = {
   ai_notice: "",
   toc_heading: "Contents",
   why_h2: "Why Arroxy",
-  nocookies_h2: "No cookies, no logins, no account linking",
   features_h2: "Features",
   dl_h2: "Download",
   privacy_h2: "Privacy",
@@ -105,16 +104,6 @@ export const en = {
   why_r7: "Subtitles + SponsorBlock",
   why_summary:
     "Arroxy is built for one thing: paste a URL, get a clean local file. No accounts, no upsells, no data collection.",
-  nocookies_intro:
-    "This is the most common reason desktop YouTube downloaders break — and the main reason Arroxy exists.",
-  nocookies_setup:
-    "When YouTube updates its bot detection, most tools tell you to export your browser's YouTube cookies as a workaround. Two problems with that:",
-  nocookies_p1:
-    "Exported sessions typically expire within ~30 minutes, so you re-export constantly.",
-  nocookies_p2:
-    "yt-dlp's own documentation [warns that cookie-based automation can flag your Google account](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).",
-  nocookies_outro:
-    "**Arroxy never asks for cookies, logins, or any credential.** It uses only the public tokens YouTube serves to any browser. Nothing tied to your Google identity, nothing to expire, nothing to rotate.",
   feat_quality_h3: "Quality & formats",
   feat_quality_1: "Up to **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**High frame rate** preserved as-is — 60 fps, 120 fps, HDR",
@@ -123,11 +112,11 @@ export const en = {
   feat_privacy_h3: "Privacy & control",
   feat_privacy_1:
     "100% local processing — downloads go straight from YouTube to your disk",
-  feat_privacy_2: "No login, no cookies, no Google account linked",
+  feat_privacy_2: "**Open source** — every line auditable, MIT licensed",
   feat_privacy_3: "Files saved straight to the folder you choose",
   feat_workflow_h3: "Workflow",
   feat_workflow_1:
-    "**Paste any YouTube URL** — videos, Shorts, and playlists supported; download the whole playlist or pick specific videos first",
+    "**Paste any link** — YouTube videos, Shorts, channels, playlists, podcasts, and Music, plus 2000+ other sites yt-dlp supports; download the whole playlist or pick specific videos first",
   feat_workflow_2:
     "**Multi-download queue** — track several downloads in parallel",
   feat_workflow_3:
@@ -147,6 +136,15 @@ export const en = {
     "**SponsorBlock** — skip or chapter-mark sponsors, intros, outros, self-promos",
   feat_post_4:
     "**Embedded metadata** — title, upload date, channel, description, thumbnail, and chapter markers written into the file",
+  feat_sites_h3: "YouTube + 2000 sites",
+  feat_sites_1:
+    "**YouTube, in full** — Videos, Shorts, Channels, Playlists, YouTube Music, and Podcasts handled as first-class sources",
+  feat_sites_2:
+    "**2000+ other sites** via yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org, and many more",
+  feat_sites_3:
+    "**Audio-only and subtitles** work across every supported site, not just YouTube",
+  feat_sites_4:
+    "If a site changes, yt-dlp ships fixes weekly and Arroxy auto-updates the binary on launch",
   shot1_alt: "Paste a URL",
   shot2_alt: "Pick your quality",
   shot3_alt: "Choose where to save",
@@ -211,6 +209,67 @@ export const en = {
   dl_linux_fuse_text: "If launch still fails, you may be missing FUSE:",
   dl_linux_flatpak_intro:
     "**Flatpak (sandboxed alternative):** download `Arroxy-*.flatpak` from the same release page.",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "Why you may see a warning",
+  dl_warning_p1:
+    "Arroxy is open-source and MIT-licensed. The Windows and macOS builds are **not code-signed** — Apple Developer ID and Windows EV code-signing certificates each cost hundreds of dollars per year, which an indie project pays out of pocket. Without those signatures, Windows SmartScreen and macOS Gatekeeper will warn you on first launch. The warnings mean *your OS doesn't recognize the publisher* — they don't mean Arroxy is malware.",
+  dl_warning_p2:
+    "Three ways to verify Arroxy yourself, in increasing rigor:\n\n- **Read the source.** Every line is on [GitHub](https://github.com/antonio-orionus/Arroxy) and you can [build it from source](#tech).\n- **Check the SHA256.** Match your file against the published [`SHA256SUMS`](../../releases/latest) — see [Verify your download](#verify) below.\n- **Run a third-party scan.** Upload the file to [VirusTotal](https://www.virustotal.com).",
+
+  dl_win_first_h3: "Windows first launch",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted',
+  shot_smartscreen_run_alt:
+    'SmartScreen dialog after expanding More info, showing the "Run anyway" button',
+  dl_win_defender_h4: "If Windows Defender flags or removes the file",
+  dl_win_defender_p:
+    "Defender heuristics sometimes flag unsigned NSIS installers and Electron portables as suspicious. If Defender quarantines `Arroxy-Setup-*.exe` or `Arroxy-Portable-*.exe`, restore it from **Windows Security → Virus & threat protection → Protection history**, then add the Arroxy executable as an allowed item under **Manage settings → Add or remove exclusions**. As with SmartScreen, the trigger is the missing publisher signature, not detected malware.",
+
+  dl_macos_first_h3: "macOS first launch",
+  dl_macos_intro:
+    "Arroxy is not yet code-signed for macOS, so Gatekeeper will block the first launch. The exact path to allow it depends on your macOS version — Sequoia 15 tightened the old right-click → Open bypass.",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 and later (current)",
+  dl_macos_sequoia_intro:
+    "On Sequoia 15 and newer, right-click → Open no longer bypasses Gatekeeper for many quarantined apps. Use the System Settings panel instead:",
+  dl_macos_sequoia_step1:
+    "Drag `Arroxy.app` from the mounted DMG into `/Applications`.",
+  dl_macos_sequoia_step2:
+    "Double-click Arroxy. The block dialog appears — click **Done** (don't click *Move to Trash*).",
+  dl_macos_sequoia_step3:
+    'Open **System Settings → Privacy & Security** and scroll to the **Security** section. You\'ll see *"Arroxy was blocked to protect your Mac"* (or a near-identical message).',
+  dl_macos_sequoia_step4:
+    "Click **Open Anyway**, confirm with your password or Touch ID, then re-launch Arroxy from `/Applications`.",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 and earlier",
+  dl_macos_sonoma_step1:
+    "Drag `Arroxy.app` from the mounted DMG into `/Applications`.",
+  dl_macos_sonoma_step2:
+    "Right-click (or Control-click) `Arroxy.app` in `/Applications` and choose **Open**.",
+  dl_macos_sonoma_step3:
+    "The warning dialog now has an **Open** button — click it and confirm. Arroxy opens normally and the warning never appears again.",
+  dl_macos_damaged_h4:
+    '"App is damaged" or persistent Gatekeeper block — Terminal fix',
+  dl_macos_damaged_p:
+    'If macOS says *"Arroxy is damaged and can\'t be opened"*, or none of the steps above clear the block, the quarantine attribute on the DMG is the cause (some browsers and macOS\'s own translocation behavior set it). Strip it from the installed app:',
+  dl_macos_arch_note:
+    "**Apple Silicon vs Intel:** on an M-series Mac (M1 / M2 / M3 / M4), download the `arm64` DMG. On Intel Macs, download the `x64` DMG. Running the wrong build still works via Rosetta but is noticeably slower.",
+
+  dl_linux_first_h3: "Linux first launch",
+  dl_linux_appimagelauncher:
+    "**Optional desktop integration:** install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) once, and any AppImage you double-click gets registered into your launcher menu automatically — no manual `.desktop` file needed.",
+
+  dl_verify_h3: "Verify your download (SHA256)",
+  dl_verify_intro:
+    "Every release publishes a `SHA256SUMS` file alongside the binaries. To check that your download wasn't corrupted or tampered with in transit, hash your file locally and match the line in `SHA256SUMS`. Open the latest release page → **Assets** → download `SHA256SUMS`.",
+  dl_verify_win_label: "Windows (PowerShell or Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "Want a third-party malware scan? Upload the file at [VirusTotal](https://www.virustotal.com). A handful of generic-heuristic flags from minor engines is normal for unsigned Electron apps; widespread detections from major engines would be a real concern.",
+
+  dl_pm_intro:
+    "Already use a package manager? You can skip the manual download path.",
+
   privacy_p1:
     "Downloads are fetched directly via [yt-dlp](https://github.com/yt-dlp/yt-dlp) from YouTube to the folder you pick — nothing routed through a third-party server. Watch history, download history, URLs, and file contents stay on your device.",
   privacy_p2:
@@ -224,10 +283,10 @@ export const en = {
   faq_a3: "Yes. Pick *audio-only* in the format menu and choose MP3, M4A/AAC, Opus, or WAV.",
   faq_q4: "Do I need a YouTube account or cookies?",
   faq_a4:
-    "No. Arroxy uses only the public tokens YouTube serves to any browser. No cookies, no login, no credentials stored. See [No cookies, no logins, no account linking](#no-cookies) for why this matters.",
+    "By default, no — Arroxy works without a YouTube account, login, or cookie export. Optional cookie support is available in Advanced settings (Cookies source: file or browser) for content that requires authentication, such as age-restricted or members-only videos. It is off by default. If you enable it, yt-dlp's wiki notes that [cookie-based automation can flag a Google account](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); a throwaway account is the safer choice in that case.",
   faq_q5: "Will it keep working when YouTube changes something?",
   faq_a5:
-    "Two layers of resilience: yt-dlp updates within hours of YouTube changes, and Arroxy doesn't rely on cookies that expire every ~30 minutes. That makes it noticeably more stable than tools that depend on exported browser sessions.",
+    "yt-dlp is updated automatically on launch, and Arroxy ships fixes promptly when YouTube changes something. If you ever do hit an issue, optional cookie support is available in Advanced settings as a fallback.",
   faq_q6: "What languages is Arroxy available in?",
   faq_a6:
     "Twenty-one, out of the box: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), and Српски (Serbian). Arroxy auto-detects your operating system's language on first launch and you can switch at any time from the language picker in the toolbar. Translations live as plain TypeScript objects in src/shared/i18n/locales/ — open a PR on GitHub to contribute.",
@@ -239,7 +298,7 @@ export const en = {
     "Yes for playlists: paste a playlist URL, then queue the whole list or only the videos you select. Whole-channel batch downloads are not supported yet.",
   faq_q9: 'macOS says "the app is damaged" — what do I do?',
   faq_a9:
-    "That's macOS Gatekeeper blocking an unsigned app, not actual damage. See the [first-time launch on macOS](#download) section for the fix.",
+    'That\'s macOS Gatekeeper blocking an unsigned app, not actual damage. See ["App is damaged" — Terminal fix](#macos-first-launch) for the one-line `xattr` command that clears it.',
   faq_q10: "Is downloading YouTube videos legal?",
   faq_a10:
     "For personal, private use it is generally accepted in most jurisdictions. You are responsible for complying with YouTube's [Terms of Service](https://www.youtube.com/t/terms) and your local copyright laws.",

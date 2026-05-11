@@ -1,6 +1,6 @@
 import { Progress as ProgressPrimitive } from '@base-ui/react/progress';
 
-import { cn } from '@renderer/lib/utils';
+import { cn } from '@renderer/lib/utils.js';
 
 function Progress({ className, children, value, ...props }: ProgressPrimitive.Root.Props) {
   return (

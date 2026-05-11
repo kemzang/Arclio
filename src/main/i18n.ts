@@ -1,25 +1,25 @@
-import en from '@shared/i18n/locales/en';
-import es from '@shared/i18n/locales/es';
-import fr from '@shared/i18n/locales/fr';
-import de from '@shared/i18n/locales/de';
-import ru from '@shared/i18n/locales/ru';
-import uk from '@shared/i18n/locales/uk';
-import ja from '@shared/i18n/locales/ja';
-import zh from '@shared/i18n/locales/zh';
-import hi from '@shared/i18n/locales/hi';
-import bn from '@shared/i18n/locales/bn';
-import ar from '@shared/i18n/locales/ar';
-import uz from '@shared/i18n/locales/uz';
-import my from '@shared/i18n/locales/my';
-import ps from '@shared/i18n/locales/ps';
-import sw from '@shared/i18n/locales/sw';
-import am from '@shared/i18n/locales/am';
-import om from '@shared/i18n/locales/om';
-import el from '@shared/i18n/locales/el';
-import sr from '@shared/i18n/locales/sr';
-import ur from '@shared/i18n/locales/ur';
-import vi from '@shared/i18n/locales/vi';
-import type { SupportedLang } from '@shared/i18n/types';
+import en from '@shared/i18n/locales/en.js';
+import es from '@shared/i18n/locales/es.js';
+import fr from '@shared/i18n/locales/fr.js';
+import de from '@shared/i18n/locales/de.js';
+import ru from '@shared/i18n/locales/ru.js';
+import uk from '@shared/i18n/locales/uk.js';
+import ja from '@shared/i18n/locales/ja.js';
+import zh from '@shared/i18n/locales/zh.js';
+import hi from '@shared/i18n/locales/hi.js';
+import bn from '@shared/i18n/locales/bn.js';
+import ar from '@shared/i18n/locales/ar.js';
+import uz from '@shared/i18n/locales/uz.js';
+import my from '@shared/i18n/locales/my.js';
+import ps from '@shared/i18n/locales/ps.js';
+import sw from '@shared/i18n/locales/sw.js';
+import am from '@shared/i18n/locales/am.js';
+import om from '@shared/i18n/locales/om.js';
+import el from '@shared/i18n/locales/el.js';
+import sr from '@shared/i18n/locales/sr.js';
+import ur from '@shared/i18n/locales/ur.js';
+import vi from '@shared/i18n/locales/vi.js';
+import type { SupportedLang } from '@shared/i18n/types.js';
 
 const RESOURCES: Record<SupportedLang, unknown> = {
   en,

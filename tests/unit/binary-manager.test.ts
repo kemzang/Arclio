@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { binaryInternals } from '@main/services/BinaryManager';
+import { binaryInternals } from '@main/services/BinaryManager.js';
 
 describe('binaryInternals', () => {
   it('parses SHA lines', () => {

@@ -2,7 +2,7 @@
 // Source-of-truth derives from SUBTITLE_FORMATS in schemas.ts so adding a
 // format updates ext detection automatically.
 
-import { SUBTITLE_FORMATS } from './schemas';
+import { SUBTITLE_FORMATS } from './schemas.js';
 
 const EXTS_ALT = SUBTITLE_FORMATS.join('|');
 

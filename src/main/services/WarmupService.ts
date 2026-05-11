@@ -1,11 +1,11 @@
 import type { BrowserWindow } from 'electron';
-import log from 'electron-log/main';
+import log from 'electron-log/main.js';
 
-import { ok, type Result } from '@shared/result';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { BLOCKING_DEPENDENCY_IDS, DEPENDENCY_IDS, type DependencyDiagnostic, type DependencyId, type WarmUpOutput, type WarmupProgressEvent } from '@shared/types';
-import type { BinaryManager } from './BinaryManager';
-import type { TokenService } from './TokenService';
+import { ok, type Result } from '@shared/result.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { BLOCKING_DEPENDENCY_IDS, DEPENDENCY_IDS, type DependencyDiagnostic, type DependencyId, type WarmUpOutput, type WarmupProgressEvent } from '@shared/types.js';
+import type { BinaryManager } from './BinaryManager.js';
+import type { TokenService } from './TokenService.js';
 
 const logger = log.scope('warmup');
 
@@ -129,14 +129,24 @@ export class WarmupService {
     // resolves with whichever fires first.
     const budgetSignal = (): AbortSignal => AbortSignal.any([userSignal, AbortSignal.timeout(PER_BINARY_BUDGET_MS)]);
 
-    const [ytDlpDiag, ffmpegPair, denoDiag] = await Promise.all([
+    const [ytDlpDiag, ffmpegPair, denoDiag, tokenStatus] = await Promise.all([
       binaryManager.resolveYtDlp({ onProgress: emit, signal: budgetSignal() }),
       binaryManager.resolveFFmpegPair({ onProgress: emit, signal: budgetSignal() }),
       binaryManager.resolveDeno({ onProgress: emit, signal: budgetSignal() }),
-      tokenService.warmUp().catch((err) => {
-        logger.warn('Token warmup failed', { error: err instanceof Error ? err.message : String(err) });
+      // Plumb userSignal so cancel() interrupts the HiddenWindow scrape and
+      // mint round-trip — without this, cancelling a slow probe/scrape leaves
+      // the token warmup running until natural completion.
+      tokenService.warmUp(userSignal).catch((err) => {
+        const reason = err instanceof Error ? err.message : String(err);
+        logger.warn('Token warmup threw', { error: reason });
+        return { ready: false, reason } as const;
       })
     ]);
+    if (!tokenStatus.ready) {
+      // Surface in a single info line so log review reveals "all binaries
+      // resolved but PoT didn't pre-warm — slow probes expected on YT".
+      logger.info('Token service did not pre-warm; first YT probe will mint on demand', { reason: tokenStatus.reason });
+    }
     flushAll();
 
     const dependencies: Record<DependencyId, DependencyDiagnostic> = {

@@ -1,8 +1,8 @@
 import { vi } from 'vitest';
-import type { AppApi } from '@shared/api';
-import type { AppSettings, DependencyDiagnostic, DependencyId, WarmUpOutput } from '@shared/types';
-import { defaultAppSettings } from '@shared/constants';
-import { ok } from '@shared/result';
+import type { AppApi } from '@shared/api.js';
+import type { AppSettings, DependencyDiagnostic, DependencyId, WarmUpOutput } from '@shared/types.js';
+import { defaultAppSettings } from '@shared/constants.js';
+import { ok } from '@shared/result.js';
 
 function runnableDeps(): Record<DependencyId, DependencyDiagnostic> {
   const make = (id: DependencyId): DependencyDiagnostic => ({
@@ -44,8 +44,14 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
       onMaximizedChange: vi.fn().mockReturnValue(() => undefined)
     },
     downloads: {
-      getFormats: vi.fn().mockResolvedValue(
+      probeCancel: vi.fn().mockResolvedValue(undefined),
+      probe: vi.fn().mockResolvedValue(
         ok({
+          kind: 'video' as const,
+          extractor: 'youtube',
+          extractorKey: 'Youtube',
+          webpageUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+          isAudioOnlySource: false,
           formats: [
             {
               formatId: '22',
@@ -58,10 +64,13 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
             }
           ],
           title: 'Test Video',
-          thumbnail: ''
+          thumbnail: '',
+          subtitles: {},
+          automaticCaptions: {},
+          isLive: false,
+          hasDrm: false
         })
       ),
-      getPlaylistItems: vi.fn().mockResolvedValue(ok({ playlistId: 'PLtest', playlistTitle: 'Test Playlist', entries: [] })),
       start: vi.fn().mockResolvedValue(
         ok({
           job: {
@@ -102,8 +111,23 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
       onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
-      save: vi.fn().mockResolvedValue(ok({ saved: true as const })),
-      load: vi.fn().mockResolvedValue(ok([]))
+      cmd: {
+        add: vi.fn().mockResolvedValue(ok({ ids: [] as string[] })),
+        getSnapshot: vi.fn().mockResolvedValue(ok([] as import('@shared/types.js').QueueItem[])),
+        start: vi.fn().mockResolvedValue(ok(undefined)),
+        pause: vi.fn().mockResolvedValue(ok(undefined)),
+        resume: vi.fn().mockResolvedValue(ok(undefined)),
+        cancel: vi.fn().mockResolvedValue(ok(undefined)),
+        retry: vi.fn().mockResolvedValue(ok(undefined)),
+        clearCompleted: vi.fn().mockResolvedValue(ok(undefined)),
+        remove: vi.fn().mockResolvedValue(ok(undefined))
+      },
+      events: {
+        onSnapshot: vi.fn().mockReturnValue(() => undefined),
+        onAdded: vi.fn().mockReturnValue(() => undefined),
+        onUpdated: vi.fn().mockReturnValue(() => undefined),
+        onRemoved: vi.fn().mockReturnValue(() => undefined)
+      }
     },
     updater: {
       onUpdateAvailable: vi.fn().mockReturnValue(() => undefined),

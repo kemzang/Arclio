@@ -32,21 +32,21 @@ describe('detectInstallChannel', () => {
   it('detects scoop from a user-scope execPath on win32', async () => {
     setPlatform('win32');
     setExecPath('C:\\Users\\me\\scoop\\apps\\arroxy\\current\\Arroxy.exe');
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('arroxy')).toBe('scoop');
   });
 
   it('detects scoop from a global-scope execPath on win32', async () => {
     setPlatform('win32');
     setExecPath('C:\\ProgramData\\scoop\\apps\\arroxy\\current\\Arroxy.exe');
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('arroxy')).toBe('scoop');
   });
 
   it('falls back to direct on win32 when execPath is a normal NSIS install', async () => {
     setPlatform('win32');
     setExecPath('C:\\Users\\me\\AppData\\Local\\Programs\\Arroxy\\Arroxy.exe');
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('arroxy')).toBe('direct');
   });
 
@@ -54,7 +54,7 @@ describe('detectInstallChannel', () => {
     setPlatform('win32');
     setExecPath('C:\\Users\\me\\Downloads\\Arroxy-portable.exe');
     process.env.PORTABLE_EXECUTABLE_FILE = 'C:\\Users\\me\\Downloads\\Arroxy-portable.exe';
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('arroxy')).toBe('portable');
   });
 
@@ -62,7 +62,7 @@ describe('detectInstallChannel', () => {
     setPlatform('win32');
     setExecPath('C:\\Users\\me\\scoop\\apps\\arroxy\\current\\Arroxy.exe');
     process.env.PORTABLE_EXECUTABLE_FILE = 'whatever';
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('arroxy')).toBe('scoop');
   });
 
@@ -71,7 +71,7 @@ describe('detectInstallChannel', () => {
     vi.doMock('node:fs', () => ({
       default: { existsSync: (p: string) => p === '/opt/homebrew/Caskroom/arroxy' }
     }));
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('arroxy')).toBe('homebrew');
     vi.doUnmock('node:fs');
   });
@@ -81,7 +81,7 @@ describe('detectInstallChannel', () => {
     vi.doMock('node:fs', () => ({
       default: { existsSync: (p: string) => p === '/opt/homebrew/Caskroom/foobar' }
     }));
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('foobar')).toBe('homebrew');
     expect(detectInstallChannel('arroxy')).toBe('direct');
     vi.doUnmock('node:fs');
@@ -90,7 +90,7 @@ describe('detectInstallChannel', () => {
   it('falls back to direct on darwin when no Caskroom directory exists', async () => {
     setPlatform('darwin');
     vi.doMock('node:fs', () => ({ default: { existsSync: () => false } }));
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('arroxy')).toBe('direct');
     vi.doUnmock('node:fs');
   });
@@ -98,7 +98,7 @@ describe('detectInstallChannel', () => {
   it('returns direct on linux when not running under Flatpak', async () => {
     setPlatform('linux');
     vi.doMock('node:fs', () => ({ default: { existsSync: () => false } }));
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('arroxy')).toBe('direct');
     vi.doUnmock('node:fs');
   });
@@ -108,7 +108,7 @@ describe('detectInstallChannel', () => {
     vi.doMock('node:fs', () => ({
       default: { existsSync: (p: string) => p === '/.flatpak-info' }
     }));
-    const { detectInstallChannel } = await import('@main/installChannel');
+    const { detectInstallChannel } = await import('@main/installChannel.js');
     expect(detectInstallChannel('arroxy')).toBe('flatpak');
     vi.doUnmock('node:fs');
   });

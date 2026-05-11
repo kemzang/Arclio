@@ -1,4 +1,4 @@
-import type { TokenProvider } from '@main/token/TokenProvider';
+import type { TokenProvider } from '@main/token/TokenProvider.js';
 
 export class MockTokenProvider implements TokenProvider {
   async ensureReady(): Promise<void> {

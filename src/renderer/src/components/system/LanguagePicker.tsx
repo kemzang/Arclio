@@ -1,8 +1,8 @@
 import type { JSX } from 'react';
 import { Languages } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '../../store/useAppStore';
-import { SUPPORTED_LANGS, LANGUAGE_NATIVE_NAMES, type SupportedLang } from '@shared/i18n';
+import { useAppStore } from '../../store/useAppStore.js';
+import { SUPPORTED_LANGS, LANGUAGE_NATIVE_NAMES, type SupportedLang } from '@shared/i18n/index.js';
 
 export function LanguagePicker(): JSX.Element {
   const { t } = useTranslation();

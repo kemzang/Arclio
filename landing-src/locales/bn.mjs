@@ -5,12 +5,12 @@
 // keep inline tags like <em>. Everything else is HTML-escaped.
 
 export const bn = {
-  title: "Arroxy — বিনামূল্যে 4K YouTube ডাউনলোডার, কোনো লগইন দরকার নেই",
+  title: "Arroxy — বিনামূল্যে 4K YouTube + ২০০০ সাইট ডাউনলোডার, লগইন ছাড়াই",
   description:
-    "Windows, macOS এবং Linux-এর জন্য বিনামূল্যে, MIT-লাইসেন্সপ্রাপ্ত ডেস্কটপ YouTube ডাউনলোডার। Google অ্যাকাউন্ট, ব্রাউজার কুকি বা কোনো লগইন ছাড়াই 4K HDR-এ 60 fps পর্যন্ত ভিডিও ডাউনলোড করুন।",
-  og_title: "Arroxy — বিনামূল্যে 4K YouTube ডাউনলোডার, কোনো লগইন দরকার নেই",
+    "Windows, macOS এবং Linux-এর জন্য বিনামূল্যে, MIT-লাইসেন্সপ্রাপ্ত ডেস্কটপ ডাউনলোডার — YouTube ও ২০০০+ সমর্থিত সাইটের জন্য। 4K HDR-এ 60 fps পর্যন্ত ভিডিও ডাউনলোড করুন। কোনো বিজ্ঞাপন নেই, কোনো ব্লোট নেই, কোনো আপসেল নেই।",
+  og_title: "Arroxy — বিনামূল্যে 4K YouTube + ২০০০ সাইট ডাউনলোডার, লগইন ছাড়াই",
   og_description:
-    "বিনামূল্যে 4K YouTube ডাউনলোডার। কোনো কুকি নেই, কোনো লগইন নেই, কোনো ভাঙা সেশন নেই। MIT-লাইসেন্সপ্রাপ্ত। Windows · macOS · Linux।",
+    "YouTube ও ২০০০+ সাইটের জন্য বিনামূল্যে 4K ডাউনলোডার। কোনো বিজ্ঞাপন নেই, কোনো ব্লোট নেই, কোনো আপসেল নেই। MIT-লাইসেন্সপ্রাপ্ত। Windows · macOS · Linux।",
 
   nav_features: "বৈশিষ্ট্য",
   nav_screenshots: "স্ক্রিনশট",
@@ -19,13 +19,13 @@ export const bn = {
   nav_download: "ডাউনলোড",
 
   hero_eyebrow: "Open Source · MIT · সক্রিয় উন্নয়ন",
-  hero_h1_a: "বিনামূল্যে 4K YouTube ডাউনলোডার।",
-  hero_h1_b: "কোনো কুকি নেই। কোনো লগইন নেই। কোনো ভাঙা সেশন নেই।",
+  hero_h1_a: "বিনামূল্যে 4K YouTube (+ ২০০০ সাইট) ডাউনলোডার।",
+  hero_h1_b: "কোনো বিজ্ঞাপন নেই, কোনো ব্লোট নেই, কোনো আপসেল নেই।",
   hero_tagline:
-    "Arroxy হলো Windows, macOS এবং Linux-এর জন্য একটি বিনামূল্যে, MIT-লাইসেন্সপ্রাপ্ত ডেস্কটপ YouTube ডাউনলোডার। এটি 60 fps পর্যন্ত 4K HDR-এ ভিডিও ডাউনলোড করে — কখনো Google অ্যাকাউন্ট, ব্রাউজার কুকি বা কোনো লগইন না চেয়ে।",
+    "Arroxy হলো Windows, macOS এবং Linux-এর জন্য একটি বিনামূল্যে, MIT-লাইসেন্সপ্রাপ্ত ডেস্কটপ ডাউনলোডার — YouTube ও ২০০০+ সমর্থিত সাইটের জন্য। 60 fps পর্যন্ত 4K HDR-এ ভিডিও ডাউনলোড করে। কোনো বিজ্ঞাপন নেই, কোনো ব্লোট নেই, কোনো আপসেল নেই — শুধু URL পেস্ট করুন এবং শুরু করুন।",
   hero_trust: "GitHub-এ প্রতিটি লাইন অডিট করুন।",
   pill_no_tracking: "কোনো ট্র্যাকিং নেই",
-  pill_no_account: "কোনো Google অ্যাকাউন্ট নেই",
+  pill_no_account: "কোনো বিজ্ঞাপন নেই",
   pill_open_source: "ওপেন সোর্স (MIT)",
   cta_download_os: "আপনার OS-এর জন্য ডাউনলোড করুন",
   cta_view_github: "GitHub-এ দেখুন",
@@ -61,7 +61,7 @@ export const bn = {
   features_h2: "যা প্রত্যাশা করেন সব আছে, কোনো ঝামেলা নেই।",
   features_sub: "URL পেস্ট করুন, মান বেছে নিন, ডাউনলোড ক্লিক করুন। এটুকুই।",
   f1_h: "4K UHD পর্যন্ত",
-  f1_p: "2160p, 1440p, 1080p, 720p — YouTube যে সব resolution দেয়, সেগুলোর সঙ্গে শুধু অডিওকে MP3, M4A/AAC, Opus আর WAV-এ convert করার সুবিধাও আছে।",
+  f1_p: "2160p, 1440p, 1080p, 720p — YouTube ও অন্যান্য সমর্থিত সাইট যে resolution দেয়, সেগুলো সব, এবং শুধু অডিওর জন্য MP3, M4A/AAC, Opus ও WAV conversion।",
   f2_h: "60 fps ও HDR সংরক্ষিত",
   f2_p: "হাই ফ্রেম-রেট এবং HDR স্ট্রিম ঠিক যেভাবে YouTube এনকোড করে সেভাবেই আসে — কোনো মান ক্ষতি নেই।",
   f3_h: "Playlist-ও",
@@ -92,7 +92,7 @@ export const bn = {
   shot3_alt: "কোথায় সেভ করবেন বেছে নিন",
   shot4_alt: "সমান্তরাল ডাউনলোড",
   shot5_alt: "সাবটাইটেল ধাপ — ভাষা, ফরম্যাট এবং সেভ মোড বেছে নিন",
-  og_image_alt: "Arroxy অ্যাপ আইকন — 4K-তে YouTube ভিডিও ডাউনলোড করার ডেস্কটপ অ্যাপ।",
+  og_image_alt: "Arroxy অ্যাপ আইকন — YouTube ও ২০০০+ অন্যান্য সাইট থেকে 4K-এ ডাউনলোডের জন্য ডেস্কটপ অ্যাপ।",
 
   privacy_eyebrow: "গোপনীয়তা",
   privacy_h2_html: "Arroxy যা <em>করে না</em>।",
@@ -161,4 +161,7 @@ export const bn = {
   faq_q9: "এটি কি আইনি?",
   faq_a9:
     "ব্যক্তিগত ব্যবহারের জন্য ভিডিও ডাউনলোড করা বেশিরভাগ বিচারক্ষেত্রে সাধারণত গ্রহণযোগ্য। YouTube-এর Terms of Service এবং আপনার স্থানীয় আইন মেনে চলা আপনার দায়িত্ব।",
+
+  f13_h: "YouTube + 2000 সাইট",
+  f13_p: "YouTube ছাড়াও, Arroxy yt-dlp সমর্থিত 2000+ সাইট থেকে ডাউনলোড করে — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org এবং আরও অনেক। শুধু-অডিও এবং সাবটাইটেল সর্বত্র কাজ করে, শুধু YouTube-এ নয়।",
 };

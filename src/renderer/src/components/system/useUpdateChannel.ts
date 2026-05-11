@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { UpdateAvailablePayload } from '@shared/types';
+import type { UpdateAvailablePayload } from '@shared/types.js';
 
 export interface UpdateChannelState {
   info: UpdateAvailablePayload | null;

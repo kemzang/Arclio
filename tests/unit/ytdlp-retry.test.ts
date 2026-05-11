@@ -1,13 +1,13 @@
 import { EventEmitter } from 'node:events';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { YtDlp } from '@main/services/YtDlp';
+import { YtDlp } from '@main/services/YtDlp.js';
 
 vi.mock('@main/utils/process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@main/utils/process')>();
+  const actual = await importOriginal<typeof import('@main/utils/process.js')>();
   return { ...actual, spawnYtDlp: vi.fn() };
 });
 
-import { spawnYtDlp } from '@main/utils/process';
+import { spawnYtDlp } from '@main/utils/process.js';
 
 const URL = 'https://www.youtube.com/watch?v=test';
 const BOT_STDERR = "ERROR: [youtube] abc: Sign in to confirm you're not a bot.";
@@ -27,7 +27,7 @@ function makeFakeProcess(exitCode: number, stderr = '') {
 
 function makeYtDlp(tokenService?: { mintTokenForUrl: ReturnType<typeof vi.fn>; invalidateCache: ReturnType<typeof vi.fn> }) {
   const ts = tokenService ?? {
-    mintTokenForUrl: vi.fn().mockResolvedValue({ token: 'tok', visitorData: 'vd' }),
+    mintTokenForUrl: vi.fn().mockResolvedValue({ token: 'tok', visitorData: 'vd', fromCache: false }),
     invalidateCache: vi.fn()
   };
   const binaryManager = {
@@ -51,35 +51,29 @@ describe('YtDlp — retry ladder', () => {
   it('happy path: attempt 0 succeeds → result success, usedExtractorFallback=false', async () => {
     vi.mocked(spawnYtDlp).mockReturnValue(makeFakeProcess(0) as never);
     const { ytDlp } = makeYtDlp();
-    const attemptSpy = vi.fn();
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL }, { onAttempt: attemptSpy });
+    const result = await ytDlp.run({ kind: 'probe', url: URL });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(false);
-    expect(attemptSpy).toHaveBeenCalledTimes(1);
-    expect(attemptSpy).toHaveBeenCalledWith(0);
     expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(1);
   });
 
   it('bot-block then success: invalidateCache called, attempt 1 uses new token', async () => {
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, BOT_STDERR) as never)
-      .mockReturnValueOnce(makeFakeProcess(0) as never);
+      .mockImplementationOnce(() => makeFakeProcess(1, BOT_STDERR) as never)
+      .mockImplementationOnce(() => makeFakeProcess(0) as never);
 
     const { ytDlp, tokenService } = makeYtDlp();
-    tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'old-tok', visitorData: 'vd' }).mockResolvedValueOnce({ token: 'new-tok', visitorData: 'vd' });
-    const attemptSpy = vi.fn();
+    tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'old-tok', visitorData: 'vd', fromCache: false }).mockResolvedValueOnce({ token: 'new-tok', visitorData: 'vd', fromCache: false });
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL }, { onAttempt: attemptSpy });
+    const result = await ytDlp.run({ kind: 'probe', url: URL });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(false);
     expect(tokenService.invalidateCache).toHaveBeenCalledOnce();
     expect(tokenService.mintTokenForUrl).toHaveBeenCalledTimes(2);
     expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(2);
-    expect(attemptSpy).toHaveBeenNthCalledWith(1, 0);
-    expect(attemptSpy).toHaveBeenNthCalledWith(2, 1);
 
     const retryArgs: string[] = vi.mocked(spawnYtDlp).mock.calls[1][1];
     expect(retryArgs[retryArgs.indexOf('--extractor-args') + 1]).toContain('new-tok');
@@ -87,64 +81,52 @@ describe('YtDlp — retry ladder', () => {
 
   it('two bot-blocks → attempt 2 uses player_client fallback, usedExtractorFallback=true', async () => {
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, BOT_STDERR) as never)
-      .mockReturnValueOnce(makeFakeProcess(1, BOT_STDERR) as never)
-      .mockReturnValueOnce(makeFakeProcess(0) as never);
+      .mockImplementationOnce(() => makeFakeProcess(1, BOT_STDERR) as never)
+      .mockImplementationOnce(() => makeFakeProcess(1, BOT_STDERR) as never)
+      .mockImplementationOnce(() => makeFakeProcess(0) as never);
 
     const { ytDlp, tokenService } = makeYtDlp();
-    const attemptSpy = vi.fn();
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL }, { onAttempt: attemptSpy });
+    const result = await ytDlp.run({ kind: 'probe', url: URL });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(true);
     expect(tokenService.invalidateCache).toHaveBeenCalledOnce();
     expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(3);
-    expect(attemptSpy).toHaveBeenNthCalledWith(1, 0);
-    expect(attemptSpy).toHaveBeenNthCalledWith(2, 1);
-    expect(attemptSpy).toHaveBeenNthCalledWith(3, 2);
 
     const fallbackArgs: string[] = vi.mocked(spawnYtDlp).mock.calls[2][1];
     expect(fallbackArgs[fallbackArgs.indexOf('--extractor-args') + 1]).toBe('youtube:player_client=default,-web,-web_safari');
   });
 
-  it('first mint throws → skips to attempt 2 (fallback), onAttempt sees 0 then 2', async () => {
+  it('first mint throws → skips to fallback, usedExtractorFallback=true', async () => {
     vi.mocked(spawnYtDlp).mockReturnValue(makeFakeProcess(0) as never);
 
     const { ytDlp, tokenService } = makeYtDlp();
     tokenService.mintTokenForUrl.mockRejectedValueOnce(new Error('provider offline'));
-    const attemptSpy = vi.fn();
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL }, { onAttempt: attemptSpy });
+    const result = await ytDlp.run({ kind: 'probe', url: URL });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(true);
     expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(1);
-    expect(attemptSpy).toHaveBeenCalledTimes(2);
-    expect(attemptSpy).toHaveBeenNthCalledWith(1, 0);
-    expect(attemptSpy).toHaveBeenNthCalledWith(2, 2);
 
     const fallbackArgs: string[] = vi.mocked(spawnYtDlp).mock.calls[0][1];
     expect(fallbackArgs[fallbackArgs.indexOf('--extractor-args') + 1]).toBe('youtube:player_client=default,-web,-web_safari');
   });
 
-  it('re-mint throws → falls back to attempt 2', async () => {
+  it('re-mint throws → falls back to player_client fallback', async () => {
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, BOT_STDERR) as never)
-      .mockReturnValueOnce(makeFakeProcess(0) as never);
+      .mockImplementationOnce(() => makeFakeProcess(1, BOT_STDERR) as never)
+      .mockImplementationOnce(() => makeFakeProcess(0) as never);
 
     const { ytDlp, tokenService } = makeYtDlp();
-    tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'tok', visitorData: 'vd' }).mockRejectedValueOnce(new Error('re-mint failed'));
-    const attemptSpy = vi.fn();
+    tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'tok', visitorData: 'vd', fromCache: false }).mockRejectedValueOnce(new Error('re-mint failed'));
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL }, { onAttempt: attemptSpy });
+    const result = await ytDlp.run({ kind: 'probe', url: URL });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(true);
     expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(2);
-    expect(attemptSpy).toHaveBeenNthCalledWith(1, 0);
-    expect(attemptSpy).toHaveBeenNthCalledWith(2, 1);
-    expect(attemptSpy).toHaveBeenNthCalledWith(3, 2);
   });
 
   it('non-botBlock exit-error returns immediately without retry', async () => {

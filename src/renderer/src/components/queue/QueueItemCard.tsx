@@ -1,14 +1,13 @@
-import type { JSX, ReactNode } from 'react';
+import { type JSX, type ReactNode } from 'react';
 import { AlertTriangle, Captions, Download, ExternalLink, Film, FolderInput, FolderOpen, Hourglass, Layers, Music, Pause, Play, RotateCcw, Tags, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { QueueItem, QueueItemStatus, StatusKey } from '@shared/types';
-import { isHeld } from '@shared/queueItem';
-import { useAppStore, formatStatus, formatLocalizedError } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
-import { Progress } from '../ui/progress';
-import { TooltipIconButton } from '../ui/tooltip-icon-button';
-import { cn } from '@renderer/lib/utils';
+import type { QueueItem, QueueItemStatus, StatusKey } from '@shared/types.js';
+import { useAppStore, formatStatus, formatLocalizedError } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { Badge } from '../ui/badge.js';
+import { Progress } from '../ui/progress.js';
+import { TooltipIconButton } from '../ui/tooltip-icon-button.js';
+import { cn } from '@renderer/lib/utils.js';
 
 const PHASE_ICON: Partial<Record<StatusKey, ReactNode>> = {
   downloadingMedia: <Download size={11} />,
@@ -24,15 +23,13 @@ const PHASE_ICON: Partial<Record<StatusKey, ReactNode>> = {
 
 interface Props {
   item: QueueItem;
-  // When set + the item is pending, render a "starts in Ns" hint so the user
-  // knows which item is on deck during the inter-job sleep window.
-  sleepRemainingSec?: number;
 }
 
 const STATUS_BORDER: Record<QueueItemStatus, string> = {
   pending: 'border-border',
-  downloading: 'border-s-2 border-s-[var(--brand)] shadow-[inset_3px_0_12px_var(--brand-glow)] rtl:shadow-[inset_-3px_0_12px_var(--brand-glow)]',
-  paused: 'border-s-2 border-s-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-paused-glow)]',
+  running: 'border-s-2 border-s-[var(--brand)] shadow-[inset_3px_0_12px_var(--brand-glow)] rtl:shadow-[inset_-3px_0_12px_var(--brand-glow)]',
+  'paused-held': 'border-border',
+  'paused-active': 'border-s-2 border-s-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-paused-glow)]',
   done: 'border-s-2 border-s-[var(--color-status-done)] shadow-[inset_3px_0_12px_var(--color-status-done-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-done-glow)]',
   error: 'border-s-2 border-s-[var(--color-status-error)] shadow-[inset_3px_0_12px_var(--color-status-error-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-error-glow)]',
   cancelled: 'border-border'
@@ -42,17 +39,15 @@ const STATUS_BORDER: Record<QueueItemStatus, string> = {
 // since both convey "completed but not perfect".
 const SUBS_FAILED_BORDER = 'border-s-2 border-s-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-paused-glow)]';
 
-export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
+export function QueueItemCard({ item }: Props): JSX.Element {
   const { t, i18n } = useTranslation();
-  const { startItemDownload, cancelItemDownload, pauseItemDownload, resumeItemDownload, removeQueueItem, retryQueueItem, openItemFolder, openItemUrl } = useAppStore();
+  const { cancelItemDownload, pauseItemDownload, resumeItemDownload, removeQueueItem, retryQueueItem, openItemFolder, openItemUrl } = useAppStore();
 
   const { status } = item;
-  const held = isHeld(item);
-  const hasActiveJob = item.downloadJobId !== null;
-  const isStarting = status === 'downloading' && !hasActiveJob;
+  const held = status === 'paused-held';
   // Held items (paused-from-pending) never spawned a job → no progress bar,
   // no Cancel button. They behave like queue-only entries.
-  const isActive = (status === 'downloading' && hasActiveJob) || (status === 'paused' && !held);
+  const isActive = status === 'running' || status === 'paused-active';
   const subsFailed = status === 'done' && item.lastStatus?.key === 'subtitlesFailed';
 
   const phaseStatusKey = item.lastStatus?.key;
@@ -67,7 +62,7 @@ export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
 
   return (
     <li className={cn('flex items-start gap-2.5 py-2 px-2 rounded-md border bg-card/60 transition-[border-color,box-shadow]', subsFailed ? SUBS_FAILED_BORDER : STATUS_BORDER[status])} data-testid={`queue-card-${item.id}`} data-status={status}>
-      <div className="shrink-0 w-12 h-[27px] rounded overflow-hidden bg-secondary mt-0.5">{item.thumbnail ? <img src={item.thumbnail} alt="" aria-hidden crossOrigin="anonymous" className="w-full h-full object-cover block" /> : <div className="thumb-shimmer w-full h-full" aria-hidden />}</div>
+      <div className="shrink-0 w-12 h-[27px] rounded overflow-hidden bg-secondary mt-0.5">{item.thumbnail ? <img src={item.thumbnail} alt="" aria-hidden referrerPolicy="no-referrer" className="w-full h-full object-cover block" /> : <div className="thumb-shimmer w-full h-full" aria-hidden />}</div>
 
       <div className="flex-1 min-w-0 flex flex-col gap-0.5">
         <p className="text-[13px] font-medium text-foreground truncate leading-snug" data-testid="queue-title">
@@ -85,23 +80,17 @@ export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
               })}
             </span>
           )}
-          {status === 'pending' && sleepRemainingSec !== undefined && sleepRemainingSec > 0 && (
-            <span className="text-[var(--color-status-paused)] inline-flex items-center gap-1" data-testid="queue-item-sleep-hint">
-              <Hourglass size={11} className="animate-pulse" />
-              {t('queue.interJobSleep', { count: sleepRemainingSec })}
-            </span>
-          )}
         </p>
 
         {isActive && (
           <div className="flex flex-col gap-0.5 mt-0.5" data-testid="queue-progress">
-            <div className={cn(status === 'paused' ? 'opacity-50' : isSleeping ? '' : 'progress-glow', isPostProcessing && 'animate-pulse')}>
+            <div className={cn(status === 'paused-active' ? 'opacity-50' : isSleeping ? '' : 'progress-glow', isPostProcessing && 'animate-pulse')}>
               <Progress value={item.progressPercent} className="[&_[data-slot=progress-track]]:h-[2px]" />
             </div>
-            <span className={cn('inline-flex items-center gap-1 font-mono text-[12px]', status === 'paused' || isSleeping ? 'text-[var(--color-status-paused)]' : 'text-[var(--brand)]')} data-testid="queue-progress-label">
+            <span className={cn('inline-flex items-center gap-1 font-mono text-[12px]', status === 'paused-active' || isSleeping ? 'text-[var(--color-status-paused)]' : 'text-[var(--brand)]')} data-testid="queue-progress-label">
               {phaseIcon && <span className="inline-flex shrink-0">{phaseIcon}</span>}
               <span>
-                {item.progressPercent.toFixed(1)}%{status === 'paused' ? ` · ${t('queue.item.paused')}` : detailText ? ` · ${detailText}` : ''}
+                {item.progressPercent.toFixed(1)}%{status === 'paused-active' ? ` · ${t('queue.item.paused')}` : detailText ? ` · ${detailText}` : ''}
               </span>
             </span>
           </div>
@@ -124,18 +113,11 @@ export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
       <div className="flex items-center gap-1 shrink-0">
         <TooltipIconButton icon={<ExternalLink size={12} />} label={t('queue.item.openUrl')} data-testid="btn-open-url" className="w-7 h-7 text-muted-foreground hover:text-foreground/80" onClick={() => openItemUrl(item.id)} />
 
-        {status === 'pending' && (
-          <>
-            <Button variant="ghost" size="icon" type="button" onClick={() => void startItemDownload(item.id)} data-testid="btn-start-download" className="w-7 h-7">
-              <Play size={12} />
-            </Button>
-            <TooltipIconButton icon={<Pause size={12} />} label={t('queue.item.hold')} data-testid="btn-hold" className="w-7 h-7" onClick={() => void pauseItemDownload(item.id)} />
-          </>
-        )}
+        {status === 'pending' && <TooltipIconButton icon={<Pause size={12} />} label={t('queue.item.hold')} data-testid="btn-hold" className="w-7 h-7" onClick={() => void pauseItemDownload(item.id)} />}
 
-        {status === 'downloading' && hasActiveJob && <TooltipIconButton icon={<Pause size={12} />} label={t('queue.item.pause')} data-testid="btn-pause" className="w-7 h-7" onClick={() => void pauseItemDownload(item.id)} />}
+        {status === 'running' && <TooltipIconButton icon={<Pause size={12} />} label={t('queue.item.pause')} data-testid="btn-pause" className="w-7 h-7" onClick={() => void pauseItemDownload(item.id)} />}
 
-        {status === 'paused' && <TooltipIconButton icon={<Play size={12} />} label={t('queue.item.resume')} data-testid="btn-resume" className="w-7 h-7" onClick={() => void resumeItemDownload(item.id)} />}
+        {(status === 'paused-active' || held) && <TooltipIconButton icon={<Play size={12} />} label={t('queue.item.resume')} data-testid="btn-resume" className="w-7 h-7" onClick={() => void resumeItemDownload(item.id)} />}
 
         {status === 'done' && (
           <Button variant="ghost" size="icon" type="button" onClick={() => void openItemFolder(item.id)} data-testid="btn-open-folder" className="w-7 h-7 text-[var(--color-status-done)]">
@@ -151,7 +133,7 @@ export function QueueItemCard({ item, sleepRemainingSec }: Props): JSX.Element {
 
         {isActive && <TooltipIconButton icon={<X size={12} />} label={t('queue.item.cancel')} data-testid="btn-cancel" className="w-7 h-7 text-muted-foreground hover:text-[var(--color-status-error)]" onClick={() => void cancelItemDownload(item.id)} />}
 
-        {!isActive && !isStarting && <TooltipIconButton icon={<X size={12} />} label={t('queue.item.remove')} data-testid="btn-remove" className="w-7 h-7 text-muted-foreground hover:text-[var(--color-status-error)]" onClick={() => removeQueueItem(item.id)} />}
+        {!isActive && <TooltipIconButton icon={<X size={12} />} label={t('queue.item.remove')} data-testid="btn-remove" className="w-7 h-7 text-muted-foreground hover:text-[var(--color-status-error)]" onClick={() => void removeQueueItem(item.id)} />}
       </div>
     </li>
   );

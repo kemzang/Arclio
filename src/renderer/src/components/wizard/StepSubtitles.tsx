@@ -1,15 +1,15 @@
 import { type JSX, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Search, Check, X } from 'lucide-react';
-import { useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
-import { RadioOption } from '../ui/radio-option';
-import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip';
-import { MascotBubble } from '../shared/MascotBubble';
-import { buildSubtitleList, SUBTITLE_MODE_I18N_KEYS } from '../../lib/subtitleLabel';
+import { useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { Separator } from '../ui/separator.js';
+import { RadioOption } from '../ui/radio-option.js';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip.js';
+import { MascotBubble } from '../shared/MascotBubble.js';
+import { buildSubtitleList, SUBTITLE_MODE_I18N_KEYS } from '../../lib/subtitleLabel.js';
 import loveImg from '../../assets/Love.png';
-import { SUBTITLE_FORMATS, SUBTITLE_MODES } from '@shared/schemas';
+import { SUBTITLE_FORMATS, SUBTITLE_MODES } from '@shared/schemas.js';
 
 export function StepSubtitles(): JSX.Element {
   const { t, i18n } = useTranslation();
@@ -155,10 +155,14 @@ export function StepSubtitles(): JSX.Element {
         </>
       )}
 
-      <Separator className="bg-border/50 -mx-6 w-auto my-1.5" />
-      <div className="flex items-center justify-between py-3 -mx-6 px-6">
-        {hasLangs ? <MascotBubble image={loveImg} message={t('wizard.subtitles.mascot')} side="left" /> : <span />}
-        <div className="flex items-center gap-2 shrink-0">
+      <div className="sticky bottom-0 -mx-6 px-6 bg-background z-10">
+        {hasLangs && (
+          <div className="flex pt-2">
+            <MascotBubble image={loveImg} message={t('wizard.subtitles.mascot')} side="left" />
+          </div>
+        )}
+        <Separator className="bg-border/50 -mx-6 w-auto my-1.5" />
+        <div className="flex items-center justify-end py-3 -mx-6 px-6 gap-2">
           <Button variant="ghost" type="button" onClick={back} className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
             {t('common.back')}
           </Button>

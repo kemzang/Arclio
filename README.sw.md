@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Nembo ya Arroxy" width="180" />
 
-# Arroxy — Kipakuzi Bure cha YouTube cha Chanzo Wazi kwa Windows, macOS na Linux
+# Arroxy — Kipakuzi Bure cha Chanzo Wazi cha YouTube (+ Tovuti 2000) kwa Windows, macOS na Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Soma kwa:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · **Kiswahili** · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Toleo](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Ujenzi](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Tovuti](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Leseni](https://img.shields.io/badge/license-MIT-green) ![Majukwaa](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Lugha](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Pakua video yoyote ya YouTube, Short, au wimbo wa sauti kwa ubora wa asili — hadi 4K HDR kwa fps 60, au kama MP3 / AAC / Opus. Inafanya kazi mahali hapo kwenye Windows, macOS, na Linux. **Hakuna matangazo, hakuna kuingia, hakuna vidakuzi vya kivinjari, hakuna akaunti ya Google iliyounganishwa.**
+Pakua video, Shorts, muziki, vituo, podikasti, au nyimbo za sauti kutoka **YouTube na tovuti 2000+ zinazotumika** — hadi 4K HDR kwa fps 60, au kama MP3 / AAC / Opus. Inafanya kazi mahali hapo kwenye Windows, macOS, na Linux. **Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada.**
 
 [**↓ Pakua Toleo la Hivi Karibuni**](../../releases/latest) &nbsp;·&nbsp; [**Tovuti**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -24,7 +24,6 @@ Ikiwa Arroxy inakuokoa muda, ⭐ inasaidia wengine kuipata.
 ## Yaliyomo
 
 - [Kwa Nini Arroxy](#why)
-- [Hakuna vidakuzi, hakuna kuingia, hakuna kuunganisha akaunti](#no-cookies)
 - [Vipengele](#features)
 - [Pakua](#download)
 - [Faragha](#privacy)
@@ -52,19 +51,6 @@ Arroxy imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Ha
 
 ---
 
-## <a id="no-cookies"></a>Hakuna vidakuzi, hakuna kuingia, hakuna kuunganisha akaunti
-
-Hii ndiyo sababu ya kawaida zaidi inayovunja vipakuzi vya YouTube vya mezani — na sababu kuu inayomfanya Arroxy awepo.
-
-YouTube inapoboresha ugunduzi wake wa boti, zana nyingi hukuambia kuhamisha vidakuzi vya YouTube vya kivinjari chako kama suluhisho la muda. Matatizo mawili na hilo:
-
-1. Vikao vilivyohamishwa kwa kawaida huisha ndani ya dakika ~30, hivyo unahamisha tena mara kwa mara.
-2. Hati za yt-dlp zenyewe [zinaonya kwamba ufafanuzi unaotegemea vidakuzi unaweza kuweka alama kwenye akaunti yako ya Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).
-
-**Arroxy haiwahi kuomba vidakuzi, kuingia, au kitambulisho chochote.** Inatumia tokeni za umma pekee ambazo YouTube inawapa vivinjari vyote. Hakuna kitu kinachohusishwa na utambulisho wako wa Google, hakuna kinachokwisha muda, hakuna kinachohitaji kuzungushwa.
-
----
-
 ## <a id="features"></a>Vipengele
 
 ### Ubora na fomati
@@ -82,7 +68,7 @@ YouTube inapoboresha ugunduzi wake wa boti, zana nyingi hukuambia kuhamisha vida
 
 ### Mtiririko wa kazi
 
-- **Bandika URL yoyote ya YouTube** — video, Shorts na playlist zinaungwa mkono; pakua playlist nzima au chagua video maalum kwanza
+- **Bandika kiungo chochote** — video za YouTube, Shorts, vituo, orodha za kucheza, podikasti na Muziki, pamoja na tovuti 2000+ zinazoungwa mkono na yt-dlp; pakua orodha nzima ya kucheza au chagua video maalum kwanza
 - **Foleni ya upakuaji wa pamoja** — fuatilia maudhui kadhaa yanayopakuliwa wakati huo huo
 - **Ufuatiliaji wa ubao wa kunakili** — nakili kiungo cha YouTube na Arroxy itajaza URL kiotomatiki ukirejesha umakini kwenye programu (washa/zima katika mipangilio ya Kina)
 - **Usafi wa URL kiotomatiki** — huondoa vigezo vya ufuatiliaji (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) na kufungua viungo vya `youtube.com/redirect`
@@ -95,6 +81,13 @@ YouTube inapoboresha ugunduzi wake wa boti, zana nyingi hukuambia kuhamisha vida
 - Hifadhi karibu na video, ingiza ndani ya `.mkv`, au panga katika folda ndogo ya `Subtitles/`
 - **SponsorBlock** — ruka au weka alama za sehemu kwenye wadhamini, utangulizi, mwisho, matangazo binafsi
 - **Metadata iliyowekwa** — kichwa, tarehe ya kupakia, chaneli, maelezo, picha ndogo, na alama za sura zimeandikwa ndani ya faili
+
+### YouTube + Tovuti 2000
+
+- **YouTube kamili** — Video, Shorts, Vituo, Orodha za Kucheza, YouTube Music na Podikasti zinashughulikiwa kama vyanzo vya daraja la kwanza
+- **Tovuti 2000+ nyingine** kupitia yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org na nyingi zaidi
+- **Sauti pekee na manukuu** yanafanya kazi kwenye kila tovuti inayoungwa mkono, si YouTube peke yake
+- Tovuti ikibadilika, yt-dlp hutoa marekebisho kila wiki na Arroxy husasisha binary kiotomatiki wakati wa uzinduzi
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="Bandika URL" />
@@ -118,65 +111,66 @@ YouTube inapoboresha ugunduzi wake wa boti, zana nyingi hukuambia kuhamisha vida
 
 [**Pata toleo la hivi karibuni →**](../../releases/latest)
 
-### Sanidi kupitia meneja wa pakiti
+### <a id="why-warning"></a>Kwa nini unaweza kuona onyo
 
-| Njia | Amri                                                                                |
-| ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+Arroxy ni chanzo wazi na ina leseni ya MIT. Ujenzi wa Windows na macOS **haujasainiwa kwa nambari** — cheti cha Apple Developer ID na Windows EV cha kutia saini msimbo huchangia mamia ya dola kwa mwaka, ambayo mradi wa kujitegemea hulipa mfukoni mwake. Bila saini hizo, Windows SmartScreen na macOS Gatekeeper watakuonya wakati wa uzinduzi wa kwanza. Maonyo hayo yanamaanisha *mfumo wako wa uendeshaji haukuitambua kampuni inayotoa programu* — hayamaanishi kwamba Arroxy ni programu hasidi.
 
-<details>
-<summary><strong>Windows: Kisanidi dhidi ya Inayobebeka</strong></summary>
+Njia tatu za kuthibitisha Arroxy mwenyewe, kwa uthabiti unaozidi:
 
-|               | Kisanidi cha NSIS | Inayobebeka `.exe` |
-| ------------- | :----------------------: | :---------------------: |
-| Usanidi unahitajika | Ndiyo  | Hapana — endesha kutoka mahali popote  |
-| Masasisho ya kiotomatiki | ✅ ndani ya programu  | ❌ upakuaji wa mkono  |
-| Kasi ya uzinduzi | ✅ ya haraka zaidi  | ⚠️ mwanzo wa polepole baridi  |
-| Inaongeza kwenye Menyu ya Kuanza |            ✅            |           ❌            |
-| Kuondoa kwa urahisi |            ✅            | ❌ futa faili  |
+- **Soma msimbo wa chanzo.** Kila mstari uko kwenye [GitHub](https://github.com/antonio-orionus/Arroxy) na unaweza [kuijenga kutoka chanzo](#tech).
+- **Angalia SHA256.** Linganisha faili yako na [`SHA256SUMS`](../../releases/latest) iliyochapishwa — tazama [Thibitisha upakuaji wako](#verify) hapa chini.
+- **Fanya ukaguzi wa tatu.** Pakia faili kwenye [VirusTotal](https://www.virustotal.com).
 
-**Pendekezo:** tumia kisanidi cha NSIS kwa masasisho ya kiotomatiki na uzinduzi wa haraka. Tumia `.exe` inayobebeka kwa chaguo lisilo na usanidi na bila usajili.
-
-**Onyo la Windows SmartScreen**
+### <a id="windows-first-launch"></a>Uzinduzi wa kwanza wa Windows
 
 Wakati wa uzinduzi wa kwanza unaweza kuona **"Windows protected your PC"** au **"Unknown publisher."** Hii inatumika kwa `Arroxy-Setup-*.exe` na `Arroxy-Portable-*.exe`. Arroxy ni bure na chanzo wazi, na ujenzi wa Windows haujasainiwa kwa cheti cha malipo, ndiyo maana SmartScreen huipiga bendera. Hii **haimaanishi** kiotomatiki kwamba Arroxy si salama. Ili kuendelea:
+
+<div align="center">
+  <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted" />
+  <img src="build/win-smartscreen-run-anyway.png" width="46%" alt="SmartScreen dialog after expanding More info, showing the "Run anyway" button" />
+</div>
 
 1. Bonyeza **More info**.
 2. Bonyeza **Run anyway**.
 
+#### Ikiwa Windows Defender inaweka bendera au kuondoa faili
+
+Heuristics za Defender wakati mwingine huweka bendera kwenye visanidi visivyosainiwa vya NSIS na portable za Electron kama zinazoshukiwa. Ikiwa Defender inaweka karantini `Arroxy-Setup-*.exe` au `Arroxy-Portable-*.exe`, irudishe kutoka **Windows Security → Virus & threat protection → Protection history**, kisha ongeza faili inayoweza kutekelezwa ya Arroxy kama kipengele kinachoruhusiwa chini ya **Manage settings → Add or remove exclusions**. Kama ilivyo na SmartScreen, kisababishi ni saini ya mchapishaji inayokosekana, si programu hasidi iliyogunduliwa.
+
 > Pakua Arroxy tu kutoka ukurasa rasmi wa GitHub Releases. Ukipata faili kutoka tovuti nyingine au mtu akikutumia, ifute na upakue nakala mpya kutoka chanzo rasmi. Msimbo wa chanzo ni wa umma, hivyo unaweza kuukagua au kuijenga Arroxy mwenyewe ukitaka.
 
-</details>
+### <a id="macos-first-launch"></a>Uzinduzi wa kwanza wa macOS
 
-<details>
-<summary><strong>Uzinduzi wa kwanza kwenye macOS</strong></summary>
+Arroxy bado haijasainiwa kwa nambari kwa macOS, kwa hivyo Gatekeeper itazuia uzinduzi wa kwanza. Njia halisi ya kuiruhusu inategemea toleo lako la macOS — Sequoia 15 ilifunga njia ya zamani ya kukwepa kwa kubonyeza kulia → Open.
 
-Arroxy bado haijakaguliwa kwa msimbo, kwa hivyo macOS Gatekeeper itakuonya wakati wa uzinduzi wa kwanza. Hii inatarajiwa — si ishara ya uharibifu.
+#### macOS Sequoia 15 na baadaye (ya sasa)
 
-**Njia ya Mipangilio ya Mfumo (inayopendekezwa):**
+Kwenye Sequoia 15 na toleo jipya zaidi, kubonyeza kulia → Open haizuii tena Gatekeeper kwa programu nyingi zilizowekwa karantini. Tumia paneli ya Mipangilio ya Mfumo badala yake:
 
-1. Bonyeza kulia ikoni ya programu ya Arroxy na uchague **Open**.
-2. Sanduku la onyo linaonekana — bonyeza **Cancel** (usibonyeze *Move to Trash*).
-3. Fungua **System Settings → Privacy & Security**.
-4. Tembeza hadi sehemu ya **Security**. Utaona *"Arroxy ilizuiwa kutumika kwa sababu haitoki kwa msanidi aliyetambuliwa."*
-5. Bonyeza **Open Anyway** na uthibitisha kwa nenosiri lako au Touch ID.
+1. Buruta `Arroxy.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.
+2. Bonyeza mara mbili Arroxy. Sanduku la mazungumzo la kuzuia linaonekana — bonyeza **Done** (usibonyeze *Move to Trash*).
+3. Fungua **System Settings → Privacy & Security** na tembeza hadi sehemu ya **Security**. Utaona *"Arroxy was blocked to protect your Mac"* (au ujumbe unaofanana sana).
+4. Bonyeza **Open Anyway**, thibitisha kwa nenosiri lako au Touch ID, kisha uzindue tena Arroxy kutoka `/Applications`.
 
-Baada ya hatua ya 5, Arroxy inafunguka kawaida na onyo halionekani tena.
+#### macOS Sonoma 14 na mapema zaidi
 
-**Njia ya Terminal (ya juu):**
+1. Buruta `Arroxy.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.
+2. Bonyeza kulia (au Control-bonyeza) `Arroxy.app` katika `/Applications` na uchague **Open**.
+3. Sanduku la onyo sasa lina kitufe cha **Open** — bonyeza na uthibitishe. Arroxy inafunguka kawaida na onyo halitatokea tena.
+
+#### "App is damaged" au kizuizi cha Gatekeeper kinachoendelea — suluhisho la Terminal
+
+Ikiwa macOS inasema *"Arroxy is damaged and can't be opened"*, au hakuna hatua zilizo hapo juu zinazoondoa kizuizi, sifa ya karantini kwenye DMG ndiyo sababu (vivinjari vingine na tabia ya translocation ya macOS yenyewe huiweka). Iondoe kutoka kwa programu iliyosanikishwa:
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/Arroxy.app
 ```
 
+**Apple Silicon vs Intel:** kwenye Mac ya mfululizo wa M (M1 / M2 / M3 / M4), pakua DMG ya `arm64`. Kwenye Mac za Intel, pakua DMG ya `x64`. Kuendesha build isiyo sahihi bado kunafanya kazi kupitia Rosetta lakini ni polepole zaidi kwa kiasi kinachoonekana.
+
 > Ujenzi wa macOS hufanywa kupitia CI kwenye vichakataji vya Apple Silicon na Intel. Ukipata matatizo, tafadhali [fungua tatizo](../../issues) — maoni kutoka kwa watumiaji wa macOS yanaathiri kikamilifu mzunguko wa majaribio ya macOS.
 
-</details>
-
-<details>
-<summary><strong>Uzinduzi wa kwanza kwenye Linux</strong></summary>
+### <a id="linux-first-launch"></a>Uzinduzi wa kwanza wa Linux
 
 AppImages zinaendesha moja kwa moja — hakuna usanidi. Unahitaji tu kuweka faili kama inayoweza kutekelezwa.
 
@@ -202,12 +196,68 @@ sudo dnf install -y fuse-libs
 sudo pacman -S fuse2
 ```
 
+**Uunganishaji wa hiari wa desktop:** sakinisha [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) mara moja, na AppImage yoyote unayobonyeza mara mbili itasajiliwa kiotomatiki kwenye menyu yako ya uzinduzi — hakuna faili ya `.desktop` ya mkono inayohitajika.
+
 **Flatpak (mbadala wenye sanduku):** pakua `Arroxy-*.flatpak` kutoka ukurasa huo huo wa toleo.
 
 ```bash
 flatpak install --user Arroxy-*.flatpak
 flatpak run io.github.antonio_orionus.Arroxy
 ```
+
+<details>
+<summary><strong><a id="verify"></a>Thibitisha upakuaji wako (SHA256)</strong></summary>
+
+Kila toleo linachapisha faili ya `SHA256SUMS` pamoja na faili za binary. Ili kuangalia kwamba upakuaji wako haukuharibiwa au kubadilishwa wakati wa usafirishaji, hesabu hash ya faili yako mahali hapo na ulinganishe mstari katika `SHA256SUMS`. Fungua ukurasa wa toleo la hivi karibuni → **Assets** → pakua `SHA256SUMS`.
+
+**Windows (PowerShell or Command Prompt):**
+
+```powershell
+certutil -hashfile Arroxy-Setup-<version>.exe SHA256
+```
+
+**macOS (Terminal):**
+
+```bash
+shasum -a 256 Arroxy-<version>-arm64.dmg
+```
+
+**Linux (Terminal):**
+
+```bash
+sha256sum Arroxy-*.AppImage
+```
+
+Unataka ukaguzi wa programu hasidi wa mtu wa tatu? Pakia faili kwenye [VirusTotal](https://www.virustotal.com). Bendera chache za heuristic za jumla kutoka kwa injini ndogo ni za kawaida kwa programu za Electron zisizosainiwa; ugunduzi ulioenea kutoka kwa injini kubwa ungekuwa wasiwasi wa kweli.
+
+</details>
+
+<details>
+<summary><strong>Sanidi kupitia meneja wa pakiti</strong></summary>
+
+Tayari unatumia meneja wa pakiti? Unaweza kuruka njia ya upakuaji wa mkono.
+
+| Njia | Amri                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------------- |
+| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
+| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
+| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+| Flatpak            | `flatpak install --user Arroxy-*.flatpak`                                                         |
+
+</details>
+
+<details>
+<summary><strong>Windows: Kisanidi dhidi ya Inayobebeka</strong></summary>
+
+|               | Kisanidi cha NSIS | Inayobebeka `.exe` |
+| ------------- | :----------------------: | :---------------------: |
+| Usanidi unahitajika | Ndiyo  | Hapana — endesha kutoka mahali popote  |
+| Masasisho ya kiotomatiki | ✅ ndani ya programu  | ❌ upakuaji wa mkono  |
+| Kasi ya uzinduzi | ✅ ya haraka zaidi  | ⚠️ mwanzo wa polepole baridi  |
+| Inaongeza kwenye Menyu ya Kuanza |            ✅            |           ❌            |
+| Kuondoa kwa urahisi |            ✅            | ❌ futa faili  |
+
+**Pendekezo:** tumia kisanidi cha NSIS kwa masasisho ya kiotomatiki na uzinduzi wa haraka. Tumia `.exe` inayobebeka kwa chaguo lisilo na usanidi na bila usajili.
 
 </details>
 
@@ -233,10 +283,10 @@ Chochote YouTube kinatoa: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, pamoja
 Ndiyo. Chagua *sauti pekee* kwenye menyu ya fomati kisha uchague MP3, M4A/AAC, Opus au WAV.
 
 **Je, ninahitaji akaunti ya YouTube au vidakuzi?**
-Hapana. Arroxy inatumia tokeni za umma pekee ambazo YouTube inawapa vivinjari vyote. Hakuna vidakuzi, hakuna kuingia, hakuna vitambulisho vilivyohifadhiwa. Tazama [Hakuna vidakuzi, hakuna kuingia, hakuna kuunganisha akaunti](#no-cookies) kwa sababu hii ina maana.
+Kwa chaguomsingi, hapana — Arroxy hufanya kazi bila akaunti ya YouTube, kuingia, au kuhamisha vidakuzi. Usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina (Chanzo cha vidakuzi: faili au kivinjari) kwa maudhui yanayohitaji uthibitisho, kama vile video zenye vikwazo vya umri au za wanachama tu. Umezimwa kwa chaguomsingi. Ukiwasha, wiki ya yt-dlp inaeleza kwamba [otomatiki inayotegemea vidakuzi inaweza kuweka alama kwenye akaunti yako ya Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); akaunti ya kutupa ni chaguo salama zaidi katika hali hiyo.
 
 **Je, itaendelea kufanya kazi YouTube ikibadilisha kitu?**
-Tabaka mbili za ustahimilivu: yt-dlp husasishwa ndani ya masaa machache baada ya mabadiliko ya YouTube, na Arroxy haitegemei vidakuzi vinavyoisha kila dakika ~30. Hii inafanya iwe thabiti zaidi dhahiri kuliko zana zinazotegemea vikao vya kivinjari vilivyohamishwa.
+yt-dlp husasishwa kiotomatiki wakati wa uzinduzi, na Arroxy hutuma marekebisho haraka YouTube inapobadilisha kitu. Iwapo utakutana na tatizo, usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina kama suluhisho la akiba.
 
 **Arroxy inapatikana katika lugha zipi?**
 Ishirini na moja, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kijerumani), Français (Kifaransa), 日本語 (Kijapani), 中文 (Kichina), Русский (Kirusi), Українська (Kiukraini), हिन्दी (Kihindi), Afaan Oromoo, Kiswahili, O'zbekcha (Kiuzbeki), Tiếng Việt (Kivietinamu), አማርኛ (Kiamhara), العربية (Kiarabu), اردو (Kiurdu), پښتو (Kipashto), বাংলা (Kibengali), မြန်မာဘာသာ (Kiburma), Ελληνικά (Kigiriki), na Српски (Kiserbia). Arroxy hugundua lugha ya mfumo wako wa uendeshaji wakati wa uzinduzi wa kwanza na unaweza kubadili wakati wowote kutoka kichaguo cha lugha kwenye upau wa zana. Tafsiri zinaishi kama vitu vya TypeScript vya kawaida katika src/shared/i18n/locales/ — fungua PR kwenye GitHub kuchangia.
@@ -248,7 +298,7 @@ Hapana. yt-dlp hupakuliwa kiotomatiki wakati wa uzinduzi wa kwanza na kuhifadhiw
 Ndiyo kwa playlist: bandika URL ya playlist, kisha weka foleni ya orodha yote au video ulizochagua tu. Upakuaji wa kundi wa channel nzima bado haujaungwa mkono.
 
 **macOS inasema "programu imeharibiwa" — nifanye nini?**
-Hiyo ni macOS Gatekeeper inayozuia programu isiyosainiwa, si uharibifu wa kweli. Tazama sehemu ya [uzinduzi wa kwanza kwenye macOS](#download) kwa suluhisho.
+Hiyo ni macOS Gatekeeper inayozuia programu isiyosainiwa, si uharibifu wa kweli. Tazama ["App is damaged" — suluhisho la Terminal](#macos-first-launch) kwa amri ya mstari mmoja ya `xattr` inayoondoa kizuizi.
 
 **Je, ni halali kupakua video za YouTube?**
 Kwa matumizi ya kibinafsi na ya faragha, kwa ujumla inakubaliwa katika mamlaka nyingi. Unawajibika kufuata [Masharti ya Huduma](https://www.youtube.com/t/terms) ya YouTube na sheria za haki miliki za mamlaka yako.

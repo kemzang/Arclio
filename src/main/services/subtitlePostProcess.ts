@@ -7,11 +7,12 @@
 import { extname } from 'node:path';
 import { readFile, rename, unlink, writeFile } from 'node:fs/promises';
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
-import log from 'electron-log/main';
-import { dedupeSrt } from './srtDedupe';
-import { dedupeVtt } from './vttDedupe';
-import { spawnFFmpeg } from '@main/utils/process';
-import { detectSubtitleLang, EMBED_CONTAINER_EXT } from '@shared/subtitlePath';
+import log from 'electron-log/main.js';
+import { dedupeSrt } from './srtDedupe.js';
+import { dedupeVtt } from './vttDedupe.js';
+import { spawnFFmpeg } from '@main/utils/process.js';
+import { detectSubtitleLang, EMBED_CONTAINER_EXT } from '@shared/subtitlePath.js';
+import { siteForExtractor } from '@shared/sites/index.js';
 
 export const logger = log.scope('subs');
 
@@ -69,10 +70,14 @@ function buildSubtitleEmbedArgs(opts: { videoPath: string; subtitleTracks: { pat
   return args;
 }
 
-// YouTube auto-captions arrive as rolling cues — each cue duplicates the
-// previous + 1 word. Run pure-TS dedupe on each .srt / .vtt we wrote.
+// Auto-caption rolling-cue dedupe — only YouTube emits captions where each
+// cue duplicates the previous + 1 word. Other extractors emit conventional
+// cues; running the dedupe on them would corrupt content with legitimate
+// phrase repeats. The Site adapter owns the gating.
+//
 // Failures are logged and swallowed: dedupe glitches must never lose a video.
-export async function dedupeSubtitleFiles(paths: readonly string[], jobId: string, shouldAbort: () => boolean): Promise<void> {
+export async function dedupeSubtitleFiles(paths: readonly string[], extractor: string, jobId: string, shouldAbort: () => boolean): Promise<void> {
+  if (!siteForExtractor(extractor).needsAutoCaptionDedupe) return;
   await Promise.all(
     paths.map(async (path) => {
       if (shouldAbort()) return;
@@ -139,8 +144,18 @@ export async function muxSubtitlesIntoVideo(opts: { ffmpegPath: string; videoPat
 
   try {
     await rename(tempPath, outputPath);
-    if (outputPath !== opts.videoPath) await unlink(opts.videoPath).catch(() => {});
-    await Promise.all(opts.subtitlePaths.map((p) => unlink(p).catch(() => {})));
+    if (outputPath !== opts.videoPath) {
+      await unlink(opts.videoPath).catch((err) => {
+        logger.warn('subtitle mux: original video unlink failed', { jobId: opts.jobId, path: opts.videoPath, message: err instanceof Error ? err.message : String(err) });
+      });
+    }
+    await Promise.all(
+      opts.subtitlePaths.map((p) =>
+        unlink(p).catch((err) => {
+          logger.warn('subtitle mux: sidecar unlink failed', { jobId: opts.jobId, path: p, message: err instanceof Error ? err.message : String(err) });
+        })
+      )
+    );
     return { ok: true, outputPath };
   } catch (err) {
     logger.warn('subtitle mux: post-mux cleanup partial', {

@@ -1,12 +1,12 @@
 import path from 'node:path';
 import { Tray, Menu, nativeImage, type BrowserWindow } from 'electron';
-import { mainT, pluralKey } from '@main/i18n';
-import type { DownloadService } from './DownloadService';
-import type { SupportedLang } from '@shared/i18n/types';
+import { mainT, pluralKey } from '@main/i18n.js';
+import type { DownloadService } from './DownloadService.js';
+import type { SupportedLang } from '@shared/i18n/types.js';
 
 function resolveTrayIconPath(): string {
   if (process.env.ELECTRON_RENDERER_URL || !process.resourcesPath) {
-    return path.join(__dirname, '../../build/icon-tray.png');
+    return path.join(import.meta.dirname, '../../build/icon-tray.png');
   }
   return path.join(process.resourcesPath, 'icon-tray.png');
 }

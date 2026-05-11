@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isRtl, RTL_LANGS } from '@shared/i18n/rtl';
+import { isRtl, RTL_LANGS } from '@shared/i18n/rtl.js';
 
 describe('isRtl', () => {
   it('returns true for RTL languages', () => {

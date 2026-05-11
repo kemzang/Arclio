@@ -3,8 +3,7 @@ const de = {
     back: 'Zurück',
     continue: 'Weiter',
     retry: 'Erneut versuchen',
-    startOver: 'Von vorn beginnen',
-    loading: 'Wird geladen…'
+    startOver: 'Von vorn beginnen'
   },
   app: {
     feedback: 'Feedback',
@@ -14,6 +13,15 @@ const de = {
     debugCopyTitle: 'Debug-Infos kopieren (Electron-, OS-, Chrome-Versionen)',
     zoomIn: 'Vergrößern',
     zoomOut: 'Verkleinern'
+  },
+  about: {
+    button: 'Info',
+    openTitle: 'Über Arroxy',
+    tagline: 'Schneller, benutzerfreundlicher Video- und Audio-Downloader für den Desktop.',
+    websiteLink: 'Website',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT-Lizenz · von Antonio Orionus',
+    thirdPartyNotices: 'Drittanbieter-Hinweise anzeigen'
   },
   titleBar: {
     close: 'Schließen',
@@ -25,7 +33,6 @@ const de = {
     greeting: 'Hey, schön dich wiederzusehen!',
     warmup: 'Arroxy wärmt sich auf…',
     downloading: '{{binary}} wird heruntergeladen…',
-    warning: 'Einrichtung unvollständig — einige Funktionen funktionieren möglicherweise nicht',
     warmupFailedNoDiag: 'Einrichtung fehlgeschlagen. Öffne das Einrichtungsprotokoll für Details.'
   },
   repair: {
@@ -81,6 +88,8 @@ const de = {
       heading: 'Playlist-Elemente',
       itemCount_one: '{{count}} video',
       itemCount_other: '{{count}} videos',
+      itemCountAudio_one: '{{count}} Titel',
+      itemCountAudio_other: '{{count}} Titel',
       selectAll: 'Alle auswählen',
       selectNone: 'Keine auswählen',
       rangeFrom: 'Von',
@@ -91,15 +100,13 @@ const de = {
       noSelection: 'Wähle mindestens ein Video aus, um fortzufahren',
       loadingItems: 'Playlist wird geladen…',
       thumbnailAlt: 'Video-Vorschaubild',
-      continue: 'Weiter',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Qualität für den Stapel wählen',
       subhead: 'Jedes Video löst die gewählte Stufe unabhängig auf — heterogene Playlists funktionieren ohne Überraschungen.',
       itemCount_one: '{{count}} Element',
-      itemCount_other: '{{count}} Elemente',
-      continue: 'Weiter'
+      itemCount_other: '{{count}} Elemente'
     },
     mixedPrompt: {
       title: 'Dieser Link enthält eine Playlist',
@@ -114,17 +121,25 @@ const de = {
       fetchFormats: 'Formate abrufen',
       features: {
         heading: 'Was Arroxy laden kann',
-        video: {
-          title: 'Videos',
-          desc: 'Beliebige Auflösung bis zu 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Videos',
+          channel: 'Kanäle',
+          playlist: 'Playlists',
+          short: 'Shorts',
+          music: 'Musik',
+          podcast: 'Podcasts'
         },
-        playlist: {
-          title: 'Playlists',
-          desc: 'Mehrere Elemente einer Playlist wählen'
+        anySite: {
+          heading: '2000+ Seiten',
+          video: 'Videos',
+          videoPlaylist: 'Video-Playlists',
+          musicPlaylist: 'Musik-Playlists'
         },
-        audio: {
-          title: 'Audio',
-          desc: 'Originalstream oder MP3/M4A konvertieren'
+        always: {
+          heading: 'Immer verfügbar',
+          audioOnly: 'Nur Audio',
+          subtitles: 'Untertitel'
         }
       },
       mascotIdle: 'Wirf mir einen YouTube-Link rüber (Video oder Short) — klick dann auf „Formate abrufen" und ich leg los ✨',
@@ -162,7 +177,7 @@ const de = {
         enabledButNoBrowser: 'Wähle einen Browser, um Cookies zu nutzen',
         banWarning: 'YouTube kann Konten markieren — und teils sperren — deren Cookies von yt-dlp verwendet werden. Nutze nach Möglichkeit ein Wegwerfkonto.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt LOKAL holen (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const de = {
       }
     },
     subtitles: {
-      heading: 'Untertitel',
       autoBadge: 'Auto',
-      hint: 'Dateien werden neben dem Video gespeichert',
       noLanguages: 'Keine Untertitel für dieses Video verfügbar',
       skip: 'Überspringen',
       skipSubs: 'Für dieses Video überspringen',
-      selectAll: 'Alle auswählen',
-      deselectAll: 'Alle abwählen',
       mascot: 'Wähle null, einen oder mehrere — ganz wie du möchtest ✨',
       searchPlaceholder: 'Sprachen suchen…',
       noMatches: 'Keine Sprachen gefunden',
@@ -238,14 +249,18 @@ const de = {
       audio: 'Audio',
       noAudio: 'Kein Audio',
       videoOnly: 'Nur Video',
+      keepAudio: 'So belassen',
+      keepAudioMeta: 'Integriertes Audio',
       audioOnly: 'Nur Audio',
       audioOnlyOption: 'Nur Audio (kein Video)',
       mascot: 'Beste + beste = maximale Qualität. Das würde ich nehmen!',
       sniffing: 'Suche die besten Formate für dich…',
-      loadingHint: 'Dauert meist nur eine Sekunde',
+      loadingHint: 'Bitte warten, bis die Analyse abgeschlossen ist — Playlists und Suchen können etwas dauern.',
       loadingAria: 'Formate werden geladen',
       sizeUnknown: 'Größe unbekannt',
       total: 'Gesamt',
+      skipToConfirm: 'Zur Bestätigung überspringen',
+      skipToConfirmTooltip: 'Verwendet deine gespeicherten Einstellungen für alle verbleibenden Schritte. Um eine Einstellung zu ändern, fahre stattdessen Schritt für Schritt fort – deine Wahl wird für das nächste Mal gespeichert.',
       convert: {
         label: 'Konvertieren',
         uncompressed: 'Konvertieren · unkomprimiert',
@@ -261,8 +276,7 @@ const de = {
         bodyDisabled: 'Cookies sind konfiguriert, aber deaktiviert. Aktiviere sie und versuche es erneut für die vollständige Liste, oder wechsle das Netzwerk.',
         bodyEnabled: 'Auch mit Cookies hat YouTube diese Abfrage eingeschränkt. Versuche es später erneut oder wechsle das Netzwerk.',
         retryCta: 'Erneut versuchen',
-        enableRetryCta: 'Cookies aktivieren und erneut versuchen',
-        openSettingsCta: 'Erweiterte Einstellungen öffnen'
+        enableRetryCta: 'Cookies aktivieren und erneut versuchen'
       },
       cookiesError: {
         heading: 'Cookies könnten die Ursache sein',
@@ -272,6 +286,10 @@ const de = {
         explanationFile: 'Deine Cookies-Datei könnte leer, abgelaufen oder im falschen Format vorliegen (yt-dlp erwartet Netscape cookies.txt). Versuche, die Cookies neu zu exportieren, eine andere Datei auszuwählen, in den Browser-Modus zu wechseln oder Cookies zu deaktivieren.',
         explanationBrowser: 'Cookies werden direkt aus dem Browser gelesen. Wenn der Browser gerade läuft, ist die Cookie-Datenbank möglicherweise gesperrt (Chromium-Familie). Der Browser muss zudem bei YouTube angemeldet sein. Versuche, den Browser zu schließen, zu einem anderen Browser zu wechseln, in den Datei-Modus zu wechseln oder Cookies zu deaktivieren.',
         openSettingsCta: 'Cookies-Einstellungen öffnen',
+        needsCookies: {
+          heading: 'Diese Seite erfordert eine Anmeldung',
+          body: 'yt-dlp konnte ohne Authentifizierung nicht auf dieses Video zugreifen. Konfiguriere Cookies in den erweiterten Einstellungen — verweise auf einen Browser, in dem du bereits angemeldet bist, oder importiere eine cookies.txt-Datei.'
+        },
         dpapi: {
           heading: 'Chrome-Cookies durch Windows-Verschlüsselung blockiert',
           explanation: 'Chrome 127 und neuer verschlüsselt Cookies auf eine Weise, die andere Apps unter Windows nicht lesen können. Probiere einen der folgenden Workarounds.',
@@ -334,26 +352,24 @@ const de = {
       labelSize: 'Größe',
       sizeUnknown: 'Unbekannt',
       nothingToDownload: 'Das Voreinstellung „Nur Untertitel" ist aktiv, aber keine Untertitelsprache ausgewählt – es wird nichts heruntergeladen.',
+      thumbnailEmbedNotSupported: 'Thumbnail-embed übersprungen – der Ausgabe-container unterstützt es nicht.',
+      subtitleEmbedAudioOnly: 'Subtitle-embed zu sidecar geändert – Audiospuren unterstützen keine eingebetteten Untertitel-Streams.',
       audioOnly: 'Nur Audio',
       addToQueue: '+ Warteschlange',
       addToQueueTooltip: 'Startet, wenn andere Downloads fertig sind — volle Bandbreite',
       pullIt: "Hol's rein! ↓",
       pullItTooltip: 'Startet sofort — läuft parallel zu anderen aktiven Downloads',
-      playlistBatch_one: '{{count}} Video · {{title}}',
-      playlistBatch_other: '{{count}} Videos · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Voreinstellung',
       labelItems: 'Elemente',
       itemsValue_one: '{{count}} von {{total}} Video',
-      itemsValue_other: '{{count}} von {{total}} Videos'
-    },
-    error: {
-      icon: 'Fehler'
+      itemsValue_other: '{{count}} von {{total}} Videos',
+      itemsValueAudio_one: '{{count}} von {{total}} Titel',
+      itemsValueAudio_other: '{{count}} von {{total}} Titeln'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Wird geladen…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Wird geladen…'
   },
   queue: {
     header: 'Download-Warteschlange',
@@ -378,9 +394,7 @@ const de = {
       resume: 'Fortsetzen',
       cancel: 'Abbrechen',
       remove: 'Entfernen'
-    },
-    interJobSleep_one: 'Nächster Download startet in {{count}}s',
-    interJobSleep_other: 'Nächster Download startet in {{count}}s'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const de = {
     ytdlpProcessError: 'yt-dlp-Prozessfehler: {{error}}',
     ytdlpExitCode: 'yt-dlp wurde mit Code {{code}} beendet',
     downloadingBinary: 'Binärdatei {{name}} wird heruntergeladen…',
-    unknownStartupFailure: 'Unbekannter Fehler beim Starten des Downloads'
+    unknownStartupFailure: 'Unbekannter Fehler beim Starten des Downloads',
+    diskSpaceInsufficient: 'Nicht genug Speicherplatz — {{required}} benötigt, nur {{free}} verfügbar'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const de = {
       unavailable: 'Dieses Video ist nicht verfügbar — möglicherweise privat, gelöscht oder regional gesperrt.',
       geoBlocked: 'Dieses Video ist in deiner Region nicht verfügbar.',
       outOfDiskSpace: 'Nicht genug Speicherplatz. Gib Speicher frei und versuche es erneut.',
-      unsupportedUrl: 'Das sieht nicht wie eine Video-URL aus. Füge einen YouTube-Video-, Short- oder Playlist-Link ein.'
+      unsupportedUrl: 'Das sieht nicht wie eine Video-URL aus. Füge einen YouTube-Video-, Short- oder Playlist-Link ein.',
+      chunkTransferFailure: 'Der Server hat den Download wiederholt mittendrin abgebrochen und yt-dlp hat nach mehreren Versuchen aufgegeben. Das betrifft meist die größten Videoformate (4K HDR / VP9 mit hoher Bitrate). Versuche es erneut, wechsle das Netzwerk/VPN oder wähle eine niedrigere Auflösung.',
+      postprocessFailure: 'yt-dlp hat den Download abgeschlossen, aber die Nachbearbeitung (Merge / Mux / Konvertierung) ist fehlgeschlagen. Oft ist das ein vorübergehendes ffmpeg-Problem — versuche es erneut, und wenn es bestehen bleibt, probiere eine andere Formatkombination.',
+      parse: 'Die Antwort der Seite konnte nicht analysiert werden. Der Extraktor von yt-dlp ist möglicherweise veraltet. Arroxy aktualisiert yt-dlp automatisch beim Start — versuche es in ein paar Minuten erneut, sobald der Fix eintrifft.',
+      network: 'Netzwerkfehler. Überprüfe deine Verbindung und versuche es erneut.',
+      unknown: 'Download fehlgeschlagen. Siehe die Rohausgabe unten.'
     }
   },
   presets: {
@@ -463,7 +483,6 @@ const de = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'In MP3 192 kbps umwandeln' }
   },
   formatLabel: {
-    audioOnly: 'Nur Audio',
     audioFallback: 'Audio',
     audioOnlyDot: 'Nur Audio · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
@@ -498,6 +517,24 @@ const de = {
       detail: 'Der Renderer-Prozess ist abgestürzt ({{reason}}). Neu laden, um es erneut zu versuchen.',
       reload: 'Neu laden',
       quit: 'Beenden'
+    }
+  },
+  share: {
+    title: 'Arroxy teilen',
+    description: 'Arroxy ist kostenlos und Open-Source. Durch das Teilen helfen mehr Menschen, es zu entdecken.',
+    copyLink: 'Link kopieren',
+    copied: 'Kopiert!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Arroxy teilen',
+    footerLabel: 'Teilen',
+    shareAction: 'Arroxy teilen',
+    inlineCard: {
+      body: 'Gefällt dir Arroxy? Teile es mit jemandem, dem es nützlich sein könnte.',
+      dismiss: 'Teilen-Vorschlag schließen'
+    },
+    highValueBanner: {
+      body: 'Gefällt dir Arroxy? Hilf anderen, es zu entdecken.',
+      dismiss: 'Teilen-Vorschlag schließen'
     }
   }
 } as const;

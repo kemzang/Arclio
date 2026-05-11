@@ -1,13 +1,16 @@
 import { mkdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
-import { STATUS_KEY } from '@shared/schemas';
-import type { YtDlpRequest } from '../YtDlp';
-import type { Phase, PhaseContext, PhaseOutcome } from './types';
+import { STATUS_KEY } from '@shared/schemas.js';
+import { siteForExtractor } from '@shared/sites/index.js';
+import type { YtDlpRequest } from '../YtDlp.js';
+import { classifyYtDlpFailure } from '../download/errorClassification.js';
+import { cleanupPartFiles, cleanupTempDirByPath } from '../download/cleanup.js';
+import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
-async function setupTempDir(outputDir: string, jobId: string): Promise<string | undefined> {
-  const tempDir = join(outputDir, '.arroxy-temp', jobId.slice(0, 8));
+async function setupTempDir(outputDir: string, jobId: string, preserve: boolean, overridePath?: string): Promise<string | undefined> {
+  const tempDir = overridePath ?? join(outputDir, '.arroxy-temp', jobId.slice(0, 8));
   try {
-    await rm(tempDir, { recursive: true, force: true });
+    if (!preserve) await rm(tempDir, { recursive: true, force: true });
     await mkdir(tempDir, { recursive: true });
     return tempDir;
   } catch {
@@ -27,10 +30,23 @@ export function VideoPhase(embed: boolean): Phase {
         throw new Error('invariant: VideoPhase reached with subtitle-only job');
       }
 
-      const tempDir = await setupTempDir(job.outputDir, job.id);
-      if (tempDir) active.tempDir = tempDir;
+      const tempDir = await setupTempDir(job.outputDir, job.id, active.tempDir != null, active.tempDir);
+      if (tempDir) {
+        active.tempDir = tempDir;
+        // Register tempDir + .part-files cleanup. Disposables drain on
+        // finalize for completed / soft-failed / hard-failed / cancelled
+        // outcomes; on `paused`, JobLifecycle skips the drain so resume can
+        // pick up the .part files.
+        ctx.register(() => cleanupTempDirByPath(tempDir));
+        ctx.register(() => cleanupPartFiles(job.outputDir));
+      }
 
-      const sbConfig = preparedJob.sponsorBlock.mode !== 'off' ? { mode: preparedJob.sponsorBlock.mode, categories: preparedJob.sponsorBlock.categories } : undefined;
+      // SponsorBlock applicability is owned by the Site adapter — currently
+      // YouTube-only. Passing the flag for non-YouTube extractors is harmless
+      // but wasted; the wizard hides the SponsorBlock step on non-supporting
+      // sites and this is the defense-in-depth gate.
+      const site = siteForExtractor(preparedJob.extractor);
+      const sbConfig = site.supportsSponsorBlock && preparedJob.sponsorBlock.mode !== 'off' ? { mode: preparedJob.sponsorBlock.mode, categories: preparedJob.sponsorBlock.categories } : undefined;
 
       const formatId = preparedJob.kind === 'single-format' ? preparedJob.formatId : undefined;
       const formatSelector = preparedJob.kind === 'playlist-preset' ? preparedJob.formatSelector : undefined;
@@ -76,15 +92,20 @@ export function VideoPhase(embed: boolean): Phase {
             };
 
       const result = await ytDlp.run(req, {
-        onAttempt: (attempt) => {
-          if (attempt === 2) return;
+        onMinting: (attempt) => {
           ctx.emitStatus('token', attempt === 0 ? STATUS_KEY.mintingToken : STATUS_KEY.remintingToken);
         },
         // Don't preemptively emit downloadingMedia on spawn — yt-dlp spends
         // a few seconds on extractor work and thumbnail conversion first.
         // The first `[download] Destination:` line in consumeProgress emits
         // the accurate status when the actual data download begins.
-        onSpawn: (proc) => ctx.attachYtDlpProcess(proc),
+        onSpawn: (proc) => {
+          active.ytDlpProcess = proc;
+          if (active.cancelRequested) proc.kill('SIGKILL');
+          ctx.register(() => {
+            proc.kill('SIGKILL');
+          });
+        },
         onStdout: (text) => ctx.safeConsume(text),
         onStderr: (text) => ctx.safeConsume(text)
       });
@@ -93,7 +114,9 @@ export function VideoPhase(embed: boolean): Phase {
       if (active.cancelRequested) return { kind: 'cancelled' };
 
       if (result.kind !== 'success') {
-        return { kind: 'hard-failed', error: ctx.emitYtdlpFailure(result) };
+        const { payload, statusKey, params } = await classifyYtDlpFailure(result, job.outputDir, job.id);
+        ctx.emitStatus('error', statusKey, params, payload);
+        return { kind: 'hard-failed', error: payload };
       }
 
       if (result.usedExtractorFallback) active.usedExtractorFallback = true;

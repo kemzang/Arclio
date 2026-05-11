@@ -1,15 +1,20 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import { useAppStore } from '@renderer/store/useAppStore';
-import type { GetFormatsOutput, StatusEvent } from '@shared/types';
-import { ok } from '../shared/fixtures';
-import { buildAppSettings } from '../shared/settingsFixtures';
-import { DEFAULTS } from '@shared/constants';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import type { ProbeResult, StatusEvent } from '@shared/types.js';
+import { ok } from '../shared/fixtures.js';
+import { buildAppSettings } from '../shared/settingsFixtures.js';
+import { DEFAULTS } from '@shared/constants.js';
 
 const YOUTUBE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 
-const PROBE_RESULT: GetFormatsOutput = {
+const PROBE_RESULT: ProbeResult = {
+  kind: 'video',
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
+  webpageUrl: YOUTUBE_URL,
+  isAudioOnlySource: false,
   formats: [
     {
       formatId: '22',
@@ -35,7 +40,9 @@ const PROBE_RESULT: GetFormatsOutput = {
   thumbnail: '',
   duration: 120,
   subtitles: {},
-  automaticCaptions: {}
+  automaticCaptions: {},
+  isLive: false,
+  hasDrm: false
 };
 
 function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
@@ -58,7 +65,7 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
         })
       ),
       cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
-      getFormats: vi.fn().mockResolvedValue(ok(PROBE_RESULT)),
+      probe: vi.fn().mockResolvedValue(ok(PROBE_RESULT)),
       pause: vi.fn().mockResolvedValue(ok({ paused: true }))
     },
     settings: {
@@ -75,8 +82,23 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
       onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
-      save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),
-      load: vi.fn().mockResolvedValue({ ok: true, data: [] })
+      cmd: {
+        add: vi.fn().mockResolvedValue({ ok: true, data: { ids: [] } }),
+        getSnapshot: vi.fn().mockResolvedValue({ ok: true, data: [] }),
+        start: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        pause: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        resume: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        cancel: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        retry: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        clearCompleted: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        remove: vi.fn().mockResolvedValue({ ok: true, data: undefined })
+      },
+      events: {
+        onSnapshot: vi.fn().mockReturnValue(() => undefined),
+        onAdded: vi.fn().mockReturnValue(() => undefined),
+        onUpdated: vi.fn().mockReturnValue(() => undefined),
+        onRemoved: vi.fn().mockReturnValue(() => undefined)
+      }
     },
     updater: {
       onUpdateAvailable: vi.fn().mockReturnValue(() => undefined),
@@ -209,7 +231,7 @@ describe('SponsorBlock wizard slice — queue serialization', () => {
       await useAppStore.getState().addToQueue();
     });
 
-    const queue = useAppStore.getState().queue;
+    const queue = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? [];
     expect(queue).toHaveLength(1);
     const job = queue[0].job;
     const sb = 'sponsorBlock' in job ? job.sponsorBlock : null;
@@ -257,7 +279,7 @@ describe('SponsorBlock wizard slice — download invocation', () => {
       await useAppStore.getState().addToQueue();
     });
 
-    const startCall = api.downloads.start.mock.calls[0]?.[0];
+    const startCall = api.queue.cmd.add.mock.calls[0]?.[0]?.[0];
     const startJob = startCall?.job;
     const startSb = startJob && 'sponsorBlock' in startJob ? startJob.sponsorBlock : null;
     expect(startSb?.mode).toBe('remove');
@@ -277,7 +299,7 @@ describe('SponsorBlock wizard slice — download invocation', () => {
       await useAppStore.getState().addToQueue();
     });
 
-    const startCall = api.downloads.start.mock.calls[0]?.[0];
+    const startCall = api.queue.cmd.add.mock.calls[0]?.[0]?.[0];
     const startJob = startCall?.job;
     const startSb = startJob && 'sponsorBlock' in startJob ? startJob.sponsorBlock : null;
     expect(startSb?.mode).toBe('off');
@@ -384,7 +406,7 @@ describe('SponsorBlock — StepSponsorBlock UI', () => {
   let StepSponsorBlock: React.FC;
 
   beforeEach(async () => {
-    const mod = await import('@renderer/components/wizard/StepSponsorBlock');
+    const mod = await import('@renderer/components/wizard/StepSponsorBlock.js');
     StepSponsorBlock = mod.StepSponsorBlock;
   });
 

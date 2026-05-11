@@ -12,7 +12,7 @@ vi.mock('electron', () => ({
     getPath: vi.fn().mockReturnValue('/tmp')
   },
   dialog: { showOpenDialog: vi.fn() },
-  shell: { openPath: vi.fn(), openExternal: vi.fn() },
+  shell: { openPath: vi.fn(), openExternal: vi.fn(), showItemInFolder: vi.fn() },
   ipcMain: {
     handle: vi.fn().mockImplementation((channel: string, fn: (e: unknown, payload: unknown) => unknown) => {
       handleCalls.push({ channel, fn });
@@ -25,8 +25,9 @@ vi.mock('electron', () => ({
   }
 }));
 
-import { registerIpcHandlers } from '@main/ipc/registerIpcHandlers';
-import { IPC_CHANNELS } from '@shared/ipc';
+import { registerIpcHandlers } from '@main/ipc/registerIpcHandlers.js';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { shell } from 'electron';
 
 class FakeDownloadService extends EventEmitter {
   start = vi.fn();
@@ -37,7 +38,7 @@ class FakeDownloadService extends EventEmitter {
 
 function makeDeps() {
   const downloadService = new FakeDownloadService();
-  const formatProbeService = { getFormats: vi.fn() };
+  const probeService = { probe: vi.fn() };
   const mainWindow = {
     isDestroyed: vi.fn().mockReturnValue(false),
     webContents: { send: vi.fn() },
@@ -47,10 +48,17 @@ function makeDeps() {
     close: vi.fn(),
     isMaximized: vi.fn().mockReturnValue(false)
   };
-  const queueStore = {
-    save: vi.fn().mockResolvedValue(undefined),
-    load: vi.fn().mockResolvedValue({ ok: true, data: [] })
-  };
+  const queueService = Object.assign(new EventEmitter(), {
+    add: vi.fn().mockReturnValue({ ok: true, data: { ids: [] } }),
+    start: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+    pause: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+    resume: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+    cancel: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+    retry: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+    clearCompleted: vi.fn().mockReturnValue({ ok: true, data: undefined }),
+    remove: vi.fn().mockReturnValue({ ok: true, data: undefined }),
+    snapshot: vi.fn().mockReturnValue([])
+  });
   const settingsStore = {
     get: vi.fn().mockResolvedValue({
       common: {
@@ -69,10 +77,9 @@ function makeDeps() {
   return {
     mainWindow: mainWindow as never,
     downloadService: downloadService as never,
-    formatProbeService: formatProbeService as never,
-    playlistProbeService: { getPlaylistItems: vi.fn() } as never,
+    probeService: probeService as never,
     settingsStore: settingsStore as never,
-    queueStore: queueStore as never,
+    queueService: queueService as never,
     binaryManager: {
       ensureYtDlp: vi.fn(),
       ensureFFmpeg: vi.fn(),
@@ -82,7 +89,7 @@ function makeDeps() {
     tokenService: { warmUp: vi.fn() } as never,
     languageRef: languageRef as never,
     clipboardWatcher: clipboardWatcher as never,
-    _raw: { downloadService, formatProbeService, mainWindow, queueStore, settingsStore, languageRef, clipboardWatcher }
+    _raw: { downloadService, probeService, mainWindow, queueService, settingsStore, languageRef, clipboardWatcher }
   };
 }
 
@@ -124,6 +131,25 @@ describe('registerIpcHandlers', () => {
       // Second register must drop prior bridge before adding the new one.
       expect(ds.listenerCount('status')).toBe(1);
       expect(ds.listenerCount('progress')).toBe(1);
+    });
+
+    it('pre-existing DownloadService listeners survive bridge re-attachment', () => {
+      const deps = makeDeps();
+      const ds = deps._raw.downloadService;
+      const received: string[] = [];
+      ds.on('status', () => received.push('survivor'));
+
+      registerIpcHandlers(deps);
+      registerIpcHandlers(deps);
+
+      ds.emit('status', {
+        jobId: 'j1',
+        stage: 'done',
+        statusKey: 'complete',
+        at: new Date().toISOString()
+      });
+
+      expect(received).toContain('survivor');
     });
   });
 
@@ -226,24 +252,24 @@ describe('registerIpcHandlers', () => {
       expect(deps._raw.languageRef.current).toBe('fr');
     });
 
-    it('queue:save rejects non-array payloads with a Result failure', async () => {
+    it('queue:cmd:add rejects non-array payloads with a Result failure', async () => {
       const deps = makeDeps();
       registerIpcHandlers(deps);
 
-      const handler = findCall(IPC_CHANNELS.queueSave)!.fn;
+      const handler = findCall(IPC_CHANNELS.queueCmdAdd)!.fn;
       const result = (await handler(null, 'not an array')) as {
         ok: boolean;
         error?: { code: string };
       };
       expect(result.ok).toBe(false);
-      expect(deps._raw.queueStore.save).not.toHaveBeenCalled();
+      expect(deps._raw.queueService.add).not.toHaveBeenCalled();
     });
 
-    it('queue:save accepts a valid queue array and writes it', async () => {
+    it('queue:cmd:add accepts a valid queue array and forwards to QueueService.add', async () => {
       const deps = makeDeps();
       registerIpcHandlers(deps);
 
-      const handler = findCall(IPC_CHANNELS.queueSave)!.fn;
+      const handler = findCall(IPC_CHANNELS.queueCmdAdd)!.fn;
       const validItem = {
         id: 'a',
         url: 'u',
@@ -257,15 +283,14 @@ describe('registerIpcHandlers', () => {
         lastStatus: null,
         error: null,
         finishedAt: null,
-        downloadJobId: null,
-        job: { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false } }
+        job: { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: { mode: 'off' }, embed: { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false } }
       };
       const result = (await handler(null, [validItem])) as { ok: boolean };
       expect(result.ok).toBe(true);
-      expect(deps._raw.queueStore.save).toHaveBeenCalledOnce();
+      expect(deps._raw.queueService.add).toHaveBeenCalledOnce();
     });
 
-    it('downloads:getFormats rejects incomplete cookies config before probing', async () => {
+    it('downloads:probe rejects incomplete cookies config before probing', async () => {
       const deps = makeDeps();
       deps._raw.settingsStore.get.mockResolvedValue({
         common: {
@@ -280,7 +305,7 @@ describe('registerIpcHandlers', () => {
       });
       registerIpcHandlers(deps);
 
-      const handler = findCall(IPC_CHANNELS.downloadsGetFormats)!.fn;
+      const handler = findCall(IPC_CHANNELS.downloadsProbe)!.fn;
       const result = (await handler(null, { url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' })) as {
         ok: boolean;
         error?: { code: string; message: string };
@@ -288,7 +313,7 @@ describe('registerIpcHandlers', () => {
 
       expect(result.ok).toBe(false);
       expect(result.error).toMatchObject({ code: 'validation', message: 'Pick a file to use cookies' });
-      expect(deps._raw.formatProbeService.getFormats).not.toHaveBeenCalled();
+      expect(deps._raw.probeService.probe).not.toHaveBeenCalled();
     });
 
     it('downloads:start rejects incomplete cookies config before starting downloads', async () => {
@@ -311,7 +336,8 @@ describe('registerIpcHandlers', () => {
         outputDir: '/tmp',
         job: {
           kind: 'single-format',
-          source: 'youtube',
+          extractor: 'youtube',
+          extractorKey: 'Youtube',
           formatId: '137+251',
           preset: 'custom',
           sponsorBlock: { mode: 'off' },
@@ -331,6 +357,26 @@ describe('registerIpcHandlers', () => {
       expect(result.ok).toBe(false);
       expect(result.error).toMatchObject({ code: 'validation', message: 'Pick a browser to use cookies' });
       expect(deps._raw.downloadService.start).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('file handlers', () => {
+    it('logs:openDir reveals main.log in Explorer on Windows', async () => {
+      const originalPlatform = Object.getOwnPropertyDescriptor(process, 'platform')!;
+      Object.defineProperty(process, 'platform', { value: 'win32', configurable: true });
+      try {
+        const deps = makeDeps();
+        registerIpcHandlers(deps);
+
+        const handler = findCall(IPC_CHANNELS.logsOpenDir)!.fn;
+        const result = (await handler(null, undefined)) as { ok: boolean };
+
+        expect(result.ok).toBe(true);
+        expect(shell.showItemInFolder).toHaveBeenCalledWith('/tmp/logs/main.log');
+        expect(shell.openPath).not.toHaveBeenCalled();
+      } finally {
+        Object.defineProperty(process, 'platform', originalPlatform);
+      }
     });
   });
 });

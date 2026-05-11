@@ -1,22 +1,23 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatError, useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { BotWallNotice } from './format/BotWallNotice';
-import { CookiesErrorAlert } from './format/CookiesErrorAlert';
-
-// Mirrors the bot-category patterns in `FormatProbeService` so a hard-fail
-// probe surfaces the same cookies CTA users see for a degraded probe.
-function isBotWallError(message: string): boolean {
-  return /sign in to confirm you'?re not a bot/i.test(message) || /HTTP Error 429\b|too many requests/i.test(message);
-}
+import { formatError, useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { BotWallNotice } from './format/BotWallNotice.js';
+import { CookiesErrorAlert } from './format/CookiesErrorAlert.js';
+import { isBotWallKind, isCookiesNeededKind } from './format/cookiesGate.js';
 
 export function StepError(): JSX.Element {
   const { t } = useTranslation();
   const { wizardError, settings, retry, reset } = useAppStore();
   const message = formatError(wizardError);
-  const showBotWallNotice = wizardError ? isBotWallError(wizardError.message) || (wizardError.details ? isBotWallError(wizardError.details) : false) : false;
-  const showCookiesAlert = (settings?.common?.cookiesMode ?? 'off') !== 'off';
+  const errorKind = wizardError?.localizedKey;
+  const showBotWallNotice = isBotWallKind(errorKind);
+  const cookiesEnabled = (settings?.common?.cookiesMode ?? 'off') !== 'off';
+  // When cookies are off but the error itself signals "auth required" / "use
+  // --cookies", fire the alert anyway so the user has a one-click route to the
+  // cookies block on the URL step.
+  const errorSuggestsCookies = isCookiesNeededKind(errorKind);
+  const showCookiesAlert = cookiesEnabled || errorSuggestsCookies;
 
   return (
     <div className="wizard-step flex flex-col items-center gap-4 py-4 text-center" data-testid="step-error">
@@ -29,7 +30,7 @@ export function StepError(): JSX.Element {
       {showBotWallNotice || showCookiesAlert ? (
         <div className="w-full max-w-md text-start flex flex-col gap-2">
           {showBotWallNotice ? <BotWallNotice forceShow /> : null}
-          {showCookiesAlert ? <CookiesErrorAlert /> : null}
+          {showCookiesAlert ? <CookiesErrorAlert forceShowCookiesOff={errorSuggestsCookies} /> : null}
         </div>
       ) : null}
       <div className="flex gap-2">

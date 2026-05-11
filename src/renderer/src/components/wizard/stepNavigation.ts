@@ -1,7 +1,8 @@
-import type { PlaylistPreset, Preset } from '@shared/types';
-import { playlistPresetSpec } from '@shared/playlistPresets';
-import { presetProducesMedia, presetProducesVideo } from '@shared/presetTraits';
-import type { WizardMode, WizardStep } from '../../store/types';
+import type { PlaylistPreset, Preset } from '@shared/types.js';
+import { playlistPresetSpec } from '@shared/playlistPresets.js';
+import { presetProducesMedia, presetProducesVideo } from '@shared/presetTraits.js';
+import { isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
+import type { WizardMode, WizardStep } from '../../store/types.js';
 
 export type VisibleStep = Exclude<WizardStep, 'error'>;
 
@@ -9,6 +10,13 @@ export interface StepContext {
   activePreset: Preset | null;
   wizardMode: WizardMode;
   selectedPlaylistPreset: PlaylistPreset | null;
+  // yt-dlp extractor for the URL the user submitted. Empty pre-probe.
+  // SponsorBlock step is YouTube-only — non-YT extractors hide the step.
+  wizardExtractor: string;
+  // True when the probe surfaced at least one subtitle or auto-caption track.
+  // Sites whose extractor doesn't publish subs (PornHub, Rumble embeds, many
+  // small hosts) get the wizard's subtitles step hidden entirely.
+  hasSubtitles: boolean;
 }
 
 // Per-step applicable predicates. Single source of truth — used by both the
@@ -20,9 +28,19 @@ export const STEP_APPLICABLE: Record<VisibleStep, (ctx: StepContext) => boolean>
   playlistItems: ({ wizardMode }) => wizardMode === 'playlist',
   playlistPresets: ({ wizardMode }) => wizardMode === 'playlist',
   formats: ({ wizardMode }) => wizardMode !== 'playlist',
-  // Playlist-mode skips subtitles once a preset is locked in.
-  subtitles: ({ wizardMode, selectedPlaylistPreset }) => !(wizardMode === 'playlist' && !!selectedPlaylistPreset),
-  sponsorblock: ({ wizardMode, selectedPlaylistPreset, activePreset }) => {
+  // Playlist-mode skips subtitles once a preset is locked in. Single-mode
+  // skips when the probe returned no subtitle tracks (no manual + no
+  // auto-captions).
+  subtitles: ({ wizardMode, selectedPlaylistPreset, hasSubtitles }) => {
+    if (wizardMode === 'playlist' && !!selectedPlaylistPreset) return false;
+    if (wizardMode !== 'playlist' && !hasSubtitles) return false;
+    return true;
+  },
+  sponsorblock: ({ wizardMode, selectedPlaylistPreset, activePreset, wizardExtractor }) => {
+    // SponsorBlock relies on YouTube's chapter timestamps + the SponsorBlock
+    // crowdsourced segment database keyed by YouTube video IDs. Non-YT URLs
+    // get nothing useful — hide the step entirely.
+    if (!isYouTubeExtractor(wizardExtractor)) return false;
     if (wizardMode === 'playlist' && selectedPlaylistPreset) return playlistPresetSpec(selectedPlaylistPreset).producesVideo;
     if (activePreset && !presetProducesVideo(activePreset)) return false;
     return true;

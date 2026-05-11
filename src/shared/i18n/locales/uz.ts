@@ -3,8 +3,7 @@ const uz = {
     back: 'Orqaga',
     continue: 'Davom etish',
     retry: 'Qayta urinish',
-    startOver: 'Qaytadan boshlash',
-    loading: 'Yuklanmoqda…'
+    startOver: 'Qaytadan boshlash'
   },
   app: {
     feedback: 'Fikr-mulohaza',
@@ -14,6 +13,15 @@ const uz = {
     debugCopyTitle: "Debug ma'lumotlarini nusxalash (Electron, OS, Chrome versiyalari)",
     zoomIn: 'Kattalashtirish',
     zoomOut: 'Kichraytirish'
+  },
+  about: {
+    button: 'Dastur haqida',
+    openTitle: 'Arroxy haqida',
+    tagline: 'Ish stoli uchun tez va qulay video va audio yuklash dasturi.',
+    websiteLink: 'Veb-sayt',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT litsenziyasi · by Antonio Orionus',
+    thirdPartyNotices: "Uchinchi tomon bildirishnomalarini ko'rish"
   },
   titleBar: {
     close: 'Yopish',
@@ -25,7 +33,6 @@ const uz = {
     greeting: 'Xush kelibsiz, qayta keldingiz!',
     warmup: 'Arroxy ishga tayyorlanmoqda…',
     downloading: '{{binary}} yuklanmoqda…',
-    warning: "Sozlash yakunlanmagan — ba'zi funksiyalar ishlamasligi mumkin",
     warmupFailedNoDiag: 'Sozlash muvaffaqiyatsiz yakunlandi. Tafsilotlar uchun sozlash jurnalini oching.'
   },
   repair: {
@@ -81,6 +88,8 @@ const uz = {
       heading: 'Playlist elementlari',
       itemCount_one: '{{count}} ta video',
       itemCount_other: '{{count}} ta video',
+      itemCountAudio_one: '{{count}} ta trek',
+      itemCountAudio_other: '{{count}} ta trek',
       selectAll: 'Hammasini tanlash',
       selectNone: 'Hammasini bekor qilish',
       rangeFrom: 'Dan',
@@ -91,15 +100,13 @@ const uz = {
       noSelection: 'Davom etish uchun kamida bitta videoni tanlang',
       loadingItems: 'Playlist yuklanmoqda…',
       thumbnailAlt: 'Video muqovasi',
-      continue: 'Davom etish',
       durationUnknown: 'jonli'
     },
     playlistPresets: {
       heading: 'Paket uchun sifatni tanlang',
       subhead: 'Har bir video tanlangan darajani mustaqil ravishda hal qiladi — turli xil playlistlar muammosiz ishlaydi.',
       itemCount_one: '{{count}} ta element',
-      itemCount_other: '{{count}} ta element',
-      continue: 'Davom etish'
+      itemCount_other: '{{count}} ta element'
     },
     mixedPrompt: {
       title: 'Bu havola Playlist ga tegishli',
@@ -114,17 +121,25 @@ const uz = {
       fetchFormats: 'Formatlarni olish',
       features: {
         heading: 'Arroxy nima yuklab olishi mumkin',
-        video: {
-          title: 'Videolar',
-          desc: '4K gacha istalgan sifatni tanlang'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Videolar',
+          channel: 'Kanallar',
+          playlist: 'Pleylistlar',
+          short: 'Shortlar',
+          music: 'Musiqa',
+          podcast: 'Podkastlar'
         },
-        playlist: {
-          title: 'Pleylistlar',
-          desc: 'Pleylistdan bir nechta elementni tanlang'
+        anySite: {
+          heading: '2000+ sayt',
+          video: 'Videolar',
+          videoPlaylist: 'Video pleylistlar',
+          musicPlaylist: 'Musiqa pleylistlar'
         },
-        audio: {
-          title: 'Audio',
-          desc: 'Asl oqim yoki MP3/M4A konvertatsiya'
+        always: {
+          heading: 'Har doim mavjud',
+          audioOnly: 'Faqat audio',
+          subtitles: 'Subtitrlar'
         }
       },
       mascotIdle: 'Menga YouTube havolasini yuboring (video yoki Short) — keyin "Formatlarni olish" tugmasini bosing, ishga tushaman ✨',
@@ -162,7 +177,7 @@ const uz = {
         enabledButNoBrowser: 'Cookiesdan foydalanish uchun brauzer tanlang',
         banWarning: "YouTube — va ba'zida — yt-dlp cookieslaridan foydalanadigan hisoblarni belgilashi yoki taqiqlashi mumkin. Iloji bo'lsa vaqtinchalik hisob ishlating.",
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt ni LOKAL olish (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const uz = {
       }
     },
     subtitles: {
-      heading: 'Subtitrlar',
       autoBadge: 'Avto',
-      hint: 'Yordamchi fayllar videoning yoniga saqlanadi',
       noLanguages: 'Bu video uchun subtitrlar mavjud emas',
       skip: "O'tkazib yuborish",
       skipSubs: "Bu video uchun o'tkazib yuborish",
-      selectAll: 'Hammasini tanlash',
-      deselectAll: 'Hammasini bekor qilish',
       mascot: "Nol, bir yoki ko'p tanlang — bu sizga bog'liq ✨",
       searchPlaceholder: 'Tillarni qidirish…',
       noMatches: 'Mos til topilmadi',
@@ -238,14 +249,18 @@ const uz = {
       audio: 'Audio',
       noAudio: "Audio yo'q",
       videoOnly: 'Faqat video',
+      keepAudio: "O'zgartirishsiz saqlash",
+      keepAudioMeta: 'Ichki audio',
       audioOnly: 'Faqat audio',
       audioOnlyOption: "Faqat audio (video yo'q)",
       mascot: 'Eng yaxshi + Eng yaxshi = maksimal sifat. Men shuni tanlardim!',
       sniffing: 'Siz uchun eng yaxshi formatlarni qidiryapman…',
-      loadingHint: 'Odatda bir soniya vaqt oladi',
+      loadingHint: 'Tekshiruv tugaguncha kuting — pleylistlar va qidiruv natijalari biroz vaqt olishi mumkin.',
       loadingAria: 'Formatlar yuklanmoqda',
       sizeUnknown: "Hajm noma'lum",
       total: 'Jami',
+      skipToConfirm: "Tasdiqlashga o'tish",
+      skipToConfirmTooltip: "Qolgan barcha qadamlar uchun saqlangan sozlamalaringizdan foydalanadi. Biror sozlamani o'zgartirish uchun, qadamma-qadam davom eting — tanlovingiz keyingi safar saqlanadi.",
       convert: {
         label: 'Konvertatsiya qilish',
         uncompressed: 'Konvertatsiya · siqilmagan',
@@ -261,8 +276,7 @@ const uz = {
         bodyDisabled: "Cookies sozlangan, lekin o'chirilgan. To'liq ro'yxat uchun ularni yoqing va qayta urinib ko'ring, yoki tarmoqni o'zgartirin.",
         bodyEnabled: "Cookies bilan ham YouTube bu tekshiruvni chekladi. Keyinroq urinib ko'ring yoki tarmoqni o'zgartiring.",
         retryCta: 'Qayta urinish',
-        enableRetryCta: 'Cookiesni yoqish va qayta urinish',
-        openSettingsCta: 'Kengaytirilgan sozlamalarni ochish'
+        enableRetryCta: 'Cookiesni yoqish va qayta urinish'
       },
       cookiesError: {
         heading: "Sabab cookies bo'lishi mumkin",
@@ -272,6 +286,10 @@ const uz = {
         explanationFile: "Cookies faylingiz bo'sh, muddati o'tgan yoki noto'g'ri formatda bo'lishi mumkin (yt-dlp Netscape cookies.txt kutadi). Cookiesni qayta eksport qiling, boshqa fayl tanlang, Brauzer rejimiga o'ting yoki cookiesni o'chiring.",
         explanationBrowser: "Cookies to'g'ridan-to'g'ri brauzerdan o'qiladi. Agar brauzer hozir ochiq bo'lsa, uning cookie ma'lumotlar bazasi qulflangan bo'lishi mumkin (Chromium-family). Brauzer YouTube ga kirgan bo'lishi ham kerak. Brauzerni yoping, boshqa brauzer sinab ko'ring, Fayl rejimiga o'ting yoki cookiesni o'chiring.",
         openSettingsCta: 'Cookies sozlamalarini ochish',
+        needsCookies: {
+          heading: 'Bu sayt tizimga kirish talab qiladi',
+          body: "yt-dlp bu videoga autentifikatsiyasiz kira olmadi. Kengaytirilgan sozlamalarda cookiesni sozlang — allaqachon kirgan brauzeringizga yo'naltiring yoki cookies.txt faylini import qiling."
+        },
         dpapi: {
           heading: 'Chrome cookies Windows shifrlash orqali bloklangan',
           explanation: "Chrome 127 va undan yangi versiyalar cookies ni Windows da boshqa ilovalar o'qiy olmaydigan tarzda shifrlaydi. Quyidagi yechimlardan birini sinab ko'ring.",
@@ -334,26 +352,24 @@ const uz = {
       labelSize: 'Hajm',
       sizeUnknown: "Noma'lum",
       nothingToDownload: 'Faqat subtitrlar oldindan sozlamasi faol, lekin hech qanday subtitrl tili tanlanmagan — hech narsa yuklanmaydi.',
+      thumbnailEmbedNotSupported: "Thumbnail embed o'tkazib yuborildi — chiqish container uni qo'llab-quvvatlamaydi.",
+      subtitleEmbedAudioOnly: "Subtitle embed sidecar ga o'zgartirildi — audio treklari ichki subtitle oqimlarini qo'llab-quvvatlamaydi.",
       audioOnly: 'Faqat audio',
       addToQueue: '+ Queue',
       addToQueueTooltip: "Boshqa yuklamalar tugaganda boshlanadi — to'liq tarmoq kengligini oladi",
-      pullIt: 'Pull it! ↓',
+      pullIt: 'Yuklab ol! ↓',
       pullItTooltip: 'Darhol boshlanadi — boshqa faol yuklamalar bilan parallel ishlaydi',
-      playlistBatch_one: '{{count}} ta video · {{title}}',
-      playlistBatch_other: '{{count}} ta video · {{title}}',
       labelPlaylist: 'Pleylist',
       labelPreset: 'Sozlama',
       labelItems: 'Elementlar',
       itemsValue_one: '{{total}} ta videoning {{count}} tasi',
-      itemsValue_other: '{{total}} ta videoning {{count}} tasi'
-    },
-    error: {
-      icon: 'Xato'
+      itemsValue_other: '{{total}} ta videoning {{count}} tasi',
+      itemsValueAudio_one: '{{total}} ta trekning {{count}} tasi',
+      itemsValueAudio_other: '{{total}} ta trekning {{count}} tasi'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Yuklanmoqda…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Yuklanmoqda…'
   },
   queue: {
     header: 'Yuklash navbati',
@@ -378,9 +394,7 @@ const uz = {
       resume: 'Davom ettirish',
       cancel: 'Bekor qilish',
       remove: "O'chirish"
-    },
-    interJobSleep_one: 'Keyingi yuklama {{count}} soniyada boshlanadi',
-    interJobSleep_other: 'Keyingi yuklama {{count}} soniyada boshlanadi'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const uz = {
     ytdlpProcessError: 'yt-dlp jarayon xatosi: {{error}}',
     ytdlpExitCode: 'yt-dlp {{code}} kodi bilan chiqdi',
     downloadingBinary: '{{name}} ikkilik fayli yuklanmoqda…',
-    unknownStartupFailure: "Noma'lum yuklama ishga tushirish xatosi"
+    unknownStartupFailure: "Noma'lum yuklama ishga tushirish xatosi",
+    diskSpaceInsufficient: 'Disk xotirasi yetarli emas — {{required}} kerak, faqat {{free}} mavjud'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const uz = {
       unavailable: "Bu video mavjud emas — u shaxsiy, o'chirilgan yoki mintaqa bilan cheklangan bo'lishi mumkin.",
       geoBlocked: 'Bu video sizning mintaqangizda mavjud emas.',
       outOfDiskSpace: "Disk xotirasi yetarli emas. Bo'sh joy ajrating va qayta urinib ko'ring.",
-      unsupportedUrl: "Bu video URL manzilga o'xshamaydi. YouTube video, Short yoki pleylist havolasini joylashtiring."
+      unsupportedUrl: "Bu video URL manzilga o'xshamaydi. YouTube video, Short yoki pleylist havolasini joylashtiring.",
+      chunkTransferFailure: "Server yuklab olishni o'rtasida uzib qo'ydi va yt-dlp qayta urinishlardan so'ng voz kechdi. Bu odatda eng katta video formatlarida (4K HDR / yuqori bitreytli VP9) uchraydi. Qayta urining, tarmoq/VPN almashtiring yoki pastroq ruxsat formatini tanlang.",
+      postprocessFailure: "yt-dlp yuklab olishni tugatdi, biroq keyingi qayta ishlash (birlashtirish / mux / o'girish) muvaffaqiyatsiz tugadi. Ko'pincha bu ffmpeg ning vaqtinchalik muammosi — qayta urining, agar davom etsa, boshqa format kombinatsiyasini sinab ko'ring.",
+      parse: "Saytdan kelgan javobni tahlil qilib bo'lmadi. yt-dlp ekstraktori eskirib qolgan bo'lishi mumkin. Arroxy ishga tushganda yt-dlp ni avtomatik yangilaydi — bir necha daqiqadan so'ng tuzatish kelgach qayta urinib ko'ring.",
+      network: 'Tarmoq xatosi. Aloqangizni tekshiring va qayta urining.',
+      unknown: "Yuklab olish muvaffaqiyatsiz tugadi. Quyidagi xom natijani ko'ring."
     }
   },
   presets: {
@@ -463,9 +483,8 @@ const uz = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps ga konvertatsiya qilish' }
   },
   formatLabel: {
-    audioOnly: 'Faqat audio',
     audioFallback: 'Audio',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'Faqat audio · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -498,6 +517,24 @@ const uz = {
       detail: 'Renderlovchi jarayon ishdan chiqdi ({{reason}}). Qayta urinish uchun yangilang.',
       reload: 'Yangilash',
       quit: 'Chiqish'
+    }
+  },
+  share: {
+    title: 'Arroxy ni ulashing',
+    description: "Arroxy bepul va ochiq manbali. Ulashish ko'proq odamlar uni topishiga yordam beradi.",
+    copyLink: 'Havolani nusxalash',
+    copied: 'Nusxalandi!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Arroxy ulashish',
+    footerLabel: 'Ulashish',
+    shareAction: 'Arroxy ulashish',
+    inlineCard: {
+      body: "Arroxy yoqdimi? Uni foydali deb topishi mumkin bo'lgan biri bilan ulashing.",
+      dismiss: 'Ulashish taklifini yopish'
+    },
+    highValueBanner: {
+      body: 'Arroxy yoqdimi? Boshqalarga uni topishga yordam bering.',
+      dismiss: 'Ulashish taklifini yopish'
     }
   }
 } as const;

@@ -1,14 +1,14 @@
 import { useState, useMemo, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
-import { RadioOption } from '../ui/radio-option';
-import { Switch } from '../ui/switch';
-import { Input } from '../ui/input';
-import { formatHomeRelativePath } from '@renderer/lib/utils';
-import { isValidSubfolder } from '@renderer/lib/path';
-import { VideoSummaryCard } from '../shared/VideoSummaryCard';
+import { useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { Separator } from '../ui/separator.js';
+import { RadioOption } from '../ui/radio-option.js';
+import { Switch } from '../ui/switch.js';
+import { Input } from '../ui/input.js';
+import { formatHomeRelativePath } from '@renderer/lib/utils.js';
+import { isValidSubfolder } from '@renderer/lib/path.js';
+import { VideoSummaryCard } from '../shared/VideoSummaryCard.js';
 
 interface Location {
   id: string;
@@ -24,7 +24,7 @@ function matchLocation(dir: string, locations: Location[]): string {
 
 export function StepFolderConfirm(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardOutputDir, wizardThumbnail, wizardTitle, wizardDuration, commonPaths, advance, back, setWizardOutputDir, wizardSubfolderEnabled, wizardSubfolderName, setWizardSubfolderEnabled, setWizardSubfolderName } = useAppStore();
+  const { wizardOutputDir, wizardThumbnail, wizardTitle, wizardDuration, wizardWebpageUrl, commonPaths, advance, back, setWizardOutputDir, wizardSubfolderEnabled, wizardSubfolderName, setWizardSubfolderEnabled, setWizardSubfolderName } = useAppStore();
 
   const { presets, custom, locations } = useMemo(() => {
     const presets: Location[] = (
@@ -120,7 +120,7 @@ export function StepFolderConfirm(): JSX.Element {
 
   return (
     <div className="wizard-step flex flex-col gap-4" data-testid="step-folder">
-      <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} />
+      <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} webpageUrl={wizardWebpageUrl} />
 
       <div className="flex flex-col gap-1.5">
         <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-subtle)]">{t('wizard.folder.heading')}</p>

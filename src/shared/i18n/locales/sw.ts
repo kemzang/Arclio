@@ -3,8 +3,7 @@ const sw = {
     back: 'Rudi',
     continue: 'Endelea',
     retry: 'Jaribu tena',
-    startOver: 'Anza upya',
-    loading: 'Inapakia…'
+    startOver: 'Anza upya'
   },
   app: {
     feedback: 'Maoni',
@@ -14,6 +13,15 @@ const sw = {
     debugCopyTitle: 'Nakili maelezo ya utatuzi (matoleo ya Electron, OS, Chrome)',
     zoomIn: 'Kuza',
     zoomOut: 'Punguza'
+  },
+  about: {
+    button: 'Kuhusu',
+    openTitle: 'Kuhusu Arroxy',
+    tagline: 'Kipakuzi cha video na sauti cha haraka na rahisi kwa kompyuta.',
+    websiteLink: 'Tovuti',
+    githubLink: 'GitHub',
+    licenseLine: 'Leseni ya MIT · na Antonio Orionus',
+    thirdPartyNotices: 'Tazama notisi za wengine'
   },
   titleBar: {
     close: 'Funga',
@@ -25,7 +33,6 @@ const sw = {
     greeting: 'Hujambo, karibu tena!',
     warmup: 'Arroxy inajipanga…',
     downloading: 'Inapakua {{binary}}…',
-    warning: 'Usanidi haukukamilika — baadhi ya vipengele vinaweza visifanye kazi',
     warmupFailedNoDiag: 'Usanidi umeshindwa. Fungua kumbukumbu ya usanidi kwa maelezo zaidi.'
   },
   repair: {
@@ -81,6 +88,8 @@ const sw = {
       heading: 'Vipande vya Playlist',
       itemCount_one: '{{count}} video',
       itemCount_other: '{{count}} video',
+      itemCountAudio_one: '{{count}} wimbo',
+      itemCountAudio_other: '{{count}} nyimbo',
       selectAll: 'Chagua yote',
       selectNone: 'Futa uchaguzi wote',
       rangeFrom: 'Kutoka',
@@ -91,15 +100,13 @@ const sw = {
       noSelection: 'Chagua angalau video moja ili kuendelea',
       loadingItems: 'Inapata Playlist…',
       thumbnailAlt: 'Picha ndogo ya video',
-      continue: 'Endelea',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Chagua ubora wa kundi',
       subhead: 'Kila video inatatua kiwango kilichochaguliwa kwa kujitegemea — playlists tofauti hufanya kazi bila mshangao.',
       itemCount_one: '{{count}} kipande',
-      itemCount_other: '{{count}} vipande',
-      continue: 'Endelea'
+      itemCount_other: '{{count}} vipande'
     },
     mixedPrompt: {
       title: 'Kiungo hiki kina Playlist',
@@ -113,17 +120,25 @@ const sw = {
       fetchFormats: 'Pata maumbo',
       features: {
         heading: 'Arroxy inaweza kupakua nini',
-        video: {
-          title: 'Video',
-          desc: 'Chagua azimio lolote hadi 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Video',
+          channel: 'Vituo',
+          playlist: 'Playlists',
+          short: 'Shorts',
+          music: 'Muziki',
+          podcast: 'Podcasts'
         },
-        playlist: {
-          title: 'Playlists',
-          desc: 'Chagua vipande vingi kutoka playlist'
+        anySite: {
+          heading: 'Tovuti 2000+',
+          video: 'Video',
+          videoPlaylist: 'Playlists za video',
+          musicPlaylist: 'Playlists za muziki'
         },
-        audio: {
-          title: 'Sauti',
-          desc: 'Mkondo wa asili au badilisha MP3/M4A'
+        always: {
+          heading: 'Daima inapatikana',
+          audioOnly: 'Sauti peke yake',
+          subtitles: 'Manukuu'
         }
       },
       mascotIdle: 'Nipe kiungo cha YouTube (video au Short) — kisha bonyeza "Pata maumbo" nami nitaanza kazi ✨',
@@ -161,7 +176,7 @@ const sw = {
         enabledButNoBrowser: 'Chagua kivinjari kutumia vidakuzi',
         banWarning: 'YouTube inaweza kufunga — na wakati mwingine kupiga marufuku — akaunti ambazo vidakuzi vyake vinatumiwa na yt-dlp. Tumia akaunti ya majaribio iwezekanavyo.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'Pata cookies.txt NDANI YA KOMPYUTA (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -179,14 +194,10 @@ const sw = {
       }
     },
     subtitles: {
-      heading: 'Manukuu',
       autoBadge: 'Otomatiki',
-      hint: 'Faili za sidecar zitahifadhiwa karibu na video',
       noLanguages: 'Hakuna manukuu yanayopatikana kwa video hii',
       skip: 'Ruka',
       skipSubs: 'Ruka kwa video hii',
-      selectAll: 'Chagua yote',
-      deselectAll: 'Futa uchaguzi wote',
       mascot: 'Chagua sufuri, moja, au mengi — inategemea wewe kabisa ✨',
       searchPlaceholder: 'Tafuta lugha…',
       noMatches: 'Hakuna lugha zinazolingana',
@@ -237,14 +248,18 @@ const sw = {
       audio: 'Sauti',
       noAudio: 'Hakuna sauti',
       videoOnly: 'Video peke yake',
+      keepAudio: 'Acha kama ilivyo',
+      keepAudioMeta: 'Sauti iliyojengwa ndani',
       audioOnly: 'Sauti peke yake',
       audioOnlyOption: 'Sauti peke yake (bila video)',
       mascot: 'Bora + Bora = ubora wa juu zaidi. Ningechagua hivyo!',
       sniffing: 'Natafuta maumbo bora kwako…',
-      loadingHint: 'Kawaida huchukua sekunde moja',
+      loadingHint: 'Tafadhali subiri hadi uchunguzi ukamilike — orodha za kuimba na utafutaji vinaweza kuchukua muda.',
       loadingAria: 'Inapakia maumbo',
       sizeUnknown: 'Ukubwa haujulikani',
       total: 'Jumla',
+      skipToConfirm: 'Ruka hadi uthibitisho',
+      skipToConfirmTooltip: 'Inatumia mapendeleo yako yaliyohifadhiwa kwa hatua zote zilizobaki. Ili kubadilisha mipangilio, endelea hatua kwa hatua badala yake — chaguo lako litahifadhiwa kwa wakati ujao.',
       convert: {
         label: 'Badilisha',
         uncompressed: 'Badilisha · isiyoshinikizwa',
@@ -260,8 +275,7 @@ const sw = {
         bodyDisabled: 'Vidakuzi vimesanidiwa lakini vimezimwa. Viwashe na ujaribu tena kupata orodha kamili, au badilisha mtandao na ujaribu tena.',
         bodyEnabled: 'Hata na vidakuzi, YouTube ilipunguza uchunguzi huu. Jaribu tena baadaye au badilisha mtandao.',
         retryCta: 'Jaribu tena',
-        enableRetryCta: 'Washa vidakuzi na ujaribu tena',
-        openSettingsCta: 'Fungua mipangilio ya hali ya juu'
+        enableRetryCta: 'Washa vidakuzi na ujaribu tena'
       },
       cookiesError: {
         heading: 'Vidakuzi vinaweza kuwa sababu',
@@ -271,6 +285,10 @@ const sw = {
         explanationFile: 'Faili yako ya vidakuzi inaweza kuwa tupu, imeisha muda wake, au iko katika umbizo lisilo sahihi (yt-dlp inategemea Netscape cookies.txt). Jaribu kusafirisha vidakuzi tena, chagua faili tofauti, ubadilishe hadi hali ya Kivinjari, au uzime vidakuzi.',
         explanationBrowser: 'Vidakuzi vinasomwa moja kwa moja kutoka kwenye kivinjari. Ikiwa kivinjari kinaendesha sasa hivi, hifadhidata yake ya vidakuzi inaweza kufungwa (familia ya Chromium). Kivinjari pia lazima kiingie katika YouTube. Jaribu kufunga kivinjari, ubadilishe hadi kivinjari tofauti, ubadilishe hadi hali ya Faili, au uzime vidakuzi.',
         openSettingsCta: 'Fungua mipangilio ya vidakuzi',
+        needsCookies: {
+          heading: 'Tovuti hii inahitaji kuingia',
+          body: 'yt-dlp haikuweza kufikia video hii bila uthibitisho. Sanidi vidakuzi katika mipangilio ya hali ya juu — ielekeza kwenye kivinjari unachoingia tayari, au ingiza faili ya cookies.txt.'
+        },
         dpapi: {
           heading: 'Vidakuzi vya Chrome vimezuiwa na usimbaji fiche wa Windows',
           explanation: 'Chrome 127 na toleo jipya zaidi husimba fiche vidakuzi kwa njia ambayo programu nyingine haziwezi kusoma kwenye Windows. Jaribu moja ya masuluhisho yaliyo hapa chini.',
@@ -333,26 +351,24 @@ const sw = {
       labelSize: 'Ukubwa',
       sizeUnknown: 'Haijulikani',
       nothingToDownload: 'Mpangilio wa manukuu peke yake umewashwa lakini hakuna lugha ya manukuu iliyochaguliwa — hakuna kitakachopakiwa.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed imerukwa — container ya matokeo hauitumii.',
+      subtitleEmbedAudioOnly: 'Subtitle embed imebadilishwa kuwa sidecar — nyimbo za sauti hazitumii mtiririko wa manukuu uliowekwa ndani.',
       audioOnly: 'Sauti peke yake',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Inaanza vipakuzi vingine vikishamaliza — inapata upanuzi kamili',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'Pakua sasa! ↓',
       pullItTooltip: 'Inaanza mara moja — inafanya kazi pamoja na vipakuzi vingine vinavyofanya kazi',
-      playlistBatch_one: '{{count}} video · {{title}}',
-      playlistBatch_other: '{{count}} video · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Mpangilio',
       labelItems: 'Vipande',
       itemsValue_one: '{{count}} kati ya {{total}} video',
-      itemsValue_other: '{{count}} kati ya {{total}} video'
-    },
-    error: {
-      icon: 'Hitilafu'
+      itemsValue_other: '{{count}} kati ya {{total}} video',
+      itemsValueAudio_one: '{{count}} kati ya {{total}} wimbo',
+      itemsValueAudio_other: '{{count}} kati ya {{total}} nyimbo'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Inapakia…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Inapakia…'
   },
   queue: {
     header: 'Foleni ya Kupakua',
@@ -377,9 +393,7 @@ const sw = {
       resume: 'Endelea',
       cancel: 'Ghairi',
       remove: 'Ondoa'
-    },
-    interJobSleep_one: 'Upakuaji unaofuata unaanza baada ya sekunde {{count}}',
-    interJobSleep_other: 'Upakuaji unaofuata unaanza baada ya sekunde {{count}}'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -414,7 +428,8 @@ const sw = {
     ytdlpProcessError: 'Hitilafu ya mchakato wa yt-dlp: {{error}}',
     ytdlpExitCode: 'yt-dlp ilitoka na msimbo {{code}}',
     downloadingBinary: 'Inapakua binary ya {{name}}…',
-    unknownStartupFailure: 'Kushindwa kwa kuanzisha pasijulikane'
+    unknownStartupFailure: 'Kushindwa kwa kuanzisha pasijulikane',
+    diskSpaceInsufficient: 'Nafasi ya diski haitoshi — inahitajika {{required}}, {{free}} tu inapatikana'
   },
   errors: {
     ytdlp: {
@@ -425,7 +440,12 @@ const sw = {
       unavailable: 'Video hii haipatikani — inaweza kuwa ya kibinafsi, imefutwa, au imezuiwa kwa mkoa.',
       geoBlocked: 'Video hii haipatikani katika eneo lako.',
       outOfDiskSpace: 'Nafasi ya diski haitoshi. Futa nafasi na ujaribu tena.',
-      unsupportedUrl: 'Hii haionekani kama URL ya video. Bandika kiungo cha video ya YouTube, Short, au playlist.'
+      unsupportedUrl: 'Hii haionekani kama URL ya video. Bandika kiungo cha video ya YouTube, Short, au playlist.',
+      chunkTransferFailure: 'Seva ilikatiza upakuaji mara kwa mara na yt-dlp ilikata tamaa baada ya kujaribu tena. Hii hutokea zaidi kwa muundo mkubwa wa video (4K HDR / VP9 ya bitrate ya juu). Jaribu tena, badilisha mtandao/VPN, au chagua muundo wa ubora wa chini.',
+      postprocessFailure: 'yt-dlp ilimaliza kupakua lakini uchakataji wa baadaye (kuunganisha / mux / kubadilisha) ulishindwa. Mara nyingi hili ni tatizo la muda la ffmpeg — jaribu tena, na ikiendelea, jaribu mchanganyiko tofauti wa muundo.',
+      parse: 'Haikuwezekana kuchanganua jibu kutoka tovuti. Kichanganuzi cha yt-dlp kinaweza kuwa kimepitwa na wakati. Arroxy huboresha yt-dlp kiotomatiki wakati wa uzinduzi — jaribu tena baada ya dakika chache marekebisho yatakapowasili.',
+      network: 'Hitilafu ya mtandao. Angalia muunganisho wako na ujaribu tena.',
+      unknown: 'Upakuaji umeshindwa. Tazama matokeo ghafi hapa chini.'
     }
   },
   presets: {
@@ -462,9 +482,8 @@ const sw = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Badilisha kuwa MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Sauti peke yake',
     audioFallback: 'Sauti',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'Sauti peke yake · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -497,6 +516,24 @@ const sw = {
       detail: 'Mchakato wa uonyeshaji umeanguka ({{reason}}). Pakia upya ujaribu tena.',
       reload: 'Pakia upya',
       quit: 'Toka'
+    }
+  },
+  share: {
+    title: 'Shiriki Arroxy',
+    description: 'Arroxy ni ya bure na chanzo wazi. Kushiriki husaidia watu wengi zaidi kuigundua.',
+    copyLink: 'Nakili kiungo',
+    copied: 'Imenakiliwa!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Shiriki Arroxy',
+    footerLabel: 'Shiriki',
+    shareAction: 'Shiriki Arroxy',
+    inlineCard: {
+      body: 'Unafurahia Arroxy? Shiriki na mtu anayeweza kuifaidika.',
+      dismiss: 'Funga pendekezo la kushiriki'
+    },
+    highValueBanner: {
+      body: 'Unafurahia Arroxy? Saidia wengine kuigundua.',
+      dismiss: 'Funga pendekezo la kushiriki'
     }
   }
 } as const;

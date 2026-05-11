@@ -1,4 +1,4 @@
-import type { Preset } from '@shared/schemas';
+import type { Preset } from '@shared/schemas.js';
 
 interface PresetTraits {
   producesVideo: boolean;

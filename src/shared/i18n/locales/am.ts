@@ -3,8 +3,7 @@ const am = {
     back: 'ተመለስ',
     continue: 'ቀጥል',
     retry: 'እንደገና ሞክር',
-    startOver: 'ከመጀመሪያ ጀምር',
-    loading: 'በመጫን ላይ…'
+    startOver: 'ከመጀመሪያ ጀምር'
   },
   app: {
     feedback: 'አስተያየት',
@@ -14,6 +13,15 @@ const am = {
     debugCopyTitle: 'የሂደት መረጃ ቅዳ (Electron፣ ስርዓተ ክወና፣ Chrome ስሪቶች)',
     zoomIn: 'አቅርብ',
     zoomOut: 'አርቅ'
+  },
+  about: {
+    button: 'ስለ',
+    openTitle: 'ስለ Arroxy',
+    tagline: 'ለዴስክቶፕ ፈጣን እና ቀላል ቪዲዮ እና ኦዲዮ አውርጅ።',
+    websiteLink: 'ድረ-ገጽ',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT ፈቃድ · በ Antonio Orionus',
+    thirdPartyNotices: 'የሦስተኛ ወገን ማስታወቂያዎችን ይመልከቱ'
   },
   titleBar: {
     close: 'ዝጋ',
@@ -25,7 +33,6 @@ const am = {
     greeting: 'እንኳን ደህና መጡ!',
     warmup: 'Arroxy እየሞቀ ነው…',
     downloading: '{{binary}} እየወረደ ነው…',
-    warning: 'ማዋቀር አልተጠናቀቀም — አንዳንድ ባህሪያት ላይሰሩ ይችላሉ',
     warmupFailedNoDiag: 'ማዋቀር አልተሳካም። ዝርዝሮችን ለማየት የማዋቀሪያ ምዝግብ ፋይሉን ይክፈቱ።'
   },
   repair: {
@@ -81,6 +88,8 @@ const am = {
       heading: 'የ Playlist ቪዲዮዎች',
       itemCount_one: '{{count}} ቪዲዮ',
       itemCount_other: '{{count}} ቪዲዮዎች',
+      itemCountAudio_one: '{{count}} ዘፈን',
+      itemCountAudio_other: '{{count}} ዘፈኖች',
       selectAll: 'ሁሉ ምረጥ',
       selectNone: 'ምንም አትምረጥ',
       rangeFrom: 'ከ',
@@ -91,15 +100,13 @@ const am = {
       noSelection: 'ለመቀጠል ቢያንስ አንድ ቪዲዮ ምረጥ',
       loadingItems: 'Playlist እየጫኑ…',
       thumbnailAlt: 'የቪዲዮ ድንክ ምስል',
-      continue: 'ቀጥል',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'ለቡድኑ ጥራት ይምረጡ',
       subhead: 'እያንዳንዱ ቪዲዮ የተመረጠውን ደረጃ ራሱን ችሎ ይፈታል — የተለያዩ playlists ያለ ችግር ይሰራሉ።',
       itemCount_one: '{{count}} ንጥል',
-      itemCount_other: '{{count}} ንጥሎች',
-      continue: 'ቀጥል'
+      itemCount_other: '{{count}} ንጥሎች'
     },
     mixedPrompt: {
       title: 'ይህ ሊንክ Playlist አለው',
@@ -114,17 +121,25 @@ const am = {
       fetchFormats: 'ቅርጸቶችን ጫን',
       features: {
         heading: 'Arroxy ምን ሊያወርድ ይችላል',
-        video: {
-          title: 'ቪዲዮዎች',
-          desc: 'እስከ 4K ማንኛውም ጥራት ምረጥ'
+        youtube: {
+          heading: 'YouTube',
+          video: 'ቪዲዮዎች',
+          channel: 'ቻናሎች',
+          playlist: 'Playlists',
+          short: 'Shorts',
+          music: 'ሙዚቃ',
+          podcast: 'Podcasts'
         },
-        playlist: {
-          title: 'Playlists',
-          desc: 'ከ playlist ብዙ ቪዲዮዎች ምረጥ'
+        anySite: {
+          heading: '2000+ ጣቢያዎች',
+          video: 'ቪዲዮዎች',
+          videoPlaylist: 'የቪዲዮ playlists',
+          musicPlaylist: 'የሙዚቃ playlists'
         },
-        audio: {
-          title: 'ድምጽ',
-          desc: 'ዋናው ዥረት ወይም MP3/M4A ቀይር'
+        always: {
+          heading: 'ሁልጊዜ ይኖራል',
+          audioOnly: 'ድምጽ ብቻ',
+          subtitles: 'ንዑስ ርዕሶች'
         }
       },
       mascotIdle: 'YouTube አገናኝ ጣል (ቪዲዮ ወይም Short) — ከዚያ "ቅርጸቶችን ጫን" ጠቅ አድርግ ✨',
@@ -162,7 +177,7 @@ const am = {
         enabledButNoBrowser: 'cookies ለመጠቀም አሳሽ ምረጥ',
         banWarning: 'YouTube cookies ያለ yt-dlp ጥቅም ላይ ሲውሉ መለያዎችን ሊያግድ ይችላል። የሚጥሉ መለያ ይጠቀሙ።',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt በቦታህ ላይ ሰበሰብ (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const am = {
       }
     },
     subtitles: {
-      heading: 'ንዑስ ርዕሶች',
       autoBadge: 'ራስ-ሰር',
-      hint: 'ሳይድካር ፋይሎች ከቪዲዮው ጎን ይቀመጣሉ',
       noLanguages: 'ለዚህ ቪዲዮ ምንም ንዑስ ርዕሶች የሉም',
       skip: 'ዝለለ',
       skipSubs: 'ለዚህ ቪዲዮ ዝለለ',
-      selectAll: 'ሁሉ ምረጥ',
-      deselectAll: 'ሁሉ ምርጫ ሰርዝ',
       mascot: 'ዜሮ፣ አንድ ወይም ብዙ ምረጥ — ፈጽሞ ለእርስዎ ✨',
       searchPlaceholder: 'ቋንቋዎችን ፈልግ…',
       noMatches: 'ምንም ቋንቋ አልተዛመደም',
@@ -242,10 +253,14 @@ const am = {
       audioOnlyOption: 'ድምጽ ብቻ (ቪዲዮ የለም)',
       mascot: 'ምርጥ + ምርጥ = ከፍተኛ ጥራት። ያንኑ ይምረጡ!',
       sniffing: 'ምርጥ ቅርጸቶችን ለእርስዎ እየፈለጉ…',
-      loadingHint: 'ብዙውን ጊዜ ሰከንድ ይወስዳል',
+      loadingHint: 'ምርምሩ እስኪጠናቀቅ ይጠብቁ — playlist ዎች እና ፍለጋዎች ጊዜ ሊወስዱ ይችላሉ።',
       loadingAria: 'ቅርጸቶችን በመጫን ላይ',
       sizeUnknown: 'መጠን አይታወቅም',
       total: 'ጠቅላላ',
+      skipToConfirm: 'ወደ ማረጋገጫ ዝለል',
+      skipToConfirmTooltip: 'ለቀሩት ሁሉም ደረጃዎች የተቀመጡ ምርጫዎችዎን ይጠቀማል። አንድ ቅንብር ለመለወጥ ደረጃ በደረጃ ቀጥሉ — ምርጫዎ ለሚቀጥለው ጊዜ ይቀመጣል።',
+      keepAudio: 'እንዳለ ቀጥል',
+      keepAudioMeta: 'ቀደም ሲል የተካተተ ድምጽ',
       convert: {
         label: 'ቀይር',
         uncompressed: 'ቀይር · ያልተጨመቀ',
@@ -261,8 +276,7 @@ const am = {
         bodyDisabled: 'Cookies ተዘጋጅቷል ነገር ግን ጠፍ ነው። ያስቡ እና እንደገና ሞክሩ፣ ወይም አውታረ መረብ ቀይሩ።',
         bodyEnabled: 'Cookies ቢኖርም YouTube ይህን ምርምር ገደበ። ቆይቶ ዳግም ሞክሩ ወይም አውታረ መረብ ቀይሩ።',
         retryCta: 'እንደገና ሞክር',
-        enableRetryCta: 'Cookies አስቻል እና እንደገና ሞክር',
-        openSettingsCta: 'ከፍተኛ ቅንብሮችን ክፈት'
+        enableRetryCta: 'Cookies አስቻል እና እንደገና ሞክር'
       },
       cookiesError: {
         heading: 'Cookies ምክንያቱ ሊሆን ይችላል',
@@ -272,6 +286,10 @@ const am = {
         explanationFile: 'የ Cookies ፋይልዎ ባዶ፣ ጊዜው ያለፈ፣ ወይም ትክክለኛ ቅርጸት ላይሆን ይችላል (yt-dlp Netscape cookies.txt ይጠቀማል)። Cookies ዳግም ወደ ውጭ ለማሳደር፣ ሌላ ፋይል ለመምረጥ፣ ወደ አሳሽ ሁነታ ለመቀየር፣ ወይም Cookies ለማጥፋት ይሞክሩ።',
         explanationBrowser: 'Cookies ቀጥታ ከአሳሹ ይነበባሉ። አሳሹ አሁን እየሰራ ከሆነ፣ የ cookie ዳታቤዝ ተቆልፎ ሊሆን ይችላል (Chromium-ቤተሰብ)። አሳሹ ወደ YouTube ገብቶ መሆን አለበት። አሳሹን ለመዝጋት፣ ወደ ሌላ አሳሽ ለመቀየር፣ ወደ ፋይል ሁነታ ለመቀየር፣ ወይም Cookies ለማጥፋት ይሞክሩ።',
         openSettingsCta: 'የ Cookies ቅንብሮችን ክፈት',
+        needsCookies: {
+          heading: 'ይህ ጣቢያ መግባትን ያስፈልጋል',
+          body: 'yt-dlp ያለ ማረጋገጫ ይህን ቪዲዮ ማግኘት አልቻለም። Cookies በከፍተኛ ቅንብሮች ያዋቅሩ — ወደ ዘለቁበት አሳሽ ያዋቅሩ ወይም cookies.txt ፋይል ያስገቡ።'
+        },
         dpapi: {
           heading: 'Chrome cookies በ Windows ምስጠራ ታግደዋል',
           explanation: 'Chrome 127 እና ከዚያ በኋላ ያሉ ስሪቶች cookies ን በ Windows ላይ ሌሎች አፕሊኬሽኖች ሊያነቡ በማይችሉ መንገድ ያመስጥሩታል። ከዚህ በታች ያሉ አንዱን መፍትሄ ይሞክሩ።',
@@ -281,7 +299,7 @@ const am = {
           fixFileBody: 'Cookies ን ከ Chrome በ browser extension ወደ ውጭ ላክ፣ ከዚያ ይህን አፕ ወደ ፋይል ሁነታ ቀይር እና የወጣውን ፋይል ምረጥ።',
           fixUnsafeLabel: 'Chrome ን App-Bound Encryption አሰናክሎ ጀምር',
           fixUnsafeBody: 'Chrome ን ለማስጀምር --disable-features=LockProfileCookieDatabase ወደ ቅርበት አክል። ማስጠንቀቂያ: ይህ ቀደም ሲል የተመሰጠሩ cookies ን ስለሚያወድም ከሁሉም ጣቢያዎች ይወጣሉ እና ዳግም መግባት ይኖርብዎታል።',
-          docsLinkLabel: 'yt-dlp docs (issue #10927)'
+          docsLinkLabel: 'yt-dlp ሰነዶች (ጉዳይ #10927)'
         }
       }
     },
@@ -334,26 +352,24 @@ const am = {
       labelSize: 'መጠን',
       sizeUnknown: 'አይታወቅም',
       nothingToDownload: 'ንዑስ ርዕስ ብቻ ቅድመ-ቅንብር ነቅቷል ነገር ግን ምንም ቋንቋ አልተመረጠም — ምንም አይዳውንሎድም።',
+      thumbnailEmbedNotSupported: 'Thumbnail embed ተዘሏል — የውፅዓት container አይደግፈውም።',
+      subtitleEmbedAudioOnly: 'Subtitle embed ወደ sidecar ተቀይሯል — የድምጽ ትራኮች ውስጣዊ subtitle ዥረቶችን አይደግፉም።',
       audioOnly: 'ድምጽ ብቻ',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'ሌሎች ዳውንሎዶች ሲጠናቀቁ ይጀምራል — ሙሉ ባንድዊድዝ ያገኛል',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'ሳቡት! ↓',
       pullItTooltip: 'ወዲያው ይጀምራል — ከሌሎች ዳውንሎዶች ጋር ይሰራል',
-      playlistBatch_one: '{{count}} ቪዲዮ · {{title}}',
-      playlistBatch_other: '{{count}} ቪዲዮዎች · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'ቅድመ-ቅንብር',
       labelItems: 'ቁጥር',
       itemsValue_one: '{{count}} ከ {{total}} ቪዲዮ',
-      itemsValue_other: '{{count}} ከ {{total}} ቪዲዮዎች'
-    },
-    error: {
-      icon: 'ስህተት'
+      itemsValue_other: '{{count}} ከ {{total}} ቪዲዮዎች',
+      itemsValueAudio_one: '{{count}} ከ {{total}} ዘፈን',
+      itemsValueAudio_other: '{{count}} ከ {{total}} ዘፈኖች'
     }
   },
   videoCard: {
-    titlePlaceholder: 'በመጫን ላይ…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'በመጫን ላይ…'
   },
   queue: {
     header: 'የዳውንሎድ ተሰላፊ',
@@ -378,9 +394,7 @@ const am = {
       resume: 'ቀጥል',
       cancel: 'ሰርዝ',
       remove: 'አስወግድ'
-    },
-    interJobSleep_one: 'ቀጣዩ ዳውንሎድ በ{{count}} ሰከንድ ይጀምራል',
-    interJobSleep_other: 'ቀጣዩ ዳውንሎድ በ{{count}} ሰከንዶች ይጀምራል'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const am = {
     ytdlpProcessError: 'yt-dlp ሂደት ስህተት: {{error}}',
     ytdlpExitCode: 'yt-dlp በኮድ {{code}} ወጥቷል',
     downloadingBinary: '{{name}} ሁለዮሽ ፋይል እያወረዱ…',
-    unknownStartupFailure: 'ያልታወቀ ዳውንሎድ መጀመሪያ ወደቀ'
+    unknownStartupFailure: 'ያልታወቀ ዳውንሎድ መጀመሪያ ወደቀ',
+    diskSpaceInsufficient: 'በቂ የዲስክ ቦታ የለም — {{required}} ያስፈልጋል፣ {{free}} ብቻ አለ'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const am = {
       unavailable: 'ይህ ቪዲዮ አይገኝም — ምናልባት የግል፣ ተሰርዟል ወይም ክልል-ተዘግቷል።',
       geoBlocked: 'ይህ ቪዲዮ በክልልዎ አይገኝም።',
       outOfDiskSpace: 'በቂ ዲስክ ቦታ የለም። ቦታ ፍቱ እና እንደገና ሞክሩ።',
-      unsupportedUrl: 'ይህ እንደ ቪዲዮ URL አይመስልም። YouTube ቪዲዮ፣ Short፣ ወይም የዝርዝር አገናኝ ለጥፍ።'
+      unsupportedUrl: 'ይህ እንደ ቪዲዮ URL አይመስልም። YouTube ቪዲዮ፣ Short፣ ወይም የዝርዝር አገናኝ ለጥፍ።',
+      chunkTransferFailure: 'አገልጋዩ ውርዱን ደጋግሞ ሲያቋርጥ yt-dlp እንደገና ከሞከረ በኋላ ሰጥቷል። ይህ ብዙ ጊዜ ትልቁን የቪዲዮ ቅርጸቶች (4K HDR / ከፍተኛ bitrate VP9) ይነካል። እንደገና ሞክሩ፣ አውታረ መረብ/VPN ይቀይሩ፣ ወይም ዝቅተኛ ጥራት ቅርጸት ይምረጡ።',
+      postprocessFailure: 'yt-dlp ማውረዱን ጨርሷል ነገር ግን ድህረ-ሂደት (merge / mux / convert) አልተሳካም። ብዙውን ጊዜ ይህ ጊዜያዊ የffmpeg ችግር ነው — እንደገና ሞክሩ፣ ችግሩ ከቀጠለ ሌላ የቅርጸት ጥምረት ሞክሩ።',
+      parse: 'ከጣቢያው የተመለሰውን ምላሽ መፈታት አልተቻለም። የyt-dlp extractor ጊዜ ያለፈበት ሊሆን ይችላል። Arroxy በሚነሳበት ጊዜ yt-dlp ን በራስ-ሰር ያዘምነዋል — እርማቱ እንደተለቀቀ በጥቂት ደቂቃዎች ውስጥ እንደገና ሞክሩ።',
+      network: 'የአውታረ መረብ ስህተት። ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።',
+      unknown: 'ማውረድ አልተሳካም። ከታች ያለውን raw output ይመልከቱ።'
     }
   },
   presets: {
@@ -463,9 +483,8 @@ const am = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'ወደ MP3 192 kbps ቀይር' }
   },
   formatLabel: {
-    audioOnly: 'ድምጽ ብቻ',
     audioFallback: 'ድምጽ',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'ድምጽ ብቻ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -498,6 +517,24 @@ const am = {
       detail: 'የተቀጣጣሪ ሂደት ተቋርጧል ({{reason}})። ለማደስ ዳግም ጫን።',
       reload: 'ዳግም ጫን',
       quit: 'ዝጋ'
+    }
+  },
+  share: {
+    title: 'Arroxy ያጋሩ',
+    description: 'Arroxy ነፃ እና ክፍት ምንጭ ነው። ማጋራት ብዙ ሰዎች እንዲያገኙት ይረዳቸዋል።',
+    copyLink: 'ሊንክ ቅዳ',
+    copied: 'ተቀድቷል!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Arroxy አጋራ',
+    footerLabel: 'አጋራ',
+    shareAction: 'Arroxy አጋራ',
+    inlineCard: {
+      body: 'Arroxy ደስ ይለዎታል? ጠቃሚ ሊሆን ከሚችልለት ሰው ጋር ያጋሩት።',
+      dismiss: 'የማጋሪያ ሀሳቡን አትኩረው'
+    },
+    highValueBanner: {
+      body: 'Arroxy ደስ ይለዎታል? ሌሎች እንዲያገኙት ይርዷቸው።',
+      dismiss: 'የማጋሪያ ሀሳቡን አትኩረው'
     }
   }
 } as const;

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-// Uses the renderer dev server (browserMock.ts stubs all Electron APIs).
+// Uses the renderer dev server in explicit browser-mock mode.
 // NUDGE_DELAY_MS is overridden via window before page load so the nudge
 // appears after 200ms instead of 45s.
 

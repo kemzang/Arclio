@@ -10,7 +10,7 @@ export default defineConfig({
     headless: true,
   },
   webServer: {
-    command: 'npx vite src/renderer --port 5173 --config src/renderer/vite.config.mjs',
+    command: 'npx vite src/renderer --port 5173 --config src/renderer/vite.config.mjs --mode browser-mock',
     url: 'http://localhost:5173',
     reuseExistingServer: true,
     timeout: 30_000,

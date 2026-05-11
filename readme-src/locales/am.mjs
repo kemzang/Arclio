@@ -71,7 +71,7 @@ bun run dist:win     # cross-compile Windows portable exe
 
 export const am = {
   icon_alt: "የ Arroxy መሸፈኛ",
-  title: "Arroxy — ነፃ ምን ኮድ ያለው YouTube አውራጅ ለ Windows, macOS እና Linux",
+  title: "Arroxy — ነፃ ምን ኮድ ያለው YouTube (+ 2000 ጣቢያ) አውራጅ ለ Windows, macOS እና Linux",
   read_in_label: "አንብብ በ:",
   badge_release_alt: "ስሪት",
   badge_build_alt: "ግንባታ",
@@ -80,7 +80,7 @@ export const am = {
   badge_i18n_alt: "ቋንቋዎች",
   badge_website_alt: "ድር ጣቢያ",
   hero_desc:
-    "ማንኛውንም YouTube ቪዲዮ፣ Short፣ ወይም የድምፅ ትራክ በዋናው ጥራት ያውርዱ — እስከ 4K HDR በ60 fps፣ ወይም MP3 / AAC / Opus። በ Windows፣ macOS፣ እና Linux ላይ አካባቢያዊ ሆኖ ይሠራል። **ምንም ማስታወቂያ፣ ምንም ግባ፣ ምንም ብሮውዘር ኩኪ፣ ምንም Google ሂሳብ አልተያያዘም።**",
+    "ቪዲዮዎች፣ Shorts፣ ሙዚቃ፣ ቻናሎች፣ ፖድካስቶች ወይም የድምፅ ትራኮች ከ**YouTube እና ከ2000+ ተደገፉ ጣቢያዎች** ያውርዱ — እስከ 4K HDR በ60 fps፣ ወይም MP3 / AAC / Opus። በ Windows፣ macOS፣ እና Linux ላይ አካባቢያዊ ሆኖ ይሠራል። **ምንም ማስታወቂያ፣ ምንም ብዝሃ ሸቀጥ፣ ምንም ተጨማሪ ሽያጭ።**",
   cta_latest: "↓ የቅርብ ጊዜ ስሪት አውርድ",
   cta_website: "ድር ጣቢያ",
   demo_alt: "የ Arroxy ማሳያ",
@@ -88,7 +88,6 @@ export const am = {
   ai_notice: "",
   toc_heading: "ዝርዝር",
   why_h2: "ለምን Arroxy",
-  nocookies_h2: "ምንም ኩኪ፣ ምንም ግባ፣ ምንም ሒሳብ ትስስር",
   features_h2: "ባህሪያት",
   dl_h2: "አውርድ",
   privacy_h2: "ግላዊነት",
@@ -105,16 +104,6 @@ export const am = {
   why_r7: "ንዑስ ርዕሶች + SponsorBlock",
   why_summary:
     "Arroxy ለአንድ ነገር ብቻ ተሠርቷል: URL ይለጥፉ፣ ንጹህ አካባቢያዊ ፋይል ያግኙ። ምንም ሒሳቦች፣ ምንም ሽያጭ፣ ምንም የዳታ ስብስብ።",
-  nocookies_intro:
-    "ይህ የዴስክቶፕ YouTube አውራጆች ብዙ ጊዜ የሚሰናከሉበት ዋና ምክንያት ነው — እናም Arroxy ለምን እንደተፈጠረ ዋና ምክንያቱ ይሄ ነው።",
-  nocookies_setup:
-    "YouTube የቦት ማወቂያ ሲያዘምን፣ አብዛኛዎቹ ሶፍትዌሮች እንደ ዙርያ አፍ ብሮውዘርዎ YouTube ኩኪዎችን ለማሳወቅ ይነግሩዎታል። ሁለት ችግሮች ከዚህ ጋር አሉ:",
-  nocookies_p1:
-    "የተላኩ ክፍለ ጊዜዎች በተለምዶ በ~30 ደቂቃ ውስጥ ያበቃሉ፣ ስለዚህ ሁልጊዜ ይልካሉ።",
-  nocookies_p2:
-    "yt-dlp ራሱ [ኩኪ ላይ የሚመሠረት አውቶሜሽን Google ሒሳብዎን ሊለይ ይችላል ሲል ያስጠነቅቃል](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)።",
-  nocookies_outro:
-    "**Arroxy ምንም ጊዜ ኩኪዎችን፣ ግቦችን ወይም ምስክርነቶችን አይጠይቅም።** YouTube ለማንኛውም ብሮውዘር የሚሰጣቸውን ህዝባዊ ቶኬኖች ብቻ ይጠቀማል። ከ Google ማንነትዎ ጋር ምንም ትስስር የለም፣ ሊቋርጥ የሚችል ምንም የለም፣ ሊቀያየር የሚችል ምንም የለም።",
   feat_quality_h3: "ጥራት እና ቅርጸቶች",
   feat_quality_1: "እስከ **4K UHD (2160p)**፣ 1440p፣ 1080p፣ 720p፣ 480p፣ 360p",
   feat_quality_2: "**ፈጣን የፍሬም ፍጥነት** እንዳለ ተጠብቆ — 60 fps፣ 120 fps፣ HDR",
@@ -127,7 +116,7 @@ export const am = {
   feat_privacy_3: "ፋይሎች ወደ መረጡት አቃፊ ቀጥታ ተቀምጠዋል",
   feat_workflow_h3: "የሥራ ፍሰት",
   feat_workflow_1:
-    "**ማንኛውንም የYouTube URL ለጥፍ** — ቪዲዮዎች፣ Shorts እና playlists ይደገፋሉ፤ playlist ሙሉውን አውርድ ወይም መጀመሪያ የተወሰኑ ቪዲዮዎችን ምረጥ",
+    "**ማንኛውንም ሊንክ ለጥፍ** — YouTube ቪዲዮዎች፣ Shorts፣ ቻናሎች፣ ፕሌይሊስቶች፣ ፖድካስቶች እና YouTube Music፣ እናም yt-dlp ከሚደግፋቸው 2000+ ሌሎች ጣቢያዎች፤ playlist ሙሉውን አውርድ ወይም መጀመሪያ የተወሰኑ ቪዲዮዎችን ምረጥ",
   feat_workflow_2:
     "**ብዙ ማውረድ ወረፋ** — ብዙ ማውረዶችን አንድ ጊዜ ይከታተሉ",
   feat_workflow_3:
@@ -147,6 +136,15 @@ export const am = {
     "**SponsorBlock** — ስፖንሰሮችን፣ ምዕራፍ ምልክቶችን፣ ወደፊት ምዕራፎችን፣ ራስ ሰር ማስታወቂያዎችን ዝለሉ ወይም ምዕራፍ ምልክት ያድርጉ",
   feat_post_4:
     "**የተካተተ ሜታዳታ** — ርዕስ፣ የሰቀሉ ቀን፣ ቻናል፣ ዝርዝር፣ አናት ስእል፣ እና ምዕራፍ ምልክቶች ወደ ፋይሉ ተጽፈዋል",
+  feat_sites_h3: "YouTube + 2000 ጣቢያዎች",
+  feat_sites_1:
+    "**YouTube ሙሉ** — ቪዲዮዎች፣ Shorts፣ ቻናሎች፣ ፕሌይሊስቶች፣ YouTube Music እና ፖድካስቶች እንደ ቀዳሚ ምንጮች ይታሰባሉ",
+  feat_sites_2:
+    "**2000+ ሌሎች ጣቢያዎች** yt-dlp አማካኝነት — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org እና ሌሎች ብዙ",
+  feat_sites_3:
+    "**ኦዲዮ ብቻ እና ጽሑፍ ርዕሶች** ሁሉም ተደጋፊ ጣቢያዎች ላይ ይሠራሉ፣ YouTube ብቻ ሳይሆን",
+  feat_sites_4:
+    "ጣቢያ ሲቀይር yt-dlp በሳምንት ውስጥ ማሻሻያዎችን ይልካሉ፣ Arroxy ደግሞ ሲጀምር binary ን ራስ-ሰር ያዘምናሉ",
   shot1_alt: "URL ይለጥፉ",
   shot2_alt: "ጥራትዎን ይምረጡ",
   shot3_alt: "የሚቀምጡበት ቦታ ይምረጡ",
@@ -211,6 +209,67 @@ export const am = {
   dl_linux_fuse_text: "አስጀምሩ አሁንም ሳይሠራ ቢቀር፣ FUSE ጎደለ ሊሆን ይችላሉ:",
   dl_linux_flatpak_intro:
     "**Flatpak (ለቅርቅብ አማራጭ):** `Arroxy-*.flatpak` ን ከተመሳሳዩ ስሪት ገጽ ያውርዱ።",
+
+  // ---- Reorganized install help (normie-first, manual-download primary) ----
+  dl_warning_h3: "ለምን ማስጠንቀቂያ ሊታዩዎ ይችላሉ",
+  dl_warning_p1:
+    "Arroxy ምን ኮድ ያለው (open-source) እና MIT ፈቃድ ያለው ነው። የ Windows እና macOS ቅጅዎቹ **ኮድ አልተፈረመባቸውም** — Apple Developer ID እና Windows EV ኮድ-ፊርማ ሰርቲፊኬቶቹ እያንዳንዳቸው በዓመት በመቶዎች ዶላር ያስወጣሉ፣ ይህ ነጻ ፕሮጀክት ከኪሳቸው ይከፍላሉ። ያነዚህ ፊርሞች ሳይኖሩ፣ Windows SmartScreen እና macOS Gatekeeper በመጀመሪያ አስጀማሪ ያስጠነቅቋቸዋል። ማስጠንቀቂያዎቹ *ሥርዓተ ክወናዎ ናሸርን አይለይም* ማለት ናቸው — Arroxy ተንኮል-አዘል ሶፍትዌር ነው ማለት አይደሉም።",
+  dl_warning_p2:
+    "Arroxy ን ራስዎ ለማረጋገጥ ሦስት መንገዶች፣ ከፍ እያለ በሚሄድ ጥብቅነት:\n\n- **ምንጩን ያንብቡ።** ሁሉም መስመሮች [GitHub](https://github.com/antonio-orionus/Arroxy) ላይ ናቸው፣ እናም [ከምንጩ ሊሠሩ](#tech) ይችላሉ።\n- **SHA256ን ያረጋግጡ።** ፋይልዎን ከታተሙት [`SHA256SUMS`](../../releases/latest) ጋር ያዛምዱ — ከዚህ በታች [ማውረዱን ያረጋግጡ](#verify) ይመልከቱ።\n- **የሦስተኛ ወገን ቅኝት ያካሂዱ።** ፋይሉን ወደ [VirusTotal](https://www.virustotal.com) ይጫኑ።",
+
+  dl_win_first_h3: "Windows ላይ ለመጀመሪያ ጊዜ አስጀምር",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" መልዕክት ሳጥን፣ "More info" ሊንክ ተጎልቶ ከሚታይ ጋር',
+  shot_smartscreen_run_alt:
+    'More info ከተከፈተ በኋላ SmartScreen መልዕክት ሳጥን፣ "Run anyway" ቁልፍ ከሚታይ ጋር',
+  dl_win_defender_h4: "Windows Defender ፋይሉን ቢሰምናቸው ወይም ቢያስወግዳቸው",
+  dl_win_defender_p:
+    "Defender ሂዩሪስቲክስ አንዳንድ ጊዜ ያልተፈረሙ NSIS ጫኞችን እና Electron ተጓዥዎችን ጥርጣሬ አዘል ብሎ ሊሰምናቸው ይችላሉ። Defender `Arroxy-Setup-*.exe` ወይም `Arroxy-Portable-*.exe` ን ካቆጠቆጠ፣ ከ **Windows Security → Virus & threat protection → Protection history** ይመልሱ፣ ከዛ Arroxy ን ሊፈጸም የሚችልን ፋይል **Manage settings → Add or remove exclusions** ስር ፈቀደ ሆኖ ያክሉ። እንደ SmartScreen ሁሉ፣ ምክንያቱ አልተገኘ ተንኮል-አዘል ሶፍትዌር ሳይሆን የጎደለ ናሸር ፊርማ ነው።",
+
+  dl_macos_first_h3: "macOS ላይ ለመጀመሪያ ጊዜ አስጀምር",
+  dl_macos_intro:
+    "Arroxy ለ macOS ኮድ ሳይፈርም ስለሆነ፣ Gatekeeper ለመጀመሪያ አስጀምሩ ያግዳሉ። እሱን ለመፍቀድ ያለው ትክክለኛ ዘዴ macOS ስሪቶ ላይ ይወሰናሉ — Sequoia 15 ቀድሞ ያለውን ቀኝ-ጠቅ → Open ማለፊያ አጥብቋቸዋሉ።",
+  dl_macos_sequoia_h4: "macOS Sequoia 15 እና ከዚህ በኋላ (ወቅታዊ)",
+  dl_macos_sequoia_intro:
+    "Sequoia 15 እና አዳዲስ ስሪቶቹ ላይ፣ ቀኝ-ጠቅ → Open ለብዙ ቆጠቡ አፖቹ Gatekeeper ን ያሳልፋቸዋሉ አልሆነም። ምትክ ሥርዓት ቅንብሮች ፓነልን ይጠቀሙ:",
+  dl_macos_sequoia_step1:
+    "ከተቀጠለው DMG ውስጥ `Arroxy.app` ን ወደ `/Applications` ጎትቱ።",
+  dl_macos_sequoia_step2:
+    "Arroxy ን ሁለቴ ጠቅ ያድርጉ። የማገጃ መልዕክት ሳጥን ይታያሉ — **Done** ጠቅ ያድርጉ (*Move to Trash* አይጫኑ)።",
+  dl_macos_sequoia_step3:
+    '**System Settings → Privacy & Security** ይክፈቱ እና ወደ **Security** ክፍሉ ያሸብልሉ። *"Arroxy was blocked to protect your Mac"* (ወይም ቅርብ ተመሳሳይ መልዕክት) ያዩሉ።',
+  dl_macos_sequoia_step4:
+    "**Open Anyway** ጠቅ ያድርጉ፣ በይለፍ ቃልዎ ወይም Touch ID ያረጋግጡ፣ ከዛ Arroxy ን ከ `/Applications` ያስጀምሩ።",
+  dl_macos_sonoma_h4: "macOS Sonoma 14 እና ከዚህ ቀደም",
+  dl_macos_sonoma_step1:
+    "ከተቀጠለው DMG ውስጥ `Arroxy.app` ን ወደ `/Applications` ጎትቱ።",
+  dl_macos_sonoma_step2:
+    "በ `/Applications` ውስጥ `Arroxy.app` ን ቀኝ-ጠቅ ያድርጉ (ወይም Control-click) እና **Open** ይምረጡ።",
+  dl_macos_sonoma_step3:
+    "የማስጠንቀቂያ መልዕክት ሳጥን አሁን **Open** ቁልፍ አለው — ጠቅ ያድርጉ እና ያረጋግጡ። Arroxy በተለምዶ ይከፈቱ እናም ማስጠንቀቂያ ሁሌ አይታዩም።",
+  dl_macos_damaged_h4:
+    '"App is damaged" ወይም ቀጣይ Gatekeeper ማገጃ — Terminal ዘዴ',
+  dl_macos_damaged_p:
+    'macOS *"Arroxy is damaged and can\'t be opened"* ቢል፣ ወይም ከላይ ያሉት ምንም ቃምሶዎች ማገጃውን ባያስወግዱ፣ DMG ላይ ያለው ቆጠቡ ባህሪ ምክንያቱ ነው (አንዳንድ ብሮውዘሮች እና macOS ራሱ የ translocation ባህሪ ያቀናጁ)። ከተጫነው አፕ ያስወግዱ:',
+  dl_macos_arch_note:
+    "**Apple Silicon vs Intel:** M-ሰሪ Mac ላይ (M1 / M2 / M3 / M4)፣ `arm64` DMG ያውርዱ። Intel Mac ላይ፣ `x64` DMG ያውርዱ። የተሳሳተ ቅጅ ማሂደት Rosetta በኩል ይሠራሉ ነገር ግን በግልጽ ዘገምተኛ ነው።",
+
+  dl_linux_first_h3: "Linux ላይ ለመጀመሪያ ጊዜ አስጀምር",
+  dl_linux_appimagelauncher:
+    "**አማራጭ የዴስክቶፕ ውህደት:** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) ን አንድ ጊዜ ጫኑ፣ ሁለቴ ጠቅ ያደርጉበት ማንኛውም AppImage በጀምር ምናሌዎ ውስጥ ራስ-ሰር ይመዘገባሉ — ምንም እጅ `.desktop` ፋይል አያስፈልጋቸውም።",
+
+  dl_verify_h3: "ማውረዱን ያረጋግጡ (SHA256)",
+  dl_verify_intro:
+    "ሁሉም ስሪቶቹ ከሁለትዮሽ ፋይሎቹ ጎን `SHA256SUMS` ፋይልን ያሳትማሉ። ማውረዱ ሳይበላሽ ወይም ሳይሻሻል እንደደረሰ ለማረጋገጥ፣ ፋይልዎን ሃሽ ያድርጉ እና `SHA256SUMS` ውስጥ ካለው መስመር ጋር ያዛምዱ። ቅርቡን ስሪት ገጽ ይክፈቱ → **Assets** → `SHA256SUMS` ያውርዱ።",
+  dl_verify_win_label: "Windows (PowerShell ወይም Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "የሦስተኛ ወገን ተንኮል-አዘል ሶፍትዌር ቅኝት ይፈልጋሉ? ፋይሉን [VirusTotal](https://www.virustotal.com) ላይ ይጫኑ። ከቀዳሚ ሞተሮቹ ጥቂት ሂዩሪስቲክ ምልክቶቹ ፊርማ ላልተደረገባቸው Electron አፖ ዘወትር ናቸው; ከዋና ሞተሮቹ ሰፊ ምልክቶቹ ሐቀኛ ጉዳይ ሊሆኑ ይችላሉ።",
+
+  dl_pm_intro:
+    "አስቀድሞ የፓኬጅ አስተዳዳሪ ይጠቀማሉ? ሰነዳዊ ማውረዱን መዝለፍ ይቻሉ።",
+
   privacy_p1:
     "ማውረዶቹ ቀጥታ በ [yt-dlp](https://github.com/yt-dlp/yt-dlp) ከ YouTube ወደ መረጡት አቃፊ ይወርዳሉ — ምንም ሦስተኛ ወገን ሰርቨር አይሆንም። የእይታ ታሪክ፣ የማውረድ ታሪክ፣ URLs፣ እና የፋይሎቹ ይዘቶች በመሳሪያዎ ላይ ይቆያሉ።",
   privacy_p2:
@@ -224,10 +283,10 @@ export const am = {
   faq_a3: "አዎ። በፎርማት ሜኑ ውስጥ *ኦዲዮ ብቻ* ምረጥ እና MP3፣ M4A/AAC፣ Opus ወይም WAV ምረጥ።",
   faq_q4: "YouTube ሒሳብ ወይም ኩኪዎች ያስፈልጉናሉ?",
   faq_a4:
-    "አይ። Arroxy YouTube ለማንኛውም ብሮውዘር የሚሰጣቸውን ህዝባዊ ቶኬኖች ብቻ ይጠቀማሉ። ምንም ኩኪ፣ ምንም ግባ፣ ምንም የተቀመጡ ምስክርነቶች። ለምን ይህ ጠቃሚ እንደሆነ [ምንም ኩኪ፣ ምንም ግባ፣ ምንም ሒሳብ ትስስር](#no-cookies) ይመልከቱ።",
+    "በነባሪ፣ አይ — Arroxy ያለ YouTube ሒሳብ፣ ግባ ወይም ኩኪ ማውጣት ይሠራል። እንደ ዕድሜ-የተገደቡ ወይም የአባላት-ብቻ ቪዲዮዎች ላሉ ማረጋገጫ ለሚፈልጉ ይዘቶች በተራቀቁ ቅንብሮች ውስጥ ተመራጭ የኩኪ ድጋፍ አለ (Cookies source: file or browser)። በነባሪ የጠፋ ነው። ካበሩት፣ የ yt-dlp ዊኪ [በኩኪ ላይ የተመሠረተ አውቶሜሽን የ Google ሒሳብን ሊያመለክት እንደሚችል](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) ያስታውቃሉ፤ በዚያ ሁኔታ ጊዜያዊ ሒሳብ ጥንቃቄ ያለው ምርጫ ነው።",
   faq_q5: "YouTube ሲቀያየር አሁንም ይሠራሉ?",
   faq_a5:
-    "ሁለት የጥንካሬ ሽፋኖች: yt-dlp የ YouTube ለውጦቹ ከደረሱ ከጥቂት ሰዓት ውስጥ ያዘምናሉ፣ እናም Arroxy በ~30 ደቂቃ ውስጥ ሊቋርጡ በሚችሉ ኩኪዎች አይመሠረቱም። ይህ ከምን ኮድ ያለው ብሮውዘር ክፍለ ጊዜዎች ላይ ከሚወሰኑ ሶፍትዌሮች ጋር ሲነጻጸር ግልፅ ስርዓት ይሰጣሉ።",
+    "yt-dlp በማስነሻ ላይ ራስ ሰር ይዘመናሉ፣ እናም YouTube አንድ ነገር ሲቀይር Arroxy እርማቶችን በፍጥነት ያደርሳሉ። ችግር ካጋጠምዎ፣ በተራቀቁ ቅንብሮች ውስጥ እንደ ዳግም መመለሻ ተመራጭ የኩኪ ድጋፍ አለ።",
   faq_q6: "Arroxy በምን ቋንቋዎች ይገኛሉ?",
   faq_a6:
     "ሃያ አንድ፣ ከሳጥን ውጭ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek) እና Српски (Serbian)። Arroxy በመጀመሪያ ጊዜ ሲጀምሩ የስርዓተ ምOS ቋንቋዎን ራስ-ሰር ያወቃል፣ ከመሳሪያ አሞሌ የቋንቋ ምርጫ ማንኛውም ጊዜ መቀየር ይችላሉ። ትርጉሞች ከ src/shared/i18n/locales/ ውስጥ ቀላል TypeScript ዕቃዎች ናቸው — ለማዋጮ GitHub ላይ PR ይክፈቱ።",
@@ -239,7 +298,7 @@ export const am = {
     "አዎ፣ ለplaylists: የplaylist URL ለጥፍ፣ ከዚያ ሙሉ ዝርዝሩን ወይም አንተ የመረጥካቸውን ቪዲዮዎች ብቻ ወደ ቅደም ተከተል አክል። ሙሉ channel በብዛት ማውረድ ገና አይደገፍም።",
   faq_q9: 'macOS "አፕ ተጎድቷል" ይላሉ — ምን ማድረግ አለብኝ?',
   faq_a9:
-    "ያ macOS Gatekeeper ያልተፈረመ አፕ ያለ ምንም ጉዳት እየከለከሉ ናቸው። ለፍትሃዊ ክርክሩ [በ macOS ላይ ለመጀመሪያ ጊዜ አስጀምር](#download) ክፍሉን ይመልከቱ።",
+    'ያ macOS Gatekeeper ያልተፈረመ አፕ እየከለከሉ ናቸው፣ ሐቀኛ ጉዳት አይደሉም። [\"App is damaged\" — Terminal ዘዴ](#macos-first-launch) ን ለሚያጸዳው አንድ-ሸዊን `xattr` ትዕዛዝ ይመልከቱ።',
   faq_q10: "YouTube ቪዲዮዎች ማውረድ ሕጋዊ ነው?",
   faq_a10:
     "ለግል፣ ሚስጥራዊ አጠቃቀም በአብዛኛዎቹ ዳኝነቶች ተቀባይነት ያለው ነው። የ YouTube [የአገልግሎት ደንቦቹን](https://www.youtube.com/t/terms) እና የቦታዎ የቅጂ መብት ሕጎቹን ማክበር ኃላፊነትዎ ነው።",

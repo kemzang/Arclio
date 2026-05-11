@@ -1,17 +1,22 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { useAppStore } from '@renderer/store/useAppStore';
-import type { GetFormatsOutput, StatusEvent } from '@shared/types';
-import { ok } from '../shared/fixtures';
-import { buildAppSettings } from '../shared/settingsFixtures';
-import { StepSubtitles } from '@renderer/components/wizard/StepSubtitles';
-import { StepConfirm } from '@renderer/components/wizard/StepConfirm';
-import { StepFormatSelect } from '@renderer/components/wizard/StepFormatSelect';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import type { ProbeResult, StatusEvent } from '@shared/types.js';
+import { ok } from '../shared/fixtures.js';
+import { buildAppSettings } from '../shared/settingsFixtures.js';
+import { StepSubtitles } from '@renderer/components/wizard/StepSubtitles.js';
+import { StepConfirm } from '@renderer/components/wizard/StepConfirm.js';
+import { StepFormatSelect } from '@renderer/components/wizard/StepFormatSelect.js';
 
 const YOUTUBE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 
-const PROBE_RESULT: GetFormatsOutput = {
+const PROBE_RESULT: Extract<ProbeResult, { kind: 'video' }> = {
+  kind: 'video',
+  extractor: 'youtube',
+  extractorKey: 'Youtube',
+  webpageUrl: YOUTUBE_URL,
+  isAudioOnlySource: false,
   formats: [
     {
       formatId: '22',
@@ -37,10 +42,12 @@ const PROBE_RESULT: GetFormatsOutput = {
   thumbnail: '',
   duration: 120,
   subtitles: { en: [{ ext: 'vtt', name: 'English' }], es: [{ ext: 'vtt' }] },
-  automaticCaptions: { 'de-orig': [{ ext: 'vtt' }], 'ja-orig': [{ ext: 'vtt' }] }
+  automaticCaptions: { 'de-orig': [{ ext: 'vtt' }], 'ja-orig': [{ ext: 'vtt' }] },
+  isLive: false,
+  hasDrm: false
 };
 
-function buildMockApi(settingsOverrides: Record<string, unknown> = {}, getFormatsResult: GetFormatsOutput = PROBE_RESULT) {
+function buildMockApi(settingsOverrides: Record<string, unknown> = {}, probeResult: ProbeResult = PROBE_RESULT) {
   return {
     app: {
       warmUp: vi.fn().mockResolvedValue(ok({ completed: true, failures: [] })),
@@ -60,7 +67,7 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}, getFormat
         })
       ),
       cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
-      getFormats: vi.fn().mockResolvedValue(ok(getFormatsResult)),
+      probe: vi.fn().mockResolvedValue(ok(probeResult)),
       pause: vi.fn().mockResolvedValue(ok({ paused: true }))
     },
     settings: {
@@ -77,8 +84,23 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}, getFormat
       onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
-      save: vi.fn().mockResolvedValue({ ok: true, data: { saved: true } }),
-      load: vi.fn().mockResolvedValue({ ok: true, data: [] })
+      cmd: {
+        add: vi.fn().mockResolvedValue({ ok: true, data: { ids: [] } }),
+        getSnapshot: vi.fn().mockResolvedValue({ ok: true, data: [] }),
+        start: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        pause: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        resume: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        cancel: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        retry: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        clearCompleted: vi.fn().mockResolvedValue({ ok: true, data: undefined }),
+        remove: vi.fn().mockResolvedValue({ ok: true, data: undefined })
+      },
+      events: {
+        onSnapshot: vi.fn().mockReturnValue(() => undefined),
+        onAdded: vi.fn().mockReturnValue(() => undefined),
+        onUpdated: vi.fn().mockReturnValue(() => undefined),
+        onRemoved: vi.fn().mockReturnValue(() => undefined)
+      }
     },
     updater: {
       onUpdateAvailable: vi.fn().mockReturnValue(() => undefined),
@@ -151,7 +173,7 @@ describe('Subtitle-only preset', () => {
 
     await useAppStore.getState().addToQueue();
 
-    const item = useAppStore.getState().queue[0];
+    const item = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0][0][0];
     expect(item.job.kind).toBe('subtitle-only');
     expect(item.job.kind === 'subtitle-only' ? item.job.subtitles.languages : []).toEqual(['en']);
   });
@@ -167,8 +189,8 @@ describe('Subtitle-only preset', () => {
 
     await useAppStore.getState().addAndDownloadImmediately();
 
-    expect(api.downloads.start).toHaveBeenCalledOnce();
-    const call = api.downloads.start.mock.calls[0][0];
+    expect(api.queue.cmd.add).toHaveBeenCalledOnce();
+    const call = api.queue.cmd.add.mock.calls[0][0][0];
     expect(call.job.kind).toBe('subtitle-only');
     expect(call.job.kind === 'subtitle-only' ? call.job.subtitles.languages : []).toEqual(['en']);
   });
@@ -232,14 +254,26 @@ describe('Wizard subtitle step — store behavior', () => {
     expect(useAppStore.getState().wizardSubtitleLanguages).toEqual([]);
   });
 
-  it('advance() from formats step goes to subtitles', async () => {
+  it('advance() from formats step goes to subtitles when subtitles available', async () => {
     window.appApi = buildMockApi() as never;
     await useAppStore.getState().initialize();
 
-    useAppStore.setState({ wizardStep: 'formats' });
+    // Populate at least one subtitle track — gating now skips the step when
+    // the probe returned no tracks at all.
+    useAppStore.setState({ wizardStep: 'formats', wizardSubtitles: { en: [{ ext: 'vtt' }] } });
     useAppStore.getState().advance();
 
     expect(useAppStore.getState().wizardStep).toBe('subtitles');
+  });
+
+  it('advance() from formats step skips subtitles when probe returned none', async () => {
+    window.appApi = buildMockApi() as never;
+    await useAppStore.getState().initialize();
+
+    useAppStore.setState({ wizardStep: 'formats', wizardSubtitles: {}, wizardAutomaticCaptions: {} });
+    useAppStore.getState().advance();
+
+    expect(useAppStore.getState().wizardStep).not.toBe('subtitles');
   });
 
   it('advance() from subtitles step goes to sponsorblock', () => {
@@ -273,12 +307,13 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitles: PROBE_RESULT.subtitles,
       wizardAutomaticCaptions: PROBE_RESULT.automaticCaptions,
       wizardSubtitleLanguages: ['en', 'es'],
-      wizardStep: 'confirm'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();
 
-    const queue = useAppStore.getState().queue;
+    const queue = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? [];
     expect(queue).toHaveLength(1);
     expect(queue[0].job.subtitles?.languages).toEqual(['en', 'es']);
     expect(queue[0].job.subtitles?.writeAuto).toBe(false);
@@ -300,12 +335,13 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitles: PROBE_RESULT.subtitles,
       wizardAutomaticCaptions: PROBE_RESULT.automaticCaptions,
       wizardSubtitleLanguages: ['de-orig'], // auto-only lang
-      wizardStep: 'confirm'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();
 
-    const queue = useAppStore.getState().queue;
+    const queue = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? [];
     expect(queue[0].job.subtitles?.writeAuto).toBe(true);
   });
 
@@ -325,12 +361,13 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitles: PROBE_RESULT.subtitles,
       wizardAutomaticCaptions: PROBE_RESULT.automaticCaptions,
       wizardSubtitleLanguages: ['en'],
-      wizardStep: 'confirm'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addAndDownloadImmediately();
 
-    const startCall = vi.mocked(window.appApi.downloads.start).mock.calls[0][0];
+    const startCall = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0][0][0];
     expect(startCall.job.subtitles?.languages).toEqual(['en']);
     expect(startCall.job.subtitles?.writeAuto).toBe(false);
   });
@@ -358,7 +395,8 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitles: PROBE_RESULT.subtitles,
       wizardAutomaticCaptions: PROBE_RESULT.automaticCaptions,
       wizardSubtitleLanguages: ['en', 'es'],
-      wizardStep: 'confirm'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();
@@ -408,12 +446,13 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitleLanguages: ['en'],
       wizardSubtitleMode: 'subfolder',
       wizardSubtitleFormat: 'vtt',
-      wizardStep: 'confirm'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();
 
-    const item = useAppStore.getState().queue[0];
+    const item = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0][0][0];
     expect(item.job.subtitles?.mode).toBe('subfolder');
     expect(item.job.subtitles?.format).toBe('vtt');
   });
@@ -436,12 +475,13 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitleLanguages: ['en'],
       wizardSubtitleMode: 'embed',
       wizardSubtitleFormat: 'ass',
-      wizardStep: 'confirm'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addAndDownloadImmediately();
 
-    const startCall = vi.mocked(window.appApi.downloads.start).mock.calls[0][0];
+    const startCall = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0][0][0];
     expect(startCall.job.subtitles?.mode).toBe('embed');
     expect(startCall.job.subtitles?.format).toBe('ass');
   });
@@ -471,7 +511,8 @@ describe('Wizard subtitle step — store behavior', () => {
       wizardSubtitleLanguages: ['en'],
       wizardSubtitleMode: 'subfolder',
       wizardSubtitleFormat: 'vtt',
-      wizardStep: 'confirm'
+      wizardStep: 'confirm',
+      wizardExtractor: 'youtube'
     });
 
     await useAppStore.getState().addToQueue();

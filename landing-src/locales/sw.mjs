@@ -5,12 +5,12 @@
 // keep inline tags like <em>. Everything else is HTML-escaped.
 
 export const sw = {
-  title: "Arroxy — Kipakuliaji cha YouTube cha Bure cha 4K, Hakuna Kuingia",
+  title: "Arroxy — Kipakuliaji Bure cha 4K cha YouTube + Tovuti 2000, Hakuna Kuingia",
   description:
-    "Kipakuliaji cha YouTube cha desktop, bure, chenye leseni ya MIT kwa Windows, macOS, na Linux. Pakua video hadi 4K HDR kwa 60 fps bila akaunti ya Google, vidakuzi vya kivinjari, au kuingia yoyote.",
-  og_title: "Arroxy — Kipakuliaji cha YouTube cha Bure cha 4K, Hakuna Kuingia",
+    "Kipakuliaji cha desktop, bure, chenye leseni ya MIT kwa YouTube na tovuti 2000+ zinazotumika kwa Windows, macOS, na Linux. Pakua video hadi 4K HDR kwa 60 fps. Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada.",
+  og_title: "Arroxy — Kipakuliaji Bure cha 4K cha YouTube + Tovuti 2000, Hakuna Kuingia",
   og_description:
-    "Kipakuliaji cha YouTube cha bure cha 4K. Bila vidakuzi, bila kuingia, bila vikao vilivyovunjika. Leseni ya MIT. Windows · macOS · Linux.",
+    "Kipakuliaji cha bure cha 4K kwa YouTube na tovuti 2000+. Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada. Leseni ya MIT. Windows · macOS · Linux.",
 
   nav_features: "Vipengele",
   nav_screenshots: "Picha za skrini",
@@ -19,12 +19,12 @@ export const sw = {
   nav_download: "Pakua",
 
   hero_eyebrow: "Open Source · MIT · Maendeleo yanayoendelea",
-  hero_h1_a: "Kipakuliaji cha YouTube cha bure cha 4K.",
-  hero_h1_b: "Bila vidakuzi. Bila kuingia. Bila vikao vilivyovunjika.",
+  hero_h1_a: "Kipakuliaji bure cha 4K cha YouTube (+ tovuti 2000).",
+  hero_h1_b: "Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada.",
   hero_tagline:
-    "Arroxy ni kipakuliaji cha YouTube cha desktop, bure, chenye leseni ya MIT kwa Windows, macOS, na Linux. Inapakua video hadi 4K HDR kwa 60 fps — bila kuomba akaunti ya Google, vidakuzi vya kivinjari, au kuingia yoyote.",
+    "Arroxy ni kipakuliaji cha desktop, bure, chenye leseni ya MIT kwa YouTube na tovuti 2000+ zinazotumika, kwa Windows, macOS, na Linux. Inapakua video hadi 4K HDR kwa 60 fps. Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada — bandika URL tu na uanze.",
   hero_trust: "Kagua kila mstari kwenye GitHub.",
-  pill_no_account: "Hakuna akaunti ya Google",
+  pill_no_account: "Hakuna matangazo",
   pill_no_tracking: "Bila ufuatiliaji",
   pill_open_source: "Open source (MIT)",
   cta_download_os: "Pakua kwa mfumo wako",
@@ -61,13 +61,13 @@ export const sw = {
   features_h2: "Kila unachotegemea, bila ugumu wowote.",
   features_sub: "Bandika URL, chagua ubora, bonyeza pakua. Hiyo tu.",
   f1_h: "Hadi 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — kila mwonekano ambao YouTube inatoa, pamoja na ubadilishaji wa sauti pekee kuwa MP3, M4A/AAC, Opus na WAV.",
+  f1_p: "2160p, 1440p, 1080p, 720p — kila mwonekano ambao YouTube na tovuti nyingine zinazotumika zinatoa, pamoja na ubadilishaji wa sauti pekee kuwa MP3, M4A/AAC, Opus na WAV.",
   f2_h: "60 fps & HDR imehifadhiwa",
   f2_p: "Mtiririko wa kasi ya fremu nyingi na HDR unakuja hasa kama YouTube inavyousimba — bila kupoteza ubora.",
   f3_h: "Playlist pia",
   f3_p: "Bandika URL ya playlist, pakua orodha yote, au tiki video unazotaka tu kabla Arroxy haijaziweka kwenye foleni.",
   f4_h: "Masasisho ya kiotomatiki",
-  f4_p: "Arroxy huweka yt-dlp ya kisasa na husafirisha ffmpeg ndani ya programu — hufanya kazi kupitia kila mabadiliko ya YouTube.",
+  f4_p: "Arroxy huweka yt-dlp ya kisasa na husafirisha ffmpeg ndani ya programu — hutoa marekebisho kila wiki YouTube na tovuti nyingine zinapobadilika.",
   f5_h: "Lugha 21",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — hugundua yako kiotomatiki.",
   f6_h: "Majukwaa mengi",
@@ -77,9 +77,9 @@ export const sw = {
   f8_h: "SponsorBlock imejumuishwa",
   f8_p: "Ruka au alama sehemu za wadhamini, utangulizi, hitimisho, matangazo ya kibinafsi, na zaidi — zikata na FFmpeg au ongeza tu sura. Uamuzi wako, kwa kila kategoria.",
   f9_h: "Kujaza kiotomatiki kutoka klipu bodi",
-  f9_p: "Nakili kiungo cha YouTube popote na Arroxy hugundua unapobadili tena — kidokezo cha uthibitisho kinakuweka udhibitini. Washa au zima katika mipangilio ya Hali ya Juu.",
+  f9_p: "Nakili kiungo chochote kinachooungwa mkono popote na Arroxy hugundua unapobadili tena — kidokezo cha uthibitisho kinakuweka udhibitini. Washa au zima katika mipangilio ya Hali ya Juu.",
   f10_h: "Usafi wa URL kiotomatiki",
-  f10_p: "Vigezo vya ufuatiliaji (si, pp, feature, utm_*, fbclid, gclid, na zaidi) huondolewa kiotomatiki kutoka viungo vya YouTube vilivyobandiikwa, na vifuniko vya youtube.com/redirect hufunuliwa — sehemu ya URL daima inaonyesha kiungo rasmi.",
+  f10_p: "Vigezo vya ufuatiliaji (si, pp, feature, utm_*, fbclid, gclid, na zaidi) huondolewa kiotomatiki kutoka viungo vilivyobandiikwa, na vifuniko vya youtube.com/redirect hufunuliwa — sehemu ya URL daima inaonyesha kiungo rasmi.",
   f11_h: "Hujificha kwenye trei",
   f11_p: "Kufunga dirisha kunaweka Arroxy kwenye trei ya mfumo wako. Vipakuliaji vinaendelea kufanya kazi nyuma — bonyeza ikoni ya trei kulirejesha dirisha, au toka kutoka menyu ya trei.",
   f12_h: "Metadata na sanaa zilizojumuishwa",
@@ -92,20 +92,20 @@ export const sw = {
   shot3_alt: "Chagua mahali pa kuhifadhi",
   shot4_alt: "Vipakuliaji vya sambamba",
   shot5_alt: "Hatua ya manukuu — chagua lugha, muundo, na hali ya kuhifadhi",
-  og_image_alt: "Ikoni ya programu ya Arroxy — programu ya kompyuta ya kupakua video za YouTube kwa 4K.",
+  og_image_alt: "Ikoni ya programu ya Arroxy — programu ya kompyuta ya kupakua YouTube na tovuti 2000+ kwa 4K.",
 
   privacy_eyebrow: "Faragha",
   privacy_h2_html: "Arroxy <em>haifanyi</em> nini.",
   privacy_sub:
-    "Vipakuliaji vingi vya YouTube hatimaye huomba vidakuzi vyako. Arroxy haitafanya hivyo kamwe.",
-  p1_h: "Bila kuingia",
-  p1_p: "Hakuna akaunti ya Google. Hakuna vikao vya kuisha muda. Hatari sifuri ya akaunti yako kupigwa bendera.",
-  p2_h: "Bila vidakuzi",
-  p2_p: "Arroxy inaomba alama sawa na kivinjari chochote. Hakuna kinachosafirishwa, hakuna kinachohifadhiwa.",
+    "Usindikaji wa mahali hapo 100%. Hakuna matangazo, hakuna mauzo ya ziada, hakuna seva za tatu — faili zinaenda moja kwa moja kutoka yt-dlp hadi kwenye diski yako.",
+  p1_h: "Hakuna kuingia kunakohitajika",
+  p1_p: "Hali chaguo-msingi inafanya kazi bila akaunti ya Google au kuingia yoyote. Usaidizi wa hiari wa vidakuzi unapatikana katika mipangilio ya Hali ya Juu kwa maudhui yenye vikwazo vya umri au ya wanachama tu — umezimwa kwa chaguo-msingi.",
+  p2_h: "Faili za mahali hapo tu",
+  p2_p: "Faili zinaenda moja kwa moja kutoka yt-dlp hadi kwenye folda unayochagua. Hakuna kinachopitia seva ya mbali.",
   p3_h: "Telemetry isiyo na jina",
   p3_p: "Telemetry isiyo na jina kupitia OpenPanel — kitambulisho cha nasibu kwa kila usakinishaji husaidia kuhesabu uzinduzi, matoleo, OS na ajali; hakuna URLs, vichwa, njia za faili, taarifa za akaunti, fingerprinting au data binafsi. Vipakuliwa, historia na faili zako hazitoki kamwe kwenye kifaa chako.",
-  p4_h: "Bila seva za tatu",
-  p4_p: "Mchakato wote unafanya kazi ndani ya mfumo kupitia yt-dlp + ffmpeg. Faili kamwe hazigusi seva ya mbali.",
+  p4_h: "Hakuna matangazo, hakuna mauzo ya ziada",
+  p4_p: "Leseni ya MIT. Hakuna ngazi ya malipo, hakuna kizuizi cha vipengele, hakuna matangazo ya banner, hakuna mifumo ya udanganyifu. Mchakato wote unafanya kazi mahali hapo kupitia yt-dlp + ffmpeg.",
 
   install_eyebrow: "Sakinisha",
   install_h2: "Chagua njia yako.",
@@ -161,4 +161,7 @@ export const sw = {
   faq_q9: "Je, hii ni halali?",
   faq_a9:
     "Kupakua video kwa matumizi ya kibinafsi kwa ujumla kunakubaliwa katika maeneo mengi ya kisheria. Wewe ndiye unayewajibika kuzingatia Masharti ya Huduma ya YouTube na sheria za nchi yako.",
+
+  f13_h: "YouTube + tovuti 2000",
+  f13_p: "Zaidi ya YouTube, Arroxy hupakua kutoka tovuti 2000+ zinazoungwa mkono na yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org na nyingine nyingi. Sauti pekee na manukuu hufanya kazi kila mahali, si YouTube tu.",
 };

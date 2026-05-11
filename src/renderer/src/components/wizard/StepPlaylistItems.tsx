@@ -1,14 +1,20 @@
-import { type JSX, useRef, useState } from 'react';
+import { type JSX, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { Checkbox } from '../ui/checkbox';
-import { Input } from '../ui/input';
-import { Separator } from '../ui/separator';
+import { useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { Checkbox } from '../ui/checkbox.js';
+import { Input } from '../ui/input.js';
+import { Separator } from '../ui/separator.js';
+import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
 
 function formatDuration(seconds: number | undefined, liveLabel: string): string {
-  if (seconds === undefined || seconds === 0) return liveLabel;
+  // undefined = no duration metadata (common for nested-playlist entries from
+  // music search, channel root, etc.) — render an em-dash instead of falsely
+  // labeling them "live". 0 still maps to live (yt-dlp's convention for
+  // ongoing streams).
+  if (seconds === undefined) return '—';
+  if (seconds === 0) return liveLabel;
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
@@ -18,7 +24,7 @@ function formatDuration(seconds: number | undefined, liveLabel: string): string 
 
 export function StepPlaylistItems(): JSX.Element {
   const { t } = useTranslation();
-  const { playlistItems, selectedPlaylistItemIds, playlistTitle, playlistProbeLoading, setPlaylistItemSelected, selectAllPlaylistItems, selectNonePlaylistItems, selectPlaylistRange, confirmPlaylistSelection, back } = useAppStore();
+  const { playlistItems, selectedPlaylistItemIds, playlistTitle, playlistProbeLoading, setPlaylistItemSelected, selectAllPlaylistItems, selectNonePlaylistItems, selectPlaylistRange, confirmPlaylistSelection, back, wizardExtractor } = useAppStore();
 
   const [rangeFrom, setRangeFrom] = useState('');
   const [rangeTo, setRangeTo] = useState('');
@@ -33,6 +39,11 @@ export function StepPlaylistItems(): JSX.Element {
   });
 
   const selectedCount = selectedPlaylistItemIds.length;
+  // yt-dlp's --flat-playlist returns thumbnails for some extractors
+  // (YouTube tab) but not others (PornHub paged list, generic). When no
+  // entry has one, hide the thumbnail slot entirely so the list renders
+  // compactly instead of showing 500 empty boxes.
+  const hasAnyThumbnail = useMemo(() => playlistItems.some((e) => !!e.thumbnail), [playlistItems]);
   const canContinue = selectedCount > 0;
 
   function applyRange(): void {
@@ -47,7 +58,7 @@ export function StepPlaylistItems(): JSX.Element {
     <div className="flex h-full flex-col gap-3 px-4 py-3">
       <div className="flex items-baseline justify-between gap-2">
         <h2 className="text-sm font-semibold truncate">{playlistTitle || t('wizard.playlist.heading')}</h2>
-        <span className="shrink-0 text-xs text-muted-foreground">{t('wizard.playlist.itemCount_other', { count: playlistItems.length })}</span>
+        <span className="shrink-0 text-xs text-muted-foreground">{t(isAudioOnlySource(wizardExtractor) ? 'wizard.playlist.itemCountAudio' : 'wizard.playlist.itemCount', { count: playlistItems.length })}</span>
       </div>
 
       {playlistProbeLoading ? (
@@ -93,7 +104,7 @@ export function StepPlaylistItems(): JSX.Element {
                     }}
                   >
                     <Checkbox checked={checked} onCheckedChange={(v) => setPlaylistItemSelected(entry.id, !!v)} onClick={(e) => e.stopPropagation()} />
-                    {entry.thumbnail ? <img src={entry.thumbnail} alt={t('wizard.playlist.thumbnailAlt')} className="h-8 w-[56px] shrink-0 rounded-sm object-cover" loading="lazy" /> : <div className="h-8 w-[56px] shrink-0 rounded-sm bg-muted" />}
+                    {hasAnyThumbnail ? entry.thumbnail ? <img src={entry.thumbnail} alt={t('wizard.playlist.thumbnailAlt')} referrerPolicy="no-referrer" className="h-8 w-[56px] shrink-0 rounded-sm object-cover" loading="lazy" /> : <div className="h-8 w-[56px] shrink-0 rounded-sm bg-muted" /> : null}
                     <span className="flex-1 truncate text-sm">{entry.title}</span>
                     <span className="shrink-0 text-xs text-muted-foreground">{formatDuration(entry.duration, liveLabel)}</span>
                   </div>

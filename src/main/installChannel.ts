@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import type { InstallChannel } from '@shared/types';
+import type { InstallChannel } from '@shared/types.js';
 
 // Detect at runtime; appName is a parameter so the module is testable without
 // electron and so the app name lives in one place (package.json via app.getName()).

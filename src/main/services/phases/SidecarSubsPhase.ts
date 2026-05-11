@@ -1,7 +1,7 @@
-import { STATUS_KEY } from '@shared/schemas';
-import { DEFAULTS } from '@shared/constants';
-import { dedupeSubtitleFiles, muxSubtitlesIntoVideo, logger } from '../subtitlePostProcess';
-import type { Phase, PhaseContext, PhaseOutcome } from './types';
+import { STATUS_KEY } from '@shared/schemas.js';
+import { DEFAULTS } from '@shared/constants.js';
+import { dedupeSubtitleFiles, muxSubtitlesIntoVideo, logger } from '../subtitlePostProcess.js';
+import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
 
 async function runEmbedMux(ctx: PhaseContext): Promise<void> {
   const { active, ytDlp } = ctx;
@@ -36,6 +36,9 @@ async function runEmbedMux(ctx: PhaseContext): Promise<void> {
     onSpawn: (proc) => {
       active.ffmpegProcess = proc;
       if (active.cancelRequested) proc.kill('SIGKILL');
+      ctx.register(() => {
+        proc.kill('SIGKILL');
+      });
     },
     jobId: job.id
   });
@@ -74,17 +77,24 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
           writeAutoSubs: subs.writeAuto
         },
         {
-          onSpawn: (proc) => ctx.attachYtDlpProcess(proc),
+          onSpawn: (proc) => {
+            active.ytDlpProcess = proc;
+            if (active.cancelRequested) proc.kill('SIGKILL');
+            ctx.register(() => {
+              proc.kill('SIGKILL');
+            });
+          },
           onStdout: (text) => ctx.safeConsume(text),
           onStderr: (text) => ctx.safeConsume(text)
         }
       );
 
+      if (active.pauseRequested) return { kind: 'paused' };
       if (subResult.kind !== 'success') {
         logger.warn('Subtitle fetch failed — video already saved', {
           jobId: job.id,
           kind: subResult.kind,
-          ...(subResult.kind === 'exit-error' ? { code: subResult.exitCode, signal: subResult.signal } : {})
+          ...(subResult.kind === 'exit-error' ? { code: subResult.exitCode, errorKind: subResult.errorKind } : {})
         });
         return { kind: 'soft-failed', status: STATUS_KEY.subtitlesFailed };
       }
@@ -92,10 +102,13 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
       if (subResult.usedExtractorFallback) active.usedExtractorFallback = true;
 
       if (subs.writeAuto) {
-        await dedupeSubtitleFiles(active.subtitlePaths, job.id, () => active.cancelRequested);
+        await dedupeSubtitleFiles(active.subtitlePaths, preparedJob.extractor, job.id, () => active.cancelRequested);
       }
 
-      if (embedAfter) await runEmbedMux(ctx);
+      if (embedAfter) {
+        await runEmbedMux(ctx);
+        if (active.pauseRequested) return { kind: 'paused' };
+      }
 
       return { kind: 'completed' };
     }

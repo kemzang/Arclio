@@ -15,20 +15,36 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
 const TEMPLATE_PATH = resolve(HERE, "template.md");
 
-function assertParity(locales) {
+// Reports drift per non-en locale. In strict mode any drift throws; otherwise
+// missing/extra keys for non-en locales are warnings — the build falls back
+// to en for missing keys and ignores extras. The en locale is always
+// validated as the source of truth (never tolerated to drift).
+function checkParity(locales, { strict }) {
   const en = locales.find((l) => l.code === "en");
   if (!en) throw new Error("English locale missing from registry");
   const enKeys = Object.keys(en.strings).sort();
+  let driftCount = 0;
   for (const loc of locales) {
+    if (loc.code === "en") continue;
     const keys = Object.keys(loc.strings).sort();
     const missing = enKeys.filter((k) => !keys.includes(k));
     const extra = keys.filter((k) => !enKeys.includes(k));
-    if (missing.length || extra.length) {
-      const parts = [];
-      if (missing.length) parts.push(`missing: ${missing.join(", ")}`);
-      if (extra.length) parts.push(`extra: ${extra.join(", ")}`);
-      throw new Error(`Locale "${loc.code}" key drift — ${parts.join("; ")}`);
-    }
+    if (!missing.length && !extra.length) continue;
+    driftCount++;
+    const parts = [];
+    if (missing.length) parts.push(`missing: ${missing.join(", ")}`);
+    if (extra.length) parts.push(`extra: ${extra.join(", ")}`);
+    const msg = `Locale "${loc.code}" key drift — ${parts.join("; ")}`;
+    if (strict) throw new Error(msg);
+    console.warn(`  ⚠ ${msg}`);
+  }
+  if (driftCount && !strict) {
+    console.warn(
+      `\n  ⚠ ${driftCount} locale(s) drift from en. Build continued with en fallback for missing keys; extras ignored.`,
+    );
+    console.warn(
+      `  Run \`bun run check:readme\` (or \`bun readme-src/build.mjs --strict\`) before pushing to fail on drift.\n`,
+    );
   }
 }
 
@@ -41,10 +57,11 @@ function buildLangNav(currentLoc, locales) {
     .join(" · ");
 }
 
-function applyStrings(template, strings) {
+function applyStrings(template, strings, fallback = {}) {
   return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
-    if (!(key in strings)) return match;
-    return strings[key];
+    if (key in strings) return strings[key];
+    if (key in fallback) return fallback[key];
+    return match;
   });
 }
 
@@ -56,12 +73,15 @@ function applyMacros(text, macros) {
 }
 
 async function main() {
-  assertParity(LOCALES);
+  const strict = process.argv.includes("--strict");
+  checkParity(LOCALES, { strict });
 
   const template = await readFile(TEMPLATE_PATH, "utf8");
+  const en = LOCALES.find((l) => l.code === "en");
+  const enStrings = en?.strings ?? {};
 
   for (const loc of LOCALES) {
-    let md = applyStrings(template, loc.strings);
+    let md = applyStrings(template, loc.strings, enStrings);
     md = applyMacros(md, {
       LANG_NAV: buildLangNav(loc, LOCALES),
     });
@@ -72,7 +92,7 @@ async function main() {
     console.log(`  ✓ ${loc.code.padEnd(5)} → ${loc.filename}`);
   }
 
-  console.log(`\nBuilt ${LOCALES.length} READMEs.`);
+  console.log(`\nBuilt ${LOCALES.length} READMEs.${strict ? " (strict)" : ""}`);
 }
 
 main().catch((err) => {

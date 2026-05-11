@@ -1,31 +1,31 @@
 import { EventEmitter } from 'node:events';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { DownloadService } from '@main/services/DownloadService';
-import { YtDlp } from '@main/services/YtDlp';
-import type { StatusEvent } from '@shared/types';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
-import type { SponsorBlockCategory } from '@shared/schemas';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
+import type { StatusEvent } from '@shared/types.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
+import type { SponsorBlockCategory } from '@shared/schemas.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };
 
 function makeJob(sb: SponsorBlockOptions, subtitleLanguages?: string[]): PreparedJob {
   if (subtitleLanguages?.length) {
-    return { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF, subtitles: { languages: subtitleLanguages, mode: 'sidecar', format: 'srt', writeAuto: false } };
+    return { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF, subtitles: { languages: subtitleLanguages, mode: 'sidecar', format: 'srt', writeAuto: false } };
   }
-  return { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF };
+  return { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: sb, embed: EMBED_OFF };
 }
 
 function makeSubtitleOnlyJob(_sb: SponsorBlockOptions): PreparedJob {
-  return { kind: 'subtitle-only', source: 'youtube', subtitles: { languages: ['en'], mode: 'sidecar', format: 'srt', writeAuto: false } };
+  return { kind: 'subtitle-only', extractor: 'youtube', extractorKey: 'Youtube', subtitles: { languages: ['en'], mode: 'sidecar', format: 'srt', writeAuto: false } };
 }
 
 vi.mock('@main/utils/process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@main/utils/process')>();
+  const actual = await importOriginal<typeof import('@main/utils/process.js')>();
   return { ...actual, spawnYtDlp: vi.fn(), spawnFFmpeg: vi.fn() };
 });
 
-import { spawnYtDlp } from '@main/utils/process';
+import { spawnYtDlp } from '@main/utils/process.js';
 
 beforeEach(() => {
   vi.clearAllMocks();

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { TokenService } from '@main/services/TokenService';
+import { TokenService } from '@main/services/TokenService.js';
 
 function makeProvider(
   overrides: Partial<{
@@ -33,7 +33,7 @@ describe('TokenService.warmUp', () => {
 
     // Cache should be populated — subsequent mintTokenForUrl does NOT call provider again
     const result = await service.mintTokenForUrl('https://youtube.com/watch?v=test');
-    expect(result).toEqual({ token: 'token-xyz', visitorData: 'visitor-abc' });
+    expect(result).toEqual({ token: 'token-xyz', visitorData: 'visitor-abc', fromCache: true });
     // mintToken was called once (by warmUp) and not again (cache hit)
     expect(provider.mintToken).toHaveBeenCalledOnce();
   });
@@ -52,13 +52,32 @@ describe('TokenService.warmUp', () => {
     expect(result.token).toBe('token-xyz');
   });
 
-  it('swallows errors silently when provider throws', async () => {
+  it('reports ready=false with reason when provider throws (non-fatal)', async () => {
     const provider = makeProvider({
       ensureReady: vi.fn().mockRejectedValue(new Error('Network error'))
     });
     const service = new TokenService(provider);
 
-    await expect(service.warmUp()).resolves.toBeUndefined();
+    const status = await service.warmUp();
+    expect(status.ready).toBe(false);
+    expect(status.reason).toContain('Network error');
+  });
+
+  it('reports ready=true on successful warm-up', async () => {
+    const provider = makeProvider();
+    const service = new TokenService(provider);
+
+    const status = await service.warmUp();
+    expect(status.ready).toBe(true);
+  });
+
+  it('reports ready=false with no-visitor-data when visitorData is empty', async () => {
+    const provider = makeProvider({ getVisitorData: vi.fn().mockResolvedValue('') });
+    const service = new TokenService(provider);
+
+    const status = await service.warmUp();
+    expect(status.ready).toBe(false);
+    expect(status.reason).toBe('no-visitor-data');
   });
 });
 
@@ -75,7 +94,7 @@ describe('TokenService.mintTokenForUrl', () => {
     };
 
     const result = await service.mintTokenForUrl('https://youtube.com/watch?v=x');
-    expect(result).toEqual({ token: 'cached-token', visitorData: 'cached-visitor' });
+    expect(result).toEqual({ token: 'cached-token', visitorData: 'cached-visitor', fromCache: true });
     expect(provider.mintToken).not.toHaveBeenCalled();
     expect(provider.ensureReady).not.toHaveBeenCalled();
   });

@@ -1,4 +1,4 @@
-import type { AudioConvert, PlaylistPreset } from './schemas';
+import type { AudioConvert, PlaylistPreset } from './schemas.js';
 
 export interface PlaylistPresetSpec {
   formatSelector?: string;

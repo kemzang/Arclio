@@ -2,8 +2,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { BinaryManager } from '@main/services/BinaryManager';
-import type { DependencyDiagnostic, DependencyId, DependencySource } from '@shared/types';
+import { BinaryManager } from '@main/services/BinaryManager.js';
+import type { DependencyDiagnostic, DependencyId, DependencySource } from '@shared/types.js';
 
 async function makeMgr(): Promise<BinaryManager> {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bm-retry-'));

@@ -3,8 +3,7 @@ const ar = {
     back: 'رجوع',
     continue: 'متابعة',
     retry: 'إعادة المحاولة',
-    startOver: 'البدء من جديد',
-    loading: 'جارٍ التحميل…'
+    startOver: 'البدء من جديد'
   },
   app: {
     feedback: 'ملاحظات',
@@ -14,6 +13,15 @@ const ar = {
     debugCopyTitle: 'نسخ معلومات التصحيح (إصدارات Electron والنظام وChrome)',
     zoomIn: 'تكبير',
     zoomOut: 'تصغير'
+  },
+  about: {
+    button: 'حول',
+    openTitle: 'حول Arroxy',
+    tagline: 'محمّل فيديو وصوت سريع وسهل لسطح المكتب.',
+    websiteLink: 'موقع الويب',
+    githubLink: 'GitHub',
+    licenseLine: 'ترخيص MIT · بواسطة Antonio Orionus',
+    thirdPartyNotices: 'عرض إشعارات الطرف الثالث'
   },
   titleBar: {
     close: 'إغلاق',
@@ -25,7 +33,6 @@ const ar = {
     greeting: 'مرحباً، أهلاً بعودتك!',
     warmup: 'Arroxy يستعد…',
     downloading: 'جارٍ تنزيل {{binary}}…',
-    warning: 'الإعداد غير مكتمل — قد لا تعمل بعض الميزات',
     warmupFailedNoDiag: 'فشل الإعداد. افتح سجل الإعداد للاطلاع على التفاصيل.'
   },
   repair: {
@@ -81,6 +88,8 @@ const ar = {
       heading: 'عناصر القائمة',
       itemCount_one: '{{count}} فيديو',
       itemCount_other: '{{count}} مقاطع فيديو',
+      itemCountAudio_one: '{{count}} مقطع صوتي',
+      itemCountAudio_other: '{{count}} مقاطع صوتية',
       selectAll: 'تحديد الكل',
       selectNone: 'إلغاء تحديد الكل',
       rangeFrom: 'من',
@@ -91,15 +100,13 @@ const ar = {
       noSelection: 'حدد فيديو واحداً على الأقل للمتابعة',
       loadingItems: 'جارٍ جلب القائمة…',
       thumbnailAlt: 'صورة مصغرة للفيديو',
-      continue: 'متابعة',
       durationUnknown: 'مباشر'
     },
     playlistPresets: {
       heading: 'اختر الجودة للدفعة',
       subhead: 'يحل كل فيديو المستوى المختار بشكل مستقل — قوائم التشغيل غير المتجانسة تعمل بدون مفاجآت.',
       itemCount_one: '{{count}} عنصر',
-      itemCount_other: '{{count}} عناصر',
-      continue: 'متابعة'
+      itemCount_other: '{{count}} عناصر'
     },
     mixedPrompt: {
       title: 'هذا الرابط يحتوي على Playlist',
@@ -114,17 +121,25 @@ const ar = {
       fetchFormats: 'جلب الصيغ',
       features: {
         heading: 'ما الذي يستطيع Arroxy سحبه',
-        video: {
-          title: 'مقاطع فيديو',
-          desc: 'اختر أي دقة حتى 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'مقاطع فيديو',
+          channel: 'القنوات',
+          playlist: 'قوائم التشغيل',
+          short: 'Shorts',
+          music: 'الموسيقى',
+          podcast: 'البودكاست'
         },
-        playlist: {
-          title: 'قوائم التشغيل',
-          desc: 'اختر عناصر متعددة من قائمة'
+        anySite: {
+          heading: '2000+ موقع',
+          video: 'مقاطع فيديو',
+          videoPlaylist: 'قوائم تشغيل الفيديو',
+          musicPlaylist: 'قوائم تشغيل الموسيقى'
         },
-        audio: {
-          title: 'صوت',
-          desc: 'المقطع الأصلي أو تحويل MP3/M4A'
+        always: {
+          heading: 'دائماً متاح',
+          audioOnly: 'الصوت فقط',
+          subtitles: 'الترجمات'
         }
       },
       mascotIdle: 'أرسل لي رابط YouTube (فيديو أو Short) — ثم اضغط "جلب الصيغ" وسأبدأ العمل ✨',
@@ -162,7 +177,7 @@ const ar = {
         enabledButNoBrowser: 'اختر متصفحاً لاستخدام الكوكيز',
         banWarning: 'قد يُعلّم YouTube — وأحياناً يحظر — الحسابات التي يستخدم yt-dlp كوكيزها. استخدم حساباً مؤقتاً إن أمكن.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'احصل على cookies.txt محلياً (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const ar = {
       }
     },
     subtitles: {
-      heading: 'الترجمات',
       autoBadge: 'تلقائي',
-      hint: 'ستُحفظ الملفات الجانبية بجانب الفيديو',
       noLanguages: 'لا توجد ترجمات متاحة لهذا الفيديو',
       skip: 'تخطي',
       skipSubs: 'تخطي لهذا الفيديو',
-      selectAll: 'تحديد الكل',
-      deselectAll: 'إلغاء تحديد الكل',
       mascot: 'اختر صفراً أو واحداً أو أكثر — الأمر يعود لك تماماً ✨',
       searchPlaceholder: 'البحث عن لغات…',
       noMatches: 'لا توجد لغات مطابقة',
@@ -242,10 +253,14 @@ const ar = {
       audioOnlyOption: 'صوت فقط (بدون فيديو)',
       mascot: 'الأفضل + الأفضل = أقصى جودة. هذا ما كنت سأختاره!',
       sniffing: 'جارٍ البحث عن أفضل الصيغ لك…',
-      loadingHint: 'عادةً يستغرق ثانية',
+      loadingHint: 'يُرجى الانتظار حتى تنتهي عملية الفحص — قوائم التشغيل والبحث قد تستغرق بعض الوقت.',
       loadingAria: 'جارٍ تحميل الصيغ',
       sizeUnknown: 'الحجم غير معروف',
       total: 'الإجمالي',
+      skipToConfirm: 'تخطَّ إلى التأكيد',
+      skipToConfirmTooltip: 'يستخدم تفضيلاتك المحفوظة لجميع الخطوات المتبقية. لتغيير إعداد ما، تابع خطوةً بخطوة — وسيُحفظ اختيارك للمرة القادمة.',
+      keepAudio: 'إبقاؤه كما هو',
+      keepAudioMeta: 'الصوت المضمّن',
       convert: {
         label: 'تحويل',
         uncompressed: 'تحويل · غير مضغوط',
@@ -261,8 +276,7 @@ const ar = {
         bodyDisabled: 'الكوكيز مضبوطة لكنها معطّلة. فعّلها وأعد المحاولة للحصول على القائمة الكاملة، أو غيّر الشبكة وأعد المحاولة.',
         bodyEnabled: 'حتى مع الكوكيز، قيّد YouTube هذا الفحص. حاول لاحقاً أو بدّل الشبكة.',
         retryCta: 'إعادة المحاولة',
-        enableRetryCta: 'تفعيل الكوكيز وإعادة المحاولة',
-        openSettingsCta: 'فتح الإعدادات المتقدمة'
+        enableRetryCta: 'تفعيل الكوكيز وإعادة المحاولة'
       },
       cookiesError: {
         heading: 'ربما تكون الكوكيز هي السبب',
@@ -272,6 +286,10 @@ const ar = {
         explanationFile: 'ملف الكوكيز قد يكون فارغاً أو منتهي الصلاحية أو بتنسيق خاطئ (يتوقع yt-dlp ملف Netscape cookies.txt). جرّب إعادة تصدير الكوكيز، أو اختيار ملف مختلف، أو التبديل إلى وضع المتصفح، أو إيقاف الكوكيز.',
         explanationBrowser: 'تُقرأ الكوكيز مباشرةً من المتصفح. إذا كان المتصفح يعمل حالياً، فقد تكون قاعدة بيانات الكوكيز مقفلة (متصفحات عائلة Chromium). يجب أن يكون المتصفح مسجّل الدخول إلى YouTube. جرّب إغلاق المتصفح، أو التبديل إلى متصفح مختلف، أو التبديل إلى وضع الملف، أو إيقاف الكوكيز.',
         openSettingsCta: 'فتح إعدادات الكوكيز',
+        needsCookies: {
+          heading: 'هذا الموقع يتطلب تسجيل الدخول',
+          body: 'تعذّر على yt-dlp الوصول إلى هذا الفيديو بدون مصادقة. أعدّ الكوكيز في الإعدادات المتقدمة — وجّههم نحو متصفح سجّلت الدخول إليه مسبقاً، أو استورد ملف cookies.txt.'
+        },
         dpapi: {
           heading: 'كوكيز Chrome محجوبة بسبب تشفير Windows',
           explanation: 'يُشفّر Chrome 127 والإصدارات الأحدث الكوكيز بطريقة لا تستطيع التطبيقات الأخرى قراءتها على Windows. جرّب أحد الحلول البديلة أدناه.',
@@ -334,26 +352,24 @@ const ar = {
       labelSize: 'الحجم',
       sizeUnknown: 'غير معروف',
       nothingToDownload: 'الإعداد المسبق "ترجمات فقط" مفعّل ولكن لم يتم اختيار أي لغة ترجمة — لن يتم تنزيل أي شيء.',
+      thumbnailEmbedNotSupported: 'تم تخطي Thumbnail embed — لا يدعمه container الإخراج.',
+      subtitleEmbedAudioOnly: 'تم تغيير Subtitle embed إلى sidecar — مسارات الصوت لا تدعم مسارات الترجمة المضمّنة.',
       audioOnly: 'صوت فقط',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'يبدأ عند انتهاء التنزيلات الأخرى — يحصل على كامل عرض النطاق',
-      pullIt: 'Pull it! ↓',
+      pullIt: 'اسحبه! ↓',
       pullItTooltip: 'يبدأ فوراً — يعمل جنباً إلى جنب مع التنزيلات النشطة الأخرى',
-      playlistBatch_one: '{{count}} فيديو · {{title}}',
-      playlistBatch_other: '{{count}} مقاطع فيديو · {{title}}',
       labelPlaylist: 'قائمة التشغيل',
       labelPreset: 'الإعداد المسبق',
       labelItems: 'العناصر',
       itemsValue_one: '{{count}} من {{total}} فيديو',
-      itemsValue_other: '{{count}} من {{total}} مقاطع فيديو'
-    },
-    error: {
-      icon: 'خطأ'
+      itemsValue_other: '{{count}} من {{total}} مقاطع فيديو',
+      itemsValueAudio_one: '{{count}} من {{total}} مقطع صوتي',
+      itemsValueAudio_other: '{{count}} من {{total}} مقاطع صوتية'
     }
   },
   videoCard: {
-    titlePlaceholder: 'جارٍ التحميل…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'جارٍ التحميل…'
   },
   queue: {
     header: 'قائمة التنزيل',
@@ -378,9 +394,7 @@ const ar = {
       resume: 'استئناف',
       cancel: 'إلغاء',
       remove: 'إزالة'
-    },
-    interJobSleep_one: 'التنزيل التالي يبدأ خلال {{count}} ثانية',
-    interJobSleep_other: 'التنزيل التالي يبدأ خلال {{count}} ثوانٍ'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const ar = {
     ytdlpProcessError: 'خطأ في عملية yt-dlp: {{error}}',
     ytdlpExitCode: 'خرج yt-dlp بالرمز {{code}}',
     downloadingBinary: 'جارٍ تنزيل ثنائي {{name}}…',
-    unknownStartupFailure: 'فشل غير معروف في بدء التنزيل'
+    unknownStartupFailure: 'فشل غير معروف في بدء التنزيل',
+    diskSpaceInsufficient: 'مساحة القرص غير كافية — تحتاج {{required}}، والمتاح فقط {{free}}'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const ar = {
       unavailable: 'هذا الفيديو غير متاح — قد يكون خاصاً أو محذوفاً أو مقيّداً بالمنطقة.',
       geoBlocked: 'هذا الفيديو غير متاح في منطقتك.',
       outOfDiskSpace: 'مساحة القرص غير كافية. أفرغ مساحة وأعد المحاولة.',
-      unsupportedUrl: 'لا يبدو هذا رابط فيديو. الصق رابط فيديو YouTube أو Short أو قائمة تشغيل.'
+      unsupportedUrl: 'لا يبدو هذا رابط فيديو. الصق رابط فيديو YouTube أو Short أو قائمة تشغيل.',
+      chunkTransferFailure: 'استمر الخادم في قطع التنزيل في منتصفه وتخلى yt-dlp بعد محاولات متعددة. يحدث هذا عادةً مع أكبر صيغ الفيديو (4K HDR / VP9 عالي معدل البت). أعد المحاولة، أو غيّر الشبكة/VPN، أو اختر صيغة بدقة أقل.',
+      postprocessFailure: 'انتهى yt-dlp من التنزيل لكن المعالجة اللاحقة (دمج / mux / تحويل) فشلت. غالبًا ما تكون مشكلة ffmpeg مؤقتة — أعد المحاولة، وإذا استمرت المشكلة جرّب توليفة صيغ مختلفة.',
+      parse: 'تعذّر تحليل الاستجابة الواردة من الموقع. ربما تكون أداة الاستخراج في yt-dlp قد تأخّرت. يقوم Arroxy بتحديث yt-dlp تلقائيًا عند التشغيل — أعد المحاولة بعد بضع دقائق حالما يصدر الإصلاح.',
+      network: 'خطأ في الشبكة. تحقق من اتصالك وأعد المحاولة.',
+      unknown: 'فشل التنزيل. راجع الإخراج الخام أدناه.'
     }
   },
   presets: {
@@ -463,9 +483,8 @@ const ar = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'تحويل إلى MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'صوت فقط',
     audioFallback: 'صوت',
-    audioOnlyDot: 'Audio only · {{audio}}',
+    audioOnlyDot: 'صوت فقط · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
   },
   tray: {
@@ -498,6 +517,24 @@ const ar = {
       detail: 'تعطّلت عملية العرض ({{reason}}). أعد التحميل للمحاولة مجدداً.',
       reload: 'إعادة التحميل',
       quit: 'الخروج'
+    }
+  },
+  share: {
+    title: 'مشاركة Arroxy',
+    description: 'Arroxy مجاني ومفتوح المصدر. مشاركته تساعد المزيد من الأشخاص على اكتشافه.',
+    copyLink: 'نسخ الرابط',
+    copied: 'تم النسخ!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'مشاركة Arroxy',
+    footerLabel: 'مشاركة',
+    shareAction: 'مشاركة Arroxy',
+    inlineCard: {
+      body: 'هل تستمتع بـ Arroxy؟ شاركه مع شخص قد يجده مفيداً.',
+      dismiss: 'إغلاق اقتراح المشاركة'
+    },
+    highValueBanner: {
+      body: 'هل تستمتع بـ Arroxy؟ ساعد الآخرين على اكتشافه.',
+      dismiss: 'إغلاق اقتراح المشاركة'
     }
   }
 } as const;

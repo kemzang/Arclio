@@ -1,10 +1,10 @@
-import type { AppSettings } from '@shared/types';
+import type { AppSettings } from '@shared/types.js';
 
-const COMMON_KEYS = new Set(['defaultOutputDir', 'rememberLastOutputDir', 'uiZoom', 'uiTheme', 'language', 'commonPaths', 'cookiesPath', 'cookiesMode', 'cookiesBrowser', 'cookiesEnabled', 'proxyUrl', 'clipboardWatchEnabled', 'closeBehavior', 'embedChapters', 'embedMetadata', 'embedThumbnail', 'writeDescription', 'writeThumbnail', 'lastSponsorBlockMode', 'lastSponsorBlockCategories', 'analyticsEnabled', 'firstRunCompleted', 'drawerOpen']);
+const COMMON_KEYS = new Set(['defaultOutputDir', 'rememberLastOutputDir', 'uiZoom', 'uiTheme', 'language', 'commonPaths', 'cookiesPath', 'cookiesMode', 'cookiesBrowser', 'cookiesEnabled', 'proxyUrl', 'clipboardWatchEnabled', 'closeBehavior', 'embedChapters', 'embedMetadata', 'embedThumbnail', 'writeDescription', 'writeThumbnail', 'lastSponsorBlockMode', 'lastSponsorBlockCategories', 'analyticsEnabled', 'firstRunCompleted', 'drawerOpen', 'lastSubfolderEnabled', 'lastSubfolder']);
 
-const SINGLE_KEYS = new Set(['lastPreset', 'lastVideoResolution', 'lastSubtitleLanguages', 'lastSubtitleMode', 'lastSubtitleFormat', 'lastSubfolderEnabled', 'lastSubfolder']);
+const SINGLE_KEYS = new Set(['lastPreset', 'lastVideoResolution', 'lastSubtitleLanguages', 'lastSubtitleMode', 'lastSubtitleFormat']);
 
-const PLAYLIST_KEYS = new Set(['lastPlaylistPreset', 'lastPlaylistSubfolderEnabled', 'lastPlaylistSubfolder']);
+const PLAYLIST_KEYS = new Set(['lastPlaylistPreset']);
 
 // Lets test files keep their flat-override style ({ lastSponsorBlockMode: 'mark', lastPreset: 'audio-only' })
 // while the production shape is now nested. Maps each flat key to its mode slot.

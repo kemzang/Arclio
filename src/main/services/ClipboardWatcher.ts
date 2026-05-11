@@ -1,6 +1,14 @@
 import { clipboard, type BrowserWindow } from 'electron';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { isYouTubeUrl } from '@shared/schemas';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+
+function isProbablyDownloadableUrl(input: string): boolean {
+  try {
+    const u = new URL(input);
+    return u.protocol === 'http:' || u.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
 
 export interface ClipboardReader {
   readText(): string;
@@ -98,7 +106,7 @@ export class ClipboardWatcher {
     if (!text || text === this.lastSeen) return;
     this.lastSeen = text;
     const trimmed = text.trim();
-    if (!isYouTubeUrl(trimmed)) return;
+    if (!isProbablyDownloadableUrl(trimmed)) return;
     if (this.window.isDestroyed()) return;
     this.window.send(IPC_CHANNELS.eventsClipboardUrl, trimmed);
   }

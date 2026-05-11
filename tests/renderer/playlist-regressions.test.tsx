@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 import { act } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { ok } from '../shared/fixtures';
-import { buildAppSettings } from '../shared/settingsFixtures';
-import type { PlaylistEntry, StatusEvent } from '@shared/types';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { ok } from '../shared/fixtures.js';
+import { buildAppSettings } from '../shared/settingsFixtures.js';
+import type { PlaylistEntry, StatusEvent } from '@shared/types.js';
 
 const PLAYLIST_ENTRIES: PlaylistEntry[] = [
   { id: 'p1', url: 'https://youtube.com/watch?v=p1', title: 'Vid 1', thumbnail: '', playlistIndex: 1 },
@@ -21,9 +21,13 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
     downloads: {
       start: vi.fn().mockResolvedValue(ok({ job: { id: 'job-1', url: '', outputDir: '/tmp', status: 'running', createdAt: '', updatedAt: '' } })),
       cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
-      getFormats: vi.fn(),
-      getPlaylistItems: vi.fn().mockResolvedValue(
+      probe: vi.fn().mockResolvedValue(
         ok({
+          kind: 'playlist' as const,
+          extractor: 'youtube:tab',
+          extractorKey: 'YoutubeTab',
+          webpageUrl: 'https://www.youtube.com/playlist?list=PL123',
+          isMultiVideo: false,
           playlistId: 'PL123',
           playlistTitle: 'Playlist',
           entries: PLAYLIST_ENTRIES
@@ -46,8 +50,23 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
       onWarmupProgress: vi.fn().mockReturnValue(() => undefined)
     },
     queue: {
-      save: vi.fn().mockResolvedValue(ok({ saved: true })),
-      load: vi.fn().mockResolvedValue(ok([]))
+      cmd: {
+        add: vi.fn().mockResolvedValue(ok({ ids: [] })),
+        getSnapshot: vi.fn().mockResolvedValue(ok([])),
+        start: vi.fn().mockResolvedValue(ok(undefined)),
+        pause: vi.fn().mockResolvedValue(ok(undefined)),
+        resume: vi.fn().mockResolvedValue(ok(undefined)),
+        cancel: vi.fn().mockResolvedValue(ok(undefined)),
+        retry: vi.fn().mockResolvedValue(ok(undefined)),
+        clearCompleted: vi.fn().mockResolvedValue(ok(undefined)),
+        remove: vi.fn().mockResolvedValue(ok(undefined))
+      },
+      events: {
+        onSnapshot: vi.fn().mockReturnValue(() => undefined),
+        onAdded: vi.fn().mockReturnValue(() => undefined),
+        onUpdated: vi.fn().mockReturnValue(() => undefined),
+        onRemoved: vi.fn().mockReturnValue(() => undefined)
+      }
     },
     diagnostics: { logWizardStep: vi.fn() }
   };
@@ -94,13 +113,14 @@ beforeEach(() => {
     playlistTitle: '',
     playlistId: '',
     playlistProbeLoading: false,
-    mixedUrlPromptOpen: false,
-    mixedUrlPending: null,
+    playlistIsMultiVideo: false,
     selectedPlaylistPreset: null,
+    wizardExtractor: '',
+    wizardExtractorKey: '',
+    wizardWebpageUrl: '',
     queue: [],
     drawerOpen: false,
-    showQueueTip: false,
-    interJobSleepEndsAt: null
+    showQueueTip: false
   } as never);
 });
 
@@ -115,8 +135,8 @@ describe('playlist regressions', () => {
       lastSponsorBlockMode: 'mark',
       lastSponsorBlockCategories: ['intro'],
       lastPlaylistPreset: 'audio-mp3',
-      lastPlaylistSubfolderEnabled: true,
-      lastPlaylistSubfolder: 'Saved Folder'
+      lastSubfolderEnabled: true,
+      lastSubfolder: 'Saved Folder'
     });
     window.appApi = api as never;
 
@@ -175,7 +195,7 @@ describe('playlist regressions', () => {
       await useAppStore.getState().addToQueue();
     });
 
-    const templates = useAppStore.getState().queue.map((item) => (item.job.kind === 'playlist-preset' ? item.job.outputTemplate : null));
+    const templates = (vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? []).map((item) => (item.job.kind === 'playlist-preset' ? item.job.outputTemplate : null));
 
     expect(templates).toEqual(['009 - %(title)s.%(ext)s', '010 - %(title)s.%(ext)s', '100 - %(title)s.%(ext)s']);
   });

@@ -5,12 +5,12 @@
 // keep inline tags like <em>. Everything else is HTML-escaped.
 
 export const zh = {
-  title: "Arroxy — 免费 4K YouTube 下载器，无需登录",
+  title: "Arroxy — 免费 4K YouTube + 2000 个网站下载器，无需登录",
   description:
-    "免费、MIT 许可的桌面 YouTube 下载器，支持 Windows、macOS 和 Linux。无需 Google 账号、浏览器 Cookie 或任何登录，即可下载高达 4K HDR 60 fps 的视频。",
-  og_title: "Arroxy — 免费 4K YouTube 下载器，无需登录",
+    "免费、MIT 许可的桌面下载器，支持 YouTube 和 2000+ 个网站，覆盖 Windows、macOS 和 Linux。最高可下载 4K HDR 60 fps 的视频。无广告、无冗余、无追加销售。",
+  og_title: "Arroxy — 免费 4K YouTube + 2000 个网站下载器，无需登录",
   og_description:
-    "免费 4K YouTube 下载器。无 Cookie，无需登录，无断会话。MIT 许可。Windows · macOS · Linux。",
+    "免费 4K 下载器，支持 YouTube 和 2000+ 个网站。无广告、无冗余、无追加销售。MIT 许可。Windows · macOS · Linux。",
 
   nav_features: "功能",
   nav_screenshots: "截图",
@@ -19,11 +19,11 @@ export const zh = {
   nav_download: "下载",
 
   hero_eyebrow: "开源 · MIT · 持续维护中",
-  hero_h1_a: "免费 4K YouTube 下载器。",
-  hero_h1_b: "无 Cookie。无需登录。无断会话。",
+  hero_h1_a: "免费 4K YouTube（+ 2000 个网站）下载器。",
+  hero_h1_b: "无广告、无冗余、无追加销售。",
   hero_tagline:
-    "Arroxy 是一款免费、MIT 许可的桌面 YouTube 下载器，支持 Windows、macOS 和 Linux。最高可下载 4K HDR 60 fps 的视频 — 无需 Google 账号、浏览器 Cookie 或任何登录。",
-  pill_no_account: "无需 Google 账号",
+    "Arroxy 是一款免费、MIT 许可的桌面下载器，支持 YouTube 和 2000+ 个网站，覆盖 Windows、macOS 和 Linux。最高可下载 4K HDR 60 fps 的视频。无广告、无冗余、无追加销售——粘贴链接即可开始。",
+  pill_no_account: "无广告",
   pill_open_source: "开源（MIT）",
   hero_trust: "在 GitHub 上审查每一行代码。",
   pill_no_tracking: "无追踪",
@@ -61,13 +61,13 @@ export const zh = {
   features_h2: "一切如你所愿，毫无阻碍。",
   features_sub: "粘贴 URL，选择画质，点击下载。就这么简单。",
   f1_h: "高达 4K UHD",
-  f1_p: "2160p、1440p、1080p、720p——YouTube 提供的各档分辨率都能下，还支持仅音频转换为 MP3、M4A/AAC、Opus 和 WAV。",
+  f1_p: "2160p、1440p、1080p、720p——YouTube 和其他支持网站提供的各档分辨率都能下，还支持仅音频转换为 MP3、M4A/AAC、Opus 和 WAV。",
   f2_h: "保留 60 fps 与 HDR",
   f2_p: "高帧率与 HDR 流原样直通，正如 YouTube 编码的那样 — 零画质损失。",
   f3_h: "也支持播放列表",
   f3_p: "粘贴播放列表链接后，可以下载整个列表，也可以先勾选想要的视频，再让 Arroxy 加入队列。",
   f4_h: "自动更新",
-  f4_p: "Arroxy 会保持 yt-dlp 最新，并把 ffmpeg 随应用一起提供 — 应对 YouTube 的每一次变化。",
+  f4_p: "Arroxy 会保持 yt-dlp 最新，并把 ffmpeg 随应用一起提供——每周发布修复以应对 YouTube 和其他网站的变化。",
   f5_h: "21 种语言",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — 自动检测你的语言。",
   f6_h: "跨平台",
@@ -77,9 +77,9 @@ export const zh = {
   f8_h: "内置 SponsorBlock",
   f8_p: "跳过或标记赞助商、片头、片尾、自我推广等片段 — 用 FFmpeg 剪除或直接添加章节。按类别自由选择。",
   f9_h: "剪贴板自动填写",
-  f9_p: "在任何地方复制 YouTube 链接，切换回应用时 Arroxy 立即检测 — 确认提示让你保持控制。在高级设置中开启或关闭。",
+  f9_p: "在任何地方复制任意支持的链接，切回应用的瞬间 Arroxy 立即检测——确认提示让你保持控制。在高级设置中开启或关闭。",
   f10_h: "自动清理 URL",
-  f10_p: "粘贴的 YouTube 链接会自动剥除跟踪参数（si、pp、feature、utm_*、fbclid、gclid 等），并解包 youtube.com/redirect 跳转链接 — URL 字段始终显示规范链接。",
+  f10_p: "粘贴的链接会自动剥除跟踪参数（si、pp、feature、utm_*、fbclid、gclid 等），并解包 youtube.com/redirect 跳转链接——URL 字段始终显示规范链接。",
   f11_h: "最小化到托盘",
   f11_p: "关闭窗口后 Arroxy 将缩入系统托盘，下载在后台持续运行 — 单击托盘图标可恢复窗口，或通过托盘菜单退出应用。",
   f12_h: "嵌入元数据与封面",
@@ -92,20 +92,20 @@ export const zh = {
   shot3_alt: "选择保存位置",
   shot4_alt: "并行下载",
   shot5_alt: "字幕步骤 — 选择语言、格式与保存方式",
-  og_image_alt: "Arroxy 应用图标 — 用于以 4K 下载 YouTube 视频的桌面应用。",
+  og_image_alt: "Arroxy 应用图标 — 用于以 4K 下载 YouTube 及 2000+ 个网站内容的桌面应用。",
 
   privacy_eyebrow: "隐私",
   privacy_h2_html: "Arroxy <em>不会</em>做什么。",
   privacy_sub:
-    "大多数 YouTube 下载器迟早会向你索取 Cookie。Arroxy 永远不会。",
+    "100% 本地处理。无广告、无追加销售、无第三方服务器——文件直接从 yt-dlp 保存到你的硬盘。",
   p1_h: "无需登录",
-  p1_p: "无需 Google 账号。没有会话过期问题。账号被标记的风险为零。",
-  p2_h: "无 Cookie",
-  p2_p: "Arroxy 请求的只是浏览器同样会请求的令牌。不导出，不保存。",
+  p1_p: "默认模式无需任何 Google 账号或登录。高级设置中提供可选的 Cookie 支持，用于年龄限制或仅会员内容——默认关闭。",
+  p2_h: "仅本地文件",
+  p2_p: "文件直接从 yt-dlp 保存到你选择的文件夹。不经过任何远程服务器。",
   p3_h: "匿名遥测",
   p3_p: "通过 OpenPanel 进行匿名遥测 — 每次安装的随机 ID 只用于统计启动次数、版本、OS 和崩溃；不包含 URL、标题、文件路径、账号信息、指纹识别或个人数据。你的下载、历史和文件永远不会离开你的设备。",
-  p4_h: "无第三方服务器",
-  p4_p: "整个流程通过 yt-dlp + ffmpeg 在本地运行。文件永远不会经过远程服务器。",
+  p4_h: "无广告、无追加销售",
+  p4_p: "MIT 许可证。无付费版、无功能门槛、无横幅广告、无暗黑模式。整个流程通过 yt-dlp + ffmpeg 在本地运行。",
 
   install_eyebrow: "安装",
   install_h2: "选择你的渠道。",
@@ -136,7 +136,7 @@ export const zh = {
   faq_h2: "常见问题",
   faq_q1: "能下载哪些画质？",
   faq_a1:
-    "凡是 YouTube 提供的都可以——4K UHD（2160p）、1440p QHD、1080p Full HD、720p、480p、360p，以及仅音频。高帧率流（60 fps、120 fps）和 HDR 内容都会原样保留。Arroxy 会显示所有可用格式，包括仅音频下载时可转换为 MP3、M4A/AAC、Opus 和 WAV。",
+    "凡是 YouTube 和其他支持网站提供的都可以——4K UHD（2160p）、1440p QHD、1080p Full HD、720p、480p、360p，以及仅音频。高帧率流（60 fps、120 fps）和 HDR 内容都会原样保留。Arroxy 会显示所有可用格式，包括仅音频下载时可转换为 MP3、M4A/AAC、Opus 和 WAV。",
   faq_q2: "真的免费吗？",
   faq_a2: "真的。MIT 许可证。没有付费版、没有功能门槛。",
   faq_q3: "Arroxy 支持哪些语言？",
@@ -147,16 +147,19 @@ export const zh = {
     "不需要。yt-dlp 会在首次启动时自动下载并缓存到你的机器上；ffmpeg 和 ffprobe 随应用一起提供。之后无需任何额外配置。",
   faq_q5: "如果 YouTube 改了什么，还能用吗？",
   faq_a5:
-    "能 — Arroxy 有两层保障。第一，yt-dlp 是社区里最活跃维护的开源工具之一 — YouTube 一变，几小时内就更新。第二，Arroxy 完全不依赖 Cookie 或你的 Google 账号，所以没有会话过期，没有凭据要轮换。这两点结合让它比依赖浏览器导出 Cookie 的工具稳定得多。",
+    "能——Arroxy 有两层保障。第一，yt-dlp 是社区里最活跃维护的开源工具之一——包括 YouTube 在内的支持网站一变，几小时内就更新。第二，Arroxy 完全不依赖 Cookie 或你的 Google 账号，所以没有会话过期，没有凭据要轮换。这两点结合让它比依赖浏览器导出 Cookie 的工具稳定得多。",
   faq_q6: "能下播放列表吗？",
   faq_a6: "可以。粘贴播放列表链接后，选择全部视频或只选你想要的那些，Arroxy 会把它们作为一个批次加入队列。整频道批量下载暂未支持。",
   faq_q7: "需要我的 YouTube 账号或 Cookie 吗？",
   faq_a7:
-    "不需要 — 这事比听起来更重要。大多数在 YouTube 更新后就罢工的工具会让你导出浏览器的 YouTube Cookie。这种方案每 30 分钟左右就坏一次（YouTube 会轮换会话），而 yt-dlp 自己的文档警告这可能让你的 Google 账号被标记。Arroxy 从不使用 Cookie 或凭据。无登录、无账号绑定，没东西过期，没东西被封。",
+    "默认不需要——Arroxy 无需账号、登录或导出 Cookie 即可使用。高级设置中提供可选的 Cookie 支持（文件或浏览器导入），用于需要身份验证的内容，例如年龄限制或仅会员视频。默认关闭。如果你启用它，yt-dlp 自己的文档警告基于 Cookie 的自动化可能导致 Google 账号被标记，因此使用一次性账号是更安全的选择。",
   faq_q8: 'macOS 提示 "应用已损坏" 或 "无法打开" — 怎么办？',
   faq_a8:
     "这是 macOS Gatekeeper 在拦截未签名应用 — 并不是真的损坏。README 里有 macOS 首次启动的分步指引。",
   faq_q9: "这合法吗？",
   faq_a9:
     "为个人使用下载视频，在大多数地区一般是被接受的。你需要自己负责遵守 YouTube 的服务条款和当地法律。",
+
+  f13_h: "YouTube + 2000 个网站",
+  f13_p: "除 YouTube 外，Arroxy 还支持从 yt-dlp 覆盖的 2000+ 个网站下载——Vimeo、Twitch、Twitter/X、TikTok、SoundCloud、Bandcamp、Bilibili、BBC iPlayer、archive.org 等众多平台。仅音频和字幕在所有支持的网站上均可使用，不限于 YouTube。",
 };

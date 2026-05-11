@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { cn } from '@renderer/lib/utils';
+import { cn } from '@renderer/lib/utils.js';
 
 interface Props {
   image: string;

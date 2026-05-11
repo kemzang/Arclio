@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { checkDiskSpace } from '@main/utils/diskSpace';
+import { checkDiskSpace } from '@main/utils/diskSpace.js';
 
 vi.mock('node:fs/promises', async (importOriginal) => {
   const actual = await importOriginal<typeof import('node:fs/promises')>();
@@ -35,11 +35,32 @@ describe('checkDiskSpace', () => {
     expect(result.requiredBytes).toBeGreaterThan(result.freeBytes!);
   });
 
-  it('returns ok=true when expectedBytes is undefined (live stream skip)', async () => {
-    // statfs should not even be called
+  it('still probes when expectedBytes undefined and uses minFreeBytes floor', async () => {
+    mockStatfs(50 * 1024 * 1024); // 50 MB free, below 200 MB default floor
+    const result = await checkDiskSpace('/some/dir', undefined);
+    expect(statfs).toHaveBeenCalled();
+    expect(result.ok).toBe(false);
+    expect(result.requiredBytes).toBe(200 * 1024 * 1024);
+  });
+
+  it('returns ok=true when expectedBytes undefined and free space exceeds floor', async () => {
+    mockStatfs(5 * 1024 * 1024 * 1024); // 5 GB free
     const result = await checkDiskSpace('/some/dir', undefined);
     expect(result.ok).toBe(true);
-    expect(statfs).not.toHaveBeenCalled();
+  });
+
+  it('requiredBytes uses max(expectedBytes×margin, minFreeBytes) — floor wins for tiny expected', async () => {
+    mockStatfs(0);
+    // 10 MB expected × 1.5 = 15 MB, floor 200 MB wins
+    const result = await checkDiskSpace('/some/dir', 10 * 1024 * 1024);
+    expect(result.requiredBytes).toBe(200 * 1024 * 1024);
+  });
+
+  it('respects custom minFreeBytes', async () => {
+    mockStatfs(150 * 1024 * 1024); // 150 MB free
+    const result = await checkDiskSpace('/some/dir', undefined, 1.5, 100 * 1024 * 1024);
+    expect(result.ok).toBe(true); // 150 MB > 100 MB floor
+    expect(result.requiredBytes).toBe(100 * 1024 * 1024);
   });
 
   it('requiredBytes = expectedBytes × marginFactor', async () => {
@@ -54,23 +75,27 @@ describe('checkDiskSpace', () => {
     expect(result.requiredBytes).toBe(1_500_000_000);
   });
 
-  it('returns ok=true and does not throw when statfs throws ENOENT', async () => {
+  it('returns ok=false with `error` set when statfs throws ENOENT', async () => {
+    // Distinguish "checked and passed" (ok:true, no error) from "couldn't
+    // check" (ok:false, error message present). Callers that need to be
+    // lenient (post-hoc disk probe) can inspect `error` and decide whether
+    // to use the verdict or skip it.
     vi.mocked(statfs).mockRejectedValue(Object.assign(new Error('no such file'), { code: 'ENOENT' }));
     const result = await checkDiskSpace('/nonexistent/dir', 1_000_000_000);
-    expect(result.ok).toBe(true);
+    expect(result.ok).toBe(false);
+    expect(result.error).toContain('no such file');
+    expect(result.freeBytes).toBeUndefined();
   });
 
-  it('returns ok=true and does not throw when statfs throws EACCES', async () => {
+  it('returns ok=false with `error` set when statfs throws EACCES', async () => {
     vi.mocked(statfs).mockRejectedValue(Object.assign(new Error('permission denied'), { code: 'EACCES' }));
     const result = await checkDiskSpace('/protected/dir', 1_000_000_000);
-    expect(result.ok).toBe(true);
+    expect(result.ok).toBe(false);
+    expect(result.error).toContain('permission denied');
+    expect(result.freeBytes).toBeUndefined();
   });
 
   it('returns freeBytes from statfs (bsize × bavail)', async () => {
-    vi.mocked(statfs).mockResolvedValue({ bsize: 512, bavail: 1000 } as never);
-    await checkDiskSpace('/dir', undefined);
-    // skip = true so freeBytes isn't computed from statfs, but with expectedBytes:
-    vi.clearAllMocks();
     vi.mocked(statfs).mockResolvedValue({ bsize: 512, bavail: 1000 } as never);
     const r2 = await checkDiskSpace('/dir', 9999);
     expect(r2.freeBytes).toBe(512 * 1000); // 512_000

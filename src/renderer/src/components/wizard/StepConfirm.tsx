@@ -1,18 +1,26 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanSize } from '@shared/format';
-import { useAppStore, presetLabel, resolveAudioLabel, resolveVideoResolution } from '../../store/useAppStore';
-import { formatHomeRelativePath } from '@renderer/lib/utils';
-import { effectiveOutputDir } from '@renderer/lib/path';
-import { resolveSubtitleLabel, SUBTITLE_MODE_I18N_KEYS } from '../../lib/subtitleLabel';
-import { Button } from '../ui/button';
-import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip';
-import { VideoSummaryCard } from '../shared/VideoSummaryCard';
+import { humanSize } from '@shared/format.js';
+import { useAppStore, presetLabel, resolveAudioLabel, resolveVideoResolution } from '../../store/useAppStore.js';
+import { formatHomeRelativePath } from '@renderer/lib/utils.js';
+import { effectiveOutputDir } from '@renderer/lib/path.js';
+import { resolveSubtitleLabel, SUBTITLE_MODE_I18N_KEYS } from '../../lib/subtitleLabel.js';
+import { sanitizeJobOptions } from '@shared/sanitizeJobOptions.js';
+import { resolveOutputContainer } from '../../store/wizard/resolveContainer.js';
+import { Button } from '../ui/button.js';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip.js';
+import { VideoSummaryCard } from '../shared/VideoSummaryCard.js';
+import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
+import { playlistPresetSpec } from '@shared/playlistPresets.js';
 import loveImg from '../../assets/Love.png';
 
 export function StepConfirm(): JSX.Element {
   const { t, i18n } = useTranslation();
-  const { wizardTitle, wizardThumbnail, wizardDuration, wizardOutputDir, selectedVideoFormatId, audioSelection, activePreset, wizardFormats, wizardSubtitleLanguages, wizardSubtitleMode, wizardSubtitleFormat, wizardSubtitles, wizardAutomaticCaptions, wizardSubtitleSkipped, commonPaths, wizardSubfolderEnabled, wizardSubfolderName, addToQueue, addAndDownloadImmediately, back, playlistItems, selectedPlaylistItemIds, selectedPlaylistPreset, playlistTitle, wizardMode } = useAppStore();
+  const CONFLICT_LABELS: Record<string, string> = {
+    thumbnailEmbedNotSupported: t('wizard.confirm.thumbnailEmbedNotSupported'),
+    subtitleEmbedAudioOnly: t('wizard.confirm.subtitleEmbedAudioOnly')
+  };
+  const { wizardTitle, wizardThumbnail, wizardDuration, wizardWebpageUrl, wizardOutputDir, selectedVideoFormatId, audioSelection, activePreset, wizardFormats, wizardSubtitleLanguages, wizardSubtitleMode, wizardSubtitleFormat, wizardSubtitles, wizardAutomaticCaptions, wizardSubtitleSkipped, commonPaths, wizardSubfolderEnabled, wizardSubfolderName, addToQueue, addAndDownloadImmediately, back, playlistItems, selectedPlaylistItemIds, selectedPlaylistPreset, playlistTitle, wizardMode, wizardExtractor, wizardEmbedChapters, wizardEmbedMetadata, wizardEmbedThumbnail, wizardWriteDescription, wizardWriteThumbnail, wizardSponsorBlockMode } = useAppStore();
   const inPlaylist = wizardMode === 'playlist';
 
   const effectiveSubtitleLanguages = wizardSubtitleSkipped ? [] : wizardSubtitleLanguages;
@@ -38,7 +46,13 @@ export function StepConfirm(): JSX.Element {
   })();
 
   const presetLabelStr = selectedPlaylistPreset ? t(`playlistPresets.${selectedPlaylistPreset}.label` as const) : '';
-  const itemsValue = t('wizard.confirm.itemsValue', { count: selectedPlaylistItemIds.length, total: String(playlistItems.length) });
+  // "videos" vs "tracks" — pick the unit that matches the actual content.
+  // Audio-only extractors (Bandcamp, QQMusic, etc.) and audio playlist
+  // presets (audio-best, audio-mp3) → "tracks". Video extractors / video
+  // presets → "videos".
+  const isAudioPlaylistPreset = !!selectedPlaylistPreset && !playlistPresetSpec(selectedPlaylistPreset).producesVideo;
+  const itemsAreAudio = isAudioOnlySource(wizardExtractor) || isAudioPlaylistPreset;
+  const itemsValue = t(itemsAreAudio ? 'wizard.confirm.itemsValueAudio' : 'wizard.confirm.itemsValue', { count: selectedPlaylistItemIds.length, total: String(playlistItems.length) });
 
   const summaryRows: { key: string; label: string; value: string }[] = inPlaylist
     ? [
@@ -57,9 +71,26 @@ export function StepConfirm(): JSX.Element {
 
   const hasNothingSelected = inPlaylist ? !selectedPlaylistPreset || selectedPlaylistItemIds.length === 0 : selectedVideoFormatId === '' && audioSelection.kind === 'none' && effectiveSubtitleLanguages.length === 0;
 
+  // Only surface conflicts the user actively created through visible wizard steps.
+  // subtitle-only skips the output + sponsorblock steps, so those options are never
+  // shown to the user — silently sanitized in buildQueueItem but not displayed here.
+  const USER_VISIBLE_CONFLICTS: ReadonlySet<string> = new Set(['thumbnailEmbedNotSupported', 'subtitleEmbedAudioOnly']);
+  const { conflicts: allConflicts } = !inPlaylist
+    ? sanitizeJobOptions({
+        isSubtitleOnly: activePreset === 'subtitle-only',
+        hasVideoTrack: selectedVideoFormatId !== '',
+        resolvedOutputContainer: resolveOutputContainer(selectedVideoFormatId, audioSelection, wizardSubtitleMode, wizardFormats, activePreset),
+        subtitleMode: wizardSubtitleMode,
+        subtitleLanguages: effectiveSubtitleLanguages,
+        embed: { chapters: wizardEmbedChapters, metadata: wizardEmbedMetadata, thumbnail: wizardEmbedThumbnail, description: wizardWriteDescription, thumbnailSidecar: wizardWriteThumbnail },
+        sponsorBlockMode: wizardSponsorBlockMode
+      })
+    : { conflicts: [] };
+  const conflicts = allConflicts.filter((c) => USER_VISIBLE_CONFLICTS.has(c.code));
+
   return (
     <div className="wizard-step flex flex-col gap-4" data-testid="step-confirm">
-      {!inPlaylist && <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={selectedVideoFormatId !== '' ? videoResolution : undefined} />}
+      {!inPlaylist && <VideoSummaryCard thumbnail={wizardThumbnail} title={wizardTitle} duration={wizardDuration} resolution={selectedVideoFormatId !== '' ? videoResolution : undefined} webpageUrl={wizardWebpageUrl} />}
 
       {/* Mascot banner */}
       <div className="flex items-center gap-4 p-4 rounded-lg border border-[hsla(220,100%,56%,0.15)] bg-[var(--brand-dim)] shrink-0">
@@ -88,14 +119,25 @@ export function StepConfirm(): JSX.Element {
         </table>
       </div>
 
+      {conflicts.length > 0 && (
+        <ul className="space-y-1" data-testid="confirm-conflicts">
+          {conflicts.map((c) => (
+            <li key={c.code} className="flex items-start gap-1.5 text-xs text-amber-500 dark:text-amber-400/90 px-1">
+              <span className="shrink-0 mt-px">⚠</span>
+              <span>{CONFLICT_LABELS[c.code]}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
       {hasNothingSelected && (
         <p className="text-xs text-muted-foreground text-center px-2" data-testid="nothing-to-download-note">
           {t('wizard.confirm.nothingToDownload')}
         </p>
       )}
 
-      <div className="flex items-center gap-2 sticky bottom-0 bg-background py-3 -mx-6 px-6 border-t border-border/50">
-        <Button variant="ghost" type="button" onClick={back} data-testid="btn-back" className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground mr-auto">
+      <div className="flex items-center justify-end gap-2 sticky bottom-0 bg-background py-3 -mx-6 px-6 border-t border-border/50">
+        <Button variant="ghost" type="button" onClick={back} data-testid="btn-back" className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
           {t('common.back')}
         </Button>
         <Tooltip>

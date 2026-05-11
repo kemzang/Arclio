@@ -1,15 +1,15 @@
 <div align="center">
   <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy маскота" width="180" />
 
-# Arroxy — Бесплатни open-source YouTube преузимач за Windows, macOS и Linux
+# Arroxy — Бесплатни open-source YouTube (+ 2000 сајтова) преузимач за Windows, macOS и Linux
 
-**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Subtitles · SponsorBlock**
+**4K · 1080p60 · HDR · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Читај на:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · **Српски** · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![Издање](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Изградња](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Веб-сајт](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Лиценца](https://img.shields.io/badge/license-MIT-green) ![Платформе](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Језици](https://img.shields.io/badge/i18n-21_languages-blue)
 
-Преузмите било који YouTube видео, Short или аудио снимак у оригиналном квалитету — до 4K HDR при 60 fps, или као MP3 / AAC / Opus. Ради локално на Windows-у, macOS-у и Linux-у. **Без реклама, без пријаве, без колачића претраживача, без повезаног Google налога.**
+Преузимајте видео снимке, Shorts, музику, каналe, подкасте или аудио записе са **YouTube-а и 2000+ подржаних сајтова** — до 4K HDR при 60 fps, или у MP3 / AAC / Opus формату. Ради локално на Windows-у, macOS-у и Linux-у. **Без реклама, без непотребног, без додатне продаје.**
 
 [**↓ Преузмите најновије издање**](../../releases/latest) &nbsp;·&nbsp; [**Веб-сајт**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#download) · [macOS](#download) · [Linux](#download)
 
@@ -24,7 +24,6 @@
 ## Садржај
 
 - [Зашто Arroxy](#why)
-- [Без колачића, без пријаве, без повезивања налога](#no-cookies)
 - [Функционалности](#features)
 - [Преузимање](#download)
 - [Приватност](#privacy)
@@ -52,19 +51,6 @@ Arroxy је направљен за једну ствар: налепите URL,
 
 ---
 
-## <a id="no-cookies"></a>Без колачића, без пријаве, без повезивања налога
-
-Ово је најчешћи разлог зашто десктоп преузимачи за YouTube престају да раде — и главни разлог зашто Arroxy постоји.
-
-Када YouTube ажурира откривање ботова, већина алата вам каже да извезете колачиће YouTube-а из претраживача као заобилазно решење. Два проблема с тим:
-
-1. Извезене сесије обично истичу за ~30 минута, па их стално поново извозите.
-2. Сопствена документација yt-dlp-а [упозорава да аутоматизација заснована на колачићима може означити ваш Google налог](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies).
-
-**Arroxy никада не тражи колачиће, пријаве нити било какве акредитиве.** Користи само јавне токене које YouTube служи сваком претраживачу. Ништа повезано са вашим Google идентитетом, ништа не истиче, ништа не треба мењати.
-
----
-
 ## <a id="features"></a>Функционалности
 
 ### Квалитет и формати
@@ -82,7 +68,7 @@ Arroxy је направљен за једну ствар: налепите URL,
 
 ### Радни ток
 
-- **Nalepi bilo koji YouTube URL** — podržani su video snimci, Shorts i plejliste; preuzmi celu plejlistu ili prvo izaberi određene video snimke
+- **Налепи bilo koji линк** — YouTube видео снимци, Shorts, канали, пlejliste, подкасти и Музика, плус 2000+ других сajтова које yt-dlp подржава; преузми цelu plejlistu или прво изабери одређене video snimke
 - **Ред за вишеструко преузимање** — пратите неколико преузимања истовремено
 - **Праћење клипборда** — копирајте YouTube линк и Arroxy аутоматски попуњава URL кад се вратите у апликацију (укључиво у напредним подешавањима)
 - **Аутоматско чишћење URL-ова** — уклања параметре праћења (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) и распакује `youtube.com/redirect` линкове
@@ -95,6 +81,13 @@ Arroxy је направљен за једну ствар: налепите URL,
 - Чувај поред видеа, уграђај у `.mkv`, или организуј у потфасциклу `Subtitles/`
 - **SponsorBlock** — прескочи или означи поглављима спонзоре, интра, аутра, самопромоције
 - **Уграђени метаподаци** — наслов, датум учитавања, канал, опис, минијатура и маркери поглавља уписани у фајл
+
+### YouTube + 2000 сајтова
+
+- **YouTube — у потпуности** — видео снимци, Shorts, канали, пlejliste, YouTube Music и подкасти обрађени као извори прве класе
+- **2000+ других сajтова** преко yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org и многи други
+- **Само аудио и титлови** раде на свaком подржаном сaјту, не само на YouTube-у
+- Ако сajт промени нешто, yt-dlp испоручује исправке недељно, а Arroxy аутоматски ажурира бинарни фajл при покретању
 
 <div align="center">
   <img src="build/Main-screenshot.png" width="48%" alt="Налепите URL" />
@@ -118,65 +111,66 @@ Arroxy је направљен за једну ствар: налепите URL,
 
 [**Преузмите најновије издање →**](../../releases/latest)
 
-### Инсталирај преко менаџера пакета
+### <a id="why-warning"></a>Зашто можете видети упозорење
 
-| Канал | Команда                                                                                |
-| ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+Arroxy је open-source пројекат са MIT лиценцом. Windows и macOS верзије **нису потписане кодом** — сертификати Apple Developer ID и Windows EV за потписивање кода коштају стотине долара годишње, које независни пројекат плаћа из сопственог џепа. Без тих потписа, Windows SmartScreen и macOS Gatekeeper ће вас упозорити при првом покретању. Упозорења значе *да ваш оперативни систем не препознаје издавача* — не значе да је Arroxy малвер.
 
-<details>
-<summary><strong>Windows: Инсталатер vs Преносиви</strong></summary>
+Три начина да сами проверите Arroxy, по растућој строгости:
 
-|               | NSIS Инсталатер | Преносиви `.exe` |
-| ------------- | :----------------------: | :---------------------: |
-| Потребна инсталација | Да  | Не — покрени са било ког места  |
-| Аутоматска ажурирања | ✅ унутар апликације  | ❌ ручно преузимање  |
-| Брзина покретања | ✅ брже  | ⚠️ спорије хладно покретање  |
-| Додаје у Start мени |            ✅            |           ❌            |
-| Лако деинсталирање |            ✅            | ❌ обришите фајл  |
+- **Прочитајте изворни код.** Свака линија је на [GitHub](https://github.com/antonio-orionus/Arroxy)-у и можете [изградити апликацију из изворног кода](#tech).
+- **Проверите SHA256.** Упоредите свој фајл са објављеним [`SHA256SUMS`](../../releases/latest) — погледајте [Верификујте преузимање](#verify) испод.
+- **Покрените скенирање треће стране.** Отпремите фајл на [VirusTotal](https://www.virustotal.com).
 
-**Препорука:** користите NSIS инсталатер за аутоматска ажурирања и брже покретање. Користите преносиви `.exe` за опцију без инсталације и регистра.
-
-**Упозорење Windows SmartScreen**
+### <a id="windows-first-launch"></a>Windows: прво покретање
 
 При prvom покретању можете видети **«Windows protected your PC»** или **«Unknown publisher»**. Ово се односи на `Arroxy-Setup-*.exe` и `Arroxy-Portable-*.exe`. Arroxy је бесплатан и отвореног кода, а Windows верзије нису потписане плаћеним сертификатом — због тога SmartScreen означава ове фајлове. То **не** значи аутоматски да је Arroxy несигуран. Да бисте наставили:
+
+<div align="center">
+  <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted" />
+  <img src="build/win-smartscreen-run-anyway.png" width="46%" alt="SmartScreen dialog after expanding More info, showing the "Run anyway" button" />
+</div>
 
 1. Кликните **More info**.
 2. Кликните **Run anyway**.
 
+#### Ако Windows Defender означи или уклони фајл
+
+Defender хеуристика понекад означава непотписане NSIS инсталатере и Electron преносиве верзије као сумњиве. Ако Defender стави у карантин `Arroxy-Setup-*.exe` или `Arroxy-Portable-*.exe`, вратите га из **Windows Security → Virus & threat protection → Protection history**, а затим додајте Arroxy извршни фајл као дозвољену ставку под **Manage settings → Add or remove exclusions**. Као и у случају SmartScreen-а, покретач је недостајући потпис издавача, а не откривен малвер.
+
 > Преузимајте Arroxy искључиво са званичне GitHub Releases странице. Ако сте добили фајл са другог сајта или вам је неко послао, обришите га и преузмите свежу копију из званичног извора. Изворни код је јаван, тако да га можете сами прегледати или компајлирати ако желите.
 
-</details>
+### <a id="macos-first-launch"></a>macOS: прво покретање
 
-<details>
-<summary><strong>Прво покретање на macOS-у</strong></summary>
+Arroxy још увек није потписан кодом за macOS, па ће Gatekeeper блокирати прво покретање. Тачан начин да га дозволите зависи од верзије macOS-а — Sequoia 15 је затегла стари обилазак преко десног клика → Отвори.
 
-Arroxy још увек није потписан кодом, па ће macOS Gatekeeper упозорити вас при првом покретању. То је очекивано — није знак оштећења.
+#### macOS Sequoia 15 и новије (актуелно)
 
-**Метода системских подешавања (препоручено):**
+На Sequoia 15 и новијим верзијама, десни клик → Отвори више не заобилази Gatekeeper за многе апликације у карантину. Уместо тога користите панел Системских подешавања:
 
-1. Кликните десним тастером на иконицу Arroxy апликације и изаберите **Отвори**.
-2. Приказује се дијалог упозорења — кликните **Откажи** (немојте кликнути *Премести у смеће*).
-3. Отворите **Системска подешавања → Приватност и безбедност**.
-4. Скролујте до одељка **Безбедност**. Видећете *"Arroxy је блокиран јер није од идентификованог програмера."*
-5. Кликните **Свеједно отвори** и потврдите лозинком или Touch ID-ом.
+1. Превуците `Arroxy.app` са монтираног DMG у `/Applications`.
+2. Двокликните Arroxy. Приказује се дијалог блокирања — кликните **Done** (не кликајте *Move to Trash*).
+3. Отворите **System Settings → Privacy & Security** и скролујте до одељка **Security**. Видећете *"Arroxy was blocked to protect your Mac"* (или сличну поруку).
+4. Кликните **Open Anyway**, потврдите лозинком или Touch ID-ом, а затим поново покрените Arroxy из `/Applications`.
 
-Након корака 5, Arroxy се отвара нормално и упозорење се више никад не приказује.
+#### macOS Sonoma 14 и старије
 
-**Метода терминала (напредно):**
+1. Превуците `Arroxy.app` са монтираног DMG у `/Applications`.
+2. Десним кликом (или Control-кликом) кликните на `Arroxy.app` у `/Applications` и одаберите **Open**.
+3. Дијалог упозорења сада има дугме **Open** — кликните га и потврдите. Arroxy се отвара нормално и упозорење се никад више не приказује.
+
+#### "App is damaged" или упорна блокада Gatekeeper-а — исправка путем Terminal-а
+
+Ако macOS каже *"Arroxy is damaged and can't be opened"*, или ниједан од горњих корака не уклони блокаду, узрок је атрибут карантина на DMG-у (неки претраживачи и macOS-ово сопствено понашање трансположења га постављају). Уклоните га са инсталиране апликације:
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/Arroxy.app
 ```
 
+**Apple Silicon vs Intel:** на Mac рачунару са процесором серије M (M1 / M2 / M3 / M4), преузмите DMG за `arm64`. На Intel Mac рачунарима, преузмите DMG за `x64`. Покретање погрешне верзије ради преко Rosetta, али је приметно спорије.
+
 > macOS верзије се производе путем CI на Apple Silicon и Intel покретачима. Ако наиђете на проблеме, [отворите пријаву](../../issues) — повратне информације корисника macOS-а активно обликују циклус тестирања.
 
-</details>
-
-<details>
-<summary><strong>Прво покретање на Linux-у</strong></summary>
+### <a id="linux-first-launch"></a>Linux: прво покретање
 
 AppImage-ови се покрећу директно — без инсталације. Само треба означити фајл као извршни.
 
@@ -202,12 +196,68 @@ sudo dnf install -y fuse-libs
 sudo pacman -S fuse2
 ```
 
+**Опционална интеграција са десктопом:** инсталирајте [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) једном, и свака AppImage коју двокликнете аутоматски се региструје у менију покретача — без ручног креирања `.desktop` фајлова.
+
 **Flatpak (алтернатива у песковнику):** преузмите `Arroxy-*.flatpak` са исте странице издања.
 
 ```bash
 flatpak install --user Arroxy-*.flatpak
 flatpak run io.github.antonio_orionus.Arroxy
 ```
+
+<details>
+<summary><strong><a id="verify"></a>Верификујте преузимање (SHA256)</strong></summary>
+
+Свако издање објављује `SHA256SUMS` фајл поред бинарних датотека. Да бисте проверили да ваше преузимање није оштећено или измењено у транзиту, хешујте свој фајл локално и упоредите га са линијом у `SHA256SUMS`. Отворите страницу најновијег издања → **Assets** → преузмите `SHA256SUMS`.
+
+**Windows (PowerShell or Command Prompt):**
+
+```powershell
+certutil -hashfile Arroxy-Setup-<version>.exe SHA256
+```
+
+**macOS (Terminal):**
+
+```bash
+shasum -a 256 Arroxy-<version>-arm64.dmg
+```
+
+**Linux (Terminal):**
+
+```bash
+sha256sum Arroxy-*.AppImage
+```
+
+Желите скенирање малвера треће стране? Отпремите фајл на [VirusTotal](https://www.virustotal.com). Неколико генеричко-хеуристичких означавања од стране мањих машина је нормално за непотписане Electron апликације; масовна откривања од стране главних машина би представљала прави разлог за забринутост.
+
+</details>
+
+<details>
+<summary><strong>Инсталирај преко менаџера пакета</strong></summary>
+
+Већ користите менаџер пакета? Можете прескочити путању ручног преузимања.
+
+| Канал | Команда                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------------- |
+| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
+| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
+| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
+| Flatpak            | `flatpak install --user Arroxy-*.flatpak`                                                         |
+
+</details>
+
+<details>
+<summary><strong>Windows: Инсталатер vs Преносиви</strong></summary>
+
+|               | NSIS Инсталатер | Преносиви `.exe` |
+| ------------- | :----------------------: | :---------------------: |
+| Потребна инсталација | Да  | Не — покрени са било ког места  |
+| Аутоматска ажурирања | ✅ унутар апликације  | ❌ ручно преузимање  |
+| Брзина покретања | ✅ брже  | ⚠️ спорије хладно покретање  |
+| Додаје у Start мени |            ✅            |           ❌            |
+| Лако деинсталирање |            ✅            | ❌ обришите фајл  |
+
+**Препорука:** користите NSIS инсталатер за аутоматска ажурирања и брже покретање. Користите преносиви `.exe` за опцију без инсталације и регистра.
 
 </details>
 
@@ -233,10 +283,10 @@ Arroxy шаље анонимну, збирну телеметрију преко
 Da. Izaberi *samo audio* u meniju formata, pa zatim MP3, M4A/AAC, Opus ili WAV.
 
 **Да ли треба YouTube налог или колачићи?**
-Не. Arroxy користи само јавне токене које YouTube служи сваком претраживачу. Без колачића, без пријаве, без ускладиштених акредитива. Погледајте [Без колачића, без пријаве, без повезивања налога](#no-cookies) за важност тога.
+Подразумевано, не — Arroxy ради без YouTube налога, пријаве или извоза колачића. Опциона подршка за колачиће доступна је у Напредним подешавањима (Извор колачића: фајл или претраживач) за садржај који захтева аутентификацију, попут видеа са старосним ограничењем или доступних само члановима. Подразумевано је искључена. Ако је омогућите, документација yt-dlp-а напомиње да [аутоматизација заснована на колачићима може означити ваш Google налог](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); у том случају је безбедније користити налог за једнократну употребу.
 
 **Хоће ли наставити да ради кад YouTube нешто промени?**
-Два слоја отпорности: yt-dlp се ажурира у року од неколико сати по промени YouTube-а, а Arroxy не ослања се на колачиће који истичу сваких ~30 минута. То га чини знатно стабилнијим од алата који зависе од извезених сесија претраживача.
+yt-dlp се аутоматски ажурира при покретању, а Arroxy брзо испоручује исправке кад YouTube нешто промени. Ако ипак наиђете на проблем, у Напредним подешавањима је на располагању опциона подршка за колачиће као резервна опција.
 
 **На којим је језицима Arroxy доступан?**
 Двадесет и један, одмах из кутије: English, Español (шпански), Deutsch (немачки), Français (француски), 日本語 (јапански), 中文 (кинески), Русский (руски), Українська (украјински), हिन्दी (хинди), Afaan Oromoo (оромо), Kiswahili (свахили), O'zbekcha (узбечки), Tiếng Việt (вијетнамски), አማርኛ (амхарски), العربية (арапски), اردو (урду), پښتو (пашто), বাংলা (бенгалски), မြန်မာဘာသာ (бурмански), Ελληνικά (грчки) и Српски. Arroxy аутоматски препознаје језик вашег оперативног система при prvom покретању и можете да пређете на други у сваком тренутку преко бирача језика у траци са алаткама. Преводи су обични TypeScript објекти у src/shared/i18n/locales/ — отворите PR на GitHub-у да допринесете.
@@ -248,7 +298,7 @@ Da. Izaberi *samo audio* u meniju formata, pa zatim MP3, M4A/AAC, Opus ili WAV.
 Da, za plejliste: nalepi URL plejliste, pa zatim stavi u red celu listu ili samo video snimke koje izabereš. Grupno preuzimanje celih kanala još nije podržano.
 
 **macOS каже да је "апликација оштећена" — шта да радим?**
-То је macOS Gatekeeper блокира непотписану апликацију, а не стварно оштећење. Погледајте одељак [прво покретање на macOS-у](#download) за решење.
+То је macOS Gatekeeper блокира непотписану апликацију, а не стварно оштећење. Погледајте ["App is damaged" — исправка путем Terminal-а](#macos-first-launch) за jednolinijsku `xattr` команду која то решава.
 
 **Да ли је преузимање YouTube видеа законито?**
 За личну, приватну употребу то је углавном прихватљиво у већини јурисдикција. Ви сте одговорни за усклађеност са [Условима коришћења](https://www.youtube.com/t/terms) YouTube-а и локалним законима о ауторским правима.

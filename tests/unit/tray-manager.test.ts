@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { EventEmitter } from 'node:events';
-import type { SupportedLang } from '@shared/i18n/types';
+import type { SupportedLang } from '@shared/i18n/types.js';
 
 const mockTrayInstance = {
   setToolTip: vi.fn(),
@@ -29,7 +29,7 @@ vi.mock('electron', () => {
 });
 
 import { Menu, nativeImage } from 'electron';
-import { TrayManager } from '@main/services/TrayManager';
+import { TrayManager } from '@main/services/TrayManager.js';
 
 // A minimal DownloadService fake that supports the event emitter pattern
 class FakeDownloadService extends EventEmitter {

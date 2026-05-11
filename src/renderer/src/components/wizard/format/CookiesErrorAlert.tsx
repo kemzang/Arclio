@@ -1,8 +1,8 @@
 import type { JSX } from 'react';
 import { AlertTriangle, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '@renderer/store/useAppStore';
-import { Button } from '@renderer/components/ui/button';
+import { useAppStore } from '@renderer/store/useAppStore.js';
+import { Button } from '@renderer/components/ui/button.js';
 
 const DPAPI_DOCS_URL = 'https://github.com/yt-dlp/yt-dlp/issues/10927';
 
@@ -11,11 +11,39 @@ function isDpapiCookieError(text: string | undefined | null): boolean {
   return /Failed to decrypt with DPAPI|no encrypted key in Local State/i.test(text);
 }
 
-export function CookiesErrorAlert(): JSX.Element | null {
+interface CookiesErrorAlertProps {
+  // When true, render even if cookiesMode === 'off'. Used by StepError when
+  // the error message itself signals "needs cookies".
+  forceShowCookiesOff?: boolean;
+}
+
+export function CookiesErrorAlert({ forceShowCookiesOff = false }: CookiesErrorAlertProps = {}): JSX.Element | null {
   const { t } = useTranslation();
   const { settings, openCookiesSettings, wizardError } = useAppStore();
   const cookiesMode = settings?.common?.cookiesMode ?? 'off';
-  if (cookiesMode === 'off') return null;
+
+  // Cookies-off + error suggests cookies → render the "needs cookies" variant
+  // so the user has a one-click path to the cookies settings.
+  if (cookiesMode === 'off') {
+    if (!forceShowCookiesOff) return null;
+    return (
+      <div role="status" data-testid="cookies-error-alert" data-mode="off" data-variant="needs-cookies" className="flex flex-col gap-2 rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-[12px] text-amber-900 dark:text-amber-100">
+        <div className="flex items-start gap-2">
+          <AlertTriangle size={14} className="mt-0.5 shrink-0 text-amber-500" />
+          <div className="flex flex-col gap-1">
+            <span className="font-semibold">{t('wizard.formats.cookiesError.needsCookies.heading')}</span>
+            <span className="leading-snug">{t('wizard.formats.cookiesError.needsCookies.body')}</span>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2 ps-6">
+          <Button type="button" size="sm" variant="outline" onClick={() => openCookiesSettings()} className="gap-1.5" data-testid="cookies-error-open-settings-cta">
+            <ExternalLink size={12} />
+            {t('wizard.formats.cookiesError.openSettingsCta')}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const dpapiDetected = cookiesMode === 'browser' && (isDpapiCookieError(wizardError?.message) || isDpapiCookieError(wizardError?.details));
 

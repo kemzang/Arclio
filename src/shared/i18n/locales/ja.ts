@@ -3,8 +3,7 @@ const ja = {
     back: '戻る',
     continue: '続行',
     retry: '再試行',
-    startOver: '最初からやり直す',
-    loading: '読み込み中…'
+    startOver: '最初からやり直す'
   },
   app: {
     feedback: 'フィードバック',
@@ -14,6 +13,15 @@ const ja = {
     debugCopyTitle: 'デバッグ情報をコピー (Electron、OS、Chrome のバージョン)',
     zoomIn: '拡大',
     zoomOut: '縮小'
+  },
+  about: {
+    button: '情報',
+    openTitle: 'Arroxy について',
+    tagline: 'デスクトップ向けの高速で使いやすい動画・音声ダウンローダー。',
+    websiteLink: '公式サイト',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT ライセンス · 作者 Antonio Orionus',
+    thirdPartyNotices: 'サードパーティ通知を表示'
   },
   titleBar: {
     close: '閉じる',
@@ -25,7 +33,6 @@ const ja = {
     greeting: 'やあ、おかえり!',
     warmup: 'Arroxyを起動中…',
     downloading: '{{binary}} をダウンロード中…',
-    warning: 'セットアップが未完了 — 一部の機能が動作しない可能性があります',
     warmupFailedNoDiag: 'セットアップに失敗しました。セットアップログを開いて詳細を確認してください。'
   },
   repair: {
@@ -81,6 +88,8 @@ const ja = {
       heading: 'Playlist アイテム',
       itemCount_one: '{{count}} 本の動画',
       itemCount_other: '{{count}} 本の動画',
+      itemCountAudio_one: '{{count}} 曲',
+      itemCountAudio_other: '{{count}} 曲',
       selectAll: 'すべて選択',
       selectNone: 'すべて解除',
       rangeFrom: '開始',
@@ -91,15 +100,13 @@ const ja = {
       noSelection: '続行するには少なくとも1本の動画を選択してください',
       loadingItems: 'Playlist を取得中…',
       thumbnailAlt: '動画サムネイル',
-      continue: '続行',
       durationUnknown: 'ライブ'
     },
     playlistPresets: {
       heading: 'バッチの画質を選択',
       subhead: '各動画が選択した画質ティアを独立して解決します — 異なる動画が混在するPlaylistも問題なく処理できます。',
       itemCount_one: '{{count}} 件',
-      itemCount_other: '{{count}} 件',
-      continue: '続行'
+      itemCount_other: '{{count}} 件'
     },
     mixedPrompt: {
       title: 'このリンクは Playlist に含まれています',
@@ -114,17 +121,25 @@ const ja = {
       fetchFormats: '形式を取得',
       features: {
         heading: 'Arroxyで取得できるもの',
-        video: {
-          title: '動画',
-          desc: '4Kまで好きな解像度を選べる'
+        youtube: {
+          heading: 'YouTube',
+          video: '動画',
+          channel: 'チャンネル',
+          playlist: 'プレイリスト',
+          short: 'Shorts',
+          music: '音楽',
+          podcast: 'ポッドキャスト'
         },
-        playlist: {
-          title: 'プレイリスト',
-          desc: 'プレイリストから複数選択'
+        anySite: {
+          heading: '2000以上のサイト',
+          video: '動画',
+          videoPlaylist: '動画プレイリスト',
+          musicPlaylist: '音楽プレイリスト'
         },
-        audio: {
-          title: '音声',
-          desc: 'オリジナルストリームまたはMP3/M4A変換'
+        always: {
+          heading: 'いつでも利用可能',
+          audioOnly: '音声のみ',
+          subtitles: '字幕'
         }
       },
       mascotIdle: 'YouTubeのリンクを貼ってね (動画でもShortsでもOK) — 「形式を取得」を押せばすぐ取りかかるよ ✨',
@@ -162,7 +177,7 @@ const ja = {
         enabledButNoBrowser: 'Cookieを使うにはブラウザを選択してください',
         banWarning: '注意: yt-dlpがCookieで使うアカウントは、YouTube側でフラグが立てられたり、稀にBANされることがあります。可能なら使い捨てアカウントを使ってください。',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'cookies.txt をローカルで取得 (Chrome)'
       },
       proxy: {
         label: 'Proxy URL',
@@ -180,14 +195,10 @@ const ja = {
       }
     },
     subtitles: {
-      heading: '字幕',
       autoBadge: '自動',
-      hint: '字幕ファイルは動画と同じフォルダに保存されます',
       noLanguages: 'この動画には字幕がありません',
       skip: 'スキップ',
       skipSubs: 'この動画ではスキップ',
-      selectAll: 'すべて選択',
-      deselectAll: 'すべて解除',
       mascot: 'ゼロでも、一つでも、複数でも — お好みで ✨',
       searchPlaceholder: '言語を検索…',
       noMatches: '言語が見つかりません',
@@ -242,10 +253,14 @@ const ja = {
       audioOnlyOption: '音声のみ (動画なし)',
       mascot: '最高 + 最高 = 最高画質。これを選ぶよ!',
       sniffing: 'あなたに最適な形式を探しています…',
-      loadingHint: '通常は1秒ほどで完了',
+      loadingHint: '解析が完了するまでお待ちください。プレイリストや検索には時間がかかる場合があります。',
       loadingAria: '形式を読み込み中',
       sizeUnknown: 'サイズ不明',
       total: '合計',
+      skipToConfirm: '確認へスキップ',
+      skipToConfirmTooltip: '残りのすべてのステップに保存済みの設定を使用します。設定を変更するには、ステップごとに進んでください — 選択内容は次回のために保存されます。',
+      keepAudio: 'そのまま保持',
+      keepAudioMeta: '内蔵音声',
       convert: {
         label: '変換',
         uncompressed: '変換 · 非圧縮',
@@ -261,8 +276,7 @@ const ja = {
         bodyDisabled: 'Cookieは設定されていますが無効になっています。有効にして再試行すると完全な一覧を取得できます。または、ネットワークを変えて再試行してください。',
         bodyEnabled: 'Cookieを使用していても、YouTubeがこの取得を制限しました。しばらくしてから再試行するか、ネットワークを切り替えてください。',
         retryCta: '再試行',
-        enableRetryCta: 'Cookieを有効にして再試行',
-        openSettingsCta: '詳細設定を開く'
+        enableRetryCta: 'Cookieを有効にして再試行'
       },
       cookiesError: {
         heading: 'Cookieが原因かもしれません',
@@ -271,6 +285,10 @@ const ja = {
         currentModeBrowser: 'ブラウザ',
         explanationFile: 'Cookieファイルが空・期限切れ・または形式が正しくない可能性があります (yt-dlp は Netscape cookies.txt を期待しています)。Cookieを再エクスポートするか、別のファイルを選ぶか、ブラウザモードに切り替えるか、Cookieをオフにしてみてください。',
         explanationBrowser: 'Cookieはブラウザから直接読み込まれます。ブラウザが起動中の場合、Cookieデータベースがロックされている可能性があります (Chromiumファミリー)。ブラウザがYouTubeにサインインしている必要もあります。ブラウザを閉じる、別のブラウザに切り替える、ファイルモードに変更する、またはCookieをオフにしてみてください。',
+        needsCookies: {
+          heading: 'このサイトはサインインが必要です',
+          body: 'yt-dlpは認証なしでこの動画にアクセスできませんでした。詳細設定でCookieを設定してください — すでにサインイン済みのブラウザを指定するか、cookies.txtファイルをインポートしてください。'
+        },
         openSettingsCta: 'Cookie設定を開く',
         dpapi: {
           heading: 'ChromeのCookieがWindowsの暗号化によりブロックされています',
@@ -334,26 +352,24 @@ const ja = {
       labelSize: 'サイズ',
       sizeUnknown: '不明',
       nothingToDownload: '字幕のみプリセットが有効ですが字幕言語が選択されていません — 何もダウンロードされません。',
+      thumbnailEmbedNotSupported: 'Thumbnail embed をスキップしました — 出力 container がこの機能をサポートしていません。',
+      subtitleEmbedAudioOnly: 'Subtitle embed を sidecar に変更しました — 音声トラックには字幕ストリームの埋め込みをサポートしていません。',
       audioOnly: '音声のみ',
       addToQueue: '+ キュー',
       addToQueueTooltip: '他のダウンロードが終わってから開始 — 帯域幅をフル活用',
       pullIt: '取得! ↓',
       pullItTooltip: 'すぐ開始 — 他のアクティブなダウンロードと並行実行',
-      playlistBatch_one: '{{count}} 本 · {{title}}',
-      playlistBatch_other: '{{count}} 本 · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'プリセット',
       labelItems: '件数',
       itemsValue_one: '全{{total}}本中{{count}}本',
-      itemsValue_other: '全{{total}}本中{{count}}本'
-    },
-    error: {
-      icon: 'エラー'
+      itemsValue_other: '全{{total}}本中{{count}}本',
+      itemsValueAudio_one: '全{{total}}曲中{{count}}曲',
+      itemsValueAudio_other: '全{{total}}曲中{{count}}曲'
     }
   },
   videoCard: {
-    titlePlaceholder: '読み込み中…',
-    domain: 'youtube.com'
+    titlePlaceholder: '読み込み中…'
   },
   queue: {
     header: 'ダウンロードキュー',
@@ -378,9 +394,7 @@ const ja = {
       resume: '再開',
       cancel: 'キャンセル',
       remove: '削除'
-    },
-    interJobSleep_one: '次のダウンロードは{{count}}秒後に開始',
-    interJobSleep_other: '次のダウンロードは{{count}}秒後に開始'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const ja = {
     ytdlpProcessError: 'yt-dlpプロセスエラー: {{error}}',
     ytdlpExitCode: 'yt-dlpがコード{{code}}で終了しました',
     downloadingBinary: 'バイナリ {{name}} をダウンロード中…',
-    unknownStartupFailure: 'ダウンロード開始時に不明なエラーが発生しました'
+    unknownStartupFailure: 'ダウンロード開始時に不明なエラーが発生しました',
+    diskSpaceInsufficient: 'ディスク空き容量が不足しています — {{required}} 必要ですが、空きは {{free}} のみです'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const ja = {
       unavailable: 'この動画は利用できません — 非公開、削除済み、または地域制限の可能性があります。',
       geoBlocked: 'この動画はあなたの地域では視聴できません。',
       outOfDiskSpace: 'ディスク容量が不足しています。空き容量を増やして再試行してください。',
-      unsupportedUrl: '動画のURLではないようです。YouTube動画、Short、またはプレイリストのリンクを貼り付けてください。'
+      unsupportedUrl: '動画のURLではないようです。YouTube動画、Short、またはプレイリストのリンクを貼り付けてください。',
+      chunkTransferFailure: 'サーバーがストリームの途中で接続を何度も切断し、yt-dlpは再試行を繰り返した末に断念しました。最も大きなビデオフォーマット（4K HDR / 高ビットレート VP9）で起こりやすい問題です。再試行するか、ネットワークまたは VPN を切り替えるか、解像度の低いフォーマットを選択してください。',
+      postprocessFailure: 'yt-dlp はダウンロードを完了しましたが、後処理（マージ / mux / 変換）に失敗しました。多くの場合、これは一時的な ffmpeg の問題です。再試行し、それでも続く場合は別のフォーマットの組み合わせを試してください。',
+      parse: 'サイトからの応答を解析できませんでした。yt-dlp の抽出機能が古くなっている可能性があります。Arroxy は起動時に yt-dlp を自動更新します — 修正版が配信されるまで数分待ってから再試行してください。',
+      network: 'ネットワークエラーです。接続を確認して再試行してください。',
+      unknown: 'ダウンロードに失敗しました。下の生の出力を確認してください。'
     }
   },
   presets: {
@@ -463,7 +483,6 @@ const ja = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'MP3 192 kbps に変換' }
   },
   formatLabel: {
-    audioOnly: '音声のみ',
     audioFallback: '音声',
     audioOnlyDot: '音声のみ · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
@@ -498,6 +517,24 @@ const ja = {
       detail: 'レンダラープロセスがクラッシュしました ({{reason}})。再読み込みしてもう一度お試しください。',
       reload: '再読み込み',
       quit: '終了'
+    }
+  },
+  share: {
+    title: 'Arroxyをシェア',
+    description: 'Arroxyは無料でオープンソースです。シェアすることでより多くの人に届けることができます。',
+    copyLink: 'リンクをコピー',
+    copied: 'コピーしました！',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Arroxy を共有',
+    footerLabel: '共有',
+    shareAction: 'Arroxy を共有',
+    inlineCard: {
+      body: 'Arroxyを気に入ってくれてる? 役に立ちそうな人にシェアしてみて。',
+      dismiss: 'シェアの提案を閉じる'
+    },
+    highValueBanner: {
+      body: 'Arroxyを気に入ってくれてる? ほかの人にも見つけてもらおう。',
+      dismiss: 'シェアの提案を閉じる'
     }
   }
 } as const;

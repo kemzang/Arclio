@@ -1,19 +1,21 @@
 import { useEffect, useState, type JSX } from 'react';
-import { Bug } from 'lucide-react';
+import { Bug, Info, Share2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ZOOM_MIN, ZOOM_MAX, ZOOM_STEP } from '@shared/schemas';
-import { useAppStore } from './store/useAppStore';
-import { TitleBar } from './components/layout/TitleBar';
-import { WizardPanel } from './components/layout/WizardPanel';
-import { SmartDrawer } from './components/layout/SmartDrawer';
-import { SplashScreen } from './components/system/SplashScreen';
-import { FeedbackNudge } from './components/system/FeedbackNudge';
-import { UpdateBanner } from './components/system/UpdateBanner';
-import { ThemeToggle } from './components/system/ThemeToggle';
-import { LanguagePicker } from './components/system/LanguagePicker';
-import { useUpdateChannel } from './components/system/useUpdateChannel';
-import { TooltipProvider } from './components/ui/tooltip';
-import { cn } from './lib/utils';
+import { ZOOM_MIN, ZOOM_MAX, ZOOM_STEP } from '@shared/schemas.js';
+import { useAppStore } from './store/useAppStore.js';
+import { TitleBar } from './components/layout/TitleBar.js';
+import { WizardPanel } from './components/layout/WizardPanel.js';
+import { SmartDrawer } from './components/layout/SmartDrawer.js';
+import { SplashScreen } from './components/system/SplashScreen.js';
+import { FeedbackNudge } from './components/system/FeedbackNudge.js';
+import { UpdateBanner } from './components/system/UpdateBanner.js';
+import { ThemeToggle } from './components/system/ThemeToggle.js';
+import { LanguagePicker } from './components/system/LanguagePicker.js';
+import { AboutDialog } from './components/system/AboutDialog.js';
+import { ShareDialog } from './components/system/ShareDialog.js';
+import { useUpdateChannel } from './components/system/useUpdateChannel.js';
+import { TooltipProvider } from './components/ui/tooltip.js';
+import { cn } from './lib/utils.js';
 
 const FEEDBACK_URL = 'https://github.com/antonio-orionus/Arroxy/issues/new/choose';
 
@@ -26,7 +28,7 @@ function buildDebugInfo(): string {
 
 export function App(): JSX.Element {
   const { t } = useTranslation();
-  const { initialized, initialize, openLogs, uiZoom, setUiZoom, uiTheme, warmupBlocking, warmupDiagnostics, warmupProgress } = useAppStore();
+  const { initialized, initialize, openLogs, uiZoom, setUiZoom, uiTheme, warmupBlocking, warmupDiagnostics, warmupProgress, setAboutDialogOpen, openShareDialog } = useAppStore();
   const update = useUpdateChannel();
   const [debugCopied, setDebugCopied] = useState(false);
   const [showNudge, setShowNudge] = useState(false);
@@ -100,15 +102,25 @@ export function App(): JSX.Element {
             <LanguagePicker />
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-[11px] text-muted-foreground/50 tabular-nums select-none">v{window.appVersion}</span>
-            <button type="button" className="w-5 h-5 flex items-center justify-center text-muted-foreground hover:text-foreground/80 transition-colors" onClick={copyDebugInfo} title={debugCopied ? t('app.debugCopied') : t('app.debugCopyTitle')} data-testid="btn-debug">
+            <button type="button" className="inline-flex items-center h-5 leading-none text-[11px] text-muted-foreground/50 tabular-nums select-none hover:text-foreground/80 transition-colors" onClick={() => setAboutDialogOpen(true)} title={t('about.openTitle')} data-testid="btn-about-version">
+              v{window.appVersion}
+            </button>
+            <button type="button" className="inline-flex items-center h-5 leading-none gap-1.5 text-[13px] text-muted-foreground hover:text-foreground/80 transition-colors" onClick={() => setAboutDialogOpen(true)} title={t('about.openTitle')} data-testid="btn-about">
+              <Info size={14} />
+              {t('about.button')}
+            </button>
+            <button type="button" className="inline-flex items-center justify-center w-5 h-5 leading-none text-muted-foreground hover:text-foreground/80 transition-colors" onClick={copyDebugInfo} title={debugCopied ? t('app.debugCopied') : t('app.debugCopyTitle')} data-testid="btn-debug">
               <Bug size={14} />
             </button>
-            <div className="relative">
+            <button type="button" className="inline-flex items-center h-5 leading-none gap-1.5 text-[13px] text-muted-foreground hover:text-foreground/80 transition-colors" onClick={() => openShareDialog('footer')} title={t('share.footerTooltip')} data-testid="btn-share">
+              <Share2 size={14} />
+              {t('share.footerLabel')}
+            </button>
+            <div className="relative inline-flex items-center h-5">
               <FeedbackNudge visible={showNudge} message={t('app.feedbackNudge')} />
               <button
                 type="button"
-                className={cn('text-[13px] transition-colors', showNudge ? 'feedback-btn-nudging' : 'text-muted-foreground hover:text-foreground/80')}
+                className={cn('inline-flex items-center h-5 leading-none text-[13px] transition-colors', showNudge ? 'feedback-btn-nudging' : 'text-muted-foreground hover:text-foreground/80')}
                 onClick={() => {
                   setShowNudge(false);
                   void window.appApi.shell.openExternal(FEEDBACK_URL);
@@ -118,13 +130,15 @@ export function App(): JSX.Element {
                 {t('app.feedback')}
               </button>
             </div>
-            <button type="button" className="text-[13px] text-muted-foreground hover:text-foreground/80 transition-colors" onClick={() => void openLogs()} data-testid="btn-logs">
+            <button type="button" className="inline-flex items-center h-5 leading-none text-[13px] text-muted-foreground hover:text-foreground/80 transition-colors" onClick={() => void openLogs()} data-testid="btn-logs">
               {t('app.logs')}
             </button>
           </div>
         </footer>
 
         <SplashScreen initialized={initialized} warmupBlocking={warmupBlocking} warmupDiagnostics={warmupDiagnostics} warmupProgress={warmupProgress} />
+        <AboutDialog />
+        <ShareDialog />
       </div>
     </TooltipProvider>
   );

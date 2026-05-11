@@ -1,6 +1,6 @@
-import type { Result } from './result';
-import type { SupportedLang } from './i18n/types';
-import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, GetFormatsInput, GetFormatsOutput, GetPlaylistItemsInput, GetPlaylistItemsOutput, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProgressEvent, QueueItem, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types';
+import type { Result } from './result.js';
+import type { SupportedLang } from './i18n/types.js';
+import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProbeInput, ProbeResult, ProgressEvent, QueueItem, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types.js';
 
 export interface SettingsPatch {
   common?: Partial<CommonSettings>;
@@ -24,8 +24,8 @@ export interface AppApi {
   };
   window: WindowApi;
   downloads: {
-    getFormats(input: GetFormatsInput): Promise<Result<GetFormatsOutput>>;
-    getPlaylistItems(input: GetPlaylistItemsInput): Promise<Result<GetPlaylistItemsOutput>>;
+    probe(input: ProbeInput): Promise<Result<ProbeResult>>;
+    probeCancel(): Promise<void>;
     start(input: StartDownloadInput): Promise<Result<StartDownloadOutput>>;
     cancel(input?: CancelDownloadInput): Promise<Result<CancelDownloadOutput>>;
     pause(input?: PauseDownloadInput): Promise<Result<PauseDownloadOutput>>;
@@ -55,8 +55,23 @@ export interface AppApi {
     onWarmupProgress(listener: (event: WarmupProgressEvent) => void): () => void;
   };
   queue: {
-    save(items: QueueItem[]): Promise<Result<{ saved: true }>>;
-    load(): Promise<Result<QueueItem[]>>;
+    cmd: {
+      add(items: QueueItem[]): Promise<Result<{ ids: string[] }>>;
+      getSnapshot(): Promise<Result<QueueItem[]>>;
+      start(input: { itemId: string }): Promise<Result<void>>;
+      pause(input: { itemId: string }): Promise<Result<void>>;
+      resume(input: { itemId: string }): Promise<Result<void>>;
+      cancel(input: { itemId: string | null }): Promise<Result<void>>;
+      retry(input: { itemId: string }): Promise<Result<void>>;
+      clearCompleted(): Promise<Result<void>>;
+      remove(input: { itemId: string }): Promise<Result<void>>;
+    };
+    events: {
+      onSnapshot(listener: (items: QueueItem[]) => void): () => void;
+      onAdded(listener: (event: { items: QueueItem[]; atIdx: number }) => void): () => void;
+      onUpdated(listener: (event: { item: QueueItem }) => void): () => void;
+      onRemoved(listener: (event: { itemId: string }) => void): () => void;
+    };
   };
   updater: {
     onUpdateAvailable(listener: (info: UpdateAvailablePayload) => void): () => void;

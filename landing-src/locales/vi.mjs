@@ -5,12 +5,12 @@
 // keep inline tags like <em>. Everything else is HTML-escaped.
 
 export const vi = {
-  title: "Arroxy — Tải YouTube 4K miễn phí, không cần đăng nhập",
+  title: "Arroxy — Trình tải YouTube 4K + 2000 Trang Miễn Phí, Không Cần Đăng Nhập",
   description:
-    "Phần mềm tải YouTube miễn phí, giấy phép MIT dành cho Windows, macOS và Linux. Tải video lên tới 4K HDR ở 60 fps mà không cần tài khoản Google, cookie trình duyệt hay bất kỳ thông tin đăng nhập nào.",
-  og_title: "Arroxy — Tải YouTube 4K miễn phí, không cần đăng nhập",
+    "Phần mềm tải máy tính để bàn miễn phí, giấy phép MIT dành cho YouTube và hơn 2000 trang được hỗ trợ trên Windows, macOS và Linux. Tải video lên tới 4K HDR ở 60 fps. Không quảng cáo, không phồng to, không bán thêm.",
+  og_title: "Arroxy — Trình tải YouTube 4K + 2000 Trang Miễn Phí, Không Cần Đăng Nhập",
   og_description:
-    "Phần mềm tải YouTube 4K miễn phí. Không cookie, không đăng nhập, không phiên hết hạn. Giấy phép MIT. Windows · macOS · Linux.",
+    "Trình tải 4K miễn phí cho YouTube và hơn 2000 trang. Không quảng cáo, không phồng to, không bán thêm. Giấy phép MIT. Windows · macOS · Linux.",
 
   nav_features: "Tính năng",
   nav_screenshots: "Ảnh chụp màn hình",
@@ -19,11 +19,11 @@ export const vi = {
   nav_download: "Tải xuống",
 
   hero_eyebrow: "Mã nguồn mở · MIT · Đang phát triển tích cực",
-  hero_h1_a: "Tải YouTube 4K miễn phí.",
-  hero_h1_b: "Không cookie. Không đăng nhập. Không phiên hết hạn.",
+  hero_h1_a: "Trình tải YouTube 4K (+ 2000 trang) miễn phí.",
+  hero_h1_b: "Không quảng cáo, không phồng to, không bán thêm.",
   hero_tagline:
-    "Arroxy là phần mềm tải YouTube miễn phí, giấy phép MIT dành cho Windows, macOS và Linux. Tải video lên tới 4K HDR ở 60 fps — không bao giờ yêu cầu tài khoản Google, cookie trình duyệt hay bất kỳ thông tin đăng nhập nào.",
-  pill_no_account: "Không cần tài khoản Google",
+    "Arroxy là phần mềm tải máy tính để bàn miễn phí, giấy phép MIT dành cho YouTube và hơn 2000 trang được hỗ trợ, trên Windows, macOS và Linux. Tải video lên tới 4K HDR ở 60 fps. Không quảng cáo, không phồng to, không bán thêm — chỉ cần dán URL và tải.",
+  pill_no_account: "Không quảng cáo",
   pill_no_tracking: "Không theo dõi",
   pill_open_source: "Mã nguồn mở (MIT)",
   hero_trust: "Kiểm tra toàn bộ mã nguồn trên GitHub.",
@@ -61,13 +61,13 @@ export const vi = {
   features_h2: "Tất cả những gì bạn mong đợi, không có bất kỳ phiền hà nào.",
   features_sub: "Dán URL, chọn chất lượng, nhấn tải xuống. Chỉ vậy thôi.",
   f1_h: "Lên tới 4K UHD",
-  f1_p: "2160p, 1440p, 1080p, 720p — mọi độ phân giải YouTube cung cấp, kèm chuyển đổi chỉ âm thanh sang MP3, M4A/AAC, Opus và WAV.",
+  f1_p: "2160p, 1440p, 1080p, 720p — mọi độ phân giải YouTube và các trang được hỗ trợ khác cung cấp, kèm chuyển đổi chỉ âm thanh sang MP3, M4A/AAC, Opus và WAV.",
   f2_h: "60 fps & HDR được bảo toàn",
   f2_p: "Luồng tốc độ khung hình cao và HDR được truyền tải chính xác như YouTube mã hóa — không mất chất lượng.",
   f3_h: "Có cả playlist",
   f3_p: "Dán URL playlist, tải toàn bộ danh sách hoặc chỉ đánh dấu những video bạn muốn trước khi Arroxy đưa chúng vào hàng đợi.",
   f4_h: "Tự động cập nhật",
-  f4_p: "Arroxy giữ yt-dlp luôn mới và đóng gói ffmpeg trong ứng dụng — hoạt động qua mọi thay đổi của YouTube.",
+  f4_p: "Arroxy giữ yt-dlp luôn mới và đóng gói ffmpeg trong ứng dụng — phát hành bản sửa lỗi hàng tuần khi YouTube và các trang khác thay đổi.",
   f5_h: "21 ngôn ngữ",
   f5_p: "English, Español, Deutsch, Français, 日本語, 中文, Русский, Українська, हिन्दी, Afaan Oromoo, Kiswahili, O'zbekcha, Tiếng Việt, አማርኛ, العربية, اردو, پښتو, বাংলা, မြန်မာဘာသာ, Ελληνικά, Српски — tự động nhận diện ngôn ngữ của bạn.",
   f6_h: "Đa nền tảng",
@@ -77,9 +77,9 @@ export const vi = {
   f8_h: "SponsorBlock tích hợp sẵn",
   f8_p: "Bỏ qua hoặc đánh dấu các đoạn tài trợ, intro, outro, tự quảng cáo và nhiều hơn nữa — cắt bằng FFmpeg hoặc chỉ thêm chương. Tùy bạn quyết định, theo từng danh mục.",
   f9_h: "Tự động điền từ clipboard",
-  f9_p: "Sao chép liên kết YouTube bất cứ đâu và Arroxy phát hiện ngay khi bạn quay lại — hộp thoại xác nhận giúp bạn kiểm soát. Bật hoặc tắt trong Cài đặt nâng cao.",
+  f9_p: "Sao chép bất kỳ liên kết được hỗ trợ nào ở bất cứ đâu và Arroxy phát hiện ngay khi bạn quay lại — hộp thoại xác nhận giúp bạn kiểm soát. Bật hoặc tắt trong Cài đặt nâng cao.",
   f10_h: "Tự động làm sạch URL",
-  f10_p: "Các tham số theo dõi (si, pp, feature, utm_*, fbclid, gclid và nhiều hơn) được tự động loại bỏ khỏi liên kết YouTube được dán, và các wrapper youtube.com/redirect được mở ra — trường URL luôn hiển thị liên kết chuẩn.",
+  f10_p: "Các tham số theo dõi (si, pp, feature, utm_*, fbclid, gclid và nhiều hơn) được tự động loại bỏ khỏi các liên kết được dán, và các wrapper youtube.com/redirect được mở ra — trường URL luôn hiển thị liên kết chuẩn.",
   f11_h: "Thu nhỏ xuống khay hệ thống",
   f11_p: "Đóng cửa sổ sẽ thu nhỏ Arroxy vào khay hệ thống. Các tải xuống tiếp tục chạy nền — nhấp biểu tượng khay để mở lại cửa sổ, hoặc thoát từ menu khay.",
   f12_h: "Siêu dữ liệu & ảnh bìa nhúng sẵn",
@@ -92,20 +92,20 @@ export const vi = {
   shot3_alt: "Chọn nơi lưu",
   shot4_alt: "Tải xuống song song",
   shot5_alt: "Bước phụ đề — chọn ngôn ngữ, định dạng và chế độ lưu",
-  og_image_alt: "Biểu tượng ứng dụng Arroxy — phần mềm máy tính để bàn tải video YouTube ở 4K.",
+  og_image_alt: "Biểu tượng ứng dụng Arroxy — phần mềm máy tính để bàn tải YouTube và hơn 2000 trang khác ở 4K.",
 
   privacy_eyebrow: "Quyền riêng tư",
   privacy_h2_html: "Những gì Arroxy <em>không</em> làm.",
   privacy_sub:
-    "Hầu hết các phần mềm tải YouTube đều yêu cầu cookie của bạn. Arroxy thì không bao giờ.",
-  p1_h: "Không đăng nhập",
-  p1_p: "Không cần tài khoản Google. Không phiên nào hết hạn. Không có nguy cơ tài khoản bị gắn cờ.",
-  p2_h: "Không cookie",
-  p2_p: "Arroxy yêu cầu cùng token như mọi trình duyệt. Không có gì được xuất, không có gì được lưu trữ.",
+    "Xử lý 100% cục bộ. Không quảng cáo, không bán thêm, không máy chủ bên thứ ba — các tệp đi thẳng từ yt-dlp đến ổ đĩa của bạn.",
+  p1_h: "Không cần đăng nhập",
+  p1_p: "Chế độ mặc định hoạt động mà không cần bất kỳ tài khoản hay đăng nhập Google nào. Hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao cho nội dung giới hạn độ tuổi hoặc chỉ dành cho thành viên — tắt theo mặc định.",
+  p2_h: "Chỉ tệp cục bộ",
+  p2_p: "Các tệp đi thẳng từ yt-dlp đến thư mục bạn chọn. Không có gì được định tuyến qua máy chủ từ xa.",
   p3_h: "Telemetry ẩn danh",
   p3_p: "Telemetry ẩn danh qua OpenPanel — một ID ngẫu nhiên cho mỗi lần cài đặt giúp đếm lượt khởi động, phiên bản, OS và sự cố; không URL, tiêu đề, đường dẫn tệp, thông tin tài khoản, fingerprinting hay dữ liệu cá nhân. Lịch sử tải xuống và tệp của bạn không bao giờ rời khỏi máy.",
-  p4_h: "Không có máy chủ bên thứ ba",
-  p4_p: "Toàn bộ quy trình chạy cục bộ qua yt-dlp + ffmpeg. Các tệp không bao giờ chạm đến máy chủ từ xa.",
+  p4_h: "Không quảng cáo, không bán thêm",
+  p4_p: "Giấy phép MIT. Không có gói cao cấp, không giới hạn tính năng, không quảng cáo banner, không thủ thuật tối. Toàn bộ quy trình chạy cục bộ qua yt-dlp + ffmpeg.",
 
   install_eyebrow: "Cài đặt",
   install_h2: "Chọn kênh của bạn.",
@@ -136,7 +136,7 @@ export const vi = {
   faq_h2: "Câu hỏi thường gặp",
   faq_q1: "Tôi có thể tải video ở những chất lượng nào?",
   faq_a1:
-    "Bất cứ thứ gì YouTube cung cấp — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p và chỉ âm thanh. Luồng tốc độ khung hình cao (60 fps, 120 fps) và nội dung HDR được giữ nguyên. Arroxy hiển thị mọi định dạng khả dụng, bao gồm chuyển đổi sang MP3, M4A/AAC, Opus và WAV cho các lượt tải chỉ âm thanh.",
+    "Bất cứ thứ gì YouTube và các trang được hỗ trợ khác cung cấp — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p và chỉ âm thanh. Luồng tốc độ khung hình cao (60 fps, 120 fps) và nội dung HDR được giữ nguyên. Arroxy hiển thị mọi định dạng khả dụng, bao gồm chuyển đổi sang MP3, M4A/AAC, Opus và WAV cho các lượt tải chỉ âm thanh.",
   faq_q2: "Thực sự miễn phí không?",
   faq_a2: "Có. Giấy phép MIT. Không có gói cao cấp, không có tính năng bị khóa.",
   faq_q3: "Arroxy có sẵn bằng những ngôn ngữ nào?",
@@ -147,13 +147,13 @@ export const vi = {
     "Không. yt-dlp được tải xuống tự động khi khởi động lần đầu và được lưu vào bộ nhớ đệm trên máy của bạn; ffmpeg và ffprobe đi kèm với ứng dụng. Sau đó, không cần thiết lập thêm gì.",
   faq_q5: "Nó có tiếp tục hoạt động nếu YouTube thay đổi gì đó không?",
   faq_a5:
-    "Có — và Arroxy có hai lớp khả năng chống chịu. Thứ nhất, yt-dlp là một trong những công cụ mã nguồn mở được duy trì tích cực nhất — nó cập nhật trong vài giờ sau khi YouTube thay đổi. Thứ hai, Arroxy hoàn toàn không phụ thuộc vào cookie hay tài khoản Google của bạn, vì vậy không có phiên nào hết hạn và không có thông tin đăng nhập nào cần xoay vòng. Sự kết hợp đó khiến nó ổn định hơn đáng kể so với các công cụ phụ thuộc vào cookie trình duyệt được xuất ra.",
+    "Có — và Arroxy có hai lớp khả năng chống chịu. Thứ nhất, yt-dlp là một trong những công cụ mã nguồn mở được duy trì tích cực nhất — nó cập nhật trong vài giờ sau bất kỳ thay đổi nào của trang được hỗ trợ, bao gồm YouTube. Thứ hai, Arroxy hoàn toàn không phụ thuộc vào cookie hay tài khoản Google của bạn, vì vậy không có phiên nào hết hạn và không có thông tin đăng nhập nào cần xoay vòng. Sự kết hợp đó khiến nó ổn định hơn đáng kể so với các công cụ phụ thuộc vào cookie trình duyệt được xuất ra.",
   faq_q6: "Tôi có thể tải playlist không?",
   faq_a6:
     "Có. Dán URL playlist, chọn tất cả video hoặc chỉ những video bạn muốn, và Arroxy sẽ xếp chúng thành một lô duy nhất. Tải hàng loạt cả kênh vẫn chưa được hỗ trợ.",
   faq_q7: "Nó có cần tài khoản YouTube hay cookie của tôi không?",
   faq_a7:
-    "Không — và điều đó quan trọng hơn bạn nghĩ. Hầu hết các công cụ ngừng hoạt động sau khi YouTube cập nhật đều yêu cầu bạn xuất cookie YouTube từ trình duyệt. Cách khắc phục đó bị phá vỡ sau khoảng ~30 phút khi YouTube xoay vòng phiên, và tài liệu của yt-dlp chính họ cảnh báo rằng điều đó có thể khiến tài khoản Google của bạn bị gắn cờ. Arroxy không bao giờ sử dụng cookie hay thông tin đăng nhập. Không đăng nhập. Không có tài khoản nào được liên kết. Không có gì hết hạn, không có gì bị cấm.",
+    "Mặc định là không — Arroxy hoạt động mà không cần tài khoản, đăng nhập hay xuất cookie. Hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao (tệp hoặc nhập từ trình duyệt) cho nội dung yêu cầu xác thực, chẳng hạn như video giới hạn độ tuổi hoặc chỉ dành cho thành viên. Tắt theo mặc định. Nếu bật, tài liệu của yt-dlp cảnh báo rằng tự động hóa dựa trên cookie có thể gắn cờ tài khoản Google, vì vậy tài khoản dùng một lần là lựa chọn an toàn hơn.",
   faq_q8:
     'macOS báo "ứng dụng bị hỏng" hoặc "không thể mở" — tôi phải làm gì?',
   faq_a8:
@@ -161,4 +161,7 @@ export const vi = {
   faq_q9: "Điều này có hợp pháp không?",
   faq_a9:
     "Tải video để sử dụng cá nhân thường được chấp nhận ở hầu hết các quốc gia. Bạn có trách nhiệm tuân thủ Điều khoản Dịch vụ của YouTube và luật pháp địa phương.",
+
+  f13_h: "YouTube + 2000 trang",
+  f13_p: "Ngoài YouTube, Arroxy tải từ hơn 2000 trang mà yt-dlp hỗ trợ — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org và nhiều hơn nữa. Chỉ âm thanh và phụ đề hoạt động ở mọi nơi, không chỉ trên YouTube.",
 };

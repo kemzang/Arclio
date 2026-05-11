@@ -1,16 +1,16 @@
 import { useState, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AudioBitrate, AudioConvertTarget, FormatOption } from '@shared/types';
-import { AUDIO_CONVERT_TARGETS } from '@shared/audioTargets';
-import { AUDIO_BITRATES } from '@shared/schemas';
-import type { AudioSelection } from '../../../store/types';
-import { useFormatSelectionView } from '../../../store/formatSelectionView';
-import { ToggleGroup, ToggleGroupItem } from '../../ui/toggle-group';
-import { Tooltip, TooltipTrigger, TooltipContent } from '../../ui/tooltip';
-import { RadioOption } from '../../ui/radio-option';
-import { ScrollArea } from '../../ui/scroll-area';
-import { MascotBubble } from '../../shared/MascotBubble';
-import { cn } from '@renderer/lib/utils';
+import type { AudioBitrate, AudioConvertTarget, FormatOption } from '@shared/types.js';
+import { AUDIO_CONVERT_TARGETS } from '@shared/audioTargets.js';
+import { AUDIO_BITRATES } from '@shared/schemas.js';
+import type { AudioSelection } from '../../../store/types.js';
+import { useFormatSelectionView } from '../../../store/formatSelectionView.js';
+import { ToggleGroup, ToggleGroupItem } from '../../ui/toggle-group.js';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../../ui/tooltip.js';
+import { RadioOption } from '../../ui/radio-option.js';
+import { ScrollArea } from '../../ui/scroll-area.js';
+import { MascotBubble } from '../../shared/MascotBubble.js';
+import { cn } from '@renderer/lib/utils.js';
 import choosingImg from '../../../assets/Choosing.png';
 
 interface AudioColumnProps {
@@ -77,6 +77,12 @@ export function AudioColumn({ formats, audioSelection, onSelect }: AudioColumnPr
       </div>
 
       <ScrollArea className="max-h-[240px]">
+        {/* Muxed-video sources surface "Keep as-is" first because it's the
+            zero-cost default — embedded audio stays in the file, no extraction
+            step. Convert/no-audio rows still follow for users who explicitly
+            want extraction or video-only output. */}
+        {audio.selectedVideoIsMuxed && <RadioOption checked={audioSelection.kind === 'none'} disabled={audio.noAudioDisabled} onClick={() => onSelect({ kind: 'none' })} label={t('wizard.formats.keepAudio')} meta={<span className="text-[11px] text-[var(--text-subtle)] ml-auto whitespace-nowrap">{t('wizard.formats.keepAudioMeta')}</span>} />}
+
         {nativeAudios
           .filter((f) => matchExt(f.ext))
           .map((fmt) => {
@@ -126,7 +132,7 @@ export function AudioColumn({ formats, audioSelection, onSelect }: AudioColumnPr
             );
           })}
 
-        <RadioOption checked={audioSelection.kind === 'none'} disabled={audio.noAudioDisabled} onClick={() => onSelect({ kind: 'none' })} label={t('wizard.formats.noAudio')} meta={<span className="text-[11px] text-[var(--text-subtle)] ml-auto whitespace-nowrap">{t('wizard.formats.videoOnly')}</span>} />
+        {!audio.selectedVideoIsMuxed && <RadioOption checked={audioSelection.kind === 'none'} disabled={audio.noAudioDisabled} onClick={() => onSelect({ kind: 'none' })} label={t('wizard.formats.noAudio')} meta={<span className="text-[11px] text-[var(--text-subtle)] ml-auto whitespace-nowrap">{t('wizard.formats.videoOnly')}</span>} />}
       </ScrollArea>
 
       {bitrateTooltipMsg ? (

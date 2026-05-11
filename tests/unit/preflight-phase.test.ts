@@ -1,18 +1,18 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { PreflightPhase } from '@main/services/phases/PreflightPhase';
-import type { PhaseContext, ActiveDownload } from '@main/services/phases/types';
-import type { DownloadJob, StartDownloadInput } from '@shared/types';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+import { PreflightPhase } from '@main/services/phases/PreflightPhase.js';
+import type { PhaseContext, ActiveDownload } from '@main/services/phases/types.js';
+import type { DownloadJob, StartDownloadInput } from '@shared/types.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };
-const DEFAULT_JOB: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
+const DEFAULT_JOB: PreparedJob = { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
 
 vi.mock('@main/utils/diskSpace', () => ({
   checkDiskSpace: vi.fn()
 }));
 
-import { checkDiskSpace } from '@main/utils/diskSpace';
+import { checkDiskSpace } from '@main/utils/diskSpace.js';
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -28,24 +28,24 @@ function makeCtx(outputDir = '/output'): PhaseContext {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
+  const controller = new AbortController();
   const active: ActiveDownload = {
     job,
     input,
+    controller,
+    signal: controller.signal,
     cancelRequested: false,
     pauseRequested: false,
-    subtitlePaths: []
+    subtitlePaths: [],
+    disposables: []
   };
   return {
     active,
+    signal: active.signal,
     ytDlp: {} as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn(),
-    attachYtDlpProcess: vi.fn(),
-    safeConsume: vi.fn(),
-    cleanupPartFiles: vi.fn(),
-    cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-    finalize: vi.fn(),
-    moveToPaused: vi.fn()
+    register: () => undefined,
+    safeConsume: vi.fn()
   };
 }
 
@@ -71,19 +71,33 @@ describe('PreflightPhase', () => {
     const outcome = await phase.run(makeCtx());
     expect(outcome.kind).toBe('hard-failed');
     if (outcome.kind === 'hard-failed') {
-      expect(outcome.error.key).toBe('outOfDiskSpace');
+      expect(outcome.error.kind).toBe('outOfDiskSpace');
     }
   });
 
-  it('returns continue when expectedBytes is undefined (live stream)', async () => {
+  it('returns continue when expectedBytes is undefined and free space exceeds floor', async () => {
     vi.mocked(checkDiskSpace).mockResolvedValue({
       ok: true,
-      freeBytes: undefined,
-      requiredBytes: undefined
+      freeBytes: 5_000_000_000,
+      requiredBytes: 200 * 1024 * 1024
     });
     const phase = PreflightPhase(undefined);
     const outcome = await phase.run(makeCtx());
     expect(outcome.kind).toBe('continue');
+  });
+
+  it('still trips when expectedBytes undefined but free space is below floor', async () => {
+    vi.mocked(checkDiskSpace).mockResolvedValue({
+      ok: false,
+      freeBytes: 50 * 1024 * 1024,
+      requiredBytes: 200 * 1024 * 1024
+    });
+    const phase = PreflightPhase(undefined);
+    const outcome = await phase.run(makeCtx());
+    expect(outcome.kind).toBe('hard-failed');
+    if (outcome.kind === 'hard-failed') {
+      expect(outcome.error.kind).toBe('outOfDiskSpace');
+    }
   });
 
   it('emits an error status on insufficient space', async () => {
@@ -95,7 +109,9 @@ describe('PreflightPhase', () => {
     const ctx = makeCtx();
     const phase = PreflightPhase(400_000_000);
     await phase.run(ctx);
-    expect(ctx.emitStatus).toHaveBeenCalledWith('error', expect.any(String), undefined, expect.objectContaining({ key: 'outOfDiskSpace' }));
+    // Localized status key with GB-formatted required/free params; payload still
+    // carries the actionable yt-dlp error key for downstream classification.
+    expect(ctx.emitStatus).toHaveBeenCalledWith('error', 'diskSpaceInsufficient', expect.objectContaining({ required: expect.any(String), free: expect.any(String) }), expect.objectContaining({ kind: 'outOfDiskSpace' }));
   });
 
   it('calls checkDiskSpace with the job outputDir', async () => {
@@ -109,7 +125,7 @@ describe('PreflightPhase', () => {
     expect(checkDiskSpace).toHaveBeenCalledWith('/my/output', 500_000_000);
   });
 
-  it('hard-failed error rawMessage includes GB amounts', async () => {
+  it('hard-failed error raw text includes GB amounts', async () => {
     vi.mocked(checkDiskSpace).mockResolvedValue({
       ok: false,
       freeBytes: 1_073_741_824,
@@ -118,7 +134,7 @@ describe('PreflightPhase', () => {
     const phase = PreflightPhase(2_000_000_000);
     const outcome = await phase.run(makeCtx());
     if (outcome.kind === 'hard-failed') {
-      expect(outcome.error.rawMessage).toContain('GB');
+      expect(outcome.error.raw).toContain('GB');
     }
   });
 });

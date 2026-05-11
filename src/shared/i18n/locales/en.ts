@@ -3,8 +3,7 @@ const en = {
     back: 'Back',
     continue: 'Continue',
     retry: 'Retry',
-    startOver: 'Start over',
-    loading: 'Loading…'
+    startOver: 'Start over'
   },
   app: {
     feedback: 'Feedback',
@@ -14,6 +13,15 @@ const en = {
     debugCopyTitle: 'Copy debug info (Electron, OS, Chrome versions)',
     zoomIn: 'Zoom in',
     zoomOut: 'Zoom out'
+  },
+  about: {
+    button: 'About',
+    openTitle: 'About Arroxy',
+    tagline: 'Fast, friendly downloader for YouTube and 2000+ other sites.',
+    websiteLink: 'Website',
+    githubLink: 'GitHub',
+    licenseLine: 'MIT License · by Antonio Orionus',
+    thirdPartyNotices: 'View third-party notices'
   },
   titleBar: {
     close: 'Close',
@@ -25,7 +33,6 @@ const en = {
     greeting: 'Hey, welcome back!',
     warmup: 'Arroxy is warming up…',
     downloading: 'Downloading {{binary}}…',
-    warning: 'Setup incomplete — some features may not work',
     warmupFailedNoDiag: 'Setup failed. Open the setup log for details.'
   },
   repair: {
@@ -81,13 +88,14 @@ const en = {
       heading: 'Pick quality for the batch',
       subhead: 'Each video resolves the chosen tier independently — heterogeneous playlists work without surprises.',
       itemCount_one: '{{count}} item',
-      itemCount_other: '{{count}} items',
-      continue: 'Continue'
+      itemCount_other: '{{count}} items'
     },
     playlist: {
       heading: 'Playlist items',
       itemCount_one: '{{count}} video',
       itemCount_other: '{{count}} videos',
+      itemCountAudio_one: '{{count}} track',
+      itemCountAudio_other: '{{count}} tracks',
       selectAll: 'Select all',
       selectNone: 'Select none',
       rangeFrom: 'From',
@@ -98,7 +106,6 @@ const en = {
       noSelection: 'Select at least one video to continue',
       loadingItems: 'Fetching playlist…',
       thumbnailAlt: 'Video thumbnail',
-      continue: 'Continue',
       durationUnknown: 'live'
     },
     mixedPrompt: {
@@ -108,33 +115,41 @@ const en = {
       pickFromPlaylist: 'Pick from playlist'
     },
     url: {
-      heading: 'YouTube URL',
-      placeholder: 'https://www.youtube.com/watch?v=...',
+      heading: 'Video URL',
+      placeholder: 'https://...',
       fetchFormats: 'Fetch formats',
       features: {
         heading: 'What Arroxy can pull',
-        video: {
-          title: 'Videos',
-          desc: 'Pick any resolution up to 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Videos',
+          channel: 'Channels',
+          playlist: 'Playlists',
+          short: 'Shorts',
+          music: 'Music',
+          podcast: 'Podcasts'
         },
-        playlist: {
-          title: 'Playlists',
-          desc: 'Multi-select items from a playlist'
+        anySite: {
+          heading: '2000+ sites',
+          video: 'Videos',
+          videoPlaylist: 'Video playlists',
+          musicPlaylist: 'Music playlists'
         },
-        audio: {
-          title: 'Audio',
-          desc: 'Original stream or MP3/M4A convert'
+        always: {
+          heading: 'Always available',
+          audioOnly: 'Audios only',
+          subtitles: 'Subtitles'
         }
       },
-      mascotIdle: 'Drop me a YouTube link (video or Short) — then hit "Fetch formats" and I\'ll get to work ✨',
+      mascotIdle: 'Drop a link — YouTube or any of 2000+ sites ✨',
       mascotBusy: 'Downloading in the background… I can multitask 😎',
       advanced: 'Advanced',
       clearAria: 'Clear URL',
       clipboard: {
         toggle: 'Watch clipboard',
-        toggleDescription: 'Auto-fill the URL field when you copy a YouTube link.',
+        toggleDescription: 'Auto-fill the URL field when you copy a video link.',
         dialog: {
-          title: 'YouTube URL detected',
+          title: 'Video URL detected',
           body: 'Use this link from your clipboard?',
           useButton: 'Use URL',
           disableButton: 'Disable',
@@ -159,7 +174,7 @@ const en = {
         browserPlaceholder: 'Pick a browser…',
         browserHelp: 'Reads cookies directly from the browser. The browser must be closed for Chromium-family browsers.',
         enabledButNoBrowser: 'Pick a browser to use cookies',
-        banWarning: 'YouTube may flag — and sometimes ban — accounts whose cookies are used by yt-dlp. Use a throwaway account when possible.',
+        banWarning: 'Sites like YouTube may flag — and sometimes ban — accounts whose cookies are used by yt-dlp. Use a throwaway account when possible.',
         extensionFirefox: 'cookies.txt (Firefox)',
         extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
       },
@@ -179,14 +194,10 @@ const en = {
       }
     },
     subtitles: {
-      heading: 'Subtitles',
       autoBadge: 'Auto',
-      hint: 'Sidecar files will be saved next to the video',
       noLanguages: 'No subtitles available for this video',
       skip: 'Skip',
       skipSubs: 'Skip for this video',
-      selectAll: 'Select all',
-      deselectAll: 'Deselect all',
       mascot: 'Pick zero, one, or many — totally up to you ✨',
       searchPlaceholder: 'Search languages…',
       noMatches: 'No languages match',
@@ -206,7 +217,7 @@ const en = {
         heading: 'Format'
       },
       embedNote: 'Embed mode saves output as .mkv so subtitle tracks embed reliably.',
-      autoAssNote: "Auto-captions will be saved as SRT instead of ASS — they're always cleaned of YouTube's rolling-cue duplication, which our ASS converter can't replicate yet."
+      autoAssNote: "Auto-captions will be saved as SRT instead of ASS — for YouTube videos they're cleaned of rolling-cue duplication, which our ASS converter can't replicate yet."
     },
     sponsorblock: {
       modeHeading: 'Sponsor filtering',
@@ -237,14 +248,18 @@ const en = {
       audio: 'Audio',
       noAudio: 'No audio',
       videoOnly: 'Video only',
+      keepAudio: 'Keep as-is',
+      keepAudioMeta: 'Built-in audio',
       audioOnly: 'Audio only',
       audioOnlyOption: 'Audio only (no video)',
       mascot: "Best + Best = max quality. I'd pick that!",
       sniffing: 'Sniffing out the best formats for you…',
-      loadingHint: 'Usually takes a second',
+      loadingHint: 'Please wait until probing finishes — playlists and searches can take a while.',
       loadingAria: 'Loading formats',
       sizeUnknown: 'Size unknown',
       total: 'Total',
+      skipToConfirm: 'Skip to confirm',
+      skipToConfirmTooltip: 'Uses your saved preferences for all remaining steps. To change a setting, continue step by step instead — your choice will be saved for next time.',
       convert: {
         label: 'Convert',
         uncompressed: 'Convert · uncompressed',
@@ -255,13 +270,12 @@ const en = {
         requiresLossy: 'A native stream is selected — bitrate only applies when converting to mp3, m4a, or opus.'
       },
       botWall: {
-        heading: 'YouTube limited this probe',
+        heading: 'Probe was limited',
         bodyUnconfigured: 'The format list may be incomplete. Set up cookies in advanced settings, or change network and retry.',
         bodyDisabled: 'Cookies are configured but turned off. Enable them and retry to get the full list, or change network and retry.',
         bodyEnabled: 'Even with cookies, YouTube limited this probe. Try again later or switch network.',
         retryCta: 'Retry',
-        enableRetryCta: 'Enable cookies and retry',
-        openSettingsCta: 'Open advanced settings'
+        enableRetryCta: 'Enable cookies and retry'
       },
       cookiesError: {
         heading: 'Cookies might be the cause',
@@ -271,6 +285,10 @@ const en = {
         explanationFile: 'Your cookies file might be empty, expired, or in the wrong format (yt-dlp expects Netscape cookies.txt). Try re-exporting cookies, picking a different file, switching to Browser mode, or turning cookies off.',
         explanationBrowser: 'Cookies are read directly from the browser. If the browser is currently running, its cookie database may be locked (Chromium-family). The browser must also be signed in to YouTube. Try closing the browser, switching to a different browser, switching to File mode, or turning cookies off.',
         openSettingsCta: 'Open cookies settings',
+        needsCookies: {
+          heading: 'This site requires sign-in',
+          body: "yt-dlp couldn't access this video without authentication. Configure cookies in advanced settings — point them at a browser you're already signed in to, or import a cookies.txt file."
+        },
         dpapi: {
           heading: 'Chrome cookies blocked by Windows encryption',
           explanation: "Chrome 127 and newer encrypts cookies in a way other apps can't read on Windows. Try one of the workarounds below.",
@@ -333,26 +351,24 @@ const en = {
       labelSize: 'Size',
       sizeUnknown: 'Unknown',
       nothingToDownload: 'Subtitles only preset is active but no subtitle language is selected — nothing will be downloaded.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed skipped — output container does not support it.',
+      subtitleEmbedAudioOnly: 'Subtitle embed changed to sidecar — audio tracks do not support embedded subtitle streams.',
       audioOnly: 'Audio only',
       addToQueue: '+ Queue',
       addToQueueTooltip: 'Starts when other downloads finish — gets full bandwidth',
       pullIt: 'Pull it! ↓',
       pullItTooltip: 'Starts immediately — runs alongside other active downloads',
-      playlistBatch_one: '{{count}} video · {{title}}',
-      playlistBatch_other: '{{count}} videos · {{title}}',
       labelPlaylist: 'Playlist',
       labelPreset: 'Preset',
       labelItems: 'Items',
       itemsValue_one: '{{count}} of {{total}} video',
-      itemsValue_other: '{{count}} of {{total}} videos'
-    },
-    error: {
-      icon: 'Error'
+      itemsValue_other: '{{count}} of {{total}} videos',
+      itemsValueAudio_one: '{{count}} of {{total}} track',
+      itemsValueAudio_other: '{{count}} of {{total}} tracks'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Loading…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Loading…'
   },
   queue: {
     header: 'Download Queue',
@@ -364,6 +380,8 @@ const en = {
     clearTitle: 'Clear completed downloads',
     pauseAll: 'Pause all',
     pauseAllTitle: 'Pause all active downloads',
+    resumeFirst: 'Resume',
+    resumeFirstTitle: 'Resume first paused download',
     cancelAll: 'Cancel all',
     cancelAllTitle: 'Cancel all active and pending downloads',
     tip: 'Your download is queued below — open anytime to track progress.',
@@ -377,9 +395,7 @@ const en = {
       resume: 'Resume',
       cancel: 'Cancel',
       remove: 'Remove'
-    },
-    interJobSleep_one: 'Next download starts in {{count}}s',
-    interJobSleep_other: 'Next download starts in {{count}}s'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -414,18 +430,24 @@ const en = {
     ytdlpProcessError: 'yt-dlp process error: {{error}}',
     ytdlpExitCode: 'yt-dlp exited with code {{code}}',
     downloadingBinary: 'Downloading {{name}} binary…',
-    unknownStartupFailure: 'Unknown download startup failure'
+    unknownStartupFailure: 'Unknown download startup failure',
+    diskSpaceInsufficient: 'Not enough disk space — need {{required}}, only {{free}} available'
   },
   errors: {
     ytdlp: {
-      botBlock: "Bot protection triggered. The IP you're using is most likely flagged (datacenter range or busy VPN exit). Change your IP or pick a different VPN endpoint and retry. If it keeps failing, this may be a temporary YouTube-side change — Arroxy auto-updates yt-dlp on launch, so the fix lands automatically once upstream ships it.",
-      ipBlock: 'Your IP address appears to be blocked by YouTube. Try again later or use a VPN.',
-      rateLimit: 'YouTube is rate-limiting requests. Wait a minute then retry.',
+      botBlock: "Bot protection triggered. The IP you're using is most likely flagged (datacenter range or busy VPN exit). Change your IP or pick a different VPN endpoint and retry. If it keeps failing, this may be a temporary site-side change — Arroxy auto-updates yt-dlp on launch, so the fix lands automatically once upstream ships it.",
+      ipBlock: 'Your IP address appears to be blocked. Try again later or use a VPN.',
+      rateLimit: 'Site is rate-limiting requests. Wait a minute then retry.',
       ageRestricted: 'This video is age-restricted and cannot be downloaded without a signed-in account.',
       unavailable: 'This video is unavailable — it may be private, deleted, or region-locked.',
       geoBlocked: 'This video is not available in your region.',
       outOfDiskSpace: 'Not enough disk space. Free up space and retry.',
-      unsupportedUrl: "That doesn't look like a video URL. Paste a YouTube video, Short, or playlist link."
+      unsupportedUrl: "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites.",
+      chunkTransferFailure: 'The server kept cutting the download mid-stream and yt-dlp gave up after retrying. This usually hits the largest video formats (4K HDR / high-bitrate VP9). Retry, switch network/VPN, or pick a lower-resolution format.',
+      postprocessFailure: 'yt-dlp finished downloading but post-processing (merge / mux / convert) failed. Often this is a transient ffmpeg issue — retry, and if it persists try a different format combination.',
+      parse: "Couldn't parse the response from the site. yt-dlp's extractor may have drifted. Arroxy auto-updates yt-dlp on launch — retry in a few minutes once the fix ships.",
+      network: 'Network error. Check your connection and retry.',
+      unknown: 'Download failed. See the raw output below.'
     }
   },
   presets: {
@@ -462,7 +484,6 @@ const en = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Convert to MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Audio only',
     audioFallback: 'Audio',
     audioOnlyDot: 'Audio only · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
@@ -481,8 +502,9 @@ const en = {
     quitWithActiveDownloads: {
       message_one: '{{count}} download in progress',
       message_other: '{{count}} downloads in progress',
-      detail: 'Closing will cancel all active downloads.',
+      detail: 'Pause to resume later, or cancel to discard progress.',
       confirm: 'Cancel Downloads & Quit',
+      pause: 'Pause Downloads & Quit',
       keep: 'Keep Downloading'
     },
     closeToTray: {
@@ -497,6 +519,24 @@ const en = {
       detail: 'The renderer process crashed ({{reason}}). Reload to try again.',
       reload: 'Reload',
       quit: 'Quit'
+    }
+  },
+  share: {
+    title: 'Share Arroxy',
+    description: 'Arroxy is free and open-source. Sharing helps more people discover it.',
+    copyLink: 'Copy link',
+    copied: 'Copied!',
+    defaultMessage: 'Arroxy — free, open-source video downloader for Windows, macOS & Linux. Works with YouTube, Vimeo, Twitch, and 1850+ sites.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Share Arroxy',
+    footerLabel: 'Share',
+    shareAction: 'Share Arroxy',
+    inlineCard: {
+      body: 'Enjoying Arroxy? Share it with someone who might find it useful.',
+      dismiss: 'Dismiss share suggestion'
+    },
+    highValueBanner: {
+      body: 'Enjoying Arroxy? Help others discover it.',
+      dismiss: 'Dismiss share suggestion'
     }
   }
 } as const;

@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { UpdateBanner } from '@renderer/components/system/UpdateBanner';
-import { resolveAction } from '@renderer/components/system/updateBannerAction';
-import type { UpdateAvailablePayload } from '@shared/types';
+import { UpdateBanner } from '@renderer/components/system/UpdateBanner.js';
+import { resolveAction } from '@renderer/components/system/updateBannerAction.js';
+import type { UpdateAvailablePayload } from '@shared/types.js';
 
 function makeInfo(overrides: Partial<UpdateAvailablePayload> = {}): UpdateAvailablePayload {
   return { version: '1.2.0', currentVersion: '0.0.1', installChannel: 'direct', ...overrides };

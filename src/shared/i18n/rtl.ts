@@ -1,4 +1,4 @@
-import type { SupportedLang } from '../schemas';
+import type { SupportedLang } from '../schemas.js';
 
 export const RTL_LANGS: ReadonlySet<SupportedLang> = new Set(['ar', 'ps', 'ur']);
 

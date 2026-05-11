@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '../../store/useAppStore';
-import { STEP_REGISTRY } from '../wizard/stepRegistry';
-import { STEPS, shouldSkip } from '../wizard/stepNavigation';
-import { StepError } from '../wizard/StepError';
-import { MixedUrlPromptDialog } from '../wizard/MixedUrlPromptDialog';
-import { cn } from '@renderer/lib/utils';
+import { useAppStore } from '../../store/useAppStore.js';
+import { STEP_REGISTRY } from '../wizard/stepRegistry.js';
+import { STEPS, shouldSkip } from '../wizard/stepNavigation.js';
+import { StepError } from '../wizard/StepError.js';
+import { MixedUrlPromptDialog } from '../wizard/MixedUrlPromptDialog.js';
+import { cn } from '@renderer/lib/utils.js';
 
 export function WizardPanel(): JSX.Element {
   const { t } = useTranslation();
@@ -13,8 +13,12 @@ export function WizardPanel(): JSX.Element {
   const activePreset = useAppStore((s) => s.activePreset);
   const wizardMode = useAppStore((s) => s.wizardMode);
   const selectedPlaylistPreset = useAppStore((s) => s.selectedPlaylistPreset);
+  const wizardExtractor = useAppStore((s) => s.wizardExtractor);
+  const wizardSubtitles = useAppStore((s) => s.wizardSubtitles);
+  const wizardAutomaticCaptions = useAppStore((s) => s.wizardAutomaticCaptions);
+  const hasSubtitles = useMemo(() => Object.keys(wizardSubtitles).length > 0 || Object.keys(wizardAutomaticCaptions).length > 0, [wizardSubtitles, wizardAutomaticCaptions]);
 
-  const visibleSteps = useMemo(() => STEPS.filter((step) => !shouldSkip(step, { activePreset, wizardMode, selectedPlaylistPreset })), [activePreset, wizardMode, selectedPlaylistPreset]);
+  const visibleSteps = useMemo(() => STEPS.filter((step) => !shouldSkip(step, { activePreset, wizardMode, selectedPlaylistPreset, wizardExtractor, hasSubtitles })), [activePreset, wizardMode, selectedPlaylistPreset, wizardExtractor, hasSubtitles]);
 
   const activeIndex = visibleSteps.indexOf(wizardStep as (typeof STEPS)[number]);
   const activeDescriptor = STEP_REGISTRY.find((d) => d.id === wizardStep);
@@ -28,7 +32,7 @@ export function WizardPanel(): JSX.Element {
   }, [activeIndex]);
 
   return (
-    <section className={cn('px-6 py-3', isBackward ? 'wizard-backward' : 'wizard-forward')} data-testid="wizard-panel">
+    <section className={cn('px-6 py-3 min-h-full flex flex-col', isBackward ? 'wizard-backward' : 'wizard-forward')} data-testid="wizard-panel">
       {wizardStep !== 'error' && (
         <div className="flex items-center mb-4" aria-hidden data-testid="step-indicator">
           {visibleSteps.map((stepKey, i) => {

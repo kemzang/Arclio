@@ -1,74 +1,59 @@
 import { EventEmitter } from 'node:events';
 import { randomUUID } from 'node:crypto';
-import { readdir, unlink, rm, rmdir } from 'node:fs/promises';
-import { join, dirname } from 'node:path';
-import { trackMain, downloadDurationBucket, sizeBucket } from '@main/services/analytics';
-import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
-import log from 'electron-log/main';
-import { phasesFor, PhaseExecutor } from './phases';
-import type { PhaseContext } from './phases';
-import { nowIso } from '@main/utils/clock';
-import { createAppError } from '@main/utils/errorFactory';
-import { splitStderrLines } from '@main/utils/process';
-import { parsePercentFromLine } from '@main/utils/progress';
-import { fail, ok, type Result } from '@shared/result';
-import { isSubtitleFile } from '@shared/subtitlePath';
-import { STATUS_KEY } from '@shared/schemas';
-import type { CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOutput, ProgressEvent, RecentJob, StartDownloadInput, StartDownloadOutput, StatusEvent, StatusKey } from '@shared/types';
-import type { RecentJobsStore } from '@main/stores/RecentJobsStore';
-import { YtDlp, type YtDlpResult } from './YtDlp';
-import type { ActiveDownload, PausedDownload } from './phases';
+import { stat } from 'node:fs/promises';
+import log from 'electron-log/main.js';
+import { trackMain } from '@main/services/analytics.js';
+import { phasesFor, PhaseExecutor } from './phases/index.js';
+import type { PhaseContext, PhaseOutcome } from './phases/index.js';
+import { nowIso } from '@main/utils/clock.js';
+import { createAppError } from '@main/utils/errorFactory.js';
+import { fail, ok, type Result } from '@shared/result.js';
+import { STATUS_KEY } from '@shared/schemas.js';
+import type { CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOutput, RecentJob, StartDownloadInput, StartDownloadOutput, StatusEvent, StatusKey } from '@shared/types.js';
+import type { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
+import { YtDlp } from './YtDlp.js';
+import type { ActiveDownload, PausedDownload } from './phases/index.js';
+import { killActiveProcesses } from './download/processControl.js';
+import { cleanupPartFiles, cleanupTempDirByPath } from './download/cleanup.js';
+import { ProgressParser } from './download/progressParser.js';
+import { JobLifecycle } from './JobLifecycle.js';
 
 const logger = log.scope('downloads');
 
-function categorizeDownloadError(msg: string): string {
-  const m = msg.toLowerCase();
-  if (/sign in to confirm|confirm you'?re not a bot|\bbot\b|http error 403|\b403\b/.test(m)) return 'bot_detected';
-  if (/\benospc\b|no space left|disk (?:full|space)/.test(m)) return 'disk_full';
-  if (/requested format (?:is )?(?:not available|unavailable)|no video formats|format not available/.test(m)) return 'format_unavailable';
-  if (/ffmpeg (?:error|failed)|error (?:while )?(?:merging|muxing)|postprocessing/.test(m)) return 'merge_failed';
-  if (/\b(?:timed? out|timeout|econn(?:reset|refused|aborted)|enotfound|getaddrinfo|network is unreachable)\b/.test(m)) return 'network';
-  return 'unknown';
-}
-
-function killProcessTree(proc: ChildProcessWithoutNullStreams, signal: NodeJS.Signals): void {
-  if (proc.pid == null) {
-    proc.kill(signal);
-    return;
-  }
-  if (process.platform === 'win32') {
-    spawn('taskkill', ['/pid', String(proc.pid), '/T', '/F'], { windowsHide: true });
-    return;
-  }
-  try {
-    process.kill(-proc.pid, signal);
-  } catch {
-    proc.kill(signal);
-  }
-}
-
-function killActiveProcesses(active: ActiveDownload, signal: NodeJS.Signals): void {
-  if (active.ytDlpProcess) killProcessTree(active.ytDlpProcess, signal);
-  if (active.ffmpegProcess) active.ffmpegProcess.kill(signal);
-}
+// Max concurrent downloads — defense-in-depth at the service boundary.
+// QueueService applies its own cap (default 1); this is a backstop that
+// catches buggy IPC bursts or future policy changes that could otherwise
+// spawn N parallel yt-dlp + ffmpeg processes. Tunable via the constructor
+// for tests.
+const DEFAULT_MAX_CONCURRENT_DOWNLOADS = 1;
 
 export class DownloadService extends EventEmitter {
   private activeJobs = new Map<string, ActiveDownload>();
   private pausedJobs = new Map<string, PausedDownload>();
+  private readonly maxConcurrent: number;
+  private readonly progressParser: ProgressParser;
+  private readonly lifecycle: JobLifecycle;
 
   constructor(
     private readonly ytDlp: YtDlp,
     private readonly recentJobsStore: RecentJobsStore,
-    private readonly mockMode = false
+    private readonly mockMode = false,
+    maxConcurrent: number = DEFAULT_MAX_CONCURRENT_DOWNLOADS
   ) {
     super();
+    this.maxConcurrent = Math.max(1, maxConcurrent);
+    this.progressParser = new ProgressParser(
+      (jobId, stage, statusKey, params, error) => this.emitStatus(jobId, stage, statusKey, params, error),
+      (event) => this.emit('progress', event)
+    );
+    this.lifecycle = new JobLifecycle(this.recentJobsStore);
   }
 
   get activeCount(): number {
     return this.activeJobs.size;
   }
 
-  get pendingCancelCount(): number {
+  get runningJobCount(): number {
     let count = 0;
     for (const active of this.activeJobs.values()) {
       if (!active.cancelRequested && !active.pauseRequested) count++;
@@ -79,6 +64,11 @@ export class DownloadService extends EventEmitter {
   async start(input: StartDownloadInput): Promise<Result<StartDownloadOutput>> {
     if (!input.outputDir) {
       return fail(createAppError('validation', 'outputDir is required'));
+    }
+    // Boundary check — counts only jobs not yet in cancel/pause-requested
+    // state. A paused job consumes no process slot, so resume() is unaffected.
+    if (this.runningJobCount >= this.maxConcurrent) {
+      return fail(createAppError('validation', `Maximum concurrent downloads (${this.maxConcurrent}) reached. Pause or cancel one before starting another.`));
     }
     const now = nowIso();
     const preparedJob = input.job;
@@ -92,12 +82,17 @@ export class DownloadService extends EventEmitter {
       createdAt: now,
       updatedAt: now
     };
+    const controller = new AbortController();
     const active: ActiveDownload = {
       job,
       input,
+      controller,
+      signal: controller.signal,
       cancelRequested: false,
       pauseRequested: false,
-      subtitlePaths: []
+      subtitlePaths: [],
+      tempDir: input.tempDir,
+      disposables: []
     };
     this.activeJobs.set(job.id, active);
     logger.info('Download job created', {
@@ -132,12 +127,35 @@ export class DownloadService extends EventEmitter {
     const { job, input } = paused;
     job.status = 'running';
     job.updatedAt = nowIso();
+    // Validate the preserved tempDir still exists. OS tmp cleaners, NFS
+    // unmounts, and manual deletes can wipe it between pause and resume.
+    // Setting tempDir to undefined makes VideoPhase's setupTempDir() recreate
+    // it fresh — partial download is lost, but the job runs cleanly instead
+    // of failing with an opaque ENOENT inside yt-dlp.
+    let resumedTempDir = paused.tempDir;
+    if (resumedTempDir) {
+      try {
+        const s = await stat(resumedTempDir);
+        if (!s.isDirectory()) resumedTempDir = undefined;
+      } catch {
+        logger.info('Resume: preserved tempDir missing — restarting fresh', {
+          jobId: job.id,
+          tempDir: paused.tempDir
+        });
+        resumedTempDir = undefined;
+      }
+    }
+    const controller = new AbortController();
     const active: ActiveDownload = {
       job,
       input,
+      controller,
+      signal: controller.signal,
       cancelRequested: false,
       pauseRequested: false,
-      subtitlePaths: []
+      subtitlePaths: [],
+      tempDir: resumedTempDir,
+      disposables: []
     };
     this.activeJobs.set(job.id, active);
     logger.info('Resuming download', { jobId: job.id });
@@ -177,7 +195,7 @@ export class DownloadService extends EventEmitter {
       void this.runPhases(active).catch(async (error) => {
         const message = error instanceof Error ? error.message : 'Unknown phase failure';
         logger.error('Download phase threw unexpectedly', { jobId: job.id, message });
-        const payload: LocalizedError = { key: null, rawMessage: message };
+        const payload: LocalizedError = { kind: 'unknown', raw: message };
         this.emitStatus(job.id, 'error', STATUS_KEY.unknownStartupFailure, undefined, payload);
         await this.finalize(job, 'failed', payload);
       });
@@ -185,7 +203,7 @@ export class DownloadService extends EventEmitter {
       return ok({ job });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown download startup failure';
-      const payload: LocalizedError = { key: null, rawMessage: message };
+      const payload: LocalizedError = { kind: 'unknown', raw: message };
       this.emitStatus(job.id, 'error', STATUS_KEY.unknownStartupFailure, undefined, payload);
       await this.finalize(job, 'failed', payload);
       return fail(createAppError('download', message));
@@ -196,30 +214,52 @@ export class DownloadService extends EventEmitter {
     const { job, input } = active;
     const ctx: PhaseContext = {
       active,
+      signal: active.signal,
       ytDlp: this.ytDlp,
       emitStatus: (stage, statusKey, params?, error?) => this.emitStatus(job.id, stage, statusKey, params, error),
-      emitYtdlpFailure: (result) => this.emitYtdlpFailure(job.id, result),
-      attachYtDlpProcess: (proc, statusKey?) => this.attachYtDlpProcess(active, proc, statusKey),
-      safeConsume: (text) => this.safeConsume(active, text),
-      cleanupPartFiles: (dir) => this.cleanupPartFiles(dir),
-      cleanupTempDir: () => this.cleanupTempDir(active),
-      finalize: (status, err?) => this.finalize(job, status, err),
-      moveToPaused: () => {
+      register: (disposable) => active.disposables.push(disposable),
+      safeConsume: (text) => this.safeConsume(active, text)
+    };
+    const outcome = await new PhaseExecutor().run(ctx, phasesFor(input));
+    await this.handleOutcome(active, outcome);
+  }
+
+  private async handleOutcome(active: ActiveDownload, outcome: PhaseOutcome): Promise<void> {
+    const { job, input } = active;
+    switch (outcome.kind) {
+      case 'completed':
+      case 'soft-failed':
+        await this.finalize(job, 'completed');
+        return;
+      case 'hard-failed':
+        await this.finalize(job, 'failed', outcome.error);
+        return;
+      case 'cancelled':
+        await this.finalize(job, 'cancelled');
+        return;
+      case 'paused':
+        // Cancel may have landed between pauseRequested and the phase
+        // returning the paused outcome. Honor the more recent intent: drain
+        // and finalize as cancelled rather than parking a job whose
+        // processes are already dead.
+        if (active.cancelRequested) {
+          this.emitStatus(job.id, 'error', STATUS_KEY.cancelled);
+          await this.finalize(job, 'cancelled');
+          return;
+        }
         this.activeJobs.delete(job.id);
         this.pausedJobs.set(job.id, { job, input, tempDir: active.tempDir });
         logger.info('Download paused — temp dir preserved', {
           jobId: job.id,
           tempDir: active.tempDir
         });
-      }
-    };
-    await new PhaseExecutor().run(ctx, phasesFor(input));
-  }
-
-  private attachYtDlpProcess(active: ActiveDownload, proc: ChildProcessWithoutNullStreams, statusKey?: StatusKey): void {
-    if (statusKey) this.emitStatus(active.job.id, 'download', statusKey);
-    active.ytDlpProcess = proc;
-    if (active.cancelRequested) proc.kill('SIGKILL');
+        return;
+      case 'continue':
+        // Should not surface here — PhaseExecutor consumes 'continue' by
+        // moving to the next phase. Treat as completed defensively.
+        await this.finalize(job, 'completed');
+        return;
+    }
   }
 
   private safeConsume(active: ActiveDownload, text: string): void {
@@ -231,26 +271,6 @@ export class DownloadService extends EventEmitter {
         message: err instanceof Error ? err.message : String(err)
       });
     }
-  }
-
-  private emitYtdlpFailure(jobId: string, result: Exclude<YtDlpResult, { kind: 'success' }>): LocalizedError {
-    if (result.kind === 'spawn-error') {
-      const payload: LocalizedError = { key: null, rawMessage: result.error.message };
-      this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpProcessError, { error: result.error.message }, payload);
-      return payload;
-    }
-    const payload: LocalizedError = {
-      key: result.signal,
-      rawMessage: result.rawError ?? undefined
-    };
-    if (result.signal) {
-      this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpExitCode, { code: result.exitCode }, payload);
-    } else if (result.rawError) {
-      this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpProcessError, { error: result.rawError }, payload);
-    } else {
-      this.emitStatus(jobId, 'error', STATUS_KEY.ytdlpExitCode, { code: result.exitCode }, payload);
-    }
-    return payload;
   }
 
   async cancel(jobId?: string): Promise<Result<CancelDownloadOutput>> {
@@ -307,10 +327,10 @@ export class DownloadService extends EventEmitter {
       this.activeJobs.delete(active.job.id);
       this.pausedJobs.set(active.job.id, { job: active.job, input: active.input });
       logger.info('Mock download paused', { jobId: active.job.id });
-      return ok({ paused: true });
+      return ok({ paused: true, jobId: active.job.id });
     }
 
-    if (!active.ytDlpProcess) {
+    if (!active.ytDlpProcess && !active.ffmpegProcess) {
       logger.info('pause() called but job has no process yet', {
         jobId: active.job.id
       });
@@ -318,13 +338,22 @@ export class DownloadService extends EventEmitter {
     }
 
     active.pauseRequested = true;
-    killProcessTree(active.ytDlpProcess, 'SIGTERM');
-    logger.info('SIGTERM sent to yt-dlp process', { jobId: active.job.id });
-    return ok({ paused: true });
+    // killActiveProcesses tree-kills both yt-dlp and ffmpeg (when present)
+    // via process-group on Unix and taskkill /T on Windows. Pause may land
+    // mid-mux (SidecarSubsPhase.runEmbedMux); without killing ffmpeg too, the
+    // mux completes after the user thinks they paused.
+    killActiveProcesses(active, 'SIGTERM');
+    logger.info('SIGTERM sent to active processes', { jobId: active.job.id });
+    return ok({ paused: true, tempDir: active.tempDir, jobId: active.job.id });
   }
 
   private async cancelOne(active: ActiveDownload): Promise<Result<CancelDownloadOutput>> {
     active.cancelRequested = true;
+    // controller.abort() drops the AbortSignal; any in-flight ytDlp.run that
+    // received `signal: active.signal` will SIGKILL its child and resolve
+    // with a Cancelled exit-error. Mirrors the cancelRequested flag for code
+    // paths that already poll the boolean.
+    active.controller.abort();
 
     if (active.ytDlpProcess || active.ffmpegProcess) {
       logger.info('Sending SIGKILL to active processes', { jobId: active.job.id });
@@ -350,131 +379,15 @@ export class DownloadService extends EventEmitter {
   }
 
   async cleanupPartFiles(outputDir: string): Promise<void> {
-    try {
-      const files = await readdir(outputDir);
-      const toDelete = files.filter((f) => f.endsWith('.part') || f.endsWith('.ytdl'));
-      if (toDelete.length === 0) {
-        logger.info('cleanupPartFiles — no .part/.ytdl files found', { outputDir });
-        return;
-      }
-      logger.info('cleanupPartFiles — deleting leftover files', {
-        outputDir,
-        files: toDelete
-      });
-      await Promise.all(toDelete.map((f) => unlink(join(outputDir, f)).catch(() => {})));
-      logger.info('cleanupPartFiles — done', { outputDir, deleted: toDelete.length });
-    } catch {
-      logger.info('cleanupPartFiles — directory inaccessible, skipping', { outputDir });
-    }
-  }
-
-  private async cleanupTempDir(active: ActiveDownload): Promise<void> {
-    if (active.tempDir) await this.cleanupTempDirByPath(active.tempDir);
+    await cleanupPartFiles(outputDir);
   }
 
   private async cleanupTempDirByPath(tempDir: string): Promise<void> {
-    try {
-      await rm(tempDir, { recursive: true, force: true });
-      logger.info('cleanupTempDir — removed', { tempDir });
-    } catch {
-      logger.warn('cleanupTempDir — failed to remove', { tempDir });
-      return;
-    }
-    const parent = dirname(tempDir);
-    try {
-      await rmdir(parent);
-      logger.info('cleanupTempDir — removed parent', { parent });
-    } catch (err) {
-      const code = (err as NodeJS.ErrnoException).code;
-      if (code !== 'ENOTEMPTY' && code !== 'ENOENT' && code !== 'EPERM') {
-        logger.warn('cleanupTempDir — parent rmdir failed', { parent, code });
-      }
-    }
+    await cleanupTempDirByPath(tempDir);
   }
 
   private consumeProgress(active: ActiveDownload, text: string): void {
-    const jobId = active.job.id;
-    for (const line of splitStderrLines(text)) {
-      logger.info(line, { jobId, source: 'yt-dlp-progress' });
-
-      const destMatch = /^\[download\] Destination:\s+(.+)$/.exec(line);
-      if (destMatch) {
-        const path = destMatch[1];
-        const kind = isSubtitleFile(path) ? 'subtitle' : 'media';
-        active.currentFileKind = kind;
-        if (kind === 'subtitle') {
-          active.subtitlePaths.push(path);
-        } else {
-          active.mediaPath = path;
-        }
-        this.emitStatus(jobId, 'download', kind === 'subtitle' ? STATUS_KEY.fetchingSubtitles : STATUS_KEY.downloadingMedia);
-        continue;
-      }
-
-      const mergerMatch = /^\[Merger\] Merging formats into "([^"]+)"|^\[Merger\] Merging formats into (.+)$/.exec(line);
-      if (mergerMatch) {
-        active.mediaPath = mergerMatch[1] ?? mergerMatch[2];
-      }
-
-      // yt-dlp emits this when the merged file pre-exists from an earlier run
-      // and skips the download entirely. No [download] Destination: or [Merger]
-      // line will follow, so this is our only chance to record mediaPath.
-      const alreadyMatch = /^\[download\]\s+(.+?)\s+has already been downloaded$/.exec(line);
-      if (alreadyMatch && !isSubtitleFile(alreadyMatch[1])) {
-        active.mediaPath = alreadyMatch[1];
-        continue;
-      }
-
-      // [MoveFiles] relocates files from .arroxy-temp/ to the final outputDir
-      // after postprocessing. Update mediaPath only when src is the file we're
-      // tracking — sidecar moves (.jpg, .description) don't touch mediaPath
-      // because their src never matched.
-      const moveMatch = /^\[MoveFiles\] Moving file "([^"]+)" to "([^"]+)"$/.exec(line);
-      if (moveMatch && active.mediaPath === moveMatch[1]) {
-        active.mediaPath = moveMatch[2];
-      }
-
-      // eslint-disable-next-line security/detect-unsafe-regex -- bounded: \d+ is constrained by yt-dlp output line length
-      const sleepMatch = /Sleeping (\d+(?:\.\d+)?) seconds/.exec(line);
-      if (sleepMatch) {
-        const seconds = Math.round(parseFloat(sleepMatch[1]));
-        this.emitStatus(jobId, 'download', STATUS_KEY.sleepingBetweenRequests, { seconds });
-        continue;
-      }
-
-      if (line.startsWith('[Merger]')) {
-        this.emitStatus(jobId, 'download', STATUS_KEY.mergingFormats);
-        continue;
-      }
-
-      if (this.emitPostProcStatus(active, line)) continue;
-
-      const event: ProgressEvent = {
-        jobId,
-        line,
-        at: nowIso(),
-        percent: active.currentFileKind === 'subtitle' ? undefined : parsePercentFromLine(line)
-      };
-      this.emit('progress', event);
-    }
-  }
-
-  private emitPostProcStatus(active: ActiveDownload, line: string): boolean {
-    let key: 'extractingAudio' | 'convertingVideo' | 'embeddingMetadata' | 'movingFiles' | null = null;
-    // `[ExtractAudio]` is the reliable signal for audio extraction. Don't match
-    // `Deleting original file` — yt-dlp also emits that for the thumbnail
-    // converter (webp→jpg) before any audio work starts, which would falsely
-    // mark extractingAudio as emitted and suppress the real signal later.
-    if (line.startsWith('[ExtractAudio]')) key = 'extractingAudio';
-    else if (line.startsWith('[VideoConvertor]') || line.startsWith('[VideoRemuxer]')) key = 'convertingVideo';
-    else if (line.startsWith('[EmbedThumbnail]') || line.startsWith('[Metadata]') || line.startsWith('[FixupM4a]') || line.startsWith('[FixupM3u8]')) key = 'embeddingMetadata';
-    else if (line.startsWith('[MoveFiles]')) key = 'movingFiles';
-    if (!key) return false;
-    const emitted = (active.postProcEmitted ??= {});
-    if (emitted[key]) return true;
-    emitted[key] = true;
-    this.emitStatus(active.job.id, 'download', STATUS_KEY[key]);
-    return true;
+    this.progressParser.consume(active, text);
   }
 
   private emitStatus(jobId: string, stage: StatusEvent['stage'], statusKey: StatusKey, params?: Record<string, string | number>, error?: LocalizedError): void {
@@ -492,32 +405,13 @@ export class DownloadService extends EventEmitter {
   }
 
   private async finalize(job: DownloadJob, status: RecentJob['status'], error?: LocalizedError): Promise<void> {
-    logger.info('Job finalized', { jobId: job.id, status, ...(error && { error }) });
+    const active = this.activeJobs.get(job.id);
     this.activeJobs.delete(job.id);
-
-    job.status = status;
-    job.updatedAt = nowIso();
-
-    const durationMs = new Date(job.updatedAt).getTime() - new Date(job.createdAt).getTime();
-    const outcome = status === 'completed' ? 'success' : status === 'cancelled' ? 'cancelled' : 'error';
-    trackMain('download_finished', {
-      outcome,
-      duration_bucket: downloadDurationBucket(durationMs),
-      ...(status !== 'cancelled' && job.expectedBytes != null ? { size_bucket: sizeBucket(job.expectedBytes) } : {}),
-      ...(outcome === 'error' ? { error_category: categorizeDownloadError(error?.rawMessage ?? '') } : {})
-    });
-
-    const recent: RecentJob = {
-      id: job.id,
-      url: job.url,
-      outputDir: job.outputDir,
-      formatId: job.formatId,
-      status,
-      finishedAt: job.updatedAt,
-      error
-    };
-
-    await this.recentJobsStore.push(recent);
+    // Drain LIFO disposables (process kills, tempDir removals, watchdog
+    // timers) before writing the RecentJob entry. Per-disposable failures
+    // log + continue; a stuck cleanup can't block finalize.
+    if (active) await this.lifecycle.drain(active);
+    await this.lifecycle.finalize(job, status, error);
   }
 
   private startMockDownload(jobId: string): void {

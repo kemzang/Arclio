@@ -1,16 +1,55 @@
-import type { AppSettings, DependencyId, QueueItem, SubtitleFormat, SubtitleMode } from '@shared/types';
-import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas';
-import { DEFAULTS } from '@shared/constants';
-import { i18next, pickLanguage, isRtl } from '@shared/i18n';
-import { nextMonotonicPercent, ProgressFormatter } from './progress';
-import { progressFormatters, saveQueue, updateQueueItem } from './queueSlice';
-import type { JobScheduler } from './jobScheduler';
-import type { GetState, SetState, SystemSlice } from './types';
-import { notify } from '../lib/notify';
+import type { AppSettings, DependencyId } from '@shared/types.js';
+import { QUEUE_STATUS } from '@shared/schemas.js';
+import { DEFAULTS } from '@shared/constants.js';
+import { i18next, pickLanguage, isRtl } from '@shared/i18n/index.js';
+import type { GetState, SetState, ShareTrigger, SystemSlice } from './types.js';
+import { notify } from '../lib/notify.js';
+import { track } from '../lib/analytics.js';
 
-let unbindStatus: (() => void) | null = null;
-let unbindProgress: (() => void) | null = null;
 let unbindWarmupProgress: (() => void) | null = null;
+let unbindQueueSnapshot: (() => void) | null = null;
+let unbindQueueAdded: (() => void) | null = null;
+let unbindQueueUpdated: (() => void) | null = null;
+let unbindQueueRemoved: (() => void) | null = null;
+
+const SHARE_MILESTONES: readonly number[] = [3, 25, 100];
+
+function commonPatch(get: GetState, set: SetState, patch: Partial<AppSettings['common']>): void {
+  const previous = get().settings;
+  if (previous) {
+    set({ settings: { ...previous, common: { ...previous.common, ...patch } } });
+  }
+  void window.appApi.settings.update({ common: patch }).then((result) => {
+    if (!result.ok) {
+      // Revert optimistic update — UI was showing patched value, but the
+      // canonical state on disk never changed. Without rollback, renderer
+      // and main process diverge until next initialize().
+      if (previous) set({ settings: previous });
+      notify.settingsSaveFailed('share', result.error);
+      return;
+    }
+    set({ settings: result.data });
+  });
+}
+
+// Shared pattern for setCookiesPath/setProxyUrl/...: optimistic update, IPC
+// patch, on failure revert to the value captured before the patch.
+async function applyCommonPatchAsync(get: GetState, set: SetState, label: string, patch: Partial<AppSettings['common']>): Promise<void> {
+  const previous = get().settings;
+  if (previous) set({ settings: { ...previous, common: { ...previous.common, ...patch } } });
+  const result = await window.appApi.settings.update({ common: patch });
+  if (!result.ok) {
+    if (previous) set({ settings: previous });
+    notify.settingsSaveFailed(label, result.error);
+    return;
+  }
+  set({ settings: result.data });
+}
+
+function openShareDialogInternal(set: SetState, trigger: ShareTrigger): void {
+  set({ shareDialogOpen: true, shareDialogTrigger: trigger });
+  track('share_dialog_opened', { via: trigger });
+}
 
 const OVERRIDE_KEY: Record<DependencyId, 'ytDlp' | 'ffmpeg' | 'ffprobe' | 'deno'> = {
   'yt-dlp': 'ytDlp',
@@ -23,7 +62,7 @@ function makeBinaryOverridePatch(id: DependencyId, path: string | undefined): { 
   return { common: { binaryOverrides: { [OVERRIDE_KEY[id]]: path } } };
 }
 
-export function createSystemSlice(set: SetState, get: GetState, scheduler: JobScheduler): SystemSlice {
+export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
   return {
     initialized: false,
     initializing: false,
@@ -32,80 +71,54 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
     warmupRunning: false,
     warmupProgress: null,
     settings: null,
-    language: pickLanguage(navigator.language),
+    // Guard `navigator` so vitest's node-env tests (e.g. format-selection-view)
+    // can construct the store at module-load time without DOM globals.
+    // initialize() reassigns from settingsResult.common.language anyway.
+    language: typeof navigator !== 'undefined' ? pickLanguage(navigator.language) : pickLanguage('en'),
     commonPaths: undefined,
+    shareDialogOpen: false,
+    shareDialogTrigger: null,
 
     initialize: async () => {
       if (get().initialized || get().initializing) return;
       set({ initializing: true });
 
-      // Detach any prior bindings (defense for a future re-init flow).
-      unbindStatus?.();
-      unbindProgress?.();
-      scheduler.reset();
+      // Detach prior queue projection bindings (defense for a future re-init flow).
+      unbindQueueSnapshot?.();
+      unbindQueueAdded?.();
+      unbindQueueUpdated?.();
+      unbindQueueRemoved?.();
 
-      unbindStatus = window.appApi.events.onStatus((event) => {
-        const item = get().queue.find((i) => i.downloadJobId === event.jobId);
-        if (!item) return;
-
-        if (event.stage === 'done') {
-          progressFormatters.delete(event.jobId);
-          updateQueueItem(set, item.id, {
-            status: QUEUE_STATUS.done,
-            progressPercent: 100,
-            finishedAt: new Date().toISOString(),
-            downloadJobId: null,
-            lastStatus: { key: event.statusKey, params: event.params }
-          });
-          saveQueue(get);
-          scheduler.notifyJobFinished();
-        } else if (event.stage === 'error') {
-          progressFormatters.delete(event.jobId);
-          updateQueueItem(set, item.id, {
-            status: QUEUE_STATUS.error,
-            error: event.error ?? { key: null },
-            lastStatus: { key: event.statusKey, params: event.params },
-            downloadJobId: null
-          });
-          saveQueue(get);
-          scheduler.notifyJobFinished();
-        } else {
-          // Phase transitions (merge, fetch subs, sleep) supersede stale download-speed
-          // progress detail — clear it so the phase status text becomes visible.
-          const isPhaseTransition = event.statusKey === STATUS_KEY.mergingFormats || event.statusKey === STATUS_KEY.fetchingSubtitles || event.statusKey === STATUS_KEY.sleepingBetweenRequests || event.statusKey === STATUS_KEY.extractingAudio || event.statusKey === STATUS_KEY.convertingVideo || event.statusKey === STATUS_KEY.embeddingMetadata || event.statusKey === STATUS_KEY.movingFiles;
-          // yt-dlp emits per-file percent (0→100% for each sub, then video, then audio).
-          // Reset the bar when a new file becomes the active download target so the
-          // first sub's instant 100% doesn't peg it for the rest of the job.
-          const isFileBoundary = event.statusKey === STATUS_KEY.downloadingMedia || event.statusKey === STATUS_KEY.fetchingSubtitles;
-          // Postprocess phases (audio extract, video convert, embed metadata, move
-          // files) emit no `[download] N%` lines, so the progress throttle in
-          // DownloadEventBridge frequently drops the final 100% event and leaves
-          // the bar at 99.x. Snap to 100 once postprocess starts — the data
-          // download is finished by definition.
-          const isPostProcessPhase = event.statusKey === STATUS_KEY.extractingAudio || event.statusKey === STATUS_KEY.convertingVideo || event.statusKey === STATUS_KEY.embeddingMetadata || event.statusKey === STATUS_KEY.movingFiles;
-          updateQueueItem(set, item.id, {
-            lastStatus: { key: event.statusKey, params: event.params },
-            ...(isPhaseTransition ? { progressDetail: null } : {}),
-            ...(isFileBoundary ? { progressPercent: 0 } : {}),
-            ...(isPostProcessPhase ? { progressPercent: 100 } : {})
-          });
+      // Queue projection: hydrate from initial snapshot, then apply diffs.
+      // QueueService on main is the queue-of-record; this slice is a read-only
+      // mirror of `service.snapshot()` + the four diff event streams.
+      unbindQueueSnapshot = window.appApi.queue.events.onSnapshot((items) => {
+        set({ queue: items });
+      });
+      unbindQueueAdded = window.appApi.queue.events.onAdded(({ items, atIdx }) => {
+        set((state) => {
+          const next = [...state.queue];
+          next.splice(atIdx, 0, ...items);
+          return { queue: next };
+        });
+      });
+      unbindQueueUpdated = window.appApi.queue.events.onUpdated(({ item }) => {
+        const prev = get().queue.find((i) => i.id === item.id);
+        set((state) => ({
+          queue: state.queue.map((i) => (i.id === item.id ? item : i))
+        }));
+        // Milestone tracking — fires when a queue item transitions to `done`.
+        if (prev && prev.status !== QUEUE_STATUS.done && item.status === QUEUE_STATUS.done) {
+          const prevCount = get().settings?.common?.successfulDownloadCount ?? 0;
+          const nextCount = prevCount + 1;
+          commonPatch(get, set, { successfulDownloadCount: nextCount });
+          if (SHARE_MILESTONES.includes(nextCount)) {
+            openShareDialogInternal(set, 'milestone');
+          }
         }
       });
-
-      unbindProgress = window.appApi.events.onProgress((event) => {
-        const item = get().queue.find((i) => i.downloadJobId === event.jobId);
-        if (!item) return;
-
-        let formatter = progressFormatters.get(event.jobId);
-        if (!formatter) {
-          formatter = new ProgressFormatter();
-          progressFormatters.set(event.jobId, formatter);
-        }
-        const detail = formatter.update(event.line);
-        updateQueueItem(set, item.id, {
-          progressPercent: nextMonotonicPercent(item.progressPercent, event.percent),
-          ...(detail !== null ? { progressDetail: detail } : {})
-        });
+      unbindQueueRemoved = window.appApi.queue.events.onRemoved(({ itemId }) => {
+        set((state) => ({ queue: state.queue.filter((i) => i.id !== itemId) }));
       });
 
       // The warmup-progress listener stays bound for the lifetime of the
@@ -121,14 +134,9 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
       set({ warmupRunning: true });
       const settingsPromise = window.appApi.settings.get();
       const warmUpPromise = window.appApi.app.warmUp();
-      const queuePromise = window.appApi.queue.load();
-
-      const [settingsResult, warmUpResult, queueResult] = await Promise.all([settingsPromise, warmUpPromise, queuePromise]);
-
-      const savedQueue = queueResult.ok ? queueResult.data : [];
-      if (!queueResult.ok) {
-        console.error('[queue] load failed — starting with empty queue', queueResult.error);
-      }
+      const snapshotPromise = window.appApi.queue.cmd.getSnapshot();
+      const [settingsResult, warmUpResult, snapshotResult] = await Promise.all([settingsPromise, warmUpPromise, snapshotPromise]);
+      if (snapshotResult.ok) set({ queue: snapshotResult.data });
 
       if (settingsResult.ok) {
         const common = settingsResult.data.common ?? ({} as AppSettings['common']);
@@ -148,31 +156,13 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
           commonPaths: common.commonPaths,
           uiZoom: zoom,
           uiTheme: theme,
-          language: nextLanguage
+          language: nextLanguage,
+          drawerOpen: settingsResult.data.common?.drawerOpen ?? false
         });
       }
 
       const warmupDiagnostics = warmUpResult.ok ? warmUpResult.data.dependencies : null;
       const warmupBlocking = warmUpResult.ok ? warmUpResult.data.blockingFailures : [];
-
-      if (savedQueue.length > 0) {
-        type StoredItem = (typeof savedQueue)[number] & {
-          subtitleLanguages?: string[];
-          writeAutoSubs?: boolean;
-          subtitleMode?: SubtitleMode;
-          subtitleFormat?: SubtitleFormat;
-        };
-        const migratedQueue: QueueItem[] = (savedQueue as StoredItem[]).map((item) => ({
-          ...item,
-          subtitleLanguages: item.subtitleLanguages ?? [],
-          writeAutoSubs: item.writeAutoSubs ?? false,
-          subtitleMode: item.subtitleMode ?? DEFAULTS.subtitleMode,
-          subtitleFormat: item.subtitleFormat ?? DEFAULTS.subtitleFormat
-        }));
-        const restoredDrawerOpen = settingsResult.ok ? (settingsResult.data.common?.drawerOpen ?? false) : false;
-        set({ queue: migratedQueue, drawerOpen: restoredDrawerOpen });
-        await scheduler.notifyItemAdded();
-      }
 
       set({ initialized: true, initializing: false, warmupRunning: false, warmupDiagnostics, warmupBlocking });
     },
@@ -233,11 +223,21 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
     },
 
     openBinariesDir: async () => {
-      await window.appApi.shell.openBinariesDir();
+      try {
+        const result = await window.appApi.shell.openBinariesDir();
+        if (!result.ok) notify.shellActionFailed('shell.openBinariesDir', result.error);
+      } catch (err) {
+        notify.shellActionFailed('shell.openBinariesDir', err);
+      }
     },
 
     openLogs: async () => {
-      await window.appApi.logs.openDir();
+      try {
+        const result = await window.appApi.logs.openDir();
+        if (!result.ok) notify.shellActionFailed('logs.openDir', result.error);
+      } catch (err) {
+        notify.shellActionFailed('logs.openDir', err);
+      }
     },
 
     setLanguage: (lang) => {
@@ -252,80 +252,49 @@ export function createSystemSlice(set: SetState, get: GetState, scheduler: JobSc
     },
 
     setCookiesPath: async (path) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, cookiesPath: path } } });
-      const result = await window.appApi.settings.update({ common: { cookiesPath: path } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('cookiesPath', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'cookiesPath', { cookiesPath: path });
     },
 
     setCookiesMode: async (mode) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, cookiesMode: mode } } });
-      const result = await window.appApi.settings.update({ common: { cookiesMode: mode } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('cookiesMode', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'cookiesMode', { cookiesMode: mode });
     },
 
     setCookiesBrowser: async (browser) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, cookiesBrowser: browser } } });
-      const result = await window.appApi.settings.update({ common: { cookiesBrowser: browser } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('cookiesBrowser', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'cookiesBrowser', { cookiesBrowser: browser });
     },
 
     setProxyUrl: async (url) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, proxyUrl: url } } });
-      const result = await window.appApi.settings.update({ common: { proxyUrl: url } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('proxyUrl', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'proxyUrl', { proxyUrl: url });
     },
 
     setClipboardWatchEnabled: async (enabled) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, clipboardWatchEnabled: enabled } } });
-      const result = await window.appApi.settings.update({ common: { clipboardWatchEnabled: enabled } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('clipboardWatchEnabled', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'clipboardWatchEnabled', { clipboardWatchEnabled: enabled });
     },
 
     setCloseBehavior: async (value) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, closeBehavior: value } } });
-      const result = await window.appApi.settings.update({ common: { closeBehavior: value } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('closeBehavior', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'closeBehavior', { closeBehavior: value });
     },
 
     setAnalyticsEnabled: async (enabled) => {
-      const current = get().settings;
-      if (current) set({ settings: { ...current, common: { ...current.common, analyticsEnabled: enabled } } });
-      const result = await window.appApi.settings.update({ common: { analyticsEnabled: enabled } });
-      if (!result.ok) {
-        notify.settingsSaveFailed('analyticsEnabled', result.error);
-        return;
-      }
-      set({ settings: result.data });
+      await applyCommonPatchAsync(get, set, 'analyticsEnabled', { analyticsEnabled: enabled });
+    },
+
+    openShareDialog: (trigger) => {
+      openShareDialogInternal(set, trigger);
+    },
+
+    closeShareDialog: () => {
+      set({ shareDialogOpen: false, shareDialogTrigger: null });
+    },
+
+    setShareInlineCardDismissed: async () => {
+      track('share_inline_card_dismissed');
+      await applyCommonPatchAsync(get, set, 'shareInlineCardDismissed', { shareInlineCardDismissed: true });
+    },
+
+    setShareHighValueBannerDismissed: async () => {
+      track('share_prompt_dismissed', { via: 'high-value-inline' });
+      await applyCommonPatchAsync(get, set, 'shareHighValueBannerDismissed', { shareHighValueBannerDismissed: true });
     }
   };
 }

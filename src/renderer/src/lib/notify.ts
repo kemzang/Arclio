@@ -6,5 +6,8 @@ export const notify = {
   },
   warmupFailed(reason: string, error: unknown): void {
     console.error(`[warmup] ${reason}`, error);
+  },
+  shellActionFailed(action: string, error: unknown): void {
+    console.error(`[shell] ${action} failed`, error);
   }
 };

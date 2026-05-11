@@ -1,6 +1,6 @@
 import type { JSX, ReactNode } from 'react';
-import { Button } from './button';
-import { Tooltip, TooltipTrigger, TooltipContent } from './tooltip';
+import { Button } from './button.js';
+import { Tooltip, TooltipTrigger, TooltipContent } from './tooltip.js';
 
 interface TooltipIconButtonProps {
   icon: ReactNode;

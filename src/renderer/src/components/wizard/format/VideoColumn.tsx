@@ -1,13 +1,13 @@
 import { useState, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { FormatOption } from '@shared/types';
-import { humanSize } from '@shared/format';
-import { groupVideoFormats } from '../../../store/useAppStore';
-import { useFormatSelectionView } from '../../../store/formatSelectionView';
-import { ToggleGroup, ToggleGroupItem } from '../../ui/toggle-group';
-import { RadioOption } from '../../ui/radio-option';
-import { ScrollArea } from '../../ui/scroll-area';
-import { cn } from '@renderer/lib/utils';
+import type { FormatOption } from '@shared/types.js';
+import { humanSize } from '@shared/format.js';
+import { groupVideoFormats } from '../../../store/useAppStore.js';
+import { useFormatSelectionView } from '../../../store/formatSelectionView.js';
+import { ToggleGroup, ToggleGroupItem } from '../../ui/toggle-group.js';
+import { RadioOption } from '../../ui/radio-option.js';
+import { ScrollArea } from '../../ui/scroll-area.js';
+import { cn } from '@renderer/lib/utils.js';
 
 interface VideoColumnProps {
   formats: FormatOption[];

@@ -2,8 +2,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { RecentJobsStore } from '@main/stores/RecentJobsStore';
-import { SettingsStore } from '@main/stores/SettingsStore';
+import { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
+import { SettingsStore } from '@main/stores/SettingsStore.js';
 
 describe('settings and recent stores', () => {
   const baseDefaults = {
@@ -52,7 +52,7 @@ describe('settings and recent stores', () => {
       outputDir: '/tmp',
       status: 'failed',
       finishedAt: '2024-01-02T00:00:00.000Z',
-      error: { key: null, rawMessage: 'boom' }
+      error: { kind: 'unknown', raw: 'boom' }
     });
 
     const list = await store.list();
@@ -108,7 +108,6 @@ describe('settings and recent stores', () => {
         lastPreset: 'best-quality',
         lastSubfolder: 'old-subfolder',
         lastPlaylistPreset: 'video-1080p',
-        lastPlaylistSubfolderEnabled: true,
         cookiesEnabled: true,
         cookiesPath: '/legacy/cookies.txt'
       }),
@@ -123,9 +122,8 @@ describe('settings and recent stores', () => {
     expect(settings.common.cookiesMode).toBe('file');
     expect((settings.common as unknown as { cookiesEnabled?: boolean }).cookiesEnabled).toBeUndefined();
     expect(settings.single.lastPreset).toBe('best-quality');
-    expect(settings.single.lastSubfolder).toBe('old-subfolder');
+    expect(settings.common.lastSubfolder).toBe('old-subfolder');
     expect(settings.playlist.lastPlaylistPreset).toBe('video-1080p');
-    expect(settings.playlist.lastPlaylistSubfolderEnabled).toBe(true);
 
     // After migration the file holds only the nested shape — flat keys gone.
     const persisted = JSON.parse(await fs.readFile(path.join(userData, 'settings.json'), 'utf-8'));
@@ -167,5 +165,65 @@ describe('settings and recent stores', () => {
     const store = new RecentJobsStore(userData);
 
     expect(await store.list()).toEqual([]);
+  });
+
+  it('push() deduplicates by id — re-pushing same id keeps only the latest entry', async () => {
+    const userData = await fs.mkdtemp(path.join(os.tmpdir(), 'recent-jobs-dedup-'));
+    const store = new RecentJobsStore(userData);
+
+    await store.push({ id: 'dup', url: 'https://youtu.be/a', outputDir: '/tmp', status: 'failed', finishedAt: '2024-01-01T00:00:00.000Z', error: { kind: 'unknown', raw: 'first' } });
+    await store.push({ id: 'dup', url: 'https://youtu.be/a', outputDir: '/tmp', status: 'completed', finishedAt: '2024-01-02T00:00:00.000Z' });
+
+    const list = await store.list();
+    expect(list).toHaveLength(1);
+    expect(list[0].status).toBe('completed');
+  });
+
+  it('push() enforces cap=30 — oldest entries evicted when full', async () => {
+    const userData = await fs.mkdtemp(path.join(os.tmpdir(), 'recent-jobs-cap-'));
+    const store = new RecentJobsStore(userData);
+
+    for (let i = 0; i < 32; i++) {
+      await store.push({
+        id: `job-${i}`,
+        url: `https://youtu.be/${i}`,
+        outputDir: '/tmp',
+        status: 'completed',
+        finishedAt: new Date(i * 1000).toISOString()
+      });
+    }
+
+    const list = await store.list();
+    expect(list).toHaveLength(30);
+    // The most-recent 30 survive; the two oldest (job-0, job-1) are gone.
+    expect(list.some((j) => j.id === 'job-0')).toBe(false);
+    expect(list.some((j) => j.id === 'job-1')).toBe(false);
+    expect(list.some((j) => j.id === 'job-31')).toBe(true);
+  });
+
+  it('push() migrates beta-shape error { key, rawMessage } → { kind, raw } on read', async () => {
+    const userData = await fs.mkdtemp(path.join(os.tmpdir(), 'recent-jobs-migrate-'));
+    await fs.writeFile(
+      path.join(userData, 'recent-jobs.json'),
+      JSON.stringify({
+        jobs: [
+          {
+            id: 'beta-job',
+            url: 'https://youtu.be/x',
+            outputDir: '/tmp',
+            status: 'failed',
+            finishedAt: '2024-01-01T00:00:00.000Z',
+            error: { key: 'botBlock', rawMessage: 'Sign in to confirm' }
+          }
+        ]
+      }),
+      'utf-8'
+    );
+
+    const store = new RecentJobsStore(userData);
+    const list = await store.list();
+
+    expect(list).toHaveLength(1);
+    expect(list[0].error).toEqual({ kind: 'botBlock', raw: 'Sign in to confirm' });
   });
 });

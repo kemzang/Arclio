@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { RadioOption } from '@renderer/components/ui/radio-option';
+import { RadioOption } from '@renderer/components/ui/radio-option.js';
 
 describe('RadioOption', () => {
   it('renders label and reflects checked state via aria-checked', () => {

@@ -3,8 +3,7 @@ const vi = {
     back: 'Quay lại',
     continue: 'Tiếp tục',
     retry: 'Thử lại',
-    startOver: 'Bắt đầu lại',
-    loading: 'Đang tải…'
+    startOver: 'Bắt đầu lại'
   },
   app: {
     feedback: 'Phản hồi',
@@ -14,6 +13,15 @@ const vi = {
     debugCopyTitle: 'Sao chép thông tin gỡ lỗi (phiên bản Electron, OS, Chrome)',
     zoomIn: 'Phóng to',
     zoomOut: 'Thu nhỏ'
+  },
+  about: {
+    button: 'Giới thiệu',
+    openTitle: 'Giới thiệu về Arroxy',
+    tagline: 'Phần mềm tải video & âm thanh nhanh, thân thiện dành cho máy tính.',
+    websiteLink: 'Trang web',
+    githubLink: 'GitHub',
+    licenseLine: 'Giấy phép MIT · bởi Antonio Orionus',
+    thirdPartyNotices: 'Xem thông báo bên thứ ba'
   },
   titleBar: {
     close: 'Đóng',
@@ -25,7 +33,6 @@ const vi = {
     greeting: 'Xin chào, chào mừng bạn quay lại!',
     warmup: 'Arroxy đang khởi động…',
     downloading: 'Đang tải xuống {{binary}}…',
-    warning: 'Thiết lập chưa hoàn tất — một số tính năng có thể không hoạt động',
     warmupFailedNoDiag: 'Thiết lập thất bại. Mở nhật ký thiết lập để xem chi tiết.'
   },
   repair: {
@@ -81,6 +88,8 @@ const vi = {
       heading: 'Các mục Playlist',
       itemCount_one: '{{count}} video',
       itemCount_other: '{{count}} video',
+      itemCountAudio_one: '{{count}} bản nhạc',
+      itemCountAudio_other: '{{count}} bản nhạc',
       selectAll: 'Chọn tất cả',
       selectNone: 'Bỏ chọn tất cả',
       rangeFrom: 'Từ',
@@ -91,15 +100,13 @@ const vi = {
       noSelection: 'Chọn ít nhất một video để tiếp tục',
       loadingItems: 'Đang tải Playlist…',
       thumbnailAlt: 'Hình thu nhỏ video',
-      continue: 'Tiếp tục',
       durationUnknown: 'live'
     },
     playlistPresets: {
       heading: 'Chọn chất lượng cho lô',
       subhead: 'Mỗi video tự xử lý cấp độ đã chọn một cách độc lập — danh sách phát không đồng nhất hoạt động mượt mà.',
       itemCount_one: '{{count}} mục',
-      itemCount_other: '{{count}} mục',
-      continue: 'Tiếp tục'
+      itemCount_other: '{{count}} mục'
     },
     mixedPrompt: {
       title: 'Liên kết này có Playlist',
@@ -114,17 +121,25 @@ const vi = {
       fetchFormats: 'Tải định dạng',
       features: {
         heading: 'Arroxy có thể tải gì',
-        video: {
-          title: 'Video',
-          desc: 'Chọn độ phân giải bất kỳ lên đến 4K'
+        youtube: {
+          heading: 'YouTube',
+          video: 'Video',
+          channel: 'Kênh',
+          playlist: 'Danh sách phát',
+          short: 'Shorts',
+          music: 'Nhạc',
+          podcast: 'Podcast'
         },
-        playlist: {
-          title: 'Danh sách phát',
-          desc: 'Chọn nhiều mục từ một playlist'
+        anySite: {
+          heading: '2000+ trang web',
+          video: 'Video',
+          videoPlaylist: 'Danh sách phát video',
+          musicPlaylist: 'Danh sách phát nhạc'
         },
-        audio: {
-          title: 'Âm thanh',
-          desc: 'Luồng gốc hoặc chuyển đổi MP3/M4A'
+        always: {
+          heading: 'Luôn có sẵn',
+          audioOnly: 'Chỉ âm thanh',
+          subtitles: 'Phụ đề'
         }
       },
       mascotIdle: 'Dán cho tôi một liên kết YouTube (video hoặc YouTube Shorts) — rồi nhấn "Tải định dạng" và tôi sẽ bắt tay vào việc ✨',
@@ -162,7 +177,7 @@ const vi = {
         enabledButNoBrowser: 'Chọn một trình duyệt để dùng cookies',
         banWarning: 'YouTube có thể gắn cờ — và đôi khi cấm — các tài khoản có cookies được yt-dlp sử dụng. Hãy dùng tài khoản phụ khi có thể.',
         extensionFirefox: 'cookies.txt (Firefox)',
-        extensionChrome: 'Get cookies.txt LOCALLY (Chrome)'
+        extensionChrome: 'Lấy cookies.txt TRÊN MÁY (Chrome)'
       },
       proxy: {
         label: 'URL Proxy',
@@ -180,14 +195,10 @@ const vi = {
       }
     },
     subtitles: {
-      heading: 'Phụ đề',
       autoBadge: 'Tự động',
-      hint: 'Các tệp phụ đề sẽ được lưu cạnh video',
       noLanguages: 'Không có phụ đề nào cho video này',
       skip: 'Bỏ qua',
       skipSubs: 'Bỏ qua cho video này',
-      selectAll: 'Chọn tất cả',
-      deselectAll: 'Bỏ chọn tất cả',
       mascot: 'Chọn không, một hay nhiều — hoàn toàn tùy bạn ✨',
       searchPlaceholder: 'Tìm ngôn ngữ…',
       noMatches: 'Không tìm thấy ngôn ngữ nào',
@@ -242,10 +253,14 @@ const vi = {
       audioOnlyOption: 'Chỉ âm thanh (không có video)',
       mascot: 'Tốt nhất + Tốt nhất = chất lượng cao nhất. Tôi sẽ chọn cái đó!',
       sniffing: 'Đang tìm định dạng tốt nhất cho bạn…',
-      loadingHint: 'Thường mất một chút thời gian',
+      loadingHint: 'Vui lòng chờ cho đến khi quá trình kiểm tra hoàn tất — playlist và tìm kiếm có thể mất một lúc.',
       loadingAria: 'Đang tải định dạng',
       sizeUnknown: 'Không biết kích thước',
       total: 'Tổng cộng',
+      skipToConfirm: 'Bỏ qua đến xác nhận',
+      skipToConfirmTooltip: 'Sử dụng tùy chọn đã lưu của bạn cho tất cả các bước còn lại. Để thay đổi một cài đặt, hãy tiếp tục từng bước — lựa chọn của bạn sẽ được lưu cho lần sau.',
+      keepAudio: 'Giữ nguyên',
+      keepAudioMeta: 'Âm thanh tích hợp',
       convert: {
         label: 'Chuyển đổi',
         uncompressed: 'Chuyển đổi · không nén',
@@ -261,8 +276,7 @@ const vi = {
         bodyDisabled: 'Cookies đã được cấu hình nhưng đang tắt. Bật lên và thử lại để có danh sách đầy đủ, hoặc đổi mạng và thử lại.',
         bodyEnabled: 'Ngay cả với cookies, YouTube vẫn giới hạn lần kiểm tra này. Hãy thử lại sau hoặc đổi mạng.',
         retryCta: 'Thử lại',
-        enableRetryCta: 'Bật cookies và thử lại',
-        openSettingsCta: 'Mở cài đặt nâng cao'
+        enableRetryCta: 'Bật cookies và thử lại'
       },
       cookiesError: {
         heading: 'Cookies có thể là nguyên nhân',
@@ -272,6 +286,10 @@ const vi = {
         explanationFile: 'Tệp cookies của bạn có thể trống, đã hết hạn hoặc sai định dạng (yt-dlp yêu cầu Netscape cookies.txt). Hãy thử xuất lại cookies, chọn tệp khác, chuyển sang chế độ Trình duyệt hoặc tắt cookies.',
         explanationBrowser: 'Cookies được đọc trực tiếp từ trình duyệt. Nếu trình duyệt đang mở, cơ sở dữ liệu cookies có thể bị khóa (Chromium-family). Trình duyệt cũng phải đã đăng nhập vào YouTube. Hãy thử đóng trình duyệt, chuyển sang trình duyệt khác, chuyển sang chế độ Tệp hoặc tắt cookies.',
         openSettingsCta: 'Mở cài đặt cookies',
+        needsCookies: {
+          heading: 'Trang web này yêu cầu đăng nhập',
+          body: 'yt-dlp không thể truy cập video này mà không xác thực. Hãy cấu hình cookies trong cài đặt nâng cao — trỏ đến trình duyệt bạn đã đăng nhập, hoặc nhập tệp cookies.txt.'
+        },
         dpapi: {
           heading: 'Cookies của Chrome bị chặn bởi mã hóa Windows',
           explanation: 'Chrome 127 trở lên mã hóa cookies theo cách mà các ứng dụng khác không thể đọc trên Windows. Hãy thử một trong các cách khắc phục bên dưới.',
@@ -334,26 +352,24 @@ const vi = {
       labelSize: 'Kích thước',
       sizeUnknown: 'Không xác định',
       nothingToDownload: 'Cài đặt chỉ phụ đề đang hoạt động nhưng chưa chọn ngôn ngữ phụ đề nào — sẽ không có gì được tải xuống.',
+      thumbnailEmbedNotSupported: 'Thumbnail embed bị bỏ qua — container đầu ra không hỗ trợ tính năng này.',
+      subtitleEmbedAudioOnly: 'Subtitle embed đã chuyển sang sidecar — các track âm thanh không hỗ trợ luồng phụ đề được nhúng.',
       audioOnly: 'Chỉ âm thanh',
       addToQueue: '+ Hàng đợi',
       addToQueueTooltip: 'Bắt đầu khi các tải xuống khác hoàn tất — sử dụng toàn bộ băng thông',
       pullIt: 'Tải về! ↓',
       pullItTooltip: 'Bắt đầu ngay lập tức — chạy song song với các tải xuống đang hoạt động',
-      playlistBatch_one: '{{count}} video · {{title}}',
-      playlistBatch_other: '{{count}} video · {{title}}',
       labelPlaylist: 'Danh sách phát',
       labelPreset: 'Cài đặt sẵn',
       labelItems: 'Mục',
       itemsValue_one: '{{count}} trong {{total}} video',
-      itemsValue_other: '{{count}} trong {{total}} video'
-    },
-    error: {
-      icon: 'Lỗi'
+      itemsValue_other: '{{count}} trong {{total}} video',
+      itemsValueAudio_one: '{{count}} trong {{total}} bản nhạc',
+      itemsValueAudio_other: '{{count}} trong {{total}} bản nhạc'
     }
   },
   videoCard: {
-    titlePlaceholder: 'Đang tải…',
-    domain: 'youtube.com'
+    titlePlaceholder: 'Đang tải…'
   },
   queue: {
     header: 'Hàng đợi tải xuống',
@@ -378,9 +394,7 @@ const vi = {
       resume: 'Tiếp tục',
       cancel: 'Hủy',
       remove: 'Xóa'
-    },
-    interJobSleep_one: 'Lượt tải tiếp bắt đầu sau {{count}}s',
-    interJobSleep_other: 'Lượt tải tiếp bắt đầu sau {{count}}s'
+    }
   },
   update: {
     appVersion: 'Arroxy {{version}}',
@@ -415,7 +429,8 @@ const vi = {
     ytdlpProcessError: 'Lỗi tiến trình yt-dlp: {{error}}',
     ytdlpExitCode: 'yt-dlp thoát với mã {{code}}',
     downloadingBinary: 'Đang tải xuống tệp nhị phân {{name}}…',
-    unknownStartupFailure: 'Lỗi khởi động tải xuống không xác định'
+    unknownStartupFailure: 'Lỗi khởi động tải xuống không xác định',
+    diskSpaceInsufficient: 'Không đủ dung lượng đĩa — cần {{required}}, chỉ còn {{free}}'
   },
   errors: {
     ytdlp: {
@@ -426,7 +441,12 @@ const vi = {
       unavailable: 'Video này không khả dụng — có thể là riêng tư, đã bị xóa hoặc bị chặn theo khu vực.',
       geoBlocked: 'Video này không có sẵn ở khu vực của bạn.',
       outOfDiskSpace: 'Không đủ dung lượng đĩa. Hãy giải phóng dung lượng rồi thử lại.',
-      unsupportedUrl: 'Đây không giống như URL video. Hãy dán liên kết video YouTube, Short hoặc danh sách phát.'
+      unsupportedUrl: 'Đây không giống như URL video. Hãy dán liên kết video YouTube, Short hoặc danh sách phát.',
+      chunkTransferFailure: 'Máy chủ liên tục ngắt kết nối giữa chừng và yt-dlp đã bỏ cuộc sau nhiều lần thử lại. Lỗi này thường xảy ra với các định dạng video lớn nhất (4K HDR / VP9 bitrate cao). Hãy thử lại, đổi mạng/VPN, hoặc chọn định dạng độ phân giải thấp hơn.',
+      postprocessFailure: 'yt-dlp đã tải xong nhưng quá trình xử lý hậu kỳ (gộp / mux / chuyển đổi) bị lỗi. Thường đây là sự cố tạm thời của ffmpeg — hãy thử lại, và nếu vẫn lỗi thì thử một tổ hợp định dạng khác.',
+      parse: 'Không thể phân tích phản hồi từ trang web. Bộ trích xuất của yt-dlp có thể đã lỗi thời. Arroxy tự động cập nhật yt-dlp khi khởi chạy — hãy thử lại sau vài phút khi bản sửa lỗi được phát hành.',
+      network: 'Lỗi mạng. Hãy kiểm tra kết nối và thử lại.',
+      unknown: 'Tải xuống thất bại. Xem đầu ra thô bên dưới.'
     }
   },
   presets: {
@@ -463,7 +483,6 @@ const vi = {
     'audio-mp3': { label: 'Audio (MP3)', desc: 'Chuyển đổi sang MP3 192 kbps' }
   },
   formatLabel: {
-    audioOnly: 'Chỉ âm thanh',
     audioFallback: 'Âm thanh',
     audioOnlyDot: 'Chỉ âm thanh · {{audio}}',
     videoDot: '{{resolution}} · {{audio}}'
@@ -498,6 +517,24 @@ const vi = {
       detail: 'Tiến trình renderer bị crash ({{reason}}). Tải lại để thử lại.',
       reload: 'Tải lại',
       quit: 'Thoát'
+    }
+  },
+  share: {
+    title: 'Chia sẻ Arroxy',
+    description: 'Arroxy miễn phí và mã nguồn mở. Chia sẻ giúp nhiều người hơn khám phá ra nó.',
+    copyLink: 'Sao chép liên kết',
+    copied: 'Đã sao chép!',
+    defaultMessage: 'Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock',
+    footerTooltip: 'Chia sẻ Arroxy',
+    footerLabel: 'Chia sẻ',
+    shareAction: 'Chia sẻ Arroxy',
+    inlineCard: {
+      body: 'Bạn thích Arroxy không? Hãy chia sẻ với ai đó có thể thấy nó hữu ích.',
+      dismiss: 'Bỏ qua gợi ý chia sẻ'
+    },
+    highValueBanner: {
+      body: 'Bạn thích Arroxy không? Hãy giúp người khác khám phá nó.',
+      dismiss: 'Bỏ qua gợi ý chia sẻ'
     }
   }
 } as const;

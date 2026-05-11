@@ -1,14 +1,14 @@
 import { EventEmitter } from 'node:events';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { YtDlp } from '@main/services/YtDlp';
-import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath';
+import { YtDlp } from '@main/services/YtDlp.js';
+import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath.js';
 
 vi.mock('@main/utils/process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@main/utils/process')>();
+  const actual = await importOriginal<typeof import('@main/utils/process.js')>();
   return { ...actual, spawnYtDlp: vi.fn() };
 });
 
-import { spawnYtDlp } from '@main/utils/process';
+import { spawnYtDlp } from '@main/utils/process.js';
 
 const URL = 'https://www.youtube.com/watch?v=test';
 const OUTPUT_DIR = '/downloads';
@@ -59,24 +59,33 @@ beforeEach(() => {
 });
 
 describe('YtDlp — probe args', () => {
-  it('--dump-json --no-playlist url', async () => {
+  it('default (auto): --dump-single-json --flat-playlist + cap, no playlist flag', async () => {
     await makeYtDlp().run({ kind: 'probe', url: URL });
     const args = getArgs();
-    expect(args).toContain('--dump-json');
-    expect(args).toContain('--no-playlist');
+    expect(args).toContain('--dump-single-json');
+    expect(args).toContain('--flat-playlist');
+    expect(args).not.toContain('--yes-playlist');
+    expect(args).not.toContain('--no-playlist');
+    expect(args).toContain('--playlist-end');
+    expect(args[args.indexOf('--playlist-end') + 1]).toBe('500');
     expect(args[args.length - 1]).toBe(URL);
   });
-});
 
-describe('YtDlp — playlist-probe args', () => {
-  it('--dump-json --flat-playlist --yes-playlist, NO --no-playlist', async () => {
-    await makeYtDlp().run({ kind: 'playlist-probe', url: URL });
+  it("playlistMode='video': adds --no-playlist, drops --playlist-end (single-video resolution)", async () => {
+    await makeYtDlp().run({ kind: 'probe', url: URL, playlistMode: 'video' });
     const args = getArgs();
-    expect(args).toContain('--dump-json');
-    expect(args).toContain('--flat-playlist');
+    expect(args).toContain('--no-playlist');
+    expect(args).not.toContain('--yes-playlist');
+    expect(args).not.toContain('--playlist-end');
+  });
+
+  it("playlistMode='playlist': adds --yes-playlist + --playlist-end 500", async () => {
+    await makeYtDlp().run({ kind: 'probe', url: URL, playlistMode: 'playlist' });
+    const args = getArgs();
     expect(args).toContain('--yes-playlist');
     expect(args).not.toContain('--no-playlist');
-    expect(args[args.length - 1]).toBe(URL);
+    expect(args).toContain('--playlist-end');
+    expect(args[args.indexOf('--playlist-end') + 1]).toBe('500');
   });
 });
 
@@ -490,7 +499,7 @@ describe('YtDlp — cookies injection', () => {
     await ytDlp.run({ kind: 'probe', url: URL });
     const args = getArgs();
     const cookiesIdx = args.indexOf('--cookies');
-    const dumpJsonIdx = args.indexOf('--dump-json');
+    const dumpJsonIdx = args.indexOf('--dump-single-json');
     expect(cookiesIdx).toBeGreaterThan(-1);
     expect(cookiesIdx).toBeLessThan(dumpJsonIdx);
   });
@@ -690,16 +699,19 @@ describe('YtDlp — extractor-args shape', () => {
     const ytDlp = makeYtDlp({ token: 'MYTOKEN', visitorData: 'MYVISITOR' });
     await ytDlp.run({ kind: 'probe', url: URL });
     const args = getArgs();
-    expect(args[0]).toBe('--extractor-args');
-    expect(args[1]).toBe('youtube:po_token=web.gvs+MYTOKEN;visitor_data=MYVISITOR');
+    const i = args.indexOf('--extractor-args');
+    expect(i).toBeGreaterThanOrEqual(0);
+    expect(args[i + 1]).toBe('youtube:po_token=web.gvs+MYTOKEN;visitor_data=MYVISITOR');
   });
 
   it('empty visitorData → omits ;visitor_data= segment', async () => {
     const ytDlp = makeYtDlp({ token: 'MYTOKEN', visitorData: '' });
     await ytDlp.run({ kind: 'probe', url: URL });
     const args = getArgs();
-    expect(args[1]).toBe('youtube:po_token=web.gvs+MYTOKEN');
-    expect(args[1]).not.toContain('visitor_data');
+    const i = args.indexOf('--extractor-args');
+    expect(i).toBeGreaterThanOrEqual(0);
+    expect(args[i + 1]).toBe('youtube:po_token=web.gvs+MYTOKEN');
+    expect(args[i + 1]).not.toContain('visitor_data');
   });
 });
 

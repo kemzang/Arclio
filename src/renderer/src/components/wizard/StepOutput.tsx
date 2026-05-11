@@ -1,9 +1,9 @@
 import { type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '../../store/useAppStore';
-import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
-import { Switch } from '../ui/switch';
+import { useAppStore } from '../../store/useAppStore.js';
+import { Button } from '../ui/button.js';
+import { Separator } from '../ui/separator.js';
+import { Switch } from '../ui/switch.js';
 
 export function StepOutput(): JSX.Element {
   const { t } = useTranslation();
@@ -57,14 +57,16 @@ export function StepOutput(): JSX.Element {
         </div>
       </div>
 
-      <Separator className="bg-border/50 -mx-6 w-auto my-1.5" />
-      <div className="flex items-center justify-end py-3 -mx-6 px-6 gap-2">
-        <Button variant="ghost" type="button" onClick={back} className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
-          {t('common.back')}
-        </Button>
-        <Button type="button" onClick={advance} className="shadow-[0_4px_14px_var(--brand-glow)]">
-          {t('common.continue')}
-        </Button>
+      <div className="sticky bottom-0 -mx-6 px-6 bg-background z-10">
+        <Separator className="bg-border/50 -mx-6 w-auto my-1.5" />
+        <div className="flex items-center justify-end py-3 -mx-6 px-6 gap-2">
+          <Button variant="ghost" type="button" onClick={back} className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
+            {t('common.back')}
+          </Button>
+          <Button type="button" onClick={advance} className="shadow-[0_4px_14px_var(--brand-glow)]">
+            {t('common.continue')}
+          </Button>
+        </div>
       </div>
     </div>
   );

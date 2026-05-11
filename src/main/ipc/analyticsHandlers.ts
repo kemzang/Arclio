@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { analyticsTrackSchema } from '@shared/schemas';
-import { trackMain } from '@main/services/analytics';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { analyticsTrackSchema } from '@shared/schemas.js';
+import { trackMain } from '@main/services/analytics.js';
 
 export function registerAnalyticsHandlers(): void {
   // Fire-and-forget: allowlist enforcement happens inside trackMain,

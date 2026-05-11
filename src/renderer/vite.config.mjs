@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import Icons from 'unplugin-icons/vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -13,5 +14,5 @@ export default defineConfig({
       '@shared': path.resolve(__dirname, '../../src/shared')
     }
   },
-  plugins: [react(), tailwindcss()]
+  plugins: [react(), tailwindcss(), Icons({ compiler: 'jsx', jsx: 'react' })]
 });

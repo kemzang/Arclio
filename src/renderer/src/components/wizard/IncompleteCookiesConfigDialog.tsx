@@ -1,8 +1,8 @@
 import { type JSX, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
-import { Button } from '../ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
+import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
+import { Button } from '../ui/button.js';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog.js';
 
 interface Props {
   issue: IncompleteCookiesConfigIssue | null;

@@ -5,7 +5,7 @@
 // then emit valid WebVTT (timecode separator `.` instead of `,`, plus the
 // `WEBVTT` header). Cue parsing is inlined here.
 
-import { dedupeCues, msToTimecodeParts, timecodeToMs, type Cue } from './cueDedupe';
+import { dedupeCues, msToTimecodeParts, timecodeToMs, type Cue } from './cueDedupe.js';
 
 const VTT_TIMECODE_RE = /^(\d+):(\d+):(\d+)\.(\d+) --> (\d+):(\d+):(\d+)\.(\d+)/;
 // YouTube's auto-caption inline tags: word timing markers and <c>...</c>

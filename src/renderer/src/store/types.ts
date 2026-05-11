@@ -1,7 +1,7 @@
 import type { StoreApi } from 'zustand';
-import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, GetFormatsOutput, PlaylistEntry, PlaylistPreset, Preset, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types';
-import type { AudioSelection } from '@shared/schemas';
-import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig';
+import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, ProbeDegradationReason, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types.js';
+import type { AudioSelection } from '@shared/schemas.js';
+import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 export type { AudioSelection };
 export type WizardStep = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error';
 
@@ -13,21 +13,65 @@ export type WizardMode = 'single' | 'playlist';
 export type SetState = StoreApi<AppState>['setState'];
 export type GetState = StoreApi<AppState>['getState'];
 
-export interface WizardSlice {
+// Wizard state is split across four cohesive slices. Each owns a subset of
+// fields + actions. AppState below sums them. Components subscribe to flat
+// fields (selector at consumption); the split is about source-of-ownership
+// for maintainers, not a re-render boundary.
+
+// ProbeOrchestrator — URL → probe pipeline + step-graph navigation +
+// playlist enumeration. Owns wizardStep (the canonical "where am I").
+export interface ProbeOrchestratorSlice {
   wizardStep: WizardStep;
   wizardMode: WizardMode;
-  formatsLoading: boolean;
   wizardUrl: string;
   wizardTitle: string;
   wizardThumbnail: string;
   wizardDuration?: number;
+  wizardFormatsDegraded: { reasons: ProbeDegradationReason[] } | null;
+  // yt-dlp's IE_NAME for the URL just probed (e.g. 'youtube', 'vimeo'). Used to
+  // gate YT-only UI (SponsorBlock step, ban warning) and threaded into PreparedJob
+  // so the download path can branch identically.
+  wizardExtractor: string;
+  wizardExtractorKey: string;
+  // The webpage URL the extractor reports — used to render "Cookies for {host}"
+  // dynamically. Empty pre-probe.
+  wizardWebpageUrl: string;
+  formatsLoading: boolean;
+  wizardError: AppError | null;
+  wizardErrorOrigin: 'formats' | null;
+  // Playlist mode — populated when the URL probe returns _type: 'playlist' or
+  // 'multi_video' from yt-dlp.
+  playlistItems: PlaylistEntry[];
+  selectedPlaylistItemIds: string[];
+  playlistTitle: string;
+  playlistId: string;
+  playlistIsMultiVideo: boolean;
+  playlistProbeLoading: boolean;
+  selectedPlaylistPreset: PlaylistPreset | null;
+
+  setWizardUrl: (url: string) => void;
+  submitUrl: () => Promise<void>;
+  dismissMixedPrompt: (choice: 'video' | 'playlist') => Promise<void>;
+  setPlaylistItemSelected: (id: string, checked: boolean) => void;
+  selectAllPlaylistItems: () => void;
+  selectNonePlaylistItems: () => void;
+  selectPlaylistRange: (from: number, to: number) => void;
+  confirmPlaylistSelection: () => void;
+  setPlaylistPreset: (p: PlaylistPreset) => void;
+  advance: () => void;
+  back: () => void;
+  skipSubtitles: () => void;
+  skipToConfirm: () => void;
+  reset: () => void;
+  retry: () => Promise<void>;
+  retryFormatProbe: () => Promise<void>;
+  retryProbeWithCookies: () => Promise<void>;
+  openCookiesSettings: () => void;
+}
+
+// FormatPicker — formats / audio / subtitles / preset state, post-probe.
+export interface FormatPickerSlice {
   wizardFormats: FormatOption[];
-  wizardFormatsDegraded: NonNullable<GetFormatsOutput['degraded']> | null;
-  // Transient flag set when the user navigates to the URL step from the
-  // CookiesErrorAlert's "Open cookies settings" link. `StepUrlInput` reads
-  // it on mount, expands the advanced section, scrolls the cookies block
-  // into view, and clears the flag so it doesn't re-fire on re-render.
-  advancedAutoOpen: boolean;
   selectedVideoFormatId: string;
   audioSelection: AudioSelection;
   // Preserves the user's bitrate choice when toggling between mp3/m4a/opus
@@ -36,15 +80,24 @@ export interface WizardSlice {
   // May be set IMPLICITLY when video='' (see setSelectedVideoFormatId).
   // Don't treat it as "the preset the user explicitly clicked."
   activePreset: Preset | null;
-  wizardOutputDir: string;
-  wizardError: AppError | null;
-  wizardErrorOrigin: 'formats' | null;
   wizardSubtitles: SubtitleMap;
   wizardAutomaticCaptions: SubtitleMap;
   wizardSubtitleLanguages: string[];
   wizardSubtitleSkipped: boolean;
   wizardSubtitleMode: SubtitleMode;
   wizardSubtitleFormat: SubtitleFormat;
+
+  setSelectedVideoFormatId: (id: string) => void;
+  setAudioSelection: (sel: AudioSelection) => void;
+  setPreset: (p: Preset) => void;
+  toggleSubtitleLanguage: (lang: string) => void;
+  setSubtitleMode: (mode: SubtitleMode) => void;
+  setSubtitleFormat: (format: SubtitleFormat) => void;
+}
+
+// OutputConfig — output dir / subfolder / SponsorBlock / embed flags.
+export interface OutputConfigSlice {
+  wizardOutputDir: string;
   wizardSubfolderEnabled: boolean;
   wizardSubfolderName: string;
   wizardSponsorBlockMode: SponsorBlockMode;
@@ -54,47 +107,11 @@ export interface WizardSlice {
   wizardEmbedThumbnail: boolean;
   wizardWriteDescription: boolean;
   wizardWriteThumbnail: boolean;
-  // Playlist mode — populated when the URL probe routes through
-  // getPlaylistItems instead of getFormats.
-  playlistItems: PlaylistEntry[];
-  selectedPlaylistItemIds: string[];
-  playlistTitle: string;
-  playlistId: string;
-  playlistProbeLoading: boolean;
-  mixedUrlPromptOpen: boolean;
-  mixedUrlPending: string | null;
-  cookiesConfigDialogIssue: IncompleteCookiesConfigIssue | null;
-  selectedPlaylistPreset: PlaylistPreset | null;
 
-  setWizardUrl: (url: string) => void;
-  submitUrl: () => Promise<void>;
-  dismissMixedPrompt: (choice: 'video' | 'playlist') => Promise<void>;
-  dismissCookiesConfigDialog: () => void;
-  setPlaylistItemSelected: (id: string, checked: boolean) => void;
-  selectAllPlaylistItems: () => void;
-  selectNonePlaylistItems: () => void;
-  selectPlaylistRange: (from: number, to: number) => void;
-  confirmPlaylistSelection: () => void;
-  setPlaylistPreset: (p: PlaylistPreset) => void;
-  advance: () => void;
-  back: () => void;
-  reset: () => void;
-  retry: () => Promise<void>;
-  retryFormatProbe: () => Promise<void>;
-  retryProbeWithCookies: () => Promise<void>;
-  openCookiesSettings: () => void;
-  setAdvancedAutoOpen: (open: boolean) => void;
   setWizardOutputDir: (dir: string, persist?: boolean) => Promise<void>;
-  setSelectedVideoFormatId: (id: string) => void;
-  setAudioSelection: (sel: AudioSelection) => void;
-  setPreset: (p: Preset) => void;
-  toggleSubtitleLanguage: (lang: string) => void;
-  setSubtitleMode: (mode: SubtitleMode) => void;
-  setSubtitleFormat: (format: SubtitleFormat) => void;
   chooseWizardFolder: () => Promise<void>;
   setWizardSubfolderEnabled: (enabled: boolean) => void;
   setWizardSubfolderName: (name: string) => void;
-  skipSubtitles: () => void;
   setSponsorBlockMode: (mode: SponsorBlockMode) => void;
   toggleSponsorBlockCategory: (cat: SponsorBlockCategory) => void;
   setEmbedChapters: (v: boolean) => void;
@@ -104,19 +121,40 @@ export interface WizardSlice {
   setWriteThumbnail: (v: boolean) => void;
 }
 
+// WizardDialogs — transient UI flags that gate modal interruptions.
+export interface WizardDialogsSlice {
+  // Mixed YouTube URLs (?v=X&list=Y) — wizard intercepts pre-probe and asks
+  // the user "video or playlist?" so Radio/Mix lists don't auto-route to
+  // playlist enumeration.
+  mixedUrlPromptOpen: boolean;
+  mixedUrlPending: string | null;
+  // Transient flag set when the user navigates to the URL step from the
+  // CookiesErrorAlert's "Open cookies settings" link. `StepUrlInput` reads
+  // it on mount, expands the advanced section, scrolls the cookies block
+  // into view, and clears the flag so it doesn't re-fire on re-render.
+  advancedAutoOpen: boolean;
+  cookiesConfigDialogIssue: IncompleteCookiesConfigIssue | null;
+
+  setAdvancedAutoOpen: (open: boolean) => void;
+  dismissCookiesConfigDialog: () => void;
+}
+
+// Renderer's queue slice is a read-only projection of QueueService (main).
+// Actions are thin IPC shims; the queue array hydrates from `queue:event:snapshot`
+// on init and updates via the four diff events. Local mutations are forbidden.
 export interface QueueSlice {
   queue: QueueItem[];
 
   addToQueue: () => Promise<void>;
   addAndDownloadImmediately: () => Promise<void>;
-  startItemDownload: (itemId: string) => Promise<void>;
   cancelItemDownload: (itemId: string) => Promise<void>;
   pauseItemDownload: (itemId: string) => Promise<void>;
   resumeItemDownload: (itemId: string) => Promise<void>;
-  removeQueueItem: (itemId: string) => void;
+  removeQueueItem: (itemId: string) => Promise<void>;
   retryQueueItem: (itemId: string) => Promise<void>;
-  clearCompleted: () => void;
+  clearCompleted: () => Promise<void>;
   pauseAll: () => Promise<void>;
+  resumeFirst: () => Promise<void>;
   cancelAll: () => Promise<void>;
   openItemFolder: (itemId: string) => Promise<void>;
   openItemUrl: (itemId: string) => void;
@@ -127,13 +165,16 @@ export interface UiSlice {
   uiTheme: UiTheme;
   drawerOpen: boolean;
   showQueueTip: boolean;
-  interJobSleepEndsAt: number | null;
+  aboutDialogOpen: boolean;
 
   setDrawerOpen: (open: boolean) => void;
   dismissQueueTip: () => void;
   setUiZoom: (zoom: number) => void;
   setUiTheme: (theme: UiTheme) => void;
+  setAboutDialogOpen: (open: boolean) => void;
 }
+
+export type ShareTrigger = 'footer' | 'titlebar' | 'about' | 'wizard-card' | 'milestone' | 'high-value-inline';
 
 export interface SystemSlice {
   initialized: boolean;
@@ -141,10 +182,12 @@ export interface SystemSlice {
   warmupDiagnostics: Record<DependencyId, DependencyDiagnostic> | null;
   warmupBlocking: DependencyId[];
   warmupRunning: boolean;
-  warmupProgress: Partial<Record<DependencyId, import('@shared/types').WarmupProgressEvent>> | null;
+  warmupProgress: Partial<Record<DependencyId, import('@shared/types.js').WarmupProgressEvent>> | null;
   settings: AppSettings | null;
   language: SupportedLang;
   commonPaths: AppSettings['common']['commonPaths'];
+  shareDialogOpen: boolean;
+  shareDialogTrigger: ShareTrigger | null;
   initialize: () => Promise<void>;
   repairWarmup: () => Promise<void>;
   cancelWarmup: () => Promise<void>;
@@ -160,6 +203,10 @@ export interface SystemSlice {
   setClipboardWatchEnabled: (enabled: boolean) => Promise<void>;
   setCloseBehavior: (value: 'tray' | 'quit') => Promise<void>;
   setAnalyticsEnabled: (enabled: boolean) => Promise<void>;
+  openShareDialog: (trigger: ShareTrigger) => void;
+  closeShareDialog: () => void;
+  setShareInlineCardDismissed: () => Promise<void>;
+  setShareHighValueBannerDismissed: () => Promise<void>;
 }
 
-export type AppState = WizardSlice & QueueSlice & UiSlice & SystemSlice;
+export type AppState = ProbeOrchestratorSlice & FormatPickerSlice & OutputConfigSlice & WizardDialogsSlice & QueueSlice & UiSlice & SystemSlice;

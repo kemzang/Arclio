@@ -1,5 +1,5 @@
 import { useState, useEffect, type JSX } from 'react';
-import { cn } from '@renderer/lib/utils';
+import { cn } from '@renderer/lib/utils.js';
 import loveImg from '../../assets/Love.png';
 
 interface Props {

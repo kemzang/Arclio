@@ -1,6 +1,6 @@
 import { BrowserWindow, session } from 'electron';
-import log from 'electron-log/main';
-import type { TokenProvider } from '@main/token/TokenProvider';
+import log from 'electron-log/main.js';
+import type { TokenProvider } from '@main/token/TokenProvider.js';
 
 const logger = log.scope('token');
 
@@ -30,7 +30,6 @@ export class HiddenWindowTokenProvider implements TokenProvider {
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,
-        sandbox: true,
         session: session.fromPartition('persist:youtube-hidden')
       }
     });

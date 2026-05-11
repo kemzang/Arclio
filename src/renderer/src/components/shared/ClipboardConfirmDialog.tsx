@@ -1,20 +1,22 @@
 import { type JSX, useRef } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
-import { Button } from '../ui/button';
-import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog.js';
+import { Button } from '../ui/button.js';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip.js';
 
 interface Props {
   open: boolean;
   url: string | null;
   onUse: () => void;
+  onFetch: () => void;
   onDisable: () => void;
   onCancel: () => void;
 }
 
-export function ClipboardConfirmDialog({ open, url, onUse, onDisable, onCancel }: Props): JSX.Element {
+export function ClipboardConfirmDialog({ open, url, onUse, onFetch, onDisable, onCancel }: Props): JSX.Element {
   const { t } = useTranslation();
-  const yesButtonRef = useRef<HTMLButtonElement>(null);
+  const fetchButtonRef = useRef<HTMLButtonElement>(null);
 
   function handleOpenChange(next: boolean): void {
     // Esc / outside click → treat as cancel.
@@ -23,7 +25,7 @@ export function ClipboardConfirmDialog({ open, url, onUse, onDisable, onCancel }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent showCloseButton={false} data-testid="clipboard-confirm-dialog" initialFocus={() => yesButtonRef.current}>
+      <DialogContent showCloseButton={false} data-testid="clipboard-confirm-dialog" initialFocus={() => fetchButtonRef.current} className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>{t('wizard.url.clipboard.dialog.title')}</DialogTitle>
           <DialogDescription>{t('wizard.url.clipboard.dialog.body')}</DialogDescription>
@@ -49,8 +51,11 @@ export function ClipboardConfirmDialog({ open, url, onUse, onDisable, onCancel }
           <Button type="button" variant="ghost" onClick={onCancel} data-testid="clipboard-confirm-cancel">
             {t('wizard.url.clipboard.dialog.cancelButton')}
           </Button>
-          <Button ref={yesButtonRef} type="button" onClick={onUse} data-testid="clipboard-confirm-use">
+          <Button type="button" variant="outline" onClick={onUse} data-testid="clipboard-confirm-use">
             {t('wizard.url.clipboard.dialog.useButton')}
+          </Button>
+          <Button ref={fetchButtonRef} type="button" onClick={onFetch} data-testid="clipboard-confirm-fetch" className="shadow-[0_4px_14px_var(--brand-glow)] gap-2">
+            {t('wizard.url.fetchFormats')} <ArrowRight size={16} className="rtl:rotate-180" />
           </Button>
         </DialogFooter>
       </DialogContent>

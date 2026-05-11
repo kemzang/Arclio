@@ -1,31 +1,86 @@
-import log from 'electron-log/main';
-import { IPC_CHANNELS } from '@shared/ipc';
-import { queueArraySchema } from '@shared/schemas';
-import { ok } from '@shared/result';
-import { unknownToMessage } from '@main/utils/errorFactory';
-import type { QueueStore } from '@main/stores/QueueStore';
-import { handle, handleRaw, toUnknownFailure } from './utils';
+import { z } from 'zod';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { queueArraySchema } from '@shared/schemas.js';
+import { ok } from '@shared/result.js';
+import type { QueueService } from '@main/services/QueueService.js';
+import { handle, handleRaw, toUnknownFailure } from './utils.js';
 
-export function registerQueueHandlers(queueStore: QueueStore): void {
-  handleRaw(IPC_CHANNELS.queueLoad, async () => {
+const itemIdSchema = z.object({ itemId: z.string() });
+const cancelInputSchema = z.object({ itemId: z.string().nullable() });
+
+export function registerQueueHandlers(queueService: QueueService): void {
+  handle(IPC_CHANNELS.queueCmdAdd, queueArraySchema, (items) => {
     try {
-      const result = await queueStore.load();
-      if (!result.ok) {
-        log.error('queue:load failed', { error: result.error.message });
-      }
-      return result;
-    } catch (error) {
-      return toUnknownFailure(error);
+      return Promise.resolve(queueService.add(items));
+    } catch (err) {
+      return Promise.resolve(toUnknownFailure(err));
     }
   });
 
-  handle(IPC_CHANNELS.queueSave, queueArraySchema, async (items) => {
+  handle(IPC_CHANNELS.queueCmdStart, itemIdSchema, async ({ itemId }) => {
     try {
-      await queueStore.save(items);
-      return ok({ saved: true });
-    } catch (error) {
-      log.error('queue:save failed', { error: unknownToMessage(error) });
-      return toUnknownFailure(error);
+      const result = await queueService.start(itemId);
+      return result.ok ? ok(undefined) : result;
+    } catch (err) {
+      return toUnknownFailure(err);
+    }
+  });
+
+  handle(IPC_CHANNELS.queueCmdPause, itemIdSchema, async ({ itemId }) => {
+    try {
+      const result = await queueService.pause(itemId);
+      return result.ok ? ok(undefined) : result;
+    } catch (err) {
+      return toUnknownFailure(err);
+    }
+  });
+
+  handle(IPC_CHANNELS.queueCmdResume, itemIdSchema, async ({ itemId }) => {
+    try {
+      const result = await queueService.resume(itemId);
+      return result.ok ? ok(undefined) : result;
+    } catch (err) {
+      return toUnknownFailure(err);
+    }
+  });
+
+  handle(IPC_CHANNELS.queueCmdCancel, cancelInputSchema, async ({ itemId }) => {
+    try {
+      const result = await queueService.cancel(itemId);
+      return result.ok ? ok(undefined) : result;
+    } catch (err) {
+      return toUnknownFailure(err);
+    }
+  });
+
+  handle(IPC_CHANNELS.queueCmdRetry, itemIdSchema, async ({ itemId }) => {
+    try {
+      const result = await queueService.retry(itemId);
+      return result.ok ? ok(undefined) : result;
+    } catch (err) {
+      return toUnknownFailure(err);
+    }
+  });
+
+  handleRaw(IPC_CHANNELS.queueCmdGetSnapshot, () => {
+    return Promise.resolve(ok(queueService.snapshot()));
+  });
+
+  handleRaw(IPC_CHANNELS.queueCmdClearCompleted, () => {
+    try {
+      const result = queueService.clearCompleted();
+      return Promise.resolve(result.ok ? ok(undefined) : result);
+    } catch (err) {
+      return Promise.resolve(toUnknownFailure(err));
+    }
+  });
+
+  handle(IPC_CHANNELS.queueCmdRemove, itemIdSchema, ({ itemId }) => {
+    try {
+      const result = queueService.remove(itemId);
+      return Promise.resolve(result.ok ? ok(undefined) : result);
+    } catch (err) {
+      return Promise.resolve(toUnknownFailure(err));
     }
   });
 }

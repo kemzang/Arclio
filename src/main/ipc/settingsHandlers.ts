@@ -1,10 +1,10 @@
-import { IPC_CHANNELS } from '@shared/ipc';
-import { updateSettingsSchema } from '@shared/schemas';
-import { ok } from '@shared/result';
-import type { SettingsStore } from '@main/stores/SettingsStore';
-import type { ClipboardWatcher } from '@main/services/ClipboardWatcher';
-import { setAnalyticsEnabled } from '@main/services/analytics';
-import { buildCommonPaths, handle, handleRaw, toUnknownFailure } from './utils';
+import { IPC_CHANNELS } from '@shared/ipc.js';
+import { updateSettingsSchema } from '@shared/schemas.js';
+import { ok } from '@shared/result.js';
+import type { SettingsStore } from '@main/stores/SettingsStore.js';
+import type { ClipboardWatcher } from '@main/services/ClipboardWatcher.js';
+import { setAnalyticsEnabled } from '@main/services/analytics.js';
+import { buildCommonPaths, handle, handleRaw, toUnknownFailure } from './utils.js';
 
 interface SettingsHandlerDeps {
   settingsStore: SettingsStore;

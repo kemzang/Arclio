@@ -1,10 +1,10 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { SubtitleOnlyPhase } from '@main/services/phases/SubtitleOnlyPhase';
-import { STATUS_KEY } from '@shared/schemas';
-import type { PhaseContext, ActiveDownload } from '@main/services/phases/types';
-import type { DownloadJob, StartDownloadInput } from '@shared/types';
-import type { PreparedJob } from '@shared/preparedJob';
-import type { YtDlpResult } from '@main/services/YtDlp';
+import { SubtitleOnlyPhase } from '@main/services/phases/SubtitleOnlyPhase.js';
+import { STATUS_KEY } from '@shared/schemas.js';
+import type { PhaseContext, ActiveDownload } from '@main/services/phases/types.js';
+import type { DownloadJob, StartDownloadInput } from '@shared/types.js';
+import type { PreparedJob } from '@shared/preparedJob.js';
+import type { YtDlpResult } from '@main/services/YtDlp.js';
 
 vi.mock('@main/services/subtitlePostProcess', () => ({
   dedupeSubtitleFiles: vi.fn().mockResolvedValue(undefined),
@@ -12,7 +12,7 @@ vi.mock('@main/services/subtitlePostProcess', () => ({
   logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() }
 }));
 
-import { dedupeSubtitleFiles } from '@main/services/subtitlePostProcess';
+import { dedupeSubtitleFiles } from '@main/services/subtitlePostProcess.js';
 
 beforeEach(() => vi.clearAllMocks());
 
@@ -28,7 +28,7 @@ function makeJob(): DownloadJob {
 }
 
 const BASE_SUBS = { languages: ['en'], mode: 'sidecar' as const, format: 'srt' as const, writeAuto: false };
-const BASE_JOB: PreparedJob = { kind: 'subtitle-only', source: 'youtube', subtitles: BASE_SUBS };
+const BASE_JOB: PreparedJob = { kind: 'subtitle-only', extractor: 'youtube', extractorKey: 'Youtube', subtitles: BASE_SUBS };
 
 const BASE_INPUT: StartDownloadInput = {
   url: 'https://www.youtube.com/watch?v=test',
@@ -40,9 +40,14 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
   return {
     job: makeJob(),
     input: BASE_INPUT,
+    controller: new AbortController(),
+    get signal(): AbortSignal {
+      return this.controller.signal;
+    },
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: ['/tmp/video.en.srt'],
+    disposables: [],
     ...overrides
   };
 }
@@ -51,15 +56,11 @@ function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload
   const runMock = vi.fn().mockResolvedValue(runResult);
   return {
     active: makeActive(activeOverrides),
+    signal: new AbortController().signal,
+    register: () => undefined,
     ytDlp: { run: runMock, ffmpegPath: null } as never,
     emitStatus: vi.fn(),
-    emitYtdlpFailure: vi.fn().mockReturnValue({ key: null }),
-    attachYtDlpProcess: vi.fn(),
-    safeConsume: vi.fn(),
-    cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-    cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-    finalize: vi.fn().mockResolvedValue(undefined),
-    moveToPaused: vi.fn()
+    safeConsume: vi.fn()
   };
 }
 
@@ -72,7 +73,7 @@ const SUCCESS: YtDlpResult = {
 const EXIT_ERROR: YtDlpResult = {
   kind: 'exit-error',
   exitCode: 1,
-  signal: null,
+  errorKind: 'unknown',
   rawError: 'fail',
   stdout: '',
   stderr: ''
@@ -93,11 +94,12 @@ describe('SubtitleOnlyPhase', () => {
     expect(outcome.kind).toBe('completed');
   });
 
-  it('failure → hard-failed (no video to fall back to)', async () => {
+  it('failure → hard-failed with classified error payload', async () => {
     const ctx = makeCtx(EXIT_ERROR);
     const outcome = await SubtitleOnlyPhase.run(ctx);
     expect(outcome.kind).toBe('hard-failed');
-    expect(ctx.emitYtdlpFailure).toHaveBeenCalledOnce();
+    if (outcome.kind === 'hard-failed') expect(outcome.error.kind).toBe('unknown');
+    expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('error', expect.any(String), expect.any(Object), expect.objectContaining({ kind: 'unknown' }));
   });
 
   it('success with usedExtractorFallback → sets active.usedExtractorFallback', async () => {
@@ -133,24 +135,39 @@ describe('SubtitleOnlyPhase', () => {
     });
     await SubtitleOnlyPhase.run(ctx);
 
-    const shouldAbort = vi.mocked(dedupeSubtitleFiles).mock.calls[0][2];
-    expect(shouldAbort()).toBe(false);
+    const shouldAbort = vi.mocked(dedupeSubtitleFiles).mock.calls[0][3];
+    expect(shouldAbort?.()).toBe(false);
     ctx.active.cancelRequested = true;
-    expect(shouldAbort()).toBe(true);
+    expect(shouldAbort?.()).toBe(true);
+  });
+
+  it('pauseRequested after run → returns paused (not hard-failed)', async () => {
+    const active = makeActive({ cancelRequested: false });
+    const runMock = vi.fn().mockImplementationOnce(async () => {
+      active.pauseRequested = true;
+      return EXIT_ERROR; // SIGTERM makes yt-dlp exit non-zero
+    });
+    const ctx: PhaseContext = {
+      active,
+      signal: active.signal,
+      register: () => undefined,
+      ytDlp: { run: runMock } as never,
+      emitStatus: vi.fn(),
+      safeConsume: vi.fn()
+    };
+
+    const outcome = await SubtitleOnlyPhase.run(ctx);
+    expect(outcome.kind).toBe('paused');
   });
 
   it('cancelled after run → returns cancelled', async () => {
     const ctx: PhaseContext = {
       active: makeActive({ cancelRequested: false }),
+      signal: new AbortController().signal,
+      register: () => undefined,
       ytDlp: {} as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
     const runMock = vi.fn().mockImplementationOnce(async () => {
       ctx.active.cancelRequested = true;
@@ -162,23 +179,19 @@ describe('SubtitleOnlyPhase', () => {
     expect(outcome.kind).toBe('cancelled');
   });
 
-  it('onAttempt(0) → emits mintingToken; onAttempt(1) → emits remintingToken', async () => {
+  it('onMinting(0) → emits mintingToken; onMinting(1) → emits remintingToken', async () => {
     const runMock = vi.fn().mockImplementation(async (_req, signal) => {
-      signal?.onAttempt?.(0);
-      signal?.onAttempt?.(1);
+      signal?.onMinting?.(0);
+      signal?.onMinting?.(1);
       return SUCCESS;
     });
     const ctx: PhaseContext = {
       active: makeActive(),
+      signal: new AbortController().signal,
+      register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await SubtitleOnlyPhase.run(ctx);
@@ -187,22 +200,15 @@ describe('SubtitleOnlyPhase', () => {
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('token', STATUS_KEY.remintingToken);
   });
 
-  it('onAttempt(2) → no status emitted', async () => {
-    const runMock = vi.fn().mockImplementation(async (_req, signal) => {
-      signal?.onAttempt?.(2);
-      return SUCCESS;
-    });
+  it('no onMinting call → no token status emitted', async () => {
+    const runMock = vi.fn().mockImplementation(async (_req, _signal) => SUCCESS);
     const ctx: PhaseContext = {
       active: makeActive(),
+      signal: new AbortController().signal,
+      register: () => undefined,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await SubtitleOnlyPhase.run(ctx);
@@ -210,27 +216,27 @@ describe('SubtitleOnlyPhase', () => {
     expect(vi.mocked(ctx.emitStatus)).not.toHaveBeenCalled();
   });
 
-  it('onSpawn → calls attachYtDlpProcess with proc and fetchingSubtitles', async () => {
-    const fakeProc = {};
+  it('onSpawn → assigns process, registers SIGKILL disposable, emits fetchingSubtitles', async () => {
+    const fakeProc = { kill: vi.fn() };
     const runMock = vi.fn().mockImplementation(async (_req, signal) => {
       signal?.onSpawn?.(fakeProc);
       return SUCCESS;
     });
+    const active = makeActive();
+    const registerSpy = vi.fn((d: () => void | Promise<void>) => active.disposables.push(d));
     const ctx: PhaseContext = {
-      active: makeActive(),
+      active,
+      signal: active.signal,
+      register: registerSpy,
       ytDlp: { run: runMock } as never,
       emitStatus: vi.fn(),
-      emitYtdlpFailure: vi.fn(),
-      attachYtDlpProcess: vi.fn(),
-      safeConsume: vi.fn(),
-      cleanupPartFiles: vi.fn().mockResolvedValue(undefined),
-      cleanupTempDir: vi.fn().mockResolvedValue(undefined),
-      finalize: vi.fn().mockResolvedValue(undefined),
-      moveToPaused: vi.fn()
+      safeConsume: vi.fn()
     };
 
     await SubtitleOnlyPhase.run(ctx);
 
-    expect(ctx.attachYtDlpProcess).toHaveBeenCalledWith(fakeProc, STATUS_KEY.fetchingSubtitles);
+    expect(active.ytDlpProcess).toBe(fakeProc);
+    expect(registerSpy).toHaveBeenCalled();
+    expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('download', STATUS_KEY.fetchingSubtitles);
   });
 });

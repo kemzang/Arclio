@@ -120,6 +120,13 @@
 }
 .wizard-step {
   animation: fade-slide-in 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.wizard-step > .sticky.bottom-0 {
+  margin-top: auto;
 }
 .wizard-forward .wizard-step {
   animation: fade-slide-in-forward 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;

@@ -1,19 +1,19 @@
 import { EventEmitter } from 'node:events';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { DownloadService } from '@main/services/DownloadService';
-import { YtDlp } from '@main/services/YtDlp';
-import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob';
+import { DownloadService } from '@main/services/DownloadService.js';
+import { YtDlp } from '@main/services/YtDlp.js';
+import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 
 const EMBED_OFF: EmbedOptions = { chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false };
 const SB_OFF: SponsorBlockOptions = { mode: 'off' };
-const DEFAULT_JOB: PreparedJob = { kind: 'single-format', source: 'youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
+const DEFAULT_JOB: PreparedJob = { kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF };
 
 vi.mock('@main/utils/process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@main/utils/process')>();
+  const actual = await importOriginal<typeof import('@main/utils/process.js')>();
   return { ...actual, spawnYtDlp: vi.fn() };
 });
 
-import { spawnYtDlp } from '@main/utils/process';
+import { spawnYtDlp } from '@main/utils/process.js';
 
 beforeEach(() => {
   vi.resetAllMocks();
@@ -101,7 +101,7 @@ describe('DownloadService — error surfacing', () => {
     const { service, recentJobsStore } = makeService();
     const statusEvents: {
       statusKey: string;
-      error?: { key: string | null; rawMessage?: string };
+      error?: { kind: string; raw: string };
     }[] = [];
     service.on('status', (ev) => statusEvents.push({ statusKey: ev.statusKey, error: ev.error }));
 
@@ -109,9 +109,9 @@ describe('DownloadService — error surfacing', () => {
     await vi.waitFor(() => expect(recentJobsStore.push).toHaveBeenCalledOnce());
 
     const errorStatus = statusEvents.find((e) => e.error);
-    expect(errorStatus?.error?.rawMessage).toBe(stderrMsg.trim());
+    expect(errorStatus?.error?.raw).toContain('Video unavailable');
     const finalized = recentJobsStore.push.mock.calls[0]?.[0];
-    expect(finalized?.error?.rawMessage).toBe(stderrMsg.trim());
+    expect(finalized?.error?.raw).toContain('Video unavailable');
   });
 });
 
@@ -120,8 +120,8 @@ describe('DownloadService — bot-block retry', () => {
     const botStderr = "ERROR: [youtube] abc: Sign in to confirm you're not a bot.";
 
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, botStderr) as never) // first attempt fails
-      .mockReturnValueOnce(makeFakeProcess(0) as never); // retry succeeds
+      .mockImplementationOnce(() => makeFakeProcess(1, botStderr) as never) // first attempt fails
+      .mockImplementationOnce(() => makeFakeProcess(0) as never); // retry succeeds
 
     const { service, tokenService, recentJobsStore } = makeService();
     tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'old-token', visitorData: 'old-visitor' }).mockResolvedValueOnce({ token: 'new-token', visitorData: 'new-visitor' });
@@ -147,9 +147,9 @@ describe('DownloadService — bot-block retry', () => {
     const botStderr = "ERROR: [youtube] abc: Sign in to confirm you're not a bot.";
 
     vi.mocked(spawnYtDlp)
-      .mockReturnValueOnce(makeFakeProcess(1, botStderr) as never)
-      .mockReturnValueOnce(makeFakeProcess(1, botStderr) as never)
-      .mockReturnValueOnce(makeFakeProcess(0) as never);
+      .mockImplementationOnce(() => makeFakeProcess(1, botStderr) as never)
+      .mockImplementationOnce(() => makeFakeProcess(1, botStderr) as never)
+      .mockImplementationOnce(() => makeFakeProcess(0) as never);
 
     const { service, tokenService, recentJobsStore } = makeService();
 
