@@ -6,7 +6,7 @@ This document covers the essentials. If anything is unclear, open an issue and a
 
 ---
 
-### Branching model
+### Branch policy
 
 Arroxy uses two long-lived branches:
 
@@ -15,18 +15,27 @@ Arroxy uses two long-lived branches:
 | **`main`** | Stable releases only. Every commit on `main` should correspond to released or release-ready code.                               |
 | **`dev`**  | Active development and integration. All features, fixes, and beta releases land here first. Open contributor PRs against `dev`. |
 
-This keeps `main` aligned with shipped releases and avoids review/merge conflicts caused by targeting the release branch instead of the development branch.
+Please open normal pull requests against `dev`. It is the active development branch and contains the next release in progress. Use `main` only for urgent hotfixes when the maintainer specifically asks for it.
 
-If you accidentally target `main`, GitHub lets you change the base branch on an open PR — click "Edit" next to the title and switch the base to `dev`. Maintainer-only release promotion PRs may target `main`.
+If you accidentally target `main`, GitHub lets you change the base branch on an open PR — click "Edit" next to the title and switch the base to `dev`.
 
-Maintainers may push directly to `dev` or `main` for release bumps, urgent fixes, and tiny low-risk changes. Contributors should use PRs so CI and review can run before merge.
+Maintainer-only `dev` → `main` PRs are release-candidate gates. They are not normal feature review PRs; feature review already happened when work entered `dev`.
 
-### Release flow
+### Contributor flow
+
+1. Fork the repo.
+2. Create a branch in your fork.
+3. Open a PR into `dev`.
+4. Wait for CI and maintainer review.
+
+### Maintainer release flow
 
 1. Contributor work lands on `dev`.
 2. Maintainers cut `vX.Y.Z-beta.N` tags from `dev` for final validation.
-3. After validation, `dev` is promoted to `main` with the stable version.
-4. Maintainers cut `vX.Y.Z` tags from `main`; stable package-manager publishing only happens for these stable tags.
+3. After validation, bump `dev` to the stable version.
+4. Open a `dev` → `main` release-candidate PR.
+5. Merge after the release-gate checks pass.
+6. Cut `vX.Y.Z` from `main`; stable package-manager publishing only happens for these stable tags.
 
 ## Reporting bugs / requesting features
 
