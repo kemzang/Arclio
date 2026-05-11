@@ -161,12 +161,17 @@ describe('TrayManager', () => {
   });
 
   it('rebuilds menu immediately for non-running status (no throttle needed)', () => {
-    const before = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
+    // Establish a running label first
+    qs.items = [makeItem({ id: 'j1', status: 'running', progressPercent: 50 })];
+    qs.emit('updated', { item: qs.items[0] });
+    vi.advanceTimersByTime(1100);
+
+    // Job finishes — label changes Idle; must happen WITHOUT advancing timers
     const doneItem = makeItem({ id: 'j1', status: 'done', progressPercent: 100, finishedAt: new Date().toISOString() });
     qs.items = [doneItem];
+    const before = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
     qs.emit('updated', { item: doneItem });
-    const after = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
-    expect(after).toBeGreaterThan(before);
+    expect(vi.mocked(Menu.buildFromTemplate).mock.calls.length).toBeGreaterThan(before);
   });
 
   it('throttles running-item progress events — rebuilds once per second', () => {
@@ -185,23 +190,28 @@ describe('TrayManager', () => {
     expect(vi.mocked(Menu.buildFromTemplate).mock.calls.length - before).toBe(1);
   });
 
-  it('added event triggers menu rebuild', () => {
-    const before = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
-    const item = makeItem({ id: 'j1', status: 'pending', progressPercent: 0 });
+  it('added event with running item shows download label', () => {
+    const item = makeItem({ id: 'j1', status: 'running', progressPercent: 25 });
     qs.items = [item];
     qs.emit('added', { items: [item], atIdx: 0 });
     vi.advanceTimersByTime(1100);
-    expect(vi.mocked(Menu.buildFromTemplate).mock.calls.length).toBeGreaterThan(before);
+    const calls = vi.mocked(Menu.buildFromTemplate).mock.calls;
+    expect(calls[calls.length - 1][0][0].label).toMatch(/25/);
   });
 
-  it('removed event rebuilds menu immediately', () => {
-    const item = makeItem({ id: 'j1', status: 'done', progressPercent: 100 });
-    qs.items = [item];
-    qs.emit('removed', { itemId: 'j1' });
+  it('removed event immediately resets label to Idle when last running item gone', () => {
+    // Establish running label
+    qs.items = [makeItem({ id: 'j1', status: 'running', progressPercent: 50 })];
+    qs.emit('updated', { item: qs.items[0] });
+    vi.advanceTimersByTime(1100);
+
+    // Remove — label must change immediately
     qs.items = [];
     const before = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
-    qs.emit('removed', { itemId: 'j2' });
+    qs.emit('removed', { itemId: 'j1' });
     expect(vi.mocked(Menu.buildFromTemplate).mock.calls.length).toBeGreaterThan(before);
+    const calls = vi.mocked(Menu.buildFromTemplate).mock.calls;
+    expect(calls[calls.length - 1][0][0].label).toContain('Idle');
   });
 
   // --- window toggle ---
