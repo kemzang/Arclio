@@ -13,7 +13,6 @@ env:
 jobs:
   cold-start:
     name: Cold start (${{ matrix.label }})
-    if: ${{ !matrix.manual_only || github.event_name == 'workflow_dispatch' }}
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -22,16 +21,68 @@ jobs:
           - os: windows-latest
             label: windows
             build_cmd: bun run dist:win:dir
-          - os: macos-13
-            label: macos-x64
-            build_cmd: bun run dist:mac:x64:dir
-            manual_only: true
           - os: macos-latest
             label: macos-arm64
             build_cmd: bun run dist:mac:arm64:dir
           - os: ubuntu-latest
             label: linux
             build_cmd: bun run dist:linux:dir
+
+  cold-start-x64:
+    name: Cold start (macos-x64)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-13
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: macos-13-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: macos-13-bun-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build unpacked app
+        shell: bash
+        env:
+          OPENPANEL_CLIENT_ID: ${{ secrets.OPENPANEL_CLIENT_ID }}
+          OPENPANEL_CLIENT_SECRET: ${{ secrets.OPENPANEL_CLIENT_SECRET }}
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: bun run dist:mac:x64:dir
+
+      - name: Locate packaged executable
+        shell: bash
+        run: |
+          exe=$(find dist -name "Arroxy" -path "*/MacOS/Arroxy" 2>/dev/null | head -1)
+          echo "PACKAGED_EXE=$GITHUB_WORKSPACE/$exe" >> "$GITHUB_ENV"
+
+      - name: Install Playwright browsers
+        run: bunx playwright install chromium --with-deps
+
+      - name: Run cold-start E2E
+        shell: bash
+        env:
+          ARROXY_COLD_TMPDIR: ${{ runner.temp }}
+          ARROXY_LOG_ARCHIVE: ${{ runner.temp }}/arroxy-cold-logs
+        run: bunx playwright test tests/e2e/cold-start.spec.ts --config playwright.config.ts
+
+      - name: Upload warmup log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cold-start-logs-macos-x64
+          path: ${{ runner.temp }}/arroxy-cold-logs/main.log
+          if-no-files-found: ignore
+          retention-days: 7
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
 
