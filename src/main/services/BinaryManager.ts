@@ -14,7 +14,7 @@ const execFileAsync = promisify(execFile);
 import { trackMain } from '@main/services/analytics.js';
 import { FAILURE_CODE, type BinaryOverrides, type DependencyAttempt, type DependencyDiagnostic, type DependencyFailure, type DependencyId, type DependencySource, type StatusKey } from '@shared/types.js';
 import { probeArgs, probeBinary, whereOnPath, classifyProbeError, cancelError, PROBE_TIMEOUT_MS } from './binary/BinaryProbe.js';
-import { classifyDownloadError, downloadFile, downloadText, parseShaLine, parseStandaloneSha256, parsePowerShellFileHash, parseTagFromLocation, sha256ForFile, wrapDownloadProgressEmitter, parseContentRangeStart, resolvePartialResponseMode, HTTP_HEADERS, HTTP_RETRY, HTTP_TIMEOUT, type DownloadProgressCallback, type ProgressEmitter } from './binary/BinaryDownloader.js';
+import { classifyDownloadError, downloadErrorDetails, downloadFile, downloadText, parseShaLine, parseStandaloneSha256, parsePowerShellFileHash, parseTagFromLocation, sha256ForFile, wrapDownloadProgressEmitter, parseContentRangeStart, resolvePartialResponseMode, HTTP_HEADERS, HTTP_RETRY, HTTP_TIMEOUT, type DownloadProgressCallback, type ProgressEmitter } from './binary/BinaryDownloader.js';
 
 function stringifyHeader(header: string | string[] | undefined): string | null {
   if (!header) return null;
@@ -280,7 +280,13 @@ export class BinaryManager {
           name: 'yt-dlp',
           destinationPath: nightlyPath,
           downloadUrl: nightlyUrl,
-          expectedSha256: async () => parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpNightly.download}/SHA2-256SUMS`, signal), assetName),
+          expectedSha256: async () => {
+            try {
+              return parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpNightly.download}/SHA2-256SUMS`, signal), assetName);
+            } catch {
+              return null;
+            }
+          },
           onStatus: opts.onStatus,
           onDownloadProgress: makeDownloadProgress(id, source, onProgress),
           requiredChecksum: true,
@@ -305,7 +311,13 @@ export class BinaryManager {
           name: 'yt-dlp',
           destinationPath: stablePath,
           downloadUrl: stableUrl,
-          expectedSha256: async () => parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpStable.download}/SHA2-256SUMS`, signal), assetName),
+          expectedSha256: async () => {
+            try {
+              return parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpStable.download}/SHA2-256SUMS`, signal), assetName);
+            } catch {
+              return null;
+            }
+          },
           onStatus: opts.onStatus,
           onDownloadProgress: makeDownloadProgress(id, source, onProgress),
           requiredChecksum: true,
@@ -343,7 +355,7 @@ export class BinaryManager {
     attempts.push(makeAttempt(source, failure));
     onProgress?.({ binary: id, phase: 'failed', source, failureKind: failure.kind });
     const tracked = id === 'yt-dlp' ? 'ytdlp' : id;
-    trackMain('binary_setup_failed', { binary: tracked, phase: failure.kind, code: FAILURE_CODE[failure.kind] });
+    trackMain('binary_setup_failed', { binary: tracked, phase: failure.kind, code: FAILURE_CODE[failure.kind], ...downloadErrorDetails(err) });
     logger.warn(`${id} managed download failed`, { source, error: failure.message });
   }
 

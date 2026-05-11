@@ -214,6 +214,17 @@ export async function downloadFile(url: string, destination: string, onProgress?
   await fsPromises.rename(partPath, destination);
 }
 
+// Extract structured diagnostic fields from a got/network error for analytics.
+export function downloadErrorDetails(err: unknown): { error_code?: string; status_code?: number } {
+  if (!(err instanceof Error)) return {};
+  const result: { error_code?: string; status_code?: number } = {};
+  const code = (err as NodeJS.ErrnoException).code;
+  if (typeof code === 'string') result.error_code = code.slice(0, 32);
+  const statusCode = (err as { response?: { statusCode?: unknown } }).response?.statusCode;
+  if (typeof statusCode === 'number') result.status_code = statusCode;
+  return result;
+}
+
 // Map an arbitrary download-pipeline failure to a `DependencyFailureKind`.
 // Used by `BinaryResolver` to record `attempts[]` entries on its strategy chain.
 export function classifyDownloadError(err: unknown): DependencyFailureKind {

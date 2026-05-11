@@ -42,7 +42,7 @@ const ALLOWED: Record<string, readonly string[]> = {
   download_cancelled: ['duration_bucket'],
   download_failed: ['duration_bucket', 'size_bucket', 'error_category'],
   tray_close_chosen: ['choice', 'remember'],
-  binary_setup_failed: ['binary', 'phase', 'code'],
+  binary_setup_failed: ['binary', 'phase', 'code', 'error_code', 'status_code'],
   crash_detected: ['type', 'reason'],
   wizard_started: [],
   share_dialog_opened: ['via'],
