@@ -1,7 +1,9 @@
 import path from 'node:path';
 import { Tray, Menu, nativeImage, type BrowserWindow } from 'electron';
 import { mainT, pluralKey } from '@main/i18n.js';
-import type { DownloadService } from './DownloadService.js';
+import { QUEUE_STATUS } from '@shared/schemas.js';
+import type { QueueItem } from '@shared/types.js';
+import type { QueueService } from './QueueService.js';
 import type { SupportedLang } from '@shared/i18n/types.js';
 
 function resolveTrayIconPath(): string {
@@ -14,28 +16,28 @@ function resolveTrayIconPath(): string {
 export class TrayManager {
   private tray: Tray | null = null;
   private throttleTimer: ReturnType<typeof setTimeout> | null = null;
-  private jobPercents = new Map<string, number>();
 
-  private readonly onProgress: (event: { jobId: string; percent?: number }) => void;
-  private readonly onStatus: (event: { jobId: string; stage: string }) => void;
+  private readonly onQueueUpdated: (event: { item: QueueItem }) => void;
+  private readonly onQueueAdded: () => void;
+  private readonly onQueueRemoved: () => void;
 
   constructor(
     private readonly mainWindow: BrowserWindow,
-    private readonly downloadService: DownloadService,
+    private readonly queueService: QueueService,
     private readonly languageRef: { current: SupportedLang },
     private readonly onQuit: () => void = () => {}
   ) {
-    this.onProgress = (event) => {
-      if (event.percent !== undefined) {
-        this.jobPercents.set(event.jobId, event.percent);
+    this.onQueueUpdated = ({ item }) => {
+      if (item.status === QUEUE_STATUS.running) {
+        this.scheduleMenuRebuild();
+      } else {
+        this.rebuildMenu();
       }
+    };
+    this.onQueueAdded = () => {
       this.scheduleMenuRebuild();
     };
-
-    this.onStatus = (event) => {
-      if (event.stage === 'done' || event.stage === 'error') {
-        this.jobPercents.delete(event.jobId);
-      }
+    this.onQueueRemoved = () => {
       this.rebuildMenu();
     };
   }
@@ -46,8 +48,9 @@ export class TrayManager {
     this.tray.setToolTip(mainT(this.languageRef.current, 'tray.tooltip'));
     this.tray.on('click', () => this.toggleWindow());
 
-    this.downloadService.on('progress', this.onProgress);
-    this.downloadService.on('status', this.onStatus);
+    this.queueService.on('updated', this.onQueueUpdated);
+    this.queueService.on('added', this.onQueueAdded);
+    this.queueService.on('removed', this.onQueueRemoved);
 
     this.rebuildMenu();
   }
@@ -67,8 +70,9 @@ export class TrayManager {
       clearTimeout(this.throttleTimer);
       this.throttleTimer = null;
     }
-    this.downloadService.removeListener('progress', this.onProgress);
-    this.downloadService.removeListener('status', this.onStatus);
+    this.queueService.removeListener('updated', this.onQueueUpdated);
+    this.queueService.removeListener('added', this.onQueueAdded);
+    this.queueService.removeListener('removed', this.onQueueRemoved);
     if (this.tray && !this.tray.isDestroyed()) {
       this.tray.destroy();
     }
@@ -87,13 +91,13 @@ export class TrayManager {
     if (!this.tray || this.tray.isDestroyed()) return;
     const lang = this.languageRef.current;
 
-    const activeCount = this.downloadService.activeCount;
+    const running = this.queueService.snapshot().filter((i) => i.status === QUEUE_STATUS.running);
+    const activeCount = running.length;
     let statusLabel: string;
     if (activeCount === 0) {
       statusLabel = mainT(lang, 'tray.menu.statusIdle');
     } else {
-      const percents = [...this.jobPercents.values()];
-      const avg = percents.length > 0 ? Math.round(percents.reduce((s, p) => s + p, 0) / percents.length) : 0;
+      const avg = Math.round(running.reduce((s, i) => s + i.progressPercent, 0) / activeCount);
       statusLabel = mainT(lang, `tray.menu.${pluralKey('statusActive', activeCount)}`, {
         count: activeCount,
         percent: avg

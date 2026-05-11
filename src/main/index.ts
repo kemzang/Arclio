@@ -363,7 +363,7 @@ if (hasSingleInstanceLock) {
 
     if (process.platform !== 'darwin') {
       try {
-        tray = new TrayManager(mainWindow, downloadService, languageRef, () => {
+        tray = new TrayManager(mainWindow, queueService, languageRef, () => {
           void warnActiveDownloadsThenQuit();
         });
         tray.start();

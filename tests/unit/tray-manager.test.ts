@@ -2,6 +2,9 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { EventEmitter } from 'node:events';
 import type { SupportedLang } from '@shared/i18n/types.js';
+import type { QueueItem } from '@shared/types.js';
+import type { QueueItemStatus } from '@shared/schemas.js';
+import type { PreparedJob } from '@shared/types.js';
 
 const mockTrayInstance = {
   setToolTip: vi.fn(),
@@ -31,10 +34,29 @@ vi.mock('electron', () => {
 import { Menu, nativeImage } from 'electron';
 import { TrayManager } from '@main/services/TrayManager.js';
 
-// A minimal DownloadService fake that supports the event emitter pattern
-class FakeDownloadService extends EventEmitter {
-  activeCount = 0;
-  _jobPercents = new Map<string, number>();
+class FakeQueueService extends EventEmitter {
+  items: QueueItem[] = [];
+  snapshot(): QueueItem[] {
+    return [...this.items];
+  }
+}
+
+function makeItem(overrides: { id?: string; status: QueueItemStatus; progressPercent: number; finishedAt?: string }): QueueItem {
+  return {
+    id: overrides.id ?? 'item-1',
+    url: 'https://youtube.com/watch?v=test',
+    title: 'Test Video',
+    thumbnail: '',
+    outputDir: '/tmp',
+    formatLabel: 'video',
+    status: overrides.status,
+    progressPercent: overrides.progressPercent,
+    progressDetail: null,
+    lastStatus: null,
+    error: null,
+    finishedAt: overrides.finishedAt ?? null,
+    job: {} as PreparedJob
+  };
 }
 
 function makeWindow(visible = true) {
@@ -52,7 +74,7 @@ function makeLanguageRef(lang: SupportedLang = 'en') {
 }
 
 describe('TrayManager', () => {
-  let ds: FakeDownloadService;
+  let qs: FakeQueueService;
   let win: ReturnType<typeof makeWindow>;
   let tray: TrayManager;
   let onQuit: ReturnType<typeof vi.fn>;
@@ -60,16 +82,15 @@ describe('TrayManager', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.clearAllMocks();
-    // Reset mock tray instance state
     mockTrayInstance.setToolTip.mockReset();
     mockTrayInstance.setContextMenu.mockReset();
     mockTrayInstance.on.mockReset();
     mockTrayInstance.destroy.mockReset();
     mockTrayInstance.isDestroyed.mockReturnValue(false);
-    ds = new FakeDownloadService();
+    qs = new FakeQueueService();
     win = makeWindow();
     onQuit = vi.fn();
-    tray = new TrayManager(win as never, ds as never, makeLanguageRef(), onQuit as () => void);
+    tray = new TrayManager(win as never, qs as never, makeLanguageRef(), onQuit as () => void);
     tray.start();
   });
 
@@ -89,69 +110,98 @@ describe('TrayManager', () => {
     expect(header.enabled).toBe(false);
   });
 
-  it('menu header shows count and percent after progress events', () => {
-    ds.activeCount = 1;
-    ds.emit('progress', { jobId: 'j1', percent: 47, line: '', at: '' });
-
-    // Progress is throttled — advance 1s
-    vi.advanceTimersByTime(1100);
-
-    const calls = vi.mocked(Menu.buildFromTemplate).mock.calls;
-    const items = calls[calls.length - 1][0];
-    const header = items[0];
-    expect(header.label).toMatch(/47/);
-    expect(header.enabled).toBe(false);
-  });
-
-  it('shows aggregate percent for multiple active jobs', () => {
-    ds.activeCount = 2;
-    ds.emit('progress', { jobId: 'j1', percent: 40, line: '', at: '' });
-    ds.emit('progress', { jobId: 'j2', percent: 80, line: '', at: '' });
+  it('menu header shows count and percent after updated event with running item', () => {
+    qs.items = [makeItem({ id: 'j1', status: 'running', progressPercent: 47 })];
+    qs.emit('updated', { item: qs.items[0] });
 
     vi.advanceTimersByTime(1100);
 
     const calls = vi.mocked(Menu.buildFromTemplate).mock.calls;
     const items = calls[calls.length - 1][0];
-    expect(items[0].label).toMatch(/60/); // (40+80)/2
+    expect(items[0].label).toMatch(/47/);
+    expect(items[0].enabled).toBe(false);
   });
 
-  it('resets to Idle when status done event fires', () => {
-    ds.activeCount = 1;
-    ds.emit('progress', { jobId: 'j1', percent: 50, line: '', at: '' });
+  it('shows aggregate percent for multiple running items', () => {
+    qs.items = [makeItem({ id: 'j1', status: 'running', progressPercent: 40 }), makeItem({ id: 'j2', status: 'running', progressPercent: 80 })];
+    qs.emit('updated', { item: qs.items[0] });
+
     vi.advanceTimersByTime(1100);
 
-    // Job completes
-    ds.activeCount = 0;
-    ds.emit('status', { jobId: 'j1', stage: 'done', statusKey: 'complete', at: '' });
+    const calls = vi.mocked(Menu.buildFromTemplate).mock.calls;
+    expect(calls[calls.length - 1][0][0].label).toMatch(/60/); // (40+80)/2
+  });
+
+  it('resets to Idle when updated event fires with done status', () => {
+    // Running → progress shown
+    qs.items = [makeItem({ id: 'j1', status: 'running', progressPercent: 50 })];
+    qs.emit('updated', { item: qs.items[0] });
+    vi.advanceTimersByTime(1100);
+
+    // Job completes — snapshot reflects done, event fires immediately
+    const doneItem = makeItem({ id: 'j1', status: 'done', progressPercent: 50, finishedAt: new Date().toISOString() });
+    qs.items = [doneItem];
+    qs.emit('updated', { item: doneItem });
 
     const calls = vi.mocked(Menu.buildFromTemplate).mock.calls;
-    const items = calls[calls.length - 1][0];
-    expect(items[0].label).toContain('Idle');
+    expect(calls[calls.length - 1][0][0].label).toContain('Idle');
   });
 
-  it('rebuilds menu immediately on status event (no throttle)', () => {
-    const beforeCount = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
-    ds.emit('status', { jobId: 'j1', stage: 'done', statusKey: 'complete', at: '' });
-    const afterCount = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
-    expect(afterCount).toBeGreaterThan(beforeCount);
+  it('resets to Idle when updated fires with error status', () => {
+    qs.items = [makeItem({ id: 'j1', status: 'running', progressPercent: 30 })];
+    qs.emit('updated', { item: qs.items[0] });
+    vi.advanceTimersByTime(1100);
+
+    const errItem = makeItem({ id: 'j1', status: 'error', progressPercent: 30 });
+    qs.items = [errItem];
+    qs.emit('updated', { item: errItem });
+
+    const calls = vi.mocked(Menu.buildFromTemplate).mock.calls;
+    expect(calls[calls.length - 1][0][0].label).toContain('Idle');
   });
 
-  it('throttles progress events — does not rebuild menu more than once per second', () => {
-    ds.activeCount = 1;
+  it('rebuilds menu immediately for non-running status (no throttle needed)', () => {
+    const before = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
+    const doneItem = makeItem({ id: 'j1', status: 'done', progressPercent: 100, finishedAt: new Date().toISOString() });
+    qs.items = [doneItem];
+    qs.emit('updated', { item: doneItem });
+    const after = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
+    expect(after).toBeGreaterThan(before);
+  });
+
+  it('throttles running-item progress events — rebuilds once per second', () => {
+    const item = makeItem({ id: 'j1', status: 'running', progressPercent: 0 });
+    qs.items = [item];
     const before = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
 
-    // Fire 20 rapid progress events
     for (let i = 0; i < 20; i++) {
-      ds.emit('progress', { jobId: 'j1', percent: i * 5, line: '', at: '' });
+      qs.items = [makeItem({ id: 'j1', status: 'running', progressPercent: i * 5 })];
+      qs.emit('updated', { item: qs.items[0] });
     }
 
-    // Before timeout: no new builds (only the one scheduled)
-    const midCount = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
-    expect(midCount - before).toBe(0); // pending, not yet fired
+    expect(vi.mocked(Menu.buildFromTemplate).mock.calls.length - before).toBe(0);
 
     vi.advanceTimersByTime(1100);
-    const afterCount = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
-    expect(afterCount - before).toBe(1); // exactly one rebuild
+    expect(vi.mocked(Menu.buildFromTemplate).mock.calls.length - before).toBe(1);
+  });
+
+  it('added event triggers menu rebuild', () => {
+    const before = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
+    const item = makeItem({ id: 'j1', status: 'pending', progressPercent: 0 });
+    qs.items = [item];
+    qs.emit('added', { items: [item], atIdx: 0 });
+    vi.advanceTimersByTime(1100);
+    expect(vi.mocked(Menu.buildFromTemplate).mock.calls.length).toBeGreaterThan(before);
+  });
+
+  it('removed event rebuilds menu immediately', () => {
+    const item = makeItem({ id: 'j1', status: 'done', progressPercent: 100 });
+    qs.items = [item];
+    qs.emit('removed', { itemId: 'j1' });
+    qs.items = [];
+    const before = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
+    qs.emit('removed', { itemId: 'j2' });
+    expect(vi.mocked(Menu.buildFromTemplate).mock.calls.length).toBeGreaterThan(before);
   });
 
   // --- window toggle ---
@@ -172,11 +222,11 @@ describe('TrayManager', () => {
 
   // --- destroy ---
 
-  it('destroy removes all downloadService listeners', () => {
-    const before = ds.listenerCount('progress') + ds.listenerCount('status');
+  it('destroy removes all queueService listeners', () => {
+    const before = qs.listenerCount('updated') + qs.listenerCount('added') + qs.listenerCount('removed');
     expect(before).toBeGreaterThan(0);
     tray.destroy();
-    const after = ds.listenerCount('progress') + ds.listenerCount('status');
+    const after = qs.listenerCount('updated') + qs.listenerCount('added') + qs.listenerCount('removed');
     expect(after).toBe(0);
   });
 
@@ -186,13 +236,12 @@ describe('TrayManager', () => {
   });
 
   it('destroy clears any pending throttle timer', () => {
-    ds.activeCount = 1;
-    ds.emit('progress', { jobId: 'j1', percent: 30, line: '', at: '' });
+    qs.items = [makeItem({ id: 'j1', status: 'running', progressPercent: 30 })];
+    qs.emit('updated', { item: qs.items[0] });
     tray.destroy();
     const countBefore = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
-    vi.advanceTimersByTime(2000); // pending timer should NOT fire
-    const countAfter = vi.mocked(Menu.buildFromTemplate).mock.calls.length;
-    expect(countAfter).toBe(countBefore);
+    vi.advanceTimersByTime(2000);
+    expect(vi.mocked(Menu.buildFromTemplate).mock.calls.length).toBe(countBefore);
   });
 
   // --- quit callback ---
