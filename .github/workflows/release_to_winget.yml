@@ -29,3 +29,8 @@ jobs:
           installers-regex: '^Arroxy-Setup-.*\.exe$'
           token: ${{ secrets.WINGET_TOKEN }}
           release-tag: ${{ steps.get_latest.outputs.tag }}
+          extra-installer-fields: |
+            Scope: user
+            InstallModes:
+            - silent
+            - silentWithProgress
