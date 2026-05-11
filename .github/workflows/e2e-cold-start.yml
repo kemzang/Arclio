@@ -3,6 +3,18 @@ name: E2E Cold Start
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'tests/e2e/**'
+      - 'build/**'
+      - 'scripts/build/**'
+      - 'scripts/test-binaries/**'
+      - 'electron-builder.json5'
+      - 'electron.vite.config.*'
+      - 'playwright.config.*'
+      - 'package.json'
+      - 'bun.lock'
+      - '.github/workflows/e2e-cold-start.yml'
   pull_request:
     branches: [main]
   workflow_dispatch:
