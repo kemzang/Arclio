@@ -10,14 +10,23 @@ This document covers the essentials. If anything is unclear, open an issue and a
 
 Arroxy uses two long-lived branches:
 
-| Branch     | Purpose                                                                                                                 |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **`main`** | Stable releases only. Every commit on `main` corresponds to released code. Do not open PRs against `main`.              |
-| **`dev`**  | Active development and integration. All features, fixes, and beta releases land here first. Open all PRs against `dev`. |
+| Branch     | Purpose                                                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **`main`** | Stable releases only. Every commit on `main` should correspond to released or release-ready code.                               |
+| **`dev`**  | Active development and integration. All features, fixes, and beta releases land here first. Open contributor PRs against `dev`. |
 
 This keeps `main` aligned with shipped releases and avoids review/merge conflicts caused by targeting the release branch instead of the development branch.
 
-If you accidentally target `main`, GitHub lets you change the base branch on an open PR — click "Edit" next to the title and switch the base to `dev`.
+If you accidentally target `main`, GitHub lets you change the base branch on an open PR — click "Edit" next to the title and switch the base to `dev`. Maintainer-only release promotion PRs may target `main`.
+
+Maintainers may push directly to `dev` or `main` for release bumps, urgent fixes, and tiny low-risk changes. Contributors should use PRs so CI and review can run before merge.
+
+### Release flow
+
+1. Contributor work lands on `dev`.
+2. Maintainers cut `vX.Y.Z-beta.N` tags from `dev` for final validation.
+3. After validation, `dev` is promoted to `main` with the stable version.
+4. Maintainers cut `vX.Y.Z` tags from `main`; stable package-manager publishing only happens for these stable tags.
 
 ## Reporting bugs / requesting features
 

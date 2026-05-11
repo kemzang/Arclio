@@ -6,9 +6,9 @@
 
 ## Base branch
 
-<!-- All PRs should target `dev`, NOT `main`. `main` is reserved for stable release tags. -->
+<!-- Contributor PRs should target `dev`. Maintainer release-promotion PRs may target `main`. -->
 
-- [ ] This PR targets `dev`.
+- [ ] This PR targets `dev`, or it is a maintainer release-promotion PR targeting `main`.
 
 ## Type
 

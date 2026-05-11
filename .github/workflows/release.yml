@@ -15,7 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Ensure tag matches package version
+        with:
+          fetch-depth: 0
+      - name: Ensure tag matches package version and release branch
         run: |
           TAG_VERSION="${GITHUB_REF_NAME#v}"
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
@@ -23,6 +25,26 @@ jobs:
             echo "::error::Tag version ($TAG_VERSION) does not match package.json version ($PACKAGE_VERSION)."
             exit 1
           fi
+
+          git fetch --no-tags origin \
+            "+refs/heads/dev:refs/remotes/origin/dev" \
+            "+refs/heads/main:refs/remotes/origin/main"
+
+          TAG_COMMIT=$(git rev-list -n 1 "$GITHUB_REF_NAME")
+          if [[ "$TAG_VERSION" == *-* ]]; then
+            EXPECTED_BRANCH=dev
+            RELEASE_KIND=prerelease
+          else
+            EXPECTED_BRANCH=main
+            RELEASE_KIND=stable
+          fi
+
+          if ! git merge-base --is-ancestor "$TAG_COMMIT" "origin/$EXPECTED_BRANCH"; then
+            echo "::error::$RELEASE_KIND tag $GITHUB_REF_NAME must point to a commit reachable from origin/$EXPECTED_BRANCH."
+            echo "::error::Tag commit: $TAG_COMMIT"
+            exit 1
+          fi
+
           echo "Releasing version $PACKAGE_VERSION"
 
   prepare-release:
