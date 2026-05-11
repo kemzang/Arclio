@@ -54,6 +54,7 @@ export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
     channel
   });
   autoUpdater.channel = channel;
+  autoUpdater.allowDowngrade = false; // channel setter silently sets allowDowngrade=true; override it
   autoUpdater.allowPrerelease = allowPrerelease;
 
   autoUpdater.autoDownload = false;
