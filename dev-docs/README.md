@@ -17,5 +17,5 @@ Internal engineering docs — feature designs, architecture notes, system maps.
 
 ## Index
 
-- [release-runbook.md](release-runbook.md) — Manual maintainer checklist for beta validation, `dev` -> `main` release-candidate PRs, stable tagging, and resuming `dev`.
+- [release-runbook.md](release-runbook.md) — Manual maintainer checklist for beta validation and stable tagging, both cut from `main`.
 - [share-feature.md](share-feature.md) — Share button + periodic prompts + telemetry. Covers the dialog, all 5 manual entry points, the time/milestone triggers, persisted settings, and i18n.
