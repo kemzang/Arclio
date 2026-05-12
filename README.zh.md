@@ -406,11 +406,11 @@ The Arroxy process starts but no window shows up. Most often this is a GPU drive
 
 **1. Check the log.** It records startup, GPU info, and any crash. Path:
 
-| Platform | Path                                              |
-| -------- | ------------------------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\logs\main.log`                  |
-| macOS    | `~/Library/Logs/Arroxy/main.log`                  |
-| Linux    | `~/.config/Arroxy/logs/main.log`                  |
+| Platform | Path                             |
+| -------- | -------------------------------- |
+| Windows  | `%APPDATA%\Arroxy\logs\main.log` |
+| macOS    | `~/Library/Logs/Arroxy/main.log` |
+| Linux    | `~/.config/Arroxy/logs/main.log` |
 
 **2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
 
@@ -435,11 +435,11 @@ If that works, the GPU/driver is the cause. Make the change permanent (next step
 
 **3. Persist the flag via `argv.json`.** Create the file at:
 
-| Platform | Path                                          |
-| -------- | --------------------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\argv.json`                  |
+| Platform | Path                                             |
+| -------- | ------------------------------------------------ |
+| Windows  | `%APPDATA%\Arroxy\argv.json`                     |
 | macOS    | `~/Library/Application Support/Arroxy/argv.json` |
-| Linux    | `~/.config/Arroxy/argv.json`                  |
+| Linux    | `~/.config/Arroxy/argv.json`                     |
 
 With contents:
 
@@ -460,6 +460,16 @@ Arroxy reads this before opening any window, so it works even when the window ne
 ## 使用条款
 
 Arroxy 仅供个人私人使用。你需要自行确保下载行为符合 YouTube 的[服务条款](https://www.youtube.com/t/terms)及你所在地区的版权法律。请勿使用 Arroxy 下载、复制或分发你不享有权利的内容。开发者对任何滥用行为不承担责任。
+
+## Star History
+
+<a href="https://www.star-history.com/?repos=antonio-orionus%2FArroxy&type=timeline&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+ </picture>
+</a>
 
 <div align="center">
   <sub>MIT 许可证 · 由 <a href="https://x.com/OrionusAI">@OrionusAI</a> 用心打造</sub>

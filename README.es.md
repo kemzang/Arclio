@@ -406,11 +406,11 @@ The Arroxy process starts but no window shows up. Most often this is a GPU drive
 
 **1. Check the log.** It records startup, GPU info, and any crash. Path:
 
-| Platform | Path                                              |
-| -------- | ------------------------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\logs\main.log`                  |
-| macOS    | `~/Library/Logs/Arroxy/main.log`                  |
-| Linux    | `~/.config/Arroxy/logs/main.log`                  |
+| Platform | Path                             |
+| -------- | -------------------------------- |
+| Windows  | `%APPDATA%\Arroxy\logs\main.log` |
+| macOS    | `~/Library/Logs/Arroxy/main.log` |
+| Linux    | `~/.config/Arroxy/logs/main.log` |
 
 **2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
 
@@ -435,11 +435,11 @@ If that works, the GPU/driver is the cause. Make the change permanent (next step
 
 **3. Persist the flag via `argv.json`.** Create the file at:
 
-| Platform | Path                                          |
-| -------- | --------------------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\argv.json`                  |
+| Platform | Path                                             |
+| -------- | ------------------------------------------------ |
+| Windows  | `%APPDATA%\Arroxy\argv.json`                     |
 | macOS    | `~/Library/Application Support/Arroxy/argv.json` |
-| Linux    | `~/.config/Arroxy/argv.json`                  |
+| Linux    | `~/.config/Arroxy/argv.json`                     |
 
 With contents:
 
@@ -460,6 +460,16 @@ Arroxy reads this before opening any window, so it works even when the window ne
 ## Términos de uso
 
 Arroxy es una herramienta para uso personal y privado únicamente. Eres el único responsable de garantizar que tus descargas cumplan con los [Términos de Servicio](https://www.youtube.com/t/terms) de YouTube y las leyes de propiedad intelectual de tu jurisdicción. No uses Arroxy para descargar, reproducir o distribuir contenido sobre el que no tengas derechos. Los desarrolladores no se hacen responsables del mal uso.
+
+## Star History
+
+<a href="https://www.star-history.com/?repos=antonio-orionus%2FArroxy&type=timeline&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+ </picture>
+</a>
 
 <div align="center">
   <sub>Licencia MIT · Hecho con cariño por <a href="https://x.com/OrionusAI">@OrionusAI</a></sub>
