@@ -164,4 +164,9 @@ export const ja = {
 
   f13_h: "YouTube + 2000 サイト",
   f13_p: "YouTube 以外にも、Arroxy は yt-dlp が対応する 2000 以上のサイトからダウンロードできます — Vimeo、Twitch、Twitter/X、TikTok、SoundCloud、Bandcamp、Bilibili、BBC iPlayer、archive.org など多数。音声のみと字幕は YouTube に限らず、すべての対応サイトで機能します。",
+
+  mid_cta_h2: "気に入りましたか？",
+  mid_cta_sub: "無料でダウンロード。アカウント不要、広告なし、条件なし。",
+  end_cta_h2: "ずっと無料。オープンソース。落とし穴なし。",
+  end_cta_sub: "すでに何千人もが Arroxy でダウンロードしています。ワンクリックで、あとは自動的に動きます。",
 };

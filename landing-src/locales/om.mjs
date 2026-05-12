@@ -164,4 +164,9 @@ export const om = {
 
   f13_h: "YouTube + sayitii 2000",
   f13_p: "YouTube cinaatti, Arroxy sayitii 2000+ kan yt-dlp deggeru irraa fida — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org fi kanneen biroo hedduu. Sagalee qofaa fi sabtaayitiloonni iddoo hundatti hojjetu, YouTube qofa irratti miti.",
+
+  mid_cta_h2: "Waan argite si gammachiise?",
+  mid_cta_sub: "Bilisatti buufi. Akkaawuntii hin jiru, beeksisa hin jiru, hanga hin jiru.",
+  end_cta_h2: "Yeroo hunda bilisaa. Open source. Dhoksaa hin jiru.",
+  end_cta_sub: "Kuma hedduun Arroxy waliin buufachaa jiru irratti makamu. Cuqaasa tokko, achiin hojjeta.",
 };

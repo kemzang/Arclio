@@ -74,16 +74,6 @@
     <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Arroxy","applicationCategory":"MultimediaApplication","operatingSystem":"Windows, macOS, Linux","description":"Phần mềm tải máy tính để bàn miễn phí, giấy phép MIT dành cho YouTube và hơn 2000 trang được hỗ trợ trên Windows, macOS và Linux. Tải video lên tới 4K HDR ở 60 fps. Không quảng cáo, không phồng to, không bán thêm.","inLanguage":"vi","url":"https://arroxy.orionus.dev/vi/","image":"https://arroxy.orionus.dev/assets/icon.png","license":"https://opensource.org/licenses/MIT","downloadUrl":"https://github.com/antonio-orionus/Arroxy/releases/latest","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI"}},{"@context":"https://schema.org","@type":"Person","@id":"https://x.com/OrionusAI","name":"Antonio Orionus","url":"https://x.com/OrionusAI","sameAs":["https://x.com/OrionusAI","https://github.com/antonio-orionus"]}]</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"vi","mainEntity":[{"@type":"Question","name":"Tôi có thể tải video ở những chất lượng nào?","acceptedAnswer":{"@type":"Answer","text":"Bất cứ thứ gì YouTube và các trang được hỗ trợ khác cung cấp — 4K UHD (2160p), 1440p QHD, 1080p Full HD, 720p, 480p, 360p và chỉ âm thanh. Luồng tốc độ khung hình cao (60 fps, 120 fps) và nội dung HDR được giữ nguyên. Arroxy hiển thị mọi định dạng khả dụng, bao gồm chuyển đổi sang MP3, M4A/AAC, Opus và WAV cho các lượt tải chỉ âm thanh."}},{"@type":"Question","name":"Thực sự miễn phí không?","acceptedAnswer":{"@type":"Answer","text":"Có. Giấy phép MIT. Không có gói cao cấp, không có tính năng bị khóa."}},{"@type":"Question","name":"Arroxy có sẵn bằng những ngôn ngữ nào?","acceptedAnswer":{"@type":"Answer","text":"Hai mươi mốt ngôn ngữ, có sẵn ngay khi cài đặt: English, Español (Tây Ban Nha), Deutsch (Đức), Français (Pháp), 日本語 (Nhật), 中文 (Trung Quốc), Русский (Nga), Українська (Ukraine), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Việt Nam), አማርኛ (Amharic), العربية (Ả Rập), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Miến Điện), Ελληνικά (Hy Lạp) và Српски (Serbia). Arroxy tự động phát hiện ngôn ngữ hệ điều hành của bạn khi khởi động lần đầu và bạn có thể chuyển đổi bất cứ lúc nào từ bộ chọn ngôn ngữ trên thanh công cụ. Các bản dịch được lưu dưới dạng đối tượng TypeScript thuần trong src/shared/i18n/locales/ — mở PR trên GitHub để đóng góp."}},{"@type":"Question","name":"Tôi có cần cài đặt thêm gì không?","acceptedAnswer":{"@type":"Answer","text":"Không. yt-dlp được tải xuống tự động khi khởi động lần đầu và được lưu vào bộ nhớ đệm trên máy của bạn; ffmpeg và ffprobe đi kèm với ứng dụng. Sau đó, không cần thiết lập thêm gì."}},{"@type":"Question","name":"Nó có tiếp tục hoạt động nếu YouTube thay đổi gì đó không?","acceptedAnswer":{"@type":"Answer","text":"Có — và Arroxy có hai lớp khả năng chống chịu. Thứ nhất, yt-dlp là một trong những công cụ mã nguồn mở được duy trì tích cực nhất — nó cập nhật trong vài giờ sau bất kỳ thay đổi nào của trang được hỗ trợ, bao gồm YouTube. Thứ hai, Arroxy hoàn toàn không phụ thuộc vào cookie hay tài khoản Google của bạn, vì vậy không có phiên nào hết hạn và không có thông tin đăng nhập nào cần xoay vòng. Sự kết hợp đó khiến nó ổn định hơn đáng kể so với các công cụ phụ thuộc vào cookie trình duyệt được xuất ra."}},{"@type":"Question","name":"Tôi có thể tải playlist không?","acceptedAnswer":{"@type":"Answer","text":"Có. Dán URL playlist, chọn tất cả video hoặc chỉ những video bạn muốn, và Arroxy sẽ xếp chúng thành một lô duy nhất. Tải hàng loạt cả kênh vẫn chưa được hỗ trợ."}},{"@type":"Question","name":"Nó có cần tài khoản YouTube hay cookie của tôi không?","acceptedAnswer":{"@type":"Answer","text":"Mặc định là không — Arroxy hoạt động mà không cần tài khoản, đăng nhập hay xuất cookie. Hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao (tệp hoặc nhập từ trình duyệt) cho nội dung yêu cầu xác thực, chẳng hạn như video giới hạn độ tuổi hoặc chỉ dành cho thành viên. Tắt theo mặc định. Nếu bật, tài liệu của yt-dlp cảnh báo rằng tự động hóa dựa trên cookie có thể gắn cờ tài khoản Google, vì vậy tài khoản dùng một lần là lựa chọn an toàn hơn."}},{"@type":"Question","name":"macOS báo \"ứng dụng bị hỏng\" hoặc \"không thể mở\" — tôi phải làm gì?","acceptedAnswer":{"@type":"Answer","text":"Đây là Gatekeeper của macOS đang chặn một ứng dụng chưa được ký — không phải hư hỏng thực sự. README có hướng dẫn từng bước để khởi động lần đầu trên macOS."}},{"@type":"Question","name":"Điều này có hợp pháp không?","acceptedAnswer":{"@type":"Answer","text":"Tải video để sử dụng cá nhân thường được chấp nhận ở hầu hết các quốc gia. Bạn có trách nhiệm tuân thủ Điều khoản Dịch vụ của YouTube và luật pháp địa phương."}}]}</script>
 
-    <script>
-      window.op = window.op || function(...args){(window.op.q=window.op.q||[]).push(args);};
-      window.op('init', {
-        clientId: '33d59339-35ce-4394-b19e-036347830c5d',
-        trackScreenViews: true,
-        trackOutgoingLinks: true,
-        trackAttributes: true,
-      });
-    </script>
-    <script src="https://openpanel.dev/op1.js" defer async></script>
 
     <style>
       :root {
@@ -414,6 +404,8 @@
       body[data-os="mobile"] #release-version { display: none; }
       body[data-os="mobile"] .first-launch-help { display: none !important; }
       body[data-os="mobile"] #mobile-notice { display: block !important; }
+      body[data-os="mobile"] #mid-download-cta,
+      body[data-os="mobile"] #end-download-cta { display: none !important; }
 
       .first-launch-help {
         --first-launch-inline-pad: 16px;
@@ -716,6 +708,70 @@
         line-height: 1.65;
       }
 
+      /* ---- Mid-page CTA strip ---- */
+      .mid-cta {
+        padding: 64px 0;
+        background: hsl(220 100% 56% / 0.04);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .mid-cta-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+      }
+      .mid-cta-text h2 {
+        font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
+      }
+      .mid-cta-text p { color: var(--text-dim); font-size: 15px; margin: 0; }
+      #mid-download-cta { display: flex; flex-wrap: wrap; gap: 12px; flex-shrink: 0; }
+      @media (max-width: 820px) {
+        .mid-cta-inner { flex-direction: column; align-items: flex-start; }
+        #mid-download-cta { width: 100%; }
+      }
+
+      /* ---- End-page CTA ---- */
+      .end-cta {
+        position: relative;
+        padding: 96px 0;
+        text-align: center;
+        overflow: hidden;
+        border-top: 1px solid var(--border);
+      }
+      .end-cta::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 120%;
+        height: 100%;
+        background: radial-gradient(ellipse 80% 70% at 50% 110%, hsl(220 100% 56% / 0.14), transparent 65%);
+        pointer-events: none;
+      }
+      .end-cta .section-eyebrow { display: inline-flex; align-items: center; margin-bottom: 18px; }
+      .end-cta h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 14px; }
+      .end-cta .section-sub { font-size: 16px; margin-bottom: 40px; }
+      #end-download-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: center;
+        margin-bottom: 28px;
+        position: relative;
+      }
+      .end-cta-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        position: relative;
+      }
+
       footer { border-top: 1px solid var(--border); padding: 32px 0 40px; margin-top: 40px; }
       .footer-langs {
         display: flex;
@@ -972,6 +1028,22 @@
       </div>
     </section>
 
+    <section class="mid-cta">
+      <div class="container">
+        <div class="mid-cta-inner">
+          <div class="mid-cta-text">
+            <h2>Thấy thích rồi chứ?</h2>
+            <p>Tải miễn phí. Không tài khoản, không quảng cáo, không ràng buộc.</p>
+          </div>
+          <div id="mid-download-cta" aria-live="polite">
+            <noscript>
+              <a class="btn btn-primary" href="https://github.com/antonio-orionus/Arroxy/releases/latest" target="_blank" rel="noopener">Tải xuống cho hệ điều hành của bạn</a>
+            </noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section>
       <div class="container">
         <div class="section-head">
@@ -1098,6 +1170,24 @@
       </div>
     </section>
 
+    <section class="end-cta">
+      <div class="container">
+        <div class="section-eyebrow">Mã nguồn mở · MIT · Đang phát triển tích cực</div>
+        <h2>Miễn phí mãi mãi. Mã nguồn mở. Không có gì bí ẩn.</h2>
+        <p class="section-sub">Tham gia hàng nghìn người đang tải với Arroxy. Một cú nhấp, rồi tự nó chạy.</p>
+        <div id="end-download-cta" aria-live="polite">
+          <noscript>
+            <a class="btn btn-primary" href="https://github.com/antonio-orionus/Arroxy/releases/latest" target="_blank" rel="noopener">Tải xuống cho hệ điều hành của bạn</a>
+          </noscript>
+        </div>
+        <div class="end-cta-pills">
+          <span class="pill ok">Không quảng cáo</span>
+          <span class="pill ok">Không theo dõi</span>
+          <span class="pill ok">Mã nguồn mở (MIT)</span>
+        </div>
+      </div>
+    </section>
+
     <footer>
       <div class="container">
         <div class="footer-langs">
@@ -1172,6 +1262,8 @@
         const picker = document.getElementById('platform-picker');
         const toggle = document.getElementById('other-platforms-toggle');
         const toggleWrap = document.getElementById('other-platforms-wrap');
+        const midCta = document.getElementById('mid-download-cta');
+        const endCta = document.getElementById('end-download-cta');
         if (!cta || !picker || !toggle || !toggleWrap) return;
 
         function detectOS() {
@@ -1293,6 +1385,23 @@
           }
         }
 
+        function renderExtraCta(el) {
+          if (!el) return;
+          while (el.firstChild) el.removeChild(el.firstChild);
+          if (os === 'windows') {
+            el.appendChild(makeBtn('primary', cta.dataset.labelWinInstaller, 'Arroxy-Setup-VERSION.exe', 'extra-cta-win-installer'));
+            el.appendChild(makeBtn('secondary', cta.dataset.labelWinPortable, 'Arroxy-Portable-VERSION.exe', 'extra-cta-win-portable'));
+          } else if (os === 'mac') {
+            el.appendChild(makeBtn('primary', cta.dataset.labelMacArm, 'Arroxy-VERSION-arm64.dmg', 'extra-cta-mac-arm'));
+            el.appendChild(makeBtn('secondary', cta.dataset.labelMacIntel, 'Arroxy-VERSION-x64.dmg', 'extra-cta-mac-intel'));
+          } else if (os === 'linux') {
+            el.appendChild(makeBtn('primary', cta.dataset.labelLinuxAppimage, 'Arroxy-VERSION.AppImage', 'extra-cta-linux-appimage'));
+            el.appendChild(makeBtn('secondary', cta.dataset.labelLinuxFlatpak, 'Arroxy-VERSION.flatpak', 'extra-cta-linux-flatpak'));
+          } else {
+            el.appendChild(makeBtn('secondary', cta.dataset.labelOtherPlatforms, 'Arroxy-Setup-VERSION.exe', 'extra-cta-fallback'));
+          }
+        }
+
         function showFirstLaunchHelp() {
           if (os === 'windows') {
             const el = document.getElementById('first-launch-windows');
@@ -1349,6 +1458,8 @@
         if (os !== 'mobile') {
           renderPrimary();
           renderPicker();
+          renderExtraCta(midCta);
+          renderExtraCta(endCta);
           showFirstLaunchHelp();
         }
 
@@ -1369,6 +1480,8 @@
             if (os !== 'mobile') {
               renderPrimary();
               renderPicker();
+              renderExtraCta(midCta);
+              renderExtraCta(endCta);
             }
           } else {
             const el = document.getElementById('release-version');

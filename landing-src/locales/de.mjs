@@ -165,4 +165,9 @@ export const de = {
 
   f13_h: "YouTube + 2000 Seiten",
   f13_p: "Neben YouTube lädt Arroxy von 2000+ Seiten, die yt-dlp unterstützt — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org und viele mehr. Nur Audio und Untertitel funktionieren überall, nicht nur auf YouTube.",
+
+  mid_cta_h2: "Gefällt dir, was du siehst?",
+  mid_cta_sub: "Kostenlos herunterladen. Kein Konto, keine Werbung, keine Bedingungen.",
+  end_cta_h2: "Für immer kostenlos. Open Source. Kein Haken.",
+  end_cta_sub: "Schließ dich Tausenden an, die mit Arroxy herunterladen. Ein Klick — und es läuft einfach.",
 };

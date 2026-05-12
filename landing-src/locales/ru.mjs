@@ -165,4 +165,9 @@ export const ru = {
 
   f13_h: "YouTube + 2000 сайтов",
   f13_p: "Помимо YouTube, Arroxy скачивает с 2000+ сайтов, которые поддерживает yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org и многих других. Режим только аудио и субтитры работают везде, а не только на YouTube.",
+
+  mid_cta_h2: "Понравилось?",
+  mid_cta_sub: "Скачайте бесплатно. Без аккаунта, без рекламы, без условий.",
+  end_cta_h2: "Бесплатно навсегда. Открытый код. Без подвоха.",
+  end_cta_sub: "Тысячи пользователей уже качают через Arroxy. Один клик — и всё работает.",
 };

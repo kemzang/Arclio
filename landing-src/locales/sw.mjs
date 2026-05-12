@@ -164,4 +164,9 @@ export const sw = {
 
   f13_h: "YouTube + tovuti 2000",
   f13_p: "Zaidi ya YouTube, Arroxy hupakua kutoka tovuti 2000+ zinazoungwa mkono na yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org na nyingine nyingi. Sauti pekee na manukuu hufanya kazi kila mahali, si YouTube tu.",
+
+  mid_cta_h2: "Umependa unachokiona?",
+  mid_cta_sub: "Pakua bure. Hakuna akaunti, hakuna matangazo, hakuna masharti.",
+  end_cta_h2: "Bure milele. Open source. Hakuna udanganyifu.",
+  end_cta_sub: "Jiunge na maelfu yanayopakua kwa Arroxy. Bonyeza mara moja, kisha inafanya kazi.",
 };

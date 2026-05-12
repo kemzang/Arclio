@@ -164,4 +164,9 @@ export const am = {
 
   f13_h: "YouTube + 2000 ጣቢያዎች",
   f13_p: "ከ YouTube ባሻገር፣ Arroxy ከ yt-dlp በሚደገፉ 2000+ ጣቢያዎች ይጎትታል — Vimeo፣ Twitch፣ Twitter/X፣ TikTok፣ SoundCloud፣ Bandcamp፣ Bilibili፣ BBC iPlayer፣ archive.org፣ እና ብዙ ሌሎች። የድምጽ ብቻ እና ንዑስ ጽሑፎች በሁሉም ቦታ ይሰራሉ፣ በYouTube ላይ ብቻ አይደለም።",
+
+  mid_cta_h2: "የሚያዩት ወደቀዎ?",
+  mid_cta_sub: "ነፃ ያውርዱ። ምንም አካውንት፣ ምንም ማስታወቂያ፣ ምንም ግዴታ።",
+  end_cta_h2: "ለዘለዓለም ነፃ። Open source። ምንም ወጥመድ የለም።",
+  end_cta_sub: "Arroxy ን የሚጠቀሙ ሺዎችን ይቀላቀሉ። አንድ ጠቅ — ከዚያ ሁሉም ይሰራል።",
 };

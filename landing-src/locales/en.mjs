@@ -164,4 +164,9 @@ export const en = {
 
   f13_h: "YouTube + 2000 sites",
   f13_p: "Beyond YouTube, Arroxy pulls from 2000+ sites yt-dlp supports — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org, and many more. Audio-only and subtitles work everywhere, not just on YouTube.",
+
+  mid_cta_h2: "Like what you see?",
+  mid_cta_sub: "Download free. No account, no ads, no strings.",
+  end_cta_h2: "Free forever. Open source. No catch.",
+  end_cta_sub: "Join thousands downloading with Arroxy. One click, then it just works.",
 };

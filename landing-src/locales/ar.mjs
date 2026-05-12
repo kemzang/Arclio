@@ -164,4 +164,9 @@ export const ar = {
 
   f13_h: "YouTube + 2000 موقع",
   f13_p: "إلى جانب YouTube، يقوم Arroxy بالتنزيل من أكثر من 2000 موقع يدعمها yt-dlp — Vimeo، Twitch، Twitter/X، TikTok، SoundCloud، Bandcamp، Bilibili، BBC iPlayer، archive.org، وغيرها الكثير. الصوت فقط والترجمات تعمل في كل مكان، وليس فقط على YouTube.",
+
+  mid_cta_h2: "أعجبك ما رأيت؟",
+  mid_cta_sub: "حمّل مجاناً. بلا حساب، بلا إعلانات، بلا التزامات.",
+  end_cta_h2: "مجاني للأبد. مفتوح المصدر. بلا مفاجآت.",
+  end_cta_sub: "انضم إلى الآلاف الذين يحمّلون باستخدام Arroxy. نقرة واحدة ويعمل تلقائياً.",
 };

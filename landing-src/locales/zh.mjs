@@ -162,4 +162,9 @@ export const zh = {
 
   f13_h: "YouTube + 2000 个网站",
   f13_p: "除 YouTube 外，Arroxy 还支持从 yt-dlp 覆盖的 2000+ 个网站下载——Vimeo、Twitch、Twitter/X、TikTok、SoundCloud、Bandcamp、Bilibili、BBC iPlayer、archive.org 等众多平台。仅音频和字幕在所有支持的网站上均可使用，不限于 YouTube。",
+
+  mid_cta_h2: "感觉不错？",
+  mid_cta_sub: "免费下载。无需账号，无广告，无附加条件。",
+  end_cta_h2: "永久免费。开源。没有任何附加条件。",
+  end_cta_sub: "加入数千名正在使用 Arroxy 下载的用户。一键下载，开箱即用。",
 };

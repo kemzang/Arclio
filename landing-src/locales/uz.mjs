@@ -164,4 +164,9 @@ export const uz = {
 
   f13_h: "YouTube + 2000 sayt",
   f13_p: "YouTube dan tashqari, Arroxy yt-dlp qo'llab-quvvatlaydigan 2000+ saytdan yuklab oladi — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org va boshqalar. Faqat audio va subtitrlar hamma joyda ishlaydi, nafaqat YouTube'da.",
+
+  mid_cta_h2: "Ko'rganingiz yoqdimi?",
+  mid_cta_sub: "Bepul yuklab oling. Hisob yo'q, reklama yo'q, majburiyat yo'q.",
+  end_cta_h2: "Abadiy bepul. Ochiq manba. Hech qanday hiyla yo'q.",
+  end_cta_sub: "Arroxy bilan minglab foydalanuvchilarga qo'shiling. Bir bosish — va u ishlaydi.",
 };

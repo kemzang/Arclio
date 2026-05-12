@@ -164,4 +164,9 @@ export const vi = {
 
   f13_h: "YouTube + 2000 trang",
   f13_p: "Ngoài YouTube, Arroxy tải từ hơn 2000 trang mà yt-dlp hỗ trợ — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org và nhiều hơn nữa. Chỉ âm thanh và phụ đề hoạt động ở mọi nơi, không chỉ trên YouTube.",
+
+  mid_cta_h2: "Thấy thích rồi chứ?",
+  mid_cta_sub: "Tải miễn phí. Không tài khoản, không quảng cáo, không ràng buộc.",
+  end_cta_h2: "Miễn phí mãi mãi. Mã nguồn mở. Không có gì bí ẩn.",
+  end_cta_sub: "Tham gia hàng nghìn người đang tải với Arroxy. Một cú nhấp, rồi tự nó chạy.",
 };

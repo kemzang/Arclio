@@ -164,4 +164,9 @@ export const ps = {
 
   f13_h: "YouTube + 2000 ویب پاڼې",
   f13_p: "د YouTube تر څنګ، Arroxy له 2000+ ویب پاڼو څخه چې yt-dlp یې ملاتړ کوي ډاونلوډ کوي — Vimeo، Twitch، Twitter/X، TikTok، SoundCloud، Bandcamp، Bilibili، BBC iPlayer، archive.org، او نور ډېر. یوازې غږ او سب ټایټلونه هرچېرته کار کوي، نه یوازې پر YouTube.",
+
+  mid_cta_h2: "دا ستاسو خوښه ده؟",
+  mid_cta_sub: "وړیا ډاونلوډ کړئ. بې له حساب، بې له اشتهار، بې له کومې تړلې شرطې.",
+  end_cta_h2: "تل وړیا. خلاصه سرچینه. بې له کوم پنهاني شرط.",
+  end_cta_sub: "د زرګونو کسانو سره یوځای شئ چې Arroxy سره ډاونلوډ کوي. یو کلیک، بیا هر شی پخپله کار کوي.",
 };

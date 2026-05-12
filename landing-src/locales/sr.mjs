@@ -164,4 +164,9 @@ export const sr = {
 
   f13_h: "YouTube + 2000 сajтова",
   f13_p: "Поред YouTube-а, Arroxy преузима са 2000+ сaјтова које yt-dlp подржава — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org и многих других. Режим само аудио и титлови раде свуда, не само на YouTube-у.",
+
+  mid_cta_h2: "Свиђа вам се?",
+  mid_cta_sub: "Преузмите бесплатно. Без налога, без реклама, без обавеза.",
+  end_cta_h2: "Бесплатно заувек. Отворени код. Без скривених услова.",
+  end_cta_sub: "Хиљаде корисника већ преузима преко Arroxy. Један клик — и само ради.",
 };
