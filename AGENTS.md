@@ -246,8 +246,7 @@ Pushing a `v*` tag publishes to **four channels in one go**: GitHub Releases, Sc
 
 ### Branch + tag conventions
 
-- **`main`** = stable releases only. Never push WIP commits directly.
-- **`dev`** = beta/staging work + version bumps. All beta tags (`v*-beta.N`) cut from here.
+- **`main`** = sole long-lived branch. Both beta (`v*-beta.N`) and stable (`v*`) tags cut from here. Feature work happens on short-lived feature branches merged into `main` when ready.
 - **Tags must be annotated** (`git tag -a NAME -m "..."`), not lightweight. `git push --follow-tags` only pushes annotated tags — lightweight tags get silently skipped, the release pipeline never fires. Lesson learned the hard way.
 
 ### Pre-release flow (test pipeline w/o auto-updating users)
@@ -283,7 +282,7 @@ Use the wrapper scripts — they enforce branch, version-shape, clean tree, no-d
 
 ```bash
 # beta
-git checkout dev
+git checkout main
 # bump package.json: e.g. 0.3.1-beta.3 → 0.3.1-beta.4
 git commit -am "release: 0.3.1-beta.4"
 bun run release:beta   # tags + pushes

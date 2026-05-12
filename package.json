@@ -60,7 +60,6 @@
     "smoke:pot": "bun scripts/smoke-pot-runner.ts",
     "release:beta": "bash scripts/release.sh beta",
     "release:stable": "bash scripts/release.sh stable",
-    "release:resume-dev": "bash scripts/release-resume-dev.sh",
     "prepare": "husky"
   },
   "dependencies": {

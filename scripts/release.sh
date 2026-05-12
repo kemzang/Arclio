@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Tag + push a release. Refuses every common footgun:
-#   - wrong branch (beta must come from dev, stable from main)
+#   - wrong branch (beta and stable both cut from main)
 #   - dirty working tree
 #   - stable release from a local main that differs from origin/main
 #   - stable release before required GitHub checks passed on the tagged commit
@@ -10,7 +10,7 @@
 #   - forgotten --follow-tags
 #
 # Usage:
-#   scripts/release.sh beta     # for v*-beta.N tags from dev
+#   scripts/release.sh beta     # for v*-beta.N tags from main
 #   scripts/release.sh stable   # for v* tags from main
 #   scripts/release.sh stable --verify-only
 set -euo pipefail
@@ -25,8 +25,7 @@ elif [[ -n "${2:-}" ]]; then
 fi
 
 case "$MODE" in
-  beta)   EXPECTED_BRANCH=dev ;;
-  stable) EXPECTED_BRANCH=main ;;
+  beta|stable) EXPECTED_BRANCH=main ;;
   *) echo "mode must be 'beta' or 'stable' (got '$MODE')" >&2; exit 1 ;;
 esac
 
