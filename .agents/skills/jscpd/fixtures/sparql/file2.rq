@@ -1,0 +1,27 @@
+PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+PREFIX dc:     <http://purl.org/dc/elements/1.1/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+PREFIX ex:     <http://example.com/ontology#>
+
+SELECT ?product ?name ?price ?category
+WHERE {
+    ?product rdf:type ex:Product ;
+             rdfs:label ?name ;
+             ex:price ?price ;
+             ex:category ?category .
+    FILTER (
+        BOUND(?price) &&
+        xsd:decimal(?price) > 0
+    )
+    OPTIONAL {
+        ?product ex:supplier ?supplier .
+        ?supplier rdfs:label ?supplierName .
+    }
+}
+ORDER BY ?category ?name
+LIMIT 100

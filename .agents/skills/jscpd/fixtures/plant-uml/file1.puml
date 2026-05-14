@@ -1,0 +1,60 @@
+@startuml
+' Common class definitions for e-commerce domain
+
+class User {
+    +id: Integer
+    +name: String
+    +email: String
+    +passwordHash: String
+    +createdAt: Date
+    +active: Boolean
+    +validate(): Boolean
+    +save(): void
+    +delete(): void
+    +toDTO(): UserDTO
+}
+
+class Order {
+    +id: Integer
+    +userId: Integer
+    +total: Decimal
+    +status: OrderStatus
+    +createdAt: Date
+    +updatedAt: Date
+    +cancel(): void
+    +refund(): void
+    +getItems(): List~OrderItem~
+    +toDTO(): OrderDTO
+}
+
+class Product {
+    +id: Integer
+    +name: String
+    +price: Decimal
+    +stock: Integer
+    +active: Boolean
+    +validate(): Boolean
+    +save(): void
+    +toDTO(): ProductDTO
+}
+
+enum OrderStatus {
+    PENDING
+    CONFIRMED
+    PROCESSING
+    SHIPPED
+    DELIVERED
+    CANCELLED
+    REFUNDED
+}
+
+User "1" --> "0..*" Order : places
+Order "1" --> "1..*" Product : contains
+
+' File-specific: place order sequence
+actor Customer
+Customer -> User: authenticate()
+User -> Order: createOrder(items)
+Order -> Product: checkStock()
+
+@enduml

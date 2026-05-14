@@ -1,0 +1,26 @@
+%section.user-profile
+  .profile-header
+    %h1= user.full_name
+    %p.subtitle Role: #{user.role}
+
+  .profile-details
+    %dl
+      %dt Email
+      %dd= user.email
+      %dt Joined
+      %dd= user.created_at.strftime('%B %d, %Y')
+      %dt Status
+      %dd
+        - if user.active?
+          %span.badge.active Active
+        - else
+          %span.badge.inactive Inactive
+
+  .profile-actions
+    = link_to 'Edit Profile', edit_user_path(user), class: 'btn btn-primary'
+    = link_to 'View Activity', user_activity_path(user), class: 'btn btn-secondary'
+
+-# File-specific: user settings section
+  .settings-section
+    %h2 Account Settings
+    %p Change your password and security preferences.

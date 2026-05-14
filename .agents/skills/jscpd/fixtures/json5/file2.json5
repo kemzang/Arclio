@@ -1,0 +1,53 @@
+{
+  // Application configuration - JSON5 format with comments
+  name: "my-application",
+  version: "2.1.0",
+  description: "A sample application configuration",
+
+  server: {
+    host: "0.0.0.0",
+    port: 3000,
+    ssl: false,
+    timeout: 30000, // milliseconds
+
+    // Database connection settings
+    database: {
+      host: "db.example.com",
+      port: 5432,
+      name: "appdb",
+      poolMin: 2,
+      poolMax: 20,
+      idleTimeout: 10000,
+      connectionTimeout: 5000,
+    },
+
+    // Redis cache settings
+    cache: {
+      host: "cache.example.com",
+      port: 6379,
+      ttl: 3600, // 1 hour
+      maxMemory: "512mb",
+    },
+  },
+
+  // Logging configuration
+  logging: {
+    level: "info",
+    format: "json",
+    destinations: ["console", "file"],
+    file: {
+      path: "/var/log/app.log",
+      maxSize: "100m",
+      maxFiles: 5,
+    },
+  },
+
+  // Notification settings
+  notifications: {
+    email: {
+      enabled: true,
+      host: "smtp.example.com",
+      port: 587,
+    },
+  },
+}

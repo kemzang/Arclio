@@ -1,0 +1,49 @@
+TAP version 14
+1..12
+ok 1 - should validate non-empty string successfully
+ok 2 - should reject empty string with error
+ok 3 - should reject null value with error
+ok 4 - should trim leading and trailing whitespace
+ok 5 - should enforce maximum length of 255 characters
+ok 6 - should parse config with default host localhost
+ok 7 - should parse config with default port 3000
+ok 8 - should parse config with debug disabled by default
+ok 9 - should parse config with default timeout value
+ok 10 - should override defaults with provided values
+not ok 11 - should retry on transient network failure
+  ---
+  message: Expected retry but function threw immediately
+  severity: fail
+  actual: null
+  at:
+    line: 112
+    column: 5
+    file: test/utils.test.js
+  ...
+not ok 12 - should exhaust retries and propagate final error
+  ---
+  message: Expected Error to propagate after 3 attempts
+  severity: fail
+  actual: null
+  at:
+    line: 134
+    column: 5
+    file: test/utils.test.js
+  ...
+
+# subtests
+ok 13 - string operations
+  TAP version 14
+  1..4
+  ok 1 - should concatenate two strings
+  ok 2 - should return length of string
+  ok 3 - should convert string to uppercase
+  ok 4 - should trim whitespace from string
+
+ok 14 - array operations
+  TAP version 14
+  1..4
+  ok 1 - should push element to array
+  ok 2 - should pop element from array
+  ok 3 - should filter array by predicate
+  ok 4 - should map array to new values

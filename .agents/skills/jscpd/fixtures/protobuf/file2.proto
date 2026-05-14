@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package example.v1;
+
+option java_package = "com.example.v1";
+option java_multiple_files = true;
+option go_package = "example/v1;v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+// Shared base types
+message Address {
+    string street = 1;
+    string city = 2;
+    string state = 3;
+    string country = 4;
+    string postal_code = 5;
+}
+
+message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2;
+}
+
+enum PhoneType {
+    PHONE_TYPE_UNSPECIFIED = 0;
+    PHONE_TYPE_MOBILE = 1;
+    PHONE_TYPE_HOME = 2;
+    PHONE_TYPE_WORK = 3;
+}
+
+enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_ACTIVE = 1;
+    STATUS_INACTIVE = 2;
+    STATUS_PENDING = 3;
+}
+
+message Organization {
+    string id = 1;
+    string name = 2;
+    string website = 3;
+    string industry = 4;
+    Address headquarters = 5;
+    Status status = 6;
+    google.protobuf.Timestamp founded_at = 7;
+    google.protobuf.Timestamp updated_at = 8;
+}
+
+service OrganizationService {
+    rpc GetOrganization(GetOrgRequest) returns (GetOrgResponse);
+    rpc ListOrganizations(ListOrgsRequest) returns (ListOrgsResponse);
+    rpc CreateOrganization(CreateOrgRequest) returns (CreateOrgResponse);
+    rpc UpdateOrganization(UpdateOrgRequest) returns (UpdateOrgResponse);
+    rpc DeleteOrganization(DeleteOrgRequest) returns (DeleteOrgResponse);
+}
+
+message GetOrgRequest {
+    string id = 1;
+}
+
+message GetOrgResponse {
+    Organization organization = 1;
+}
+
+message ListOrgsRequest {
+    int32 page_size = 1;
+    string page_token = 2;
+    Status status_filter = 3;
+}
+
+message ListOrgsResponse {
+    repeated Organization organizations = 1;
+    string next_page_token = 2;
+    int32 total_count = 3;
+}
+
+message CreateOrgRequest {
+    Organization organization = 1;
+}
+
+message CreateOrgResponse {
+    Organization organization = 1;
+}
+
+message UpdateOrgRequest {
+    Organization organization = 1;
+    repeated string update_mask = 2;
+}
+
+message UpdateOrgResponse {
+    Organization organization = 1;
+}
+
+message DeleteOrgRequest {
+    string id = 1;
+}
+
+message DeleteOrgResponse {
+    bool success = 1;
+}

@@ -1,0 +1,72 @@
+--- a/src/utils/helpers.js
++++ b/src/utils/helpers.js
+@@ -1,45 +1,65 @@
+ const validateInput = (value) => {
+-  if (!value) {
+-    throw new Error('Input is required');
++  if (!value || value.trim() === '') {
++    throw new Error('Input cannot be empty');
+   }
+-  return value;
++  if (value.length > 255) {
++    throw new Error('Input exceeds maximum length');
++  }
++  return value.trim();
+ };
+ 
+ const parseConfig = (config) => {
+   return {
+     host:    config.host    || 'localhost',
+     port:    config.port    || 3000,
+     debug:   config.debug   || false,
++    timeout: config.timeout || 30000,
++    retries: config.retries || 3,
+   };
+ };
+ 
++const sanitize = (str) => {
++  return str.replace(/[<>&'"]/g, (c) => ({
++    '<': '&lt;', '>': '&gt;', '&': '&amp;',
++    "'": '&#39;', '"': '&quot;',
++  }[c]));
++};
++
+ const deepClone = (obj) => {
+   return JSON.parse(JSON.stringify(obj));
+ };
+ 
+ const debounce = (fn, delay) => {
+   let timer;
+   return (...args) => {
+     clearTimeout(timer);
+     timer = setTimeout(() => fn(...args), delay);
+   };
+ };
+ 
++const throttle = (fn, limit) => {
++  let inThrottle = false;
++  return (...args) => {
++    if (!inThrottle) {
++      fn(...args);
++      inThrottle = true;
++      setTimeout(() => { inThrottle = false; }, limit);
++    }
++  };
++};
++
+ module.exports = {
+-  validateInput, parseConfig, deepClone, debounce,
++  validateInput, parseConfig, sanitize, deepClone, debounce, throttle,
+ };
++@@ -52,8 +72,18 @@
++const setupLogger = (level, output) => {
++  return {
++    level:  level  || 'info',
++    output: output || process.stdout,
++    log: (msg) => output.write(`[${level}] ${msg}\n`),
++    warn: (msg) => output.write(`[WARN][${level}] ${msg}\n`),
++    error: (msg) => output.write(`[ERROR][${level}] ${msg}\n`),
++  };
++};
++
++module.exports.setupLogger = setupLogger;

@@ -1,0 +1,45 @@
+# Application configuration
+
+[server]
+host     = "localhost"
+port     = 8080
+debug    = false
+timeout  = 30000
+max_conn = 100
+
+[database]
+host      = "db.example.com"
+port      = 5432
+name      = "myapp"
+user      = "appuser"
+password  = "secret"
+pool_size = 10
+max_idle  = 5
+ssl_mode  = "require"
+
+[cache]
+driver      = "redis"
+host        = "cache.example.com"
+port        = 6379
+ttl         = 3600
+max_entries = 1000
+password    = ""
+
+[logging]
+level   = "info"
+format  = "json"
+output  = "stdout"
+max_size = 100
+backups  = 5
+
+[auth]
+jwt_secret    = "change-me-in-production"
+token_expiry  = 3600
+refresh_expiry = 86400
+bcrypt_cost   = 12
+
+# File-specific: users service settings
+[users]
+max_per_page     = 50
+default_per_page = 20
+cache_ttl        = 300

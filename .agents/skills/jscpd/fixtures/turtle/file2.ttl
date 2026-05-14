@@ -1,0 +1,45 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex:   <http://example.com/ontology#> .
+
+ex:Person a owl:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "A human being"@en .
+
+ex:Employee a owl:Class ;
+    rdfs:subClassOf ex:Person ;
+    rdfs:label "Employee"@en ;
+    rdfs:comment "A person employed by an organization"@en .
+
+ex:hasName a owl:DatatypeProperty ;
+    rdfs:domain ex:Person ;
+    rdfs:range  xsd:string ;
+    rdfs:label  "has name"@en .
+
+ex:hasEmail a owl:DatatypeProperty ;
+    rdfs:domain ex:Person ;
+    rdfs:range  xsd:string ;
+    rdfs:label  "has email"@en .
+
+ex:hasAge a owl:DatatypeProperty ;
+    rdfs:domain ex:Person ;
+    rdfs:range  xsd:integer ;
+    rdfs:label  "has age"@en .
+
+ex:worksFor a owl:ObjectProperty ;
+    rdfs:domain ex:Employee ;
+    rdfs:range  ex:Organization ;
+    rdfs:label  "works for"@en .
+
+# File-specific: product instances
+ex:Widget a ex:Product ;
+    ex:hasName  "Widget Pro" ;
+    ex:hasPrice 99.99 ;
+    ex:inStock  true .
+
+ex:Gadget a ex:Product ;
+    ex:hasName  "Super Gadget" ;
+    ex:hasPrice 149.99 ;
+    ex:inStock  false .

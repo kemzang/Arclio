@@ -1,0 +1,52 @@
+[% # Template Toolkit 2 - E-commerce product listing template %]
+[% META
+   title   = 'Product Catalog'
+   author  = 'Shop Team'
+   version = '1.0'
+%]
+[% INCLUDE header.tt2 title = "Product Catalog" %]
+
+<main class="catalog">
+  <h1>Our Products</h1>
+
+  [% IF products.size > 0 %]
+    <div class="product-grid">
+      [% FOREACH product IN products %]
+        <article class="product-card" id="product-[% product.id %]">
+          <img src="[% product.image_url | html %]"
+               alt="[% product.name | html %]"
+               loading="lazy" />
+          <div class="product-info">
+            <h2 class="product-name">[% product.name | html %]</h2>
+            <p class="product-description">[% product.description | truncate(120) %]</p>
+            <div class="product-meta">
+              <span class="price">[% product.price | format('$%.2f') %]</span>
+              [% IF product.discount > 0 %]
+                <span class="original-price">
+                  [% product.original_price | format('$%.2f') %]
+                </span>
+                <span class="discount-badge">-[% product.discount %]%</span>
+              [% END %]
+            </div>
+            <div class="stock-status">
+              [% IF product.in_stock %]
+                <span class="in-stock">In Stock ([% product.stock_count %])</span>
+              [% ELSE %]
+                <span class="out-of-stock">Out of Stock</span>
+              [% END %]
+            </div>
+            <div class="product-reviews">
+              <span class="rating">[% product.rating | format('%.1f') %] / 5.0</span>
+              <span class="review-count">([% product.review_count %] reviews)</span>
+            </div>
+            <a class="view-details" href="/products/[% product.id %]">View Details</a>
+          </div>
+        </article>
+      [% END %]
+    </div>
+  [% ELSE %]
+    <p class="no-products">No products found.</p>
+  [% END %]
+</main>
+
+[% INCLUDE footer.tt2 %]

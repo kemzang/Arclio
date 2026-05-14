@@ -1,0 +1,53 @@
+h1. Application Documentation
+
+h2. Overview
+
+This application provides *data processing* utilities for managing items and configurations.
+
+h2. Features
+
+* Validate input strings with length constraints
+* Parse configuration objects with default values
+* Retry failed operations with configurable attempt limits
+* Filter and transform data collections efficiently
+
+h2. API Reference
+
+h3. validateInput(value)
+
+Validates a string value. Rules:
+
+* Must not be @null@ or empty
+* Must not exceed *255 characters*
+* Returns the trimmed value on success
+
+h3. parseConfig(config)
+
+Parses a configuration object with sensible defaults:
+
+|_. Property |_. Default   |_. Description              |
+| host       | localhost   | Server hostname             |
+| port       | 3000        | Server port                 |
+| debug      | false       | Debug mode flag             |
+| timeout    | 30000       | Request timeout in ms       |
+
+h3. retryOnFailure(maxAttempts, fn)
+
+Retries a function up to @maxAttempts@ times on failure.
+
+h2. Installation
+
+bc. npm install myapp-utils
+
+h2. Usage
+
+bc.. import { validateInput, parseConfig } from 'myapp-utils'
+
+const config = parseConfig({ host: 'api.example.com', port: 8080 })
+const name   = validateInput('  Alice  ')
+
+p. For more details see the "full docs":http://example.com/docs
+
+h2. User Guide
+
+This section covers common usage patterns for end users.

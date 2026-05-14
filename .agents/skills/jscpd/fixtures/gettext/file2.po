@@ -1,0 +1,110 @@
+# German translation for MyApp
+# Copyright (C) 2024 Example Corp
+# This file is distributed under the MIT License.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: MyApp 1.0\n"
+"POT-Creation-Date: 2024-01-15 10:00+0000\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+
+# Technical identifiers — not translated, identical across all locales
+msgid "ERROR_400"
+msgstr "ERROR_400"
+
+msgid "ERROR_401"
+msgstr "ERROR_401"
+
+msgid "ERROR_403"
+msgstr "ERROR_403"
+
+msgid "ERROR_404"
+msgstr "ERROR_404"
+
+msgid "ERROR_409"
+msgstr "ERROR_409"
+
+msgid "ERROR_422"
+msgstr "ERROR_422"
+
+msgid "ERROR_429"
+msgstr "ERROR_429"
+
+msgid "ERROR_500"
+msgstr "ERROR_500"
+
+msgid "ERROR_502"
+msgstr "ERROR_502"
+
+msgid "ERROR_503"
+msgstr "ERROR_503"
+
+msgid "STATUS_PENDING"
+msgstr "STATUS_PENDING"
+
+msgid "STATUS_ACTIVE"
+msgstr "STATUS_ACTIVE"
+
+msgid "STATUS_INACTIVE"
+msgstr "STATUS_INACTIVE"
+
+msgid "STATUS_DELETED"
+msgstr "STATUS_DELETED"
+
+msgid "STATUS_ARCHIVED"
+msgstr "STATUS_ARCHIVED"
+
+# Common UI labels
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "Submit"
+msgstr "Absenden"
+
+msgid "Back"
+msgstr "Zurück"
+
+msgid "Next"
+msgstr "Weiter"
+
+msgid "Previous"
+msgstr "Zurück"
+
+# Authentication messages
+msgid "Welcome to the application"
+msgstr "Willkommen in der Anwendung"
+
+msgid "Please enter your username"
+msgstr "Bitte geben Sie Ihren Benutzernamen ein"
+
+msgid "Password must be at least 8 characters"
+msgstr "Das Passwort muss mindestens 8 Zeichen lang sein"
+
+msgid "Login successful"
+msgstr "Anmeldung erfolgreich"
+
+msgid "Invalid credentials"
+msgstr "Ungültige Anmeldedaten"
+
+msgid "Session expired"
+msgstr "Sitzung abgelaufen"
+
+msgid "Please log in again"
+msgstr "Bitte melden Sie sich erneut an"

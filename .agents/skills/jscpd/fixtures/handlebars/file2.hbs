@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{pageTitle}} - {{siteName}}</title>
+  <link rel="stylesheet" href="/css/{{theme}}.css">
+</head>
+<body class="{{bodyClass}}">
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">{{siteName}}</a>
+      <nav class="main-nav">
+        {{#each navItems}}
+          <a href="{{url}}" class="{{#if active}}active{{/if}}">{{label}}</a>
+        {{/each}}
+      </nav>
+      {{#if user}}
+        <div class="user-menu">
+          <span>{{user.name}}</span>
+          <a href="/logout">Logout</a>
+        </div>
+      {{else}}
+        <a href="/login" class="btn-login">Login</a>
+      {{/if}}
+    </div>
+  </header>
+  <main class="site-main">
+    <div class="breadcrumbs">
+      {{#each breadcrumbs}}
+        <span class="crumb"><a href="{{url}}">{{label}}</a></span>
+      {{/each}}
+    </div>
+    {{> content}}
+  </main>
+</body>
+</html>

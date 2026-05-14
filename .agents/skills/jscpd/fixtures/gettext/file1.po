@@ -1,0 +1,110 @@
+# French translation for MyApp
+# Copyright (C) 2024 Example Corp
+# This file is distributed under the MIT License.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: MyApp 1.0\n"
+"POT-Creation-Date: 2024-01-15 10:00+0000\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+# Technical identifiers — not translated, identical across all locales
+msgid "ERROR_400"
+msgstr "ERROR_400"
+
+msgid "ERROR_401"
+msgstr "ERROR_401"
+
+msgid "ERROR_403"
+msgstr "ERROR_403"
+
+msgid "ERROR_404"
+msgstr "ERROR_404"
+
+msgid "ERROR_409"
+msgstr "ERROR_409"
+
+msgid "ERROR_422"
+msgstr "ERROR_422"
+
+msgid "ERROR_429"
+msgstr "ERROR_429"
+
+msgid "ERROR_500"
+msgstr "ERROR_500"
+
+msgid "ERROR_502"
+msgstr "ERROR_502"
+
+msgid "ERROR_503"
+msgstr "ERROR_503"
+
+msgid "STATUS_PENDING"
+msgstr "STATUS_PENDING"
+
+msgid "STATUS_ACTIVE"
+msgstr "STATUS_ACTIVE"
+
+msgid "STATUS_INACTIVE"
+msgstr "STATUS_INACTIVE"
+
+msgid "STATUS_DELETED"
+msgstr "STATUS_DELETED"
+
+msgid "STATUS_ARCHIVED"
+msgstr "STATUS_ARCHIVED"
+
+# Common UI labels
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Submit"
+msgstr "Soumettre"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Previous"
+msgstr "Précédent"
+
+# Authentication messages
+msgid "Welcome to the application"
+msgstr "Bienvenue dans l'application"
+
+msgid "Please enter your username"
+msgstr "Veuillez saisir votre nom d'utilisateur"
+
+msgid "Password must be at least 8 characters"
+msgstr "Le mot de passe doit comporter au moins 8 caractères"
+
+msgid "Login successful"
+msgstr "Connexion réussie"
+
+msgid "Invalid credentials"
+msgstr "Identifiants invalides"
+
+msgid "Account locked after too many failed attempts"
+msgstr "Compte bloqué après trop de tentatives échouées"
+
+msgid "Password reset email sent"
+msgstr "Email de réinitialisation envoyé"

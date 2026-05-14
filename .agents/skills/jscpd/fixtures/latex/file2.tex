@@ -1,0 +1,43 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Introduction to Numerical Methods}
+\author{Jane Doe \and John Smith}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+Numerical methods are algorithms for solving mathematical problems
+using arithmetic operations. They are essential when analytical
+solutions are difficult or impossible to obtain.
+
+\section{Root Finding}
+Given a continuous function $f: \mathbb{R} \rightarrow \mathbb{R}$,
+we seek $x^*$ such that $f(x^*) = 0$.
+
+\subsection{Bisection Method}
+Given an interval $[a, b]$ where $f(a) \cdot f(b) < 0$:
+\begin{equation}
+  c = \frac{a + b}{2}
+\end{equation}
+
+This method has linear convergence and is guaranteed to converge.
+
+\subsection{Error Analysis}
+The error bound after $n$ iterations is:
+\begin{equation}
+  |x_n - x^*| \leq \frac{b - a}{2^n}
+\end{equation}
+
+\section{Conclusion}
+Numerical methods provide practical tools for scientific computing.
+
+\end{document}

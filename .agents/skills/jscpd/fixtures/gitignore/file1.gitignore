@@ -1,0 +1,98 @@
+# Dependencies and package managers
+node_modules/
+vendor/
+.pnp
+.pnp.js
+bower_components/
+jspm_packages/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+target/
+*.egg-info/
+__pycache__/
+.output/
+.vercel/
+.netlify/
+
+# Environment configuration files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor configuration
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.iml
+.DS_Store
+
+# Compiled and binary files
+*.pyc
+*.pyo
+*.pyd
+*.class
+*.jar
+*.war
+*.ear
+*.com
+*.dll
+*.exe
+*.o
+*.so
+*.a
+*.lib
+
+# Archives
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.iso
+
+# Generated and temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+*.rej
+*.min.js
+*.min.css
+*.bundle.js
+*.map
+
+# Log files
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing artifacts
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+junit.xml
+
+# OS generated files
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+._*

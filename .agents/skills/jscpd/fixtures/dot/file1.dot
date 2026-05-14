@@ -1,0 +1,24 @@
+digraph DependencyGraph {
+    rankdir=LR;
+    node [shape=box, style=filled, fillcolor=lightblue, fontname=Helvetica];
+    edge [fontname=Helvetica, fontsize=10];
+
+    AuthService -> UserRepository;
+    AuthService -> TokenManager;
+    AuthService -> EmailService;
+    TokenManager -> CacheService;
+    UserRepository -> Database;
+
+    OrderService -> UserRepository;
+    OrderService -> ProductService;
+    OrderService -> PaymentService;
+    ProductService -> Database;
+    PaymentService -> Database;
+
+    node [fillcolor=lightgreen];
+    Database [label="PostgreSQL\nDatabase", shape=cylinder];
+    CacheService [label="Redis\nCache", shape=cylinder];
+
+    node [fillcolor=lightyellow];
+    EmailService [label="Email\nSMTP"];
+}

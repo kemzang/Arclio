@@ -1,0 +1,49 @@
+TAP version 14
+1..12
+ok 1 - should validate non-empty string successfully
+ok 2 - should reject empty string with error
+ok 3 - should reject null value with error
+ok 4 - should trim leading and trailing whitespace
+ok 5 - should enforce maximum length of 255 characters
+ok 6 - should parse config with default host localhost
+ok 7 - should parse config with default port 3000
+ok 8 - should parse config with debug disabled by default
+ok 9 - should parse config with default timeout value
+ok 10 - should override defaults with provided values
+not ok 11 - should retry on transient network failure
+  ---
+  message: Expected retry but function threw immediately
+  severity: fail
+  actual: null
+  at:
+    line: 112
+    column: 5
+    file: test/utils.test.js
+  ...
+not ok 12 - should exhaust retries and propagate final error
+  ---
+  message: Expected Error to propagate after 3 attempts
+  severity: fail
+  actual: null
+  at:
+    line: 134
+    column: 5
+    file: test/utils.test.js
+  ...
+
+# subtests
+ok 13 - object operations
+  TAP version 14
+  1..4
+  ok 1 - should create object with properties
+  ok 2 - should read nested property value
+  ok 3 - should update existing property
+  ok 4 - should delete property from object
+
+ok 14 - promise operations
+  TAP version 14
+  1..4
+  ok 1 - should resolve with correct value
+  ok 2 - should reject with error message
+  ok 3 - should chain then handlers correctly
+  ok 4 - should handle errors with catch handler

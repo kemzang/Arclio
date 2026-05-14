@@ -1,0 +1,44 @@
+## Velocity Template - Common macros
+
+#macro(renderField $field $label $required)
+<div class="form-group #if($required)required#end">
+    <label for="$field">$label
+        #if($required)<span class="required-mark">*</span>#end
+    </label>
+    <input type="text" id="$field" name="$field"
+           value="$!{form.get($field)}"
+           class="form-control #if($errors.hasFieldErrors($field))is-invalid#end" />
+    #if($errors.hasFieldErrors($field))
+    <div class="invalid-feedback">
+        $errors.getFieldError($field).getDefaultMessage()
+    </div>
+    #end
+</div>
+#end
+
+#macro(renderPagination $page $totalPages)
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        #if($page > 1)
+        <li class="page-item">
+            <a class="page-link" href="?page=${page - 1}">Previous</a>
+        </li>
+        #end
+        #foreach($i in [1..$totalPages])
+        <li class="page-item #if($i == $page)active#end">
+            <a class="page-link" href="?page=$i">$i</a>
+        </li>
+        #end
+        #if($page < $totalPages)
+        <li class="page-item">
+            <a class="page-link" href="?page=${page + 1}">Next</a>
+        </li>
+        #end
+    </ul>
+</nav>
+#end
+
+## File-specific: render product form
+#renderField("productName" "Product Name" true)
+#renderField("productPrice" "Price" true)
+#renderPagination($currentPage $totalPages)

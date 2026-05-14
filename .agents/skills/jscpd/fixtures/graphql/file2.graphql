@@ -1,0 +1,68 @@
+type Query {
+  user(id: ID!): User
+  users(limit: Int, offset: Int, role: Role): [User!]!
+  product(id: ID!): Product
+  products(categoryId: ID, limit: Int): [Product!]!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+  deleteUser(id: ID!): Boolean!
+  createOrder(input: CreateOrderInput!): Order!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  role: Role!
+  orders: [Order!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  description: String
+  price: Float!
+  categoryId: ID!
+  stock: Int!
+  createdAt: String!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  products: [Product!]!
+}
+
+enum Role {
+  ADMIN
+  USER
+  GUEST
+}
+
+input CreateOrderInput {
+  userId: ID!
+  items: [OrderItemInput!]!
+}
+
+input OrderItemInput {
+  productId: ID!
+  quantity: Int!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  role: Role
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  role: Role
+}

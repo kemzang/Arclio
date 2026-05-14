@@ -1,0 +1,71 @@
+// Variables
+$primary-color:    #3498db;
+$secondary-color:  #2ecc71;
+$font-size-base:   16px;
+$font-family-base: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$border-radius:    4px;
+$spacing-unit:     8px;
+$transition:       0.3s ease;
+
+// Mixins
+@mixin flex-center {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+}
+
+@mixin truncate {
+    overflow:      hidden;
+    text-overflow: ellipsis;
+    white-space:   nowrap;
+}
+
+@mixin responsive($breakpoint) {
+    @if $breakpoint == 'mobile' {
+        @media (max-width: 767px) { @content; }
+    } @else if $breakpoint == 'tablet' {
+        @media (min-width: 768px) and (max-width: 1023px) { @content; }
+    }
+}
+
+// Base styles
+.container {
+    max-width: 1200px;
+    margin:    0 auto;
+    padding:   0 ($spacing-unit * 2);
+
+    &-fluid {
+        max-width: 100%;
+    }
+}
+
+.btn {
+    display:       inline-block;
+    padding:       $spacing-unit ($spacing-unit * 2);
+    border-radius: $border-radius;
+    font-size:     $font-size-base;
+    cursor:        pointer;
+    transition:    background-color $transition;
+
+    &:hover        { opacity: 0.9; }
+    &-primary      { background-color: $primary-color;   color: white; }
+    &-secondary    { background-color: $secondary-color; color: white; }
+}
+
+// File-specific: navigation component
+.navbar {
+    @include flex-center;
+    background-color: $primary-color;
+    padding:          $spacing-unit * 2;
+    color:            white;
+
+    &-brand {
+        font-size:   $font-size-base * 1.5;
+        font-weight: bold;
+    }
+
+    &-menu {
+        display: flex;
+        gap:     $spacing-unit * 2;
+    }
+}

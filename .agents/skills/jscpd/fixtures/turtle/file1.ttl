@@ -1,0 +1,45 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex:   <http://example.com/ontology#> .
+
+ex:Person a owl:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "A human being"@en .
+
+ex:Employee a owl:Class ;
+    rdfs:subClassOf ex:Person ;
+    rdfs:label "Employee"@en ;
+    rdfs:comment "A person employed by an organization"@en .
+
+ex:hasName a owl:DatatypeProperty ;
+    rdfs:domain ex:Person ;
+    rdfs:range  xsd:string ;
+    rdfs:label  "has name"@en .
+
+ex:hasEmail a owl:DatatypeProperty ;
+    rdfs:domain ex:Person ;
+    rdfs:range  xsd:string ;
+    rdfs:label  "has email"@en .
+
+ex:hasAge a owl:DatatypeProperty ;
+    rdfs:domain ex:Person ;
+    rdfs:range  xsd:integer ;
+    rdfs:label  "has age"@en .
+
+ex:worksFor a owl:ObjectProperty ;
+    rdfs:domain ex:Employee ;
+    rdfs:range  ex:Organization ;
+    rdfs:label  "works for"@en .
+
+# File-specific: user instances
+ex:alice a ex:Employee ;
+    ex:hasName  "Alice Smith" ;
+    ex:hasEmail "alice@example.com" ;
+    ex:hasAge   30 .
+
+ex:bob a ex:Employee ;
+    ex:hasName  "Bob Jones" ;
+    ex:hasEmail "bob@example.com" ;
+    ex:hasAge   25 .

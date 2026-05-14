@@ -1,0 +1,45 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Introduction to Numerical Methods}
+\author{Jane Doe \and John Smith}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+Numerical methods are algorithms for solving mathematical problems
+using arithmetic operations. They are essential when analytical
+solutions are difficult or impossible to obtain.
+
+\section{Root Finding}
+Given a continuous function $f: \mathbb{R} \rightarrow \mathbb{R}$,
+we seek $x^*$ such that $f(x^*) = 0$.
+
+\subsection{Newton-Raphson Method}
+The iterative formula is:
+\begin{equation}
+  x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+\end{equation}
+
+This method has quadratic convergence when started near the root.
+
+\subsection{Convergence Criteria}
+The iteration stops when:
+\begin{itemize}
+  \item $|x_{n+1} - x_n| < \epsilon$
+  \item $|f(x_{n+1})| < \delta$
+  \item Maximum iterations reached
+\end{itemize}
+
+\section{Conclusion}
+Numerical methods provide practical tools for scientific computing.
+
+\end{document}
