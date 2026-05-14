@@ -35,6 +35,12 @@ jobs:
       - name: Circular imports
         run: bun run madge
 
+      - name: Max LOC
+        run: bun run check:loc
+
+      - name: Dependency pins
+        run: bun run check:pins
+
       - name: Test
         run: bun run test
 
