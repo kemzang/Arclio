@@ -4,9 +4,10 @@ Internal engineering docs — feature designs, architecture notes, system maps.
 
 **Not** to be confused with:
 
-- `docs/` — generated GitHub Pages output (`landing-src/build.mjs`). Public site.
-- `readme-src/` — README source-of-truth (English + 21 locales).
+- `readme-src/` — README source-of-truth (English + 20 locales).
 - `CLAUDE.md` / `AGENTS.md` — agent-only operating notes (gitignored).
+
+Public landing site (`arroxy.orionus.dev`) lives in a separate repo: [`antonio-orionus/arroxy-web`](https://github.com/antonio-orionus/arroxy-web). Don't put landing content here.
 
 ## Convention
 

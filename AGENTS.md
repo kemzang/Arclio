@@ -362,40 +362,37 @@ Arroxy ships four third-party binaries. They split into two camps based on updat
 
 ---
 
-## Updating Public-Facing Content (READMEs + Landing Page)
+## Updating Public-Facing Content (READMEs)
 
-The README files and GitHub Pages landing page are **generated** — never edit them directly. All source-of-truth lives in two source directories:
+README files (English + 20 locales) are **generated** — never edit them directly. Source-of-truth:
 
-| Source                                                  | Generates                                    | Command                      |
-| ------------------------------------------------------- | -------------------------------------------- | ---------------------------- |
-| `readme-src/strings.mjs` + `readme-src/template.md`     | `README.md` + `README.{lang}.md`             | `node readme-src/build.mjs`  |
-| `landing-src/strings.mjs` + `landing-src/template.html` | `docs/index.html` + `docs/{lang}/index.html` | `node landing-src/build.mjs` |
+| Source                                              | Generates                        | Command                     |
+| --------------------------------------------------- | -------------------------------- | --------------------------- |
+| `readme-src/strings.mjs` + `readme-src/template.md` | `README.md` + `README.{lang}.md` | `node readme-src/build.mjs` |
 
-Both build scripts validate **key parity** — if any locale is missing a key that `en` has (or has an extra key), the build fails loudly. This is intentional: every new string must be translated into every supported language.
+The build script validates **key parity** — if any locale is missing a key that `en` has (or has an extra key), the build fails loudly. Every new string must be translated into every supported language.
+
+The landing site (`arroxy.orionus.dev`) lives in a separate repo: [antonio-orionus/arroxy-web](https://github.com/antonio-orionus/arroxy-web). Don't update landing copy from here — open a PR there instead.
 
 ### Adding a new feature
 
-1. **README "What it does" bullet** — add `what_N` (next in sequence) to every locale object in `readme-src/strings.mjs`, then add `- {{what_N}}` to `readme-src/template.md`.
-2. **Landing page feature card** — add `fN_h` + `fN_p` to every locale object in `landing-src/strings.mjs`, then add the corresponding `<div class="feature">…</div>` block to `landing-src/template.html`. Pick an appropriate SVG icon (24×24 Lucide-style, `stroke="currentColor"`).
-3. **Run both build scripts** and confirm both exit with `✓` for every locale.
-4. Commit the source files **and** the generated outputs together.
+1. Add `what_N` (next in sequence) to every locale object in `readme-src/strings.mjs`, then add `- {{what_N}}` to `readme-src/template.md`.
+2. Run `node readme-src/build.mjs` and confirm `✓` for every locale.
+3. Commit the source files **and** the regenerated `README*.md` files together.
 
 ### Locales in scope — source of truth
 
-Do **not** hardcode the locale list or count anywhere in code, docs, or memory. Read it from the canonical sources:
+Do **not** hardcode the locale list or count anywhere in code, docs, or memory. Read from the canonical sources:
 
 | Surface                        | Canonical list                                                        | Type                                                                                      |
 | ------------------------------ | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | Renderer + main process (i18n) | `SUPPORTED_LANGS` in [`src/shared/schemas.ts`](src/shared/schemas.ts) | `SupportedLang` (re-exported from [`src/shared/i18n/types.ts`](src/shared/i18n/types.ts)) |
 | README build                   | `LOCALES` in [`readme-src/strings.mjs`](readme-src/strings.mjs)       | —                                                                                         |
-| Landing page build             | `LOCALES` in [`landing-src/strings.mjs`](landing-src/strings.mjs)     | —                                                                                         |
 
-These three lists must stay in lockstep. When adding a locale, update all three plus the matching locale files under `src/shared/i18n/locales/`, `readme-src/locales/`, and `landing-src/locales/`. The `en` locale is the canonical reference; build scripts and the `WidenStrings<EnTranslation>` type (see `src/shared/i18n/types.ts`) diff every other locale against it.
+Both must stay in lockstep with the landing-site locale list in the `arroxy-web` repo. The `en` locale is the canonical reference; the build script and the `WidenStrings<EnTranslation>` type (see `src/shared/i18n/types.ts`) diff every other locale against it.
 
 ### What NOT to edit directly
 
 - `README.md`, `README.es.md`, `README.de.md`, … — generated from `readme-src/`
-- `docs/index.html`, `docs/es/index.html`, … — generated from `landing-src/`
-- `docs/sitemap.xml`, `docs/robots.txt` — generated by the landing build script
 
 ---
