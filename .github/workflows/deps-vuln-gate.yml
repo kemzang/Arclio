@@ -7,10 +7,11 @@ name: Deps vuln gate
 on:
   pull_request:
     paths:
+      # Only re-audit when the dep graph actually changes. Editing the gate
+      # workflow or its script doesn't change vulnerabilities — would only
+      # false-fire the gate on stale advisories unrelated to the PR.
       - 'package.json'
       - 'bun.lock'
-      - '.github/workflows/deps-vuln-gate.yml'
-      - 'scripts/check-deps-vuln.mjs'
 
 permissions:
   contents: read
