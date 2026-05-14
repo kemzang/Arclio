@@ -16,6 +16,7 @@ export const ar = {
   nav_screenshots: "لقطات الشاشة",
   nav_install: "التثبيت",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "تحميل",
 
   hero_eyebrow: "مفتوح المصدر · MIT · قيد التطوير النشط",
@@ -169,4 +170,14 @@ export const ar = {
   mid_cta_sub: "حمّل مجاناً. بلا حساب، بلا إعلانات، بلا التزامات.",
   end_cta_h2: "مجاني للأبد. مفتوح المصدر. بلا مفاجآت.",
   end_cta_sub: "انضم إلى الآلاف الذين يحمّلون باستخدام Arroxy. نقرة واحدة ويعمل تلقائياً.",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "مقارنات وتحليلات معمّقة وملاحظات الإصدارات من فريق Arroxy.",
+  blog_read_more: "اقرأ →",
+  blog_published_prefix: "نُشر",
+  blog_updated_prefix: "حُدِّث",
+  blog_by_author: "بقلم",
+  blog_back_to_index: "← العودة إلى Blog",
+  blog_lang_note: "هذا المقال متاح حالياً باللغة الإنجليزية فقط.",
 };

@@ -16,6 +16,7 @@ export const uz = {
   nav_screenshots: "Skrinshotlar",
   nav_install: "O'rnatish",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "Yuklab olish",
 
   hero_eyebrow: "Open Source · MIT · Faol ishlab chiqilmoqda",
@@ -169,4 +170,14 @@ export const uz = {
   mid_cta_sub: "Bepul yuklab oling. Hisob yo'q, reklama yo'q, majburiyat yo'q.",
   end_cta_h2: "Abadiy bepul. Ochiq manba. Hech qanday hiyla yo'q.",
   end_cta_sub: "Arroxy bilan minglab foydalanuvchilarga qo'shiling. Bir bosish — va u ishlaydi.",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Arroxy jamoasidan taqqoslashlar, chuqur tahlillar va reliz eslatmalari.",
+  blog_read_more: "O'qish →",
+  blog_published_prefix: "Nashr etilgan",
+  blog_updated_prefix: "Yangilangan",
+  blog_by_author: "muallif",
+  blog_back_to_index: "← Blogga qaytish",
+  blog_lang_note: "Ushbu maqola hozirda faqat ingliz tilida mavjud.",
 };

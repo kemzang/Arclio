@@ -16,6 +16,7 @@ export const ja = {
   nav_screenshots: "スクリーンショット",
   nav_install: "インストール",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "ダウンロード",
 
   hero_eyebrow: "Open Source · MIT · 継続開発中",
@@ -169,4 +170,14 @@ export const ja = {
   mid_cta_sub: "無料でダウンロード。アカウント不要、広告なし、条件なし。",
   end_cta_h2: "ずっと無料。オープンソース。落とし穴なし。",
   end_cta_sub: "すでに何千人もが Arroxy でダウンロードしています。ワンクリックで、あとは自動的に動きます。",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Arroxy チームによる比較記事、詳細解説、リリースノート。",
+  blog_read_more: "読む →",
+  blog_published_prefix: "公開日",
+  blog_updated_prefix: "更新日",
+  blog_by_author: "著者:",
+  blog_back_to_index: "← ブログに戻る",
+  blog_lang_note: "この記事は現在、英語のみでご利用いただけます。",
 };

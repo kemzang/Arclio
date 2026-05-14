@@ -16,6 +16,7 @@ export const sw = {
   nav_screenshots: "Picha za skrini",
   nav_install: "Sakinisha",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "Pakua",
 
   hero_eyebrow: "Open Source · MIT · Maendeleo yanayoendelea",
@@ -169,4 +170,14 @@ export const sw = {
   mid_cta_sub: "Pakua bure. Hakuna akaunti, hakuna matangazo, hakuna masharti.",
   end_cta_h2: "Bure milele. Open source. Hakuna udanganyifu.",
   end_cta_sub: "Jiunge na maelfu yanayopakua kwa Arroxy. Bonyeza mara moja, kisha inafanya kazi.",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Ulinganisho, uchambuzi wa kina, na maelezo ya matoleo kutoka timu ya Arroxy.",
+  blog_read_more: "Soma →",
+  blog_published_prefix: "Imechapishwa",
+  blog_updated_prefix: "Imesasishwa",
+  blog_by_author: "na",
+  blog_back_to_index: "← Rudi kwenye blogu",
+  blog_lang_note: "Makala hii kwa sasa inapatikana kwa Kiingereza tu.",
 };

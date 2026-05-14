@@ -1,0 +1,56 @@
+---
+import { Icon } from 'astro-icon/components';
+import FeatureCard from './FeatureCard.astro';
+interface Props { s: Record<string, string>; }
+const { s } = Astro.props;
+---
+<section id="features" class="scroll-mt-16">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">{s.features_eyebrow}</div>
+      <h2>{s.features_h2}</h2>
+      <p class="section-sub">{s.features_sub}</p>
+    </div>
+    <div class="features">
+      <FeatureCard title={s.f1_h} desc={s.f1_p}>
+        <Icon slot="icon" name="lucide:laptop" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f2_h} desc={s.f2_p}>
+        <Icon slot="icon" name="lucide:zap" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f3_h} desc={s.f3_p}>
+        <Icon slot="icon" name="lucide:tv" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f4_h} desc={s.f4_p}>
+        <Icon slot="icon" name="lucide:clock" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f5_h} desc={s.f5_p}>
+        <Icon slot="icon" name="lucide:globe" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f6_h} desc={s.f6_p}>
+        <Icon slot="icon" name="lucide:monitor" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f7_h} desc={s.f7_p}>
+        <Icon slot="icon" name="lucide:captions" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f8_h} desc={s.f8_p}>
+        <Icon slot="icon" name="lucide:share-2" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f9_h} desc={s.f9_p}>
+        <Icon slot="icon" name="lucide:clipboard-list" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f10_h} desc={s.f10_p}>
+        <Icon slot="icon" name="lucide:sparkles" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f11_h} desc={s.f11_p}>
+        <Icon slot="icon" name="lucide:disc" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f12_h} desc={s.f12_p}>
+        <Icon slot="icon" name="lucide:tag" width={20} height={20} />
+      </FeatureCard>
+      <FeatureCard title={s.f13_h} desc={s.f13_p}>
+        <Icon slot="icon" name="lucide:git-fork" width={20} height={20} />
+      </FeatureCard>
+    </div>
+  </div>
+</section>

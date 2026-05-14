@@ -1,0 +1,18 @@
+---
+import { Faq as FaqIsland } from './Faq.tsx';
+interface Props { s: Record<string, string>; }
+const { s } = Astro.props;
+const items = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => ({
+  q: s[`faq_q${i}`],
+  a: s[`faq_a${i}`],
+}));
+---
+<section id="faq">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">{s.faq_eyebrow}</div>
+      <h2>{s.faq_h2}</h2>
+    </div>
+    <FaqIsland items={items} client:only="react" />
+  </div>
+</section>

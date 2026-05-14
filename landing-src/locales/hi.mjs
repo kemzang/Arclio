@@ -16,6 +16,7 @@ export const hi = {
   nav_screenshots: "स्क्रीनशॉट",
   nav_install: "इंस्टॉल",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "डाउनलोड",
 
   hero_eyebrow: "Open Source · MIT · सक्रिय विकास",
@@ -167,4 +168,14 @@ export const hi = {
   mid_cta_sub: "मुफ़्त डाउनलोड करें। कोई अकाउंट नहीं, कोई विज्ञापन नहीं, कोई शर्त नहीं।",
   end_cta_h2: "हमेशा के लिए मुफ़्त। ओपन सोर्स। कोई छुपी बात नहीं।",
   end_cta_sub: "उन हज़ारों लोगों से जुड़ें जो Arroxy से डाउनलोड कर रहे हैं। एक क्लिक, फिर बस काम होता है।",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Arroxy टीम की ओर से तुलनाएँ, गहन विश्लेषण और रिलीज़ नोट्स।",
+  blog_read_more: "पढ़ें →",
+  blog_published_prefix: "प्रकाशित",
+  blog_updated_prefix: "अपडेट किया गया",
+  blog_by_author: "द्वारा",
+  blog_back_to_index: "← ब्लॉग पर वापस जाएँ",
+  blog_lang_note: "यह लेख अभी केवल अंग्रेज़ी में उपलब्ध है।",
 };

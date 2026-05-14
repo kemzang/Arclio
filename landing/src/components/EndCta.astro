@@ -1,0 +1,21 @@
+---
+interface Props { s: Record<string, string>; }
+const { s } = Astro.props;
+---
+<section class="end-cta">
+  <div class="shell">
+    <div class="section-eyebrow">{s.hero_eyebrow}</div>
+    <h2>{s.end_cta_h2}</h2>
+    <p class="section-sub">{s.end_cta_sub}</p>
+    <div id="end-download-cta" aria-live="polite">
+      <noscript>
+        <a class="btn btn-primary" href="https://github.com/antonio-orionus/Arroxy/releases/latest" target="_blank" rel="noopener">{s.cta_download_os}</a>
+      </noscript>
+    </div>
+    <div class="end-cta-pills">
+      <span class="pill ok">{s.pill_no_account}</span>
+      <span class="pill ok">{s.pill_no_tracking}</span>
+      <span class="pill ok">{s.pill_open_source}</span>
+    </div>
+  </div>
+</section>

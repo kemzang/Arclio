@@ -16,6 +16,7 @@ export const ps = {
   nav_screenshots: "سکرین شاټونه",
   nav_install: "نصب کول",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "ډاونلوډ",
 
   hero_eyebrow: "Open Source · MIT · فعاله پراختیا",
@@ -169,4 +170,14 @@ export const ps = {
   mid_cta_sub: "وړیا ډاونلوډ کړئ. بې له حساب، بې له اشتهار، بې له کومې تړلې شرطې.",
   end_cta_h2: "تل وړیا. خلاصه سرچینه. بې له کوم پنهاني شرط.",
   end_cta_sub: "د زرګونو کسانو سره یوځای شئ چې Arroxy سره ډاونلوډ کوي. یو کلیک، بیا هر شی پخپله کار کوي.",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "د Arroxy ټیم له خوا پرتله کول، ژور تحلیلونه، او د خپرونو یادښتونه.",
+  blog_read_more: "ولولئ →",
+  blog_published_prefix: "خپور شوی",
+  blog_updated_prefix: "تازه شوی",
+  blog_by_author: "له خوا",
+  blog_back_to_index: "← بلاګ ته ستنیدل",
+  blog_lang_note: "دا مقاله اوس مهال یوازې پښتو ته نه ده ژباړل شوې او یوازې په انګلیسي ژبه کې شتون لري.",
 };

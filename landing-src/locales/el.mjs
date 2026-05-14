@@ -16,6 +16,7 @@ export const el = {
   nav_screenshots: "Στιγμιότυπα",
   nav_install: "Εγκατάσταση",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "Λήψη",
 
   hero_eyebrow: "Open Source · MIT · Ενεργή ανάπτυξη",
@@ -169,4 +170,14 @@ export const el = {
   mid_cta_sub: "Κατεβάστε δωρεάν. Χωρίς λογαριασμό, χωρίς διαφημίσεις, χωρίς δεσμεύσεις.",
   end_cta_h2: "Δωρεάν για πάντα. Ανοιχτός κώδικας. Χωρίς καμία παγίδα.",
   end_cta_sub: "Ενταχθείτε σε χιλιάδες χρήστες που κατεβάζουν με το Arroxy. Ένα κλικ, κι αμέσως δουλεύει.",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Συγκρίσεις, αναλυτικά άρθρα και σημειώσεις έκδοσης από την ομάδα του Arroxy.",
+  blog_read_more: "Διαβάστε →",
+  blog_published_prefix: "Δημοσιεύτηκε",
+  blog_updated_prefix: "Ενημερώθηκε",
+  blog_by_author: "από",
+  blog_back_to_index: "← Επιστροφή στο Blog",
+  blog_lang_note: "Αυτό το άρθρο είναι προς το παρόν διαθέσιμο μόνο στα Αγγλικά.",
 };

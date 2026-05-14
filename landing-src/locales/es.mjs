@@ -16,6 +16,7 @@ export const es = {
   nav_screenshots: "Capturas",
   nav_install: "Instalar",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "Descargar",
 
   hero_eyebrow: "Open Source · MIT · Desarrollo activo",
@@ -169,4 +170,14 @@ export const es = {
   mid_cta_sub: "Descarga gratis. Sin cuenta, sin anuncios, sin compromisos.",
   end_cta_h2: "Gratis para siempre. Código abierto. Sin trampa.",
   end_cta_sub: "Únete a miles que descargan con Arroxy. Un clic y funciona sin más.",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Comparativas, análisis en profundidad y notas de versión del equipo de Arroxy.",
+  blog_read_more: "Leer →",
+  blog_published_prefix: "Publicado",
+  blog_updated_prefix: "Actualizado",
+  blog_by_author: "por",
+  blog_back_to_index: "← Volver al blog",
+  blog_lang_note: "Este artículo solo está disponible en inglés por el momento.",
 };

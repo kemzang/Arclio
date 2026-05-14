@@ -16,6 +16,7 @@ export const om = {
   nav_screenshots: "Fakkiiwwan",
   nav_install: "Diriirsi",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "Buufi",
 
   hero_eyebrow: "Open Source · MIT · Guddinni Itti Fufa",
@@ -169,4 +170,14 @@ export const om = {
   mid_cta_sub: "Bilisatti buufi. Akkaawuntii hin jiru, beeksisa hin jiru, hanga hin jiru.",
   end_cta_h2: "Yeroo hunda bilisaa. Open source. Dhoksaa hin jiru.",
   end_cta_sub: "Kuma hedduun Arroxy waliin buufachaa jiru irratti makamu. Cuqaasa tokko, achiin hojjeta.",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Madaallii, qorannoo gadi-fagoo, fi waabeffama baasii garee Arroxy irraa.",
+  blog_read_more: "Dubbisi →",
+  blog_published_prefix: "Maxxanfame",
+  blog_updated_prefix: "Haaromfame",
+  blog_by_author: "kan",
+  blog_back_to_index: "← Gara blogitti deebi'i",
+  blog_lang_note: "Barreeffamni kun yeroo ammaa afaan Ingiliffaa qofaan argama.",
 };

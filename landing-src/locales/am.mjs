@@ -16,6 +16,7 @@ export const am = {
   nav_screenshots: "ቅጽበታዊ ምስሎች",
   nav_install: "ጫን",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "አውርድ",
 
   hero_eyebrow: "Open Source · MIT · ቀጣይ ልማት",
@@ -169,4 +170,14 @@ export const am = {
   mid_cta_sub: "ነፃ ያውርዱ። ምንም አካውንት፣ ምንም ማስታወቂያ፣ ምንም ግዴታ።",
   end_cta_h2: "ለዘለዓለም ነፃ። Open source። ምንም ወጥመድ የለም።",
   end_cta_sub: "Arroxy ን የሚጠቀሙ ሺዎችን ይቀላቀሉ። አንድ ጠቅ — ከዚያ ሁሉም ይሰራል።",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "ንፅፅሮች፣ ጥልቅ ትንታኔዎች እና ከ Arroxy ቡድን የሚወጡ የስሪት ማስታወሻዎች።",
+  blog_read_more: "ያንብቡ →",
+  blog_published_prefix: "ታትሟል",
+  blog_updated_prefix: "ዘምኗል",
+  blog_by_author: "በ",
+  blog_back_to_index: "← ወደ blog ተመለስ",
+  blog_lang_note: "ይህ ጽሑፍ በአሁኑ ጊዜ በእንግሊዝኛ ብቻ ይገኛል።",
 };

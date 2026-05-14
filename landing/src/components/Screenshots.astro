@@ -1,0 +1,19 @@
+---
+interface Props { s: Record<string, string>; }
+const { s } = Astro.props;
+---
+<section id="screenshots" class="section-tight-top scroll-mt-16">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">{s.shots_eyebrow}</div>
+      <h2>{s.shots_h2}</h2>
+    </div>
+    <div class="shots">
+      <div class="shot"><img src="/assets/Main-screenshot.png" alt={s.shot1_alt} loading="lazy" /></div>
+      <div class="shot"><img src="/assets/Choosing-format-screenshot.png" alt={s.shot2_alt} loading="lazy" /></div>
+      <div class="shot"><img src="/assets/Choosing-destination-screenshot.png" alt={s.shot3_alt} loading="lazy" /></div>
+      <div class="shot"><img src="/assets/Downloading-in-parallel-screenshot.png" alt={s.shot4_alt} loading="lazy" /></div>
+      <div class="shot"><img src="/assets/Subtitles-screenshot.png" alt={s.shot5_alt} loading="lazy" /></div>
+    </div>
+  </div>
+</section>

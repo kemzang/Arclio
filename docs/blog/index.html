@@ -1,223 +1,43 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Arroxy Blog</title>
-    <meta name="description" content="Long-form posts from the Arroxy team — comparisons, deep dives, and release notes." />
-    <link rel="canonical" href="https://arroxy.orionus.dev/blog/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Arroxy" />
-    <meta property="og:url" content="https://arroxy.orionus.dev/blog/" />
-    <meta property="og:title" content="Arroxy Blog" />
-    <meta property="og:description" content="Long-form posts from the Arroxy team — comparisons, deep dives, and release notes." />
-    <meta property="og:image" content="https://arroxy.orionus.dev/assets/icon.png" />
-    <meta name="theme-color" content="#0d1019" />
-    <link rel="icon" href="/assets/icon.png" />
-    <link rel="apple-touch-icon" href="/assets/icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
-    <script>
-      window.op = window.op || function(...args){(window.op.q=window.op.q||[]).push(args);};
-      window.op('init', {
-        clientId: '33d59339-35ce-4394-b19e-036347830c5d',
-        trackScreenViews: true,
-        trackOutgoingLinks: true,
-        trackAttributes: true,
-      });
-    </script>
-    <script src="https://openpanel.dev/op1.js" defer async></script>
-    <style>
-      :root {
-        --bg: hsl(240 20% 6%);
-        --bg-elev: hsl(240 18% 9%);
-        --bg-card: hsl(240 16% 11%);
-        --border: hsl(240 12% 18%);
-        --text: hsl(0 0% 98%);
-        --text-dim: hsl(0 0% 72%);
-        --text-subtle: hsl(0 0% 52%);
-        --brand: hsl(220 100% 56%);
-        --brand-hover: hsl(220 100% 65%);
-        --brand-glow: hsl(220 100% 56% / 0.32);
-        --accent: hsl(195 100% 70%);
-      }
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      body {
-        font-family: 'Poppins', system-ui, -apple-system, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-      }
-      body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background:
-          radial-gradient(60rem 40rem at 20% -10%, hsl(220 100% 56% / 0.16), transparent 60%),
-          radial-gradient(50rem 35rem at 90% 10%, hsl(195 100% 70% / 0.08), transparent 60%);
-        pointer-events: none;
-        z-index: -1;
-      }
-      nav {
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        backdrop-filter: blur(14px);
-        background: hsl(240 20% 6% / 0.65);
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 14px 0;
-        width: min(1080px, 94%);
-        margin: 0 auto;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 700;
-        font-size: 18px;
-        color: var(--text);
-        text-decoration: none;
-      }
-      .brand img { width: 32px; height: 32px; border-radius: 8px; }
-      .nav-cta {
-        background: var(--brand);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 14px;
-        text-decoration: none;
-        box-shadow: 0 0 0 1px hsl(220 100% 70% / 0.3), 0 8px 24px var(--brand-glow);
-      }
-      .nav-cta:hover { background: var(--brand-hover); }
-
-      main {
-        width: min(1080px, 92%);
-        margin: 0 auto;
-        padding: 64px 0 96px;
-      }
-      .index-eyebrow {
-        display: inline-block;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-        color: var(--brand-hover);
-        padding: 6px 14px;
-        border-radius: 999px;
-        background: hsl(220 100% 56% / 0.1);
-        border: 1px solid hsl(220 100% 56% / 0.25);
-        margin-bottom: 22px;
-      }
-      h1 {
-        font-size: clamp(2.2rem, 5vw, 3rem);
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        margin-bottom: 12px;
-        background: linear-gradient(120deg, var(--brand), var(--accent));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-      .index-tagline {
-        color: var(--text-dim);
-        font-size: 1.1rem;
-        margin-bottom: 48px;
-      }
-
-      .post-list { display: flex; flex-direction: column; gap: 18px; }
-      .post-card {
-        display: block;
-        padding: 24px 28px;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        text-decoration: none;
-        color: inherit;
-        transition: transform .15s, border-color .15s, box-shadow .15s;
-      }
-      .post-card:hover {
-        transform: translateY(-2px);
-        border-color: var(--brand);
-        box-shadow: 0 12px 30px hsl(0 0% 0% / 0.3);
-      }
-      .post-card-meta {
-        font-size: 13px;
-        color: var(--text-subtle);
-        margin-bottom: 8px;
-      }
-      .post-card h2 {
-        font-size: 1.35rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        margin-bottom: 8px;
-        color: var(--text);
-      }
-      .post-card p {
-        color: var(--text-dim);
-        font-size: 15px;
-        line-height: 1.55;
-      }
-      .post-card .read-more {
-        display: inline-block;
-        margin-top: 10px;
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--brand-hover);
-      }
-
-      footer {
-        border-top: 1px solid var(--border);
-        padding: 32px 0;
-        text-align: center;
-        color: var(--text-subtle);
-        font-size: 13px;
-      }
-      footer a { color: var(--text-dim); text-decoration: none; }
-      footer a:hover { color: var(--brand-hover); }
-      footer .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
-    </style>
-  </head>
-  <body>
-    <nav>
-      <div class="nav-inner">
-        <a class="brand" href="/">
-          <img src="/assets/icon.png" alt="Arroxy" />
-          <span>Arroxy</span>
-        </a>
-        <a class="nav-cta" href="/">Get Arroxy →</a>
-      </div>
-    </nav>
-
-    <main>
-      <span class="index-eyebrow">Blog</span>
-      <h1>Arroxy Blog</h1>
-      <p class="index-tagline">Comparisons, deep dives, and release notes from the Arroxy team.</p>
-
-      <div class="post-list">
-        <a class="post-card" href="/blog/video-downloader-comparison/">
-          <div class="post-card-meta">May 4, 2026</div>
-          <h2>Video Downloader Comparison: 30+ Cross-Platform GUIs</h2>
-          <p>A capability-by-capability comparison of cross-platform video downloader GUIs (yt-dlp-powered and otherwise) — feature matrix, pick-by-use-case guidance, and where Arroxy fits.</p>
-          <span class="read-more">Read →</span>
-        </a>
-      </div>
-    </main>
-
-    <footer>
-      <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="https://github.com/antonio-orionus/Arroxy">GitHub</a>
-      </div>
-      <div>© Arroxy · MIT licensed</div>
-    </footer>
-  </body>
-</html>
+<!DOCTYPE html><html lang="en" dir="ltr" class="scroll-smooth"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Arroxy Blog — Arroxy</title><meta name="description" content="Comparisons, deep dives, and release notes from the Arroxy team."><link rel="canonical" href="https://arroxy.orionus.dev/blog/">    <link rel="alternate" hreflang="om" href="https://arroxy.orionus.dev/om/" />
+    <link rel="alternate" hreflang="de" href="https://arroxy.orionus.dev/de/" />
+    <link rel="alternate" hreflang="en" href="https://arroxy.orionus.dev/" />
+    <link rel="alternate" hreflang="es" href="https://arroxy.orionus.dev/es/" />
+    <link rel="alternate" hreflang="fr" href="https://arroxy.orionus.dev/fr/" />
+    <link rel="alternate" hreflang="sw" href="https://arroxy.orionus.dev/sw/" />
+    <link rel="alternate" hreflang="uz" href="https://arroxy.orionus.dev/uz/" />
+    <link rel="alternate" hreflang="vi" href="https://arroxy.orionus.dev/vi/" />
+    <link rel="alternate" hreflang="am" href="https://arroxy.orionus.dev/am/" />
+    <link rel="alternate" hreflang="ar" href="https://arroxy.orionus.dev/ar/" />
+    <link rel="alternate" hreflang="ur" href="https://arroxy.orionus.dev/ur/" />
+    <link rel="alternate" hreflang="ps" href="https://arroxy.orionus.dev/ps/" />
+    <link rel="alternate" hreflang="bn" href="https://arroxy.orionus.dev/bn/" />
+    <link rel="alternate" hreflang="hi" href="https://arroxy.orionus.dev/hi/" />
+    <link rel="alternate" hreflang="my" href="https://arroxy.orionus.dev/my/" />
+    <link rel="alternate" hreflang="el" href="https://arroxy.orionus.dev/el/" />
+    <link rel="alternate" hreflang="ru" href="https://arroxy.orionus.dev/ru/" />
+    <link rel="alternate" hreflang="sr" href="https://arroxy.orionus.dev/sr/" />
+    <link rel="alternate" hreflang="uk" href="https://arroxy.orionus.dev/uk/" />
+    <link rel="alternate" hreflang="zh" href="https://arroxy.orionus.dev/zh/" />
+    <link rel="alternate" hreflang="ja" href="https://arroxy.orionus.dev/ja/" />
+    <link rel="alternate" hreflang="x-default" href="https://arroxy.orionus.dev/" /><meta property="og:type" content="website"><meta property="og:site_name" content="Arroxy"><meta property="og:url" content="https://arroxy.orionus.dev/blog/"><meta property="og:title" content="Arroxy Blog — Arroxy"><meta property="og:description" content="Comparisons, deep dives, and release notes from the Arroxy team."><meta property="og:image" content="https://arroxy.orionus.dev/assets/icon.png"><meta property="og:locale" content="en_US">    <meta property="og:locale:alternate" content="om_ET" />
+    <meta property="og:locale:alternate" content="de_DE" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta property="og:locale:alternate" content="sw_KE" />
+    <meta property="og:locale:alternate" content="uz_UZ" />
+    <meta property="og:locale:alternate" content="vi_VN" />
+    <meta property="og:locale:alternate" content="am_ET" />
+    <meta property="og:locale:alternate" content="ar_SA" />
+    <meta property="og:locale:alternate" content="ur_PK" />
+    <meta property="og:locale:alternate" content="ps_AF" />
+    <meta property="og:locale:alternate" content="bn_BD" />
+    <meta property="og:locale:alternate" content="hi_IN" />
+    <meta property="og:locale:alternate" content="my_MM" />
+    <meta property="og:locale:alternate" content="el_GR" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+    <meta property="og:locale:alternate" content="sr_RS" />
+    <meta property="og:locale:alternate" content="uk_UA" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:locale:alternate" content="ja_JP" /><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Arroxy Blog — Arroxy"><meta name="twitter:description" content="Comparisons, deep dives, and release notes from the Arroxy team."><meta name="twitter:image" content="https://arroxy.orionus.dev/assets/icon.png"><meta name="theme-color" content="#0d1019"><link rel="icon" href="/assets/icon.png"><link rel="apple-touch-icon" href="/assets/icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/BaseLayout.CdGUchUd.css"></head> <body data-copied-label="Copied!">  <nav> <div class="shell nav-inner"> <a href="/" class="brand"> <img src="/assets/icon.png" alt="Arroxy logo">
+Arroxy
+</a> <div class="nav-links">  <a href="/">Home</a> <a href="/blog/" aria-current="page">Blog</a> <a href="https://github.com/antonio-orionus/Arroxy" target="_blank" rel="noopener">GitHub</a> <a class="nav-cta" href="/#download">Download</a>  </div> </div> </nav>  <main class="shell pt-20 pb-[120px]"> <div class="text-center mb-14"> <div class="inline-block text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--brand-hover)] px-[14px] py-[6px] rounded-full bg-[hsl(220_100%_56%/0.1)] border border-[hsl(220_100%_56%/0.25)] mb-[22px]">Blog</div> <h1 class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-[-0.03em] mb-[14px]">Arroxy Blog</h1> <p class="text-[var(--text-dim)] text-[1.1rem] mb-12">Comparisons, deep dives, and release notes from the Arroxy team.</p> </div> <div class="flex flex-col gap-[18px]"> <a class="block px-7 py-6 bg-[var(--bg-card)] border border-[var(--border)] rounded-[14px] no-underline text-inherit transition-[transform,border-color,box-shadow] hover:-translate-y-0.5 hover:border-[var(--brand)] hover:shadow-[0_12px_30px_hsl(0_0%_0%/0.3)]" href="/blog/video-downloader-comparison/"> <div class="text-[13px] text-[var(--text-subtle)] mb-2">Updated May 14, 2026 · by Antonio Orionus</div> <h2 class="text-[1.35rem] font-bold tracking-[-0.02em] mb-2 text-[var(--text)]">Video Downloader Comparison: 30+ Cross-Platform GUIs</h2> <p class="text-[var(--text-dim)] text-[15px] leading-[1.55]">A capability-by-capability comparison of cross-platform video downloader GUIs (yt-dlp-powered and otherwise) — feature matrix, pick-by-use-case guidance, and where Arroxy fits.</p> <span class="inline-block mt-[10px] text-[14px] font-semibold text-[var(--brand-hover)]">Read →</span> </a> </div> </main>  <footer> <div class="shell"> <div class="footer-langs"> <span class="footer-langs-label">Language:</span> <a href="om/" hreflang="om" lang="om">Afaan Oromoo</a><a href="de/" hreflang="de" lang="de">Deutsch</a><a href="#" hreflang="en" lang="en" aria-current="page">English</a><a href="es/" hreflang="es" lang="es">Español</a><a href="fr/" hreflang="fr" lang="fr">Français</a><a href="sw/" hreflang="sw" lang="sw">Kiswahili</a><a href="uz/" hreflang="uz" lang="uz">O&#39;zbekcha</a><a href="vi/" hreflang="vi" lang="vi">Tiếng Việt</a><a href="am/" hreflang="am" lang="am">አማርኛ</a><a href="ar/" hreflang="ar" lang="ar">العربية</a><a href="ur/" hreflang="ur" lang="ur">اردو</a><a href="ps/" hreflang="ps" lang="ps">پښتو</a><a href="bn/" hreflang="bn" lang="bn">বাংলা</a><a href="hi/" hreflang="hi" lang="hi">हिन्दी</a><a href="my/" hreflang="my" lang="my">မြန်မာဘာသာ</a><a href="el/" hreflang="el" lang="el">Ελληνικά</a><a href="ru/" hreflang="ru" lang="ru">Русский</a><a href="sr/" hreflang="sr" lang="sr">Српски</a><a href="uk/" hreflang="uk" lang="uk">Українська</a><a href="zh/" hreflang="zh" lang="zh">中文</a><a href="ja/" hreflang="ja" lang="ja">日本語</a> </div> <div class="footer-inner"> <div> MIT Licensed · Made with care by  <a href="https://x.com/OrionusAI" target="_blank" rel="noopener">@OrionusAI</a> </div> <div class="footer-links"> <a href="https://github.com/antonio-orionus/Arroxy" target="_blank" rel="noopener">GitHub</a> <a href="https://github.com/antonio-orionus/Arroxy/issues" target="_blank" rel="noopener">Issues</a> <a href="https://github.com/antonio-orionus/Arroxy/releases" target="_blank" rel="noopener">Releases</a> </div> </div> </div> </footer> </body></html>

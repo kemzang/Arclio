@@ -1,0 +1,285 @@
+---
+// Client-side runtime: copy buttons, OS detection, smart CTA rendering,
+// platform picker tabs, GitHub stars/release-time eyebrow update.
+// Astro hoists and bundles this script. Both index.astro and [lang]/index.astro
+// import this component so the page-level <script> is shared.
+---
+
+  <script>
+    // Copy buttons
+    const COPIED_LABEL = document.body.dataset.copiedLabel ?? 'Copied!';
+    function attachCopy(btn: HTMLElement, payload: string) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(payload);
+          const orig = btn.textContent!;
+          btn.textContent = COPIED_LABEL;
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
+        } catch {}
+      });
+    }
+    document.querySelectorAll<HTMLElement>('.copy-btn').forEach(btn => {
+      const payload = (btn as HTMLButtonElement & { dataset: DOMStringMap }).dataset.copy;
+      if (payload) attachCopy(btn, payload);
+    });
+    const mobileCopyBtn = document.getElementById('mobile-copy-btn');
+    if (mobileCopyBtn) {
+      const url = (mobileCopyBtn as HTMLElement).dataset.copyUrl ?? '';
+      attachCopy(mobileCopyBtn, url);
+    }
+
+    // Sticky language choice
+    document.querySelectorAll<HTMLAnchorElement>('.footer-langs a[hreflang]').forEach(a => {
+      a.addEventListener('click', () => {
+        try { localStorage.setItem('langChosen', a.getAttribute('hreflang') ?? ''); } catch (_) {}
+      });
+    });
+
+    // OS / arch detection + smart CTA
+    (function () {
+      const REPO = 'https://github.com/antonio-orionus/Arroxy';
+      const cta = document.getElementById('download-cta') as HTMLElement | null;
+      const picker = document.getElementById('platform-picker') as HTMLElement | null;
+      const toggle = document.getElementById('other-platforms-toggle') as HTMLElement | null;
+      const toggleWrap = document.getElementById('other-platforms-wrap') as HTMLElement | null;
+      const midCta = document.getElementById('mid-download-cta') as HTMLElement | null;
+      const endCta = document.getElementById('end-download-cta') as HTMLElement | null;
+      const downloadIconTpl = document.getElementById('download-icon-tpl') as HTMLTemplateElement | null;
+      const starIconTpl = document.getElementById('star-icon-tpl') as HTMLTemplateElement | null;
+      const ghIconTpl = document.getElementById('gh-icon-tpl') as HTMLTemplateElement | null;
+      if (!cta || !picker || !toggle || !toggleWrap) return;
+
+      function detectOS(): string {
+        const uad = (navigator as any).userAgentData;
+        if (uad) {
+          if (uad.mobile) return 'mobile';
+          const p = (uad.platform ?? '').toLowerCase();
+          if (p === 'windows') return 'windows';
+          if (p === 'macos') return 'mac';
+          if (p === 'linux') return 'linux';
+        }
+        const ua = navigator.userAgent ?? '';
+        const pl = (navigator.platform ?? '').toLowerCase();
+        if (/iphone|ipad|ipod/.test(pl) || /android|iphone|ipad|ipod/i.test(ua)) return 'mobile';
+        if (/cros/i.test(ua)) return 'chromeos';
+        if (pl.startsWith('win') || /windows/i.test(ua)) return 'windows';
+        if (pl.startsWith('mac') || /macintosh|mac os x/i.test(ua)) return 'mac';
+        if (pl.startsWith('linux') || /linux/i.test(ua)) return 'linux';
+        return 'unknown';
+      }
+
+      const os = detectOS();
+      document.body.dataset.os = (os === 'chromeos' || os === 'unknown') ? 'unknown' : os;
+
+      let resolvedVersion: string | null = null;
+      const assetSizes = new Map<string, number>();
+
+      function assetUrl(filename: string): string {
+        const f = filename.replace('VERSION', resolvedVersion ?? 'latest');
+        return resolvedVersion
+          ? `${REPO}/releases/download/v${resolvedVersion}/${f}`
+          : `${REPO}/releases/latest/download/${f}`;
+      }
+      function downloadName(filename: string): string { return filename.replace('VERSION', resolvedVersion ?? ''); }
+      function formatMB(bytes: number): string { return Math.round(bytes / 1024 / 1024) + ' MB'; }
+      function sizeLabel(label: string, filename: string): string {
+        const bytes = assetSizes.get(downloadName(filename));
+        return bytes ? `${label} · ${formatMB(bytes)}` : label;
+      }
+
+      function makeBtn(kind: string, label: string, filename: string, track: string): HTMLAnchorElement {
+        const a = document.createElement('a');
+        a.className = `btn btn-${kind}`;
+        a.href = assetUrl(filename);
+        a.setAttribute('download', downloadName(filename));
+        a.dataset.track = track;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        if (kind === 'primary' && downloadIconTpl) {
+          a.appendChild(downloadIconTpl.content.cloneNode(true));
+          a.appendChild(document.createTextNode(sizeLabel(label, filename)));
+        } else {
+          a.textContent = label;
+        }
+        return a;
+      }
+
+      function updateEyebrow(repo: Record<string, unknown> | null, release: Record<string, unknown> | null): void {
+        const eyebrow = document.querySelector<HTMLElement>('.hero-eyebrow');
+        if (!eyebrow) return;
+        const lang = document.documentElement.lang || 'en';
+        const STAR_THRESHOLD = 100;
+        const rawStars = typeof repo?.stargazers_count === 'number' ? repo.stargazers_count : null;
+        let starsText: string | null = null;
+        if (rawStars !== null && rawStars >= STAR_THRESHOLD) {
+          try { starsText = new Intl.NumberFormat(lang, { notation: 'compact', maximumFractionDigits: 1 }).format(rawStars); }
+          catch { starsText = String(rawStars); }
+        }
+        let timeStr: string | null = null;
+        const ts = typeof release?.published_at === 'string' ? new Date(release.published_at) : null;
+        if (ts && !isNaN(ts.getTime())) {
+          const days = Math.round((Date.now() - ts.getTime()) / 86400000);
+          try {
+            const rtf = new Intl.RelativeTimeFormat(lang, { numeric: 'auto' });
+            timeStr = days < 1 ? rtf.format(0, 'day')
+              : days < 30 ? rtf.format(-days, 'day')
+              : days < 365 ? rtf.format(-Math.round(days / 30), 'month')
+              : rtf.format(-Math.round(days / 365), 'year');
+          } catch {}
+        }
+        if (!starsText && !timeStr) return;
+
+        eyebrow.textContent = '';
+        eyebrow.classList.add('is-live');
+
+        if (starsText && starIconTpl) {
+          const starBtn = document.createElement('a');
+          starBtn.className = 'star-btn';
+          starBtn.href = 'https://github.com/antonio-orionus/Arroxy';
+          starBtn.target = '_blank';
+          starBtn.rel = 'noopener';
+          starBtn.setAttribute('data-track', 'eyebrow-star');
+          starBtn.setAttribute('aria-label', `Star Arroxy on GitHub (${starsText} stars)`);
+          const starLabel = document.createElement('span');
+          starLabel.className = 'star-btn-label';
+          starLabel.appendChild(starIconTpl.content.cloneNode(true));
+          starLabel.appendChild(document.createTextNode('Star'));
+          const starCount = document.createElement('span');
+          starCount.className = 'star-btn-count';
+          starCount.textContent = starsText;
+          starBtn.appendChild(starLabel);
+          starBtn.appendChild(starCount);
+          eyebrow.appendChild(starBtn);
+        }
+        if (starsText && (timeStr || ghIconTpl)) {
+          const sep = document.createElement('span');
+          sep.className = 'sep';
+          sep.textContent = '·';
+          eyebrow.appendChild(sep);
+        }
+        if (timeStr) {
+          eyebrow.appendChild(document.createTextNode(`Updated ${timeStr}`));
+        }
+        if ((starsText || timeStr) && ghIconTpl) {
+          const sep2 = document.createElement('span');
+          sep2.className = 'sep';
+          sep2.textContent = '·';
+          eyebrow.appendChild(sep2);
+        }
+        if (ghIconTpl) {
+          const ghLink = document.createElement('a');
+          ghLink.href = 'https://github.com/antonio-orionus/Arroxy';
+          ghLink.target = '_blank';
+          ghLink.rel = 'noopener';
+          ghLink.setAttribute('data-track', 'eyebrow-github');
+          ghLink.style.cssText = 'display:inline-flex;align-items:center;gap:5px;color:inherit;text-decoration:none';
+          ghLink.appendChild(ghIconTpl.content.cloneNode(true));
+          ghLink.appendChild(document.createTextNode('Open source on GitHub'));
+          eyebrow.appendChild(ghLink);
+        }
+      }
+
+      const ds = cta.dataset as Record<string, string>;
+
+      function renderPrimary(): void {
+        while (cta!.firstChild) cta!.removeChild(cta!.firstChild);
+        if (os === 'windows') {
+          cta!.appendChild(makeBtn('primary', ds.labelWinInstaller, 'Arroxy-Setup-VERSION.exe', 'hero-win-installer'));
+          cta!.appendChild(makeBtn('secondary', ds.labelWinPortable, 'Arroxy-Portable-VERSION.exe', 'hero-win-portable'));
+          toggleWrap!.style.display = 'inline';
+        } else if (os === 'mac') {
+          cta!.appendChild(makeBtn('primary', ds.labelMacArm, 'Arroxy-VERSION-arm64.dmg', 'hero-mac-arm'));
+          cta!.appendChild(makeBtn('secondary', ds.labelMacIntel, 'Arroxy-VERSION-x64.dmg', 'hero-mac-intel'));
+          toggleWrap!.style.display = 'inline';
+        } else if (os === 'linux') {
+          cta!.appendChild(makeBtn('primary', ds.labelLinuxAppimage, 'Arroxy-VERSION.AppImage', 'hero-linux-appimage'));
+          cta!.appendChild(makeBtn('secondary', ds.labelLinuxFlatpak, 'Arroxy-VERSION.flatpak', 'hero-linux-flatpak'));
+          toggleWrap!.style.display = 'inline';
+        } else {
+          toggleWrap!.style.display = 'none';
+          picker!.style.display = 'block';
+        }
+      }
+
+      function renderExtraCta(el: HTMLElement | null): void {
+        if (!el) return;
+        while (el.firstChild) el.removeChild(el.firstChild);
+        if (os === 'windows') {
+          el.appendChild(makeBtn('primary', ds.labelWinInstaller, 'Arroxy-Setup-VERSION.exe', 'extra-cta-win'));
+          el.appendChild(makeBtn('secondary', ds.labelWinPortable, 'Arroxy-Portable-VERSION.exe', 'extra-cta-win-portable'));
+        } else if (os === 'mac') {
+          el.appendChild(makeBtn('primary', ds.labelMacArm, 'Arroxy-VERSION-arm64.dmg', 'extra-cta-mac-arm'));
+          el.appendChild(makeBtn('secondary', ds.labelMacIntel, 'Arroxy-VERSION-x64.dmg', 'extra-cta-mac-intel'));
+        } else if (os === 'linux') {
+          el.appendChild(makeBtn('primary', ds.labelLinuxAppimage, 'Arroxy-VERSION.AppImage', 'extra-cta-linux'));
+          el.appendChild(makeBtn('secondary', ds.labelLinuxFlatpak, 'Arroxy-VERSION.flatpak', 'extra-cta-linux-flatpak'));
+        } else {
+          el.appendChild(makeBtn('secondary', ds.labelOtherPlatforms, 'Arroxy-Setup-VERSION.exe', 'extra-cta-fallback'));
+        }
+      }
+
+      function showFirstLaunchHelp(): void {
+        const ids: Record<string, string> = { windows: 'first-launch-windows', mac: 'first-launch-mac', linux: 'first-launch-linux' };
+        const el = ids[os] ? document.getElementById(ids[os]) : null;
+        if (el) el.style.display = 'block';
+      }
+
+      function fillPickerRow(slot: string, items: { label: string; file: string; track: string }[]): void {
+        const row = document.getElementById(`picker-assets-${slot}`);
+        if (!row) return;
+        while (row.firstChild) row.removeChild(row.firstChild);
+        items.forEach(({ label, file, track }) => row.appendChild(makeBtn('secondary', label, file, track)));
+      }
+
+      function renderPicker(): void {
+        fillPickerRow('windows', [
+          { label: `${ds.labelInstaller} (.exe)`, file: 'Arroxy-Setup-VERSION.exe', track: 'picker-win-installer' },
+          { label: `${ds.labelPortable} (.exe)`, file: 'Arroxy-Portable-VERSION.exe', track: 'picker-win-portable' },
+        ]);
+        fillPickerRow('mac', [
+          { label: `${ds.labelArm} (.dmg)`, file: 'Arroxy-VERSION-arm64.dmg', track: 'picker-mac-arm' },
+          { label: `${ds.labelIntel} (.dmg)`, file: 'Arroxy-VERSION-x64.dmg', track: 'picker-mac-intel' },
+        ]);
+        fillPickerRow('linux', [
+          { label: 'AppImage', file: 'Arroxy-VERSION.AppImage', track: 'picker-linux-appimage' },
+          { label: 'Flatpak', file: 'Arroxy-VERSION.flatpak', track: 'picker-linux-flatpak' },
+        ]);
+      }
+
+      toggle.addEventListener('click', () => {
+        picker!.style.display = picker!.style.display === 'none' ? 'block' : 'none';
+      });
+      // Tab switching handled by the InstallerTabs React island (base-ui Tabs primitive).
+
+      if (os !== 'mobile') {
+        renderPrimary();
+        renderPicker();
+        renderExtraCta(midCta);
+        renderExtraCta(endCta);
+        showFirstLaunchHelp();
+      }
+
+      const REPO_API = 'https://api.github.com/repos/antonio-orionus/Arroxy';
+      Promise.all([
+        fetch(`${REPO_API}/releases/latest`).then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch(REPO_API).then(r => r.ok ? r.json() : null).catch(() => null),
+      ]).then(([release, repo]) => {
+        if (release?.tag_name) {
+          const versionEl = document.getElementById('version');
+          if (versionEl) versionEl.textContent = String(release.tag_name);
+          resolvedVersion = String(release.tag_name).replace(/^v/, '');
+          if (Array.isArray(release.assets)) {
+            for (const a of release.assets) {
+              if (a?.name && typeof a.size === 'number') assetSizes.set(a.name, a.size);
+            }
+          }
+          if (os !== 'mobile') { renderPrimary(); renderPicker(); renderExtraCta(midCta); renderExtraCta(endCta); }
+        } else {
+          const el = document.getElementById('release-version');
+          if (el) el.style.display = 'none';
+        }
+        updateEyebrow(repo, release);
+      });
+    })();
+  </script>

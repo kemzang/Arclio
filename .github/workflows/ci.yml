@@ -49,7 +49,11 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install dependencies
+      - name: Install root dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install landing dependencies
+        working-directory: landing
         run: bun install --frozen-lockfile
 
       - name: Regenerate landing + blog pages
@@ -59,7 +63,7 @@ jobs:
 
       - name: Verify docs/ matches landing-src/
         run: |
-          if ! git diff --quiet -- docs/; then
+          if ! git diff --quiet -- ':(exclude)docs/_astro' docs/; then
             echo "::warning::docs/ is out of sync with landing-src/. Run 'bun run build:docs' and commit the result when updating public content."
-            git diff --stat -- docs/
+            git diff --stat -- ':(exclude)docs/_astro' docs/
           fi

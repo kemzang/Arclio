@@ -16,6 +16,7 @@ export const zh = {
   nav_screenshots: "截图",
   nav_install: "安装",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "下载",
 
   hero_eyebrow: "开源 · MIT · 持续维护中",
@@ -167,4 +168,14 @@ export const zh = {
   mid_cta_sub: "免费下载。无需账号，无广告，无附加条件。",
   end_cta_h2: "永久免费。开源。没有任何附加条件。",
   end_cta_sub: "加入数千名正在使用 Arroxy 下载的用户。一键下载，开箱即用。",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "来自 Arroxy 团队的对比评测、深度解析与版本发布说明。",
+  blog_read_more: "阅读 →",
+  blog_published_prefix: "发布于",
+  blog_updated_prefix: "更新于",
+  blog_by_author: "作者",
+  blog_back_to_index: "← 返回博客",
+  blog_lang_note: "本文目前仅提供英文版本。",
 };

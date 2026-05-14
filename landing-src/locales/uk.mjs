@@ -16,6 +16,7 @@ export const uk = {
   nav_screenshots: "Скриншоти",
   nav_install: "Встановлення",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "Завантажити",
 
   hero_eyebrow: "Open Source · MIT · Активна розробка",
@@ -169,4 +170,14 @@ export const uk = {
   mid_cta_sub: "Завантажте безкоштовно. Без акаунта, без реклами, без умов.",
   end_cta_h2: "Безкоштовно назавжди. Відкритий код. Без прихованих умов.",
   end_cta_sub: "Тисячі користувачів вже завантажують через Arroxy. Один клік — і просто працює.",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Порівняння, поглиблені огляди та нотатки про релізи від команди Arroxy.",
+  blog_read_more: "Читати →",
+  blog_published_prefix: "Опубліковано",
+  blog_updated_prefix: "Оновлено",
+  blog_by_author: "автор",
+  blog_back_to_index: "← Назад до блогу",
+  blog_lang_note: "Ця стаття наразі доступна лише англійською мовою.",
 };

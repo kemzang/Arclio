@@ -16,6 +16,7 @@ export const sr = {
   nav_screenshots: "Снимци екрана",
   nav_install: "Инсталација",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "Преузми",
 
   hero_eyebrow: "Open Source · MIT · Активни развој",
@@ -169,4 +170,14 @@ export const sr = {
   mid_cta_sub: "Преузмите бесплатно. Без налога, без реклама, без обавеза.",
   end_cta_h2: "Бесплатно заувек. Отворени код. Без скривених услова.",
   end_cta_sub: "Хиљаде корисника већ преузима преко Arroxy. Један клик — и само ради.",
+
+  blog_eyebrow: "Блог",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Поређења, детаљне анализе и белешке о издањима тима Arroxy.",
+  blog_read_more: "Читај →",
+  blog_published_prefix: "Објављено",
+  blog_updated_prefix: "Ажурирано",
+  blog_by_author: "аутор",
+  blog_back_to_index: "← Назад на блог",
+  blog_lang_note: "Овај чланак је тренутно доступан само на енглеском језику.",
 };

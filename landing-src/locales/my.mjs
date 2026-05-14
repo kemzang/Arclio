@@ -16,6 +16,7 @@ export const my = {
   nav_screenshots: "ဖန်သားပြင်ဓာတ်ပုံများ",
   nav_install: "တပ်ဆင်ခြင်း",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "ဒေါင်းလုဒ်",
 
   hero_eyebrow: "Open Source · MIT · တက်ကြွစွာ ထိန်းသိမ်းနေသည်",
@@ -169,4 +170,14 @@ export const my = {
   mid_cta_sub: "အခမဲ့ ဒေါင်းလုဒ်လုပ်ပါ။ အကောင့်မလို၊ ကြော်ငြာမရှိ၊ ကြိုးများမရှိ။",
   end_cta_h2: "အမြဲတမ်း အခမဲ့။ Open source။ မည်သည့် သံသယမျှ မရှိ။",
   end_cta_sub: "Arroxy ဖြင့် ဒေါင်းလုဒ်လုပ်နေသော လူထောင်ပေါင်းများစွာနှင့် ပူးပေါင်းပါ။ တစ်ချက်နှိပ်ပြီး ကျန်အရာများ အလိုလို အလုပ်လုပ်သည်။",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "Arroxy အဖွဲ့မှ နှိုင်းယှဉ်ချက်များ၊ နက်နဲသောလေ့လာမှုများနှင့် release မှတ်တမ်းများ။",
+  blog_read_more: "ဖတ်ရှုပါ →",
+  blog_published_prefix: "ဖော်ပြသည့်ရက်",
+  blog_updated_prefix: "နောက်ဆုံးပြင်ဆင်သည့်ရက်",
+  blog_by_author: "ရေးသားသူ",
+  blog_back_to_index: "← Blog သို့ ပြန်သွားပါ",
+  blog_lang_note: "ဤဆောင်းပါးသည် လောလောဆယ် အင်္ဂလိပ်ဘာသာဖြင့်သာ ရနိုင်ပါသည်။",
 };

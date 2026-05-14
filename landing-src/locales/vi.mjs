@@ -16,6 +16,7 @@ export const vi = {
   nav_screenshots: "Ảnh chụp màn hình",
   nav_install: "Cài đặt",
   nav_blog: "Blog",
+  nav_home: "Home",
   nav_download: "Tải xuống",
 
   hero_eyebrow: "Mã nguồn mở · MIT · Đang phát triển tích cực",
@@ -169,4 +170,14 @@ export const vi = {
   mid_cta_sub: "Tải miễn phí. Không tài khoản, không quảng cáo, không ràng buộc.",
   end_cta_h2: "Miễn phí mãi mãi. Mã nguồn mở. Không có gì bí ẩn.",
   end_cta_sub: "Tham gia hàng nghìn người đang tải với Arroxy. Một cú nhấp, rồi tự nó chạy.",
+
+  blog_eyebrow: "Blog",
+  blog_index_h1: "Arroxy Blog",
+  blog_index_tagline: "So sánh, phân tích chuyên sâu và ghi chú phát hành từ đội ngũ Arroxy.",
+  blog_read_more: "Đọc →",
+  blog_published_prefix: "Đã đăng",
+  blog_updated_prefix: "Đã cập nhật",
+  blog_by_author: "bởi",
+  blog_back_to_index: "← Quay lại blog",
+  blog_lang_note: "Bài viết này hiện chỉ có sẵn bằng tiếng Anh.",
 };
