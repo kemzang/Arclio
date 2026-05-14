@@ -3,7 +3,7 @@
 // Soft target is ~700 (see CLAUDE.md); hard cap defaults to 800.
 // Override: `--max 1000`.
 
-import { readdir, readFile, stat } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const ROOT = "src";
