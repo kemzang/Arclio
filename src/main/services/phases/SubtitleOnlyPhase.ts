@@ -3,6 +3,7 @@ import { DEFAULTS } from '@shared/constants.js';
 import { dedupeSubtitleFiles, logger } from '../subtitlePostProcess.js';
 import { classifyYtDlpFailure } from '../download/errorClassification.js';
 import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
+import { buildYtDlpSignal } from './phaseHelpers.js';
 
 export const SubtitleOnlyPhase: Phase = {
   kind: 'subtitle-only',
@@ -27,21 +28,14 @@ export const SubtitleOnlyPhase: Phase = {
         subtitleFormat: subtitles.format ?? DEFAULTS.subtitleFormat,
         writeAutoSubs: subtitles.writeAuto
       },
-      {
+      buildYtDlpSignal(ctx, active, {
         onMinting: (attempt) => {
           ctx.emitStatus('token', attempt === 0 ? STATUS_KEY.mintingToken : STATUS_KEY.remintingToken);
         },
-        onSpawn: (proc) => {
-          active.ytDlpProcess = proc;
-          if (active.cancelRequested) proc.kill('SIGKILL');
-          ctx.register(() => {
-            proc.kill('SIGKILL');
-          });
+        onSpawn: () => {
           ctx.emitStatus('download', STATUS_KEY.fetchingSubtitles);
-        },
-        onStdout: (text) => ctx.safeConsume(text),
-        onStderr: (text) => ctx.safeConsume(text)
-      }
+        }
+      })
     );
 
     if (active.pauseRequested) return { kind: 'paused' };

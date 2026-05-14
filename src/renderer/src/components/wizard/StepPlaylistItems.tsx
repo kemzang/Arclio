@@ -5,21 +5,16 @@ import { useAppStore } from '../../store/useAppStore.js';
 import { Button } from '../ui/button.js';
 import { Checkbox } from '../ui/checkbox.js';
 import { Input } from '../ui/input.js';
-import { WizardFooter } from './WizardFooter.js';
+import { WizardStepFooterActions } from './WizardStepFooterActions.js';
 import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
+import { formatDuration } from '@renderer/lib/formatDuration.js';
 
-function formatDuration(seconds: number | undefined, liveLabel: string): string {
-  // undefined = no duration metadata (common for nested-playlist entries from
-  // music search, channel root, etc.) — render an em-dash instead of falsely
-  // labeling them "live". 0 still maps to live (yt-dlp's convention for
-  // ongoing streams).
+// undefined = no duration metadata (common for nested-playlist entries from
+// music search, channel root, etc.) — render an em-dash instead of falsely
+// labeling them "live".
+function formatEntryDuration(seconds: number | undefined, liveLabel: string): string {
   if (seconds === undefined) return '—';
-  if (seconds === 0) return liveLabel;
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
-  if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-  return `${m}:${String(s).padStart(2, '0')}`;
+  return formatDuration(seconds, liveLabel);
 }
 
 export function StepPlaylistItems(): JSX.Element {
@@ -106,7 +101,7 @@ export function StepPlaylistItems(): JSX.Element {
                     <Checkbox checked={checked} onCheckedChange={(v) => setPlaylistItemSelected(entry.id, !!v)} onClick={(e) => e.stopPropagation()} />
                     {hasAnyThumbnail ? entry.thumbnail ? <img src={entry.thumbnail} alt={t('wizard.playlist.thumbnailAlt')} referrerPolicy="no-referrer" className="h-8 w-[56px] shrink-0 rounded-sm object-cover" loading="lazy" /> : <div className="h-8 w-[56px] shrink-0 rounded-sm bg-muted" /> : null}
                     <span className="flex-1 truncate text-sm">{entry.title}</span>
-                    <span className="shrink-0 text-xs text-muted-foreground">{formatDuration(entry.duration, liveLabel)}</span>
+                    <span className="shrink-0 text-xs text-muted-foreground">{formatEntryDuration(entry.duration, liveLabel)}</span>
                   </div>
                 );
               })}
@@ -117,14 +112,7 @@ export function StepPlaylistItems(): JSX.Element {
         </>
       )}
 
-      <WizardFooter>
-        <Button variant="ghost" type="button" onClick={back} className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
-          {t('common.back')}
-        </Button>
-        <Button type="button" disabled={!canContinue} onClick={() => void confirmPlaylistSelection()} className="shadow-[0_4px_14px_var(--brand-glow)]">
-          {t('common.continue')}
-        </Button>
-      </WizardFooter>
+      <WizardStepFooterActions onBack={back} onContinue={() => void confirmPlaylistSelection()} continueDisabled={!canContinue} />
     </div>
   );
 }

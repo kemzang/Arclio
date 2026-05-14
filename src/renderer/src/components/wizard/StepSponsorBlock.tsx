@@ -1,10 +1,9 @@
 import { type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '../../store/useAppStore.js';
-import { Button } from '../ui/button.js';
 import { Checkbox } from '../ui/checkbox.js';
 import { Separator } from '../ui/separator.js';
-import { WizardFooter } from './WizardFooter.js';
+import { WizardStepFooterActions } from './WizardStepFooterActions.js';
 import { RadioOption } from '../ui/radio-option.js';
 import { SPONSORBLOCK_CATEGORIES, SPONSORBLOCK_MODES } from '@shared/schemas.js';
 import type { SponsorBlockMode } from '@shared/types.js';
@@ -63,14 +62,7 @@ export function StepSponsorBlock(): JSX.Element {
         </>
       )}
 
-      <WizardFooter>
-        <Button variant="ghost" type="button" onClick={back} className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
-          {t('common.back')}
-        </Button>
-        <Button type="button" onClick={advance} className="shadow-[0_4px_14px_var(--brand-glow)]">
-          {t('common.continue')}
-        </Button>
-      </WizardFooter>
+      <WizardStepFooterActions onBack={back} onContinue={advance} />
     </div>
   );
 }

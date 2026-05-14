@@ -2,6 +2,7 @@ import { STATUS_KEY } from '@shared/schemas.js';
 import { DEFAULTS } from '@shared/constants.js';
 import { dedupeSubtitleFiles, muxSubtitlesIntoVideo, logger } from '../subtitlePostProcess.js';
 import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
+import { buildYtDlpSignal } from './phaseHelpers.js';
 
 async function runEmbedMux(ctx: PhaseContext): Promise<void> {
   const { active, ytDlp } = ctx;
@@ -76,17 +77,7 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
           subtitleFormat: subs.format ?? DEFAULTS.subtitleFormat,
           writeAutoSubs: subs.writeAuto
         },
-        {
-          onSpawn: (proc) => {
-            active.ytDlpProcess = proc;
-            if (active.cancelRequested) proc.kill('SIGKILL');
-            ctx.register(() => {
-              proc.kill('SIGKILL');
-            });
-          },
-          onStdout: (text) => ctx.safeConsume(text),
-          onStderr: (text) => ctx.safeConsume(text)
-        }
+        buildYtDlpSignal(ctx, active)
       );
 
       if (active.pauseRequested) return { kind: 'paused' };

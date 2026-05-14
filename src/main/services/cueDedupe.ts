@@ -99,7 +99,7 @@ export function timecodeToMs(h: string, mm: string, s: string, ms: string): numb
   return Number(h) * 3_600_000 + Number(mm) * 60_000 + Number(s) * 1_000 + Number(ms);
 }
 
-export function msToTimecodeParts(ms: number): { h: string; m: string; s: string; ms: string } {
+function msToTimecodeParts(ms: number): { h: string; m: string; s: string; ms: string } {
   const hours = Math.floor(ms / 3_600_000);
   const minutes = Math.floor((ms % 3_600_000) / 60_000);
   const seconds = Math.floor((ms % 60_000) / 1_000);
@@ -107,4 +107,10 @@ export function msToTimecodeParts(ms: number): { h: string; m: string; s: string
   const pad2 = (n: number): string => String(n).padStart(2, '0');
   const pad3 = (n: number): string => String(n).padStart(3, '0');
   return { h: pad2(hours), m: pad2(minutes), s: pad2(seconds), ms: pad3(millis) };
+}
+
+// Format ms as `HH:MM:SS<sep>mmm`. SRT uses `,`, WebVTT uses `.`.
+export function formatTimecode(ms: number, sep: ',' | '.'): string {
+  const p = msToTimecodeParts(ms);
+  return `${p.h}:${p.m}:${p.s}${sep}${p.ms}`;
 }

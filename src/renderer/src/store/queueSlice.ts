@@ -152,51 +152,33 @@ function buildPlaylistQueueItem(entry: PlaylistEntry, get: GetState, playlistGro
   };
 }
 
+async function submitWizardToQueue(set: SetState, get: GetState): Promise<void> {
+  const { playlistItems, selectedPlaylistItemIds } = get();
+  if (get().wizardMode === 'playlist') {
+    const groupId = generateId();
+    const selected = playlistItems.filter((e) => selectedPlaylistItemIds.includes(e.id));
+    const items = selected.map((e) => buildPlaylistQueueItem(e, get, groupId));
+    await window.appApi.queue.cmd.add(items);
+  } else {
+    const item = buildQueueItem(get);
+    if (!item) return;
+    await window.appApi.queue.cmd.add([item]);
+  }
+  maybeShowQueueTip(set);
+  await persistFormatPrefs(set, get);
+  get().reset();
+}
+
 export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
   return {
     queue: [],
 
-    addToQueue: async () => {
-      const { playlistItems, selectedPlaylistItemIds } = get();
-      if (get().wizardMode === 'playlist') {
-        const groupId = generateId();
-        const selected = playlistItems.filter((e) => selectedPlaylistItemIds.includes(e.id));
-        const items = selected.map((e) => buildPlaylistQueueItem(e, get, groupId));
-        await window.appApi.queue.cmd.add(items);
-        maybeShowQueueTip(set);
-        await persistFormatPrefs(set, get);
-        get().reset();
-        return;
-      }
-      const item = buildQueueItem(get);
-      if (!item) return;
-      await window.appApi.queue.cmd.add([item]);
-      maybeShowQueueTip(set);
-      await persistFormatPrefs(set, get);
-      get().reset();
-    },
+    // QueueService auto-starts the head of the queue when cap allows; both
+    // actions converge on the same submit. They remain split at the public
+    // API in case future variants need an explicit-start path.
+    addToQueue: () => submitWizardToQueue(set, get),
 
-    addAndDownloadImmediately: async () => {
-      const { playlistItems, selectedPlaylistItemIds } = get();
-      if (get().wizardMode === 'playlist') {
-        const groupId = generateId();
-        const selected = playlistItems.filter((e) => selectedPlaylistItemIds.includes(e.id));
-        const items = selected.map((e) => buildPlaylistQueueItem(e, get, groupId));
-        await window.appApi.queue.cmd.add(items);
-        maybeShowQueueTip(set);
-        await persistFormatPrefs(set, get);
-        get().reset();
-        // QueueService auto-starts the head of the queue when cap allows;
-        // explicit start here is redundant but harmless if cap is full.
-        return;
-      }
-      const item = buildQueueItem(get);
-      if (!item) return;
-      await window.appApi.queue.cmd.add([item]);
-      maybeShowQueueTip(set);
-      await persistFormatPrefs(set, get);
-      get().reset();
-    },
+    addAndDownloadImmediately: () => submitWizardToQueue(set, get),
 
     cancelItemDownload: async (itemId) => {
       await window.appApi.queue.cmd.cancel({ itemId });

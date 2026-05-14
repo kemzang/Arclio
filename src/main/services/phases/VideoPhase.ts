@@ -6,6 +6,7 @@ import type { YtDlpRequest } from '../YtDlp.js';
 import { classifyYtDlpFailure } from '../download/errorClassification.js';
 import { cleanupPartFiles, cleanupTempDirByPath } from '../download/cleanup.js';
 import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
+import { buildYtDlpSignal } from './phaseHelpers.js';
 
 async function setupTempDir(outputDir: string, jobId: string, preserve: boolean, overridePath?: string): Promise<string | undefined> {
   const tempDir = overridePath ?? join(outputDir, '.arroxy-temp', jobId.slice(0, 8));
@@ -91,24 +92,18 @@ export function VideoPhase(embed: boolean): Phase {
               outputTemplate
             };
 
-      const result = await ytDlp.run(req, {
-        onMinting: (attempt) => {
-          ctx.emitStatus('token', attempt === 0 ? STATUS_KEY.mintingToken : STATUS_KEY.remintingToken);
-        },
-        // Don't preemptively emit downloadingMedia on spawn — yt-dlp spends
-        // a few seconds on extractor work and thumbnail conversion first.
-        // The first `[download] Destination:` line in consumeProgress emits
-        // the accurate status when the actual data download begins.
-        onSpawn: (proc) => {
-          active.ytDlpProcess = proc;
-          if (active.cancelRequested) proc.kill('SIGKILL');
-          ctx.register(() => {
-            proc.kill('SIGKILL');
-          });
-        },
-        onStdout: (text) => ctx.safeConsume(text),
-        onStderr: (text) => ctx.safeConsume(text)
-      });
+      // Don't preemptively emit downloadingMedia on spawn — yt-dlp spends
+      // a few seconds on extractor work and thumbnail conversion first.
+      // The first `[download] Destination:` line in consumeProgress emits
+      // the accurate status when the actual data download begins.
+      const result = await ytDlp.run(
+        req,
+        buildYtDlpSignal(ctx, active, {
+          onMinting: (attempt) => {
+            ctx.emitStatus('token', attempt === 0 ? STATUS_KEY.mintingToken : STATUS_KEY.remintingToken);
+          }
+        })
+      );
 
       if (active.pauseRequested) return { kind: 'paused' };
       if (active.cancelRequested) return { kind: 'cancelled' };

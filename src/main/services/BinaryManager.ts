@@ -247,6 +247,36 @@ export class BinaryManager {
     return null;
   }
 
+  // Attempt one managed yt-dlp channel (nightly or stable): build path + URL,
+  // call tryManagedDownload, then probe-and-accept. Returns the diagnostic on
+  // success or null to fall through.
+  private async tryManagedYtDlpChannel(id: DependencyId, channel: 'nightly' | 'stable', channelSource: { download: string; latest: string }, binaryFilename: string, assetName: string, attempts: DependencyAttempt[], opts: ResolveOptions, onProgress: ProgressEmitter | undefined, signal: AbortSignal | undefined): Promise<DependencyDiagnostic | null> {
+    const destinationPath = path.join(this.cacheDir, binaryFilename);
+    const downloadUrl = `${channelSource.download}/${assetName}`;
+    const source: DependencySource = { kind: 'managed', channel, url: downloadUrl };
+    const downloadOk = await this.tryManagedDownload(id, attempts, source, onProgress, () =>
+      this.ensureBinary({
+        name: 'yt-dlp',
+        destinationPath,
+        downloadUrl,
+        expectedSha256: async () => {
+          try {
+            return parseShaLine(await downloadText(`${channelSource.download}/SHA2-256SUMS`, signal), assetName);
+          } catch {
+            return null;
+          }
+        },
+        onStatus: opts.onStatus,
+        onDownloadProgress: makeDownloadProgress(id, source, onProgress),
+        requiredChecksum: true,
+        isUpToDate: () => this.isYtDlpUpToDate(destinationPath, channelSource.latest, signal),
+        signal
+      })
+    );
+    if (!downloadOk) return null;
+    return this.probeAndAccept(id, source, destinationPath, attempts, onProgress, signal);
+  }
+
   async resolveYtDlp(opts: ResolveOptions = {}): Promise<DependencyDiagnostic> {
     const id: DependencyId = 'yt-dlp';
     const attempts: DependencyAttempt[] = [];
@@ -270,66 +300,12 @@ export class BinaryManager {
 
     const assetName = ytDlpAssetName();
 
-    // Managed nightly
-    const nightlyPath = path.join(this.cacheDir, process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp');
-    const nightlyUrl = `${BINARY_SOURCES.ytDlpNightly.download}/${assetName}`;
-    {
-      const source: DependencySource = { kind: 'managed', channel: 'nightly', url: nightlyUrl };
-      const downloadOk = await this.tryManagedDownload(id, attempts, source, onProgress, () =>
-        this.ensureBinary({
-          name: 'yt-dlp',
-          destinationPath: nightlyPath,
-          downloadUrl: nightlyUrl,
-          expectedSha256: async () => {
-            try {
-              return parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpNightly.download}/SHA2-256SUMS`, signal), assetName);
-            } catch {
-              return null;
-            }
-          },
-          onStatus: opts.onStatus,
-          onDownloadProgress: makeDownloadProgress(id, source, onProgress),
-          requiredChecksum: true,
-          isUpToDate: () => this.isYtDlpUpToDate(nightlyPath, BINARY_SOURCES.ytDlpNightly.latest, signal),
-          signal
-        })
-      );
-      if (downloadOk) {
-        const diag = await this.probeAndAccept(id, source, nightlyPath, attempts, onProgress, signal);
-        if (diag) return diag;
-      }
-    }
+    const nightlyDiag = await this.tryManagedYtDlpChannel(id, 'nightly', BINARY_SOURCES.ytDlpNightly, process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp', assetName, attempts, opts, onProgress, signal);
+    if (nightlyDiag) return nightlyDiag;
 
-    // Managed stable
     onProgress?.({ binary: id, phase: 'fallback' });
-    const stablePath = path.join(this.cacheDir, process.platform === 'win32' ? 'yt-dlp-stable.exe' : 'yt-dlp-stable');
-    const stableUrl = `${BINARY_SOURCES.ytDlpStable.download}/${assetName}`;
-    {
-      const source: DependencySource = { kind: 'managed', channel: 'stable', url: stableUrl };
-      const downloadOk = await this.tryManagedDownload(id, attempts, source, onProgress, () =>
-        this.ensureBinary({
-          name: 'yt-dlp',
-          destinationPath: stablePath,
-          downloadUrl: stableUrl,
-          expectedSha256: async () => {
-            try {
-              return parseShaLine(await downloadText(`${BINARY_SOURCES.ytDlpStable.download}/SHA2-256SUMS`, signal), assetName);
-            } catch {
-              return null;
-            }
-          },
-          onStatus: opts.onStatus,
-          onDownloadProgress: makeDownloadProgress(id, source, onProgress),
-          requiredChecksum: true,
-          isUpToDate: () => this.isYtDlpUpToDate(stablePath, BINARY_SOURCES.ytDlpStable.latest, signal),
-          signal
-        })
-      );
-      if (downloadOk) {
-        const diag = await this.probeAndAccept(id, source, stablePath, attempts, onProgress, signal);
-        if (diag) return diag;
-      }
-    }
+    const stableDiag = await this.tryManagedYtDlpChannel(id, 'stable', BINARY_SOURCES.ytDlpStable, process.platform === 'win32' ? 'yt-dlp-stable.exe' : 'yt-dlp-stable', assetName, attempts, opts, onProgress, signal);
+    if (stableDiag) return stableDiag;
 
     // System PATH — last resort. Picks up brew/pipx/distro-package installs
     // when managed download is unreachable (firewalled, rate-limited, etc.).

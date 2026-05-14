@@ -11,20 +11,7 @@ import { DEFAULTS } from '@shared/constants.js';
 import { DEFAULT_AUDIO_BITRATE } from '@shared/schemas.js';
 import type { AppSettings, AudioSelection, FormatOption, Preset, SubtitleMap } from '@shared/types.js';
 import type { FormatPickerSlice, GetState, SetState } from '../types.js';
-
-function groupedNonAudioFormats(formats: FormatOption[]): { resolution: string; formatId: string }[] {
-  const seen = new Set<string>();
-  const out: { resolution: string; formatId: string }[] = [];
-  for (const f of formats) {
-    if (f.isAudioOnly) continue;
-    const key = `${f.resolution}|${f.dynamicRange ?? ''}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      out.push({ resolution: f.resolution, formatId: f.formatId });
-    }
-  }
-  return out;
-}
+import { groupVideoFormats } from '../helpers.js';
 
 function nativeAudio(formatId: string | null): AudioSelection {
   return formatId === null ? { kind: 'none' } : { kind: 'native', formatId };
@@ -50,7 +37,9 @@ function audioForVideoPick(videoFormatId: string, formats: FormatOption[], fallb
 const RESOLUTION_NUMBER_PATTERN = /(\d+)/;
 
 export function applyPreset(preset: Preset, formats: FormatOption[]): { videoFormatId: string; audioSelection: AudioSelection } {
-  const grouped = groupedNonAudioFormats(formats);
+  // groupVideoFormats appends an `audio-only` sentinel for the format dropdown;
+  // for preset/restore math we only want real video rows.
+  const grouped = groupVideoFormats(formats).filter((g) => !g.isAudioOnly);
   const audioFormats = formats.filter((f) => f.isAudioOnly);
   const bestAudio = audioFormats[0]?.formatId ?? null;
   const worstAudio = audioFormats[audioFormats.length - 1]?.formatId ?? bestAudio;
@@ -110,7 +99,9 @@ function reviveAudio(persisted: AudioSelection | undefined, formats: FormatOptio
 }
 
 export function restoreFormatSelection(formats: FormatOption[], settings: AppSettings | null): { videoFormatId: string; audioSelection: AudioSelection; preset: Preset | null } {
-  const grouped = groupedNonAudioFormats(formats);
+  // groupVideoFormats appends an `audio-only` sentinel for the format dropdown;
+  // for preset/restore math we only want real video rows.
+  const grouped = groupVideoFormats(formats).filter((g) => !g.isAudioOnly);
   const audioFormats = formats.filter((f) => f.isAudioOnly);
   const bestAudio = audioFormats[0]?.formatId ?? null;
   const single = settings?.single;

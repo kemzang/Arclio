@@ -5,7 +5,7 @@
 // then emit valid WebVTT (timecode separator `.` instead of `,`, plus the
 // `WEBVTT` header). Cue parsing is inlined here.
 
-import { dedupeCues, msToTimecodeParts, timecodeToMs, type Cue } from './cueDedupe.js';
+import { dedupeCues, formatTimecode, timecodeToMs, type Cue } from './cueDedupe.js';
 
 const VTT_TIMECODE_RE = /^(\d+):(\d+):(\d+)\.(\d+) --> (\d+):(\d+):(\d+)\.(\d+)/;
 // YouTube's auto-caption inline tags: word timing markers and <c>...</c>
@@ -19,11 +19,6 @@ function parseVttTimecode(line: string): [number, number] | null {
   return [timecodeToMs(m[1], m[2], m[3], m[4]), timecodeToMs(m[5], m[6], m[7], m[8])];
 }
 
-function formatVttTimecode(ms: number): string {
-  const p = msToTimecodeParts(ms);
-  return `${p.h}:${p.m}:${p.s}.${p.ms}`;
-}
-
 function stripInlineTags(text: string): string {
   return text.replace(INLINE_TIMING_RE, '').replace(INLINE_STYLE_RE, '');
 }
@@ -31,7 +26,7 @@ function stripInlineTags(text: string): string {
 function formatVtt(header: string, cues: Iterable<Cue>): string {
   let out = header.trimEnd() + '\n\n';
   for (const c of cues) {
-    out += `${formatVttTimecode(c.start)} --> ${formatVttTimecode(c.end)}\n${c.text}\n\n`;
+    out += `${formatTimecode(c.start, '.')} --> ${formatTimecode(c.end, '.')}\n${c.text}\n\n`;
   }
   return out.trimEnd();
 }
