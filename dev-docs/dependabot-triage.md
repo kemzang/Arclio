@@ -19,8 +19,7 @@ Procedure for handling a Dependabot PR. No API-billed AI review — local Claude
 
 - **Version updates: weekly, Monday.** Two grouped PRs each Monday: `production` and `development` (minor + patch). Major bumps open as individual PRs same day.
 - **Security advisories: immediate.** Dependabot's security-update feature ignores the weekly schedule and opens PRs as soon as a fix publishes for a known CVE affecting your tree. These are the only "critical" PRs that interrupt the weekly cadence.
-- 2-day cooldown — Dependabot waits 2 days after publish before opening a version PR. Security PRs override cooldown.
-- `bunfig.toml` adds another 5 days locally — any `bun install` you run skips packages <7 days old.
+- 7-day cooldown — Dependabot waits 7 days after publish before opening a version PR. Matches `bunfig.toml` `minimumReleaseAge = 604800` so CI's `bun install --frozen-lockfile` accepts the bot's chosen versions instead of blocking them as too-young. Security PRs override cooldown.
 - Net effect: routine bumps land in a single Monday batch review. Security work interrupts only when an actual advisory is fixed upstream.
 
 ## Decision tree per PR
