@@ -301,7 +301,7 @@ Einundzwanzig, direkt out of the box: English, Español (Spanisch), Deutsch, Fra
 Nein. yt-dlp wird beim ersten Start automatisch heruntergeladen und auf deinem Rechner gecacht; ffmpeg und ffprobe werden mit der App geliefert. Danach ist keine weitere Einrichtung nötig.
 
 **Kann ich Playlists oder ganze Kanäle herunterladen?**
-Ja, für Playlists: Füge eine Playlist-URL ein und stelle dann entweder die ganze Liste oder nur die Videos in die Warteschlange, die du auswählst. Ganze Kanäle im Batch werden noch nicht unterstützt.
+Ja — beides. Füge eine Playlist-URL oder eine Kanal-URL ein (z. B. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy zählt bis zu 500 Einträge auf, danach stellst du die gesamte Liste oder einzelne Videos in die Warteschlange. Datums- und Anzahlfilter folgen in Kürze.
 
 **macOS sagt „die App ist beschädigt" — was tun?**
 Das ist macOS Gatekeeper, der eine unsignierte App blockiert — kein echter Schaden. Siehe ["App is damaged" — Terminal-Fix](#macos-first-launch) für den einzeiligen `xattr`-Befehl, der das behebt.
@@ -317,6 +317,7 @@ Was kommt — grob nach Priorität sortiert:
 
 | Funktion    | Beschreibung    |
 | ---------------- | ---------------- |
+| **Playlist- & Kanal-Filter** | Datums- und Anzahlfilter beim Aufzählen einer Playlist oder eines Kanals (derzeit ist die Grenze fest auf 500 Einträge gesetzt) |
 | **Mehrere URLs auf einmal eingeben** | Mehrere URLs einfügen und alle auf einmal starten |
 | **Eigene Dateinamen-Vorlagen** | Dateien nach Titel, Hochlader, Datum, Auflösung benennen — mit Live-Vorschau |
 | **Geplante Downloads** | Warteschlange zu einer bestimmten Zeit starten (Nacht-Runs) |

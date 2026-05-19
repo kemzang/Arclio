@@ -299,7 +299,7 @@ Twenty-one, out of the box: English, Español (Spanish), Deutsch (German), Fran�
 No. yt-dlp is downloaded automatically on first launch and cached on your machine; ffmpeg and ffprobe ship with the app. After that, no extra setup is needed.
 
 **Can I download playlists or whole channels?**
-Yes for playlists: paste a playlist URL, then queue the whole list or only the videos you select. Whole-channel batch downloads are not supported yet.
+Yes — both. Paste a playlist URL or a channel URL (e.g. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy enumerates up to 500 entries, then you queue the whole list or pick specific videos. Date-range and count filters are coming soon.
 
 **macOS says "the app is damaged" — what do I do?**
 That's macOS Gatekeeper blocking an unsigned app, not actual damage. See ["App is damaged" — Terminal fix](#macos-first-launch) for the one-line `xattr` command that clears it.
@@ -315,6 +315,7 @@ Coming up — roughly in priority order:
 
 | Feature    | Description    |
 | ---------------- | ---------------- |
+| **Playlist & channel filters** | Date-range and count filters when enumerating a playlist or channel (today the cap is a fixed 500 entries) |
 | **Batch URL input** | Paste multiple URLs at once and run them in one go |
 | **Custom filename templates** | Name files by title, uploader, date, resolution — with live preview |
 | **Scheduled downloads** | Start a queue at a set time (overnight runs) |

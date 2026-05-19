@@ -299,7 +299,7 @@ Ishirini na moja, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kije
 Hapana. yt-dlp hupakuliwa kiotomatiki wakati wa uzinduzi wa kwanza na kuhifadhiwa kwenye kifaa chako; ffmpeg na ffprobe huja pamoja na programu. Baada ya hapo, hakuna usanidi wa ziada unaohitajika.
 
 **Je, ninaweza kupakua orodha za kucheza au vituo vyote?**
-Ndiyo kwa playlist: bandika URL ya playlist, kisha weka foleni ya orodha yote au video ulizochagua tu. Upakuaji wa kundi wa channel nzima bado haujaungwa mkono.
+Ndiyo — vyote viwili. Bandika URL ya playlist au URL ya kituo (k.m. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy inahesabu hadi ingizo 500, kisha unaweza kuweka foleni orodha nzima au kuchagua video maalum. Vichujio vya masafa ya tarehe na idadi vinakuja hivi karibuni.
 
 **macOS inasema "programu imeharibiwa" — nifanye nini?**
 Hiyo ni macOS Gatekeeper inayozuia programu isiyosainiwa, si uharibifu wa kweli. Tazama ["App is damaged" — suluhisho la Terminal](#macos-first-launch) kwa amri ya mstari mmoja ya `xattr` inayoondoa kizuizi.
@@ -315,6 +315,7 @@ Inakuja — kwa takriban mpangilio wa kipaumbele:
 
 | Kipengele    | Maelezo    |
 | ---------------- | ---------------- |
+| **Vichujio vya orodha za kucheza na vituo** | Vichujio vya masafa ya tarehe na idadi wakati wa kuhesabu orodha ya kucheza au kituo (kwa sasa kikomo ni ingizo 500 imara) |
 | **Uingizaji wa URL nyingi** | Bandika URL nyingi kwa wakati mmoja na uziendeshe mara moja |
 | **Templeti maalum za majina ya faili** | Weka jina la faili kwa kichwa, mpakiaji, tarehe, azimio — na onyesho la moja kwa moja |
 | **Upakuaji uliopangwa** | Anza foleni kwa wakati uliowekwa (uendeshaji wa usiku) |

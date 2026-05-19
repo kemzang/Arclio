@@ -295,7 +295,7 @@ export const uz = {
     "Yo‘q. yt-dlp birinchi ishga tushirishda avtomatik yuklab olinadi va kompyuteringizda keshlanadi; ffmpeg va ffprobe ilova bilan birga keladi. Undan keyin qo‘shimcha sozlash shart emas.",
   faq_q8: "Playlist yoki butun kanallarni yuklab olishim mumkinmi?",
   faq_a8:
-    "Ha, playlistlar uchun: playlist URL manzilini joylang, keyin butun ro‘yxatni yoki faqat tanlagan videolaringizni navbatga qo‘shing. Butun kanalni to‘plam holida yuklab olish hali qo‘llab-quvvatlanmaydi.",
+    "Ha — ikkalasi ham. Playlist URL yoki kanal URL’ini joylang (masalan, `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy 500 tagacha yozuvni ro’yxatga oladi, so’ng butun ro’yxatni navbatga qo’shasiz yoki aniq videolarni tanlab olasiz. Sana oralig’i va miqdor filtrlari tez orada qo’shiladi.",
   faq_q9: 'macOS "ilova shikastlangan" deydi — nima qilaman?',
   faq_a9:
     'Bu macOS Gatekeeper imzalanmagan ilovani bloklayotgani, haqiqiy shikastlanish emas. Bir qatorli `xattr` buyrug\'i haqida ["App is damaged" — Terminal orqali tuzatish](#macos-first-launch) ga qarang.',
@@ -305,13 +305,11 @@ export const uz = {
   plan_intro: "Kelayotgan — taxminan ustuvorlik tartibida:",
   plan_col1: "Xususiyat",
   plan_col2: "Tavsif",
-  plan_r1_name: "**Playlist va kanal yuklab olish**",
+  plan_r1_name: "**Playlist va kanal filtrlari**",
   plan_r1_desc:
-    "Playlist yoki kanal URL'ini joylashtiring; sana yoki miqdor filtrlari bilan barcha videolarni navbatga qo'shing",
+    "Playlist yoki kanal sanab chiqilganda sana oralig'i va miqdor filtrlari (hozircha chegara 500 yozuvga belgilangan)",
   plan_r2_name: "**Toplu URL kiritish**",
   plan_r2_desc: "Bir vaqtning o'zida bir nechta URL'larni joylashtiring va ularni bitta yugurishda bajaring",
-  plan_r3_name: "**Format konvertatsiyasi**",
-  plan_r3_desc: "Alohida vositasiz yuklamalarni MP3, WAV, FLAC ga aylantirish",
   plan_r4_name: "**Maxsus fayl nomi shablonlari**",
   plan_r4_desc:
     "Fayllarni sarlavha, yuklovchi, sana, aniqlik bo'yicha nomlash — jonli ko'rinish bilan",

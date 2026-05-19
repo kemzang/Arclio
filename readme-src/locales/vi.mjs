@@ -295,7 +295,7 @@ export const vi = {
     "Không. yt-dlp được tải xuống tự động khi khởi động lần đầu và được lưu vào bộ nhớ đệm trên máy của bạn; ffmpeg và ffprobe đi kèm với ứng dụng. Sau đó, không cần thiết lập thêm gì.",
   faq_q8: "Tôi có thể tải xuống danh sách phát hoặc toàn bộ kênh không?",
   faq_a8:
-    "Có, với playlist: dán URL playlist rồi xếp hàng toàn bộ danh sách hoặc chỉ những video bạn chọn. Tải hàng loạt cả kênh vẫn chưa được hỗ trợ.",
+    "Có — cả hai. Dán URL danh sách phát hoặc URL kênh (ví dụ `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy liệt kê tới 500 mục, sau đó bạn xếp hàng toàn bộ danh sách hoặc chọn từng video cụ thể. Bộ lọc theo khoảng ngày và số lượng sẽ sớm ra mắt.",
   faq_q9: 'macOS báo "ứng dụng bị hỏng" — tôi phải làm gì?',
   faq_a9:
     'Đó là macOS Gatekeeper chặn ứng dụng chưa được ký, không phải file thực sự bị hỏng. Xem ["App is damaged" — sửa bằng Terminal](#macos-first-launch) để biết lệnh `xattr` một dòng giải quyết vấn đề.',
@@ -305,13 +305,11 @@ export const vi = {
   plan_intro: "Sắp ra mắt — theo thứ tự ưu tiên:",
   plan_col1: "Tính năng",
   plan_col2: "Mô tả",
-  plan_r1_name: "**Tải danh sách phát & kênh**",
+  plan_r1_name: "**Bộ lọc danh sách phát & kênh**",
   plan_r1_desc:
-    "Dán URL danh sách phát hoặc kênh; xếp hàng tất cả video với bộ lọc ngày hoặc số lượng",
+    "Bộ lọc theo khoảng ngày và số lượng khi liệt kê danh sách phát hoặc kênh (hiện tại giới hạn cố định là 500 mục)",
   plan_r2_name: "**Nhập URL hàng loạt**",
   plan_r2_desc: "Dán nhiều URL cùng lúc và chạy tất cả trong một lần",
-  plan_r3_name: "**Chuyển đổi định dạng**",
-  plan_r3_desc: "Chuyển đổi tải xuống sang MP3, WAV, FLAC mà không cần công cụ riêng",
   plan_r4_name: "**Mẫu tên file tùy chỉnh**",
   plan_r4_desc:
     "Đặt tên file theo tiêu đề, người tải lên, ngày, độ phân giải — với xem trước trực tiếp",

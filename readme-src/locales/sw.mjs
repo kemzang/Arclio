@@ -295,7 +295,7 @@ export const sw = {
     "Hapana. yt-dlp hupakuliwa kiotomatiki wakati wa uzinduzi wa kwanza na kuhifadhiwa kwenye kifaa chako; ffmpeg na ffprobe huja pamoja na programu. Baada ya hapo, hakuna usanidi wa ziada unaohitajika.",
   faq_q8: "Je, ninaweza kupakua orodha za kucheza au vituo vyote?",
   faq_a8:
-    "Ndiyo kwa playlist: bandika URL ya playlist, kisha weka foleni ya orodha yote au video ulizochagua tu. Upakuaji wa kundi wa channel nzima bado haujaungwa mkono.",
+    "Ndiyo — vyote viwili. Bandika URL ya playlist au URL ya kituo (k.m. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy inahesabu hadi ingizo 500, kisha unaweza kuweka foleni orodha nzima au kuchagua video maalum. Vichujio vya masafa ya tarehe na idadi vinakuja hivi karibuni.",
   faq_q9: 'macOS inasema "programu imeharibiwa" — nifanye nini?',
   faq_a9:
     'Hiyo ni macOS Gatekeeper inayozuia programu isiyosainiwa, si uharibifu wa kweli. Tazama ["App is damaged" — suluhisho la Terminal](#macos-first-launch) kwa amri ya mstari mmoja ya `xattr` inayoondoa kizuizi.',
@@ -305,13 +305,11 @@ export const sw = {
   plan_intro: "Inakuja — kwa takriban mpangilio wa kipaumbele:",
   plan_col1: "Kipengele",
   plan_col2: "Maelezo",
-  plan_r1_name: "**Upakuaji wa orodha ya kucheza na vituo**",
+  plan_r1_name: "**Vichujio vya orodha za kucheza na vituo**",
   plan_r1_desc:
-    "Bandika URL ya orodha ya kucheza au kituo; panga video zote na vichujio vya tarehe au idadi",
+    "Vichujio vya masafa ya tarehe na idadi wakati wa kuhesabu orodha ya kucheza au kituo (kwa sasa kikomo ni ingizo 500 imara)",
   plan_r2_name: "**Uingizaji wa URL nyingi**",
   plan_r2_desc: "Bandika URL nyingi kwa wakati mmoja na uziendeshe mara moja",
-  plan_r3_name: "**Ubadilishaji wa fomati**",
-  plan_r3_desc: "Badilisha maudhui yaliyopakuliwa kuwa MP3, WAV, FLAC bila zana nyingine",
   plan_r4_name: "**Templeti maalum za majina ya faili**",
   plan_r4_desc:
     "Weka jina la faili kwa kichwa, mpakiaji, tarehe, azimio — na onyesho la moja kwa moja",

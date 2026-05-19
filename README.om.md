@@ -299,7 +299,7 @@ Digdamatokkoo, yeroo jalqabaatii: English, Español (Spanish), Deutsch (German),
 Lakki. yt-dlp jalqaba banuu irratti ofumaan buufamee meeshaa kee irratti kuufama; ffmpeg fi ffprobe app waliin dhufu. Sana booda qindaaʼinni dabalataa hin barbaachisu.
 
 **Playlist ykn chaanaalii guutuu buusuu danda'aa?**
-Eeyyee, playlist'f: URL playlist maxxansi, booda tarree guutuu yookaan viidiyoowwan ati filatte qofa queue keessa galchi. Channel guutuu batch'n buusuun ammaaf hin deggaramu.
+Eeyyee — lamaanuu. URL playlist ykn URL chaanaalii maxxansi (fkn. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy hanga galmeewwan 500 lakkaa'a, booda tarree guutuu yookaan viidiyoowwan filataman queue keessa galchi. Hojjettoonni guyyaa fi lakkoofsa dursaa dhufaa jiru.
 
 **macOS "app miidhaameera" jedha — maal godhaa?**
 Sun macOS Gatekeeper app mallattoo hin qabne dhorku, midhaa dhugaa miti. ["App is damaged" — Terminal dursaa](#macos-first-launch) ilaali, ajaja sarara tokkoo `xattr` kan sirreessuu argachuuf.
@@ -315,6 +315,7 @@ Dhufuuf jiru — bakka dursa hordofee:
 
 | Amalli    | Ibsa    |
 | ---------------- | ---------------- |
+| **Playlist & chaanaalii hojjettoota** | Hojjettoota guyyaa fi lakkoofsa playlist ykn chaanaalii lakkaa'uu irratti (har'a daangaan galmeewwan 500 dhaabbataa) |
 | **Galchii URL fakkaataa** | URLs heddu yeroo tokkotti maxxansi fi isaan tokkoon oofii |
 | **Template maqaa faayilaa dhuunfaa** | Faayiloota mata-duree, olkaa'aa, guyyaa, mookii shan — preview qindoofame wajjin maqaa kaa'i |
 | **Buufannoo yeroo qabamee** | Queue yeroo qindaawaa irratti eegali (halkaniidhumaan hojeti) |

@@ -296,7 +296,7 @@ export const de = {
     "Nein. yt-dlp wird beim ersten Start automatisch heruntergeladen und auf deinem Rechner gecacht; ffmpeg und ffprobe werden mit der App geliefert. Danach ist keine weitere Einrichtung nötig.",
   faq_q8: "Kann ich Playlists oder ganze Kanäle herunterladen?",
   faq_a8:
-    "Ja, für Playlists: Füge eine Playlist-URL ein und stelle dann entweder die ganze Liste oder nur die Videos in die Warteschlange, die du auswählst. Ganze Kanäle im Batch werden noch nicht unterstützt.",
+    "Ja — beides. Füge eine Playlist-URL oder eine Kanal-URL ein (z. B. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy zählt bis zu 500 Einträge auf, danach stellst du die gesamte Liste oder einzelne Videos in die Warteschlange. Datums- und Anzahlfilter folgen in Kürze.",
   faq_q9: 'macOS sagt „die App ist beschädigt" — was tun?',
   faq_a9:
     'Das ist macOS Gatekeeper, der eine unsignierte App blockiert — kein echter Schaden. Siehe ["App is damaged" — Terminal-Fix](#macos-first-launch) für den einzeiligen `xattr`-Befehl, der das behebt.',
@@ -306,13 +306,11 @@ export const de = {
   plan_intro: "Was kommt — grob nach Priorität sortiert:",
   plan_col1: "Funktion",
   plan_col2: "Beschreibung",
-  plan_r1_name: "**Playlist- & Kanal-Downloads**",
+  plan_r1_name: "**Playlist- & Kanal-Filter**",
   plan_r1_desc:
-    "Playlist- oder Kanal-URL einfügen; alle Videos mit Datums- oder Anzahl-Filtern in die Warteschlange",
+    "Datums- und Anzahlfilter beim Aufzählen einer Playlist oder eines Kanals (derzeit ist die Grenze fest auf 500 Einträge gesetzt)",
   plan_r2_name: "**Mehrere URLs auf einmal eingeben**",
   plan_r2_desc: "Mehrere URLs einfügen und alle auf einmal starten",
-  plan_r3_name: "**Format-Konvertierung**",
-  plan_r3_desc: "Downloads in MP3, WAV, FLAC konvertieren — ohne extra Tool",
   plan_r4_name: "**Eigene Dateinamen-Vorlagen**",
   plan_r4_desc:
     "Dateien nach Titel, Hochlader, Datum, Auflösung benennen — mit Live-Vorschau",

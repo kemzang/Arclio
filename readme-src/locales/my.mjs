@@ -295,7 +295,7 @@ export const my = {
     "မလိုပါ။ yt-dlp သည် ပထမဆုံး ဖွင့်ချိန်တွင် အလိုအလျောက် ဒေါင်းလုဒ်လုပ်ပြီး သင့်စက်တွင် cache လုပ်သည်; ffmpeg နှင့် ffprobe သည် app နှင့်အတူ ပါလာသည်။ ထို့နောက် နောက်ထပ် setup မလိုအပ်ပါ။",
   faq_q8: "Playlist များ သို့မဟုတ် channel တစ်ခုလုံး ဒေါင်းလုဒ်ဆွဲနိုင်သလား?",
   faq_a8:
-    "ဟုတ်ပါတယ်၊ playlist အတွက်: playlist URL ကို paste လုပ်ပြီး စာရင်းတစ်ခုလုံးကို သို့မဟုတ် သင်ရွေးထားသော video များကိုသာ queue ထဲထည့်နိုင်သည်။ channel တစ်ခုလုံးကို batch အလိုက် download လုပ်ခြင်းကိုတော့ မထောက်ပံ့သေးပါ။",
+    "ဟုတ်ပါတယ် — နှစ်ခုလုံး။ playlist URL သို့မဟုတ် channel URL (ဥပမာ `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`) ကို paste လုပ်ပါ; Arroxy သည် ၅၀၀ ခုအထိ ရေတွက်ပြီး စာရင်းတစ်ခုလုံးကို queue ထည့်နိုင်သည် သို့မဟုတ် သင်ရွေးချယ်သော video များကိုသာ ရွေးနိုင်သည်။ ရက်စွဲ-အပိုင်းအခြားနှင့် အရေအတွက် filters များ မကြာမီလာမည်။",
   faq_q9: 'macOS က "app ပျက်စီးနေသည်" ဟုဆိုသည် — ဘာလုပ်ရမည်နည်း?',
   faq_a9:
     '၎င်းသည် macOS Gatekeeper သည် unsigned app ကို ပိတ်ဆို့ခြင်းဖြစ်ပြီး တကယ်ပျက်စီးမှုမဟုတ်ပါ။ ["App is damaged" — Terminal fix](#macos-first-launch) ကိုကြည့်ပါ၊ ၎င်းကိုဖြေရှင်းသည့် တစ်ကြောင်းတည်းသော `xattr` command ပါဝင်သည်။',
@@ -305,13 +305,11 @@ export const my = {
   plan_intro: "အနီးကပ် ဦးစားပေးအစဉ်လိုက် လာမည့်အရာများ:",
   plan_col1: "လုပ်ဆောင်ချက်",
   plan_col2: "ဖော်ပြချက်",
-  plan_r1_name: "**Playlist နှင့် channel ဒေါင်းလုဒ်များ**",
+  plan_r1_name: "**Playlist နှင့် channel filters**",
   plan_r1_desc:
-    "Playlist သို့မဟုတ် channel URL ကို paste လုပ်ပါ; date သို့မဟုတ် count filters ဖြင့် ဗီဒီယိုများအားလုံးကို queue ထည့်ပါ",
+    "Playlist သို့မဟုတ် channel ကို ရေတွက်သောအခါ ရက်စွဲ-အပိုင်းအခြားနှင့် အရေအတွက် filters (ယနေ့ cap သည် ၅၀၀ ခုသတ်မှတ်ထားသည်)",
   plan_r2_name: "**Batch URL ထည့်သွင်းမှု**",
   plan_r2_desc: "URLs များစွာကို တစ်ကြိမ်တည်း paste လုပ်ပြီး တစ်ကြိမ်တည်း run ပါ",
-  plan_r3_name: "**Format ပြောင်းလဲခြင်း**",
-  plan_r3_desc: "သီးခြား tool မလိုဘဲ downloads ကို MP3, WAV, FLAC သို့ ပြောင်းလဲပါ",
   plan_r4_name: "**ကိုယ်ပိုင် filename ပုံစံများ**",
   plan_r4_desc:
     "ဖိုင်များကို ခေါင်းစဉ်၊ uploader, date, resolution ဖြင့် နာမည်ပေးပြီး live preview ဖြင့်",

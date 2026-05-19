@@ -299,7 +299,7 @@ Yigirma bir, darhol tayyor: English, Español (ispan), Deutsch (nemis), Françai
 Yo‘q. yt-dlp birinchi ishga tushirishda avtomatik yuklab olinadi va kompyuteringizda keshlanadi; ffmpeg va ffprobe ilova bilan birga keladi. Undan keyin qo‘shimcha sozlash shart emas.
 
 **Playlist yoki butun kanallarni yuklab olishim mumkinmi?**
-Ha, playlistlar uchun: playlist URL manzilini joylang, keyin butun ro‘yxatni yoki faqat tanlagan videolaringizni navbatga qo‘shing. Butun kanalni to‘plam holida yuklab olish hali qo‘llab-quvvatlanmaydi.
+Ha — ikkalasi ham. Playlist URL yoki kanal URL’ini joylang (masalan, `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy 500 tagacha yozuvni ro’yxatga oladi, so’ng butun ro’yxatni navbatga qo’shasiz yoki aniq videolarni tanlab olasiz. Sana oralig’i va miqdor filtrlari tez orada qo’shiladi.
 
 **macOS "ilova shikastlangan" deydi — nima qilaman?**
 Bu macOS Gatekeeper imzalanmagan ilovani bloklayotgani, haqiqiy shikastlanish emas. Bir qatorli `xattr` buyrug'i haqida ["App is damaged" — Terminal orqali tuzatish](#macos-first-launch) ga qarang.
@@ -315,6 +315,7 @@ Kelayotgan — taxminan ustuvorlik tartibida:
 
 | Xususiyat    | Tavsif    |
 | ---------------- | ---------------- |
+| **Playlist va kanal filtrlari** | Playlist yoki kanal sanab chiqilganda sana oralig'i va miqdor filtrlari (hozircha chegara 500 yozuvga belgilangan) |
 | **Toplu URL kiritish** | Bir vaqtning o'zida bir nechta URL'larni joylashtiring va ularni bitta yugurishda bajaring |
 | **Maxsus fayl nomi shablonlari** | Fayllarni sarlavha, yuklovchi, sana, aniqlik bo'yicha nomlash — jonli ko'rinish bilan |
 | **Rejalashtirilgan yuklab olishlar** | Navbatni belgilangan vaqtda boshlash (tunda ishlash) |

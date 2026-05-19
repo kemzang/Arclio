@@ -296,7 +296,7 @@ export const fr = {
     "Non. yt-dlp est téléchargé automatiquement au premier lancement et mis en cache sur ta machine ; ffmpeg et ffprobe sont inclus dans l’app. Après ça, aucune configuration supplémentaire.",
   faq_q8: "Puis-je télécharger des playlists ou des chaînes entières ?",
   faq_a8:
-    "Oui, pour les playlists : colle l'URL d'une playlist puis mets en file toute la liste ou seulement les vidéos que tu sélectionnes. Les téléchargements par lot de chaînes entières ne sont pas encore pris en charge.",
+    "Oui — les deux. Colle une URL de playlist ou une URL de chaîne (ex. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`) ; Arroxy énumère jusqu'à 500 entrées, puis tu mets toute la liste en file ou tu choisis des vidéos précises. Des filtres par plage de dates et par nombre arrivent bientôt.",
   faq_q9: 'macOS dit "l\'application est endommagée" — que faire ?',
   faq_a9:
     'C\'est Gatekeeper de macOS qui bloque une app non signée, pas un vrai endommagement. Voir ["App is damaged" — correction via Terminal](#macos-first-launch) pour la commande `xattr` en une ligne qui règle le problème.',
@@ -306,13 +306,11 @@ export const fr = {
   plan_intro: "À venir — approximativement par ordre de priorité :",
   plan_col1: "Fonctionnalité",
   plan_col2: "Description",
-  plan_r1_name: "**Téléchargement de playlists et chaînes**",
+  plan_r1_name: "**Filtres de playlists et chaînes**",
   plan_r1_desc:
-    "Colle l'URL d'une playlist ou d'une chaîne ; mets toutes les vidéos en file avec des filtres de date ou de nombre",
+    "Filtres par plage de dates et par nombre lors de l'énumération d'une playlist ou d'une chaîne (aujourd'hui le plafond est fixe à 500 entrées)",
   plan_r2_name: "**Saisie d'URLs en lot**",
   plan_r2_desc: "Colle plusieurs URLs d'un coup et lance tout ensemble",
-  plan_r3_name: "**Conversion de format**",
-  plan_r3_desc: "Convertis les téléchargements en MP3, WAV, FLAC sans outil supplémentaire",
   plan_r4_name: "**Modèles de noms de fichier personnalisés**",
   plan_r4_desc:
     "Nomme les fichiers par titre, auteur, date, résolution — avec aperçu en direct",

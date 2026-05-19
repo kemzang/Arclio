@@ -299,7 +299,7 @@ Hai mươi mốt ngôn ngữ, có sẵn ngay khi cài đặt: English, Español 
 Không. yt-dlp được tải xuống tự động khi khởi động lần đầu và được lưu vào bộ nhớ đệm trên máy của bạn; ffmpeg và ffprobe đi kèm với ứng dụng. Sau đó, không cần thiết lập thêm gì.
 
 **Tôi có thể tải xuống danh sách phát hoặc toàn bộ kênh không?**
-Có, với playlist: dán URL playlist rồi xếp hàng toàn bộ danh sách hoặc chỉ những video bạn chọn. Tải hàng loạt cả kênh vẫn chưa được hỗ trợ.
+Có — cả hai. Dán URL danh sách phát hoặc URL kênh (ví dụ `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy liệt kê tới 500 mục, sau đó bạn xếp hàng toàn bộ danh sách hoặc chọn từng video cụ thể. Bộ lọc theo khoảng ngày và số lượng sẽ sớm ra mắt.
 
 **macOS báo "ứng dụng bị hỏng" — tôi phải làm gì?**
 Đó là macOS Gatekeeper chặn ứng dụng chưa được ký, không phải file thực sự bị hỏng. Xem ["App is damaged" — sửa bằng Terminal](#macos-first-launch) để biết lệnh `xattr` một dòng giải quyết vấn đề.
@@ -315,6 +315,7 @@ Sắp ra mắt — theo thứ tự ưu tiên:
 
 | Tính năng    | Mô tả    |
 | ---------------- | ---------------- |
+| **Bộ lọc danh sách phát & kênh** | Bộ lọc theo khoảng ngày và số lượng khi liệt kê danh sách phát hoặc kênh (hiện tại giới hạn cố định là 500 mục) |
 | **Nhập URL hàng loạt** | Dán nhiều URL cùng lúc và chạy tất cả trong một lần |
 | **Mẫu tên file tùy chỉnh** | Đặt tên file theo tiêu đề, người tải lên, ngày, độ phân giải — với xem trước trực tiếp |
 | **Tải xuống theo lịch** | Bắt đầu hàng đợi vào thời điểm đặt trước (chạy qua đêm) |

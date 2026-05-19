@@ -42,6 +42,33 @@ export function isMixedYouTubeUrl(url: string): boolean {
 // (`/videos`, `/shorts`, `/playlists`, `/about`, etc.) pass through.
 const YT_CHANNEL_TAB_NAMES = new Set(['videos', 'shorts', 'streams', 'live', 'playlists', 'community', 'about', 'featured', 'channels', 'store', 'releases', 'podcasts']);
 
+/**
+ * Whole-channel / channel-batch download support entry point.
+ *
+ * Rewrites a YouTube channel-root URL to its `/videos` tab so the probe
+ * pipeline can treat the channel as a playlist and enumerate up to 500
+ * uploads (cap set in `YtDlp.ts` via `--playlist-end 500`). The user can
+ * then queue every entry or pick a subset from the wizard playlist picker.
+ *
+ * Accepted channel-root shapes (all rewritten to `<root>/videos`):
+ *   - `youtube.com/@handle`
+ *   - `youtube.com/channel/UC…` (24-char browse id)
+ *   - `youtube.com/c/CustomName`
+ *   - `youtube.com/user/OldName`
+ *
+ * Tab-suffixed URLs (`/videos`, `/shorts`, `/playlists`, …) pass through
+ * unchanged so a deliberate Shorts-only or Playlists-only download stays
+ * scoped to that tab.
+ *
+ * Keywords for code search: channel download, whole-channel, channel-batch,
+ * channel URL, /@handle, /channel/UC, /c/, /user/, channel enumeration,
+ * channel playlist, channel videos tab, batch channel.
+ *
+ * @see YtDlp.ts `buildProbeArgs` — `--flat-playlist --playlist-end 500`
+ *   is what actually enumerates the channel entries server-side.
+ * @see ../../components/wizard/StepPlaylistItems.tsx — UI that lets the
+ *   user pick specific channel videos from the enumerated list.
+ */
 export function rewriteYouTubeChannelRoot(url: string): string {
   try {
     const u = new URL(url);

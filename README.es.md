@@ -301,7 +301,7 @@ Veintiuno, listos para usar: English, Español, Deutsch (alemán), Français (fr
 No. yt-dlp se descarga automáticamente en el primer arranque y se guarda en caché en tu máquina; ffmpeg y ffprobe vienen incluidos con la app. Después de eso, no se necesita configuración adicional.
 
 **¿Puedo descargar listas de reproducción o canales completos?**
-Sí, para playlists: pega la URL de una playlist y luego pon en cola toda la lista o solo los videos que selecciones. Las descargas por lotes de canales completos todavía no están disponibles.
+Sí — ambos. Pega una URL de playlist o una URL de canal (p. ej. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy enumera hasta 500 entradas y luego puedes poner en cola toda la lista o elegir videos concretos. Los filtros por rango de fechas y por cantidad estarán disponibles próximamente.
 
 **macOS dice "la aplicación está dañada" — ¿qué hago?**
 Es Gatekeeper de macOS bloqueando una app sin firmar, no un daño real. Consulta ["App is damaged" — solución con Terminal](#macos-first-launch) para el comando `xattr` de una sola línea que lo resuelve.
@@ -317,6 +317,7 @@ Próximamente — aproximadamente por orden de prioridad:
 
 | Función    | Descripción    |
 | ---------------- | ---------------- |
+| **Filtros de listas y canales** | Filtros por rango de fechas y por cantidad al enumerar una playlist o canal (hoy el límite es fijo de 500 entradas) |
 | **Entrada de URLs por lotes** | Pega varias URLs a la vez y lánzalas todas juntas |
 | **Plantillas de nombre de archivo personalizadas** | Nombra archivos por título, autor, fecha, resolución — con vista previa en vivo |
 | **Descargas programadas** | Inicia una cola a una hora fijada (ejecuciones nocturnas) |

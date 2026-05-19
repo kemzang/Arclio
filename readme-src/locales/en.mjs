@@ -295,7 +295,7 @@ export const en = {
     "No. yt-dlp is downloaded automatically on first launch and cached on your machine; ffmpeg and ffprobe ship with the app. After that, no extra setup is needed.",
   faq_q8: "Can I download playlists or whole channels?",
   faq_a8:
-    "Yes for playlists: paste a playlist URL, then queue the whole list or only the videos you select. Whole-channel batch downloads are not supported yet.",
+    "Yes — both. Paste a playlist URL or a channel URL (e.g. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy enumerates up to 500 entries, then you queue the whole list or pick specific videos. Date-range and count filters are coming soon.",
   faq_q9: 'macOS says "the app is damaged" — what do I do?',
   faq_a9:
     'That\'s macOS Gatekeeper blocking an unsigned app, not actual damage. See ["App is damaged" — Terminal fix](#macos-first-launch) for the one-line `xattr` command that clears it.',
@@ -305,13 +305,11 @@ export const en = {
   plan_intro: "Coming up — roughly in priority order:",
   plan_col1: "Feature",
   plan_col2: "Description",
-  plan_r1_name: "**Playlist & channel downloads**",
+  plan_r1_name: "**Playlist & channel filters**",
   plan_r1_desc:
-    "Paste a playlist or channel URL; queue all videos with date or count filters",
+    "Date-range and count filters when enumerating a playlist or channel (today the cap is a fixed 500 entries)",
   plan_r2_name: "**Batch URL input**",
   plan_r2_desc: "Paste multiple URLs at once and run them in one go",
-  plan_r3_name: "**Format conversion**",
-  plan_r3_desc: "Convert downloads to MP3, WAV, FLAC without a separate tool",
   plan_r4_name: "**Custom filename templates**",
   plan_r4_desc:
     "Name files by title, uploader, date, resolution — with live preview",

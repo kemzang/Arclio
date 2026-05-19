@@ -296,7 +296,7 @@ export const es = {
     "No. yt-dlp se descarga automáticamente en el primer arranque y se guarda en caché en tu máquina; ffmpeg y ffprobe vienen incluidos con la app. Después de eso, no se necesita configuración adicional.",
   faq_q8: "¿Puedo descargar listas de reproducción o canales completos?",
   faq_a8:
-    "Sí, para playlists: pega la URL de una playlist y luego pon en cola toda la lista o solo los videos que selecciones. Las descargas por lotes de canales completos todavía no están disponibles.",
+    "Sí — ambos. Pega una URL de playlist o una URL de canal (p. ej. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy enumera hasta 500 entradas y luego puedes poner en cola toda la lista o elegir videos concretos. Los filtros por rango de fechas y por cantidad estarán disponibles próximamente.",
   faq_q9: 'macOS dice "la aplicación está dañada" — ¿qué hago?',
   faq_a9:
     'Es Gatekeeper de macOS bloqueando una app sin firmar, no un daño real. Consulta ["App is damaged" — solución con Terminal](#macos-first-launch) para el comando `xattr` de una sola línea que lo resuelve.',
@@ -306,13 +306,11 @@ export const es = {
   plan_intro: "Próximamente — aproximadamente por orden de prioridad:",
   plan_col1: "Función",
   plan_col2: "Descripción",
-  plan_r1_name: "**Descarga de listas y canales**",
+  plan_r1_name: "**Filtros de listas y canales**",
   plan_r1_desc:
-    "Pega la URL de una lista o canal; encola todos los videos con filtros por fecha o cantidad",
+    "Filtros por rango de fechas y por cantidad al enumerar una playlist o canal (hoy el límite es fijo de 500 entradas)",
   plan_r2_name: "**Entrada de URLs por lotes**",
   plan_r2_desc: "Pega varias URLs a la vez y lánzalas todas juntas",
-  plan_r3_name: "**Conversión de formato**",
-  plan_r3_desc: "Convierte descargas a MP3, WAV, FLAC sin necesitar otra herramienta",
   plan_r4_name: "**Plantillas de nombre de archivo personalizadas**",
   plan_r4_desc:
     "Nombra archivos por título, autor, fecha, resolución — con vista previa en vivo",

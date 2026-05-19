@@ -295,7 +295,7 @@ export const om = {
     "Lakki. yt-dlp jalqaba banuu irratti ofumaan buufamee meeshaa kee irratti kuufama; ffmpeg fi ffprobe app waliin dhufu. Sana booda qindaaʼinni dabalataa hin barbaachisu.",
   faq_q8: "Playlist ykn chaanaalii guutuu buusuu danda'aa?",
   faq_a8:
-    "Eeyyee, playlist'f: URL playlist maxxansi, booda tarree guutuu yookaan viidiyoowwan ati filatte qofa queue keessa galchi. Channel guutuu batch'n buusuun ammaaf hin deggaramu.",
+    "Eeyyee — lamaanuu. URL playlist ykn URL chaanaalii maxxansi (fkn. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); Arroxy hanga galmeewwan 500 lakkaa'a, booda tarree guutuu yookaan viidiyoowwan filataman queue keessa galchi. Hojjettoonni guyyaa fi lakkoofsa dursaa dhufaa jiru.",
   faq_q9: 'macOS "app miidhaameera" jedha — maal godhaa?',
   faq_a9:
     'Sun macOS Gatekeeper app mallattoo hin qabne dhorku, midhaa dhugaa miti. ["App is damaged" — Terminal dursaa](#macos-first-launch) ilaali, ajaja sarara tokkoo `xattr` kan sirreessuu argachuuf.',
@@ -305,13 +305,11 @@ export const om = {
   plan_intro: "Dhufuuf jiru — bakka dursa hordofee:",
   plan_col1: "Amalli",
   plan_col2: "Ibsa",
-  plan_r1_name: "**Playlist & chaanaalii buusuu**",
+  plan_r1_name: "**Playlist & chaanaalii hojjettoota**",
   plan_r1_desc:
-    "Playlist ykn URL chaanaalii maxxansi; viidiyoo hunda hordoffii guyyaa ykn lakkoofsa wajjin kaa'i",
+    "Hojjettoota guyyaa fi lakkoofsa playlist ykn chaanaalii lakkaa'uu irratti (har'a daangaan galmeewwan 500 dhaabbataa)",
   plan_r2_name: "**Galchii URL fakkaataa**",
   plan_r2_desc: "URLs heddu yeroo tokkotti maxxansi fi isaan tokkoon oofii",
-  plan_r3_name: "**Jijjiiruu format**",
-  plan_r3_desc: "Buufannoota meeshaa adda tokko malee MP3, WAV, FLAC tti jijjiiri",
   plan_r4_name: "**Template maqaa faayilaa dhuunfaa**",
   plan_r4_desc:
     "Faayiloota mata-duree, olkaa'aa, guyyaa, mookii shan — preview qindoofame wajjin maqaa kaa'i",

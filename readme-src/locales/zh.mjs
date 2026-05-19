@@ -296,7 +296,7 @@ export const zh = {
     "不需要。yt-dlp 会在首次启动时自动下载并缓存到你的机器上；ffmpeg 和 ffprobe 随应用一起提供。之后无需任何额外配置。",
   faq_q8: "能下载播放列表或整个频道吗？",
   faq_a8:
-    "播放列表可以：粘贴播放列表链接后，可以把整个列表加入队列，也可以只加入你选中的视频。整频道批量下载暂未支持。",
+    "两者都支持。粘贴播放列表或频道链接（如 `youtube.com/@handle`、`/channel/UC…`、`/c/Name`、`/user/Old`）；Arroxy 最多枚举 500 条，然后可以将整个列表加入队列，也可以挑选具体视频。按日期范围和数量筛选的功能即将推出。",
   faq_q9: 'macOS 提示"应用已损坏" — 怎么处理？',
   faq_a9:
     '这是 macOS Gatekeeper 在拦截未签名应用，并非真正损坏。请参见["App is damaged" — Terminal 修复方法](#macos-first-launch)，其中有一行 `xattr` 命令即可清除该问题。',
@@ -306,13 +306,11 @@ export const zh = {
   plan_intro: "即将推出 — 大致按优先级排序：",
   plan_col1: "功能",
   plan_col2: "描述",
-  plan_r1_name: "**播放列表与频道下载**",
+  plan_r1_name: "**播放列表与频道筛选**",
   plan_r1_desc:
-    "粘贴播放列表或频道链接；支持按日期或数量过滤，将所有视频加入队列",
+    "枚举播放列表或频道时按日期范围和数量筛选（当前上限为固定的 500 条）",
   plan_r2_name: "**批量 URL 输入**",
   plan_r2_desc: "一次粘贴多个链接，全部一起运行",
-  plan_r3_name: "**格式转换**",
-  plan_r3_desc: "将下载内容转换为 MP3、WAV、FLAC，无需额外工具",
   plan_r4_name: "**自定义文件名模板**",
   plan_r4_desc:
     "按标题、上传者、日期、分辨率命名文件 — 带实时预览",
