@@ -4,8 +4,11 @@
 version: 2
 
 updates:
-  # npm/bun dependencies (root)
-  - package-ecosystem: npm
+  # bun dependencies (root) — updates package.json AND bun.lock together so
+  # CI's `bun install --frozen-lockfile` stays green. The npm ecosystem only
+  # rewrites package.json and leaves bun.lock stale, which trips the frozen
+  # install check on every dependabot PR.
+  - package-ecosystem: bun
     directory: /
     schedule:
       interval: weekly
