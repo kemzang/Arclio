@@ -33,22 +33,6 @@ updates:
       # Major bumps stay ungrouped so each is reviewed individually.
     open-pull-requests-limit: 10
 
-  # Vendored agent skills (e.g. .agents/skills/jscpd) ship their own
-  # package.json + pnpm-lock.yaml. They're tooling for skills, not runtime
-  # code, and aren't on the build/release path. Dependabot opens both version
-  # and security update PRs for any manifest it can reach — declaring the
-  # manifest here with a wildcard `ignore` is the canonical way to silence
-  # both (Dependabot docs: ignore entries are respected by security updates
-  # too). Without this, security advisories like GHSA-5xc8-49mv-x4mm on
-  # transitive deps keep opening PRs we don't intend to act on.
-  - package-ecosystem: npm
-    directory: /.agents/skills/jscpd
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 0
-    ignore:
-      - dependency-name: "*"
-
   # GitHub Actions
   - package-ecosystem: github-actions
     directory: /
