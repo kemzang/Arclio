@@ -69,8 +69,8 @@ export function SmartDrawer(): JSX.Element {
       <QueueTipNudge visible={showQueueTip} onDismiss={dismissQueueTip} />
       <button type="button" onClick={() => setDrawerOpen(!drawerOpen)} className="relative overflow-hidden w-full flex items-center justify-between px-4 h-9 hover:bg-accent transition-colors" data-testid="drawer-toggle" title={t('queue.toggleTitle')}>
         <div className="flex items-center gap-2">
-          <span className="text-[12px] font-bold uppercase tracking-widest text-muted-foreground">
-            {t('queue.header')}
+          <span className="inline-flex items-center text-muted-foreground" aria-label={t('queue.header')} title={t('queue.header')}>
+            <Inbox size={14} />
             {totalCount > 0 && (
               <Badge variant="secondary" className="ms-1 text-[9px] font-mono h-4 px-1">
                 {totalCount}

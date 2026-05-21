@@ -63,6 +63,10 @@ export type YtDlpRequest =
       writeDescription?: boolean;
       writeThumbnail?: boolean;
       outputTemplate?: string;
+      // When set, yt-dlp skips extractor and reuses cached metadata.
+      // Used on resume to avoid re-extraction (signed-URL expiry,
+      // format-ID drift across spawns for HLS/DASH).
+      loadInfoJsonPath?: string;
     }
   | {
       kind: 'video+embed';
@@ -81,6 +85,7 @@ export type YtDlpRequest =
       writeDescription?: boolean;
       writeThumbnail?: boolean;
       outputTemplate?: string;
+      loadInfoJsonPath?: string;
     };
 
 export interface YtDlpSignal {
@@ -360,6 +365,13 @@ function buildSubtitleArgs(req: Extract<YtDlpRequest, { kind: 'subtitle' }>): st
 function buildVideoArgs(req: Extract<YtDlpRequest, { kind: 'video' | 'video+embed' }>): string[] {
   const skipDownload = req.kind === 'video' && req.skipDownload === true;
   const args: string[] = ['--progress', '--no-playlist'];
+  // Resume hardening: feed cached metadata from a prior spawn so yt-dlp
+  // skips extractor work entirely. Avoids signed-URL expiry, session-cookie
+  // drift, and HLS format-ID churn that otherwise breaks resume on sites
+  // like PornHub.
+  if (req.loadInfoJsonPath) {
+    args.push('--load-info-json', req.loadInfoJsonPath);
+  }
   // Resume from any .part file left by a prior interrupted run (network drop,
   // hard kill, etc.). Cancel paths explicitly call cleanupPartFiles() so a
   // user-cancelled download starts fresh.
@@ -430,7 +442,16 @@ function buildVideoArgs(req: Extract<YtDlpRequest, { kind: 'video' | 'video+embe
   } else {
     args.push('-o', `${req.outputDir}/${template}`);
   }
-  args.push(req.url);
+  // Persist info.json to a deterministic path inside tempDir so the next
+  // spawn can find it (consumed by --load-info-json on resume). Skipped for
+  // skipDownload paths (no download = no resume). Pushed after the media
+  // `-o` so callers indexing the first `-o` still find the media template.
+  if (req.tempDir && !skipDownload) {
+    args.push('--write-info-json', '-o', `infojson:${req.tempDir}/_arroxy`);
+  }
+  // With --load-info-json, the info.json is the input source; passing a URL
+  // triggers "WARNING: URLs are ignored due to --load-info-json" noise.
+  if (!req.loadInfoJsonPath) args.push(req.url);
   return args;
 }
 

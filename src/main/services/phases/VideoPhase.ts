@@ -1,4 +1,4 @@
-import { mkdir, rm } from 'node:fs/promises';
+import { mkdir, rm, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { STATUS_KEY } from '@shared/schemas.js';
 import { siteForExtractor } from '@shared/sites/index.js';
@@ -19,6 +19,17 @@ async function setupTempDir(outputDir: string, jobId: string, preserve: boolean,
   }
 }
 
+async function detectCachedInfoJson(tempDir: string | undefined): Promise<string | undefined> {
+  if (!tempDir) return undefined;
+  const path = join(tempDir, '_arroxy.info.json');
+  try {
+    const s = await stat(path);
+    return s.isFile() ? path : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export function VideoPhase(embed: boolean): Phase {
   return {
     kind: embed ? 'video+embed' : 'video',
@@ -31,7 +42,8 @@ export function VideoPhase(embed: boolean): Phase {
         throw new Error('invariant: VideoPhase reached with subtitle-only job');
       }
 
-      const tempDir = await setupTempDir(job.outputDir, job.id, active.tempDir != null, active.tempDir);
+      const isResume = active.tempDir != null;
+      const tempDir = await setupTempDir(job.outputDir, job.id, isResume, active.tempDir);
       if (tempDir) {
         active.tempDir = tempDir;
         // Register tempDir + .part-files cleanup. Disposables drain on
@@ -41,6 +53,11 @@ export function VideoPhase(embed: boolean): Phase {
         ctx.register(() => cleanupTempDirByPath(tempDir));
         ctx.register(() => cleanupPartFiles(job.outputDir));
       }
+      // Resume hardening: if a prior spawn wrote _arroxy.info.json into the
+      // preserved tempDir, feed it to yt-dlp so extraction is skipped on
+      // resume (signed-URL / format-ID / session-cookie drift cause spurious
+      // "Requested format is not available" failures otherwise).
+      const loadInfoJsonPath = await detectCachedInfoJson(isResume ? tempDir : undefined);
 
       // SponsorBlock applicability is owned by the Site adapter — currently
       // YouTube-only. Passing the flag for non-YouTube extractors is harmless
@@ -73,7 +90,8 @@ export function VideoPhase(embed: boolean): Phase {
               embedThumbnail: embedOpts.thumbnail,
               writeDescription: embedOpts.description,
               writeThumbnail: embedOpts.thumbnailSidecar,
-              outputTemplate
+              outputTemplate,
+              loadInfoJsonPath
             }
           : {
               kind: 'video',
@@ -89,7 +107,8 @@ export function VideoPhase(embed: boolean): Phase {
               embedThumbnail: embedOpts.thumbnail,
               writeDescription: embedOpts.description,
               writeThumbnail: embedOpts.thumbnailSidecar,
-              outputTemplate
+              outputTemplate,
+              loadInfoJsonPath
             };
 
       // Don't preemptively emit downloadingMedia on spawn — yt-dlp spends

@@ -311,6 +311,42 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
     expect(ctx.active.tempDir).toBe(expectedTempDir);
   });
 
+  it('resume w/ cached _arroxy.info.json → passes loadInfoJsonPath to ytDlp.run', async () => {
+    const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8));
+    await mkdir(expectedTempDir, { recursive: true });
+    const infoJsonPath = join(expectedTempDir, '_arroxy.info.json');
+    await writeFile(infoJsonPath, '{}');
+
+    const ctx = makeRealCtx({ tempDir: expectedTempDir });
+    await VideoPhase(false).run(ctx);
+
+    const [req] = ctx.runMock.mock.calls[0];
+    expect(req.loadInfoJsonPath).toBe(infoJsonPath);
+  });
+
+  it('resume w/o cached info.json → loadInfoJsonPath undefined', async () => {
+    const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8));
+    await mkdir(expectedTempDir, { recursive: true });
+
+    const ctx = makeRealCtx({ tempDir: expectedTempDir });
+    await VideoPhase(false).run(ctx);
+
+    const [req] = ctx.runMock.mock.calls[0];
+    expect(req.loadInfoJsonPath).toBeUndefined();
+  });
+
+  it('fresh start → loadInfoJsonPath undefined even if stale info.json existed (tempDir wiped)', async () => {
+    const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8));
+    await mkdir(expectedTempDir, { recursive: true });
+    await writeFile(join(expectedTempDir, '_arroxy.info.json'), '{}');
+
+    const ctx = makeRealCtx({});
+    await VideoPhase(false).run(ctx);
+
+    const [req] = ctx.runMock.mock.calls[0];
+    expect(req.loadInfoJsonPath).toBeUndefined();
+  });
+
   it('resume with missing temp dir → mkdir recreates it without throwing', async () => {
     const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8));
 

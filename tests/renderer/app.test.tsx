@@ -53,7 +53,7 @@ describe('App renderer', () => {
 
   it('shows queue panel below wizard', async () => {
     render(<App />);
-    expect(await screen.findByText('Download Queue')).toBeInTheDocument();
+    expect(await screen.findByLabelText('Download Queue')).toBeInTheDocument();
     expect(await screen.findAllByText(/no downloads yet/i)).not.toHaveLength(0);
   });
 });

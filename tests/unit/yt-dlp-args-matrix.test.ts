@@ -91,6 +91,111 @@ describe('buildArgs — video kind invariants', () => {
   });
 });
 
+describe('buildArgs — info-json (resume hardening)', () => {
+  it('video kind w/ tempDir emits --write-info-json + infojson outtmpl', () => {
+    const req: YtDlpRequest = {
+      kind: 'video',
+      url: 'https://example.com/x',
+      outputDir: '/tmp/out',
+      tempDir: '/tmp/out/.arroxy-temp/abc12345',
+      formatId: 'hls-3217'
+    };
+    const { args } = buildArgs(req);
+    expect(args).toContain('--write-info-json');
+    expect(adjacent(args, '-o', 'infojson:/tmp/out/.arroxy-temp/abc12345/_arroxy')).toBe(true);
+  });
+
+  it('video kind w/o tempDir does NOT emit info-json flags', () => {
+    const req: YtDlpRequest = {
+      kind: 'video',
+      url: 'https://example.com/x',
+      outputDir: '/tmp/out',
+      formatId: 'best'
+    };
+    const { args } = buildArgs(req);
+    expect(args).not.toContain('--write-info-json');
+    expect(args.some((a) => a.startsWith('infojson:'))).toBe(false);
+  });
+
+  it('video kind w/ loadInfoJsonPath emits --load-info-json <path>', () => {
+    const req: YtDlpRequest = {
+      kind: 'video',
+      url: 'https://example.com/x',
+      outputDir: '/tmp/out',
+      tempDir: '/tmp/out/.arroxy-temp/abc12345',
+      formatId: 'hls-3217',
+      loadInfoJsonPath: '/tmp/out/.arroxy-temp/abc12345/_arroxy.info.json'
+    };
+    const { args } = buildArgs(req);
+    expect(adjacent(args, '--load-info-json', '/tmp/out/.arroxy-temp/abc12345/_arroxy.info.json')).toBe(true);
+  });
+
+  it('video kind w/ loadInfoJsonPath omits the URL (avoids yt-dlp warning)', () => {
+    const url = 'https://example.com/x';
+    const req: YtDlpRequest = {
+      kind: 'video',
+      url,
+      outputDir: '/tmp/out',
+      tempDir: '/tmp/out/.arroxy-temp/abc12345',
+      formatId: 'hls-3217',
+      loadInfoJsonPath: '/tmp/out/.arroxy-temp/abc12345/_arroxy.info.json'
+    };
+    const { args } = buildArgs(req);
+    expect(args).not.toContain(url);
+  });
+
+  it('video kind w/o loadInfoJsonPath still passes the URL as positional', () => {
+    const url = 'https://example.com/x';
+    const req: YtDlpRequest = {
+      kind: 'video',
+      url,
+      outputDir: '/tmp/out',
+      formatId: 'best'
+    };
+    const { args } = buildArgs(req);
+    expect(args).toContain(url);
+  });
+
+  it('video+embed kind w/ tempDir emits --write-info-json + infojson outtmpl', () => {
+    const req: YtDlpRequest = {
+      kind: 'video+embed',
+      url: 'https://example.com/x',
+      outputDir: '/tmp/out',
+      tempDir: '/tmp/out/.arroxy-temp/abc12345',
+      subtitleLanguages: ['en']
+    };
+    const { args } = buildArgs(req);
+    expect(args).toContain('--write-info-json');
+    expect(adjacent(args, '-o', 'infojson:/tmp/out/.arroxy-temp/abc12345/_arroxy')).toBe(true);
+  });
+
+  it('subtitle kind never emits info-json flags', () => {
+    const req: YtDlpRequest = {
+      kind: 'subtitle',
+      url: 'https://example.com/x',
+      outputDir: '/tmp/out',
+      subtitleLanguages: ['en'],
+      subtitleFormat: 'srt'
+    };
+    const { args } = buildArgs(req);
+    expect(args).not.toContain('--write-info-json');
+    expect(args).not.toContain('--load-info-json');
+  });
+
+  it('video kind w/ skipDownload + tempDir does NOT emit info-json flags', () => {
+    const req: YtDlpRequest = {
+      kind: 'video',
+      url: 'https://example.com/x',
+      outputDir: '/tmp/out',
+      tempDir: '/tmp/out/.arroxy-temp/abc12345',
+      formatId: 'best',
+      skipDownload: true
+    };
+    const { args } = buildArgs(req);
+    expect(args).not.toContain('--write-info-json');
+  });
+});
+
 describe('buildArgs — production repro cells (audio convert + sidecar subs)', () => {
   // The exact failure mode from the production log: audio-only preset with
   // m4a@192 convert. The sidecar subs go through a separate phase, so the
