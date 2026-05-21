@@ -118,9 +118,11 @@ jobs:
           VERSION="${REF_NAME#v}"
           AUTO_NOTES=$(gh api "repos/${REPO}/releases/generate-notes" \
             -f tag_name="${REF_NAME}" --jq .body)
+          # Stop only on next *version* heading (## followed by a digit), so
+          # nested `## Highlights` subsections inside the entry are kept.
           MANUAL_NOTES=$(awk -v ver="## ${VERSION}" '
             $0 == ver { capture = 1; next }
-            capture && /^## / { capture = 0 }
+            capture && /^## [0-9]/ { capture = 0 }
             capture { print }
           ' CHANGELOG.md)
           if [ -n "$(echo "$MANUAL_NOTES" | tr -d '[:space:]')" ]; then
