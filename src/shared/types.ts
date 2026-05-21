@@ -50,6 +50,7 @@ export interface CommonSettings {
   cookiesMode?: CookiesMode;
   cookiesBrowser?: CookiesBrowser;
   proxyUrl?: string;
+  limitRate?: string;
   clipboardWatchEnabled: boolean;
   closeBehavior?: 'ask' | 'tray' | 'quit';
   embedChapters?: boolean;

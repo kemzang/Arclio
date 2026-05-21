@@ -200,6 +200,7 @@ export interface SystemSlice {
   setCookiesMode: (mode: CookiesMode) => Promise<void>;
   setCookiesBrowser: (browser: CookiesBrowser) => Promise<void>;
   setProxyUrl: (url: string) => Promise<void>;
+  setLimitRate: (value: string | undefined) => Promise<void>;
   setClipboardWatchEnabled: (enabled: boolean) => Promise<void>;
   setCloseBehavior: (value: 'tray' | 'quit') => Promise<void>;
   setAnalyticsEnabled: (enabled: boolean) => Promise<void>;

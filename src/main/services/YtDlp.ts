@@ -139,6 +139,7 @@ interface InvokeOptions {
   tokenService: TokenService;
   cookies?: ResolvedCookies | null;
   proxyUrl?: string;
+  limitRate?: string;
   timeoutMs?: number;
   signal?: YtDlpSignal;
 }
@@ -158,6 +159,10 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 
   const cookiesArgs = opts.cookies?.kind === 'file' ? ['--cookies', opts.cookies.path] : opts.cookies?.kind === 'browser' ? ['--cookies-from-browser', opts.cookies.browser] : [];
   const proxyArgs = opts.proxyUrl ? ['--proxy', opts.proxyUrl] : [];
+  // Bandwidth cap (anti-bot lever): only applied to media downloads via the
+  // caller — never on probes (we want format JSON instantly) or subtitle
+  // sidecar pulls (tiny text, throttling adds zero anti-bot value).
+  const limitRateArgs = opts.limitRate ? ['--limit-rate', opts.limitRate] : [];
   // yt-dlp 2026+ requires a JS runtime for nsig/signature decoding on the web
   // client. With deno bundled, we point yt-dlp at it explicitly so it doesn't
   // silently fall back to JS-free clients (where our web.gvs PoT is unused).
@@ -170,7 +175,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
   // yt-dlp's frozen-Python `shutil.which('ffmpeg')` reads the original `Path`
   // (without ffmpegDir) → "Preprocessing/Postprocessing: ffmpeg not found".
   const ffmpegLocationArgs = opts.ffmpegPath ? ['--ffmpeg-location', opts.ffmpegPath] : [];
-  const args = [...ffmpegLocationArgs, ...extractorArgsArr, ...cookiesArgs, ...proxyArgs, ...jsRuntimeArgs, ...opts.args];
+  const args = [...ffmpegLocationArgs, ...extractorArgsArr, ...cookiesArgs, ...proxyArgs, ...limitRateArgs, ...jsRuntimeArgs, ...opts.args];
 
   ytDlpLog.info('spawn', {
     attempt: strategy.kind,
@@ -489,6 +494,11 @@ export class YtDlp {
     const proxyUrl = nonEmpty(settings.common?.proxyUrl?.trim());
     const { args, subtitleFormat } = buildArgs(req);
     const isProbe = req.kind === 'probe';
+    // Bandwidth cap applies to media downloads only — probes need raw speed
+    // for snappy "Fetch formats" UX, sidecar subs are tiny so throttling
+    // wouldn't change YouTube's anti-bot signal.
+    const isMediaDownload = req.kind === 'video' || req.kind === 'video+embed';
+    const limitRate = isMediaDownload ? nonEmpty(settings.common?.limitRate?.trim()) : undefined;
     const result = await invokeWithRetry({
       url: req.url,
       ytDlpPath: this._ytDlpPath!,
@@ -498,6 +508,7 @@ export class YtDlp {
       tokenService: this.tokenService,
       cookies,
       proxyUrl,
+      limitRate,
       timeoutMs: isProbe ? PROBE_TIMEOUT_MS : undefined,
       signal
     });

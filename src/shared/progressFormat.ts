@@ -60,7 +60,9 @@ export class ProgressFormatter {
 
     if (!line.startsWith('[download]')) return null;
 
-    const match = /\bat\s+(.+?)\s+ETA\s+(.+)$/.exec(line);
+    // HLS / DASH lines append "(frag N/M)" after ETA — strip via optional group so
+    // it doesn't end up in the ETA capture (would break parseEtaSeconds).
+    const match = /\bat\s+(.+?)\s+ETA\s+(.+?)(?:\s+\(frag\s+\d+\/\d+\))?$/.exec(line);
     if (!match) return null;
 
     const speedStr = match[1].trim();

@@ -10,6 +10,7 @@ import { RadioOption } from '../ui/radio-option.js';
 import { MascotBubble } from '../shared/MascotBubble.js';
 import { ClipboardConfirmDialog } from '../shared/ClipboardConfirmDialog.js';
 import { IncompleteCookiesConfigDialog } from './IncompleteCookiesConfigDialog.js';
+import { LimitRatePicker } from '../shared/LimitRatePicker.js';
 import { formatHomeRelativePath } from '@renderer/lib/utils.js';
 import { cleanUrl } from '@shared/cleanUrl.js';
 import type { CookiesBrowser, CookiesMode } from '@shared/types.js';
@@ -34,7 +35,7 @@ const COOKIES_CHROME_URL = 'https://chromewebstore.google.com/detail/get-cookies
 
 export function StepUrlInput(): JSX.Element {
   const { t } = useTranslation();
-  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl, cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings, openShareDialog, setShareInlineCardDismissed } = useAppStore();
+  const { wizardUrl, setWizardUrl, submitUrl, queue, settings, initialized, advancedAutoOpen, setAdvancedAutoOpen, setCookiesPath, setCookiesMode, setCookiesBrowser, setClipboardWatchEnabled, setCloseBehavior, setAnalyticsEnabled, setProxyUrl, setLimitRate, cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings, openShareDialog, setShareInlineCardDismissed } = useAppStore();
   const inputRef = useRef<HTMLInputElement>(null);
   const hasActiveDownloads = queue.some((i) => i.status === 'running');
   const [pendingClipboardUrl, setPendingClipboardUrl] = useState<string | null>(null);
@@ -295,6 +296,14 @@ export function StepUrlInput(): JSX.Element {
                 {t('wizard.url.proxy.clear')}
               </Button>
             </div>
+          </div>
+
+          <div className="flex flex-col gap-1.5" data-testid="limit-rate-section">
+            <div className="flex flex-col gap-0.5">
+              <span className="text-[13px] font-medium text-foreground">{t('wizard.url.limitRate.label')}</span>
+              <span className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.limitRate.description')}</span>
+            </div>
+            <LimitRatePicker value={settings?.common?.limitRate?.trim() ? settings.common.limitRate : undefined} onChange={(v) => void setLimitRate(v)} />
           </div>
 
           {(window as Window & { platform?: string }).platform !== 'darwin' && (

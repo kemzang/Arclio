@@ -267,6 +267,10 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
       await applyCommonPatchAsync(get, set, 'proxyUrl', { proxyUrl: url });
     },
 
+    setLimitRate: async (value) => {
+      await applyCommonPatchAsync(get, set, 'limitRate', { limitRate: value ?? '' });
+    },
+
     setClipboardWatchEnabled: async (enabled) => {
       await applyCommonPatchAsync(get, set, 'clipboardWatchEnabled', { clipboardWatchEnabled: enabled });
     },

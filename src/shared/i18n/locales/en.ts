@@ -184,6 +184,15 @@ const en = {
         placeholder: 'http://host:port',
         clear: 'Clear'
       },
+      limitRate: {
+        label: 'Download speed limit',
+        description: 'Cap bandwidth to look less bot-like to YouTube. Applies to video downloads only.',
+        off: 'Off',
+        custom: 'Custom…',
+        customPlaceholder: 'e.g. 750K or 1.5M',
+        invalid: 'Use a number followed by K or M (e.g. 500K, 1.5M)',
+        activeWarning: 'Active downloads keep their current limit. Pause + Resume to apply changes.'
+      },
       closeToTray: {
         toggle: 'Hide to tray on close',
         toggleDescription: 'Continue downloads in the background after closing the window.'
@@ -384,6 +393,9 @@ const en = {
     resumeFirstTitle: 'Resume first paused download',
     cancelAll: 'Cancel all',
     cancelAllTitle: 'Cancel all active and pending downloads',
+    limitRate: 'Speed: {{value}}',
+    limitRateOff: 'Speed: Off',
+    limitRateTitle: 'Bandwidth limit for downloads',
     tip: 'Your download is queued below — open anytime to track progress.',
     item: {
       doneAt: 'Done {{time}}',

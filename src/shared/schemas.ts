@@ -233,8 +233,15 @@ const subfolderNameSchema = z
   .max(SUBFOLDER_NAME_MAX)
   .refine((s) => s === '' || isValidSubfolder(s), { message: 'Invalid subfolder name' });
 
+// yt-dlp `--limit-rate` syntax: integer or decimal followed by K (KB/s) or M (MB/s).
+// e.g. "500K", "1.5M". Case-insensitive. Stored verbatim — passed straight to yt-dlp.
+// Empty string is the "off" representation (same pattern as proxyUrl). YtDlp.run()
+// applies `nonEmpty(value.trim())` so empty / whitespace yields no flag.
+export const limitRateSchema = z.string().regex(/^(|\s*|\d+(\.\d+)?[KM])$/i, 'Use a number followed by K or M (e.g. 500K, 1.5M)');
+
 const commonSettingsPatchSchema = z.object({
   defaultOutputDir: z.string().min(1).optional(),
+  limitRate: limitRateSchema.optional(),
   rememberLastOutputDir: z.boolean().optional(),
   uiZoom: z.number().min(ZOOM_MIN).max(ZOOM_MAX).optional(),
   uiTheme: uiThemeSchema.optional(),

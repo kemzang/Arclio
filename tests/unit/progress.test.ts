@@ -174,6 +174,16 @@ describe('ProgressFormatter', () => {
     expect(result).toMatch(/9\.83x/);
   });
 
+  it('parses HLS fragmented line with trailing (frag N/M) suffix', () => {
+    const line = '[download]   1.8% of ~ 374.36MiB at    2.63MiB/s ETA 02:28 (frag 4/234)';
+    expect(formatter.update(line)).toBe('2.63MiB/s • ETA 2:28');
+  });
+
+  it('parses DASH fragmented line with trailing (frag N/M) suffix', () => {
+    const line = '[download]  47.0% of ~  1.23GiB at  890.12KiB/s ETA 10:05 (frag 88/187)';
+    expect(formatter.update(line)).toBe('890.12KiB/s • ETA 10:05');
+  });
+
   it('reset clears state so next update starts fresh', () => {
     formatter.update(downloadLine('10.00MiB/s', '27:19'));
     formatter.reset();

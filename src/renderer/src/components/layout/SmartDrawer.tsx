@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { useEffect, useMemo, useRef } from 'react';
-import { ChevronDown, Inbox, Pause, Play, Share2, Trash2, X } from 'lucide-react';
+import { ChevronDown, Gauge, Inbox, Pause, Play, Share2, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { isHighValueDownload } from '@shared/queueItem.js';
 import { useAppStore, formatStatus } from '../../store/useAppStore.js';
@@ -8,6 +8,9 @@ import { QueueItemCard } from '../queue/QueueItemCard.js';
 import { QueueTipNudge } from '../queue/QueueTipNudge.js';
 import { Badge } from '../ui/badge.js';
 import { ScrollArea } from '../ui/scroll-area.js';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover.js';
+import { LimitRatePicker } from '../shared/LimitRatePicker.js';
+import { formatLimitRateLabel } from '../shared/limitRateFormat.js';
 import { track } from '../../lib/analytics.js';
 
 export function SmartDrawer(): JSX.Element {
@@ -24,6 +27,9 @@ export function SmartDrawer(): JSX.Element {
   const shareHighValueBannerDismissed = useAppStore((s) => s.settings?.common?.shareHighValueBannerDismissed ?? false);
   const openShareDialog = useAppStore((s) => s.openShareDialog);
   const setShareHighValueBannerDismissed = useAppStore((s) => s.setShareHighValueBannerDismissed);
+  const limitRateRaw = useAppStore((s) => s.settings?.common?.limitRate);
+  const limitRate = limitRateRaw && limitRateRaw.trim() !== '' ? limitRateRaw : undefined;
+  const setLimitRate = useAppStore((s) => s.setLimitRate);
 
   const orderedQueue = useMemo(() => {
     const finished = (s: string): boolean => s === 'done' || s === 'cancelled';
@@ -146,6 +152,19 @@ export function SmartDrawer(): JSX.Element {
               {t('queue.clear')}
             </button>
           )}
+          <Popover>
+            <PopoverTrigger type="button" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-0.5 rounded hover:bg-accent" title={t('queue.limitRateTitle')} data-testid="btn-limit-rate">
+              <Gauge size={10} />
+              {limitRate ? t('queue.limitRate', { value: formatLimitRateLabel(limitRate) }) : t('queue.limitRateOff')}
+            </PopoverTrigger>
+            <PopoverContent align="end" side="top" sideOffset={8} onClick={(e) => e.stopPropagation()} className="w-64">
+              <div className="flex flex-col gap-1">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{t('wizard.url.limitRate.label')}</p>
+                <p className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.limitRate.description')}</p>
+              </div>
+              <LimitRatePicker value={limitRate} onChange={(v) => void setLimitRate(v)} />
+            </PopoverContent>
+          </Popover>
           {totalCount > 0 && !drawerOpen && <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand)] animate-pulse" aria-hidden />}
           <span className={activeCount > 0 ? 'text-[var(--brand)]' : 'text-muted-foreground'}>
             <ChevronDown size={activeCount > 0 ? 14 : 12} strokeWidth={activeCount > 0 ? 2.5 : 2} className={`transition-all duration-300 ${drawerOpen ? '' : 'rotate-180'}`} />

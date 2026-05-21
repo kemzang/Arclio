@@ -715,6 +715,49 @@ describe('YtDlp — extractor-args shape', () => {
   });
 });
 
+describe('YtDlp — limit-rate', () => {
+  it('settings.limitRate set + kind=video → --limit-rate <value>', async () => {
+    const ytDlp = makeYtDlp({ settings: { limitRate: '500K' } });
+    await ytDlp.run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR });
+    const args = getArgs();
+    const idx = args.indexOf('--limit-rate');
+    expect(idx).toBeGreaterThan(-1);
+    expect(args[idx + 1]).toBe('500K');
+  });
+
+  it('settings.limitRate set + kind=video+embed → --limit-rate <value>', async () => {
+    const ytDlp = makeYtDlp({ settings: { limitRate: '1.5M' } });
+    await ytDlp.run({ kind: 'video+embed', url: URL, outputDir: OUTPUT_DIR, subtitleLanguages: ['en'] });
+    const args = getArgs();
+    const idx = args.indexOf('--limit-rate');
+    expect(idx).toBeGreaterThan(-1);
+    expect(args[idx + 1]).toBe('1.5M');
+  });
+
+  it('settings.limitRate set + kind=probe → no --limit-rate (probe must stay fast)', async () => {
+    const ytDlp = makeYtDlp({ settings: { limitRate: '500K' } });
+    await ytDlp.run({ kind: 'probe', url: URL });
+    expect(getArgs()).not.toContain('--limit-rate');
+  });
+
+  it('settings.limitRate set + kind=subtitle → no --limit-rate (sidecar phase exempt)', async () => {
+    const ytDlp = makeYtDlp({ settings: { limitRate: '500K' } });
+    await ytDlp.run({ kind: 'subtitle', url: URL, outputDir: OUTPUT_DIR, subtitleLanguages: ['en'], subtitleFormat: 'srt' });
+    expect(getArgs()).not.toContain('--limit-rate');
+  });
+
+  it('settings.limitRate empty/whitespace → no --limit-rate', async () => {
+    const ytDlp = makeYtDlp({ settings: { limitRate: '   ' } });
+    await ytDlp.run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR });
+    expect(getArgs()).not.toContain('--limit-rate');
+  });
+
+  it('settings.limitRate undefined → no --limit-rate', async () => {
+    await makeYtDlp().run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR });
+    expect(getArgs()).not.toContain('--limit-rate');
+  });
+});
+
 describe('YtDlp — js-runtimes (deno)', () => {
   it('passes --js-runtimes deno:<path> when deno is bundled', async () => {
     const ytDlp = makeYtDlp({ denoPath: '/fake/deno' });

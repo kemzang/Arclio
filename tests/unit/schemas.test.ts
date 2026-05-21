@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { startDownloadSchema, queueArraySchema, audioConvertSchema, MAX_SUBTITLE_LANGUAGES, infoDictSchema } from '@shared/schemas.js';
+import { startDownloadSchema, queueArraySchema, audioConvertSchema, MAX_SUBTITLE_LANGUAGES, infoDictSchema, updateSettingsSchema } from '@shared/schemas.js';
 
 const IDENTITY = { extractor: 'youtube', extractorKey: 'Youtube' };
 
@@ -190,5 +190,15 @@ describe('queueArraySchema', () => {
         }
       ]).success
     ).toBe(false);
+  });
+});
+
+describe('updateSettingsSchema — common.limitRate', () => {
+  it.each(['500K', '1M', '1.5M', '750K', '10M', '50M', '100k', '2m', ''])('accepts %s', (value) => {
+    expect(updateSettingsSchema.safeParse({ common: { limitRate: value } }).success).toBe(true);
+  });
+
+  it.each(['500', 'abc', '1G', '500KB', '1 M', '-1M', '1.M'])('rejects %s', (value) => {
+    expect(updateSettingsSchema.safeParse({ common: { limitRate: value } }).success).toBe(false);
   });
 });
