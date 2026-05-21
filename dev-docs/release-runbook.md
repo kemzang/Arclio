@@ -6,8 +6,22 @@
 | Release workflow        | `.github/workflows/release.yml`         |
 | Windows release gate    | `.github/workflows/installer-smoke.yml` |
 | Cold-start release gate | `.github/workflows/e2e-cold-start.yml`  |
+| Release notes (SSOT)    | `CHANGELOG.md`                          |
 
 This is the manual checklist for cutting a stable release.
+
+## Release notes
+
+User-facing release notes live in `CHANGELOG.md` at the repo root, keyed by version (`## 0.3.5-beta.1`). The `finalize` job in `release.yml` extracts the matching section, appends the auto-generated "What's Changed" PR list + Full Changelog link, and posts the combined body as the GitHub Release.
+
+Before tagging:
+
+1. Open `CHANGELOG.md`, add a new `## <version>` section at the top in the same shape as the previous entry (look at `## 0.3.4` for tone — friendly user-facing prose grouped by feature category).
+2. Commit alongside the `package.json` bump in the same `release: X.Y.Z` commit.
+
+If you skip step 1, the workflow logs a `::warning::` and falls back to pure auto-generated notes (PR titles only). The release still publishes — it just looks lazy.
+
+Do **not** edit GitHub Release notes directly via the web UI or `gh release edit`. The `finalize` step runs late (after build + Windows artifact wait) and will overwrite manual edits. Fix `CHANGELOG.md`, push a fix-up commit, and re-run `finalize`.
 
 ## Branch model
 

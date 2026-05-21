@@ -262,6 +262,14 @@ Tag w/ semver pre-release suffix (e.g. `v0.4.0-beta.1`):
 
 **NSIS installer:** pin `electron-builder ≥ 26.9.0` (26.8.x has a `multiUser.nsh:35` buffer over-read on cold-heap). Drop `build/installer.nsh`. Any future custom NSIS `Page custom` callback must open with `${If} ${Silent} \n Abort \n ${EndIf}`.
 
+### Release notes — CHANGELOG.md is SSOT
+
+Release notes are hand-written in `CHANGELOG.md` and keyed by version (e.g. `## 0.3.5-beta.1`). The `finalize` job in `release.yml` extracts the matching section, appends the auto-generated "What's Changed" PR list + Full Changelog link, and posts the combined body as the GitHub Release notes.
+
+**Before tagging a release**, add a new `## <version>` section at the top of `CHANGELOG.md` in the same shape as the previous entry. Tone is friendly user-facing prose grouped by feature (look at `## 0.3.4` as the reference). If no matching section exists, the workflow falls back to pure auto-generated notes and emits a `::warning::` — the release will still publish but the body will only be the PR list.
+
+Do **not** edit GitHub Release notes directly via the web UI or `gh release edit`. The `finalize` step runs late in the pipeline and will overwrite manual edits made before it. Edit `CHANGELOG.md` instead and push a fix-up commit; re-running `finalize` rewrites the notes from the file.
+
 ### Pre-release checks
 
 **Before committing the release bump**, run all three checks and fix any failures. A broken release commit fails CI and publishes a broken artifact:
