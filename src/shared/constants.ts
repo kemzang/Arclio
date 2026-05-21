@@ -59,3 +59,12 @@ export const WINDOW_DEFAULT_HEIGHT = 760;
 // YouTube buckets `live_chat` into `subtitles` even though it isn't a caption
 // track. Both probe-side filtering and renderer-side display filter it out.
 export const LIVE_CHAT_LANG = 'live_chat';
+
+// Queue concurrency policy. `NORMAL_LANE_CAP` is the steady-state cap for
+// non-priority items — one at a time, with INTER_JOB_SLEEP_MS between jobs
+// so YouTube's rate-limit window can roll over. `MAX_CONCURRENT_DOWNLOADS`
+// is the hard ceiling that even priority-lane spawns honor; protects the
+// machine from resource storms and YouTube from bot-detection escalation.
+export const NORMAL_LANE_CAP = 1;
+export const MAX_CONCURRENT_DOWNLOADS = 4;
+export const INTER_JOB_SLEEP_MS = 3000;

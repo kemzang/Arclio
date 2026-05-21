@@ -6,7 +6,7 @@
 // from wizard state because the wizard data lives in the renderer; once
 // built, the items are pushed to main via queue.cmd.add.
 
-import type { PlaylistEntry, QueueItem } from '@shared/types.js';
+import type { PlaylistEntry, QueueItem, QueueLane } from '@shared/types.js';
 import { QUEUE_STATUS } from '@shared/schemas.js';
 import { buildAudioConvertPayload, buildFormatId, buildFormatLabel, generateId, resolveVideoResolution } from './helpers.js';
 import { effectiveOutputDir } from '@renderer/lib/path.js';
@@ -26,7 +26,7 @@ function maybeShowQueueTip(set: SetState): void {
   }
 }
 
-function buildQueueItem(get: GetState): QueueItem | null {
+function buildQueueItem(get: GetState, lane: QueueLane): QueueItem | null {
   const state = get();
   const { wizardUrl, wizardTitle, wizardThumbnail, wizardOutputDir } = state;
   const { wizardSubfolderEnabled, wizardSubfolderName } = state;
@@ -90,6 +90,7 @@ function buildQueueItem(get: GetState): QueueItem | null {
     outputDir,
     formatLabel,
     status: QUEUE_STATUS.pending,
+    lane,
     progressPercent: 0,
     progressDetail: null,
     lastStatus: null,
@@ -104,7 +105,7 @@ function padPlaylistIndex(index: number, maxIndex: number): string {
   return String(index).padStart(width, '0');
 }
 
-function buildPlaylistQueueItem(entry: PlaylistEntry, get: GetState, playlistGroupId: string): QueueItem {
+function buildPlaylistQueueItem(entry: PlaylistEntry, get: GetState, playlistGroupId: string, lane: QueueLane): QueueItem {
   const state = get();
   const { wizardOutputDir, wizardSubfolderEnabled, wizardSubfolderName, selectedPlaylistPreset } = state;
   if (!selectedPlaylistPreset) throw new Error('playlist preset missing');
@@ -142,6 +143,7 @@ function buildPlaylistQueueItem(entry: PlaylistEntry, get: GetState, playlistGro
     outputDir: baseDir,
     formatLabel,
     status: QUEUE_STATUS.pending,
+    lane,
     progressPercent: 0,
     progressDetail: null,
     lastStatus: null,
@@ -152,15 +154,15 @@ function buildPlaylistQueueItem(entry: PlaylistEntry, get: GetState, playlistGro
   };
 }
 
-async function submitWizardToQueue(set: SetState, get: GetState): Promise<void> {
+async function submitWizardToQueue(set: SetState, get: GetState, lane: QueueLane): Promise<void> {
   const { playlistItems, selectedPlaylistItemIds } = get();
   if (get().wizardMode === 'playlist') {
     const groupId = generateId();
     const selected = playlistItems.filter((e) => selectedPlaylistItemIds.includes(e.id));
-    const items = selected.map((e) => buildPlaylistQueueItem(e, get, groupId));
+    const items = selected.map((e) => buildPlaylistQueueItem(e, get, groupId, lane));
     await window.appApi.queue.cmd.add(items);
   } else {
-    const item = buildQueueItem(get);
+    const item = buildQueueItem(get, lane);
     if (!item) return;
     await window.appApi.queue.cmd.add([item]);
   }
@@ -173,12 +175,17 @@ export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
   return {
     queue: [],
 
-    // QueueService auto-starts the head of the queue when cap allows; both
-    // actions converge on the same submit. They remain split at the public
-    // API in case future variants need an explicit-start path.
-    addToQueue: () => submitWizardToQueue(set, get),
+    // "+ Queue" → normal lane: respects cap=1, waits for the active slot.
+    // "Pull it!" → priority lane: spawns alongside running normal items,
+    // gated by maxConcurrent ceiling. Both go through the same builder; the
+    // only difference is the lane stamped on the QueueItem.
+    addToQueue: () => submitWizardToQueue(set, get, 'normal'),
 
-    addAndDownloadImmediately: () => submitWizardToQueue(set, get),
+    addAndDownloadImmediately: () => submitWizardToQueue(set, get, 'priority'),
+
+    setItemLane: async (itemId, lane) => {
+      await window.appApi.queue.cmd.setLane({ itemId, lane });
+    },
 
     cancelItemDownload: async (itemId) => {
       await window.appApi.queue.cmd.cancel({ itemId });
@@ -204,17 +211,15 @@ export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
       await window.appApi.queue.cmd.clearCompleted();
     },
 
+    // Delegated to QueueService — the global pauseAll/resumeAll route flips
+    // the scheduler-paused flag atomically with the per-item pause/resume so
+    // pause-all can't auto-spawn the next pending item mid-flight.
     pauseAll: async () => {
-      const downloading = get().queue.filter((i) => i.status === QUEUE_STATUS.running);
-      for (const item of downloading) {
-        await window.appApi.queue.cmd.pause({ itemId: item.id });
-      }
+      await window.appApi.queue.cmd.pauseAll();
     },
 
-    resumeFirst: async () => {
-      const first = get().queue.find((i) => i.status === QUEUE_STATUS.pausedActive || i.status === QUEUE_STATUS.pausedHeld);
-      if (!first) return;
-      await window.appApi.queue.cmd.resume({ itemId: first.id });
+    resumeAll: async () => {
+      await window.appApi.queue.cmd.resumeAll();
     },
 
     cancelAll: async () => {

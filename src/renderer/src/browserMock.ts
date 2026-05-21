@@ -626,6 +626,20 @@ export function installBrowserMock(): void {
         remove: ({ itemId }) => {
           removeQueueItem(itemId);
           return Promise.resolve({ ok: true, data: undefined } as const);
+        },
+        setLane: ({ itemId, lane }) => {
+          const item = queueItems.find((candidate) => candidate.id === itemId);
+          if (item) setQueueItem({ ...item, lane });
+          return Promise.resolve({ ok: true, data: undefined } as const);
+        },
+        pauseAll: () => {
+          queueItems.filter((i) => i.status === QUEUE_STATUS.running).forEach((i) => setQueueItem({ ...i, status: QUEUE_STATUS.pausedActive }));
+          return Promise.resolve({ ok: true, data: undefined } as const);
+        },
+        resumeAll: () => {
+          queueItems.filter((i) => i.status === QUEUE_STATUS.pausedActive || i.status === QUEUE_STATUS.pausedHeld).forEach((i) => setQueueItem({ ...i, status: QUEUE_STATUS.pending }));
+          maybeStartNextQueueItem();
+          return Promise.resolve({ ok: true, data: undefined } as const);
         }
       },
       events: {

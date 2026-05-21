@@ -6,7 +6,7 @@ export type { PreparedJob } from './preparedJob.js';
 // Re-export the enum types whose canonical definition lives in `schemas.ts`
 // (where they're z.enum schemas). Importing from `@shared/types` continues to
 // work for callers that don't care about the schema vs type distinction.
-export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection, CookiesMode, CookiesBrowser } from './schemas.js';
+export type { Preset, PlaylistPreset, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, QueueItemStatus, QueueLane, AudioConvertTarget, AudioBitrate, AudioConvert, AudioSelection, CookiesMode, CookiesBrowser } from './schemas.js';
 
 export type { StatusKey } from './schemas.js';
 export type { LocalizedError, YtDlpErrorKind } from './i18n/types.js';
@@ -155,6 +155,7 @@ export interface QueueItem {
   outputDir: string;
   formatLabel: string;
   status: import('./schemas.js').QueueItemStatus;
+  lane: import('./schemas.js').QueueLane;
   progressPercent: number;
   progressDetail: string | null;
   lastStatus: StatusSnapshot | null;

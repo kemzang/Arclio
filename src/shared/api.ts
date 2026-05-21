@@ -1,6 +1,6 @@
 import type { Result } from './result.js';
 import type { SupportedLang } from './i18n/types.js';
-import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProbeInput, ProbeResult, ProgressEvent, QueueItem, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types.js';
+import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProbeInput, ProbeResult, ProgressEvent, QueueItem, QueueLane, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types.js';
 
 export interface SettingsPatch {
   common?: Partial<CommonSettings>;
@@ -65,6 +65,9 @@ export interface AppApi {
       retry(input: { itemId: string }): Promise<Result<void>>;
       clearCompleted(): Promise<Result<void>>;
       remove(input: { itemId: string }): Promise<Result<void>>;
+      setLane(input: { itemId: string; lane: QueueLane }): Promise<Result<void>>;
+      pauseAll(): Promise<Result<void>>;
+      resumeAll(): Promise<Result<void>>;
     };
     events: {
       onSnapshot(listener: (items: QueueItem[]) => void): () => void;

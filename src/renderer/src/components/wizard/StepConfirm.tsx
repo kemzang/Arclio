@@ -141,26 +141,43 @@ export function StepConfirm(): JSX.Element {
         <Button variant="ghost" type="button" onClick={back} data-testid="btn-back" className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
           {t('common.back')}
         </Button>
-        <Tooltip>
-          <TooltipTrigger
-            render={(props) => (
-              <Button {...props} variant="outline" type="button" onClick={() => void addToQueue()} data-testid="btn-add-to-queue" disabled={hasNothingSelected}>
-                {t('wizard.confirm.addToQueue')}
-              </Button>
-            )}
-          />
-          <TooltipContent>{t('wizard.confirm.addToQueueTooltip')}</TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger
-            render={(props) => (
-              <Button {...props} type="button" onClick={() => void addAndDownloadImmediately()} data-testid="btn-download-now" disabled={hasNothingSelected} className="shadow-[0_4px_14px_var(--brand-glow)] pl-4 pr-3 min-w-[96px]">
-                {t('wizard.confirm.pullIt')}
-              </Button>
-            )}
-          />
-          <TooltipContent>{t('wizard.confirm.pullItTooltip')}</TooltipContent>
-        </Tooltip>
+        {wizardMode === 'playlist' ? (
+          // Playlists always go through the queue — parallel-pulling N entries
+          // would spike YouTube rate-limits and bot-detection. No Pull-it CTA.
+          <Tooltip>
+            <TooltipTrigger
+              render={(props) => (
+                <Button {...props} type="button" onClick={() => void addToQueue()} data-testid="btn-add-to-queue" disabled={hasNothingSelected} className="shadow-[0_4px_14px_var(--brand-glow)] pl-4 pr-3 min-w-[96px]">
+                  {t('wizard.confirm.addToQueue')}
+                </Button>
+              )}
+            />
+            <TooltipContent>{t('wizard.confirm.addToQueueTooltip')}</TooltipContent>
+          </Tooltip>
+        ) : (
+          <>
+            <Tooltip>
+              <TooltipTrigger
+                render={(props) => (
+                  <Button {...props} variant="outline" type="button" onClick={() => void addAndDownloadImmediately()} data-testid="btn-download-now" disabled={hasNothingSelected}>
+                    {t('wizard.confirm.pullIt')}
+                  </Button>
+                )}
+              />
+              <TooltipContent>{t('wizard.confirm.pullItTooltip')}</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger
+                render={(props) => (
+                  <Button {...props} type="button" onClick={() => void addToQueue()} data-testid="btn-add-to-queue" disabled={hasNothingSelected} className="shadow-[0_4px_14px_var(--brand-glow)] pl-4 pr-3 min-w-[96px]">
+                    {t('wizard.confirm.addToQueue')}
+                  </Button>
+                )}
+              />
+              <TooltipContent>{t('wizard.confirm.addToQueueTooltip')}</TooltipContent>
+            </Tooltip>
+          </>
+        )}
       </WizardFooter>
     </div>
   );

@@ -1,5 +1,5 @@
 import type { StoreApi } from 'zustand';
-import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, ProbeDegradationReason, QueueItem, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types.js';
+import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, ProbeDegradationReason, QueueItem, QueueLane, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types.js';
 import type { AudioSelection } from '@shared/schemas.js';
 import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 export type { AudioSelection };
@@ -147,6 +147,7 @@ export interface QueueSlice {
 
   addToQueue: () => Promise<void>;
   addAndDownloadImmediately: () => Promise<void>;
+  setItemLane: (itemId: string, lane: QueueLane) => Promise<void>;
   cancelItemDownload: (itemId: string) => Promise<void>;
   pauseItemDownload: (itemId: string) => Promise<void>;
   resumeItemDownload: (itemId: string) => Promise<void>;
@@ -154,7 +155,7 @@ export interface QueueSlice {
   retryQueueItem: (itemId: string) => Promise<void>;
   clearCompleted: () => Promise<void>;
   pauseAll: () => Promise<void>;
-  resumeFirst: () => Promise<void>;
+  resumeAll: () => Promise<void>;
   cancelAll: () => Promise<void>;
   openItemFolder: (itemId: string) => Promise<void>;
   openItemUrl: (itemId: string) => void;

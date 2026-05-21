@@ -5,6 +5,10 @@ import { fail, ok, type Result } from '@shared/result.js';
 
 interface QueueData {
   items: QueueItem[];
+  // Global "queue paused" flag — persists user intent across app restart.
+  // Without this, a quit-with-pause would silently auto-resume on next boot
+  // because the in-memory flag resets to false.
+  schedulerPaused?: boolean;
 }
 
 // Pre-validation migrators for upgrades across schema breaks. Each migrator
@@ -70,7 +74,7 @@ export class QueueStore {
   // behind it. save() takes the in-memory snapshot and writes it to disk.
   // Cancelled items are stripped (not worth restoring); running items are
   // demoted to pending on save (the process didn't survive — restart it).
-  async save(items: QueueItem[]): Promise<void> {
+  async save(items: QueueItem[], schedulerPaused = false): Promise<void> {
     const toStore = items
       .filter((item) => item.status !== QUEUE_STATUS.cancelled)
       .map((item): QueueItem => {
@@ -92,9 +96,10 @@ export class QueueStore {
     }
 
     this.store.set('items', result.data);
+    this.store.set('schedulerPaused', schedulerPaused);
   }
 
-  async load(): Promise<Result<QueueItem[]>> {
+  async load(): Promise<Result<{ items: QueueItem[]; schedulerPaused: boolean }>> {
     const raw = this.store.get('items');
     const migrated = Array.isArray(raw) ? raw.map(migrateRow) : raw;
     const validated = queueArraySchema.safeParse(migrated);
@@ -102,6 +107,7 @@ export class QueueStore {
       const issue = validated.error.issues[0]?.message ?? 'schema mismatch';
       return fail({ code: 'validation', message: `Queue file is corrupted: ${issue}` });
     }
-    return ok(validated.data);
+    const schedulerPaused = this.store.get('schedulerPaused') === true;
+    return ok({ items: validated.data, schedulerPaused });
   }
 }

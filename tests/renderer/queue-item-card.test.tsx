@@ -24,6 +24,7 @@ function makeItem(overrides: Partial<QueueItem> = {}): QueueItem {
     outputDir: '/tmp',
     formatLabel: '720p · mp4',
     status: 'pending',
+    lane: 'normal',
     progressPercent: 0,
     progressDetail: null,
     lastStatus: null,
@@ -41,7 +42,8 @@ const actions = {
   removeQueueItem: vi.fn(),
   retryQueueItem: vi.fn(),
   openItemFolder: vi.fn(),
-  openItemUrl: vi.fn()
+  openItemUrl: vi.fn(),
+  setItemLane: vi.fn()
 };
 
 beforeEach(() => {

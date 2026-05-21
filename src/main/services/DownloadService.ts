@@ -9,6 +9,7 @@ import { nowIso } from '@main/utils/clock.js';
 import { createAppError } from '@main/utils/errorFactory.js';
 import { fail, ok, type Result } from '@shared/result.js';
 import { STATUS_KEY } from '@shared/schemas.js';
+import { MAX_CONCURRENT_DOWNLOADS } from '@shared/constants.js';
 import type { CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOutput, RecentJob, StartDownloadInput, StartDownloadOutput, StatusEvent, StatusKey } from '@shared/types.js';
 import type { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
 import { YtDlp } from './YtDlp.js';
@@ -21,11 +22,13 @@ import { JobLifecycle } from './JobLifecycle.js';
 const logger = log.scope('downloads');
 
 // Max concurrent downloads — defense-in-depth at the service boundary.
-// QueueService applies its own cap (default 1); this is a backstop that
-// catches buggy IPC bursts or future policy changes that could otherwise
-// spawn N parallel yt-dlp + ffmpeg processes. Tunable via the constructor
-// for tests.
-const DEFAULT_MAX_CONCURRENT_DOWNLOADS = 1;
+// QueueService applies its own lane-aware policy (NORMAL_LANE_CAP for the
+// normal lane, MAX_CONCURRENT_DOWNLOADS as a hard ceiling for priority
+// spawns). This backstop catches buggy IPC bursts or future policy changes
+// that could otherwise spawn more parallel yt-dlp + ffmpeg processes than
+// the queue scheduler intended. Defaults to the shared ceiling so the
+// queue's priority-lane bypass isn't rejected here. Tunable for tests.
+const DEFAULT_MAX_CONCURRENT_DOWNLOADS = MAX_CONCURRENT_DOWNLOADS;
 
 export class DownloadService extends EventEmitter {
   private activeJobs = new Map<string, ActiveDownload>();

@@ -180,6 +180,22 @@ describe('queueArraySchema', () => {
     expect(queueArraySchema.safeParse([{ ...valid, job: { kind: 'magic-format' } }]).success).toBe(false);
   });
 
+  it('defaults lane to "normal" when missing (beta-shape migration safety)', () => {
+    const { lane: _omit, ...legacy } = { ...valid, lane: 'normal' };
+    void _omit;
+    const parsed = queueArraySchema.safeParse([legacy]);
+    expect(parsed.success).toBe(true);
+    if (parsed.success) expect(parsed.data[0].lane).toBe('normal');
+  });
+
+  it('accepts lane="priority"', () => {
+    expect(queueArraySchema.safeParse([{ ...valid, lane: 'priority' }]).success).toBe(true);
+  });
+
+  it('rejects an unknown lane value', () => {
+    expect(queueArraySchema.safeParse([{ ...valid, lane: 'turbo' }]).success).toBe(false);
+  });
+
   it('rejects when error.kind is not a known YtDlpErrorKind', () => {
     expect(
       queueArraySchema.safeParse([

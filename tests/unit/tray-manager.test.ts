@@ -50,6 +50,7 @@ function makeItem(overrides: { id?: string; status: QueueItemStatus; progressPer
     outputDir: '/tmp',
     formatLabel: 'video',
     status: overrides.status,
+    lane: 'normal',
     progressPercent: overrides.progressPercent,
     progressDetail: null,
     lastStatus: null,

@@ -1,5 +1,5 @@
 import { type JSX, type ReactNode } from 'react';
-import { AlertTriangle, Captions, Download, ExternalLink, Film, FolderInput, FolderOpen, Hourglass, Layers, Music, Pause, Play, RotateCcw, Tags, X } from 'lucide-react';
+import { AlertTriangle, Ban, Captions, CheckCircle2, Clock, Download, ExternalLink, FastForward, Film, FolderInput, FolderOpen, Hourglass, Layers, Loader2, Music, Pause, PauseCircle, Play, RotateCcw, Tags, X, XCircle, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { QueueItem, QueueItemStatus, StatusKey } from '@shared/types.js';
 import { useAppStore, formatStatus, formatLocalizedError } from '../../store/useAppStore.js';
@@ -39,9 +39,22 @@ const STATUS_BORDER: Record<QueueItemStatus, string> = {
 // since both convey "completed but not perfect".
 const SUBS_FAILED_BORDER = 'border-s-2 border-s-[var(--color-status-paused)] shadow-[inset_3px_0_12px_var(--color-status-paused-glow)] rtl:shadow-[inset_-3px_0_12px_var(--color-status-paused-glow)]';
 
+// Status pill — small badge on the meta row that names the queue state. The
+// progress bar already implies "running"; everything else gets an explicit
+// label so the user never has to infer state from icon-only affordances.
+const STATUS_PILL: Record<QueueItemStatus, { icon: ReactNode; i18nKey: 'queue.item.statusPending' | 'queue.item.statusRunning' | 'queue.item.statusHeld' | 'queue.item.statusPaused' | 'queue.item.statusDone' | 'queue.item.statusError' | 'queue.item.statusCancelled'; tone: string } | null> = {
+  pending: { icon: <Clock size={10} />, i18nKey: 'queue.item.statusPending', tone: 'text-muted-foreground' },
+  running: { icon: <Loader2 size={10} className="animate-spin" />, i18nKey: 'queue.item.statusRunning', tone: 'text-[var(--brand)]' },
+  'paused-held': { icon: <PauseCircle size={10} />, i18nKey: 'queue.item.statusHeld', tone: 'text-[var(--color-status-paused)]' },
+  'paused-active': { icon: <Pause size={10} />, i18nKey: 'queue.item.statusPaused', tone: 'text-[var(--color-status-paused)]' },
+  done: { icon: <CheckCircle2 size={10} />, i18nKey: 'queue.item.statusDone', tone: 'text-[var(--color-status-done)]' },
+  error: { icon: <XCircle size={10} />, i18nKey: 'queue.item.statusError', tone: 'text-[var(--color-status-error)]' },
+  cancelled: { icon: <Ban size={10} />, i18nKey: 'queue.item.statusCancelled', tone: 'text-muted-foreground' }
+};
+
 export function QueueItemCard({ item }: Props): JSX.Element {
   const { t, i18n } = useTranslation();
-  const { cancelItemDownload, pauseItemDownload, resumeItemDownload, removeQueueItem, retryQueueItem, openItemFolder, openItemUrl } = useAppStore();
+  const { cancelItemDownload, pauseItemDownload, resumeItemDownload, removeQueueItem, retryQueueItem, openItemFolder, openItemUrl, setItemLane } = useAppStore();
 
   const { status } = item;
   const held = status === 'paused-held';
@@ -72,6 +85,22 @@ export function QueueItemCard({ item }: Props): JSX.Element {
           <Badge variant="secondary" className="text-[12px] font-normal">
             {item.formatLabel}
           </Badge>
+          {(() => {
+            const pill = STATUS_PILL[status];
+            if (!pill) return null;
+            return (
+              <Badge variant="secondary" data-testid="queue-status-badge" className={cn('text-[10px] font-semibold uppercase tracking-wider gap-1', pill.tone)}>
+                {pill.icon}
+                {t(pill.i18nKey)}
+              </Badge>
+            );
+          })()}
+          {item.lane === 'priority' && (status === 'running' || status === 'pending') && (
+            <Badge variant="secondary" data-testid="queue-priority-badge" className="text-[10px] font-semibold uppercase tracking-wider gap-1 text-[var(--brand)]">
+              <Zap size={10} />
+              {t('queue.item.priorityBadge')}
+            </Badge>
+          )}
           {status === 'done' && item.finishedAt && (
             <span className="text-muted-foreground">
               ·{' '}
@@ -112,6 +141,8 @@ export function QueueItemCard({ item }: Props): JSX.Element {
 
       <div className="flex items-center gap-1 shrink-0">
         <TooltipIconButton icon={<ExternalLink size={12} />} label={t('queue.item.openUrl')} data-testid="btn-open-url" className="w-7 h-7 text-muted-foreground hover:text-foreground/80" onClick={() => openItemUrl(item.id)} />
+
+        {status === 'pending' && item.lane === 'normal' && <TooltipIconButton icon={<FastForward size={12} />} label={t('queue.item.pullNow')} data-testid="btn-pull-now" className="w-7 h-7 text-[var(--brand)] hover:text-[var(--brand-hover)]" onClick={() => void setItemLane(item.id, 'priority')} />}
 
         {status === 'pending' && <TooltipIconButton icon={<Pause size={12} />} label={t('queue.item.hold')} data-testid="btn-hold" className="w-7 h-7" onClick={() => void pauseItemDownload(item.id)} />}
 

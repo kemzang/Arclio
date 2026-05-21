@@ -3,35 +3,57 @@
 // events. All mutations route through the pure transition() function from
 // @shared/queueTransition.
 //
-// Cap = 1 (single in-flight job by default). 3-second inter-job sleep is
-// preserved from the previous renderer-side jobScheduler — gives YouTube's
-// rate-limit window a chance to roll over between back-to-back pulls.
+// Concurrency policy (lane-aware):
+//   - lane='normal' items respect NORMAL_LANE_CAP (1) and the inter-job
+//     sleep window, so back-to-back normal jobs give YouTube's rate-limit
+//     window a chance to roll over.
+//   - lane='priority' items bypass the cap and the sleep window — user
+//     intent is "skip the queue, pull now alongside the active job".
+//     Priority spawns are still gated by MAX_CONCURRENT_DOWNLOADS to
+//     protect the machine and avoid bot-detection escalation.
+//
+// Mutation pipeline: every state change flows through commit() — one
+// internal seam that runs apply → persist → emit → recomputeSchedule. No
+// caller decides when to schedule; it always happens.
 
 import { EventEmitter } from 'node:events';
 import log from 'electron-log/main.js';
 import { fail, ok, type Result } from '@shared/result.js';
 import { createAppError } from '@main/utils/errorFactory.js';
 import { nowIso } from '@main/utils/clock.js';
-import { QUEUE_STATUS } from '@shared/schemas.js';
+import { QUEUE_STATUS, type QueueLane } from '@shared/schemas.js';
 import { transition, illegalTransition, type QueueEvent } from '@shared/queueTransition.js';
 import { ProgressFormatter, nextMonotonicPercent } from '@shared/progressFormat.js';
+import { INTER_JOB_SLEEP_MS, MAX_CONCURRENT_DOWNLOADS, NORMAL_LANE_CAP } from '@shared/constants.js';
 import type { ProgressEvent, QueueItem, StatusEvent } from '@shared/types.js';
 import type { QueueStore } from '@main/stores/QueueStore.js';
 import type { DownloadService } from './DownloadService.js';
 
 const logger = log.scope('queue');
 
-const INTER_JOB_SLEEP_MS = 3000;
-
-interface SchedulerState {
-  kind: 'idle' | 'running';
-  jobId?: string;
-}
+// Discriminated union covering every shape a mutation can take. commit()
+// is the only writer; new mutation kinds add a case here (compile-checked
+// in commit's exhaustive switch) instead of inventing a new helper.
+type Mutation = { kind: 'add'; items: QueueItem[] } | { kind: 'event'; itemId: string; evt: QueueEvent } | { kind: 'patch'; itemId: string; patcher: (item: QueueItem) => QueueItem; reason: string } | { kind: 'remove'; itemId: string };
 
 export class QueueService extends EventEmitter {
   private items: QueueItem[] = [];
-  private scheduler: SchedulerState = { kind: 'idle' };
+  // Items currently mid-spawn (downloadService.start awaiting). recomputeSchedule
+  // counts these toward activeCount so a re-fire during the await window
+  // doesn't double-spawn the same item.
+  private readonly spawning = new Set<string>();
+  // Earliest time the next normal-lane spawn is allowed. Cleared on cancel-all
+  // or when no normal job remains. Priority spawns ignore this.
+  private sleepUntil = 0;
   private sleepTimer: NodeJS.Timeout | null = null;
+  // Global "queue paused" flag — qBittorrent-style. When true, the auto-
+  // scheduler is fully suspended: no pending items spawn, no priority items
+  // spawn, no sleep timer fires anything new. Per-item explicit actions
+  // (`start(itemId)`, `resume(itemId)`) still spawn directly because the user
+  // asked for that specific item; only the implicit "next pending" loop is
+  // halted. Cleared by `resumeAll()` or `cancel(null)`. Session-only — does
+  // not survive app restart.
+  private schedulerPaused = false;
   // One ProgressFormatter per running jobId — preserves throttle / spike-suppress
   // state across consecutive progress lines for that job.
   private readonly progressFormatters = new Map<string, ProgressFormatter>();
@@ -39,10 +61,10 @@ export class QueueService extends EventEmitter {
   constructor(
     private readonly queueStore: QueueStore,
     private readonly downloadService: DownloadService,
-    private readonly cap = 1
+    private readonly normalCap = NORMAL_LANE_CAP,
+    private readonly maxConcurrent = MAX_CONCURRENT_DOWNLOADS
   ) {
     super();
-    // Hook DownloadService events into queue projection.
     this.downloadService.on('status', (event: StatusEvent) => this.consumeStatusEvent(event));
     this.downloadService.on('progress', (event: ProgressEvent) => this.consumeProgressEvent(event));
   }
@@ -54,8 +76,13 @@ export class QueueService extends EventEmitter {
       this.items = [];
       return;
     }
-    this.items = result.data;
-    logger.info('Queue loaded', { count: this.items.length });
+    this.items = result.data.items;
+    this.schedulerPaused = result.data.schedulerPaused;
+    logger.info('Queue loaded', { count: this.items.length, schedulerPaused: this.schedulerPaused });
+    // Boot-time spawn pass: respects maxConcurrent so persisted priority
+    // items never trigger a storm. Anything beyond the ceiling stays pending.
+    // Skipped if the user quit with the queue paused (flag persisted).
+    this.recomputeSchedule();
   }
 
   snapshot(): QueueItem[] {
@@ -66,41 +93,29 @@ export class QueueService extends EventEmitter {
 
   add(toAdd: QueueItem[]): Result<{ ids: string[] }> {
     if (toAdd.length === 0) return ok({ ids: [] });
-    const atIdx = this.items.length;
-    this.items.push(...toAdd);
-    this.persist();
-    this.emit('added', { items: toAdd, atIdx });
-    this.maybeStartNext();
+    this.commit({ kind: 'add', items: toAdd });
     return ok({ ids: toAdd.map((i) => i.id) });
   }
 
+  // Explicit-start IPC entry point. The scheduler auto-spawns pending items
+  // on add/resume/retry, so this is rarely needed from the renderer; kept
+  // for parity with the existing IPC contract and tests that drive a single
+  // item through start() directly.
   async start(itemId: string): Promise<Result<void>> {
     const item = this.findItem(itemId);
     if (!item) return fail(createAppError('validation', `queue item ${itemId} not found`));
     if (item.status !== QUEUE_STATUS.pending) {
       return fail(createAppError('validation', `cannot start item in status ${item.status}`));
     }
-    // Claim the scheduler slot synchronously before the await so concurrent
-    // maybeStartNext() calls don't see kind === 'idle' and spawn a second job.
-    this.scheduler = { kind: 'running', jobId: '' };
-    const result = await this.downloadService.start({ url: item.url, outputDir: item.outputDir, job: item.job });
-    if (!result.ok) {
-      this.scheduler = { kind: 'idle' };
-      this.applyEvent(itemId, { kind: 'failed', error: { kind: 'unknown', raw: result.error.message } });
-      return fail(result.error);
-    }
-    this.applyEvent(itemId, { kind: 'started', lastJobId: result.data.job.id });
-    this.scheduler = { kind: 'running', jobId: result.data.job.id };
-    return ok(undefined);
+    return this.spawnViaStart(itemId, undefined);
   }
 
   async pause(itemId: string): Promise<Result<void>> {
     const item = this.findItem(itemId);
     if (!item) return fail(createAppError('validation', `queue item ${itemId} not found`));
 
-    // Held: pending → paused-held without IPC.
     if (item.status === QUEUE_STATUS.pending) {
-      this.applyEvent(itemId, { kind: 'paused-held' });
+      this.commit({ kind: 'event', itemId, evt: { kind: 'paused-held' } });
       return ok(undefined);
     }
 
@@ -113,17 +128,18 @@ export class QueueService extends EventEmitter {
     if (!pauseResult.ok) return fail(pauseResult.error);
     if (!pauseResult.data.paused) return ok(undefined);
 
-    this.applyEvent(itemId, { kind: 'paused-active', tempDir: pauseResult.data.tempDir });
-    // Free scheduler slot — paused jobs don't count against cap.
-    if (this.scheduler.kind === 'running' && this.scheduler.jobId === item.lastJobId) {
-      this.scheduler = { kind: 'idle' };
-      this.maybeStartNext();
-    }
+    this.commit({ kind: 'event', itemId, evt: { kind: 'paused-active', tempDir: pauseResult.data.tempDir } });
     return ok(undefined);
   }
 
   async pauseAll(): Promise<void> {
+    // Flip the global pause flag FIRST so the per-item pause commits below
+    // can't re-trigger an auto-spawn of the next pending item (the original
+    // "pause all → next one starts" bug).
+    this.schedulerPaused = true;
+    this.clearSleep();
     const running = this.items.filter((i) => i.status === QUEUE_STATUS.running);
+    logger.info('pauseAll', { runningCount: running.length, total: this.items.length, snapshot: this.statusSummary() });
     for (const item of running) {
       try {
         const result = await this.pause(item.id);
@@ -134,16 +150,59 @@ export class QueueService extends EventEmitter {
         logger.warn('pauseAll: unexpected error pausing item', { itemId: item.id, error: err instanceof Error ? err.message : String(err) });
       }
     }
+    // Ensure the flag itself reaches disk even if no items needed pausing
+    // (e.g. queue had only pending items).
+    this.persist();
+    logger.info('pauseAll done', { snapshot: this.statusSummary() });
+  }
+
+  // Global "resume queue" — counterpart to pauseAll. Clears the scheduler
+  // pause flag, transitions every paused-* item back to pending (preserving
+  // resume context like tempDir/lastJobId on paused-active rows), then lets
+  // recomputeSchedule do the spawning. Critical: must NOT call `resume(id)`
+  // per item — that path bypasses the cap (it's the explicit-user path) and
+  // would spawn every paused-active in parallel.
+  // eslint-disable-next-line @typescript-eslint/require-await -- async for IPC parity
+  async resumeAll(): Promise<void> {
+    this.schedulerPaused = false;
+    const held = this.items.filter((i) => i.status === QUEUE_STATUS.pausedHeld);
+    const pausedActive = this.items.filter((i) => i.status === QUEUE_STATUS.pausedActive);
+    logger.info('resumeAll', { heldCount: held.length, pausedActiveCount: pausedActive.length, snapshot: this.statusSummary() });
+    for (const item of held) {
+      this.commit({ kind: 'event', itemId: item.id, evt: { kind: 'retry-reset' } });
+    }
+    for (const item of pausedActive) {
+      // Patch (not transition) — keep tempDir + lastJobId so the upcoming
+      // spawn picks up the .part files. retry-reset would wipe both. Going
+      // through `pending` instead of `running` is critical: it routes the
+      // spawn through recomputeSchedule, which enforces the cap. Calling
+      // `resume(id)` per item instead bypasses the cap and spawns all
+      // paused-active items in parallel — that was the "resume → 10 in
+      // parallel" bug.
+      this.commit({
+        kind: 'patch',
+        itemId: item.id,
+        reason: 'resumeAll:queueResume',
+        patcher: (prev) => ({ ...prev, status: QUEUE_STATUS.pending, progressDetail: null })
+      });
+    }
+    // Final sweep — picks up the items that the per-item commits left on the
+    // table because the cap was already satisfied during their commit.
+    this.recomputeSchedule();
+    this.persist();
+    logger.info('resumeAll done', { snapshot: this.statusSummary() });
+  }
+
+  schedulerIsPaused(): boolean {
+    return this.schedulerPaused;
   }
 
   async resume(itemId: string): Promise<Result<void>> {
     const item = this.findItem(itemId);
     if (!item) return fail(createAppError('validation', `queue item ${itemId} not found`));
 
-    // Held → pending: scheduler picks it up.
     if (item.status === QUEUE_STATUS.pausedHeld) {
-      this.applyEvent(itemId, { kind: 'retry-reset' });
-      this.maybeStartNext();
+      this.commit({ kind: 'event', itemId, evt: { kind: 'retry-reset' } });
       return ok(undefined);
     }
 
@@ -156,52 +215,56 @@ export class QueueService extends EventEmitter {
     if (item.lastJobId) {
       const resumeResult = await this.downloadService.resume(item.lastJobId);
       if (resumeResult.ok && resumeResult.data.resumed) {
-        this.applyEvent(itemId, { kind: 'resumed' });
-        this.scheduler = { kind: 'running', jobId: item.lastJobId };
+        this.commit({ kind: 'event', itemId, evt: { kind: 'resumed' } });
         return ok(undefined);
       }
     }
 
-    const startResult = await this.downloadService.start({ url: item.url, outputDir: item.outputDir, job: item.job, tempDir: item.tempDir });
-    if (!startResult.ok) {
-      this.applyEvent(itemId, { kind: 'failed', error: { kind: 'unknown', raw: startResult.error.message } });
-      return fail(startResult.error);
-    }
-    this.applyEvent(itemId, { kind: 'started', lastJobId: startResult.data.job.id });
-    this.scheduler = { kind: 'running', jobId: startResult.data.job.id };
-    return ok(undefined);
+    return this.spawnViaStart(itemId, item.tempDir);
   }
 
   async cancel(itemId: string | null): Promise<Result<void>> {
     if (itemId === null) {
-      // Cancel-all: bulk IPC, then mark every running/paused/pending as cancelled.
       await this.downloadService.cancel();
       const ids = this.items.filter((i) => i.status === QUEUE_STATUS.running || i.status === QUEUE_STATUS.pausedActive || i.status === QUEUE_STATUS.pausedHeld || i.status === QUEUE_STATUS.pending).map((i) => i.id);
+      logger.info('cancelAll', { ids: ids.length, snapshot: this.statusSummary() });
+      // Suppress scheduler during the sweep. Without this guard, the FIRST
+      // per-item commit fires recomputeSchedule, which sees the still-running
+      // priority lane + still-pending normals and spawns a fresh download.
+      // The rest of the loop then cancels that brand-new item — but the
+      // yt-dlp child process is already alive (downloadService.cancel ran
+      // BEFORE the new spawn) and keeps downloading to disk. End state: UI
+      // says "cancelled", yt-dlp says "still running".
+      this.clearSleep();
+      this.schedulerPaused = true;
       for (const id of ids) {
-        this.applyEvent(id, { kind: 'cancelled' });
+        this.commit({ kind: 'event', itemId: id, evt: { kind: 'cancelled' } });
       }
-      this.scheduler = { kind: 'idle' };
-      this.clearSleepTimer();
+      // Restore "fresh slate" — future adds auto-spawn. Nothing pending
+      // survives the sweep, so this last recomputeSchedule is a no-op
+      // unless the renderer added a new item mid-flight.
+      this.schedulerPaused = false;
+      this.recomputeSchedule();
+      // Persist the cleared flag — the per-item cancel commits saved it
+      // as `true`, so without this the next boot would come up paused
+      // even though cancel-all is meant to leave a fresh slate.
+      this.persist();
+      logger.info('cancelAll done', { snapshot: this.statusSummary() });
       return ok(undefined);
     }
 
     const item = this.findItem(itemId);
     if (!item) return ok(undefined);
 
-    // Pre-spawn (held / pending): no IPC needed, just transition.
     if (item.status === QUEUE_STATUS.pending || item.status === QUEUE_STATUS.pausedHeld) {
-      this.applyEvent(itemId, { kind: 'cancelled' });
+      this.commit({ kind: 'event', itemId, evt: { kind: 'cancelled' } });
       return ok(undefined);
     }
 
     if (item.lastJobId) {
       await this.downloadService.cancel(item.lastJobId);
     }
-    this.applyEvent(itemId, { kind: 'cancelled' });
-    if (this.scheduler.kind === 'running' && this.scheduler.jobId === item.lastJobId) {
-      this.scheduler = { kind: 'idle' };
-      this.maybeStartNext();
-    }
+    this.commit({ kind: 'event', itemId, evt: { kind: 'cancelled' } });
     return ok(undefined);
   }
 
@@ -212,15 +275,28 @@ export class QueueService extends EventEmitter {
     if (item.status !== QUEUE_STATUS.error && item.status !== QUEUE_STATUS.cancelled) {
       return fail(createAppError('validation', `cannot retry item in status ${item.status}`));
     }
-    this.applyEvent(itemId, { kind: 'retry-reset' });
-    this.maybeStartNext();
+    this.commit({ kind: 'event', itemId, evt: { kind: 'retry-reset' } });
+    return ok(undefined);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/require-await -- Result API is async
+  async setLane(itemId: string, lane: QueueLane): Promise<Result<void>> {
+    const item = this.findItem(itemId);
+    if (!item) return fail(createAppError('validation', `queue item ${itemId} not found`));
+    // Lane is intent. Allow change for pre-terminal items only; flipping a
+    // done/cancelled/error item has no effect on scheduling.
+    if (item.status === QUEUE_STATUS.done || item.status === QUEUE_STATUS.cancelled || item.status === QUEUE_STATUS.error) {
+      return fail(createAppError('validation', `cannot change lane of item in status ${item.status}`));
+    }
+    if (item.lane === lane) return ok(undefined);
+    this.commit({ kind: 'patch', itemId, reason: `setLane:${lane}`, patcher: (prev) => ({ ...prev, lane }) });
     return ok(undefined);
   }
 
   clearCompleted(): Result<void> {
     const idsToRemove = this.items.filter((i) => i.status === QUEUE_STATUS.done || i.status === QUEUE_STATUS.cancelled || i.status === QUEUE_STATUS.error).map((i) => i.id);
     for (const id of idsToRemove) {
-      this.removeInternal(id);
+      this.commit({ kind: 'remove', itemId: id });
     }
     return ok(undefined);
   }
@@ -228,13 +304,10 @@ export class QueueService extends EventEmitter {
   remove(itemId: string): Result<void> {
     const item = this.findItem(itemId);
     if (!item) return ok(undefined);
-    // Active jobs can't be removed without cancelling first — the cancel cmd
-    // is the right path for that. paused-held + paused-active can be
-    // removed (paused-held has no job; paused-active resume path clears state).
     if (item.status === QUEUE_STATUS.running) {
       return fail(createAppError('validation', 'cannot remove a running item — cancel it first'));
     }
-    this.removeInternal(itemId);
+    this.commit({ kind: 'remove', itemId });
     return ok(undefined);
   }
 
@@ -245,45 +318,39 @@ export class QueueService extends EventEmitter {
     if (!item) return;
     if (event.stage === 'done') {
       this.progressFormatters.delete(event.jobId);
-      this.applyEvent(item.id, {
-        kind: 'completed',
-        finishedAt: nowIso(),
-        lastStatusKey: event.statusKey,
-        params: event.params
+      // Inter-job cooldown applies only when a normal-lane job finishes —
+      // priority jobs are user-driven bursts, no need to throttle the queue
+      // after they wrap.
+      if (item.lane === 'normal') this.armSleepWindow();
+      this.commit({
+        kind: 'event',
+        itemId: item.id,
+        evt: { kind: 'completed', finishedAt: nowIso(), lastStatusKey: event.statusKey, params: event.params }
       });
-      if (this.scheduler.kind === 'running' && this.scheduler.jobId === event.jobId) {
-        this.scheduler = { kind: 'idle' };
-        this.scheduleNext();
-      }
       return;
     }
     if (event.stage === 'error') {
+      this.progressFormatters.delete(event.jobId);
       // Cancellation arrives as STATUS_KEY.cancelled — already projected via
       // the cancel command path. Skip a redundant transition.
-      this.progressFormatters.delete(event.jobId);
       if (event.statusKey === 'cancelled') return;
-      this.applyEvent(item.id, {
-        kind: 'failed',
-        error: event.error ?? { kind: 'unknown', raw: '' },
-        lastStatusKey: event.statusKey,
-        params: event.params
+      if (item.lane === 'normal') this.armSleepWindow();
+      this.commit({
+        kind: 'event',
+        itemId: item.id,
+        evt: { kind: 'failed', error: event.error ?? { kind: 'unknown', raw: '' }, lastStatusKey: event.statusKey, params: event.params }
       });
-      if (this.scheduler.kind === 'running' && this.scheduler.jobId === event.jobId) {
-        this.scheduler = { kind: 'idle' };
-        this.scheduleNext();
-      }
       return;
     }
-    // Phase transition — surface as a non-status update so the UI can show
-    // "Merging…", "Embedding metadata…", etc. We don't transition status here;
-    // we just update lastStatus + progressDetail.
-    // Skip for terminal states — a cancelled/done item must not be mutated by stale phase events.
+    // Phase transition — non-status update for "Merging…", "Embedding…", etc.
+    // Skip for terminal states to avoid stale events mutating cancelled/done.
     if (item.status === QUEUE_STATUS.cancelled || item.status === QUEUE_STATUS.done) return;
-    this.updateItem(item.id, (prev) => ({
-      ...prev,
-      lastStatus: { key: event.statusKey, params: event.params },
-      progressDetail: null
-    }));
+    this.commit({
+      kind: 'patch',
+      itemId: item.id,
+      reason: `phase:${event.statusKey}`,
+      patcher: (prev) => ({ ...prev, lastStatus: { key: event.statusKey, params: event.params }, progressDetail: null })
+    });
   }
 
   consumeProgressEvent(event: ProgressEvent): void {
@@ -295,45 +362,170 @@ export class QueueService extends EventEmitter {
       this.progressFormatters.set(event.jobId, formatter);
     }
     const detail = formatter.update(event.line);
-    this.applyEvent(item.id, {
-      kind: 'progress',
-      percent: nextMonotonicPercent(item.progressPercent, event.percent),
-      ...(detail !== null ? { detail } : {})
+    this.commit({
+      kind: 'event',
+      itemId: item.id,
+      evt: { kind: 'progress', percent: nextMonotonicPercent(item.progressPercent, event.percent), ...(detail !== null ? { detail } : {}) }
     });
   }
 
-  // internals --------------------------------------------------------------
+  // commit pipeline --------------------------------------------------------
 
-  private applyEvent(itemId: string, evt: QueueEvent): void {
-    const idx = this.items.findIndex((i) => i.id === itemId);
-    if (idx < 0) return;
-    const prev = this.items[idx];
-    const illegal = illegalTransition(prev, evt);
-    if (illegal) {
-      logger.debug('Skipping illegal transition', { itemId, evt: evt.kind, reason: illegal });
+  private commit(mutation: Mutation): void {
+    logger.debug('commit', { mutation: this.describeMutation(mutation) });
+    switch (mutation.kind) {
+      case 'add': {
+        const atIdx = this.items.length;
+        this.items.push(...mutation.items);
+        this.persist();
+        this.emit('added', { items: mutation.items, atIdx });
+        break;
+      }
+      case 'event': {
+        const idx = this.items.findIndex((i) => i.id === mutation.itemId);
+        if (idx < 0) return;
+        const prev = this.items[idx];
+        const illegal = illegalTransition(prev, mutation.evt);
+        if (illegal) {
+          logger.debug('Skipping illegal transition', { itemId: mutation.itemId, evt: mutation.evt.kind, reason: illegal });
+          return;
+        }
+        const next = transition(prev, mutation.evt);
+        this.items[idx] = next;
+        this.persist();
+        this.emit('updated', { item: next });
+        break;
+      }
+      case 'patch': {
+        const idx = this.items.findIndex((i) => i.id === mutation.itemId);
+        if (idx < 0) return;
+        const next = mutation.patcher(this.items[idx]);
+        this.items[idx] = next;
+        this.persist();
+        this.emit('updated', { item: next });
+        break;
+      }
+      case 'remove': {
+        const idx = this.items.findIndex((i) => i.id === mutation.itemId);
+        if (idx < 0) return;
+        this.items.splice(idx, 1);
+        this.persist();
+        this.emit('removed', { itemId: mutation.itemId });
+        break;
+      }
+    }
+    this.recomputeSchedule();
+  }
+
+  // scheduler --------------------------------------------------------------
+
+  private recomputeSchedule(): void {
+    // Global pause: scheduler is dormant. Per-item explicit start/resume
+    // still spawn directly via spawnViaStart — they don't go through here.
+    if (this.schedulerPaused) {
+      logger.debug('recomputeSchedule skipped (queue paused)', { snapshot: this.statusSummary() });
       return;
     }
-    const next = transition(prev, evt);
-    this.items[idx] = next;
-    this.persist();
-    this.emit('updated', { item: next });
+    const now = Date.now();
+    let activeCount = this.spawning.size + this.items.filter((i) => i.status === QUEUE_STATUS.running || i.status === QUEUE_STATUS.pausedActive).length;
+    let normalRunning = this.items.filter((i) => i.status === QUEUE_STATUS.running && i.lane === 'normal').length;
+    for (const s of this.spawning) {
+      const item = this.findItem(s);
+      if (item?.lane === 'normal') normalRunning++;
+    }
+
+    let armSleep = false;
+    const spawned: string[] = [];
+    for (const item of this.items) {
+      if (item.status !== QUEUE_STATUS.pending) continue;
+      if (this.spawning.has(item.id)) continue;
+      if (activeCount >= this.maxConcurrent) break;
+      if (item.lane === 'priority') {
+        this.beginSpawn(item.id);
+        spawned.push(item.id);
+        activeCount++;
+        continue;
+      }
+      // Normal lane.
+      if (normalRunning >= this.normalCap) continue;
+      if (now < this.sleepUntil) {
+        armSleep = true;
+        continue;
+      }
+      this.beginSpawn(item.id);
+      spawned.push(item.id);
+      activeCount++;
+      normalRunning++;
+    }
+    if (spawned.length > 0 || armSleep) {
+      logger.info('recomputeSchedule', { spawned, activeCount, normalRunning, normalCap: this.normalCap, ceiling: this.maxConcurrent, sleepUntil: this.sleepUntil, armSleep, snapshot: this.statusSummary() });
+    }
+
+    // Arm/clear the sleep timer based on whether anything is waiting on it.
+    if (armSleep && !this.sleepTimer) {
+      const delay = Math.max(0, this.sleepUntil - now);
+      this.sleepTimer = setTimeout(() => {
+        this.sleepTimer = null;
+        this.sleepUntil = 0;
+        this.recomputeSchedule();
+      }, delay);
+    } else if (!armSleep && this.sleepTimer && this.sleepUntil <= now) {
+      // Sleep window expired and nothing's waiting — drop the timer if it
+      // somehow outlived its purpose.
+      clearTimeout(this.sleepTimer);
+      this.sleepTimer = null;
+    }
   }
 
-  private updateItem(itemId: string, updater: (item: QueueItem) => QueueItem): void {
-    const idx = this.items.findIndex((i) => i.id === itemId);
-    if (idx < 0) return;
-    this.items[idx] = updater(this.items[idx]);
-    this.persist();
-    this.emit('updated', { item: this.items[idx] });
+  private beginSpawn(itemId: string): void {
+    if (this.spawning.has(itemId)) return;
+    this.spawning.add(itemId);
+    const item = this.findItem(itemId);
+    logger.info('beginSpawn', { itemId, lane: item?.lane, hasTempDir: Boolean(item?.tempDir), spawningSize: this.spawning.size });
+    void this.spawnViaStart(itemId, undefined).catch((err) => {
+      logger.error('Auto-start failed', { itemId, error: err instanceof Error ? err.message : String(err) });
+    });
   }
 
-  private removeInternal(itemId: string): void {
-    const idx = this.items.findIndex((i) => i.id === itemId);
-    if (idx < 0) return;
-    this.items.splice(idx, 1);
-    this.persist();
-    this.emit('removed', { itemId });
+  private async spawnViaStart(itemId: string, tempDir: string | undefined): Promise<Result<void>> {
+    this.spawning.add(itemId);
+    const item = this.findItem(itemId);
+    if (!item) {
+      this.spawning.delete(itemId);
+      return fail(createAppError('validation', `queue item ${itemId} not found`));
+    }
+    // Fall back to the item's persisted tempDir so a pending item that came
+    // from a paused-active row (via resumeAll's patch) picks up its .part
+    // files instead of starting over.
+    const effectiveTempDir = tempDir ?? item.tempDir;
+    try {
+      const result = await this.downloadService.start({ url: item.url, outputDir: item.outputDir, job: item.job, tempDir: effectiveTempDir });
+      if (!result.ok) {
+        this.commit({ kind: 'event', itemId, evt: { kind: 'failed', error: { kind: 'unknown', raw: result.error.message } } });
+        return fail(result.error);
+      }
+      this.commit({ kind: 'event', itemId, evt: { kind: 'started', lastJobId: result.data.job.id } });
+      return ok(undefined);
+    } finally {
+      this.spawning.delete(itemId);
+    }
   }
+
+  private armSleepWindow(): void {
+    this.sleepUntil = Date.now() + INTER_JOB_SLEEP_MS;
+    // Don't pre-arm the timer here — recomputeSchedule decides whether one
+    // is actually needed (no pending items ⇒ no timer).
+  }
+
+  private clearSleep(): void {
+    this.sleepUntil = 0;
+    if (this.sleepTimer) {
+      clearTimeout(this.sleepTimer);
+      this.sleepTimer = null;
+    }
+  }
+
+  // helpers ----------------------------------------------------------------
 
   private findItem(itemId: string): QueueItem | undefined {
     return this.items.find((i) => i.id === itemId);
@@ -344,40 +536,35 @@ export class QueueService extends EventEmitter {
   }
 
   private persist(): void {
-    void this.queueStore.save(this.items).catch((err) => {
+    void this.queueStore.save(this.items, this.schedulerPaused).catch((err) => {
       logger.error('Queue persist failed', { error: err instanceof Error ? err.message : String(err) });
     });
   }
 
-  private maybeStartNext(): void {
-    if (this.scheduler.kind === 'running') return;
-    if (this.runningCount() >= this.cap) return;
-    if (this.sleepTimer) return; // already in inter-job sleep
-    const next = this.items.find((i) => i.status === QUEUE_STATUS.pending);
-    if (!next) return;
-    void this.start(next.id).catch((err) => {
-      logger.error('Auto-start failed', { itemId: next.id, error: err instanceof Error ? err.message : String(err) });
-    });
-  }
-
-  private scheduleNext(): void {
-    this.clearSleepTimer();
-    const hasPending = this.items.some((i) => i.status === QUEUE_STATUS.pending);
-    if (!hasPending) return;
-    this.sleepTimer = setTimeout(() => {
-      this.sleepTimer = null;
-      this.maybeStartNext();
-    }, INTER_JOB_SLEEP_MS);
-  }
-
-  private clearSleepTimer(): void {
-    if (this.sleepTimer) {
-      clearTimeout(this.sleepTimer);
-      this.sleepTimer = null;
+  // Diagnostic helpers — used for logging. Kept inline (not stripped under
+  // NODE_ENV) so post-mortem of a user log file is possible without a
+  // dedicated dev build.
+  private statusSummary(): Record<string, number> {
+    const counts: Record<string, number> = {};
+    for (const item of this.items) {
+      const key = `${item.status}:${item.lane}`;
+      counts[key] = (counts[key] ?? 0) + 1;
     }
+    counts.spawning = this.spawning.size;
+    counts.paused = this.schedulerPaused ? 1 : 0;
+    return counts;
   }
 
-  private runningCount(): number {
-    return this.items.filter((i) => i.status === QUEUE_STATUS.running).length;
+  private describeMutation(m: Mutation): string {
+    switch (m.kind) {
+      case 'add':
+        return `add[${m.items.length}]`;
+      case 'event':
+        return `event[${m.itemId}:${m.evt.kind}]`;
+      case 'patch':
+        return `patch[${m.itemId}:${m.reason}]`;
+      case 'remove':
+        return `remove[${m.itemId}]`;
+    }
   }
 }

@@ -13,7 +13,7 @@ async function tempStore(): Promise<[QueueStore, string]> {
 async function loadOk(store: QueueStore) {
   const result = await store.load();
   if (!result.ok) throw new Error(`expected ok, got fail: ${result.error.message}`);
-  return result.data;
+  return result.data.items;
 }
 
 describe('QueueStore', () => {

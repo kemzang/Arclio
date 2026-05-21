@@ -153,21 +153,22 @@ describe('D1/D3 — StepConfirm playlist-mode rendering', () => {
     expect(cell.textContent).toMatch(/3/);
   });
 
-  it('disables Pull/AddToQueue when no preset selected', () => {
+  it('disables AddToQueue when no preset selected (playlist mode has no Pull-it CTA)', () => {
     window.appApi = buildMockApi() as never;
     setPlaylistConfirmState();
     useAppStore.setState({ selectedPlaylistPreset: null } as never);
     render(<StepConfirm />);
-    expect(screen.getByTestId('btn-download-now')).toBeDisabled();
+    expect(screen.queryByTestId('btn-download-now')).toBeNull();
     expect(screen.getByTestId('btn-add-to-queue')).toBeDisabled();
   });
 
-  it('disables Pull/AddToQueue when no items selected', () => {
+  it('disables AddToQueue when no items selected', () => {
     window.appApi = buildMockApi() as never;
     setPlaylistConfirmState();
     useAppStore.setState({ selectedPlaylistItemIds: [] } as never);
     render(<StepConfirm />);
-    expect(screen.getByTestId('btn-download-now')).toBeDisabled();
+    expect(screen.queryByTestId('btn-download-now')).toBeNull();
+    expect(screen.getByTestId('btn-add-to-queue')).toBeDisabled();
   });
 });
 

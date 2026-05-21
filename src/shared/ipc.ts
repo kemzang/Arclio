@@ -33,6 +33,9 @@ export const IPC_CHANNELS = {
   queueCmdRetry: 'queue:cmd:retry',
   queueCmdClearCompleted: 'queue:cmd:clearCompleted',
   queueCmdRemove: 'queue:cmd:remove',
+  queueCmdSetLane: 'queue:cmd:setLane',
+  queueCmdPauseAll: 'queue:cmd:pauseAll',
+  queueCmdResumeAll: 'queue:cmd:resumeAll',
   // Queue events — main → renderer. `snapshot` fires once on window create
   // (initial hydration); the others stream incremental diffs.
   queueEventSnapshot: 'queue:event:snapshot',

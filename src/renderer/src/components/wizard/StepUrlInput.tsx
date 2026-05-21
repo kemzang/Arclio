@@ -41,16 +41,8 @@ export function StepUrlInput(): JSX.Element {
   const [pendingClipboardUrl, setPendingClipboardUrl] = useState<string | null>(null);
 
   const shareCardVisible = !(settings?.common?.shareInlineCardDismissed ?? false);
-  const shareCardImpressionFiredRef = useRef(false);
-  useEffect(() => {
-    if (shareCardVisible && !shareCardImpressionFiredRef.current) {
-      shareCardImpressionFiredRef.current = true;
-      track('share_inline_card_impression');
-    }
-  }, [shareCardVisible]);
 
   function handleShareInlineCardClick(): void {
-    track('share_inline_card_clicked');
     openShareDialog('wizard-card');
   }
   const cookiesPath = settings?.common?.cookiesPath ?? '';

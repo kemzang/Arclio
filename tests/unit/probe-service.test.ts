@@ -111,6 +111,34 @@ describe('ProbeService — playlist probe', () => {
       expect(r.data.entries[0].title).toBe('First Song');
     }
   });
+
+  it('assigns a unique row id even when the same video appears multiple times (YouTube mix / radio)', async () => {
+    // Simulates a YouTube radio mix where the same video appears at two
+    // playlist positions. Before the fix, both rows shared the same id and a
+    // single user selection produced two queue items.
+    const json = JSON.stringify({
+      _type: 'playlist',
+      id: 'RDmix',
+      title: 'Mix',
+      extractor: 'youtube:tab',
+      extractor_key: 'YoutubeTab',
+      webpage_url: 'https://www.youtube.com/watch?v=dup&list=RDmix',
+      entries: [
+        { _type: 'url', id: 'dup', title: 'Repeated Song', url: 'https://www.youtube.com/watch?v=dup', playlist_index: 1 },
+        { _type: 'url', id: 'unique', title: 'Other Song', url: 'https://www.youtube.com/watch?v=unique', playlist_index: 2 },
+        { _type: 'url', id: 'dup', title: 'Repeated Song', url: 'https://www.youtube.com/watch?v=dup', playlist_index: 3 }
+      ]
+    });
+    vi.mocked(spawnYtDlp).mockReturnValue(makeFakeProcessEmitting(json) as never);
+
+    const r = await makeProbeService().probe('https://www.youtube.com/watch?v=dup&list=RDmix');
+    expect(r.ok).toBe(true);
+    if (r.ok && r.data.kind === 'playlist') {
+      const ids = r.data.entries.map((e) => e.id);
+      expect(new Set(ids).size).toBe(3);
+      expect(ids).toEqual(['1::dup', '2::unique', '3::dup']);
+    }
+  });
 });
 
 describe('ProbeService — heterogeneous playlist filter', () => {
@@ -133,7 +161,9 @@ describe('ProbeService — heterogeneous playlist filter', () => {
     expect(r.ok).toBe(true);
     if (r.ok && r.data.kind === 'playlist') {
       expect(r.data.entries).toHaveLength(1);
-      expect(r.data.entries[0].id).toBe('realvid111');
+      // PlaylistEntry.id is index-prefixed so YouTube-mix duplicates each get
+      // a unique row id; the underlying video id appears after the "::".
+      expect(r.data.entries[0].id.endsWith('::realvid111')).toBe(true);
     }
   });
 

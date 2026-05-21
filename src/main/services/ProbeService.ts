@@ -236,8 +236,16 @@ function mapPlaylistEntries(entries: readonly InfoDict[], jobUrl: string, site: 
     const rawTitle = typeof v.title === 'string' ? v.title.trim() : '';
     const idHint = idStr ? siteHintForId(site, idStr) : null;
     const title = rawTitle.length > 0 ? rawTitle : (idHint ?? untitledLabel(playlistIndex));
+    // PlaylistEntry.id must be unique per row, not per video. YouTube mix /
+    // radio feeds frequently repeat the same video at multiple positions;
+    // collapsing them to one id would make the selection state and the
+    // post-confirm filter (`playlistItems.filter(e => ids.includes(e.id))`)
+    // treat them as one — clicking one would check both, and a single
+    // selection would produce two queue items. Index-prefixing guarantees
+    // 1 row = 1 stable id even when the underlying yt-dlp id collides.
+    const videoIdPart = typeof v.id === 'string' && v.id.length > 0 ? v.id : url;
     out.push({
-      id: typeof v.id === 'string' && v.id.length > 0 ? v.id : url,
+      id: `${playlistIndex}::${videoIdPart}`,
       url,
       title,
       thumbnail: pickEntryThumbnail(entry),

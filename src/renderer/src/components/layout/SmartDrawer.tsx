@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { ChevronDown, Gauge, Inbox, Pause, Play, Share2, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { isHighValueDownload } from '@shared/queueItem.js';
@@ -11,7 +11,6 @@ import { ScrollArea } from '../ui/scroll-area.js';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover.js';
 import { LimitRatePicker } from '../shared/LimitRatePicker.js';
 import { formatLimitRateLabel } from '../shared/limitRateFormat.js';
-import { track } from '../../lib/analytics.js';
 
 export function SmartDrawer(): JSX.Element {
   const { t } = useTranslation();
@@ -22,7 +21,7 @@ export function SmartDrawer(): JSX.Element {
   const dismissQueueTip = useAppStore((s) => s.dismissQueueTip);
   const clearCompleted = useAppStore((s) => s.clearCompleted);
   const pauseAll = useAppStore((s) => s.pauseAll);
-  const resumeFirst = useAppStore((s) => s.resumeFirst);
+  const resumeAll = useAppStore((s) => s.resumeAll);
   const cancelAll = useAppStore((s) => s.cancelAll);
   const shareHighValueBannerDismissed = useAppStore((s) => s.settings?.common?.shareHighValueBannerDismissed ?? false);
   const openShareDialog = useAppStore((s) => s.openShareDialog);
@@ -50,13 +49,6 @@ export function SmartDrawer(): JSX.Element {
 
   const hasHighValueCompletion = useMemo(() => queue.some(isHighValueDownload), [queue]);
   const showShareBanner = hasHighValueCompletion && !shareHighValueBannerDismissed;
-  const bannerImpressionFiredRef = useRef(false);
-  useEffect(() => {
-    if (showShareBanner && !bannerImpressionFiredRef.current) {
-      bannerImpressionFiredRef.current = true;
-      track('share_prompt_impression', { via: 'high-value-inline' });
-    }
-  }, [showShareBanner]);
 
   let headerSummary: string | null = null;
   if (activeCount === 1) {
@@ -113,13 +105,13 @@ export function SmartDrawer(): JSX.Element {
               data-testid="btn-resume-first"
               onClick={(e) => {
                 e.stopPropagation();
-                void resumeFirst();
+                void resumeAll();
               }}
               className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-0.5 rounded hover:bg-accent"
-              title={t('queue.resumeFirstTitle')}
+              title={t('queue.resumeAllTitle')}
             >
               <Play size={10} />
-              {t('queue.resumeFirst')}
+              {t('queue.resumeAll')}
             </button>
           )}
           {hasInFlight && (

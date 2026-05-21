@@ -1,6 +1,6 @@
 import { IPC_CHANNELS } from '@shared/ipc.js';
 import type { AppApi } from '@shared/api.js';
-import type { ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmupProgressEvent } from '@shared/types.js';
+import type { ProgressEvent, QueueItem, QueueLane, StatusEvent, UpdateAvailablePayload, WarmupProgressEvent } from '@shared/types.js';
 
 // Minimal IpcRenderer shape — only what the api factory uses, no electron dep.
 export interface PreloadIpcRenderer {
@@ -98,7 +98,10 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
         cancel: (input: { itemId: string | null }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdCancel, input),
         retry: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdRetry, input),
         clearCompleted: () => ipcRenderer.invoke(IPC_CHANNELS.queueCmdClearCompleted),
-        remove: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdRemove, input)
+        remove: (input: { itemId: string }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdRemove, input),
+        setLane: (input: { itemId: string; lane: QueueLane }) => ipcRenderer.invoke(IPC_CHANNELS.queueCmdSetLane, input),
+        pauseAll: () => ipcRenderer.invoke(IPC_CHANNELS.queueCmdPauseAll),
+        resumeAll: () => ipcRenderer.invoke(IPC_CHANNELS.queueCmdResumeAll)
       },
       events: {
         onSnapshot: (listener) => {

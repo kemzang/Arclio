@@ -49,10 +49,7 @@ const ALLOWED: Record<string, readonly string[]> = {
   share_dialog_closed: ['via', 'clicked'],
   share_destination_clicked: ['destination'],
   share_link_copied: [],
-  share_inline_card_impression: [],
-  share_inline_card_clicked: [],
   share_inline_card_dismissed: [],
-  share_prompt_impression: ['via'],
   share_prompt_dismissed: ['via']
 };
 

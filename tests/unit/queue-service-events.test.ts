@@ -22,7 +22,7 @@ class FakeDownloadService extends EventEmitter {
 
 function fakeStore(): QueueStore {
   return {
-    load: vi.fn().mockResolvedValue({ ok: true, data: [] }),
+    load: vi.fn().mockResolvedValue({ ok: true, data: { items: [], schedulerPaused: false } }),
     save: vi.fn().mockResolvedValue({ ok: true, data: undefined })
   } as unknown as QueueStore;
 }
@@ -99,7 +99,7 @@ describe('QueueService — downloadService listener path', () => {
     const reloaded = await store.load();
     expect(reloaded.ok).toBe(true);
     if (!reloaded.ok) return;
-    expect(reloaded.data).toEqual([]);
+    expect(reloaded.data.items).toEqual([]);
   });
 });
 

@@ -120,7 +120,10 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
         cancel: vi.fn().mockResolvedValue(ok(undefined)),
         retry: vi.fn().mockResolvedValue(ok(undefined)),
         clearCompleted: vi.fn().mockResolvedValue(ok(undefined)),
-        remove: vi.fn().mockResolvedValue(ok(undefined))
+        remove: vi.fn().mockResolvedValue(ok(undefined)),
+        setLane: vi.fn().mockResolvedValue(ok(undefined)),
+        pauseAll: vi.fn().mockResolvedValue(ok(undefined)),
+        resumeAll: vi.fn().mockResolvedValue(ok(undefined))
       },
       events: {
         onSnapshot: vi.fn().mockReturnValue(() => undefined),

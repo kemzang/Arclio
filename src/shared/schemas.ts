@@ -73,6 +73,15 @@ export type CookiesBrowser = z.infer<typeof cookiesBrowserSchema>;
 export const queueItemStatusSchema = z.enum(['pending', 'running', 'paused-held', 'paused-active', 'done', 'error', 'cancelled']);
 export type QueueItemStatus = z.infer<typeof queueItemStatusSchema>;
 
+// Lane controls how the scheduler treats an item. `normal` items respect the
+// single-slot cap and the inter-job sleep window — typical queue flow.
+// `priority` items spawn alongside whatever is running and bypass the sleep
+// window, gated only by the maxConcurrent ceiling. User intent: "skip the
+// queue, pull this now." Set via the wizard's "Pull it!" CTA or the drawer
+// card's Pull-now button.
+export const queueLaneSchema = z.enum(['normal', 'priority']);
+export type QueueLane = z.infer<typeof queueLaneSchema>;
+
 const ytDlpErrorKindSchema = z.enum(YT_DLP_ERROR_KINDS);
 
 // Reified queue-status names for use in equality checks. Exact mirror of the schema.
@@ -331,6 +340,7 @@ export const queueItemSchema = z.object({
   outputDir: z.string(),
   formatLabel: z.string(),
   status: queueItemStatusSchema,
+  lane: queueLaneSchema.default('normal'),
   progressPercent: z.number(),
   progressDetail: z.string().nullable(),
   lastStatus: statusSnapshotSchema.nullable(),
