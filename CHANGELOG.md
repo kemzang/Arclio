@@ -8,6 +8,41 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.3.5
+
+This release tightens resume reliability for tricky sites and adds the speed-limit control a lot of you have asked for.
+
+## Highlights
+
+### Per-Job Speed Limits
+You can now cap how fast Arroxy downloads, so background jobs do not steal your whole connection.
+
+- New rate-limit picker in the wizard and in the queue drawer, with presets like `500K`, `2M`, `5M` plus a custom value.
+- Limits are validated before they are sent to yt-dlp, so typos do not silently get ignored.
+- A small inline hint explains that an in-flight download needs Pause + Resume to pick up a new limit.
+
+### More Trustworthy Resume
+Big or fiddly downloads now survive interruptions a lot better.
+
+- Resumed downloads reuse cached metadata from the original spawn instead of re-extracting on every retry. Sites with short-lived signed URLs, shifting HLS/DASH format IDs, or session-bound cookies (PornHub being a notable one) no longer trip the "Requested format is not available" error on resume.
+- The fix is invisible: Arroxy writes a small info file into the preserved temp folder on the first run, and the next spawn picks it up automatically.
+
+### Smoother Queue
+A big rewrite under the hood of the download queue makes state transitions cleaner and progress reporting more accurate.
+
+- The ETA (estimated time left) shown on active downloads is finally honest — it now reflects current throughput instead of an averaged-since-start figure.
+- Internal telemetry around the queue was tightened so error categories and lifecycle events line up consistently.
+- Small visual polish on the queue drawer, queue items, and the confirm + URL-input wizard steps.
+
+### Security
+- Closed two high-severity advisories pulled in transitively through `ajv` by overriding `fast-uri` to a patched version. No user action needed.
+
+### Maintenance
+- Dependency refresh across the board: Electron, electron-builder, i18next, Tailwind Merge, Playwright, Vite, Vitest, plus a sweep of GitHub Actions versions.
+- The marketing site moved to its own repository ([`antonio-orionus/arroxy-web`](https://github.com/antonio-orionus/arroxy-web)); the app repo is leaner now.
+
+---
+
 ## 0.3.5-beta.1
 
 This beta tightens resume reliability for tricky sites and adds the speed-limit control a lot of you have asked for.
