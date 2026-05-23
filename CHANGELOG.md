@@ -8,6 +8,60 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.3.6
+
+This release is all about big playlists. If you ever pasted a 290-video URL and watched Arroxy slowly chew through it while the UI lagged behind, this one is for you.
+
+## Highlights
+
+### Large playlists no longer drag the UI
+
+Queueing hundreds of items used to push the renderer multiple seconds behind the actual download state. With a 290-video playlist, the drawer would still show "downloading Ep. 4" while yt-dlp was already on Ep. 7.
+
+- Progress events from yt-dlp are now coalesced on the main side at 10 Hz per job. Transitions (started, completed, merging, failed) still fire immediately — only the lossy "downloading X.X%" stream is throttled.
+- Queue updates arriving in the renderer are now batched per animation frame. Updates, additions, and removals coming in the same frame merge into a single state mutation and one React commit.
+- The queue drawer is now virtualized. Only the rows in view (plus a small over-scroll buffer) mount in the DOM. Drawer scroll stays smooth at any queue size.
+
+### "Cancel all" + "Clear" go from minutes to a blink
+
+Cancelling and clearing a 290-item queue used to take **a full minute** in the worst case. Each item triggered its own disk write and its own re-render.
+
+- Bulk cancel and bulk clear now persist the queue file once at the end of the sweep, not per item.
+- The renderer applies all the removals in one pass per animation frame.
+
+End-to-end, clearing a 290-item queue is now under a second.
+
+### Full YouTube playlist enumeration
+
+Probing a YouTube playlist now returns **all** entries (up to the configured cap), not the first 100.
+
+- We were sending a `visitor_data` token alongside the YouTube tab extractor probe, which silently capped tab pagination at one innertube page (100 entries) regardless of `--playlist-end`. Symptom: "can't fetch more than 100 videos."
+- Probes no longer need PoT/visitor_data — they only fetch metadata, not streaming URLs — so we skip that path entirely for probes. Non-web clients (android/ios) provide the format JSON without it.
+
+### Smarter URL paste
+
+URLs pasted from word-wrapped terminals, chat bubbles, or PDF viewers often arrive with a newline or stray space mid-link. Arroxy now cleans those up before parsing.
+
+- A line break injected mid-playlist-ID no longer turns into `%20` and mangles the URL.
+- Tabs, CRLFs, and literal spaces all get stripped at paste time.
+- Already-encoded `%20` sequences (legitimately part of a path) are left alone.
+
+### No more accidental double-submit
+
+Submitting a 290-entry playlist takes a perceptible moment while Arroxy builds and ships the queue items. Mash the button twice and you used to end up with duplicates.
+
+- The "Add to queue" and "Pull it" buttons are now disabled while the submission is in flight.
+- A guard at the function level catches double-fires from keyboard shortcuts too.
+
+### Smaller stuff
+- Error messages in the queue drawer now stay on a single line and reveal the full text in a tooltip on hover. Keeps the queue density tight even when something blows up verbosely.
+
+### Maintenance
+- Internal IPC seam now has a single chokepoint for the bulk-write guard, so future bulk operations (think: future import-from-file) get the perf optimization for free.
+- Dropped the shadcn `ScrollArea` wrapper specifically for the queue drawer — the virtualizer needed direct access to the scroll element. Other ScrollArea usages elsewhere in the app are unchanged.
+
+---
+
 ## 0.3.5
 
 This release tightens resume reliability for tricky sites and adds the speed-limit control a lot of you have asked for.

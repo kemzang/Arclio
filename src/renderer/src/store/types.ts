@@ -144,6 +144,11 @@ export interface WizardDialogsSlice {
 // on init and updates via the four diff events. Local mutations are forbidden.
 export interface QueueSlice {
   queue: QueueItem[];
+  // True while submitWizardToQueue is in flight. Lets the confirm step
+  // disable its action buttons so a user staring at a momentarily-frozen UI
+  // (e.g. a 290-entry playlist mid-add) doesn't double-submit and produce
+  // duplicate queue items.
+  isSubmittingToQueue: boolean;
 
   addToQueue: () => Promise<void>;
   addAndDownloadImmediately: () => Promise<void>;

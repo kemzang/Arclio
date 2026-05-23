@@ -695,23 +695,42 @@ describe('YtDlp — sidecar flags', () => {
 });
 
 describe('YtDlp — extractor-args shape', () => {
-  it('PoT: youtube:po_token=web.gvs+<token>;visitor_data=<vd>', async () => {
+  it('PoT (kind=video): youtube:po_token=web.gvs+<token>;visitor_data=<vd>', async () => {
     const ytDlp = makeYtDlp({ token: 'MYTOKEN', visitorData: 'MYVISITOR' });
-    await ytDlp.run({ kind: 'probe', url: URL });
+    await ytDlp.run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR });
     const args = getArgs();
     const i = args.indexOf('--extractor-args');
     expect(i).toBeGreaterThanOrEqual(0);
     expect(args[i + 1]).toBe('youtube:po_token=web.gvs+MYTOKEN;visitor_data=MYVISITOR');
   });
 
-  it('empty visitorData → omits ;visitor_data= segment', async () => {
+  it('empty visitorData (kind=video) → omits ;visitor_data= segment', async () => {
     const ytDlp = makeYtDlp({ token: 'MYTOKEN', visitorData: '' });
-    await ytDlp.run({ kind: 'probe', url: URL });
+    await ytDlp.run({ kind: 'video', url: URL, outputDir: OUTPUT_DIR });
     const args = getArgs();
     const i = args.indexOf('--extractor-args');
     expect(i).toBeGreaterThanOrEqual(0);
     expect(args[i + 1]).toBe('youtube:po_token=web.gvs+MYTOKEN');
     expect(args[i + 1]).not.toContain('visitor_data');
+  });
+
+  // Regression guard: visitor_data passed to YouTube tab extractor silently
+  // caps playlist enumeration at 100 entries (single innertube page),
+  // regardless of --playlist-end. Probes are metadata-only and don't fetch
+  // streaming URLs, so PoT is unneeded; skipping it lets non-web clients
+  // (android/ios) provide full format JSON and unblocks tab pagination.
+  it('probe (YouTube): no --extractor-args (bypasses PoT to avoid visitor_data tab cap)', async () => {
+    const ytDlp = makeYtDlp({ token: 'MYTOKEN', visitorData: 'MYVISITOR' });
+    await ytDlp.run({ kind: 'probe', url: URL });
+    const args = getArgs();
+    expect(args).not.toContain('--extractor-args');
+  });
+
+  it('probe (YouTube, playlistMode=video): also no --extractor-args', async () => {
+    const ytDlp = makeYtDlp({ token: 'MYTOKEN', visitorData: 'MYVISITOR' });
+    await ytDlp.run({ kind: 'probe', url: URL, playlistMode: 'video' });
+    const args = getArgs();
+    expect(args).not.toContain('--extractor-args');
   });
 });
 

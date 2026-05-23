@@ -184,3 +184,153 @@ describe('pauseAll', () => {
     expect(qs.snapshot().find((i) => i.id === 'b')?.status).toBe('paused-active');
   });
 });
+
+describe('QueueService — POST_DOWNLOAD_PHASES progress gate', () => {
+  // Helper: build a phase-patch status event (downloadingMedia / mergingFormats / etc.)
+  // Mirrors consumeStatusEvent's non-terminal `stage` path that hits the
+  // `commit({kind:'patch'})` branch in QueueService.
+  function phaseStatus(jobId: string, statusKey: 'mergingFormats' | 'embeddingMetadata' | 'movingFiles' | 'extractingAudio' | 'convertingVideo' | 'downloadingMedia'): StatusEvent {
+    return { jobId, stage: 'download', statusKey, at: new Date().toISOString() };
+  }
+
+  it('drops progress arriving while item is in mergingFormats phase', () => {
+    const { qs, ds } = makeService();
+    qs.add([makeItem({ id: 'q-1', status: 'running', lastJobId: 'job-1' })]);
+
+    // Bring item into a download phase first, then transition to merging.
+    ds.emit('status', phaseStatus('job-1', 'downloadingMedia'));
+    ds.emit('progress', progressEvent('job-1', 50)); // accepted
+    qs.flushPendingProgressForTests();
+    expect(qs.snapshot()[0].progressPercent).toBeCloseTo(50, 1);
+
+    ds.emit('status', phaseStatus('job-1', 'mergingFormats'));
+    expect(qs.snapshot()[0].lastStatus?.key).toBe('mergingFormats');
+
+    // Stale [download] line yt-dlp may emit after Merger — must NOT overwrite
+    // lastStatus or repopulate progressDetail. progressPercent monotonic so
+    // the new percent is also irrelevant; the key invariant is that the merge
+    // label survives.
+    ds.emit('progress', progressEvent('job-1', 60));
+    qs.flushPendingProgressForTests();
+    expect(qs.snapshot()[0].lastStatus?.key).toBe('mergingFormats');
+    expect(qs.snapshot()[0].progressDetail).toBeNull();
+  });
+
+  it('drops progress in every post-download phase (embeddingMetadata, movingFiles, extractingAudio, convertingVideo)', () => {
+    for (const phase of ['embeddingMetadata', 'movingFiles', 'extractingAudio', 'convertingVideo'] as const) {
+      const { qs, ds } = makeService();
+      qs.add([makeItem({ id: 'q-1', status: 'running', lastJobId: 'job-1' })]);
+      ds.emit('status', phaseStatus('job-1', phase));
+      ds.emit('progress', progressEvent('job-1', 70));
+      qs.flushPendingProgressForTests();
+      expect(qs.snapshot()[0].lastStatus?.key, `phase=${phase}`).toBe(phase);
+    }
+  });
+
+  it('allows progress during downloadingMedia phase (sanity)', () => {
+    const { qs, ds } = makeService();
+    qs.add([makeItem({ id: 'q-1', status: 'running', lastJobId: 'job-1' })]);
+    ds.emit('status', phaseStatus('job-1', 'downloadingMedia'));
+    ds.emit('progress', progressEvent('job-1', 30));
+    qs.flushPendingProgressForTests();
+    expect(qs.snapshot()[0].progressPercent).toBeCloseTo(30, 1);
+  });
+});
+
+describe('QueueService — progress coalescing', () => {
+  it('multiple progress events flush as a single updated emit', () => {
+    vi.useFakeTimers();
+    try {
+      const { qs, ds } = makeService();
+      qs.add([makeItem({ id: 'q-1', status: 'running', lastJobId: 'job-1' })]);
+      // Drain the synchronous `started` + `add` updated emits before counting.
+      const updates: { item: { id: string; progressPercent: number } }[] = [];
+      qs.on('updated', (e: { item: { id: string; progressPercent: number } }) => updates.push(e));
+
+      ds.emit('progress', progressEvent('job-1', 10));
+      ds.emit('progress', progressEvent('job-1', 30));
+      ds.emit('progress', progressEvent('job-1', 50));
+      ds.emit('progress', progressEvent('job-1', 70));
+
+      // Nothing emitted yet — all four buffered.
+      expect(updates).toHaveLength(0);
+
+      vi.advanceTimersByTime(100);
+
+      // One coalesced emit carrying the latest state (highest monotonic percent).
+      expect(updates).toHaveLength(1);
+      expect(updates[0].item.progressPercent).toBeCloseTo(70, 1);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('transition during pending progress drops the stale buffered progress', () => {
+    vi.useFakeTimers();
+    try {
+      const { qs, ds } = makeService();
+      qs.add([makeItem({ id: 'q-1', status: 'running', lastJobId: 'job-1' })]);
+      const updates: { item: { id: string; status: string; progressPercent: number } }[] = [];
+      qs.on('updated', (e: { item: { id: string; status: string; progressPercent: number } }) => updates.push(e));
+
+      ds.emit('progress', progressEvent('job-1', 47)); // buffered
+      // Transition fires immediately and clears the buffer.
+      ds.emit('status', { jobId: 'job-1', stage: 'done', statusKey: 'complete', at: new Date().toISOString() });
+      expect(updates).toHaveLength(1);
+      expect(updates[0].item.status).toBe('done');
+
+      // Pending progress was dropped — no late flush firing the stale 47%.
+      vi.advanceTimersByTime(200);
+      expect(updates).toHaveLength(1);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+});
+
+describe('QueueService — bulk persist coalescing', () => {
+  it('cancelAll persists once regardless of item count', async () => {
+    const store = fakeStore();
+    const saveSpy = vi.mocked(store.save);
+    const ds = new FakeDownloadService();
+    const qs = new QueueService(store, ds as unknown as DownloadService);
+    const items = Array.from({ length: 50 }, (_, i) => makeItem({ id: `q-${i}`, status: 'pending' }));
+    qs.add(items);
+    const baselineCalls = saveSpy.mock.calls.length; // add() persists once
+
+    await qs.cancel(null);
+
+    // Exactly one persist for the entire sweep — not 50.
+    expect(saveSpy.mock.calls.length - baselineCalls).toBe(1);
+    // All items cancelled.
+    expect(qs.snapshot().every((i) => i.status === 'cancelled')).toBe(true);
+  });
+
+  it('clearCompleted persists once regardless of item count', () => {
+    const store = fakeStore();
+    const saveSpy = vi.mocked(store.save);
+    const ds = new FakeDownloadService();
+    const qs = new QueueService(store, ds as unknown as DownloadService);
+    const items = Array.from({ length: 30 }, (_, i) => makeItem({ id: `q-${i}`, status: 'done' }));
+    qs.add(items);
+    const baselineCalls = saveSpy.mock.calls.length;
+
+    qs.clearCompleted();
+
+    expect(saveSpy.mock.calls.length - baselineCalls).toBe(1);
+    expect(qs.snapshot()).toHaveLength(0);
+  });
+
+  it('clearCompleted with no eligible items does not persist', () => {
+    const store = fakeStore();
+    const saveSpy = vi.mocked(store.save);
+    const ds = new FakeDownloadService();
+    const qs = new QueueService(store, ds as unknown as DownloadService);
+    qs.add([makeItem({ id: 'q-1', status: 'pending' })]);
+    const baselineCalls = saveSpy.mock.calls.length;
+
+    qs.clearCompleted();
+
+    expect(saveSpy.mock.calls.length - baselineCalls).toBe(0);
+  });
+});

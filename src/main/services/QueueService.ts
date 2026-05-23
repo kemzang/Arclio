@@ -21,7 +21,7 @@ import log from 'electron-log/main.js';
 import { fail, ok, type Result } from '@shared/result.js';
 import { createAppError } from '@main/utils/errorFactory.js';
 import { nowIso } from '@main/utils/clock.js';
-import { QUEUE_STATUS, type QueueLane } from '@shared/schemas.js';
+import { QUEUE_STATUS, STATUS_KEY, type QueueLane, type StatusKey } from '@shared/schemas.js';
 import { transition, illegalTransition, type QueueEvent } from '@shared/queueTransition.js';
 import { ProgressFormatter, nextMonotonicPercent } from '@shared/progressFormat.js';
 import { INTER_JOB_SLEEP_MS, MAX_CONCURRENT_DOWNLOADS, NORMAL_LANE_CAP } from '@shared/constants.js';
@@ -57,6 +57,19 @@ export class QueueService extends EventEmitter {
   // One ProgressFormatter per running jobId — preserves throttle / spike-suppress
   // state across consecutive progress lines for that job.
   private readonly progressFormatters = new Map<string, ProgressFormatter>();
+  // Progress-event coalescing seam. yt-dlp emits many progress lines per second
+  // per job; un-throttled, the renderer queue projection (290+ items) cannot
+  // keep up with the IPC fan-out. Progress is lossy (latest wins per item),
+  // transitions (started/completed/failed/phase patch) are not — they bypass
+  // the buffer via emitImmediate and drop any in-flight progress for that item.
+  private pendingProgress = new Map<string, QueueItem>();
+  private flushTimer: NodeJS.Timeout | null = null;
+  private static readonly PROGRESS_FLUSH_MS = 100;
+  // Bulk-mutation guard: when true, per-commit persist() is suppressed so a
+  // bulk operation (cancelAll, clearCompleted) writes queue.json once at the
+  // end instead of N times. JSON.stringify on a 290-item queue is ~5ms each;
+  // 500+ writes back-to-back blocks the main thread for seconds.
+  private inBulk = false;
 
   constructor(
     private readonly queueStore: QueueStore,
@@ -237,17 +250,20 @@ export class QueueService extends EventEmitter {
       // says "cancelled", yt-dlp says "still running".
       this.clearSleep();
       this.schedulerPaused = true;
-      for (const id of ids) {
-        this.commit({ kind: 'event', itemId: id, evt: { kind: 'cancelled' } });
+      this.inBulk = true;
+      try {
+        for (const id of ids) {
+          this.commit({ kind: 'event', itemId: id, evt: { kind: 'cancelled' } });
+        }
+      } finally {
+        this.inBulk = false;
       }
       // Restore "fresh slate" — future adds auto-spawn. Nothing pending
       // survives the sweep, so this last recomputeSchedule is a no-op
       // unless the renderer added a new item mid-flight.
       this.schedulerPaused = false;
       this.recomputeSchedule();
-      // Persist the cleared flag — the per-item cancel commits saved it
-      // as `true`, so without this the next boot would come up paused
-      // even though cancel-all is meant to leave a fresh slate.
+      // Single persist for the whole sweep — also flushes schedulerPaused=false.
       this.persist();
       logger.info('cancelAll done', { snapshot: this.statusSummary() });
       return ok(undefined);
@@ -295,9 +311,15 @@ export class QueueService extends EventEmitter {
 
   clearCompleted(): Result<void> {
     const idsToRemove = this.items.filter((i) => i.status === QUEUE_STATUS.done || i.status === QUEUE_STATUS.cancelled || i.status === QUEUE_STATUS.error).map((i) => i.id);
-    for (const id of idsToRemove) {
-      this.commit({ kind: 'remove', itemId: id });
+    this.inBulk = true;
+    try {
+      for (const id of idsToRemove) {
+        this.commit({ kind: 'remove', itemId: id });
+      }
+    } finally {
+      this.inBulk = false;
     }
+    if (idsToRemove.length > 0) this.persist();
     return ok(undefined);
   }
 
@@ -353,9 +375,31 @@ export class QueueService extends EventEmitter {
     });
   }
 
+  // Post-download phase keys. yt-dlp can emit a straggler `[download] X%`
+  // line AFTER the Merger/Metadata/MoveFiles status events due to stdout
+  // buffering. Without this gate, the late progress event would re-populate
+  // `progressDetail` and the UI would flip from "Merging formats…" back to
+  // "downloading at X MB/s" — visible regression on every fast job.
+  private static readonly POST_DOWNLOAD_PHASES: ReadonlySet<StatusKey> = new Set([
+    STATUS_KEY.mergingFormats,
+    STATUS_KEY.extractingAudio,
+    STATUS_KEY.convertingVideo,
+    STATUS_KEY.embeddingMetadata,
+    STATUS_KEY.movingFiles
+  ]);
+
   consumeProgressEvent(event: ProgressEvent): void {
     const item = this.findByJobId(event.jobId);
     if (!item) return;
+    // Drop progress arriving while item is in a post-download phase (see
+    // POST_DOWNLOAD_PHASES). Also drop the pending coalesced progress for
+    // this item — a phase patch already cleared it via emitImmediate, but a
+    // racing progress event could have re-enqueued before this guard ran.
+    const lastKey = item.lastStatus?.key;
+    if (lastKey && QueueService.POST_DOWNLOAD_PHASES.has(lastKey)) {
+      this.pendingProgress.delete(item.id);
+      return;
+    }
     let formatter = this.progressFormatters.get(event.jobId);
     if (!formatter) {
       formatter = new ProgressFormatter();
@@ -370,6 +414,42 @@ export class QueueService extends EventEmitter {
   }
 
   // commit pipeline --------------------------------------------------------
+
+  // Transitions, phase patches, and any non-progress update bypass the
+  // coalescer. A pending progress emit for the same item is dropped because
+  // the transition encodes a newer state; emitting the stale progress after
+  // the transition would briefly revert UI from e.g. "merging" to "downloading
+  // 47%". Dropping is safe because progress fields ride along on every
+  // QueueItem and the transition's `next` already carries the latest values.
+  private emitImmediate(item: QueueItem): void {
+    this.pendingProgress.delete(item.id);
+    this.emit('updated', { item });
+  }
+
+  // Latest-wins per itemId, flushed at PROGRESS_FLUSH_MS. setTimeout (not
+  // setImmediate) so the renderer event loop can drain between bursts.
+  private emitProgress(item: QueueItem): void {
+    this.pendingProgress.set(item.id, item);
+    if (this.flushTimer) return;
+    this.flushTimer = setTimeout(() => {
+      this.flushTimer = null;
+      const batch = this.pendingProgress;
+      this.pendingProgress = new Map();
+      for (const it of batch.values()) this.emit('updated', { item: it });
+    }, QueueService.PROGRESS_FLUSH_MS);
+  }
+
+  // Test seam — synchronously drain pending progress. Production code never
+  // calls this; the timer flushes naturally.
+  flushPendingProgressForTests(): void {
+    if (this.flushTimer) {
+      clearTimeout(this.flushTimer);
+      this.flushTimer = null;
+    }
+    const batch = this.pendingProgress;
+    this.pendingProgress = new Map();
+    for (const it of batch.values()) this.emit('updated', { item: it });
+  }
 
   private commit(mutation: Mutation): void {
     logger.debug('commit', { mutation: this.describeMutation(mutation) });
@@ -393,7 +473,8 @@ export class QueueService extends EventEmitter {
         const next = transition(prev, mutation.evt);
         this.items[idx] = next;
         this.persist();
-        this.emit('updated', { item: next });
+        if (mutation.evt.kind === 'progress') this.emitProgress(next);
+        else this.emitImmediate(next);
         break;
       }
       case 'patch': {
@@ -402,7 +483,7 @@ export class QueueService extends EventEmitter {
         const next = mutation.patcher(this.items[idx]);
         this.items[idx] = next;
         this.persist();
-        this.emit('updated', { item: next });
+        this.emitImmediate(next);
         break;
       }
       case 'remove': {
@@ -410,6 +491,7 @@ export class QueueService extends EventEmitter {
         if (idx < 0) return;
         this.items.splice(idx, 1);
         this.persist();
+        this.pendingProgress.delete(mutation.itemId);
         this.emit('removed', { itemId: mutation.itemId });
         break;
       }
@@ -535,7 +617,13 @@ export class QueueService extends EventEmitter {
     return this.items.find((i) => i.lastJobId === jobId);
   }
 
+  // Persist gate: short-circuits when a bulk op (cancelAll, clearCompleted)
+  // is in flight. Each commit() call site invokes persist() unconditionally
+  // for clarity — the guard here is the single chokepoint. If a future bulk
+  // path adds items (e.g., import-from-file), the same invariant holds
+  // without needing per-case handling.
   private persist(): void {
+    if (this.inBulk) return;
     void this.queueStore.save(this.items, this.schedulerPaused).catch((err) => {
       logger.error('Queue persist failed', { error: err instanceof Error ? err.message : String(err) });
     });

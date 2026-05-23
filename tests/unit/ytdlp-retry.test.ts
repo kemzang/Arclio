@@ -52,7 +52,7 @@ describe('YtDlp — retry ladder', () => {
     vi.mocked(spawnYtDlp).mockReturnValue(makeFakeProcess(0) as never);
     const { ytDlp } = makeYtDlp();
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL });
+    const result = await ytDlp.run({ kind: 'video', url: URL, outputDir: '/tmp' });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(false);
@@ -67,7 +67,7 @@ describe('YtDlp — retry ladder', () => {
     const { ytDlp, tokenService } = makeYtDlp();
     tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'old-tok', visitorData: 'vd', fromCache: false }).mockResolvedValueOnce({ token: 'new-tok', visitorData: 'vd', fromCache: false });
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL });
+    const result = await ytDlp.run({ kind: 'video', url: URL, outputDir: '/tmp' });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(false);
@@ -87,7 +87,7 @@ describe('YtDlp — retry ladder', () => {
 
     const { ytDlp, tokenService } = makeYtDlp();
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL });
+    const result = await ytDlp.run({ kind: 'video', url: URL, outputDir: '/tmp' });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(true);
@@ -104,7 +104,7 @@ describe('YtDlp — retry ladder', () => {
     const { ytDlp, tokenService } = makeYtDlp();
     tokenService.mintTokenForUrl.mockRejectedValueOnce(new Error('provider offline'));
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL });
+    const result = await ytDlp.run({ kind: 'video', url: URL, outputDir: '/tmp' });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(true);
@@ -122,7 +122,7 @@ describe('YtDlp — retry ladder', () => {
     const { ytDlp, tokenService } = makeYtDlp();
     tokenService.mintTokenForUrl.mockResolvedValueOnce({ token: 'tok', visitorData: 'vd', fromCache: false }).mockRejectedValueOnce(new Error('re-mint failed'));
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL });
+    const result = await ytDlp.run({ kind: 'video', url: URL, outputDir: '/tmp' });
 
     expect(result.kind).toBe('success');
     if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(true);
@@ -135,7 +135,7 @@ describe('YtDlp — retry ladder', () => {
 
     const { ytDlp, tokenService } = makeYtDlp();
 
-    const result = await ytDlp.run({ kind: 'probe', url: URL });
+    const result = await ytDlp.run({ kind: 'video', url: URL, outputDir: '/tmp' });
 
     expect(result.kind).toBe('exit-error');
     expect(tokenService.invalidateCache).not.toHaveBeenCalled();
@@ -152,7 +152,7 @@ describe('YtDlp — retry ladder', () => {
     vi.mocked(spawnYtDlp).mockReturnValue(fakeProc as never);
 
     const { ytDlp } = makeYtDlp();
-    const result = await ytDlp.run({ kind: 'probe', url: URL });
+    const result = await ytDlp.run({ kind: 'video', url: URL, outputDir: '/tmp' });
 
     expect(result.kind).toBe('spawn-error');
     expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(1);

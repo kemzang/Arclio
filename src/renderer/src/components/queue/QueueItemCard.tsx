@@ -1,4 +1,4 @@
-import { type JSX, type ReactNode } from 'react';
+import { memo, type JSX, type ReactNode } from 'react';
 import { AlertTriangle, Ban, Captions, CheckCircle2, Clock, Download, ExternalLink, FastForward, Film, FolderInput, FolderOpen, Hourglass, Layers, Loader2, Music, Pause, PauseCircle, Play, RotateCcw, Tags, X, XCircle, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { QueueItem, QueueItemStatus, StatusKey } from '@shared/types.js';
@@ -52,9 +52,16 @@ const STATUS_PILL: Record<QueueItemStatus, { icon: ReactNode; i18nKey: 'queue.it
   cancelled: { icon: <Ban size={10} />, i18nKey: 'queue.item.statusCancelled', tone: 'text-muted-foreground' }
 };
 
-export function QueueItemCard({ item }: Props): JSX.Element {
+function QueueItemCardImpl({ item }: Props): JSX.Element {
   const { t, i18n } = useTranslation();
-  const { cancelItemDownload, pauseItemDownload, resumeItemDownload, removeQueueItem, retryQueueItem, openItemFolder, openItemUrl, setItemLane } = useAppStore();
+  const cancelItemDownload = useAppStore((s) => s.cancelItemDownload);
+  const pauseItemDownload = useAppStore((s) => s.pauseItemDownload);
+  const resumeItemDownload = useAppStore((s) => s.resumeItemDownload);
+  const removeQueueItem = useAppStore((s) => s.removeQueueItem);
+  const retryQueueItem = useAppStore((s) => s.retryQueueItem);
+  const openItemFolder = useAppStore((s) => s.openItemFolder);
+  const openItemUrl = useAppStore((s) => s.openItemUrl);
+  const setItemLane = useAppStore((s) => s.setItemLane);
 
   const { status } = item;
   const held = status === 'paused-held';
@@ -74,7 +81,7 @@ export function QueueItemCard({ item }: Props): JSX.Element {
   const errorText = formatLocalizedError(item.error) || t('queue.item.defaultError');
 
   return (
-    <li className={cn('flex items-start gap-2.5 py-2 px-2 rounded-md border bg-card/60 transition-[border-color,box-shadow]', subsFailed ? SUBS_FAILED_BORDER : STATUS_BORDER[status])} data-testid={`queue-card-${item.id}`} data-status={status}>
+    <div className={cn('flex items-start gap-2.5 py-2 px-2 rounded-md border bg-card/60 transition-[border-color,box-shadow]', subsFailed ? SUBS_FAILED_BORDER : STATUS_BORDER[status])} data-testid={`queue-card-${item.id}`} data-status={status}>
       <div className="shrink-0 w-12 h-[27px] rounded overflow-hidden bg-secondary mt-0.5">{item.thumbnail ? <img src={item.thumbnail} alt="" aria-hidden referrerPolicy="no-referrer" className="w-full h-full object-cover block" /> : <div className="thumb-shimmer w-full h-full" aria-hidden />}</div>
 
       <div className="flex-1 min-w-0 flex flex-col gap-0.5">
@@ -133,7 +140,10 @@ export function QueueItemCard({ item }: Props): JSX.Element {
         )}
 
         {status === 'error' && (
-          <p className="text-[12px] text-[var(--color-status-error)] mt-0.5 leading-snug" data-testid="queue-error-msg">
+          // Single-line truncate to keep row height fixed for virtualization.
+          // Full text still readable via tooltip (title attribute) and the
+          // expanded item view.
+          <p className="text-[12px] text-[var(--color-status-error)] mt-0.5 leading-snug truncate" title={errorText} data-testid="queue-error-msg">
             {errorText}
           </p>
         )}
@@ -166,6 +176,12 @@ export function QueueItemCard({ item }: Props): JSX.Element {
 
         {!isActive && <TooltipIconButton icon={<X size={12} />} label={t('queue.item.remove')} data-testid="btn-remove" className="w-7 h-7 text-muted-foreground hover:text-[var(--color-status-error)]" onClick={() => void removeQueueItem(item.id)} />}
       </div>
-    </li>
+    </div>
   );
 }
+
+// Memoized: parent re-renders every queue update (raf-batched progress ticks),
+// but flushQueueUpdates preserves item refs for unchanged items, so memo skips
+// cards whose item didn't change. Combined with per-action selectors above,
+// each card only renders when its own data changes.
+export const QueueItemCard = memo(QueueItemCardImpl);

@@ -155,25 +155,37 @@ function buildPlaylistQueueItem(entry: PlaylistEntry, get: GetState, playlistGro
 }
 
 async function submitWizardToQueue(set: SetState, get: GetState, lane: QueueLane): Promise<void> {
-  const { playlistItems, selectedPlaylistItemIds } = get();
-  if (get().wizardMode === 'playlist') {
-    const groupId = generateId();
-    const selected = playlistItems.filter((e) => selectedPlaylistItemIds.includes(e.id));
-    const items = selected.map((e) => buildPlaylistQueueItem(e, get, groupId, lane));
-    await window.appApi.queue.cmd.add(items);
-  } else {
-    const item = buildQueueItem(get, lane);
-    if (!item) return;
-    await window.appApi.queue.cmd.add([item]);
+  // Re-entry guard: large playlists (e.g. 290 entries) take a perceptible
+  // moment to enumerate, serialize over IPC, and commit on the main process.
+  // Without this, a user who thinks the app froze will click the button again
+  // and end up with duplicate queue items. Pair with `isSubmittingToQueue`
+  // being read by StepConfirm to also disable the buttons.
+  if (get().isSubmittingToQueue) return;
+  set({ isSubmittingToQueue: true });
+  try {
+    const { playlistItems, selectedPlaylistItemIds } = get();
+    if (get().wizardMode === 'playlist') {
+      const groupId = generateId();
+      const selected = playlistItems.filter((e) => selectedPlaylistItemIds.includes(e.id));
+      const items = selected.map((e) => buildPlaylistQueueItem(e, get, groupId, lane));
+      await window.appApi.queue.cmd.add(items);
+    } else {
+      const item = buildQueueItem(get, lane);
+      if (!item) return;
+      await window.appApi.queue.cmd.add([item]);
+    }
+    maybeShowQueueTip(set);
+    await persistFormatPrefs(set, get);
+    get().reset();
+  } finally {
+    set({ isSubmittingToQueue: false });
   }
-  maybeShowQueueTip(set);
-  await persistFormatPrefs(set, get);
-  get().reset();
 }
 
 export function createQueueSlice(set: SetState, get: GetState): QueueSlice {
   return {
     queue: [],
+    isSubmittingToQueue: false,
 
     // "+ Queue" → normal lane: respects cap=1, waits for the active slot.
     // "Pull it!" → priority lane: spawns alongside running normal items,

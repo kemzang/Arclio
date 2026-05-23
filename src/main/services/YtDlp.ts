@@ -147,6 +147,7 @@ interface InvokeOptions {
   limitRate?: string;
   timeoutMs?: number;
   signal?: YtDlpSignal;
+  isProbe?: boolean;
 }
 
 async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise<YtDlpResult> {
@@ -319,11 +320,19 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 // Non-YouTube URLs run a single attempt with no --extractor-args. Skipping the
 // PoT mint avoids gratuitous HiddenWindow scrapes for sites where the token
 // would be ignored.
+//
+// Probe requests (--dump-single-json) also bypass the PoT path. The
+// `visitor_data` arg that travels alongside the PoT silently caps YouTube tab
+// pagination at 100 entries (single innertube page) regardless of
+// --playlist-end, so a 290-video playlist comes back with `entries.length=100`
+// and `playlist_count=290` — visible in user reports as "can't fetch more than
+// 100 videos". Probes don't fetch streaming URLs, so PoT validation isn't
+// needed; non-web clients (android/ios) provide the format JSON.
 async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
   // Site adapter resolves PoT applicability from the URL hostname. The unified
   // probe pipeline runs before extractor identity is known, so URL-based
   // routing stays the conservative pre-probe signal.
-  if (!siteForUrl(opts.url).needsPotToken) {
+  if (opts.isProbe || !siteForUrl(opts.url).needsPotToken) {
     return invokeOnce(opts, { kind: 'noExtractorArgs' });
   }
 
@@ -531,6 +540,7 @@ export class YtDlp {
       proxyUrl,
       limitRate,
       timeoutMs: isProbe ? PROBE_TIMEOUT_MS : undefined,
+      isProbe,
       signal
     });
     if (result.kind === 'success' && subtitleFormat) {

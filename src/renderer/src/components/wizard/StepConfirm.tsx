@@ -21,7 +21,7 @@ export function StepConfirm(): JSX.Element {
     thumbnailEmbedNotSupported: t('wizard.confirm.thumbnailEmbedNotSupported'),
     subtitleEmbedAudioOnly: t('wizard.confirm.subtitleEmbedAudioOnly')
   };
-  const { wizardTitle, wizardThumbnail, wizardDuration, wizardWebpageUrl, wizardOutputDir, selectedVideoFormatId, audioSelection, activePreset, wizardFormats, wizardSubtitleLanguages, wizardSubtitleMode, wizardSubtitleFormat, wizardSubtitles, wizardAutomaticCaptions, wizardSubtitleSkipped, commonPaths, wizardSubfolderEnabled, wizardSubfolderName, addToQueue, addAndDownloadImmediately, back, playlistItems, selectedPlaylistItemIds, selectedPlaylistPreset, playlistTitle, wizardMode, wizardExtractor, wizardEmbedChapters, wizardEmbedMetadata, wizardEmbedThumbnail, wizardWriteDescription, wizardWriteThumbnail, wizardSponsorBlockMode } = useAppStore();
+  const { wizardTitle, wizardThumbnail, wizardDuration, wizardWebpageUrl, wizardOutputDir, selectedVideoFormatId, audioSelection, activePreset, wizardFormats, wizardSubtitleLanguages, wizardSubtitleMode, wizardSubtitleFormat, wizardSubtitles, wizardAutomaticCaptions, wizardSubtitleSkipped, commonPaths, wizardSubfolderEnabled, wizardSubfolderName, addToQueue, addAndDownloadImmediately, back, playlistItems, selectedPlaylistItemIds, selectedPlaylistPreset, playlistTitle, wizardMode, wizardExtractor, wizardEmbedChapters, wizardEmbedMetadata, wizardEmbedThumbnail, wizardWriteDescription, wizardWriteThumbnail, wizardSponsorBlockMode, isSubmittingToQueue } = useAppStore();
   const inPlaylist = wizardMode === 'playlist';
 
   const effectiveSubtitleLanguages = wizardSubtitleSkipped ? [] : wizardSubtitleLanguages;
@@ -138,7 +138,7 @@ export function StepConfirm(): JSX.Element {
       )}
 
       <WizardFooter>
-        <Button variant="ghost" type="button" onClick={back} data-testid="btn-back" className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
+        <Button variant="ghost" type="button" onClick={back} data-testid="btn-back" disabled={isSubmittingToQueue} className="border-[1.5px] border-[var(--border-strong)] text-muted-foreground hover:text-foreground">
           {t('common.back')}
         </Button>
         {wizardMode === 'playlist' ? (
@@ -147,7 +147,7 @@ export function StepConfirm(): JSX.Element {
           <Tooltip>
             <TooltipTrigger
               render={(props) => (
-                <Button {...props} type="button" onClick={() => void addToQueue()} data-testid="btn-add-to-queue" disabled={hasNothingSelected} className="shadow-[0_4px_14px_var(--brand-glow)] pl-4 pr-3 min-w-[96px]">
+                <Button {...props} type="button" onClick={() => void addToQueue()} data-testid="btn-add-to-queue" disabled={hasNothingSelected || isSubmittingToQueue} className="shadow-[0_4px_14px_var(--brand-glow)] pl-4 pr-3 min-w-[96px]">
                   {t('wizard.confirm.addToQueue')}
                 </Button>
               )}
@@ -159,7 +159,7 @@ export function StepConfirm(): JSX.Element {
             <Tooltip>
               <TooltipTrigger
                 render={(props) => (
-                  <Button {...props} variant="outline" type="button" onClick={() => void addAndDownloadImmediately()} data-testid="btn-download-now" disabled={hasNothingSelected}>
+                  <Button {...props} variant="outline" type="button" onClick={() => void addAndDownloadImmediately()} data-testid="btn-download-now" disabled={hasNothingSelected || isSubmittingToQueue}>
                     {t('wizard.confirm.pullIt')}
                   </Button>
                 )}
@@ -169,7 +169,7 @@ export function StepConfirm(): JSX.Element {
             <Tooltip>
               <TooltipTrigger
                 render={(props) => (
-                  <Button {...props} type="button" onClick={() => void addToQueue()} data-testid="btn-add-to-queue" disabled={hasNothingSelected} className="shadow-[0_4px_14px_var(--brand-glow)] pl-4 pr-3 min-w-[96px]">
+                  <Button {...props} type="button" onClick={() => void addToQueue()} data-testid="btn-add-to-queue" disabled={hasNothingSelected || isSubmittingToQueue} className="shadow-[0_4px_14px_var(--brand-glow)] pl-4 pr-3 min-w-[96px]">
                     {t('wizard.confirm.addToQueue')}
                   </Button>
                 )}

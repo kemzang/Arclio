@@ -1,16 +1,38 @@
-import type { JSX } from 'react';
-import { useMemo } from 'react';
+import type { JSX, KeyboardEvent as ReactKeyboardEvent } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { ChevronDown, Gauge, Inbox, Pause, Play, Share2, Trash2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { isHighValueDownload } from '@shared/queueItem.js';
+import type { QueueItem } from '@shared/types.js';
 import { useAppStore, formatStatus } from '../../store/useAppStore.js';
 import { QueueItemCard } from '../queue/QueueItemCard.js';
 import { QueueTipNudge } from '../queue/QueueTipNudge.js';
 import { Badge } from '../ui/badge.js';
-import { ScrollArea } from '../ui/scroll-area.js';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover.js';
 import { LimitRatePicker } from '../shared/LimitRatePicker.js';
 import { formatLimitRateLabel } from '../shared/limitRateFormat.js';
+
+// Virtualization constants for the queue list.
+// Two fixed tiers. The tall tier covers rows with an extra content line below
+// the meta row: the progress block (running/paused-active), the error message,
+// or the subtitles-failed warning. Other states (pending, paused-held, done,
+// cancelled) render thumbnail + title + meta only. Error and subsFailed text
+// are single-line truncate (QueueItemCard) so the slot never overflows.
+const TALL_ROW_CONTENT = 76;
+const SHORT_ROW_CONTENT = 48;
+const ROW_GAP = 6;
+const TALL_ROW_STRIDE = TALL_ROW_CONTENT + ROW_GAP;
+const SHORT_ROW_STRIDE = SHORT_ROW_CONTENT + ROW_GAP;
+const ROW_OVERSCAN = 5;
+
+function rowStride(item: QueueItem): number {
+  const s = item.status;
+  if (s === 'running' || s === 'paused-active') return TALL_ROW_STRIDE;
+  if (s === 'error') return TALL_ROW_STRIDE;
+  if (s === 'done' && item.lastStatus?.key === 'subtitlesFailed') return TALL_ROW_STRIDE;
+  return SHORT_ROW_STRIDE;
+}
 
 export function SmartDrawer(): JSX.Element {
   const { t } = useTranslation();
@@ -30,25 +52,57 @@ export function SmartDrawer(): JSX.Element {
   const limitRate = limitRateRaw && limitRateRaw.trim() !== '' ? limitRateRaw : undefined;
   const setLimitRate = useAppStore((s) => s.setLimitRate);
 
-  const orderedQueue = useMemo(() => {
-    const finished = (s: string): boolean => s === 'done' || s === 'cancelled';
-    const active = queue.filter((i) => !finished(i.status));
-    const done = queue.filter((i) => finished(i.status));
-    return [...active, ...done];
+  // Single pass over queue: fold all derived flags + ordered split + active
+  // aggregate into one walk. Previously 7 separate filter/some/reduce calls,
+  // each iterating the full array on every queue update.
+  const derived = useMemo(() => {
+    const active: QueueItem[] = [];
+    const done: QueueItem[] = [];
+    const running: QueueItem[] = [];
+    let hasCompleted = false;
+    let hasPaused = false;
+    let hasInFlight = false;
+    let hasHighValueCompletion = false;
+    let progressSum = 0;
+    for (const i of queue) {
+      const s = i.status;
+      const finished = s === 'done' || s === 'cancelled';
+      if (finished) done.push(i);
+      else active.push(i);
+      if (s === 'running') {
+        running.push(i);
+        progressSum += i.progressPercent;
+      }
+      if (s === 'done' || s === 'cancelled' || s === 'error') hasCompleted = true;
+      if (s === 'paused-active' || s === 'paused-held') hasPaused = true;
+      if (s === 'running' || s === 'paused-active' || s === 'paused-held' || s === 'pending') hasInFlight = true;
+      if (isHighValueDownload(i)) hasHighValueCompletion = true;
+    }
+    const orderedQueue = active.concat(done);
+    const activeCount = running.length;
+    const aggregatePercent = activeCount === 0 ? 0 : progressSum / activeCount;
+    return { orderedQueue, running, activeCount, hasCompleted, hasPaused, hasInFlight, hasHighValueCompletion, aggregatePercent };
   }, [queue]);
-  const activeItems = useMemo(() => queue.filter((i) => i.status === 'running'), [queue]);
-  const activeCount = activeItems.length;
+  const { orderedQueue, running: activeItems, activeCount, hasCompleted, hasPaused, hasInFlight, hasHighValueCompletion, aggregatePercent } = derived;
   const totalCount = queue.length;
-  const hasCompleted = useMemo(() => queue.some((i) => i.status === 'done' || i.status === 'cancelled' || i.status === 'error'), [queue]);
   const hasDownloading = activeCount > 0;
-  const hasPaused = useMemo(() => queue.some((i) => i.status === 'paused-active' || i.status === 'paused-held'), [queue]);
-  const hasInFlight = useMemo(() => queue.some((i) => i.status === 'running' || i.status === 'paused-active' || i.status === 'paused-held' || i.status === 'pending'), [queue]);
-
-  const aggregatePercent = useMemo(() => (activeItems.length === 0 ? 0 : activeItems.reduce((sum, i) => sum + i.progressPercent, 0) / activeItems.length), [activeItems]);
   const headerProgress = activeCount === 1 ? activeItems[0].progressPercent : aggregatePercent;
-
-  const hasHighValueCompletion = useMemo(() => queue.some(isHighValueDownload), [queue]);
   const showShareBanner = hasHighValueCompletion && !shareHighValueBannerDismissed;
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const getScrollElement = useCallback(() => scrollRef.current, []);
+  const estimateSize = useCallback((i: number) => rowStride(orderedQueue[i]), [orderedQueue]);
+  const getItemKey = useCallback((i: number) => orderedQueue[i].id, [orderedQueue]);
+  // eslint-disable-next-line react-hooks/incompatible-library
+  const rowVirtualizer = useVirtualizer({
+    count: orderedQueue.length,
+    getScrollElement,
+    estimateSize,
+    overscan: ROW_OVERSCAN,
+    getItemKey
+  });
+  const virtualItems = rowVirtualizer.getVirtualItems();
+  const totalListSize = rowVirtualizer.getTotalSize();
 
   let headerSummary: string | null = null;
   if (activeCount === 1) {
@@ -67,7 +121,21 @@ export function SmartDrawer(): JSX.Element {
   return (
     <section className="relative shrink-0 border-t border-border bg-background" data-testid="smart-drawer">
       <QueueTipNudge visible={showQueueTip} onDismiss={dismissQueueTip} />
-      <button type="button" onClick={() => setDrawerOpen(!drawerOpen)} className="relative overflow-hidden w-full flex items-center justify-between px-4 h-9 hover:bg-accent transition-colors" data-testid="drawer-toggle" title={t('queue.toggleTitle')}>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={drawerOpen}
+        onClick={() => setDrawerOpen(!drawerOpen)}
+        onKeyDown={(e: ReactKeyboardEvent<HTMLDivElement>) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setDrawerOpen(!drawerOpen);
+          }
+        }}
+        className="relative overflow-hidden w-full flex items-center justify-between px-4 h-9 hover:bg-accent transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        data-testid="drawer-toggle"
+        title={t('queue.toggleTitle')}
+      >
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center text-muted-foreground" aria-label={t('queue.header')} title={t('queue.header')}>
             <Inbox size={14} />
@@ -174,10 +242,10 @@ export function SmartDrawer(): JSX.Element {
             }}
           />
         )}
-      </button>
+      </div>
 
-      <div className="drawer-body" style={{ maxHeight: drawerOpen ? '16rem' : '0px' }} data-testid="drawer-body">
-        {showShareBanner && (
+      <div className="drawer-body" style={{ maxHeight: drawerOpen ? '16rem' : '0px' }} data-testid="drawer-body" aria-hidden={!drawerOpen}>
+        {drawerOpen && showShareBanner && (
           <div className="bg-muted/40 border-b border-border flex items-stretch" data-testid="share-high-value-banner">
             <button type="button" onClick={() => openShareDialog('high-value-inline')} className="flex-1 flex items-center gap-2 px-3 py-1.5 text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors text-left cursor-pointer" data-testid="share-high-value-banner-action">
               <Share2 size={11} className="shrink-0 text-[var(--brand)]" />
@@ -188,18 +256,33 @@ export function SmartDrawer(): JSX.Element {
             </button>
           </div>
         )}
-        <ScrollArea className="h-64">
-          <ul className="px-3 pt-2 pb-3 flex flex-col gap-1.5">
-            {queue.length === 0 ? (
-              <li className="flex items-center gap-2 text-xs text-muted-foreground py-3">
-                <Inbox size={16} className="shrink-0" />
-                <span>{t('queue.empty')}</span>
-              </li>
-            ) : (
-              orderedQueue.map((item) => <QueueItemCard key={item.id} item={item} />)
-            )}
-          </ul>
-        </ScrollArea>
+        {/* Virtualized list. Plain `overflow-y-auto` scroll container instead
+            of `ScrollArea` because @tanstack/react-virtual needs a direct ref
+            to the scroll element; ScrollArea wraps its viewport behind a
+            shadow primitive that isn't reachable. Trade-off accepted: drawer
+            uses the native scrollbar styled by the browser/OS, identical to
+            the rest of the app within ~1px. */}
+        {drawerOpen && (
+        <div ref={scrollRef} className="h-64 overflow-y-auto px-3 pt-2 pb-3" data-testid="drawer-scroll">
+          {queue.length === 0 ? (
+            <div className="flex items-center gap-2 text-xs text-muted-foreground py-3">
+              <Inbox size={16} className="shrink-0" />
+              <span>{t('queue.empty')}</span>
+            </div>
+          ) : (
+            <ul className="relative" style={{ height: totalListSize }}>
+              {virtualItems.map((vr) => {
+                const item = orderedQueue[vr.index];
+                return (
+                  <li key={vr.key} className="absolute left-0 right-0" style={{ top: vr.start, height: vr.size - ROW_GAP }}>
+                    <QueueItemCard item={item} />
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+        )}
       </div>
     </section>
   );
