@@ -263,25 +263,25 @@ export function SmartDrawer(): JSX.Element {
             uses the native scrollbar styled by the browser/OS, identical to
             the rest of the app within ~1px. */}
         {drawerOpen && (
-        <div ref={scrollRef} className="h-64 overflow-y-auto px-3 pt-2 pb-3" data-testid="drawer-scroll">
-          {queue.length === 0 ? (
-            <div className="flex items-center gap-2 text-xs text-muted-foreground py-3">
-              <Inbox size={16} className="shrink-0" />
-              <span>{t('queue.empty')}</span>
-            </div>
-          ) : (
-            <ul className="relative" style={{ height: totalListSize }}>
-              {virtualItems.map((vr) => {
-                const item = orderedQueue[vr.index];
-                return (
-                  <li key={vr.key} className="absolute left-0 right-0" style={{ top: vr.start, height: vr.size - ROW_GAP }}>
-                    <QueueItemCard item={item} />
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
+          <div ref={scrollRef} className="h-64 overflow-y-auto px-3 pt-2 pb-3" data-testid="drawer-scroll">
+            {queue.length === 0 ? (
+              <div className="flex items-center gap-2 text-xs text-muted-foreground py-3">
+                <Inbox size={16} className="shrink-0" />
+                <span>{t('queue.empty')}</span>
+              </div>
+            ) : (
+              <ul className="relative" style={{ height: totalListSize }}>
+                {virtualItems.map((vr) => {
+                  const item = orderedQueue[vr.index];
+                  return (
+                    <li key={vr.key} className="absolute left-0 right-0" style={{ top: vr.start, height: vr.size - ROW_GAP }}>
+                      <QueueItemCard item={item} />
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
         )}
       </div>
     </section>

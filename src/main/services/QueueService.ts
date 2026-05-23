@@ -380,13 +380,7 @@ export class QueueService extends EventEmitter {
   // buffering. Without this gate, the late progress event would re-populate
   // `progressDetail` and the UI would flip from "Merging formats…" back to
   // "downloading at X MB/s" — visible regression on every fast job.
-  private static readonly POST_DOWNLOAD_PHASES: ReadonlySet<StatusKey> = new Set([
-    STATUS_KEY.mergingFormats,
-    STATUS_KEY.extractingAudio,
-    STATUS_KEY.convertingVideo,
-    STATUS_KEY.embeddingMetadata,
-    STATUS_KEY.movingFiles
-  ]);
+  private static readonly POST_DOWNLOAD_PHASES: ReadonlySet<StatusKey> = new Set([STATUS_KEY.mergingFormats, STATUS_KEY.extractingAudio, STATUS_KEY.convertingVideo, STATUS_KEY.embeddingMetadata, STATUS_KEY.movingFiles]);
 
   consumeProgressEvent(event: ProgressEvent): void {
     const item = this.findByJobId(event.jobId);
