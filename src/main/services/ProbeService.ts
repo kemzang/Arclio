@@ -9,7 +9,7 @@ import type { FormatOption, PlaylistEntry, ProbePlaylistMode, ProbeResult, Probe
 import { LIVE_CHAT_LANG } from '@shared/constants.js';
 import { infoDictSchema, isPlaylistLike, isUrlRedirect, type InfoDict, type PlaylistInfo, type MultiVideoInfo, type VideoInfo, type YtDlpFormat, type YtDlpSubtitleTrack } from '@shared/ytdlp/infoDict.js';
 import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
-import { classifyYtDlpStderr, type YtDlpErrorKind } from '@shared/ytdlp/errors.js';
+import { classifyYtDlpStderr, type YtDlpErrorKind } from 'ytdlp-errors';
 import { siteForExtractor, type Site } from '@shared/sites/index.js';
 import { YtDlp } from './YtDlp.js';
 

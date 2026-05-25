@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { isValidSubfolder, SUBFOLDER_NAME_MAX } from './subfolder.js';
 import { AUDIO_CONVERT_TARGETS, type AudioConvertTarget } from './audioTargets.js';
-import { YT_DLP_ERROR_KINDS, type YtDlpErrorKind } from './ytdlp/errors.js';
+import { YT_DLP_ERROR_KINDS, type YtDlpErrorKind } from 'ytdlp-errors';
 
 export type { AudioConvertTarget };
 export type { YtDlpErrorKind };

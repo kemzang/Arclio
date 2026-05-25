@@ -446,6 +446,8 @@ const de = {
       postprocessFailure: 'yt-dlp hat den Download abgeschlossen, aber die Nachbearbeitung (Merge / Mux / Konvertierung) ist fehlgeschlagen. Oft ist das ein vorübergehendes ffmpeg-Problem — versuche es erneut, und wenn es bestehen bleibt, probiere eine andere Formatkombination.',
       parse: 'Die Antwort der Seite konnte nicht analysiert werden. Der Extraktor von yt-dlp ist möglicherweise veraltet. Arroxy aktualisiert yt-dlp automatisch beim Start — versuche es in ein paar Minuten erneut, sobald der Fix eintrifft.',
       network: 'Netzwerkfehler. Überprüfe deine Verbindung und versuche es erneut.',
+      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
+      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
       unknown: 'Download fehlgeschlagen. Siehe die Rohausgabe unten.'
     }
   },

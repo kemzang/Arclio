@@ -446,6 +446,8 @@ const ur = {
       postprocessFailure: 'yt-dlp نے ڈاؤن لوڈ مکمل کر لیا لیکن پوسٹ پروسیسنگ (مرج / mux / تبدیلی) ناکام رہی۔ اکثر یہ ffmpeg کا عارضی مسئلہ ہوتا ہے — دوبارہ کوشش کریں، اور اگر برقرار رہے تو مختلف فارمیٹ کا مجموعہ آزمائیں۔',
       parse: 'سائٹ کا جواب پارس نہیں ہو سکا۔ ممکن ہے yt-dlp کا ایکسٹریکٹر پرانا ہو گیا ہو۔ Arroxy لانچ پر yt-dlp کو خودکار اپڈیٹ کرتا ہے — چند منٹ بعد دوبارہ کوشش کریں جب فکس آ جائے۔',
       network: 'نیٹ ورک کی خرابی۔ اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔',
+      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
+      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
       unknown: 'ڈاؤن لوڈ ناکام ہو گیا۔ نیچے خام آؤٹ پٹ دیکھیں۔'
     }
   },

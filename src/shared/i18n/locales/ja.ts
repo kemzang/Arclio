@@ -446,6 +446,8 @@ const ja = {
       postprocessFailure: 'yt-dlp はダウンロードを完了しましたが、後処理（マージ / mux / 変換）に失敗しました。多くの場合、これは一時的な ffmpeg の問題です。再試行し、それでも続く場合は別のフォーマットの組み合わせを試してください。',
       parse: 'サイトからの応答を解析できませんでした。yt-dlp の抽出機能が古くなっている可能性があります。Arroxy は起動時に yt-dlp を自動更新します — 修正版が配信されるまで数分待ってから再試行してください。',
       network: 'ネットワークエラーです。接続を確認して再試行してください。',
+      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
+      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
       unknown: 'ダウンロードに失敗しました。下の生の出力を確認してください。'
     }
   },

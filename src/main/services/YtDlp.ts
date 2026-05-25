@@ -1,8 +1,8 @@
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
 import log from 'electron-log/main.js';
 import { spawnYtDlp } from '@main/utils/process.js';
-import { classifyYtDlpStderr, extractLastError } from '@shared/ytdlp/errors.js';
-import type { YtDlpErrorKind } from '@shared/ytdlp/errors.js';
+import { classifyYtDlpStderr, extractLastError } from 'ytdlp-errors';
+import type { YtDlpErrorKind } from 'ytdlp-errors';
 import { resolveCookies, type ResolvedCookies } from './cookiesResolver.js';
 import { nonEmpty } from '@shared/format.js';
 import { EMBED_CONTAINER_EXT } from '@shared/subtitlePath.js';

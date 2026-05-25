@@ -1,2 +1,0 @@
-[download] 1234567 bytes read, 999999 more expected
-ERROR: HTTPError stream truncated

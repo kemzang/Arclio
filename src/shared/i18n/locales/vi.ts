@@ -446,6 +446,8 @@ const vi = {
       postprocessFailure: 'yt-dlp đã tải xong nhưng quá trình xử lý hậu kỳ (gộp / mux / chuyển đổi) bị lỗi. Thường đây là sự cố tạm thời của ffmpeg — hãy thử lại, và nếu vẫn lỗi thì thử một tổ hợp định dạng khác.',
       parse: 'Không thể phân tích phản hồi từ trang web. Bộ trích xuất của yt-dlp có thể đã lỗi thời. Arroxy tự động cập nhật yt-dlp khi khởi chạy — hãy thử lại sau vài phút khi bản sửa lỗi được phát hành.',
       network: 'Lỗi mạng. Hãy kiểm tra kết nối và thử lại.',
+      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
+      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
       unknown: 'Tải xuống thất bại. Xem đầu ra thô bên dưới.'
     }
   },

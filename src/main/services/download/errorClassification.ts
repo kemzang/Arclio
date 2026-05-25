@@ -11,7 +11,7 @@
 
 import log from 'electron-log/main.js';
 import { STATUS_KEY } from '@shared/schemas.js';
-import { isPostprocessFailure } from '@shared/ytdlp/errors.js';
+import { isPostprocessFailure } from 'ytdlp-errors';
 import { checkDiskSpace } from '@main/utils/diskSpace.js';
 import type { LocalizedError, StatusKey } from '@shared/types.js';
 import type { YtDlpResult } from '../YtDlp.js';

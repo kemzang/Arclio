@@ -1,10 +1,10 @@
-import type { YtDlpErrorKind } from '@shared/ytdlp/errors.js';
+import type { YtDlpErrorKind } from 'ytdlp-errors';
 
 // Kinds that suggest "yt-dlp needs cookies / signed-in account" to the user.
 // Single source of truth — replaces the regex set we used to ship in the
-// renderer. The classifier in `src/shared/ytdlp/errors.ts` drives this; if a
-// new auth-related kind appears, add it here.
-const COOKIES_KINDS: ReadonlySet<YtDlpErrorKind> = new Set(['botBlock', 'ageRestricted', 'unavailable']);
+// renderer. The classifier (npm `ytdlp-errors`) drives this; if a new
+// auth-related kind appears, add it here.
+const COOKIES_KINDS: ReadonlySet<YtDlpErrorKind> = new Set(['botBlock', 'ageRestricted', 'unavailable', 'loginRequired']);
 
 export function isCookiesNeededKind(kind: YtDlpErrorKind | undefined): boolean {
   return kind !== undefined && COOKIES_KINDS.has(kind);

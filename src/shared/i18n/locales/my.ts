@@ -446,6 +446,8 @@ const my = {
       postprocessFailure: 'yt-dlp ဒေါင်းလုဒ်လုပ်ခြင်းကို ပြီးစီးခဲ့သော်လည်း post-processing (merge / mux / convert) မအောင်မြင်ပါ။ ၎င်းသည် ခဏတာ ffmpeg ပြဿနာဖြစ်တတ်ပါသည် — ထပ်ကြိုးစားကြည့်ပါ၊ ဆက်လက်ဖြစ်နေပါက ဖော်မတ်ပေါင်းစပ်မှု အခြားတစ်ခုကို စမ်းကြည့်ပါ။',
       parse: 'ဆိုက်မှ တုံ့ပြန်ချက်ကို parse မလုပ်နိုင်ပါ။ yt-dlp ၏ extractor သည် ခေတ်နောက်ကျနေပြီ ဖြစ်နိုင်သည်။ Arroxy သည် launch လုပ်သည့်အခါ yt-dlp ကို အလိုအလျောက် update လုပ်ပါသည် — ပြင်ဆင်မှု ထွက်ရှိပြီးနောက် မိနစ်အနည်းငယ်အကြာတွင် ထပ်ကြိုးစားကြည့်ပါ။',
       network: 'Network အမှား။ သင့်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်ကြိုးစားပါ။',
+      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
+      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
       unknown: 'ဒေါင်းလုဒ်မအောင်မြင်ပါ။ အောက်ပါ raw output ကို ကြည့်ပါ။'
     }
   },

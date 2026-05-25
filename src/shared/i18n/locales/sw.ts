@@ -445,6 +445,8 @@ const sw = {
       postprocessFailure: 'yt-dlp ilimaliza kupakua lakini uchakataji wa baadaye (kuunganisha / mux / kubadilisha) ulishindwa. Mara nyingi hili ni tatizo la muda la ffmpeg — jaribu tena, na ikiendelea, jaribu mchanganyiko tofauti wa muundo.',
       parse: 'Haikuwezekana kuchanganua jibu kutoka tovuti. Kichanganuzi cha yt-dlp kinaweza kuwa kimepitwa na wakati. Arroxy huboresha yt-dlp kiotomatiki wakati wa uzinduzi — jaribu tena baada ya dakika chache marekebisho yatakapowasili.',
       network: 'Hitilafu ya mtandao. Angalia muunganisho wako na ujaribu tena.',
+      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
+      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
       unknown: 'Upakuaji umeshindwa. Tazama matokeo ghafi hapa chini.'
     }
   },

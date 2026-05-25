@@ -446,6 +446,8 @@ const sr = {
       postprocessFailure: 'yt-dlp је завршио преузимање, али је накнадна обрада (спајање / mux / конверзија) пропала. Често је ово пролазни проблем са ffmpeg-ом — покушај поново, а ако се настави, испробај другу комбинацију формата.',
       parse: 'Није било могуће парсирати одговор сајта. yt-dlp екстрактор је можда застарео. Arroxy аутоматски ажурира yt-dlp при покретању — покушај поново за неколико минута када стигне исправка.',
       network: 'Грешка мреже. Провери везу и покушај поново.',
+      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
+      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
       unknown: 'Преузимање није успело. Погледај сирови излаз испод.'
     }
   },

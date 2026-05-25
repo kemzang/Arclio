@@ -9,7 +9,7 @@ import ja from '@shared/i18n/locales/ja.js';
 import zh from '@shared/i18n/locales/zh.js';
 import hi from '@shared/i18n/locales/hi.js';
 import { STATUS_KEY } from '@shared/schemas.js';
-import { YT_DLP_ERROR_KINDS } from '@shared/ytdlp/errors.js';
+import { YT_DLP_ERROR_KINDS } from 'ytdlp-errors';
 import type { LocaleResource } from '@shared/i18n/types.js';
 
 const LOCALES: Record<string, LocaleResource> = { en, es, fr, de, ru, uk, ja, zh, hi };
