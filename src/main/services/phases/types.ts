@@ -4,6 +4,25 @@ import type { YtDlp } from '../YtDlp.js';
 
 export type Disposable = () => Promise<void> | void;
 
+export class AsyncStack {
+  private readonly fns: Disposable[] = [];
+  disposed = false;
+
+  defer(fn: Disposable): void {
+    this.fns.push(fn);
+  }
+
+  async [Symbol.asyncDispose](): Promise<void> {
+    const fns = this.fns.splice(0).reverse();
+    for (const fn of fns) {
+      try {
+        await fn();
+      } catch {}
+    }
+    this.disposed = true;
+  }
+}
+
 export interface ActiveJob {
   job: DownloadJob;
   input: StartDownloadInput;
@@ -19,7 +38,7 @@ export interface ActiveJob {
   // active processes get SIGTERM, and the phase returns 'paused'. Cancel,
   // by contrast, calls controller.abort() and triggers the disposable drain.
   pauseRequested: boolean;
-  disposables: AsyncDisposableStack;
+  disposables: AsyncStack;
   ytDlpProcess?: ChildProcessWithoutNullStreams;
   ffmpegProcess?: ChildProcessWithoutNullStreams;
   mockTimer?: NodeJS.Timeout;

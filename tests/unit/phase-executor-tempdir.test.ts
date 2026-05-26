@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { PhaseExecutor } from '@main/services/phases/PhaseExecutor.js';
 import { JobLifecycle } from '@main/services/JobLifecycle.js';
 import { STATUS_KEY } from '@shared/schemas.js';
+import { AsyncStack } from '@main/services/phases/types.js';
 import type { Phase, PhaseContext, PhaseOutcome, ActiveDownload } from '@main/services/phases/types.js';
 import type { DownloadJob, LocalizedError, StartDownloadInput } from '@shared/types.js';
 import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
@@ -32,7 +33,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
-    disposables: new AsyncDisposableStack(),
+    disposables: new AsyncStack(),
     ...overrides
   };
 }

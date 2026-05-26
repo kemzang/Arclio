@@ -1,6 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { SubtitleOnlyPhase } from '@main/services/phases/SubtitleOnlyPhase.js';
 import { STATUS_KEY } from '@shared/schemas.js';
+import { AsyncStack } from '@main/services/phases/types.js';
 import type { PhaseContext, ActiveDownload } from '@main/services/phases/types.js';
 import type { DownloadJob, StartDownloadInput } from '@shared/types.js';
 import type { PreparedJob } from '@shared/preparedJob.js';
@@ -47,7 +48,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: ['/tmp/video.en.srt'],
-    disposables: new AsyncDisposableStack(),
+    disposables: new AsyncStack(),
     ...overrides
   };
 }

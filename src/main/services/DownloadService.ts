@@ -13,6 +13,7 @@ import { MAX_CONCURRENT_DOWNLOADS } from '@shared/constants.js';
 import type { CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOutput, RecentJob, StartDownloadInput, StartDownloadOutput, StatusEvent, StatusKey } from '@shared/types.js';
 import type { RecentJobsStore } from '@main/stores/RecentJobsStore.js';
 import { YtDlp } from './YtDlp.js';
+import { AsyncStack } from './phases/index.js';
 import type { ActiveDownload, PausedDownload } from './phases/index.js';
 import { killActiveProcesses } from './download/processControl.js';
 import { cleanupPartFiles, cleanupTempDirByPath } from './download/cleanup.js';
@@ -95,7 +96,7 @@ export class DownloadService extends EventEmitter {
       pauseRequested: false,
       subtitlePaths: [],
       tempDir: input.tempDir,
-      disposables: new AsyncDisposableStack()
+      disposables: new AsyncStack()
     };
     this.activeJobs.set(job.id, active);
     logger.info('Download job created', {
@@ -158,7 +159,7 @@ export class DownloadService extends EventEmitter {
       pauseRequested: false,
       subtitlePaths: [],
       tempDir: resumedTempDir,
-      disposables: new AsyncDisposableStack()
+      disposables: new AsyncStack()
     };
     this.activeJobs.set(job.id, active);
     logger.info('Resuming download', { jobId: job.id });

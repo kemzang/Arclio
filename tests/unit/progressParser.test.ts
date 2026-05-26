@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { ProgressParser } from '@main/services/download/progressParser.js';
+import { AsyncStack } from '@main/services/phases/types.js';
 import type { ActiveDownload } from '@main/services/phases/types.js';
 import type { DownloadJob, StartDownloadInput } from '@shared/types.js';
 import type { PreparedJob } from '@shared/preparedJob.js';
@@ -53,7 +54,7 @@ function makeActive(input: StartDownloadInput): ActiveDownload {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
-    disposables: new AsyncDisposableStack()
+    disposables: new AsyncStack()
   };
 }
 

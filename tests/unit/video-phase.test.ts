@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { VideoPhase } from '@main/services/phases/VideoPhase.js';
 import { STATUS_KEY } from '@shared/schemas.js';
+import { AsyncStack } from '@main/services/phases/types.js';
 import type { PhaseContext, ActiveDownload } from '@main/services/phases/types.js';
 import type { DownloadJob, StartDownloadInput } from '@shared/types.js';
 import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
@@ -52,7 +53,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
-    disposables: new AsyncDisposableStack(),
+    disposables: new AsyncStack(),
     ...overrides
   };
 }
@@ -275,7 +276,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
     const runMock = vi.fn().mockResolvedValue(SUCCESS);
     const realController = new AbortController();
     const ctx: PhaseContext = {
-      active: { job, input, controller: realController, signal: realController.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: new AsyncDisposableStack(), ...activeOverrides },
+      active: { job, input, controller: realController, signal: realController.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: new AsyncStack(), ...activeOverrides },
       signal: realController.signal,
       register: () => undefined,
       ytDlp: { run: runMock } as never,

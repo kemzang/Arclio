@@ -43,3 +43,4 @@ export function phasesFor(input: StartDownloadInput): Phase[] {
 
 export { PhaseExecutor } from './PhaseExecutor.js';
 export type { Phase, PhaseContext, PhaseOutcome, ActiveDownload, PausedDownload } from './types.js';
+export { AsyncStack } from './types.js';
