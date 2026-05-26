@@ -12,7 +12,7 @@
 import log from 'electron-log/main.js';
 import { STATUS_KEY } from '@shared/schemas.js';
 import { isPostprocessFailure } from 'ytdlp-errors';
-import { checkDiskSpace } from '@main/utils/diskSpace.js';
+import { checkDiskSpace, type DiskSpaceResult } from '@main/utils/diskSpace.js';
 import type { LocalizedError, StatusKey } from '@shared/types.js';
 import type { YtDlpResult } from '../YtDlp.js';
 
@@ -24,7 +24,9 @@ export interface YtDlpFailureClassification {
   params?: Record<string, string | number>;
 }
 
-export async function classifyYtDlpFailure(result: Exclude<YtDlpResult, { kind: 'success' }>, outputDir: string, jobId: string): Promise<YtDlpFailureClassification> {
+export type DiskProbe = (dir: string) => Promise<DiskSpaceResult>;
+
+export async function classifyYtDlpFailure(result: Exclude<YtDlpResult, { kind: 'success' }>, outputDir: string, jobId: string, diskProbe: DiskProbe = (dir) => checkDiskSpace(dir, undefined)): Promise<YtDlpFailureClassification> {
   if (result.kind === 'spawn-error') {
     const payload: LocalizedError = { kind: 'unknown', raw: result.error.message };
     return {
@@ -36,7 +38,7 @@ export async function classifyYtDlpFailure(result: Exclude<YtDlpResult, { kind: 
 
   let kind = result.errorKind;
   if (kind === 'postprocessFailure' && isPostprocessFailure(result.rawError)) {
-    const probe = await checkDiskSpace(outputDir, undefined);
+    const probe = await diskProbe(outputDir);
     if (!probe.ok && probe.error === undefined && probe.freeBytes !== undefined) {
       kind = 'outOfDiskSpace';
       logger.info('Reclassified postprocess failure as outOfDiskSpace', {
