@@ -52,7 +52,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
-    disposables: [],
+    disposables: new AsyncDisposableStack(),
     ...overrides
   };
 }
@@ -275,7 +275,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
     const runMock = vi.fn().mockResolvedValue(SUCCESS);
     const realController = new AbortController();
     const ctx: PhaseContext = {
-      active: { job, input, controller: realController, signal: realController.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: [], ...activeOverrides },
+      active: { job, input, controller: realController, signal: realController.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: new AsyncDisposableStack(), ...activeOverrides },
       signal: realController.signal,
       register: () => undefined,
       ytDlp: { run: runMock } as never,
@@ -403,7 +403,7 @@ describe('VideoPhase — signal callbacks', () => {
       return SUCCESS;
     });
     const active = makeActive();
-    const registerSpy = vi.fn((d: () => void | Promise<void>) => active.disposables.push(d));
+    const registerSpy = vi.fn((d: () => void | Promise<void>) => active.disposables.defer(d));
     const ctx: PhaseContext = {
       active,
       signal: active.signal,

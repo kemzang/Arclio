@@ -95,7 +95,7 @@ export class DownloadService extends EventEmitter {
       pauseRequested: false,
       subtitlePaths: [],
       tempDir: input.tempDir,
-      disposables: []
+      disposables: new AsyncDisposableStack()
     };
     this.activeJobs.set(job.id, active);
     logger.info('Download job created', {
@@ -158,7 +158,7 @@ export class DownloadService extends EventEmitter {
       pauseRequested: false,
       subtitlePaths: [],
       tempDir: resumedTempDir,
-      disposables: []
+      disposables: new AsyncDisposableStack()
     };
     this.activeJobs.set(job.id, active);
     logger.info('Resuming download', { jobId: job.id });
@@ -220,7 +220,14 @@ export class DownloadService extends EventEmitter {
       signal: active.signal,
       ytDlp: this.ytDlp,
       emitStatus: (stage, statusKey, params?, error?) => this.emitStatus(job.id, stage, statusKey, params, error),
-      register: (disposable) => active.disposables.push(disposable),
+      register: (disposable) =>
+        active.disposables.defer(async () => {
+          try {
+            await disposable();
+          } catch (err) {
+            logger.warn('disposable threw during drain', { jobId: active.job.id, message: err instanceof Error ? err.message : String(err) });
+          }
+        }),
       safeConsume: (text) => this.safeConsume(active, text)
     };
     const outcome = await new PhaseExecutor().run(ctx, phasesFor(input));

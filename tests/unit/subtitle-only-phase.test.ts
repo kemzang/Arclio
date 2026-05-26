@@ -47,7 +47,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: ['/tmp/video.en.srt'],
-    disposables: [],
+    disposables: new AsyncDisposableStack(),
     ...overrides
   };
 }
@@ -223,7 +223,7 @@ describe('SubtitleOnlyPhase', () => {
       return SUCCESS;
     });
     const active = makeActive();
-    const registerSpy = vi.fn((d: () => void | Promise<void>) => active.disposables.push(d));
+    const registerSpy = vi.fn((d: () => void | Promise<void>) => active.disposables.defer(d));
     const ctx: PhaseContext = {
       active,
       signal: active.signal,

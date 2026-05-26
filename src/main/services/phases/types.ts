@@ -2,10 +2,6 @@ import type { ChildProcessWithoutNullStreams } from 'node:child_process';
 import type { DownloadJob, LocalizedError, StartDownloadInput, StatusEvent, StatusKey } from '@shared/types.js';
 import type { YtDlp } from '../YtDlp.js';
 
-// Disposable: a teardown callback registered against an ActiveJob for LIFO
-// drain at finalize. Replaces ad-hoc per-cleanup-path code in DownloadService
-// (cancel / paused-cancel / mock-cancel) and PhaseExecutor — every spawn /
-// tempDir / mux process pushes one and JobLifecycle.finalize drains them.
 export type Disposable = () => Promise<void> | void;
 
 export interface ActiveJob {
@@ -23,9 +19,7 @@ export interface ActiveJob {
   // active processes get SIGTERM, and the phase returns 'paused'. Cancel,
   // by contrast, calls controller.abort() and triggers the disposable drain.
   pauseRequested: boolean;
-  // Resources to drain on finalize. LIFO order (last-pushed first).
-  // Phase-internal helpers push entries via PhaseContext.register.
-  disposables: Disposable[];
+  disposables: AsyncDisposableStack;
   ytDlpProcess?: ChildProcessWithoutNullStreams;
   ffmpegProcess?: ChildProcessWithoutNullStreams;
   mockTimer?: NodeJS.Timeout;

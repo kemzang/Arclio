@@ -37,7 +37,7 @@ function makeCtx(outputDir = '/output'): PhaseContext {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
-    disposables: []
+    disposables: new AsyncDisposableStack()
   };
   return {
     active,

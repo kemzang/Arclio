@@ -36,7 +36,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
-    disposables: [],
+    disposables: new AsyncDisposableStack(),
     ...overrides
   };
 }

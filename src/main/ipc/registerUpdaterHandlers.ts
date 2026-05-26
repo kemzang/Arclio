@@ -105,15 +105,15 @@ export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
       return { ok: false, error: `install not supported for channel: ${installChannel}` };
     }
 
-    return new Promise<UpdateInstallResult>((resolve) => {
-      pendingInstall = resolve;
-      autoUpdater.downloadUpdate().catch((err: Error) => {
-        if (pendingInstall) {
-          pendingInstall({ ok: false, error: err.message });
-          pendingInstall = null;
-        }
-      });
+    const { promise, resolve } = Promise.withResolvers<UpdateInstallResult>();
+    pendingInstall = resolve;
+    autoUpdater.downloadUpdate().catch((err: Error) => {
+      if (pendingInstall) {
+        pendingInstall({ ok: false, error: err.message });
+        pendingInstall = null;
+      }
     });
+    return promise;
   });
 
   setTimeout(() => {

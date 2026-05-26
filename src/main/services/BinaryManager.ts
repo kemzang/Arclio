@@ -523,46 +523,43 @@ export class BinaryManager {
 
     const promise = (async (): Promise<void> => {
       const tempDir = await fsPromises.mkdtemp(path.join(os.tmpdir(), `arroxy-${name}-`));
+      await using _cleanup = { [Symbol.asyncDispose]: () => fsPromises.rm(tempDir, { recursive: true, force: true }) };
       const zipPath = path.join(tempDir, config.zipFileName);
 
-      try {
-        onStatus?.('downloadingBinary', { name });
-        logger.info(`Downloading ${name}`, {
-          downloadUrl: config.downloadUrl,
-          destinationPath
-        });
+      onStatus?.('downloadingBinary', { name });
+      logger.info(`Downloading ${name}`, {
+        downloadUrl: config.downloadUrl,
+        destinationPath
+      });
 
-        await downloadFile(config.downloadUrl, zipPath, onDownloadProgress, true, signal);
+      await downloadFile(config.downloadUrl, zipPath, onDownloadProgress, true, signal);
 
-        const expected = await config.expectedSha256();
-        if (expected) {
-          const actual = await sha256ForFile(zipPath);
-          if (actual !== expected) {
-            throw new Error(`${name} checksum mismatch. Expected ${expected.slice(0, 8)}..., got ${actual.slice(0, 8)}...`);
-          }
-        } else if (config.requiredChecksum) {
-          throw new Error(`Checksum source unavailable for ${name}. Refusing to use unverified archive.`);
-        } else {
-          logger.warn(`Checksum unavailable for ${name}, proceeding without verification`);
+      const expected = await config.expectedSha256();
+      if (expected) {
+        const actual = await sha256ForFile(zipPath);
+        if (actual !== expected) {
+          throw new Error(`${name} checksum mismatch. Expected ${expected.slice(0, 8)}..., got ${actual.slice(0, 8)}...`);
         }
+      } else if (config.requiredChecksum) {
+        throw new Error(`Checksum source unavailable for ${name}. Refusing to use unverified archive.`);
+      } else {
+        logger.warn(`Checksum unavailable for ${name}, proceeding without verification`);
+      }
 
-        const extractDir = path.join(tempDir, 'unpacked');
-        await fsPromises.mkdir(extractDir, { recursive: true });
-        await extractZip(zipPath, { dir: extractDir });
+      const extractDir = path.join(tempDir, 'unpacked');
+      await fsPromises.mkdir(extractDir, { recursive: true });
+      await extractZip(zipPath, { dir: extractDir });
 
-        const innerPath = await this.findExecutableInTree(extractDir, config.innerExecutableName);
-        if (!innerPath) {
-          throw new Error(`${name} archive did not contain ${config.innerExecutableName}`);
-        }
+      const innerPath = await this.findExecutableInTree(extractDir, config.innerExecutableName);
+      if (!innerPath) {
+        throw new Error(`${name} archive did not contain ${config.innerExecutableName}`);
+      }
 
-        await fsPromises.mkdir(path.dirname(destinationPath), { recursive: true });
-        // copyFile (rather than rename) handles cross-device temp dirs.
-        await fsPromises.copyFile(innerPath, destinationPath);
-        if (process.platform !== 'win32') {
-          await fsPromises.chmod(destinationPath, 0o755);
-        }
-      } finally {
-        await fsPromises.rm(tempDir, { recursive: true, force: true });
+      await fsPromises.mkdir(path.dirname(destinationPath), { recursive: true });
+      // copyFile (rather than rename) handles cross-device temp dirs.
+      await fsPromises.copyFile(innerPath, destinationPath);
+      if (process.platform !== 'win32') {
+        await fsPromises.chmod(destinationPath, 0o755);
       }
     })().finally(() => {
       this.inProgress.delete(destinationPath);

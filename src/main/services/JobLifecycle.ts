@@ -20,17 +20,7 @@ export class JobLifecycle {
   constructor(private readonly recentJobsStore: RecentJobsStore) {}
 
   async drain(active: ActiveJob): Promise<void> {
-    const list = active.disposables.splice(0, active.disposables.length);
-    for (let i = list.length - 1; i >= 0; i--) {
-      try {
-        await list[i]();
-      } catch (err) {
-        logger.warn('disposable threw during drain', {
-          jobId: active.job.id,
-          message: err instanceof Error ? err.message : String(err)
-        });
-      }
-    }
+    await active.disposables[Symbol.asyncDispose]();
   }
 
   async finalize(job: DownloadJob, status: RecentJob['status'], error?: LocalizedError): Promise<void> {

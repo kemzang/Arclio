@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { PhaseExecutor } from '@main/services/phases/PhaseExecutor.js';
 import { JobLifecycle } from '@main/services/JobLifecycle.js';
 import { STATUS_KEY } from '@shared/schemas.js';
-import type { Phase, PhaseContext, PhaseOutcome, ActiveDownload, Disposable } from '@main/services/phases/types.js';
+import type { Phase, PhaseContext, PhaseOutcome, ActiveDownload } from '@main/services/phases/types.js';
 import type { DownloadJob, LocalizedError, StartDownloadInput } from '@shared/types.js';
 import type { PreparedJob, EmbedOptions, SponsorBlockOptions } from '@shared/preparedJob.js';
 
@@ -32,7 +32,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
-    disposables: [],
+    disposables: new AsyncDisposableStack(),
     ...overrides
   };
 }
@@ -41,7 +41,12 @@ function makeCtx(active: ActiveDownload): PhaseContext {
   return {
     active,
     signal: active.signal,
-    register: (d) => active.disposables.push(d),
+    register: (d) =>
+      active.disposables.defer(async () => {
+        try {
+          await d();
+        } catch {}
+      }),
     ytDlp: {} as never,
     emitStatus: vi.fn(),
     safeConsume: vi.fn()
@@ -96,9 +101,9 @@ describe('PhaseExecutor — outcome propagation', () => {
 
   it('paused outcome — no terminal emitStatus, disposables untouched', async () => {
     const active = makeActive();
-    const cleanup = vi.fn();
-    active.disposables.push(cleanup);
     const ctx = makeCtx(active);
+    const cleanup = vi.fn();
+    ctx.register(cleanup);
     const phase = stubPhase({ kind: 'paused' });
 
     const outcome = await new PhaseExecutor().run(ctx, [phase]);
@@ -106,7 +111,7 @@ describe('PhaseExecutor — outcome propagation', () => {
     expect(outcome.kind).toBe('paused');
     expect(vi.mocked(ctx.emitStatus)).not.toHaveBeenCalled();
     expect(cleanup).not.toHaveBeenCalled();
-    expect(active.disposables).toHaveLength(1);
+    expect(active.disposables.disposed).toBe(false);
   });
 });
 
@@ -116,21 +121,21 @@ describe('JobLifecycle.drain — disposables', () => {
     const lifecycle = new JobLifecycle(recentJobsStore);
     const order: string[] = [];
     const active = makeActive();
-    const a: Disposable = () => {
+    const ctx = makeCtx(active);
+    ctx.register(() => {
       order.push('a');
-    };
-    const b: Disposable = () => {
+    });
+    ctx.register(() => {
       order.push('b');
-    };
-    const c: Disposable = () => {
+    });
+    ctx.register(() => {
       order.push('c');
-    };
-    active.disposables.push(a, b, c);
+    });
 
     await lifecycle.drain(active);
 
     expect(order).toEqual(['c', 'b', 'a']);
-    expect(active.disposables).toHaveLength(0);
+    expect(active.disposables.disposed).toBe(true);
   });
 
   it('one disposable throwing does not block the next', async () => {
@@ -138,17 +143,16 @@ describe('JobLifecycle.drain — disposables', () => {
     const lifecycle = new JobLifecycle(recentJobsStore);
     const order: string[] = [];
     const active = makeActive();
-    active.disposables.push(
-      () => {
-        order.push('a');
-      },
-      () => {
-        throw new Error('b broke');
-      },
-      () => {
-        order.push('c');
-      }
-    );
+    const ctx = makeCtx(active);
+    ctx.register(() => {
+      order.push('a');
+    });
+    ctx.register(() => {
+      throw new Error('b broke');
+    });
+    ctx.register(() => {
+      order.push('c');
+    });
 
     await lifecycle.drain(active);
 

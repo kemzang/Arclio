@@ -59,7 +59,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
     pauseRequested: false,
     subtitlePaths: ['/tmp/video.en.srt'],
     mediaPath: '/tmp/video.mp4',
-    disposables: [],
+    disposables: new AsyncDisposableStack(),
     ...overrides
   };
 }
@@ -70,7 +70,7 @@ function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload
   return {
     active,
     signal: active.signal,
-    register: (d) => active.disposables.push(d),
+    register: (d) => active.disposables.defer(d),
     ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
     emitStatus: vi.fn(),
     safeConsume: vi.fn()
@@ -172,7 +172,7 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
     const ctx: PhaseContext = {
       active,
       signal: active.signal,
-      register: (d) => active.disposables.push(d),
+      register: (d) => active.disposables.defer(d),
       ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
       emitStatus: vi.fn(),
       safeConsume: vi.fn()
@@ -260,7 +260,7 @@ describe('SidecarSubsPhase(embedAfter=true)', () => {
     const ctx: PhaseContext = {
       active,
       signal: active.signal,
-      register: (d) => active.disposables.push(d),
+      register: (d) => active.disposables.defer(d),
       ytDlp: { run: runMock, ffmpegPath: '/fake/ffmpeg' } as never,
       emitStatus: vi.fn(),
       safeConsume: vi.fn()

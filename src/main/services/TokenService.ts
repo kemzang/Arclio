@@ -35,6 +35,7 @@ export class TokenService {
 
   async warmUp(signal?: AbortSignal): Promise<{ ready: boolean; reason?: string }> {
     if (signal?.aborted) return { ready: false, reason: 'cancelled' };
+    using _window = { [Symbol.dispose]: () => this.provider.releaseWindow() };
     try {
       await this.provider.ensureReady();
       if (signal?.aborted) return { ready: false, reason: 'cancelled' };
@@ -50,8 +51,6 @@ export class TokenService {
       const reason = unknownToMessage(err);
       logger.warn('Token warm-up failed (non-fatal)', { error: reason });
       return { ready: false, reason };
-    } finally {
-      this.provider.releaseWindow();
     }
   }
 
@@ -63,19 +62,14 @@ export class TokenService {
     if (this.cache && Date.now() - this.cache.mintedAt < TTL_MS) {
       return { token: this.cache.token, visitorData: this.cache.visitorData, fromCache: true };
     }
-
-    try {
-      await this.provider.ensureReady();
-      const visitorData = await this.provider.getVisitorData();
-      const binding = nonEmpty(visitorData) ?? parseYouTubeVideoId(url) ?? url;
-
-      logger.info('Minting PO token', { bindingLength: binding.length });
-      const token = await this.provider.mintToken(binding);
-      this.cache = { token, visitorData, mintedAt: Date.now() };
-      return { token, visitorData, fromCache: false };
-    } finally {
-      this.provider.releaseWindow();
-    }
+    using _window = { [Symbol.dispose]: () => this.provider.releaseWindow() };
+    await this.provider.ensureReady();
+    const visitorData = await this.provider.getVisitorData();
+    const binding = nonEmpty(visitorData) ?? parseYouTubeVideoId(url) ?? url;
+    logger.info('Minting PO token', { bindingLength: binding.length });
+    const token = await this.provider.mintToken(binding);
+    this.cache = { token, visitorData, mintedAt: Date.now() };
+    return { token, visitorData, fromCache: false };
   }
 
   dispose(): void {

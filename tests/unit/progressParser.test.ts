@@ -53,7 +53,7 @@ function makeActive(input: StartDownloadInput): ActiveDownload {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
-    disposables: []
+    disposables: new AsyncDisposableStack()
   };
 }
 

@@ -20,9 +20,17 @@ function makeJob(): DownloadJob {
   };
 }
 
-function makeActive(disposables: (() => Promise<void> | void)[]): ActiveJob {
+function makeActive(disposableFns: (() => Promise<void> | void)[] = []): ActiveJob {
   const controller = new AbortController();
   const input: StartDownloadInput = { url: 'https://www.youtube.com/watch?v=test', outputDir: '/tmp', job: PREPARED };
+  const stack = new AsyncDisposableStack();
+  for (const fn of disposableFns) {
+    stack.defer(async () => {
+      try {
+        await fn();
+      } catch {}
+    });
+  }
   return {
     job: makeJob(),
     input,
@@ -31,7 +39,7 @@ function makeActive(disposables: (() => Promise<void> | void)[]): ActiveJob {
     cancelRequested: false,
     pauseRequested: false,
     subtitlePaths: [],
-    disposables: [...disposables]
+    disposables: stack
   };
 }
 
@@ -64,7 +72,7 @@ describe('JobLifecycle.drain', () => {
     await new JobLifecycle(makeStore()).drain(active);
 
     expect(order).toEqual(['c', 'b', 'a']);
-    expect(active.disposables).toEqual([]);
+    expect(active.disposables.disposed).toBe(true);
   });
 
   it('continues drain when one disposable throws', async () => {
@@ -86,10 +94,10 @@ describe('JobLifecycle.drain', () => {
     expect(order).toEqual(['last', 'first']);
   });
 
-  it('is a no-op for empty disposables array', async () => {
+  it('is a no-op for empty disposables stack', async () => {
     const active = makeActive([]);
     await new JobLifecycle(makeStore()).drain(active);
-    expect(active.disposables).toEqual([]);
+    expect(active.disposables.disposed).toBe(true);
   });
 });
 
