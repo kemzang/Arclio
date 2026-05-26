@@ -280,7 +280,7 @@ export function installBrowserMock(): void {
         await delay(1400);
 
         if (!looksLikeUrl(input.url)) {
-          return { ok: false, error: { code: 'validation', message: 'Not a valid http(s) URL', recoverable: true } };
+          return { ok: false, error: { kind: 'other', message: 'Not a valid http(s) URL' } };
         }
 
         // Mock playlist branch — append `?playlist=1` to a URL to drive the
@@ -319,11 +319,13 @@ export function installBrowserMock(): void {
         if (/[?&]fail=1\b/.test(input.url)) {
           const isBot = /[?&]bot=1\b/.test(input.url);
           const isDpapi = /[?&]dpapi=1\b/.test(input.url);
-          const message = isDpapi ? 'ERROR: Failed to decrypt with DPAPI. See https://github.com/yt-dlp/yt-dlp/issues/10927 for more info' : isBot ? "ERROR: [youtube] x: Sign in to confirm you're not a bot. Use --cookies-from-browser …" : 'ERROR: [youtube] dQw4w9WgXcQ: Video unavailable. The uploader has not made this video available in your country.';
-          return {
-            ok: false,
-            error: { code: 'download', message, recoverable: true }
-          };
+          if (isDpapi) {
+            return { ok: false, error: { kind: 'ytdlp', error: { kind: 'unknown', raw: 'ERROR: Failed to decrypt with DPAPI. See https://github.com/yt-dlp/yt-dlp/issues/10927 for more info' } } };
+          }
+          if (isBot) {
+            return { ok: false, error: { kind: 'ytdlp', error: { kind: 'botBlock', raw: "ERROR: [youtube] x: Sign in to confirm you're not a bot. Use --cookies-from-browser …" } } };
+          }
+          return { ok: false, error: { kind: 'ytdlp', error: { kind: 'unavailable', raw: 'ERROR: [youtube] dQw4w9WgXcQ: Video unavailable. The uploader has not made this video available in your country.' } } };
         }
 
         // Visual harness: append `?bot=1` to a URL to simulate the bot-wall

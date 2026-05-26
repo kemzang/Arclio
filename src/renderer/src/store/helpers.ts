@@ -1,4 +1,4 @@
-import type { AppError, AudioConvert, FormatOption, LocalizedError, Preset, StatusSnapshot } from '@shared/types.js';
+import type { AudioConvert, FormatOption, LocalizedError, ProbeError, Preset, StatusSnapshot } from '@shared/types.js';
 import { PRESETS } from '@shared/schemas.js';
 import { i18next } from '@shared/i18n/index.js';
 import type { AudioSelection, WizardStep } from './types.js';
@@ -127,8 +127,8 @@ export function formatLocalizedError(error: LocalizedError | null): string {
   return i18next.t(`errors.ytdlp.${error.kind}` as const);
 }
 
-export function formatError(error: AppError | null): string {
+export function formatProbeError(error: ProbeError | null): string {
   if (!error) return '';
-  if (error.localizedKey) return i18next.t(`errors.ytdlp.${error.localizedKey}` as const);
+  if (error.kind === 'ytdlp') return formatLocalizedError(error.error);
   return error.message;
 }

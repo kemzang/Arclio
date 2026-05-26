@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useAppStore } from '@renderer/store/useAppStore.js';
-import type { ProbeResult } from '@shared/types.js';
+import type { ProbeError, ProbeResult } from '@shared/types.js';
 import { ok, fail, type Result } from '@shared/result.js';
 import { RESET_WIZARD_STATE } from '@renderer/store/wizard/commands.js';
 import { buildMockAppApi } from '../shared/mockAppApi.js';
@@ -90,7 +90,7 @@ describe('submitUrl — video probe', () => {
 
   it('sets wizardStep=error on probe failure', async () => {
     const api = buildMockAppApi();
-    vi.mocked(api.downloads.probe).mockResolvedValue(fail({ code: 'ipc', message: 'Bot block' }));
+    vi.mocked(api.downloads.probe).mockResolvedValue(fail({ kind: 'other', message: 'Bot block' }));
     window.appApi = api;
 
     useAppStore.setState({ wizardUrl: YOUTUBE_URL });
@@ -104,9 +104,9 @@ describe('submitUrl — video probe', () => {
 
   it('sets formatsLoading=true during probe and false after', async () => {
     const api = buildMockAppApi();
-    let resolveProbe!: (v: Result<ProbeResult>) => void;
+    let resolveProbe!: (v: Result<ProbeResult, ProbeError>) => void;
     vi.mocked(api.downloads.probe).mockReturnValue(
-      new Promise<Result<ProbeResult>>((res) => {
+      new Promise<Result<ProbeResult, ProbeError>>((res) => {
         resolveProbe = res;
       })
     );

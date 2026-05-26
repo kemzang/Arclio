@@ -1,5 +1,5 @@
 import type { StoreApi } from 'zustand';
-import type { AppError, AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, ProbeDegradationReason, QueueItem, QueueLane, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types.js';
+import type { AppSettings, AudioBitrate, CookiesBrowser, CookiesMode, DependencyDiagnostic, DependencyId, FormatOption, PlaylistEntry, PlaylistPreset, Preset, ProbeError, ProbeDegradationReason, QueueItem, QueueLane, SubtitleFormat, SubtitleMap, SubtitleMode, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme } from '@shared/types.js';
 import type { AudioSelection } from '@shared/schemas.js';
 import type { IncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 export type { AudioSelection };
@@ -37,7 +37,7 @@ export interface ProbeOrchestratorSlice {
   // dynamically. Empty pre-probe.
   wizardWebpageUrl: string;
   formatsLoading: boolean;
-  wizardError: AppError | null;
+  wizardError: ProbeError | null;
   wizardErrorOrigin: 'formats' | null;
   // Playlist mode — populated when the URL probe returns _type: 'playlist' or
   // 'multi_video' from yt-dlp.

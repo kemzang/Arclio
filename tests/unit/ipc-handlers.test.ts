@@ -308,11 +308,11 @@ describe('registerIpcHandlers', () => {
       const handler = findCall(IPC_CHANNELS.downloadsProbe)!.fn;
       const result = (await handler(null, { url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' })) as {
         ok: boolean;
-        error?: { code: string; message: string };
+        error?: { kind: string; message: string };
       };
 
       expect(result.ok).toBe(false);
-      expect(result.error).toMatchObject({ code: 'validation', message: 'Pick a file to use cookies' });
+      expect(result.error).toMatchObject({ kind: 'other', message: 'Pick a file to use cookies' });
       expect(deps._raw.probeService.probe).not.toHaveBeenCalled();
     });
 

@@ -41,7 +41,7 @@ export function buildCommonPaths(): CommonPaths {
   };
 }
 
-export function handle<T, R>(channel: string, schema: ZodType<T>, fn: (data: T) => Promise<Result<R>>): void {
+export function handle<T, R, E = AppError>(channel: string, schema: ZodType<T>, fn: (data: T) => Promise<Result<R, E>>): void {
   ipcMain.removeHandler(channel);
   ipcMain.handle(channel, async (_, payload: unknown) => {
     const parsed = schema.safeParse(payload ?? {});

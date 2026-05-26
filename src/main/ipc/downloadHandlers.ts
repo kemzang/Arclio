@@ -3,7 +3,9 @@ import { createAppError } from '@main/utils/errorFactory.js';
 import { cookiesConfigIssueMessage, getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 import { IPC_CHANNELS } from '@shared/ipc.js';
 import { fail, type Result } from '@shared/result.js';
+import { z } from 'zod';
 import { cancelDownloadSchema, pauseResumeSchema, probeSchema, resumeSchema, startDownloadSchema } from '@shared/schemas.js';
+import type { ProbeError, ProbeResult } from '@shared/types.js';
 import type { DownloadService } from '@main/services/DownloadService.js';
 import type { ProbeService } from '@main/services/ProbeService.js';
 import type { SettingsStore } from '@main/stores/SettingsStore.js';
@@ -23,10 +25,10 @@ function getCookiesValidationFailure(settings: Awaited<ReturnType<SettingsStore[
 export function registerDownloadHandlers(deps: DownloadHandlerDeps): void {
   const { downloadService, probeService, settingsStore } = deps;
 
-  handle(IPC_CHANNELS.downloadsProbe, probeSchema, async ({ url, playlistMode }) => {
+  handle<z.infer<typeof probeSchema>, ProbeResult, ProbeError>(IPC_CHANNELS.downloadsProbe, probeSchema, async ({ url, playlistMode }) => {
     const settings = await settingsStore.get();
-    const validationFailure = getCookiesValidationFailure(settings);
-    if (validationFailure) return validationFailure;
+    const issue = getIncompleteCookiesConfigIssue(settings.common);
+    if (issue) return fail<ProbeResult, ProbeError>({ kind: 'other', message: cookiesConfigIssueMessage(issue) });
     return probeService.probe(url, settings.common.cookiesMode ?? 'off', playlistMode ?? 'auto');
   });
 

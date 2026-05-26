@@ -1,11 +1,10 @@
 import log from 'electron-log/main.js';
 import { trackMain, probeDurationBucket } from '@main/services/analytics.js';
-import { createAppError } from '@main/utils/errorFactory.js';
 import { splitStderrLines } from '@main/utils/process.js';
 import { ok, fail, type Result } from '@shared/result.js';
 import { sortFormatsByQuality } from '@shared/qualitySorter.js';
 import { humanSize } from '@shared/format.js';
-import type { FormatOption, PlaylistEntry, ProbePlaylistMode, ProbeResult, ProbeDegradationReason, SubtitleMap } from '@shared/types.js';
+import type { FormatOption, PlaylistEntry, ProbeError, ProbePlaylistMode, ProbeResult, ProbeDegradationReason, SubtitleMap } from '@shared/types.js';
 import { LIVE_CHAT_LANG } from '@shared/constants.js';
 import { infoDictSchema, isPlaylistLike, isUrlRedirect, type InfoDict, type PlaylistInfo, type MultiVideoInfo, type VideoInfo, type YtDlpFormat, type YtDlpSubtitleTrack } from '@shared/ytdlp/infoDict.js';
 import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
@@ -46,7 +45,7 @@ interface ProbeAttemptSuccess {
   degradationSignals: ProbeSignal[];
 }
 
-type ProbeAttemptResult = { kind: 'success'; data: ProbeAttemptSuccess } | { kind: 'failure'; error: ReturnType<typeof createAppError>; errorCategory: ProbeFailureCategory };
+type ProbeAttemptResult = { kind: 'success'; data: ProbeAttemptSuccess } | { kind: 'failure'; error: ProbeError; errorCategory: ProbeFailureCategory };
 
 function sanitizeSubtitleMap(raw: Record<string, YtDlpSubtitleTrack[]> | undefined, opts: { isAutomaticCaptions: boolean; site: Site }): SubtitleMap {
   if (!raw) return {};
@@ -329,7 +328,7 @@ export class ProbeService {
     this.inFlight.clear();
   }
 
-  async probe(url: string, cookiesMode: 'off' | 'file' | 'browser' = 'off', playlistMode: ProbePlaylistMode = 'auto'): Promise<Result<ProbeResult>> {
+  async probe(url: string, cookiesMode: 'off' | 'file' | 'browser' = 'off', playlistMode: ProbePlaylistMode = 'auto'): Promise<Result<ProbeResult, ProbeError>> {
     const startMs = Date.now();
     const emitSuccess = (result: ProbeResult): void => {
       trackMain('format_probed', {
@@ -357,7 +356,7 @@ export class ProbeService {
       const probeResult = await this.probeWithRedirectFollow(url, playlistMode, controller.signal);
       if (controller.signal.aborted) {
         emitFailure('cancelled');
-        return fail(createAppError('download', 'Probe cancelled'));
+        return fail<ProbeResult, ProbeError>({ kind: 'other', message: 'Probe cancelled' });
       }
       if (probeResult.kind === 'failure') {
         emitFailure(probeResult.errorCategory);
@@ -376,12 +375,12 @@ export class ProbeService {
           // geo-blocked, exhausted page). Categorize accordingly so analytics
           // and any user-facing copy can distinguish the cause.
           emitFailure('content_unavailable');
-          return fail(createAppError('download', 'Playlist returned no entries'));
+          return fail<ProbeResult, ProbeError>({ kind: 'other', message: 'Playlist returned no entries' });
         }
       } else if (isUrlRedirect(info)) {
         // Hit redirect-depth cap. Surface the URL error rather than guess.
         emitFailure('redirect_loop');
-        return fail(createAppError('download', 'Probe redirected too many times'));
+        return fail<ProbeResult, ProbeError>({ kind: 'other', message: 'Probe redirected too many times' });
       } else {
         const video = info;
         const degraded = deriveDegraded(final.degradationSignals);
@@ -391,7 +390,7 @@ export class ProbeService {
           // auto-captions — geo-block, age-gate, members-only, or live-not-yet.
           // Not a parse failure; the JSON shape was fine.
           emitFailure('content_unavailable');
-          return fail(createAppError('download', 'Probe returned no formats'));
+          return fail<ProbeResult, ProbeError>({ kind: 'other', message: 'Probe returned no formats' });
         }
       }
 
@@ -402,7 +401,7 @@ export class ProbeService {
       const message = error instanceof Error ? error.message : 'Unknown probing error';
       logger.error('Probe failure', { message, url });
       emitFailure(controller.signal.aborted ? 'cancelled' : classifyProbeFailure(message));
-      return fail(createAppError('download', message));
+      return fail<ProbeResult, ProbeError>({ kind: 'other', message });
     } finally {
       this.inFlight.delete(controller);
     }
@@ -414,7 +413,7 @@ export class ProbeService {
   private async probeWithRedirectFollow(url: string, playlistMode: ProbePlaylistMode, signal: AbortSignal): Promise<ProbeAttemptResult> {
     let currentUrl = url;
     for (let depth = 0; depth <= 1; depth++) {
-      if (signal.aborted) return { kind: 'failure', error: createAppError('download', 'Probe cancelled'), errorCategory: 'cancelled' };
+      if (signal.aborted) return { kind: 'failure', error: { kind: 'other', message: 'Probe cancelled' } satisfies ProbeError, errorCategory: 'cancelled' };
       const attempt = await this.runProbeWithDegradationRetry(currentUrl, playlistMode, signal);
       if (attempt.kind === 'failure') return attempt;
       const info = attempt.data.info;
@@ -475,7 +474,7 @@ export class ProbeService {
       if (signal.aborted || rawError === 'Cancelled') {
         return {
           kind: 'failure',
-          error: createAppError('download', 'Probe cancelled'),
+          error: { kind: 'other', message: 'Probe cancelled' } satisfies ProbeError,
           errorCategory: 'cancelled'
         };
       }
@@ -486,7 +485,7 @@ export class ProbeService {
       logger.error('yt-dlp probe failed', { attempt, code, url, kind: probeKind });
       return {
         kind: 'failure',
-        error: createAppError('download', rawError ?? 'Probing failed', undefined, true, probeKind),
+        error: { kind: 'ytdlp', error: { kind: probeKind, raw: rawError ?? 'Probing failed' } } satisfies ProbeError,
         errorCategory: probeKind
       };
     }
@@ -499,7 +498,7 @@ export class ProbeService {
       logger.error('Probe JSON parse failed', { attempt, message, url });
       return {
         kind: 'failure',
-        error: createAppError('download', 'Failed to parse probe output', message),
+        error: { kind: 'other', message: 'Failed to parse probe output', details: message } satisfies ProbeError,
         errorCategory: 'parse'
       };
     }
@@ -510,7 +509,7 @@ export class ProbeService {
       logger.error('Probe schema validation failed', { attempt, message, url });
       return {
         kind: 'failure',
-        error: createAppError('download', 'Unexpected yt-dlp output shape', message),
+        error: { kind: 'other', message: 'Unexpected yt-dlp output shape', details: message } satisfies ProbeError,
         errorCategory: 'parse'
       };
     }

@@ -84,7 +84,7 @@ export async function runSmokeMode(deps: SmokeDeps): Promise<number> {
       pass('  └ schema parses', probe.data.playlistTitle || '(no title)');
     }
   } else {
-    fail('probe (full ladder)', probe.error.message);
+    fail('probe (full ladder)', probe.error.kind === 'ytdlp' ? probe.error.error.raw : probe.error.message);
     failures++;
   }
 

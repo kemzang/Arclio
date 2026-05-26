@@ -73,7 +73,8 @@ export function CookiesErrorAlert({ forceShowCookiesOff = false }: CookiesErrorA
     );
   }
 
-  const dpapiDetected = cookiesMode === 'browser' && (isDpapiCookieError(wizardError?.message) || isDpapiCookieError(wizardError?.details));
+  const errorRaw = wizardError?.kind === 'ytdlp' ? wizardError.error.raw : wizardError?.kind === 'other' ? wizardError.message + (wizardError.details ? '\n' + wizardError.details : '') : null;
+  const dpapiDetected = cookiesMode === 'browser' && isDpapiCookieError(errorRaw);
 
   if (dpapiDetected) {
     return (

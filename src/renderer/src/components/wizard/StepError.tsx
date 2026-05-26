@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatError, useAppStore } from '../../store/useAppStore.js';
+import { formatProbeError, useAppStore } from '../../store/useAppStore.js';
 import { Button } from '../ui/button.js';
 import { BotWallNotice } from './format/BotWallNotice.js';
 import { CookiesErrorAlert } from './format/CookiesErrorAlert.js';
@@ -9,8 +9,8 @@ import { isBotWallKind, isCookiesNeededKind } from './format/cookiesGate.js';
 export function StepError(): JSX.Element {
   const { t } = useTranslation();
   const { wizardError, settings, retry, reset } = useAppStore();
-  const message = formatError(wizardError);
-  const errorKind = wizardError?.localizedKey;
+  const message = formatProbeError(wizardError);
+  const errorKind = wizardError?.kind === 'ytdlp' ? wizardError.error.kind : undefined;
   const showBotWallNotice = isBotWallKind(errorKind);
   const cookiesEnabled = (settings?.common?.cookiesMode ?? 'off') !== 'off';
   // When cookies are off but the error itself signals "auth required" / "use

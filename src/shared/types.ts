@@ -20,8 +20,12 @@ export interface AppError {
   message: string;
   details?: string;
   recoverable?: boolean;
-  localizedKey?: import('./schemas.js').YtDlpErrorKind;
 }
+
+// Discriminated error for the probe IPC command. Separates yt-dlp classified
+// failures (carry LocalizedError for i18n + UI gating) from other probe
+// failures (carry a plain message). Replaces the AppError.localizedKey bridge.
+export type ProbeError = { kind: 'ytdlp'; error: LocalizedError } | { kind: 'other'; message: string; details?: string };
 
 // Mode-independent prefs and infrastructure config. Anything that applies
 // regardless of single-vs-playlist flow lives here.

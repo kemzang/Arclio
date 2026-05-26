@@ -1,6 +1,6 @@
 import type { Result } from './result.js';
 import type { SupportedLang } from './i18n/types.js';
-import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProbeInput, ProbeResult, ProgressEvent, QueueItem, QueueLane, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types.js';
+import type { AppSettings, CancelDownloadInput, CancelDownloadOutput, CommonSettings, DependencyId, DownloadJob, PauseDownloadInput, PauseDownloadOutput, PlaylistPrefs, ProbeError, ProbeInput, ProbeResult, ProgressEvent, QueueItem, QueueLane, SinglePrefs, StartDownloadInput, StartDownloadOutput, StatusEvent, UpdateAvailablePayload, UpdateInstallResult, WarmUpOutput, WarmupProgressEvent, WizardStepSnapshot } from './types.js';
 
 export interface SettingsPatch {
   common?: Partial<CommonSettings>;
@@ -24,7 +24,7 @@ export interface AppApi {
   };
   window: WindowApi;
   downloads: {
-    probe(input: ProbeInput): Promise<Result<ProbeResult>>;
+    probe(input: ProbeInput): Promise<Result<ProbeResult, ProbeError>>;
     probeCancel(): Promise<void>;
     start(input: StartDownloadInput): Promise<Result<StartDownloadOutput>>;
     cancel(input?: CancelDownloadInput): Promise<Result<CancelDownloadOutput>>;
