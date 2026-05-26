@@ -446,8 +446,8 @@ const uk = {
       postprocessFailure: 'yt-dlp завершив завантаження, але пост-обробка (злиття / mux / конвертація) не вдалася. Зазвичай це тимчасова проблема ffmpeg — спробуй ще раз, а якщо помилка повторюється, вибери іншу комбінацію форматів.',
       parse: 'Не вдалося розібрати відповідь сайту. Можливо, екстрактор yt-dlp застарів. Arroxy автоматично оновлює yt-dlp при запуску — спробуй ще раз за кілька хвилин, коли виправлення буде доставлено.',
       network: 'Помилка мережі. Перевір з’єднання та спробуй ще раз.',
-      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
-      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
+      drmProtected: 'Це відео захищене DRM. yt-dlp не може зняти захист DRM, тому файл неможливо завантажити.',
+      loginRequired: 'Для цього відео потрібен авторизований акаунт. Налаштуй cookies.txt (Налаштування → Cookies) і повтори спробу.',
       unknown: 'Завантаження не вдалося. Дивись необроблений вивід нижче.'
     }
   },

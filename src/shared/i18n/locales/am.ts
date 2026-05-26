@@ -446,8 +446,8 @@ const am = {
       postprocessFailure: 'yt-dlp ማውረዱን ጨርሷል ነገር ግን ድህረ-ሂደት (merge / mux / convert) አልተሳካም። ብዙውን ጊዜ ይህ ጊዜያዊ የffmpeg ችግር ነው — እንደገና ሞክሩ፣ ችግሩ ከቀጠለ ሌላ የቅርጸት ጥምረት ሞክሩ።',
       parse: 'ከጣቢያው የተመለሰውን ምላሽ መፈታት አልተቻለም። የyt-dlp extractor ጊዜ ያለፈበት ሊሆን ይችላል። Arroxy በሚነሳበት ጊዜ yt-dlp ን በራስ-ሰር ያዘምነዋል — እርማቱ እንደተለቀቀ በጥቂት ደቂቃዎች ውስጥ እንደገና ሞክሩ።',
       network: 'የአውታረ መረብ ስህተት። ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።',
-      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
-      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
+      drmProtected: 'ይህ ቪዲዮ DRM የተጠበቀ ነው። yt-dlp DRM ን ማስወገድ አይችልም፣ ስለዚህ ፋይሉ ሊዳውንሎድ አይቻልም።',
+      loginRequired: 'ይህ ቪዲዮ ወደ ስርዓት የገባ መለያ ያስፈልገዋል። cookies.txt ያዋቅሩ (ቅንብሮች → Cookies) እና እንደገና ሞክሩ።',
       unknown: 'ማውረድ አልተሳካም። ከታች ያለውን raw output ይመልከቱ።'
     }
   },

@@ -446,8 +446,8 @@ const fr = {
       postprocessFailure: 'yt-dlp a terminé le téléchargement, mais le post-traitement (fusion / mux / conversion) a échoué. C’est souvent un souci ffmpeg passager — réessaie, et si ça persiste, essaie une autre combinaison de formats.',
       parse: 'Impossible d’analyser la réponse du site. L’extracteur de yt-dlp est peut-être désynchronisé. Arroxy met yt-dlp à jour automatiquement au démarrage — réessaie dans quelques minutes, le temps que le correctif arrive.',
       network: 'Erreur réseau. Vérifie ta connexion et réessaie.',
-      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
-      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
+      drmProtected: 'Cette vidéo est protégée par DRM. yt-dlp ne peut pas supprimer le DRM, donc le fichier ne peut pas être téléchargé.',
+      loginRequired: 'Cette vidéo nécessite un compte connecté. Configure un cookies.txt (Paramètres → Cookies) et réessaie.',
       unknown: 'Échec du téléchargement. Consulte la sortie brute ci-dessous.'
     }
   },

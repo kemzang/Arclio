@@ -446,8 +446,8 @@ const uz = {
       postprocessFailure: "yt-dlp yuklab olishni tugatdi, biroq keyingi qayta ishlash (birlashtirish / mux / o'girish) muvaffaqiyatsiz tugadi. Ko'pincha bu ffmpeg ning vaqtinchalik muammosi — qayta urining, agar davom etsa, boshqa format kombinatsiyasini sinab ko'ring.",
       parse: "Saytdan kelgan javobni tahlil qilib bo'lmadi. yt-dlp ekstraktori eskirib qolgan bo'lishi mumkin. Arroxy ishga tushganda yt-dlp ni avtomatik yangilaydi — bir necha daqiqadan so'ng tuzatish kelgach qayta urinib ko'ring.",
       network: 'Tarmoq xatosi. Aloqangizni tekshiring va qayta urining.',
-      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
-      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
+      drmProtected: "Bu video DRM bilan himoyalangan. yt-dlp DRM ni olib tashlayolmaydi, shuning uchun fayl yuklab bo'lmaydi.",
+      loginRequired: "Bu video uchun tizimga kirgan hisob zarur. cookies.txt ni sozlang (Sozlamalar → Cookies) va qayta urinib ko'ring.",
       unknown: "Yuklab olish muvaffaqiyatsiz tugadi. Quyidagi xom natijani ko'ring."
     }
   },

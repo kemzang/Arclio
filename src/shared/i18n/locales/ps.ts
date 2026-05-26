@@ -446,8 +446,8 @@ const ps = {
       postprocessFailure: 'yt-dlp ډاونلوډ بشپړ کړ خو وروستی پروسس (یوځای کول / mux / بدلون) ناکام شو. ډیری وختونه دا د ffmpeg لنډمهاله ستونزه ده — بیا هڅه وکړئ، او که دوام ولري، بل فارمیټ ترکیب وازمویئ.',
       parse: 'د سایټ ځواب پارس نه شو. د yt-dlp استخراج کوونکی ممکن لرې شوی وي. Arroxy په پیلیدو سره yt-dlp په اتومات ډول تازه کوي — څو دقیقې وروسته بیا هڅه وکړئ کله چې اصلاح راشي.',
       network: 'د شبکې تېروتنه. خپله اړیکه وګورئ او بیا هڅه وکړئ.',
-      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
-      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
+      drmProtected: 'دا ویډیو د DRM لخوا خوندي دی. yt-dlp نشي کولی DRM لیرې کړي، نو فایل نشي ډاونلوډ کیدی.',
+      loginRequired: 'دا ویډیو د ننوتلي حساب ته اړتیا لري. یو cookies.txt تنظیم کړئ (تنظیمات → Cookies) او بیا هڅه وکړئ.',
       unknown: 'ډاونلوډ ناکام شو. لاندې خام محصول وګورئ.'
     }
   },

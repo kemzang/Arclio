@@ -446,8 +446,8 @@ const el = {
       postprocessFailure: 'Το yt-dlp ολοκλήρωσε τη λήψη αλλά η μετα-επεξεργασία (merge / mux / convert) απέτυχε. Συχνά πρόκειται για παροδικό πρόβλημα του ffmpeg — δοκίμασε ξανά και, αν επιμένει, δοκίμασε διαφορετικό συνδυασμό φορμά.',
       parse: 'Δεν ήταν δυνατή η ανάλυση της απάντησης από τον ιστότοπο. Ο extractor του yt-dlp μπορεί να έχει μείνει πίσω. Το Arroxy ενημερώνει αυτόματα το yt-dlp κατά την εκκίνηση — δοκίμασε ξανά σε λίγα λεπτά μόλις κυκλοφορήσει η διόρθωση.',
       network: 'Σφάλμα δικτύου. Έλεγξε τη σύνδεσή σου και δοκίμασε ξανά.',
-      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
-      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
+      drmProtected: 'Αυτό το βίντεο προστατεύεται από DRM. Το yt-dlp δεν μπορεί να αφαιρέσει DRM, οπότε το αρχείο δεν μπορεί να ληφθεί.',
+      loginRequired: 'Αυτό το βίντεο απαιτεί συνδεδεμένο λογαριασμό. Ρύθμισε ένα cookies.txt (Ρυθμίσεις → Cookies) και δοκίμασε ξανά.',
       unknown: 'Η λήψη απέτυχε. Δες το raw output παρακάτω.'
     }
   },

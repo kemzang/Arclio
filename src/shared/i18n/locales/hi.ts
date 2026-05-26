@@ -446,8 +446,8 @@ const hi = {
       postprocessFailure: 'yt-dlp ने डाउनलोड पूरा कर लिया लेकिन post-processing (merge / mux / convert) विफल रहा। अक्सर यह एक अस्थायी ffmpeg समस्या होती है — फिर से कोशिश करें, और अगर समस्या बनी रहे तो कोई दूसरा फॉर्मेट कॉम्बिनेशन आज़माएँ।',
       parse: 'साइट से मिले रिस्पॉन्स को पार्स नहीं किया जा सका। yt-dlp का extractor पुराना पड़ गया हो सकता है। Arroxy लॉन्च होने पर yt-dlp को स्वचालित रूप से अपडेट करता है — कुछ मिनटों में फिक्स आने पर पुनः प्रयास करें।',
       network: 'नेटवर्क त्रुटि। अपना कनेक्शन जाँचें और पुनः प्रयास करें।',
-      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
-      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
+      drmProtected: 'यह वीडियो DRM-सुरक्षित है। yt-dlp DRM हटा नहीं सकता, इसलिए फ़ाइल डाउनलोड नहीं हो सकती।',
+      loginRequired: 'इस वीडियो के लिए साइन-इन खाता ज़रूरी है। एक cookies.txt सेट करें (सेटिंग्स → Cookies) और फिर से प्रयास करें।',
       unknown: 'डाउनलोड विफल। नीचे raw output देखें।'
     }
   },

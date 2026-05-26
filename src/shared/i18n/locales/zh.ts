@@ -446,8 +446,8 @@ const zh = {
       postprocessFailure: 'yt-dlp 已完成下载，但后处理（合并 / mux / 转换）失败。这通常是 ffmpeg 的临时问题——请重试，如果仍然失败，请尝试其他格式组合。',
       parse: '无法解析网站的响应。yt-dlp 的提取器可能已过时。Arroxy 会在启动时自动更新 yt-dlp——请几分钟后再重试，等待修复发布。',
       network: '网络错误。请检查你的连接并重试。',
-      drmProtected: "This video is DRM-protected. yt-dlp can't strip DRM, so the file can't be downloaded.",
-      loginRequired: 'This video requires a signed-in account. Set up a cookies.txt (Settings → Cookies) and retry.',
+      drmProtected: '该视频受 DRM 保护。yt-dlp 无法去除 DRM，因此无法下载该文件。',
+      loginRequired: '该视频需要已登录的账号。请设置 cookies.txt（设置 → Cookies）后重试。',
       unknown: '下载失败。请查看下方的原始输出。'
     }
   },
