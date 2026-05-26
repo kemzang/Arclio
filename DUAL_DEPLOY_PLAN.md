@@ -1,7 +1,7 @@
 # Arroxy Dual-Deploy Architecture Plan
 
 > Status: design proposal. Not yet executed.
-> Author/owner: Antonio (antoniusmaxes@gmail.com).
+> Author/owner: Antonio (OrionusAI@proton.me).
 > Last revised: 2026-05-26.
 
 ## 1. Goal
