@@ -19,6 +19,7 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
       setLanguage: vi.fn().mockResolvedValue(undefined)
     },
     downloads: {
+      probeCancel: vi.fn().mockResolvedValue(undefined),
       start: vi.fn().mockResolvedValue(ok({ job: { id: 'job-1', url: '', outputDir: '/tmp', status: 'running', createdAt: '', updatedAt: '' } })),
       cancel: vi.fn().mockResolvedValue(ok({ cancelled: true })),
       probe: vi.fn().mockResolvedValue(
@@ -171,6 +172,21 @@ describe('playlist regressions', () => {
       lastSponsorBlockMode: 'mark',
       lastSponsorBlockCategories: ['intro']
     });
+  });
+
+  it('playlist format retry preserves a manually selected playlist preset', async () => {
+    window.appApi = buildMockApi({ lastPlaylistPreset: 'audio-mp3' }) as never;
+
+    await useAppStore.getState().initialize();
+    useAppStore.getState().setWizardUrl('https://www.youtube.com/playlist?list=PL123');
+    await useAppStore.getState().submitUrl();
+    useAppStore.getState().setPlaylistPreset('video-1080p');
+
+    await act(async () => {
+      await useAppStore.getState().retryFormatProbe();
+    });
+
+    expect(useAppStore.getState().selectedPlaylistPreset).toBe('video-1080p');
   });
 
   it('playlist outputTemplate padding scales with playlist length', async () => {
