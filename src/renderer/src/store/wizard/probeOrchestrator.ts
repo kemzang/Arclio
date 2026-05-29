@@ -326,6 +326,7 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
     playlistIsMultiVideo: RESET_WIZARD_STATE.playlistIsMultiVideo,
     playlistProbeLoading: RESET_WIZARD_STATE.playlistProbeLoading,
     selectedPlaylistPreset: RESET_WIZARD_STATE.selectedPlaylistPreset,
+    syncedDownloadedIds: RESET_WIZARD_STATE.syncedDownloadedIds,
 
     setWizardUrl: (url) => set({ wizardUrl: url }),
 
@@ -379,6 +380,22 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
     },
 
     setPlaylistPreset: (p) => set({ selectedPlaylistPreset: p, wizardSubtitleSkipped: false }),
+
+    syncWithFolder: async () => {
+      const { wizardOutputDir, playlistItems } = get();
+      const videoIds = playlistItems.map((e) => e.videoId).filter((v): v is string => v !== null);
+      const res = await window.appApi.playlist.scanFolder({ outputDir: wizardOutputDir, videoIds });
+      if (!res.ok) return;
+      const matchedIds = res.data.matchedIds;
+      const matched = new Set(matchedIds);
+      set((state) => {
+        const stillSelected = state.selectedPlaylistItemIds.filter((id) => {
+          const entry = state.playlistItems.find((e) => e.id === id);
+          return !entry?.videoId || !matched.has(entry.videoId);
+        });
+        return { syncedDownloadedIds: matchedIds, selectedPlaylistItemIds: stillSelected };
+      });
+    },
 
     advance: () => {
       const state = get();
