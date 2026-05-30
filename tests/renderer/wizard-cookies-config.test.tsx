@@ -148,6 +148,18 @@ describe('advanced network settings', () => {
 });
 
 describe('incomplete cookies config guard', () => {
+  it('keeps cookie export help links with the cookies source controls', () => {
+    render(<StepUrlInput />);
+
+    const advanced = screen.getByTestId('advanced-section');
+    if (advanced instanceof HTMLDetailsElement) advanced.open = true;
+
+    const cookiesSource = screen.getByTestId('cookies-source');
+    expect(within(cookiesSource).getByTestId('cookies-help-link')).toBeInTheDocument();
+    expect(within(cookiesSource).getByTestId('cookies-firefox-link')).toBeInTheDocument();
+    expect(within(cookiesSource).getByTestId('cookies-chrome-link')).toBeInTheDocument();
+  });
+
   it('blocks fetch and opens a modal when file mode has no path', async () => {
     resetStore(buildSettings({ cookiesMode: 'file', cookiesPath: '   ' }));
     render(<StepUrlInput />);

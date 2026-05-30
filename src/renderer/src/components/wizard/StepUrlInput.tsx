@@ -221,6 +221,17 @@ export function StepUrlInput(): JSX.Element {
               <RadioOption label={t('wizard.url.cookies.sourceFile')} checked={cookiesMode === 'file'} onClick={() => void setCookiesMode('file')} />
               <RadioOption label={t('wizard.url.cookies.sourceBrowser')} checked={cookiesMode === 'browser'} onClick={() => void setCookiesMode('browser')} />
             </div>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+              <button type="button" className="underline text-[var(--text-subtle)] hover:text-foreground" onClick={() => void window.appApi.shell.openExternal(COOKIES_HELP_URL)} data-testid="cookies-help-link">
+                {t('wizard.url.cookies.helpLink')}
+              </button>
+              <button type="button" className="underline text-[var(--text-subtle)] hover:text-foreground" onClick={() => void window.appApi.shell.openExternal(COOKIES_FIREFOX_URL)} data-testid="cookies-firefox-link">
+                {t('wizard.url.cookies.extensionFirefox')} ↗
+              </button>
+              <button type="button" className="underline text-[var(--text-subtle)] hover:text-foreground" onClick={() => void window.appApi.shell.openExternal(COOKIES_CHROME_URL)} data-testid="cookies-chrome-link">
+                {t('wizard.url.cookies.extensionChrome')} ↗
+              </button>
+            </div>
           </div>
 
           {cookiesMode === 'file' ? (
@@ -327,18 +338,6 @@ export function StepUrlInput(): JSX.Element {
               <span className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.analytics.toggleDescription')}</span>
             </div>
             <Switch checked={settings?.common?.analyticsEnabled ?? true} onCheckedChange={(checked) => void setAnalyticsEnabled(checked)} aria-label={t('wizard.url.analytics.toggle')} data-testid="analytics-toggle" />
-          </div>
-
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
-            <button type="button" className="underline text-[var(--text-subtle)] hover:text-foreground" onClick={() => void window.appApi.shell.openExternal(COOKIES_HELP_URL)} data-testid="cookies-help-link">
-              {t('wizard.url.cookies.helpLink')}
-            </button>
-            <button type="button" className="underline text-[var(--text-subtle)] hover:text-foreground" onClick={() => void window.appApi.shell.openExternal(COOKIES_FIREFOX_URL)} data-testid="cookies-firefox-link">
-              {t('wizard.url.cookies.extensionFirefox')} ↗
-            </button>
-            <button type="button" className="underline text-[var(--text-subtle)] hover:text-foreground" onClick={() => void window.appApi.shell.openExternal(COOKIES_CHROME_URL)} data-testid="cookies-chrome-link">
-              {t('wizard.url.cookies.extensionChrome')} ↗
-            </button>
           </div>
         </div>
       </details>

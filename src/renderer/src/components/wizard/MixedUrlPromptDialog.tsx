@@ -1,8 +1,10 @@
 import { useRef, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Info } from 'lucide-react';
 import { resolvePlaylistProbeLimit } from '@shared/networkPacing.js';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter } from '../ui/dialog.js';
 import { Button } from '../ui/button.js';
+import { Alert, AlertDescription } from '../ui/alert.js';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.js';
 import { useAppStore } from '../../store/useAppStore.js';
 
@@ -24,12 +26,13 @@ export function MixedUrlPromptDialog(): JSX.Element {
       <DialogContent initialFocus={playlistButtonRef}>
         <DialogTitle>{t('wizard.mixedPrompt.title')}</DialogTitle>
         <DialogDescription>{t('wizard.mixedPrompt.body')}</DialogDescription>
-        <div className="mt-3 flex items-center justify-between gap-3 rounded-md border border-[var(--border-strong)] bg-card/40 px-3 py-2 text-[12px]" data-testid="mixed-playlist-cap">
-          <span className="text-[var(--text-subtle)]">{t('wizard.mixedPrompt.playlistLimit', { count: playlistLimit })}</span>
+        <Alert variant="info" className="mt-3 flex items-center gap-3 py-2 text-[12px]" data-testid="mixed-playlist-cap">
+          <Info className="shrink-0" />
+          <AlertDescription className="min-w-0 flex-1 text-[12px]">{t('wizard.mixedPrompt.playlistLimit', { count: playlistLimit })}</AlertDescription>
           <button type="button" className="font-medium text-[var(--brand)] hover:underline" onClick={() => openAdvancedSettings('network')} data-testid="mixed-open-advanced">
             {t('wizard.mixedPrompt.advancedSettings')}
           </button>
-        </div>
+        </Alert>
         <DialogFooter>
           <Tooltip>
             <TooltipTrigger
