@@ -193,6 +193,7 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
     ...extractorIdentitySchema,
     formatId: z.string().min(1),
     preset: presetOrCustomSchema,
+    outputTemplate: z.string().min(1).optional(),
     subtitles: subtitleOptionsSchema.optional(),
     sponsorBlock: sponsorBlockOptionsSchema,
     embed: embedOptionsSchema,
@@ -203,6 +204,7 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
     ...extractorIdentitySchema,
     audioConvert: audioConvertSchema,
     preset: presetOrCustomSchema,
+    outputTemplate: z.string().min(1).optional(),
     subtitles: subtitleOptionsSchema.optional(),
     sponsorBlock: sponsorBlockOptionsSchema,
     embed: embedOptionsSchema
@@ -221,6 +223,7 @@ export const preparedJobSchema = z.discriminatedUnion('kind', [
   z.object({
     kind: z.literal('subtitle-only'),
     ...extractorIdentitySchema,
+    outputTemplate: z.string().min(1).optional(),
     subtitles: subtitleOptionsSchema
   })
 ]);
@@ -279,12 +282,14 @@ const commonSettingsPatchSchema = z.object({
   cookiesBrowser: cookiesBrowserSchema.optional(),
   proxyUrl: z.string().optional(),
   clipboardWatchEnabled: z.boolean().optional(),
+  includeIdInSingleFilenames: z.boolean().optional(),
   closeBehavior: z.enum(['ask', 'tray', 'quit']).optional(),
   embedChapters: z.boolean().optional(),
   embedMetadata: z.boolean().optional(),
   embedThumbnail: z.boolean().optional(),
   writeDescription: z.boolean().optional(),
   writeThumbnail: z.boolean().optional(),
+  writeM3u: z.boolean().optional(),
   lastSponsorBlockMode: sponsorBlockModeSchema.optional(),
   lastSponsorBlockCategories: z.array(sponsorBlockCategorySchema).optional(),
   analyticsEnabled: z.boolean().optional(),
@@ -366,6 +371,11 @@ export const queueItemSchema = z.object({
   error: localizedErrorSchema.nullable(),
   finishedAt: z.string().nullable(),
   playlistGroupId: z.string().min(1).optional(),
+  // Per-item opt-out for the playlist `.m3u` artifact. Defaults true so
+  // pre-existing persisted items (and single-mode items, which ignore it)
+  // keep the historical always-on behavior; only an explicit `false` set by
+  // the wizard suppresses the write. Consulted in playlist mode only.
+  writeM3u: z.boolean().default(true),
   // Persisted resume context. `lastJobId` is set iff status ∈ {running,
   // paused-active}; `tempDir` is set iff status === 'paused-active' and the
   // job was paused mid-download. `tempDir` survives app restart so the

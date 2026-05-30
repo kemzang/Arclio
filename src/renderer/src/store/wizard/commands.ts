@@ -53,10 +53,12 @@ export const RESET_WIZARD_STATE = {
   wizardEmbedThumbnail: DEFAULTS.embedThumbnail,
   wizardWriteDescription: DEFAULTS.writeDescription,
   wizardWriteThumbnail: DEFAULTS.writeThumbnail,
+  wizardWriteM3u: DEFAULTS.writeM3u,
   wizardSubfolderEnabled: false,
   wizardSubfolderName: '',
   // sync-with-folder
   syncedDownloadedIds: [] as string[],
+  syncScanState: 'idle' as 'idle' | 'scanning' | 'done',
   // dialogs
   advancedAutoOpen: false,
   advancedAutoTarget: 'cookies' as const,

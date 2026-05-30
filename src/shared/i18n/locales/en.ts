@@ -107,11 +107,13 @@ const en = {
       loadingItems: 'Fetching playlist…',
       thumbnailAlt: 'Video thumbnail',
       durationUnknown: 'live',
-      syncWithFolder: 'Sync with folder',
-      syncPanelDir: 'Folder',
-      syncChange: 'Change…',
+      syncChange: 'Change folder…',
       syncApply: 'Apply sync',
-      syncNoPriorDownloads: 'No prior downloads found in this folder',
+      syncScanning: 'Checking folder…',
+      syncFoundTitle: 'Already in folder',
+      syncFoundDesc: '{{n}} of these videos are already in {{dir}}. Sync to download only the new ones?',
+      syncNoneTitle: 'Nothing downloaded yet',
+      syncNoneDesc: 'No videos from this playlist were found in {{dir}}.',
       alreadyDownloaded: 'Already downloaded'
     },
     mixedPrompt: {
@@ -210,6 +212,10 @@ const en = {
         custom: 'Custom…',
         invalid: 'Use a whole number from 1 to 5000',
         tooltip: 'Maps to yt-dlp --playlist-end: Arroxy only asks for this many playlist, channel, or search entries while building the picker.'
+      },
+      singleFilenameId: {
+        toggle: 'Add video ID to single filenames',
+        toggleDescription: 'Keeps one-off downloads unique when titles change or collide.'
       },
       networkPacing: {
         heading: 'Network pacing',
@@ -395,6 +401,10 @@ const en = {
       writeThumbnail: {
         label: 'Save thumbnail',
         description: 'Saves the thumbnail as a .jpg image file next to the download.'
+      },
+      writeM3u: {
+        label: 'Generate .m3u playlist file',
+        description: 'Save an .m3u playlist alongside the videos so they open in order in your media player.'
       }
     },
     confirm: {

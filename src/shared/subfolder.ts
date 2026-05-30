@@ -51,3 +51,33 @@ export function effectiveOutputDir(base: string, enabled: boolean, subfolder: st
   if (!enabled || !t || !isValidSubfolder(t)) return base;
   return joinSubfolder(base, t);
 }
+
+// Directory a playlist's files land in: an explicit subfolder when the user
+// named one, else a folder named after the (sanitized) playlist title.
+// Single source of truth for where playlist media is written
+// (buildPlaylistQueueItem) and where we scan for already-downloaded items
+// (scanDownloadedInFolder) — the two must agree or the scan looks in the wrong dir.
+export function playlistBaseDir(base: string, subfolderEnabled: boolean, subfolderName: string, playlistTitle: string): string {
+  const sub = subfolderName.trim();
+  return subfolderEnabled && isValidSubfolder(sub) ? joinSubfolder(base, sub) : joinSubfolder(base, safeFolderName(playlistTitle || 'Playlist'));
+}
+
+// Inverse of joinSubfolder: split a directory path into its parent and final
+// segment, tolerating either separator and trailing slashes. Maps a user-picked
+// playlist folder back onto base + explicit subfolder so the base+subfolder
+// SSOT stays consistent and playlistBaseDir reproduces the chosen dir exactly
+// (rather than appending the auto/saved subfolder a second time).
+export function splitDir(dir: string): { parent: string; leaf: string } {
+  const trimmed = dir.replace(/[/\\]+$/, '');
+  // Windows drive root ("C:\" or "C:"): the root IS the parent and there is no
+  // leaf, so joinSubfolder(parent, '') round-trips back to the drive root
+  // instead of mangling it to "/C:".
+  if (/^[A-Za-z]:$/.test(trimmed)) return { parent: trimmed + '\\', leaf: '' };
+  // Separator-only root ("/" or "\") collapsed to empty by the trim above —
+  // restore the bare root as the parent so the round-trip holds.
+  if (trimmed === '' && dir !== '') return { parent: dir.slice(0, 1), leaf: '' };
+  const idx = Math.max(trimmed.lastIndexOf('/'), trimmed.lastIndexOf('\\'));
+  if (idx < 0) return { parent: '', leaf: trimmed };
+  const parent = idx === 0 ? trimmed.slice(0, 1) : trimmed.slice(0, idx);
+  return { parent: /^[A-Za-z]:$/.test(parent) && trimmed[idx] === '\\' ? parent + '\\' : parent, leaf: trimmed.slice(idx + 1) };
+}

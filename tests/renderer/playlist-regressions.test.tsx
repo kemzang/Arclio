@@ -130,6 +130,64 @@ beforeEach(() => {
 });
 
 describe('playlist regressions', () => {
+  it('single outputTemplate includes the id suffix by default', async () => {
+    window.appApi = buildMockApi() as never;
+
+    useAppStore.setState({
+      initialized: true,
+      settings: buildAppSettings(),
+      wizardMode: 'single',
+      wizardUrl: 'https://youtube.com/watch?v=abc123',
+      wizardTitle: 'Single Video',
+      wizardThumbnail: '',
+      wizardOutputDir: '/tmp/out',
+      wizardExtractor: 'youtube',
+      wizardExtractorKey: 'Youtube',
+      wizardFormats: [{ formatId: '22', label: '720p', ext: 'mp4', resolution: '720p', isVideoOnly: false, isAudioOnly: false }],
+      selectedVideoFormatId: '22',
+      audioSelection: { kind: 'none' },
+      activePreset: null
+    } as never);
+
+    await act(async () => {
+      await useAppStore.getState().addToQueue();
+    });
+
+    const item = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0]?.[0];
+    expect(item?.job.kind).toBe('single-format');
+    if (item?.job.kind !== 'single-format') throw new Error('single-format job expected');
+    expect(item.job.outputTemplate).toBe('%(title).200B [%(id)s].%(ext)s');
+  });
+
+  it('single outputTemplate can omit the id suffix when the advanced setting is off', async () => {
+    window.appApi = buildMockApi({ includeIdInSingleFilenames: false }) as never;
+
+    useAppStore.setState({
+      initialized: true,
+      settings: buildAppSettings({ includeIdInSingleFilenames: false }),
+      wizardMode: 'single',
+      wizardUrl: 'https://youtube.com/watch?v=abc123',
+      wizardTitle: 'Single Video',
+      wizardThumbnail: '',
+      wizardOutputDir: '/tmp/out',
+      wizardExtractor: 'youtube',
+      wizardExtractorKey: 'Youtube',
+      wizardFormats: [{ formatId: '22', label: '720p', ext: 'mp4', resolution: '720p', isVideoOnly: false, isAudioOnly: false }],
+      selectedVideoFormatId: '22',
+      audioSelection: { kind: 'none' },
+      activePreset: null
+    } as never);
+
+    await act(async () => {
+      await useAppStore.getState().addToQueue();
+    });
+
+    const item = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0]?.[0];
+    expect(item?.job.kind).toBe('single-format');
+    if (item?.job.kind !== 'single-format') throw new Error('single-format job expected');
+    expect(item.job.outputTemplate).toBe('%(title).200B.%(ext)s');
+  });
+
   it('playlist probe restores persisted common prefs before the first playlist save', async () => {
     const api = buildMockApi({
       embedChapters: true,
@@ -218,5 +276,52 @@ describe('playlist regressions', () => {
     const templates = (vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? []).map((item) => (item.job.kind === 'playlist-preset' ? item.job.outputTemplate : null));
 
     expect(templates).toEqual(['%(title).200B [%(id)s].%(ext)s', '%(title).200B [%(id)s].%(ext)s', '%(title).200B [%(id)s].%(ext)s']);
+  });
+
+  it('built playlist items carry writeM3u from wizard state (opt-out propagates)', async () => {
+    window.appApi = buildMockApi() as never;
+
+    useAppStore.setState({
+      initialized: true,
+      settings: buildAppSettings(),
+      wizardMode: 'playlist',
+      playlistTitle: 'Big Playlist',
+      playlistItems: [{ id: 'p1', url: 'https://youtube.com/watch?v=p1', title: 'Vid 1', thumbnail: '', playlistIndex: 1, videoId: 'p1' }],
+      selectedPlaylistItemIds: ['p1'],
+      selectedPlaylistPreset: 'video-1080p',
+      wizardOutputDir: '/tmp/out',
+      wizardWriteM3u: false
+    } as never);
+
+    await act(async () => {
+      await useAppStore.getState().addToQueue();
+    });
+
+    const items = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? [];
+    expect(items).toHaveLength(1);
+    expect(items[0]?.writeM3u).toBe(false);
+  });
+
+  it('built playlist items default writeM3u to true (M3U on by default)', async () => {
+    window.appApi = buildMockApi() as never;
+
+    useAppStore.setState({
+      initialized: true,
+      settings: buildAppSettings(),
+      wizardMode: 'playlist',
+      playlistTitle: 'Big Playlist',
+      playlistItems: [{ id: 'p1', url: 'https://youtube.com/watch?v=p1', title: 'Vid 1', thumbnail: '', playlistIndex: 1, videoId: 'p1' }],
+      selectedPlaylistItemIds: ['p1'],
+      selectedPlaylistPreset: 'video-1080p',
+      wizardOutputDir: '/tmp/out',
+      wizardWriteM3u: true
+    } as never);
+
+    await act(async () => {
+      await useAppStore.getState().addToQueue();
+    });
+
+    const items = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? [];
+    expect(items[0]?.writeM3u).toBe(true);
   });
 });

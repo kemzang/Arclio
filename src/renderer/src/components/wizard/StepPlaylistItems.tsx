@@ -1,13 +1,17 @@
 import { type JSX, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { FolderCheck, FolderSearch, Info, X } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore.js';
 import { Button } from '../ui/button.js';
 import { Checkbox } from '../ui/checkbox.js';
 import { Input } from '../ui/input.js';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert.js';
 import { WizardStepFooterActions } from './WizardStepFooterActions.js';
 import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
+import { resolvePlaylistDir } from '../../store/wizard/playlistDir.js';
 import { formatDuration } from '@renderer/lib/formatDuration.js';
+import { notify } from '@renderer/lib/notify.js';
 
 // undefined = no duration metadata (common for nested-playlist entries from
 // music search, channel root, etc.) — render an em-dash instead of falsely
@@ -19,11 +23,38 @@ function formatEntryDuration(seconds: number | undefined, liveLabel: string): st
 
 export function StepPlaylistItems(): JSX.Element {
   const { t } = useTranslation();
-  const { playlistItems, selectedPlaylistItemIds, playlistTitle, playlistProbeLoading, syncedDownloadedIds, wizardOutputDir, setPlaylistItemSelected, selectAllPlaylistItems, selectNonePlaylistItems, selectPlaylistRange, confirmPlaylistSelection, back, wizardExtractor, syncWithFolder, chooseWizardFolder } = useAppStore();
+  const store = useAppStore();
+  const { playlistItems, selectedPlaylistItemIds, playlistTitle, playlistProbeLoading, syncedDownloadedIds, syncScanState, setPlaylistItemSelected, selectAllPlaylistItems, selectNonePlaylistItems, selectPlaylistRange, confirmPlaylistSelection, back, wizardExtractor, scanDownloadedInFolder, applyFolderSync, setPlaylistFolder } = store;
+
+  // Effective folder the playlist's files land in (and where the scan looks) —
+  // the same resolver the queue builder + scan use, so display == download == scan.
+  const syncDir = resolvePlaylistDir(store);
 
   const [rangeFrom, setRangeFrom] = useState('');
   const [rangeTo, setRangeTo] = useState('');
-  const [syncOpen, setSyncOpen] = useState(false);
+  // Lets the user dismiss the sync alert (or hide it after applying) without
+  // re-running the scan. Reset implicitly whenever a new scan completes.
+  const [syncDismissed, setSyncDismissed] = useState(false);
+
+  const foundCount = syncedDownloadedIds.length;
+
+  function changeSyncFolder(): void {
+    // Open at the current playlist dir; the pick becomes base+subfolder via
+    // setPlaylistFolder (single SSOT), then we rescan the new location. State
+    // only changes after a successful pick + folder write, so a rejected dialog
+    // or failed settings persist can't leave the sync UI inconsistent.
+    void (async () => {
+      try {
+        const res = await window.appApi.dialog.chooseFolder(syncDir || undefined);
+        if (!res.ok || !res.data.path) return;
+        await setPlaylistFolder(res.data.path);
+        setSyncDismissed(false);
+        void scanDownloadedInFolder();
+      } catch (error) {
+        notify.folderSelectFailed(error);
+      }
+    })();
+  }
 
   const parentRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line react-hooks/incompatible-library
@@ -68,9 +99,6 @@ export function StepPlaylistItems(): JSX.Element {
             <Button type="button" variant="outline" size="sm" onClick={selectNonePlaylistItems}>
               {t('wizard.playlist.selectNone')}
             </Button>
-            <Button type="button" variant="outline" size="sm" onClick={() => setSyncOpen((v) => !v)}>
-              {t('wizard.playlist.syncWithFolder')}
-            </Button>
             <div className="ml-auto flex items-center gap-1">
               <span className="text-xs text-muted-foreground">{t('wizard.playlist.rangeFrom')}</span>
               <Input className="h-7 w-14 px-2 text-xs" value={rangeFrom} onChange={(e) => setRangeFrom(e.target.value)} placeholder="1" />
@@ -82,22 +110,57 @@ export function StepPlaylistItems(): JSX.Element {
             </div>
           </div>
 
-          {syncOpen && (
-            <div className="rounded-md border border-border bg-muted/30 px-3 py-2 flex flex-col gap-2">
-              <div className="flex items-center gap-2 text-xs">
-                <span className="text-muted-foreground shrink-0">{t('wizard.playlist.syncPanelDir')}</span>
-                <span className="flex-1 truncate font-mono text-[11px]">{wizardOutputDir || '—'}</span>
-                <Button type="button" variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={() => void chooseWizardFolder()}>
-                  {t('wizard.playlist.syncChange')}
-                </Button>
+          {syncScanState === 'scanning' && (
+            <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <FolderSearch size={13} />
+              {t('wizard.playlist.syncScanning')}
+            </p>
+          )}
+
+          {syncScanState === 'done' && !syncDismissed && foundCount > 0 && (
+            <Alert variant="success" className="flex items-start gap-3">
+              <FolderCheck className="mt-0.5 size-4 shrink-0 text-emerald-500" />
+              <div className="min-w-0 flex-1">
+                <AlertTitle>{t('wizard.playlist.syncFoundTitle')}</AlertTitle>
+                <AlertDescription className="break-words">{t('wizard.playlist.syncFoundDesc', { n: foundCount, dir: syncDir })}</AlertDescription>
+                <div className="mt-2.5 flex items-center gap-2">
+                  <Button
+                    type="button"
+                    size="sm"
+                    onClick={() => {
+                      applyFolderSync();
+                      setSyncDismissed(true);
+                    }}
+                  >
+                    {t('wizard.playlist.syncApply')}
+                  </Button>
+                  <Button type="button" variant="outline" size="sm" onClick={changeSyncFolder}>
+                    {t('wizard.playlist.syncChange')}
+                  </Button>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Button type="button" variant="outline" size="sm" onClick={() => void syncWithFolder()}>
-                  {t('wizard.playlist.syncApply')}
-                </Button>
-                {syncedDownloadedIds.length === 0 && <span className="text-xs text-muted-foreground">{t('wizard.playlist.syncNoPriorDownloads')}</span>}
+              <Button type="button" variant="ghost" size="icon-sm" className="-mt-1 -me-1 shrink-0" aria-label={t('titleBar.close')} onClick={() => setSyncDismissed(true)}>
+                <X />
+              </Button>
+            </Alert>
+          )}
+
+          {syncScanState === 'done' && !syncDismissed && foundCount === 0 && (
+            <Alert variant="info" className="flex items-start gap-3">
+              <Info className="mt-0.5 size-4 shrink-0 text-sky-500" />
+              <div className="min-w-0 flex-1">
+                <AlertTitle>{t('wizard.playlist.syncNoneTitle')}</AlertTitle>
+                <AlertDescription className="break-words">{t('wizard.playlist.syncNoneDesc', { dir: syncDir })}</AlertDescription>
+                <div className="mt-2.5">
+                  <Button type="button" variant="outline" size="sm" onClick={changeSyncFolder}>
+                    {t('wizard.playlist.syncChange')}
+                  </Button>
+                </div>
               </div>
-            </div>
+              <Button type="button" variant="ghost" size="icon-sm" className="-mt-1 -me-1 shrink-0" aria-label={t('titleBar.close')} onClick={() => setSyncDismissed(true)}>
+                <X />
+              </Button>
+            </Alert>
           )}
 
           <div ref={parentRef} className="h-[calc(100vh-280px)] min-h-[300px] overflow-y-auto rounded-md border border-border">
