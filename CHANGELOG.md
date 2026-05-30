@@ -8,6 +8,40 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.3.7-beta.1
+
+This beta makes playlist downloads feel more intentional: better presets, cleaner folders, and fewer surprises when Arroxy has to slow itself down for a host.
+
+## Highlights
+
+### Playlist Presets Are More Useful
+Playlist preset downloads now do a better job matching the output you asked for.
+
+- Presets apply during playlist probing without wiping out retry state.
+- Mixed playlist flows keep format choices and output preferences lined up more reliably.
+- Playlist item handling has been tightened so large queues behave more predictably from probe through submit.
+
+### Cleaner Playlist Output
+Playlist downloads now have better tools for keeping a folder organized.
+
+- Stable playlist filenames make repeated runs less messy.
+- Sync-with-folder can skip items that already exist locally.
+- M3U playlist generation adds a lightweight way to preserve playlist order for external players.
+
+### Network Pacing Controls
+Arroxy now has configurable network pacing for playlist-heavy workflows.
+
+- The default pacing preset is now balanced.
+- Inter-job sleep is shorter, so safe pacing feels less sluggish.
+- Playlist probe limits are configurable for users who need to trade speed against host pressure.
+
+### Maintenance
+- Error classification now uses the shared `ytdlp-errors` package instead of a local classifier.
+- Probe errors now flow through a discriminated union, which makes failure handling easier to reason about.
+- CI and dependency maintenance landed across Bun, Node, Vitest matcher types, and repository review tooling.
+
+---
+
 ## 0.3.6
 
 This release is all about big playlists. If you ever pasted a 290-video URL and watched Arroxy slowly chew through it while the UI lagged behind, this one is for you.
