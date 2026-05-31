@@ -14,12 +14,23 @@ describe('beforeBuild arch resolution', () => {
 
     expect(resolveBuilderArch('x64', 'arm64')).toBe('x64');
     expect(resolveBuilderArch('arm64', 'x64')).toBe('arm64');
+    expect(resolveBuilderArch('ia32', 'x64')).toBe('ia32');
+    expect(resolveBuilderArch('armv7l', 'arm64')).toBe('armv7l');
   });
 
   it('keeps compatibility with numeric electron-builder arch enum values', async () => {
     const { resolveBuilderArch } = await loadBeforeBuild();
 
+    // electron-builder Arch enum: 1=x64, 3=arm64
     expect(resolveBuilderArch(1, 'arm64')).toBe('x64');
     expect(resolveBuilderArch(3, 'x64')).toBe('arm64');
+  });
+
+  it('falls back to the host architecture when context.arch is absent or unsupported', async () => {
+    const { resolveBuilderArch } = await loadBeforeBuild();
+
+    expect(resolveBuilderArch(undefined, 'x64')).toBe('x64');
+    expect(resolveBuilderArch(null, 'arm64')).toBe('arm64');
+    expect(resolveBuilderArch('unsupported', 'arm64')).toBe('arm64');
   });
 });
