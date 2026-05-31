@@ -14,21 +14,8 @@ name: Windows Installer
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'build/**'
-      - 'scripts/build/**'
-      - 'electron-builder.json5'
-      - 'electron.vite.config.*'
-      - 'package.json'
-      - 'bun.lock'
-      - '.github/workflows/installer-smoke.yml'
   push:
     branches: [main]
-    paths:
-      - 'build/*.nsh'
-      - 'package.json'
-      - 'bun.lock'
-      - '.github/workflows/installer-smoke.yml'
     tags: ['v*']
   workflow_dispatch:
 
