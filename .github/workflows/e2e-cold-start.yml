@@ -17,6 +17,18 @@ on:
       - '.github/workflows/e2e-cold-start.yml'
   pull_request:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'tests/e2e/**'
+      - 'build/**'
+      - 'scripts/build/**'
+      - 'scripts/test-binaries/**'
+      - 'electron-builder.json5'
+      - 'electron.vite.config.*'
+      - 'playwright.config.*'
+      - 'package.json'
+      - 'bun.lock'
+      - '.github/workflows/e2e-cold-start.yml'
   workflow_dispatch:
 
 concurrency:
