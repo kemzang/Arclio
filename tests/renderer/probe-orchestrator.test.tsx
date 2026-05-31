@@ -42,6 +42,16 @@ const PLAYLIST_PROBE: Extract<ProbeResult, { kind: 'playlist' }> = {
   ]
 };
 
+function playlistProbeWithEntries(count: number): Extract<ProbeResult, { kind: 'playlist' }> {
+  return {
+    ...PLAYLIST_PROBE,
+    entries: Array.from({ length: count }, (_, index) => {
+      const n = index + 1;
+      return { id: `e${n}`, title: `Entry ${n}`, url: `https://youtu.be/e${n}`, thumbnail: '', duration: 60, playlistIndex: n, videoId: `e${n}` };
+    })
+  };
+}
+
 function resetStore() {
   useAppStore.setState({
     ...RESET_WIZARD_STATE,
@@ -151,6 +161,47 @@ describe('submitUrl — playlist probe', () => {
 
     const { selectedPlaylistItemIds, playlistItems } = useAppStore.getState();
     expect(selectedPlaylistItemIds).toEqual(playlistItems.map((e) => e.id));
+  });
+
+  it('trims the sentinel entry and marks the playlist as likely capped', async () => {
+    const api = buildMockAppApi();
+    vi.mocked(api.downloads.probe).mockResolvedValue(ok(playlistProbeWithEntries(101)));
+    window.appApi = api;
+
+    useAppStore.setState({
+      wizardUrl: 'https://www.youtube.com/playlist?list=PLtest',
+      settings: {
+        common: { defaultOutputDir: '/tmp', rememberLastOutputDir: false, clipboardWatchEnabled: false, playlistProbeLimit: 100 },
+        single: {},
+        playlist: {}
+      }
+    });
+    await useAppStore.getState().submitUrl();
+
+    const state = useAppStore.getState();
+    expect(state.playlistItems).toHaveLength(100);
+    expect(state.selectedPlaylistItemIds).toHaveLength(100);
+    expect(state.playlistLikelyCapped).toBe(true);
+  });
+
+  it('does not mark an exact-limit playlist as capped without a sentinel entry', async () => {
+    const api = buildMockAppApi();
+    vi.mocked(api.downloads.probe).mockResolvedValue(ok(playlistProbeWithEntries(100)));
+    window.appApi = api;
+
+    useAppStore.setState({
+      wizardUrl: 'https://www.youtube.com/playlist?list=PLtest',
+      settings: {
+        common: { defaultOutputDir: '/tmp', rememberLastOutputDir: false, clipboardWatchEnabled: false, playlistProbeLimit: 100 },
+        single: {},
+        playlist: {}
+      }
+    });
+    await useAppStore.getState().submitUrl();
+
+    const state = useAppStore.getState();
+    expect(state.playlistItems).toHaveLength(100);
+    expect(state.playlistLikelyCapped).toBe(false);
   });
 });
 

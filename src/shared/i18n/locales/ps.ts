@@ -108,7 +108,9 @@ const ps = {
       syncFoundDesc: 'له دې ویډیوګانو څخه {{n}} مخکې په {{dir}} کې شته. یوازې نوي ډاونلوډولو لپاره همغږي کوې؟',
       syncNoneTitle: 'تر اوسه هېڅ نه دي ډاونلوډ شوي',
       syncNoneDesc: 'د دې پلی‌لېست هېڅ ویډیو په {{dir}} کې ونه موندل شوه.',
-      alreadyDownloaded: 'مخکې ډاونلوډ شوی'
+      alreadyDownloaded: 'مخکې ډاونلوډ شوی',
+      probeLimitAlertTitle: 'د Playlist سکین محدود دی',
+      probeLimitAlertDesc: 'Arroxy له {{count}} څخه زیات توکي وموندل، نو اوسنی سکین حد پاتې توکي پټوي.'
     },
     playlistPresets: {
       heading: 'د بیچ لپاره کیفیت وټاکئ',
@@ -192,6 +194,20 @@ const ps = {
         description: 'د پراکسي له لارې ترافیک لیږدول — د جغرافیایي محدودیتونو لرونکي مینځپانګې لپاره ګټور.',
         placeholder: 'http://host:port',
         clear: 'پاکول'
+      },
+      playlistProbeLimit: {
+        label: 'د سکین لپاره د Playlist توکي',
+        description: 'هغه اعظمي ننوتونه چې Arroxy د یوه playlist، چینل، یا د لټون پایله خلاصیدو پرمهال بارومه.',
+        option: '{{count}} توکي',
+        current: 'اوسنی حد: {{count}} توکي',
+        customValue: 'دودیز: {{count}} توکي',
+        custom: 'دودیز…',
+        customDialogTitle: 'دودیز د Playlist سکین حد',
+        customDialogDescription: 'د {{min}} نه تر {{max}} پورې بشپړ عدد وکاروئ.',
+        customDialogCancel: 'لغوه کړئ',
+        customDialogSave: 'حد خوندي کړئ',
+        invalid: 'د 1 نه تر 5000 پورې بشپړ عدد وکاروئ',
+        tooltip: 'yt-dlp --playlist-end ته د لارښوونې لپاره: Arroxy د انتخاب جوړولو پرمهال یوازې د playlist، چینل، یا لټون له ننوتونو دومره غواړي.'
       },
       singleFilenameId: {
         toggle: 'د یوازینو فایل نومونو ته د ویډیو ID ورزیات کړه',

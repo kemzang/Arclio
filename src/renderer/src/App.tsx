@@ -15,9 +15,11 @@ import { AboutDialog } from './components/system/AboutDialog.js';
 import { ShareDialog } from './components/system/ShareDialog.js';
 import { useUpdateChannel } from './components/system/useUpdateChannel.js';
 import { TooltipProvider } from './components/ui/tooltip.js';
+import { ScenarioGallery } from './dev/ScenarioGallery.js';
 import { cn } from './lib/utils.js';
 
 const FEEDBACK_URL = 'https://github.com/antonio-orionus/Arroxy/issues/new/choose';
+const SHOW_SCENARIO_GALLERY = import.meta.env.MODE === 'browser-mock';
 
 function buildDebugInfo(): string {
   const ua = navigator.userAgent;
@@ -139,6 +141,7 @@ export function App(): JSX.Element {
         <SplashScreen initialized={initialized} warmupBlocking={warmupBlocking} warmupDiagnostics={warmupDiagnostics} warmupProgress={warmupProgress} />
         <AboutDialog />
         <ShareDialog />
+        {SHOW_SCENARIO_GALLERY && <ScenarioGallery />}
       </div>
     </TooltipProvider>
   );

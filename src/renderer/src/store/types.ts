@@ -47,6 +47,7 @@ export interface ProbeOrchestratorSlice {
   playlistTitle: string;
   playlistId: string;
   playlistIsMultiVideo: boolean;
+  playlistLikelyCapped: boolean;
   playlistProbeLoading: boolean;
   playlistSelection: PlaylistSelection | null;
 
@@ -149,6 +150,7 @@ export interface WizardDialogsSlice {
   cookiesConfigDialogIssue: IncompleteCookiesConfigIssue | null;
 
   setAdvancedAutoOpen: (open: boolean, target?: AdvancedSettingsTarget) => void;
+  cancelMixedPrompt: () => void;
   dismissCookiesConfigDialog: () => void;
   openAdvancedSettings: (target: AdvancedSettingsTarget) => void;
 }

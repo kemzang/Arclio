@@ -108,11 +108,44 @@ describe('advanced network settings', () => {
 
     expect(screen.getByTestId('network-pacing-section')).toBeInTheDocument();
     const playlistSection = screen.getByTestId('playlist-probe-limit-section');
-    fireEvent.click(within(playlistSection).getByText('250'));
+    fireEvent.click(within(playlistSection).getByTestId('playlist-probe-limit-trigger'));
+    fireEvent.click(await screen.findByTestId('playlist-probe-limit-option-250'));
 
     await waitFor(() => {
       expect(mockApi.settings.update).toHaveBeenCalledWith({ common: { playlistProbeLimit: 250 } });
     });
+  });
+
+  it('saves a custom playlist probe limit from the dialog', async () => {
+    render(<StepUrlInput />);
+
+    const advanced = screen.getByTestId('advanced-section');
+    if (advanced instanceof HTMLDetailsElement) advanced.open = true;
+
+    const playlistSection = screen.getByTestId('playlist-probe-limit-section');
+    fireEvent.click(within(playlistSection).getByTestId('playlist-probe-limit-trigger'));
+    fireEvent.click(await screen.findByTestId('playlist-probe-limit-option-custom'));
+    fireEvent.change(await screen.findByTestId('playlist-probe-limit-custom-input'), { target: { value: '375' } });
+    fireEvent.click(screen.getByTestId('playlist-probe-limit-custom-save'));
+
+    await waitFor(() => {
+      expect(mockApi.settings.update).toHaveBeenCalledWith({ common: { playlistProbeLimit: 375 } });
+    });
+  });
+
+  it('does not save an invalid custom playlist probe limit', async () => {
+    render(<StepUrlInput />);
+
+    const advanced = screen.getByTestId('advanced-section');
+    if (advanced instanceof HTMLDetailsElement) advanced.open = true;
+
+    const playlistSection = screen.getByTestId('playlist-probe-limit-section');
+    fireEvent.click(within(playlistSection).getByTestId('playlist-probe-limit-trigger'));
+    fireEvent.click(await screen.findByTestId('playlist-probe-limit-option-custom'));
+    fireEvent.change(await screen.findByTestId('playlist-probe-limit-custom-input'), { target: { value: '5001' } });
+
+    expect(screen.getByTestId('playlist-probe-limit-custom-save')).toBeDisabled();
+    expect(mockApi.settings.update).not.toHaveBeenCalled();
   });
 
   it('saves the single-filename id suffix switch', async () => {
@@ -128,7 +161,7 @@ describe('advanced network settings', () => {
     });
   });
 
-  it('mixed URL dialog shows the current playlist cap and opens Advanced at network settings', async () => {
+  it('mixed URL dialog shows the current playlist cap and changes it inline', async () => {
     resetStore(buildSettings({ playlistProbeLimit: 250 }));
     useAppStore.setState({ mixedUrlPromptOpen: true, mixedUrlPending: SINGLE_URL });
 
@@ -139,15 +172,59 @@ describe('advanced network settings', () => {
     );
 
     expect(screen.getByTestId('mixed-playlist-cap')).toHaveTextContent('250');
-    fireEvent.click(screen.getByTestId('mixed-open-advanced'));
+    expect(screen.queryByTestId('mixed-open-advanced')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('mixed-playlist-probe-limit-trigger'));
+    fireEvent.click(await screen.findByTestId('mixed-playlist-probe-limit-option-500'));
 
-    expect(useAppStore.getState().mixedUrlPromptOpen).toBe(false);
-    expect(useAppStore.getState().advancedAutoOpen).toBe(true);
-    expect(useAppStore.getState().advancedAutoTarget).toBe('network');
+    await waitFor(() => {
+      expect(mockApi.settings.update).toHaveBeenCalledWith({ common: { playlistProbeLimit: 500 } });
+    });
+    expect(useAppStore.getState().mixedUrlPromptOpen).toBe(true);
+    expect(useAppStore.getState().advancedAutoOpen).toBe(false);
+  });
+
+  it('keeps the mixed URL dialog close button working after closing the custom limit dialog', async () => {
+    resetStore(buildSettings({ playlistProbeLimit: 250 }));
+    useAppStore.setState({ mixedUrlPromptOpen: true, mixedUrlPending: SINGLE_URL });
+
+    render(
+      <TooltipProvider>
+        <MixedUrlPromptDialog />
+      </TooltipProvider>
+    );
+
+    fireEvent.click(screen.getByTestId('mixed-playlist-probe-limit-trigger'));
+    fireEvent.click(await screen.findByTestId('mixed-playlist-probe-limit-option-custom'));
+
+    const customDialog = await screen.findByTestId('mixed-playlist-probe-limit-custom-dialog');
+    fireEvent.click(within(customDialog).getByRole('button', { name: 'Close' }));
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('mixed-playlist-probe-limit-custom-dialog')).not.toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Close' }));
+
+    await waitFor(() => {
+      expect(useAppStore.getState().mixedUrlPromptOpen).toBe(false);
+      expect(useAppStore.getState().mixedUrlPending).toBeNull();
+    });
   });
 });
 
 describe('incomplete cookies config guard', () => {
+  it('keeps cookie export help links with the cookies source controls', () => {
+    render(<StepUrlInput />);
+
+    const advanced = screen.getByTestId('advanced-section');
+    if (advanced instanceof HTMLDetailsElement) advanced.open = true;
+
+    const cookiesSource = screen.getByTestId('cookies-source');
+    expect(within(cookiesSource).getByTestId('cookies-help-link')).toBeInTheDocument();
+    expect(within(cookiesSource).getByTestId('cookies-firefox-link')).toBeInTheDocument();
+    expect(within(cookiesSource).getByTestId('cookies-chrome-link')).toBeInTheDocument();
+  });
+
   it('blocks fetch and opens a modal when file mode has no path', async () => {
     resetStore(buildSettings({ cookiesMode: 'file', cookiesPath: '   ' }));
     render(<StepUrlInput />);

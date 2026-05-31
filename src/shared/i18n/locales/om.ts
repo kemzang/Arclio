@@ -108,7 +108,9 @@ const om = {
       syncFoundDesc: 'Viidiyoowwan kana keessaa {{n}} duraan {{dir}} keessa jiru. Kan haaraa qofa buufachuuf walsimsiisi?',
       syncNoneTitle: 'Ammaaf homtuu hin buufamne',
       syncNoneDesc: 'Viidiyoon playlist kanaa {{dir}} keessatti hin argamne.',
-      alreadyDownloaded: 'Duraan buufameera'
+      alreadyDownloaded: 'Duraan buufameera',
+      probeLimitAlertTitle: 'Qorannaan playlist daangeffameera',
+      probeLimitAlertDesc: 'Arroxy wantoota {{count}} ol argateera, kanaafuu daangaan qorannaa ammaa kan hafan dhoksaa jira.'
     },
     playlistPresets: {
       heading: 'Kutaa gurmuu barbaadi',
@@ -191,6 +193,20 @@ const om = {
         description: 'Geejjiba proxy darbii ergi — qabiyyee mootummaan dhorge argachuuf gargaara.',
         placeholder: 'http://host:port',
         clear: 'Haquu'
+      },
+      playlistProbeLimit: {
+        label: 'Wantota playlist qoratamu',
+        description: "Playlist, chaanaalii, ykn filannoowwan barbaachaa yommuu banamu Arroxy galmeewwan baay'ina meeqa fe'u.",
+        option: 'Wantota {{count}}',
+        current: 'Daangaa ammaa: wantota {{count}}',
+        customValue: 'Mifaan: wantota {{count}}',
+        custom: 'Mifaan…',
+        customDialogTitle: 'Daangaa qorannaa playlist mifaan',
+        customDialogDescription: 'Lakkoofsa guutuu {{min}} hanga {{max}} fayyadami.',
+        customDialogCancel: 'Haquu',
+        customDialogSave: 'Daangaa kuusi',
+        invalid: 'Lakkoofsa guutuu 1 hanga 5000 fayyadami',
+        tooltip: 'yt-dlp --playlist-end waliin walsimsiisa: Arroxy filataa ijaarutti wantota playlist, chaanaalii, ykn barbaadaa lakkoofsa kana qofa gaafata.'
       },
       singleFilenameId: {
         toggle: 'Maqaa faayila tokko tokkootti ID viidiyoo dabali',

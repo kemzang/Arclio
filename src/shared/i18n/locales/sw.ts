@@ -108,7 +108,9 @@ const sw = {
       syncFoundDesc: '{{n}} kati ya video hizi tayari zipo kwenye {{dir}}. Sawazisha ili kupakua mpya pekee?',
       syncNoneTitle: 'Hakuna kilichopakuliwa bado',
       syncNoneDesc: 'Hakuna video kutoka orodha hii ya kucheza zilizopatikana kwenye {{dir}}.',
-      alreadyDownloaded: 'Tayari imepakuliwa'
+      alreadyDownloaded: 'Tayari imepakuliwa',
+      probeLimitAlertTitle: 'Skani ya playlist imefungwa',
+      probeLimitAlertDesc: 'Arroxy imepata zaidi ya vipande {{count}}, kwa hivyo kikomo cha skani cha sasa kinaficha vilivyobaki.'
     },
     playlistPresets: {
       heading: 'Chagua ubora wa kundi',
@@ -191,6 +193,20 @@ const sw = {
         description: 'Peleka trafiki kupitia proksi — muhimu kwa maudhui yenye vizuizi vya kijiografia.',
         placeholder: 'http://host:port',
         clear: 'Futa'
+      },
+      playlistProbeLimit: {
+        label: 'Vipande vya playlist vya kuskanisha',
+        description: 'Idadi ya juu ya maingizo ambayo Arroxy hupakia wakati playlist, kituo, au matokeo ya utafutaji yanafunguliwa.',
+        option: 'Vipande {{count}}',
+        current: 'Kikomo cha sasa: vipande {{count}}',
+        customValue: 'Maalum: vipande {{count}}',
+        custom: 'Maalum…',
+        customDialogTitle: 'Kikomo maalum cha skani ya playlist',
+        customDialogDescription: 'Tumia nambari nzima kutoka {{min}} hadi {{max}}.',
+        customDialogCancel: 'Ghairi',
+        customDialogSave: 'Hifadhi kikomo',
+        invalid: 'Tumia nambari nzima kutoka 1 hadi 5000',
+        tooltip: 'Inalingana na yt-dlp --playlist-end: Arroxy inauliza idadi hii tu ya maingizo ya playlist, kituo, au utafutaji wakati wa kujenga kichaguzi.'
       },
       singleFilenameId: {
         toggle: 'Ongeza ID ya video kwenye majina ya faili moja moja',

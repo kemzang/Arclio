@@ -108,7 +108,9 @@ const zh = {
       syncFoundDesc: '这些视频中有 {{n}} 个已在 {{dir}} 中。要同步以仅下载新视频吗？',
       syncNoneTitle: '尚未下载任何内容',
       syncNoneDesc: '在 {{dir}} 中未找到此播放列表的视频。',
-      alreadyDownloaded: '已下载'
+      alreadyDownloaded: '已下载',
+      probeLimitAlertTitle: '播放列表扫描已达上限',
+      probeLimitAlertDesc: 'Arroxy 发现超过 {{count}} 个项目，当前扫描上限隐藏了其余内容。'
     },
     playlistPresets: {
       heading: '选择批量下载画质',
@@ -192,6 +194,20 @@ const zh = {
         description: '通过代理路由流量 — 适用于地区限制内容。',
         placeholder: 'http://host:port',
         clear: '清除'
+      },
+      playlistProbeLimit: {
+        label: '要扫描的播放列表项目数',
+        description: '打开播放列表、频道或搜索结果时，Arroxy 最多加载的条目数。',
+        option: '{{count}} 个项目',
+        current: '当前上限：{{count}} 个项目',
+        customValue: '自定义：{{count}} 个项目',
+        custom: '自定义…',
+        customDialogTitle: '自定义播放列表扫描上限',
+        customDialogDescription: '请输入 {{min}} 到 {{max}} 之间的整数。',
+        customDialogCancel: '取消',
+        customDialogSave: '保存上限',
+        invalid: '请输入 1 到 5000 之间的整数',
+        tooltip: '对应 yt-dlp 的 --playlist-end 参数：Arroxy 在构建选择器时仅请求这么多播放列表、频道或搜索条目。'
       },
       singleFilenameId: {
         toggle: '将视频 ID 添加到单个文件名',

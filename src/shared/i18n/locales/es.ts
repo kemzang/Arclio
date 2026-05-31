@@ -108,7 +108,9 @@ const es = {
       syncFoundDesc: '{{n}} de estos vídeos ya están en {{dir}}. ¿Sincronizar para descargar solo los nuevos?',
       syncNoneTitle: 'Aún no hay nada descargado',
       syncNoneDesc: 'No se encontraron vídeos de esta playlist en {{dir}}.',
-      alreadyDownloaded: 'Ya descargado'
+      alreadyDownloaded: 'Ya descargado',
+      probeLimitAlertTitle: 'El escaneo de la playlist está limitado',
+      probeLimitAlertDesc: 'Arroxy encontró más de {{count}} elementos, por lo que el límite de escaneo actual está ocultando el resto.'
     },
     playlistPresets: {
       heading: 'Elige la calidad para el lote',
@@ -191,6 +193,20 @@ const es = {
         description: 'Enruta el tráfico a través de un proxy — útil para contenido con restricciones geográficas.',
         placeholder: 'http://host:port',
         clear: 'Borrar'
+      },
+      playlistProbeLimit: {
+        label: 'Elementos de playlist a escanear',
+        description: 'Número máximo de entradas que Arroxy carga al abrir una playlist, canal o resultado de búsqueda.',
+        option: '{{count}} elementos',
+        current: 'Límite actual: {{count}} elementos',
+        customValue: 'Personalizado: {{count}} elementos',
+        custom: 'Personalizado…',
+        customDialogTitle: 'Límite de escaneo de playlist personalizado',
+        customDialogDescription: 'Usa un número entero de {{min}} a {{max}}.',
+        customDialogCancel: 'Cancelar',
+        customDialogSave: 'Guardar límite',
+        invalid: 'Usa un número entero del 1 al 5000',
+        tooltip: 'Se corresponde con yt-dlp --playlist-end: Arroxy solo solicita este número de entradas de playlist, canal o búsqueda al construir el selector.'
       },
       singleFilenameId: {
         toggle: 'Añadir ID del vídeo a nombres de archivo individuales',

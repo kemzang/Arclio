@@ -114,7 +114,9 @@ const en = {
       syncFoundDesc: '{{n}} of these videos are already in {{dir}}. Sync to download only the new ones?',
       syncNoneTitle: 'Nothing downloaded yet',
       syncNoneDesc: 'No videos from this playlist were found in {{dir}}.',
-      alreadyDownloaded: 'Already downloaded'
+      alreadyDownloaded: 'Already downloaded',
+      probeLimitAlertTitle: 'Playlist scan is capped',
+      probeLimitAlertDesc: 'Arroxy found more than {{count}} items, so the current scan limit is hiding the rest.'
     },
     mixedPrompt: {
       title: 'This link has a playlist',
@@ -208,8 +210,14 @@ const en = {
       playlistProbeLimit: {
         label: 'Playlist items to scan',
         description: 'Maximum entries Arroxy loads when a playlist, channel, or search result is opened.',
+        option: '{{count}} items',
         current: 'Current limit: {{count}} items',
+        customValue: 'Custom: {{count}} items',
         custom: 'Custom…',
+        customDialogTitle: 'Custom playlist scan limit',
+        customDialogDescription: 'Use a whole number from {{min}} to {{max}}.',
+        customDialogCancel: 'Cancel',
+        customDialogSave: 'Save limit',
         invalid: 'Use a whole number from 1 to 5000',
         tooltip: 'Maps to yt-dlp --playlist-end: Arroxy only asks for this many playlist, channel, or search entries while building the picker.'
       },

@@ -108,7 +108,9 @@ const am = {
       syncFoundDesc: '{{n}} ከእነዚህ ቪዲዮዎች በ{{dir}} ውስጥ ቀድሞውኑ አሉ። አዳዲሶቹን ብቻ ለማውረድ ይመሳሰል?',
       syncNoneTitle: 'እስካሁን ምንም አልወረደም',
       syncNoneDesc: 'ከዚህ አጫዋች ዝርዝር ውስጥ ምንም ቪዲዮ በ{{dir}} ውስጥ አልተገኘም።',
-      alreadyDownloaded: 'ቀድሞ ወርዷል'
+      alreadyDownloaded: 'ቀድሞ ወርዷል',
+      probeLimitAlertTitle: 'የ Playlist ቃኝት ተገድቧል',
+      probeLimitAlertDesc: 'Arroxy ከ {{count}} በላይ ንጥሎችን አግኝቷል፣ ስለዚህ የአሁኑ ቃኝት ገደብ የቀሩትን እየደበቀ ነው።'
     },
     playlistPresets: {
       heading: 'ለቡድኑ ጥራት ይምረጡ',
@@ -193,9 +195,47 @@ const am = {
         placeholder: 'http://host:port',
         clear: 'አጽዳ'
       },
+      playlistProbeLimit: {
+        label: 'ሊቃኙ የ Playlist ንጥሎች',
+        description: 'Arroxy playlist፣ ቻናል፣ ወይም የፍለጋ ውጤት ሲከፍት የሚጭነው ከፍተኛ ቁጥር።',
+        option: '{{count}} ንጥሎች',
+        current: 'የአሁን ገደብ: {{count}} ንጥሎች',
+        customValue: 'ብጁ: {{count}} ንጥሎች',
+        custom: 'ብጁ…',
+        customDialogTitle: 'ብጁ የ Playlist ቃኝት ገደብ',
+        customDialogDescription: 'ከ {{min}} እስከ {{max}} ሙሉ ቁጥር ይጠቀሙ።',
+        customDialogCancel: 'ሰርዝ',
+        customDialogSave: 'ገደብ አስቀምጥ',
+        invalid: 'ከ1 እስከ 5000 ሙሉ ቁጥር ይጠቀሙ',
+        tooltip: 'yt-dlp --playlist-end ጋር ይዛመዳል: Arroxy ምርጫ ሲሰራ ከ playlist፣ ቻናል፣ ወይም ፍለጋ ውጤቶች ይህን ያህል ብቻ ይጠይቃል።'
+      },
       singleFilenameId: {
         toggle: 'የቪዲዮ ID ወደ ነጠላ ፋይል ስሞች ጨምር',
         toggleDescription: 'ርዕሶች ሲቀየሩ ወይም ሲጋጩ ነጠላ ማውረዶችን ልዩ ያደርጋል።'
+      },
+      networkPacing: {
+        heading: 'ለዝቅ ያሉ ዳውንሎዶች',
+        description: 'Arroxy ጣቢያን ከልክ ያለፈ ጥያቄ እንዳያደርግ እያንዳንዱ ዳውንሎድ ላይ ትናንሽ መጠበቂያዎችን ያክላል። ዋጋዎች በሰከንድ ነው (ካልተጠቀሰ)።',
+        tooltip: 'እነዚህ መጠበቂያዎች ማሳወቂያ ዳውንሎዶች ውስጥ ይሆናሉ። Arroxy ተራ የሆኑ ዳውንሎዶችን አሁንም አንድ ባንድ ያስተዳድራል።',
+        summary: 'መጠበቂያ: {{requests}} ምርምሮች መካከል፣ {{downloads}} ሚዲያ ከመጀመሩ በፊት፣ {{subtitles}} ንዑስ ርዕስ ፋይሎች በፊት። ግንኙነቶች: {{fragments}}።',
+        presets: {
+          off: 'ጠፍ',
+          balanced: 'ሚዛናዊ',
+          careful: 'ጥንቁቅ',
+          custom: 'ብጁ'
+        },
+        tooltips: {
+          off: 'Arroxy ለሚዲያ እና ንዑስ ርዕሶች የሚያቆየውን ትንሽ መሰረታዊ እረፍት ብቻ ይጠቀማል።',
+          balanced: 'ነባሪ። አጫጭር እረፍቶችን ያክላል እና አንድ የዳውንሎድ ግንኙነት ይጠቀማል።',
+          careful: 'ለትልልቅ playlists ወይም ቶሎ ቶሎ ገደብ ለሚያጋጥማቸው አውታሮች ረዥም እረፍቶችን ያክላል።',
+          custom: 'የከፍተኛ ዳውንሎድ መቆጣጠሪያዎችን እራስዎ ያስተካክሉ።'
+        },
+        fields: {
+          sleepRequests: 'ምርምሮች መካከል መጠበቂያ',
+          sleepInterval: 'ሚዲያ ከመጀመሩ በፊት እረፍት: ዝቅ.',
+          maxSleepInterval: 'ሚዲያ ከመጀመሩ በፊት እረፍት: ከፍ.',
+          concurrentFragments: 'የዳውንሎድ ግንኙነቶች'
+        }
       },
       closeToTray: {
         toggle: 'ሲዘጋ ወደ ትሬ ደብቅ',
@@ -565,36 +605,6 @@ const am = {
       detail: 'የተቀጣጣሪ ሂደት ተቋርጧል ({{reason}})። ለማደስ ዳግም ጫን።',
       reload: 'ዳግም ጫን',
       quit: 'ዝጋ'
-    }
-  },
-  networkPacing: {
-    heading: 'ለዝቅ ያሉ ዳውንሎዶች',
-    description: 'Arroxy ጣቢያን ከልክ ያለፈ ጥያቄ እንዳያደርግ እያንዳንዱ ዳውንሎድ ላይ ትናንሽ መጠበቂያዎችን ያክላል። ዋጋዎች በሰከንድ ነው (ካልተጠቀሰ)።',
-    tooltip: 'እነዚህ መጠበቂያዎች ማሳወቂያ ዳውንሎዶች ውስጥ ይሆናሉ። Arroxy ተራ የሆኑ ዳውንሎዶችን አሁንም አንድ ባንድ ያስተዳድራል።',
-    summary: 'መጠበቂያ: {{requests}} ምርምሮች መካከል፣ {{downloads}} ሚዲያ ከመጀመሩ በፊት፣ {{subtitles}} ንዑስ ርዕስ ፋይሎች በፊት። ግንኙነቶች: {{fragments}}።',
-    presets: {
-      off: {
-        label: 'ጠፍ',
-        description: 'Arroxy ለሚዲያ እና ንዑስ ርዕሶች የሚያቆየውን ትንሽ መሰረታዊ እረፍት ብቻ ይጠቀማል።'
-      },
-      balanced: {
-        label: 'ሚዛናዊ',
-        description: 'ነባሪ። አጫጭር እረፍቶችን ያክላል እና አንድ የዳውንሎድ ግንኙነት ይጠቀማል።'
-      },
-      careful: {
-        label: 'ጥንቁቅ',
-        description: 'ለትልልቅ playlists ወይም ቶሎ ቶሎ ገደብ ለሚያጋጥማቸው አውታሮች ረዥም እረፍቶችን ያክላል።'
-      },
-      custom: {
-        label: 'ብጁ',
-        description: 'የከፍተኛ ዳውንሎድ መቆጣጠሪያዎችን እራስዎ ያስተካክሉ።'
-      }
-    },
-    fields: {
-      sleepRequests: 'ምርምሮች መካከል መጠበቂያ',
-      sleepInterval: 'ሚዲያ ከመጀመሩ በፊት እረፍት: ዝቅ.',
-      maxSleepInterval: 'ሚዲያ ከመጀመሩ በፊት እረፍት: ከፍ.',
-      concurrentFragments: 'የዳውንሎድ ግንኙነቶች'
     }
   },
   share: {

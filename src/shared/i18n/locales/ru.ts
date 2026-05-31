@@ -108,7 +108,9 @@ const ru = {
       syncFoundDesc: '{{n}} из этих видео уже есть в {{dir}}. Синхронизировать, чтобы скачать только новые?',
       syncNoneTitle: 'Пока ничего не скачано',
       syncNoneDesc: 'Видео из этого плейлиста не найдены в {{dir}}.',
-      alreadyDownloaded: 'Уже скачано'
+      alreadyDownloaded: 'Уже скачано',
+      probeLimitAlertTitle: 'Сканирование плейлиста ограничено',
+      probeLimitAlertDesc: 'Arroxy нашёл более {{count}} элементов, поэтому текущий лимит сканирования скрывает остальные.'
     },
     playlistPresets: {
       heading: 'Выбери качество для пакетной загрузки',
@@ -225,6 +227,20 @@ const ru = {
           seconds: 'сек',
           threads: 'потоков'
         }
+      },
+      playlistProbeLimit: {
+        label: 'Элементов плейлиста для сканирования',
+        description: 'Максимальное количество записей, которые Arroxy загружает при открытии плейлиста, канала или результатов поиска.',
+        option: '{{count}} элементов',
+        current: 'Текущий лимит: {{count}} элементов',
+        customValue: 'Настроить: {{count}} элементов',
+        custom: 'Настроить…',
+        customDialogTitle: 'Пользовательский лимит сканирования плейлиста',
+        customDialogDescription: 'Введите целое число от {{min}} до {{max}}.',
+        customDialogCancel: 'Отмена',
+        customDialogSave: 'Сохранить лимит',
+        invalid: 'Введите целое число от 1 до 5000',
+        tooltip: 'Соответствует yt-dlp --playlist-end: Arroxy запрашивает только это количество записей плейлиста, канала или поиска при построении списка выбора.'
       },
       closeToTray: {
         toggle: 'Скрывать в трей при закрытии',

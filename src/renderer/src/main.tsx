@@ -4,14 +4,14 @@ import { createRoot } from 'react-dom/client';
 import { App } from './App.js';
 import { initI18n, pickLanguage, isRtl } from '@shared/i18n/index.js';
 import { useAppStore } from './store/useAppStore.js';
-import { ensureAppBridge, isElectronUserAgent, renderBridgeFailure } from './bootstrapBridge.js';
+import { ensureAppBridge, renderBridgeFailure } from './bootstrapBridge.js';
 import './styles.css';
 
 async function bootstrap(): Promise<void> {
   const mode = import.meta.env.MODE;
   const userAgent = navigator.userAgent;
 
-  if (!('appApi' in window) && import.meta.env.MODE === 'browser-mock' && !isElectronUserAgent(userAgent)) {
+  if (!('appApi' in window) && import.meta.env.MODE === 'browser-mock') {
     const { installBrowserMock } = await import('./browserMock.js');
     installBrowserMock();
   }

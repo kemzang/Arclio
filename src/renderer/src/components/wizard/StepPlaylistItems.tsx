@@ -9,9 +9,11 @@ import { Input } from '../ui/input.js';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert.js';
 import { WizardStepFooterActions } from './WizardStepFooterActions.js';
 import { isAudioOnlySource } from '@shared/ytdlp/extractorPredicates.js';
+import { resolvePlaylistProbeLimit } from '@shared/networkPacing.js';
 import { resolvePlaylistDir } from '../../store/wizard/playlistDir.js';
 import { formatDuration } from '@renderer/lib/formatDuration.js';
 import { notify } from '@renderer/lib/notify.js';
+import { PlaylistProbeLimitSelector } from './PlaylistProbeLimitSelector.js';
 
 // undefined = no duration metadata (common for nested-playlist entries from
 // music search, channel root, etc.) — render an em-dash instead of falsely
@@ -24,7 +26,7 @@ function formatEntryDuration(seconds: number | undefined, liveLabel: string): st
 export function StepPlaylistItems(): JSX.Element {
   const { t } = useTranslation();
   const store = useAppStore();
-  const { playlistItems, selectedPlaylistItemIds, playlistTitle, playlistProbeLoading, syncedDownloadedIds, syncScanState, setPlaylistItemSelected, selectAllPlaylistItems, selectNonePlaylistItems, selectPlaylistRange, confirmPlaylistSelection, back, wizardExtractor, scanDownloadedInFolder, applyFolderSync, setPlaylistFolder } = store;
+  const { playlistItems, selectedPlaylistItemIds, playlistTitle, playlistProbeLoading, playlistLikelyCapped, syncedDownloadedIds, syncScanState, setPlaylistItemSelected, selectAllPlaylistItems, selectNonePlaylistItems, selectPlaylistRange, confirmPlaylistSelection, back, wizardExtractor, scanDownloadedInFolder, applyFolderSync, setPlaylistFolder, settings, retryFormatProbe } = store;
 
   // Effective folder the playlist's files land in (and where the scan looks) —
   // the same resolver the queue builder + scan use, so display == download == scan.
@@ -66,6 +68,8 @@ export function StepPlaylistItems(): JSX.Element {
   });
 
   const selectedCount = selectedPlaylistItemIds.length;
+  const playlistLimit = resolvePlaylistProbeLimit(settings?.common);
+  const showProbeLimitAlert = !playlistProbeLoading && playlistLikelyCapped;
   // yt-dlp's --flat-playlist returns thumbnails for some extractors
   // (YouTube tab) but not others (PornHub paged list, generic). When no
   // entry has one, hide the thumbnail slot entirely so the list renders
@@ -82,11 +86,22 @@ export function StepPlaylistItems(): JSX.Element {
   const liveLabel = t('wizard.playlist.durationUnknown');
 
   return (
-    <div className="flex h-full flex-col gap-3 px-4 py-3">
+    <div className="flex h-full flex-col gap-3 px-4 py-3" data-testid="step-playlist-items">
       <div className="flex items-baseline justify-between gap-2">
         <h2 className="text-sm font-semibold truncate">{playlistTitle || t('wizard.playlist.heading')}</h2>
         <span className="shrink-0 text-xs text-muted-foreground">{t(isAudioOnlySource(wizardExtractor) ? 'wizard.playlist.itemCountAudio' : 'wizard.playlist.itemCount', { count: playlistItems.length })}</span>
       </div>
+
+      {showProbeLimitAlert && (
+        <Alert variant="info" className="flex items-start gap-3" data-testid="playlist-probe-limit-alert">
+          <Info className="mt-0.5 size-4 shrink-0 text-sky-500" />
+          <div className="min-w-0 flex-1">
+            <AlertTitle>{t('wizard.playlist.probeLimitAlertTitle')}</AlertTitle>
+            <AlertDescription className="break-words">{t('wizard.playlist.probeLimitAlertDesc', { count: playlistLimit })}</AlertDescription>
+          </div>
+          <PlaylistProbeLimitSelector testId="playlist-alert-probe-limit" showCurrent={false} onLimitChanged={() => retryFormatProbe()} className="w-40" />
+        </Alert>
+      )}
 
       {playlistProbeLoading ? (
         <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">{t('wizard.playlist.loadingItems')}</div>

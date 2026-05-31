@@ -108,7 +108,9 @@ const ja = {
       syncFoundDesc: 'これらの動画のうち {{n}} 件はすでに {{dir}} にあります。新しいものだけをダウンロードするために同期しますか？',
       syncNoneTitle: 'まだダウンロードされていません',
       syncNoneDesc: 'このプレイリストの動画は {{dir}} で見つかりませんでした。',
-      alreadyDownloaded: 'ダウンロード済み'
+      alreadyDownloaded: 'ダウンロード済み',
+      probeLimitAlertTitle: 'プレイリストのスキャンが上限に達しました',
+      probeLimitAlertDesc: 'Arroxy は {{count}} 件を超えるアイテムを検出しましたが、現在のスキャン上限により残りは表示されていません。'
     },
     playlistPresets: {
       heading: 'バッチの画質を選択',
@@ -192,6 +194,20 @@ const ja = {
         description: 'プロキシ経由でトラフィックを転送 — 地域制限コンテンツに有効。',
         placeholder: 'http://host:port',
         clear: 'クリア'
+      },
+      playlistProbeLimit: {
+        label: 'スキャンするプレイリストの項目数',
+        description: 'プレイリスト、チャンネル、または検索結果を開いたときに Arroxy が読み込む最大エントリ数。',
+        option: '{{count}} 件',
+        current: '現在の上限：{{count}} 件',
+        customValue: 'カスタム：{{count}} 件',
+        custom: 'カスタム…',
+        customDialogTitle: 'カスタムプレイリストスキャン上限',
+        customDialogDescription: '{{min}} から {{max}} の整数を入力してください。',
+        customDialogCancel: 'キャンセル',
+        customDialogSave: '上限を保存',
+        invalid: '1 から 5000 の整数を入力してください',
+        tooltip: 'yt-dlp の --playlist-end に対応します：Arroxy はピッカーを構築する際、この件数のプレイリスト・チャンネル・検索エントリのみ取得します。'
       },
       singleFilenameId: {
         toggle: '単体ファイル名に動画IDを追加',

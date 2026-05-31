@@ -1,10 +1,13 @@
 import { useRef, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Info } from 'lucide-react';
 import { resolvePlaylistProbeLimit } from '@shared/networkPacing.js';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter } from '../ui/dialog.js';
 import { Button } from '../ui/button.js';
+import { Alert, AlertDescription } from '../ui/alert.js';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.js';
 import { useAppStore } from '../../store/useAppStore.js';
+import { PlaylistProbeLimitSelector } from './PlaylistProbeLimitSelector.js';
 
 // Mixed YouTube URLs (?v=X&list=Y) are ambiguous: yt-dlp's default routes
 // Radio/Mix lists to playlist enumeration, which rarely matches user intent
@@ -13,23 +16,22 @@ import { useAppStore } from '../../store/useAppStore.js';
 // through to the probe IPC as `playlistMode: 'video' | 'playlist'`.
 export function MixedUrlPromptDialog(): JSX.Element {
   const { t } = useTranslation();
-  const { mixedUrlPromptOpen, dismissMixedPrompt, openAdvancedSettings, settings } = useAppStore();
+  const { mixedUrlPromptOpen, cancelMixedPrompt, dismissMixedPrompt, settings } = useAppStore();
   const playlistButtonRef = useRef<HTMLButtonElement>(null);
   const playlistLimit = resolvePlaylistProbeLimit(settings?.common);
 
   return (
-    <Dialog open={mixedUrlPromptOpen} onOpenChange={() => undefined}>
+    <Dialog open={mixedUrlPromptOpen} onOpenChange={(open) => !open && cancelMixedPrompt()}>
       {/* Focus "Pick from playlist" on open — the recommended action — instead
           of the close button / advanced-settings link the trap would pick. */}
       <DialogContent initialFocus={playlistButtonRef}>
         <DialogTitle>{t('wizard.mixedPrompt.title')}</DialogTitle>
         <DialogDescription>{t('wizard.mixedPrompt.body')}</DialogDescription>
-        <div className="mt-3 flex items-center justify-between gap-3 rounded-md border border-[var(--border-strong)] bg-card/40 px-3 py-2 text-[12px]" data-testid="mixed-playlist-cap">
-          <span className="text-[var(--text-subtle)]">{t('wizard.mixedPrompt.playlistLimit', { count: playlistLimit })}</span>
-          <button type="button" className="font-medium text-[var(--brand)] hover:underline" onClick={() => openAdvancedSettings('network')} data-testid="mixed-open-advanced">
-            {t('wizard.mixedPrompt.advancedSettings')}
-          </button>
-        </div>
+        <Alert variant="info" className="mt-3 flex items-center gap-3 py-2 text-[12px]" data-testid="mixed-playlist-cap">
+          <Info className="shrink-0" />
+          <AlertDescription className="min-w-0 flex-1 text-[12px]">{t('wizard.mixedPrompt.playlistLimit', { count: playlistLimit })}</AlertDescription>
+          <PlaylistProbeLimitSelector testId="mixed-playlist-probe-limit" showCurrent={false} className="w-36" />
+        </Alert>
         <DialogFooter>
           <Tooltip>
             <TooltipTrigger

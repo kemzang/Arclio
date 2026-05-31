@@ -518,12 +518,14 @@ export function buildArgs(req: YtDlpRequest, opts: { pacing?: NetworkPacingArgs;
       //   still returns full video info (formats, subs, etc.).
       // --playlist-end: cap enumeration for channels / search / playlists.
       //   Big channels (5000+ uploads) would otherwise hang the probe and
-      //   produce JSON the renderer can't paginate. 500 is a generous ceiling
-      //   for a single-screen picker.
+      //   produce JSON the renderer can't paginate. Ask for one sentinel entry
+      //   past the user-visible limit so the renderer can tell "exactly N
+      //   items" apart from "N shown, more exist" and then trim the sentinel.
       // playlistMode disambiguates mixed YouTube URLs (?v=X&list=Y): yt-dlp's
       //   default routes Radio/Mix to playlist, which is rarely user intent.
       const modeFlag = req.playlistMode === 'video' ? ['--no-playlist'] : req.playlistMode === 'playlist' ? ['--yes-playlist'] : [];
-      const capFlag = req.playlistMode === 'video' ? [] : ['--playlist-end', String(opts.playlistProbeLimit ?? DEFAULT_PLAYLIST_PROBE_LIMIT)];
+      const visibleLimit = opts.playlistProbeLimit ?? DEFAULT_PLAYLIST_PROBE_LIMIT;
+      const capFlag = req.playlistMode === 'video' ? [] : ['--playlist-end', String(visibleLimit + 1)];
       const args = ['--dump-single-json', '--flat-playlist', ...modeFlag, ...capFlag, ...requestPacingArgs(opts.pacing), req.url];
       return { args };
     }

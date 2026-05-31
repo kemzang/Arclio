@@ -108,7 +108,9 @@ const hi = {
       syncFoundDesc: 'इन वीडियो में से {{n}} पहले से {{dir}} में हैं। केवल नए वीडियो डाउनलोड करने के लिए सिंक करें?',
       syncNoneTitle: 'अभी तक कुछ डाउनलोड नहीं हुआ',
       syncNoneDesc: 'इस प्लेलिस्ट के कोई वीडियो {{dir}} में नहीं मिले।',
-      alreadyDownloaded: 'पहले से डाउनलोड किया गया'
+      alreadyDownloaded: 'पहले से डाउनलोड किया गया',
+      probeLimitAlertTitle: 'प्लेलिस्ट स्कैन सीमित है',
+      probeLimitAlertDesc: 'Arroxy को {{count}} से अधिक आइटम मिले, इसलिए वर्तमान स्कैन सीमा बाकी को छुपा रही है।'
     },
     playlistPresets: {
       heading: 'बैच के लिए गुणवत्ता चुनें',
@@ -226,6 +228,20 @@ const hi = {
           seconds: 'से.',
           threads: 'थ्रेड'
         }
+      },
+      playlistProbeLimit: {
+        label: 'स्कैन करने वाले प्लेलिस्ट आइटम',
+        description: 'Arroxy जब कोई प्लेलिस्ट, चैनल या सर्च परिणाम खोलता है तो अधिकतम कितनी प्रविष्टियाँ लोड करे।',
+        option: '{{count}} आइटम',
+        current: 'वर्तमान सीमा: {{count}} आइटम',
+        customValue: 'कस्टम: {{count}} आइटम',
+        custom: 'कस्टम…',
+        customDialogTitle: 'कस्टम प्लेलिस्ट स्कैन सीमा',
+        customDialogDescription: '{{min}} से {{max}} के बीच कोई पूर्ण संख्या उपयोग करें।',
+        customDialogCancel: 'रद्द करें',
+        customDialogSave: 'सीमा सहेजें',
+        invalid: '1 से 5000 के बीच कोई पूर्ण संख्या उपयोग करें',
+        tooltip: 'yt-dlp --playlist-end से मैप होता है: Arroxy पिकर बनाते समय केवल इतनी प्लेलिस्ट, चैनल या सर्च प्रविष्टियाँ मांगता है।'
       },
       closeToTray: {
         toggle: 'बंद करने पर ट्रे में छिपाएं',
