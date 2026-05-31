@@ -8,6 +8,22 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.3.8
+
+This is a small stability release for Intel Mac users.
+
+## Highlights
+
+### Intel Mac Builds Include FFmpeg Again
+
+The previous Intel macOS DMG could open, but it did not include the embedded `ffmpeg` and `ffprobe` binaries. Arroxy would then show `ARX-004` and ask the user to pick working copies manually.
+
+- Intel macOS packaging now resolves the requested build architecture correctly instead of falling back to the Apple Silicon runner architecture.
+- The build now fails early if either embedded FFmpeg binary is missing, so a broken DMG cannot be published silently.
+- The packaging logic has targeted test coverage for electron-builder's string and numeric architecture values.
+
+---
+
 ## 0.3.7
 
 This release turns playlist handling into a much more deliberate workflow: pick the right batch format, scan only as much as you need, skip files you already have, and keep the output folder organized as the playlist grows.
