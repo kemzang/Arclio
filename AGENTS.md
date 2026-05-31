@@ -1,3 +1,17 @@
+## Shell command wrapper
+
+This repo prefers `rtk` as a token-optimized shell command proxy.
+
+Bootstrap exception: before using `rtk`, check whether it is available:
+
+```bash
+command -v rtk
+```
+
+If available, prefix repo shell commands with `rtk`. If unavailable, run commands directly and mention that `rtk` was not found.
+
+@/home/anton/projects/yt-download-ui/RTK.md
+
 # General
 
 ## Engineering Principles
