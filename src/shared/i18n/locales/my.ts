@@ -109,8 +109,8 @@ const my = {
       syncNoneTitle: 'ဒေါင်းလုဒ်လုပ်ထားတာ မရှိသေးပါ',
       syncNoneDesc: 'ဤ playlist မှ ဗီဒီယိုများကို {{dir}} တွင် မတွေ့ပါ။',
       alreadyDownloaded: 'ဒေါင်းလုဒ်ပြီးသား',
-      probeLimitAlertTitle: 'Playlist scan ကန့်သတ်ထားနိုင်သည်',
-      probeLimitAlertDesc: 'Arroxy သည် {{count}} ခုတိတိ လုဒ်လုပ်ခဲ့သည်၊ ၎င်းသည် လက်ရှိ scan ကန့်သတ်ချက်ကြောင့် playlist ကို စောစီးစွာ ရပ်တန့်ခြင်းကို ညွှန်ပြသည်ဟု ပုံမှန်အားဖြင့် ဆိုလိုသည်။'
+      probeLimitAlertTitle: 'Playlist scan ကန့်သတ်ထားသည်',
+      probeLimitAlertDesc: 'Arroxy သည် {{count}} ထက်ပိုသော အကြောင်းအရာများ တွေ့ရှိသောကြောင့် လက်ရှိ scan ကန့်သတ်ချက်ကြောင့် ကျန်သောအရာများ ဖျောက်ထားသည်။'
     },
     playlistPresets: {
       heading: 'Batch အတွက် အရည်အသွေးရွေးပါ',

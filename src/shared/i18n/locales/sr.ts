@@ -109,8 +109,8 @@ const sr = {
       syncNoneTitle: 'Још ништа није преузето',
       syncNoneDesc: 'Ниједан видео из ове плејлисте није пронађен у {{dir}}.',
       alreadyDownloaded: 'Већ преузето',
-      probeLimitAlertTitle: 'Скенирање плејлисте можда је ограничено',
-      probeLimitAlertDesc: 'Arroxy је учитао тачно {{count}} ставки, што обично значи да је тренутно ограничење скенирања прерано зауставило плејлисту.'
+      probeLimitAlertTitle: 'Скенирање плејлисте је ограничено',
+      probeLimitAlertDesc: 'Arroxy је пронашао више од {{count}} ставки, па тренутно ограничење скенирања скрива остатак.'
     },
     playlistPresets: {
       heading: 'Изабери квалитет за групно преузимање',

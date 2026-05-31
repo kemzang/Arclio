@@ -109,8 +109,8 @@ const fr = {
       syncNoneTitle: 'Rien de téléchargé pour le moment',
       syncNoneDesc: 'Aucune vidéo de cette playlist n’a été trouvée dans {{dir}}.',
       alreadyDownloaded: 'Déjà téléchargé',
-      probeLimitAlertTitle: 'Le scan de la playlist est peut-être limité',
-      probeLimitAlertDesc: 'Arroxy a chargé exactement {{count}} éléments, ce qui signifie généralement que la limite de scan actuelle a interrompu la playlist trop tôt.'
+      probeLimitAlertTitle: 'Le scan de la playlist est limité',
+      probeLimitAlertDesc: 'Arroxy a trouvé plus de {{count}} éléments, donc la limite de scan actuelle masque le reste.'
     },
     playlistPresets: {
       heading: 'Choisir la qualité pour le lot',

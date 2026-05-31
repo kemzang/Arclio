@@ -109,8 +109,8 @@ const de = {
       syncNoneTitle: 'Noch nichts heruntergeladen',
       syncNoneDesc: 'Keine Videos aus dieser Playlist wurden in {{dir}} gefunden.',
       alreadyDownloaded: 'Bereits heruntergeladen',
-      probeLimitAlertTitle: 'Playlist-Scan möglicherweise begrenzt',
-      probeLimitAlertDesc: 'Arroxy hat genau {{count}} Einträge geladen, was meist bedeutet, dass das aktuelle Scan-Limit die Playlist vorzeitig gestoppt hat.'
+      probeLimitAlertTitle: 'Playlist-Scan ist begrenzt',
+      probeLimitAlertDesc: 'Arroxy hat mehr als {{count}} Einträge gefunden, daher verbirgt das aktuelle Scan-Limit den Rest.'
     },
     playlistPresets: {
       heading: 'Qualität für den Stapel wählen',

@@ -109,8 +109,8 @@ const bn = {
       syncNoneTitle: 'এখনও কিছু ডাউনলোড হয়নি',
       syncNoneDesc: 'এই প্লেলিস্টের কোনো ভিডিও {{dir}}-এ পাওয়া যায়নি।',
       alreadyDownloaded: 'ইতিমধ্যেই ডাউনলোড করা',
-      probeLimitAlertTitle: 'প্লেলিস্ট স্ক্যান সীমাবদ্ধ হতে পারে',
-      probeLimitAlertDesc: 'Arroxy ঠিক {{count}}টি আইটেম লোড করেছে, যা সাধারণত বোঝায় যে বর্তমান স্ক্যান সীমা প্লেলিস্টটি আগেই বন্ধ করে দিয়েছে।'
+      probeLimitAlertTitle: 'প্লেলিস্ট স্ক্যান সীমাবদ্ধ করা হয়েছে',
+      probeLimitAlertDesc: 'Arroxy {{count}}-এর বেশি আইটেম খুঁজে পেয়েছে, তাই বর্তমান স্ক্যান সীমা বাকিগুলো লুকিয়ে রাখছে।'
     },
     playlistPresets: {
       heading: 'ব্যাচের জন্য মান বেছে নিন',

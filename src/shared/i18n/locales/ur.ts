@@ -109,8 +109,8 @@ const ur = {
       syncNoneTitle: 'ابھی تک کچھ ڈاؤن لوڈ نہیں ہوا',
       syncNoneDesc: 'اس پلے لسٹ کی کوئی ویڈیوز {{dir}} میں نہیں ملیں۔',
       alreadyDownloaded: 'پہلے سے ڈاؤن لوڈ شدہ',
-      probeLimitAlertTitle: 'Playlist اسکین محدود ہو سکتا ہے',
-      probeLimitAlertDesc: 'Arroxy نے بالکل {{count}} آئٹمز لوڈ کیے، جس کا عموماً مطلب ہے کہ موجودہ اسکین لمٹ نے playlist کو جلدی روک دیا۔'
+      probeLimitAlertTitle: 'Playlist اسکین محدود ہے',
+      probeLimitAlertDesc: 'Arroxy نے {{count}} سے زیادہ آئٹمز دریافت کیے، اس لیے موجودہ اسکین لمٹ باقی آئٹمز چھپا رہی ہے۔'
     },
     playlistPresets: {
       heading: 'بیچ کے لیے کوالٹی منتخب کریں',

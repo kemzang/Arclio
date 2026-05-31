@@ -109,8 +109,8 @@ const uk = {
       syncNoneTitle: 'Поки нічого не завантажено',
       syncNoneDesc: 'Відео з цього плейлиста не знайдено в {{dir}}.',
       alreadyDownloaded: 'Уже завантажено',
-      probeLimitAlertTitle: 'Сканування плейлиста може бути обмежено',
-      probeLimitAlertDesc: 'Arroxy завантажив рівно {{count}} елементів, що зазвичай означає, що поточний ліміт сканування зупинив плейлист передчасно.'
+      probeLimitAlertTitle: 'Сканування плейлиста обмежено',
+      probeLimitAlertDesc: 'Arroxy знайшов більше {{count}} елементів, тому поточний ліміт сканування приховує решту.'
     },
     playlistPresets: {
       heading: 'Вибери якість для пакетного завантаження',

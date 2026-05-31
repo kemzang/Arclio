@@ -109,8 +109,8 @@ const zh = {
       syncNoneTitle: '尚未下载任何内容',
       syncNoneDesc: '在 {{dir}} 中未找到此播放列表的视频。',
       alreadyDownloaded: '已下载',
-      probeLimitAlertTitle: '播放列表扫描可能已被截断',
-      probeLimitAlertDesc: 'Arroxy 恰好加载了 {{count}} 个项目，这通常意味着当前扫描上限提前终止了播放列表。'
+      probeLimitAlertTitle: '播放列表扫描已达上限',
+      probeLimitAlertDesc: 'Arroxy 发现超过 {{count}} 个项目，当前扫描上限隐藏了其余内容。'
     },
     playlistPresets: {
       heading: '选择批量下载画质',

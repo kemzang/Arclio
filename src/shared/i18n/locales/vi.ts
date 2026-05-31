@@ -109,8 +109,8 @@ const vi = {
       syncNoneTitle: 'Chưa có gì được tải xuống',
       syncNoneDesc: 'Không tìm thấy video nào từ danh sách phát này trong {{dir}}.',
       alreadyDownloaded: 'Đã tải xuống',
-      probeLimitAlertTitle: 'Quét playlist có thể bị giới hạn',
-      probeLimitAlertDesc: 'Arroxy đã tải đúng {{count}} mục, thường có nghĩa là giới hạn quét hiện tại đã dừng playlist sớm.'
+      probeLimitAlertTitle: 'Quét playlist đã bị giới hạn',
+      probeLimitAlertDesc: 'Arroxy tìm thấy nhiều hơn {{count}} mục, vì vậy giới hạn quét hiện tại đang ẩn phần còn lại.'
     },
     playlistPresets: {
       heading: 'Chọn chất lượng cho lô',

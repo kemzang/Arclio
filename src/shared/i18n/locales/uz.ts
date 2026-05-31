@@ -109,8 +109,8 @@ const uz = {
       syncNoneTitle: 'Hali hech narsa yuklab olinmagan',
       syncNoneDesc: 'Bu pleylistdan hech bir video {{dir}} ichida topilmadi.',
       alreadyDownloaded: 'Allaqachon yuklab olingan',
-      probeLimitAlertTitle: "Pleylist skaneri cheklangan bo'lishi mumkin",
-      probeLimitAlertDesc: "Arroxy aynan {{count}} ta element yukladi, bu odatda joriy skaner chekovi pleylistni erta to'xtatganini anglatadi."
+      probeLimitAlertTitle: 'Pleylist skaneri cheklangan',
+      probeLimitAlertDesc: 'Arroxy {{count}} tadan ortiq element topdi, shuning uchun joriy skaner chekovi qolganlarini yashirmoqda.'
     },
     playlistPresets: {
       heading: 'Paket uchun sifatni tanlang',

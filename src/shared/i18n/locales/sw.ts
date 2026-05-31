@@ -109,8 +109,8 @@ const sw = {
       syncNoneTitle: 'Hakuna kilichopakuliwa bado',
       syncNoneDesc: 'Hakuna video kutoka orodha hii ya kucheza zilizopatikana kwenye {{dir}}.',
       alreadyDownloaded: 'Tayari imepakuliwa',
-      probeLimitAlertTitle: 'Skani ya playlist inaweza kuwa imepunguzwa',
-      probeLimitAlertDesc: 'Arroxy ilipakia vipande {{count}} hasa, ambayo kwa kawaida inamaanisha kikomo cha skani cha sasa kilisimamisha playlist mapema.'
+      probeLimitAlertTitle: 'Skani ya playlist imefungwa',
+      probeLimitAlertDesc: 'Arroxy imepata zaidi ya vipande {{count}}, kwa hivyo kikomo cha skani cha sasa kinaficha vilivyobaki.'
     },
     playlistPresets: {
       heading: 'Chagua ubora wa kundi',

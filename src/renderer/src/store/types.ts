@@ -47,6 +47,7 @@ export interface ProbeOrchestratorSlice {
   playlistTitle: string;
   playlistId: string;
   playlistIsMultiVideo: boolean;
+  playlistLikelyCapped: boolean;
   playlistProbeLoading: boolean;
   playlistSelection: PlaylistSelection | null;
 

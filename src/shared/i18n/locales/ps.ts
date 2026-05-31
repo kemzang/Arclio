@@ -109,8 +109,8 @@ const ps = {
       syncNoneTitle: 'تر اوسه هېڅ نه دي ډاونلوډ شوي',
       syncNoneDesc: 'د دې پلی‌لېست هېڅ ویډیو په {{dir}} کې ونه موندل شوه.',
       alreadyDownloaded: 'مخکې ډاونلوډ شوی',
-      probeLimitAlertTitle: 'د Playlist سکین ممکن محدود وي',
-      probeLimitAlertDesc: 'Arroxy سم {{count}} توکي ولوستل، کوم چې معمولاً پدې معنی دي چې اوسنی سکین حد playlist ژر ودروه.'
+      probeLimitAlertTitle: 'د Playlist سکین محدود دی',
+      probeLimitAlertDesc: 'Arroxy له {{count}} څخه زیات توکي وموندل، نو اوسنی سکین حد پاتې توکي پټوي.'
     },
     playlistPresets: {
       heading: 'د بیچ لپاره کیفیت وټاکئ',

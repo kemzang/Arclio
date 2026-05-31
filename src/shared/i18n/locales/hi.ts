@@ -109,8 +109,8 @@ const hi = {
       syncNoneTitle: 'अभी तक कुछ डाउनलोड नहीं हुआ',
       syncNoneDesc: 'इस प्लेलिस्ट के कोई वीडियो {{dir}} में नहीं मिले।',
       alreadyDownloaded: 'पहले से डाउनलोड किया गया',
-      probeLimitAlertTitle: 'प्लेलिस्ट स्कैन सीमित हो सकती है',
-      probeLimitAlertDesc: 'Arroxy ने ठीक {{count}} आइटम लोड किए, जिसका आमतौर पर मतलब है कि वर्तमान स्कैन सीमा ने प्लेलिस्ट जल्दी रोक दी।'
+      probeLimitAlertTitle: 'प्लेलिस्ट स्कैन सीमित है',
+      probeLimitAlertDesc: 'Arroxy को {{count}} से अधिक आइटम मिले, इसलिए वर्तमान स्कैन सीमा बाकी को छुपा रही है।'
     },
     playlistPresets: {
       heading: 'बैच के लिए गुणवत्ता चुनें',

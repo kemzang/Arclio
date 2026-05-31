@@ -109,8 +109,8 @@ const am = {
       syncNoneTitle: 'እስካሁን ምንም አልወረደም',
       syncNoneDesc: 'ከዚህ አጫዋች ዝርዝር ውስጥ ምንም ቪዲዮ በ{{dir}} ውስጥ አልተገኘም።',
       alreadyDownloaded: 'ቀድሞ ወርዷል',
-      probeLimitAlertTitle: 'የ Playlist ቃኝት ሊቆረጥ ይችላል',
-      probeLimitAlertDesc: 'Arroxy ትክክለኛ {{count}} ንጥሎችን ጭኗል፣ ይህ ብዙውን ጊዜ የአሁኑ ቃኝት ገደብ playlist ቀድሞ አቆመው ማለት ነው።'
+      probeLimitAlertTitle: 'የ Playlist ቃኝት ተገድቧል',
+      probeLimitAlertDesc: 'Arroxy ከ {{count}} በላይ ንጥሎችን አግኝቷል፣ ስለዚህ የአሁኑ ቃኝት ገደብ የቀሩትን እየደበቀ ነው።'
     },
     playlistPresets: {
       heading: 'ለቡድኑ ጥራት ይምረጡ',

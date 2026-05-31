@@ -109,8 +109,8 @@ const om = {
       syncNoneTitle: 'Ammaaf homtuu hin buufamne',
       syncNoneDesc: 'Viidiyoon playlist kanaa {{dir}} keessatti hin argamne.',
       alreadyDownloaded: 'Duraan buufameera',
-      probeLimitAlertTitle: "Qorannaan playlist caphee ta'uu danda'a",
-      probeLimitAlertDesc: "Arroxy wantoota {{count}} qofa fe'e, kunis yeroo baay'ee daangaa qorannaa ammaa playlist dursa dhaabsise jechuudha."
+      probeLimitAlertTitle: 'Qorannaan playlist daangeffameera',
+      probeLimitAlertDesc: 'Arroxy wantoota {{count}} ol argateera, kanaafuu daangaan qorannaa ammaa kan hafan dhoksaa jira.'
     },
     playlistPresets: {
       heading: 'Kutaa gurmuu barbaadi',

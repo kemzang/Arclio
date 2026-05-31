@@ -31,11 +31,11 @@ test('playlist cap alert follows scenario item counts', async ({ page }) => {
 
   await openScenario(page, 'playlist-at-limit');
   await waitForPlaylist(page);
-  await expect(page.getByTestId('playlist-probe-limit-alert')).toBeVisible();
+  await expect(page.getByTestId('playlist-probe-limit-alert')).not.toBeVisible();
 
   await openScenario(page, 'playlist-over-limit');
   await waitForPlaylist(page);
-  await expect(page.getByTestId('playlist-probe-limit-alert')).not.toBeVisible();
+  await expect(page.getByTestId('playlist-probe-limit-alert')).toBeVisible();
 });
 
 test('update scenarios render channel-specific actions', async ({ page }) => {
@@ -69,11 +69,11 @@ test('screenshots - playlist cap alert across viewports', async ({ page }) => {
     { width: 1200, height: 900 }
   ]) {
     await page.setViewportSize(viewport);
-    await openScenario(page, 'playlist-at-limit');
+    await openScenario(page, 'playlist-over-limit');
     await waitForPlaylist(page);
     await waitForSplashToLeave(page);
     await page.screenshot({
-      path: `tests/browser/screenshots/scenario-playlist-at-limit-${viewport.width}.png`,
+      path: `tests/browser/screenshots/scenario-playlist-over-limit-${viewport.width}.png`,
       fullPage: false
     });
   }

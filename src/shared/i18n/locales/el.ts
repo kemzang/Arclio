@@ -109,8 +109,8 @@ const el = {
       syncNoneTitle: 'Δεν έχει κατεβεί τίποτα ακόμη',
       syncNoneDesc: 'Δεν βρέθηκαν βίντεο από αυτήν την playlist στο {{dir}}.',
       alreadyDownloaded: 'Ήδη κατεβασμένο',
-      probeLimitAlertTitle: 'Η σάρωση playlist ενδέχεται να είναι περιορισμένη',
-      probeLimitAlertDesc: 'Το Arroxy φόρτωσε ακριβώς {{count}} στοιχεία, που συνήθως σημαίνει ότι το τρέχον όριο σάρωσης σταμάτησε την playlist νωρίς.'
+      probeLimitAlertTitle: 'Η σάρωση playlist έχει περιοριστεί',
+      probeLimitAlertDesc: 'Το Arroxy βρήκε περισσότερα από {{count}} στοιχεία, οπότε το τρέχον όριο σάρωσης αποκρύπτει τα υπόλοιπα.'
     },
     playlistPresets: {
       heading: 'Επιλογή ποιότητας για την ομαδική λήψη',

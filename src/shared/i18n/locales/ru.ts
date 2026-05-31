@@ -109,8 +109,8 @@ const ru = {
       syncNoneTitle: 'Пока ничего не скачано',
       syncNoneDesc: 'Видео из этого плейлиста не найдены в {{dir}}.',
       alreadyDownloaded: 'Уже скачано',
-      probeLimitAlertTitle: 'Сканирование плейлиста может быть ограничено',
-      probeLimitAlertDesc: 'Arroxy загрузил ровно {{count}} элементов, что обычно означает, что текущий лимит сканирования остановил плейлист раньше времени.'
+      probeLimitAlertTitle: 'Сканирование плейлиста ограничено',
+      probeLimitAlertDesc: 'Arroxy нашёл более {{count}} элементов, поэтому текущий лимит сканирования скрывает остальные.'
     },
     playlistPresets: {
       heading: 'Выбери качество для пакетной загрузки',

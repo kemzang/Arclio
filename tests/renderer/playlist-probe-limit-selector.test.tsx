@@ -51,7 +51,7 @@ function playlistProbe(count: number): Extract<ProbeResult, { kind: 'playlist' }
   };
 }
 
-function resetStore(limit: number, itemCount: number): void {
+function resetStore(limit: number, itemCount: number, playlistLikelyCapped = false): void {
   useAppStore.setState({
     initialized: true,
     initializing: false,
@@ -71,6 +71,7 @@ function resetStore(limit: number, itemCount: number): void {
     playlistTitle: 'Capped Playlist',
     playlistId: 'PLcap',
     playlistIsMultiVideo: false,
+    playlistLikelyCapped,
     playlistSelection: { kind: 'video', tier: 'best', codec: 'best' },
     syncedDownloadedIds: [],
     syncScanState: 'idle',
@@ -100,13 +101,22 @@ beforeEach(() => {
 });
 
 describe('playlist probe limit selector alert', () => {
-  it('appears when the probed playlist item count equals the current probe limit', () => {
+  it('appears when the probe result was trimmed by the sentinel item', () => {
+    installApi();
+    resetStore(50, 50, true);
+
+    render(<StepPlaylistItems />);
+
+    expect(screen.getByTestId('playlist-probe-limit-alert')).toBeInTheDocument();
+  });
+
+  it('stays hidden when the probed playlist item count exactly matches the current probe limit without a sentinel', () => {
     installApi();
     resetStore(50, 50);
 
     render(<StepPlaylistItems />);
 
-    expect(screen.getByTestId('playlist-probe-limit-alert')).toBeInTheDocument();
+    expect(screen.queryByTestId('playlist-probe-limit-alert')).not.toBeInTheDocument();
   });
 
   it('stays hidden when the probed playlist item count is below the current probe limit', () => {
@@ -120,7 +130,7 @@ describe('playlist probe limit selector alert', () => {
 
   it('saves a new limit from the playlist alert and reruns the playlist probe', async () => {
     const api = installApi();
-    resetStore(50, 50);
+    resetStore(50, 50, true);
 
     render(<StepPlaylistItems />);
 
@@ -135,7 +145,7 @@ describe('playlist probe limit selector alert', () => {
 
   it('does not save or rerun when a custom limit is invalid', async () => {
     const api = installApi();
-    resetStore(50, 50);
+    resetStore(50, 50, true);
 
     render(<StepPlaylistItems />);
 

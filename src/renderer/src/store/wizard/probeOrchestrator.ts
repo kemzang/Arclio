@@ -13,6 +13,7 @@ import type { AppSettings, PlaylistSelection, ProbePlaylistMode, ProbeResult, Wi
 import { DEFAULT_PLAYLIST_SELECTION } from '@shared/schemas.js';
 import { getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 import { cleanUrl } from '@shared/cleanUrl.js';
+import { resolvePlaylistProbeLimit } from '@shared/networkPacing.js';
 import { resolvePlaylistDir } from './playlistDir.js';
 import { isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
 import { applyPreset, restoreFormatSelection, restoreSubtitleSelection } from './formatPicker.js';
@@ -50,8 +51,8 @@ const YT_CHANNEL_TAB_NAMES = new Set(['videos', 'shorts', 'streams', 'live', 'pl
  * Whole-channel / channel-batch download support entry point.
  *
  * Rewrites a YouTube channel-root URL to its `/videos` tab so the probe
- * pipeline can treat the channel as a playlist and enumerate up to 500
- * uploads (cap set in `YtDlp.ts` via `--playlist-end 500`). The user can
+ * pipeline can treat the channel as a playlist and enumerate up to the
+ * configured playlist probe limit. The user can
  * then queue every entry or pick a subset from the wizard playlist picker.
  *
  * Accepted channel-root shapes (all rewritten to `<root>/videos`):
@@ -68,7 +69,7 @@ const YT_CHANNEL_TAB_NAMES = new Set(['videos', 'shorts', 'streams', 'live', 'pl
  * channel URL, /@handle, /channel/UC, /c/, /user/, channel enumeration,
  * channel playlist, channel videos tab, batch channel.
  *
- * @see YtDlp.ts `buildProbeArgs` — `--flat-playlist --playlist-end 500`
+ * @see YtDlp.ts `buildArgs` — `--flat-playlist --playlist-end <limit + 1>`
  *   is what actually enumerates the channel entries server-side.
  * @see ../../components/wizard/StepPlaylistItems.tsx — UI that lets the
  *   user pick specific channel videos from the enumerated list.
@@ -225,6 +226,9 @@ function applyVideoProbeResult(probe: Extract<ProbeResult, { kind: 'video' }>, s
 
 function applyPlaylistProbeResult(probe: Extract<ProbeResult, { kind: 'playlist' }>, set: SetState, get: GetState, firstProbe: boolean): void {
   const settings = get().settings;
+  const playlistLimit = resolvePlaylistProbeLimit(settings?.common);
+  const playlistLikelyCapped = probe.entries.length > playlistLimit;
+  const playlistItems = playlistLikelyCapped ? probe.entries.slice(0, playlistLimit) : probe.entries;
   // Audio-only sources skip the persisted video selection and default to
   // audio-best — the user came to a music host, video presets would fail.
   const persistedSelection: PlaylistSelection = settings?.playlist?.lastPlaylistSelection ?? DEFAULT_PLAYLIST_SELECTION;
@@ -236,11 +240,12 @@ function applyPlaylistProbeResult(probe: Extract<ProbeResult, { kind: 'playlist'
     wizardExtractor: probe.extractor,
     wizardExtractorKey: probe.extractorKey,
     wizardWebpageUrl: probe.webpageUrl,
-    playlistItems: probe.entries,
-    selectedPlaylistItemIds: probe.entries.map((e) => e.id),
+    playlistItems,
+    selectedPlaylistItemIds: playlistItems.map((e) => e.id),
     playlistTitle: probe.playlistTitle,
     playlistId: probe.playlistId,
     playlistIsMultiVideo: probe.isMultiVideo,
+    playlistLikelyCapped,
     playlistProbeLoading: false,
     formatsLoading: false,
     wizardFormats: [],
@@ -283,6 +288,7 @@ async function runProbe(url: string, playlistMode: ProbePlaylistMode, set: SetSt
     playlistTitle: '',
     playlistId: '',
     playlistIsMultiVideo: false,
+    playlistLikelyCapped: false,
     syncedDownloadedIds: [],
     syncScanState: 'idle',
     wizardExtractor: '',
@@ -334,6 +340,7 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
     playlistTitle: RESET_WIZARD_STATE.playlistTitle,
     playlistId: RESET_WIZARD_STATE.playlistId,
     playlistIsMultiVideo: RESET_WIZARD_STATE.playlistIsMultiVideo,
+    playlistLikelyCapped: RESET_WIZARD_STATE.playlistLikelyCapped,
     playlistProbeLoading: RESET_WIZARD_STATE.playlistProbeLoading,
     playlistSelection: RESET_WIZARD_STATE.playlistSelection,
     syncedDownloadedIds: RESET_WIZARD_STATE.syncedDownloadedIds,

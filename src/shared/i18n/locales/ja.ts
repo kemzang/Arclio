@@ -109,8 +109,8 @@ const ja = {
       syncNoneTitle: 'まだダウンロードされていません',
       syncNoneDesc: 'このプレイリストの動画は {{dir}} で見つかりませんでした。',
       alreadyDownloaded: 'ダウンロード済み',
-      probeLimitAlertTitle: 'プレイリストのスキャンが上限に達した可能性があります',
-      probeLimitAlertDesc: 'Arroxy がちょうど {{count}} 件を読み込みました。これは現在のスキャン上限によりプレイリストが途中で停止したことを示している可能性があります。'
+      probeLimitAlertTitle: 'プレイリストのスキャンが上限に達しました',
+      probeLimitAlertDesc: 'Arroxy は {{count}} 件を超えるアイテムを検出しましたが、現在のスキャン上限により残りは表示されていません。'
     },
     playlistPresets: {
       heading: 'バッチの画質を選択',

@@ -115,8 +115,8 @@ const en = {
       syncNoneTitle: 'Nothing downloaded yet',
       syncNoneDesc: 'No videos from this playlist were found in {{dir}}.',
       alreadyDownloaded: 'Already downloaded',
-      probeLimitAlertTitle: 'Playlist scan may be capped',
-      probeLimitAlertDesc: 'Arroxy loaded exactly {{count}} items, which usually means the current scan limit stopped the playlist early.'
+      probeLimitAlertTitle: 'Playlist scan is capped',
+      probeLimitAlertDesc: 'Arroxy found more than {{count}} items, so the current scan limit is hiding the rest.'
     },
     mixedPrompt: {
       title: 'This link has a playlist',

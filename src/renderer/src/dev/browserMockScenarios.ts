@@ -39,8 +39,8 @@ const COMMON_PATHS = {
 export const BROWSER_MOCK_SCENARIOS: readonly BrowserMockScenario[] = [
   { id: 'default', group: 'General', title: 'Default app', description: 'Standard mock video flow and clean queue.', kind: 'default' },
   { id: 'playlist-under-limit', group: 'Playlist', title: '99 items', description: 'Playlist just below the default probe limit.', kind: 'probe' },
-  { id: 'playlist-at-limit', group: 'Playlist', title: '100 capped', description: 'Playlist exactly at the default probe limit; cap alert should show.', kind: 'probe' },
-  { id: 'playlist-over-limit', group: 'Playlist', title: '101 returned', description: 'Playlist above the limit when the mock returns more than the cap.', kind: 'probe' },
+  { id: 'playlist-at-limit', group: 'Playlist', title: '100 exact', description: 'Playlist exactly at the default probe limit; cap alert should stay hidden.', kind: 'probe' },
+  { id: 'playlist-over-limit', group: 'Playlist', title: '101 capped', description: 'Playlist with a hidden sentinel item beyond the default probe limit; cap alert should show.', kind: 'probe' },
   { id: 'playlist-no-thumbnails', group: 'Playlist', title: 'No thumbnails', description: 'Playlist rows with no thumbnail column.', kind: 'probe' },
   { id: 'playlist-long-titles', group: 'Playlist', title: 'Long titles', description: 'Playlist rows with intentionally long titles.', kind: 'probe' },
   { id: 'probe-bot-block', group: 'Probe Errors', title: 'Bot block', description: 'Hard yt-dlp bot-wall probe failure.', kind: 'probe' },

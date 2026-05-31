@@ -26,7 +26,7 @@ function formatEntryDuration(seconds: number | undefined, liveLabel: string): st
 export function StepPlaylistItems(): JSX.Element {
   const { t } = useTranslation();
   const store = useAppStore();
-  const { playlistItems, selectedPlaylistItemIds, playlistTitle, playlistProbeLoading, syncedDownloadedIds, syncScanState, setPlaylistItemSelected, selectAllPlaylistItems, selectNonePlaylistItems, selectPlaylistRange, confirmPlaylistSelection, back, wizardExtractor, scanDownloadedInFolder, applyFolderSync, setPlaylistFolder, settings, retryFormatProbe } = store;
+  const { playlistItems, selectedPlaylistItemIds, playlistTitle, playlistProbeLoading, playlistLikelyCapped, syncedDownloadedIds, syncScanState, setPlaylistItemSelected, selectAllPlaylistItems, selectNonePlaylistItems, selectPlaylistRange, confirmPlaylistSelection, back, wizardExtractor, scanDownloadedInFolder, applyFolderSync, setPlaylistFolder, settings, retryFormatProbe } = store;
 
   // Effective folder the playlist's files land in (and where the scan looks) —
   // the same resolver the queue builder + scan use, so display == download == scan.
@@ -69,7 +69,7 @@ export function StepPlaylistItems(): JSX.Element {
 
   const selectedCount = selectedPlaylistItemIds.length;
   const playlistLimit = resolvePlaylistProbeLimit(settings?.common);
-  const playlistLikelyCapped = !playlistProbeLoading && playlistItems.length === playlistLimit;
+  const showProbeLimitAlert = !playlistProbeLoading && playlistLikelyCapped;
   // yt-dlp's --flat-playlist returns thumbnails for some extractors
   // (YouTube tab) but not others (PornHub paged list, generic). When no
   // entry has one, hide the thumbnail slot entirely so the list renders
@@ -92,7 +92,7 @@ export function StepPlaylistItems(): JSX.Element {
         <span className="shrink-0 text-xs text-muted-foreground">{t(isAudioOnlySource(wizardExtractor) ? 'wizard.playlist.itemCountAudio' : 'wizard.playlist.itemCount', { count: playlistItems.length })}</span>
       </div>
 
-      {playlistLikelyCapped && (
+      {showProbeLimitAlert && (
         <Alert variant="info" className="flex items-start gap-3" data-testid="playlist-probe-limit-alert">
           <Info className="mt-0.5 size-4 shrink-0 text-sky-500" />
           <div className="min-w-0 flex-1">

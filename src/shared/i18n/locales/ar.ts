@@ -109,8 +109,8 @@ const ar = {
       syncNoneTitle: 'لم يتم تنزيل شيء بعد',
       syncNoneDesc: 'لم يتم العثور على أي فيديوهات من قائمة التشغيل هذه في {{dir}}.',
       alreadyDownloaded: 'تم تنزيله بالفعل',
-      probeLimitAlertTitle: 'قد يكون فحص القائمة محدوداً',
-      probeLimitAlertDesc: 'حمّل Arroxy {{count}} عنصراً بالضبط، وهذا يعني عادةً أن حد الفحص الحالي أوقف القائمة مبكراً.'
+      probeLimitAlertTitle: 'فحص قائمة التشغيل محدود',
+      probeLimitAlertDesc: 'عثر Arroxy على أكثر من {{count}} عنصر، لذا يُخفي حد الفحص الحالي بقية العناصر.'
     },
     playlistPresets: {
       heading: 'اختر الجودة للدفعة',

@@ -109,8 +109,8 @@ const es = {
       syncNoneTitle: 'Aún no hay nada descargado',
       syncNoneDesc: 'No se encontraron vídeos de esta playlist en {{dir}}.',
       alreadyDownloaded: 'Ya descargado',
-      probeLimitAlertTitle: 'El escaneo de la playlist puede estar limitado',
-      probeLimitAlertDesc: 'Arroxy cargó exactamente {{count}} elementos, lo que normalmente significa que el límite de escaneo actual detuvo la playlist antes de tiempo.'
+      probeLimitAlertTitle: 'El escaneo de la playlist está limitado',
+      probeLimitAlertDesc: 'Arroxy encontró más de {{count}} elementos, por lo que el límite de escaneo actual está ocultando el resto.'
     },
     playlistPresets: {
       heading: 'Elige la calidad para el lote',

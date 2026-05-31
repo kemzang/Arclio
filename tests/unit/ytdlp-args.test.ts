@@ -67,7 +67,7 @@ describe('YtDlp — probe args', () => {
     expect(args).not.toContain('--yes-playlist');
     expect(args).not.toContain('--no-playlist');
     expect(args).toContain('--playlist-end');
-    expect(args[args.indexOf('--playlist-end') + 1]).toBe('100');
+    expect(args[args.indexOf('--playlist-end') + 1]).toBe('101');
     expect(args[args.length - 1]).toBe(URL);
   });
 
@@ -79,19 +79,19 @@ describe('YtDlp — probe args', () => {
     expect(args).not.toContain('--playlist-end');
   });
 
-  it("playlistMode='playlist': adds --yes-playlist + --playlist-end 100", async () => {
+  it("playlistMode='playlist': adds --yes-playlist + sentinel --playlist-end 101", async () => {
     await makeYtDlp().run({ kind: 'probe', url: URL, playlistMode: 'playlist' });
     const args = getArgs();
     expect(args).toContain('--yes-playlist');
     expect(args).not.toContain('--no-playlist');
     expect(args).toContain('--playlist-end');
-    expect(args[args.indexOf('--playlist-end') + 1]).toBe('100');
+    expect(args[args.indexOf('--playlist-end') + 1]).toBe('101');
   });
 
   it('settings.playlistProbeLimit overrides default --playlist-end', async () => {
     await makeYtDlp({ settings: { playlistProbeLimit: 250 } }).run({ kind: 'probe', url: URL });
     const args = getArgs();
-    expect(args[args.indexOf('--playlist-end') + 1]).toBe('250');
+    expect(args[args.indexOf('--playlist-end') + 1]).toBe('251');
   });
 });
 
