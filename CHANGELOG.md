@@ -8,6 +8,29 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.3.9
+
+This release fixes the Intel Mac packaging issue and makes SponsorBlock outages non-fatal during downloads.
+
+## Highlights
+
+### Intel Mac Builds Include FFmpeg Again
+
+The previous Intel macOS DMG could open, but it did not include the embedded `ffmpeg` and `ffprobe` binaries. Arroxy would then show `ARX-004` and ask the user to pick working copies manually.
+
+- Intel macOS packaging now resolves the requested build architecture correctly instead of falling back to the Apple Silicon runner architecture.
+- The build now fails early if either embedded FFmpeg binary is missing, so a broken DMG cannot be published silently.
+- The packaging logic has targeted test coverage for electron-builder's string and numeric architecture values.
+
+### SponsorBlock Outages No Longer Stop Downloads
+
+When SponsorBlock is enabled, a temporary SponsorBlock API outage should not make the whole download fail.
+
+- Arroxy now treats SponsorBlock lookup failures as a skipped SponsorBlock step and continues the download.
+- The queue still records the skip state, so the download status remains honest without blocking the file.
+
+---
+
 ## 0.3.8
 
 This is a small stability release for Intel Mac users.
