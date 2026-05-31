@@ -8,6 +8,61 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.3.7
+
+This release turns playlist handling into a much more deliberate workflow: pick the right batch format, scan only as much as you need, skip files you already have, and keep the output folder organized as the playlist grows.
+
+## Highlights
+
+### Playlist Quality Is Now a Real Picker
+Playlist downloads no longer ask you to choose from a short list of fixed presets. The batch quality step now lets you choose the media type, quality ceiling, codec preference, audio format, and bitrate.
+
+- Video playlists can use best available codecs or prefer MP4 / H.264 for broader player compatibility.
+- Audio playlists can stay native or convert to MP3, M4A, or Opus with selectable bitrates.
+- Each playlist item resolves the chosen tier independently, so mixed-resolution playlists download cleanly instead of failing on one awkward entry.
+- Mixed YouTube links (`video + playlist`) now explain the choice more clearly: download only the clicked video or open the playlist picker.
+
+### Playlist Sync Keeps Folders Tidy
+Arroxy can now compare a probed playlist against the local destination folder before queueing work.
+
+- Playlist files use stable names with the video ID included, which makes repeat runs and title changes much less messy.
+- The playlist picker scans the output folder automatically and marks videos that are already downloaded.
+- "Apply sync" deselects already-downloaded videos so only new items get queued.
+- You can change the playlist folder from the sync alert and Arroxy keeps the output settings aligned with that folder.
+- Playlist downloads can generate an `.m3u` file in playlist order. The file is rebuilt as items finish, so partial or resumed playlist runs still leave a useful playlist behind.
+
+### Scan Limits And Gentle Downloading
+Large playlists, channels, and search results now have explicit controls instead of hidden limits.
+
+- The URL step has a playlist scan limit picker with presets and custom values from 1 to 5000 items.
+- If a playlist is capped by the current scan limit, Arroxy shows an alert right in the item picker and lets you raise the limit and re-scan.
+- Network pacing presets now live in Advanced settings: Off, Balanced, Careful, and Custom.
+- Balanced is the new default: it adds small request/media/subtitle waits and uses one fragment connection to reduce host pressure on heavy playlist runs.
+- The queue's old fixed 3-second pause between jobs is now shorter, so normal queues feel less sluggish while pacing is handled inside yt-dlp where it matters.
+
+### More Helpful Download Feedback
+Several failure and progress cases should now be less confusing.
+
+- DRM-protected videos and login-required videos now get clearer error messages.
+- SponsorBlock lookup and retry states are shown in the queue instead of looking like a stalled download.
+- HLS fragment bootstrap lines no longer jump running jobs to 100% before the file is actually done.
+- Resuming a paused job whose temp folder disappeared now restarts cleanly instead of trying to reuse a missing path.
+- Cancelling during the subtitle phase now exits as a cancellation instead of falling through as a subtitle failure.
+
+### Smaller Workflow Improvements
+- One-off downloads can include the video ID in the filename by default, with a toggle in Advanced settings.
+- URL cleanup now uses the maintained `@url-sanitize` ClearURLs catalog and still strips pasted whitespace from wrapped links.
+- Cookies setup links are easier to reach from Advanced settings.
+- Output sidecar options now include `.m3u` playlist generation alongside description and thumbnail files.
+
+### Maintenance
+- Error classification now uses the shared `ytdlp-errors` package instead of a local classifier.
+- Probe errors now flow through a discriminated union, which makes failure handling easier to reason about.
+- The browser-mock dev mode gained a scenario gallery, test knobs, and browser coverage for playlist states.
+- CI and dependency maintenance landed across Bun, Node, Vitest matcher types, setup-node, setup-bun, CodeRabbit, and release notifications.
+
+---
+
 ## 0.3.7-beta.1
 
 This beta makes playlist downloads feel more intentional: better presets, cleaner folders, and fewer surprises when Arroxy has to slow itself down for a host.
