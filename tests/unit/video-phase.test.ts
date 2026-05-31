@@ -97,6 +97,14 @@ const EXIT_ERROR: YtDlpResult = {
   stdout: '',
   stderr: ''
 };
+const SPONSORBLOCK_API_ERROR: YtDlpResult = {
+  kind: 'exit-error',
+  exitCode: 1,
+  errorKind: 'unknown',
+  rawError: 'ERROR: Preprocessing: Unable to communicate with SponsorBlock API: HTTP Error 503: Service Unavailable',
+  stdout: '',
+  stderr: 'ERROR: Preprocessing: Unable to communicate with SponsorBlock API: HTTP Error 503: Service Unavailable'
+};
 
 describe('VideoPhase(embed=false)', () => {
   it('calls ytDlp.run with kind: video', async () => {
@@ -136,6 +144,25 @@ describe('VideoPhase(embed=false)', () => {
     expect(outcome.kind).toBe('hard-failed');
     if (outcome.kind === 'hard-failed') expect(outcome.error.kind).toBe('botBlock');
     expect(vi.mocked(ctx.emitStatus)).toHaveBeenCalledWith('error', expect.any(String), expect.any(Object), expect.objectContaining({ kind: 'botBlock' }));
+  });
+
+  it('SponsorBlock API failure → continues without failing the downloaded media', async () => {
+    const ctx = makeCtx(SPONSORBLOCK_API_ERROR, {
+      input: {
+        ...BASE_INPUT,
+        job: {
+          ...BASE_JOB,
+          sponsorBlock: { mode: 'mark', categories: ['sponsor'] }
+        }
+      }
+    });
+
+    const outcome = await VideoPhase(false).run(ctx);
+
+    expect(outcome.kind).toBe('continue');
+    expect(ctx.runMock).toHaveBeenCalledTimes(1);
+    expect(ctx.runMock.mock.calls[0][0].sponsorBlock).toEqual({ mode: 'mark', categories: ['sponsor'] });
+    expect(ctx.emitStatus).not.toHaveBeenCalledWith('error', expect.any(String), expect.any(Object), expect.any(Object));
   });
 });
 
