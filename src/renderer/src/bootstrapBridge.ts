@@ -14,16 +14,10 @@ export interface EnsureAppBridgeOptions {
   installBrowserMock: () => Promise<void> | void;
 }
 
-const ELECTRON_USER_AGENT = /\bElectron\/\d+(?:\.\d+)*/;
-
-export function isElectronUserAgent(userAgent: string): boolean {
-  return ELECTRON_USER_AGENT.test(userAgent);
-}
-
 export async function ensureAppBridge(options: EnsureAppBridgeOptions): Promise<BridgeSource> {
   if (options.hasAppApi()) return 'preload';
 
-  if (options.mode === 'browser-mock' && !isElectronUserAgent(options.userAgent)) {
+  if (options.mode === 'browser-mock') {
     await options.installBrowserMock();
     if (options.hasAppApi()) return 'browser-mock';
     throw new BridgeUnavailableError('Browser mock mode did not install window.appApi.');

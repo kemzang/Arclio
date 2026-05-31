@@ -19,7 +19,7 @@ describe('renderer app bridge bootstrap', () => {
     expect(installBrowserMock).not.toHaveBeenCalled();
   });
 
-  it('installs the browser mock only in explicit non-Electron browser-mock mode', async () => {
+  it('installs the browser mock in explicit browser-mock mode', async () => {
     let appApiInstalled = false;
     const installBrowserMock = vi.fn(() => {
       appApiInstalled = true;
@@ -37,12 +37,30 @@ describe('renderer app bridge bootstrap', () => {
     expect(installBrowserMock).toHaveBeenCalledOnce();
   });
 
-  it('does not install the browser mock inside Electron when the preload bridge is missing', async () => {
-    const installBrowserMock = vi.fn();
+  it('still installs the browser mock in explicit browser-mock mode inside an Electron shell', async () => {
+    let appApiInstalled = false;
+    const installBrowserMock = vi.fn(() => {
+      appApiInstalled = true;
+    });
 
     await expect(
       ensureAppBridge({
         mode: 'browser-mock',
+        userAgent: 'Mozilla/5.0 Arroxy/0.3.2 Electron/42.0.0',
+        hasAppApi: () => appApiInstalled,
+        installBrowserMock
+      })
+    ).resolves.toBe('browser-mock');
+
+    expect(installBrowserMock).toHaveBeenCalledOnce();
+  });
+
+  it('does not install the browser mock in normal Electron mode when the preload bridge is missing', async () => {
+    const installBrowserMock = vi.fn();
+
+    await expect(
+      ensureAppBridge({
+        mode: 'development',
         userAgent: 'Mozilla/5.0 Arroxy/0.3.2 Electron/42.0.0',
         hasAppApi: () => false,
         installBrowserMock

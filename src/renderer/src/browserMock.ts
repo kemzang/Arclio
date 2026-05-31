@@ -1,7 +1,7 @@
 import type { AppApi } from '@shared/api.js';
 import type { AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent } from '@shared/types.js';
-import { defaultAppSettings } from '@shared/constants.js';
 import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas.js';
+import { buildScenarioAppApiState, getScenario, readScenarioIdFromUrl, type BrowserMockScenario } from './dev/browserMockScenarios.js';
 
 const BROWSER_MOCK_LAUNCH_MODES = ['ready', 'cold-loading', 'cold-error'] as const;
 export type BrowserMockLaunchMode = (typeof BROWSER_MOCK_LAUNCH_MODES)[number];
@@ -26,6 +26,14 @@ function readBrowserMockLaunchMode(): BrowserMockLaunchMode {
   }
 }
 
+function readBrowserMockScenario(): BrowserMockScenario {
+  try {
+    return getScenario(readScenarioIdFromUrl(window.location));
+  } catch {
+    return getScenario(null);
+  }
+}
+
 function looksLikeUrl(input: string): boolean {
   try {
     const u = new URL(input);
@@ -38,6 +46,7 @@ function looksLikeUrl(input: string): boolean {
 export function installBrowserMock(): void {
   if ('appApi' in window) return;
 
+  const scenarioState = buildScenarioAppApiState(readBrowserMockScenario());
   const statusListeners = new Set<(e: StatusEvent) => void>();
   const progressListeners = new Set<(e: ProgressEvent) => void>();
   const updateListeners = new Set<(info: UpdateAvailablePayload) => void>();
@@ -46,38 +55,25 @@ export function installBrowserMock(): void {
   const queueAddedListeners = new Set<(event: { items: QueueItem[]; atIdx: number }) => void>();
   const queueUpdatedListeners = new Set<(event: { item: QueueItem }) => void>();
   const queueRemovedListeners = new Set<(event: { itemId: string }) => void>();
-  const queueItems: QueueItem[] = [];
+  const queueItems: QueueItem[] = [...scenarioState.queueItems];
   let queueRunning = false;
   let warmupCallCount = 0;
   const launchMode = readBrowserMockLaunchMode();
 
-  setTimeout(() => {
-    // Flip installChannel to 'scoop' / 'homebrew' / 'winget' to preview those banner states
-    updateListeners.forEach((l) => l({ version: '1.2.0', currentVersion: '0.0.1', installChannel: 'direct' }));
-  }, 3_000);
+  let settings: AppSettings = scenarioState.settings;
 
-  const baseSettings = defaultAppSettings('/home/user/Downloads');
-  let settings: AppSettings = {
-    ...baseSettings,
-    common: {
-      ...baseSettings.common,
-      language: 'en',
-      cookiesPath: undefined,
-      cookiesMode: 'off',
-      embedChapters: true,
-      embedMetadata: true,
-      embedThumbnail: false,
-      commonPaths: {
-        downloads: '/home/user/Downloads',
-        videos: '/home/user/Videos',
-        desktop: '/home/user/Desktop',
-        music: '/home/user/Music',
-        documents: '/home/user/Documents',
-        pictures: '/home/user/Pictures',
-        home: '/home/user'
-      }
+  function emitScenarioUpdate(listener: (info: UpdateAvailablePayload) => void): void {
+    const update = scenarioState.update ?? { version: '1.2.0', currentVersion: '0.0.1', installChannel: 'direct' as const };
+    listener(update);
+  }
+
+  setTimeout(() => {
+    // Default mock still previews direct updater UX after a delay; update
+    // scenarios emit sooner when listeners subscribe.
+    if (!scenarioState.update) {
+      updateListeners.forEach(emitScenarioUpdate);
     }
-  };
+  }, 3_000);
 
   function delay(ms: number): Promise<void> {
     return new Promise((r) => setTimeout(r, ms));
@@ -247,7 +243,7 @@ export function installBrowserMock(): void {
           return { ok: true, data: result };
         }
 
-        const result: WarmUpOutput = { completed: true, dependencies: allRunnable, blockingFailures: [], cancelled: false };
+        const result: WarmUpOutput = force ? { completed: true, dependencies: allRunnable, blockingFailures: [], cancelled: false } : scenarioState.warmUp;
         return { ok: true, data: result };
       },
       cancelWarmup: async () => {
@@ -283,10 +279,33 @@ export function installBrowserMock(): void {
           return { ok: false, error: { kind: 'other', message: 'Not a valid http(s) URL' } };
         }
 
+        if (scenarioState.probeError) {
+          return { ok: false, error: scenarioState.probeError };
+        }
+
+        if (scenarioState.probeResult) {
+          return {
+            ok: true,
+            data: {
+              ...scenarioState.probeResult,
+              webpageUrl: input.url
+            }
+          };
+        }
+
         // Mock playlist branch — append `?playlist=1` to a URL to drive the
         // playlist UI flow.
         if (/[?&]playlist=1\b/.test(input.url)) {
-          const entries = Array.from({ length: 12 }, (_, i) => ({
+          const itemCount = (() => {
+            try {
+              const raw = new URL(input.url).searchParams.get('items');
+              const parsed = Number(raw);
+              return Number.isInteger(parsed) && parsed > 0 ? parsed : 12;
+            } catch {
+              return 12;
+            }
+          })();
+          const entries = Array.from({ length: itemCount }, (_, i) => ({
             id: `mock${i + 1}`,
             url: `https://www.youtube.com/watch?v=mock${i + 1}`,
             title: `Mock playlist item ${i + 1} — ${i % 3 === 0 ? 'a longer title that should ellipsize gracefully when the row is narrow' : 'short title'}`,
@@ -668,6 +687,9 @@ export function installBrowserMock(): void {
     updater: {
       onUpdateAvailable: (listener) => {
         updateListeners.add(listener);
+        if (scenarioState.update) {
+          window.setTimeout(() => emitScenarioUpdate(listener), 200);
+        }
         return () => updateListeners.delete(listener);
       },
       install: async () => {

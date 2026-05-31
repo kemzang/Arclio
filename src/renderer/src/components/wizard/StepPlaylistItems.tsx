@@ -86,7 +86,7 @@ export function StepPlaylistItems(): JSX.Element {
   const liveLabel = t('wizard.playlist.durationUnknown');
 
   return (
-    <div className="flex h-full flex-col gap-3 px-4 py-3">
+    <div className="flex h-full flex-col gap-3 px-4 py-3" data-testid="step-playlist-items">
       <div className="flex items-baseline justify-between gap-2">
         <h2 className="text-sm font-semibold truncate">{playlistTitle || t('wizard.playlist.heading')}</h2>
         <span className="shrink-0 text-xs text-muted-foreground">{t(isAudioOnlySource(wizardExtractor) ? 'wizard.playlist.itemCountAudio' : 'wizard.playlist.itemCount', { count: playlistItems.length })}</span>
