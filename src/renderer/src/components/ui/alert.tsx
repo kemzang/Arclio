@@ -9,6 +9,7 @@ const alertVariants = cva("group/alert relative grid w-full gap-0.5 rounded-lg b
       default: 'bg-card text-card-foreground',
       success: 'border-emerald-500/30 bg-emerald-500/10 text-foreground *:[svg]:text-emerald-500',
       info: 'border-sky-500/30 bg-sky-500/10 text-foreground *:[svg]:text-sky-500',
+      warning: 'border-amber-500/30 bg-amber-500/10 text-foreground *:[svg]:text-amber-500',
       destructive: 'bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current'
     }
   },

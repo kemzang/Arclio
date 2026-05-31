@@ -93,7 +93,7 @@ export function StepPlaylistItems(): JSX.Element {
       </div>
 
       {showProbeLimitAlert && (
-        <Alert variant="info" className="flex items-start gap-3" data-testid="playlist-probe-limit-alert">
+        <Alert variant="warning" className="flex items-start gap-3" data-testid="playlist-probe-limit-alert">
           <Info className="mt-0.5 size-4 shrink-0 text-sky-500" />
           <div className="min-w-0 flex-1">
             <AlertTitle>{t('wizard.playlist.probeLimitAlertTitle')}</AlertTitle>
