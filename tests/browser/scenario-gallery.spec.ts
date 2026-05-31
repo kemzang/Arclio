@@ -8,6 +8,11 @@ async function openScenario(page: Page, scenario: string): Promise<void> {
   await page.waitForSelector('[data-testid="app-root"]');
 }
 
+async function openWithParams(page: Page, params: string): Promise<void> {
+  await page.goto(`${BASE_URL}/?${params}`);
+  await page.waitForSelector('[data-testid="app-root"]');
+}
+
 async function waitForSplashToLeave(page: Page): Promise<void> {
   await page.waitForSelector('[data-testid="splash-overlay"]', { state: 'detached', timeout: 6_000 }).catch(() => undefined);
 }
@@ -21,21 +26,33 @@ test('scenario gallery is available in browser-mock mode', async ({ page }) => {
 
   await expect(page.getByTestId('scenario-gallery')).toBeVisible();
   await page.getByTestId('scenario-gallery-toggle').click();
-  await expect(page.getByTestId('scenario-button-playlist-at-limit')).toBeVisible();
+  await expect(page.getByTestId('scenario-button-queue-running')).toBeVisible();
 });
 
-test('playlist cap alert follows scenario item counts', async ({ page }) => {
-  await openScenario(page, 'playlist-under-limit');
+test('playlist cap alert follows ?playlist=n param counts', async ({ page }) => {
+  await openWithParams(page, 'playlist=99');
   await waitForPlaylist(page);
   await expect(page.getByTestId('playlist-probe-limit-alert')).not.toBeVisible();
 
-  await openScenario(page, 'playlist-at-limit');
+  await openWithParams(page, 'playlist=100');
   await waitForPlaylist(page);
   await expect(page.getByTestId('playlist-probe-limit-alert')).not.toBeVisible();
 
-  await openScenario(page, 'playlist-over-limit');
+  await openWithParams(page, 'playlist=101');
   await waitForPlaylist(page);
   await expect(page.getByTestId('playlist-probe-limit-alert')).toBeVisible();
+});
+
+test('playlist count presets in gallery navigate to ?playlist=n', async ({ page }) => {
+  await openScenario(page, 'default');
+  await page.getByTestId('scenario-gallery-toggle').click();
+  await expect(page.getByTestId('playlist-preset-101')).toBeVisible();
+});
+
+test('probe error dropdown shows all error kinds', async ({ page }) => {
+  await openScenario(page, 'default');
+  await page.getByTestId('scenario-gallery-toggle').click();
+  await expect(page.getByTestId('probe-error-kind-select')).toBeVisible();
 });
 
 test('update scenarios render channel-specific actions', async ({ page }) => {
@@ -69,7 +86,7 @@ test('screenshots - playlist cap alert across viewports', async ({ page }) => {
     { width: 1200, height: 900 }
   ]) {
     await page.setViewportSize(viewport);
-    await openScenario(page, 'playlist-over-limit');
+    await openWithParams(page, 'playlist=101');
     await waitForPlaylist(page);
     await waitForSplashToLeave(page);
     await page.screenshot({

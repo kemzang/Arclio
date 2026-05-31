@@ -1,34 +1,36 @@
 import { describe, expect, it } from 'vitest';
 
-import { buildScenarioAppApiState, getScenario, readScenarioIdFromUrl } from '@renderer/dev/browserMockScenarios.js';
+import { buildScenarioAppApiState, getScenario, readScenarioIdFromUrl, readUrlParams } from '@renderer/dev/browserMockScenarios.js';
 
 describe('browser mock scenarios', () => {
   it('reads known scenario ids from URLs', () => {
-    expect(readScenarioIdFromUrl(new URL('http://localhost:5173/?scenario=playlist-at-limit'))).toBe('playlist-at-limit');
+    expect(readScenarioIdFromUrl(new URL('http://localhost:5173/?scenario=queue-running'))).toBe('queue-running');
     expect(readScenarioIdFromUrl(new URL('http://localhost:5173/?scenario=nope'))).toBeNull();
     expect(readScenarioIdFromUrl(new URL('http://localhost:5173/'))).toBeNull();
   });
 
   it('falls back to the default scenario for unknown ids', () => {
-    expect(getScenario('playlist-under-limit').id).toBe('playlist-under-limit');
+    expect(getScenario('probe-audio-only').id).toBe('probe-audio-only');
     expect(getScenario('not-real').id).toBe('default');
   });
 
-  it('builds playlist fixtures at the capped boundary', () => {
-    const under = buildScenarioAppApiState(getScenario('playlist-under-limit'));
-    const capped = buildScenarioAppApiState(getScenario('playlist-at-limit'));
-    const over = buildScenarioAppApiState(getScenario('playlist-over-limit'));
+  it('builds playlist fixtures via ?playlist=n param', () => {
+    const params99 = readUrlParams(new URL('http://localhost:5173/?playlist=99'));
+    const params100 = readUrlParams(new URL('http://localhost:5173/?playlist=100'));
+    const params101 = readUrlParams(new URL('http://localhost:5173/?playlist=101'));
 
-    expect(under.probeResult?.kind).toBe('playlist');
-    expect(capped.probeResult?.kind).toBe('playlist');
-    expect(over.probeResult?.kind).toBe('playlist');
+    expect(params99.playlistCount).toBe(99);
+    expect(params100.playlistCount).toBe(100);
+    expect(params101.playlistCount).toBe(101);
+
+    const under = buildScenarioAppApiState(getScenario('default'), params99);
+    const capped = buildScenarioAppApiState(getScenario('default'), params100);
+    const over = buildScenarioAppApiState(getScenario('default'), params101);
+
     if (under.probeResult?.kind !== 'playlist' || capped.probeResult?.kind !== 'playlist' || over.probeResult?.kind !== 'playlist') {
       throw new Error('expected playlist probe fixtures');
     }
 
-    expect(under.settings.common.playlistProbeLimit).toBe(100);
-    expect(capped.settings.common.playlistProbeLimit).toBe(100);
-    expect(over.settings.common.playlistProbeLimit).toBe(100);
     expect(under.probeResult.entries).toHaveLength(99);
     expect(capped.probeResult.entries).toHaveLength(100);
     expect(over.probeResult.entries).toHaveLength(101);
@@ -42,6 +44,28 @@ describe('browser mock scenarios', () => {
     expect(state.probeResult.entries.every((entry) => entry.thumbnail === '')).toBe(true);
   });
 
+  it('builds probe errors via ?probeError=kind param', () => {
+    const paramsBot = readUrlParams(new URL('http://localhost:5173/?probeError=botBlock'));
+    const paramsRate = readUrlParams(new URL('http://localhost:5173/?probeError=rateLimit'));
+    const paramsInvalid = readUrlParams(new URL('http://localhost:5173/?probeError=notAKind'));
+    const paramsNone = readUrlParams(new URL('http://localhost:5173/'));
+
+    expect(paramsBot.probeErrorKind).toBe('botBlock');
+    expect(paramsRate.probeErrorKind).toBe('rateLimit');
+    expect(paramsInvalid.probeErrorKind).toBeNull();
+    expect(paramsNone.probeErrorKind).toBeNull();
+
+    const stateBot = buildScenarioAppApiState(getScenario('default'), paramsBot);
+    expect(stateBot.probeError).not.toBeNull();
+    expect(stateBot.probeError?.kind).toBe('ytdlp');
+    if (stateBot.probeError?.kind === 'ytdlp') {
+      expect(stateBot.probeError.error.kind).toBe('botBlock');
+    }
+
+    const stateNone = buildScenarioAppApiState(getScenario('default'), paramsNone);
+    expect(stateNone.probeError).toBeNull();
+  });
+
   it('builds update and diagnostics fixtures', () => {
     expect(buildScenarioAppApiState(getScenario('update-homebrew')).update?.installChannel).toBe('homebrew');
 
@@ -49,5 +73,76 @@ describe('browser mock scenarios', () => {
     expect(diagnostics.completed).toBe(false);
     expect(diagnostics.blockingFailures).toEqual(['yt-dlp']);
     expect(diagnostics.dependencies['yt-dlp'].state).toBe('failed');
+  });
+
+  it('builds new queue scenarios', () => {
+    const pausedHeld = buildScenarioAppApiState(getScenario('queue-paused-held'));
+    expect(pausedHeld.queueItems).toHaveLength(1);
+    expect(pausedHeld.queueItems[0].status).toBe('paused-held');
+
+    const cancelled = buildScenarioAppApiState(getScenario('queue-cancelled'));
+    expect(cancelled.queueItems).toHaveLength(1);
+    expect(cancelled.queueItems[0].status).toBe('cancelled');
+
+    const multi = buildScenarioAppApiState(getScenario('queue-multi'));
+    expect(multi.queueItems).toHaveLength(6);
+    const statuses = multi.queueItems.map((item) => item.status);
+    expect(statuses).toContain('running');
+    expect(statuses).toContain('pending');
+    expect(statuses).toContain('paused-held');
+    expect(statuses).toContain('done');
+    expect(statuses).toContain('error');
+    expect(statuses).toContain('cancelled');
+  });
+
+  it('builds new diagnostics scenarios', () => {
+    const denoMissing = buildScenarioAppApiState(getScenario('diagnostics-deno-missing')).warmUp;
+    expect(denoMissing.completed).toBe(false);
+    expect(denoMissing.blockingFailures).toEqual(['deno']);
+    expect(denoMissing.dependencies.deno.state).toBe('failed');
+
+    const ffprobeBroken = buildScenarioAppApiState(getScenario('diagnostics-ffprobe-broken')).warmUp;
+    expect(ffprobeBroken.blockingFailures).toEqual(['ffprobe']);
+
+    const allMissing = buildScenarioAppApiState(getScenario('diagnostics-all-missing')).warmUp;
+    expect(allMissing.blockingFailures).toHaveLength(4);
+    expect(allMissing.dependencies['yt-dlp'].state).toBe('failed');
+    expect(allMissing.dependencies.ffmpeg.state).toBe('failed');
+
+    const warmupRunning = buildScenarioAppApiState(getScenario('diagnostics-warmup-running')).warmUp;
+    expect(warmupRunning.completed).toBe(false);
+    expect(warmupRunning.blockingFailures).toHaveLength(0);
+    expect(warmupRunning.dependencies.deno.state).toBe('failed');
+  });
+
+  it('builds new update scenarios', () => {
+    expect(buildScenarioAppApiState(getScenario('update-winget')).update?.installChannel).toBe('winget');
+    expect(buildScenarioAppApiState(getScenario('update-flatpak')).update?.installChannel).toBe('flatpak');
+    expect(buildScenarioAppApiState(getScenario('update-darwin-dmg')).update?.installChannel).toBe('direct');
+    expect(buildScenarioAppApiState(getScenario('update-none')).update).toBeNull();
+  });
+
+  it('builds new probe result scenarios', () => {
+    const audioOnly = buildScenarioAppApiState(getScenario('probe-audio-only'));
+    expect(audioOnly.probeResult?.kind).toBe('video');
+    if (audioOnly.probeResult?.kind !== 'video') throw new Error('expected video probe');
+    expect(audioOnly.probeResult.isAudioOnlySource).toBe(true);
+    expect(audioOnly.probeResult.isLive).toBe(false);
+
+    const withSubs = buildScenarioAppApiState(getScenario('probe-with-subtitles'));
+    expect(withSubs.probeResult?.kind).toBe('video');
+    if (withSubs.probeResult?.kind !== 'video') throw new Error('expected video probe');
+    expect(Object.keys(withSubs.probeResult.subtitles).length).toBeGreaterThan(0);
+    expect(Object.keys(withSubs.probeResult.automaticCaptions).length).toBeGreaterThan(0);
+
+    const noFormats = buildScenarioAppApiState(getScenario('probe-no-formats'));
+    expect(noFormats.probeResult?.kind).toBe('video');
+    if (noFormats.probeResult?.kind !== 'video') throw new Error('expected video probe');
+    expect(noFormats.probeResult.formats).toHaveLength(0);
+
+    const liveStream = buildScenarioAppApiState(getScenario('probe-live-stream'));
+    expect(liveStream.probeResult?.kind).toBe('video');
+    if (liveStream.probeResult?.kind !== 'video') throw new Error('expected video probe');
+    expect(liveStream.probeResult.isLive).toBe(true);
   });
 });

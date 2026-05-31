@@ -5,6 +5,7 @@ import { YT_DLP_ERROR_KINDS, type YtDlpErrorKind } from 'ytdlp-errors';
 
 export type { AudioConvertTarget };
 export type { YtDlpErrorKind };
+export { YT_DLP_ERROR_KINDS };
 
 // Enum schemas — single source of truth. Types below are inferred so adding
 // or removing a value never requires hand-editing a parallel union.

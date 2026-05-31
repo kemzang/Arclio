@@ -1,7 +1,8 @@
 import type { AppApi } from '@shared/api.js';
 import type { AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent } from '@shared/types.js';
 import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas.js';
-import { buildScenarioAppApiState, getScenario, readScenarioIdFromUrl, type BrowserMockScenario } from './dev/browserMockScenarios.js';
+import { buildScenarioAppApiState, getScenario, readScenarioIdFromUrl, readUrlParams, type BrowserMockScenario } from './dev/browserMockScenarios.js';
+import { applyThemeLive, readKnobs, RTL_LANGS } from './dev/browserMockKnobs.js';
 
 const BROWSER_MOCK_LAUNCH_MODES = ['ready', 'cold-loading', 'cold-error'] as const;
 export type BrowserMockLaunchMode = (typeof BROWSER_MOCK_LAUNCH_MODES)[number];
@@ -46,7 +47,21 @@ function looksLikeUrl(input: string): boolean {
 export function installBrowserMock(): void {
   if ('appApi' in window) return;
 
-  const scenarioState = buildScenarioAppApiState(readBrowserMockScenario());
+  const knobs = readKnobs(location);
+  const scenarioState = buildScenarioAppApiState(readBrowserMockScenario(), readUrlParams(location), knobs);
+
+  // Apply theme immediately so the first render uses the right colour scheme.
+  applyThemeLive(knobs.theme);
+
+  // Expose mock platform so UpdateBanner, TitleBar, etc. behave as if running
+  // on the selected OS. Falls back to 'linux' so browser-mock always has a value.
+  (window as Window & { platform: string }).platform = knobs.platform ?? 'linux';
+
+  // RTL direction for locale knob.
+  if (knobs.locale !== null) {
+    document.documentElement.dir = RTL_LANGS.has(knobs.locale) ? 'rtl' : 'ltr';
+  }
+
   const statusListeners = new Set<(e: StatusEvent) => void>();
   const progressListeners = new Set<(e: ProgressEvent) => void>();
   const updateListeners = new Set<(info: UpdateAvailablePayload) => void>();
