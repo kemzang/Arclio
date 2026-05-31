@@ -164,6 +164,54 @@ describe('VideoPhase(embed=false)', () => {
     expect(ctx.runMock.mock.calls[0][0].sponsorBlock).toEqual({ mode: 'mark', categories: ['sponsor'] });
     expect(ctx.emitStatus).not.toHaveBeenCalledWith('error', expect.any(String), expect.any(Object), expect.any(Object));
   });
+
+  it('SponsorBlock API failure with mode=off → hard-fails', async () => {
+    const ctx = makeCtx(SPONSORBLOCK_API_ERROR);
+
+    const outcome = await VideoPhase(false).run(ctx);
+
+    expect(outcome.kind).toBe('hard-failed');
+    expect(ctx.runMock.mock.calls[0][0].sponsorBlock).toBeUndefined();
+    expect(ctx.emitStatus).toHaveBeenCalledWith('error', expect.any(String), expect.any(Object), expect.any(Object));
+  });
+
+  it('SponsorBlock API failure with empty categories → hard-fails', async () => {
+    const ctx = makeCtx(SPONSORBLOCK_API_ERROR, {
+      input: {
+        ...BASE_INPUT,
+        job: {
+          ...BASE_JOB,
+          sponsorBlock: { mode: 'mark', categories: [] }
+        }
+      }
+    });
+
+    const outcome = await VideoPhase(false).run(ctx);
+
+    expect(outcome.kind).toBe('hard-failed');
+    expect(ctx.runMock.mock.calls[0][0].sponsorBlock).toEqual({ mode: 'mark', categories: [] });
+    expect(ctx.emitStatus).toHaveBeenCalledWith('error', expect.any(String), expect.any(Object), expect.any(Object));
+  });
+
+  it('SponsorBlock API failure on a site without SponsorBlock support → hard-fails', async () => {
+    const ctx = makeCtx(SPONSORBLOCK_API_ERROR, {
+      input: {
+        ...BASE_INPUT,
+        job: {
+          ...BASE_JOB,
+          extractor: 'Vimeo',
+          extractorKey: 'Vimeo',
+          sponsorBlock: { mode: 'mark', categories: ['sponsor'] }
+        }
+      }
+    });
+
+    const outcome = await VideoPhase(false).run(ctx);
+
+    expect(outcome.kind).toBe('hard-failed');
+    expect(ctx.runMock.mock.calls[0][0].sponsorBlock).toBeUndefined();
+    expect(ctx.emitStatus).toHaveBeenCalledWith('error', expect.any(String), expect.any(Object), expect.any(Object));
+  });
 });
 
 describe('VideoPhase(embed=true)', () => {
