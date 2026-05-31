@@ -1,14 +1,14 @@
 import { useState, type JSX, type ReactNode } from 'react';
 import { Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { DEFAULT_PLAYLIST_PROBE_LIMIT, NETWORK_PACING_PRESET_VALUES, PLAYLIST_PROBE_LIMIT_PRESETS } from '@shared/constants.js';
-import { PLAYLIST_PROBE_LIMIT_MAX, PLAYLIST_PROBE_LIMIT_MIN, playlistProbeLimitSchema, pacingConcurrentFragmentsSchema, pacingSleepSecondsSchema } from '@shared/schemas.js';
-import { resolvePlaylistProbeLimit } from '@shared/networkPacing.js';
+import { NETWORK_PACING_PRESET_VALUES } from '@shared/constants.js';
+import { pacingConcurrentFragmentsSchema, pacingSleepSecondsSchema } from '@shared/schemas.js';
 import type { NetworkPacingPreset } from '@shared/types.js';
 import { useAppStore } from '../../store/useAppStore.js';
 import { Input } from '../ui/input.js';
 import { RadioOption } from '../ui/radio-option.js';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.js';
+import { PlaylistProbeLimitSelector } from './PlaylistProbeLimitSelector.js';
 
 const CUSTOM_FIELDS = [
   { key: 'pacingSleepRequests', labelKey: 'sleepRequests', unitKey: 'seconds', testId: 'pacing-sleep-requests' },
@@ -57,26 +57,10 @@ function presetSummaryValues(preset: Exclude<NetworkPacingPreset, 'custom'>): { 
 
 export function NetworkPacingSettings(): JSX.Element {
   const { t } = useTranslation();
-  const { settings, setPlaylistProbeLimit, setNetworkPacingPreset, setPacingSleepRequests, setPacingSleepInterval, setPacingMaxSleepInterval, setPacingSleepSubtitles, setPacingConcurrentFragments } = useAppStore();
+  const { settings, setNetworkPacingPreset, setPacingSleepRequests, setPacingSleepInterval, setPacingMaxSleepInterval, setPacingSleepSubtitles, setPacingConcurrentFragments } = useAppStore();
   const common = settings?.common;
-  const playlistLimit = resolvePlaylistProbeLimit(common);
-  const playlistIsPreset = (PLAYLIST_PROBE_LIMIT_PRESETS as readonly number[]).includes(playlistLimit);
   const pacingPreset: NetworkPacingPreset = common?.networkPacingPreset ?? 'balanced';
-  const [customLimitDraft, setCustomLimitDraft] = useState(playlistIsPreset ? '' : String(playlistLimit));
   const [fieldDrafts, setFieldDrafts] = useState<Partial<Record<(typeof CUSTOM_FIELDS)[number]['key'], string>>>({});
-
-  const customLimitInvalid = customLimitDraft.trim() !== '' && !playlistProbeLimitSchema.safeParse(Number(customLimitDraft)).success;
-
-  function pickPlaylistLimit(value: number): void {
-    setCustomLimitDraft('');
-    void setPlaylistProbeLimit(value);
-  }
-
-  function updateCustomLimit(value: string): void {
-    setCustomLimitDraft(value);
-    const parsed = Number(value);
-    if (playlistProbeLimitSchema.safeParse(parsed).success) void setPlaylistProbeLimit(parsed);
-  }
 
   const FIELD_SETTERS = {
     pacingSleepRequests: setPacingSleepRequests,
@@ -119,21 +103,7 @@ export function NetworkPacingSettings(): JSX.Element {
           </HelpTooltip>
         </div>
         <p className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.playlistProbeLimit.description')}</p>
-        <div className="grid grid-cols-3 gap-0.5" role="radiogroup" aria-label={t('wizard.url.playlistProbeLimit.label')}>
-          {PLAYLIST_PROBE_LIMIT_PRESETS.map((preset) => (
-            <RadioOption key={preset} label={String(preset)} checked={playlistLimit === preset && customLimitDraft === ''} onClick={() => pickPlaylistLimit(preset)} />
-          ))}
-          <RadioOption label={t('wizard.url.playlistProbeLimit.custom')} checked={customLimitDraft !== '' || !playlistIsPreset} onClick={() => setCustomLimitDraft(String(playlistLimit))} />
-        </div>
-        <p className="text-[11px] text-[var(--text-subtle)]" data-testid="playlist-probe-limit-current">
-          {t('wizard.url.playlistProbeLimit.current', { count: playlistLimit })}
-        </p>
-        {(customLimitDraft !== '' || !playlistIsPreset) && (
-          <div className="flex flex-col gap-1">
-            <Input type="number" min={PLAYLIST_PROBE_LIMIT_MIN} max={PLAYLIST_PROBE_LIMIT_MAX} value={customLimitDraft} onChange={(e) => updateCustomLimit(e.target.value)} placeholder={String(DEFAULT_PLAYLIST_PROBE_LIMIT)} className="h-8 text-[12px] font-mono" aria-invalid={customLimitInvalid} data-testid="playlist-probe-limit-custom" />
-            {customLimitInvalid && <p className="text-[11px] text-amber-500">{t('wizard.url.playlistProbeLimit.invalid')}</p>}
-          </div>
-        )}
+        <PlaylistProbeLimitSelector testId="playlist-probe-limit" className="w-full" />
       </div>
 
       <div className="flex flex-col gap-1.5 rounded-md border border-[var(--border-strong)] bg-background/35 p-2.5">

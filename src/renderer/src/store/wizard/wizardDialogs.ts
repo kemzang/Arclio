@@ -15,6 +15,10 @@ export function createWizardDialogsSlice(set: SetState, _get: GetState): WizardD
 
     setAdvancedAutoOpen: (open, target = 'cookies') => set({ advancedAutoOpen: open, advancedAutoTarget: target }),
 
+    cancelMixedPrompt: () => {
+      set({ mixedUrlPromptOpen: false, mixedUrlPending: null });
+    },
+
     openAdvancedSettings: (target) => {
       set({
         wizardStep: 'url',

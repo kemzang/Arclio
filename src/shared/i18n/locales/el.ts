@@ -108,7 +108,9 @@ const el = {
       syncFoundDesc: '{{n}} από αυτά τα βίντεο υπάρχουν ήδη στο {{dir}}. Να γίνει συγχρονισμός για να κατεβούν μόνο τα νέα;',
       syncNoneTitle: 'Δεν έχει κατεβεί τίποτα ακόμη',
       syncNoneDesc: 'Δεν βρέθηκαν βίντεο από αυτήν την playlist στο {{dir}}.',
-      alreadyDownloaded: 'Ήδη κατεβασμένο'
+      alreadyDownloaded: 'Ήδη κατεβασμένο',
+      probeLimitAlertTitle: 'Η σάρωση playlist ενδέχεται να είναι περιορισμένη',
+      probeLimitAlertDesc: 'Το Arroxy φόρτωσε ακριβώς {{count}} στοιχεία, που συνήθως σημαίνει ότι το τρέχον όριο σάρωσης σταμάτησε την playlist νωρίς.'
     },
     playlistPresets: {
       heading: 'Επιλογή ποιότητας για την ομαδική λήψη',
@@ -226,6 +228,20 @@ const el = {
           seconds: 'δευτ.',
           threads: 'νήματα'
         }
+      },
+      playlistProbeLimit: {
+        label: 'Στοιχεία playlist για σάρωση',
+        description: 'Μέγιστος αριθμός εγγραφών που φορτώνει το Arroxy όταν ανοίγει playlist, κανάλι ή αποτέλεσμα αναζήτησης.',
+        option: '{{count}} στοιχεία',
+        current: 'Τρέχον όριο: {{count}} στοιχεία',
+        customValue: 'Προσαρμοσμένο: {{count}} στοιχεία',
+        custom: 'Προσαρμοσμένο…',
+        customDialogTitle: 'Προσαρμοσμένο όριο σάρωσης playlist',
+        customDialogDescription: 'Χρησιμοποίησε έναν ακέραιο από {{min}} έως {{max}}.',
+        customDialogCancel: 'Άκυρο',
+        customDialogSave: 'Αποθήκευση ορίου',
+        invalid: 'Χρησιμοποίησε έναν ακέραιο από 1 έως 5000',
+        tooltip: 'Αντιστοιχεί στο yt-dlp --playlist-end: το Arroxy ζητά μόνο τόσες εγγραφές playlist, καναλιού ή αναζήτησης κατά τη δημιουργία του picker.'
       },
       closeToTray: {
         toggle: 'Απόκρυψη στο δίσκο κατά το κλείσιμο',

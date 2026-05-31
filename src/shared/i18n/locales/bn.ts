@@ -108,7 +108,9 @@ const bn = {
       syncFoundDesc: 'এই ভিডিওগুলোর মধ্যে {{n}}টি ইতিমধ্যেই {{dir}}-এ আছে। শুধু নতুনগুলো ডাউনলোড করতে সিঙ্ক করবেন?',
       syncNoneTitle: 'এখনও কিছু ডাউনলোড হয়নি',
       syncNoneDesc: 'এই প্লেলিস্টের কোনো ভিডিও {{dir}}-এ পাওয়া যায়নি।',
-      alreadyDownloaded: 'ইতিমধ্যেই ডাউনলোড করা'
+      alreadyDownloaded: 'ইতিমধ্যেই ডাউনলোড করা',
+      probeLimitAlertTitle: 'প্লেলিস্ট স্ক্যান সীমাবদ্ধ হতে পারে',
+      probeLimitAlertDesc: 'Arroxy ঠিক {{count}}টি আইটেম লোড করেছে, যা সাধারণত বোঝায় যে বর্তমান স্ক্যান সীমা প্লেলিস্টটি আগেই বন্ধ করে দিয়েছে।'
     },
     playlistPresets: {
       heading: 'ব্যাচের জন্য মান বেছে নিন',
@@ -226,6 +228,20 @@ const bn = {
           seconds: 'সে',
           threads: 'থ্রেড'
         }
+      },
+      playlistProbeLimit: {
+        label: 'স্ক্যান করার প্লেলিস্ট আইটেম',
+        description: 'Arroxy যখন প্লেলিস্ট, চ্যানেল বা সার্চ ফলাফল খোলে তখন সর্বোচ্চ কতটি এন্ট্রি লোড করবে।',
+        option: '{{count}}টি আইটেম',
+        current: 'বর্তমান সীমা: {{count}}টি আইটেম',
+        customValue: 'কাস্টম: {{count}}টি আইটেম',
+        custom: 'কাস্টম…',
+        customDialogTitle: 'কাস্টম প্লেলিস্ট স্ক্যান সীমা',
+        customDialogDescription: '{{min}} থেকে {{max}} পর্যন্ত একটি পূর্ণ সংখ্যা ব্যবহার করুন।',
+        customDialogCancel: 'বাতিল',
+        customDialogSave: 'সীমা সংরক্ষণ করুন',
+        invalid: '১ থেকে ৫০০০ পর্যন্ত একটি পূর্ণ সংখ্যা ব্যবহার করুন',
+        tooltip: 'yt-dlp --playlist-end-এর সাথে ম্যাপ করে: Arroxy পিকার তৈরির সময় শুধুমাত্র এতটি প্লেলিস্ট, চ্যানেল বা সার্চ এন্ট্রি চায়।'
       },
       closeToTray: {
         toggle: 'বন্ধে ট্রেতে লুকান',

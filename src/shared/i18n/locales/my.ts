@@ -108,7 +108,9 @@ const my = {
       syncFoundDesc: 'ဤဗီဒီယိုများထဲမှ {{n}} ခုသည် {{dir}} တွင် ရှိပြီးသားဖြစ်သည်။ အသစ်များကိုသာ ဒေါင်းလုဒ်ရန် sync လုပ်မလား။',
       syncNoneTitle: 'ဒေါင်းလုဒ်လုပ်ထားတာ မရှိသေးပါ',
       syncNoneDesc: 'ဤ playlist မှ ဗီဒီယိုများကို {{dir}} တွင် မတွေ့ပါ။',
-      alreadyDownloaded: 'ဒေါင်းလုဒ်ပြီးသား'
+      alreadyDownloaded: 'ဒေါင်းလုဒ်ပြီးသား',
+      probeLimitAlertTitle: 'Playlist scan ကန့်သတ်ထားနိုင်သည်',
+      probeLimitAlertDesc: 'Arroxy သည် {{count}} ခုတိတိ လုဒ်လုပ်ခဲ့သည်၊ ၎င်းသည် လက်ရှိ scan ကန့်သတ်ချက်ကြောင့် playlist ကို စောစီးစွာ ရပ်တန့်ခြင်းကို ညွှန်ပြသည်ဟု ပုံမှန်အားဖြင့် ဆိုလိုသည်။'
     },
     playlistPresets: {
       heading: 'Batch အတွက် အရည်အသွေးရွေးပါ',
@@ -226,6 +228,20 @@ const my = {
           seconds: 'စက္ကန့်',
           threads: 'threads'
         }
+      },
+      playlistProbeLimit: {
+        label: 'Scan လုပ်မည့် playlist အရေအတွက်',
+        description: 'Arroxy သည် playlist၊ channel သို့မဟုတ် ရှာဖွေမှုရလဒ်ကို ဖွင့်သောအခါ အများဆုံး entries မည်မျှ လုဒ်မည်ကို သတ်မှတ်သည်။',
+        option: '{{count}} ခု',
+        current: 'လက်ရှိ ကန့်သတ်ချက်: {{count}} ခု',
+        customValue: 'စိတ်ကြိုက်: {{count}} ခု',
+        custom: 'စိတ်ကြိုက်…',
+        customDialogTitle: 'စိတ်ကြိုက် playlist scan ကန့်သတ်ချက်',
+        customDialogDescription: '{{min}} မှ {{max}} အထိ ကိန်းပြည့်တစ်ခု အသုံးပြုပါ။',
+        customDialogCancel: 'မလုပ်တော့',
+        customDialogSave: 'ကန့်သတ်ချက် သိမ်းဆည်းမည်',
+        invalid: '1 မှ 5000 အထိ ကိန်းပြည့်တစ်ခု အသုံးပြုပါ',
+        tooltip: 'yt-dlp --playlist-end နှင့် map ချိတ်ဆက်သည်: Arroxy သည် picker ဆောက်စဉ် ဤမျှ playlist၊ channel သို့မဟုတ် ရှာဖွေမှု entries များကိုသာ တောင်းဆိုသည်။'
       },
       closeToTray: {
         toggle: 'ပိတ်လျှင် tray သို့ ဝှက်မည်',

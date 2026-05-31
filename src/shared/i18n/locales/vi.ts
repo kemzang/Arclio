@@ -108,7 +108,9 @@ const vi = {
       syncFoundDesc: '{{n}} video trong số này đã có trong {{dir}}. Đồng bộ để chỉ tải các video mới?',
       syncNoneTitle: 'Chưa có gì được tải xuống',
       syncNoneDesc: 'Không tìm thấy video nào từ danh sách phát này trong {{dir}}.',
-      alreadyDownloaded: 'Đã tải xuống'
+      alreadyDownloaded: 'Đã tải xuống',
+      probeLimitAlertTitle: 'Quét playlist có thể bị giới hạn',
+      probeLimitAlertDesc: 'Arroxy đã tải đúng {{count}} mục, thường có nghĩa là giới hạn quét hiện tại đã dừng playlist sớm.'
     },
     playlistPresets: {
       heading: 'Chọn chất lượng cho lô',
@@ -193,9 +195,47 @@ const vi = {
         placeholder: 'http://host:port',
         clear: 'Xóa'
       },
+      playlistProbeLimit: {
+        label: 'Số mục playlist cần quét',
+        description: 'Số mục tối đa Arroxy tải khi mở một playlist, kênh hoặc kết quả tìm kiếm.',
+        option: '{{count}} mục',
+        current: 'Giới hạn hiện tại: {{count}} mục',
+        customValue: 'Tùy chỉnh: {{count}} mục',
+        custom: 'Tùy chỉnh…',
+        customDialogTitle: 'Giới hạn quét playlist tùy chỉnh',
+        customDialogDescription: 'Nhập số nguyên từ {{min}} đến {{max}}.',
+        customDialogCancel: 'Hủy',
+        customDialogSave: 'Lưu giới hạn',
+        invalid: 'Nhập số nguyên từ 1 đến 5000',
+        tooltip: 'Tương ứng với yt-dlp --playlist-end: Arroxy chỉ yêu cầu số mục này từ playlist, kênh hoặc kết quả tìm kiếm khi tạo bộ chọn.'
+      },
       singleFilenameId: {
         toggle: 'Thêm ID video vào tên tệp đơn lẻ',
         toggleDescription: 'Giữ các lượt tải một lần là duy nhất khi tiêu đề thay đổi hoặc trùng nhau.'
+      },
+      networkPacing: {
+        heading: 'Tải xuống nhẹ nhàng',
+        description: 'Thêm khoảng dừng nhỏ trong mỗi lần tải xuống để Arroxy không truy cập trang web quá mức. Giá trị tính bằng giây trừ khi có ghi chú.',
+        tooltip: 'Các khoảng dừng này xảy ra bên trong mỗi lần tải xuống. Arroxy vẫn duy trì tải xuống trong hàng đợi theo thứ tự từng cái một.',
+        summary: 'Chờ: {{requests}} giữa các lần kiểm tra, {{downloads}} trước khi media bắt đầu, {{subtitles}} trước các tệp phụ đề. Kết nối: {{fragments}}.',
+        presets: {
+          off: 'Tắt',
+          balanced: 'Cân bằng',
+          careful: 'Cẩn thận',
+          custom: 'Tùy chỉnh'
+        },
+        tooltips: {
+          off: 'Chỉ sử dụng các khoảng dừng cơ bản nhỏ mà Arroxy duy trì cho media và phụ đề.',
+          balanced: 'Mặc định. Thêm các khoảng dừng ngắn và sử dụng một kết nối tải xuống.',
+          careful: 'Thêm khoảng dừng dài hơn cho danh sách phát lớn hoặc mạng thường xuyên bị giới hạn.',
+          custom: 'Tự điều chỉnh các điều khiển tải xuống nâng cao.'
+        },
+        fields: {
+          sleepRequests: 'Chờ giữa các lần kiểm tra metadata',
+          sleepInterval: 'Dừng trước khi media bắt đầu: tối thiểu',
+          maxSleepInterval: 'Dừng trước khi media bắt đầu: tối đa',
+          concurrentFragments: 'Kết nối tải xuống'
+        }
       },
       closeToTray: {
         toggle: 'Ẩn xuống khay khi đóng',
@@ -565,36 +605,6 @@ const vi = {
       detail: 'Tiến trình renderer bị crash ({{reason}}). Tải lại để thử lại.',
       reload: 'Tải lại',
       quit: 'Thoát'
-    }
-  },
-  networkPacing: {
-    heading: 'Tải xuống nhẹ nhàng',
-    description: 'Thêm khoảng dừng nhỏ trong mỗi lần tải xuống để Arroxy không truy cập trang web quá mức. Giá trị tính bằng giây trừ khi có ghi chú.',
-    tooltip: 'Các khoảng dừng này xảy ra bên trong mỗi lần tải xuống. Arroxy vẫn duy trì tải xuống trong hàng đợi theo thứ tự từng cái một.',
-    summary: 'Chờ: {{requests}} giữa các lần kiểm tra, {{downloads}} trước khi media bắt đầu, {{subtitles}} trước các tệp phụ đề. Kết nối: {{fragments}}.',
-    presets: {
-      off: {
-        label: 'Tắt',
-        description: 'Chỉ sử dụng các khoảng dừng cơ bản nhỏ mà Arroxy duy trì cho media và phụ đề.'
-      },
-      balanced: {
-        label: 'Cân bằng',
-        description: 'Mặc định. Thêm các khoảng dừng ngắn và sử dụng một kết nối tải xuống.'
-      },
-      careful: {
-        label: 'Cẩn thận',
-        description: 'Thêm khoảng dừng dài hơn cho danh sách phát lớn hoặc mạng thường xuyên bị giới hạn.'
-      },
-      custom: {
-        label: 'Tùy chỉnh',
-        description: 'Tự điều chỉnh các điều khiển tải xuống nâng cao.'
-      }
-    },
-    fields: {
-      sleepRequests: 'Chờ giữa các lần kiểm tra metadata',
-      sleepInterval: 'Dừng trước khi media bắt đầu: tối thiểu',
-      maxSleepInterval: 'Dừng trước khi media bắt đầu: tối đa',
-      concurrentFragments: 'Kết nối tải xuống'
     }
   },
   share: {

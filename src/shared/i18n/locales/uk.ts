@@ -108,7 +108,9 @@ const uk = {
       syncFoundDesc: '{{n}} із цих відео вже є в {{dir}}. Синхронізувати, щоб завантажити лише нові?',
       syncNoneTitle: 'Поки нічого не завантажено',
       syncNoneDesc: 'Відео з цього плейлиста не знайдено в {{dir}}.',
-      alreadyDownloaded: 'Уже завантажено'
+      alreadyDownloaded: 'Уже завантажено',
+      probeLimitAlertTitle: 'Сканування плейлиста може бути обмежено',
+      probeLimitAlertDesc: 'Arroxy завантажив рівно {{count}} елементів, що зазвичай означає, що поточний ліміт сканування зупинив плейлист передчасно.'
     },
     playlistPresets: {
       heading: 'Вибери якість для пакетного завантаження',
@@ -192,6 +194,20 @@ const uk = {
         description: 'Направляти трафік через проксі — корисно для контенту з географічними обмеженнями.',
         placeholder: 'http://host:port',
         clear: 'Очистити'
+      },
+      playlistProbeLimit: {
+        label: 'Елементів плейлиста для сканування',
+        description: 'Максимальна кількість записів, які Arroxy завантажує під час відкриття плейлиста, каналу або результатів пошуку.',
+        option: '{{count}} елементів',
+        current: 'Поточний ліміт: {{count}} елементів',
+        customValue: 'Власне: {{count}} елементів',
+        custom: 'Власне…',
+        customDialogTitle: 'Власний ліміт сканування плейлиста',
+        customDialogDescription: 'Введи ціле число від {{min}} до {{max}}.',
+        customDialogCancel: 'Скасувати',
+        customDialogSave: 'Зберегти ліміт',
+        invalid: 'Введи ціле число від 1 до 5000',
+        tooltip: 'Відповідає параметру yt-dlp --playlist-end: Arroxy запитує лише таку кількість записів плейлиста, каналу або пошуку під час побудови вибірки.'
       },
       singleFilenameId: {
         toggle: 'Додавати ID відео до одиночних імен файлів',

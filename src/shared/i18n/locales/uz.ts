@@ -108,7 +108,9 @@ const uz = {
       syncFoundDesc: 'Bu videolarning {{n}} tasi allaqachon {{dir}} ichida. Faqat yangilarini yuklab olish uchun sinxronlansinmi?',
       syncNoneTitle: 'Hali hech narsa yuklab olinmagan',
       syncNoneDesc: 'Bu pleylistdan hech bir video {{dir}} ichida topilmadi.',
-      alreadyDownloaded: 'Allaqachon yuklab olingan'
+      alreadyDownloaded: 'Allaqachon yuklab olingan',
+      probeLimitAlertTitle: "Pleylist skaneri cheklangan bo'lishi mumkin",
+      probeLimitAlertDesc: "Arroxy aynan {{count}} ta element yukladi, bu odatda joriy skaner chekovi pleylistni erta to'xtatganini anglatadi."
     },
     playlistPresets: {
       heading: 'Paket uchun sifatni tanlang',
@@ -193,9 +195,47 @@ const uz = {
         placeholder: 'http://host:port',
         clear: 'Tozalash'
       },
+      playlistProbeLimit: {
+        label: 'Skanerlash uchun pleylist elementlari',
+        description: 'Arroxy pleylist, kanal yoki qidiruv natijasi ochilganda yuklaydigan maksimal yozuvlar soni.',
+        option: '{{count}} ta element',
+        current: 'Joriy chegara: {{count}} ta element',
+        customValue: 'Maxsus: {{count}} ta element',
+        custom: 'Maxsus…',
+        customDialogTitle: 'Maxsus pleylist skaner chegarasi',
+        customDialogDescription: "{{min}} dan {{max}} gacha bo'lgan butun son kiriting.",
+        customDialogCancel: 'Bekor qilish',
+        customDialogSave: 'Chegarani saqlash',
+        invalid: "1 dan 5000 gacha bo'lgan butun son kiriting",
+        tooltip: "yt-dlp --playlist-end ga to'g'ri keladi: Arroxy tanlagichni qurishdan oldin faqat shu miqdordagi pleylist, kanal yoki qidiruv yozuvlarini so'raydi."
+      },
       singleFilenameId: {
         toggle: 'Yakka fayl nomlariga video ID qo‘shish',
         toggleDescription: 'Sarlavhalar o‘zgarganda yoki mos kelib qolganda yakka yuklab olishlarni noyob saqlaydi.'
+      },
+      networkPacing: {
+        heading: 'Yumshoq yuklamalar',
+        description: "Arroxy saytga haddan tashqari agressiv murojaat qilmasligi uchun har bir yuklab olish paytida kichik kutish vaqtlarini qo'shadi. Qiymatlar soniyalarda (boshqacha ko'rsatilmagan holda).",
+        tooltip: "Bu kutish vaqtlari har bir yuklab olish ichida sodir bo'ladi. Arroxy oddiy navbatdagi yuklamalarni baribir ketma-ket bajaradi.",
+        summary: 'Kutish: {{requests}} tekshiruvlar orasida, {{downloads}} media boshlanishidan oldin, {{subtitles}} subtitrl fayllaridan oldin. Ulanishlar: {{fragments}}.',
+        presets: {
+          off: "O'chiriq",
+          balanced: 'Muvozanatli',
+          careful: 'Ehtiyotkor',
+          custom: 'Maxsus'
+        },
+        tooltips: {
+          off: 'Arroxy media va subtitrlar uchun saqlaydigan kichik asosiy tanaffuslarnigina ishlatadi.',
+          balanced: "Standart. Qisqa tanaffuslar qo'shadi va bitta yuklab olish ulanishidan foydalanadi.",
+          careful: "Katta pleylistlar yoki tez-tez cheklovlarga duch keladigan tarmoqlar uchun uzunroq tanaffuslar qo'shadi.",
+          custom: "Yuklab olish boshqaruvlarini o'zingiz sozlang."
+        },
+        fields: {
+          sleepRequests: 'Metadata tekshiruvlari orasidagi kutish',
+          sleepInterval: 'Media boshlanishidan oldingi pauza: min',
+          maxSleepInterval: 'Media boshlanishidan oldingi pauza: maks',
+          concurrentFragments: 'Yuklab olish ulanishlari'
+        }
       },
       closeToTray: {
         toggle: 'Yopilganda tizim soatiga yashirish',
@@ -565,36 +605,6 @@ const uz = {
       detail: 'Renderlovchi jarayon ishdan chiqdi ({{reason}}). Qayta urinish uchun yangilang.',
       reload: 'Yangilash',
       quit: 'Chiqish'
-    }
-  },
-  networkPacing: {
-    heading: 'Yumshoq yuklamalar',
-    description: "Arroxy saytga haddan tashqari agressiv murojaat qilmasligi uchun har bir yuklab olish paytida kichik kutish vaqtlarini qo'shadi. Qiymatlar soniyalarda (boshqacha ko'rsatilmagan holda).",
-    tooltip: "Bu kutish vaqtlari har bir yuklab olish ichida sodir bo'ladi. Arroxy oddiy navbatdagi yuklamalarni baribir ketma-ket bajaradi.",
-    summary: 'Kutish: {{requests}} tekshiruvlar orasida, {{downloads}} media boshlanishidan oldin, {{subtitles}} subtitrl fayllaridan oldin. Ulanishlar: {{fragments}}.',
-    presets: {
-      off: {
-        label: "O'chiriq",
-        description: 'Arroxy media va subtitrlar uchun saqlaydigan kichik asosiy tanaffuslarnigina ishlatadi.'
-      },
-      balanced: {
-        label: 'Muvozanatli',
-        description: "Standart. Qisqa tanaffuslar qo'shadi va bitta yuklab olish ulanishidan foydalanadi."
-      },
-      careful: {
-        label: 'Ehtiyotkor',
-        description: "Katta pleylistlar yoki tez-tez cheklovlarga duch keladigan tarmoqlar uchun uzunroq tanaffuslar qo'shadi."
-      },
-      custom: {
-        label: 'Maxsus',
-        description: "Yuklab olish boshqaruvlarini o'zingiz sozlang."
-      }
-    },
-    fields: {
-      sleepRequests: 'Metadata tekshiruvlari orasidagi kutish',
-      sleepInterval: 'Media boshlanishidan oldingi pauza: min',
-      maxSleepInterval: 'Media boshlanishidan oldingi pauza: maks',
-      concurrentFragments: 'Yuklab olish ulanishlari'
     }
   },
   share: {

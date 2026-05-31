@@ -108,7 +108,9 @@ const sr = {
       syncFoundDesc: '{{n}} ових видео снимака је већ у {{dir}}. Синхронизовати да се преузму само нови?',
       syncNoneTitle: 'Још ништа није преузето',
       syncNoneDesc: 'Ниједан видео из ове плејлисте није пронађен у {{dir}}.',
-      alreadyDownloaded: 'Већ преузето'
+      alreadyDownloaded: 'Већ преузето',
+      probeLimitAlertTitle: 'Скенирање плејлисте можда је ограничено',
+      probeLimitAlertDesc: 'Arroxy је учитао тачно {{count}} ставки, што обично значи да је тренутно ограничење скенирања прерано зауставило плејлисту.'
     },
     playlistPresets: {
       heading: 'Изабери квалитет за групно преузимање',
@@ -192,6 +194,20 @@ const sr = {
         description: 'Прусмери саобраћај кроз прокси — корисно за географски ограничен садржај.',
         placeholder: 'http://host:port',
         clear: 'Обриши'
+      },
+      playlistProbeLimit: {
+        label: 'Ставке плејлисте за скенирање',
+        description: 'Максималан број уноса које Arroxy учитава када се отвори плејлиста, канал или резултат претраге.',
+        option: '{{count}} ставки',
+        current: 'Тренутно ограничење: {{count}} ставки',
+        customValue: 'Прилагођено: {{count}} ставки',
+        custom: 'Прилагођено…',
+        customDialogTitle: 'Прилагођено ограничење скенирања плејлисте',
+        customDialogDescription: 'Унеси цео број од {{min}} до {{max}}.',
+        customDialogCancel: 'Откажи',
+        customDialogSave: 'Сачувај ограничење',
+        invalid: 'Унеси цео број од 1 до 5000',
+        tooltip: 'Одговара yt-dlp опцији --playlist-end: Arroxy тражи само овај број уноса плејлисте, канала или претраге приликом прављења бирача.'
       },
       singleFilenameId: {
         toggle: 'Додај ID видеа у појединачна имена фајлова',

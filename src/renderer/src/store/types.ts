@@ -149,6 +149,7 @@ export interface WizardDialogsSlice {
   cookiesConfigDialogIssue: IncompleteCookiesConfigIssue | null;
 
   setAdvancedAutoOpen: (open: boolean, target?: AdvancedSettingsTarget) => void;
+  cancelMixedPrompt: () => void;
   dismissCookiesConfigDialog: () => void;
   openAdvancedSettings: (target: AdvancedSettingsTarget) => void;
 }
