@@ -145,7 +145,7 @@ describe('advanced network settings', () => {
     fireEvent.change(await screen.findByTestId('playlist-probe-limit-custom-input'), { target: { value: '5001' } });
 
     expect(screen.getByTestId('playlist-probe-limit-custom-save')).toBeDisabled();
-    expect(mockApi.settings.update).not.toHaveBeenCalledWith({ common: { playlistProbeLimit: 5001 } });
+    expect(mockApi.settings.update).not.toHaveBeenCalled();
   });
 
   it('saves the single-filename id suffix switch', async () => {
