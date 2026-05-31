@@ -2,7 +2,7 @@ import { mkdir, rm, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { STATUS_KEY } from '@shared/schemas.js';
 import { siteForExtractor } from '@shared/sites/index.js';
-import type { YtDlpRequest } from '../YtDlp.js';
+import type { YtDlpRequest, YtDlpResult } from '../YtDlp.js';
 import { classifyYtDlpFailure } from '../download/errorClassification.js';
 import { cleanupPartFiles, cleanupTempDirByPath } from '../download/cleanup.js';
 import type { Phase, PhaseContext, PhaseOutcome } from './types.js';
@@ -28,6 +28,12 @@ async function detectCachedInfoJson(tempDir: string | undefined): Promise<string
   } catch {
     return undefined;
   }
+}
+
+function isSkippableSponsorBlockApiFailure(result: Exclude<YtDlpResult, { kind: 'success' }>, req: YtDlpRequest): boolean {
+  if (result.kind !== 'exit-error') return false;
+  if (!('sponsorBlock' in req) || req.sponsorBlock === undefined || req.sponsorBlock.categories.length === 0) return false;
+  return /Unable to communicate with SponsorBlock API/i.test([result.rawError, result.stderr].filter(Boolean).join('\n'));
 }
 
 export function VideoPhase(embed: boolean): Phase {
@@ -134,6 +140,9 @@ export function VideoPhase(embed: boolean): Phase {
       if (active.cancelRequested) return { kind: 'cancelled' };
 
       if (result.kind !== 'success') {
+        if (isSkippableSponsorBlockApiFailure(result, req)) {
+          return { kind: 'continue' };
+        }
         const { payload, statusKey, params } = await classifyYtDlpFailure(result, job.outputDir, job.id);
         ctx.emitStatus('error', statusKey, params, payload);
         return { kind: 'hard-failed', error: payload };
