@@ -7,6 +7,7 @@ import { applyThemeLive, knobUrl, MOCK_PLATFORM_LABELS, MOCK_PLATFORMS, readKnob
 import type { UiTheme } from '@shared/schemas.js';
 import { cn } from '../lib/utils.js';
 import { useAppStore } from '../store/useAppStore.js';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select.js';
 
 const GROUPS: BrowserMockScenarioGroup[] = ['General', 'Playlist', 'Probe Results', 'Probe Errors', 'Dialogs', 'Updates', 'Queue', 'Diagnostics'];
 const PLAYLIST_PRESETS = [99, 100, 101] as const;
@@ -156,7 +157,7 @@ export function ScenarioGallery(): JSX.Element {
   );
 
   return (
-    <aside className="fixed bottom-9 left-3 z-[1000] max-w-[calc(100vw-1.5rem)] text-xs" data-testid="scenario-gallery">
+    <aside className="fixed bottom-9 left-3 z-[45] max-w-[calc(100vw-1.5rem)] text-xs" data-testid="scenario-gallery">
       <button type="button" onClick={() => setOpen((value) => !value)} className="flex max-w-[calc(100vw-1.5rem)] items-center gap-2 rounded-md border border-[var(--border-strong)] bg-background/95 px-3 py-2 text-left shadow-lg backdrop-blur" data-testid="scenario-gallery-toggle" aria-expanded={open}>
         <TestTube2 size={14} className="shrink-0 text-sky-500" />
         <span className="min-w-0">
@@ -199,14 +200,19 @@ export function ScenarioGallery(): JSX.Element {
                 <div>
                   <p className="mb-1 text-[10px] text-muted-foreground">Locale</p>
                   <div className="flex gap-1">
-                    <select value={knobs.locale ?? ''} onChange={(e) => applyKnob({ locale: e.target.value === '' ? null : (e.target.value as SupportedLang) })} className={cn('h-7 rounded border bg-muted/20 px-1.5 text-[11px] focus:outline-none focus:ring-1 focus:ring-[var(--brand)]', knobs.locale !== null ? 'border-[var(--brand)]' : 'border-border')} data-testid="knob-locale-select">
-                      <option value="">— default (en) —</option>
-                      {SUPPORTED_LANGS.map((lang) => (
-                        <option key={lang} value={lang}>
-                          {lang}
-                        </option>
-                      ))}
-                    </select>
+                    <Select value={knobs.locale ?? ''} onValueChange={(v) => applyKnob({ locale: v === '' ? null : (v as SupportedLang) })}>
+                      <SelectTrigger size="sm" className={cn('text-[11px]', knobs.locale !== null ? 'border-[var(--brand)]' : '')} data-testid="knob-locale-select">
+                        <SelectValue placeholder="— default (en) —" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">— default (en) —</SelectItem>
+                        {SUPPORTED_LANGS.map((lang) => (
+                          <SelectItem key={lang} value={lang}>
+                            {lang}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 {/* Platform */}
@@ -257,14 +263,19 @@ export function ScenarioGallery(): JSX.Element {
                   <div className="mb-2">
                     <p className="mb-1.5 text-[10px] text-muted-foreground">Error kind — all YtDlpErrorKind values</p>
                     <div className="flex items-center gap-1.5">
-                      <select value={urlParams.probeErrorKind ?? ''} onChange={(e) => applyProbeErrorKind(e.target.value === '' ? null : (e.target.value as YtDlpErrorKind))} className={cn('h-7 flex-1 rounded border bg-muted/20 px-2 text-[11px] focus:outline-none focus:ring-1 focus:ring-[var(--brand)]', isProbeErrorParam ? 'border-[var(--brand)]' : 'border-border')} data-testid="probe-error-kind-select">
-                        <option value="">— pick an error kind —</option>
-                        {YT_DLP_ERROR_KINDS.map((kind) => (
-                          <option key={kind} value={kind}>
-                            {kind}
-                          </option>
-                        ))}
-                      </select>
+                      <Select value={urlParams.probeErrorKind ?? ''} onValueChange={(v) => applyProbeErrorKind(v === '' ? null : (v as YtDlpErrorKind))}>
+                        <SelectTrigger size="sm" className={cn('flex-1 text-[11px]', isProbeErrorParam ? 'border-[var(--brand)]' : '')} data-testid="probe-error-kind-select">
+                          <SelectValue placeholder="— pick an error kind —" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="">— pick an error kind —</SelectItem>
+                          {YT_DLP_ERROR_KINDS.map((kind) => (
+                            <SelectItem key={kind} value={kind}>
+                              {kind}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       {isProbeErrorParam && (
                         <button type="button" onClick={() => applyProbeErrorKind(null)} className="h-7 rounded border border-border px-2 text-[10px] font-medium text-muted-foreground hover:text-foreground" data-testid="probe-error-clear">
                           Clear
