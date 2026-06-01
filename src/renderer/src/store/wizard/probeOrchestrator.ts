@@ -13,7 +13,9 @@ import type { AppSettings, PlaylistScope, PlaylistSelection, ProbePlaylistMode, 
 import { DEFAULT_PLAYLIST_SELECTION } from '@shared/schemas.js';
 import { getIncompleteCookiesConfigIssue } from '@shared/cookiesConfig.js';
 import { cleanUrl } from '@shared/cleanUrl.js';
+import { deriveBulkUrlLabel, extractYouTubeVideoId, isClearlyIndividualYouTubeUrl } from '@shared/bulkUrls.js';
 import { resolvePlaylistProbeLimit } from '@shared/networkPacing.js';
+import { bulkLogger } from '@renderer/lib/bulkLogger.js';
 import { resolvePlaylistDir } from './playlistDir.js';
 import { isYouTubeExtractor } from '@shared/ytdlp/extractorPredicates.js';
 import { applyPreset, restoreFormatSelection, restoreSubtitleSelection } from './formatPicker.js';
@@ -24,6 +26,8 @@ import { formatProbeError } from '../helpers.js';
 import type { AppState, GetState, SetState, ProbeOrchestratorSlice, WizardStep } from '../types.js';
 import { type VisibleStep } from '../../components/wizard/stepNavigation.js';
 import { nextStep, type NavContext } from '../../components/wizard/nextStep.js';
+import { BULK_METADATA_CONCURRENCY, cancelBulkMetadataProbes, hydrateBulkMetadata, nextBulkMetadataRunId } from './bulkMetadataHydration.js';
+import { playlistScopeReloadErrorMessage, unknownPlaylistScopeReloadErrorMessage } from './playlistScopeReload.js';
 
 // Detect YouTube URLs that carry both `v=` (single video) and `list=` (playlist).
 // yt-dlp's default for these routes Radio/Mix lists to playlist enumeration;
@@ -286,19 +290,6 @@ function applyPlaylistProbeResult(probe: Extract<ProbeResult, { kind: 'playlist'
   });
 }
 
-function playlistScopeReloadErrorMessage(error: Parameters<typeof formatProbeError>[0]): string {
-  if (error?.kind === 'other' && error.message === 'Playlist returned no entries') {
-    return 'No videos matched that playlist scope. Your previous list is still shown.';
-  }
-  return formatProbeError(error) || 'Could not reload that playlist scope. Your previous list is still shown.';
-}
-
-function unknownErrorMessage(error: unknown): string {
-  if (error instanceof Error && error.message) return error.message;
-  if (typeof error === 'string' && error.length > 0) return error;
-  return 'Unknown error';
-}
-
 async function runProbe(url: string, playlistMode: ProbePlaylistMode, set: SetState, get: GetState, firstProbe = true): Promise<void> {
   void window.appApi.downloads.probeCancel();
   const fromStep = get().wizardStep;
@@ -329,6 +320,10 @@ async function runProbe(url: string, playlistMode: ProbePlaylistMode, set: SetSt
     playlistIsMultiVideo: false,
     playlistLikelyCapped: false,
     playlistScopeReloading: false,
+    bulkMetadataStatus: 'idle',
+    bulkMetadataCompleted: 0,
+    bulkMetadataTotal: 0,
+    bulkMetadataById: {},
     syncedDownloadedIds: [],
     syncScanState: 'idle',
     wizardExtractor: '',
@@ -393,7 +388,7 @@ async function reloadPlaylistWithScope(scope: PlaylistScope, set: SetState, get:
   try {
     result = await window.appApi.downloads.probe({ url, playlistMode: 'playlist', playlistScope: scope });
   } catch (error) {
-    const message = `Could not reload that playlist scope: ${unknownErrorMessage(error)}. Your previous list is still shown.`;
+    const message = `Could not reload that playlist scope: ${unknownPlaylistScopeReloadErrorMessage(error)}. Your previous list is still shown.`;
     set({
       playlistScope: previousScope,
       playlistScopeReloading: false,
@@ -486,6 +481,10 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
     playlistScopeError: RESET_WIZARD_STATE.playlistScopeError,
     playlistScope: RESET_WIZARD_STATE.playlistScope,
     playlistSelection: RESET_WIZARD_STATE.playlistSelection,
+    bulkMetadataStatus: RESET_WIZARD_STATE.bulkMetadataStatus,
+    bulkMetadataCompleted: RESET_WIZARD_STATE.bulkMetadataCompleted,
+    bulkMetadataTotal: RESET_WIZARD_STATE.bulkMetadataTotal,
+    bulkMetadataById: RESET_WIZARD_STATE.bulkMetadataById,
     quickDownloadStatus: RESET_WIZARD_STATE.quickDownloadStatus,
     quickDownloadError: RESET_WIZARD_STATE.quickDownloadError,
     syncedDownloadedIds: RESET_WIZARD_STATE.syncedDownloadedIds,
@@ -555,6 +554,88 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
       } catch (err) {
         set({ quickDownloadStatus: 'error', quickDownloadError: err instanceof Error ? err.message : String(err) });
       }
+    },
+
+    startBulkUrls: (urls) => {
+      const previousState = get();
+      if (previousState.wizardMode === 'bulk' && previousState.bulkMetadataStatus === 'resolving') {
+        cancelBulkMetadataProbes('start-new-bulk', previousState);
+      }
+      const bulkRunId = nextBulkMetadataRunId();
+      const fromStep = get().wizardStep;
+      const settings = get().settings;
+      const allYouTubeVideos = urls.length > 0 && urls.every(isClearlyIndividualYouTubeUrl);
+      const playlistSelection: PlaylistSelection = settings?.playlist?.lastPlaylistSelection ?? DEFAULT_PLAYLIST_SELECTION;
+      const playlistItems = urls.map((url, index) => {
+        const number = index + 1;
+        return {
+          id: `bulk-${number}`,
+          url,
+          title: deriveBulkUrlLabel(url) ?? `Bulk URL ${number}`,
+          thumbnail: '',
+          playlistIndex: number,
+          videoId: extractYouTubeVideoId(url)
+        };
+      });
+
+      set({
+        wizardStep: 'playlistItems',
+        wizardMode: 'bulk',
+        wizardUrl: '',
+        wizardTitle: '',
+        wizardThumbnail: '',
+        wizardDuration: undefined,
+        wizardFormats: [],
+        wizardFormatsDegraded: null,
+        selectedVideoFormatId: '',
+        audioSelection: { kind: 'none' },
+        activePreset: null,
+        wizardSubtitles: {},
+        wizardAutomaticCaptions: {},
+        wizardSubtitleLanguages: [],
+        wizardSubtitleSkipped: false,
+        wizardExtractor: allYouTubeVideos ? 'youtube' : '',
+        wizardExtractorKey: allYouTubeVideos ? 'Youtube' : '',
+        wizardWebpageUrl: '',
+        formatsLoading: false,
+        playlistProbeLoading: false,
+        wizardError: null,
+        wizardErrorOrigin: null,
+        cookiesConfigDialogIssue: null,
+        playlistItems,
+        selectedPlaylistItemIds: playlistItems.map((entry) => entry.id),
+        playlistTitle: 'Bulk URLs',
+        playlistId: 'bulk',
+        playlistIsMultiVideo: false,
+        playlistLikelyCapped: false,
+        bulkMetadataStatus: urls.length > 0 ? 'resolving' : 'idle',
+        bulkMetadataCompleted: 0,
+        bulkMetadataTotal: urls.length,
+        bulkMetadataById: Object.fromEntries(playlistItems.map((entry) => [entry.id, 'pending'])),
+        syncedDownloadedIds: [],
+        syncScanState: 'idle',
+        ...restoreCommonWizardPrefs(settings),
+        wizardSubfolderEnabled: settings?.common?.lastSubfolderEnabled ?? false,
+        wizardSubfolderName: settings?.common?.lastSubfolder ?? '',
+        wizardWriteM3u: false,
+        playlistSelection
+      });
+      bulkLogger.info('Bulk URL flow started', {
+        runId: bulkRunId,
+        count: urls.length,
+        selectedCount: playlistItems.length,
+        allYouTubeVideos,
+        metadataConcurrency: BULK_METADATA_CONCURRENCY
+      });
+      void hydrateBulkMetadata(urls, set, bulkRunId);
+      logStep('submitUrl', fromStep, 'playlistItems', pickWizardSnapshot(get()));
+    },
+
+    cancelBulkMetadata: (reason = 'queue-submit') => {
+      const state = get();
+      if (state.wizardMode !== 'bulk' || state.bulkMetadataStatus !== 'resolving') return;
+      cancelBulkMetadataProbes(reason, state);
+      set({ bulkMetadataStatus: 'done' });
     },
 
     dismissMixedPrompt: async (choice) => {
@@ -644,6 +725,9 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
       const state = get();
       const target = nextStep(state.wizardStep as VisibleStep, navCtx(state), 'backward');
       if (!target) return;
+      if (state.wizardMode === 'bulk' && target === 'url' && state.bulkMetadataStatus === 'resolving') {
+        cancelBulkMetadataProbes('back-to-url', state);
+      }
       set({ wizardStep: target, ...(target === 'subtitles' && { wizardSubtitleSkipped: false }) });
       logStep('back', state.wizardStep, target, pickWizardSnapshot(get()));
     },
@@ -667,7 +751,11 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
     },
 
     reset: () => {
-      const fromStep = get().wizardStep;
+      const state = get();
+      const fromStep = state.wizardStep;
+      if (state.wizardMode === 'bulk' && state.bulkMetadataStatus === 'resolving') {
+        cancelBulkMetadataProbes('reset', state);
+      }
       WizardCommands.resetAll(set);
       logStep('reset', fromStep, 'url', pickWizardSnapshot(get()));
     },
@@ -683,6 +771,7 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
 
     retryFormatProbe: async () => {
       const { wizardUrl } = get();
+      if (get().wizardMode === 'bulk') return;
       if (!wizardUrl) return;
       set({ formatsLoading: true, wizardFormatsDegraded: null });
       const playlistMode: ProbePlaylistMode = get().wizardMode === 'playlist' ? 'playlist' : 'auto';
