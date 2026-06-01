@@ -309,6 +309,8 @@ jobs:
     # SHA256SUMS, keeping this job independent from the final publish gate.
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     container:
       image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-24.08
       options: --privileged
