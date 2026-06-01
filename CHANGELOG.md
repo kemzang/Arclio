@@ -8,6 +8,46 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.3.10
+
+This release makes Arroxy faster for everyday grabbing, better for playlist triage, and more helpful when yt-dlp needs repair.
+
+## Highlights
+
+### Faster Ways To Start Downloads
+
+Quick downloads are now easier to launch when you already know what you want.
+
+- A new clipboard quick-download flow can pick up a copied URL and move it toward download without forcing you through the full wizard every time.
+- Bulk URL downloads let you paste multiple links, hydrate their metadata, and send them into the queue together.
+- Startup clipboard prompts are now gated more carefully, so Arroxy avoids interrupting launch unless there is a real action to confirm.
+
+### Playlist Scope Filters
+
+Large playlist and channel runs now have better controls for deciding what should be probed and queued.
+
+- Playlist scope filters let you narrow work before the item list is built.
+- The playlist picker keeps scope, limit, and retry state aligned when reloading results.
+- Mock scenarios and regression coverage were expanded around playlist limits, scope changes, and bulk submission paths.
+
+### yt-dlp Repair From Package Managers
+
+When a local yt-dlp install is stale or broken, Arroxy can now guide repair through supported package-manager paths.
+
+- The repair panel can surface package-manager repair actions for Homebrew and Winget installs.
+- Binary diagnostics record the repair path more clearly, making dependency issues easier to understand.
+- Startup repair and dependency checks have broader automated coverage.
+
+### Release Pipeline Hardening
+
+The release workflow now publishes with stronger provenance and safer automation.
+
+- Release assets are covered by GitHub artifact attestations.
+- GitHub Actions workflows were hardened and the release runbook was refreshed.
+- The README feature roadmap was updated across localized copies.
+
+---
+
 ## 0.3.9
 
 This release fixes the Intel Mac packaging issue and makes SponsorBlock outages non-fatal during downloads.
