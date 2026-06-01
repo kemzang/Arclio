@@ -54,18 +54,10 @@ The renderer's `browserMock.ts` stubs `window.appApi` only in explicit `browser-
 
 ## Required pre-PR checks
 
-All three must pass cleanly before opening a PR. CI gates on the same commands.
+Run the full local gate before opening a PR. CI gates on the same checks.
 
 ```bash
-bun run lint        # ESLint — zero warnings
-bun run typecheck   # tsc --noEmit — zero type errors
-bun run knip        # dead exports / unused files — zero issues
-```
-
-If your change touches code with tests, also run:
-
-```bash
-bun run test        # vitest run
+bun run check       # lint + typecheck + knip + madge + LOC + pins + i18n + tests
 ```
 
 ## Building installers locally (optional)

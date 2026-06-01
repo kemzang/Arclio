@@ -58,6 +58,8 @@ Do not tag yet.
 
 The stable tag script refuses to tag until the exact `main` commit passed the required release-gate checks.
 
+The tag workflow also runs its own `quality-gate` job (`bun run check`) before creating the draft release or building artifacts, so a manually pushed tag cannot publish from a commit that fails the full local gate.
+
 Watch the latest `main` runs:
 
 ```bash
@@ -90,6 +92,8 @@ bun run release:stable
 ```
 
 This creates the annotated `vX.Y.Z` tag and pushes it. The release workflows publish GitHub assets and stable package-manager updates.
+
+Release graph summary: `release.yml` runs `verify-version` -> `quality-gate` -> `prepare-release` -> mac/linux builds -> `finalize`; Flatpak builds after the mac/linux build and uploads separately; Scoop/Homebrew publish after `finalize`; Winget runs from `release_to_winget.yml` when the release is un-drafted. Windows artifacts are still produced by `installer-smoke.yml` and `finalize` waits for them before checksums and publish.
 
 ## 5. Start the next beta line
 

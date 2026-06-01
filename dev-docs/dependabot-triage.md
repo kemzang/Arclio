@@ -8,7 +8,7 @@ Procedure for handling a Dependabot PR. No API-billed AI review — local Claude
 |---|---|
 | `.github/dependabot.yml` | Schedule, groups, 2-day cooldown |
 | `.github/workflows/ci.yml` | Lint, types, knip, madge, LOC, pin guard, tests |
-| `.github/workflows/deps-vuln-gate.yml` | `bun audit` on bot PRs touching `package.json`/`bun.lock` |
+| `.github/workflows/deps-vuln-gate.yml` | `bun audit` on any PR touching `package.json`/`bun.lock` |
 | `bunfig.toml` | `minimumReleaseAge = 604800` (7d) local install floor |
 | `package.json` | All deps exact-pinned (no `^`/`~`) |
 | `scripts/check-dependency-pins.mjs` | Enforces pin discipline |

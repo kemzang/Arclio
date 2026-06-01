@@ -287,15 +287,13 @@ Do **not** edit GitHub Release notes directly via the web UI or `gh release edit
 
 ### Pre-release checks
 
-**Before committing the release bump**, run all three checks and fix any failures. A broken release commit fails CI and publishes a broken artifact:
+**Before committing the release bump**, run the full local gate and fix any failures. A broken release commit fails CI and the tag-side `quality-gate` in `release.yml` now blocks publishing before any artifacts are built:
 
 ```bash
-bun run lint       # ESLint — no warnings promoted to errors
-bun run typecheck  # tsc --noEmit — zero type errors
-bun run knip       # dead exports / unused files — zero issues
+bun run check      # lint + typecheck + knip + madge + LOC + pins + i18n + tests
 ```
 
-Do not skip. A type error or dead export that slips into a release tag breaks remote CI.
+Do not skip. A type error, dead export, circular import, stale locale key, or test failure that slips into a release tag breaks the remote release gate.
 
 ### Trigger
 
@@ -327,11 +325,11 @@ git push --follow-tags
 
 ### Job graph
 
-`.github/workflows/release.yml`: `verify-version` → `build` matrix (linux + mac on `ubuntu-latest`/`macos-latest`) → `finalize` → `publish-scoop` + `publish-homebrew` parallel with `build-flatpak` → `upload-flatpak`. Read the YAML for step-level detail.
+`.github/workflows/release.yml`: `verify-version` → `quality-gate` (`bun run check`) → `prepare-release` → `build` matrix (linux + mac on `ubuntu-latest`/`macos-latest`) → `finalize`; `build-flatpak` starts after `build`, then `upload-flatpak`; stable tags also run `publish-scoop` + `publish-homebrew` after `finalize`, and `notify-web-release-manifest` after both `finalize` and `upload-flatpak`. Read the YAML for step-level detail.
 
 Windows is built separately via a dedicated Windows Installer workflow (smoke-testable before publish); `finalize` polls up to 15min until the Windows Setup + Portable `.exe` artifacts appear before generating `SHA256SUMS` and un-drafting the release.
 
-`.github/workflows/release_to_winget.yml` triggers on the `released` event: once `finalize` un-drafts the release, `vedantmgoyal9/winget-releaser@main` runs `komac update AntonioOrionus.Arroxy --submit` → opens a PR against `microsoft/winget-pkgs`. Microsoft reviewers merge within hours-to-a-day.
+`.github/workflows/release_to_winget.yml` triggers on the `released` event: once `finalize` un-drafts the release, the SHA-pinned `vedantmgoyal9/winget-releaser` action runs `komac update AntonioOrionus.Arroxy --submit` → opens a PR against `microsoft/winget-pkgs`. Microsoft reviewers merge within hours-to-a-day. Keep that third-party action pinned to a full commit SHA because it receives `WINGET_TOKEN`.
 
 ### Required GitHub repo secret
 
