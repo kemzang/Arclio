@@ -33,8 +33,8 @@ describe('electron.vite.config', () => {
   it('treats Windows absolute paths as internal', () => {
     expect(isExternalPreloadBuildImport('D:\\a\\Arroxy\\Arroxy\\src\\shared\\ipc.js')).toBe(false);
     expect(isExternalPreloadBuildImport('D:/a/Arroxy/Arroxy/src/shared/ipc.js')).toBe(false);
-    expect(isExternalPreloadBuildImport('C:\\Users\\anton\\projects\\yt-download-ui\\src\\preload\\createPreloadApi.ts')).toBe(false);
+    expect(isExternalPreloadBuildImport('C:\\work\\arroxy\\src\\preload\\createPreloadApi.ts')).toBe(false);
     expect(isExternalMainBuildImport('D:\\a\\Arroxy\\Arroxy\\src\\shared\\types.ts')).toBe(false);
-    expect(isExternalMainBuildImport('C:/Users/anton/projects/yt-download-ui/src/main/index.ts')).toBe(false);
+    expect(isExternalMainBuildImport('C:/work/arroxy/src/main/index.ts')).toBe(false);
   });
 });

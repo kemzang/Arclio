@@ -4,7 +4,7 @@
 # embedded ffmpeg/ffprobe.
 #
 # Usage:
-#   bun run worktree codex/my-feature [../yt-download-ui-my-feature]
+#   bun run worktree codex/my-feature [.worktrees/my-feature]
 set -euo pipefail
 
 BRANCH="${1:-}"
@@ -21,19 +21,20 @@ if ! command -v bun >/dev/null 2>&1; then
 fi
 
 SOURCE_ROOT="$(git rev-parse --show-toplevel)"
-REPO_NAME="$(basename "$SOURCE_ROOT")"
-PARENT_DIR="$(dirname "$SOURCE_ROOT")"
+WORKTREE_ROOT="$SOURCE_ROOT/.worktrees"
 
 if [[ -z "$TARGET" ]]; then
   SLUG="${BRANCH#codex/}"
   SLUG="${SLUG//\//-}"
-  TARGET="$PARENT_DIR/$REPO_NAME-$SLUG"
+  TARGET="$WORKTREE_ROOT/$SLUG"
 fi
 
 if [[ -e "$TARGET" ]]; then
   echo "ERR: target already exists: $TARGET" >&2
   exit 1
 fi
+
+mkdir -p "$(dirname "$TARGET")"
 
 echo "Creating worktree"
 echo "  branch: $BRANCH"

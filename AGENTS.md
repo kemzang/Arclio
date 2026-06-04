@@ -10,7 +10,7 @@ command -v rtk
 
 If available, prefix repo shell commands with `rtk`. If unavailable, run commands directly and mention that `rtk` was not found.
 
-@/home/anton/projects/yt-download-ui/RTK.md
+@RTK.md
 
 # General
 
@@ -98,7 +98,7 @@ Before implementing:
 
 ## Memory storage — project-scoped, not user-scoped
 
-Persistent memory for this repo lives at `/home/anton/projects/yt-download-ui/.claude/memory/`, not in the user-scoped (`~/.claude/projects/...`) location. Read `MEMORY.md` in that directory for the index, and write new memories there following the same `name` / `description` / `type` frontmatter convention as the existing files. Do **not** write project facts, conventions, or references into user-scoped memory — they belong with the repo so other clones / collaborators / reset-home agents can see them.
+Persistent memory for this repo lives at `./.claude/memory/`, not in the user-scoped (`~/.claude/projects/...`) location. Read `MEMORY.md` in that directory for the index, and write new memories there following the same `name` / `description` / `type` frontmatter convention as the existing files. Do **not** write project facts, conventions, or references into user-scoped memory — they belong with the repo so other clones / collaborators / reset-home agents can see them.
 
 Rarely-needed deep-dive references that bloat this file (e.g. the YouTube bot-protection research map) live as memory entries instead of inline sections here. Pull them in via memory when the symptom matches.
 
@@ -135,10 +135,10 @@ bun run dev:fresh  # clear main.log then start (cross-platform)
 Use the repo bootstrap script instead of raw `git worktree add`:
 
 ```bash
-bun run worktree codex/my-feature [../yt-download-ui-my-feature]
+bun run worktree codex/my-feature [.worktrees/my-feature]
 ```
 
-It creates the worktree, runs `bun install`, verifies Electron's generated `path.txt` + `dist/electron` payload, repairs it from the source checkout if Bun reports "no changes" but Electron is half-installed, and fetches embedded ffmpeg/ffprobe. Raw worktrees are easy to leave broken because Git does not copy ignored runtime artifacts and `bun install` may skip Electron postinstall repair.
+It creates the worktree under `.worktrees/` by default, runs `bun install`, verifies Electron's generated `path.txt` + `dist/electron` payload, repairs it from the source checkout if Bun reports "no changes" but Electron is half-installed, and fetches embedded ffmpeg/ffprobe. Raw worktrees are easy to leave broken because Git does not copy ignored runtime artifacts and `bun install` may skip Electron postinstall repair.
 
 ### Test runner
 

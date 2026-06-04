@@ -16,11 +16,17 @@ function spyOnPrivate(target: BinaryManager, method: string): ReturnType<typeof 
   return vi.spyOn(target as unknown as Record<string, (...args: unknown[]) => unknown>, method);
 }
 
-// Stub probe so the resolve chain accepts whatever path the caller passes,
-// instead of trying to spawn a real binary. Retry tests only exercise the
-// inner attemptDownload retry loop; probe success is asserted elsewhere.
-function stubProbe(mgr: BinaryManager): void {
-  vi.spyOn(mgr as unknown as { probeAndAccept: (id: DependencyId, source: DependencySource, p: string, attempts: unknown[]) => Promise<DependencyDiagnostic> }, 'probeAndAccept').mockImplementation(async (id, source, candidatePath, attempts) => {
+// Stub probe instead of spawning a real binary. Retry tests only exercise the
+// inner attemptDownload retry loop; probe success is asserted elsewhere. Tests
+// that expect managed resolution to fail can reject system PATH candidates so
+// host-installed binaries do not affect the outcome.
+function stubProbe(mgr: BinaryManager, options: { acceptSystemPath?: boolean } = {}): void {
+  const { acceptSystemPath = true } = options;
+  vi.spyOn(mgr as unknown as { probeAndAccept: (id: DependencyId, source: DependencySource, p: string, attempts: unknown[]) => Promise<DependencyDiagnostic | null> }, 'probeAndAccept').mockImplementation(async (id, source, candidatePath, attempts) => {
+    if (source.kind === 'systemPath' && !acceptSystemPath) {
+      attempts.push({ source, failure: { kind: 'spawn_failed', message: 'system PATH disabled for retry test' } });
+      return null;
+    }
     attempts.push({ source });
     (mgr as unknown as { resolved: Record<string, string> }).resolved[id] = candidatePath;
     return { id, state: 'runnable', source, resolvedPath: candidatePath, attempts: attempts as never };
@@ -34,7 +40,7 @@ afterEach(() => {
 describe('BinaryManager download retry', () => {
   it('retries once on network error and succeeds on second attempt', async () => {
     const mgr = await makeMgr();
-    stubProbe(mgr);
+    stubProbe(mgr, { acceptSystemPath: false });
 
     let calls = 0;
     spyOnPrivate(mgr, 'attemptDownload').mockImplementation(async () => {
@@ -48,7 +54,7 @@ describe('BinaryManager download retry', () => {
 
   it('throws after exhausting all 3 attempts on every fallback', async () => {
     const mgr = await makeMgr();
-    stubProbe(mgr);
+    stubProbe(mgr, { acceptSystemPath: false });
 
     let calls = 0;
     spyOnPrivate(mgr, 'attemptDownload').mockImplementation(async () => {
@@ -57,14 +63,13 @@ describe('BinaryManager download retry', () => {
     });
 
     await expect(mgr.ensureYtDlp()).rejects.toThrow();
-    // 3 attempts on nightly + 3 on stable. PATH fallback only on Windows.
-    const expectedMin = process.platform === 'win32' ? 6 : 6;
-    expect(calls).toBeGreaterThanOrEqual(expectedMin);
+    // 3 attempts on nightly + 3 on stable.
+    expect(calls).toBe(6);
   });
 
   it('does not retry on checksum mismatch — fails fast and falls through', async () => {
     const mgr = await makeMgr();
-    stubProbe(mgr);
+    stubProbe(mgr, { acceptSystemPath: false });
 
     let calls = 0;
     spyOnPrivate(mgr, 'attemptDownload').mockImplementation(async () => {
