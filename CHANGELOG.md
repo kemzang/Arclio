@@ -8,6 +8,30 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.3.13
+
+This patch release switches Arroxy's release integrity model to GitHub immutable releases.
+
+## Highlights
+
+### Verified Release Assets
+
+Arroxy now relies on GitHub's immutable release verification for published release assets.
+
+- GitHub Release assets are locked after publish and get GitHub's release-integrity verification path.
+- The release workflow still publishes stable binary filenames, updater metadata, package-manager inputs, and `SHA256SUMS`.
+- The workflow no longer generates separate build-provenance attestations for release assets, because those are redundant for GitHub's release asset verification UI.
+
+### Release Workflow Cleanup
+
+The publish job is smaller and easier to reason about.
+
+- Removed the extra `actions/attest` step and the follow-up `gh attestation verify` polling.
+- Removed the attestation-specific workflow permissions from the release job.
+- Kept draft-first publishing, so all asset mutation still happens before immutable release publication.
+
+---
+
 ## 0.3.12
 
 This patch release refreshes Arroxy's release packaging so download links can stay stable from one version to the next.

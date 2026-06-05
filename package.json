@@ -1,6 +1,6 @@
 {
   "name": "arroxy",
-  "version": "0.3.12",
+  "version": "0.3.13",
   "description": "Arroxy - YouTube downloader app",
   "type": "module",
   "main": "out/main/index.js",

@@ -38,6 +38,16 @@ describe('release asset names', () => {
     expect(flatpak).not.toContain('Arroxy-${VERSION}.tar.gz');
   });
 
+  it('relies on immutable release attestations instead of workflow provenance attestations', () => {
+    const release = read('.github/workflows/release.yml');
+
+    expect(release).not.toContain('actions/attest');
+    expect(release).not.toContain('attestations: write');
+    expect(release).not.toContain('artifact-metadata: write');
+    expect(release).not.toContain('gh attestation verify');
+    expect(release).toContain('gh release edit "$REF_NAME" --draft=false $EXTRA');
+  });
+
   it('normalizes electron-builder AppImage arch names before publishing checksums', () => {
     const release = read('.github/workflows/release.yml');
 
