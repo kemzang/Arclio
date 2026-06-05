@@ -244,12 +244,12 @@ jobs:
             fi
           fi
 
-          builder_id=$(gh release view "${GITHUB_REF_NAME}" \
+          builder_api_url=$(gh release view "${GITHUB_REF_NAME}" \
             --repo "${GITHUB_REPOSITORY}" \
             --json assets \
-            --jq ".assets[] | select(.name == \"${builder_name}\") | .id" 2>/dev/null || true)
-          if [ -n "$builder_id" ]; then
-            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/releases/assets/${builder_id}"
+            --jq ".assets[] | select(.name == \"${builder_name}\") | .apiUrl" 2>/dev/null || true)
+          if [ -n "$builder_api_url" ]; then
+            gh api -X DELETE "${builder_api_url#https://api.github.com/}"
           fi
       - name: Generate SHA256SUMS
         run: |

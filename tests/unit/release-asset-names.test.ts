@@ -45,7 +45,8 @@ describe('release asset names', () => {
     expect(release).toContain('Arroxy-linux-x86_64.AppImage');
     expect(release).toContain('Arroxy-linux-x64.AppImage');
     expect(release).toContain('latest-linux.yml');
-    expect(release).toContain('releases/assets/${builder_id}');
+    expect(release).toContain('.apiUrl');
+    expect(release).toContain('${builder_api_url#https://api.github.com/}');
   });
 
   it('documents evergreen direct download links in the README template', () => {
