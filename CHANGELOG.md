@@ -8,7 +8,7 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
-## 0.3.11
+## 0.3.12
 
 This patch release refreshes Arroxy's release packaging so download links can stay stable from one version to the next.
 
@@ -21,6 +21,7 @@ Release assets now use predictable platform-prefixed filenames, so the website a
 - Windows builds publish `Arroxy-win-x64-Setup.exe` and `Arroxy-win-x64-Portable.exe`.
 - macOS builds publish separate `Arroxy-mac-arm64.dmg` and `Arroxy-mac-x64.dmg` files.
 - Linux builds publish `Arroxy-linux-x64.AppImage`, `Arroxy-linux-x64.flatpak`, and `Arroxy-linux-x64.tar.gz`.
+- README and GitHub Release notes now use direct Shields download badges for the main binaries.
 
 ### Release Automation Compatibility
 
@@ -28,6 +29,7 @@ The release pipeline, package-manager updates, checksums, and artifact attestati
 
 - Electron auto-update metadata still uses `latest.yml`, `latest-mac.yml`, and `latest-linux.yml`.
 - Differential updates remain enabled.
+- The release workflow normalizes electron-builder's AppImage `x86_64` output back to the public `x64` filename and rewrites `latest-linux.yml` before checksums.
 - Scoop, Homebrew Cask, Winget, Flatpak validation, and Windows installer smoke tests all resolve the new asset names.
 
 ---

@@ -153,11 +153,20 @@ jobs:
             capture && /^## [0-9]/ { capture = 0 }
             capture { print }
           ' CHANGELOG.md)
+          DOWNLOAD_BADGES=$(cat <<EOF
+          ## Install
+
+          [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/${REPO}/releases/download/${REF_NAME}/Arroxy-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/${REPO}/releases/download/${REF_NAME}/Arroxy-win-x64-Portable.exe)<br>
+          [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/${REPO}/releases/download/${REF_NAME}/Arroxy-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/${REPO}/releases/download/${REF_NAME}/Arroxy-mac-x64.dmg)<br>
+          [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/${REPO}/releases/download/${REF_NAME}/Arroxy-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/${REPO}/releases/download/${REF_NAME}/Arroxy-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/${REPO}/releases/download/${REF_NAME}/Arroxy-linux-x64.tar.gz)<br>
+          [![SHA256](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/${REPO}/releases/download/${REF_NAME}/SHA256SUMS)
+          EOF
+          )
           if [ -n "$(echo "$MANUAL_NOTES" | tr -d '[:space:]')" ]; then
-            NOTES="${MANUAL_NOTES}"$'\n\n---\n\n'"${AUTO_NOTES}"
+            NOTES="${DOWNLOAD_BADGES}"$'\n\n'"${MANUAL_NOTES}"$'\n\n---\n\n'"${AUTO_NOTES}"
           else
             echo "::warning::No CHANGELOG.md section found for ${VERSION}; using auto-generated notes only"
-            NOTES="${AUTO_NOTES}"
+            NOTES="${DOWNLOAD_BADGES}"$'\n\n'"${AUTO_NOTES}"
           fi
           gh release edit "${REF_NAME}" \
             --title "${REF_NAME}" \
@@ -186,6 +195,62 @@ jobs:
           echo "::error::Timed out waiting for Windows artifacts after 15 min."
           echo "::error::Check the Windows Installer workflow run for this tag."
           exit 1
+      - name: Normalize Linux AppImage asset name
+        # electron-builder's AppImage target emits the Linux machine arch as
+        # x86_64 even when the configured build arch is x64. Keep the public
+        # release contract on x64 and rewrite latest-linux.yml to match.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          public_name="Arroxy-linux-x64.AppImage"
+          builder_name="Arroxy-linux-x86_64.AppImage"
+          tmpdir=$(mktemp -d)
+          trap 'rm -rf "$tmpdir"' EXIT
+
+          assets=$(gh release view "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --json assets --jq '.assets[].name' 2>/dev/null || echo "")
+
+          if echo "$assets" | grep -Fxq "$public_name"; then
+            echo "${public_name} already present"
+          elif echo "$assets" | grep -Fxq "$builder_name"; then
+            gh release download "${GITHUB_REF_NAME}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --pattern "$builder_name" \
+              --dir "$tmpdir"
+            mv "$tmpdir/$builder_name" "$tmpdir/$public_name"
+            gh release upload "${GITHUB_REF_NAME}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              "$tmpdir/$public_name" \
+              --clobber
+          else
+            echo "::error::Missing Linux AppImage asset. Expected ${public_name} or ${builder_name}."
+            echo "$assets"
+            exit 1
+          fi
+
+          if gh release download "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --pattern latest-linux.yml \
+            --dir "$tmpdir"; then
+            if grep -Fq "$builder_name" "$tmpdir/latest-linux.yml"; then
+              perl -0pi -e "s/\Q$builder_name\E/$public_name/g" "$tmpdir/latest-linux.yml"
+              gh release upload "${GITHUB_REF_NAME}" \
+                --repo "${GITHUB_REPOSITORY}" \
+                "$tmpdir/latest-linux.yml" \
+                --clobber
+            fi
+          fi
+
+          builder_id=$(gh release view "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --json assets \
+            --jq ".assets[] | select(.name == \"${builder_name}\") | .id" 2>/dev/null || true)
+          if [ -n "$builder_id" ]; then
+            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/releases/assets/${builder_id}"
+          fi
       - name: Generate SHA256SUMS
         run: |
           set -euo pipefail

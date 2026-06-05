@@ -38,6 +38,16 @@ describe('release asset names', () => {
     expect(flatpak).not.toContain('Arroxy-${VERSION}.tar.gz');
   });
 
+  it('normalizes electron-builder AppImage arch names before publishing checksums', () => {
+    const release = read('.github/workflows/release.yml');
+
+    expect(release).toContain('Normalize Linux AppImage asset name');
+    expect(release).toContain('Arroxy-linux-x86_64.AppImage');
+    expect(release).toContain('Arroxy-linux-x64.AppImage');
+    expect(release).toContain('latest-linux.yml');
+    expect(release).toContain('releases/assets/${builder_id}');
+  });
+
   it('documents evergreen direct download links in the README template', () => {
     const template = read('readme-src/template.md');
 
@@ -46,6 +56,10 @@ describe('release asset names', () => {
       expect(template).toContain(`https://github.com/antonio-orionus/Arroxy/releases/latest/download/${asset}`);
     }
     expect(template).toContain('https://github.com/antonio-orionus/Arroxy/releases/latest/download/SHA256SUMS');
+    expect(template).toContain('img.shields.io/badge/Windows-Setup-0078D4');
+    expect(template).not.toContain('| 🪟 Windows');
+    expect(template).not.toContain('| 🍎 macOS');
+    expect(template).not.toContain('| 🐧 Linux');
   });
 
   it('does not document stale versioned Windows filename patterns in generated READMEs', () => {
