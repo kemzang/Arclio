@@ -50,6 +50,9 @@ flatpak/Arroxy-*.tar.gz
 build-dir/
 private
 
+# Local reference checkouts used for comparison/debugging; never part of releases.
+.ref
+
 # Smoke harness output (root-only — scripts/test-binaries/ contains
 # the harness scripts themselves and must stay tracked)
 /test-binaries/

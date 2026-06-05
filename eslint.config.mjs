@@ -9,7 +9,8 @@ import security from 'eslint-plugin-security';
 
 export default tseslint.config(
   {
-    ignores: ['dist', 'out', 'node_modules', 'dist-electron', 'playwright-report', 'test-results', 'refs', 'readme-src', '.electron-user-data', '.agents', '.claude']
+    // `refs` and `.ref` are local reference checkouts used during debugging/comparison.
+    ignores: ['dist', 'out', 'node_modules', 'dist-electron', 'playwright-report', 'test-results', 'refs', '.ref', 'readme-src', '.electron-user-data', '.agents', '.claude']
   },
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
