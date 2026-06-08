@@ -36,16 +36,16 @@ describe('App renderer', () => {
   it('renders the app heading and URL input', async () => {
     render(<App />);
     expect(await screen.findByTestId('title-bar')).toHaveTextContent('Arroxy');
-    expect(await screen.findByPlaceholderText(/^https/i)).toBeInTheDocument();
+    expect(await screen.findByTestId('profiles-main-input')).toBeInTheDocument();
   });
 
   it('submits URL probes through the preload API', async () => {
     render(<App />);
 
-    const input = await screen.findByPlaceholderText(/^https/i);
+    const input = await screen.findByTestId('profiles-main-input');
     fireEvent.change(input, { target: { value: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' } });
 
-    fireEvent.click(screen.getByTestId('btn-find-formats'));
+    fireEvent.click(screen.getByTestId('profiles-interactive-download'));
 
     await waitFor(() => {
       expect(mockAppApi.downloads.probe).toHaveBeenCalledWith(expect.objectContaining({ url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' }));
@@ -61,19 +61,26 @@ describe('App renderer', () => {
     );
     render(<App />);
 
-    const quick = await screen.findByTestId('btn-quick-download');
-    const fetch = screen.getByTestId('btn-find-formats');
-    expect(quick).toHaveTextContent('Quick download');
+    const quick = await screen.findByTestId('profiles-quick-download');
+    const fetch = screen.getByTestId('profiles-interactive-download');
+    expect(quick).toHaveTextContent('Quick Download');
+    expect(screen.getByTestId('profiles-quick-preview')).toHaveTextContent('Active profile');
+    expect(screen.getByRole('button', { name: 'Edit selected profile: Balanced' })).toBeInTheDocument();
+    const profileMenuTrigger = screen.getByRole('button', { name: 'Choose active download profile' });
+    expect(profileMenuTrigger).toBeInTheDocument();
     expect(quick).toBeDisabled();
 
-    const input = await screen.findByPlaceholderText(/^https/i);
+    fireEvent.click(profileMenuTrigger);
+    expect(await screen.findByText('Switch profile')).toBeInTheDocument();
+    expect(screen.getByText('Change the active profile for Quick Download, Bulk URLs, and playlists.')).toBeInTheDocument();
+
+    const input = await screen.findByTestId('profiles-main-input');
     fireEvent.change(input, { target: { value: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' } });
     fireEvent.click(quick);
 
     await waitFor(() => {
       expect(quick).toBeDisabled();
       expect(fetch).toBeDisabled();
-      expect(quick).toHaveTextContent('Preparing');
     });
 
     resolveProbe({
@@ -95,8 +102,34 @@ describe('App renderer', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByTestId('quick-download-feedback')).toHaveTextContent('Added to queue');
+      expect(mockAppApi.queue.cmd.add).toHaveBeenCalledTimes(1);
     });
+  });
+
+  it('closes the profile picker when opening profile editor surfaces', async () => {
+    render(<App />);
+
+    const profileMenuTrigger = await screen.findByRole('button', { name: 'Choose active download profile' });
+    fireEvent.click(profileMenuTrigger);
+    expect(await screen.findByText('Switch profile')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'New profile' }));
+
+    await waitFor(() => {
+      expect(screen.queryByText('Switch profile')).not.toBeInTheDocument();
+    });
+    expect(await screen.findByTestId('profiles-editor-dialog')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    fireEvent.click(profileMenuTrigger);
+    expect(await screen.findByText('Switch profile')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Manage profiles' }));
+
+    await waitFor(() => {
+      expect(screen.queryByText('Switch profile')).not.toBeInTheDocument();
+    });
+    expect(await screen.findByTestId('profiles-manage-tab')).toBeInTheDocument();
   });
 
   it('shows queue panel below wizard', async () => {

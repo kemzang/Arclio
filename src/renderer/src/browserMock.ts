@@ -1,11 +1,9 @@
 import type { AppApi } from '@shared/api.js';
 import type { AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent } from '@shared/types.js';
 import { QUEUE_STATUS, STATUS_KEY } from '@shared/schemas.js';
-import { buildScenarioAppApiState, getScenario, normalVideoProbe, playlistProbe, readScenarioIdFromUrl, readUrlParams, shouldMockEmptyPlaylistScopeReload, type BrowserMockScenario } from './dev/browserMockScenarios.js';
+import { BROWSER_MOCK_LAUNCH_MODES, buildScenarioAppApiState, getScenario, normalVideoProbe, playlistProbe, readScenarioIdFromUrl, readUrlParams, shouldMockEmptyPlaylistScopeReload, shouldShowBrowserMockStartupSplash, type BrowserMockLaunchMode, type BrowserMockScenario } from './dev/browserMockScenarios.js';
 import { applyThemeLive, readKnobs, RTL_LANGS } from './dev/browserMockKnobs.js';
 
-const BROWSER_MOCK_LAUNCH_MODES = ['ready', 'cold-loading', 'cold-error'] as const;
-export type BrowserMockLaunchMode = (typeof BROWSER_MOCK_LAUNCH_MODES)[number];
 const BROWSER_MOCK_LAUNCH_STORAGE_KEY = 'arroxy:browserMockLaunch';
 
 function isBrowserMockLaunchMode(value: string | null): value is BrowserMockLaunchMode {
@@ -44,11 +42,40 @@ function looksLikeUrl(input: string): boolean {
   }
 }
 
+function shouldMockPlaylistProbe(input: { url: string; playlistMode?: 'auto' | 'video' | 'playlist' }): boolean {
+  if (input.playlistMode === 'playlist') return true;
+  if (input.playlistMode === 'video') return false;
+  try {
+    const url = new URL(input.url);
+    const host = url.hostname.toLowerCase().replace(/^www\./, '');
+    if (url.searchParams.get('playlist') === '1') return true;
+    if (host === 'youtube.com' || host === 'youtu.be' || host.endsWith('.youtube.com')) {
+      if (url.pathname.startsWith('/playlist')) return true;
+      if (!url.searchParams.has('v') && url.searchParams.has('list')) return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+function mockPlaylistItemCount(url: string): number {
+  try {
+    const raw = new URL(url).searchParams.get('items');
+    const parsed = Number(raw);
+    return Number.isInteger(parsed) && parsed > 0 ? parsed : 12;
+  } catch {
+    return 12;
+  }
+}
+
 export function installBrowserMock(): void {
   if ('appApi' in window) return;
 
   const knobs = readKnobs(location);
+  const launchMode = readBrowserMockLaunchMode();
   const scenarioState = buildScenarioAppApiState(readBrowserMockScenario(), readUrlParams(location), knobs);
+  (window as Window & { __arroxyBrowserMockShowStartupSplash?: boolean }).__arroxyBrowserMockShowStartupSplash = shouldShowBrowserMockStartupSplash({ launchMode, warmUp: scenarioState.warmUp });
 
   // Apply theme immediately so the first render uses the right colour scheme.
   applyThemeLive(knobs.theme);
@@ -74,7 +101,6 @@ export function installBrowserMock(): void {
   const queueItems: QueueItem[] = [...scenarioState.queueItems];
   let queueRunning = false;
   let warmupCallCount = 0;
-  const launchMode = readBrowserMockLaunchMode();
 
   let settings: AppSettings = scenarioState.settings;
 
@@ -315,6 +341,14 @@ export function installBrowserMock(): void {
           return { ok: false, error: { kind: 'other', message: 'Playlist returned no entries' } };
         }
 
+        if (shouldMockPlaylistProbe(input)) {
+          const itemCount = mockPlaylistItemCount(input.url);
+          return {
+            ok: true,
+            data: playlistProbe(itemCount, { webpageUrl: input.url })
+          };
+        }
+
         if (scenarioState.probeResult) {
           return {
             ok: true,
@@ -322,24 +356,6 @@ export function installBrowserMock(): void {
               ...scenarioState.probeResult,
               webpageUrl: input.url
             }
-          };
-        }
-
-        // Mock playlist branch — append `?playlist=1` to a URL to drive the
-        // playlist UI flow.
-        if (/[?&]playlist=1\b/.test(input.url)) {
-          const itemCount = (() => {
-            try {
-              const raw = new URL(input.url).searchParams.get('items');
-              const parsed = Number(raw);
-              return Number.isInteger(parsed) && parsed > 0 ? parsed : 12;
-            } catch {
-              return 12;
-            }
-          })();
-          return {
-            ok: true,
-            data: playlistProbe(itemCount, { webpageUrl: input.url })
           };
         }
 
@@ -410,7 +426,8 @@ export function installBrowserMock(): void {
         settings = {
           common: { ...settings.common, ...(patch.common ?? {}) },
           single: { ...settings.single, ...(patch.single ?? {}) },
-          playlist: { ...settings.playlist, ...(patch.playlist ?? {}) }
+          playlist: { ...settings.playlist, ...(patch.playlist ?? {}) },
+          profiles: { ...settings.profiles, ...(patch.profiles ?? {}) }
         };
         return Promise.resolve({ ok: true, data: { ...settings } } as const);
       }

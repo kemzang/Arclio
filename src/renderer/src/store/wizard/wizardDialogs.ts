@@ -4,6 +4,7 @@
 // the wizard reset fires.
 
 import type { GetState, SetState, WizardDialogsSlice } from '../types.js';
+import { replaceHash } from '@renderer/lib/navigation.js';
 
 export function createWizardDialogsSlice(set: SetState, _get: GetState): WizardDialogsSlice {
   return {
@@ -12,6 +13,7 @@ export function createWizardDialogsSlice(set: SetState, _get: GetState): WizardD
     advancedAutoOpen: false,
     advancedAutoTarget: 'cookies',
     cookiesConfigDialogIssue: null,
+    quickPlaylistCapDialogOpen: false,
 
     setAdvancedAutoOpen: (open, target = 'cookies') => set({ advancedAutoOpen: open, advancedAutoTarget: target }),
 
@@ -20,6 +22,7 @@ export function createWizardDialogsSlice(set: SetState, _get: GetState): WizardD
     },
 
     openAdvancedSettings: (target) => {
+      replaceHash('settings');
       set({
         wizardStep: 'url',
         wizardError: null,
@@ -34,6 +37,10 @@ export function createWizardDialogsSlice(set: SetState, _get: GetState): WizardD
 
     dismissCookiesConfigDialog: () => {
       set({ cookiesConfigDialogIssue: null });
+    },
+
+    dismissQuickPlaylistCapDialog: () => {
+      set({ quickPlaylistCapDialogOpen: false, quickDownloadStatus: 'idle', quickDownloadError: null });
     }
   };
 }

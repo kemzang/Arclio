@@ -188,6 +188,40 @@ describe('playlist regressions', () => {
     expect(item.job.outputTemplate).toBe('%(title).200B.%(ext)s');
   });
 
+  it('active profile single downloads honor the single filename id setting', async () => {
+    const api = buildMockApi({ includeIdInSingleFilenames: false });
+    vi.mocked(api.downloads.probe).mockResolvedValue(
+      ok({
+        kind: 'video',
+        extractor: 'youtube',
+        extractorKey: 'Youtube',
+        webpageUrl: 'https://youtube.com/watch?v=abc123',
+        isAudioOnlySource: false,
+        formats: [],
+        title: 'Single Video',
+        thumbnail: '',
+        subtitles: {},
+        automaticCaptions: {},
+        isLive: false,
+        hasDrm: false
+      })
+    );
+    window.appApi = api as never;
+
+    await useAppStore.getState().initialize();
+    useAppStore.setState({
+      wizardUrl: 'https://youtube.com/watch?v=abc123',
+      settings: buildAppSettings({ includeIdInSingleFilenames: false })
+    } as never);
+
+    await useAppStore.getState().quickDownload();
+
+    const item = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0]?.[0];
+    expect(item?.job.kind).toBe('ranged-format');
+    if (item?.job.kind !== 'ranged-format') throw new Error('ranged-format job expected');
+    expect(item.job.outputTemplate).toBe('%(title).200B.%(ext)s');
+  });
+
   it('playlist probe restores persisted common prefs before the first playlist save', async () => {
     const selAudioMp3 = { kind: 'audio' as const, format: 'mp3' as const, bitrateKbps: 192 as const };
     const api = buildMockApi({
@@ -276,7 +310,7 @@ describe('playlist regressions', () => {
       await useAppStore.getState().addToQueue();
     });
 
-    const templates = (vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? []).map((item) => (item.job.kind === 'playlist-preset' ? item.job.outputTemplate : null));
+    const templates = (vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? []).map((item) => (item.job.kind === 'ranged-format' ? item.job.outputTemplate : null));
 
     expect(templates).toEqual(['%(title).200B [%(id)s].%(ext)s', '%(title).200B [%(id)s].%(ext)s', '%(title).200B [%(id)s].%(ext)s']);
   });
@@ -353,7 +387,7 @@ describe('playlist regressions', () => {
     const items = vi.mocked(window.appApi.queue.cmd.add).mock.calls[0]?.[0] ?? [];
     expect(items).toHaveLength(2);
     expect(items.map((item) => item.url)).toEqual(['https://vimeo.com/1', 'https://example.com/video/2']);
-    expect(items.every((item) => item.job.kind === 'playlist-preset')).toBe(true);
+    expect(items.every((item) => item.job.kind === 'ranged-format')).toBe(true);
     expect(items.every((item) => item.writeM3u === false)).toBe(true);
     expect(window.appApi.playlist.registerManifest).not.toHaveBeenCalled();
   });
