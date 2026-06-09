@@ -11,6 +11,17 @@ function queryTallyScripts(): NodeListOf<HTMLScriptElement> {
 	return document.querySelectorAll(`script[src="${TALLY_WIDGET_SCRIPT}"]`)
 }
 
+async function expectRejectsToThrow(promise: Promise<unknown>, message: string): Promise<void> {
+	try {
+		await promise
+	} catch (error) {
+		expect(error).toBeInstanceOf(Error)
+		expect((error as Error).message).toContain(message)
+		return
+	}
+	throw new Error(`Expected promise to reject with ${message}`)
+}
+
 describe('tallyWidget', () => {
 	afterEach(() => {
 		document.body.innerHTML = ''
@@ -44,7 +55,7 @@ describe('tallyWidget', () => {
 		const failedScript = queryTallyScripts()[0]
 		failedScript.dispatchEvent(new Event('error'))
 
-		await expect(failedOpen).rejects.toThrow('Failed to load Tally widget')
+		await expectRejectsToThrow(failedOpen, 'Failed to load Tally widget')
 		expect(queryTallyScripts()).toHaveLength(0)
 
 		const openPopup = vi.fn()

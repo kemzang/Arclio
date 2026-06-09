@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef, useState, type ClipboardEvent, type JSX, type KeyboardEvent} from 'react'
+import {useEffect, useMemo, useRef, useState, useSyncExternalStore, type ClipboardEvent, type KeyboardEvent, type ReactNode} from 'react'
 import type {TFunction} from 'i18next'
 import {useTranslation} from 'react-i18next'
 import {Archive, BookOpen, Captions, Check, ChevronDown, ChevronRight, Clapperboard, Clock3, Download, FileAudio, Globe2, Headphones, Link2, ListPlus, Loader2, Music, PenLine, Plus, Scissors, Settings, SlidersHorizontal, Sparkles, Users, Wand2, X, type LucideIcon} from 'lucide-react'
@@ -53,6 +53,15 @@ function browserMockScenarioId(): string | null {
 	}
 }
 
+function subscribeProfileTabHash(onStoreChange: () => void): () => void {
+	window.addEventListener('hashchange', onStoreChange)
+	return () => window.removeEventListener('hashchange', onStoreChange)
+}
+
+function profileTabSnapshot(): ProfilesTab {
+	return tabFromHash()
+}
+
 function isProfilesTab(value: unknown): value is ProfilesTab {
 	return typeof value === 'string' && PROFILE_TABS.includes(value as ProfilesTab)
 }
@@ -61,6 +70,11 @@ function tabHash(tab: ProfilesTab): string {
 	if (tab === 'profiles') return '#profiles'
 	if (tab === 'settings') return '#settings'
 	return '#download'
+}
+
+function selectProfilesTab(tab: ProfilesTab): void {
+	window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${tabHash(tab)}`)
+	window.dispatchEvent(new Event('hashchange'))
 }
 
 function profileDetail(profile: DownloadProfile, t: TFunction): string {
@@ -129,14 +143,15 @@ function quickDownloadErrorText(t: TFunction, error: string | null | undefined):
 	return error
 }
 
-export function DownloadProfilesHome(): JSX.Element {
+// react-doctor-disable-next-line react-doctor/prefer-useReducer -- these local UI controls update independently and do not share reducer-style transitions
+export function DownloadProfilesHome(): ReactNode {
 	const {t} = useTranslation()
 	const {cookiesConfigDialogIssue, dismissCookiesConfigDialog, openCookiesSettings, quickDownload, quickDownloadError, quickDownloadStatus, removeDownloadProfile, saveDownloadProfile, setActiveDownloadProfile, setWizardUrl, settings, submitUrl, wizardUrl} = useAppStore()
 	const hasActiveDownloads = useAppStore(state => state.queue.some(item => item.status === 'running'))
 	const inputRef = useRef<HTMLInputElement>(null)
 	const bulkOpenRef = useRef(false)
 	const initialBrowserMockScenario = browserMockScenarioId()
-	const [activeTab, setActiveTab] = useState<ProfilesTab>(() => tabFromHash())
+	const activeTab = useSyncExternalStore(subscribeProfileTabHash, profileTabSnapshot, profileTabSnapshot)
 	const [bulkOpen, setBulkOpen] = useState(() => initialBrowserMockScenario === 'profiles-bulk')
 	const [editorOpen, setEditorOpen] = useState(() => initialBrowserMockScenario === 'profiles-editor')
 	const [editorSessionId, setEditorSessionId] = useState(0)
@@ -155,13 +170,6 @@ export function DownloadProfilesHome(): JSX.Element {
 	const activateProfile = (profile: DownloadProfile): void => {
 		void setActiveDownloadProfile(downloadProfileRefFor(profile, profilesPrefs))
 	}
-
-	useEffect(() => {
-		const sync = (): void => setActiveTab(tabFromHash())
-		window.addEventListener('hashchange', sync)
-		sync()
-		return () => window.removeEventListener('hashchange', sync)
-	}, [])
 
 	useEffect(() => {
 		bulkOpenRef.current = bulkOpen
@@ -194,11 +202,6 @@ export function DownloadProfilesHome(): JSX.Element {
 			notify.clipboardAutofilled('Link added from clipboard')
 		})
 	}, [setWizardUrl])
-
-	function selectTab(tab: ProfilesTab): void {
-		setActiveTab(tab)
-		window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${tabHash(tab)}`)
-	}
 
 	function openEditor(profile: DownloadProfile | null): void {
 		setEditingProfile(profile)
@@ -233,7 +236,7 @@ export function DownloadProfilesHome(): JSX.Element {
 			<Tabs
 				value={activeTab}
 				onValueChange={value => {
-					if (isProfilesTab(value)) selectTab(value)
+					if (isProfilesTab(value)) selectProfilesTab(value)
 				}}
 				className="gap-4"
 			>
@@ -283,7 +286,7 @@ export function DownloadProfilesHome(): JSX.Element {
 								onEditProfile={() => openEditor(activeProfile)}
 								onManageProfiles={() => {
 									setProfileMenuOpen(false)
-									selectTab('profiles')
+									selectProfilesTab('profiles')
 								}}
 								onMenuOpenChange={setProfileMenuOpen}
 								onNewProfile={() => {
@@ -324,7 +327,7 @@ export function DownloadProfilesHome(): JSX.Element {
 	)
 }
 
-function DownloadMascotHelpCard({help}: {help: ReturnType<typeof downloadMascotHelp>}): JSX.Element {
+function DownloadMascotHelpCard({help}: {help: ReturnType<typeof downloadMascotHelp>}): ReactNode {
 	return (
 		<Card className="glow-panel flex w-full flex-col gap-6 rounded-[1.5rem] border-transparent !px-8 !py-7 sm:flex-row sm:items-center md:!px-12 md:!py-8" data-testid="profiles-mascot-help">
 			<img src={help.image} alt="" aria-hidden className="size-20 shrink-0 object-contain md:size-24" />
@@ -347,7 +350,7 @@ function DownloadMascotHelpCard({help}: {help: ReturnType<typeof downloadMascotH
 	)
 }
 
-function MascotCapabilityMatrix(): JSX.Element {
+function MascotCapabilityMatrix(): ReactNode {
 	const {t} = useTranslation()
 	return (
 		<div className="min-w-0 lg:border-l lg:border-[var(--glow-border)] lg:pl-7" data-testid="url-capabilities">
@@ -400,7 +403,7 @@ function QuickProfileCard({
 	onNewProfile: () => void
 	onPickProfile: (profile: DownloadProfile) => void
 	profiles: DownloadProfile[]
-}): JSX.Element {
+}): ReactNode {
 	const {t} = useTranslation()
 	const ActiveIcon = ICONS[activeProfile.icon]
 	return (
@@ -485,7 +488,7 @@ function ProfileMenu({
 	onNewProfile: () => void
 	onPickProfile: (profile: DownloadProfile) => void
 	profiles: DownloadProfile[]
-}): JSX.Element {
+}): ReactNode {
 	return (
 		<Popover open={menuOpen} onOpenChange={onMenuOpenChange}>
 			<PopoverTrigger
@@ -549,7 +552,7 @@ function ProfileMenu({
 	)
 }
 
-function ActionRow({description, disabled = false, icon: Icon, onClick, testId, title}: {description: string; disabled?: boolean; icon: LucideIcon; onClick: () => void; testId: string; title: string}): JSX.Element {
+function ActionRow({description, disabled = false, icon: Icon, onClick, testId, title}: {description: string; disabled?: boolean; icon: LucideIcon; onClick: () => void; testId: string; title: string}): ReactNode {
 	return (
 		<Button
 			type="button"
@@ -585,7 +588,7 @@ function ProfilesTab({
 	onRemove: (profile: DownloadProfile) => void
 	profiles: DownloadProfile[]
 	profilesPrefs: DownloadProfilesPrefs | undefined
-}): JSX.Element {
+}): ReactNode {
 	const {t} = useTranslation()
 	return (
 		<Card className="glow-panel rounded-2xl border-transparent" data-testid="profiles-manage-tab">

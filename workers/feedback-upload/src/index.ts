@@ -96,6 +96,7 @@ async function readBodyWithLimit(request: Request, maxBytes: number): Promise<Ar
   let received = 0;
 
   for (;;) {
+    // react-doctor-disable-next-line react-doctor/async-await-in-loop -- stream chunks must be read sequentially from a single reader
     const { done, value } = await reader.read();
     if (done) break;
     received += value.byteLength;

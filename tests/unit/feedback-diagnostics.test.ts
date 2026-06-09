@@ -7,6 +7,17 @@ import {gunzipSync} from 'node:zlib'
 import {describe, expect, it, vi} from 'vitest'
 import {createFeedbackDiagnosticPayload, FEEDBACK_DIAGNOSTIC_TAIL_BYTES, uploadFeedbackDiagnostic} from '@main/services/FeedbackDiagnostics.js'
 
+async function expectRejectsToThrow(promise: Promise<unknown>, message: string): Promise<void> {
+	try {
+		await promise
+	} catch (error) {
+		expect(error).toBeInstanceOf(Error)
+		expect((error as Error).message).toContain(message)
+		return
+	}
+	throw new Error(`Expected promise to reject with ${message}`)
+}
+
 describe('FeedbackDiagnostics', () => {
 	it('tails, redacts, and gzips the diagnostic log payload', async () => {
 		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-feedback-diagnostics-'))
@@ -75,7 +86,7 @@ describe('FeedbackDiagnostics', () => {
 		try {
 			vi.useFakeTimers()
 			const upload = uploadFeedbackDiagnostic({endpoint: 'https://arroxy.orionus.dev/api/feedback-diagnostics', fetchImpl, logPath, reportId, timeoutMs: 1})
-			const rejectedUpload = expect(upload).rejects.toThrow('Diagnostic upload timed out')
+			const rejectedUpload = expectRejectsToThrow(upload, 'Diagnostic upload timed out')
 			await fetchStarted
 			await vi.advanceTimersByTimeAsync(1)
 			await rejectedUpload
@@ -90,7 +101,7 @@ describe('FeedbackDiagnostics', () => {
 	it('rejects invalid report ids before reading or uploading logs', async () => {
 		const fetchImpl = vi.fn()
 
-		await expect(uploadFeedbackDiagnostic({endpoint: 'https://arroxy.orionus.dev/api/feedback-diagnostics', fetchImpl, logPath: '/tmp/does-not-matter.log', reportId: 'report-123'})).rejects.toThrow('Invalid feedback report id')
+		await expectRejectsToThrow(uploadFeedbackDiagnostic({endpoint: 'https://arroxy.orionus.dev/api/feedback-diagnostics', fetchImpl, logPath: '/tmp/does-not-matter.log', reportId: 'report-123'}), 'Invalid feedback report id')
 		expect(fetchImpl).not.toHaveBeenCalled()
 	})
 
@@ -102,7 +113,7 @@ describe('FeedbackDiagnostics', () => {
 		const fetchImpl = vi.fn().mockResolvedValue(new Response(JSON.stringify({report_id: '22222222-2222-4222-8222-222222222222', diagnostic_url: null}), {status: 201, headers: {'content-type': 'application/json'}}))
 
 		try {
-			await expect(uploadFeedbackDiagnostic({endpoint: 'https://arroxy.orionus.dev/api/feedback-diagnostics', fetchImpl, logPath, reportId})).rejects.toThrow('Diagnostic upload response report_id did not match request')
+			await expectRejectsToThrow(uploadFeedbackDiagnostic({endpoint: 'https://arroxy.orionus.dev/api/feedback-diagnostics', fetchImpl, logPath, reportId}), 'Diagnostic upload response report_id did not match request')
 		} finally {
 			await fs.rm(tempDir, {force: true, recursive: true})
 		}
