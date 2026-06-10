@@ -21,12 +21,14 @@ export type PlaylistVideoTier = z.infer<typeof playlistVideoTierSchema>
 // reordered by JavaScript property ordering. Keep the intended UI order here.
 export const PLAYLIST_VIDEO_TIERS: readonly PlaylistVideoTier[] = PLAYLIST_VIDEO_TIER_VALUES
 
-const playlistVideoCodecSchema = z.enum(['best', 'mp4'])
+export const playlistVideoCodecSchema = z.enum(['best', 'mp4'])
+export type PlaylistVideoCodec = z.infer<typeof playlistVideoCodecSchema>
 
 export const playlistAudioFormatSchema = z.enum(['best', 'mp3', 'm4a', 'opus'])
 export type PlaylistAudioFormat = z.infer<typeof playlistAudioFormatSchema>
 
-const downloadProfileAudioFormatSchema = z.enum(['best', 'mp3', 'm4a', 'opus', 'wav'])
+export const downloadProfileAudioFormatSchema = z.enum(['best', 'mp3', 'm4a', 'opus', 'wav'])
+export type DownloadProfileAudioFormat = z.infer<typeof downloadProfileAudioFormatSchema>
 
 export const downloadProfileIconSchema = z.enum(['controls', 'download', 'video', 'captions', 'audio', 'music', 'podcast', 'classes', 'clip', 'archive'])
 export type DownloadProfileIcon = z.infer<typeof downloadProfileIconSchema>
@@ -98,7 +100,8 @@ export const mediaIntentSchema = z.discriminatedUnion('kind', [
 ])
 export type MediaIntent = z.infer<typeof mediaIntentSchema>
 
-const downloadProfileSubtitleSourceSchema = z.enum(['manual-first', 'manual-only', 'auto-only'])
+export const downloadProfileSubtitleSourceSchema = z.enum(['manual-first', 'manual-only', 'auto-only'])
+export type DownloadProfileSubtitleSource = z.infer<typeof downloadProfileSubtitleSourceSchema>
 
 const downloadProfileSubtitlesSchema = z.object({enabled: z.boolean(), languages: z.array(z.string()).max(MAX_SUBTITLE_LANGUAGES), source: downloadProfileSubtitleSourceSchema, mode: subtitleModeSchema, format: subtitleFormatSchema})
 
@@ -158,6 +161,9 @@ export type BulkMetadataItemStatus = z.infer<typeof bulkMetadataItemStatusSchema
 
 export const bulkMetadataCancelReasonSchema = z.enum(['queue-submit', 'reset', 'back-to-url', 'start-new-bulk'])
 export type BulkMetadataCancelReason = z.infer<typeof bulkMetadataCancelReasonSchema>
+
+export const probeOtherErrorCodeSchema = z.enum(['cancelled', 'cookies_config', 'invalid_url', 'no_formats', 'parse', 'playlist_empty', 'redirect_loop', 'schema', 'unknown'])
+export type ProbeOtherErrorCode = z.infer<typeof probeOtherErrorCodeSchema>
 
 export const bulkUrlKindSchema = z.enum(['single', 'playlist', 'channel', 'search', 'other'])
 export type BulkUrlKind = z.infer<typeof bulkUrlKindSchema>

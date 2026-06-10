@@ -110,17 +110,9 @@ export function installBrowserMock(): void {
 	}
 
 	function emitScenarioUpdate(listener: (info: UpdateAvailablePayload) => void): void {
-		const update = scenarioState.update ?? {version: '1.2.0', currentVersion: '0.0.1', installChannel: 'direct' as const}
-		listener(update)
+		if (scenarioState.update === null) return
+		listener(scenarioState.update)
 	}
-
-	setTimeout(() => {
-		// Default mock still previews direct updater UX after a delay; update
-		// scenarios emit sooner when listeners subscribe.
-		if (!scenarioState.update) {
-			updateListeners.forEach(emitScenarioUpdate)
-		}
-	}, 3_000)
 
 	function delay(ms: number): Promise<void> {
 		return new Promise(r => setTimeout(r, ms))
@@ -294,7 +286,7 @@ export function installBrowserMock(): void {
 			},
 			probe: async input => {
 				if (!looksLikeUrl(input.url)) {
-					return {ok: false, error: {kind: 'other', message: 'Not a valid http(s) URL'}}
+					return {ok: false, error: {kind: 'other', code: 'invalid_url', message: 'Not a valid http(s) URL'}}
 				}
 
 				if (scenarioState.probeError) {
@@ -302,7 +294,7 @@ export function installBrowserMock(): void {
 				}
 
 				if (shouldMockEmptyPlaylistScopeReload(scenarioState.scenario, input.playlistMode, input.playlistScope)) {
-					return {ok: false, error: {kind: 'other', message: 'Playlist returned no entries'}}
+					return {ok: false, error: {kind: 'other', code: 'playlist_empty', message: 'Playlist returned no entries'}}
 				}
 
 				if (shouldMockPlaylistProbe(input)) {
