@@ -1,5 +1,6 @@
 import {describe, expect, it} from 'vitest'
 import {defaultAppSettings} from '@shared/constants.js'
+import {i18next} from '@shared/i18n/index.js'
 import type {DownloadProfile, FormatOption, PlaylistEntry, ProbeResult} from '@shared/types.js'
 import type {AppState} from '@renderer/store/types.js'
 import {prepareActiveProfileQueueSubmission, prepareManualQueueSubmission} from '@renderer/store/wizard/queueSubmission.js'
@@ -107,6 +108,17 @@ describe('QueueSubmission', () => {
 		expect(prepared?.manifest).toMatchObject({playlistTitle: 'Playlist', outputDir: '/downloads/Playlist', items: PLAYLIST_ITEMS.map(entry => ({videoId: entry.videoId, title: entry.title, duration: entry.duration}))})
 	})
 
+	it('localizes Smart TV MP4 playlist queue labels', async () => {
+		await i18next.changeLanguage('de')
+		try {
+			const prepared = prepareManualQueueSubmission(state({wizardMode: 'playlist', selectedPlaylistItemIds: ['a'], playlistSelection: {kind: 'video', tier: '1080', codec: 'mp4'}}), 'normal')
+
+			expect(prepared?.items[0]?.formatLabel).toBe('Smart-TV H.264 MP4 · Bis 1080p')
+		} finally {
+			await i18next.changeLanguage('en')
+		}
+	})
+
 	it('prepares bulk items without an M3U manifest', () => {
 		const prepared = prepareManualQueueSubmission(state({wizardMode: 'bulk'}), 'normal')
 
@@ -120,6 +132,13 @@ describe('QueueSubmission', () => {
 
 		expect(prepared?.items).toHaveLength(1)
 		expect(prepared?.items[0]).toMatchObject({url: 'https://www.youtube.com/watch?v=abc', title: 'Video', outputDir: '/profile-downloads/Balanced', formatLabel: 'Video + audio · Best native · up to 720p · best native audio', job: {kind: 'ranged-format'}})
+	})
+
+	it('uses the default downloads folder and profile subfolder with native separators', () => {
+		const settings = defaultAppSettings('C:\\Users\\User\\Downloads')
+		const prepared = prepareActiveProfileQueueSubmission(VIDEO_PROBE, state({settings, wizardOutputDir: ''}), 'normal')
+
+		expect(prepared?.items[0]?.outputDir).toBe('C:\\Users\\User\\Downloads\\Balanced')
 	})
 
 	it('prepares active-profile playlist items and manifest payload', () => {

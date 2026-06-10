@@ -72,7 +72,7 @@ function createProfileId(): string {
 
 const VIDEO_COMPATIBILITY_OPTIONS: SelectOption<PlaylistVideoCodec>[] = [
 	{value: 'best', label: 'Best native'},
-	{value: 'mp4', label: 'MP4 / Smart TV'}
+	{value: 'mp4', label: 'Smart TV H.264 MP4'}
 ]
 
 const RESOLUTION_OPTIONS: SelectOption<PlaylistVideoTier>[] = [
@@ -84,6 +84,9 @@ const RESOLUTION_OPTIONS: SelectOption<PlaylistVideoTier>[] = [
 	{value: '480', label: 'Up to 480p'},
 	{value: '360', label: 'Up to 360p'}
 ]
+
+const SMART_TV_MP4_BLOCKED_RESOLUTIONS = new Set<PlaylistVideoTier>(['best', '2160', '1440'])
+const SMART_TV_MP4_RESOLUTION_OPTIONS = RESOLUTION_OPTIONS.filter(option => !SMART_TV_MP4_BLOCKED_RESOLUTIONS.has(option.value))
 
 const AUDIO_FORMAT_OPTIONS: SelectOption<DownloadProfileAudioFormat>[] = [
 	{value: 'best', label: 'Best'},
@@ -233,6 +236,7 @@ function ProfileSwitchRow({id, label, description, checked, onCheckedChange}: {i
 export function DownloadProfileEditor({initialProfile = null, open, onOpenChange, onSave}: {initialProfile?: DownloadProfile | null; open: boolean; onOpenChange: (open: boolean) => void; onSave?: (profile: DownloadProfile) => void | Promise<void>}): ReactNode {
 	const [draft, setDraft] = useState(() => createDownloadProfileDraft(initialProfile))
 	const [profileIconPickerOpen, setProfileIconPickerOpen] = useState(false)
+	const [destinationPickerError, setDestinationPickerError] = useState<string | null>(null)
 	const {
 		profileName,
 		profileIcon,
@@ -266,9 +270,15 @@ export function DownloadProfileEditor({initialProfile = null, open, onOpenChange
 	const {subfolderInvalid} = validateDownloadProfileDraft(draft)
 	const videoAudioFormat: Extract<DownloadProfileAudioFormat, 'best' | 'm4a'> = audioFormat === 'm4a' ? 'm4a' : 'best'
 	const audioQualityDisabled = audioFormat === 'best' || audioFormat === 'wav'
+	const videoResolutionOptions = codec === 'mp4' ? SMART_TV_MP4_RESOLUTION_OPTIONS : RESOLUTION_OPTIONS
 
 	function updateDraft(action: DownloadProfileDraftAction): void {
 		setDraft(current => updateDownloadProfileDraft(current, action))
+	}
+
+	function changeDestination(nextDestination: string): void {
+		setDestinationPickerError(null)
+		updateDraft({type: 'set-destination', destination: nextDestination})
 	}
 
 	function changeProfileName(nextName: string): void {
@@ -289,6 +299,18 @@ export function DownloadProfileEditor({initialProfile = null, open, onOpenChange
 
 	function removeSubtitleLanguage(code: string): void {
 		updateDraft({type: 'remove-subtitle-language', code})
+	}
+
+	async function chooseDestinationFolder(): Promise<void> {
+		setDestinationPickerError(null)
+		try {
+			const result = await window.appApi.dialog.chooseFolder(destination.trim() || undefined)
+			if (!result.ok || !result.data.path) return
+			updateDraft({type: 'set-destination', destination: result.data.path})
+		} catch (error) {
+			console.error('Failed to open destination folder picker', error)
+			setDestinationPickerError('Could not open folder picker. Enter a path manually.')
+		}
 	}
 
 	async function saveProfile(): Promise<void> {
@@ -389,7 +411,7 @@ export function DownloadProfileEditor({initialProfile = null, open, onOpenChange
 									<ProfilePanel title="Video">
 										<FieldGroup className="gap-3">
 											<ProfileSelect label="Compatibility" value={codec} options={VIDEO_COMPATIBILITY_OPTIONS} onValueChange={setProfileCodec} testId="profiles-editor-video-codec" />
-											<ProfileSelect label="Resolution" value={resolution} options={RESOLUTION_OPTIONS} onValueChange={next => updateDraft({type: 'set-resolution', resolution: next})} testId="profiles-editor-video-resolution" />
+											<ProfileSelect label="Resolution" value={resolution} options={videoResolutionOptions} onValueChange={next => updateDraft({type: 'set-resolution', resolution: next})} testId="profiles-editor-video-resolution" />
 										</FieldGroup>
 									</ProfilePanel>
 								) : null}
@@ -554,13 +576,14 @@ export function DownloadProfileEditor({initialProfile = null, open, onOpenChange
 										Destination
 									</FieldLabel>
 									<InputGroup aria-label="Destination folder">
-										<InputGroupInput id="profile-destination" value={destination} onChange={event => updateDraft({type: 'set-destination', destination: event.target.value})} placeholder="Default downloads folder" className="font-mono text-[12px]" />
+										<InputGroupInput id="profile-destination" value={destination} onChange={event => changeDestination(event.target.value)} placeholder="Default downloads folder" className="font-mono text-[12px]" />
 										<InputGroupAddon align="inline-end">
-											<InputGroupButton type="button" size="icon-xs" aria-label="Choose destination folder">
+											<InputGroupButton type="button" size="icon-xs" aria-label="Choose destination folder" onClick={() => void chooseDestinationFolder()}>
 												<Folder aria-hidden />
 											</InputGroupButton>
 										</InputGroupAddon>
 									</InputGroup>
+									{destinationPickerError ? <FieldDescription className="text-[12px] text-destructive">{destinationPickerError}</FieldDescription> : null}
 								</Field>
 
 								<Field orientation="horizontal" className="items-center gap-2 text-[12px] text-[var(--text-subtle)]">
