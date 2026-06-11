@@ -1,0 +1,347 @@
+name: Windows yt-dlp Probe Soak
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner_label:
+        description: Windows runner label to test
+        required: true
+        type: choice
+        default: windows-latest
+        options:
+          - windows-latest
+          - windows-2025
+          - windows-2022
+      fail_threshold_ms:
+        description: Fail a job when the first yt-dlp probe exceeds this duration
+        required: true
+        type: number
+        default: 30000
+      probe_timeout_ms:
+        description: Hard timeout for each yt-dlp probe
+        required: true
+        type: number
+        default: 180000
+      include_stable_fallback:
+        description: Probe stable yt-dlp only when nightly fails or exceeds the threshold
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    name: Probe ${{ inputs.runner_label }} #${{ matrix.attempt }}
+    runs-on: ${{ inputs.runner_label }}
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      max-parallel: 30
+      matrix:
+        attempt:
+          - "01"
+          - "02"
+          - "03"
+          - "04"
+          - "05"
+          - "06"
+          - "07"
+          - "08"
+          - "09"
+          - "10"
+          - "11"
+          - "12"
+          - "13"
+          - "14"
+          - "15"
+          - "16"
+          - "17"
+          - "18"
+          - "19"
+          - "20"
+          - "21"
+          - "22"
+          - "23"
+          - "24"
+          - "25"
+          - "26"
+          - "27"
+          - "28"
+          - "29"
+          - "30"
+
+    steps:
+      - name: Probe yt-dlp first launch
+        shell: pwsh
+        env:
+          ATTEMPT: ${{ matrix.attempt }}
+          RUNNER_LABEL: ${{ inputs.runner_label }}
+          FAIL_THRESHOLD_MS: ${{ inputs.fail_threshold_ms }}
+          PROBE_TIMEOUT_MS: ${{ inputs.probe_timeout_ms }}
+          INCLUDE_STABLE_FALLBACK: ${{ inputs.include_stable_fallback }}
+        run: |
+          $ErrorActionPreference = 'Continue'
+          $diag = Join-Path $env:RUNNER_TEMP 'yt-dlp-probe-soak'
+          $binaryDir = Join-Path $diag 'binaries'
+          New-Item -ItemType Directory -Force -Path $binaryDir | Out-Null
+
+          $resultPath = Join-Path $diag 'probe-results.jsonl'
+          $exitCodePath = Join-Path $diag 'job-exit-code.txt'
+          $summaryPath = Join-Path $diag 'summary.txt'
+          $thresholdMs = [int]$env:FAIL_THRESHOLD_MS
+          $probeTimeoutMs = [int]$env:PROBE_TIMEOUT_MS
+          $jobFailed = $false
+
+          function Write-TextFile($Name, $Value) {
+            $Value | Out-File -FilePath (Join-Path $diag $Name) -Encoding utf8
+          }
+
+          function Add-JsonLine($Object) {
+            $Object | ConvertTo-Json -Depth 8 -Compress | Out-File -FilePath $resultPath -Append -Encoding utf8
+          }
+
+          function Download-File($Url, $Path) {
+            $handler = [System.Net.Http.HttpClientHandler]::new()
+            $handler.AllowAutoRedirect = $true
+            $client = [System.Net.Http.HttpClient]::new($handler)
+            try {
+              $client.DefaultRequestHeaders.UserAgent.ParseAdd('Arroxy-CI-yt-dlp-probe-soak')
+              $response = $client.GetAsync($Url, [System.Net.Http.HttpCompletionOption]::ResponseHeadersRead).GetAwaiter().GetResult()
+              $response.EnsureSuccessStatusCode()
+              $inputStream = $response.Content.ReadAsStreamAsync().GetAwaiter().GetResult()
+              $outputStream = [System.IO.File]::Create($Path)
+              try {
+                $inputStream.CopyTo($outputStream)
+              } finally {
+                $outputStream.Dispose()
+                $inputStream.Dispose()
+              }
+            } finally {
+              $client.Dispose()
+              $handler.Dispose()
+            }
+          }
+
+          function Get-ZoneIdentifier($Path) {
+            try {
+              return Get-Content -LiteralPath "${Path}:Zone.Identifier" -Raw -ErrorAction Stop
+            } catch {
+              return $null
+            }
+          }
+
+          function Get-FileMetadata($Path) {
+            $item = Get-Item -LiteralPath $Path
+            $streams = @()
+            try {
+              $streams = @(Get-Item -LiteralPath $Path -Stream * -ErrorAction Stop | ForEach-Object { $_.Stream })
+            } catch {
+              $streams = @()
+            }
+            return [ordered]@{
+              path = $Path
+              size = $item.Length
+              createdUtc = $item.CreationTimeUtc.ToString('o')
+              modifiedUtc = $item.LastWriteTimeUtc.ToString('o')
+              sha256 = (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
+              streams = $streams
+              zoneIdentifier = Get-ZoneIdentifier $Path
+            }
+          }
+
+          function Invoke-Probe($Channel, $Url, $Path) {
+            $downloadStarted = Get-Date
+            try {
+              Download-File $Url $Path
+              $downloadError = $null
+            } catch {
+              $downloadError = $_.Exception.Message
+            }
+            $downloadEnded = Get-Date
+
+            if ($downloadError) {
+              $record = [ordered]@{
+                attempt = $env:ATTEMPT
+                runnerLabel = $env:RUNNER_LABEL
+                channel = $Channel
+                url = $Url
+                status = 'download_failed'
+                downloadStartedUtc = $downloadStarted.ToUniversalTime().ToString('o')
+                downloadEndedUtc = $downloadEnded.ToUniversalTime().ToString('o')
+                downloadError = $downloadError
+              }
+              Add-JsonLine $record
+              return $record
+            }
+
+            $metadata = Get-FileMetadata $Path
+            $psi = [System.Diagnostics.ProcessStartInfo]::new()
+            $psi.FileName = $Path
+            $psi.Arguments = '--version'
+            $psi.UseShellExecute = $false
+            $psi.RedirectStandardOutput = $true
+            $psi.RedirectStandardError = $true
+            $psi.CreateNoWindow = $true
+
+            $startedUtc = (Get-Date).ToUniversalTime().ToString('o')
+            $sw = [System.Diagnostics.Stopwatch]::StartNew()
+            $status = 'unknown'
+            $stdout = ''
+            $stderr = ''
+            $exitCode = $null
+            $pidValue = $null
+            $probeError = $null
+
+            try {
+              $process = [System.Diagnostics.Process]::Start($psi)
+              $pidValue = $process.Id
+              $exited = $process.WaitForExit($probeTimeoutMs)
+              $sw.Stop()
+              if ($exited) {
+                $stdout = $process.StandardOutput.ReadToEnd()
+                $stderr = $process.StandardError.ReadToEnd()
+                $exitCode = $process.ExitCode
+                if ($exitCode -eq 0) {
+                  $status = 'ok'
+                } else {
+                  $status = 'bad_exit_code'
+                }
+              } else {
+                $status = 'timeout'
+                try {
+                  $process.Kill($true)
+                } catch {
+                  $probeError = $_.Exception.Message
+                }
+              }
+            } catch {
+              $sw.Stop()
+              $status = 'spawn_failed'
+              $probeError = $_.Exception.Message
+            } finally {
+              if ($process) {
+                $process.Dispose()
+              }
+            }
+
+            $elapsedMs = [int]$sw.ElapsedMilliseconds
+            $record = [ordered]@{
+              attempt = $env:ATTEMPT
+              runnerLabel = $env:RUNNER_LABEL
+              channel = $Channel
+              url = $Url
+              status = $status
+              pid = $pidValue
+              startedUtc = $startedUtc
+              endedUtc = (Get-Date).ToUniversalTime().ToString('o')
+              elapsedMs = $elapsedMs
+              thresholdMs = $thresholdMs
+              timeoutMs = $probeTimeoutMs
+              exitCode = $exitCode
+              stdout = $stdout.Trim()
+              stderr = $stderr.Trim()
+              probeError = $probeError
+              downloadStartedUtc = $downloadStarted.ToUniversalTime().ToString('o')
+              downloadEndedUtc = $downloadEnded.ToUniversalTime().ToString('o')
+              metadata = $metadata
+            }
+            Add-JsonLine $record
+            return $record
+          }
+
+          try {
+            Write-TextFile 'environment.txt' ((Get-ChildItem Env: | Sort-Object Name | Format-Table -AutoSize | Out-String))
+            Write-TextFile 'computer-info.txt' (Get-ComputerInfo | Format-List * | Out-String)
+            Write-TextFile 'defender-status.txt' (Get-MpComputerStatus | Format-List * | Out-String)
+            Write-TextFile 'defender-preference.txt' (Get-MpPreference | Format-List * | Out-String)
+
+            try {
+              $metadataResponse = Invoke-RestMethod -Headers @{Metadata = 'true'} -Method GET -TimeoutSec 2 -Uri 'http://169.254.169.254/metadata/instance/compute?api-version=2021-02-01'
+              Write-TextFile 'azure-instance-metadata.json' ($metadataResponse | ConvertTo-Json -Depth 8)
+            } catch {
+              Write-TextFile 'azure-instance-metadata-error.txt' $_.Exception.Message
+            }
+
+            $channels = @(
+              'Microsoft-Windows-Windows Defender/Operational',
+              'Microsoft-Windows-CodeIntegrity/Operational',
+              'Microsoft-Windows-AppLocker/EXE and DLL',
+              'Microsoft-Windows-AppLocker/MSI and Script',
+              'Microsoft-Windows-SmartScreen/Debug'
+            )
+            foreach ($channel in $channels) {
+              "Enabling $channel" | Out-File -FilePath (Join-Path $diag 'event-channel-setup.txt') -Append -Encoding utf8
+              & wevtutil sl $channel /e:true 2>&1 | Out-File -FilePath (Join-Path $diag 'event-channel-setup.txt') -Append -Encoding utf8
+            }
+
+            $nightly = Invoke-Probe `
+              'nightly' `
+              'https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download/yt-dlp.exe' `
+              (Join-Path $binaryDir 'yt-dlp-nightly.exe')
+
+            if ($nightly.status -ne 'ok' -or $nightly.elapsedMs -gt $thresholdMs) {
+              $jobFailed = $true
+              if ($env:INCLUDE_STABLE_FALLBACK -eq 'true') {
+                Invoke-Probe `
+                  'stable' `
+                  'https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe' `
+                  (Join-Path $binaryDir 'yt-dlp-stable.exe') | Out-Null
+              }
+            }
+
+            foreach ($channel in @('Application', 'System') + $channels) {
+              $safe = $channel -replace '[\\/:*?"<>| ]+', '-'
+              & wevtutil qe $channel /f:text /c:300 /rd:true 2>&1 | Out-File -FilePath (Join-Path $diag "$safe.txt") -Encoding utf8
+              & wevtutil epl $channel (Join-Path $diag "$safe.evtx") /ow:true 2>&1 | Out-File -FilePath (Join-Path $diag "$safe-export.txt") -Encoding utf8
+            }
+
+            $resultLines = Get-Content -LiteralPath $resultPath
+            $summaryLines = @(
+              "attempt=$env:ATTEMPT",
+              "runnerLabel=$env:RUNNER_LABEL",
+              "thresholdMs=$thresholdMs",
+              "timeoutMs=$probeTimeoutMs",
+              "jobFailed=$jobFailed",
+              '',
+              'results:',
+              $resultLines
+            )
+            Write-TextFile 'summary.txt' ($summaryLines -join [Environment]::NewLine)
+
+            if ($env:GITHUB_STEP_SUMMARY) {
+              "### yt-dlp probe soak #$env:ATTEMPT" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
+              "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
+              "````json" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
+              $resultLines | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
+              "````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
+            }
+          } catch {
+            $jobFailed = $true
+            Write-TextFile 'fatal-error.txt' ($_.Exception | Format-List * -Force | Out-String)
+          }
+
+          if ($jobFailed) {
+            '1' | Out-File -FilePath $exitCodePath -Encoding utf8
+          } else {
+            '0' | Out-File -FilePath $exitCodePath -Encoding utf8
+          }
+
+      - name: Upload probe diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: yt-dlp-probe-${{ inputs.runner_label }}-${{ matrix.attempt }}
+          path: ${{ runner.temp }}/yt-dlp-probe-soak
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Fail when probe exceeded threshold
+        shell: pwsh
+        run: |
+          $exitCodePath = Join-Path $env:RUNNER_TEMP 'yt-dlp-probe-soak/job-exit-code.txt'
+          if ((Test-Path $exitCodePath) -and ((Get-Content -LiteralPath $exitCodePath -Raw).Trim() -eq '0')) {
+            exit 0
+          }
+          exit 1
