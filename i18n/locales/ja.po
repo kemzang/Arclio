@@ -2268,3 +2268,4 @@ msgstr "タイトルが変わったり重複したりしても、単発ダウン
 #~ msgctxt "wizard.url.quickSingleOnly"
 #~ msgid "Quick Download can use single videos, playlists, channels, searches, and Bulk URLs."
 #~ msgstr "クイックダウンロードは、単体動画、プレイリスト、チャンネル、検索、Bulk URL を使用できます。"
+

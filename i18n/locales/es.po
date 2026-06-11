@@ -2268,3 +2268,4 @@ msgstr "Mantiene únicas las descargas sueltas cuando los títulos cambian o coi
 #~ msgctxt "wizard.url.quickSingleOnly"
 #~ msgid "Quick Download can use single videos, playlists, channels, searches, and Bulk URLs."
 #~ msgstr "La descarga rápida puede usar videos individuales, playlists, canales, búsquedas y URLs en lote."
+

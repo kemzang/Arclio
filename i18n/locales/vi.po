@@ -2268,3 +2268,4 @@ msgstr "Giữ các lượt tải một lần là duy nhất khi tiêu đề thay
 #~ msgctxt "wizard.url.quickSingleOnly"
 #~ msgid "Quick Download can use single videos, playlists, channels, searches, and Bulk URLs."
 #~ msgstr "Tải nhanh có thể dùng video đơn lẻ, danh sách phát, kênh, tìm kiếm và URL hàng loạt."
+

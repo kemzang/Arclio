@@ -2268,3 +2268,4 @@ msgstr "عنوان بدلنے یا ٹکرانے پر ایک بار کی ڈاؤن
 #~ msgctxt "wizard.url.quickSingleOnly"
 #~ msgid "Quick Download can use single videos, playlists, channels, searches, and Bulk URLs."
 #~ msgstr "فوری ڈاؤنلوڈ واحد ویڈیوز، پلے لسٹس، چینلز، تلاشوں، اور Bulk URLs استعمال کر سکتا ہے۔"
+

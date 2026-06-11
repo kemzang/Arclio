@@ -2268,3 +2268,4 @@ msgstr "Mata dureewwan yeroo jijjiiraman ykn walitti bu’an buufata tokko tokko
 #~ msgctxt "wizard.url.quickSingleOnly"
 #~ msgid "Quick Download can use single videos, playlists, channels, searches, and Bulk URLs."
 #~ msgstr "Quick Download viidiyoo tokko, playlist, channel, barbaacha, fi Bulk URLs fayyadamuu ni danda'a."
+

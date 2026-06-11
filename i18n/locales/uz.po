@@ -2268,3 +2268,4 @@ msgstr "Sarlavhalar o‘zgarganda yoki mos kelib qolganda yakka yuklab olishlarn
 #~ msgctxt "wizard.url.quickSingleOnly"
 #~ msgid "Quick Download can use single videos, playlists, channels, searches, and Bulk URLs."
 #~ msgstr "Tez yuklab olish alohida videolar, pleylistlar, kanallar, qidiruvlar va Bulk URLlardan foydalanishi mumkin."
+

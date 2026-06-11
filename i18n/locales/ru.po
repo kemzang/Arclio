@@ -2268,3 +2268,4 @@ msgstr "Помогает сохранять одиночные загрузки 
 #~ msgctxt "wizard.url.quickSingleOnly"
 #~ msgid "Quick Download can use single videos, playlists, channels, searches, and Bulk URLs."
 #~ msgstr "Быстрая загрузка поддерживает отдельные видео, плейлисты, каналы, поисковые запросы и Bulk URLs."
+

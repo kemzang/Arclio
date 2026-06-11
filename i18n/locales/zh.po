@@ -2268,3 +2268,4 @@ msgstr "当标题变化或重复时，让单次下载保持唯一。"
 #~ msgctxt "wizard.url.quickSingleOnly"
 #~ msgid "Quick Download can use single videos, playlists, channels, searches, and Bulk URLs."
 #~ msgstr "快速下载可以使用单个视频、播放列表、频道、搜索和批量 URL。"
+

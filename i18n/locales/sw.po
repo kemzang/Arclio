@@ -2268,3 +2268,4 @@ msgstr "Huweka upakuaji wa mara moja kuwa wa kipekee wakati vichwa vinabadilika 
 #~ msgctxt "wizard.url.quickSingleOnly"
 #~ msgid "Quick Download can use single videos, playlists, channels, searches, and Bulk URLs."
 #~ msgstr "Upakuaji wa Haraka unaweza kutumia video moja, orodha za kucheza, vituo, utafutaji, na URL za Wingi."
+
