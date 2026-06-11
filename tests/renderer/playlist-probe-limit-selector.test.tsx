@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
+import {QuickPlaylistCapDialog} from '@renderer/components/wizard/QuickPlaylistCapDialog.js'
 import {StepPlaylistItems} from '@renderer/components/wizard/StepPlaylistItems.js'
 import {useAppStore} from '@renderer/store/useAppStore.js'
 import {buildMockAppApi} from '../shared/mockAppApi.js'
@@ -8,6 +9,8 @@ import {ok} from '../shared/fixtures.js'
 import {defaultAppSettings} from '@shared/constants.js'
 import type {AppApi, SettingsPatch} from '@shared/api.js'
 import type {AppSettings, PlaylistEntry, ProbeResult} from '@shared/types.js'
+
+vi.mock('@tanstack/react-virtual', () => ({useVirtualizer: ({count}: {count: number}) => ({getTotalSize: () => count * 56, getVirtualItems: () => Array.from({length: count}, (_, index) => ({index, key: index, size: 56, start: index * 56})), measureElement: () => undefined})}))
 
 const PLAYLIST_URL = 'https://www.youtube.com/playlist?list=PLcap'
 
@@ -128,6 +131,42 @@ describe('playlist probe limit selector alert', () => {
 		expect(screen.getByTestId('playlist-alert-probe-limit-custom-save')).toBeDisabled()
 		expect(api.settings.update).not.toHaveBeenCalled()
 		expect(api.downloads.probe).not.toHaveBeenCalled()
+	})
+
+	it('prevents Space from scrolling when a keyboard user toggles a playlist row', () => {
+		installApi()
+		resetStore(50, 2)
+		const {container} = render(<StepPlaylistItems />)
+		const row = container.querySelector<HTMLElement>('[role="checkbox"][data-index="0"]')
+		expect(row).toBeTruthy()
+
+		const event = new KeyboardEvent('keydown', {key: ' ', bubbles: true, cancelable: true})
+		row!.dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(true)
+		expect(useAppStore.getState().selectedPlaylistItemIds).toEqual(['p2'])
+	})
+})
+
+describe('quick playlist cap dialog', () => {
+	it('saves a new limit and retries through quick download instead of opening interactive review', async () => {
+		const api = installApi()
+		resetStore(50, 50, true)
+		useAppStore.setState({wizardStep: 'url', quickPlaylistCapDialogOpen: true, quickDownloadStatus: 'idle', quickDownloadFailure: null, quickDownloadQueueIds: [], wizardOutputDir: '/tmp'} as never)
+
+		render(<QuickPlaylistCapDialog />)
+
+		fireEvent.click(screen.getByTestId('quick-playlist-cap-probe-limit-trigger'))
+		fireEvent.click(await screen.findByTestId('quick-playlist-cap-probe-limit-option-100'))
+
+		await waitFor(() => {
+			expect(api.settings.update).toHaveBeenCalledWith({common: {playlistProbeLimit: 100}})
+			expect(api.downloads.probe).toHaveBeenCalledWith({url: PLAYLIST_URL, playlistMode: 'playlist', playlistScope: {items: {kind: 'app-limit'}}})
+			expect(api.queue.cmd.add).toHaveBeenCalled()
+		})
+		expect(useAppStore.getState().wizardStep).toBe('url')
+		expect(useAppStore.getState().quickPlaylistCapDialogOpen).toBe(false)
+		expect(useAppStore.getState().quickDownloadStatus).toBe('queued')
 	})
 })
 

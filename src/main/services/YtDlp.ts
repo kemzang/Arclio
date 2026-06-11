@@ -211,7 +211,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 	// sidecar pulls (tiny text, throttling adds zero anti-bot value).
 	const limitRateArgs = opts.limitRate ? ['--limit-rate', opts.limitRate] : []
 	// yt-dlp 2026+ requires a JS runtime for nsig/signature decoding on the web
-	// client. With deno bundled, we point yt-dlp at it explicitly so it doesn't
+	// client. With deno runtime-resolved, we point yt-dlp at it explicitly so it doesn't
 	// silently fall back to JS-free clients (where our web.gvs PoT is unused).
 	const jsRuntimeArgs = opts.denoPath ? ['--js-runtimes', `deno:${opts.denoPath}`] : []
 	// Pass ffmpeg's location to yt-dlp explicitly instead of relying on the PATH
@@ -497,6 +497,8 @@ export function buildArgs(req: YtDlpRequest, opts: {pacing?: NetworkPacingArgs; 
 	switch (req.kind) {
 		case 'probe': {
 			// --dump-single-json: one JSON document per URL regardless of content type.
+			// --no-quiet: keep yt-dlp's playlist item status lines visible so the
+			//   probe service can stream enumeration progress before the final JSON.
 			// --flat-playlist: for playlists, returns flat entries (id+title+url) instead
 			//   of expanding each entry. For non-playlist URLs it's a no-op — yt-dlp
 			//   still returns full video info (formats, subs, etc.).
@@ -510,7 +512,7 @@ export function buildArgs(req: YtDlpRequest, opts: {pacing?: NetworkPacingArgs; 
 			const modeFlag = req.playlistMode === 'video' ? ['--no-playlist'] : req.playlistMode === 'playlist' ? ['--yes-playlist'] : []
 			const visibleLimit = opts.playlistProbeLimit ?? DEFAULT_PLAYLIST_PROBE_LIMIT
 			const scopeArgs = req.playlistMode === 'video' ? [] : playlistScopeArgs(req.playlistScope, visibleLimit)
-			const args = ['--dump-single-json', '--flat-playlist', ...modeFlag, ...scopeArgs, ...requestPacingArgs(opts.pacing), req.url]
+			const args = ['--dump-single-json', '--no-quiet', '--flat-playlist', ...modeFlag, ...scopeArgs, ...requestPacingArgs(opts.pacing), req.url]
 			return {args}
 		}
 		case 'subtitle': {
@@ -546,6 +548,9 @@ export class YtDlp {
 		// yt-dlp's post-processors discover it via PATH.
 		await this.binaryManager.ensureFFprobe(onStatus)
 		this._denoPath = this.opts.e2eMode?.skipDeno ? null : await this.binaryManager.ensureDeno(onStatus)
+		if (!this.opts.e2eMode?.skipDeno && !this._denoPath) {
+			throw new Error('deno could not be resolved')
+		}
 	}
 
 	get ffmpegPath(): string | null {

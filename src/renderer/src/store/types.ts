@@ -2,6 +2,7 @@ import type {StoreApi} from 'zustand'
 import type {
 	AppSettings,
 	AudioBitrate,
+	BackdropRenderMode,
 	BulkMetadataCancelReason,
 	BulkMetadataItemStatus,
 	BulkMetadataStatus,
@@ -17,6 +18,7 @@ import type {
 	PlaylistSelection,
 	Preset,
 	ProbeError,
+	ProbeProgressEvent,
 	ProbeDegradationReason,
 	QueueItem,
 	QueueLane,
@@ -33,10 +35,12 @@ import type {
 } from '@shared/types.js'
 import type {AudioSelection} from '@shared/schemas.js'
 import type {IncompleteCookiesConfigIssue} from '@shared/cookiesConfig.js'
+import type {QuickDownloadFailure} from './wizard/quickDownloadFeedback.js'
 export type {AudioSelection}
 export type {BulkMetadataCancelReason, BulkMetadataItemStatus, BulkMetadataStatus, WizardMode} from '@shared/types.js'
 export type WizardStep = 'url' | 'playlistItems' | 'playlistPresets' | 'formats' | 'subtitles' | 'sponsorblock' | 'output' | 'folder' | 'confirm' | 'error'
 export type AdvancedSettingsTarget = 'cookies' | 'network'
+export type MixedUrlPromptSource = 'wizard' | 'quick-download'
 
 // Explicit mode tag so consumers don't re-derive intent from
 // `playlistItems.length > 0`. `single` = format-probe flow; `playlist` =
@@ -79,6 +83,7 @@ export interface ProbeOrchestratorSlice {
 	playlistIsMultiVideo: boolean
 	playlistLikelyCapped: boolean
 	playlistProbeLoading: boolean
+	playlistProbeProgress: ProbeProgressEvent | null
 	playlistScopeReloading: boolean
 	playlistScopeError: string | null
 	playlistScope: PlaylistScope
@@ -88,7 +93,7 @@ export interface ProbeOrchestratorSlice {
 	bulkMetadataTotal: number
 	bulkMetadataById: Record<string, BulkMetadataItemStatus>
 	quickDownloadStatus: QuickDownloadStatus
-	quickDownloadError: string | null
+	quickDownloadFailure: QuickDownloadFailure | null
 	quickDownloadQueueIds: string[]
 	quickDownloadProgressPhase: QuickDownloadProgressPhase
 	quickDownloadProgressTotal: number
@@ -108,6 +113,9 @@ export interface ProbeOrchestratorSlice {
 	submitUrl: () => Promise<void>
 	quickDownload: () => Promise<void>
 	quickDownloadUrls: (urls: string[]) => Promise<void>
+	retryQuickDownloadFailure: () => Promise<void>
+	retryQuickPlaylistCap: () => Promise<void>
+	retryQuickDownloadWithCookies: () => Promise<void>
 	cancelQuickDownload: () => void
 	startBulkUrls: (urls: string[]) => void
 	cancelBulkMetadata: (reason?: BulkMetadataCancelReason) => void
@@ -195,6 +203,7 @@ export interface WizardDialogsSlice {
 	// playlist enumeration.
 	mixedUrlPromptOpen: boolean
 	mixedUrlPending: string | null
+	mixedUrlPromptSource: MixedUrlPromptSource | null
 	// Transient flag set when the user navigates to the URL step from the
 	// an "Open advanced settings" link. `StepUrlInput` reads it on mount,
 	// expands the advanced section, scrolls the requested block into view,
@@ -286,6 +295,7 @@ export interface SystemSlice {
 	setProxyUrl: (url: string) => Promise<void>
 	setLimitRate: (value: string | undefined) => Promise<void>
 	setPlaylistProbeLimit: (value: number) => Promise<void>
+	setBackdropRenderMode: (value: BackdropRenderMode) => Promise<void>
 	setIncludeIdInSingleFilenames: (enabled: boolean) => Promise<void>
 	setNetworkPacingPreset: (value: AppSettings['common']['networkPacingPreset']) => Promise<void>
 	setPacingSleepRequests: (value: number | undefined) => Promise<void>

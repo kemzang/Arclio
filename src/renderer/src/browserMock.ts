@@ -1,8 +1,9 @@
 import type {AppApi} from '@shared/api.js'
-import type {AppSettings, DependencyDiagnostic, DependencyId, ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent} from '@shared/types.js'
-import {QUEUE_STATUS, STATUS_KEY} from '@shared/schemas.js'
+import type {AppSettings, DependencyDiagnostic, DependencyId, ProbeProgressEvent, ProgressEvent, QueueItem, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent} from '@shared/types.js'
+import {QUEUE_STATUS, STATUS_KEY, YT_DLP_ERROR_KINDS, type YtDlpErrorKind} from '@shared/schemas.js'
 import {BROWSER_MOCK_LAUNCH_MODES, buildScenarioAppApiState, getScenario, normalVideoProbe, playlistProbe, readScenarioIdFromUrl, readUrlParams, shouldMockEmptyPlaylistScopeReload, shouldShowBrowserMockStartupSplash, type BrowserMockLaunchMode, type BrowserMockScenario} from './dev/browserMockScenarios.js'
 import {applyThemeLive, readKnobs, RTL_LANGS} from './dev/browserMockKnobs.js'
+import {buildProbeErrorForKind} from './dev/scenarios/probeScenarios.js'
 
 const BROWSER_MOCK_LAUNCH_STORAGE_KEY = 'arroxy:browserMockLaunch'
 
@@ -69,6 +70,15 @@ function mockPlaylistItemCount(url: string): number {
 	}
 }
 
+function mockProbeErrorKind(url: string): YtDlpErrorKind | null {
+	try {
+		const raw = new URL(url).searchParams.get('mockProbeError')
+		return raw !== null && (YT_DLP_ERROR_KINDS as readonly string[]).includes(raw) ? (raw as YtDlpErrorKind) : null
+	} catch {
+		return null
+	}
+}
+
 export function installBrowserMock(): void {
 	if ('appApi' in window) return
 
@@ -91,6 +101,7 @@ export function installBrowserMock(): void {
 
 	const statusListeners = new Set<(e: StatusEvent) => void>()
 	const progressListeners = new Set<(e: ProgressEvent) => void>()
+	const probeProgressListeners = new Set<(e: ProbeProgressEvent) => void>()
 	const updateListeners = new Set<(info: UpdateAvailablePayload) => void>()
 	const warmupProgressListeners = new Set<(e: WarmupProgressEvent) => void>()
 	const clipboardUrlListeners = new Set<(url: string) => void>()
@@ -218,10 +229,10 @@ export function installBrowserMock(): void {
 				warmupCallCount += 1
 				const force = input?.force === true
 				const allRunnable: Record<DependencyId, DependencyDiagnostic> = {
-					'yt-dlp': {id: 'yt-dlp', state: 'runnable', source: {kind: 'managed', channel: 'nightly', url: 'mock'}, resolvedPath: '/mock/yt-dlp', attempts: []},
-					ffmpeg: {id: 'ffmpeg', state: 'runnable', source: {kind: 'managed', channel: 'default', url: 'mock'}, resolvedPath: '/mock/ffmpeg', attempts: []},
-					ffprobe: {id: 'ffprobe', state: 'runnable', source: {kind: 'managed', channel: 'default', url: 'mock'}, resolvedPath: '/mock/ffprobe', attempts: []},
-					deno: {id: 'deno', state: 'runnable', source: {kind: 'managed', channel: 'default', url: 'mock'}, resolvedPath: '/mock/deno', attempts: []}
+					'yt-dlp': {id: 'yt-dlp', state: 'runnable', source: {kind: 'managed', channel: 'nightly', provider: 'github', url: 'mock'}, resolvedPath: '/mock/yt-dlp', attempts: []},
+					ffmpeg: {id: 'ffmpeg', state: 'runnable', source: {kind: 'managed', channel: 'default', provider: 'github', url: 'mock'}, resolvedPath: '/mock/ffmpeg', attempts: []},
+					ffprobe: {id: 'ffprobe', state: 'runnable', source: {kind: 'managed', channel: 'default', provider: 'github', url: 'mock'}, resolvedPath: '/mock/ffprobe', attempts: []},
+					deno: {id: 'deno', state: 'runnable', source: {kind: 'managed', channel: 'default', provider: 'github', url: 'mock'}, resolvedPath: '/mock/deno', attempts: []}
 				}
 
 				if (launchMode !== 'ready') {
@@ -242,7 +253,10 @@ export function installBrowserMock(): void {
 				}
 
 				if (launchMode === 'cold-error' && !force && warmupCallCount === 1) {
-					const blocked: Record<DependencyId, DependencyDiagnostic> = {...allRunnable, 'yt-dlp': {id: 'yt-dlp', state: 'failed', source: {kind: 'managed', channel: 'nightly', url: 'mock'}, resolvedPath: null, failure: {kind: 'blocked_or_quarantined', message: 'SmartScreen blocked the download'}, attempts: []}}
+					const blocked: Record<DependencyId, DependencyDiagnostic> = {
+						...allRunnable,
+						'yt-dlp': {id: 'yt-dlp', state: 'failed', source: {kind: 'managed', channel: 'nightly', provider: 'github', url: 'mock'}, resolvedPath: null, failure: {kind: 'blocked_or_quarantined', message: 'SmartScreen blocked the download'}, attempts: []}
+					}
 					const result: WarmUpOutput = {completed: false, dependencies: blocked, blockingFailures: ['yt-dlp'], cancelled: false}
 					return {ok: true, data: result}
 				}
@@ -289,8 +303,9 @@ export function installBrowserMock(): void {
 					return {ok: false, error: {kind: 'other', code: 'invalid_url', message: 'Not a valid http(s) URL'}}
 				}
 
-				if (scenarioState.probeError) {
-					return {ok: false, error: scenarioState.probeError}
+				const probeErrorKind = mockProbeErrorKind(input.url)
+				if (probeErrorKind !== null) {
+					return {ok: false, error: buildProbeErrorForKind(probeErrorKind)}
 				}
 
 				if (shouldMockEmptyPlaylistScopeReload(scenarioState.scenario, input.playlistMode, input.playlistScope)) {
@@ -411,6 +426,10 @@ export function installBrowserMock(): void {
 			onProgress: listener => {
 				progressListeners.add(listener)
 				return () => progressListeners.delete(listener)
+			},
+			onProbeProgress: listener => {
+				probeProgressListeners.add(listener)
+				return () => probeProgressListeners.delete(listener)
 			},
 			onClipboardUrl: listener => {
 				clipboardUrlListeners.add(listener)

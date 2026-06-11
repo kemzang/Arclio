@@ -10,7 +10,9 @@ import {
 	downloadProfileRefFor,
 	removeDownloadProfileFromPrefs,
 	resolveActiveDownloadProfile,
+	resolveDownloadProfileBaseDir,
 	resolveDownloadProfile,
+	resolveDownloadProfileOutputDir,
 	saveDownloadProfileToPrefs
 } from '@shared/downloadProfiles.js'
 import type {DownloadProfile} from '@shared/types.js'
@@ -111,6 +113,28 @@ describe('download profiles', () => {
 		const prefs = {...DEFAULT_DOWNLOAD_PROFILES_PREFS, active: {kind: 'custom' as const, id: 'missing'}}
 		expect(resolveActiveDownloadProfile(prefs).ref).toEqual(DEFAULT_DOWNLOAD_PROFILE_REF)
 		expect(resolveActiveDownloadProfile(prefs).profile.id).toBe(DEFAULT_DOWNLOAD_PROFILE_REF.id)
+	})
+
+	it('resolves profile output from fixed destination, current default root, and subfolder policy', () => {
+		const balanced = BUILTIN_DOWNLOAD_PROFILES.find(item => item.id === 'balanced')
+		if (!balanced) throw new Error('expected balanced profile')
+
+		expect(resolveDownloadProfileOutputDir(balanced, {currentOutputDir: '', defaultOutputDir: '/home/user/Downloads'})).toBe('/home/user/Downloads/Balanced 720p')
+		expect(resolveDownloadProfileOutputDir(balanced, {currentOutputDir: '/media/archive', defaultOutputDir: '/home/user/Downloads'})).toBe('/media/archive/Balanced 720p')
+
+		const fixed = customProfile({output: {kind: 'fixed', dir: '/mnt/classes'}, subfolder: {enabled: true, name: 'Lectures'}})
+		expect(resolveDownloadProfileOutputDir(fixed, {currentOutputDir: '/media/archive', defaultOutputDir: '/home/user/Downloads'})).toBe('/mnt/classes/Lectures')
+
+		const flat = customProfile({output: {kind: 'default'}, subfolder: {enabled: false, name: 'Ignored'}})
+		expect(resolveDownloadProfileOutputDir(flat, {currentOutputDir: '', defaultOutputDir: '/home/user/Downloads'})).toBe('/home/user/Downloads')
+	})
+
+	it('rejects default profile output when no output root is available', () => {
+		const balanced = BUILTIN_DOWNLOAD_PROFILES.find(item => item.id === 'balanced')
+		if (!balanced) throw new Error('expected balanced profile')
+
+		expect(() => resolveDownloadProfileBaseDir(balanced, {currentOutputDir: '', defaultOutputDir: ''})).toThrow('Download profile output directory is required')
+		expect(() => resolveDownloadProfileOutputDir(balanced, {currentOutputDir: '', defaultOutputDir: ''})).toThrow('Download profile output directory is required')
 	})
 
 	it('upserts and removes custom profiles while preserving active fallback', () => {

@@ -9,10 +9,10 @@ interface WizardFooterProps {
 
 export function WizardFooter({children, info, extraAbove}: WizardFooterProps): ReactNode {
 	return (
-		<div className="sticky bottom-0 -mx-6 px-6 bg-background z-10">
-			{extraAbove}
-			<Separator className="bg-border/50 -mx-6 w-auto my-1.5" />
-			<div className="flex items-center py-3 -mx-6 px-6">
+		<div className="wizard-footer-surface sticky bottom-0 z-10 -mx-6">
+			{extraAbove ? <div className="px-6">{extraAbove}</div> : null}
+			<Separator className="wizard-footer-divider my-0 w-full" />
+			<div className="flex items-center px-6 py-3">
 				<div className="flex-1 text-[13px] text-muted-foreground">{info}</div>
 				<div className="flex gap-2">{children}</div>
 			</div>

@@ -2,7 +2,7 @@ import {useEffect, type ReactNode} from 'react'
 import {useTranslation} from 'react-i18next'
 import {AlertTriangle, Gauge} from 'lucide-react'
 import {DEFAULTS} from '@shared/constants.js'
-import type {CookiesBrowser, CookiesMode} from '@shared/types.js'
+import type {BackdropRenderMode, CookiesBrowser, CookiesMode} from '@shared/types.js'
 import {formatHomeRelativePath} from '@renderer/lib/utils.js'
 import {useAppStore} from '../../store/useAppStore.js'
 import {Alert, AlertDescription} from '../ui/alert.js'
@@ -17,6 +17,7 @@ import {ToggleGroup, ToggleGroupItem} from '../ui/toggle-group.js'
 import {LimitRatePicker} from '../shared/LimitRatePicker.js'
 import {formatLimitRateLabel} from '../shared/limitRateFormat.js'
 import {NetworkPacingSettings} from './NetworkPacingSettings.js'
+import {PlaylistProbeLimitSelector} from './PlaylistProbeLimitSelector.js'
 
 const COOKIES_BROWSERS: readonly {value: CookiesBrowser; label: string; macOnly?: boolean}[] = [
 	{value: 'firefox', label: 'Firefox'},
@@ -31,6 +32,12 @@ const COOKIES_BROWSERS: readonly {value: CookiesBrowser; label: string; macOnly?
 const COOKIES_HELP_URL = 'https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp'
 const COOKIES_FIREFOX_URL = 'https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/'
 const COOKIES_CHROME_URL = 'https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc'
+
+const BACKDROP_RENDER_OPTIONS = [
+	{value: 'gpu', labelKey: 'wizard.url.backdrop.gpuLabel', descriptionKey: 'wizard.url.backdrop.gpuDescription'},
+	{value: 'fallback', labelKey: 'wizard.url.backdrop.fallbackLabel', descriptionKey: 'wizard.url.backdrop.fallbackDescription'},
+	{value: 'css-only', labelKey: 'wizard.url.backdrop.cssOnlyLabel', descriptionKey: 'wizard.url.backdrop.cssOnlyDescription'}
+] as const satisfies readonly {value: BackdropRenderMode; labelKey: string; descriptionKey: string}[]
 
 function SettingsPanel({title, description, children}: {title: string; description?: string; children: ReactNode}): ReactNode {
 	return (
@@ -60,7 +67,7 @@ function SettingSwitch({id, label, description, checked, onCheckedChange, testId
 
 export function DownloadProfilesSettingsTab(): ReactNode {
 	const {t} = useTranslation()
-	const {advancedAutoOpen, advancedAutoTarget, settings, setAdvancedAutoOpen, setClipboardWatchEnabled, setCookiesPath, setCookiesMode, setCookiesBrowser, setProxyUrl, setLimitRate, setIncludeIdInSingleFilenames, setCloseBehavior, setAnalyticsEnabled} = useAppStore()
+	const {advancedAutoOpen, advancedAutoTarget, settings, setAdvancedAutoOpen, setClipboardWatchEnabled, setCookiesPath, setCookiesMode, setCookiesBrowser, setProxyUrl, setLimitRate, setBackdropRenderMode, setIncludeIdInSingleFilenames, setCloseBehavior, setAnalyticsEnabled} = useAppStore()
 	const common = settings?.common
 	const cookiesPath = common?.cookiesPath ?? ''
 	const cookiesMode: CookiesMode = common?.cookiesMode ?? 'off'
@@ -72,6 +79,7 @@ export function DownloadProfilesSettingsTab(): ReactNode {
 	const showMissingFileWarning = cookiesMode === 'file' && !cookiesPath.trim()
 	const showMissingBrowserWarning = cookiesMode === 'browser' && !cookiesBrowser
 	const limitRate = common?.limitRate?.trim() ? common.limitRate : undefined
+	const backdropRenderMode = common?.backdropRenderMode ?? DEFAULTS.backdropRenderMode
 
 	useEffect(() => {
 		if (!advancedAutoOpen) return
@@ -201,7 +209,52 @@ export function DownloadProfilesSettingsTab(): ReactNode {
 							</InputGroupAddon>
 						</InputGroup>
 					</Field>
+
+					<Field orientation="horizontal" className="items-start justify-between gap-3" data-testid="playlist-probe-limit-section">
+						<FieldContent className="gap-0.5">
+							<FieldTitle id="profiles-settings-playlist-probe-limit" className="text-[13px] font-medium text-foreground">
+								{t('wizard.url.playlistProbeLimit.label')}
+							</FieldTitle>
+							<FieldDescription className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.playlistProbeLimit.description')}</FieldDescription>
+						</FieldContent>
+						<PlaylistProbeLimitSelector testId="profiles-settings-playlist-probe-limit" className="w-40" showCurrent={false} />
+					</Field>
 				</FieldGroup>
+			</SettingsPanel>
+
+			<SettingsPanel title={t('wizard.url.backdrop.panelTitle')} description={t('wizard.url.backdrop.panelDescription')}>
+				<Field className="gap-2">
+					<FieldContent className="gap-0.5">
+						<FieldTitle id="profiles-settings-backdrop-mode-label" className="text-[13px] font-medium text-foreground">
+							{t('wizard.url.backdrop.modeLabel')}
+						</FieldTitle>
+						<FieldDescription className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.backdrop.modeDescription')}</FieldDescription>
+					</FieldContent>
+					<div className="rounded-lg border border-border bg-muted/20 p-1" data-testid="profiles-settings-backdrop-mode">
+						<ToggleGroup
+							variant="outline"
+							value={[backdropRenderMode]}
+							onValueChange={value => {
+								if (value[0]) void setBackdropRenderMode(value[0] as BackdropRenderMode)
+							}}
+							spacing={1}
+							className="grid w-full grid-cols-[repeat(auto-fit,minmax(10.5rem,1fr))] gap-1"
+							aria-labelledby="profiles-settings-backdrop-mode-label"
+						>
+							{BACKDROP_RENDER_OPTIONS.map(option => (
+								<ToggleGroupItem
+									key={option.value}
+									value={option.value}
+									className="h-auto min-h-[4.5rem] w-full min-w-0 flex-1 flex-col items-start justify-start gap-1 whitespace-normal px-3 py-2 text-left aria-pressed:border-[var(--brand)] aria-pressed:bg-[var(--brand-dim)] aria-pressed:text-[var(--brand)]"
+									data-testid={`profiles-settings-backdrop-mode-${option.value}`}
+								>
+									<span className="block w-full min-w-0 whitespace-normal break-words text-[12px] font-semibold leading-tight">{t(option.labelKey)}</span>
+									<span className="block w-full min-w-0 whitespace-normal break-words text-[10px] font-normal leading-snug text-[var(--text-subtle)]">{t(option.descriptionKey)}</span>
+								</ToggleGroupItem>
+							))}
+						</ToggleGroup>
+					</div>
+				</Field>
 			</SettingsPanel>
 
 			<SettingsPanel title="Download behavior" description="Global behavior that affects profile-driven downloads too.">

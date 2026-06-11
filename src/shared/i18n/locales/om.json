@@ -57,6 +57,11 @@
 			"selectedCount_other": "{{count}} filataman",
 			"noSelection": "Itti fufuuf viidiyoo tokko yoo xiqqaate filadhu",
 			"loadingItems": "Playlist fidaa jira…",
+			"loadingPhasePages": "Fuulota chaanaalii sakattaʼaa jira",
+			"loadingPhaseItems": "Viidiyoowwan walitti qabaa jira",
+			"loadingPagesFound_one": "Fuulli {{count}} argame",
+			"loadingPagesFound_other": "Fuulonni {{count}} argaman",
+			"loadingLimitHint": "Wantoota jalqabaa {{count}} qofatti daangeffame",
 			"thumbnailAlt": "Thumbnail viidiyoo",
 			"durationUnknown": "kallattii",
 			"syncChange": "Galmee jijjiiri…",
@@ -84,11 +89,17 @@
 		"mixedPrompt": {
 			"title": "Liinkin kun Playlist qaba",
 			"body": "Viidiyoo tokko kana filadda, moo Playlist keessaa barbaadda? Viidiyoowwan addaddaa yookaan kutaa filattu itti aanu.",
+			"quickBody": "Viidiyoo kana qofa buufadhu, yookaan piroofaayila Buufata saffisaa hojiirra jiru fayyadamuun tarree taphachiisaa guutuu gara tarree hojiiitti galchi.",
 			"singleVideo": "Kana qofa",
+			"quickSingleVideo": "Viidiyoo kana buufadhu",
 			"pickFromPlaylist": "Playlist keessaa filadhu",
+			"quickWholePlaylist": "Tarree taphachiisaa guutuu buufadhu",
 			"playlistLimit": "Daangaa sakatta’iinsa playlist: wantoota {{count}}",
+			"quickLimitDescription": "Baay’ina olaanaa wantoota Arroxy tarree taphachiisaa, chaanaalii, yookaan bu’aa barbaacha gara tarree hojiiitti galchuu dura sakatta’u.",
 			"singleTooltip": "Haala viidiyoo tokkoo yt-dlp fayyadama; playlist URL kanaan hidhame ni tuffatama.",
-			"playlistTooltip": "Haala playlist yt-dlp fayyadamee hanga daangaa sakatta’iinsa playlist kee dura filannoo agarsiisa."
+			"quickSingleTooltip": "Buufata tokko gara tarree hojiiitti galcha, tarree taphachiisaa URL kanaan walqabate immoo ni dhiisa.",
+			"playlistTooltip": "Haala playlist yt-dlp fayyadamee hanga daangaa sakatta’iinsa playlist kee dura filannoo agarsiisa.",
+			"quickPlaylistTooltip": "Wantoota tarree taphachiisaa fe’aman hunda piroofaayila Buufata saffisaa hojiirra jiru fayyadamuun gara tarree hojiiitti galcha. Sakatta’iinsi daangaa kee yoo ga’e, Arroxy tarree hojiiitti galchuu dura ni gaafata."
 		},
 		"url": {
 			"heading": "URL irraa buusi",
@@ -106,6 +117,18 @@
 			"quickFailed": "Kana dabaluun hin danda’amne: {{error}}",
 			"quickPartialFailed_one": "Kan hojjete tarreetti dabalame. URL {{count}} qopheessuun hin danda’amne.",
 			"quickPartialFailed_other": "Kan hojjete tarreetti dabalame. URL {{count}} qopheessuun hin danda’amne.",
+			"profile": {
+				"destinationFallback": "Bakki itti olkaa'amu",
+				"switchAria": "Profaayilii bu'uuraa buusaa jijjiiri: {{profileName}}",
+				"switchTitle": "Profaayilii bu'uuraa buusaa jijjiiri",
+				"activeLabel": "Profaayilii hojiirra jiru",
+				"editActive": "Profaayilii hojiirra jiru gulaali",
+				"changeGlobalDestination": "Bakki waliigalaa jijjiiri",
+				"menuTitle": "Profaayilii jijjiiri",
+				"menuDescription": "Quick Download, URL baay'ee fi playlist'f profaayilii hojiirra jiru jijjiiri.",
+				"newProfile": "Profaayilii haaraa",
+				"manageProfiles": "Profaayilii bulchi"
+			},
 			"bulkButton": "URL hedduu",
 			"bulkTooltip": "URL hedduu dabaliitii tarree buusutti galchi.",
 			"features": {
@@ -141,6 +164,18 @@
 				"extensionChrome": "cookies.txt LOCALLY argadhu (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Geejjiba proxy darbii ergi — qabiyyee mootummaan dhorge argachuuf gargaara.", "placeholder": "http://host:port", "clear": "Haquu"},
+			"backdrop": {
+				"panelTitle": "Mul’ata fi raawwii",
+				"panelDescription": "Arroxy duubbee socho’uuf sochii hammam akka fayyadamu filadhu.",
+				"modeLabel": "Qulqullina duubbee",
+				"modeDescription": "Mul’ata sochii baay’ee qabu irraa gara raawwii gaariitti deemaa.",
+				"cssOnlyLabel": "Raawwii gaarii",
+				"cssOnlyDescription": "CSS qofa, canvas hin agarsiisu.",
+				"fallbackLabel": "Madaalawaa",
+				"fallbackDescription": "Duubbee Canvas2D dhaabbataa WebGL malee.",
+				"gpuLabel": "Bareedina olaanaa",
+				"gpuDescription": "Duubbee WebGL socho’u yoo deeggarame."
+			},
 			"limitRate": {
 				"label": "Daangaa saffisa buusuu",
 				"description": "Baandwiidtii buusuu miidiyaa daangeessi. Pacing gaaffii armaan gadii yeroo baay’ee caalaa jabaa dha.",

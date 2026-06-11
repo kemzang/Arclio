@@ -31,7 +31,7 @@ describe('parseBulkUrls', () => {
 	it('accepts and classifies YouTube playlist, channel, search, and mixed watch URLs', () => {
 		const result = parseBulkUrls('https://www.youtube.com/playlist?list=PLtest https://www.youtube.com/@arroxy https://www.youtube.com/results?search_query=arroxy https://www.youtube.com/watch?v=abc123&list=PLtest')
 
-		expect(result.accepted.map(item => item.kind)).toEqual(['playlist', 'channel', 'search', 'playlist'])
+		expect(result.accepted.map(item => item.kind)).toEqual(['playlist', 'channel', 'search', 'mixed'])
 		expect(result.rejected).toEqual([])
 	})
 
@@ -39,6 +39,23 @@ describe('parseBulkUrls', () => {
 		const result = parseBulkUrls('https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=share&si=abc')
 
 		expect(result.accepted[0]?.url).toBe('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+	})
+
+	it('filters obvious non-media file URLs before probing', () => {
+		const result = parseBulkUrls('https://cdn.test/thumb.jpg https://cdn.test/poster.JPEG?size=large https://files.test/report.pdf https://example.com/video https://example.com/video')
+
+		expect(result.accepted.map(item => item.url)).toEqual(['https://example.com/video'])
+		expect(result.rejected.map(item => item.reason)).toEqual(['duplicate'])
+		expect(result.duplicateCount).toBe(1)
+		expect(result.nonMediaCount).toBe(3)
+		expect(result.ignoredCount).toBe(4)
+	})
+
+	it('keeps direct audio and video file URLs eligible for yt-dlp', () => {
+		const result = parseBulkUrls('https://cdn.test/clip.mp4 https://cdn.test/song.mp3 https://stream.test/live.m3u8 https://example.com/images/watch')
+
+		expect(result.accepted.map(item => item.url)).toEqual(['https://cdn.test/clip.mp4', 'https://cdn.test/song.mp3', 'https://stream.test/live.m3u8', 'https://example.com/images/watch'])
+		expect(result.nonMediaCount).toBe(0)
 	})
 })
 
@@ -72,11 +89,11 @@ describe('extractYouTubeVideoId', () => {
 describe('classifyBulkUrlKind', () => {
 	it.each([
 		['https://www.youtube.com/watch?v=abc123', 'single'],
-		['https://www.youtube.com/watch?v=abc123&list=PLtest', 'playlist'],
+		['https://www.youtube.com/watch?v=abc123&list=PLtest', 'mixed'],
 		['https://www.youtube.com/playlist?list=PLtest', 'playlist'],
 		['https://www.youtube.com/@arroxy', 'channel'],
 		['https://www.youtube.com/results?search_query=arroxy', 'search'],
-		['https://vimeo.com/123', 'other']
+		['https://vimeo.com/123', 'unknown']
 	] as const)('%s -> %s', (url, kind) => {
 		expect(classifyBulkUrlKind(url)).toBe(kind)
 	})

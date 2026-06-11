@@ -33,12 +33,18 @@ Format: `**Term** — definition. \`path\``. Add an entry when extracting a new 
 - **transition** — pure exhaustive `(QueueItem, QueueEvent) → QueueItem` switch. No I/O. New event kind without a case = compile error. `illegalTransition` guards stale signals (progress/completed/failed on a cancelled item, anything on a done item except retry). `src/shared/queueTransition.ts`.
 - **YtDlpErrorKind** — closed enum of yt-dlp failure categories: `botBlock`, `ipBlock`, `rateLimit`, `ageRestricted`, `unavailable`, `geoBlocked`, `outOfDiskSpace`, `chunkTransferFailure`, `postprocessFailure`, `unsupportedUrl`, `parse`, `network`, `unknown`. Drives both analytics (`error_category` label) and i18n key lookup. Every yt-dlp failure plumbs through `classifyYtDlpStderr(stderr)` → `{ kind, raw }`; UI keys i18n off `kind`, falls through to `raw` for `'unknown'`. ProbeService adds `unsupportedUrl` for the pre-extraction signal yt-dlp emits before any pattern would match. `src/shared/ytdlp/errors.ts`.
 - **LocalizedError** — `{ kind: YtDlpErrorKind; raw: string }`. Always populated; `'unknown'` covers unmatched-stderr fallback. Replaces the old `{ key, rawMessage? }` shape; QueueStore + RecentJobsStore migrate beta-shape entries on load. `src/shared/i18n/types.ts`.
-- **BinaryDownloader** — HTTP fetch with range-resume, checksum verification, zip extraction with symlink-safety. Pure I/O, no policy. Exposes `parseShaLine`/`parseStandaloneSha256`/`parsePowerShellFileHash`, `sha256ForFile`, `downloadText`, `downloadFile`, `classifyDownloadError`, plus shared `HTTP_HEADERS`/`HTTP_RETRY`/`HTTP_TIMEOUT` got config. BinaryManager's strategy chain calls it for managed-binary fetches. `src/main/services/binary/BinaryDownloader.ts`.
+- **BinaryDownloader** — HTTP fetch with range-resume, checksum helpers, and download-error classification. Pure I/O, no provider policy. Exposes `parseShaLine`/`parseStandaloneSha256`/`parsePowerShellFileHash`, `sha256ForFile`, `downloadText`, `downloadFile`, `classifyDownloadError`, plus shared `HTTP_HEADERS`/`HTTP_RETRY`/`HTTP_TIMEOUT` got config. BinaryManager and ZippedBinaryInstaller call it for managed-binary fetches. `src/main/services/binary/BinaryDownloader.ts`.
+- **ManagedSourcePlan** — pure description of a managed runtime binary attempt: source metadata, destination path, download/checksum URLs, checksum parser, install kind, and optional version-check rule. BinaryManager executes these plans and records Diagnostics; source modules own provider policy. `src/main/services/binary/ManagedSourcePlan.ts`.
+- **Deno binary-source module** — runtime-only Deno source policy: supported target triples, asset/executable names, latest-version validation, checksum parsing, dl.deno.land primary URLs, GitHub fallback URLs, and shell-env formatting for smoke scripts. Deno is required but not embedded in packaged resources. `src/main/services/binary/DenoBinarySource.ts`, `scripts/build/denoResolver.ts`.
+- **YtDlp binary-source module** — yt-dlp managed-source policy: platform asset names, GitHub nightly/stable plans, SourceForge stable mirror URL construction, and SourceForge latest-version parsing. `src/main/services/binary/YtDlpBinarySource.ts`.
+- **ZippedBinaryInstaller** — archive installer for runtime-managed zipped binaries. Owns in-flight destination dedupe, temp-dir cleanup, checksum verification, safe executable discovery, extraction, copy/chmod install, and `ManagedSetupError` step attribution. `src/main/services/binary/ZippedBinaryInstaller.ts`.
 - **BinaryProbe** — spawns binary with `--version`/`-version`, parses stdout/stderr, classifies spawn failures (ENOENT/EACCES/ETIMEDOUT/SmartScreen). Companion `whereOnPath` discovers candidates via `where`/`which`. No version-comparison policy. `src/main/services/binary/BinaryProbe.ts`.
 - **BinaryManager** — resolver facade orchestrating BinaryDownloader + BinaryProbe behind the strategy chain (manualOverride → envOverride → managed → systemPath). Owns version-comparison policy, accumulates `DependencyAttempt[]`, returns `DependencyDiagnostic` per binary. Public class API preserved for callers (`YtDlp`, `WarmupService`, `diagnosticsHandlers`). `src/main/services/BinaryManager.ts`.
 - **BtbN binary-source module** — build-time resolver for BtbN FFmpeg release selection and the Win/Linux target matrix consumed by embedded-binary fetch and binary-source smoke tests. Shell callers source its emitted env instead of duplicating target facts. `scripts/build/btbnResolver.ts`.
+- **DependencyRequirementPolicy** — shared required-dependency policy. Computes blocking failures from dependency diagnostics with explicit harness exceptions such as `skipDeno`, while keeping the full `DEPENDENCY_IDS` diagnostic set intact. `src/shared/dependencyPolicy.ts`.
 - **Diagnostic** — `DependencyAttempt[]` + final `DependencyDiagnostic` shape: what attempts ran, which succeeded/failed. Each failure carries a stable `FAILURE_CODE` (ARX-NNN) so users can search the repair UI codes language-independently. `src/shared/types.ts` (`DependencyDiagnostic`, `DependencyAttempt`, `DependencyFailure`, `FAILURE_CODE`).
 - **WizardStepGraph** — pure wizard topology module. Builds visible steps from wizard state, reports active index, and walks forward/backward for `ProbeOrchestrator`; `stepRegistry` stays render-only. `src/renderer/src/store/wizard/wizardStepGraph.ts`.
+- **UrlIntent** — pure shared URL-shape classifier for the four user-intent states: obvious single, obvious collection, mixed, and unknown. Renderer policies decide whether each entry point probes, prompts, or opens review from this single model. `src/shared/urlIntent.ts`.
 - **ProbeResultProjection** — pure URL/probe result projector. Converts probe start, video success, playlist success/failure, playlist sentinel trimming, retry selection preservation, audio-only defaults, scoped preference restore, and bulk URL start state into store patches. `src/renderer/src/store/wizard/probeResultProjection.ts`.
 - **Preset** — interactive wizard format preset (`best-quality`, `balanced`, `small-file`, `audio-only`, `subtitle-only`). Do not use this term for main-screen Quick Download choices; those are download profiles. `src/shared/schemas.ts`, `src/renderer/src/store/wizard/formatPicker.ts`.
 - **FormatPicker** — pure helpers (`applyPreset`, `restoreFormatSelection`, `restoreSubtitleSelection`) + slice (`createFormatPickerSlice`) owning `wizardFormats`, `selectedVideoFormatId`, `audioSelection`, `lastConvertBitrate`, `activePreset`, plus subtitle pools (`wizardSubtitles`, `wizardAutomaticCaptions`, `wizardSubtitleLanguages`, `wizardSubtitleSkipped`, `wizardSubtitleMode`, `wizardSubtitleFormat`). Probe pipeline writes pools via shared `set()` after probe success. `src/renderer/src/store/wizard/formatPicker.ts`.
@@ -75,6 +81,8 @@ Format: `**Term** — definition. \`path\``. Add an entry when extracting a new 
 **TDD for non-trivial changes.** Write failing tests first, implement minimally, then refactor. Skip only for typo fixes and single-line edits.
 
 **Translation workflow.** Use the `translate-arroxy-i18n` project skill for app locale changes, PO/POT sync, generated locale JSON, and i18n audits.
+
+**Session scope.** Treat every agent session as scoped to the task context it was given. Other agents may be working in parallel on the same branch, so do not repair, reformat, revert, or restructure files outside your current scope just because you notice a problem there.
 
 ### Agent Skills
 
@@ -121,13 +129,15 @@ Only tiny project-owned, non-installable skills stay tracked under `./.agents/sk
 
 ## Post-Task Checks
 
-After completing any implementation task, run this single command and fix all errors before reporting done:
+After completing any implementation task, run this single command and fix all errors caused by your change before reporting done:
 
 ```bash
 bun run check   # lint + typecheck + knip + madge (circular imports)
 ```
 
 Do not skip. A change in one file can break types, introduce dead code, or create circular imports elsewhere.
+
+If `bun run check`, lint, typecheck, or tests report an unexpected failure that is not clearly attributable to your current task, do not try to fix it opportunistically. Capture the relevant failure, state that it appears outside the current session scope, and leave it alone so a parallel agent's in-progress work is not disrupted. Only touch unrelated files when the user explicitly expands the scope or when you can show the failure is a direct consequence of your edits.
 
 ### On-demand hygiene checks
 

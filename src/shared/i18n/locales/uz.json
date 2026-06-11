@@ -65,6 +65,11 @@
 			"selectedCount_other": "{{count}} ta tanlangan",
 			"noSelection": "Davom etish uchun kamida bitta videoni tanlang",
 			"loadingItems": "Playlist yuklanmoqda…",
+			"loadingPhasePages": "Kanal sahifalari skanerlanmoqda",
+			"loadingPhaseItems": "Videolar yig'ilmoqda",
+			"loadingPagesFound_one": "{{count}} sahifa topildi",
+			"loadingPagesFound_other": "{{count}} sahifa topildi",
+			"loadingLimitHint": "Dastlabki {{count}} ta element bilan cheklangan",
 			"thumbnailAlt": "Video muqovasi",
 			"durationUnknown": "jonli",
 			"syncChange": "Jildni o‘zgartirish…",
@@ -92,11 +97,17 @@
 		"mixedPrompt": {
 			"title": "Bu havola Playlist ga tegishli",
 			"body": "Faqat bosilgan videoni olasizmi yoki Playlist dan tanlaysizmi? Keyingi qadamda aniq videolar yoki diapazon tanlanadi.",
+			"quickBody": "Faqat shu videoni yuklab oling yoki butun pleylistni faol Tez yuklab olish profilingiz bilan navbatga qo‘ying.",
 			"singleVideo": "Faqat shu birini",
+			"quickSingleVideo": "Shu videoni yuklab olish",
 			"pickFromPlaylist": "Playlist dan tanlash",
+			"quickWholePlaylist": "Butun pleylistni yuklab olish",
 			"playlistLimit": "Pleylist tekshiruv chegarasi: {{count}} ta element",
+			"quickLimitDescription": "Pleylist, kanal yoki qidiruv natijasini navbatga qo‘yishdan oldin Arroxy skanerlaydigan eng ko‘p elementlar soni.",
 			"singleTooltip": "Bu URLga ulangan pleylist e’tiborsiz qolishi uchun yt-dlp bitta video rejimidan foydalanadi.",
-			"playlistTooltip": "Tanlagichni ko‘rsatishdan oldin yt-dlp pleylist rejimida belgilangan chegaragacha yuklaydi."
+			"quickSingleTooltip": "Bitta yuklab olishni navbatga qo‘yadi va bu URLga biriktirilgan pleylistni e’tiborsiz qoldiradi.",
+			"playlistTooltip": "Tanlagichni ko‘rsatishdan oldin yt-dlp pleylist rejimida belgilangan chegaragacha yuklaydi.",
+			"quickPlaylistTooltip": "Yuklangan har bir pleylist elementini faol Tez yuklab olish profili bilan navbatga qo‘yadi. Skanerlash limitingizga yetsa, Arroxy navbatga qo‘yishdan oldin so‘raydi."
 		},
 		"url": {
 			"heading": "URL orqali yuklab olish",
@@ -114,6 +125,18 @@
 			"quickFailed": "Buni qo‘shib bo‘lmadi: {{error}}",
 			"quickPartialFailed_one": "Ishlagani navbatga qo‘shildi. {{count}} ta URL tayyorlanmadi.",
 			"quickPartialFailed_other": "Ishlaganlari navbatga qo‘shildi. {{count}} ta URL tayyorlanmadi.",
+			"profile": {
+				"destinationFallback": "Manzil",
+				"switchAria": "Yuklab olish profilini almashtirish: {{profileName}}",
+				"switchTitle": "Yuklab olish profilini almashtirish",
+				"activeLabel": "Faol profil",
+				"editActive": "Faol profilni tahrirlash",
+				"changeGlobalDestination": "Umumiy saqlash manzilini o'zgartirish",
+				"menuTitle": "Profilni almashtirish",
+				"menuDescription": "Quick Download, ko'p URL va pleylistlar uchun faol profilni o'zgartiring.",
+				"newProfile": "Yangi profil",
+				"manageProfiles": "Profillarni boshqarish"
+			},
 			"bulkButton": "Ommaviy URLlar",
 			"bulkTooltip": "Bir nechta URLni qo‘shing va navbatga qo‘ying.",
 			"features": {
@@ -149,6 +172,18 @@
 				"extensionChrome": "cookies.txt ni LOKAL olish (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Trafikni proksi orqali yo'naltirish — geo-cheklangan kontent uchun foydali.", "placeholder": "http://host:port", "clear": "Tozalash"},
+			"backdrop": {
+				"panelTitle": "Ko‘rinish va unumdorlik",
+				"panelDescription": "Arroxy animatsiyali fon uchun qancha harakat ishlatishini tanlang.",
+				"modeLabel": "Fon sifati",
+				"modeDescription": "Eng animatsiyali ko‘rinishdan eng yaxshi unumdorlikka o‘ting.",
+				"cssOnlyLabel": "Eng yaxshi unumdorlik",
+				"cssOnlyDescription": "Faqat CSS, canvas render qilinmaydi.",
+				"fallbackLabel": "Muvozanatli",
+				"fallbackDescription": "WebGLsiz statik Canvas2D fon.",
+				"gpuLabel": "Eng chiroyli",
+				"gpuDescription": "Qo‘llab-quvvatlansa, animatsiyali WebGL fon."
+			},
 			"limitRate": {
 				"label": "Yuklab olish tezligi chegarasi",
 				"description": "Media yuklab olishlar uchun tarmoq sarfini cheklang. Quyidagi so‘rov oralig‘i odatda kuchliroq vosita.",

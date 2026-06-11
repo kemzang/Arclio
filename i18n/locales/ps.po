@@ -1269,6 +1269,30 @@ msgctxt "wizard.mixedPrompt.playlistTooltip"
 msgid "Uses yt-dlp playlist mode and fetches up to your playlist probe limit before showing the picker."
 msgstr "د yt-dlp د پلی‌لېسټ حالت کاروي او د انتخابګر تر ښودلو مخکې ستاسې تر ټاکلي حد پورې توکي راولي."
 
+msgctxt "wizard.mixedPrompt.quickBody"
+msgid "Download only this video, or queue the whole playlist with your active Quick Download profile."
+msgstr "یوازې دا ویډیو ډاونلوډ کړه، یا ټول پلیلېسټ د خپل فعال چټک ډاونلوډ پروفایل سره قطار ته اضافه کړه."
+
+msgctxt "wizard.mixedPrompt.quickLimitDescription"
+msgid "Maximum entries Arroxy scans before queueing a playlist, channel, or search result."
+msgstr "تر ټولو زیات توکي چې Arroxy یې د پلیلېسټ، چینل یا لټون پایله قطار ته تر اضافه کولو مخکې سکین کوي."
+
+msgctxt "wizard.mixedPrompt.quickPlaylistTooltip"
+msgid "Queues every loaded playlist item with the active Quick Download profile. If the scan hits your limit, Arroxy asks before queueing."
+msgstr "هر بار شوی پلیلېسټ توکی د فعال چټک ډاونلوډ پروفایل سره قطار ته اضافه کوي. که سکین ستا حد ته ورسېږي، Arroxy به د قطار ته اضافه کولو مخکې پوښتنه وکړي."
+
+msgctxt "wizard.mixedPrompt.quickSingleTooltip"
+msgid "Queues one download and ignores the playlist attached to this URL."
+msgstr "یو ډاونلوډ قطار ته اضافه کوي او له دې URL سره تړلی پلیلېسټ له پامه غورځوي."
+
+msgctxt "wizard.mixedPrompt.quickSingleVideo"
+msgid "Download this video"
+msgstr "دا ویډیو ډاونلوډ کړه"
+
+msgctxt "wizard.mixedPrompt.quickWholePlaylist"
+msgid "Download whole playlist"
+msgstr "ټول پلیلېسټ ډاونلوډ کړه"
+
 msgctxt "wizard.mixedPrompt.singleTooltip"
 msgid "Uses yt-dlp single-video mode so the playlist attached to this URL is ignored."
 msgstr "د yt-dlp د یوه ویډیو حالت کاروي، نو له دې URL سره تړلی پلی‌لېسټ له پامه غورځول کېږي."
@@ -1388,6 +1412,26 @@ msgstr "{{count}} URLونه"
 msgctxt "wizard.playlist.loadingItems"
 msgid "Fetching playlist…"
 msgstr "Playlist ترلاسه کیږي…"
+
+msgctxt "wizard.playlist.loadingLimitHint"
+msgid "Limited to first {{count}} items"
+msgstr "یوازې لومړیو {{count}} توکو ته محدود"
+
+msgctxt "wizard.playlist.loadingPagesFound_one"
+msgid "{{count}} page found"
+msgstr "{{count}} پاڼه وموندل شوه"
+
+msgctxt "wizard.playlist.loadingPagesFound_other"
+msgid "{{count}} pages found"
+msgstr "{{count}} پاڼې وموندل شوې"
+
+msgctxt "wizard.playlist.loadingPhaseItems"
+msgid "Collecting videos"
+msgstr "ویډیوګانې راټولېږي"
+
+msgctxt "wizard.playlist.loadingPhasePages"
+msgid "Scanning channel pages"
+msgstr "د چینل پاڼې کتل کېږي"
 
 msgctxt "wizard.playlist.noSelection"
 msgid "Select at least one video to continue"
@@ -1700,6 +1744,46 @@ msgstr "د ناپیژندل شوي کارونې احصائیې واستوئ"
 msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "یوازې د اپلیکیشن پیلونه شمیري. هیڅ URL، د فایل نومونه، یا شخصي معلومات نه شته."
+
+msgctxt "wizard.url.backdrop.cssOnlyDescription"
+msgid "CSS only, no canvas rendering."
+msgstr "یوازې CSS، د canvas وړاندې کول نشته."
+
+msgctxt "wizard.url.backdrop.cssOnlyLabel"
+msgid "Best performance"
+msgstr "غوره کړنه"
+
+msgctxt "wizard.url.backdrop.fallbackDescription"
+msgid "Static Canvas2D backdrop with no WebGL."
+msgstr "بې له WebGL څخه ثابت Canvas2D شالید."
+
+msgctxt "wizard.url.backdrop.fallbackLabel"
+msgid "Balanced"
+msgstr "منځنی"
+
+msgctxt "wizard.url.backdrop.gpuDescription"
+msgid "Animated WebGL backdrop when supported."
+msgstr "که ملاتړ ولري، خوځنده WebGL شالید."
+
+msgctxt "wizard.url.backdrop.gpuLabel"
+msgid "Most beautiful"
+msgstr "تر ټولو ښکلی"
+
+msgctxt "wizard.url.backdrop.modeDescription"
+msgid "Move from the most animated look to best performance."
+msgstr "له تر ټولو خوځنده بڼې څخه غوره کړنې ته ولاړ شئ."
+
+msgctxt "wizard.url.backdrop.modeLabel"
+msgid "Backdrop quality"
+msgstr "د شالید کیفیت"
+
+msgctxt "wizard.url.backdrop.panelDescription"
+msgid "Choose how much motion Arroxy uses for the animated backdrop."
+msgstr "وټاکئ چې Arroxy د خوځنده شالید لپاره څومره حرکت وکاروي."
+
+msgctxt "wizard.url.backdrop.panelTitle"
+msgid "Appearance and performance"
+msgstr "بڼه او کړنه"
 
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
@@ -2048,6 +2132,46 @@ msgstr "{{count}} توکي"
 msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arroxy only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "yt-dlp --playlist-end ته د لارښوونې لپاره: Arroxy د انتخاب جوړولو پرمهال یوازې د playlist، چینل، یا لټون له ننوتونو دومره غواړي."
+
+msgctxt "wizard.url.profile.activeLabel"
+msgid "Active profile"
+msgstr "فعال پروفایل"
+
+msgctxt "wizard.url.profile.changeGlobalDestination"
+msgid "Change global destination"
+msgstr "عمومي موخه بدله کړئ"
+
+msgctxt "wizard.url.profile.destinationFallback"
+msgid "Destination"
+msgstr "موخه"
+
+msgctxt "wizard.url.profile.editActive"
+msgid "Edit active profile"
+msgstr "فعال پروفایل سمول"
+
+msgctxt "wizard.url.profile.manageProfiles"
+msgid "Manage profiles"
+msgstr "پروفایلونه اداره کړئ"
+
+msgctxt "wizard.url.profile.menuDescription"
+msgid "Change the active profile for Quick Download, Bulk URLs, and playlists."
+msgstr "د چټک ډاونلوډ، ګڼو URLونو او پلی‌لیستونو لپاره فعال پروفایل بدل کړئ."
+
+msgctxt "wizard.url.profile.menuTitle"
+msgid "Switch profile"
+msgstr "پروفایل بدل کړئ"
+
+msgctxt "wizard.url.profile.newProfile"
+msgid "New profile"
+msgstr "نوی پروفایل"
+
+msgctxt "wizard.url.profile.switchAria"
+msgid "Switch download profile: {{profileName}}"
+msgstr "د ډاونلوډ پروفایل بدل کړئ: {{profileName}}"
+
+msgctxt "wizard.url.profile.switchTitle"
+msgid "Switch download profile"
+msgstr "د ډاونلوډ پروفایل بدل کړئ"
 
 msgctxt "wizard.url.proxy.clear"
 msgid "Clear"

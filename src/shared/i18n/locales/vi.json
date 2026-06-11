@@ -57,6 +57,11 @@
 			"selectedCount_other": "{{count}} đã chọn",
 			"noSelection": "Chọn ít nhất một video để tiếp tục",
 			"loadingItems": "Đang tải Playlist…",
+			"loadingPhasePages": "Đang quét các trang kênh",
+			"loadingPhaseItems": "Đang thu thập video",
+			"loadingPagesFound_one": "Đã tìm thấy {{count}} trang",
+			"loadingPagesFound_other": "Đã tìm thấy {{count}} trang",
+			"loadingLimitHint": "Giới hạn ở {{count}} mục đầu tiên",
 			"thumbnailAlt": "Hình thu nhỏ video",
 			"durationUnknown": "live",
 			"syncChange": "Đổi thư mục…",
@@ -84,11 +89,17 @@
 		"mixedPrompt": {
 			"title": "Liên kết này có Playlist",
 			"body": "Bạn chỉ muốn video đã chọn, hay muốn chọn từ Playlist? Bạn sẽ chọn các video cụ thể hoặc một đoạn ở bước tiếp theo.",
+			"quickBody": "Chỉ tải video này, hoặc đưa toàn bộ playlist vào hàng đợi bằng hồ sơ Tải nhanh đang hoạt động.",
 			"singleVideo": "Chỉ cái này thôi",
+			"quickSingleVideo": "Tải video này",
 			"pickFromPlaylist": "Chọn từ Playlist",
+			"quickWholePlaylist": "Tải toàn bộ playlist",
 			"playlistLimit": "Giới hạn dò playlist: {{count}} mục",
+			"quickLimitDescription": "Số mục tối đa Arroxy quét trước khi đưa playlist, kênh hoặc kết quả tìm kiếm vào hàng đợi.",
 			"singleTooltip": "Dùng chế độ video đơn của yt-dlp để bỏ qua playlist gắn với URL này.",
-			"playlistTooltip": "Dùng chế độ playlist của yt-dlp và lấy đến giới hạn dò playlist trước khi hiện bộ chọn."
+			"quickSingleTooltip": "Đưa một lượt tải vào hàng đợi và bỏ qua playlist gắn với URL này.",
+			"playlistTooltip": "Dùng chế độ playlist của yt-dlp và lấy đến giới hạn dò playlist trước khi hiện bộ chọn.",
+			"quickPlaylistTooltip": "Đưa mọi mục playlist đã tải vào hàng đợi bằng hồ sơ Tải nhanh đang hoạt động. Nếu lần quét chạm giới hạn của bạn, Arroxy sẽ hỏi trước khi đưa vào hàng đợi."
 		},
 		"url": {
 			"heading": "Tải xuống từ URL",
@@ -106,6 +117,18 @@
 			"quickFailed": "Không thể thêm mục này: {{error}}",
 			"quickPartialFailed_one": "Đã đưa mục hoạt động vào hàng đợi. Không thể chuẩn bị {{count}} URL.",
 			"quickPartialFailed_other": "Đã đưa các mục hoạt động vào hàng đợi. Không thể chuẩn bị {{count}} URL.",
+			"profile": {
+				"destinationFallback": "Đích lưu",
+				"switchAria": "Đổi hồ sơ tải xuống: {{profileName}}",
+				"switchTitle": "Đổi hồ sơ tải xuống",
+				"activeLabel": "Hồ sơ đang dùng",
+				"editActive": "Sửa hồ sơ đang dùng",
+				"changeGlobalDestination": "Đổi thư mục lưu chung",
+				"menuTitle": "Đổi hồ sơ",
+				"menuDescription": "Đổi hồ sơ đang dùng cho Tải nhanh, URL hàng loạt và playlist.",
+				"newProfile": "Hồ sơ mới",
+				"manageProfiles": "Quản lý hồ sơ"
+			},
 			"bulkButton": "URL hàng loạt",
 			"bulkTooltip": "Thêm và xếp hàng nhiều URL.",
 			"features": {
@@ -141,6 +164,18 @@
 				"extensionChrome": "Lấy cookies.txt TRÊN MÁY (Chrome)"
 			},
 			"proxy": {"label": "URL Proxy", "description": "Chuyển lưu lượng qua proxy — hữu ích cho nội dung bị chặn theo khu vực.", "placeholder": "http://host:port", "clear": "Xóa"},
+			"backdrop": {
+				"panelTitle": "Giao diện và hiệu năng",
+				"panelDescription": "Chọn mức chuyển động Arroxy dùng cho nền động.",
+				"modeLabel": "Chất lượng nền",
+				"modeDescription": "Chuyển từ giao diện nhiều chuyển động nhất sang hiệu năng tốt nhất.",
+				"cssOnlyLabel": "Hiệu năng tốt nhất",
+				"cssOnlyDescription": "Chỉ dùng CSS, không kết xuất canvas.",
+				"fallbackLabel": "Cân bằng",
+				"fallbackDescription": "Nền Canvas2D tĩnh không dùng WebGL.",
+				"gpuLabel": "Đẹp nhất",
+				"gpuDescription": "Nền WebGL động khi được hỗ trợ."
+			},
 			"limitRate": {
 				"label": "Giới hạn tốc độ tải",
 				"description": "Giới hạn băng thông cho tải media. Nhịp yêu cầu bên dưới thường là đòn bẩy giới hạn mạnh hơn.",

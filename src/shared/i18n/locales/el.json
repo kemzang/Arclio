@@ -57,6 +57,11 @@
 			"selectedCount_other": "{{count}} επιλεγμένα",
 			"noSelection": "Επέλεξε τουλάχιστον ένα βίντεο για να συνεχίσεις",
 			"loadingItems": "Φόρτωση playlist…",
+			"loadingPhasePages": "Σάρωση σελίδων καναλιού",
+			"loadingPhaseItems": "Συλλογή βίντεο",
+			"loadingPagesFound_one": "Βρέθηκε {{count}} σελίδα",
+			"loadingPagesFound_other": "Βρέθηκαν {{count}} σελίδες",
+			"loadingLimitHint": "Περιορισμένο στα πρώτα {{count}} στοιχεία",
 			"thumbnailAlt": "Μικρογραφία βίντεο",
 			"durationUnknown": "live",
 			"syncChange": "Αλλαγή φακέλου…",
@@ -84,11 +89,17 @@
 		"mixedPrompt": {
 			"title": "Αυτός ο σύνδεσμος έχει playlist",
 			"body": "Θέλεις μόνο το βίντεο που έκανες κλικ, ή να επιλέξεις από την playlist; Θα διαλέξεις συγκεκριμένα βίντεο ή εύρος στη συνέχεια.",
+			"quickBody": "Κατέβασε μόνο αυτό το βίντεο ή βάλε ολόκληρη τη λίστα αναπαραγωγής στην ουρά με το ενεργό προφίλ Γρήγορης λήψης.",
 			"singleVideo": "Μόνο αυτό",
+			"quickSingleVideo": "Λήψη αυτού του βίντεο",
 			"pickFromPlaylist": "Επιλογή από την playlist",
+			"quickWholePlaylist": "Λήψη ολόκληρης λίστας αναπαραγωγής",
 			"playlistLimit": "Όριο ελέγχου playlist: {{count}} στοιχεία",
+			"quickLimitDescription": "Ο μέγιστος αριθμός στοιχείων που σαρώνει το Arroxy πριν βάλει στην ουρά μια λίστα αναπαραγωγής, ένα κανάλι ή ένα αποτέλεσμα αναζήτησης.",
 			"singleTooltip": "Χρησιμοποιεί τη λειτουργία μεμονωμένου βίντεο του yt-dlp ώστε να αγνοηθεί η playlist που είναι συνδεδεμένη με αυτό το URL.",
-			"playlistTooltip": "Χρησιμοποιεί τη λειτουργία playlist του yt-dlp και ανακτά μέχρι το όριό σου πριν εμφανίσει τον επιλογέα."
+			"quickSingleTooltip": "Βάζει μία λήψη στην ουρά και αγνοεί τη λίστα αναπαραγωγής που είναι συνδεδεμένη με αυτό το URL.",
+			"playlistTooltip": "Χρησιμοποιεί τη λειτουργία playlist του yt-dlp και ανακτά μέχρι το όριό σου πριν εμφανίσει τον επιλογέα.",
+			"quickPlaylistTooltip": "Βάζει κάθε φορτωμένο στοιχείο της λίστας στην ουρά με το ενεργό προφίλ Γρήγορης λήψης. Αν η σάρωση φτάσει το όριό σου, το Arroxy θα ρωτήσει πριν βάλει στοιχεία στην ουρά."
 		},
 		"url": {
 			"heading": "Λήψη από URL",
@@ -106,6 +117,18 @@
 			"quickFailed": "Δεν ήταν δυνατή η προσθήκη: {{error}}",
 			"quickPartialFailed_one": "Μπήκε στην ουρά ό,τι λειτούργησε. {{count}} URL δεν προετοιμάστηκε.",
 			"quickPartialFailed_other": "Μπήκε στην ουρά ό,τι λειτούργησε. {{count}} URL δεν προετοιμάστηκαν.",
+			"profile": {
+				"destinationFallback": "Προορισμός",
+				"switchAria": "Αλλαγή προφίλ λήψης: {{profileName}}",
+				"switchTitle": "Αλλαγή προφίλ λήψης",
+				"activeLabel": "Ενεργό προφίλ",
+				"editActive": "Επεξεργασία ενεργού προφίλ",
+				"changeGlobalDestination": "Αλλαγή καθολικού προορισμού",
+				"menuTitle": "Αλλαγή προφίλ",
+				"menuDescription": "Άλλαξε το ενεργό προφίλ για Γρήγορη λήψη, μαζικά URL και playlist.",
+				"newProfile": "Νέο προφίλ",
+				"manageProfiles": "Διαχείριση προφίλ"
+			},
 			"bulkButton": "Μαζικά URL",
 			"bulkTooltip": "Πρόσθεσε και βάλε στην ουρά πολλά URL.",
 			"features": {
@@ -141,6 +164,18 @@
 				"extensionChrome": "Λήψη cookies.txt ΤΟΠΙΚΑ (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Δρομολόγηση κίνησης μέσω proxy — χρήσιμο για περιεχόμενο με γεωγραφικούς περιορισμούς.", "placeholder": "http://host:port", "clear": "Εκκαθάριση"},
+			"backdrop": {
+				"panelTitle": "Εμφάνιση και απόδοση",
+				"panelDescription": "Επίλεξε πόση κίνηση χρησιμοποιεί το Arroxy για το κινούμενο φόντο.",
+				"modeLabel": "Ποιότητα φόντου",
+				"modeDescription": "Μετακινηθείτε από την πιο κινούμενη εμφάνιση στην καλύτερη απόδοση.",
+				"cssOnlyLabel": "Καλύτερη απόδοση",
+				"cssOnlyDescription": "Μόνο CSS, χωρίς απόδοση canvas.",
+				"fallbackLabel": "Ισορροπημένο",
+				"fallbackDescription": "Στατικό φόντο Canvas2D χωρίς WebGL.",
+				"gpuLabel": "Πιο όμορφο",
+				"gpuDescription": "Κινούμενο φόντο WebGL όταν υποστηρίζεται."
+			},
 			"limitRate": {
 				"label": "Όριο ταχύτητας λήψης",
 				"description": "Περιόρισε το bandwidth για λήψεις πολυμέσων. Ο ρυθμός αιτημάτων παρακάτω είναι συνήθως ισχυρότερος μοχλός ορίων.",

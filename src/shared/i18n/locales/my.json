@@ -48,6 +48,11 @@
 			"selectedCount_other": "{{count}} ခုရွေးထားသည်",
 			"noSelection": "ဆက်လက်ရန် ဗီဒီယိုတစ်ခုအနည်းဆုံးရွေးပါ",
 			"loadingItems": "Playlist ရယူနေသည်…",
+			"loadingPhasePages": "ချန်နယ် စာမျက်နှာများကို စစ်ဆေးနေသည်",
+			"loadingPhaseItems": "ဗီဒီယိုများ စုဆောင်းနေသည်",
+			"loadingPagesFound_one": "{{count}} စာမျက်နှာ တွေ့ရှိသည်",
+			"loadingPagesFound_other": "{{count}} စာမျက်နှာများ တွေ့ရှိသည်",
+			"loadingLimitHint": "ပထမဆုံး {{count}} ခုအထိသာ ကန့်သတ်ထားသည်",
 			"thumbnailAlt": "ဗီဒီယို thumbnail",
 			"durationUnknown": "live",
 			"syncChange": "ဖိုလ်ဒါ ပြောင်းရန်…",
@@ -75,11 +80,17 @@
 		"mixedPrompt": {
 			"title": "ဤလင့်ခ်တွင် Playlist ပါဝင်သည်",
 			"body": "သင်နှိပ်ခဲ့သော ဗီဒီယိုကိုသာ လိုချင်သလော၊ Playlist မှ ရွေးချင်သလော? နောက်တွင် သီးခြားဗီဒီယိုများ သို့မဟုတ် အပိုင်းအခြား ရွေးနိုင်မည်။",
+			"quickBody": "ဤဗီဒီယိုတစ်ခုတည်းကိုသာ ဒေါင်းလုဒ်လုပ်ပါ၊ သို့မဟုတ် သင့်အသုံးပြုနေသော အမြန်ဒေါင်းလုဒ် ပရိုဖိုင်ဖြင့် playlist တစ်ခုလုံးကို queue ထဲထည့်ပါ။",
 			"singleVideo": "ဤတစ်ခုသာ",
+			"quickSingleVideo": "ဤဗီဒီယိုကို ဒေါင်းလုဒ်လုပ်ပါ",
 			"pickFromPlaylist": "Playlist မှ ရွေးမည်",
+			"quickWholePlaylist": "playlist တစ်ခုလုံးကို ဒေါင်းလုဒ်လုပ်ပါ",
 			"playlistLimit": "Playlist စစ်ဆေးမှု ကန့်သတ်ချက်: {{count}} ခု",
+			"quickLimitDescription": "playlist၊ channel သို့မဟုတ် ရှာဖွေမှုရလဒ်ကို queue ထဲမထည့်မီ Arroxy စကန်ဖတ်မည့် အများဆုံး item အရေအတွက်။",
 			"singleTooltip": "ဤ URL နှင့်တွဲနေသော playlist ကို လျစ်လျူရှုရန် yt-dlp ၏ ဗီဒီယိုတစ်ခုချင်း မုဒ်ကို သုံးသည်။",
-			"playlistTooltip": "yt-dlp ၏ playlist မုဒ်ကို သုံးပြီး ရွေးချယ်ကိရိယာ မပြမီ သင့်ကန့်သတ်ချက်အထိ ယူသည်။"
+			"quickSingleTooltip": "ဒေါင်းလုဒ်တစ်ခုကို queue ထဲထည့်ပြီး ဤ URL နှင့်တွဲထားသော playlist ကို လျစ်လျူရှုပါသည်။",
+			"playlistTooltip": "yt-dlp ၏ playlist မုဒ်ကို သုံးပြီး ရွေးချယ်ကိရိယာ မပြမီ သင့်ကန့်သတ်ချက်အထိ ယူသည်။",
+			"quickPlaylistTooltip": "တင်ပြီးသား playlist item တစ်ခုချင်းစီကို အသုံးပြုနေသော အမြန်ဒေါင်းလုဒ် ပရိုဖိုင်ဖြင့် queue ထဲထည့်ပါသည်။ စကန်ဖတ်မှုက သင့် limit ထိရောက်ပါက queue မထည့်မီ Arroxy က မေးပါမည်။"
 		},
 		"url": {
 			"heading": "URL မှ ဒေါင်းလုဒ်လုပ်ရန်",
@@ -97,6 +108,18 @@
 			"quickFailed": "ဤအရာကို ထည့်မရပါ: {{error}}",
 			"quickPartialFailed_one": "အလုပ်ဖြစ်သည့်အရာများကို တန်းစီစာရင်းထဲ ထည့်ပြီးပါပြီ။ {{count}} URL ကို မပြင်ဆင်နိုင်ပါ။",
 			"quickPartialFailed_other": "အလုပ်ဖြစ်သည့်အရာများကို တန်းစီစာရင်းထဲ ထည့်ပြီးပါပြီ။ {{count}} URL များကို မပြင်ဆင်နိုင်ပါ။",
+			"profile": {
+				"destinationFallback": "သိမ်းဆည်းရာနေရာ",
+				"switchAria": "ဒေါင်းလုဒ် ပရိုဖိုင် ပြောင်းပါ: {{profileName}}",
+				"switchTitle": "ဒေါင်းလုဒ် ပရိုဖိုင် ပြောင်းပါ",
+				"activeLabel": "လက်ရှိ ပရိုဖိုင်",
+				"editActive": "လက်ရှိ ပရိုဖိုင်ကို ပြင်ဆင်ပါ",
+				"changeGlobalDestination": "အများသုံး သိမ်းဆည်းရာနေရာ ပြောင်းပါ",
+				"menuTitle": "ပရိုဖိုင် ပြောင်းပါ",
+				"menuDescription": "Quick Download၊ URL များစွာ နှင့် playlist များအတွက် လက်ရှိ ပရိုဖိုင်ကို ပြောင်းပါ။",
+				"newProfile": "ပရိုဖိုင် အသစ်",
+				"manageProfiles": "ပရိုဖိုင်များကို စီမံပါ"
+			},
 			"bulkButton": "URL အများအပြား",
 			"bulkTooltip": "URL အများအပြားကို ထည့်ပြီး queue ထဲသို့ ထည့်ပါ။",
 			"features": {
@@ -132,6 +155,18 @@
 				"extensionChrome": "cookies.txt ကို ဒေသတွင်း ရယူရန် (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Proxy မှတဆင့် traffic လမ်းကြောင်းလွှဲပါ — ဂျီဩဂရပ်ကန့်သတ်ချက်ရှိသော အကြောင်းအရာများအတွက် အသုံးဝင်သည်။", "placeholder": "http://host:port", "clear": "ရှင်းလင်း"},
+			"backdrop": {
+				"panelTitle": "အသွင်အပြင်နှင့် စွမ်းဆောင်ရည်",
+				"panelDescription": "Arroxy သည် လှုပ်ရှားနောက်ခံအတွက် လှုပ်ရှားမှုမည်မျှ အသုံးပြုမည်ကို ရွေးပါ။",
+				"modeLabel": "နောက်ခံ အရည်အသွေး",
+				"modeDescription": "အလှုပ်ရှားဆုံး အသွင်အပြင်မှ အကောင်းဆုံး စွမ်းဆောင်ရည်သို့ ရွှေ့ပါ။",
+				"cssOnlyLabel": "အကောင်းဆုံး စွမ်းဆောင်ရည်",
+				"cssOnlyDescription": "CSS သာအသုံးပြုမည်၊ canvas rendering မရှိပါ။",
+				"fallbackLabel": "မျှတ",
+				"fallbackDescription": "WebGL မပါသော တည်ငြိမ်သည့် Canvas2D နောက်ခံ။",
+				"gpuLabel": "အလှဆုံး",
+				"gpuDescription": "ထောက်ပံ့ပါက လှုပ်ရှားနေသော WebGL နောက်ခံ။"
+			},
 			"limitRate": {
 				"label": "ဒေါင်းလုဒ် အမြန်နှုန်း ကန့်သတ်ချက်",
 				"description": "မီဒီယာ ဒေါင်းလုဒ်များအတွက် bandwidth ကို ကန့်သတ်ပါ။ အောက်ပါ request pacing သည် အများအားဖြင့် ပိုအားကောင်းသော ကန့်သတ်ကိရိယာ ဖြစ်သည်။",

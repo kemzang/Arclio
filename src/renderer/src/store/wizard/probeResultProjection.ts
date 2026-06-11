@@ -1,8 +1,8 @@
 import {DEFAULTS} from '@shared/constants.js'
-import {deriveBulkUrlLabel, extractYouTubeVideoId, isClearlyIndividualYouTubeUrl} from '@shared/bulkUrls.js'
 import {resolvePlaylistProbeLimit} from '@shared/networkPacing.js'
 import {DEFAULT_PLAYLIST_SELECTION} from '@shared/schemas.js'
 import type {AppSettings, PlaylistEntry, PlaylistSelection, ProbePlaylistMode, ProbeResult} from '@shared/types.js'
+import {classifyUrlIntent, deriveUrlIntentLabel, extractUrlIntentYouTubeVideoId, isObviousSingleUrlIntent} from '@shared/urlIntent.js'
 import {isYouTubeExtractor} from '@shared/ytdlp/extractorPredicates.js'
 import type {AppState, WizardStep} from '../types.js'
 import {applyPreset, restoreFormatSelection, restoreSubtitleSelection} from './formatPicker.js'
@@ -59,6 +59,7 @@ export function projectProbeStart(state: AppState, url: string, playlistMode: Pr
 			playlistId: '',
 			playlistIsMultiVideo: false,
 			playlistLikelyCapped: false,
+			playlistProbeProgress: null,
 			playlistScopeReloading: false,
 			bulkMetadataStatus: 'idle',
 			bulkMetadataCompleted: 0,
@@ -74,7 +75,7 @@ export function projectProbeStart(state: AppState, url: string, playlistMode: Pr
 }
 
 export function projectProbeFailure(error: AppState['wizardError']): Partial<AppState> {
-	return {wizardStep: 'error', formatsLoading: false, playlistProbeLoading: false, wizardError: error, wizardErrorOrigin: 'formats', wizardFormatsDegraded: null}
+	return {wizardStep: 'error', formatsLoading: false, playlistProbeLoading: false, playlistProbeProgress: null, wizardError: error, wizardErrorOrigin: 'formats', wizardFormatsDegraded: null}
 }
 
 export function projectVideoProbeResult(probe: Extract<ProbeResult, {kind: 'video'}>, state: AppState, firstProbe: boolean): Partial<AppState> {
@@ -122,6 +123,7 @@ export function projectVideoProbeResult(probe: Extract<ProbeResult, {kind: 'vide
 			: {}),
 		formatsLoading: false,
 		playlistProbeLoading: false,
+		playlistProbeProgress: null,
 		playlistItems: [],
 		selectedPlaylistItemIds: [],
 		playlistTitle: '',
@@ -160,6 +162,7 @@ export function projectPlaylistProbeResult(probe: Extract<ProbeResult, {kind: 'p
 		playlistLikelyCapped,
 		playlistScopeError: null,
 		playlistProbeLoading: false,
+		playlistProbeProgress: null,
 		formatsLoading: false,
 		wizardFormats: [],
 		wizardFormatsDegraded: null,
@@ -170,11 +173,13 @@ export function projectPlaylistProbeResult(probe: Extract<ProbeResult, {kind: 'p
 
 export function projectBulkStart(urls: readonly string[], state: AppState): BulkStartProjection {
 	const settings = state.settings
-	const allYouTubeVideos = urls.length > 0 && urls.every(isClearlyIndividualYouTubeUrl)
+	const intents = urls.map(url => classifyUrlIntent(url))
+	const allYouTubeVideos = intents.length > 0 && intents.every(isObviousSingleUrlIntent)
 	const playlistSelection: PlaylistSelection = settings?.playlist?.lastPlaylistSelection ?? DEFAULT_PLAYLIST_SELECTION
 	const playlistItems = urls.map((url, index) => {
 		const number = index + 1
-		return {id: `bulk-${number}`, url, title: deriveBulkUrlLabel(url) ?? `Bulk URL ${number}`, thumbnail: '', playlistIndex: number, videoId: extractYouTubeVideoId(url)}
+		const intent = intents[index] ?? classifyUrlIntent(url)
+		return {id: `bulk-${number}`, url, title: deriveUrlIntentLabel(url) ?? `Bulk URL ${number}`, thumbnail: '', playlistIndex: number, videoId: extractUrlIntentYouTubeVideoId(intent)}
 	})
 	return {
 		allYouTubeVideos,
@@ -209,6 +214,7 @@ export function projectBulkStart(urls: readonly string[], state: AppState): Bulk
 			playlistId: 'bulk',
 			playlistIsMultiVideo: false,
 			playlistLikelyCapped: false,
+			playlistProbeProgress: null,
 			bulkMetadataStatus: urls.length > 0 ? 'resolving' : 'idle',
 			bulkMetadataCompleted: 0,
 			bulkMetadataTotal: urls.length,

@@ -48,6 +48,11 @@
 			"selectedCount_other": "{{count}} selected",
 			"noSelection": "Select at least one video to continue",
 			"loadingItems": "Fetching playlist…",
+			"loadingPhasePages": "Scanning channel pages",
+			"loadingPhaseItems": "Collecting videos",
+			"loadingPagesFound_one": "{{count}} page found",
+			"loadingPagesFound_other": "{{count}} pages found",
+			"loadingLimitHint": "Limited to first {{count}} items",
 			"thumbnailAlt": "Video thumbnail",
 			"durationUnknown": "live",
 			"syncChange": "Change folder…",
@@ -75,11 +80,17 @@
 		"mixedPrompt": {
 			"title": "This link has a playlist",
 			"body": "Want only the video you clicked, or pick from the playlist? You'll choose specific videos or a range next.",
+			"quickBody": "Download only this video, or queue the whole playlist with your active Quick Download profile.",
 			"singleVideo": "Just this one",
+			"quickSingleVideo": "Download this video",
 			"pickFromPlaylist": "Pick from playlist",
+			"quickWholePlaylist": "Download whole playlist",
 			"playlistLimit": "Playlist probe limit: {{count}} items",
+			"quickLimitDescription": "Maximum entries Arroxy scans before queueing a playlist, channel, or search result.",
 			"singleTooltip": "Uses yt-dlp single-video mode so the playlist attached to this URL is ignored.",
-			"playlistTooltip": "Uses yt-dlp playlist mode and fetches up to your playlist probe limit before showing the picker."
+			"quickSingleTooltip": "Queues one download and ignores the playlist attached to this URL.",
+			"playlistTooltip": "Uses yt-dlp playlist mode and fetches up to your playlist probe limit before showing the picker.",
+			"quickPlaylistTooltip": "Queues every loaded playlist item with the active Quick Download profile. If the scan hits your limit, Arroxy asks before queueing."
 		},
 		"url": {
 			"heading": "Download from URL",
@@ -97,6 +108,18 @@
 			"quickFailed": "Couldn't add this one: {{error}}",
 			"quickPartialFailed_one": "Queued what worked. {{count}} URL could not be prepared.",
 			"quickPartialFailed_other": "Queued what worked. {{count}} URLs could not be prepared.",
+			"profile": {
+				"destinationFallback": "Destination",
+				"switchAria": "Switch download profile: {{profileName}}",
+				"switchTitle": "Switch download profile",
+				"activeLabel": "Active profile",
+				"editActive": "Edit active profile",
+				"changeGlobalDestination": "Change global destination",
+				"menuTitle": "Switch profile",
+				"menuDescription": "Change the active profile for Quick Download, Bulk URLs, and playlists.",
+				"newProfile": "New profile",
+				"manageProfiles": "Manage profiles"
+			},
 			"bulkButton": "Bulk URLs",
 			"bulkTooltip": "Add and queue multiple URLs.",
 			"features": {
@@ -132,6 +155,18 @@
 				"extensionChrome": "Get cookies.txt LOCALLY (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Route traffic through a proxy — useful for geo-restricted content.", "placeholder": "http://host:port", "clear": "Clear"},
+			"backdrop": {
+				"panelTitle": "Appearance and performance",
+				"panelDescription": "Choose how much motion Arroxy uses for the animated backdrop.",
+				"modeLabel": "Backdrop quality",
+				"modeDescription": "Move from the most animated look to best performance.",
+				"cssOnlyLabel": "Best performance",
+				"cssOnlyDescription": "CSS only, no canvas rendering.",
+				"fallbackLabel": "Balanced",
+				"fallbackDescription": "Static Canvas2D backdrop with no WebGL.",
+				"gpuLabel": "Most beautiful",
+				"gpuDescription": "Animated WebGL backdrop when supported."
+			},
 			"limitRate": {
 				"label": "Download speed limit",
 				"description": "Cap bandwidth for media downloads. Request pacing below is usually the stronger rate-limit lever.",

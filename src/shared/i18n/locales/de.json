@@ -57,6 +57,11 @@
 			"selectedCount_other": "{{count}} ausgewählt",
 			"noSelection": "Wähle mindestens ein Video aus, um fortzufahren",
 			"loadingItems": "Playlist wird geladen…",
+			"loadingPhasePages": "Kanalseiten werden geprüft",
+			"loadingPhaseItems": "Videos werden gesammelt",
+			"loadingPagesFound_one": "{{count}} Seite gefunden",
+			"loadingPagesFound_other": "{{count}} Seiten gefunden",
+			"loadingLimitHint": "Auf die ersten {{count}} Einträge begrenzt",
 			"thumbnailAlt": "Video-Vorschaubild",
 			"durationUnknown": "live",
 			"syncChange": "Ordner ändern…",
@@ -84,11 +89,17 @@
 		"mixedPrompt": {
 			"title": "Dieser Link enthält eine Playlist",
 			"body": "Nur das angeklickte Video oder aus der Playlist auswählen? Im nächsten Schritt kannst du einzelne Videos oder einen Bereich festlegen.",
+			"quickBody": "Lade nur dieses Video herunter oder stelle die ganze Playlist mit deinem aktiven Schnelldownload-Profil in die Warteschlange.",
 			"singleVideo": "Nur dieses eine",
+			"quickSingleVideo": "Dieses Video herunterladen",
 			"pickFromPlaylist": "Aus Playlist auswählen",
+			"quickWholePlaylist": "Ganze Playlist herunterladen",
 			"playlistLimit": "Playlist-Prüflimit: {{count}} Einträge",
+			"quickLimitDescription": "Maximale Anzahl der Einträge, die Arroxy scannt, bevor eine Playlist, ein Kanal oder ein Suchergebnis in die Warteschlange kommt.",
 			"singleTooltip": "Verwendet den Einzelvideo-Modus von yt-dlp, sodass die an diese URL angehängte Playlist ignoriert wird.",
-			"playlistTooltip": "Verwendet den Playlist-Modus von yt-dlp und lädt bis zu deinem Playlist-Prüflimit, bevor die Auswahl angezeigt wird."
+			"quickSingleTooltip": "Stellt einen Download in die Warteschlange und ignoriert die Playlist, die an diese URL angehängt ist.",
+			"playlistTooltip": "Verwendet den Playlist-Modus von yt-dlp und lädt bis zu deinem Playlist-Prüflimit, bevor die Auswahl angezeigt wird.",
+			"quickPlaylistTooltip": "Stellt jeden geladenen Playlist-Eintrag mit dem aktiven Schnelldownload-Profil in die Warteschlange. Wenn der Scan dein Limit erreicht, fragt Arroxy vor dem Einreihen nach."
 		},
 		"url": {
 			"heading": "Von URL herunterladen",
@@ -106,6 +117,18 @@
 			"quickFailed": "Konnte dieses Element nicht hinzufügen: {{error}}",
 			"quickPartialFailed_one": "Was funktioniert hat, wurde eingereiht. {{count}} URL konnte nicht vorbereitet werden.",
 			"quickPartialFailed_other": "Was funktioniert hat, wurde eingereiht. {{count}} URLs konnten nicht vorbereitet werden.",
+			"profile": {
+				"destinationFallback": "Ziel",
+				"switchAria": "Download-Profil wechseln: {{profileName}}",
+				"switchTitle": "Download-Profil wechseln",
+				"activeLabel": "Aktives Profil",
+				"editActive": "Aktives Profil bearbeiten",
+				"changeGlobalDestination": "Globales Ziel ändern",
+				"menuTitle": "Profil wechseln",
+				"menuDescription": "Ändere das aktive Profil für Quick Download, Bulk-URLs und Playlists.",
+				"newProfile": "Neues Profil",
+				"manageProfiles": "Profile verwalten"
+			},
 			"bulkButton": "Bulk-URLs",
 			"bulkTooltip": "Mehrere URLs hinzufügen und in die Warteschlange stellen.",
 			"features": {
@@ -141,6 +164,18 @@
 				"extensionChrome": "cookies.txt LOKAL holen (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Datenverkehr über einen Proxy leiten — nützlich für geo-gesperrte Inhalte.", "placeholder": "http://host:port", "clear": "Löschen"},
+			"backdrop": {
+				"panelTitle": "Darstellung und Leistung",
+				"panelDescription": "Wähle, wie viel Bewegung Arroxy für den animierten Hintergrund verwendet.",
+				"modeLabel": "Hintergrundqualität",
+				"modeDescription": "Von der stärksten Animation zur besten Leistung.",
+				"cssOnlyLabel": "Beste Leistung",
+				"cssOnlyDescription": "Nur CSS, kein canvas-Rendering.",
+				"fallbackLabel": "Ausgewogen",
+				"fallbackDescription": "Statischer Canvas2D-Hintergrund ohne WebGL.",
+				"gpuLabel": "Am schönsten",
+				"gpuDescription": "Animierter WebGL-Hintergrund, wenn unterstützt."
+			},
 			"limitRate": {
 				"label": "Download-Geschwindigkeitslimit",
 				"description": "Begrenzt die Bandbreite für Mediendownloads. Die Anfrage-Pausen darunter sind meist der stärkere Hebel gegen Limits.",

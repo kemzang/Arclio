@@ -29,7 +29,7 @@ const mockAppApi = {
 	shell: {openFolder: vi.fn().mockResolvedValue(ok({opened: true})), openExternal: mockOpenExternal, openBinariesDir: vi.fn().mockResolvedValue(ok({opened: true}))},
 	logs: {openDir: vi.fn().mockResolvedValue(ok({opened: true})), uploadFeedbackDiagnostic: vi.fn(async ({reportId}: {reportId: string}) => ok({reportId, diagnosticUrl: null, rawBytes: 42, compressedBytes: 31, truncated: false, sha256: 'a'.repeat(64)}))},
 	dialog: {chooseFolder: vi.fn().mockResolvedValue(ok({path: '/tmp'})), chooseFile: vi.fn().mockResolvedValue(ok({path: null})), chooseExecutable: vi.fn().mockResolvedValue(ok({path: null}))},
-	events: {onStatus: vi.fn().mockReturnValue(() => undefined), onProgress: vi.fn().mockReturnValue(() => undefined), onClipboardUrl: vi.fn().mockReturnValue(() => undefined), onWarmupProgress: vi.fn().mockReturnValue(() => undefined)},
+	events: {onStatus: vi.fn().mockReturnValue(() => undefined), onProgress: vi.fn().mockReturnValue(() => undefined), onProbeProgress: vi.fn().mockReturnValue(() => undefined), onClipboardUrl: vi.fn().mockReturnValue(() => undefined), onWarmupProgress: vi.fn().mockReturnValue(() => undefined)},
 	queue: {
 		cmd: {
 			add: vi.fn().mockResolvedValue({ok: true, data: {ids: []}}),
@@ -108,6 +108,7 @@ describe('Feedback nudge', () => {
 
 		expect(screen.getByTestId('feedback-nudge')).toBeInTheDocument()
 		expect(screen.getByText("Enjoying Arroxy? I'd love to hear from you! 💬")).toBeInTheDocument()
+		expect(mockTallyOpenPopup).not.toHaveBeenCalled()
 	})
 
 	it('nudge auto-dismisses after 8 seconds', async () => {
@@ -146,7 +147,7 @@ describe('Feedback nudge', () => {
 		})
 
 		expect(mockOpenExternal).not.toHaveBeenCalled()
-		expect(mockTallyOpenPopup).toHaveBeenCalledWith('Ek6M8B', expect.objectContaining({hiddenFields: expect.objectContaining({source: 'app-footer', diagnostic_upload_status: 'requested'})}))
+		expect(mockTallyOpenPopup).toHaveBeenCalledWith('Ek6M8B', expect.objectContaining({hiddenFields: expect.objectContaining({source: 'app-footer', diagnostic_mode: 'automatic'})}))
 
 		// After exit animation completes
 		act(() => {

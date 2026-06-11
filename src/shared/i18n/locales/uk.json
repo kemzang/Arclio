@@ -65,6 +65,11 @@
 			"selectedCount_other": "{{count}} вибрано",
 			"noSelection": "Вибери хоча б одне відео, щоб продовжити",
 			"loadingItems": "Завантаження Playlist…",
+			"loadingPhasePages": "Сканування сторінок каналу",
+			"loadingPhaseItems": "Збирання відео",
+			"loadingPagesFound_one": "Знайдено {{count}} сторінку",
+			"loadingPagesFound_other": "Знайдено {{count}} сторінок",
+			"loadingLimitHint": "Обмежено першими {{count}} елементами",
 			"thumbnailAlt": "Мініатюра відео",
 			"durationUnknown": "live",
 			"syncChange": "Змінити папку…",
@@ -92,11 +97,17 @@
 		"mixedPrompt": {
 			"title": "Це посилання з Playlist",
 			"body": "Хочеш завантажити лише те відео, на яке натиснув, чи вибрати з Playlist? Далі зможеш вказати конкретні відео або діапазон.",
+			"quickBody": "Завантажити лише це відео або поставити весь плейлист у чергу з активним профілем Швидкого завантаження.",
 			"singleVideo": "Лише це одне",
+			"quickSingleVideo": "Завантажити це відео",
 			"pickFromPlaylist": "Вибрати з Playlist",
+			"quickWholePlaylist": "Завантажити весь плейлист",
 			"playlistLimit": "Ліміт перевірки плейлиста: {{count}} елементів",
+			"quickLimitDescription": "Максимальна кількість записів, які Arroxy сканує перед додаванням плейлиста, каналу або результату пошуку в чергу.",
 			"singleTooltip": "Використовує режим одного відео yt-dlp, тому плейлист у цьому URL ігнорується.",
-			"playlistTooltip": "Використовує режим плейлиста yt-dlp і завантажує елементи до твого ліміту перед показом вибору."
+			"quickSingleTooltip": "Додає в чергу одне завантаження й ігнорує плейлист, прикріплений до цього URL.",
+			"playlistTooltip": "Використовує режим плейлиста yt-dlp і завантажує елементи до твого ліміту перед показом вибору.",
+			"quickPlaylistTooltip": "Додає в чергу кожен завантажений елемент плейлиста з активним профілем Швидкого завантаження. Якщо сканування досягне твого ліміту, Arroxy запитає перед додаванням у чергу."
 		},
 		"url": {
 			"heading": "Завантажити з URL",
@@ -114,6 +125,18 @@
 			"quickFailed": "Не вдалося додати: {{error}}",
 			"quickPartialFailed_one": "Те, що спрацювало, додано до черги. {{count}} URL не вдалося підготувати.",
 			"quickPartialFailed_other": "Те, що спрацювало, додано до черги. {{count}} URL не вдалося підготувати.",
+			"profile": {
+				"destinationFallback": "Тека призначення",
+				"switchAria": "Перемкнути профіль завантаження: {{profileName}}",
+				"switchTitle": "Перемкнути профіль завантаження",
+				"activeLabel": "Активний профіль",
+				"editActive": "Редагувати активний профіль",
+				"changeGlobalDestination": "Змінити глобальну теку призначення",
+				"menuTitle": "Перемкнути профіль",
+				"menuDescription": "Змініть активний профіль для Quick Download, масових URL і списків відтворення.",
+				"newProfile": "Новий профіль",
+				"manageProfiles": "Керувати профілями"
+			},
 			"bulkButton": "Масові URL",
 			"bulkTooltip": "Додайте кілька URL і поставте їх у чергу.",
 			"features": {
@@ -149,6 +172,18 @@
 				"extensionChrome": "Отримати cookies.txt ЛОКАЛЬНО (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Направляти трафік через проксі — корисно для контенту з географічними обмеженнями.", "placeholder": "http://host:port", "clear": "Очистити"},
+			"backdrop": {
+				"panelTitle": "Вигляд і продуктивність",
+				"panelDescription": "Виберіть, скільки руху Arroxy використовує для анімованого тла.",
+				"modeLabel": "Якість тла",
+				"modeDescription": "Від найанімованішого вигляду до найкращої продуктивності.",
+				"cssOnlyLabel": "Найкраща продуктивність",
+				"cssOnlyDescription": "Лише CSS, без рендерингу canvas.",
+				"fallbackLabel": "Збалансовано",
+				"fallbackDescription": "Статичне тло Canvas2D без WebGL.",
+				"gpuLabel": "Найгарніше",
+				"gpuDescription": "Анімоване тло WebGL, якщо підтримується."
+			},
 			"limitRate": {
 				"label": "Обмеження швидкості завантаження",
 				"description": "Обмежує пропускну здатність для медіазавантажень. Інтервали запитів нижче зазвичай сильніше впливають на ліміти.",

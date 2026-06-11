@@ -34,6 +34,7 @@ export const RESET_WIZARD_STATE = {
 	playlistIsMultiVideo: false,
 	playlistLikelyCapped: false,
 	playlistProbeLoading: false,
+	playlistProbeProgress: null,
 	playlistScopeReloading: false,
 	playlistScopeError: null as string | null,
 	playlistScope: {items: {kind: 'app-limit'}} as PlaylistScope,
@@ -74,6 +75,7 @@ export const RESET_WIZARD_STATE = {
 	advancedAutoTarget: 'cookies' as const,
 	mixedUrlPromptOpen: false,
 	mixedUrlPending: null as string | null,
+	mixedUrlPromptSource: null,
 	cookiesConfigDialogIssue: null,
 	quickPlaylistCapDialogOpen: false
 } as const

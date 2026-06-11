@@ -9,6 +9,7 @@ import {track} from '../lib/analytics.js'
 
 let unbindWarmupProgress: (() => void) | null = null
 let unbindQueueProjection: (() => void) | null = null
+let unbindProbeProgress: (() => void) | null = null
 
 const SHARE_MILESTONES: readonly number[] = [3, 25, 100]
 const SHARE_MILESTONE_SET = new Set(SHARE_MILESTONES)
@@ -123,6 +124,16 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 			unbindWarmupProgress?.()
 			unbindWarmupProgress = window.appApi.events.onWarmupProgress(event => {
 				set(state => ({warmupProgress: {...(state.warmupProgress ?? {}), [event.binary]: event}}))
+			})
+
+			unbindProbeProgress?.()
+			unbindProbeProgress = window.appApi.events.onProbeProgress(event => {
+				const state = get()
+				const playlistProbeActive = state.playlistProbeLoading || state.playlistScopeReloading
+				const quickDownloadProbeActive = state.quickDownloadStatus === 'preparing' && state.quickDownloadProgressPhase === 'probing'
+				const matchesActiveUrl = state.wizardUrl === event.url || state.quickDownloadProgressCurrent === event.url
+				if ((!playlistProbeActive && !quickDownloadProbeActive) || !matchesActiveUrl) return
+				set({playlistProbeProgress: event})
 			})
 
 			set({warmupRunning: true, warmupCancellable: true})
@@ -317,6 +328,10 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 
 		setPlaylistProbeLimit: async value => {
 			await applyCommonPatchAsync(get, set, 'playlistProbeLimit', {playlistProbeLimit: value})
+		},
+
+		setBackdropRenderMode: async value => {
+			await applyCommonPatchAsync(get, set, 'backdropRenderMode', {backdropRenderMode: value})
 		},
 
 		setIncludeIdInSingleFilenames: async enabled => {

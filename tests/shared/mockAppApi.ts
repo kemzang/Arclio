@@ -5,7 +5,7 @@ import {defaultAppSettings} from '@shared/constants.js'
 import {ok} from '@shared/result.js'
 
 function runnableDeps(): Record<DependencyId, DependencyDiagnostic> {
-	const make = (id: DependencyId): DependencyDiagnostic => ({id, state: 'runnable', source: {kind: 'managed', channel: 'default', url: 'mock'}, resolvedPath: `/mock/${id}`, attempts: []})
+	const make = (id: DependencyId): DependencyDiagnostic => ({id, state: 'runnable', source: {kind: 'managed', channel: 'default', provider: 'github', url: 'mock'}, resolvedPath: `/mock/${id}`, attempts: []})
 	return {'yt-dlp': make('yt-dlp'), ffmpeg: make('ffmpeg'), ffprobe: make('ffprobe'), deno: make('deno')}
 }
 
@@ -60,7 +60,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 		shell: {openFolder: vi.fn().mockResolvedValue(ok({opened: true})), openExternal: vi.fn().mockResolvedValue(ok({opened: true})), openBinariesDir: vi.fn().mockResolvedValue(ok({opened: true}))},
 		logs: {openDir: vi.fn().mockResolvedValue(ok({opened: true})), uploadFeedbackDiagnostic: vi.fn(({reportId}: {reportId: string}) => Promise.resolve(ok({reportId, diagnosticUrl: null, rawBytes: 42, compressedBytes: 31, truncated: false, sha256: 'a'.repeat(64)})))},
 		dialog: {chooseFolder: vi.fn().mockResolvedValue(ok({path: '/tmp'})), chooseFile: vi.fn().mockResolvedValue(ok({path: null})), chooseExecutable: vi.fn().mockResolvedValue(ok({path: null}))},
-		events: {onStatus: vi.fn().mockReturnValue(() => undefined), onProgress: vi.fn().mockReturnValue(() => undefined), onClipboardUrl: vi.fn().mockReturnValue(() => undefined), onWarmupProgress: vi.fn().mockReturnValue(() => undefined)},
+		events: {onStatus: vi.fn().mockReturnValue(() => undefined), onProgress: vi.fn().mockReturnValue(() => undefined), onProbeProgress: vi.fn().mockReturnValue(() => undefined), onClipboardUrl: vi.fn().mockReturnValue(() => undefined), onWarmupProgress: vi.fn().mockReturnValue(() => undefined)},
 		queue: {
 			cmd: {
 				add: vi.fn((items: QueueItem[]) => Promise.resolve(ok({ids: items.map(item => item.id)}))),

@@ -27,6 +27,7 @@ export type {
 	SponsorBlockCategory,
 	SupportedLang,
 	UiTheme,
+	BackdropRenderMode,
 	QueueItemStatus,
 	QueueLane,
 	AudioConvertTarget,
@@ -50,7 +51,7 @@ export type {
 export type {StatusKey} from './schemas.js'
 export type {LocalizedError, YtDlpErrorKind} from './i18n/types.js'
 
-import type {AudioSelection, Preset, PlaylistScope, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, StatusKey, CookiesMode, CookiesBrowser, NetworkPacingPreset, DownloadProfilesPrefs, ProbeOtherErrorCode} from './schemas.js'
+import type {AudioSelection, Preset, PlaylistScope, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, BackdropRenderMode, StatusKey, CookiesMode, CookiesBrowser, NetworkPacingPreset, DownloadProfilesPrefs, ProbeOtherErrorCode} from './schemas.js'
 
 export type AppErrorCode = 'validation' | 'token' | 'binary' | 'download' | 'ipc' | 'unknown'
 
@@ -79,6 +80,7 @@ export interface CommonSettings {
 	installId?: string
 	uiZoom?: number
 	uiTheme?: UiTheme
+	backdropRenderMode?: BackdropRenderMode
 	language?: SupportedLang
 	commonPaths?: {downloads: string | null; videos: string | null; desktop: string | null; music: string | null; documents: string | null; pictures: string | null; home: string | null}
 	cookiesPath?: string
@@ -288,6 +290,15 @@ export interface PlaylistProbeResult extends ProbeCommon {
 
 export type ProbeResult = VideoProbeResult | PlaylistProbeResult
 
+export interface ProbeProgressEvent {
+	url: string
+	playlistMode: ProbePlaylistMode
+	phase: 'pages' | 'items'
+	loaded: number
+	total?: number
+	at: string
+}
+
 export type DownloadStage = 'setup' | 'token' | 'download' | 'done' | 'error'
 
 export interface StatusEvent {
@@ -310,9 +321,13 @@ export interface ProgressEvent {
 export const DEPENDENCY_IDS = ['yt-dlp', 'ffmpeg', 'ffprobe', 'deno'] as const
 export type DependencyId = (typeof DEPENDENCY_IDS)[number]
 
-export const BLOCKING_DEPENDENCY_IDS: readonly DependencyId[] = ['yt-dlp', 'ffmpeg', 'ffprobe'] as const
-
-export type DependencySource = {kind: 'manualOverride'; path: string} | {kind: 'envOverride'; path: string; envVar: string} | {kind: 'managed'; channel: 'nightly' | 'stable' | 'default'; url: string} | {kind: 'systemPath'; path: string} | {kind: 'cache'; path: string} | {kind: 'bundled'; path: string}
+export type DependencySource =
+	| {kind: 'manualOverride'; path: string}
+	| {kind: 'envOverride'; path: string; envVar: string}
+	| {kind: 'managed'; channel: 'nightly' | 'stable' | 'default'; url: string; provider: 'github' | 'sourceforge' | 'deno-land'}
+	| {kind: 'systemPath'; path: string}
+	| {kind: 'cache'; path: string}
+	| {kind: 'bundled'; path: string}
 
 export type DependencyFailureKind = 'download_failed' | 'extract_failed' | 'hash_failed' | 'spawn_failed' | 'permission_denied' | 'blocked_or_quarantined' | 'bad_exit_code' | 'timeout' | 'pair_incomplete'
 

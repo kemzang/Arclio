@@ -1,9 +1,11 @@
 import {cleanUrl} from './cleanUrl.js'
 import type {BulkUrlKind, BulkUrlRejectReason} from './schemas.js'
+import {classifyUrlIntent, deriveUrlIntentLabel, extractUrlIntentYouTubeVideoId, isObviousSingleUrlIntent, type UrlIntent, urlIntentBulkLabel} from './urlIntent.js'
 
 export interface BulkUrlAccepted {
 	url: string
 	kind: BulkUrlKind
+	intent: UrlIntent
 }
 
 export interface BulkUrlRejected {
@@ -16,74 +18,108 @@ export interface BulkUrlParseResult {
 	accepted: BulkUrlAccepted[]
 	rejected: BulkUrlRejected[]
 	duplicateCount: number
+	nonMediaCount: number
 	ignoredCount: number
 }
 
 const URL_RE = /https?:\/\/[^\s,;|<>"'`]+/gi
 const TRAILING_PUNCTUATION_RE = /[)\].,;:!?]+$/
+const OBVIOUS_NON_MEDIA_FILE_EXTENSIONS = new Set([
+	'7z',
+	'apk',
+	'avif',
+	'bmp',
+	'bz2',
+	'cab',
+	'css',
+	'csv',
+	'deb',
+	'dmg',
+	'doc',
+	'docx',
+	'eot',
+	'exe',
+	'gif',
+	'gz',
+	'heic',
+	'heif',
+	'ico',
+	'iso',
+	'jfif',
+	'jpeg',
+	'jpg',
+	'js',
+	'json',
+	'map',
+	'mjs',
+	'msi',
+	'odp',
+	'ods',
+	'odt',
+	'otf',
+	'pdf',
+	'png',
+	'ppt',
+	'pptx',
+	'rar',
+	'rpm',
+	'rtf',
+	'svg',
+	'tar',
+	'tgz',
+	'tif',
+	'tiff',
+	'ttf',
+	'txt',
+	'txz',
+	'wasm',
+	'webp',
+	'woff',
+	'woff2',
+	'xls',
+	'xlsx',
+	'xml',
+	'xz',
+	'zip'
+])
 
 function trimUrlToken(token: string): string {
 	return token.replace(TRAILING_PUNCTUATION_RE, '')
 }
 
-function parseUrl(url: string): URL | null {
+function decodedPathname(url: URL): string {
 	try {
-		return new URL(url)
+		return decodeURIComponent(url.pathname)
 	} catch {
-		return null
+		return url.pathname
 	}
 }
 
-function isYouTubeHost(hostname: string): boolean {
-	const host = hostname.toLowerCase()
-	return host === 'youtube.com' || host.endsWith('.youtube.com') || host === 'youtu.be'
-}
-
-function isSingleVideoYouTubePath(host: string, segments: string[], searchParams: URLSearchParams): boolean {
-	return (host === 'youtu.be' && segments.length === 1 && !!segments[0]) || (segments[0] === 'watch' && !!searchParams.get('v')) || (segments[0] === 'shorts' && segments.length === 2 && !!segments[1])
+function isObviouslyNonMediaUrl(url: string): boolean {
+	try {
+		const parsed = new URL(url)
+		const lastPathSegment = decodedPathname(parsed).replace(/\/+$/, '').split('/').pop()?.toLowerCase() ?? ''
+		const extension = /\.([a-z0-9]+)$/.exec(lastPathSegment)?.[1]
+		return extension ? OBVIOUS_NON_MEDIA_FILE_EXTENSIONS.has(extension) : false
+	} catch {
+		return false
+	}
 }
 
 export function classifyBulkUrlKind(url: string): BulkUrlKind {
-	const parsed = parseUrl(url)
-	if (!parsed || !isYouTubeHost(parsed.hostname)) return 'other'
-
-	const host = parsed.hostname.toLowerCase()
-	const segments = parsed.pathname.split('/').filter(Boolean)
-	if (segments[0] === 'results' && parsed.searchParams.has('search_query')) return 'search'
-	if (segments[0]?.startsWith('@') || segments[0] === 'channel' || segments[0] === 'c' || segments[0] === 'user') return 'channel'
-
-	if (parsed.searchParams.has('list') || segments[0] === 'playlist') return 'playlist'
-	if (isSingleVideoYouTubePath(host, segments, parsed.searchParams)) return 'single'
-	return 'other'
+	return urlIntentBulkLabel(classifyUrlIntent(url))
 }
 
 export function isClearlyIndividualYouTubeUrl(url: string): boolean {
-	const parsed = parseUrl(url)
-	if (!parsed || !isYouTubeHost(parsed.hostname)) return false
-	return classifyBulkUrlKind(url) === 'single'
+	return isObviousSingleUrlIntent(classifyUrlIntent(url))
 }
 
 export function extractYouTubeVideoId(url: string): string | null {
-	const parsed = parseUrl(url)
-	if (!parsed || !isYouTubeHost(parsed.hostname) || classifyBulkUrlKind(url) !== 'single') return null
-
-	const host = parsed.hostname.toLowerCase()
-	const segments = parsed.pathname.split('/').filter(Boolean)
-	if (host === 'youtu.be') return segments[0] ?? null
-	if (segments[0] === 'watch') return parsed.searchParams.get('v')
-	if (segments[0] === 'shorts') return segments[1] ?? null
-	return null
+	return extractUrlIntentYouTubeVideoId(classifyUrlIntent(url))
 }
 
 export function deriveBulkUrlLabel(url: string): string | null {
-	const parsed = parseUrl(url)
-	if (!parsed) return null
-
-	const videoId = extractYouTubeVideoId(url)
-	if (videoId) return `YouTube ${videoId}`
-
-	const path = parsed.pathname.replace(/\/+$/g, '').split('/').filter(Boolean).slice(-2).join('/')
-	return path ? `${parsed.hostname}/${path}` : parsed.hostname
+	return deriveUrlIntentLabel(url)
 }
 
 export function parseBulkUrls(raw: string): BulkUrlParseResult {
@@ -91,10 +127,16 @@ export function parseBulkUrls(raw: string): BulkUrlParseResult {
 	const rejected: BulkUrlRejected[] = []
 	const seen = new Set<string>()
 	let duplicateCount = 0
+	let nonMediaCount = 0
 	let rejectedIndex = 0
 
 	for (const match of raw.matchAll(URL_RE)) {
 		const cleaned = cleanUrl(trimUrlToken(match[0]))
+
+		if (isObviouslyNonMediaUrl(cleaned)) {
+			nonMediaCount++
+			continue
+		}
 
 		if (seen.has(cleaned)) {
 			duplicateCount++
@@ -104,8 +146,9 @@ export function parseBulkUrls(raw: string): BulkUrlParseResult {
 		}
 
 		seen.add(cleaned)
-		accepted.push({url: cleaned, kind: classifyBulkUrlKind(cleaned)})
+		const intent = classifyUrlIntent(cleaned)
+		accepted.push({url: cleaned, kind: urlIntentBulkLabel(intent), intent})
 	}
 
-	return {accepted, rejected, duplicateCount, ignoredCount: rejected.length}
+	return {accepted, rejected, duplicateCount, nonMediaCount, ignoredCount: rejected.length + nonMediaCount}
 }

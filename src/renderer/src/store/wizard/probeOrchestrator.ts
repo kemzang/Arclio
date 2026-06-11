@@ -11,6 +11,7 @@
 import type {PlaylistScope, ProbePlaylistMode, ProbeResult, WizardTransition} from '@shared/types.js'
 import {getIncompleteCookiesConfigIssue} from '@shared/cookiesConfig.js'
 import {cleanUrl} from '@shared/cleanUrl.js'
+import {classifyUrlIntent} from '@shared/urlIntent.js'
 import {bulkLogger} from '@renderer/lib/bulkLogger.js'
 import {replaceHash} from '@renderer/lib/navigation.js'
 import {resolvePlaylistDir} from './playlistDir.js'
@@ -19,10 +20,13 @@ import type {AppState, GetState, SetState, ProbeOrchestratorSlice, WizardStep} f
 import {buildWizardStepGraph, nextWizardStep} from './wizardStepGraph.js'
 import {BULK_METADATA_CONCURRENCY, cancelBulkMetadataProbes, hydrateBulkMetadata, nextBulkMetadataRunId} from './bulkMetadataHydration.js'
 import {playlistScopeReloadErrorMessage, unknownPlaylistScopeReloadErrorMessage} from './playlistScopeReload.js'
-import {isMixedYouTubeUrl, rewriteYouTubeChannelRoot} from './urlIntake.js'
-import {quickDownload, quickDownloadUrls, cancelQuickDownload} from './quickDownloadPreparation.js'
+import {rewriteYouTubeChannelRoot} from './urlIntake.js'
+import {quickDownload as runQuickDownload, quickDownloadUrls, cancelQuickDownload, retryQuickDownloadFailure, retryQuickDownloadWithCookies, retryQuickPlaylistCap} from './quickDownloadPreparation.js'
 import {resetQuickDownloadFeedback} from './quickDownloadFeedback.js'
 import {projectBulkStart, projectPlaylistProbeResult, projectProbeFailure, projectProbeStart, projectVideoProbeResult} from './probeResultProjection.js'
+import {mixedUrlPromptPatch} from './mixedUrlPrompt.js'
+import {configuredCookiesRetryMode} from './probeErrorExperience.js'
+import {policyForUrlIntent} from './urlIntentPolicy.js'
 
 function pickWizardSnapshot(state: AppState): Record<string, unknown> {
 	return {
@@ -65,7 +69,7 @@ function logStep(transition: WizardTransition, fromStep: WizardStep, toStep: Wiz
 function maybeBlockIncompleteCookiesConfig(url: string, set: SetState, get: GetState): boolean {
 	const issue = getIncompleteCookiesConfigIssue(get().settings?.common)
 	if (!issue) return false
-	set({wizardUrl: url, wizardStep: 'url', formatsLoading: false, playlistProbeLoading: false, wizardError: null, wizardErrorOrigin: null, cookiesConfigDialogIssue: issue})
+	set({wizardUrl: url, wizardStep: 'url', formatsLoading: false, playlistProbeLoading: false, playlistProbeProgress: null, wizardError: null, wizardErrorOrigin: null, cookiesConfigDialogIssue: issue})
 	return true
 }
 
@@ -109,38 +113,39 @@ async function reloadPlaylistWithScope(scope: PlaylistScope, set: SetState, get:
 	}
 	const previousScope = state.playlistScope
 	const previousItemsCount = state.playlistItems.length
+	const previousLikelyCapped = state.playlistLikelyCapped
 
 	void window.appApi.downloads.probeCancel()
 	logStep('playlistScopeReloadStart', state.wizardStep, state.wizardStep, {...pickWizardSnapshot(state), requestedScope: scope, previousScope, previousItemsCount})
-	set({playlistScope: scope, playlistScopeReloading: true, playlistScopeError: null, playlistLikelyCapped: false})
+	set({playlistScope: scope, playlistScopeReloading: true, playlistScopeError: null, playlistLikelyCapped: false, playlistProbeProgress: null})
 
 	let result: Awaited<ReturnType<typeof window.appApi.downloads.probe>>
 	try {
 		result = await window.appApi.downloads.probe({url, playlistMode: 'playlist', playlistScope: scope})
 	} catch (error) {
 		const message = `Could not reload that playlist scope: ${unknownPlaylistScopeReloadErrorMessage(error)}. Your previous list is still shown.`
-		set({playlistScope: previousScope, playlistScopeReloading: false, playlistScopeError: message})
+		set({playlistScope: previousScope, playlistScopeReloading: false, playlistScopeError: message, playlistLikelyCapped: previousLikelyCapped, playlistProbeProgress: null})
 		logStep('playlistScopeReloadFailure', get().wizardStep, get().wizardStep, {...pickWizardSnapshot(get()), requestedScope: scope, restoredScope: previousScope, previousItemsCount, errorKind: 'exception', message})
 		return
 	}
 
 	if (!result.ok) {
 		const message = playlistScopeReloadErrorMessage(result.error)
-		set({playlistScope: previousScope, playlistScopeReloading: false, playlistScopeError: message})
+		set({playlistScope: previousScope, playlistScopeReloading: false, playlistScopeError: message, playlistLikelyCapped: previousLikelyCapped, playlistProbeProgress: null})
 		logStep('playlistScopeReloadFailure', get().wizardStep, get().wizardStep, {...pickWizardSnapshot(get()), requestedScope: scope, restoredScope: previousScope, previousItemsCount, errorKind: result.error.kind, message})
 		return
 	}
 
 	if (result.data.kind !== 'playlist') {
 		const message = 'No videos matched that playlist scope. Your previous list is still shown.'
-		set({playlistScope: previousScope, playlistScopeReloading: false, playlistScopeError: message})
+		set({playlistScope: previousScope, playlistScopeReloading: false, playlistScopeError: message, playlistLikelyCapped: previousLikelyCapped, playlistProbeProgress: null})
 		logStep('playlistScopeReloadFailure', get().wizardStep, get().wizardStep, {...pickWizardSnapshot(get()), requestedScope: scope, restoredScope: previousScope, previousItemsCount, resultKind: result.data.kind, message})
 		return
 	}
 
 	const returnedEntryCount = result.data.entries.length
 	applyPlaylistProbeResult(result.data, set, get, false)
-	set({playlistScopeReloading: false, playlistScopeError: null})
+	set({playlistScopeReloading: false, playlistScopeError: null, playlistProbeProgress: null})
 	logStep('playlistScopeReloadSuccess', get().wizardStep, get().wizardStep, {...pickWizardSnapshot(get()), requestedScope: scope, previousScope, previousItemsCount, returnedEntryCount, visibleItemsCount: get().playlistItems.length})
 	void get().scanDownloadedInFolder()
 }
@@ -167,6 +172,7 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
 		playlistIsMultiVideo: RESET_WIZARD_STATE.playlistIsMultiVideo,
 		playlistLikelyCapped: RESET_WIZARD_STATE.playlistLikelyCapped,
 		playlistProbeLoading: RESET_WIZARD_STATE.playlistProbeLoading,
+		playlistProbeProgress: RESET_WIZARD_STATE.playlistProbeProgress,
 		playlistScopeReloading: RESET_WIZARD_STATE.playlistScopeReloading,
 		playlistScopeError: RESET_WIZARD_STATE.playlistScopeError,
 		playlistScope: RESET_WIZARD_STATE.playlistScope,
@@ -176,7 +182,7 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
 		bulkMetadataTotal: RESET_WIZARD_STATE.bulkMetadataTotal,
 		bulkMetadataById: RESET_WIZARD_STATE.bulkMetadataById,
 		quickDownloadStatus: RESET_WIZARD_STATE.quickDownloadStatus,
-		quickDownloadError: RESET_WIZARD_STATE.quickDownloadError,
+		quickDownloadFailure: RESET_WIZARD_STATE.quickDownloadFailure,
 		quickDownloadQueueIds: RESET_WIZARD_STATE.quickDownloadQueueIds,
 		quickDownloadProgressPhase: RESET_WIZARD_STATE.quickDownloadProgressPhase,
 		quickDownloadProgressTotal: RESET_WIZARD_STATE.quickDownloadProgressTotal,
@@ -193,19 +199,25 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
 		submitUrl: async () => {
 			const cleaned = rewriteYouTubeChannelRoot(cleanUrl(get().wizardUrl.trim()))
 			if (!cleaned) return
-			// Mixed YouTube URLs (?v=X&list=Y) — disambiguate before probing so the
-			// user picks intent rather than yt-dlp defaulting to playlist.
-			if (isMixedYouTubeUrl(cleaned)) {
-				set({wizardUrl: cleaned, mixedUrlPromptOpen: true, mixedUrlPending: cleaned, wizardError: null, cookiesConfigDialogIssue: null})
+			const action = policyForUrlIntent(classifyUrlIntent(cleaned), 'interactive-submit')
+			if (action.kind === 'show-mixed-prompt') {
+				set(mixedUrlPromptPatch(cleaned, 'wizard'))
 				return
 			}
+			if (action.kind === 'open-bulk-review' || action.kind === 'show-label') return
 			if (maybeBlockIncompleteCookiesConfig(cleaned, set, get)) return
-			await runProbe(cleaned, 'auto', set, get)
+			await runProbe(cleaned, action.playlistMode, set, get)
 		},
 
-		quickDownload: () => quickDownload(set, get),
+		quickDownload: () => runQuickDownload(set, get),
 
 		quickDownloadUrls: urls => quickDownloadUrls(urls, set, get),
+
+		retryQuickDownloadFailure: () => retryQuickDownloadFailure(set, get),
+
+		retryQuickPlaylistCap: () => retryQuickPlaylistCap(set, get),
+
+		retryQuickDownloadWithCookies: () => retryQuickDownloadWithCookies(set, get),
 
 		cancelQuickDownload: () => cancelQuickDownload(set, get),
 
@@ -233,8 +245,14 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
 
 		dismissMixedPrompt: async choice => {
 			const pending = get().mixedUrlPending
-			set({mixedUrlPromptOpen: false, mixedUrlPending: null})
+			const source = get().mixedUrlPromptSource
+			set({mixedUrlPromptOpen: false, mixedUrlPending: null, mixedUrlPromptSource: null})
 			if (!pending) return
+			if (source === 'quick-download') {
+				set({wizardUrl: pending})
+				await runQuickDownload(set, get, choice)
+				return
+			}
 			if (choice === 'video') {
 				if (maybeBlockIncompleteCookiesConfig(pending, set, get)) return
 				await runProbe(pending, 'video', set, get)
@@ -369,10 +387,7 @@ export function createProbeOrchestratorSlice(set: SetState, get: GetState): Prob
 		},
 
 		retryProbeWithCookies: async () => {
-			const settings = get().settings
-			const path = settings?.common.cookiesPath?.trim()
-			const browser = settings?.common.cookiesBrowser
-			const targetMode: 'file' | 'browser' | null = path ? 'file' : browser ? 'browser' : null
+			const targetMode = configuredCookiesRetryMode(get().settings?.common)
 			if (!targetMode) return
 			await get().setCookiesMode(targetMode)
 			await get().retryFormatProbe()

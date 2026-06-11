@@ -1269,6 +1269,30 @@ msgctxt "wizard.mixedPrompt.playlistTooltip"
 msgid "Uses yt-dlp playlist mode and fetches up to your playlist probe limit before showing the picker."
 msgstr "yt-dlp-এর প্লেলিস্ট মোড ব্যবহার করে এবং পিকার দেখানোর আগে আপনার সীমা পর্যন্ত আইটেম আনে।"
 
+msgctxt "wizard.mixedPrompt.quickBody"
+msgid "Download only this video, or queue the whole playlist with your active Quick Download profile."
+msgstr "শুধু এই ভিডিওটি ডাউনলোড করুন, অথবা আপনার সক্রিয় দ্রুত ডাউনলোড প্রোফাইল দিয়ে পুরো প্লেলিস্টটি কিউতে যোগ করুন।"
+
+msgctxt "wizard.mixedPrompt.quickLimitDescription"
+msgid "Maximum entries Arroxy scans before queueing a playlist, channel, or search result."
+msgstr "কোনো প্লেলিস্ট, চ্যানেল বা সার্চ ফলাফল কিউতে যোগ করার আগে Arroxy সর্বোচ্চ যতটি আইটেম স্ক্যান করে।"
+
+msgctxt "wizard.mixedPrompt.quickPlaylistTooltip"
+msgid "Queues every loaded playlist item with the active Quick Download profile. If the scan hits your limit, Arroxy asks before queueing."
+msgstr "সক্রিয় দ্রুত ডাউনলোড প্রোফাইল দিয়ে লোড হওয়া প্রতিটি প্লেলিস্ট আইটেম কিউতে যোগ করে। স্ক্যান আপনার সীমায় পৌঁছালে, কিউতে যোগ করার আগে Arroxy জিজ্ঞেস করবে।"
+
+msgctxt "wizard.mixedPrompt.quickSingleTooltip"
+msgid "Queues one download and ignores the playlist attached to this URL."
+msgstr "একটি ডাউনলোড কিউতে যোগ করে এবং এই URL-এ যুক্ত প্লেলিস্ট উপেক্ষা করে।"
+
+msgctxt "wizard.mixedPrompt.quickSingleVideo"
+msgid "Download this video"
+msgstr "এই ভিডিওটি ডাউনলোড করুন"
+
+msgctxt "wizard.mixedPrompt.quickWholePlaylist"
+msgid "Download whole playlist"
+msgstr "পুরো প্লেলিস্ট ডাউনলোড করুন"
+
 msgctxt "wizard.mixedPrompt.singleTooltip"
 msgid "Uses yt-dlp single-video mode so the playlist attached to this URL is ignored."
 msgstr "yt-dlp-এর একক-ভিডিও মোড ব্যবহার করে, তাই এই URL-এর সঙ্গে থাকা প্লেলিস্ট উপেক্ষা করা হয়।"
@@ -1388,6 +1412,26 @@ msgstr "{{count}} URL"
 msgctxt "wizard.playlist.loadingItems"
 msgid "Fetching playlist…"
 msgstr "Playlist আনা হচ্ছে…"
+
+msgctxt "wizard.playlist.loadingLimitHint"
+msgid "Limited to first {{count}} items"
+msgstr "প্রথম {{count}}টি আইটেমে সীমিত"
+
+msgctxt "wizard.playlist.loadingPagesFound_one"
+msgid "{{count}} page found"
+msgstr "{{count}}টি পৃষ্ঠা পাওয়া গেছে"
+
+msgctxt "wizard.playlist.loadingPagesFound_other"
+msgid "{{count}} pages found"
+msgstr "{{count}}টি পৃষ্ঠা পাওয়া গেছে"
+
+msgctxt "wizard.playlist.loadingPhaseItems"
+msgid "Collecting videos"
+msgstr "ভিডিও সংগ্রহ করা হচ্ছে"
+
+msgctxt "wizard.playlist.loadingPhasePages"
+msgid "Scanning channel pages"
+msgstr "চ্যানেল পৃষ্ঠা স্ক্যান করা হচ্ছে"
 
 msgctxt "wizard.playlist.noSelection"
 msgid "Select at least one video to continue"
@@ -1700,6 +1744,46 @@ msgstr "বেনামী ব্যবহার পরিসংখ্যান 
 msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "শুধুমাত্র অ্যাপ চালু হওয়ার সংখ্যা গণনা করে। কোনো URL, ফাইলের নাম বা ব্যক্তিগত তথ্য নেই।"
+
+msgctxt "wizard.url.backdrop.cssOnlyDescription"
+msgid "CSS only, no canvas rendering."
+msgstr "শুধু CSS, কোনো canvas রেন্ডারিং নয়।"
+
+msgctxt "wizard.url.backdrop.cssOnlyLabel"
+msgid "Best performance"
+msgstr "সেরা পারফরম্যান্স"
+
+msgctxt "wizard.url.backdrop.fallbackDescription"
+msgid "Static Canvas2D backdrop with no WebGL."
+msgstr "WebGL ছাড়া স্থির Canvas2D ব্যাকড্রপ।"
+
+msgctxt "wizard.url.backdrop.fallbackLabel"
+msgid "Balanced"
+msgstr "সুষম"
+
+msgctxt "wizard.url.backdrop.gpuDescription"
+msgid "Animated WebGL backdrop when supported."
+msgstr "সমর্থিত হলে অ্যানিমেটেড WebGL ব্যাকড্রপ।"
+
+msgctxt "wizard.url.backdrop.gpuLabel"
+msgid "Most beautiful"
+msgstr "সবচেয়ে সুন্দর"
+
+msgctxt "wizard.url.backdrop.modeDescription"
+msgid "Move from the most animated look to best performance."
+msgstr "সবচেয়ে অ্যানিমেটেড চেহারা থেকে সেরা পারফরম্যান্সে যান।"
+
+msgctxt "wizard.url.backdrop.modeLabel"
+msgid "Backdrop quality"
+msgstr "ব্যাকড্রপের মান"
+
+msgctxt "wizard.url.backdrop.panelDescription"
+msgid "Choose how much motion Arroxy uses for the animated backdrop."
+msgstr "অ্যানিমেটেড ব্যাকড্রপে Arroxy কতটা মুভমেন্ট ব্যবহার করবে তা বেছে নিন।"
+
+msgctxt "wizard.url.backdrop.panelTitle"
+msgid "Appearance and performance"
+msgstr "চেহারা ও পারফরম্যান্স"
 
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
@@ -2048,6 +2132,46 @@ msgstr "{{count}}টি আইটেম"
 msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arroxy only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "yt-dlp --playlist-end-এর সাথে ম্যাপ করে: Arroxy পিকার তৈরির সময় শুধুমাত্র এতটি প্লেলিস্ট, চ্যানেল বা সার্চ এন্ট্রি চায়।"
+
+msgctxt "wizard.url.profile.activeLabel"
+msgid "Active profile"
+msgstr "সক্রিয় প্রোফাইল"
+
+msgctxt "wizard.url.profile.changeGlobalDestination"
+msgid "Change global destination"
+msgstr "গ্লোবাল গন্তব্য পরিবর্তন করুন"
+
+msgctxt "wizard.url.profile.destinationFallback"
+msgid "Destination"
+msgstr "গন্তব্য"
+
+msgctxt "wizard.url.profile.editActive"
+msgid "Edit active profile"
+msgstr "সক্রিয় প্রোফাইল সম্পাদনা করুন"
+
+msgctxt "wizard.url.profile.manageProfiles"
+msgid "Manage profiles"
+msgstr "প্রোফাইল পরিচালনা করুন"
+
+msgctxt "wizard.url.profile.menuDescription"
+msgid "Change the active profile for Quick Download, Bulk URLs, and playlists."
+msgstr "Quick Download, Bulk URLs এবং প্লেলিস্টের জন্য সক্রিয় প্রোফাইল পরিবর্তন করুন।"
+
+msgctxt "wizard.url.profile.menuTitle"
+msgid "Switch profile"
+msgstr "প্রোফাইল বদলান"
+
+msgctxt "wizard.url.profile.newProfile"
+msgid "New profile"
+msgstr "নতুন প্রোফাইল"
+
+msgctxt "wizard.url.profile.switchAria"
+msgid "Switch download profile: {{profileName}}"
+msgstr "ডাউনলোড প্রোফাইল বদলান: {{profileName}}"
+
+msgctxt "wizard.url.profile.switchTitle"
+msgid "Switch download profile"
+msgstr "ডাউনলোড প্রোফাইল বদলান"
 
 msgctxt "wizard.url.proxy.clear"
 msgid "Clear"
