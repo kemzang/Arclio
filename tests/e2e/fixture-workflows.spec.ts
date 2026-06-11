@@ -24,13 +24,13 @@ test('Electron quick download applies the active Download Profile to a fixture v
 			}
 		},
 		async ({page, outputDir, fixtureServer, urls, queue, files}) => {
-			await expect(page.locator('[data-testid="profiles-active-profile-card"]')).toContainText('Small file')
+			await expect(page.locator('[data-testid="profiles-active-profile-card"]')).toContainText('Small file 480p')
 			await page.locator('[data-testid="profiles-main-input"]').fill(urls.video(videoId))
 			await page.locator('[data-testid="profiles-quick-download"]').click()
 			await expect(page.locator('[data-testid="profiles-mascot-help"]')).toContainText(/queued/i, {timeout: 60_000})
 			await queue.expectStatus('Fixture Video 8', 'done', 120_000)
 
-			const profileOutputDir = path.join(outputDir, 'Small file')
+			const profileOutputDir = path.join(outputDir, 'Small file 480p')
 			files.expectMp4Count(1, profileOutputDir)
 			const mediaRequest = fixtureServer.telemetry().requests.find(request => request.kind === 'media' && request.videoId === videoId && request.status === 200)
 			expect(mediaRequest).toMatchObject({kind: 'media', videoId, formatId: '18', status: 200})
@@ -132,4 +132,40 @@ test('Electron bulk metadata concurrency and back/next navigation reach complete
 		files.expectMp4Count(10)
 		expect(files.listRecursive().filter(fileName => fileName.endsWith('.m3u'))).toHaveLength(0)
 	})
+})
+
+test('Electron bulk Quick Download shows preparation progress and queues fixture files', async () => {
+	test.setTimeout(180_000)
+
+	await withFixtureProductApp(
+		{
+			behavior: {metadataDelayMs: 1_500},
+			userDataPrefix: 'arroxy-fixture-bulk-quick-user-',
+			outputPrefix: 'arroxy-fixture-bulk-quick-out-',
+			settings: settings => {
+				const smallFileProfile = BUILTIN_DOWNLOAD_PROFILES.find(profile => profile.id === 'small-file')
+				if (!smallFileProfile) throw new Error('small-file built-in profile missing')
+				settings.profiles.active = {kind: 'builtin', id: 'small-file'}
+				settings.profiles.overrides = [{...smallFileProfile, embed: {chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false}, sponsorBlock: {mode: 'off', categories: []}}]
+			}
+		},
+		async ({app, page, urls, files}) => {
+			const rawBulkText = urls.videos([FIXTURE_VIDEO_IDS[0], FIXTURE_VIDEO_IDS[1]]).join('\n')
+			await startBulkFromClipboard(page, app, rawBulkText)
+			await expect(page.locator('[data-testid="bulk-url-valid-count"]')).toContainText('2')
+			await expect(page.locator('[data-testid="bulk-active-profile-card"]')).toContainText('Small file 480p')
+			await page.locator('[data-testid="bulk-quick-download"]').click()
+
+			await expect(page.locator('[data-testid="quick-download-progress-dialog"]')).toBeVisible({timeout: 10_000})
+			await expect(page.locator('[data-testid="quick-download-progress-dialog"]')).toContainText('Small file 480p')
+			await expect(page.locator('[data-testid="quick-download-progress-count"]')).toContainText('/ 2')
+			await expect(page.locator('[data-testid="quick-download-progress-dialog"]')).toBeHidden({timeout: 60_000})
+
+			await expect(page.locator('[data-testid^="queue-card-"]')).toHaveCount(2, {timeout: 20_000})
+			await expect
+				.poll(async () => page.locator('[data-testid^="queue-card-"]').evaluateAll(cards => cards.map(card => ({status: card.getAttribute('data-status'), text: card.textContent?.replace(/\s+/g, ' ').trim()}))), {timeout: 140_000})
+				.toEqual([expect.objectContaining({status: 'done'}), expect.objectContaining({status: 'done'})])
+			files.expectMp4Count(2)
+		}
+	)
 })

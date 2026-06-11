@@ -125,13 +125,13 @@ describe('App renderer', () => {
 		const quick = await screen.findByTestId('profiles-quick-download')
 		const fetch = screen.getByTestId('profiles-interactive-download')
 		expect(quick).toHaveTextContent(/Quick download/i)
-		expect(quick).toHaveTextContent('Will download using: Balanced')
+		expect(quick).toHaveTextContent('Will download using: Balanced 720p')
 		expect(screen.getByTestId('profiles-quick-preview')).toHaveAttribute('data-linked-control', 'quick-profile')
-		expect(screen.getByTestId('profiles-active-profile-card')).toHaveTextContent('Balanced')
+		expect(screen.getByTestId('profiles-active-profile-card')).toHaveTextContent('Balanced 720p')
 		expect(screen.getByTestId('profiles-active-profile-card')).toHaveTextContent('Active profile')
 		expect(screen.getByTestId('profiles-active-profile-card')).toHaveTextContent('720p · best audio')
-		expect(screen.queryByRole('button', {name: 'Edit active profile: Balanced'})).not.toBeInTheDocument()
-		const profileMenuTrigger = screen.getByRole('button', {name: 'Switch download profile: Balanced'})
+		expect(screen.queryByRole('button', {name: 'Edit active profile: Balanced 720p'})).not.toBeInTheDocument()
+		const profileMenuTrigger = screen.getByRole('button', {name: 'Switch download profile: Balanced 720p'})
 		expect(profileMenuTrigger).toBeInTheDocument()
 		expect(quick).toBeDisabled()
 
@@ -153,6 +153,10 @@ describe('App renderer', () => {
 		const input = await screen.findByTestId('profiles-main-input')
 		fireEvent.change(input, {target: {value: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}})
 		fireEvent.click(quick)
+
+		expect(await screen.findByTestId('quick-download-progress-dialog')).toHaveTextContent('Preparing Quick Download')
+		expect(screen.getByTestId('quick-download-progress-dialog')).toHaveTextContent('Balanced 720p')
+		expect(screen.getByTestId('quick-download-progress-count')).toHaveTextContent('0 / 1')
 
 		await waitFor(() => {
 			expect(quick).toBeDisabled()
@@ -180,12 +184,33 @@ describe('App renderer', () => {
 		await waitFor(() => {
 			expect(mockAppApi.queue.cmd.add).toHaveBeenCalledTimes(1)
 		})
+		await waitFor(() => {
+			expect(screen.queryByTestId('quick-download-progress-dialog')).not.toBeInTheDocument()
+		})
+	})
+
+	it('cancels quick download preparation from the blocking progress dialog', async () => {
+		vi.mocked(mockAppApi.downloads.probe).mockReturnValue(new Promise(() => undefined))
+		render(<App />)
+
+		const input = await screen.findByTestId('profiles-main-input')
+		fireEvent.change(input, {target: {value: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}})
+		fireEvent.click(screen.getByTestId('profiles-quick-download'))
+
+		expect(await screen.findByTestId('quick-download-progress-dialog')).toBeInTheDocument()
+		fireEvent.click(screen.getByTestId('quick-download-progress-cancel'))
+
+		await waitFor(() => {
+			expect(screen.queryByTestId('quick-download-progress-dialog')).not.toBeInTheDocument()
+		})
+		expect(mockAppApi.downloads.probeCancel).toHaveBeenCalled()
+		expect(screen.getByTestId('profiles-main-input')).toHaveValue('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 	})
 
 	it('closes the profile picker when opening profile editor surfaces', async () => {
 		render(<App />)
 
-		const profileMenuTrigger = await screen.findByRole('button', {name: 'Switch download profile: Balanced'})
+		const profileMenuTrigger = await screen.findByRole('button', {name: 'Switch download profile: Balanced 720p'})
 		expect(screen.queryByTestId('profiles-editor-dialog')).not.toBeInTheDocument()
 		fireEvent.click(profileMenuTrigger)
 		expect(await screen.findByText('Switch profile')).toBeInTheDocument()
