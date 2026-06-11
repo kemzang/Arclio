@@ -13,6 +13,8 @@ Tải xuống video, Shorts, nhạc, kênh, podcast hoặc bản nhạc từ **Y
 
 [**↓ Tải phiên bản mới nhất**](#install) &nbsp;·&nbsp; [**Trang web**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
+[![Tham gia cộng đồng Discord](https://img.shields.io/badge/Tham%20gia%20c%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
+
 <img src="build/demo.gif" alt="Demo Arroxy" width="720" />
 
 Nếu Arroxy giúp bạn tiết kiệm thời gian, một ⭐ sẽ giúp người khác tìm thấy nó.

@@ -13,6 +13,8 @@
 
 [**↓ 最新リリースをダウンロード**](#install) &nbsp;·&nbsp; [**ウェブサイト**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
+[![Discord コミュニティに参加](https://img.shields.io/badge/Discord%20%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%8B%E3%83%86%E3%82%A3%E3%81%AB%E5%8F%82%E5%8A%A0-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
+
 <img src="build/demo.gif" alt="Arroxy デモ" width="720" />
 
 Arroxy が役に立ったなら、⭐ で他のユーザーへの周知を助けてください。

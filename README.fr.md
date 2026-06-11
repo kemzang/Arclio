@@ -13,6 +13,8 @@ Télécharge des vidéos, Shorts, musiques, chaînes, podcasts ou pistes audio d
 
 [**↓ Télécharger la dernière version**](#install) &nbsp;·&nbsp; [**Site web**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
+[![Rejoindre la communauté Discord](https://img.shields.io/badge/Rejoindre%20la%20communaut%C3%A9%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
+
 <img src="build/demo.gif" alt="Démo Arroxy" width="720" />
 
 Si Arroxy te fait gagner du temps, une ⭐ aide les autres à le trouver.

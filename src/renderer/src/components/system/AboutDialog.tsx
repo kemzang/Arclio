@@ -1,6 +1,8 @@
 import {type ReactNode} from 'react'
 import {useTranslation} from 'react-i18next'
 import {ExternalLink, Share2} from 'lucide-react'
+import IconDiscord from '~icons/simple-icons/discord'
+import {DISCORD_URL} from '@shared/constants.js'
 import {Button} from '../ui/button.js'
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '../ui/dialog.js'
 import {useAppStore} from '../../store/useAppStore.js'
@@ -33,7 +35,7 @@ export function AboutDialog(): ReactNode {
 					<DialogDescription className="text-center">{t('about.tagline')}</DialogDescription>
 				</DialogHeader>
 
-				<div className="flex gap-2 justify-center">
+				<div className="flex flex-wrap gap-2 justify-center">
 					<Button type="button" variant="outline" size="sm" onClick={() => openExternalUrl(WEBSITE_URL)} data-testid="about-link-website">
 						{t('about.websiteLink')}
 						<ExternalLink size={12} aria-hidden />
@@ -41,6 +43,10 @@ export function AboutDialog(): ReactNode {
 					<Button type="button" variant="outline" size="sm" onClick={() => openExternalUrl(GITHUB_URL)} data-testid="about-link-github">
 						{t('about.githubLink')}
 						<ExternalLink size={12} aria-hidden />
+					</Button>
+					<Button type="button" variant="outline" size="sm" onClick={() => openExternalUrl(DISCORD_URL)} data-testid="about-link-discord">
+						Discord
+						<IconDiscord width={12} height={12} aria-hidden />
 					</Button>
 					<Button type="button" variant="outline" size="sm" onClick={handleShare} data-testid="about-link-share">
 						{t('share.shareAction')}

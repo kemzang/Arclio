@@ -13,6 +13,8 @@ Pakua video, Shorts, muziki, vituo, podikasti, au nyimbo za sauti kutoka **YouTu
 
 [**↓ Pakua Toleo la Hivi Karibuni**](#install) &nbsp;·&nbsp; [**Tovuti**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
+[![Jiunge na jumuiya ya Discord](https://img.shields.io/badge/Jiunge%20na%20jumuiya%20ya%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
+
 <img src="build/demo.gif" alt="Demo ya Arroxy" width="720" />
 
 Ikiwa Arroxy inakuokoa muda, ⭐ inasaidia wengine kuipata.

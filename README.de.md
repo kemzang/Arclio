@@ -13,6 +13,8 @@ Lade Videos, Shorts, Musik, Kanäle, Podcasts oder Audiotracks von **YouTube und
 
 [**↓ Neueste Version herunterladen**](#install) &nbsp;·&nbsp; [**Webseite**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
+[![Discord-Community beitreten](https://img.shields.io/badge/Discord%2DCommunity%20beitreten-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
+
 <img src="build/demo.gif" alt="Arroxy Demo" width="720" />
 
 Wenn Arroxy dir Zeit spart, hilft ein ⭐ anderen, es zu finden.
