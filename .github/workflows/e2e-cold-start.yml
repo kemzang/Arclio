@@ -82,6 +82,30 @@ jobs:
       - name: Install Playwright browsers
         run: bunx playwright install chromium --with-deps
 
+      - name: Prepare Windows diagnostics
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Continue'
+          $diag = Join-Path $env:RUNNER_TEMP 'arroxy-windows-diagnostics'
+          New-Item -ItemType Directory -Force -Path $diag | Out-Null
+          "ARROXY_WINDOWS_DIAG_DIR=$diag" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+          $channels = @(
+            'Microsoft-Windows-Windows Defender/Operational',
+            'Microsoft-Windows-CodeIntegrity/Operational',
+            'Microsoft-Windows-AppLocker/EXE and DLL',
+            'Microsoft-Windows-AppLocker/MSI and Script',
+            'Microsoft-Windows-SmartScreen/Debug'
+          )
+
+          foreach ($channel in $channels) {
+            "Enabling $channel" | Tee-Object -FilePath (Join-Path $diag 'event-channel-setup.txt') -Append
+            & wevtutil sl $channel /e:true 2>&1 | Tee-Object -FilePath (Join-Path $diag 'event-channel-setup.txt') -Append
+          }
+
+          exit 0
+
       - name: Run cold-start E2E
         shell: bash
         env:
@@ -94,11 +118,73 @@ jobs:
             bunx playwright test tests/e2e/cold-start.spec.ts --config playwright.config.ts
           fi
 
-      - name: Upload warmup log
+      - name: Collect Windows diagnostics
+        if: always() && runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Continue'
+          $diag = if ($env:ARROXY_WINDOWS_DIAG_DIR) { $env:ARROXY_WINDOWS_DIAG_DIR } else { Join-Path $env:RUNNER_TEMP 'arroxy-windows-diagnostics' }
+          New-Item -ItemType Directory -Force -Path $diag | Out-Null
+
+          Get-Date -Format o | Out-File -FilePath (Join-Path $diag 'collected-at.txt') -Encoding utf8
+          Get-ComputerInfo | Format-List * | Out-File -FilePath (Join-Path $diag 'computer-info.txt') -Encoding utf8
+          Get-CimInstance Win32_OperatingSystem | Format-List * | Out-File -FilePath (Join-Path $diag 'os-cim.txt') -Encoding utf8
+          Get-CimInstance Win32_ComputerSystem | Format-List * | Out-File -FilePath (Join-Path $diag 'computer-system-cim.txt') -Encoding utf8
+          Get-ChildItem Env: | Sort-Object Name | Format-Table -AutoSize | Out-File -FilePath (Join-Path $diag 'environment.txt') -Encoding utf8
+          Get-Process | Sort-Object CPU -Descending | Select-Object -First 150 | Format-Table -AutoSize | Out-File -FilePath (Join-Path $diag 'top-processes.txt') -Encoding utf8
+          Get-Service WinDefend, SecurityHealthService, AppIDSvc -ErrorAction SilentlyContinue | Format-List * | Out-File -FilePath (Join-Path $diag 'security-services.txt') -Encoding utf8
+          Get-Command winget, powershell, pwsh, wevtutil -ErrorAction SilentlyContinue | Format-List * | Out-File -FilePath (Join-Path $diag 'commands.txt') -Encoding utf8
+
+          Get-MpComputerStatus | Format-List * | Out-File -FilePath (Join-Path $diag 'defender-status.txt') -Encoding utf8
+          Get-MpPreference | Format-List * | Out-File -FilePath (Join-Path $diag 'defender-preference.txt') -Encoding utf8
+          Get-MpThreat | Format-List * | Out-File -FilePath (Join-Path $diag 'defender-threats.txt') -Encoding utf8
+          Get-MpThreatDetection | Format-List * | Out-File -FilePath (Join-Path $diag 'defender-threat-detections.txt') -Encoding utf8
+
+          Get-ChildItem $env:RUNNER_TEMP -Force -Recurse -ErrorAction SilentlyContinue |
+            Select-Object FullName, Length, CreationTimeUtc, LastWriteTimeUtc, Attributes |
+            Export-Csv -NoTypeInformation -Path (Join-Path $diag 'runner-temp-tree.csv')
+
+          $channels = @(
+            'Application',
+            'System',
+            'Microsoft-Windows-Windows Defender/Operational',
+            'Microsoft-Windows-CodeIntegrity/Operational',
+            'Microsoft-Windows-AppLocker/EXE and DLL',
+            'Microsoft-Windows-AppLocker/MSI and Script',
+            'Microsoft-Windows-SmartScreen/Debug'
+          )
+
+          foreach ($channel in $channels) {
+            $safe = $channel -replace '[\\/:*?"<>| ]+', '-'
+            & wevtutil qe $channel /f:text /c:300 /rd:true 2>&1 | Out-File -FilePath (Join-Path $diag "$safe.txt") -Encoding utf8
+            & wevtutil epl $channel (Join-Path $diag "$safe.evtx") /ow:true 2>&1 | Out-File -FilePath (Join-Path $diag "$safe-export.txt") -Encoding utf8
+          }
+
+          exit 0
+
+      - name: Upload warmup logs
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: cold-start-logs-${{ matrix.label }}
-          path: ${{ runner.temp }}/arroxy-cold-logs/main.log
+          path: ${{ runner.temp }}/arroxy-cold-logs
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload Windows diagnostics
+        if: always() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v7
+        with:
+          name: cold-start-windows-diagnostics
+          path: ${{ runner.temp }}/arroxy-windows-diagnostics
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload Playwright artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cold-start-playwright-${{ matrix.label }}
+          path: test-results
           if-no-files-found: ignore
           retention-days: 7

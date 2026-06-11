@@ -8,7 +8,7 @@ import type {DependencyFailure, DependencyId} from '@shared/types.js'
 const execFileAsync = promisify(execFile)
 
 const PROBE_TIMEOUT_MS = 10_000
-const WINDOWS_YTDLP_PROBE_TIMEOUT_MS = 30_000
+const WINDOWS_YTDLP_PROBE_TIMEOUT_MS = 180_000
 
 export function probeTimeoutMs(id: DependencyId, platform: NodeJS.Platform = process.platform): number {
 	if (id === 'yt-dlp' && platform === 'win32') return WINDOWS_YTDLP_PROBE_TIMEOUT_MS

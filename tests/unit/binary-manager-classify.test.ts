@@ -85,7 +85,7 @@ describe('classifyProbeError', () => {
 
 describe('probeTimeoutMs', () => {
 	it('allows extra first-launch time for Windows yt-dlp probes', () => {
-		expect(probeTimeoutMs('yt-dlp', 'win32')).toBe(30_000)
+		expect(probeTimeoutMs('yt-dlp', 'win32')).toBe(180_000)
 	})
 
 	it('keeps the default probe budget for other binaries and platforms', () => {

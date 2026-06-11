@@ -1,6 +1,7 @@
 import path from 'node:path'
 import os from 'node:os'
 import fs from 'node:fs'
+import crypto from 'node:crypto'
 import {expect, test, _electron as electron, type Page} from '@playwright/test'
 
 function defaultExePath(): string {
@@ -16,6 +17,59 @@ const WARMUP_TIMEOUT_MS = 12 * 60 * 1000 // yt-dlp + deno cold download
 
 function compactText(text: string): string {
 	return text.replace(/\s+/g, ' ').trim()
+}
+
+function sha256ForFile(filePath: string): string {
+	return crypto.createHash('sha256').update(fs.readFileSync(filePath)).digest('hex')
+}
+
+function maybeReadWindowsStream(filePath: string, streamName: string): string | null {
+	if (process.platform !== 'win32') return null
+	try {
+		return fs.readFileSync(`${filePath}:${streamName}`, 'utf8')
+	} catch {
+		return null
+	}
+}
+
+function captureColdStartDiagnostics(userDataDir: string, logArchive: string | undefined): void {
+	if (!logArchive) return
+
+	fs.mkdirSync(logArchive, {recursive: true})
+
+	const logPath = path.join(userDataDir, 'logs', 'main.log')
+	if (fs.existsSync(logPath)) {
+		fs.copyFileSync(logPath, path.join(logArchive, 'main.log'))
+	}
+
+	const binaryDir = path.join(userDataDir, 'runtime-cache', 'binaries')
+	const lines = [`capturedAt=${new Date().toISOString()}`, `platform=${process.platform}`, `arch=${process.arch}`, `pid=${process.pid}`, `packagedExe=${PACKAGED_EXE}`, `userDataDir=${userDataDir}`, `binaryDir=${binaryDir}`]
+
+	if (!fs.existsSync(binaryDir)) {
+		lines.push('binaryDirExists=false')
+		fs.writeFileSync(path.join(logArchive, 'binary-diagnostics.txt'), `${lines.join(os.EOL)}${os.EOL}`)
+		return
+	}
+
+	lines.push('binaryDirExists=true')
+	for (const entry of fs.readdirSync(binaryDir, {withFileTypes: true})) {
+		if (!entry.isFile()) continue
+		const filePath = path.join(binaryDir, entry.name)
+		const stat = fs.statSync(filePath)
+		lines.push('')
+		lines.push(`[${entry.name}]`)
+		lines.push(`path=${filePath}`)
+		lines.push(`size=${stat.size}`)
+		lines.push(`mode=${stat.mode.toString(8)}`)
+		lines.push(`birthtime=${stat.birthtime.toISOString()}`)
+		lines.push(`mtime=${stat.mtime.toISOString()}`)
+		lines.push(`sha256=${sha256ForFile(filePath)}`)
+
+		const zoneIdentifier = maybeReadWindowsStream(filePath, 'Zone.Identifier')
+		lines.push(`zoneIdentifier=${zoneIdentifier === null ? 'absent' : zoneIdentifier.replace(/\r?\n/g, '\\n')}`)
+	}
+
+	fs.writeFileSync(path.join(logArchive, 'binary-diagnostics.txt'), `${lines.join(os.EOL)}${os.EOL}`)
 }
 
 async function waitForWarmupSuccess(page: Page): Promise<void> {
@@ -68,15 +122,8 @@ test('packaged exe: downloads binaries, completes warmup, shows wizard', async (
 	} finally {
 		await app.close()
 
-		// Copy main.log before cleanup so the CI artifact step can upload it.
-		const logArchive = process.env.ARROXY_LOG_ARCHIVE
-		if (logArchive) {
-			const src = path.join(userDataDir, 'logs', 'main.log')
-			if (fs.existsSync(src)) {
-				fs.mkdirSync(logArchive, {recursive: true})
-				fs.copyFileSync(src, path.join(logArchive, 'main.log'))
-			}
-		}
+		// Copy diagnostics before cleanup so the CI artifact step can upload them.
+		captureColdStartDiagnostics(userDataDir, process.env.ARROXY_LOG_ARCHIVE)
 
 		fs.rmSync(userDataDir, {recursive: true, force: true})
 	}
