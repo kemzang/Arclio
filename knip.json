@@ -27,12 +27,13 @@
     "shadcn",
 		"tw-animate-css",
 		"tailwindcss",
-		"@types/extract-zip",
 		"@svgr/plugin-jsx"
 	],
-  "ignoreBinaries": [
-    "skills"
-  ],
+	"ignoreBinaries": [
+		"msgmerge",
+		"skills",
+		"taskkill"
+	],
   "ignoreUnresolved": [
     "~icons/.*"
   ]
