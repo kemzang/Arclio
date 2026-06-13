@@ -84,6 +84,37 @@ function browserMockScenarioId(): string | null {
 	}
 }
 
+function isBrowserMockBulkDialogScenario(scenario: string | null): boolean {
+	return scenario === 'profiles-bulk' || scenario === 'profiles-bulk-huge-input'
+}
+
+function browserMockBulkInitialRaw(scenario: string | null): string {
+	if (scenario !== 'profiles-bulk-huge-input') return ''
+	return [
+		'vite v8.0.16 building ssr environment for development...',
+		'4 modules transformed.',
+		'out/preload/index.cjs  9.02 kB',
+		'',
+		'built in 14ms',
+		'',
+		'electron preload scripts built successfully',
+		'',
+		'-----',
+		'',
+		'dev server running for the electron renderer process at:',
+		'',
+		'  -> Local:   http://localhost:5173/',
+		'  -> Network: use --host to expose',
+		'',
+		'starting electron app...',
+		'',
+		...Array.from({length: 180}, (_, index) => {
+			const seconds = String(index % 60).padStart(2, '0')
+			return `17:20:${seconds}.${String(index).padStart(3, '0')}          > gpu features { 2d_canvas: 'disabled_software', direct_rendering_display_compositor: 'disabled_off_ok', gpu_compositing: 'disabled_software', multiple_raster_threads: 'enabled_on', opengl: 'disabled_off', rasterization: 'disabled_software', video_decode: 'disabled_software', vulkan: 'disabled_off' }`
+		})
+	].join('\n')
+}
+
 function subscribeProfileTabHash(onStoreChange: () => void): () => void {
 	window.addEventListener('hashchange', onStoreChange)
 	return () => window.removeEventListener('hashchange', onStoreChange)
@@ -235,8 +266,8 @@ export function DownloadProfilesHome(): ReactNode {
 	const bulkOpenRef = useRef(false)
 	const initialBrowserMockScenario = browserMockScenarioId()
 	const activeTab = useSyncExternalStore(subscribeProfileTabHash, profileTabSnapshot, profileTabSnapshot)
-	const [bulkOpen, setBulkOpen] = useState(() => initialBrowserMockScenario === 'profiles-bulk')
-	const [bulkInitialRaw, setBulkInitialRaw] = useState('')
+	const [bulkOpen, setBulkOpen] = useState(() => isBrowserMockBulkDialogScenario(initialBrowserMockScenario))
+	const [bulkInitialRaw, setBulkInitialRaw] = useState(() => browserMockBulkInitialRaw(initialBrowserMockScenario))
 	const [pendingClipboard, setPendingClipboard] = useState<ClipboardCandidate | null>(null)
 	const [editorOpen, setEditorOpen] = useState(() => initialBrowserMockScenario === 'profiles-editor')
 	const [editorSessionId, setEditorSessionId] = useState(0)

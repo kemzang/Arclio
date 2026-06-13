@@ -272,3 +272,36 @@ test('screenshots - bulk stress workbench state across viewports', async ({page}
 		await page.screenshot({path: `tests/browser/screenshots/scenario-bulk-stress-${viewport.width}.png`, fullPage: false})
 	}
 })
+
+test('screenshots - bulk URL dialog huge input keeps chrome visible', async ({page}) => {
+	for (const viewport of [
+		{width: 390, height: 844},
+		{width: 1020, height: 859}
+	]) {
+		await page.setViewportSize(viewport)
+		await openScenario(page, 'profiles-bulk-huge-input')
+		await expect(page.getByTestId('bulk-url-dialog')).toBeVisible({timeout: 6_000})
+		await expect(page.getByTestId('bulk-url-textarea')).toHaveValue(/vite v8\.0\.16 building ssr environment for development/)
+
+		const metrics = await page.evaluate(() => {
+			const bounds = (selector: string) => {
+				const element = document.querySelector<HTMLElement>(selector)
+				if (!element) throw new Error(`Missing ${selector}`)
+				const rect = element.getBoundingClientRect()
+				return {bottom: rect.bottom, clientHeight: element.clientHeight, overflowY: getComputedStyle(element).overflowY, scrollHeight: element.scrollHeight, top: rect.top}
+			}
+			return {body: bounds('[data-testid="bulk-url-dialog-body"]'), dialog: bounds('[data-testid="bulk-url-dialog"]'), footer: bounds('[data-slot="dialog-footer"]'), header: bounds('[data-slot="dialog-header"]'), textarea: bounds('[data-testid="bulk-url-textarea"]'), viewportHeight: window.innerHeight}
+		})
+
+		expect(metrics.dialog.top).toBeGreaterThanOrEqual(0)
+		expect(metrics.footer.bottom).toBeLessThanOrEqual(metrics.viewportHeight)
+		expect(metrics.header.top).toBeGreaterThanOrEqual(metrics.dialog.top)
+		expect(metrics.dialog.overflowY).toBe('hidden')
+		expect(metrics.body.overflowY).toBe('auto')
+		expect(metrics.textarea.overflowY).toBe('auto')
+		expect(metrics.textarea.scrollHeight).toBeGreaterThan(metrics.textarea.clientHeight)
+
+		await waitForSplashToLeave(page)
+		await page.screenshot({path: `tests/browser/screenshots/scenario-bulk-huge-input-${viewport.width}.png`, fullPage: false})
+	}
+})

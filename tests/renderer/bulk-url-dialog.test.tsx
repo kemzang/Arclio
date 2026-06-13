@@ -50,4 +50,15 @@ describe('BulkUrlDialog', () => {
 
 		expect(screen.getByTestId('bulk-url-dialog')).toHaveClass('w-[calc(100%-2rem)]', 'sm:max-w-2xl', 'md:max-w-3xl')
 	})
+
+	it('keeps long pasted input inside bounded scroll regions', () => {
+		const raw = Array.from({length: 160}, (_, index) => `build log line ${index}`).join('\n')
+
+		render(<BulkUrlDialog open onOpenChange={vi.fn()} initialRaw={raw} />)
+
+		expect(screen.getByTestId('bulk-url-dialog')).toHaveClass('flex', 'flex-col', 'max-h-[calc(100dvh-2rem)]', 'overflow-hidden')
+		expect(screen.getByTestId('bulk-url-dialog-body')).toHaveClass('min-h-0', 'overflow-y-auto')
+		expect(screen.getByTestId('bulk-url-textarea')).toHaveClass('h-40', 'resize-none', 'overflow-y-auto')
+		expect(screen.getByTestId('bulk-url-textarea')).not.toHaveClass('field-sizing-content')
+	})
 })

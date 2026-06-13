@@ -145,6 +145,8 @@ describe('browser mock scenarios', () => {
 		expect(store.reset).toHaveBeenCalledOnce()
 		expect(playlistCapPatch).toMatchObject({wizardStep: 'url', wizardMode: 'playlist', playlistTitle: 'Mock Browser Playlist', playlistLikelyCapped: true, quickPlaylistCapDialogOpen: true})
 		expect((playlistCapPatch as {playlistItems?: unknown[]}).playlistItems).toHaveLength(100)
+
+		expect(getScenario('profiles-bulk-huge-input')).toMatchObject({title: 'Bulk URLs huge input', kind: 'profile'})
 	})
 
 	it('flags only scoped playlist reloads for the empty-scope scenario', () => {
