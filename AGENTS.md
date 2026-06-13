@@ -134,7 +134,7 @@ Only tiny project-owned, non-installable skills stay tracked under `./.agents/sk
 After completing any implementation task, run this single command and fix all errors caused by your change before reporting done:
 
 ```bash
-bun run check   # lint + typecheck + knip + madge (circular imports)
+bun run check   # format + lint + tooling contract + typecheck + knip + madge + package gates
 ```
 
 Do not skip. A change in one file can break types, introduce dead code, or create circular imports elsewhere.
@@ -149,6 +149,8 @@ bun run knip:test-only  # src/ files imported only from tests/ — potential dea
 ```
 
 Run `madge` after any refactor that moves modules or changes import boundaries. Run `knip:test-only` when reviewing whether a helper belongs in `src/` or `tests/`.
+
+The root-owned tooling contract lives in `dev-docs/tooling-contract.md`. Do not add package-local formatter/linter configs. Publishable package runtime `workspace:*` dependencies are allowed only for local workspace packages and must pass packed metadata verification.
 
 ### Dev workflow
 
@@ -246,7 +248,7 @@ Run the renderer standalone via Vite for fast visual iteration; full Electron au
 
 ```bash
 # From project root — uses src/renderer/vite.config.mjs (aliases + Tailwind + React)
-npx vite src/renderer --port 5173 --mode browser-mock
+bunx vite src/renderer --port 5173 --mode browser-mock
 ```
 
 The renderer's `browserMock.ts` stubs `window.appApi` with simulated downloads, formats, settings when Vite runs in explicit `browser-mock` mode — no Electron needed. Electron dev and packaged builds must use the real preload bridge.
@@ -348,7 +350,7 @@ shadcn/ui is the primary source for renderer UI primitives. Before inventing cus
 
 **Do not add Radix.** This project does **not** use `@radix-ui/*` — the `base-nova` registry doesn't depend on Radix primitives. Don't add Radix deps or assume Radix is available.
 
-**Install via CLI:** `npx shadcn@latest add <component>` (style: `base-nova`). Never hand-roll `@base-ui/react/*` wrappers. After install, modify freely to match app style.
+**Install via CLI:** `bunx shadcn@latest add <component>` (style: `base-nova`). Never hand-roll `@base-ui/react/*` wrappers. After install, modify freely to match app style.
 
 ---
 
@@ -422,7 +424,7 @@ Tag w/ semver pre-release suffix (e.g. `v0.4.0-beta.1`):
 - Manually download the artifact from the GitHub Release page to validate.
 - When ready: bump to plain semver (`v0.4.0`), tag annotated, push.
 
-**NSIS installer:** pin `electron-builder ≥ 26.9.0` (26.8.x has a `multiUser.nsh:35` buffer over-read on cold-heap). Drop `build/installer.nsh`. Any future custom NSIS `Page custom` callback must open with `${If} ${Silent} \n Abort \n ${EndIf}`. Note: npm `latest` dist-tag is broken `26.8.1`; pin from `next` channel — `bun update --latest` silently downgrades.
+**NSIS installer:** pin `electron-builder ≥ 26.9.0` (26.8.x has a `multiUser.nsh:35` buffer over-read on cold-heap). Drop `build/installer.nsh`. Any future custom NSIS `Page custom` callback must open with `${If} ${Silent} \n Abort \n ${EndIf}`. Note: the registry `latest` dist-tag is broken `26.8.1`; pin from `next` channel — `bun update --latest` silently downgrades.
 
 ### Release notes — CHANGELOG.md is SSOT
 
@@ -437,7 +439,7 @@ Do **not** edit GitHub Release notes directly via the web UI or `gh release edit
 **Before committing the release bump**, run the full local gate and fix any failures. A broken release commit fails CI and the tag-side `quality-gate` in `release.yml` now blocks publishing before any artifacts are built:
 
 ```bash
-bun run check      # lint + typecheck + knip + madge + LOC + pins + i18n + tests
+bun run check      # format + lint + tooling contract + typecheck + knip + madge + package gates
 ```
 
 Do not skip. A type error, dead export, circular import, stale locale key, or test failure that slips into a release tag breaks the remote release gate.
@@ -651,8 +653,8 @@ rtk gh api              # Compact API responses (26%)
 rtk pnpm list           # Compact dependency tree (70%)
 rtk pnpm outdated       # Compact outdated packages (80%)
 rtk pnpm install        # Compact install output (90%)
-rtk npm run <script>    # Compact npm script output
-rtk npx <cmd>           # Compact npx command output
+rtk bun run <script>    # Compact Bun script output
+rtk bunx <cmd>          # Compact Bun package-exec output
 rtk prisma              # Prisma without ASCII art (88%)
 ```
 
@@ -713,7 +715,7 @@ rtk init --global       # Add RTK to ~/.claude/CLAUDE.md
 | Build            | next, tsc, lint, prettier      | 70-87%          |
 | Git              | status, log, diff, add, commit | 59-80%          |
 | GitHub           | gh pr, gh run, gh issue        | 26-87%          |
-| Package Managers | pnpm, npm, npx                 | 70-90%          |
+| Package Managers | pnpm, bun, bunx                | 70-90%          |
 | Files            | ls, read, grep, find           | 60-75%          |
 | Infrastructure   | docker, kubectl                | 85%             |
 | Network          | curl, wget                     | 65-70%          |

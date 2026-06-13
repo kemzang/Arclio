@@ -71,7 +71,7 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
 			ctx.emitStatus('download', STATUS_KEY.fetchingSubtitles)
 
 			const subResult = await ytDlp.run(
-				{kind: 'subtitle', url: input.url, outputDir: input.outputDir!, subtitleLanguages: subs.languages, subtitleMode: subs.mode, subtitleFormat: subs.format ?? DEFAULTS.subtitleFormat, writeAutoSubs: subs.writeAuto, outputTemplate: preparedJob.outputTemplate},
+				{kind: 'subtitles', url: input.url, output: {directory: input.outputDir!, subtitleMode: subs.mode, ...(preparedJob.outputTemplate ? {template: preparedJob.outputTemplate} : {})}, subtitles: {languages: subs.languages, format: subs.format ?? DEFAULTS.subtitleFormat, writeAuto: subs.writeAuto}},
 				buildYtDlpSignal(ctx, active)
 			)
 

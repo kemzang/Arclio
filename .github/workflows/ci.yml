@@ -37,29 +37,5 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Format
-        run: bun run format:check
-
-      - name: Lint
-        run: bun run lint
-
-      - name: Lint parity
-        run: bun run lint:parity
-
-      - name: Knip
-        run: bun run knip
-
-      - name: Typecheck
-        run: bun run typecheck
-
-      - name: Circular imports
-        run: bun run madge
-
-      - name: Max LOC
-        run: bun run check:loc
-
-      - name: Dependency pins
-        run: bun run check:pins
-
-      - name: Test
-        run: bun run test
+      - name: Check
+        run: bun run check

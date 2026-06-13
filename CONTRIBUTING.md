@@ -24,6 +24,16 @@ Arroxy uses a single long-lived branch, **`main`**. Open contributor PRs against
 3. After validation, bump `package.json` to the stable version on `main`.
 4. Cut `vX.Y.Z` from `main`; stable package-manager publishing (Scoop, Homebrew, Winget) only happens for these stable tags.
 
+### Registry package flows
+
+`yt-dlp-bridge` and `ytdlp-errors` live under `packages/` and are published to npmjs.com from this repository. Package PRs use the same Arroxy CI gate as app PRs.
+
+Maintainers publish `yt-dlp-bridge` by bumping `packages/yt-dlp-bridge/package.json`, merging to `main`, then pushing a tag named `yt-dlp-bridge-vX.Y.Z`.
+
+Maintainers publish `ytdlp-errors` by bumping `packages/ytdlp-errors/package.json`, merging to `main`, then pushing a tag named `ytdlp-errors-vX.Y.Z`.
+
+Both registry workflows publish with Bun and require a scoped `NPM_TOKEN` secret exposed to `bun publish` as `NPM_CONFIG_TOKEN`. npmjs.com trusted publishing/provenance is intentionally paused for these packages until Bun supports registry OIDC publishing.
+
 ## Reporting bugs / requesting features
 
 Use the [issue templates](https://github.com/antonio-orionus/Arroxy/issues/new/choose). For bugs, include:
@@ -47,7 +57,7 @@ bun run dev          # runs the Electron app against the Vite renderer
 For pure-renderer / UI work without the Electron shell:
 
 ```bash
-npx vite src/renderer --port 5173 --mode browser-mock
+bunx vite src/renderer --port 5173 --mode browser-mock
 ```
 
 The renderer's `browserMock.ts` stubs `window.appApi` only in explicit `browser-mock` mode so the wizard, queue, and update banner all simulate without a backend. Electron dev and packaged builds use the real preload bridge.
@@ -57,8 +67,10 @@ The renderer's `browserMock.ts` stubs `window.appApi` only in explicit `browser-
 Run the full local gate before opening a PR. CI gates on the same checks.
 
 ```bash
-bun run check       # lint + typecheck + knip + madge + LOC + pins + i18n + tests
+bun run check       # format + lint + tooling contract + typecheck + knip + madge + LOC + pins + i18n + tests + package gates
 ```
+
+The root-owned tooling contract is documented in [`dev-docs/tooling-contract.md`](dev-docs/tooling-contract.md). New workspace packages must be wired into that contract before merging.
 
 ## Building installers locally (optional)
 

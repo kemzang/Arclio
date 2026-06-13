@@ -4,6 +4,8 @@ Audit date: 2026-06-08.
 
 Implementation branch: `tooling-migration-main`.
 
+Current operational policy lives in [`dev-docs/tooling-contract.md`](tooling-contract.md). This audit records the original migration evidence and parity rationale.
+
 ## Implemented Decision
 
 Arroxy migrated in one phase from direct ESLint + Prettier scripts to:
@@ -27,17 +29,18 @@ Docs/prose are not part of the Biome formatter include list. Formatting is scope
 | `biome.jsonc` | Dense formatter config; Tailwind v4 parser enabled; `lineWidth: 320`; linter disabled |
 | `.oxlintrc.json` | Type-aware Oxlint config and JS-plugin bridge policy |
 | `scripts/check-tooling-parity.mjs` | Fixture probes for formatter/parser, type-aware lint, React hooks/compiler, and security bridge rules |
-| `package.json` | `format`, `format:check`, `lint`, `lint:parity`, `check`, and lint-staged commands |
-| `.github/workflows/ci.yml` | CI runs format check, lint, lint parity, knip, typecheck, madge, pins, and tests |
+| `package.json` | `format`, `format:check`, `lint:prepare`, `lint`, `check:tooling-parity`, `check:tooling-contract`, `check`, and lint-staged commands |
+| `.github/workflows/ci.yml` | CI runs the canonical `bun run check` gate |
 
 Primary commands:
 
 ```bash
 bun run format        # biome format --write
 bun run format:check  # biome ci
-bun run lint          # oxlint --type-aware .
-bun run lint:parity   # node scripts/check-tooling-parity.mjs
-bun run check         # includes format, lint, parity, typecheck, knip, madge, pins, i18n, tests
+bun run lint          # lint:prepare + oxlint --type-aware .
+bun run check:tooling-parity   # node scripts/check-tooling-parity.mjs
+bun run check:tooling-contract # node scripts/check-tooling-contract.mjs
+bun run check         # includes format, lint, tooling contract, typecheck, knip, madge, pins, i18n, tests, package gates
 ```
 
 ## Tailwind

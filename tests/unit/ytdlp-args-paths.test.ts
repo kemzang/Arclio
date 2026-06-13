@@ -1,6 +1,6 @@
 import {EventEmitter} from 'node:events'
 import {describe, expect, it, vi, beforeEach} from 'vitest'
-import {YtDlp} from '@main/services/YtDlp.js'
+import {YtDlp, type YtDlpRequest} from '@main/services/YtDlp.js'
 
 vi.mock('@main/utils/process', async importOriginal => {
 	const actual = await importOriginal<typeof import('@main/utils/process.js')>()
@@ -36,6 +36,14 @@ function getArgs(callIndex = 0): string[] {
 	return vi.mocked(spawnYtDlp).mock.calls[callIndex][1]
 }
 
+function mediaRequest(overrides: {tempDir?: string; subtitleLanguages?: string[]} = {}): YtDlpRequest {
+	return {kind: 'media', url: URL, output: {directory: OUTPUT_DIR, ...(overrides.tempDir ? {tempDirectory: overrides.tempDir} : {})}, ...(overrides.subtitleLanguages !== undefined ? {subtitles: {embed: true, languages: overrides.subtitleLanguages}} : {})}
+}
+
+function subtitleRequest(format: 'srt' | 'vtt'): YtDlpRequest {
+	return {kind: 'subtitles', url: URL, output: {directory: OUTPUT_DIR}, subtitles: {languages: ['en'], format}}
+}
+
 beforeEach(() => {
 	vi.clearAllMocks()
 	vi.mocked(probeElectronNodeRuntime).mockResolvedValue({ok: true, runtime: {kind: 'electron-node', executablePath: '/mock/Arroxy', version: '24.16.0'}, output: 'v24.16.0'})
@@ -44,7 +52,7 @@ beforeEach(() => {
 
 describe('YtDlp — --paths temp dir (video)', () => {
 	it('when tempDir provided: uses --paths home: and --paths temp:', async () => {
-		await makeYtDlp().run({kind: 'video', url: URL, outputDir: OUTPUT_DIR, tempDir: TEMP_DIR})
+		await makeYtDlp().run(mediaRequest({tempDir: TEMP_DIR}))
 		const args = getArgs()
 
 		const homeIdx = args.indexOf('--paths')
@@ -58,7 +66,7 @@ describe('YtDlp — --paths temp dir (video)', () => {
 	})
 
 	it('when tempDir provided: -o template has no directory prefix', async () => {
-		await makeYtDlp().run({kind: 'video', url: URL, outputDir: OUTPUT_DIR, tempDir: TEMP_DIR})
+		await makeYtDlp().run(mediaRequest({tempDir: TEMP_DIR}))
 		const args = getArgs()
 		const oIdx = args.indexOf('-o')
 		expect(oIdx).toBeGreaterThan(-1)
@@ -67,7 +75,7 @@ describe('YtDlp — --paths temp dir (video)', () => {
 	})
 
 	it('when tempDir is absent: falls back to old -o <outputDir>/%(title)s.%(ext)s', async () => {
-		await makeYtDlp().run({kind: 'video', url: URL, outputDir: OUTPUT_DIR})
+		await makeYtDlp().run(mediaRequest())
 		const args = getArgs()
 		expect(args).not.toContain('--paths')
 		const oIdx = args.indexOf('-o')
@@ -75,14 +83,14 @@ describe('YtDlp — --paths temp dir (video)', () => {
 	})
 
 	it('url is always the last argument', async () => {
-		await makeYtDlp().run({kind: 'video', url: URL, outputDir: OUTPUT_DIR, tempDir: TEMP_DIR})
+		await makeYtDlp().run(mediaRequest({tempDir: TEMP_DIR}))
 		expect(getArgs().at(-1)).toBe(URL)
 	})
 })
 
 describe('YtDlp — --paths temp dir (video+embed)', () => {
 	it('when tempDir provided: uses --paths home: and --paths temp:', async () => {
-		await makeYtDlp().run({kind: 'video+embed', url: URL, outputDir: OUTPUT_DIR, tempDir: TEMP_DIR, subtitleLanguages: ['en']})
+		await makeYtDlp().run(mediaRequest({tempDir: TEMP_DIR, subtitleLanguages: ['en']}))
 		const args = getArgs()
 		const homeIdx = args.indexOf('--paths')
 		expect(args[homeIdx + 1]).toBe(`home:${OUTPUT_DIR}`)
@@ -93,12 +101,12 @@ describe('YtDlp — --paths temp dir (video+embed)', () => {
 
 describe('YtDlp — subtitle requests unchanged by --paths', () => {
 	it('subtitle kind does not use --paths', async () => {
-		await makeYtDlp().run({kind: 'subtitle', url: URL, outputDir: OUTPUT_DIR, subtitleLanguages: ['en'], subtitleFormat: 'vtt'})
+		await makeYtDlp().run(subtitleRequest('vtt'))
 		expect(getArgs()).not.toContain('--paths')
 	})
 
 	it('subtitle -o still contains outputDir', async () => {
-		await makeYtDlp().run({kind: 'subtitle', url: URL, outputDir: OUTPUT_DIR, subtitleLanguages: ['en'], subtitleFormat: 'srt'})
+		await makeYtDlp().run(subtitleRequest('srt'))
 		const args = getArgs()
 		const oIdx = args.indexOf('-o')
 		expect(args[oIdx + 1]).toContain(OUTPUT_DIR)

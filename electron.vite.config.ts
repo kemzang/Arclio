@@ -49,7 +49,16 @@ export default defineConfig(({mode}) => {
 	return {
 		main: {
 			define: {'process.env.OPENPANEL_CLIENT_ID': JSON.stringify(openpanelClientId), 'process.env.OPENPANEL_CLIENT_SECRET': JSON.stringify(openpanelClientSecret), 'process.env.ARROXY_ANALYTICS_DEBUG': JSON.stringify(arroxyAnalyticsDebug)},
-			resolve: {alias: {'@main': path.resolve('src/main'), '@shared': path.resolve('src/shared')}},
+			resolve: {
+				alias: [
+					{find: '@main', replacement: path.resolve('src/main')},
+					{find: '@shared', replacement: path.resolve('src/shared')},
+					{find: 'yt-dlp-bridge/parsers', replacement: path.resolve('packages/yt-dlp-bridge/src/parsers.ts')},
+					{find: 'yt-dlp-bridge/redaction', replacement: path.resolve('packages/yt-dlp-bridge/src/redaction.ts')},
+					{find: 'yt-dlp-bridge', replacement: path.resolve('packages/yt-dlp-bridge/src/index.ts')},
+					{find: 'ytdlp-errors', replacement: path.resolve('packages/ytdlp-errors/src/index.ts')}
+				]
+			},
 			build: {
 				externalizeDeps: true,
 				rollupOptions: {
@@ -88,6 +97,6 @@ export default defineConfig(({mode}) => {
 				}
 			}
 		},
-		renderer: {resolve: {alias: {'@renderer': path.resolve('src/renderer/src'), '@shared': path.resolve('src/shared')}}, plugins: [react(), tailwindcss(), Icons({compiler: 'jsx', jsx: 'react'}) as PluginOption]}
+		renderer: {resolve: {alias: {'@renderer': path.resolve('src/renderer/src'), '@shared': path.resolve('src/shared'), 'ytdlp-errors': path.resolve('packages/ytdlp-errors/src/index.ts')}}, plugins: [react(), tailwindcss(), Icons({compiler: 'jsx', jsx: 'react'}) as PluginOption]}
 	}
 })

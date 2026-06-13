@@ -1,5 +1,5 @@
 // Single registry for audio-convert targets. The lossy flag drives bitrate-strip
-// enablement in the wizard and the auto-embed policy in `embedPolicy.ts`.
+// enablement in the wizard.
 // `AudioConvertTarget` is defined here (not in schemas.ts) so the zod schema can
 // build its enum from this list without a circular import.
 
@@ -17,4 +17,6 @@ export const AUDIO_CONVERT_TARGETS = [
 	{target: 'wav', lossy: false}
 ] as const satisfies readonly AudioConvertTargetSpec[]
 
-export const isLossyTarget = (t: AudioConvertTarget): boolean => AUDIO_CONVERT_TARGETS.find(s => s.target === t)?.lossy ?? false
+export function isAudioConvertTargetLossy(target: AudioConvertTarget): boolean {
+	return AUDIO_CONVERT_TARGETS.some(spec => spec.target === target && spec.lossy)
+}

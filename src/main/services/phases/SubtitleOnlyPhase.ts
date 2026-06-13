@@ -19,7 +19,7 @@ export const SubtitleOnlyPhase: Phase = {
 		const {subtitles} = preparedJob
 
 		const result = await ytDlp.run(
-			{kind: 'subtitle', url: input.url, outputDir: input.outputDir!, subtitleLanguages: subtitles.languages, subtitleMode: subtitles.mode, subtitleFormat: subtitles.format ?? DEFAULTS.subtitleFormat, writeAutoSubs: subtitles.writeAuto, outputTemplate: preparedJob.outputTemplate},
+			{kind: 'subtitles', url: input.url, output: {directory: input.outputDir!, subtitleMode: subtitles.mode, ...(preparedJob.outputTemplate ? {template: preparedJob.outputTemplate} : {})}, subtitles: {languages: subtitles.languages, format: subtitles.format ?? DEFAULTS.subtitleFormat, writeAuto: subtitles.writeAuto}},
 			buildYtDlpSignal(ctx, active, {
 				onMinting: attempt => {
 					ctx.emitStatus('token', attempt === 0 ? STATUS_KEY.mintingToken : STATUS_KEY.remintingToken)

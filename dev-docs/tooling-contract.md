@@ -1,0 +1,50 @@
+# Tooling Contract
+
+Arroxy uses one root-owned monorepo tooling contract. Package-local configuration is allowed only when a package needs its own build, test, or registry publish surface.
+
+## Authorities
+
+| Concern | Tool | Contract |
+| --- | --- | --- |
+| Formatting | Biome | Formatter only. `biome.jsonc` keeps `linter` and `assist` disabled. |
+| Linting | Oxlint | Root `.oxlintrc.json` is the only Oxlint config. Type-aware lint runs after `lint:prepare`. |
+| Types | TypeScript | Root `tsc --noEmit` checks app and shared workspace source. Publishable packages keep local `tsconfig` files for their package output. |
+| Tests | Vitest | Root tests use the root Vitest config; packages keep package-specific Vitest configs when their package build needs one. |
+| Unused code | Knip | Every workspace package must be represented in `knip.json`. |
+| Import cycles | Madge | Every workspace package with TS/JS source must be represented in the root `madge` script. |
+| Registry package safety | Package gates | Root `packages:check` owns dependency order and runs package typecheck, test, build, pack dry-run, and packed metadata verification. |
+
+## Root Commands
+
+```bash
+bun run format                  # Biome formatter
+bun run format:check            # Biome formatter check
+bun run lint:prepare            # build workspace outputs needed by type-aware lint
+bun run lint                    # lint:prepare + oxlint --type-aware .
+bun run check:tooling-parity    # representative rule parity probes
+bun run check:tooling-contract  # verifies this monorepo tooling contract
+bun run packages:check          # registry package gates in dependency order
+bun run check                   # canonical local and CI gate
+```
+
+`bun run check` is the single required pre-PR and CI command. CI should call it directly instead of duplicating its substeps.
+
+Publish workflows stay package-specific, but they call root package check scripts: `bun run errors:check` for `ytdlp-errors` and `bun run bridge:check` for `yt-dlp-bridge`.
+
+Package release workflows use `bun pm pack` and `bun publish` with `NPM_CONFIG_TOKEN`. GitHub artifact attestation still covers generated tarballs, but registry trusted publishing/provenance is paused until Bun supports OIDC publishing.
+
+## Workspace Package Rules
+
+- Add every workspace package to Biome includes, Knip workspaces, and Madge source roots when it has source.
+- Publishable packages must expose `typecheck`, `test`, `build`, `prepack`, and `pack:dry-run`.
+- Publishable packages use `bun pm pack --dry-run` for local pack checks.
+- Publishable package-to-package runtime dependencies may use `workspace:*` only when the dependency name is another local workspace package.
+- Packed package metadata must not contain `workspace:`; `scripts/check-package-publish-metadata.mjs` verifies Bun rewrites internal `workspace:*` dependencies to the exact local package version.
+- The root app is private and may use `workspace:*` for local package development.
+- Keep package-local build/test configs when they describe package output. Do not add package-local Biome, Oxlint, ESLint, or Prettier configs.
+
+## Oxlint Bridge Policy
+
+`eslint-plugin-react-hooks`, `eslint-plugin-security`, and `eslint-plugin-react` remain dev dependencies because Oxlint loads them through its JS-plugin bridge for parity-critical rules. Removing them requires native Oxlint parity or a documented replacement scanner.
+
+`scripts/check-tooling-parity.mjs` protects this bridge by proving representative React hooks/compiler, security, React, and type-aware TypeScript diagnostics still fire.

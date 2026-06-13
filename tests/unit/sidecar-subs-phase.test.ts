@@ -51,11 +51,11 @@ const SUCCESS: YtDlpResult = {kind: 'success', stdout: '', stderr: '', usedExtra
 const EXIT_ERROR: YtDlpResult = {kind: 'exit-error', exitCode: 1, errorKind: 'unknown', rawError: 'fail', stdout: '', stderr: ''}
 
 describe('SidecarSubsPhase(embedAfter=false)', () => {
-	it('calls ytDlp.run with kind: subtitle', async () => {
+	it('calls ytDlp.run with kind: subtitles', async () => {
 		const ctx = makeCtx(SUCCESS)
 		await SidecarSubsPhase(false).run(ctx)
 		const [req] = vi.mocked(ctx.ytDlp.run as ReturnType<typeof vi.fn>).mock.calls[0]
-		expect(req.kind).toBe('subtitle')
+		expect(req.kind).toBe('subtitles')
 	})
 
 	it('does not forward SponsorBlock config to the subtitle request', async () => {
@@ -71,7 +71,7 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
 		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, outputTemplate: '%(title).200B [%(id)s].%(ext)s'}}})
 		await SidecarSubsPhase(false).run(ctx)
 		const [req] = vi.mocked(ctx.ytDlp.run as ReturnType<typeof vi.fn>).mock.calls[0]
-		expect(req.outputTemplate).toBe('%(title).200B [%(id)s].%(ext)s')
+		expect(req.output.template).toBe('%(title).200B [%(id)s].%(ext)s')
 	})
 
 	it('emits fetchingSubtitles status before run', async () => {

@@ -272,7 +272,7 @@ All three must exit clean. Currently they do.
 Renderer-only Playwright walk-through (per `CLAUDE.md`):
 
 ```bash
-npx vite src/renderer --port 5173 --mode browser-mock
+bunx vite src/renderer --port 5173 --mode browser-mock
 ```
 
 Drive in a browser via the Playwright MCP tools or manually:

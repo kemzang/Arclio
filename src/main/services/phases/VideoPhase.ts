@@ -1,7 +1,10 @@
 import {mkdir, rm, stat} from 'node:fs/promises'
 import {join} from 'node:path'
+import type {AudioConvert as BridgeAudioConvert} from 'yt-dlp-bridge'
+import {isAudioConvertTargetLossy} from '@shared/audioTargets.js'
 import {STATUS_KEY} from '@shared/schemas.js'
 import {siteForExtractor} from '@shared/sites/index.js'
+import type {AudioConvert} from '@shared/types.js'
 import type {YtDlpRequest, YtDlpResult} from '../YtDlp.js'
 import {classifyYtDlpFailure} from '../download/errorClassification.js'
 import {QueueResumeLifecycle} from '../download/QueueResumeLifecycle.js'
@@ -32,8 +35,12 @@ async function detectCachedInfoJson(tempDir: string | undefined): Promise<string
 
 function isSkippableSponsorBlockApiFailure(result: Exclude<YtDlpResult, {kind: 'success'}>, req: YtDlpRequest): boolean {
 	if (result.kind !== 'exit-error') return false
-	if (!('sponsorBlock' in req) || req.sponsorBlock === undefined || req.sponsorBlock.categories.length === 0) return false
+	if (req.kind !== 'media' || req.sponsorBlock === undefined || req.sponsorBlock.categories.length === 0) return false
 	return /Unable to communicate with SponsorBlock API/i.test([result.rawError, result.stderr].filter(Boolean).join('\n'))
+}
+
+function bridgeAudioConvert(input: AudioConvert): BridgeAudioConvert {
+	return {...input, lossy: isAudioConvertTargetLossy(input.target)}
 }
 
 export function VideoPhase(embed: boolean): Phase {
@@ -75,51 +82,21 @@ export function VideoPhase(embed: boolean): Phase {
 			const formatSort = preparedJob.kind === 'ranged-format' ? preparedJob.formatSort : undefined
 			const mergeOutputFormat = preparedJob.kind === 'ranged-format' ? preparedJob.mergeOutputFormat : undefined
 			const audioConvert = preparedJob.kind === 'audio-convert' ? preparedJob.audioConvert : preparedJob.kind === 'ranged-format' ? preparedJob.audioConvert : undefined
+			const bridgeConvert = audioConvert ? bridgeAudioConvert(audioConvert) : undefined
 			const outputTemplate = preparedJob.outputTemplate
 			const {embed: embedOpts} = preparedJob
 
-			const req: YtDlpRequest =
-				embed && (preparedJob.subtitles?.languages.length ?? 0) > 0
-					? {
-							kind: 'video+embed',
-							url: input.url,
-							outputDir: job.outputDir,
-							tempDir,
-							formatId,
-							formatSelector,
-							formatSort,
-							mergeOutputFormat,
-							audioConvert,
-							subtitleLanguages: preparedJob.subtitles!.languages,
-							writeAutoSubs: preparedJob.subtitles!.writeAuto,
-							sponsorBlock: sbConfig,
-							embedChapters: embedOpts.chapters,
-							embedMetadata: embedOpts.metadata,
-							embedThumbnail: embedOpts.thumbnail,
-							writeDescription: embedOpts.description,
-							writeThumbnail: embedOpts.thumbnailSidecar,
-							outputTemplate,
-							loadInfoJsonPath
-						}
-					: {
-							kind: 'video',
-							url: input.url,
-							outputDir: job.outputDir,
-							tempDir,
-							formatId,
-							formatSelector,
-							formatSort,
-							mergeOutputFormat,
-							audioConvert,
-							sponsorBlock: sbConfig,
-							embedChapters: embedOpts.chapters,
-							embedMetadata: embedOpts.metadata,
-							embedThumbnail: embedOpts.thumbnail,
-							writeDescription: embedOpts.description,
-							writeThumbnail: embedOpts.thumbnailSidecar,
-							outputTemplate,
-							loadInfoJsonPath
-						}
+			const req: YtDlpRequest = {
+				kind: 'media',
+				url: input.url,
+				output: {directory: job.outputDir, ...(tempDir ? {tempDirectory: tempDir} : {}), ...(outputTemplate ? {template: outputTemplate} : {})},
+				selection: {formatId, formatSelector, formatSort, mergeOutputFormat},
+				...(bridgeConvert ? {audio: {convert: bridgeConvert}} : {}),
+				...(embed && (preparedJob.subtitles?.languages.length ?? 0) > 0 && preparedJob.subtitles ? {subtitles: {embed: true, languages: preparedJob.subtitles.languages, writeAuto: preparedJob.subtitles.writeAuto}} : {}),
+				...(sbConfig ? {sponsorBlock: sbConfig} : {}),
+				embed: {chapters: embedOpts.chapters, metadata: embedOpts.metadata, thumbnail: embedOpts.thumbnail, description: embedOpts.description, thumbnailSidecar: embedOpts.thumbnailSidecar},
+				...(loadInfoJsonPath ? {resume: {loadInfoJsonPath}} : {})
+			}
 
 			// Don't preemptively emit downloadingMedia on spawn — yt-dlp spends
 			// a few seconds on extractor work and thumbnail conversion first.

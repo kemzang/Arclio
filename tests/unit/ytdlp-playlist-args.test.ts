@@ -4,31 +4,35 @@
 // Pipeline under test:
 //   PlaylistSelection
 //   → mediaIntentSpec → MediaIntentSpec
-//   → YtDlpRequest (as VideoPhase builds it)
-//   → buildVideoArgs → string[]
+//   → WorkflowInput (as VideoPhase builds it)
+//   → planWorkflow → string[]
 //
 // Assertions check the flags that matter for format correctness.
 // Pacing is omitted (undefined) — covered by pacing-specific tests.
 
 import {describe, expect, it} from 'vitest'
+import {isAudioConvertTargetLossy} from '@shared/audioTargets.js'
 import {mediaIntentSpec, playlistSelectionToMediaIntent} from '@shared/mediaIntent.js'
-import {buildVideoArgs} from '@main/services/YtDlp.js'
-import type {YtDlpRequest} from '@main/services/YtDlp.js'
-import type {PlaylistSelection} from '@shared/schemas.js'
+import {planWorkflow, type AudioConvert as BridgeAudioConvert, type WorkflowInput} from 'yt-dlp-bridge'
+import type {AudioConvert, PlaylistSelection} from '@shared/schemas.js'
 
 const URL = 'https://www.youtube.com/watch?v=test'
 const OUTPUT_DIR = '/tmp/out'
 const TEMPLATE = '%(title).200B [%(id)s].%(ext)s'
 
-// Build a minimal 'video' YtDlpRequest from a PlaylistSelection, mirroring VideoPhase logic.
-function reqFor(sel: PlaylistSelection): Extract<YtDlpRequest, {kind: 'video'}> {
+// Build a minimal media WorkflowInput from a PlaylistSelection, mirroring VideoPhase logic.
+function reqFor(sel: PlaylistSelection): WorkflowInput {
 	const spec = mediaIntentSpec(playlistSelectionToMediaIntent(sel))
-	return {kind: 'video', url: URL, outputDir: OUTPUT_DIR, formatSelector: spec.formatSelector, formatSort: spec.formatSort, mergeOutputFormat: spec.mergeOutputFormat, audioConvert: spec.audioConvert, outputTemplate: TEMPLATE}
+	return {kind: 'media', url: URL, output: {directory: OUTPUT_DIR, template: TEMPLATE}, selection: {formatSelector: spec.formatSelector, formatSort: spec.formatSort, mergeOutputFormat: spec.mergeOutputFormat}, ...(spec.audioConvert ? {audio: {convert: bridgeAudioConvert(spec.audioConvert)}} : {})}
+}
+
+function bridgeAudioConvert(input: AudioConvert): BridgeAudioConvert {
+	return {...input, lossy: isAudioConvertTargetLossy(input.target)}
 }
 
 // Helper: extract yt-dlp args as a flat string for easy substring assertions.
 function argsFor(sel: PlaylistSelection): string[] {
-	return buildVideoArgs(reqFor(sel), undefined)
+	return planWorkflow(reqFor(sel)).args
 }
 
 describe('Video · Best codec', () => {
@@ -77,17 +81,8 @@ describe('Video · MP4 codec', () => {
 
 	it('forcesMkv (video+embed with subs) → embed merge wins over playlist mp4 merge', () => {
 		const spec = mediaIntentSpec(playlistSelectionToMediaIntent({kind: 'video', tier: '1080', codec: 'mp4'}))
-		const req: Extract<YtDlpRequest, {kind: 'video+embed'}> = {
-			kind: 'video+embed',
-			url: URL,
-			outputDir: OUTPUT_DIR,
-			formatSelector: spec.formatSelector,
-			formatSort: spec.formatSort,
-			mergeOutputFormat: spec.mergeOutputFormat, // 'mp4' from spec
-			subtitleLanguages: ['en'],
-			outputTemplate: TEMPLATE
-		}
-		const args = buildVideoArgs(req, undefined)
+		const req: WorkflowInput = {kind: 'media', url: URL, output: {directory: OUTPUT_DIR, template: TEMPLATE}, selection: {formatSelector: spec.formatSelector, formatSort: spec.formatSort, mergeOutputFormat: spec.mergeOutputFormat}, subtitles: {embed: true, languages: ['en']}}
+		const args = planWorkflow(req).args
 		// forcesMkv = true (video+embed with subtitles) — mkv wins
 		const mIdx = args.indexOf('--merge-output-format')
 		expect(mIdx).toBeGreaterThan(-1)

@@ -6,6 +6,10 @@ const aliasObj = {
 	'@preload': path.resolve('src/preload'),
 	'@renderer': path.resolve('src/renderer/src'),
 	'@shared': path.resolve('src/shared'),
+	'yt-dlp-bridge/parsers': path.resolve('packages/yt-dlp-bridge/src/parsers.ts'),
+	'yt-dlp-bridge/redaction': path.resolve('packages/yt-dlp-bridge/src/redaction.ts'),
+	'yt-dlp-bridge': path.resolve('packages/yt-dlp-bridge/src/index.ts'),
+	'ytdlp-errors': path.resolve('packages/ytdlp-errors/src/index.ts'),
 	'electron-log/main.js': path.resolve('tests/__mocks__/electron-log-main.ts'),
 	'electron-log/renderer.js': path.resolve('tests/__mocks__/electron-log-renderer.ts'),
 	electron: path.resolve('tests/__mocks__/electron.ts')

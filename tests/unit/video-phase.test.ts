@@ -67,19 +67,19 @@ const SPONSORBLOCK_API_ERROR: YtDlpResult = {
 }
 
 describe('VideoPhase(embed=false)', () => {
-	it('calls ytDlp.run with kind: video', async () => {
+	it('calls ytDlp.run with kind: media', async () => {
 		const ctx = makeCtx(SUCCESS)
 		await VideoPhase(false).run(ctx)
 		expect(ctx.runMock).toHaveBeenCalledOnce()
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.kind).toBe('video')
+		expect(req.kind).toBe('media')
 	})
 
 	it('forwards a single-mode outputTemplate to yt-dlp', async () => {
 		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, outputTemplate: '%(title).200B [%(id)s].%(ext)s'}}})
 		await VideoPhase(false).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.outputTemplate).toBe('%(title).200B [%(id)s].%(ext)s')
+		expect(req.output.template).toBe('%(title).200B [%(id)s].%(ext)s')
 	})
 
 	it('success → returns continue', async () => {
@@ -191,26 +191,28 @@ describe('VideoPhase(embed=false)', () => {
 })
 
 describe('VideoPhase(embed=true)', () => {
-	it('calls ytDlp.run with kind: video+embed and subtitle fields', async () => {
+	it('calls ytDlp.run with media subtitles when embedding is enabled', async () => {
 		const ctx = makeCtx(SUCCESS)
 		await VideoPhase(true).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.kind).toBe('video+embed')
-		expect(req.subtitleLanguages).toEqual(['en', 'ja'])
+		expect(req.kind).toBe('media')
+		expect(req.subtitles).toMatchObject({embed: true, languages: ['en', 'ja']})
 	})
 
-	it('embed=true but no subtitleLanguages → falls back to video kind', async () => {
+	it('embed=true but no subtitleLanguages → omits media subtitles', async () => {
 		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, subtitles: undefined}}})
 		await VideoPhase(true).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.kind).toBe('video')
+		expect(req.kind).toBe('media')
+		expect(req.subtitles).toBeUndefined()
 	})
 
-	it('embed=true with empty subtitleLanguages → falls back to video kind', async () => {
+	it('embed=true with empty subtitleLanguages → omits media subtitles', async () => {
 		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, subtitles: undefined}}})
 		await VideoPhase(true).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.kind).toBe('video')
+		expect(req.kind).toBe('media')
+		expect(req.subtitles).toBeUndefined()
 	})
 
 	it('audio-convert jobs keep audioConvert when subtitles are embedded', async () => {
@@ -219,38 +221,48 @@ describe('VideoPhase(embed=true)', () => {
 		})
 		await VideoPhase(true).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.kind).toBe('video+embed')
-		expect(req.audioConvert).toEqual({target: 'mp3', bitrateKbps: 192})
+		expect(req.kind).toBe('media')
+		expect(req.subtitles).toMatchObject({embed: true, languages: ['en']})
+		expect(req.audio?.convert).toEqual({target: 'mp3', lossy: true, bitrateKbps: 192})
+	})
+
+	it('marks wav audio conversion as lossless for the bridge planner', async () => {
+		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {kind: 'audio-convert', extractor: 'youtube', extractorKey: 'Youtube', audioConvert: {target: 'wav'}, preset: 'audio-only', sponsorBlock: SB_OFF, embed: EMBED_OFF}}})
+
+		await VideoPhase(false).run(ctx)
+
+		const [req] = ctx.runMock.mock.calls[0]
+		expect(req.audio?.convert).toEqual({target: 'wav', lossy: false})
 	})
 })
 
 describe('VideoPhase — sidecar field propagation', () => {
-	it('writeDescription propagates to YtDlpRequest (video kind)', async () => {
+	it('writeDescription propagates to media embed options', async () => {
 		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, subtitles: undefined, embed: {...EMBED_OFF, description: true}}}})
 		await VideoPhase(false).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.writeDescription).toBe(true)
+		expect(req.embed?.description).toBe(true)
 	})
 
-	it('writeThumbnail propagates to YtDlpRequest (video kind)', async () => {
+	it('writeThumbnail propagates to media embed options', async () => {
 		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, subtitles: undefined, embed: {...EMBED_OFF, thumbnailSidecar: true}}}})
 		await VideoPhase(false).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.writeThumbnail).toBe(true)
+		expect(req.embed?.thumbnailSidecar).toBe(true)
 	})
 
-	it('writeDescription propagates to YtDlpRequest (video+embed kind)', async () => {
+	it('writeDescription propagates with embedded subtitles', async () => {
 		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, embed: {...EMBED_OFF, description: true}}}})
 		await VideoPhase(true).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.writeDescription).toBe(true)
+		expect(req.embed?.description).toBe(true)
 	})
 
-	it('writeThumbnail propagates to YtDlpRequest (video+embed kind)', async () => {
+	it('writeThumbnail propagates with embedded subtitles', async () => {
 		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, embed: {...EMBED_OFF, thumbnailSidecar: true}}}})
 		await VideoPhase(true).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.writeThumbnail).toBe(true)
+		expect(req.embed?.thumbnailSidecar).toBe(true)
 	})
 })
 
@@ -341,7 +353,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 		await VideoPhase(false).run(ctx)
 
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.loadInfoJsonPath).toBe(infoJsonPath)
+		expect(req.resume?.loadInfoJsonPath).toBe(infoJsonPath)
 	})
 
 	it('resume w/o cached info.json → loadInfoJsonPath undefined', async () => {
@@ -352,7 +364,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 		await VideoPhase(false).run(ctx)
 
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.loadInfoJsonPath).toBeUndefined()
+		expect(req.resume?.loadInfoJsonPath).toBeUndefined()
 	})
 
 	it('fresh start → loadInfoJsonPath undefined even if stale info.json existed (tempDir wiped)', async () => {
@@ -364,7 +376,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 		await VideoPhase(false).run(ctx)
 
 		const [req] = ctx.runMock.mock.calls[0]
-		expect(req.loadInfoJsonPath).toBeUndefined()
+		expect(req.resume?.loadInfoJsonPath).toBeUndefined()
 	})
 
 	it('resume with missing temp dir → mkdir recreates it without throwing', async () => {

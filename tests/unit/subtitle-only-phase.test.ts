@@ -47,20 +47,20 @@ const SUCCESS: YtDlpResult = {kind: 'success', stdout: '', stderr: '', usedExtra
 const EXIT_ERROR: YtDlpResult = {kind: 'exit-error', exitCode: 1, errorKind: 'unknown', rawError: 'fail', stdout: '', stderr: ''}
 
 describe('SubtitleOnlyPhase', () => {
-	it('calls ytDlp.run with kind: subtitle', async () => {
+	it('calls ytDlp.run with kind: subtitles', async () => {
 		const ctx = makeCtx(SUCCESS)
 		await SubtitleOnlyPhase.run(ctx)
 		const [req] = vi.mocked(ctx.ytDlp.run as ReturnType<typeof vi.fn>).mock.calls[0]
-		expect(req.kind).toBe('subtitle')
+		expect(req.kind).toBe('subtitles')
 		expect(req.url).toBe(BASE_INPUT.url)
-		expect(req.subtitleLanguages).toEqual(['en'])
+		expect(req.subtitles.languages).toEqual(['en'])
 	})
 
 	it('forwards outputTemplate for single subtitle-only jobs', async () => {
 		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, outputTemplate: '%(title).200B [%(id)s].%(ext)s'}}})
 		await SubtitleOnlyPhase.run(ctx)
 		const [req] = vi.mocked(ctx.ytDlp.run as ReturnType<typeof vi.fn>).mock.calls[0]
-		expect(req.outputTemplate).toBe('%(title).200B [%(id)s].%(ext)s')
+		expect(req.output.template).toBe('%(title).200B [%(id)s].%(ext)s')
 	})
 
 	it('success → returns completed', async () => {

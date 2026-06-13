@@ -478,7 +478,7 @@ export class ProbeService extends EventEmitter {
 			}
 		}
 		const result = await this.ytDlp.run(
-			{kind: 'probe', url, playlistMode, playlistScope},
+			{kind: 'probe', url, selection: {playlistMode, ...(playlistScope ? {playlistScope} : {})}},
 			{
 				abortSignal: signal,
 				onStdout: consumeStdout,

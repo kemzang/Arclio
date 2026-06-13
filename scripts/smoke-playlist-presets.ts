@@ -3,7 +3,7 @@
 // Arroxy splits playlists into per-video queue items, so this does NOT use
 // yt-dlp native playlist downloads. It probes one YouTube item, caches the real
 // info JSON, then runs every UI-reachable PlaylistSelection through Arroxy's
-// mediaIntentSpec -> buildVideoArgs path with yt-dlp --load-info-json.
+// mediaIntentSpec -> planWorkflow path with yt-dlp --load-info-json.
 //
 // Usage:
 //   bun run smoke:playlist
@@ -17,9 +17,10 @@ import {mkdtemp, rm, writeFile} from 'node:fs/promises'
 import {existsSync} from 'node:fs'
 import {homedir, tmpdir} from 'node:os'
 import {join} from 'node:path'
+import {isAudioConvertTargetLossy} from '../src/shared/audioTargets.js'
 import {mediaIntentSpec, playlistSelectionToMediaIntent} from '../src/shared/mediaIntent.js'
-import {AUDIO_BITRATES, PLAYLIST_VIDEO_TIERS, playlistAudioFormatSchema, type AudioBitrate, type PlaylistSelection} from '../src/shared/schemas.js'
-import {buildVideoArgs, type YtDlpRequest} from '../src/main/services/YtDlp.js'
+import {AUDIO_BITRATES, PLAYLIST_VIDEO_TIERS, playlistAudioFormatSchema, type AudioBitrate, type AudioConvert, type PlaylistSelection} from '../src/shared/schemas.js'
+import {planWorkflow, type AudioConvert as BridgeAudioConvert, type WorkflowInput} from 'yt-dlp-bridge'
 
 const DEFAULT_URL = 'https://www.youtube.com/watch?v=WO2b03Zdu4Q&pp=ygUCNGvSBwkJIwsBhyohjO8%3D'
 const PLAYER_CLIENT_FALLBACK = 'youtube:player_client=default,-web,-web_safari'
@@ -191,9 +192,20 @@ async function probeInfoJson(ytDlpPath: string, url: string, cli: CliArgs, nodeP
 	throw new Error(`Initial YouTube probe failed.\n${tail}`)
 }
 
-function reqFor(selection: PlaylistSelection, outputDir: string, infoJsonPath: string): Extract<YtDlpRequest, {kind: 'video'}> {
+function reqFor(selection: PlaylistSelection, outputDir: string, infoJsonPath: string): WorkflowInput {
 	const spec = mediaIntentSpec(playlistSelectionToMediaIntent(selection))
-	return {kind: 'video', url: DEFAULT_URL, outputDir, loadInfoJsonPath: infoJsonPath, formatSelector: spec.formatSelector, formatSort: spec.formatSort, mergeOutputFormat: spec.mergeOutputFormat, audioConvert: spec.audioConvert, outputTemplate: OUTPUT_TEMPLATE}
+	return {
+		kind: 'media',
+		url: DEFAULT_URL,
+		output: {directory: outputDir, template: OUTPUT_TEMPLATE},
+		selection: {formatSelector: spec.formatSelector, formatSort: spec.formatSort, mergeOutputFormat: spec.mergeOutputFormat},
+		...(spec.audioConvert ? {audio: {convert: bridgeAudioConvert(spec.audioConvert)}} : {}),
+		resume: {loadInfoJsonPath: infoJsonPath}
+	}
+}
+
+function bridgeAudioConvert(input: AudioConvert): BridgeAudioConvert {
+	return {...input, lossy: isAudioConvertTargetLossy(input.target)}
 }
 
 function smokeCases(): SmokeCase[] {
@@ -323,7 +335,7 @@ async function main(): Promise<void> {
 		const cases = smokeCases()
 		let failed = 0
 		for (const caseDef of cases) {
-			const args = ['--simulate', '--dump-single-json', '--no-warnings', ...nodeArgs(nodePath), ...buildVideoArgs(reqFor(caseDef.selection, tempDir, infoJsonPath), undefined)]
+			const args = ['--simulate', '--dump-single-json', '--no-warnings', ...nodeArgs(nodePath), ...planWorkflow(reqFor(caseDef.selection, tempDir, infoJsonPath)).args]
 			const result = await run(ytDlpPath, args)
 			const info = parseSelectedInfo(result.stdout)
 			const failures = info ? validate(caseDef, args, info) : ['yt-dlp did not return parseable JSON']
