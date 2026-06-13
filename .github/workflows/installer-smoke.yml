@@ -35,29 +35,24 @@ jobs:
     name: Build Windows installer
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
           persist-credentials: false
-      - uses: oven-sh/setup-bun@v2.2.0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: ${{ env.BUN_VERSION }}
       - run: bun install --frozen-lockfile
-      # On tag push, build both NSIS Setup and Portable (both shipped on the
-      # GitHub Release; portable feeds the scoop bucket). Otherwise, only
-      # build NSIS — that's what smoke tests, and saves ~30s per non-tag run.
+      # Build both NSIS Setup and Portable on PR and release. The no-Deno
+      # runtime migration must prove both installed and portable executables can
+      # use their own Electron runtime before any artifact is published.
       - name: Build Windows artifacts
         shell: bash
         env:
           OPENPANEL_CLIENT_ID: ${{ secrets.OPENPANEL_CLIENT_ID }}
           OPENPANEL_CLIENT_SECRET: ${{ secrets.OPENPANEL_CLIENT_SECRET }}
           BTBN_GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            bun run dist:win
-          else
-            bun run dist:win:nsis
-          fi
-      - uses: actions/upload-artifact@v7
+        run: bun run dist:win
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: installer
           path: |
@@ -73,7 +68,7 @@ jobs:
     needs: build
     runs-on: windows-latest
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
           name: installer
           path: ./installer
@@ -82,13 +77,24 @@ jobs:
         shell: pwsh
         run: |
           $key = "HKLM:\Software\Microsoft\Windows\Windows Error Reporting\LocalDumps"
+          $dumpDir = Join-Path $env:RUNNER_TEMP 'CrashDumps'
           New-Item -Path $key -Force | Out-Null
-          Set-ItemProperty $key DumpFolder "$env:LOCALAPPDATA\CrashDumps"
+          Set-ItemProperty $key DumpFolder $dumpDir
           Set-ItemProperty $key DumpType 2 -Type DWord
           Set-ItemProperty $key DumpCount 10 -Type DWord
-          New-Item -Path "$env:LOCALAPPDATA\CrashDumps" -ItemType Directory -Force | Out-Null
+          New-Item -Path $dumpDir -ItemType Directory -Force | Out-Null
 
-      - name: Silent install + uninstall (single cold cycle)
+      - name: Prepend fake JS runtimes and yt-dlp to PATH
+        shell: pwsh
+        run: |
+          $fake = Join-Path $env:RUNNER_TEMP 'arroxy fake tools Ω'
+          New-Item -ItemType Directory -Force -Path $fake | Out-Null
+          Set-Content -Path (Join-Path $fake 'node.cmd') -Value "@echo off`necho fake old node v10.0.0`nexit /b 0`n" -Encoding ascii
+          Set-Content -Path (Join-Path $fake 'deno.cmd') -Value "@echo off`necho fake deno 2.0.0`nexit /b 0`n" -Encoding ascii
+          Set-Content -Path (Join-Path $fake 'yt-dlp.cmd') -Value "@echo off`necho fake yt-dlp should not be used`nexit /b 1`n" -Encoding ascii
+          $fake | Out-File -FilePath $env:GITHUB_PATH -Append -Encoding utf8
+
+      - name: Silent install (single cold cycle)
         shell: pwsh
         run: |
           $inst = (Get-ChildItem ./installer/Arroxy-win-x64-Setup.exe | Select-Object -First 1).FullName
@@ -104,9 +110,65 @@ jobs:
 
           $appExe = "$env:LOCALAPPDATA\Programs\Arroxy\Arroxy.exe"
           if (-not (Test-Path $appExe)) { throw "Install reported success but $appExe missing" }
+          Write-Host "Cold install passed"
 
+      - name: Run installed app runtime smoke
+        shell: pwsh
+        env:
+          ARROXY_RUNTIME_SMOKE: '1'
+        run: |
+          $appExe = "$env:LOCALAPPDATA\Programs\Arroxy\Arroxy.exe"
+          if (-not (Test-Path $appExe)) { throw "Installed app missing at $appExe" }
+          $logDir = Join-Path $env:RUNNER_TEMP 'runtime-smoke-logs'
+          New-Item -ItemType Directory -Force -Path $logDir | Out-Null
+          $stdout = Join-Path $logDir 'installed-runtime-smoke.out'
+          $stderr = Join-Path $logDir 'installed-runtime-smoke.err'
+          $env:ELECTRON_USER_DATA = Join-Path $env:RUNNER_TEMP 'Arroxy Runtime Ω Installed'
+          Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue
+          $p = Start-Process -FilePath $appExe -Wait -PassThru -RedirectStandardOutput $stdout -RedirectStandardError $stderr
+          $exitCode = $p.ExitCode
+          Get-Content $stdout -ErrorAction SilentlyContinue
+          if (Test-Path $stderr) { Get-Content $stderr -ErrorAction SilentlyContinue | ForEach-Object { Write-Host $_ } }
+          Remove-Item Env:ARROXY_RUNTIME_SMOKE -ErrorAction SilentlyContinue
+          Remove-Item Env:ELECTRON_USER_DATA -ErrorAction SilentlyContinue
+          if ($null -eq $exitCode) { throw "Installed runtime smoke did not report an exit code" }
+          if ($exitCode -ne 0) { throw "Installed runtime smoke failed: exit $exitCode" }
+
+      - name: Run portable app runtime smoke
+        shell: pwsh
+        env:
+          ARROXY_RUNTIME_SMOKE: '1'
+        run: |
+          $portable = (Get-ChildItem ./installer/Arroxy-win-x64-Portable.exe | Select-Object -First 1).FullName
+          if (-not $portable) { throw "No portable artifact found in ./installer" }
+          $portableDir = Join-Path $env:RUNNER_TEMP 'Arroxy Portable Ω Path [test]'
+          New-Item -ItemType Directory -Force -Path $portableDir | Out-Null
+          $portableExe = Join-Path $portableDir 'Arroxy Portable Ω.exe'
+          Copy-Item $portable $portableExe -Force
+          $logDir = Join-Path $env:RUNNER_TEMP 'runtime-smoke-logs'
+          New-Item -ItemType Directory -Force -Path $logDir | Out-Null
+          $stdout = Join-Path $logDir 'portable-runtime-smoke.out'
+          $stderr = Join-Path $logDir 'portable-runtime-smoke.err'
+          $env:ELECTRON_USER_DATA = Join-Path $env:RUNNER_TEMP 'Arroxy Runtime Ω Portable'
+          Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue
+          $p = Start-Process -FilePath $portableExe -Wait -PassThru -RedirectStandardOutput $stdout -RedirectStandardError $stderr
+          $exitCode = $p.ExitCode
+          Get-Content $stdout -ErrorAction SilentlyContinue
+          if (Test-Path $stderr) { Get-Content $stderr -ErrorAction SilentlyContinue | ForEach-Object { Write-Host $_ } }
+          Remove-Item Env:ARROXY_RUNTIME_SMOKE -ErrorAction SilentlyContinue
+          Remove-Item Env:ELECTRON_USER_DATA -ErrorAction SilentlyContinue
+          if ($null -eq $exitCode) { throw "Portable runtime smoke did not report an exit code" }
+          if ($exitCode -ne 0) { throw "Portable runtime smoke failed: exit $exitCode" }
+
+      - name: Silent uninstall
+        if: always()
+        shell: pwsh
+        run: |
           $uninst = "$env:LOCALAPPDATA\Programs\Arroxy\Uninstall Arroxy.exe"
-          if (-not (Test-Path $uninst)) { throw "Uninstaller missing at $uninst" }
+          if (-not (Test-Path $uninst)) {
+            Write-Host "Uninstaller missing at $uninst"
+            exit 0
+          }
           $u = Start-Process -FilePath $uninst -ArgumentList '/S' -Wait -PassThru
           Write-Host "Uninstall exit: $($u.ExitCode)"
           if ($u.ExitCode -ne 0) { throw "Silent uninstall failed: exit $($u.ExitCode)" }
@@ -114,37 +176,50 @@ jobs:
           if (Test-Path "$env:LOCALAPPDATA\Programs\Arroxy") {
             throw "Uninstall left files at $env:LOCALAPPDATA\Programs\Arroxy"
           }
-          Write-Host "Cold install + uninstall passed"
+          Write-Host "Cold uninstall passed"
 
       - name: Auto-analyze crash dumps on failure
         if: failure()
         shell: pwsh
         continue-on-error: true
         run: |
-          $dumps = Get-ChildItem "$env:LOCALAPPDATA\CrashDumps\*.dmp" -ErrorAction SilentlyContinue
+          $dumpDir = Join-Path $env:RUNNER_TEMP 'CrashDumps'
+          $dumps = Get-ChildItem "$dumpDir\*.dmp" -ErrorAction SilentlyContinue
           if (-not $dumps) { Write-Host "No crash dumps captured."; exit 0 }
           $cdb = Get-ChildItem "C:\Program Files (x86)\Windows Kits\*\Debuggers\*\cdb.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
           if (-not $cdb) { Write-Host "cdb.exe not found on runner."; exit 0 }
           foreach ($d in $dumps) {
-            $out = "$env:LOCALAPPDATA\CrashDumps\$($d.BaseName).analyze.txt"
+            $out = "$dumpDir\$($d.BaseName).analyze.txt"
             Write-Host "=== !analyze -v on $($d.Name) ==="
             & $cdb.FullName -z $d.FullName -c "!analyze -v; q" -lines 2>&1 | Tee-Object -FilePath $out
           }
 
       - name: Upload crash dumps + analysis
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: crash-dump-cold
-          path: ${{ runner.temp }}/../../AppData/Local/CrashDumps/
+          path: ${{ runner.temp }}/CrashDumps/
           if-no-files-found: ignore
+
+      - name: Upload runtime smoke logs
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: runtime-smoke-logs
+          path: |
+            ${{ runner.temp }}/runtime-smoke-logs
+            ${{ runner.temp }}/Arroxy Runtime Ω Installed/logs
+            ${{ runner.temp }}/Arroxy Runtime Ω Portable/logs
+          if-no-files-found: ignore
+          retention-days: 7
 
   cycle-smoke:
     name: 1x install/uninstall cycle
     needs: build
     runs-on: windows-latest
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
           name: installer
           path: ./installer
@@ -153,9 +228,11 @@ jobs:
         shell: pwsh
         run: |
           $key = "HKLM:\Software\Microsoft\Windows\Windows Error Reporting\LocalDumps"
+          $dumpDir = Join-Path $env:RUNNER_TEMP 'CrashDumps'
           New-Item -Path $key -Force | Out-Null
-          Set-ItemProperty $key DumpFolder "$env:LOCALAPPDATA\CrashDumps"
+          Set-ItemProperty $key DumpFolder $dumpDir
           Set-ItemProperty $key DumpType 2 -Type DWord
+          New-Item -Path $dumpDir -ItemType Directory -Force | Out-Null
 
       - name: 1x install + uninstall
         shell: pwsh
@@ -170,17 +247,17 @@ jobs:
 
       - name: Upload crash dumps on failure
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: crash-dump-cycle
-          path: ${{ runner.temp }}/../../AppData/Local/CrashDumps/
+          path: ${{ runner.temp }}/CrashDumps/
           if-no-files-found: ignore
 
   npm-latest-gate:
     name: electron-builder dist-tag advisory
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
       - name: Compare installed electron-builder vs npm latest
         run: |
           installed=$(jq -r '.devDependencies."electron-builder"' package.json | sed 's/^[~^]//')
@@ -206,7 +283,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
           name: installer
           path: ./dist

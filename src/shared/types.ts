@@ -45,13 +45,38 @@ export type {
 	BulkMetadataItemStatus,
 	BulkMetadataCancelReason,
 	BulkUrlKind,
-	BulkUrlRejectReason
+	BulkUrlRejectReason,
+	RuntimeBinaryId,
+	RuntimeBinaryChannel,
+	RuntimeBinaryProvider,
+	RuntimeBinaryPlatform,
+	RuntimeBinaryManifestEntry,
+	RuntimeBinaryIndex
 } from './schemas.js'
 
 export type {StatusKey} from './schemas.js'
 export type {LocalizedError, YtDlpErrorKind} from './i18n/types.js'
 
-import type {AudioSelection, Preset, PlaylistScope, SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, SupportedLang, UiTheme, BackdropRenderMode, StatusKey, CookiesMode, CookiesBrowser, NetworkPacingPreset, DownloadProfilesPrefs, ProbeOtherErrorCode} from './schemas.js'
+import type {
+	AudioSelection,
+	Preset,
+	PlaylistScope,
+	SubtitleMode,
+	SubtitleFormat,
+	SponsorBlockMode,
+	SponsorBlockCategory,
+	SupportedLang,
+	UiTheme,
+	BackdropRenderMode,
+	StatusKey,
+	CookiesMode,
+	CookiesBrowser,
+	NetworkPacingPreset,
+	DownloadProfilesPrefs,
+	ProbeOtherErrorCode,
+	RuntimeBinaryChannel,
+	RuntimeBinaryProvider
+} from './schemas.js'
 
 export type AppErrorCode = 'validation' | 'token' | 'binary' | 'download' | 'ipc' | 'unknown'
 
@@ -120,7 +145,6 @@ export interface BinaryOverrides {
 	ytDlp?: string
 	ffmpeg?: string
 	ffprobe?: string
-	deno?: string
 }
 
 // Single-video flow prefs. Restored when the user enters the format-probe path.
@@ -318,13 +342,14 @@ export interface ProgressEvent {
 	percent?: number
 }
 
-export const DEPENDENCY_IDS = ['yt-dlp', 'ffmpeg', 'ffprobe', 'deno'] as const
+export const DEPENDENCY_IDS = ['yt-dlp', 'ffmpeg', 'ffprobe'] as const
 export type DependencyId = (typeof DEPENDENCY_IDS)[number]
 
 export type DependencySource =
 	| {kind: 'manualOverride'; path: string}
 	| {kind: 'envOverride'; path: string; envVar: string}
-	| {kind: 'managed'; channel: 'nightly' | 'stable' | 'default'; url: string; provider: 'github' | 'sourceforge' | 'deno-land'}
+	| {kind: 'managed'; channel: RuntimeBinaryChannel; url: string; provider: RuntimeBinaryProvider}
+	| {kind: 'managedCache'; channel: RuntimeBinaryChannel; url: string; provider: RuntimeBinaryProvider; path: string}
 	| {kind: 'systemPath'; path: string}
 	| {kind: 'cache'; path: string}
 	| {kind: 'bundled'; path: string}
