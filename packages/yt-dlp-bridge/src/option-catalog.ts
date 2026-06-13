@@ -1,4 +1,22 @@
 import catalog from './generated/ytdlp-options.json' with {type: 'json'}
+import {z} from 'zod'
+import type {OptionPolicy, OptionRisk, OptionRiskPhase} from './schemas.js'
+
+const UpstreamOptionDescriptorSchema = z.object({
+	group: z.string(),
+	shortOptions: z.array(z.string()),
+	longOptions: z.array(z.string()),
+	dest: z.string().nullable(),
+	action: z.string().nullable(),
+	type: z.string().nullable(),
+	metavar: z.string().nullable(),
+	default: z.unknown(),
+	choices: z.array(z.string()),
+	takesValue: z.boolean(),
+	help: z.string()
+})
+
+const UpstreamOptionCatalogSchema = z.object({source: z.string(), ytDlpVersion: z.string(), optionCount: z.number().int().nonnegative(), groups: z.array(z.object({title: z.string(), optionCount: z.number().int().nonnegative()})), options: z.array(UpstreamOptionDescriptorSchema)})
 
 export interface UpstreamOptionDescriptor {
 	group: string
@@ -23,13 +41,13 @@ export interface UpstreamOptionCatalog {
 }
 
 export interface OptionRiskMetadata {
-	phase: 'inspect' | 'plan' | 'download' | 'postprocess' | 'expert'
+	phase: OptionRiskPhase
 	dependencies: string[]
-	risk: 'low' | 'medium' | 'high'
-	policy: 'safe' | 'path-gated' | 'expert-only' | 'blocked-in-expert'
+	risk: OptionRisk
+	policy: OptionPolicy
 }
 
-export const UPSTREAM_OPTION_CATALOG = catalog as UpstreamOptionCatalog
+export const UPSTREAM_OPTION_CATALOG: UpstreamOptionCatalog = UpstreamOptionCatalogSchema.parse(catalog)
 
 const HIGH_RISK_FLAGS = new Set(['--exec', '--downloader-args', '--postprocessor-args', '--use-postprocessor', '--config-locations', '--plugin-dirs', '--enable-file-urls', '--netrc-cmd', '--print-traffic', '--dump-pages', '--write-pages', '--force-overwrites', '--rm-cache-dir'])
 
@@ -56,7 +74,7 @@ function phaseForGroup(group: string): OptionRiskMetadata['phase'] {
 	if (group === 'Post-Processing Options' || group === 'SponsorBlock Options') return 'postprocess'
 	if (group === 'Download Options' || group === 'Filesystem Options' || group === 'Authentication Options') return 'download'
 	if (group === 'Verbosity and Simulation Options' || group === 'Thumbnail Options' || group === 'Subtitle Options' || group === 'Video Format Options') return 'inspect'
-	if (group === 'General Options' && /config|plugin/i.test(group)) return 'expert'
+	if (group === 'General Options' || /config|plugin/i.test(group)) return 'expert'
 	return 'plan'
 }
 

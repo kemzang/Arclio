@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import {existsSync, readFileSync, readdirSync} from 'node:fs'
-import {dirname, join, relative, resolve} from 'node:path'
+import {basename, dirname, join, relative, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
 const DEFAULT_ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
@@ -162,7 +162,7 @@ function findNpmFamilyCommands() {
 	for (const root of COMMAND_SCAN_ROOTS) {
 		const abs = repoPath(root)
 		if (!existsSync(abs)) continue
-		const entry = readdirSync(dirname(abs), {withFileTypes: true}).find(candidate => candidate.name === abs.split('/').at(-1))
+		const entry = readdirSync(dirname(abs), {withFileTypes: true}).find(candidate => candidate.name === basename(abs))
 		if (!entry) continue
 		if (entry.isDirectory()) scan(abs)
 		if (entry.isFile() && shouldScanCommandFile(root)) {

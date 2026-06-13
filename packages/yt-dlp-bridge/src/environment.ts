@@ -19,7 +19,7 @@ export async function checkEnvironment(config: ServerConfig = CONFIG): Promise<E
 		detectBinary('ffmpeg', config.ffmpegPath ?? 'ffmpeg', ['-version'], ['merge', 'remux', 'recode', 'extract audio', 'embed assets'], false, config),
 		detectBinary('ffprobe', config.ffprobePath ?? 'ffprobe', ['-version'], ['audio extraction', 'media probing'], false, config),
 		detectBinary('deno', 'deno', ['--version'], ['yt-dlp JavaScript challenges'], false, config),
-		detectBinary('node', process.execPath, ['--version'], ['yt-dlp JavaScript challenges'], false, config),
+		detectBinary('node', 'node', ['--version'], ['yt-dlp JavaScript challenges'], false, config),
 		detectBinary('bun', 'bun', ['--version'], ['yt-dlp JavaScript challenges'], false, config),
 		detectBinary('qjs', 'qjs', ['--version'], ['yt-dlp JavaScript challenges'], false, config),
 		detectBinary('AtomicParsley', 'AtomicParsley', ['--version'], ['legacy thumbnail embedding'], false, config),

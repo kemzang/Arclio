@@ -100,10 +100,24 @@ describe('filesystem policy', () => {
 		const policy = resolveOutputPolicy(config, {outputRoot: 'playlist', tempRoot: 'job-1'})
 		const args = planWorkflow(makePlanInput({output: {outputRoot: 'playlist', tempRoot: 'job-1'}, selection: {matchFilters: [], breakMatchFilters: [], downloadArchive: 'archive.txt'}}), {config, configFiles: {mode: 'disabled'}}).args
 		const archiveIndex = args.indexOf('--download-archive')
+		expect(archiveIndex).toBeGreaterThan(-1)
 
 		expect(policy.outputRoot).toBe(path.join(config.outputRoot, 'playlist'))
 		expect(policy.tempRoot).toBe(path.join(config.tempRoot, 'job-1'))
 		expect(args[archiveIndex + 1]).toBe(path.join(policy.outputRoot, 'archive.txt'))
+	})
+
+	it('treats blank env vars as unset', () => {
+		const config = loadConfig({YTDLP_MCP_YTDLP_PATH: '', YTDLP_PATH: 'yt-dlp-custom', YTDLP_MCP_OUTPUT_ROOT: '', YTDLP_MCP_TEMP_ROOT: '', YTDLP_MCP_TIMEOUT_MS: '', YTDLP_MCP_MAX_OUTPUT_BYTES: '', YTDLP_MCP_COOKIES_FILE: '', YTDLP_MCP_COOKIES_FROM_BROWSER: '', YTDLP_MCP_JS_RUNTIMES: ''})
+
+		expect(config.ytdlpPath).toBe('yt-dlp-custom')
+		expect(config.outputRoot).toBe(path.join(os.homedir(), 'Downloads', 'yt-dlp-mcp'))
+		expect(config.tempRoot).toBe(path.join(os.tmpdir(), 'yt-dlp-mcp'))
+		expect(config.defaultTimeoutMs).toBe(15 * 60 * 1000)
+		expect(config.maxOutputBytes).toBe(4 * 1024 * 1024)
+		expect(config.cookiesFile).toBeUndefined()
+		expect(config.cookiesFromBrowser).toBeUndefined()
+		expect(config.jsRuntimes).toEqual(['deno', 'node', 'bun', 'quickjs'])
 	})
 
 	it('rejects temp roots outside the configured temp root', () => {

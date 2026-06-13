@@ -96,9 +96,45 @@ function loadPriorStrings() {
 		const parsed = readJsonObject(OUT_FILE)
 		const {schemaVersion, note, strings} = parsed
 		return {schemaVersion: typeof schemaVersion === 'number' ? schemaVersion : undefined, note: typeof note === 'string' ? note : undefined, strings: Array.isArray(strings) ? strings.filter(isKnownString) : []}
-	} catch {
-		return {strings: []}
+	} catch (error) {
+		if (isRecord(error) && error.code === 'ENOENT') return {strings: []}
+		throw error
 	}
+}
+
+/**
+ * @param {string} matchText
+ * @returns {string}
+ */
+function callName(matchText) {
+	const trimmed = matchText.trim()
+	const raised = /^raise\s+([A-Za-z_][\w.]*)/.exec(trimmed)
+	if (raised?.[1]) return raised[1]
+	const call = /^([A-Za-z_][\w.]*)/.exec(trimmed)
+	return call?.[1] ?? 'unknown'
+}
+
+/**
+ * @param {RawHit} hit
+ * @returns {KnownString}
+ */
+function knownStringFromHit(hit) {
+	const id = sha1(`${hit.fragment}::${hit.call}`)
+	return {id, source: hit.source, call: hit.call, fragment: hit.fragment, kind: null}
+}
+
+/**
+ * @param {KnownString[]} priorStrings
+ * @param {RawHit[]} rawHits
+ * @returns {KnownString[]}
+ */
+function mergeRawHits(priorStrings, rawHits) {
+	const byId = new Map(priorStrings.map(entry => [entry.id, entry]))
+	for (const hit of rawHits) {
+		const next = knownStringFromHit(hit)
+		if (!byId.has(next.id)) byId.set(next.id, next)
+	}
+	return [...byId.values()].sort((a, b) => a.id.localeCompare(b.id))
 }
 
 /**
@@ -165,7 +201,7 @@ function scanFile(absPath, rel) {
 	}
 
 	for (const m of src.matchAll(CALL_RE)) {
-		out.push({source: `${rel}:${lineOf(m.index ?? 0)}`, call: m[0].split(/[\s(]/)[0] ?? 'unknown', fragment: m[2] ?? ''})
+		out.push({source: `${rel}:${lineOf(m.index ?? 0)}`, call: callName(m[0]), fragment: m[2] ?? ''})
 	}
 	for (const m of src.matchAll(DEFAULT_MSG_RE)) {
 		out.push({source: `${rel}:${lineOf(m.index ?? 0)}`, call: 'default_msg', fragment: m[1] ?? ''})
@@ -214,18 +250,7 @@ function main() {
 	// The snapshot is deliberately curated: IDs, notes, and kind assignments are
 	// human-maintained API review data. Re-scans should refresh the upstream pin
 	// metadata without replacing the curated list with every raw extractor error.
-	let strings = prior.strings ?? []
-	if (strings.length === 0) {
-		// First-run fallback: dedupe identical fragments and keep the first source
-		// for traceability. Existing repositories should not normally hit this.
-		/** @type {Map<string, KnownString>} */
-		const byHash = new Map()
-		for (const hit of rawHits) {
-			const id = sha1(`${hit.fragment}::${hit.call}`)
-			if (!byHash.has(id)) byHash.set(id, {id, source: hit.source, call: hit.call, fragment: hit.fragment, kind: null})
-		}
-		strings = [...byHash.values()].sort((a, b) => a.id.localeCompare(b.id))
-	}
+	const strings = mergeRawHits(prior.strings ?? [], rawHits)
 
 	writeFileSync(OUT_FILE, `${JSON.stringify({schemaVersion: prior.schemaVersion ?? 1, ytDlpVersion: pin.version, ytDlpCommit: pin.commit, note: prior.note ?? DEFAULT_NOTE, strings}, null, 2)}\n`)
 

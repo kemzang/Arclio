@@ -28,8 +28,8 @@ export async function runCommand(command: string, args: string[], options: RunCo
 		let settled = false
 		const child = spawn(command, args, {cwd: options.cwd, env: options.env, shell: false, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe']})
 
-		let stdout = ''
-		let stderr = ''
+		let stdout: Buffer<ArrayBufferLike> = Buffer.alloc(0)
+		let stderr: Buffer<ArrayBufferLike> = Buffer.alloc(0)
 		let timedOut = false
 		let aborted = false
 
@@ -48,9 +48,9 @@ export async function runCommand(command: string, args: string[], options: RunCo
 		if (options.signal?.aborted) onAbort()
 		options.signal?.addEventListener('abort', onAbort, {once: true})
 
-		const append = (current: string, chunk: Buffer): string => {
-			const next = current + chunk.toString('utf8')
-			return next.length <= options.maxOutputBytes ? next : next.slice(next.length - options.maxOutputBytes)
+		const append = (current: Buffer<ArrayBufferLike>, chunk: Buffer): Buffer<ArrayBufferLike> => {
+			const next = Buffer.concat([current, chunk])
+			return next.length <= options.maxOutputBytes ? next : next.subarray(next.length - options.maxOutputBytes)
 		}
 
 		child.stdout.on('data', (chunk: Buffer) => {
@@ -64,7 +64,7 @@ export async function runCommand(command: string, args: string[], options: RunCo
 			settled = true
 			clearTimeout(timer)
 			options.signal?.removeEventListener('abort', onAbort)
-			const result = makeResult(command, redactedArgs, stdout, error.message, 127, startedAt)
+			const result = makeResult(command, redactedArgs, stdout.toString('utf8'), error.message, 127, startedAt)
 			reject(new CommandExecutionError(`Failed to spawn ${command}: ${error.message}`, result))
 		})
 
@@ -72,13 +72,14 @@ export async function runCommand(command: string, args: string[], options: RunCo
 			settled = true
 			clearTimeout(timer)
 			options.signal?.removeEventListener('abort', onAbort)
-			const result = makeResult(command, redactedArgs, stdout, stderr, code ?? (timedOut ? 124 : aborted ? 130 : 1), startedAt)
+			const result = makeResult(command, redactedArgs, stdout.toString('utf8'), stderr.toString('utf8'), code ?? (timedOut ? 124 : aborted ? 130 : 1), startedAt)
 			if (result.exitCode === 0) {
 				resolve(result)
 				return
 			}
 			const reason = timedOut ? `Command timed out after ${options.timeoutMs}ms` : aborted ? 'Command was cancelled' : `Command exited with code ${result.exitCode}`
-			reject(new CommandExecutionError(`${reason}: ${command} ${redactedArgs.join(' ')}\n${excerpt(stderr.length > 0 ? stderr : stdout)}`, result))
+			const output = stderr.length > 0 ? stderr.toString('utf8') : stdout.toString('utf8')
+			reject(new CommandExecutionError(`${reason}: ${command} ${redactedArgs.join(' ')}\n${excerpt(output)}`, result))
 		})
 	})
 }

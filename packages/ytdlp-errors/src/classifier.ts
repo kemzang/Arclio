@@ -1,6 +1,8 @@
 import type {ClassifiedError, ClassifierKind} from './kinds.js'
 import {ERROR_PATTERNS, PATTERN_ENTRIES} from './patterns.js'
 
+const CLASSIFIER_KINDS = new Set(PATTERN_ENTRIES.map(([kind]) => kind))
+
 export interface ClassifyOpts {
 	// Site-specific patterns to merge in *before* the built-in table, so apps
 	// can layer in custom rules without forking. Keys must be one of the
@@ -12,11 +14,16 @@ export interface ClassifyOpts {
 function buildEntries(extra?: ClassifyOpts['extraPatterns']): [ClassifierKind, RegExp][] {
 	if (!extra) return PATTERN_ENTRIES
 	const merged: [ClassifierKind, RegExp][] = []
-	for (const [kind, regex] of Object.entries(extra) as [ClassifierKind, RegExp | RegExp[]][]) {
+	for (const [kind, regex] of Object.entries(extra)) {
+		if (!isClassifierKind(kind)) throw new Error(`Unsupported extraPatterns kind: ${kind}`)
 		const list = Array.isArray(regex) ? regex : [regex]
 		for (const r of list) merged.push([kind, r])
 	}
 	return [...merged, ...PATTERN_ENTRIES]
+}
+
+function isClassifierKind(kind: string): kind is ClassifierKind {
+	return CLASSIFIER_KINDS.has(kind as ClassifierKind)
 }
 
 // Pure classifier. Given a yt-dlp stderr blob, return the matched kind plus
@@ -24,6 +31,7 @@ function buildEntries(extra?: ClassifyOpts['extraPatterns']): [ClassifierKind, R
 export function classifyYtDlpStderr(stderr: string, opts: ClassifyOpts = {}): ClassifiedError {
 	const entries = buildEntries(opts.extraPatterns)
 	for (const [kind, pattern] of entries) {
+		if (pattern.global || pattern.sticky) pattern.lastIndex = 0
 		if (pattern.test(stderr)) return {kind, raw: stderr}
 	}
 	return {kind: 'unknown', raw: stderr}

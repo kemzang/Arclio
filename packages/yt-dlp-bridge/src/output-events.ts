@@ -1,15 +1,17 @@
-export type YtDlpPostprocessPhase = 'extractingAudio' | 'convertingVideo' | 'embeddingMetadata' | 'movingFiles'
+import type {YtDlpOutputEventKind, YtDlpPostprocessPhase} from './schemas.js'
+
+export type {YtDlpPostprocessPhase}
 
 export type YtDlpOutputEvent =
-	| {kind: 'destination'; path: string}
-	| {kind: 'merge'; path?: string}
-	| {kind: 'already-downloaded'; path: string}
-	| {kind: 'move'; from: string; to: string}
-	| {kind: 'sleep'; seconds: number}
-	| {kind: 'sponsorblock-fetch'}
-	| {kind: 'sponsorblock-retry'; attempt: number; total: number}
-	| {kind: 'postprocess'; phase: YtDlpPostprocessPhase}
-	| {kind: 'progress'; percent?: number; raw: string}
+	| {kind: Extract<YtDlpOutputEventKind, 'destination'>; path: string}
+	| {kind: Extract<YtDlpOutputEventKind, 'merge'>; path?: string}
+	| {kind: Extract<YtDlpOutputEventKind, 'already-downloaded'>; path: string}
+	| {kind: Extract<YtDlpOutputEventKind, 'move'>; from: string; to: string}
+	| {kind: Extract<YtDlpOutputEventKind, 'sleep'>; seconds: number}
+	| {kind: Extract<YtDlpOutputEventKind, 'sponsorblock-fetch'>}
+	| {kind: Extract<YtDlpOutputEventKind, 'sponsorblock-retry'>; attempt: number; total: number}
+	| {kind: Extract<YtDlpOutputEventKind, 'postprocess'>; phase: YtDlpPostprocessPhase}
+	| {kind: Extract<YtDlpOutputEventKind, 'progress'>; percent?: number; raw: string}
 
 export function parseYtDlpOutputLine(line: string): YtDlpOutputEvent | null {
 	const clean = line.trim()

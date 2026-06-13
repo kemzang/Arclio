@@ -9,6 +9,7 @@ PYTHONPATH pointing at a yt-dlp source checkout.
 from __future__ import annotations
 
 import json
+import optparse
 import sys
 
 from yt_dlp.options import create_parser
@@ -62,7 +63,7 @@ def main() -> None:
     options = []
     for title, option_list in groups:
         for option in option_list:
-            if option.help == "SUPPRESS_HELP":
+            if option.help == optparse.SUPPRESS_HELP:
                 continue
             flags = [*option._short_opts, *option._long_opts]
             if not flags:

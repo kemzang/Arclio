@@ -1,4 +1,4 @@
-export type DependencyStatus = 'available' | 'missing' | 'unknown'
+import type {DependencyStatus, ProgressEventPhase} from './schemas.js'
 
 export interface DetectedDependency {
 	name: string
@@ -132,7 +132,7 @@ export interface ThumbnailSummary {
 }
 
 export interface ProgressEvent {
-	phase: 'download' | 'postprocess' | 'unknown'
+	phase: ProgressEventPhase
 	percent?: number
 	total?: string
 	speed?: string

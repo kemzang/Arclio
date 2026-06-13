@@ -208,7 +208,7 @@ describe('VideoPhase(embed=true)', () => {
 	})
 
 	it('embed=true with empty subtitleLanguages → omits media subtitles', async () => {
-		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, subtitles: undefined}}})
+		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, subtitles: {...BASE_JOB.subtitles!, languages: []}}}})
 		await VideoPhase(true).run(ctx)
 		const [req] = ctx.runMock.mock.calls[0]
 		expect(req.kind).toBe('media')

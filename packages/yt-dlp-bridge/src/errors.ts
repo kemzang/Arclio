@@ -28,7 +28,7 @@ function inferDependency(text: string): string | undefined {
 	if (/atomicparsley/i.test(text)) return 'AtomicParsley'
 	if (/aria2c/i.test(text)) return 'aria2c'
 	if (/curl_cffi|impersonat/i.test(text)) return 'curl_cffi'
-	if (/deno|node|bun|quickjs|javascript/i.test(text)) return 'js-runtime'
+	if (/\b(?:deno|node|bun|quickjs|javascript)\b/i.test(text)) return 'js-runtime'
 	return undefined
 }
 

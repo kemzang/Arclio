@@ -56,6 +56,7 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
 		await SidecarSubsPhase(false).run(ctx)
 		const [req] = vi.mocked(ctx.ytDlp.run as ReturnType<typeof vi.fn>).mock.calls[0]
 		expect(req.kind).toBe('subtitles')
+		expect(req).toMatchObject({output: {subtitleMode: 'sidecar'}, subtitles: {languages: ['en'], format: 'srt', writeAuto: false}})
 	})
 
 	it('does not forward SponsorBlock config to the subtitle request', async () => {

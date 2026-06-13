@@ -61,7 +61,7 @@ export function resolveOutputPolicy(config: ServerConfig, input: OutputPolicyInp
 	if (path.isAbsolute(outputTemplate) && !config.allowArbitraryOutputPaths) {
 		ensureWithinRoot(outputRoot, outputTemplate, 'outputTemplate')
 	}
-	if (!path.isAbsolute(outputTemplate) && hasParentTraversal(path.normalize(outputTemplate))) {
+	if (!config.allowArbitraryOutputPaths && !path.isAbsolute(outputTemplate) && hasParentTraversal(path.normalize(outputTemplate))) {
 		throw new Error('outputTemplate must not contain parent-directory traversal')
 	}
 

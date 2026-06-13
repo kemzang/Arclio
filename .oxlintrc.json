@@ -156,7 +156,7 @@
 		},
 		{"files": ["src/main/stores/**/*.ts", "src/main/token/providers/**/*.ts"], "rules": {"typescript/require-await": "off"}},
 		{
-			"files": ["build/*.mjs", "scripts/*.mjs", "src/preload/index.cts", "src/renderer/vite.config.mjs", "vitest.config.mts"],
+			"files": ["build/*.mjs", "scripts/*.mjs", "packages/*/scripts/*.mjs", "src/preload/index.cts", "src/renderer/vite.config.mjs", "vitest.config.mts"],
 			"rules": {
 				"typescript/explicit-function-return-type": "off",
 				"typescript/no-unsafe-assignment": "off",

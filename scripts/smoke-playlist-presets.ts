@@ -192,11 +192,11 @@ async function probeInfoJson(ytDlpPath: string, url: string, cli: CliArgs, nodeP
 	throw new Error(`Initial YouTube probe failed.\n${tail}`)
 }
 
-function reqFor(selection: PlaylistSelection, outputDir: string, infoJsonPath: string): WorkflowInput {
+function reqFor(selection: PlaylistSelection, outputDir: string, infoJsonPath: string, url: string): WorkflowInput {
 	const spec = mediaIntentSpec(playlistSelectionToMediaIntent(selection))
 	return {
 		kind: 'media',
-		url: DEFAULT_URL,
+		url,
 		output: {directory: outputDir, template: OUTPUT_TEMPLATE},
 		selection: {formatSelector: spec.formatSelector, formatSort: spec.formatSort, mergeOutputFormat: spec.mergeOutputFormat},
 		...(spec.audioConvert ? {audio: {convert: bridgeAudioConvert(spec.audioConvert)}} : {}),
@@ -335,7 +335,7 @@ async function main(): Promise<void> {
 		const cases = smokeCases()
 		let failed = 0
 		for (const caseDef of cases) {
-			const args = ['--simulate', '--dump-single-json', '--no-warnings', ...nodeArgs(nodePath), ...planWorkflow(reqFor(caseDef.selection, tempDir, infoJsonPath)).args]
+			const args = ['--simulate', '--dump-single-json', '--no-warnings', ...nodeArgs(nodePath), ...planWorkflow(reqFor(caseDef.selection, tempDir, infoJsonPath, url)).args]
 			const result = await run(ytDlpPath, args)
 			const info = parseSelectedInfo(result.stdout)
 			const failures = info ? validate(caseDef, args, info) : ['yt-dlp did not return parseable JSON']

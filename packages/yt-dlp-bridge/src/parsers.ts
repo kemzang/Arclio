@@ -158,12 +158,12 @@ export function parseProgress(output: string): ProgressEvent[] {
 		if (!isDownload && !isPostprocess) continue
 
 		const percent = /(\d+(?:\.\d+)?)%/.exec(line)
-		const total = /\bof\s+([^\s]+(?:\s+[^\s]+)?)/i.exec(line)
+		const total = /\bof\s+(.+?)(?=\s+\bat\b|\s+\bETA\b|$)/i.exec(line)
 		const speed = /\bat\s+([^\s]+)/i.exec(line)
 		const eta = /\bETA\s+([^\s]+)/i.exec(line)
 		const event: ProgressEvent = {phase: isDownload ? 'download' : isPostprocess ? 'postprocess' : 'unknown', raw}
 		if (percent) event.percent = Number.parseFloat(percent[1] ?? '0')
-		if (total?.[1]) event.total = total[1]
+		if (total?.[1]) event.total = total[1].trim()
 		if (speed?.[1]) event.speed = speed[1]
 		if (eta?.[1]) event.eta = eta[1]
 		events.push(event)

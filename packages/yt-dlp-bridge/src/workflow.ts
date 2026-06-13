@@ -2,13 +2,10 @@ import type {z} from 'zod'
 import {CONFIG, type ServerConfig} from './config.js'
 import {resolveManagedPath, resolveOutputPolicy, type OutputPolicyInput, type ResolvedOutputPolicy} from './filesystem.js'
 import {redactArgs} from './redaction.js'
-import {type WorkflowDownloadInputSchema, type WorkflowExpertInputSchema, type WorkflowInspectInputSchema, type WorkflowPostprocessInputSchema} from './schemas.js'
+import {type InspectWorkflowKind, type ProbePlaylistMode, type SubtitleFormat, type SubtitleMode, type WorkflowDownloadInputSchema, type WorkflowExpertInputSchema, type WorkflowInspectInputSchema, type WorkflowPostprocessInputSchema} from './schemas.js'
 import type {DetectedDependency} from './types.js'
 
-export type ProbePlaylistMode = 'auto' | 'video' | 'playlist'
-export type SubtitleFormat = 'srt' | 'vtt' | 'ass'
-export type SubtitleMode = 'sidecar' | 'subfolder' | 'embed'
-export type InspectWorkflowKind = 'metadata' | 'single-json' | 'formats' | 'subtitles' | 'thumbnails'
+export type {InspectWorkflowKind, ProbePlaylistMode, SubtitleFormat, SubtitleMode}
 
 export interface NetworkPacing {
 	sleepRequests?: number
