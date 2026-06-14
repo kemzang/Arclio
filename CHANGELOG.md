@@ -10,7 +10,13 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ## Unreleased
 
-Changes committed after `0.4.0-beta.3`.
+Changes committed after `0.4.0-beta.4`.
+
+---
+
+## 0.4.0-beta.4
+
+This beta keeps the 0.4.0 startup presentation work but backs out the hidden-first window path after follow-up testing showed it could delay initial display.
 
 ## Highlights
 
