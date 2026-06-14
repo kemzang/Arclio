@@ -10,6 +10,11 @@ function read(path: string): string {
 
 describe('release asset names', () => {
 	const stableAssets = ['Arroxy-win-x64-Setup.exe', 'Arroxy-win-x64-Portable.exe', 'Arroxy-mac-arm64.dmg', 'Arroxy-mac-x64.dmg', 'Arroxy-linux-x64.AppImage', 'Arroxy-linux-x64.tar.gz', 'Arroxy-linux-x64.flatpak']
+	const workflowText = () =>
+		readdirSync(join(root, '.github', 'workflows'))
+			.filter(file => file.endsWith('.yml') || file.endsWith('.yaml'))
+			.map(file => read(join('.github', 'workflows', file)))
+			.join('\n')
 
 	it('configures electron-builder to publish stable platform-prefixed artifacts', () => {
 		const config = read('electron-builder.json5')
@@ -117,6 +122,15 @@ describe('release asset names', () => {
 		expect(release).toContain('BTBN_GITHUB_TOKEN: ${{ github.token }}')
 		expect(installer).not.toMatch(/^\s+GITHUB_TOKEN:\s+\$\{\{\s*github\.token\s*\}\}/m)
 		expect(coldStart).not.toMatch(/^\s+GITHUB_TOKEN:\s+\$\{\{\s*github\.token\s*\}\}/m)
+	})
+
+	it('keeps GitHub artifact actions off Node 20-backed refs', () => {
+		const workflows = workflowText()
+
+		expect(workflows).not.toContain('actions/upload-artifact@v4')
+		expect(workflows).not.toContain('actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02')
+		expect(workflows).not.toContain('actions/download-artifact@v4')
+		expect(workflows).not.toContain('actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53')
 	})
 
 	it('normalizes electron-builder AppImage arch names before publishing checksums', () => {
