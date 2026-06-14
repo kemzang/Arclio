@@ -2,6 +2,6 @@ export const RUNTIME_BINARY_INDEX_URL = 'https://github.com/antonio-orionus/Arro
 export const RUNTIME_BINARY_INDEX_SIGNATURE_URL = 'https://github.com/antonio-orionus/Arroxy/releases/download/runtime-binaries/runtime-index-v1.sig'
 
 export const RUNTIME_BINARY_INDEX_PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----
-MCowBQYDK2VwAyEAPsxcuS2nTKtMOtdy32Bkb+r+R2XQM1AyezQWjNWSX8s=
+MCowBQYDK2VwAyEASwotnq/ABvF3TAJHHzcEIXTfbNF8hD8AzSL1oFrNGPw=
 -----END PUBLIC KEY-----
 `
