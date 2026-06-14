@@ -123,7 +123,7 @@ jobs:
           OPENPANEL_CLIENT_SECRET: ${{ secrets.OPENPANEL_CLIENT_SECRET }}
       - name: Install Linux smoke dependencies
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb libfuse2t64
       - name: Locate packaged smoke executable
         shell: bash
         run: |

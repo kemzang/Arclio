@@ -71,6 +71,7 @@ describe('release asset names', () => {
 
 		expect(release).toContain('Run packaged runtime smoke')
 		expect(release).toContain("ARROXY_RUNTIME_SMOKE: '1'")
+		expect(release).toContain('libfuse2t64')
 		expect(release).toContain('Run Linux live YouTube canary')
 		expect(release).toContain('ARROXY_LIVE_CANARY_URL')
 		expect(release).toContain('ARROXY_SMOKE_URL')
