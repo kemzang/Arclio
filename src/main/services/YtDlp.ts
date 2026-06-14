@@ -76,6 +76,8 @@ export interface YtDlpInvocationSummary {
 	ffmpegPath: string | null
 	args: string[]
 	jsRuntime: YtDlpJsRuntimeLogSummary
+	attempt: RetryStrategy['kind']
+	reMint: boolean | null
 }
 
 // VidBee's strategy: skip the player clients that demand a PoT, so the
@@ -147,7 +149,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 	const e2eArgs = opts.e2eMode?.ytDlpArgs({isProbe: opts.isProbe === true}) ?? []
 	const args = [...e2eArgs, ...ffmpegLocationArgs, ...extractorArgsArr, ...cookiesArgs, ...proxyArgs, ...limitRateArgs, ...jsRuntimeArgs, ...opts.args]
 	const jsRuntimeSummary = summarizeYtDlpJsRuntimeForLog(opts.jsRuntime)
-	opts.onInvocation?.({ytDlpPath: opts.ytDlpPath, ffmpegPath: opts.ffmpegPath, args: redactArgs(args), jsRuntime: jsRuntimeSummary})
+	opts.onInvocation?.({ytDlpPath: opts.ytDlpPath, ffmpegPath: opts.ffmpegPath, args: redactArgs(args), jsRuntime: jsRuntimeSummary, attempt: strategy.kind, reMint: strategy.kind === 'pot' ? strategy.reMint : null})
 
 	ytDlpLog.info('spawn', {attempt: strategy.kind, reMint: strategy.kind === 'pot' ? strategy.reMint : undefined, binary: opts.ytDlpPath, ffmpeg: opts.ffmpegPath, ...jsRuntimeSummary, cookies: opts.cookies?.kind ?? null, proxy: redactProxy(opts.proxyUrl), args: redactArgs(args)})
 
@@ -305,6 +307,7 @@ export class YtDlp {
 	private _ffmpegPath: string | null = null
 	private _jsRuntime: YtDlpJsRuntime | null = null
 	private _lastInvocation: YtDlpInvocationSummary | null = null
+	private _lastInvocations: YtDlpInvocationSummary[] = []
 
 	constructor(
 		private readonly binaryManager: BinaryManager,
@@ -344,8 +347,14 @@ export class YtDlp {
 		return {...this._lastInvocation, args: [...this._lastInvocation.args]}
 	}
 
+	getLastInvocationSummaries(): YtDlpInvocationSummary[] {
+		return this._lastInvocations.map(summary => ({...summary, args: [...summary.args]}))
+	}
+
 	async run(req: YtDlpRequest, signal?: YtDlpSignal): Promise<YtDlpResult> {
 		if (!this._ytDlpPath) await this.prepare()
+		this._lastInvocation = null
+		this._lastInvocations = []
 		const settings = await this.settingsStore.get()
 		const cookies = resolveCookies(settings)
 		const proxyUrl = nonEmpty(settings.common?.proxyUrl?.trim())
@@ -378,7 +387,10 @@ export class YtDlp {
 			probePlaylistMode,
 			hasExplicitYoutubePlayerClient,
 			signal,
-			onInvocation: summary => (this._lastInvocation = summary)
+			onInvocation: summary => {
+				this._lastInvocation = summary
+				this._lastInvocations.push(summary)
+			}
 		})
 		if (result.kind === 'success' && plan.facts.effectiveSubtitleFormat) {
 			return {...result, effectiveSubtitleFormat: plan.facts.effectiveSubtitleFormat}

@@ -10,7 +10,7 @@
 
 import {app} from 'electron'
 import {nonEmpty} from '@shared/format.js'
-import type {ProbeError} from '@shared/types.js'
+import type {ProbeError, ProbeOtherErrorCode, YtDlpErrorKind} from '@shared/types.js'
 import type {BinaryManager} from './services/BinaryManager.js'
 import type {ProbeService} from './services/ProbeService.js'
 import type {TokenService} from './services/TokenService.js'
@@ -25,6 +25,7 @@ interface SmokeDeps {
 }
 
 const GREEN = '\x1b[32m'
+const YELLOW = '\x1b[33m'
 const RED = '\x1b[31m'
 const RESET = '\x1b[0m'
 export const LIVE_PROBE_SMOKE_RESULT_PREFIX = 'ARROXY_LIVE_PROBE_SMOKE_RESULT '
@@ -49,10 +50,12 @@ export interface LiveProbeSmokeReport {
 		hasNoJsRuntimes: boolean
 		hasBundledEjs: boolean
 		hasRemoteEjs: boolean
+		attempts: YtDlpInvocationSummary[]
 	}
-	probe: {ok: boolean; kind: 'video' | 'playlist' | null; title: string | null; formatCount: number; durationMs: number | null; error: string | null}
+	probe: {ok: boolean; kind: 'video' | 'playlist' | null; title: string | null; formatCount: number; durationMs: number | null; error: string | null; errorKind: YtDlpErrorKind | ProbeOtherErrorCode | null}
 	potMint: {ok: boolean; tokenLength: number | null; visitorDataLength: number | null; durationMs: number | null; error: string | null}
 	failures: string[]
+	warnings: string[]
 }
 
 // Electron's main process can buffer console.log oddly under xvfb-run; use
@@ -62,6 +65,9 @@ function out(line: string): void {
 }
 function pass(label: string, detail = ''): void {
 	out(`  ${GREEN}PASS${RESET}  ${label}${detail ? '  ' + detail : ''}`)
+}
+function warn(label: string, detail: string): void {
+	out(`  ${YELLOW}WARN${RESET}  ${label}  ${detail}`)
 }
 function fail(label: string, detail: string): void {
 	out(`  ${RED}FAIL${RESET}  ${label}  ${detail}`)
@@ -76,10 +82,11 @@ function emptyLiveProbeSmokeReport(url: string): LiveProbeSmokeReport {
 		arch: process.arch,
 		execPath: process.execPath,
 		parentElectronRunAsNode: process.env.ELECTRON_RUN_AS_NODE ?? null,
-		ytDlp: {path: null, args: [], jsRuntime: null, jsRuntimePath: null, jsRuntimeVersion: null, ejsComponents: 'none', usesElectronNode: false, usesDeno: false, hasNoJsRuntimes: false, hasBundledEjs: false, hasRemoteEjs: false},
-		probe: {ok: false, kind: null, title: null, formatCount: 0, durationMs: null, error: null},
+		ytDlp: {path: null, args: [], jsRuntime: null, jsRuntimePath: null, jsRuntimeVersion: null, ejsComponents: 'none', usesElectronNode: false, usesDeno: false, hasNoJsRuntimes: false, hasBundledEjs: false, hasRemoteEjs: false, attempts: []},
+		probe: {ok: false, kind: null, title: null, formatCount: 0, durationMs: null, error: null, errorKind: null},
 		potMint: {ok: false, tokenLength: null, visitorDataLength: null, durationMs: null, error: null},
-		failures: []
+		failures: [],
+		warnings: []
 	}
 }
 
@@ -95,7 +102,8 @@ function usesYoutubePoToken(args: readonly string[]): boolean {
 	return args.some(arg => arg.startsWith('youtube:po_token='))
 }
 
-function applyInvocationSummary(report: LiveProbeSmokeReport, summary: YtDlpInvocationSummary | null, fallbackYtDlpPath: string | null): void {
+function applyInvocationSummaries(report: LiveProbeSmokeReport, summaries: readonly YtDlpInvocationSummary[], fallbackYtDlpPath: string | null): void {
+	const summary = summaries.at(-1) ?? null
 	const args = summary?.args ?? []
 	const jsRuntime = summary?.jsRuntime.jsRuntime === 'electron-node' ? summary.jsRuntime : null
 	report.ytDlp = {
@@ -109,7 +117,8 @@ function applyInvocationSummary(report: LiveProbeSmokeReport, summary: YtDlpInvo
 		usesDeno: usesDenoRuntime(args),
 		hasNoJsRuntimes: args.includes('--no-js-runtimes'),
 		hasBundledEjs: summary?.jsRuntime.ejsComponents === 'bundled-required',
-		hasRemoteEjs: summary?.jsRuntime.ejsComponents === 'remote-github' || usesRemoteEjs(args)
+		hasRemoteEjs: summary?.jsRuntime.ejsComponents === 'remote-github' || usesRemoteEjs(args),
+		attempts: summaries.map(item => ({...item, args: [...item.args]}))
 	}
 }
 
@@ -118,10 +127,19 @@ function addFailure(report: LiveProbeSmokeReport, label: string, detail: string)
 	fail(label, detail)
 }
 
+function addWarning(report: LiveProbeSmokeReport, label: string, detail: string): void {
+	report.warnings.push(`${label}: ${detail}`)
+	warn(label, detail)
+}
+
 function probeErrorMessage(error: ProbeError): string {
 	if (error.kind === 'ytdlp') return error.error.raw
 	if (error.message) return error.message
 	return 'Probe failed'
+}
+
+function probeErrorKind(error: ProbeError): YtDlpErrorKind | ProbeOtherErrorCode {
+	return error.kind === 'ytdlp' ? error.error.kind : error.code
 }
 
 export function serializeLiveProbeSmokeReport(report: LiveProbeSmokeReport): string {
@@ -138,26 +156,26 @@ export function parseLiveProbeSmokeResultLine(line: string): LiveProbeSmokeRepor
 	}
 }
 
+function legacyInvocationSummary(report: LiveProbeSmokeReport): YtDlpInvocationSummary {
+	if (report.ytDlp.jsRuntime === 'electron-node' && report.ytDlp.jsRuntimePath && report.ytDlp.jsRuntimeVersion) {
+		const ejsComponents = report.ytDlp.ejsComponents === 'remote-github' ? 'remote-github' : 'bundled-required'
+		return {ytDlpPath: report.ytDlp.path ?? '', ffmpegPath: null, args: report.ytDlp.args, jsRuntime: {jsRuntime: 'electron-node', jsRuntimePath: report.ytDlp.jsRuntimePath, jsRuntimeVersion: report.ytDlp.jsRuntimeVersion, ejsComponents}, attempt: 'pot', reMint: false}
+	}
+	return {ytDlpPath: report.ytDlp.path ?? '', ffmpegPath: null, args: report.ytDlp.args, jsRuntime: {jsRuntime: null, ejsComponents: 'none'}, attempt: 'pot', reMint: false}
+}
+
 export function probeSmokeReportIsHealthy(report: LiveProbeSmokeReport): boolean {
-	const args = report.ytDlp.args
-	return (
-		report.ok &&
-		report.probe.ok &&
-		report.probe.kind === 'video' &&
-		report.probe.formatCount > 0 &&
-		report.ytDlp.hasNoJsRuntimes &&
-		args.includes('--js-runtimes') &&
-		args.includes('--no-playlist') &&
-		usesYoutubePoToken(args) &&
-		args.some(arg => arg === `node:${report.execPath}`) &&
-		report.ytDlp.usesElectronNode &&
-		!report.ytDlp.usesDeno &&
-		!usesDenoRuntime(args) &&
-		report.ytDlp.hasBundledEjs &&
-		!report.ytDlp.hasRemoteEjs &&
-		!usesRemoteEjs(args) &&
-		report.failures.length === 0
-	)
+	const attempts = report.ytDlp.attempts.length > 0 ? report.ytDlp.attempts : [legacyInvocationSummary(report)]
+	const usesPackagedElectronNode = (args: readonly string[]): boolean => args.includes('--no-js-runtimes') && args.includes('--js-runtimes') && args.some(arg => arg === `node:${report.execPath}`) && !usesDenoRuntime(args) && !usesRemoteEjs(args)
+	const allAttemptsUsePackagedRuntime =
+		attempts.length > 0 &&
+		attempts.every(attempt => {
+			return usesPackagedElectronNode(attempt.args) && attempt.jsRuntime.jsRuntime === 'electron-node' && attempt.jsRuntime.jsRuntimePath === report.execPath && attempt.jsRuntime.ejsComponents === 'bundled-required'
+		})
+	const hasYoutubePoAttempt = attempts.some(attempt => attempt.attempt === 'pot' && attempt.args.includes('--no-playlist') && usesYoutubePoToken(attempt.args) && usesPackagedElectronNode(attempt.args))
+	const successfulVideoProbe = report.probe.ok && report.probe.kind === 'video' && report.probe.formatCount > 0
+	const acceptedRunnerBotBlock = !report.probe.ok && report.probe.errorKind === 'botBlock' && report.potMint.ok && hasYoutubePoAttempt
+	return report.ok && report.potMint.ok && allAttemptsUsePackagedRuntime && hasYoutubePoAttempt && (successfulVideoProbe || acceptedRunnerBotBlock) && report.failures.length === 0
 }
 
 export async function runSmokeMode(deps: SmokeDeps): Promise<number> {
@@ -201,22 +219,27 @@ export async function runSmokeMode(deps: SmokeDeps): Promise<number> {
 		const durationMs = Date.now() - probeStart
 		if (probe.ok) {
 			if (probe.data.kind === 'video') {
-				report.probe = {ok: true, kind: 'video', title: probe.data.title || null, formatCount: probe.data.formats.length, durationMs, error: null}
+				report.probe = {ok: true, kind: 'video', title: probe.data.title || null, formatCount: probe.data.formats.length, durationMs, error: null, errorKind: null}
 				pass('probe (ProbeService)', `${probe.data.formats.length} formats  in ${durationMs}ms`)
 				pass('  └ schema parses', probe.data.title || '(no title)')
 			} else {
-				report.probe = {ok: true, kind: 'playlist', title: probe.data.playlistTitle || null, formatCount: probe.data.entries.length, durationMs, error: null}
+				report.probe = {ok: true, kind: 'playlist', title: probe.data.playlistTitle || null, formatCount: probe.data.entries.length, durationMs, error: null, errorKind: null}
 				pass('probe (ProbeService)', `${probe.data.entries.length} playlist entries  in ${durationMs}ms`)
 				pass('  └ schema parses', probe.data.playlistTitle || '(no title)')
 			}
 		} else {
 			const message = probeErrorMessage(probe.error)
-			report.probe = {ok: false, kind: null, title: null, formatCount: 0, durationMs, error: message}
-			addFailure(report, 'probe (ProbeService)', message)
+			const kind = probeErrorKind(probe.error)
+			report.probe = {ok: false, kind: null, title: null, formatCount: 0, durationMs, error: message, errorKind: kind}
+			if (kind === 'botBlock') {
+				addWarning(report, 'probe (ProbeService)', `${message} (accepted only when packaged PoT runtime proof is present)`)
+			} else {
+				addFailure(report, 'probe (ProbeService)', message)
+			}
 		}
 	}
 
-	applyInvocationSummary(report, ytDlp.getLastInvocationSummary(), ytDlpPath)
+	applyInvocationSummaries(report, ytDlp.getLastInvocationSummaries(), ytDlpPath)
 	report.ok = probeSmokeReportIsHealthy({...report, ok: report.failures.length === 0})
 
 	out('')
@@ -224,6 +247,8 @@ export async function runSmokeMode(deps: SmokeDeps): Promise<number> {
 	out('')
 	if (report.ok) {
 		out(`${GREEN}Live probe smoke passed.${RESET}`)
+	} else if (report.failures.length === 0) {
+		out(`${RED}Live probe smoke contract failed.${RESET}`)
 	} else {
 		out(`${RED}${report.failures.length} live probe smoke check${report.failures.length === 1 ? '' : 's'} failed.${RESET}`)
 	}
