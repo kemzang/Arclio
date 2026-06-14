@@ -133,6 +133,18 @@ describe('release asset names', () => {
 		expect(workflows).not.toContain('actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53')
 	})
 
+	it('publishes runtime binary manifests through a draft release before immutable publish', () => {
+		const workflow = read('.github/workflows/runtime-binaries.yml')
+
+		expect(workflow).toContain('gh release delete "$tag" --repo "$repo" --cleanup-tag --yes')
+		expect(workflow).toContain('gh release create "$tag" \\')
+		expect(workflow).toContain('--draft')
+		expect(workflow).toContain('runtime-index-v1.json')
+		expect(workflow).toContain('runtime-index-v1.sig')
+		expect(workflow).toContain('gh release edit "$tag" --repo "$repo" --draft=false')
+		expect(workflow).not.toContain('gh release upload "$tag"')
+	})
+
 	it('normalizes electron-builder AppImage arch names before publishing checksums', () => {
 		const release = read('.github/workflows/release.yml')
 

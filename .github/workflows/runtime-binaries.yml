@@ -90,7 +90,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
-      # Required to create/update the signed runtime manifest release assets.
+      # Required to recreate the fixed-tag signed runtime manifest release.
       contents: write
 
     steps:
@@ -106,7 +106,16 @@ jobs:
           set -euo pipefail
           repo="$GITHUB_REPOSITORY"
           tag="runtime-binaries"
-          if ! gh release view "$tag" --repo "$repo" >/dev/null 2>&1; then
-            gh release create "$tag" --repo "$repo" --target "$GITHUB_SHA" --title "Runtime binary manifests" --notes "Mutable signed runtime binary manifest. The app verifies runtime-index-v1.sig before trusting runtime-index-v1.json."
+          notes="Current signed runtime binary manifest. The app verifies runtime-index-v1.sig before trusting runtime-index-v1.json."
+          if gh release view "$tag" --repo "$repo" >/dev/null 2>&1; then
+            gh release delete "$tag" --repo "$repo" --cleanup-tag --yes
           fi
-          gh release upload "$tag" dist/runtime-binaries/runtime-index-v1.json dist/runtime-binaries/runtime-index-v1.sig --repo "$repo" --clobber
+          gh release create "$tag" \
+            dist/runtime-binaries/runtime-index-v1.json \
+            dist/runtime-binaries/runtime-index-v1.sig \
+            --repo "$repo" \
+            --target "$GITHUB_SHA" \
+            --draft \
+            --title "Runtime binary manifests" \
+            --notes "$notes"
+          gh release edit "$tag" --repo "$repo" --draft=false
