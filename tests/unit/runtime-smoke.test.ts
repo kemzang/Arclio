@@ -1,4 +1,5 @@
 import {describe, expect, it} from 'vitest'
+import {LIVE_PROBE_SMOKE_RESULT_PREFIX, parseLiveProbeSmokeResultLine, probeSmokeReportIsHealthy, serializeLiveProbeSmokeReport, type LiveProbeSmokeReport} from '@main/smoke.js'
 import {parseRuntimeSmokeResultLine, readRuntimeSmokeEnabled, RUNTIME_SMOKE_RESULT_PREFIX, runtimeSmokeReportIsHealthy, serializeRuntimeSmokeReport, summarizeYtDlpVerboseRuntime, type RuntimeSmokeReport} from '@main/runtimeSmoke.js'
 
 const healthyReport: RuntimeSmokeReport = {
@@ -18,6 +19,32 @@ const healthyReport: RuntimeSmokeReport = {
 		args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arroxy.app/Contents/MacOS/Arroxy'],
 		verbose: {hasNodeRuntime: true, hasUnsupportedNodeRuntime: false, hasYtDlpEjs: true, hasDenoRuntime: false, hasEjsNpmRemoteComponent: false, jsRuntimeLines: ['[debug] JS runtimes: node 24.16.0'], optionalLibraryLines: ['[debug] Optional libraries: curl_cffi-0.11.4, yt-dlp-ejs-0.3.0']}
 	},
+	failures: []
+}
+
+const healthyLiveProbeReport: LiveProbeSmokeReport = {
+	liveProbeSmoke: true,
+	ok: true,
+	url: 'https://www.youtube.com/watch?v=abc123',
+	platform: 'darwin',
+	arch: 'arm64',
+	execPath: '/Applications/Arroxy.app/Contents/MacOS/Arroxy',
+	parentElectronRunAsNode: null,
+	ytDlp: {
+		path: '/tmp/runtime-cache/yt-dlp',
+		args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arroxy.app/Contents/MacOS/Arroxy', '--dump-single-json', '--flat-playlist', 'https://www.youtube.com/watch?v=abc123'],
+		jsRuntime: 'electron-node',
+		jsRuntimePath: '/Applications/Arroxy.app/Contents/MacOS/Arroxy',
+		jsRuntimeVersion: '24.16.0',
+		ejsComponents: 'bundled-required',
+		usesElectronNode: true,
+		usesDeno: false,
+		hasNoJsRuntimes: true,
+		hasBundledEjs: true,
+		hasRemoteEjs: false
+	},
+	probe: {ok: true, kind: 'video', title: 'Canary Video', formatCount: 12, durationMs: 1234, error: null},
+	potMint: {ok: true, tokenLength: 64, visitorDataLength: 128, durationMs: 432, error: null},
 	failures: []
 }
 
@@ -75,5 +102,25 @@ describe('runtime smoke contract', () => {
 		expect(runtimeSmokeReportIsHealthy({...healthyReport, ytDlp: {...healthyReport.ytDlp, args: ['--no-js-runtimes', '--js-runtimes', 'node:/usr/bin/node']}})).toBe(false)
 		expect(runtimeSmokeReportIsHealthy({...healthyReport, ytDlp: {...healthyReport.ytDlp, args: ['--js-runtimes', 'deno:/tmp/deno']}})).toBe(false)
 		expect(runtimeSmokeReportIsHealthy({...healthyReport, ytDlp: {...healthyReport.ytDlp, verbose: {...healthyVerbose!, hasYtDlpEjs: false}}})).toBe(false)
+	})
+})
+
+describe('live probe smoke contract', () => {
+	it('serializes one JSON result line and rejects malformed lines', () => {
+		const line = serializeLiveProbeSmokeReport(healthyLiveProbeReport)
+
+		expect(line.startsWith(LIVE_PROBE_SMOKE_RESULT_PREFIX)).toBe(true)
+		expect(parseLiveProbeSmokeResultLine(line)).toEqual(healthyLiveProbeReport)
+		expect(parseLiveProbeSmokeResultLine(`noise ${JSON.stringify(healthyLiveProbeReport)}`)).toBe(null)
+		expect(parseLiveProbeSmokeResultLine(`${LIVE_PROBE_SMOKE_RESULT_PREFIX}{bad json`)).toBe(null)
+	})
+
+	it('requires a successful video probe through the packaged Electron Node runtime', () => {
+		expect(probeSmokeReportIsHealthy(healthyLiveProbeReport)).toBe(true)
+		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, ytDlp: {...healthyLiveProbeReport.ytDlp, args: ['--no-js-runtimes', '--js-runtimes', 'node:/usr/bin/node']}})).toBe(false)
+		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, ytDlp: {...healthyLiveProbeReport.ytDlp, args: ['--js-runtimes', 'deno:/tmp/deno'], usesDeno: true, usesElectronNode: false}})).toBe(false)
+		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, ytDlp: {...healthyLiveProbeReport.ytDlp, args: ['--js-runtimes', `node:${healthyLiveProbeReport.execPath}`], hasNoJsRuntimes: false}})).toBe(false)
+		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, probe: {...healthyLiveProbeReport.probe, formatCount: 0}})).toBe(false)
+		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, probe: {...healthyLiveProbeReport.probe, ok: false, error: 'bot wall'}})).toBe(false)
 	})
 })

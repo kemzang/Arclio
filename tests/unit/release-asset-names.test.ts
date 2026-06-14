@@ -59,6 +59,18 @@ describe('release asset names', () => {
 		expect(coldStart).toContain('exit "$status"')
 	})
 
+	it('runs packaged live probe smoke before UI cold-start on every PR platform', () => {
+		const coldStart = read('.github/workflows/e2e-cold-start.yml')
+
+		expect(coldStart).toContain('Run packaged live probe smoke')
+		expect(coldStart).toContain('ARROXY_SMOKE_URL: ${{ vars.ARROXY_LIVE_CANARY_URL }}')
+		expect(coldStart).toContain('Arroxy Live Probe Ω Cold')
+		expect(coldStart).toContain('live-probe-smoke.out')
+		expect(coldStart).toContain('live-probe-smoke.err')
+		expect(coldStart).toContain('ARROXY_LIVE_CANARY_URL repository variable is required for live probe smoke.')
+		expect(coldStart).toContain('exit "$status"')
+	})
+
 	it('smoke-tests Windows installed and portable artifacts before publish', () => {
 		const installer = read('.github/workflows/installer-smoke.yml')
 
@@ -77,11 +89,12 @@ describe('release asset names', () => {
 		expect(release).toContain('Run packaged runtime smoke')
 		expect(release).toContain("ARROXY_RUNTIME_SMOKE: '1'")
 		expect(release).toContain('libfuse2t64')
-		expect(release).toContain('Run Linux live YouTube canary')
+		expect(release).toContain('Run Linux live probe canary')
 		expect(release).toContain("runner.os == 'Linux' && !contains(github.ref_name, '-')")
 		expect(release).toContain('ARROXY_LIVE_CANARY_URL')
 		expect(release).toContain('ARROXY_SMOKE_URL')
 		expect(release).toContain('vars.ARROXY_LIVE_CANARY_URL')
+		expect(release).toContain('live-probe-smoke.out')
 		expect(release).toContain('status=$?')
 		expect(release).toContain('exit "$status"')
 	})

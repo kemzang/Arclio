@@ -3,7 +3,7 @@ import log from 'electron-log/main.js'
 import {spawnYtDlp} from '@main/utils/process.js'
 import {classifyYtDlpStderr, extractLastError} from 'ytdlp-errors'
 import type {YtDlpErrorKind} from 'ytdlp-errors'
-import {planWorkflow, type CallerMediaWorkflowInput, type CallerSubtitlesWorkflowInput, type ProbeWorkflowInput, type SubtitleFormat} from 'yt-dlp-bridge'
+import {planWorkflow, type CallerMediaWorkflowInput, type CallerSubtitlesWorkflowInput, type ProbePlaylistMode, type ProbeWorkflowInput, type SubtitleFormat} from 'yt-dlp-bridge'
 import {redactArgs} from 'yt-dlp-bridge/redaction'
 import {resolveCookies, type ResolvedCookies} from './cookiesResolver.js'
 import {nonEmpty} from '@shared/format.js'
@@ -14,7 +14,7 @@ import type {E2eHarnessMode} from '@main/e2eHarness.js'
 import type {BinaryManager} from './BinaryManager.js'
 import type {TokenService} from './TokenService.js'
 import type {SettingsStore} from '@main/stores/SettingsStore.js'
-import {applyJsRuntimeEnv, buildYtDlpJsRuntimeArgs, probeElectronNodeRuntime, summarizeYtDlpJsRuntimeForLog, type YtDlpJsRuntime} from './ytDlpJsRuntime.js'
+import {applyJsRuntimeEnv, buildYtDlpJsRuntimeArgs, probeElectronNodeRuntime, summarizeYtDlpJsRuntimeForLog, type YtDlpJsRuntime, type YtDlpJsRuntimeLogSummary} from './ytDlpJsRuntime.js'
 
 type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | number>) => void
 
@@ -71,6 +71,13 @@ export type YtDlpResult =
 			stderr: string
 	  }
 
+export interface YtDlpInvocationSummary {
+	ytDlpPath: string
+	ffmpegPath: string | null
+	args: string[]
+	jsRuntime: YtDlpJsRuntimeLogSummary
+}
+
 // VidBee's strategy: skip the player clients that demand a PoT, so the
 // non-PoT download path works without needing to mint anything.
 const PLAYER_CLIENT_FALLBACK = 'youtube:player_client=default,-web,-web_safari'
@@ -80,7 +87,7 @@ function buildPotExtractorArgs(token: string, visitorData: string): string {
 	return `youtube:po_token=web.gvs+${token}${visitor}`
 }
 
-type RetryStrategy = {kind: 'pot'; reMint: boolean} | {kind: 'fallback'} | {kind: 'noExtractorArgs'}
+type RetryStrategy = {kind: 'pot'; reMint: boolean} | {kind: 'fallback'} | {kind: 'noExtractorArgs'; usedExtractorFallback?: boolean}
 
 // Probes (--dump-json) should never legitimately take this long. Without a
 // timeout, a stalled yt-dlp run (e.g. extractor giving up but not exiting)
@@ -101,6 +108,9 @@ interface InvokeOptions {
 	timeoutMs?: number
 	signal?: YtDlpSignal
 	isProbe?: boolean
+	probePlaylistMode?: ProbePlaylistMode
+	hasExplicitYoutubePlayerClient?: boolean
+	onInvocation?: (summary: YtDlpInvocationSummary) => void
 }
 
 async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise<YtDlpResult> {
@@ -136,8 +146,10 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 	const ffmpegLocationArgs = opts.ffmpegPath ? ['--ffmpeg-location', opts.ffmpegPath] : []
 	const e2eArgs = opts.e2eMode?.ytDlpArgs({isProbe: opts.isProbe === true}) ?? []
 	const args = [...e2eArgs, ...ffmpegLocationArgs, ...extractorArgsArr, ...cookiesArgs, ...proxyArgs, ...limitRateArgs, ...jsRuntimeArgs, ...opts.args]
+	const jsRuntimeSummary = summarizeYtDlpJsRuntimeForLog(opts.jsRuntime)
+	opts.onInvocation?.({ytDlpPath: opts.ytDlpPath, ffmpegPath: opts.ffmpegPath, args: redactArgs(args), jsRuntime: jsRuntimeSummary})
 
-	ytDlpLog.info('spawn', {attempt: strategy.kind, reMint: strategy.kind === 'pot' ? strategy.reMint : undefined, binary: opts.ytDlpPath, ffmpeg: opts.ffmpegPath, ...summarizeYtDlpJsRuntimeForLog(opts.jsRuntime), cookies: opts.cookies?.kind ?? null, proxy: redactProxy(opts.proxyUrl), args: redactArgs(args)})
+	ytDlpLog.info('spawn', {attempt: strategy.kind, reMint: strategy.kind === 'pot' ? strategy.reMint : undefined, binary: opts.ytDlpPath, ffmpeg: opts.ffmpegPath, ...jsRuntimeSummary, cookies: opts.cookies?.kind ?? null, proxy: redactProxy(opts.proxyUrl), args: redactArgs(args)})
 
 	const abortSignal = opts.signal?.abortSignal
 	if (abortSignal?.aborted) {
@@ -218,7 +230,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 					stderr,
 					// 'fallback' is the YouTube degraded-success path (no PoT). The non-YouTube
 					// vanilla path ('noExtractorArgs') is not a fallback — the user sees nothing.
-					usedExtractorFallback: strategy.kind === 'fallback'
+					usedExtractorFallback: strategy.kind === 'fallback' || (strategy.kind === 'noExtractorArgs' && strategy.usedExtractorFallback === true)
 				})
 				return
 			}
@@ -227,7 +239,20 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 	})
 }
 
-// 3-attempt ladder (YouTube only):
+function finalFallbackStrategy(opts: InvokeOptions): RetryStrategy {
+	// An explicit probe player client is already present in plan args. Preserve
+	// it on the final no-PoT attempt instead of injecting the generic default
+	// client override, which would erase the caller's chosen enrichment client.
+	return opts.hasExplicitYoutubePlayerClient === true ? {kind: 'noExtractorArgs', usedExtractorFallback: true} : {kind: 'fallback'}
+}
+
+function shouldUsePotLadder(opts: InvokeOptions): boolean {
+	if (!siteForUrl(opts.url).needsPotToken) return false
+	if (opts.isProbe !== true) return true
+	return (opts.probePlaylistMode ?? 'auto') === 'video'
+}
+
+// 3-attempt ladder (YouTube media and explicit single-video probes only):
 //   0. PoT token  → if botBlock, retry
 //   1. Re-mint PoT → if still botBlock, fall back
 //   2. No PoT, player_client=default,-web,-web_safari  (final attempt)
@@ -239,18 +264,19 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 // PoT mint avoids gratuitous HiddenWindow scrapes for sites where the token
 // would be ignored.
 //
-// Probe requests (--dump-single-json) also bypass the PoT path. The
-// `visitor_data` arg that travels alongside the PoT silently caps YouTube tab
-// pagination at 100 entries (single innertube page) regardless of
-// --playlist-end, so a 290-video playlist comes back with `entries.length=100`
-// and `playlist_count=290` — visible in user reports as "can't fetch more than
-// 100 videos". Probes don't fetch streaming URLs, so PoT validation isn't
-// needed; non-web clients (android/ios) provide the format JSON.
+// Playlist-capable probes (--dump-single-json with playlistMode auto/playlist)
+// bypass the PoT path. The `visitor_data` arg that travels alongside the PoT
+// silently caps YouTube tab pagination at 100 entries (single innertube page)
+// regardless of --playlist-end, so a 290-video playlist comes back with
+// `entries.length=100` and `playlist_count=290` — visible in user reports as
+// "can't fetch more than 100 videos". Explicit single-video probes cannot
+// enumerate tabs, so they can use the manual PoT ladder to expose clients and
+// formats that require it.
 async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
 	// Site adapter resolves PoT applicability from the URL hostname. The unified
 	// probe pipeline runs before extractor identity is known, so URL-based
 	// routing stays the conservative pre-probe signal.
-	if (opts.isProbe || !siteForUrl(opts.url).needsPotToken) {
+	if (!shouldUsePotLadder(opts)) {
 		return invokeOnce(opts, {kind: 'noExtractorArgs'})
 	}
 
@@ -258,7 +284,7 @@ async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
 	try {
 		result = await invokeOnce(opts, {kind: 'pot', reMint: false})
 	} catch {
-		return invokeOnce(opts, {kind: 'fallback'})
+		return invokeOnce(opts, finalFallbackStrategy(opts))
 	}
 
 	if (result.kind !== 'exit-error' || result.errorKind !== 'botBlock') return result
@@ -266,18 +292,19 @@ async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
 	try {
 		result = await invokeOnce(opts, {kind: 'pot', reMint: true})
 	} catch {
-		return invokeOnce(opts, {kind: 'fallback'})
+		return invokeOnce(opts, finalFallbackStrategy(opts))
 	}
 
 	if (result.kind !== 'exit-error' || result.errorKind !== 'botBlock') return result
 
-	return invokeOnce(opts, {kind: 'fallback'})
+	return invokeOnce(opts, finalFallbackStrategy(opts))
 }
 
 export class YtDlp {
 	private _ytDlpPath: string | null = null
 	private _ffmpegPath: string | null = null
 	private _jsRuntime: YtDlpJsRuntime | null = null
+	private _lastInvocation: YtDlpInvocationSummary | null = null
 
 	constructor(
 		private readonly binaryManager: BinaryManager,
@@ -312,6 +339,11 @@ export class YtDlp {
 		return this._ffmpegPath
 	}
 
+	getLastInvocationSummary(): YtDlpInvocationSummary | null {
+		if (!this._lastInvocation) return null
+		return {...this._lastInvocation, args: [...this._lastInvocation.args]}
+	}
+
 	async run(req: YtDlpRequest, signal?: YtDlpSignal): Promise<YtDlpResult> {
 		if (!this._ytDlpPath) await this.prepare()
 		const settings = await this.settingsStore.get()
@@ -321,14 +353,33 @@ export class YtDlp {
 		const playlistProbeLimit = resolvePlaylistProbeLimit(settings.common)
 		const plan = planWorkflow(req, {pacing, playlistProbeLimit, downloadRetryPolicy: this.opts.e2eMode?.downloadRetryPolicy})
 		const isProbe = req.kind === 'probe'
+		const probePlaylistMode = isProbe ? (req.selection?.playlistMode ?? 'auto') : undefined
+		const hasExplicitYoutubePlayerClient = isProbe ? (req.extractor?.youtube?.playerClient?.length ?? 0) > 0 : false
 		if (isProbe) {
-			ytDlpLog.info('probe request', {url: req.url, playlistMode: req.selection?.playlistMode ?? 'auto', playlistScope: plan.facts.playlistScope ?? null})
+			ytDlpLog.info('probe request', {url: req.url, playlistMode: probePlaylistMode, playlistScope: plan.facts.playlistScope ?? null})
 		}
 		// Bandwidth cap applies to media downloads only — probes need raw speed
 		// for snappy "Fetch formats" UX, sidecar subs are tiny so throttling
 		// wouldn't change YouTube's anti-bot signal.
 		const limitRate = plan.facts.isMediaDownload ? nonEmpty(settings.common?.limitRate?.trim()) : undefined
-		const result = await invokeWithRetry({url: req.url, ytDlpPath: this._ytDlpPath!, ffmpegPath: this._ffmpegPath, jsRuntime: this._jsRuntime, e2eMode: this.opts.e2eMode, args: plan.args, tokenService: this.tokenService, cookies, proxyUrl, limitRate, timeoutMs: isProbe ? PROBE_TIMEOUT_MS : undefined, isProbe, signal})
+		const result = await invokeWithRetry({
+			url: req.url,
+			ytDlpPath: this._ytDlpPath!,
+			ffmpegPath: this._ffmpegPath,
+			jsRuntime: this._jsRuntime,
+			e2eMode: this.opts.e2eMode,
+			args: plan.args,
+			tokenService: this.tokenService,
+			cookies,
+			proxyUrl,
+			limitRate,
+			timeoutMs: isProbe ? PROBE_TIMEOUT_MS : undefined,
+			isProbe,
+			probePlaylistMode,
+			hasExplicitYoutubePlayerClient,
+			signal,
+			onInvocation: summary => (this._lastInvocation = summary)
+		})
 		if (result.kind === 'success' && plan.facts.effectiveSubtitleFormat) {
 			return {...result, effectiveSubtitleFormat: plan.facts.effectiveSubtitleFormat}
 		}

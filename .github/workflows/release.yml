@@ -194,7 +194,7 @@ jobs:
             cat "$stderr" >&2
           fi
           exit "$status"
-      - name: Run Linux live YouTube canary
+      - name: Run Linux live probe canary
         if: runner.os == 'Linux' && !contains(github.ref_name, '-')
         shell: bash
         env:
@@ -209,8 +209,8 @@ jobs:
           fi
           mkdir -p "$ARROXY_LOG_ARCHIVE"
           unset ELECTRON_RUN_AS_NODE
-          stdout="$ARROXY_LOG_ARCHIVE/live-canary.out"
-          stderr="$ARROXY_LOG_ARCHIVE/live-canary.err"
+          stdout="$ARROXY_LOG_ARCHIVE/live-probe-smoke.out"
+          stderr="$ARROXY_LOG_ARCHIVE/live-probe-smoke.err"
           set +e
           xvfb-run -a "$PACKAGED_EXE" >"$stdout" 2>"$stderr"
           status=$?

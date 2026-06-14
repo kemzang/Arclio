@@ -217,7 +217,7 @@ if (hasSingleInstanceLock) {
 		// real YouTube using production services, then exits. No window created.
 		const smokeUrl = readSmokeUrl()
 		if (smokeUrl) {
-			const code = await runSmokeMode({url: smokeUrl, binaryManager, tokenService, probeService})
+			const code = await runSmokeMode({url: smokeUrl, binaryManager, tokenService, probeService, ytDlp})
 			tokenService.dispose()
 			exitWithCode(code)
 			return
