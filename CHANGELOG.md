@@ -8,6 +8,26 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.4.0-beta.3
+
+This beta moves Arroxy's runtime manifest channel out of the app release feed and keeps the 0.4.0 beta line focused on release/runtime reliability.
+
+## Highlights
+
+### Dedicated Runtime Manifest Releases
+
+Runtime-managed binary metadata now comes from the dedicated `arroxy-runtime-binaries` release repo instead of the main app repo.
+
+- New builds fetch `runtime-index-v1.json` and `runtime-index-v1.sig` through `arroxy-runtime-binaries/releases/latest/download`.
+- The app still verifies the manifest offline with Arroxy's bundled Ed25519 public key before trusting it.
+- The old main-repo runtime manifest publishing workflow is disabled, so the Arroxy release page stays focused on app releases.
+
+### Release And Startup Polish
+
+This beta includes the latest UI startup presentation fix and keeps the packaged release checks in place for the 0.4.0 beta series.
+
+---
+
 ## 0.4.0-beta.1
 
 This beta release previews the next major Arroxy workflow and runtime changes before the stable 0.4.0 release.
