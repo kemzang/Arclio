@@ -182,17 +182,25 @@ export async function generateRuntimeBinaryIndex(options: {cacheRoot?: string} =
 	return index
 }
 
-async function validateRuntimeBinaryIndexEntries(index: RuntimeBinaryIndex, cacheRoot: string, smoke: 'current' | 'none'): Promise<void> {
+export function entriesForRuntimeBinaryValidation(index: RuntimeBinaryIndex, smoke: 'current' | 'none', platform: NodeJS.Platform = process.platform, arch: NodeJS.Architecture = process.arch): RuntimeBinaryManifestEntry[] {
+	if (smoke === 'none') return index.entries
+	const currentPlatform = runtimeBinaryPlatformFor(platform)
+	const currentArch = runtimeBinaryArchFor(arch)
+	if (!currentPlatform || !currentArch) return []
+	return index.entries.filter(entry => entry.platform === currentPlatform && entry.arch === currentArch)
+}
+
+async function validateRuntimeBinaryIndexEntries(index: RuntimeBinaryIndex, cacheRoot: string, smoke: 'current' | 'none'): Promise<number> {
 	const materializer = new RuntimeBinaryMaterializer()
-	const currentPlatform = runtimeBinaryPlatformFor()
-	const currentArch = runtimeBinaryArchFor()
-	for (const entry of index.entries) {
+	const entries = entriesForRuntimeBinaryValidation(index, smoke)
+	for (const entry of entries) {
 		const result = await materializer.materialize(entry, {cacheRoot})
-		if (smoke === 'current' && entry.platform === currentPlatform && entry.arch === currentArch) {
+		if (smoke === 'current') {
 			const probe = await probeBinary(result.executablePath, probeArgs(entry.id), probeTimeoutMs(entry.id))
 			if (!probe.ok) throw new Error(`Smoke probe failed for ${entry.id} ${entry.provider} ${entry.version}: ${probe.failure.message}`)
 		}
 	}
+	return entries.length
 }
 
 export function normalizePrivateKeyPem(value: string): string {
@@ -283,15 +291,17 @@ async function generateCommand(args: string[]): Promise<void> {
 	const raw = formatIndex(index)
 	await fsPromises.mkdir(path.dirname(options.outPath), {recursive: true})
 	await fsPromises.writeFile(options.outPath, raw)
-	if (options.validate) await validateRuntimeBinaryIndexEntries(index, path.join(cacheRoot, 'materialized'), 'current')
+	const materializedCount = options.validate ? await validateRuntimeBinaryIndexEntries(index, path.join(cacheRoot, 'materialized'), 'current') : 0
 	console.log(`Wrote ${options.outPath} with ${index.entries.length} entries`)
+	if (options.validate) console.log(`Materialized and smoked ${materializedCount} current-host entries`)
 }
 
 async function validateCommand(args: string[]): Promise<void> {
 	const options = parseValidateOptions(args)
 	const {index} = await readIndexFile(options.manifestPath)
-	await validateRuntimeBinaryIndexEntries(index, options.cacheRoot ?? defaultCacheRoot(), options.smoke)
+	const materializedCount = await validateRuntimeBinaryIndexEntries(index, options.cacheRoot ?? defaultCacheRoot(), options.smoke)
 	console.log(`Validated ${options.manifestPath} with ${index.entries.length} entries`)
+	console.log(`Materialized ${materializedCount} ${options.smoke === 'current' ? 'current-host' : 'manifest'} entries`)
 }
 
 async function signCommand(args: string[]): Promise<void> {
