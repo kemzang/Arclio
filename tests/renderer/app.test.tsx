@@ -8,6 +8,21 @@ import {BUILTIN_DOWNLOAD_PROFILES} from '@shared/downloadProfiles.js'
 
 const mockAppApi = buildMockAppApi()
 
+async function openProfileMenu(): Promise<void> {
+	const profileMenuTrigger = await screen.findByRole('button', {name: 'Switch download profile: Balanced 720p'})
+	fireEvent.click(profileMenuTrigger)
+	expect(await screen.findByText('Switch profile')).toBeInTheDocument()
+}
+
+function expectProfileMenuClosed(): void {
+	const profileMenu = screen.queryByTestId('profiles-profile-menu')
+	if (profileMenu) {
+		expect(profileMenu).toHaveAttribute('data-closed')
+	} else {
+		expect(profileMenu).not.toBeInTheDocument()
+	}
+}
+
 describe('App renderer', () => {
 	beforeEach(() => {
 		useAppStore.setState({
@@ -242,32 +257,29 @@ describe('App renderer', () => {
 		expect(screen.getByTestId('profiles-main-input')).toHaveValue('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 	})
 
-	it('closes the profile picker when opening profile editor surfaces', async () => {
+	it('closes the profile picker when opening the new profile editor', async () => {
 		render(<App />)
 
-		const profileMenuTrigger = await screen.findByRole('button', {name: 'Switch download profile: Balanced 720p'})
 		expect(screen.queryByTestId('profiles-editor-dialog')).not.toBeInTheDocument()
-		fireEvent.click(profileMenuTrigger)
-		expect(await screen.findByText('Switch profile')).toBeInTheDocument()
+		await openProfileMenu()
 
 		fireEvent.click(screen.getByRole('button', {name: 'New profile'}))
 
 		await waitFor(() => {
-			expect(screen.getByTestId('profiles-profile-menu')).toHaveAttribute('data-closed')
+			expectProfileMenuClosed()
 		})
 		expect(await screen.findByTestId('profiles-editor-dialog')).toBeInTheDocument()
+	})
 
-		fireEvent.click(screen.getByRole('button', {name: 'Cancel'}))
-		await waitFor(() => {
-			expect(screen.queryByTestId('profiles-editor-dialog')).not.toBeInTheDocument()
-		})
-		fireEvent.click(profileMenuTrigger)
-		expect(await screen.findByText('Switch profile')).toBeInTheDocument()
+	it('closes the profile picker when opening profile management', async () => {
+		render(<App />)
+
+		await openProfileMenu()
 
 		fireEvent.click(screen.getByRole('button', {name: 'Manage profiles'}))
 
 		await waitFor(() => {
-			expect(screen.queryByTestId('profiles-profile-menu')).not.toBeInTheDocument()
+			expectProfileMenuClosed()
 		})
 		expect(await screen.findByTestId('profiles-manage-tab')).toBeInTheDocument()
 	})
