@@ -138,8 +138,6 @@ function createMainWindow(backgroundColor: string): BrowserWindow {
 		titleBarStyle: 'hidden',
 		autoHideMenuBar: true,
 		backgroundColor,
-		show: false,
-		paintWhenInitiallyHidden: true,
 		webPreferences: {preload: preloadPath, contextIsolation: true, nodeIntegration: false}
 	})
 
@@ -152,9 +150,6 @@ function createMainWindow(backgroundColor: string): BrowserWindow {
 	window.webContents.setWindowOpenHandler(() => ({action: 'deny'}))
 	window.webContents.on('will-navigate', event => {
 		event.preventDefault()
-	})
-	window.once('ready-to-show', () => {
-		if (!window.isDestroyed()) window.show()
 	})
 
 	if (process.env.ELECTRON_RENDERER_URL) {

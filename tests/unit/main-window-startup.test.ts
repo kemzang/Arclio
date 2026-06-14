@@ -6,13 +6,12 @@ import {BOOT_SPLASH_DARK_BACKGROUND_COLOR, BOOT_SPLASH_LIGHT_BACKGROUND_COLOR, r
 const mainSource = readFileSync(path.resolve('src/main/index.ts'), 'utf8')
 
 describe('main window startup presentation', () => {
-	it('keeps the window hidden on native white until the first renderer paint', () => {
+	it('uses a theme-aware native background without delaying the initial window show', () => {
 		expect(mainSource).toContain('resolveMainWindowBackgroundColor(initialSettings.common.uiTheme, nativeTheme.shouldUseDarkColors)')
 		expect(mainSource).toContain('backgroundColor,')
-		expect(mainSource).toContain('show: false')
-		expect(mainSource).toContain('paintWhenInitiallyHidden: true')
-		expect(mainSource).toContain("window.once('ready-to-show'")
-		expect(mainSource).toContain('window.show()')
+		expect(mainSource).not.toContain('show: false')
+		expect(mainSource).not.toContain('paintWhenInitiallyHidden: true')
+		expect(mainSource).not.toContain("window.once('ready-to-show'")
 	})
 
 	it('matches the native pre-paint color to explicit and system themes', () => {
