@@ -73,6 +73,7 @@ describe('release asset names', () => {
 		expect(release).toContain("ARROXY_RUNTIME_SMOKE: '1'")
 		expect(release).toContain('libfuse2t64')
 		expect(release).toContain('Run Linux live YouTube canary')
+		expect(release).toContain("runner.os == 'Linux' && !contains(github.ref_name, '-')")
 		expect(release).toContain('ARROXY_LIVE_CANARY_URL')
 		expect(release).toContain('ARROXY_SMOKE_URL')
 		expect(release).toContain('vars.ARROXY_LIVE_CANARY_URL')
