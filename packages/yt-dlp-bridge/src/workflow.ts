@@ -54,6 +54,7 @@ export interface ProbeWorkflowInput {
 	kind: 'probe'
 	url: string
 	selection?: {playlistMode?: ProbePlaylistMode; playlistScope?: PlaylistScope}
+	extractor?: {youtube?: {playerClient?: string[]}}
 }
 
 export interface CallerMediaWorkflowInput {
@@ -171,7 +172,9 @@ function planProbeWorkflow(input: ProbeWorkflowInput, options: WorkflowPlanOptio
 	const scopePlan = playlistMode === 'video' ? undefined : playlistScopeSentinelFields(input.selection?.playlistScope, visibleLimit)
 	const modeFlag = playlistMode === 'video' ? ['--no-playlist'] : playlistMode === 'playlist' ? ['--yes-playlist'] : []
 	const scopeArgs = scopePlan ? [scopePlan.ytDlpFlag, scopePlan.ytDlpValue] : []
-	const args = [...baseArgs(options), '--dump-single-json', '--no-quiet', '--flat-playlist', ...modeFlag, ...scopeArgs, ...requestPacingArgs(options.pacing), input.url]
+	const extractorArgs: string[] = []
+	pushJoined(extractorArgs, 'youtube', 'player_client', input.extractor?.youtube?.playerClient ?? [])
+	const args = [...baseArgs(options), '--dump-single-json', '--no-quiet', '--flat-playlist', ...modeFlag, ...scopeArgs, ...requestPacingArgs(options.pacing), ...extractorArgs, input.url]
 	const facts: WorkflowPlanFacts = {isMediaDownload: false, dependencies: dependencyFacts(new Map([['yt-dlp', ['execute probe workflow']]]), new Map(), options.detectedDependencies), risks: [], sideEffects: []}
 	if (scopePlan) facts.playlistScope = scopePlan
 	return withFacts({kind: 'probe', args, redactedArgs: [], facts})

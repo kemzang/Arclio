@@ -65,6 +65,18 @@ describe('argv generation', () => {
 		expect(args).toEqual(['--ignore-config', '--no-warnings', '--dump-json', 'https://example.com/watch?v=abc'])
 	})
 
+	it('builds default probe args without extractor overrides', () => {
+		const args = planWorkflow({kind: 'probe', url: 'https://youtu.be/abc'}, {configFiles: {mode: 'disabled'}}).args
+
+		expect(args).toEqual(['--ignore-config', '--dump-single-json', '--no-quiet', '--flat-playlist', '--playlist-end', '101', 'https://youtu.be/abc'])
+	})
+
+	it('emits requested YouTube player client args for probe enrichment', () => {
+		const args = planWorkflow({kind: 'probe', url: 'https://youtu.be/abc', selection: {playlistMode: 'video'}, extractor: {youtube: {playerClient: ['web_embedded']}}}, {configFiles: {mode: 'disabled'}}).args
+
+		expect(args).toEqual(['--ignore-config', '--dump-single-json', '--no-quiet', '--flat-playlist', '--no-playlist', '--extractor-args', 'youtube:player_client=web_embedded', 'https://youtu.be/abc'])
+	})
+
 	it('builds audio download args with extraction and safe output policy', () => {
 		const config = loadConfig({YTDLP_MCP_OUTPUT_ROOT: path.join(os.tmpdir(), 'yt-dlp-bridge-test')})
 		const args = planWorkflow(makePlanInput({kind: 'audio'}), {config, configFiles: {mode: 'disabled'}}).args

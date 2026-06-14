@@ -231,7 +231,6 @@ describe('YtDlp — probe args', () => {
 		expect(args).not.toContain('--playlist-items')
 		expect(args).not.toContain('--playlist-end')
 		expect(args).not.toContain('--dateafter')
-		expect(args).not.toContain('--extractor-args')
 	})
 })
 
@@ -694,21 +693,30 @@ describe('YtDlp — extractor-args shape', () => {
 
 	// Regression guard: visitor_data passed to YouTube tab extractor silently
 	// caps playlist enumeration at 100 entries (single innertube page),
-	// regardless of --playlist-end. Probes are metadata-only and don't fetch
-	// streaming URLs, so PoT is unneeded; skipping it lets non-web clients
-	// (android/ios) provide full format JSON and unblocks tab pagination.
-	it('probe (YouTube): no --extractor-args (bypasses PoT to avoid visitor_data tab cap)', async () => {
+	// regardless of --playlist-end. Playlist-capable probes stay PoT-free before
+	// the first spawn; explicit single-video probes can safely use PoT because
+	// they do not enumerate YouTube tabs.
+	it('probe (YouTube, playlistMode=auto): no --extractor-args (bypasses PoT to avoid visitor_data tab cap)', async () => {
 		const ytDlp = makeYtDlp({token: 'MYTOKEN', visitorData: 'MYVISITOR'})
 		await ytDlp.run({kind: 'probe', url: URL})
 		const args = getArgs()
 		expect(args).not.toContain('--extractor-args')
 	})
 
-	it('probe (YouTube, playlistMode=video): also no --extractor-args', async () => {
+	it('probe (YouTube, playlistMode=playlist): no --extractor-args (bypasses PoT to avoid visitor_data tab cap)', async () => {
+		const ytDlp = makeYtDlp({token: 'MYTOKEN', visitorData: 'MYVISITOR'})
+		await ytDlp.run(probeRequest({playlistMode: 'playlist'}))
+		const args = getArgs()
+		expect(args).not.toContain('--extractor-args')
+	})
+
+	it('probe (YouTube, playlistMode=video): uses manual PoT extractor args', async () => {
 		const ytDlp = makeYtDlp({token: 'MYTOKEN', visitorData: 'MYVISITOR'})
 		await ytDlp.run(probeRequest({playlistMode: 'video'}))
 		const args = getArgs()
-		expect(args).not.toContain('--extractor-args')
+		const i = args.indexOf('--extractor-args')
+		expect(i).toBeGreaterThanOrEqual(0)
+		expect(args[i + 1]).toBe('youtube:po_token=web.gvs+MYTOKEN;visitor_data=MYVISITOR')
 	})
 })
 

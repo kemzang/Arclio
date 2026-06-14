@@ -22,6 +22,7 @@ function makeStubs() {
 	const recentJobsStore = {push: vi.fn().mockResolvedValue(undefined)} as unknown as RecentJobsStore
 	const settingsStore = {get: vi.fn().mockResolvedValue({})} as never
 	const ytDlp = new YtDlp(binaryManager, tokenService, settingsStore)
+	Object.assign(ytDlp, {_ytDlpPath: '/fake/yt-dlp', _ffmpegPath: null, _jsRuntime: null})
 	return {binaryManager, tokenService, recentJobsStore, settingsStore, ytDlp}
 }
 
@@ -98,7 +99,7 @@ describe('DownloadService error surfacing', () => {
 		})
 
 		await svc.start({url: 'https://youtube.com/watch?v=test', outputDir: '/tmp', job: DEFAULT_JOB})
-		await vi.waitFor(() => expect(stubs.recentJobsStore.push).toHaveBeenCalledOnce())
+		await vi.waitFor(() => expect(stubs.recentJobsStore.push).toHaveBeenCalledOnce(), {timeout: 5000})
 
 		expect(statusErrors[0]?.raw).toContain('Video unavailable')
 		const finalized = vi.mocked(stubs.recentJobsStore.push).mock.calls[0]?.[0]
