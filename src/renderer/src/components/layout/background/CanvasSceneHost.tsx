@@ -6,6 +6,9 @@ import {createWebglProgram, disposeWebglProgram, isSoftwareRenderer, releaseWebg
 
 const FALLBACK_RESIZE_SETTLE_MS = 300
 type ForcedFallbackMode = 'canvas2d' | 'css'
+interface FallbackActivationOptions {
+	cleanupSceneClass: boolean
+}
 
 function backdropSoftwareAllowed(): boolean {
 	try {
@@ -54,7 +57,7 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 
 		const cleanupSceneClass = addSceneClasses(scene)
 
-		const activateCanvasFallback = (reason: string, details: Record<string, unknown> = {}): (() => void) => {
+		const activateCanvasFallback = (reason: string, details: Record<string, unknown> = {}, options: FallbackActivationOptions = {cleanupSceneClass: true}): (() => void) => {
 			logBackdrop('info', scene.id, 'fallback-activate', {mode: 'fallback', reason, ...details})
 			const cleanupStatic = activateStaticFallback()
 			const renderer = scene.createStaticFallbackRenderer(fallbackCanvas)
@@ -63,7 +66,7 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 				setMode('css')
 				return () => {
 					cleanupStatic()
-					cleanupSceneClass()
+					if (options.cleanupSceneClass) cleanupSceneClass()
 				}
 			}
 
@@ -107,7 +110,7 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 				window.removeEventListener('resize', scheduleResizeDraw)
 				document.body.classList.remove('backdrop-canvas-fallback')
 				cleanupStatic()
-				cleanupSceneClass()
+				if (options.cleanupSceneClass) cleanupSceneClass()
 			}
 		}
 
@@ -178,8 +181,6 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 		const uTime = gl.getUniformLocation(resources.prog, 'uTime')
 
 		setMode('webgl')
-		document.body.classList.add('backdrop-webgl-active')
-		logBackdrop('info', scene.id, 'webgl-activate', {mode: 'webgl', renderer: productionRendererName || probeRendererName, softwareRendererAllowed})
 
 		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 		const staticRender = (): boolean => reduceMotion.matches
@@ -198,12 +199,28 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 
 		let raf = 0
 		let lastFrame = 0
+		let webglActive = false
+		let fallbackCleanup: (() => void) | null = null
 		const start = performance.now()
 
 		const draw = (now: number): void => {
 			resize()
 			gl.uniform1f(uTime, (now - start) / 1000)
 			gl.drawArrays(gl.TRIANGLES, 0, 3)
+		}
+		const activateWebglBackdrop = (reason: string): void => {
+			if (webglActive) return
+			webglActive = true
+			document.body.classList.add('backdrop-webgl-active')
+			logBackdrop('info', scene.id, 'webgl-activate', {mode: 'webgl', reason, renderer: productionRendererName || probeRendererName, softwareRendererAllowed})
+		}
+		const drawInitialFrame = (reason: string): boolean => {
+			if (webglActive || fallbackCleanup || document.hidden) return webglActive
+			const now = performance.now()
+			draw(now)
+			lastFrame = now
+			activateWebglBackdrop(reason)
+			return true
 		}
 		const loop = (now: number): void => {
 			if (now - lastFrame >= scene.frameIntervalMs) {
@@ -216,7 +233,16 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 			if (raf) cancelAnimationFrame(raf)
 			raf = 0
 		}
+		const activateRuntimeFallback = (reason: string, details: Record<string, unknown> = {}): void => {
+			if (fallbackCleanup) return
+			stop()
+			webglActive = false
+			document.body.classList.remove('backdrop-webgl-active')
+			fallbackCleanup = activateCanvasFallback(reason, details, {cleanupSceneClass: false})
+		}
 		const run = (): void => {
+			if (fallbackCleanup) return
+			drawInitialFrame('initial')
 			if (raf || !isBackdropActive()) return
 			if (staticRender()) {
 				draw(performance.now())
@@ -229,6 +255,7 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 			else stop()
 		}
 		const onVisibility = (): void => {
+			if (!document.hidden) drawInitialFrame('visibility')
 			onActivityChange()
 		}
 		const onWindowFocus = (): void => {
@@ -242,9 +269,15 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 			run()
 		}
 		const onStaticInvalidation = (): void => {
-			if (isBackdropActive() && staticRender()) draw(performance.now())
+			if (!fallbackCleanup && isBackdropActive() && staticRender()) draw(performance.now())
+		}
+		const onContextLost = (event: Event): void => {
+			event.preventDefault()
+			logBackdrop('warn', scene.id, 'webgl-context-lost', {mode: 'webgl', renderer: productionRendererName || probeRendererName})
+			activateRuntimeFallback('production-webgl-context-lost', {renderer: productionRendererName || probeRendererName})
 		}
 
+		webglCanvas.addEventListener('webglcontextlost', onContextLost)
 		document.addEventListener('visibilitychange', onVisibility)
 		window.addEventListener('focus', onWindowFocus)
 		window.addEventListener('blur', onWindowBlur)
@@ -254,12 +287,15 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 
 		return () => {
 			stop()
+			webglCanvas.removeEventListener('webglcontextlost', onContextLost)
 			document.removeEventListener('visibilitychange', onVisibility)
 			window.removeEventListener('focus', onWindowFocus)
 			window.removeEventListener('blur', onWindowBlur)
 			reduceMotion.removeEventListener('change', onReduce)
 			window.removeEventListener('resize', onStaticInvalidation)
 			document.body.classList.remove('backdrop-webgl-active')
+			fallbackCleanup?.()
+			fallbackCleanup = null
 			cleanupSceneClass()
 			disposeWebglProgram(gl, resources)
 			gl.deleteBuffer(buf)

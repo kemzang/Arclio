@@ -1,7 +1,7 @@
 import path from 'node:path'
 import fs from 'node:fs'
 import os from 'node:os'
-import {app, BrowserWindow, dialog} from 'electron'
+import {app, BrowserWindow, dialog, nativeTheme} from 'electron'
 import log from 'electron-log/main.js'
 import {IPC_CHANNELS} from '@shared/ipc.js'
 import {TrayManager} from '@main/services/TrayManager.js'
@@ -30,6 +30,7 @@ import {runSmokeMode, readSmokeUrl, exitWithCode} from '@main/smoke.js'
 import {readRuntimeSmokeEnabled, runRuntimeSmokeMode} from '@main/runtimeSmoke.js'
 import {cancelQueueBeforeExit} from '@main/shutdown.js'
 import {decideCloseAction, decideRendererCrashAction} from '@main/windowLifecycle.js'
+import {resolveMainWindowBackgroundColor} from '@main/windowPresentation.js'
 import {registerPreloadDiagnostics, resolveMainWindowPreloadPath} from '@main/preloadDiagnostics.js'
 import {resolveE2eHarnessMode} from '@main/e2eHarness.js'
 import contextMenu from 'electron-context-menu'
@@ -121,7 +122,7 @@ if (!hasSingleInstanceLock) {
 	app.quit()
 }
 
-function createMainWindow(): BrowserWindow {
+function createMainWindow(backgroundColor: string): BrowserWindow {
 	const winState = windowStateKeeper({defaultWidth: WINDOW_DEFAULT_WIDTH, defaultHeight: WINDOW_DEFAULT_HEIGHT})
 	const preloadPath = resolveMainWindowPreloadPath(import.meta.dirname)
 
@@ -136,6 +137,9 @@ function createMainWindow(): BrowserWindow {
 		frame: false,
 		titleBarStyle: 'hidden',
 		autoHideMenuBar: true,
+		backgroundColor,
+		show: false,
+		paintWhenInitiallyHidden: true,
 		webPreferences: {preload: preloadPath, contextIsolation: true, nodeIntegration: false}
 	})
 
@@ -148,6 +152,9 @@ function createMainWindow(): BrowserWindow {
 	window.webContents.setWindowOpenHandler(() => ({action: 'deny'}))
 	window.webContents.on('will-navigate', event => {
 		event.preventDefault()
+	})
+	window.once('ready-to-show', () => {
+		if (!window.isDestroyed()) window.show()
 	})
 
 	if (process.env.ELECTRON_RENDERER_URL) {
@@ -231,7 +238,7 @@ if (hasSingleInstanceLock) {
 			void launch
 		}
 
-		const mainWindow = createMainWindow()
+		const mainWindow = createMainWindow(resolveMainWindowBackgroundColor(initialSettings.common.uiTheme, nativeTheme.shouldUseDarkColors))
 
 		contextMenu({window: mainWindow.webContents, showSaveImageAs: true, showCopyImageAddress: true, showInspectElement: !app.isPackaged})
 

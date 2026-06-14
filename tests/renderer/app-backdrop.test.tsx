@@ -285,6 +285,30 @@ describe('AppBackdrop fallback', () => {
 		expect(productionGl.loseContext).not.toHaveBeenCalled()
 	})
 
+	it('paints one WebGL frame while initially unfocused without starting the animation loop', async () => {
+		const scratchGl = mockWebgl()
+		const productionGl = mockWebgl()
+		installCanvasMocks({productionGl, scratchGl})
+		const hasFocus = vi.spyOn(document, 'hasFocus').mockReturnValue(false)
+		const request = vi.spyOn(window, 'requestAnimationFrame')
+
+		render(<AppBackdrop colorScheme="dark" renderMode="gpu" />)
+
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-webgl-active'))
+		expect(productionGl.drawArrays).toHaveBeenCalledOnce()
+
+		const requestCallsAfterInitialPaint = request.mock.calls.length
+		await act(async () => {
+			await new Promise(resolve => setTimeout(resolve, 40))
+		})
+		expect(request.mock.calls.length).toBe(requestCallsAfterInitialPaint)
+
+		hasFocus.mockReturnValue(true)
+		window.dispatchEvent(new Event('focus'))
+
+		expect(request.mock.calls.length).toBeGreaterThan(requestCallsAfterInitialPaint)
+	})
+
 	it('pauses WebGL while the window is blurred and resumes on focus', async () => {
 		const scratchGl = mockWebgl()
 		const productionGl = mockWebgl()
@@ -314,6 +338,28 @@ describe('AppBackdrop fallback', () => {
 		await nextFrame()
 
 		expect(request.mock.calls.length).toBeGreaterThan(requestCallsAfterBlur)
+	})
+
+	it('falls back to Canvas2D when the production WebGL context is lost', async () => {
+		const context2d = mockCanvas2d()
+		const scratchGl = mockWebgl()
+		const productionGl = mockWebgl()
+		installCanvasMocks({context2d, productionGl, scratchGl})
+
+		const {container} = render(<AppBackdrop colorScheme="dark" renderMode="gpu" />)
+
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-webgl-active'))
+		const webglCanvas = container.querySelector<HTMLCanvasElement>('canvas[data-backdrop-layer="webgl"]')
+		expect(webglCanvas).not.toBeNull()
+
+		const lostEvent = new Event('webglcontextlost', {cancelable: true})
+		webglCanvas?.dispatchEvent(lostEvent)
+
+		expect(lostEvent.defaultPrevented).toBe(true)
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-canvas-fallback'))
+		expect(document.body).not.toHaveClass('backdrop-webgl-active')
+		expect(container.querySelector('canvas[data-backdrop-mode="canvas2d"]')).not.toBeNull()
+		expect(context2d.clearRect).toHaveBeenCalled()
 	})
 
 	it('runs the light ocean WebGL scene at 30 FPS', () => {

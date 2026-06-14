@@ -133,16 +133,17 @@ describe('release asset names', () => {
 		expect(workflows).not.toContain('actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53')
 	})
 
-	it('publishes runtime binary manifests through a draft release before immutable publish', () => {
+	it('does not publish runtime binary manifests from the app repository', () => {
 		const workflow = read('.github/workflows/runtime-binaries.yml')
 
-		expect(workflow).toContain('gh release delete "$tag" --repo "$repo" --cleanup-tag --yes')
-		expect(workflow).toContain('gh release create "$tag" \\')
-		expect(workflow).toContain('--draft')
-		expect(workflow).toContain('runtime-index-v1.json')
-		expect(workflow).toContain('runtime-index-v1.sig')
-		expect(workflow).toContain('gh release edit "$tag" --repo "$repo" --draft=false')
-		expect(workflow).not.toContain('gh release upload "$tag"')
+		expect(workflow).toContain('name: Runtime Binary Manifest Validation')
+		expect(workflow).toContain('workflow_dispatch:')
+		expect(workflow).toContain('runtimeBinaryManifest.ts generate')
+		expect(workflow).toContain('--validate')
+		expect(workflow).not.toContain('schedule:')
+		expect(workflow).not.toContain('contents: write')
+		expect(workflow).not.toContain('ARROXY_RUNTIME_INDEX_SIGNING_KEY')
+		expect(workflow).not.toContain('gh release')
 	})
 
 	it('normalizes electron-builder AppImage arch names before publishing checksums', () => {
