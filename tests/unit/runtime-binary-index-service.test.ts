@@ -35,6 +35,10 @@ async function tempDir(): Promise<string> {
 	return fs.mkdtemp(path.join(os.tmpdir(), 'runtime-index-'))
 }
 
+function makeLogger() {
+	return {debug: vi.fn(), info: vi.fn(), warn: vi.fn()}
+}
+
 describe('RuntimeBinaryIndexService', () => {
 	it('verifies Ed25519 signatures', () => {
 		const keys = keyPair()
@@ -49,16 +53,24 @@ describe('RuntimeBinaryIndexService', () => {
 		const index: RuntimeBinaryIndex = {schemaVersion: 1, generatedAt: '2026-06-12T00:00:00.000Z', entries: [entry]}
 		const payload = signed(index, keys.privateKeyPem)
 		const userData = await tempDir()
-		const svc = new RuntimeBinaryIndexService(userData, {
-			publicKeyPem: keys.publicKeyPem,
-			remoteIndexUrl: 'https://updates.example/runtime-index-v1.json',
-			remoteSignatureUrl: 'https://updates.example/runtime-index-v1.sig',
-			bundledIndex: {...index, entries: [] as RuntimeBinaryManifestEntry[]},
-			fetchText: async url => (url.endsWith('.sig') ? payload.signature : payload.raw)
-		})
+		const logger = makeLogger()
+		const remoteIndexUrl = 'https://github.com/antonio-orionus/arroxy-runtime-binaries/releases/latest/download/runtime-index-v1.json'
+		const remoteSignatureUrl = 'https://github.com/antonio-orionus/arroxy-runtime-binaries/releases/latest/download/runtime-index-v1.sig'
+		const svc = new RuntimeBinaryIndexService(userData, {publicKeyPem: keys.publicKeyPem, remoteIndexUrl, remoteSignatureUrl, bundledIndex: {...index, entries: [] as RuntimeBinaryManifestEntry[]}, fetchText: async url => (url.endsWith('.sig') ? payload.signature : payload.raw), logger})
 
 		await expect(svc.candidatesFor('yt-dlp')).resolves.toEqual([entry])
 		await expect(fs.readFile(path.join(userData, 'runtime-cache', 'manifests', 'runtime-index-v1.json'), 'utf8')).resolves.toBe(payload.raw)
+		expect(logger.info).toHaveBeenCalledWith('Remote runtime binary index verified', {indexUrl: remoteIndexUrl, signatureUrl: remoteSignatureUrl, sourceRepo: 'antonio-orionus/arroxy-runtime-binaries', generatedAt: index.generatedAt, entryCount: 1, elapsedMs: expect.any(Number)})
+		expect(logger.info).toHaveBeenCalledWith('Persisted last-known-good runtime binary index', {manifestDir: path.join(userData, 'runtime-cache', 'manifests'), generatedAt: index.generatedAt, entryCount: 1})
+		expect(logger.info).toHaveBeenCalledWith('Runtime binary index selected', {source: 'remote', generatedAt: index.generatedAt, entryCount: 1, fallbackCount: 1})
+		expect(logger.debug).toHaveBeenCalledWith('Runtime binary candidates loaded', {
+			id: 'yt-dlp',
+			source: 'remote',
+			indexUrl: remoteIndexUrl,
+			sourceRepo: 'antonio-orionus/arroxy-runtime-binaries',
+			count: 1,
+			candidates: [{channel: 'nightly', provider: 'github', version: '2026.06.12', platform: 'linux', arch: 'x64', format: 'raw'}]
+		})
 	})
 
 	it('uses a verified remote index even when last-known-good persistence fails', async () => {
@@ -111,15 +123,20 @@ describe('RuntimeBinaryIndexService', () => {
 		const index: RuntimeBinaryIndex = {schemaVersion: 1, generatedAt: '2026-06-12T00:00:00.000Z', entries: [entry]}
 		const payload = signed(index, keys.privateKeyPem)
 		const bundled: RuntimeBinaryIndex = {schemaVersion: 1, generatedAt: '2026-06-12T00:00:00.000Z', entries: [{...entry, version: 'bundled', sha256: 'b'.repeat(64)}]}
+		const logger = makeLogger()
 		const svc = new RuntimeBinaryIndexService(await tempDir(), {
 			publicKeyPem: keys.publicKeyPem,
 			remoteIndexUrl: 'https://updates.example/runtime-index-v1.json',
 			remoteSignatureUrl: 'https://updates.example/runtime-index-v1.sig',
 			bundledIndex: bundled,
-			fetchText: async url => (url.endsWith('.sig') ? payload.signature : JSON.stringify({...index, generatedAt: '2026-06-13T00:00:00.000Z'}))
+			fetchText: async url => (url.endsWith('.sig') ? payload.signature : JSON.stringify({...index, generatedAt: '2026-06-13T00:00:00.000Z'})),
+			logger
 		})
 
 		await expect(svc.candidatesFor('yt-dlp')).resolves.toEqual(bundled.entries)
+		expect(logger.warn).toHaveBeenCalledWith('Remote runtime binary index unavailable', {indexUrl: 'https://updates.example/runtime-index-v1.json', signatureUrl: 'https://updates.example/runtime-index-v1.sig', sourceRepo: null, error: 'Runtime binary index signature verification failed'})
+		expect(logger.info).toHaveBeenCalledWith('Runtime binary index selected', {source: 'bundled', generatedAt: bundled.generatedAt, entryCount: 1, fallbackCount: 0})
+		expect(logger.debug).toHaveBeenCalledWith('Runtime binary candidates loaded', expect.objectContaining({source: 'bundled', indexUrl: null, sourceRepo: null}))
 	})
 
 	it('uses last-known-good when remote fetch fails', async () => {
