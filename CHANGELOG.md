@@ -8,6 +8,46 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## 0.4.0-beta.1
+
+This beta release previews the next major Arroxy workflow and runtime changes before the stable 0.4.0 release.
+
+## Highlights
+
+### Faster Download Workflows
+
+Arroxy now has a broader quick-download and profile system for common download choices.
+
+- Universal download profiles power the home screen profile picker and quick-download actions.
+- Bulk URL handling, clipboard intake, and playlist submission paths were tightened so larger sessions move into the queue with less manual cleanup.
+- Playlist scope, limits, retry state, and review details now stay better aligned while metadata is loading or being refreshed.
+
+### Runtime And Binary Reliability
+
+The app now leans on managed runtime metadata instead of runtime "latest" resolution.
+
+- yt-dlp runs through Electron's bundled Node runtime for JavaScript challenges instead of depending on Deno or a system Node install.
+- Managed binary manifests are generated, validated, signed, and smoke-tested through dedicated automation.
+- Dependency diagnostics, warmup behavior, and Windows yt-dlp probe coverage were expanded.
+
+### UI, Feedback, And Localization
+
+The renderer received a broad polish pass with more complete localization plumbing.
+
+- The home surface, profile editor, queue drawer, backdrop, and wizard flows were refined for denser everyday use.
+- App copy now flows through a gettext-backed i18n workflow and generated runtime locale JSON.
+- Feedback can include explicit-consent diagnostic uploads with redacted log context.
+
+### Tooling And Test Coverage
+
+The project moved more of its quality gate into reproducible tooling.
+
+- Formatting and linting moved to Biome and Oxlint.
+- Fixture Product E2E coverage now owns more real user workflows around clipboard, metadata, queueing, downloads, and resilience.
+- Publishable yt-dlp helper packages now have their own package metadata, tests, and release checks.
+
+---
+
 ## 0.3.13
 
 This patch release switches Arroxy's release integrity model to GitHub immutable releases.
