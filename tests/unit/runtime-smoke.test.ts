@@ -32,7 +32,7 @@ const healthyLiveProbeReport: LiveProbeSmokeReport = {
 	parentElectronRunAsNode: null,
 	ytDlp: {
 		path: '/tmp/runtime-cache/yt-dlp',
-		args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arroxy.app/Contents/MacOS/Arroxy', '--dump-single-json', '--flat-playlist', 'https://www.youtube.com/watch?v=abc123'],
+		args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arroxy.app/Contents/MacOS/Arroxy', '--extractor-args', 'youtube:po_token=[REDACTED];visitor_data=[REDACTED]', '--dump-single-json', '--flat-playlist', '--no-playlist', 'https://www.youtube.com/watch?v=abc123'],
 		jsRuntime: 'electron-node',
 		jsRuntimePath: '/Applications/Arroxy.app/Contents/MacOS/Arroxy',
 		jsRuntimeVersion: '24.16.0',
@@ -120,6 +120,8 @@ describe('live probe smoke contract', () => {
 		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, ytDlp: {...healthyLiveProbeReport.ytDlp, args: ['--no-js-runtimes', '--js-runtimes', 'node:/usr/bin/node']}})).toBe(false)
 		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, ytDlp: {...healthyLiveProbeReport.ytDlp, args: ['--js-runtimes', 'deno:/tmp/deno'], usesDeno: true, usesElectronNode: false}})).toBe(false)
 		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, ytDlp: {...healthyLiveProbeReport.ytDlp, args: ['--js-runtimes', `node:${healthyLiveProbeReport.execPath}`], hasNoJsRuntimes: false}})).toBe(false)
+		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, ytDlp: {...healthyLiveProbeReport.ytDlp, args: healthyLiveProbeReport.ytDlp.args.filter(arg => arg !== '--no-playlist')}})).toBe(false)
+		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, ytDlp: {...healthyLiveProbeReport.ytDlp, args: healthyLiveProbeReport.ytDlp.args.filter(arg => !arg.startsWith('youtube:po_token='))}})).toBe(false)
 		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, probe: {...healthyLiveProbeReport.probe, formatCount: 0}})).toBe(false)
 		expect(probeSmokeReportIsHealthy({...healthyLiveProbeReport, probe: {...healthyLiveProbeReport.probe, ok: false, error: 'bot wall'}})).toBe(false)
 	})

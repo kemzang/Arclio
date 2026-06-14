@@ -91,6 +91,10 @@ function usesRemoteEjs(args: readonly string[]): boolean {
 	return args.some(arg => arg === '--remote-components' || arg === 'ejs:npm' || arg === 'ejs:github')
 }
 
+function usesYoutubePoToken(args: readonly string[]): boolean {
+	return args.some(arg => arg.startsWith('youtube:po_token='))
+}
+
 function applyInvocationSummary(report: LiveProbeSmokeReport, summary: YtDlpInvocationSummary | null, fallbackYtDlpPath: string | null): void {
 	const args = summary?.args ?? []
 	const jsRuntime = summary?.jsRuntime.jsRuntime === 'electron-node' ? summary.jsRuntime : null
@@ -143,6 +147,8 @@ export function probeSmokeReportIsHealthy(report: LiveProbeSmokeReport): boolean
 		report.probe.formatCount > 0 &&
 		report.ytDlp.hasNoJsRuntimes &&
 		args.includes('--js-runtimes') &&
+		args.includes('--no-playlist') &&
+		usesYoutubePoToken(args) &&
 		args.some(arg => arg === `node:${report.execPath}`) &&
 		report.ytDlp.usesElectronNode &&
 		!report.ytDlp.usesDeno &&
@@ -191,7 +197,7 @@ export async function runSmokeMode(deps: SmokeDeps): Promise<number> {
 	// 3. Probe — real ProbeService invocation, real yt-dlp spawn, real network.
 	if (ytDlpPath) {
 		const probeStart = Date.now()
-		const probe = await probeService.probe(url)
+		const probe = await probeService.probe(url, 'off', 'video')
 		const durationMs = Date.now() - probeStart
 		if (probe.ok) {
 			if (probe.data.kind === 'video') {
