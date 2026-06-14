@@ -9,7 +9,7 @@ import {isPathInsideWith, resolveOutputPolicy} from '../src/filesystem.js'
 import {listLongFlags, UPSTREAM_OPTION_CATALOG} from '../src/option-catalog.js'
 import {parseFinalPaths, parseFormats, parseJsonLines, parseProgress, parseSubtitles, parseThumbnails} from '../src/parsers.js'
 import {redactArgs, redactText} from '../src/redaction.js'
-import {CommandExecutionError} from '../src/runner.js'
+import {CommandExecutionError, runCommand} from '../src/runner.js'
 import {WorkflowDownloadInputSchema} from '../src/schemas.js'
 
 type PlanInput = z.input<typeof WorkflowDownloadInputSchema>
@@ -108,11 +108,25 @@ describe('filesystem policy', () => {
 	})
 
 	it('treats blank env vars as unset', () => {
-		const config = loadConfig({YTDLP_MCP_YTDLP_PATH: '', YTDLP_PATH: 'yt-dlp-custom', YTDLP_MCP_OUTPUT_ROOT: '', YTDLP_MCP_TEMP_ROOT: '', YTDLP_MCP_TIMEOUT_MS: '', YTDLP_MCP_MAX_OUTPUT_BYTES: '', YTDLP_MCP_COOKIES_FILE: '', YTDLP_MCP_COOKIES_FROM_BROWSER: '', YTDLP_MCP_JS_RUNTIMES: ''})
+		const config = loadConfig({
+			YTDLP_MCP_YTDLP_PATH: '',
+			YTDLP_PATH: 'yt-dlp-custom',
+			YTDLP_MCP_OUTPUT_ROOT: '',
+			YTDLP_MCP_TEMP_ROOT: '',
+			YTDLP_MCP_TIMEOUT_MS: '',
+			YTDLP_MCP_MAX_OUTPUT_BYTES: '',
+			YTDLP_MCP_COOKIES_FILE: '',
+			YTDLP_MCP_COOKIES_FROM_BROWSER: '',
+			YTDLP_MCP_JS_RUNTIMES: '',
+			YTDLP_MCP_ALLOW_CONFIG_FILES: ' true ',
+			YTDLP_MCP_ENABLE_EXPERT: ' ON '
+		})
 
 		expect(config.ytdlpPath).toBe('yt-dlp-custom')
 		expect(config.outputRoot).toBe(path.join(os.homedir(), 'Downloads', 'yt-dlp-mcp'))
 		expect(config.tempRoot).toBe(path.join(os.tmpdir(), 'yt-dlp-mcp'))
+		expect(config.allowConfigFiles).toBe(true)
+		expect(config.enableExpertMode).toBe(true)
 		expect(config.defaultTimeoutMs).toBe(15 * 60 * 1000)
 		expect(config.maxOutputBytes).toBe(4 * 1024 * 1024)
 		expect(config.cookiesFile).toBeUndefined()
@@ -124,6 +138,12 @@ describe('filesystem policy', () => {
 		const config = loadConfig({YTDLP_MCP_OUTPUT_ROOT: path.join(os.tmpdir(), 'yt-dlp-bridge-test', 'downloads'), YTDLP_MCP_TEMP_ROOT: path.join(os.tmpdir(), 'yt-dlp-bridge-test', 'temp')})
 
 		expect(() => resolveOutputPolicy(config, {tempRoot: path.dirname(config.tempRoot)})).toThrow(/tempRoot/)
+	})
+})
+
+describe('runner', () => {
+	it('reports timeout even when the terminated child exits zero', async () => {
+		await expect(runCommand(process.execPath, ['-e', "process.on('SIGTERM', () => process.exit(0)); setInterval(() => {}, 1000)"], {timeoutMs: 50, maxOutputBytes: 1024})).rejects.toMatchObject({result: {exitCode: 124}})
 	})
 })
 

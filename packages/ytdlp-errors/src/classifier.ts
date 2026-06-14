@@ -17,7 +17,10 @@ function buildEntries(extra?: ClassifyOpts['extraPatterns']): [ClassifierKind, R
 	for (const [kind, regex] of Object.entries(extra)) {
 		if (!isClassifierKind(kind)) throw new Error(`Unsupported extraPatterns kind: ${kind}`)
 		const list = Array.isArray(regex) ? regex : [regex]
-		for (const r of list) merged.push([kind, r])
+		for (const r of list) {
+			if (!(r instanceof RegExp)) throw new Error(`Unsupported extraPatterns value for kind ${kind}: expected RegExp`)
+			merged.push([kind, r])
+		}
 	}
 	return [...merged, ...PATTERN_ENTRIES]
 }

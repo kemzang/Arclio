@@ -30,7 +30,9 @@ function int(value: string | undefined, fallback: number): number {
 }
 
 function blankToUndefined(value: string | undefined): string | undefined {
-	return value?.trim() ? value : undefined
+	const normalized = value?.trim()
+	if (!normalized) return undefined
+	return normalized
 }
 
 function firstNonBlank(...values: (string | undefined)[]): string | undefined {

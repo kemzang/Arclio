@@ -72,7 +72,8 @@ export async function runCommand(command: string, args: string[], options: RunCo
 			settled = true
 			clearTimeout(timer)
 			options.signal?.removeEventListener('abort', onAbort)
-			const result = makeResult(command, redactedArgs, stdout.toString('utf8'), stderr.toString('utf8'), code ?? (timedOut ? 124 : aborted ? 130 : 1), startedAt)
+			const exitCode = timedOut ? 124 : aborted ? 130 : (code ?? 1)
+			const result = makeResult(command, redactedArgs, stdout.toString('utf8'), stderr.toString('utf8'), exitCode, startedAt)
 			if (result.exitCode === 0) {
 				resolve(result)
 				return

@@ -90,6 +90,10 @@ describe('classifyYtDlpStderr — extension hook', () => {
 		expect(() => classifyYtDlpStderr('ERROR: anything', {extraPatterns: {badKind: /anything/} as never})).toThrow(/Unsupported extraPatterns kind/)
 	})
 
+	it('rejects unsupported extraPatterns values from JavaScript callers', () => {
+		expect(() => classifyYtDlpStderr('ERROR: anything', {extraPatterns: {ipBlock: 'anything'} as never})).toThrow(/Unsupported extraPatterns value/)
+	})
+
 	it('resets stateful extra pattern regexes before testing', () => {
 		const stateful = /customSiteSpecificBan/g
 		expect(classifyYtDlpStderr('ERROR: customSiteSpecificBan triggered', {extraPatterns: {ipBlock: stateful}}).kind).toBe('ipBlock')
