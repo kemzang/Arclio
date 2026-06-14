@@ -171,8 +171,6 @@
 				"modeDescription": "最も動きのある表示から最高のパフォーマンスへ調整します。",
 				"cssOnlyLabel": "最高のパフォーマンス",
 				"cssOnlyDescription": "CSS のみ、canvas レンダリングなし。",
-				"fallbackLabel": "バランス",
-				"fallbackDescription": "WebGL なしの静的な Canvas2D 背景。",
 				"gpuLabel": "最も美しい",
 				"gpuDescription": "対応環境ではアニメーション WebGL 背景を使用します。"
 			},

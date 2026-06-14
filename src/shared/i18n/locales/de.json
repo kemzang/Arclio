@@ -171,8 +171,6 @@
 				"modeDescription": "Von der stärksten Animation zur besten Leistung.",
 				"cssOnlyLabel": "Beste Leistung",
 				"cssOnlyDescription": "Nur CSS, kein canvas-Rendering.",
-				"fallbackLabel": "Ausgewogen",
-				"fallbackDescription": "Statischer Canvas2D-Hintergrund ohne WebGL.",
 				"gpuLabel": "Am schönsten",
 				"gpuDescription": "Animierter WebGL-Hintergrund, wenn unterstützt."
 			},

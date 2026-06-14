@@ -171,8 +171,6 @@
 				"modeDescription": "Passez de l’apparence la plus animée aux meilleures performances.",
 				"cssOnlyLabel": "Meilleures performances",
 				"cssOnlyDescription": "CSS uniquement, sans rendu canvas.",
-				"fallbackLabel": "Équilibré",
-				"fallbackDescription": "Arrière-plan Canvas2D statique sans WebGL.",
 				"gpuLabel": "Le plus beau",
 				"gpuDescription": "Arrière-plan WebGL animé lorsque pris en charge."
 			},

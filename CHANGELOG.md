@@ -8,9 +8,24 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ---
 
+## Unreleased
+
+Changes committed after `0.4.0-beta.3`.
+
+## Highlights
+
+### Startup Presentation Follow-Up
+
+The main window still uses a theme-aware native background during launch, but it no longer delays the initial window show while waiting for `ready-to-show`.
+
+- Removed the hidden-first BrowserWindow startup path introduced in `0.4.0-beta.3`.
+- Kept the dark/light native background color match so startup no longer flashes default white before the renderer paints.
+
+---
+
 ## 0.4.0-beta.3
 
-This beta moves Arroxy's runtime manifest channel out of the app release feed and keeps the 0.4.0 beta line focused on release/runtime reliability.
+This beta moves Arroxy's runtime manifest channel out of the app release feed and fixes startup/backdrop regressions found during the 0.4.0 beta line.
 
 ## Highlights
 
@@ -18,53 +33,108 @@ This beta moves Arroxy's runtime manifest channel out of the app release feed an
 
 Runtime-managed binary metadata now comes from the dedicated `arroxy-runtime-binaries` release repo instead of the main app repo.
 
-- New builds fetch `runtime-index-v1.json` and `runtime-index-v1.sig` through `arroxy-runtime-binaries/releases/latest/download`.
+- New builds fetch `runtime-index-v1.json` and `runtime-index-v1.sig` through `antonio-orionus/arroxy-runtime-binaries/releases/latest/download`.
 - The app still verifies the manifest offline with Arroxy's bundled Ed25519 public key before trusting it.
-- The old main-repo runtime manifest publishing workflow is disabled, so the Arroxy release page stays focused on app releases.
+- The old main-repo runtime manifest publishing workflow is disabled; this repo now keeps only a generator/smoke validation job.
+- The main Arroxy release page stays focused on installers, updater metadata, checksums, and app release notes.
 
-### Release And Startup Polish
+### Startup And Backdrop Polish
 
-This beta includes the latest UI startup presentation fix and keeps the packaged release checks in place for the 0.4.0 beta series.
+The renderer startup surface and animated backdrop received targeted fixes.
+
+- The native BrowserWindow background is matched to the selected or system theme before the renderer paints, reducing the launch-time white flash.
+- The window is initially hidden and shown on `ready-to-show` in this beta so the first visible frame is less abrupt.
+- The WebGL backdrop paints one initial frame even while the window is not focused, then starts the animation loop on focus.
+- If the WebGL context is lost, the backdrop falls back to Canvas2D/static rendering instead of leaving the background blank or stuck in the wrong scene state.
+
+---
+
+## 0.4.0-beta.2
+
+This beta hardens the release/runtime automation introduced in `0.4.0-beta.1`.
+
+## Highlights
+
+### Runtime Manifest Release Hardening
+
+The runtime manifest path was tightened before publishing more 0.4.0 beta builds.
+
+- The runtime manifest signing key was rotated and the app's bundled Ed25519 public key was updated.
+- The manifest workflow recreates the fixed runtime manifest release through a draft-first publish flow instead of mutating release assets in place.
+- Runtime manifest validation can smoke only entries for the current host platform while still using the same manifest generator.
+- Stable release-asset checks now cover the runtime manifest release behavior so future release edits do not silently reintroduce clobbered mutable assets.
+
+### Release Smoke Reliability
+
+The release pipeline received small fixes for prerelease reliability.
+
+- Linux release smoke installs FUSE so AppImage smoke checks can run in GitHub Actions.
+- The live YouTube canary is skipped for prerelease tags, keeping beta releases from being blocked by external site drift.
+- GitHub artifact actions used by release and runtime workflows were moved to Node 24-compatible pinned revisions.
 
 ---
 
 ## 0.4.0-beta.1
 
-This beta release previews the next major Arroxy workflow and runtime changes before the stable 0.4.0 release.
+This beta release previews the next major Arroxy workflow, runtime, support, and test-architecture changes before the stable 0.4.0 release.
 
 ## Highlights
 
 ### Faster Download Workflows
 
-Arroxy now has a broader quick-download and profile system for common download choices.
+Arroxy now has a broader download-profile system that drives quick downloads, bulk runs, and playlist submissions.
 
-- Universal download profiles power the home screen profile picker and quick-download actions.
-- Bulk URL handling, clipboard intake, and playlist submission paths were tightened so larger sessions move into the queue with less manual cleanup.
-- Playlist scope, limits, retry state, and review details now stay better aligned while metadata is loading or being refreshed.
+- The home screen now ships with built-in profiles for best available, 4K, QHD, 1080p, 720p, 480p, Smart TV MP4 variants, and audio-only downloads.
+- Download profiles can carry media targets, subtitles, SponsorBlock settings, embed settings, output folder rules, and per-profile subfolders.
+- Built-in profiles can be customized, custom profiles can be added, and the active profile is shared by home-screen quick actions and bulk quick downloads.
+- Quick Download now shows probe/queue progress, supports cancellation and retry, can retry with configured cookies, and reports partial success for bulk runs.
+- Playlist-cap handling now opens review when Arroxy cannot safely queue the whole playlist automatically.
+- URL intent detection distinguishes obvious single videos, playlists, channels, search URLs, mixed video-plus-playlist URLs, and unknown URLs before choosing whether to probe, prompt, or open review.
+- Bulk URL parsing now cleans links, filters obvious non-media files, deduplicates entries, previews accepted/rejected rows, and scales the preview for large paste sessions.
+- Queue submission keeps playlist title, selected items, output folder, M3U manifest data, and filename templates aligned across manual wizard submissions and active-profile submissions.
 
 ### Runtime And Binary Reliability
 
-The app now leans on managed runtime metadata instead of runtime "latest" resolution.
+The app now leans on signed runtime metadata, stronger dependency diagnostics, and Electron's bundled Node runtime instead of resolving "latest" binaries at runtime.
 
-- yt-dlp runs through Electron's bundled Node runtime for JavaScript challenges instead of depending on Deno or a system Node install.
-- Managed binary manifests are generated, validated, signed, and smoke-tested through dedicated automation.
-- Dependency diagnostics, warmup behavior, and Windows yt-dlp probe coverage were expanded.
+- yt-dlp JavaScript challenges run through Electron's bundled Node runtime with `ELECTRON_RUN_AS_NODE=1`, so Arroxy no longer depends on Deno or a system Node install for extractor JavaScript.
+- Runtime-managed binaries are resolved from signed manifest entries, verified with bundled Ed25519 trust, cached as last-known-good, and backed by a bundled fallback index.
+- Runtime binary materialization now verifies size/SHA-256, uses content-addressed cache directories, guards ZIP extraction, records install metadata, and probes only after a real executable path exists.
+- Packaged runtime smoke checks verify managed yt-dlp, Electron Node, and bundled EJS before normal app startup; release and cold-start workflows run those checks against installed, portable, macOS, and Linux artifacts.
+- Dependency diagnostics now carry clearer attempt/failure records and required-dependency policy for yt-dlp, ffmpeg, and ffprobe.
+- Windows cold-start diagnostics and a Windows yt-dlp probe soak workflow were added to catch platform-specific binary failures earlier.
+
+### Download Reliability And Recovery
+
+Queue and yt-dlp error handling became more resilient during interrupted or degraded downloads.
+
+- Media retries can preserve temp data for resumable network, rate-limit, chunk-transfer, disk-space, and postprocess failures when usable media evidence exists.
+- Retry and restart paths validate preserved temp directories before reusing them and clean up stale temp data when preservation is not safe.
+- Progress parsing and display normalization better handle bootstrap and HLS progress output without showing misleading completed progress before the queue item is actually done.
+- yt-dlp stderr classification now uses the publishable `ytdlp-errors` taxonomy, including first-class DRM-protected, login-required, and missing-dependency failures.
+- Probe and download errors now flow through localized `kind`/`raw` payloads, allowing cookies, bot-wall, dependency, and unsupported-URL guidance to be more specific.
 
 ### UI, Feedback, And Localization
 
-The renderer received a broad polish pass with more complete localization plumbing.
+The renderer received a broad polish pass and a more complete support/localization pipeline.
 
-- The home surface, profile editor, queue drawer, backdrop, and wizard flows were refined for denser everyday use.
-- App copy now flows through a gettext-backed i18n workflow and generated runtime locale JSON.
-- Feedback can include explicit-consent diagnostic uploads with redacted log context.
+- The home surface, profile picker, profile editor, queue drawer, review step, wizard navigation, warmup splash, and footer controls were refined for denser everyday use.
+- The adaptive backdrop added dark/light scenes with WebGL, Canvas2D, and CSS fallback paths, plus GPU/runtime switches for diagnosing launch and driver issues.
+- The review step now projects user-facing summaries and conflict warnings from the same normalized media/subtitle/embed decisions used for queue submission.
+- Feedback opens through Tally with a hidden state snapshot and, after explicit submission, can upload a gzipped, redacted tail of `main.log` to the feedback Worker.
+- Discord community links were added to the README, footer, and About dialog.
+- App copy now flows through a gettext-backed PO/POT workflow and generated runtime locale JSON instead of hand-maintained TypeScript locale modules.
 
 ### Tooling And Test Coverage
 
-The project moved more of its quality gate into reproducible tooling.
+The project moved more of its quality gate into reproducible tooling and separated acceptance-test ownership from cheaper unit/renderer checks.
 
 - Formatting and linting moved to Biome and Oxlint.
-- Fixture Product E2E coverage now owns more real user workflows around clipboard, metadata, queueing, downloads, and resilience.
-- Publishable yt-dlp helper packages now have their own package metadata, tests, and release checks.
+- `bun run check` now gates formatting, linting, tooling contract checks, typecheck, package metadata, dependency hygiene, dead-code checks, circular imports, and package publish checks.
+- Fixture Product E2E now owns real Electron/IPC/yt-dlp workflows against deterministic fixture media, including clipboard intake, metadata probing, queueing, downloads, and failure recovery.
+- Browser-mock scenario coverage was reorganized for faster UI-state review without pretending to prove real download workflows.
+- Publishable `yt-dlp-bridge` and `ytdlp-errors` packages were added with package metadata, READMEs, tests, option catalogs, redaction, structured errors, and release workflows.
+- The project now tracks agent skill recovery through `skills-lock.json` instead of committing large restored third-party skill sources.
 
 ---
 

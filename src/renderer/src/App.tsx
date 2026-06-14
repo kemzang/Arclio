@@ -1,6 +1,6 @@
 import {lazy, Suspense, useEffect, useState, type ReactNode} from 'react'
 import log from 'electron-log/renderer.js'
-import {Cpu, FileText, Image, Info, MessageCircle, Paintbrush, Share2} from 'lucide-react'
+import {Cpu, FileText, Info, MessageCircle, Paintbrush, Share2} from 'lucide-react'
 import IconDiscord from '~icons/simple-icons/discord'
 import {useTranslation} from 'react-i18next'
 import {useShallow} from 'zustand/react/shallow'
@@ -33,11 +33,10 @@ const FOOTER_ACTION_BUTTON_CLASS = 'footer-action-button h-6 rounded-md px-1.5 t
 const FOOTER_VERSION_BUTTON_CLASS = 'footer-action-button h-6 rounded-md px-1.5 text-[11px] text-muted-foreground/60 tabular-nums max-sm:hidden'
 const FOOTER_COMPACT_LABEL_CLASS = 'max-sm:sr-only'
 const feedbackLogger = log.scope('feedback')
-type BackdropPreviewMode = 'gpu' | 'canvas2d' | 'css'
+type BackdropPreviewMode = 'gpu' | 'css'
 
 const BACKDROP_PREVIEW_MODES = [
 	{description: 'WebGL shader preview: hardware when available, software allowed in this stage.', icon: Cpu, id: 'gpu', label: 'WebGL shader'},
-	{description: 'Canvas2D fallback: WebGL is bypassed, static canvas plus CSS drift.', icon: Image, id: 'canvas2d', label: 'Canvas2D fallback'},
 	{description: 'CSS emergency: no canvas, body gradients only.', icon: Paintbrush, id: 'css', label: 'CSS emergency'}
 ] as const satisfies readonly {description: string; icon: typeof Cpu; id: BackdropPreviewMode; label: string}[]
 
@@ -48,7 +47,7 @@ function isBackdropOnlyStage(): boolean {
 function backdropPreviewModeFromUrl(): BackdropPreviewMode {
 	try {
 		const forcedMode = new URLSearchParams(window.location.search).get('backdropForceFallback')
-		return forcedMode === 'canvas2d' || forcedMode === 'css' ? forcedMode : 'gpu'
+		return forcedMode === 'css' ? forcedMode : 'gpu'
 	} catch {
 		return 'gpu'
 	}
@@ -58,9 +57,8 @@ function resolveColorScheme(uiTheme: UiTheme, systemPrefersDark: boolean): Backd
 	return uiTheme === 'dark' || (uiTheme === 'system' && systemPrefersDark) ? 'dark' : 'light'
 }
 
-function previewModeToRenderMode(mode: BackdropPreviewMode): 'css-only' | 'fallback' | 'gpu' {
+function previewModeToRenderMode(mode: BackdropPreviewMode): 'css-only' | 'gpu' {
 	if (mode === 'css') return 'css-only'
-	if (mode === 'canvas2d') return 'fallback'
 	return 'gpu'
 }
 

@@ -35,7 +35,6 @@ const COOKIES_CHROME_URL = 'https://chromewebstore.google.com/detail/get-cookies
 
 const BACKDROP_RENDER_OPTIONS = [
 	{value: 'gpu', labelKey: 'wizard.url.backdrop.gpuLabel', descriptionKey: 'wizard.url.backdrop.gpuDescription'},
-	{value: 'fallback', labelKey: 'wizard.url.backdrop.fallbackLabel', descriptionKey: 'wizard.url.backdrop.fallbackDescription'},
 	{value: 'css-only', labelKey: 'wizard.url.backdrop.cssOnlyLabel', descriptionKey: 'wizard.url.backdrop.cssOnlyDescription'}
 ] as const satisfies readonly {value: BackdropRenderMode; labelKey: string; descriptionKey: string}[]
 

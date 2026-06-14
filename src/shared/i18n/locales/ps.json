@@ -171,8 +171,6 @@
 				"modeDescription": "له تر ټولو خوځنده بڼې څخه غوره کړنې ته ولاړ شئ.",
 				"cssOnlyLabel": "غوره کړنه",
 				"cssOnlyDescription": "یوازې CSS، د canvas وړاندې کول نشته.",
-				"fallbackLabel": "منځنی",
-				"fallbackDescription": "بې له WebGL څخه ثابت Canvas2D شالید.",
 				"gpuLabel": "تر ټولو ښکلی",
 				"gpuDescription": "که ملاتړ ولري، خوځنده WebGL شالید."
 			},

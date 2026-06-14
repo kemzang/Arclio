@@ -171,8 +171,6 @@
 				"modeDescription": "Chuyển từ giao diện nhiều chuyển động nhất sang hiệu năng tốt nhất.",
 				"cssOnlyLabel": "Hiệu năng tốt nhất",
 				"cssOnlyDescription": "Chỉ dùng CSS, không kết xuất canvas.",
-				"fallbackLabel": "Cân bằng",
-				"fallbackDescription": "Nền Canvas2D tĩnh không dùng WebGL.",
 				"gpuLabel": "Đẹp nhất",
 				"gpuDescription": "Nền WebGL động khi được hỗ trợ."
 			},

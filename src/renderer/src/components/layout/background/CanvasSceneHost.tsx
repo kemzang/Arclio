@@ -4,12 +4,6 @@ import {logBackdrop} from './backdropLogger.js'
 import type {BackdropMode, BackdropScene} from './types.js'
 import {createWebglProgram, disposeWebglProgram, isSoftwareRenderer, releaseWebglContext, rendererName, WEBGL_CONTEXT_OPTIONS} from './webgl.js'
 
-const FALLBACK_RESIZE_SETTLE_MS = 300
-type ForcedFallbackMode = 'canvas2d' | 'css'
-interface FallbackActivationOptions {
-	cleanupSceneClass: boolean
-}
-
 function backdropSoftwareAllowed(): boolean {
 	try {
 		const params = new URLSearchParams(window.location.search)
@@ -21,11 +15,10 @@ function backdropSoftwareAllowed(): boolean {
 	}
 }
 
-function forcedFallbackPreviewMode(): ForcedFallbackMode | null {
+function forcedFallbackPreviewMode(): 'css' | null {
 	if (import.meta.env.MODE !== 'browser-mock' && import.meta.env.MODE !== 'test') return null
 	try {
-		const mode = new URLSearchParams(window.location.search).get('backdropForceFallback')
-		return mode === 'canvas2d' || mode === 'css' ? mode : null
+		return new URLSearchParams(window.location.search).get('backdropForceFallback') === 'css' ? 'css' : null
 	} catch {
 		return null
 	}
@@ -47,75 +40,16 @@ function activateStaticFallback(): () => void {
 
 export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; renderMode: BackdropRenderMode}): ReactNode {
 	const webglCanvasRef = useRef<HTMLCanvasElement>(null)
-	const fallbackCanvasRef = useRef<HTMLCanvasElement>(null)
 	const [mode, setMode] = useState<BackdropMode>('webgl')
 
 	useEffect(() => {
 		const webglCanvas = webglCanvasRef.current
-		const fallbackCanvas = fallbackCanvasRef.current
-		if (!webglCanvas || !fallbackCanvas) return
+		if (!webglCanvas) return
 
 		const cleanupSceneClass = addSceneClasses(scene)
 
-		const activateCanvasFallback = (reason: string, details: Record<string, unknown> = {}, options: FallbackActivationOptions = {cleanupSceneClass: true}): (() => void) => {
-			logBackdrop('info', scene.id, 'fallback-activate', {mode: 'fallback', reason, ...details})
-			const cleanupStatic = activateStaticFallback()
-			const renderer = scene.createStaticFallbackRenderer(fallbackCanvas)
-			if (!renderer) {
-				logBackdrop('warn', scene.id, 'fallback-css-only', {mode: 'css', reason, ...details})
-				setMode('css')
-				return () => {
-					cleanupStatic()
-					if (options.cleanupSceneClass) cleanupSceneClass()
-				}
-			}
-
-			const drawFallback = (drawReason: string, renderScale = scene.fallbackRenderScale): void => {
-				const stats = renderer.draw(renderScale)
-				logBackdrop(stats.durationMs > 50 ? 'warn' : 'debug', scene.id, 'canvas2d-draw', {mode: 'canvas2d', reason: drawReason, ...stats})
-			}
-
-			drawFallback('initial')
-			setMode('canvas2d')
-			document.body.classList.add('backdrop-canvas-fallback')
-
-			let raf = 0
-			let resizeSettledTimer = 0
-			const scheduleDraw = (drawReason: string, renderScale = scene.fallbackRenderScale): void => {
-				if (raf) cancelAnimationFrame(raf)
-				raf = requestAnimationFrame(() => {
-					raf = 0
-					drawFallback(drawReason, renderScale)
-				})
-			}
-			const scheduleResizeDraw = (): void => {
-				if (resizeSettledTimer) window.clearTimeout(resizeSettledTimer)
-				logBackdrop('debug', scene.id, 'resize-settle-scheduled', {
-					cssHeight: Math.max(1, Math.round(fallbackCanvas.clientHeight || window.innerHeight || 1)),
-					cssWidth: Math.max(1, Math.round(fallbackCanvas.clientWidth || window.innerWidth || 1)),
-					liveRedraw: false,
-					mode: 'canvas2d',
-					settleMs: FALLBACK_RESIZE_SETTLE_MS
-				})
-				resizeSettledTimer = window.setTimeout(() => {
-					resizeSettledTimer = 0
-					scheduleDraw('resize-settled')
-				}, FALLBACK_RESIZE_SETTLE_MS)
-			}
-			window.addEventListener('resize', scheduleResizeDraw)
-
-			return () => {
-				if (raf) cancelAnimationFrame(raf)
-				if (resizeSettledTimer) window.clearTimeout(resizeSettledTimer)
-				window.removeEventListener('resize', scheduleResizeDraw)
-				document.body.classList.remove('backdrop-canvas-fallback')
-				cleanupStatic()
-				if (options.cleanupSceneClass) cleanupSceneClass()
-			}
-		}
-
-		const activateCssFallback = (reason: string): (() => void) => {
-			logBackdrop('info', scene.id, 'fallback-activate', {mode: 'css', reason})
+		const activateCssFallback = (reason: string, details: Record<string, unknown> = {}, cleanupSceneOnDispose = true): (() => void) => {
+			logBackdrop('info', scene.id, 'fallback-activate', {mode: 'css', reason, ...details})
 			const cleanupStatic = activateStaticFallback()
 			let cancelled = false
 			queueMicrotask(() => {
@@ -124,44 +58,42 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 			return () => {
 				cancelled = true
 				cleanupStatic()
-				cleanupSceneClass()
+				if (cleanupSceneOnDispose) cleanupSceneClass()
 			}
 		}
 
 		const forcedFallback = forcedFallbackPreviewMode()
-		if (forcedFallback === 'canvas2d') return activateCanvasFallback('forced-canvas2d-preview')
 		if (forcedFallback === 'css') return activateCssFallback('forced-css-preview')
-		if (renderMode === 'fallback') return activateCanvasFallback('render-mode-fallback')
 		if (renderMode === 'css-only') return activateCssFallback('render-mode-css-only')
 
 		const softwareRendererAllowed = backdropSoftwareAllowed()
 		const probeCanvas = document.createElement('canvas')
 		const probeGl = probeCanvas.getContext('webgl', WEBGL_CONTEXT_OPTIONS)
-		if (!probeGl) return activateCanvasFallback('scratch-webgl-unavailable')
+		if (!probeGl) return activateCssFallback('scratch-webgl-unavailable')
 
 		const probeRendererName = rendererName(probeGl)
 		if (isSoftwareRenderer(probeRendererName) && !softwareRendererAllowed) {
 			releaseWebglContext(probeGl)
-			return activateCanvasFallback('software-webgl-rejected', {renderer: probeRendererName})
+			return activateCssFallback('software-webgl-rejected', {renderer: probeRendererName})
 		}
 
 		const probeResources = createWebglProgram(probeGl, scene.fragmentShader, scene.id)
 		if (!probeResources) {
 			releaseWebglContext(probeGl)
-			return activateCanvasFallback('scratch-program-failed', {renderer: probeRendererName})
+			return activateCssFallback('scratch-program-failed', {renderer: probeRendererName})
 		}
 		disposeWebglProgram(probeGl, probeResources)
 		releaseWebglContext(probeGl)
 		logBackdrop('debug', scene.id, 'scratch-webgl-valid', {mode: 'probe', renderer: probeRendererName, softwareRendererAllowed})
 
 		const gl = webglCanvas.getContext('webgl', WEBGL_CONTEXT_OPTIONS)
-		if (!gl) return activateCanvasFallback('production-webgl-unavailable', {renderer: probeRendererName})
+		if (!gl) return activateCssFallback('production-webgl-unavailable', {renderer: probeRendererName})
 
 		const productionRendererName = rendererName(gl)
 		const resources = createWebglProgram(gl, scene.fragmentShader, scene.id)
 		if (!resources) {
 			releaseWebglContext(gl)
-			return activateCanvasFallback('production-program-failed', {renderer: productionRendererName || probeRendererName})
+			return activateCssFallback('production-program-failed', {renderer: productionRendererName || probeRendererName})
 		}
 		gl.useProgram(resources.prog)
 
@@ -169,7 +101,7 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 		if (!buf) {
 			disposeWebglProgram(gl, resources)
 			releaseWebglContext(gl)
-			return activateCanvasFallback('production-buffer-failed', {renderer: productionRendererName || probeRendererName})
+			return activateCssFallback('production-buffer-failed', {renderer: productionRendererName || probeRendererName})
 		}
 		gl.bindBuffer(gl.ARRAY_BUFFER, buf)
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
@@ -238,7 +170,7 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 			stop()
 			webglActive = false
 			document.body.classList.remove('backdrop-webgl-active')
-			fallbackCleanup = activateCanvasFallback(reason, details, {cleanupSceneClass: false})
+			fallbackCleanup = activateCssFallback(reason, details, false)
 		}
 		const run = (): void => {
 			if (fallbackCleanup) return
@@ -304,14 +236,5 @@ export function CanvasSceneHost({scene, renderMode}: {scene: BackdropScene; rend
 
 	if (mode === 'css') return null
 
-	const canvasClassName = 'pointer-events-none fixed inset-0 h-full w-full'
-	const hiddenStyle = {display: 'none', zIndex: -1}
-	const visibleStyle = {zIndex: -1}
-
-	return (
-		<>
-			<canvas ref={webglCanvasRef} aria-hidden data-backdrop-layer="webgl" data-backdrop-mode={mode === 'webgl' ? 'webgl' : undefined} data-backdrop-scene={scene.id} className={canvasClassName} style={mode === 'webgl' ? visibleStyle : hiddenStyle} />
-			<canvas ref={fallbackCanvasRef} aria-hidden data-backdrop-layer="fallback" data-backdrop-mode={mode === 'canvas2d' ? 'canvas2d' : undefined} data-backdrop-scene={scene.id} className={canvasClassName} style={mode === 'canvas2d' ? visibleStyle : hiddenStyle} />
-		</>
-	)
+	return <canvas ref={webglCanvasRef} aria-hidden data-backdrop-layer="webgl" data-backdrop-mode="webgl" data-backdrop-scene={scene.id} className="pointer-events-none fixed inset-0 h-full w-full" style={{zIndex: -1}} />
 }

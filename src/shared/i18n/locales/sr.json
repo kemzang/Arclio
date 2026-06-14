@@ -179,8 +179,6 @@
 				"modeDescription": "Померите од најанимиранијег изгледа ка најбољим перформансама.",
 				"cssOnlyLabel": "Најбоље перформансе",
 				"cssOnlyDescription": "Само CSS, без canvas рендеровања.",
-				"fallbackLabel": "Уравнотежено",
-				"fallbackDescription": "Статична Canvas2D позадина без WebGL-а.",
 				"gpuLabel": "Најлепше",
 				"gpuDescription": "Анимирана WebGL позадина када је подржана."
 			},

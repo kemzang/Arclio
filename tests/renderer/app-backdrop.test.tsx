@@ -3,40 +3,6 @@ import {afterEach, describe, expect, it, vi} from 'vitest'
 import {AppBackdrop} from '@renderer/components/layout/background/AppBackdrop.js'
 import {lightOceanScene} from '@renderer/components/layout/background/lightOcean/scene.js'
 
-function mockGradient(): CanvasGradient {
-	return {addColorStop: vi.fn()} as unknown as CanvasGradient
-}
-
-function mockCanvas2d(): CanvasRenderingContext2D {
-	const target: Partial<CanvasRenderingContext2D> = {
-		arc: vi.fn(),
-		beginPath: vi.fn(),
-		bezierCurveTo: vi.fn(),
-		clearRect: vi.fn(),
-		closePath: vi.fn(),
-		createLinearGradient: vi.fn(mockGradient),
-		createRadialGradient: vi.fn(mockGradient),
-		fill: vi.fn(),
-		fillRect: vi.fn(),
-		lineTo: vi.fn(),
-		moveTo: vi.fn(),
-		restore: vi.fn(),
-		save: vi.fn(),
-		setTransform: vi.fn(),
-		stroke: vi.fn()
-	}
-	return new Proxy(target, {
-		get(object, property) {
-			const key = property as keyof CanvasRenderingContext2D
-			if (key in object) return object[key]
-			return vi.fn()
-		},
-		set(object, property, value) {
-			return Reflect.set(object, property, value)
-		}
-	}) as CanvasRenderingContext2D
-}
-
 interface MockWebglOptions {
 	compileOk?: boolean
 	debugRenderer?: string | null
@@ -99,23 +65,21 @@ function mockWebgl(options: MockWebglOptions = {}): WebGLRenderingContext & {los
 	return Object.assign(gl, {loseContext}) as unknown as WebGLRenderingContext & {loseContext: ReturnType<typeof vi.fn>}
 }
 
-function installCanvasMocks({context2d = mockCanvas2d(), productionGl = mockWebgl(), scratchGl = mockWebgl()}: {context2d?: CanvasRenderingContext2D | null; productionGl?: WebGLRenderingContext | null; scratchGl?: WebGLRenderingContext | null} = {}): void {
-	vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(function getContext(this: HTMLCanvasElement, contextId: string) {
-		if (contextId === '2d') return context2d
+function installCanvasMocks({productionGl = mockWebgl(), scratchGl = mockWebgl()}: {productionGl?: WebGLRenderingContext | null; scratchGl?: WebGLRenderingContext | null} = {}) {
+	return vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(function getContext(this: HTMLCanvasElement, contextId: string) {
 		if (contextId === 'webgl') return this.dataset.backdropLayer === 'webgl' ? productionGl : scratchGl
 		return null
 	} as HTMLCanvasElement['getContext'])
+}
+
+function expectCanvas2dUnused(getContext: ReturnType<typeof installCanvasMocks>): void {
+	expect(getContext.mock.calls.some(([contextId]) => contextId === '2d')).toBe(false)
 }
 
 async function nextFrame(): Promise<void> {
 	await act(async () => {
 		await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
 	})
-}
-
-function setViewport(width: number, height: number): void {
-	Object.defineProperty(window, 'innerWidth', {configurable: true, value: width})
-	Object.defineProperty(window, 'innerHeight', {configurable: true, value: height})
 }
 
 describe('AppBackdrop fallback', () => {
@@ -125,104 +89,79 @@ describe('AppBackdrop fallback', () => {
 		document.body.className = ''
 		document.documentElement.className = ''
 		window.history.replaceState(null, '', '/')
-		setViewport(1024, 768)
 	})
 
-	it('draws an adaptive static canvas when WebGL is unavailable', async () => {
-		const context2d = mockCanvas2d()
-		installCanvasMocks({context2d, scratchGl: null})
+	it('uses the CSS fallback when WebGL is unavailable without touching Canvas2D', async () => {
+		const getContext = installCanvasMocks({scratchGl: null})
 
 		const {container, unmount} = render(<AppBackdrop colorScheme="dark" />)
 
 		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
-		await waitFor(() => expect(document.body).toHaveClass('backdrop-canvas-fallback'))
-		const canvas = container.querySelector<HTMLCanvasElement>('canvas[data-backdrop-mode="canvas2d"]')
-		expect(canvas).not.toBeNull()
-		expect(canvas).toHaveAttribute('data-backdrop-scene', 'dark-aurora')
-		expect(canvas?.width).toBeGreaterThan(0)
-		expect(canvas?.height).toBeGreaterThan(0)
-		expect(context2d.clearRect).toHaveBeenCalled()
+		await waitFor(() => expect(container.querySelector('canvas')).toBeNull())
+		expect(document.body).toHaveClass('backdrop-dark-aurora')
+		expectCanvas2dUnused(getContext)
 
 		unmount()
 
 		expect(document.body).not.toHaveClass('backdrop-static-fallback')
-		expect(document.body).not.toHaveClass('backdrop-canvas-fallback')
 		expect(document.body).not.toHaveClass('backdrop-dark-aurora')
 	})
 
-	it('forces the Canvas2D fallback preview without probing WebGL', async () => {
-		window.history.replaceState(null, '', '/?backdropForceFallback=canvas2d')
-		const context2d = mockCanvas2d()
-		const scratchGl = mockWebgl()
-		const productionGl = mockWebgl()
-		installCanvasMocks({context2d, productionGl, scratchGl})
-
-		const {container} = render(<AppBackdrop colorScheme="light" />)
-
-		await waitFor(() => expect(document.body).toHaveClass('backdrop-canvas-fallback'))
-		expect(container.querySelector('canvas[data-backdrop-scene="light-ocean"][data-backdrop-mode="canvas2d"]')).not.toBeNull()
-		expect(scratchGl.createShader).not.toHaveBeenCalled()
-		expect(productionGl.createShader).not.toHaveBeenCalled()
-		expect(context2d.clearRect).toHaveBeenCalled()
-	})
-
-	it('uses the persisted fallback mode without probing WebGL', async () => {
-		const context2d = mockCanvas2d()
-		const scratchGl = mockWebgl()
-		const productionGl = mockWebgl()
-		installCanvasMocks({context2d, productionGl, scratchGl})
-
-		const {container} = render(<AppBackdrop colorScheme="light" renderMode="fallback" />)
-
-		await waitFor(() => expect(document.body).toHaveClass('backdrop-canvas-fallback'))
-		expect(container.querySelector('canvas[data-backdrop-scene="light-ocean"][data-backdrop-mode="canvas2d"]')).not.toBeNull()
-		expect(scratchGl.createShader).not.toHaveBeenCalled()
-		expect(productionGl.createShader).not.toHaveBeenCalled()
-		expect(context2d.clearRect).toHaveBeenCalled()
-	})
-
-	it('forces the CSS fallback preview without probing WebGL or drawing Canvas2D', async () => {
+	it('forces the CSS fallback preview without probing WebGL or touching Canvas2D', async () => {
 		window.history.replaceState(null, '', '/?backdropForceFallback=css')
-		const context2d = mockCanvas2d()
 		const scratchGl = mockWebgl()
 		const productionGl = mockWebgl()
-		installCanvasMocks({context2d, productionGl, scratchGl})
+		const getContext = installCanvasMocks({productionGl, scratchGl})
 
 		const {container} = render(<AppBackdrop colorScheme="dark" />)
 
 		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
 		await waitFor(() => expect(container.querySelector('canvas')).toBeNull())
 		expect(document.body).toHaveClass('backdrop-dark-aurora')
-		expect(context2d.clearRect).not.toHaveBeenCalled()
 		expect(scratchGl.createShader).not.toHaveBeenCalled()
 		expect(productionGl.createShader).not.toHaveBeenCalled()
+		expectCanvas2dUnused(getContext)
 	})
 
-	it('uses the persisted CSS-only mode without probing WebGL or drawing Canvas2D', async () => {
-		const context2d = mockCanvas2d()
+	it('ignores the removed Canvas2D preview mode and uses GPU rendering', async () => {
+		window.history.replaceState(null, '', '/?backdropForceFallback=canvas2d')
 		const scratchGl = mockWebgl()
 		const productionGl = mockWebgl()
-		installCanvasMocks({context2d, productionGl, scratchGl})
+		const getContext = installCanvasMocks({productionGl, scratchGl})
+
+		const {container} = render(<AppBackdrop colorScheme="light" />)
+
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-webgl-active'))
+		expect(container.querySelector('canvas[data-backdrop-mode="webgl"]')).not.toBeNull()
+		expect(scratchGl.createShader).toHaveBeenCalled()
+		expect(productionGl.createShader).toHaveBeenCalled()
+		expectCanvas2dUnused(getContext)
+	})
+
+	it('uses the persisted CSS-only mode without probing WebGL or touching Canvas2D', async () => {
+		const scratchGl = mockWebgl()
+		const productionGl = mockWebgl()
+		const getContext = installCanvasMocks({productionGl, scratchGl})
 
 		const {container} = render(<AppBackdrop colorScheme="dark" renderMode="css-only" />)
 
 		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
 		await waitFor(() => expect(container.querySelector('canvas')).toBeNull())
-		expect(context2d.clearRect).not.toHaveBeenCalled()
 		expect(scratchGl.createShader).not.toHaveBeenCalled()
 		expect(productionGl.createShader).not.toHaveBeenCalled()
+		expectCanvas2dUnused(getContext)
 	})
 
-	it('rejects software WebGL using masked renderer data when debug renderer info is unavailable', async () => {
-		const context2d = mockCanvas2d()
+	it('rejects software WebGL using masked renderer data and falls back to CSS', async () => {
 		const scratchGl = mockWebgl({debugRenderer: null, maskedRenderer: 'Google SwiftShader', maskedVendor: 'Google Inc.'})
-		installCanvasMocks({context2d, scratchGl})
+		const getContext = installCanvasMocks({scratchGl})
 
 		const {container} = render(<AppBackdrop colorScheme="dark" />)
 
-		await waitFor(() => expect(document.body).toHaveClass('backdrop-canvas-fallback'))
-		expect(container.querySelector('canvas[data-backdrop-mode="canvas2d"]')).not.toBeNull()
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
+		await waitFor(() => expect(container.querySelector('canvas')).toBeNull())
 		expect(scratchGl.loseContext).toHaveBeenCalledOnce()
+		expectCanvas2dUnused(getContext)
 	})
 
 	it('allows software WebGL in the backdrop isolation preview', async () => {
@@ -243,30 +182,31 @@ describe('AppBackdrop fallback', () => {
 	})
 
 	it('does not touch the production WebGL canvas when scratch shader validation fails', async () => {
-		const context2d = mockCanvas2d()
 		const scratchGl = mockWebgl({linkOk: false})
 		const productionGl = mockWebgl()
-		installCanvasMocks({context2d, productionGl, scratchGl})
+		const getContext = installCanvasMocks({productionGl, scratchGl})
 
 		const {container} = render(<AppBackdrop colorScheme="dark" />)
 
-		await waitFor(() => expect(container.querySelector('canvas[data-backdrop-mode="canvas2d"]')).not.toBeNull())
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
+		await waitFor(() => expect(container.querySelector('canvas')).toBeNull())
 		expect(productionGl.createShader).not.toHaveBeenCalled()
 		expect(scratchGl.loseContext).toHaveBeenCalledOnce()
+		expectCanvas2dUnused(getContext)
 	})
 
-	it('uses the separate Canvas2D fallback when production WebGL setup fails', async () => {
-		const context2d = mockCanvas2d()
+	it('falls back to CSS when production WebGL setup fails', async () => {
 		const scratchGl = mockWebgl()
 		const productionGl = mockWebgl({linkOk: false})
-		installCanvasMocks({context2d, productionGl, scratchGl})
+		const getContext = installCanvasMocks({productionGl, scratchGl})
 
 		const {container} = render(<AppBackdrop colorScheme="dark" />)
 
-		await waitFor(() => expect(container.querySelector('canvas[data-backdrop-mode="canvas2d"]')).not.toBeNull())
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
+		await waitFor(() => expect(container.querySelector('canvas')).toBeNull())
 		expect(productionGl.createShader).toHaveBeenCalled()
-		expect(context2d.clearRect).toHaveBeenCalled()
 		expect(scratchGl.loseContext).toHaveBeenCalledOnce()
+		expectCanvas2dUnused(getContext)
 	})
 
 	it('releases the scratch WebGL context after a successful WebGL setup', async () => {
@@ -340,11 +280,10 @@ describe('AppBackdrop fallback', () => {
 		expect(request.mock.calls.length).toBeGreaterThan(requestCallsAfterBlur)
 	})
 
-	it('falls back to Canvas2D when the production WebGL context is lost', async () => {
-		const context2d = mockCanvas2d()
+	it('falls back to CSS when the production WebGL context is lost', async () => {
 		const scratchGl = mockWebgl()
 		const productionGl = mockWebgl()
-		installCanvasMocks({context2d, productionGl, scratchGl})
+		const getContext = installCanvasMocks({productionGl, scratchGl})
 
 		const {container} = render(<AppBackdrop colorScheme="dark" renderMode="gpu" />)
 
@@ -356,96 +295,43 @@ describe('AppBackdrop fallback', () => {
 		webglCanvas?.dispatchEvent(lostEvent)
 
 		expect(lostEvent.defaultPrevented).toBe(true)
-		await waitFor(() => expect(document.body).toHaveClass('backdrop-canvas-fallback'))
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
+		await waitFor(() => expect(container.querySelector('canvas')).toBeNull())
 		expect(document.body).not.toHaveClass('backdrop-webgl-active')
-		expect(container.querySelector('canvas[data-backdrop-mode="canvas2d"]')).not.toBeNull()
-		expect(context2d.clearRect).toHaveBeenCalled()
+		expectCanvas2dUnused(getContext)
 	})
 
 	it('runs the light ocean WebGL scene at 30 FPS', () => {
 		expect(lightOceanScene.frameIntervalMs).toBe(1000 / 30)
 	})
 
-	it('selects dark aurora for dark mode and light ocean for light mode', async () => {
-		const context2d = mockCanvas2d()
-		installCanvasMocks({context2d, scratchGl: null})
+	it('selects dark aurora for dark mode and light ocean for light mode under CSS fallback', async () => {
+		const getContext = installCanvasMocks({scratchGl: null})
 		const {container, rerender} = render(<AppBackdrop colorScheme="dark" />)
 
-		await waitFor(() => expect(container.querySelector('canvas[data-backdrop-scene="dark-aurora"][data-backdrop-mode="canvas2d"]')).not.toBeNull())
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
 		expect(document.body).toHaveClass('backdrop-dark-aurora')
+		expect(container.querySelector('canvas')).toBeNull()
 
 		rerender(<AppBackdrop colorScheme="light" />)
 
-		await waitFor(() => expect(container.querySelector('canvas[data-backdrop-scene="light-ocean"][data-backdrop-mode="canvas2d"]')).not.toBeNull())
-		expect(document.body).toHaveClass('backdrop-light-ocean')
+		await waitFor(() => expect(document.body).toHaveClass('backdrop-light-ocean'))
 		expect(document.body).not.toHaveClass('backdrop-dark-aurora')
+		expect(container.querySelector('canvas')).toBeNull()
+		expectCanvas2dUnused(getContext)
 	})
 
-	it('redraws the Canvas2D fallback when the selected scene changes', async () => {
-		const context2d = mockCanvas2d()
-		installCanvasMocks({context2d, scratchGl: null})
-		const {rerender} = render(<AppBackdrop colorScheme="dark" />)
-
-		await waitFor(() => expect(document.body).toHaveClass('backdrop-canvas-fallback'))
-		const initialDraws = vi.mocked(context2d.clearRect).mock.calls.length
-		rerender(<AppBackdrop colorScheme="light" />)
-
-		await waitFor(() => expect(context2d.clearRect).toHaveBeenCalledTimes(initialDraws + 1))
-	})
-
-	it('skips live resize redraws and redraws once after resize settles', async () => {
-		setViewport(800, 500)
-		const context2d = mockCanvas2d()
-		installCanvasMocks({context2d, scratchGl: null})
-		const {container} = render(<AppBackdrop colorScheme="dark" />)
-
-		await waitFor(() => expect(document.body).toHaveClass('backdrop-canvas-fallback'))
-		const canvas = container.querySelector<HTMLCanvasElement>('canvas[data-backdrop-mode="canvas2d"]')
-		expect(canvas?.width).toBe(600)
-		const initialDraws = vi.mocked(context2d.clearRect).mock.calls.length
-
-		setViewport(640, 360)
-		window.dispatchEvent(new Event('resize'))
-		await nextFrame()
-
-		expect(canvas?.width).toBe(600)
-		expect(context2d.clearRect).toHaveBeenCalledTimes(initialDraws)
-
-		await act(async () => {
-			await new Promise(resolve => setTimeout(resolve, 330))
-		})
-		await nextFrame()
-
-		expect(canvas?.width).toBe(480)
-		expect(canvas?.height).toBe(270)
-		expect(context2d.clearRect).toHaveBeenCalledTimes(initialDraws + 1)
-	})
-
-	it('logs opt-in Canvas2D fallback diagnostics', async () => {
+	it('logs opt-in CSS fallback diagnostics', async () => {
 		window.history.replaceState(null, '', '/?backdropDebug=1')
 		const debug = vi.spyOn(console, 'debug').mockImplementation(() => undefined)
 		const info = vi.spyOn(console, 'info').mockImplementation(() => undefined)
-		const context2d = mockCanvas2d()
-		installCanvasMocks({context2d, scratchGl: null})
+		installCanvasMocks({scratchGl: null})
+
 		render(<AppBackdrop colorScheme="dark" />)
 
-		await waitFor(() => expect(document.body).toHaveClass('backdrop-canvas-fallback'))
-
-		expect(info).toHaveBeenCalledWith('[backdrop]', expect.objectContaining({event: 'fallback-activate', mode: 'fallback', reason: 'scratch-webgl-unavailable', sceneId: 'dark-aurora'}))
-		expect(debug).toHaveBeenCalledWith('[backdrop]', expect.objectContaining({cssHeight: 768, cssWidth: 1024, event: 'canvas2d-draw', mode: 'canvas2d', pixelHeight: 576, pixelWidth: 768, reason: 'initial', renderScale: 0.75, sceneId: 'dark-aurora'}))
-	})
-
-	it('falls back to CSS only when neither WebGL nor Canvas2D is available', async () => {
-		installCanvasMocks({context2d: null, scratchGl: null})
-
-		const {container, unmount} = render(<AppBackdrop colorScheme="dark" />)
-
 		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
-		await waitFor(() => expect(container.querySelector('canvas')).toBeNull())
 
-		unmount()
-
-		expect(document.body).not.toHaveClass('backdrop-static-fallback')
-		expect(document.body).not.toHaveClass('backdrop-canvas-fallback')
+		expect(info).toHaveBeenCalledWith('[backdrop]', expect.objectContaining({event: 'fallback-activate', mode: 'css', reason: 'scratch-webgl-unavailable', sceneId: 'dark-aurora'}))
+		expect(debug).not.toHaveBeenCalledWith('[backdrop]', expect.objectContaining({event: 'canvas2d-draw'}))
 	})
 })

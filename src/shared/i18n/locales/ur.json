@@ -171,8 +171,6 @@
 				"modeDescription": "سب سے زیادہ متحرک انداز سے بہترین کارکردگی تک جائیں۔",
 				"cssOnlyLabel": "بہترین کارکردگی",
 				"cssOnlyDescription": "صرف CSS، کوئی canvas رینڈرنگ نہیں۔",
-				"fallbackLabel": "متوازن",
-				"fallbackDescription": "WebGL کے بغیر جامد Canvas2D پس منظر۔",
 				"gpuLabel": "سب سے خوبصورت",
 				"gpuDescription": "سپورٹ ہونے پر متحرک WebGL پس منظر۔"
 			},

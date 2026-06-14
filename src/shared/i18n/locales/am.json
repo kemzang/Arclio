@@ -162,8 +162,6 @@
 				"modeDescription": "ከበጣም እንቅስቃሴ ያለው መልክ ወደ ምርጥ አፈጻጸም ይሂዱ።",
 				"cssOnlyLabel": "ምርጥ አፈጻጸም",
 				"cssOnlyDescription": "CSS ብቻ፣ የcanvas ማቅረብ የለም።",
-				"fallbackLabel": "ሚዛናዊ",
-				"fallbackDescription": "WebGL የሌለው ቋሚ Canvas2D ዳራ።",
 				"gpuLabel": "በጣም ቆንጆ",
 				"gpuDescription": "ሲደገፍ የሚንቀሳቀስ WebGL ዳራ።"
 			},

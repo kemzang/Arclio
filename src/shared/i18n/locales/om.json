@@ -171,8 +171,6 @@
 				"modeDescription": "Mul’ata sochii baay’ee qabu irraa gara raawwii gaariitti deemaa.",
 				"cssOnlyLabel": "Raawwii gaarii",
 				"cssOnlyDescription": "CSS qofa, canvas hin agarsiisu.",
-				"fallbackLabel": "Madaalawaa",
-				"fallbackDescription": "Duubbee Canvas2D dhaabbataa WebGL malee.",
 				"gpuLabel": "Bareedina olaanaa",
 				"gpuDescription": "Duubbee WebGL socho’u yoo deeggarame."
 			},

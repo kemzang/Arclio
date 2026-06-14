@@ -171,8 +171,6 @@
 				"modeDescription": "От самого анимированного вида к лучшей производительности.",
 				"cssOnlyLabel": "Лучшая производительность",
 				"cssOnlyDescription": "Только CSS, без рендеринга canvas.",
-				"fallbackLabel": "Сбалансировано",
-				"fallbackDescription": "Статичный фон Canvas2D без WebGL.",
 				"gpuLabel": "Самый красивый",
 				"gpuDescription": "Анимированный фон WebGL, если поддерживается."
 			},

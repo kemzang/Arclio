@@ -146,7 +146,7 @@ export const SUPPORTED_LANGS = supportedLangSchema.options
 export const uiThemeSchema = z.enum(['light', 'dark', 'system'])
 export type UiTheme = z.infer<typeof uiThemeSchema>
 
-export const backdropRenderModeSchema = z.enum(['css-only', 'fallback', 'gpu'])
+export const backdropRenderModeSchema = z.enum(['css-only', 'gpu'])
 export type BackdropRenderMode = z.infer<typeof backdropRenderModeSchema>
 
 export const quickDownloadStatusSchema = z.enum(['idle', 'preparing', 'queued', 'error'])

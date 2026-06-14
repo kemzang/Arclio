@@ -80,11 +80,7 @@ describe('App renderer', () => {
 		expect(await screen.findByTestId('backdrop-preview-controls')).toBeInTheDocument()
 		expect(screen.getByTestId('backdrop-preview-gpu')).toHaveAttribute('aria-pressed', 'true')
 		expect(screen.getByTestId('backdrop-preview-description')).toHaveTextContent('WebGL shader preview: hardware when available, software allowed in this stage.')
-
-		fireEvent.click(screen.getByTestId('backdrop-preview-canvas2d'))
-		expect(new URL(window.location.href).searchParams.get('backdropForceFallback')).toBe('canvas2d')
-		expect(screen.getByTestId('backdrop-preview-canvas2d')).toHaveAttribute('aria-pressed', 'true')
-		expect(screen.getByTestId('backdrop-preview-description')).toHaveTextContent('Canvas2D fallback: WebGL is bypassed, static canvas plus CSS drift.')
+		expect(screen.queryByTestId('backdrop-preview-canvas2d')).not.toBeInTheDocument()
 
 		fireEvent.click(screen.getByTestId('backdrop-preview-css'))
 		expect(new URL(window.location.href).searchParams.get('backdropForceFallback')).toBe('css')
@@ -96,8 +92,20 @@ describe('App renderer', () => {
 		expect(screen.getByTestId('backdrop-preview-gpu')).toHaveAttribute('aria-pressed', 'true')
 	})
 
-	it('syncs backdrop isolation theme changes into the URL', async () => {
+	it('resolves the removed Canvas2D isolation preview mode to GPU', async () => {
 		window.history.replaceState(null, '', '/?backdrop=1&backdropForceFallback=canvas2d')
+
+		render(<App />)
+
+		expect(await screen.findByTestId('backdrop-preview-gpu')).toHaveAttribute('aria-pressed', 'true')
+		expect(screen.queryByTestId('backdrop-preview-canvas2d')).not.toBeInTheDocument()
+
+		fireEvent.click(screen.getByTestId('backdrop-preview-gpu'))
+		expect(new URL(window.location.href).searchParams.get('backdropForceFallback')).toBeNull()
+	})
+
+	it('syncs backdrop isolation theme changes into the URL', async () => {
+		window.history.replaceState(null, '', '/?backdrop=1&backdropForceFallback=css')
 
 		render(<App />)
 
@@ -105,7 +113,7 @@ describe('App renderer', () => {
 		let url = new URL(window.location.href)
 		expect(url.searchParams.get('theme')).toBe('dark')
 		expect(url.searchParams.get('backdrop')).toBe('1')
-		expect(url.searchParams.get('backdropForceFallback')).toBe('canvas2d')
+		expect(url.searchParams.get('backdropForceFallback')).toBe('css')
 
 		fireEvent.click(screen.getByRole('button', {name: 'Light mode'}))
 		url = new URL(window.location.href)

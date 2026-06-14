@@ -1745,14 +1745,6 @@ msgctxt "wizard.url.backdrop.cssOnlyLabel"
 msgid "Best performance"
 msgstr "بہترین کارکردگی"
 
-msgctxt "wizard.url.backdrop.fallbackDescription"
-msgid "Static Canvas2D backdrop with no WebGL."
-msgstr "WebGL کے بغیر جامد Canvas2D پس منظر۔"
-
-msgctxt "wizard.url.backdrop.fallbackLabel"
-msgid "Balanced"
-msgstr "متوازن"
-
 msgctxt "wizard.url.backdrop.gpuDescription"
 msgid "Animated WebGL backdrop when supported."
 msgstr "سپورٹ ہونے پر متحرک WebGL پس منظر۔"

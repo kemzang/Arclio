@@ -171,8 +171,6 @@
 				"modeDescription": "انتقل من المظهر الأكثر حركة إلى أفضل أداء.",
 				"cssOnlyLabel": "أفضل أداء",
 				"cssOnlyDescription": "CSS فقط، بلا عرض canvas.",
-				"fallbackLabel": "متوازن",
-				"fallbackDescription": "خلفية Canvas2D ثابتة بدون WebGL.",
 				"gpuLabel": "الأجمل",
 				"gpuDescription": "خلفية WebGL متحركة عند توفر الدعم."
 			},

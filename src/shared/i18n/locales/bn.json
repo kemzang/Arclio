@@ -171,8 +171,6 @@
 				"modeDescription": "সবচেয়ে অ্যানিমেটেড চেহারা থেকে সেরা পারফরম্যান্সে যান।",
 				"cssOnlyLabel": "সেরা পারফরম্যান্স",
 				"cssOnlyDescription": "শুধু CSS, কোনো canvas রেন্ডারিং নয়।",
-				"fallbackLabel": "সুষম",
-				"fallbackDescription": "WebGL ছাড়া স্থির Canvas2D ব্যাকড্রপ।",
 				"gpuLabel": "সবচেয়ে সুন্দর",
 				"gpuDescription": "সমর্থিত হলে অ্যানিমেটেড WebGL ব্যাকড্রপ।"
 			},

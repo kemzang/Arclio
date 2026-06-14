@@ -179,8 +179,6 @@
 				"modeDescription": "Від найанімованішого вигляду до найкращої продуктивності.",
 				"cssOnlyLabel": "Найкраща продуктивність",
 				"cssOnlyDescription": "Лише CSS, без рендерингу canvas.",
-				"fallbackLabel": "Збалансовано",
-				"fallbackDescription": "Статичне тло Canvas2D без WebGL.",
 				"gpuLabel": "Найгарніше",
 				"gpuDescription": "Анімоване тло WebGL, якщо підтримується."
 			},

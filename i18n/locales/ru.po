@@ -1745,14 +1745,6 @@ msgctxt "wizard.url.backdrop.cssOnlyLabel"
 msgid "Best performance"
 msgstr "Лучшая производительность"
 
-msgctxt "wizard.url.backdrop.fallbackDescription"
-msgid "Static Canvas2D backdrop with no WebGL."
-msgstr "Статичный фон Canvas2D без WebGL."
-
-msgctxt "wizard.url.backdrop.fallbackLabel"
-msgid "Balanced"
-msgstr "Сбалансировано"
-
 msgctxt "wizard.url.backdrop.gpuDescription"
 msgid "Animated WebGL backdrop when supported."
 msgstr "Анимированный фон WebGL, если поддерживается."

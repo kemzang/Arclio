@@ -162,8 +162,6 @@
 				"modeDescription": "အလှုပ်ရှားဆုံး အသွင်အပြင်မှ အကောင်းဆုံး စွမ်းဆောင်ရည်သို့ ရွှေ့ပါ။",
 				"cssOnlyLabel": "အကောင်းဆုံး စွမ်းဆောင်ရည်",
 				"cssOnlyDescription": "CSS သာအသုံးပြုမည်၊ canvas rendering မရှိပါ။",
-				"fallbackLabel": "မျှတ",
-				"fallbackDescription": "WebGL မပါသော တည်ငြိမ်သည့် Canvas2D နောက်ခံ။",
 				"gpuLabel": "အလှဆုံး",
 				"gpuDescription": "ထောက်ပံ့ပါက လှုပ်ရှားနေသော WebGL နောက်ခံ။"
 			},

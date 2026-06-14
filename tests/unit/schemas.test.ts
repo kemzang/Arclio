@@ -246,6 +246,16 @@ describe('updateSettingsSchema — common.includeIdInSingleFilenames', () => {
 	})
 })
 
+describe('updateSettingsSchema — common.backdropRenderMode', () => {
+	it.each(['gpu', 'css-only'])('accepts backdropRenderMode=%s', value => {
+		expect(updateSettingsSchema.safeParse({common: {backdropRenderMode: value}}).success).toBe(true)
+	})
+
+	it('rejects the removed Canvas2D fallback mode', () => {
+		expect(updateSettingsSchema.safeParse({common: {backdropRenderMode: 'fallback'}}).success).toBe(false)
+	})
+})
+
 describe('updateSettingsSchema — common.writeM3u', () => {
 	it.each([true, false])('accepts writeM3u=%s', value => {
 		expect(updateSettingsSchema.safeParse({common: {writeM3u: value}}).success).toBe(true)

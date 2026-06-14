@@ -1745,14 +1745,6 @@ msgctxt "wizard.url.backdrop.cssOnlyLabel"
 msgid "Best performance"
 msgstr "Raawwii gaarii"
 
-msgctxt "wizard.url.backdrop.fallbackDescription"
-msgid "Static Canvas2D backdrop with no WebGL."
-msgstr "Duubbee Canvas2D dhaabbataa WebGL malee."
-
-msgctxt "wizard.url.backdrop.fallbackLabel"
-msgid "Balanced"
-msgstr "Madaalawaa"
-
 msgctxt "wizard.url.backdrop.gpuDescription"
 msgid "Animated WebGL backdrop when supported."
 msgstr "Duubbee WebGL socho’u yoo deeggarame."

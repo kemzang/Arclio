@@ -162,8 +162,6 @@
 				"modeDescription": "Move from the most animated look to best performance.",
 				"cssOnlyLabel": "Best performance",
 				"cssOnlyDescription": "CSS only, no canvas rendering.",
-				"fallbackLabel": "Balanced",
-				"fallbackDescription": "Static Canvas2D backdrop with no WebGL.",
 				"gpuLabel": "Most beautiful",
 				"gpuDescription": "Animated WebGL backdrop when supported."
 			},

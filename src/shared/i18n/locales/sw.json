@@ -171,8 +171,6 @@
 				"modeDescription": "Badili kutoka mwonekano wenye mwendo mwingi hadi utendaji bora.",
 				"cssOnlyLabel": "Utendaji bora",
 				"cssOnlyDescription": "CSS pekee, hakuna uchoraji wa canvas.",
-				"fallbackLabel": "Uwiano",
-				"fallbackDescription": "Mandhari tuli ya Canvas2D bila WebGL.",
 				"gpuLabel": "Nzuri zaidi",
 				"gpuDescription": "Mandhari ya WebGL yenye mwendo ikisaidiwa."
 			},

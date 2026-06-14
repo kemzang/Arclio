@@ -162,8 +162,6 @@
 				"modeDescription": "从最丰富的动画效果切换到最佳性能。",
 				"cssOnlyLabel": "最佳性能",
 				"cssOnlyDescription": "仅使用 CSS，不进行 canvas 渲染。",
-				"fallbackLabel": "平衡",
-				"fallbackDescription": "静态 Canvas2D 背景，不使用 WebGL。",
 				"gpuLabel": "最美观",
 				"gpuDescription": "支持时使用动画 WebGL 背景。"
 			},

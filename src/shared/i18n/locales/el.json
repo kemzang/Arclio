@@ -171,8 +171,6 @@
 				"modeDescription": "Μετακινηθείτε από την πιο κινούμενη εμφάνιση στην καλύτερη απόδοση.",
 				"cssOnlyLabel": "Καλύτερη απόδοση",
 				"cssOnlyDescription": "Μόνο CSS, χωρίς απόδοση canvas.",
-				"fallbackLabel": "Ισορροπημένο",
-				"fallbackDescription": "Στατικό φόντο Canvas2D χωρίς WebGL.",
 				"gpuLabel": "Πιο όμορφο",
 				"gpuDescription": "Κινούμενο φόντο WebGL όταν υποστηρίζεται."
 			},

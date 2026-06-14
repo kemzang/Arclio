@@ -171,8 +171,6 @@
 				"modeDescription": "Pasa del aspecto más animado al mejor rendimiento.",
 				"cssOnlyLabel": "Mejor rendimiento",
 				"cssOnlyDescription": "Solo CSS, sin renderizado de canvas.",
-				"fallbackLabel": "Equilibrado",
-				"fallbackDescription": "Fondo Canvas2D estático sin WebGL.",
 				"gpuLabel": "Más bonito",
 				"gpuDescription": "Fondo WebGL animado cuando es compatible."
 			},

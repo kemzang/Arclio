@@ -179,8 +179,6 @@
 				"modeDescription": "Eng animatsiyali ko‘rinishdan eng yaxshi unumdorlikka o‘ting.",
 				"cssOnlyLabel": "Eng yaxshi unumdorlik",
 				"cssOnlyDescription": "Faqat CSS, canvas render qilinmaydi.",
-				"fallbackLabel": "Muvozanatli",
-				"fallbackDescription": "WebGLsiz statik Canvas2D fon.",
 				"gpuLabel": "Eng chiroyli",
 				"gpuDescription": "Qo‘llab-quvvatlansa, animatsiyali WebGL fon."
 			},

@@ -162,8 +162,6 @@
 				"modeDescription": "सबसे अधिक एनिमेटेड रूप से सर्वश्रेष्ठ प्रदर्शन तक जाएं।",
 				"cssOnlyLabel": "सर्वश्रेष्ठ प्रदर्शन",
 				"cssOnlyDescription": "केवल CSS, कोई canvas रेंडरिंग नहीं।",
-				"fallbackLabel": "संतुलित",
-				"fallbackDescription": "WebGL के बिना स्थिर Canvas2D बैकड्रॉप।",
 				"gpuLabel": "सबसे सुंदर",
 				"gpuDescription": "समर्थित होने पर एनिमेटेड WebGL बैकड्रॉप।"
 			},

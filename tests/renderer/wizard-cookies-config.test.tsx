@@ -141,15 +141,12 @@ describe('advanced network settings', () => {
 
 		expect(screen.getByTestId('profiles-settings-backdrop-mode')).toHaveTextContent('Best performance')
 		expect(screen.getByTestId('profiles-settings-backdrop-mode')).toHaveTextContent('Most beautiful')
+		expect(screen.getByTestId('profiles-settings-backdrop-mode')).not.toHaveTextContent('Balanced')
 		const options = within(screen.getByTestId('profiles-settings-backdrop-mode')).getAllByRole('button')
 		expect(options[0]).toHaveTextContent('Most beautiful')
-		expect(options[1]).toHaveTextContent('Balanced')
-		expect(options[2]).toHaveTextContent('Best performance')
-
-		fireEvent.click(screen.getByTestId('profiles-settings-backdrop-mode-fallback'))
-		await waitFor(() => {
-			expect(mockApi.settings.update).toHaveBeenCalledWith({common: {backdropRenderMode: 'fallback'}})
-		})
+		expect(options[1]).toHaveTextContent('Best performance')
+		expect(options).toHaveLength(2)
+		expect(screen.queryByTestId('profiles-settings-backdrop-mode-fallback')).not.toBeInTheDocument()
 
 		fireEvent.click(screen.getByTestId('profiles-settings-backdrop-mode-css-only'))
 		await waitFor(() => {
