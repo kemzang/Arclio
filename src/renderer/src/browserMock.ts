@@ -265,6 +265,10 @@ export function installBrowserMock(): void {
 			cancelWarmup: async () => {
 				/* no-op in browser */
 			},
+			getGraphicsPolicy: async () => {
+				await Promise.resolve()
+				return {ok: true, data: {backdrop: {forceRenderMode: null, softwareWebglAllowed: false}}}
+			},
 			installYtDlpWithHomebrew: async () => {
 				await delay(800)
 				return {ok: true, data: {installedPath: '/opt/homebrew/bin/yt-dlp'}}
@@ -556,5 +560,5 @@ export function installBrowserMock(): void {
 	}
 
 	;(window as unknown as {appApi: AppApi}).appApi = mock
-	;(window as unknown as {appVersion: string}).appVersion = '0.0.0-dev'
+	;(window as unknown as {appVersion: string}).appVersion = scenarioState.appVersion
 }

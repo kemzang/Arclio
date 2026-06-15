@@ -4,6 +4,7 @@ import os from 'node:os'
 import {app, BrowserWindow, dialog, nativeTheme} from 'electron'
 import log from 'electron-log/main.js'
 import {IPC_CHANNELS} from '@shared/ipc.js'
+import type {GraphicsPolicy} from '@shared/types.js'
 import {TrayManager} from '@main/services/TrayManager.js'
 import {mainT, pluralKey} from '@main/i18n.js'
 import {pickLanguage} from '@shared/i18n/index.js'
@@ -12,9 +13,11 @@ import {registerUpdaterHandlers} from '@main/ipc/registerUpdaterHandlers.js'
 import {setupAnalytics, setAnalyticsEnabled, trackCrashDetectedOncePerSession, trackMain} from '@main/services/analytics.js'
 import {detectInstallChannel} from '@main/installChannel.js'
 import {BinaryManager} from '@main/services/BinaryManager.js'
+import {buildGraphicsPolicy} from '@main/services/GraphicsPolicy.js'
 import {DownloadService} from '@main/services/DownloadService.js'
 import {QueueService} from '@main/services/QueueService.js'
 import {ProbeService} from '@main/services/ProbeService.js'
+import {ProbeInfoJsonCache} from '@main/services/ProbeInfoJsonCache.js'
 import {TokenService} from '@main/services/TokenService.js'
 import {YtDlp} from '@main/services/YtDlp.js'
 import {RecentJobsStore} from '@main/stores/RecentJobsStore.js'
@@ -26,8 +29,8 @@ import {ClipboardWatcher, watcherWindowFromBrowserWindow} from '@main/services/C
 import {HiddenWindowTokenProvider} from '@main/token/providers/HiddenWindowTokenProvider.js'
 import {MockTokenProvider} from '@main/token/providers/MockTokenProvider.js'
 import {defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT} from '@shared/constants.js'
-import {runSmokeMode, readSmokeUrl, exitWithCode} from '@main/smoke.js'
-import {readRuntimeSmokeEnabled, runRuntimeSmokeMode} from '@main/runtimeSmoke.js'
+import {readSmokeUrl, runSmokeMode} from '@main/smoke.js'
+import {readRuntimeSmokeEnabled, runRuntimeSmokeMode, exitWithCode} from '@main/runtimeSmoke.js'
 import {cancelQueueBeforeExit} from '@main/shutdown.js'
 import {decideCloseAction, decideRendererCrashAction} from '@main/windowLifecycle.js'
 import {resolveMainWindowBackgroundColor} from '@main/windowPresentation.js'
@@ -54,7 +57,6 @@ log.info('boot', {platform: process.platform, arch: process.arch, release: os.re
 const isMockBackend = process.env.MOCK_BACKEND === '1'
 const e2eMode = resolveE2eHarnessMode(process.env, {isPackaged: app.isPackaged})
 const gpuMode = process.env.ARROXY_GPU_MODE
-const forceSoftwareBackdrop = process.env.ARROXY_BACKDROP_SOFTWARE === '1'
 
 for (const commandLineSwitch of e2eMode.commandLineSwitches) {
 	app.commandLine.appendSwitch(commandLineSwitch)
@@ -122,6 +124,24 @@ if (!hasSingleInstanceLock) {
 	app.quit()
 }
 
+function waitForInitialGpuInfoUpdate(timeoutMs: number): Promise<boolean> {
+	return new Promise(resolve => {
+		let settled = false
+		const finish = (updated: boolean): void => {
+			if (settled) return
+			settled = true
+			clearTimeout(timeout)
+			app.removeListener('gpu-info-update', onUpdate)
+			resolve(updated)
+		}
+		const onUpdate = (): void => finish(true)
+		const timeout = setTimeout(() => finish(false), timeoutMs)
+		app.once('gpu-info-update', onUpdate)
+	})
+}
+
+const initialGpuInfoUpdatePromise = hasSingleInstanceLock ? waitForInitialGpuInfoUpdate(2_500) : Promise.resolve(false)
+
 function createMainWindow(backgroundColor: string): BrowserWindow {
 	const winState = windowStateKeeper({defaultWidth: WINDOW_DEFAULT_WIDTH, defaultHeight: WINDOW_DEFAULT_HEIGHT})
 	const preloadPath = resolveMainWindowPreloadPath(import.meta.dirname)
@@ -154,10 +174,9 @@ function createMainWindow(backgroundColor: string): BrowserWindow {
 
 	if (process.env.ELECTRON_RENDERER_URL) {
 		const rendererUrl = new URL(process.env.ELECTRON_RENDERER_URL)
-		if (forceSoftwareBackdrop) rendererUrl.searchParams.set('backdropSoftware', '1')
 		void window.loadURL(rendererUrl.toString())
 	} else {
-		void window.loadFile(path.join(import.meta.dirname, '../renderer/index.html'), forceSoftwareBackdrop ? {query: {backdropSoftware: '1'}} : undefined)
+		void window.loadFile(path.join(import.meta.dirname, '../renderer/index.html'))
 	}
 
 	return window
@@ -168,11 +187,29 @@ if (hasSingleInstanceLock) {
 		const userDataPath = app.getPath('userData')
 		log.transports.file.resolvePathFn = () => path.join(userDataPath, 'logs', 'main.log')
 		log.info('Session started')
-		log.info('gpu features', app.getGPUFeatureStatus())
-		void app
-			.getGPUInfo('basic')
-			.then(info => log.info('gpu info', info))
-			.catch((err: unknown) => log.warn('gpu info failed', err))
+		let graphicsPolicyPromise: Promise<GraphicsPolicy> | null = null
+		const graphicsPolicyProvider = async (): Promise<GraphicsPolicy> => {
+			graphicsPolicyPromise ??= (async () => {
+				const gpuInfoUpdated = await initialGpuInfoUpdatePromise
+				const gpuFeatureStatus: Partial<Record<string, string>> = {}
+				for (const [feature, status] of Object.entries(app.getGPUFeatureStatus())) {
+					if (typeof status === 'string') gpuFeatureStatus[feature] = status
+				}
+				log.info('gpu features', {gpuInfoUpdated, status: gpuFeatureStatus})
+				let gpuInfo: unknown
+				try {
+					gpuInfo = await app.getGPUInfo('basic')
+					log.info('gpu info', gpuInfo)
+				} catch (err: unknown) {
+					log.warn('gpu info failed', err)
+					gpuInfo = undefined
+				}
+				const policy = buildGraphicsPolicy({isPackaged: app.isPackaged, env: process.env, featureStatus: gpuFeatureStatus, featureStatusUsable: gpuInfoUpdated, gpuInfo, gpuInfoUnavailable: gpuInfo === undefined})
+				log.info('graphics policy', policy)
+				return policy
+			})()
+			return graphicsPolicyPromise
+		}
 
 		const baseSettings = defaultAppSettings(app.getPath('downloads'))
 		const settingsStore = new SettingsStore(userDataPath, e2eMode.applyAppSettingsDefaults(baseSettings))
@@ -195,6 +232,8 @@ if (hasSingleInstanceLock) {
 		const recentJobsStore = new RecentJobsStore(userDataPath)
 		const queueStore = new QueueStore(userDataPath)
 		const playlistManifestStore = new PlaylistManifestStore(userDataPath)
+		const probeInfoJsonCache = new ProbeInfoJsonCache(userDataPath)
+		await probeInfoJsonCache.sweepExpired()
 		const binaryManager = new BinaryManager(userDataPath, {overridesProvider: () => settingsStore.getSync().common.binaryOverrides})
 
 		// Packaged runtime smoke mode — exercises Electron-as-Node and managed
@@ -209,12 +248,12 @@ if (hasSingleInstanceLock) {
 		const tokenService = new TokenService(tokenProvider)
 		const ytDlp = new YtDlp(binaryManager, tokenService, settingsStore, {e2eMode})
 		const downloadService = new DownloadService(ytDlp, recentJobsStore, isMockBackend)
-		const probeService = new ProbeService(ytDlp, isMockBackend)
-		const queueService = new QueueService(queueStore, downloadService, undefined, undefined, {manifestStore: playlistManifestStore, writeM3u: writePlaylistM3u})
+		const probeService = new ProbeService(ytDlp, isMockBackend, probeInfoJsonCache)
+		const queueService = new QueueService(queueStore, downloadService, undefined, undefined, {manifestStore: playlistManifestStore, writeM3u: writePlaylistM3u}, probeInfoJsonCache)
 		await queueService.init()
 
-		// Headless smoke mode — exercises PoT scrape + 3-attempt ladder against
-		// real YouTube using production services, then exits. No window created.
+		// Headless smoke mode — exercises PoT scrape + retry ladder against real
+		// YouTube using production services, then exits. No window created.
 		const smokeUrl = readSmokeUrl()
 		if (smokeUrl) {
 			const code = await runSmokeMode({url: smokeUrl, binaryManager, tokenService, probeService, ytDlp})
@@ -327,7 +366,7 @@ if (hasSingleInstanceLock) {
 		const clipboardWatcher = new ClipboardWatcher(watcherWindowFromBrowserWindow(mainWindow))
 		clipboardWatcher.setEnabled(initialSettings.common.clipboardWatchEnabled)
 
-		registerIpcHandlers({mainWindow, binaryManager, downloadService, probeService, settingsStore, queueService, tokenService, languageRef, clipboardWatcher, playlistManifestStore})
+		registerIpcHandlers({mainWindow, binaryManager, downloadService, probeService, settingsStore, queueService, tokenService, languageRef, clipboardWatcher, playlistManifestStore, graphicsPolicyProvider})
 
 		if (!e2eMode.disableUpdater) {
 			registerUpdaterHandlers(mainWindow)
@@ -390,9 +429,7 @@ if (hasSingleInstanceLock) {
 }
 
 app.on('window-all-closed', () => {
-	// In smoke mode, the hidden token window is created/destroyed transiently
-	// and we don't want that to trigger a quit mid-probe. The smoke runner
-	// calls app.exit() itself when its async work finishes.
-	if (process.env.ARROXY_SMOKE_URL || readRuntimeSmokeEnabled()) return
+	// In smoke modes, hidden windows can churn before the runner calls app.exit().
+	if (readSmokeUrl() || readRuntimeSmokeEnabled()) return
 	app.quit()
 })
