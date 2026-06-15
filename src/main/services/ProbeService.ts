@@ -6,6 +6,7 @@ import {nowIso} from '@main/utils/clock.js'
 import {ok, fail, type Result} from '@shared/result.js'
 import {sortFormatsByQuality} from '@shared/qualitySorter.js'
 import {humanSize} from '@shared/format.js'
+import {audioTrackLabel, audioTrackQuality, isDefaultAudio, isOriginalAudio} from '@shared/audioTrackMeta.js'
 import type {FormatOption, PlaylistEntry, PlaylistScope, ProbeError, ProbePlaylistMode, ProbeProgressEvent, ProbeResult, ProbeDegradationReason, SubtitleMap, ProbeInfoJsonRef} from '@shared/types.js'
 import {LIVE_CHAT_LANG} from '@shared/constants.js'
 import {infoDictSchema, isPlaylistLike, isUrlRedirect, type InfoDict, type PlaylistInfo, type MultiVideoInfo, type VideoInfo, type YtDlpFormat, type YtDlpSubtitleTrack} from '@shared/ytdlp/infoDict.js'
@@ -105,8 +106,32 @@ export function mapFormats(formats: readonly YtDlpFormat[]): FormatOption[] {
 			const audioCodec = item.acodec
 			const isDrc = isDrcAudio(item)
 			const codec = friendlyCodec(item.acodec ?? '')
-			const details = [ext, codec, channelLabel(item.audio_channels), isDrc ? 'DRC' : null, sampleRateLabel(item.asr), abr ? `${Math.round(abr)} kbps` : null, filesize ? humanSize(filesize) : null].filter(Boolean).join(' · ')
-			return [{formatId, label: details, ext, resolution: 'audio only', abr, audioCodec, isDrc, filesize, isVideoOnly: false, isAudioOnly: true, dynamicRange: undefined} satisfies FormatOption]
+			const trackLabel = audioTrackLabel(item)
+			const trackQuality = audioTrackQuality(item)
+			const defaultAudio = isDefaultAudio(item)
+			const originalAudio = isOriginalAudio(item)
+			const details = [trackLabel, ext, codec, channelLabel(item.audio_channels), isDrc ? 'DRC' : null, sampleRateLabel(item.asr), abr ? `${Math.round(abr)} kbps` : null, filesize ? humanSize(filesize) : null].filter(Boolean).join(' · ')
+			return [
+				{
+					formatId,
+					label: details,
+					ext,
+					resolution: 'audio only',
+					abr,
+					audioCodec,
+					isDrc,
+					...(item.language ? {audioLanguage: item.language} : {}),
+					...(typeof item.language_preference === 'number' ? {audioLanguagePreference: item.language_preference} : {}),
+					...(trackLabel ? {audioTrackLabel: trackLabel} : {}),
+					...(trackQuality ? {audioTrackQuality: trackQuality} : {}),
+					isDefaultAudio: defaultAudio,
+					isOriginalAudio: originalAudio,
+					filesize,
+					isVideoOnly: false,
+					isAudioOnly: true,
+					dynamicRange: undefined
+				} satisfies FormatOption
+			]
 		}
 
 		const resolution = item.resolution ?? item.format_note ?? 'unknown'

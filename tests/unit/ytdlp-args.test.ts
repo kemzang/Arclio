@@ -8,6 +8,7 @@ import {resolveE2eHarnessMode, type E2eHarnessMode} from '@main/e2eHarness.js'
 import {EMBED_SUBTITLE_CONTAINER_EXT, type AudioConvert, type PlaylistScope, type ProbePlaylistMode, type SponsorBlockPlan, type SubtitleFormat, type SubtitleMode} from 'yt-dlp-bridge'
 import {redactArgs} from 'yt-dlp-bridge/redaction'
 import type {DependencySource} from '@shared/types.js'
+import {SOURCE_PREFERRED_BEST_AUDIO_SELECTOR} from '../shared/nativeAudioSelectors.js'
 
 vi.mock('@main/utils/process', async importOriginal => {
 	const actual = await importOriginal<typeof import('@main/utils/process.js')>()
@@ -319,10 +320,10 @@ describe('YtDlp — video args', () => {
 })
 
 describe('YtDlp — audio convert args', () => {
-	it('mp3 192K → -f bestaudio/best, -x, --audio-format mp3, --audio-quality 192K', async () => {
+	it('mp3 192K → source-preferred bestaudio selector, -x, --audio-format mp3, --audio-quality 192K', async () => {
 		await makeYtDlp().run(mediaRequest({audioConvert: lossyAudio('mp3', 192)}))
 		const args = getArgs()
-		expect(args[args.indexOf('-f') + 1]).toBe('bestaudio/best')
+		expect(args[args.indexOf('-f') + 1]).toBe(SOURCE_PREFERRED_BEST_AUDIO_SELECTOR)
 		expect(args).toContain('-x')
 		expect(args[args.indexOf('--audio-format') + 1]).toBe('mp3')
 		expect(args[args.indexOf('--audio-quality') + 1]).toBe('192K')
@@ -374,7 +375,7 @@ describe('YtDlp — audio convert args', () => {
 	it('audioConvert overrides any provided formatId', async () => {
 		await makeYtDlp().run(mediaRequest({formatId: 'bv+ba', audioConvert: lossyAudio('mp3', 192)}))
 		const args = getArgs()
-		expect(args[args.indexOf('-f') + 1]).toBe('bestaudio/best')
+		expect(args[args.indexOf('-f') + 1]).toBe(SOURCE_PREFERRED_BEST_AUDIO_SELECTOR)
 		expect(args.filter(a => a === '-f').length).toBe(1)
 	})
 })

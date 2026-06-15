@@ -2,6 +2,7 @@ import {describe, expect, it} from 'vitest'
 import {EMBED_SUBTITLE_CONTAINER_EXT, planWorkflow, type WorkflowInput} from '../src/index.js'
 import {parseYtDlpOutputLine} from '../src/parsers.js'
 import {redactArgs} from '../src/redaction.js'
+import {SOURCE_PREFERRED_BEST_AUDIO_SELECTOR} from '../../../tests/shared/nativeAudioSelectors.js'
 
 const URL = 'https://www.youtube.com/watch?v=test'
 
@@ -71,7 +72,7 @@ describe('planWorkflow — media', () => {
 	it('plans audio conversion and default music embed policy', () => {
 		const plan = planWorkflow({kind: 'media', url: URL, output: {directory: '/out'}, audio: {convert: {target: 'mp3', lossy: true, bitrateKbps: 192}}})
 
-		expect(adjacent(plan.args, '-f', 'bestaudio/best')).toBe(true)
+		expect(adjacent(plan.args, '-f', SOURCE_PREFERRED_BEST_AUDIO_SELECTOR)).toBe(true)
 		expect(plan.args).toContain('-x')
 		expect(adjacent(plan.args, '--audio-format', 'mp3')).toBe(true)
 		expect(adjacent(plan.args, '--audio-quality', '192K')).toBe(true)

@@ -2,6 +2,7 @@ import {describe, it, expect} from 'vitest'
 import type {AudioConvert, SubtitleFormat, SubtitleMode} from '@shared/types.js'
 import {isAudioConvertTargetLossy} from '@shared/audioTargets.js'
 import {planWorkflow, type AudioConvert as BridgeAudioConvert, type WorkflowInput} from 'yt-dlp-bridge'
+import {SOURCE_PREFERRED_BEST_AUDIO_SELECTOR} from '../shared/nativeAudioSelectors.js'
 
 const AUDIO_CONVERTS: AudioConvert[] = [{target: 'wav'}, {target: 'mp3', bitrateKbps: 128}, {target: 'mp3', bitrateKbps: 192}, {target: 'mp3', bitrateKbps: 320}, {target: 'm4a', bitrateKbps: 192}, {target: 'opus', bitrateKbps: 128}]
 
@@ -54,9 +55,9 @@ describe('planWorkflow — video kind invariants', () => {
 		expect(args).toContain('--no-write-auto-subs')
 	})
 
-	it.each(audioConvertCases)('audioConvert set ⇒ -x + bestaudio + --audio-format [target=$audioConvert.target]', ({audioConvert}) => {
+	it.each(audioConvertCases)('audioConvert set ⇒ -x + source-preferred bestaudio + --audio-format [target=$audioConvert.target]', ({audioConvert}) => {
 		const args = argsFor({kind: 'media', url: 'https://www.youtube.com/watch?v=x', output: {directory: '/tmp/out'}, audio: {convert: bridgeAudioConvert(audioConvert)}})
-		expect(adjacent(args, '-f', 'bestaudio/best')).toBe(true)
+		expect(adjacent(args, '-f', SOURCE_PREFERRED_BEST_AUDIO_SELECTOR)).toBe(true)
 		expect(args).toContain('-x')
 		expect(adjacent(args, '--audio-format', audioConvert.target)).toBe(true)
 		if (audioConvert.target !== 'wav') {
