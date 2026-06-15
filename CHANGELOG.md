@@ -10,7 +10,64 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ## Unreleased
 
-Changes committed after `0.4.0-beta.5`.
+_Nothing yet._
+
+---
+
+## 0.4.0
+
+The 0.4.0 stable release brings together everything from the 0.4.0 beta line: a full download-profile system, smarter audio handling, a more reliable binary runtime, stronger download recovery, and a broad UI and localization pass.
+
+## Highlights
+
+### Faster Download Workflows
+
+Arroxy now has a download-profile system that drives quick downloads, bulk runs, and playlist submissions from one place.
+
+- The home screen ships with built-in profiles for best available, 4K, QHD, 1080p, 720p, 480p, Smart TV MP4 variants, and audio-only downloads.
+- Profiles can carry media targets, subtitles, SponsorBlock settings, embed settings, output folder rules, and per-profile subfolders. Built-in profiles can be customized and your own profiles can be added.
+- Quick Download shows probe/queue progress, supports cancellation and retry, can retry with configured cookies, and reports partial success for bulk runs.
+- URL intent detection distinguishes single videos, playlists, channels, search URLs, and mixed links before choosing whether to probe, prompt, or open review, and playlist-cap handling opens review when the whole playlist cannot be queued safely.
+- Bulk URL parsing cleans links, filters obvious non-media files, deduplicates entries, and previews accepted/rejected rows for large paste sessions.
+
+### Smarter Audio Selection
+
+Audio handling now favors the source's own tracks and surfaces clearer quality information.
+
+- A new preference chooses between compatible audio and surround-first native audio, and it stays consistent from probing through presets, profiles, playlists, and quick downloads.
+- Arroxy now prefers the source default or original audio track when available, and keeps Dolby/DRC tracks out of the default compatible path unless you opt into the surround preference.
+- The audio format picker shows language, quality tier (high/medium/low badges with tooltips), and format details so multi-track videos are easier to choose from.
+
+### Release Notes In The App
+
+- A What's New dialog reads the current version's changelog after an update and remembers the last version it showed, so release details no longer live only on GitHub.
+
+### Runtime And Binary Reliability
+
+The app now relies on signed runtime metadata and Electron's bundled Node runtime instead of resolving "latest" binaries at runtime.
+
+- yt-dlp JavaScript challenges run through Electron's bundled Node runtime, so Arroxy no longer needs Deno or a system Node install for extractor JavaScript.
+- Runtime-managed binaries resolve from signed manifest entries verified with a bundled Ed25519 key, cached as last-known-good and backed by a bundled fallback index, served from a dedicated runtime-binaries release feed.
+- Materialization verifies size and SHA-256, uses content-addressed cache directories, guards ZIP extraction, and probes only after a real executable exists.
+- Packaged runtime smoke checks verify managed yt-dlp, Electron Node, and bundled extractor JS before normal startup, and dependency diagnostics carry clearer attempt/failure records for yt-dlp, ffmpeg, and ffprobe.
+
+### Download Reliability And Recovery
+
+- Media retries can preserve temp data for resumable network, rate-limit, chunk-transfer, disk-space, and postprocess failures when usable media evidence exists, and retry/restart paths validate or clean up preserved temp directories.
+- Progress parsing and HLS normalization no longer show misleading completed progress before a queue item is actually done.
+- yt-dlp errors flow through a published error taxonomy with localized guidance, including first-class DRM-protected, login-required, and missing-dependency failures.
+
+### UI, Feedback, And Localization
+
+- The home surface, profile picker, profile editor, queue drawer, review step, wizard navigation, warmup splash, and footer were refined for denser everyday use.
+- An adaptive backdrop adds dark/light scenes with WebGL, Canvas2D, and CSS fallbacks, plus a theme-matched native startup background to reduce launch flash.
+- Feedback opens through Tally with a hidden state snapshot and, after explicit submission, can upload a gzipped, redacted tail of the log to the feedback service. Discord community links were added to the README, footer, and About dialog.
+- App copy now flows through a gettext-backed translation workflow with generated runtime locale JSON across all supported languages.
+
+### Tooling And Tests
+
+- Formatting and linting moved to Biome and Oxlint, and `bun run check` now gates formatting, linting, tooling contract, typecheck, dependency hygiene, dead-code, circular imports, and package publish checks.
+- Fixture Product E2E now owns real Electron/IPC/yt-dlp workflows against deterministic fixture media, separating acceptance tests from cheaper unit/renderer checks.
 
 ---
 
