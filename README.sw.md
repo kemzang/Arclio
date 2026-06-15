@@ -226,7 +226,7 @@ Arroxy imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Ha
 
 - Hadi **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p
 - **Kiwango cha juu cha fremu** kimehifadhiwa kama kilivyo — fps 60, fps 120, HDR
-- **Vidhibiti vya sauti** — hamisha sauti pekee kama MP3, M4A/AAC, Opus au WAV; weka chaguo la jumla **Pendelea surround / Dolby**; na acha nyimbo asili za Dolby AC-3/EC-3, multichannel, DRC na sauti nyingine za juu zichagulike kwenye upakuaji wa mwingiliano zinapopatikana
+- **Sauti** — hamisha sauti pekee kama MP3, M4A/AAC, Opus au WAV. Katika upakuaji wa mwingiliano, chagua nyimbo asili za surround/Dolby za chanzo (AC-3, E-AC-3, 5.1, DRC) zinapopatikana, au weka chaguo-msingi la jumla **Pendelea surround / Dolby**
 - Maandiko ya haraka: *Ubora bora* · *Usawa* · *Faili ndogo*
 
 ### Faragha na udhibiti

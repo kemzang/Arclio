@@ -226,7 +226,7 @@ Arroxy ለአንድ ነገር ብቻ ተሠርቷል: URL ይለጥፉ፣ ንጹ
 
 - እስከ **4K UHD (2160p)**፣ 1440p፣ 1080p፣ 720p፣ 480p፣ 360p
 - **ፈጣን የፍሬም ፍጥነት** እንዳለ ተጠብቆ — 60 fps፣ 120 fps፣ HDR
-- **የድምፅ መቆጣጠሪያዎች** — ኦዲዮ ብቻን ወደ MP3፣ M4A/AAC፣ Opus ወይም WAV ማውጣት፤ ዓለም አቀፍ **surround / Dolby ን ይመርጡ** አማራጭ ማቀናበር፤ እና ካሉ native Dolby AC-3/EC-3፣ multichannel፣ DRC እና ሌሎች የላቁ የድምፅ ትራኮች በinteractive downloads ውስጥ እንዲመረጡ ማድረግ
+- **ድምፅ** — ኦዲዮ ብቻን ወደ MP3፣ M4A/AAC፣ Opus ወይም WAV ማውጣት። በinteractive downloads ውስጥ ካሉ የምንጩን native surround/Dolby ትራኮች (AC-3፣ E-AC-3፣ 5.1፣ DRC) ይምረጡ፣ ወይም ዓለም አቀፍ **surround / Dolby ን ይመርጡ** ነባሪ ያቀናብሩ
 - ፈጣን ቅድመ ቅንብሮች: *ምርጥ ጥራት* · *ሚዛናዊ* · *ትንሽ ፋይል*
 
 ### ግላዊነት እና ቁጥጥር

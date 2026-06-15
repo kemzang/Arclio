@@ -110,7 +110,7 @@ export const om = {
   feat_quality_1: "Hanga **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Frame rate ol'aanaa** akka jiru eegama — 60 fps, 120 fps, HDR",
   feat_quality_3:
-    "**To'annoo sagalee** — sagalee qofa gara MP3, M4A/AAC, Opus yookaan WAV export godhi; filannoo waliigalaa **Surround / Dolby filadhu** kaa'i; akkasumas yoo jiran buufataalee wal-qunnamtii keessatti Dolby AC-3/EC-3, multichannel, DRC fi sagalee ol'aanaa biroo filatamuu danda'u godhi",
+    "**Sagalee** — sagalee qofa gara MP3, M4A/AAC, Opus yookaan WAV export godhi. Buufataalee wal-qunnamtii keessatti, yoo jiran, sirna sagalee surround/Dolby maddaa (AC-3, E-AC-3, 5.1, DRC) filadhu, yookaan durtii waliigalaa **Surround / Dolby filadhu** kaa'i",
   feat_quality_4: "Preset saffisoo: *Qulqullina gaarii* · *Walirraanfattee* · *Faayila xiqqaa*",
   feat_privacy_h3: "Icciitii & to'annaa",
   feat_privacy_1:

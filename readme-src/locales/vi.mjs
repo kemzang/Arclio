@@ -110,7 +110,7 @@ export const vi = {
   feat_quality_1: "Lên tới **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Tốc độ khung hình cao** được giữ nguyên — 60 fps, 120 fps, HDR",
   feat_quality_3:
-    "**Điều khiển âm thanh** — xuất chỉ âm thanh thành MP3, M4A/AAC, Opus hoặc WAV; đặt tùy chọn toàn cục **Ưu tiên surround / Dolby**; và giữ các bản âm thanh gốc Dolby AC-3/EC-3, đa kênh, DRC cùng các định dạng âm thanh nâng cao khác có thể chọn trong tải xuống tương tác khi có sẵn",
+    "**Âm thanh** — xuất chỉ âm thanh thành MP3, M4A/AAC, Opus hoặc WAV. Trong tải xuống tương tác, chọn các bản âm thanh surround/Dolby gốc của nguồn (AC-3, E-AC-3, 5.1, DRC) khi có sẵn, hoặc đặt mặc định toàn cục **Ưu tiên surround / Dolby**",
   feat_quality_4: "Cài đặt nhanh: *Chất lượng tốt nhất* · *Cân bằng* · *File nhỏ*",
   feat_privacy_h3: "Quyền riêng tư & kiểm soát",
   feat_privacy_1:

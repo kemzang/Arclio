@@ -226,7 +226,7 @@ Arroxy ကို တစ်ခုတည်းသောရည်ရွယ်ချ
 
 - **4K UHD (2160p)** အထိ၊ 1440p, 1080p, 720p, 480p, 360p
 - **High frame rate** ကို မူရင်းအတိုင်း ထိန်းသိမ်း — 60 fps, 120 fps, HDR
-- **အသံထိန်းချုပ်မှုများ** — အသံသာကို MP3၊ M4A/AAC၊ Opus သို့မဟုတ် WAV အဖြစ် export လုပ်နိုင်သည်၊ global **surround / Dolby ကို ဦးစားပေးပါ** option ကို သတ်မှတ်နိုင်သည်၊ ရနိုင်ပါက interactive downloads တွင် native Dolby AC-3/EC-3၊ multichannel၊ DRC နှင့် အခြား advanced audio tracks များကို ရွေးချယ်နိုင်သည်
+- **အသံ** — အသံသာကို MP3၊ M4A/AAC၊ Opus သို့မဟုတ် WAV အဖြစ် export လုပ်ပါ။ interactive downloads တွင် ရနိုင်ပါက source ၏ native surround/Dolby tracks (AC-3၊ E-AC-3၊ 5.1၊ DRC) ကို ရွေးချယ်ပါ၊ သို့မဟုတ် global default **surround / Dolby ကို ဦးစားပေးပါ** ကို သတ်မှတ်ပါ
 - အမြန် presets: *အကောင်းဆုံးအရည်အသွေး* · * မျှတသော* · *ဖိုင်ငယ်*
 
 ### ကိုယ်ရေးကိုယ်တာနှင့် ထိန်းချုပ်မှု

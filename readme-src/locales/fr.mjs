@@ -111,7 +111,7 @@ export const fr = {
   feat_quality_1: "Jusqu'à **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**Haut framerate** préservé tel quel — 60 fps, 120 fps, HDR",
   feat_quality_3:
-    "**Contrôles audio** — exporte l'audio seul en MP3, M4A/AAC, Opus ou WAV ; définis une option globale **Préférer le surround / Dolby** ; et garde les pistes natives Dolby AC-3/EC-3, multicanal, DRC et autres pistes audio avancées sélectionnables dans les téléchargements interactifs quand elles sont disponibles",
+    "**Audio** — exporte l'audio seul en MP3, M4A/AAC, Opus ou WAV. Dans les téléchargements interactifs, choisis les pistes natives surround/Dolby de la source (AC-3, E-AC-3, 5.1, DRC) quand elles sont disponibles, ou définis une valeur par défaut globale **Préférer le surround / Dolby**",
   feat_quality_4: "Préréglages rapides : *Meilleure qualité* · *Équilibré* · *Petit fichier*",
   feat_privacy_h3: "Confidentialité & contrôle",
   feat_privacy_1:

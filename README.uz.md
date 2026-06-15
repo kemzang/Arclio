@@ -226,7 +226,7 @@ Arroxy bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl olin
 
 - **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p gacha
 - **Yuqori kadr tezligi** o'zgarmagan holda saqlanadi — 60 fps, 120 fps, HDR
-- **Audio boshqaruvlari** — faqat audioni MP3, M4A/AAC, Opus yoki WAV sifatida eksport qilish; global **Surround / Dolbyni afzal ko'rish** sozlamasini tanlash; va interaktiv yuklab olishlarda mavjud bo'lsa, asl Dolby AC-3/EC-3, ko'p kanalli, DRC va boshqa ilg'or audio treklarni tanlash mumkin bo'lishi
+- **Audio** — faqat audioni MP3, M4A/AAC, Opus yoki WAV sifatida eksport qiling. Interaktiv yuklab olishlarda mavjud bo'lganda manbaning asl surround/Dolby treklarini (AC-3, E-AC-3, 5.1, DRC) tanlang yoki global **Surround / Dolbyni afzal ko'rish** standartini o'rnating
 - Tezkor sozlamalar: *Eng yaxshi sifat* · *Muvozanatli* · *Kichik fayl*
 
 ### Maxfiylik va nazorat

@@ -111,7 +111,7 @@ export const zh = {
   feat_quality_1: "最高 **4K UHD（2160p）**、1440p、1080p、720p、480p、360p",
   feat_quality_2: "**高帧率**原样保留 — 60 fps、120 fps、HDR",
   feat_quality_3:
-    "**音频控制** — 将仅音频导出为 MP3、M4A/AAC、Opus 或 WAV；设置全局 **优先环绕声 / Dolby** 选项；并在可用时，让交互式下载中的原生 Dolby AC-3/EC-3、多声道、DRC 和其他高级音频轨道保持可选",
+    "**音频** — 将仅音频导出为 MP3、M4A/AAC、Opus 或 WAV。在交互式下载中，可用时选择来源的原生环绕声/Dolby 音轨（AC-3、E-AC-3、5.1、DRC），或设置全局默认 **优先环绕声 / Dolby**",
   feat_quality_4: "快速预设：*最佳画质* · *平衡* · *小文件*",
   feat_privacy_h3: "隐私与控制",
   feat_privacy_1:

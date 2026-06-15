@@ -226,7 +226,7 @@ Arroxy је направљен за једну ствар: налепите URL,
 
 - До **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p
 - **Висок број сличица** задржан без измена — 60 fps, 120 fps, HDR
-- **Kontrole zvuka** — izvezi samo audio kao MP3, M4A/AAC, Opus ili WAV; podesi globalnu opciju **Daj prednost surround / Dolby**; i zadrži izvorne Dolby AC-3/EC-3, višekanalne, DRC i druge napredne audio trake kao izbor u interaktivnim preuzimanjima kada su dostupne
+- **Zvuk** — izvezi samo audio kao MP3, M4A/AAC, Opus ili WAV. U interaktivnim preuzimanjima izaberi izvorne surround/Dolby trake izvora (AC-3, E-AC-3, 5.1, DRC) kada su dostupne, ili podesi globalnu podrazumevanu opciju **Daj prednost surround / Dolby**
 - Брзи предефинисани избори: *Најбољи квалитет* · *Уравнотежено* · *Мали фајл*
 
 ### Приватност и контрола

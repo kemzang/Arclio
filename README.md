@@ -226,7 +226,7 @@ Arroxy is built for one thing: paste a URL, get a clean local file. No accounts,
 
 - Up to **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p
 - **High frame rate** preserved as-is — 60 fps, 120 fps, HDR
-- **Audio controls** — export audio-only as MP3, M4A/AAC, Opus, or WAV; set a global **Prefer surround / Dolby** option; and keep native Dolby AC-3/EC-3, multichannel, DRC, and other advanced audio tracks selectable in interactive downloads when available
+- **Audio** — export audio-only as MP3, M4A/AAC, Opus, or WAV. In interactive downloads, pick the source's native surround/Dolby tracks (AC-3, E-AC-3, 5.1, DRC) when available, or set a global **Prefer surround / Dolby** default
 - Quick presets: *Best quality* · *Balanced* · *Small file*
 
 ### Privacy & control
