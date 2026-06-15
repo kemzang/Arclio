@@ -222,7 +222,7 @@ export function buildScenarioAppApiState(scenario: BrowserMockScenario, params?:
 }
 
 function buildAppVersion(scenario: BrowserMockScenario): string {
-	return scenario.id === 'update-whats-new' ? '0.4.0-beta.4' : '0.0.0-dev'
+	return scenario.id === 'update-whats-new' ? '0.4.0-beta.5' : '0.0.0-dev'
 }
 
 const PROFILE_SINGLE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'

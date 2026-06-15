@@ -10,7 +10,38 @@ When cutting a release, add a new section at the top in the same shape as the mo
 
 ## Unreleased
 
-Changes committed after `0.4.0-beta.4`.
+Changes committed after `0.4.0-beta.5`.
+
+---
+
+## 0.4.0-beta.5
+
+This beta adds user-facing release notes inside Arroxy, improves native audio selection, and tightens packaged smoke coverage before the 0.4.0 stable cut.
+
+## Highlights
+
+### Release Notes In The App
+
+Arroxy now surfaces the relevant changelog after an update instead of leaving release details only on GitHub.
+
+- Added a What's New dialog that reads the current version's changelog section and remembers the last version shown.
+- Added release-note copy to the app locales and browser-mock scenarios so the update path is easier to review.
+
+### Native Audio Controls
+
+Audio selection now has a clearer app-level preference for native audio tracks.
+
+- Added a setting for compatible audio versus surround-first native audio selection.
+- Improved preset, profile, playlist, and quick-download paths so native audio choices stay consistent from probing through queue submission.
+- Kept Dolby and DRC tracks out of the default compatible path unless the user chooses the surround preference.
+
+### Release Smoke Reliability
+
+The release and packaged smoke paths received another hardening pass.
+
+- Packaged runtime smoke now exercises the live probe mode used by release validation.
+- Live probe smoke tolerates known runner-side bot-wall responses while still catching real app/runtime regressions.
+- Runtime binary smoke guidance was expanded for future release troubleshooting.
 
 ---
 
