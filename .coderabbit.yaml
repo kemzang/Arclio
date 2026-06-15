@@ -82,28 +82,12 @@ reviews:
     - "!.agents/**"
     - "!.claude/**"
     - "!i18n/app.pot"
-    # Locale-heavy PRs can exceed CodeRabbit's file cap. Keep English + Russian in review scope
-    # and exclude the parallel generated/source locale artifacts explicitly; broad negative
+    # README files are generated from readme-src; review the source files, not the outputs.
+    - "!README.md"
+    - "!README.*.md"
+    # Locale-heavy PRs can exceed CodeRabbit's file cap. Keep English + Russian sources in review
+    # scope and exclude the parallel generated/source locale artifacts explicitly; broad negative
     # patterns cannot be re-included later by CodeRabbit.
-    - "!README.am.md"
-    - "!README.ar.md"
-    - "!README.bn.md"
-    - "!README.de.md"
-    - "!README.el.md"
-    - "!README.es.md"
-    - "!README.fr.md"
-    - "!README.hi.md"
-    - "!README.ja.md"
-    - "!README.my.md"
-    - "!README.om.md"
-    - "!README.ps.md"
-    - "!README.sr.md"
-    - "!README.sw.md"
-    - "!README.uk.md"
-    - "!README.ur.md"
-    - "!README.uz.md"
-    - "!README.vi.md"
-    - "!README.zh.md"
     - "!readme-src/locales/am.mjs"
     - "!readme-src/locales/ar.mjs"
     - "!readme-src/locales/bn.mjs"
