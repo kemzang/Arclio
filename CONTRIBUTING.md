@@ -45,22 +45,40 @@ Use the [issue templates](https://github.com/antonio-orionus/Arroxy/issues/new/c
 
 ## Local development
 
-Prerequisites: [Bun](https://bun.sh) and Node.js LTS. Linux additionally needs `bash` + `unzip` for the embedded-binary fetch.
+Recommended prerequisites: [mise](https://mise.jdx.dev), plus the native OS packages listed below. The shared `mise.toml` pins Node.js and Bun for this repo.
+
+If you do not use mise, install Node.js from `.node-version` and Bun from the root `package.json` `packageManager` field. Bun must already be available before `bun run bootstrap`; bootstrap repairs project-local dependencies and managed binaries, but it does not install Bun itself.
+
+Bun installs JavaScript dependencies, but it does not replace native OS prerequisites.
+
+- macOS: Xcode Command Line Tools may be needed for native rebuilds.
+- Windows: Visual Studio Build Tools and Python may be needed for native rebuilds.
+- Linux: Electron GUI libraries, compiler toolchain, Python, `tar`, and Playwright browser dependencies may be needed.
+
+Run `bun run doctor` after setup. It reports the specific missing tool or artifact when possible.
 
 ```bash
 git clone https://github.com/antonio-orionus/Arroxy.git
 cd Arroxy
-bun install
+mise install
+bun run bootstrap
+bun run doctor
 bun run dev          # runs the Electron app against the Vite renderer
 ```
+
+Without mise, manually activate the versions from `.node-version` and `package.json`, then run `bun run bootstrap`, `bun run doctor`, and `bun run dev`.
 
 For pure-renderer / UI work without the Electron shell:
 
 ```bash
-bunx vite src/renderer --port 5173 --mode browser-mock
+bun run dev:mock
 ```
 
 The renderer's `browserMock.ts` stubs `window.appApi` only in explicit `browser-mock` mode so the wizard, queue, and update banner all simulate without a backend. Electron dev and packaged builds use the real preload bridge.
+
+If you use git worktrees, create them with your own tool or harness, then run `bun run bootstrap` inside the new worktree.
+
+Playwright browser downloads use Playwright's normal user cache by default. If you need a strictly repo-local browser cache for a throwaway checkout, run commands with `PLAYWRIGHT_BROWSERS_PATH="$PWD/.playwright-browsers"`; that local cache path is ignored by Git.
 
 ## Required pre-PR checks
 
@@ -85,7 +103,7 @@ For a fresh-Windows-box bootstrap, see `scripts/build/build-windows.ps1`.
 ## Coding conventions
 
 - **TypeScript-strict.** No `any` / `unknown` without justification.
-- **Naming.** Reuse the domain glossary in [`CLAUDE.md`](CLAUDE.md) → "Domain Glossary" section (Job / ActiveJob / Phase / JobLifecycle / BinaryManager / NavContext / FormatPicker / etc.). Don't introduce parallel vocabularies.
+- **Naming.** Reuse the domain glossary in [`CONTEXT.md`](CONTEXT.md). Don't introduce parallel vocabularies.
 - **Architecture.** Renderer should not know how main fetches; main should not know which component renders. IPC channel names live in `src/shared/ipc.ts`; payload types live in `src/shared/types.ts`.
 - **Comments.** Don't restate what code already says. Comment when WHY is non-obvious — a hidden constraint, an OS-specific quirk, a workaround for a specific bug.
 - **No backwards-compat shims.** Delete old code rather than aliasing or re-exporting.
