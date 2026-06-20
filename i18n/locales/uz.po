@@ -375,33 +375,61 @@ msgctxt "presets.subtitle-only.label"
 msgid "Subtitles only"
 msgstr "Faqat subtitrlar"
 
-msgctxt "queue.activeCount"
-msgid "{{count}} downloading · {{percent}}%"
-msgstr "{{count}} ta yuklanmoqda · {{percent}}%"
+msgctxt "queue.artifact.companion"
+msgid "Companion"
+msgstr "Qo‘shimcha fayl"
 
-msgctxt "queue.cancelAll"
-msgid "Cancel all"
-msgstr "Hammasini bekor qilish"
+msgctxt "queue.artifact.description"
+msgid "Description"
+msgstr "Tavsif"
+
+msgctxt "queue.artifact.media"
+msgid "Media"
+msgstr "Media"
+
+msgctxt "queue.artifact.missing"
+msgid "Missing"
+msgstr "Yo‘q"
+
+msgctxt "queue.artifact.subtitle"
+msgid "Subtitle"
+msgstr "Subtitr"
+
+msgctxt "queue.artifact.thumbnail"
+msgid "Thumbnail"
+msgstr "Eskiz"
+
+msgctxt "queue.artifact.unknown"
+msgid "Artifact"
+msgstr "Fayl"
 
 msgctxt "queue.cancelAllTitle"
 msgid "Cancel all active and pending downloads"
 msgstr "Barcha faol va kutayotgan yuklamalarni bekor qilish"
-
-msgctxt "queue.clear"
-msgid "Clear"
-msgstr "Tozalash"
 
 msgctxt "queue.clearTitle"
 msgid "Clear completed downloads"
 msgstr "Tugallangan yuklamalarni tozalash"
 
 msgctxt "queue.empty"
-msgid "Downloads you queue will appear here"
-msgstr "Navbatga qo'shgan yuklamalaringiz bu yerda ko'rinadi"
+msgid "Queued downloads will appear here"
+msgstr "Navbatga qo‘shilgan yuklab olishlar shu yerda ko‘rinadi"
+
+msgctxt "queue.filterAll"
+msgid "All"
+msgstr "Hammasi"
+
+msgctxt "queue.filtersLabel"
+msgid "Queue status filters"
+msgstr "Navbat holati filtrlari"
+
+msgctxt "queue.globalActionsLabel"
+msgid "All items"
+msgstr "Barcha elementlar"
 
 msgctxt "queue.header"
-msgid "Download Queue"
-msgstr "Yuklash navbati"
+msgid "Downloads"
+msgstr "Yuklamalar"
 
 msgctxt "queue.item.cancel"
 msgid "Cancel"
@@ -411,29 +439,17 @@ msgctxt "queue.item.defaultError"
 msgid "Download failed"
 msgstr "Yuklama muvaffaqiyatsiz"
 
-msgctxt "queue.item.doneAt"
-msgid "Done {{time}}"
-msgstr "{{time}} da tugallandi"
-
-msgctxt "queue.item.hold"
-msgid "Hold"
-msgstr "Ushlab tur"
-
-msgctxt "queue.item.openUrl"
-msgid "Open URL"
-msgstr "URLni ochish"
+msgctxt "queue.item.openDestinationFolder"
+msgid "Open destination folder"
+msgstr "Manzil papkasini ochish"
 
 msgctxt "queue.item.pause"
 msgid "Pause"
 msgstr "To'xtatish"
 
-msgctxt "queue.item.paused"
-msgid "Paused"
-msgstr "To'xtatilgan"
-
-msgctxt "queue.item.priorityBadge"
-msgid "Priority"
-msgstr "Ustuvor"
+msgctxt "queue.item.pendingOnly"
+msgid "Pending only"
+msgstr "Faqat kutilayotganlar"
 
 msgctxt "queue.item.pullNow"
 msgid "Pull now — skip the queue"
@@ -446,6 +462,18 @@ msgstr "O'chirish"
 msgctxt "queue.item.resume"
 msgid "Resume"
 msgstr "Davom ettirish"
+
+msgctxt "queue.item.retry"
+msgid "Retry"
+msgstr "Qayta urinish"
+
+msgctxt "queue.item.setLocation"
+msgid "Set location"
+msgstr "Joylashuvni belgilash"
+
+msgctxt "queue.item.setLocationHint"
+msgid "Select pending items to set location."
+msgstr "Joylashuvni belgilash uchun kutilayotgan elementlarni tanlang."
 
 msgctxt "queue.item.statusCancelled"
 msgid "Cancelled"
@@ -475,45 +503,81 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "Yuklanmoqda"
 
-msgctxt "queue.limitRate"
-msgid "Speed: {{value}}"
-msgstr "Tezlik: {{value}}"
-
-msgctxt "queue.limitRateOff"
-msgid "Speed: Off"
-msgstr "Tezlik: o‘chiq"
-
-msgctxt "queue.limitRateTitle"
-msgid "Bandwidth limit for downloads"
-msgstr "Yuklab olishlar uchun tarmoq chegarasi"
-
-msgctxt "queue.noDownloads"
-msgid "No downloads yet."
-msgstr "Hali hech qanday yuklama yo'q."
-
-msgctxt "queue.pauseAll"
-msgid "Pause queue"
-msgstr "Hammasini to'xtatib turish"
-
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "Barcha faol yuklamalarni to'xtatib turish"
-
-msgctxt "queue.resumeAll"
-msgid "Resume queue"
-msgstr "Navbatni davom ettirish"
 
 msgctxt "queue.resumeAllTitle"
 msgid "Resume paused downloads and let the queue keep going"
 msgstr "Pauzadagi yuklab olishlarni davom ettirib, navbatni yurgizish"
 
-msgctxt "queue.tip"
-msgid "Your download is queued below — open anytime to track progress."
-msgstr "Yuklamangiz quyida navbatda — jarayonni kuzatish uchun istalgan vaqt oching."
+msgctxt "queue.selectedActionsLabel"
+msgid "Selected items"
+msgstr "Tanlangan elementlar"
 
-msgctxt "queue.toggleTitle"
-msgid "Toggle download queue"
-msgstr "Yuklash navbatini ko'rsatish/yashirish"
+msgctxt "queue.selectionSummary"
+msgid "{{selected}} selected · {{total}} total"
+msgstr "{{selected}} tanlangan · jami {{total}}"
+
+msgctxt "queue.tabLabel"
+msgid "Downloads"
+msgstr "Yuklamalar"
+
+msgctxt "queue.table.added"
+msgid "Added"
+msgstr "Qo‘shilgan"
+
+msgctxt "queue.table.artifacts"
+msgid "Artifacts"
+msgstr "Natija fayllari"
+
+msgctxt "queue.table.columns"
+msgid "Columns"
+msgstr "Ustunlar"
+
+msgctxt "queue.table.finished"
+msgid "Finished"
+msgstr "Tugagan"
+
+msgctxt "queue.table.format"
+msgid "Format"
+msgstr "Format"
+
+msgctxt "queue.table.hideArtifactsFor"
+msgid "Hide artifacts for {{title}}"
+msgstr "{{title}} uchun fayllarni yashirish"
+
+msgctxt "queue.table.notAvailable"
+msgid "—"
+msgstr "—"
+
+msgctxt "queue.table.outputTarget"
+msgid "Output target"
+msgstr "Natija manzili"
+
+msgctxt "queue.table.progress"
+msgid "Progress"
+msgstr "Jarayon"
+
+msgctxt "queue.table.showArtifactsFor"
+msgid "Show artifacts for {{title}}"
+msgstr "{{title}} uchun fayllarni ko‘rsatish"
+
+msgctxt "queue.table.sortBy"
+msgid "Sort by {{label}}"
+msgstr "{{label}} bo‘yicha saralash"
+
+msgctxt "queue.table.status"
+msgid "Status"
+msgstr "Holat"
+
+msgctxt "queue.table.title"
+msgid "Title"
+msgstr "Sarlavha"
+
+msgctxt "queue.tabTip"
+msgid "Downloads live in the Downloads tab now — open it anytime to track progress."
+msgstr "Yuklab olishlar endi Yuklamalar varag‘ida — jarayonni kuzatish uchun uni istalgan vaqtda oching."
 
 msgctxt "releaseNotes.continue"
 msgid "Continue"
@@ -646,14 +710,6 @@ msgstr "Ulashish"
 msgctxt "share.footerTooltip"
 msgid "Share Arroxy"
 msgstr "Arroxy ulashish"
-
-msgctxt "share.highValueBanner.body"
-msgid "Enjoying Arroxy? Help others discover it."
-msgstr "Arroxy yoqdimi? Boshqalarga uni topishga yordam bering."
-
-msgctxt "share.highValueBanner.dismiss"
-msgid "Dismiss share suggestion"
-msgstr "Ulashish taklifini yopish"
 
 msgctxt "share.shareAction"
 msgid "Share Arroxy"
@@ -1833,9 +1889,45 @@ msgctxt "wizard.url.clearAria"
 msgid "Clear URL"
 msgstr "URLni tozalash"
 
+msgctxt "wizard.url.clipboard.autofilledLink"
+msgid "Link added from clipboard"
+msgstr "Havola buferdan qo‘shildi"
+
+msgctxt "wizard.url.clipboard.autofilledLinks_one"
+msgid "{{count}} link opened from clipboard"
+msgstr "{{count}} ta havola buferdan ochildi"
+
+msgctxt "wizard.url.clipboard.autofilledLinks_other"
+msgid "{{count}} links opened from clipboard"
+msgstr "{{count}} ta havola buferdan ochildi"
+
 msgctxt "wizard.url.clipboard.dialog.cancelButton"
 msgid "Cancel"
 msgstr "Bekor qilish"
+
+msgctxt "wizard.url.clipboard.dismissCopiedLink"
+msgid "Dismiss copied link"
+msgstr "Nusxalangan havolani yopish"
+
+msgctxt "wizard.url.clipboard.openCopiedLinks_one"
+msgid "Open {{count}} copied link"
+msgstr "{{count}} ta nusxalangan havolani ochish"
+
+msgctxt "wizard.url.clipboard.openCopiedLinks_other"
+msgid "Open {{count}} copied links"
+msgstr "{{count}} ta nusxalangan havolani ochish"
+
+msgctxt "wizard.url.clipboard.pendingLinkReady"
+msgid "Copied link ready"
+msgstr "Nusxalangan havola tayyor"
+
+msgctxt "wizard.url.clipboard.pendingLinksReady_one"
+msgid "{{count}} copied link ready"
+msgstr "{{count}} ta nusxalangan havola tayyor"
+
+msgctxt "wizard.url.clipboard.pendingLinksReady_other"
+msgid "{{count}} copied links ready"
+msgstr "{{count}} ta nusxalangan havola tayyor"
 
 msgctxt "wizard.url.clipboard.toggle"
 msgid "Watch clipboard"
@@ -1844,6 +1936,10 @@ msgstr "Buferga nazar solish"
 msgctxt "wizard.url.clipboard.toggleDescription"
 msgid "Auto-fill the URL field when you copy a video link."
 msgstr "YouTube havolasini nusxalaganda URL maydonini avtomatik to'ldiradi."
+
+msgctxt "wizard.url.clipboard.useCopiedLink"
+msgid "Use copied link"
+msgstr "Nusxalangan havoladan foydalanish"
 
 msgctxt "wizard.url.closeToTray.toggle"
 msgid "Hide to tray on close"
@@ -2185,6 +2281,18 @@ msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "Faol profil"
 
+msgctxt "wizard.url.profile.badgeBuiltIn"
+msgid "Built-in"
+msgstr "Ichki"
+
+msgctxt "wizard.url.profile.badgeCustom"
+msgid "Custom"
+msgstr "Maxsus"
+
+msgctxt "wizard.url.profile.badgeModified"
+msgid "Modified"
+msgstr "O‘zgartirilgan"
+
 msgctxt "wizard.url.profile.changeGlobalDestination"
 msgid "Change global destination"
 msgstr "Umumiy saqlash manzilini o'zgartirish"
@@ -2192,6 +2300,10 @@ msgstr "Umumiy saqlash manzilini o'zgartirish"
 msgctxt "wizard.url.profile.destinationFallback"
 msgid "Destination"
 msgstr "Manzil"
+
+msgctxt "wizard.url.profile.edit"
+msgid "Edit"
+msgstr "Tahrirlash"
 
 msgctxt "wizard.url.profile.editActive"
 msgid "Edit active profile"
@@ -2212,6 +2324,22 @@ msgstr "Profilni almashtirish"
 msgctxt "wizard.url.profile.newProfile"
 msgid "New profile"
 msgstr "Yangi profil"
+
+msgctxt "wizard.url.profile.panelDescription"
+msgid "Create, select, edit, or remove reusable download setups."
+msgstr "Qayta ishlatiladigan yuklab olish sozlamalarini yarating, tanlang, tahrirlang yoki olib tashlang."
+
+msgctxt "wizard.url.profile.panelTitle"
+msgid "Download Profiles"
+msgstr "Yuklab olish profillari"
+
+msgctxt "wizard.url.profile.remove"
+msgid "Remove"
+msgstr "Olib tashlash"
+
+msgctxt "wizard.url.profile.reset"
+msgid "Reset"
+msgstr "Qayta tiklash"
 
 msgctxt "wizard.url.profile.switchAria"
 msgid "Switch download profile: {{profileName}}"
@@ -2288,3 +2416,11 @@ msgstr "Yakka fayl nomlariga video ID qo‘shish"
 msgctxt "wizard.url.singleFilenameId.toggleDescription"
 msgid "Keeps one-off downloads unique when titles change or collide."
 msgstr "Sarlavhalar o‘zgarganda yoki mos kelib qolganda yakka yuklab olishlarni noyob saqlaydi."
+
+msgctxt "wizard.url.tabs.profiles"
+msgid "Profiles"
+msgstr "Profillar"
+
+msgctxt "wizard.url.tabs.settings"
+msgid "Settings"
+msgstr "Sozlamalar"

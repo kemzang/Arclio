@@ -375,33 +375,61 @@ msgctxt "presets.subtitle-only.label"
 msgid "Subtitles only"
 msgstr "仅字幕"
 
-msgctxt "queue.activeCount"
-msgid "{{count}} downloading · {{percent}}%"
-msgstr "正在下载 {{count}} 项 · {{percent}}%"
+msgctxt "queue.artifact.companion"
+msgid "Companion"
+msgstr "伴随文件"
 
-msgctxt "queue.cancelAll"
-msgid "Cancel all"
-msgstr "全部取消"
+msgctxt "queue.artifact.description"
+msgid "Description"
+msgstr "描述"
+
+msgctxt "queue.artifact.media"
+msgid "Media"
+msgstr "媒体"
+
+msgctxt "queue.artifact.missing"
+msgid "Missing"
+msgstr "缺失"
+
+msgctxt "queue.artifact.subtitle"
+msgid "Subtitle"
+msgstr "字幕"
+
+msgctxt "queue.artifact.thumbnail"
+msgid "Thumbnail"
+msgstr "缩略图"
+
+msgctxt "queue.artifact.unknown"
+msgid "Artifact"
+msgstr "文件"
 
 msgctxt "queue.cancelAllTitle"
 msgid "Cancel all active and pending downloads"
 msgstr "取消所有正在进行和等待中的下载"
-
-msgctxt "queue.clear"
-msgid "Clear"
-msgstr "清空"
 
 msgctxt "queue.clearTitle"
 msgid "Clear completed downloads"
 msgstr "清除已完成的下载"
 
 msgctxt "queue.empty"
-msgid "Downloads you queue will appear here"
-msgstr "加入队列的下载会显示在这里"
+msgid "Queued downloads will appear here"
+msgstr "排队的下载会显示在这里"
+
+msgctxt "queue.filterAll"
+msgid "All"
+msgstr "全部"
+
+msgctxt "queue.filtersLabel"
+msgid "Queue status filters"
+msgstr "队列状态筛选"
+
+msgctxt "queue.globalActionsLabel"
+msgid "All items"
+msgstr "所有项目"
 
 msgctxt "queue.header"
-msgid "Download Queue"
-msgstr "下载队列"
+msgid "Downloads"
+msgstr "下载"
 
 msgctxt "queue.item.cancel"
 msgid "Cancel"
@@ -411,29 +439,17 @@ msgctxt "queue.item.defaultError"
 msgid "Download failed"
 msgstr "下载失败"
 
-msgctxt "queue.item.doneAt"
-msgid "Done {{time}}"
-msgstr "{{time}} 完成"
-
-msgctxt "queue.item.hold"
-msgid "Hold"
-msgstr "搁置"
-
-msgctxt "queue.item.openUrl"
-msgid "Open URL"
-msgstr "打开链接"
+msgctxt "queue.item.openDestinationFolder"
+msgid "Open destination folder"
+msgstr "打开目标文件夹"
 
 msgctxt "queue.item.pause"
 msgid "Pause"
 msgstr "暂停"
 
-msgctxt "queue.item.paused"
-msgid "Paused"
-msgstr "已暂停"
-
-msgctxt "queue.item.priorityBadge"
-msgid "Priority"
-msgstr "优先"
+msgctxt "queue.item.pendingOnly"
+msgid "Pending only"
+msgstr "仅待处理"
 
 msgctxt "queue.item.pullNow"
 msgid "Pull now — skip the queue"
@@ -446,6 +462,18 @@ msgstr "移除"
 msgctxt "queue.item.resume"
 msgid "Resume"
 msgstr "继续"
+
+msgctxt "queue.item.retry"
+msgid "Retry"
+msgstr "重试"
+
+msgctxt "queue.item.setLocation"
+msgid "Set location"
+msgstr "设置位置"
+
+msgctxt "queue.item.setLocationHint"
+msgid "Select pending items to set location."
+msgstr "选择待处理项目以设置位置。"
 
 msgctxt "queue.item.statusCancelled"
 msgid "Cancelled"
@@ -475,45 +503,81 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "下载中"
 
-msgctxt "queue.limitRate"
-msgid "Speed: {{value}}"
-msgstr "速度：{{value}}"
-
-msgctxt "queue.limitRateOff"
-msgid "Speed: Off"
-msgstr "速度：关闭"
-
-msgctxt "queue.limitRateTitle"
-msgid "Bandwidth limit for downloads"
-msgstr "下载带宽限制"
-
-msgctxt "queue.noDownloads"
-msgid "No downloads yet."
-msgstr "还没有下载任务。"
-
-msgctxt "queue.pauseAll"
-msgid "Pause queue"
-msgstr "全部暂停"
-
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "暂停所有正在进行的下载"
-
-msgctxt "queue.resumeAll"
-msgid "Resume queue"
-msgstr "继续队列"
 
 msgctxt "queue.resumeAllTitle"
 msgid "Resume paused downloads and let the queue keep going"
 msgstr "继续已暂停的下载并让队列继续运行"
 
-msgctxt "queue.tip"
-msgid "Your download is queued below — open anytime to track progress."
-msgstr "你的下载已在下方队列 — 随时打开查看进度。"
+msgctxt "queue.selectedActionsLabel"
+msgid "Selected items"
+msgstr "已选项目"
 
-msgctxt "queue.toggleTitle"
-msgid "Toggle download queue"
-msgstr "展开/收起下载队列"
+msgctxt "queue.selectionSummary"
+msgid "{{selected}} selected · {{total}} total"
+msgstr "已选择 {{selected}} · 共 {{total}}"
+
+msgctxt "queue.tabLabel"
+msgid "Downloads"
+msgstr "下载"
+
+msgctxt "queue.table.added"
+msgid "Added"
+msgstr "已添加"
+
+msgctxt "queue.table.artifacts"
+msgid "Artifacts"
+msgstr "输出文件"
+
+msgctxt "queue.table.columns"
+msgid "Columns"
+msgstr "列"
+
+msgctxt "queue.table.finished"
+msgid "Finished"
+msgstr "已完成"
+
+msgctxt "queue.table.format"
+msgid "Format"
+msgstr "格式"
+
+msgctxt "queue.table.hideArtifactsFor"
+msgid "Hide artifacts for {{title}}"
+msgstr "隐藏 {{title}} 的文件"
+
+msgctxt "queue.table.notAvailable"
+msgid "—"
+msgstr "—"
+
+msgctxt "queue.table.outputTarget"
+msgid "Output target"
+msgstr "输出目标"
+
+msgctxt "queue.table.progress"
+msgid "Progress"
+msgstr "进度"
+
+msgctxt "queue.table.showArtifactsFor"
+msgid "Show artifacts for {{title}}"
+msgstr "显示 {{title}} 的文件"
+
+msgctxt "queue.table.sortBy"
+msgid "Sort by {{label}}"
+msgstr "按 {{label}} 排序"
+
+msgctxt "queue.table.status"
+msgid "Status"
+msgstr "状态"
+
+msgctxt "queue.table.title"
+msgid "Title"
+msgstr "标题"
+
+msgctxt "queue.tabTip"
+msgid "Downloads live in the Downloads tab now — open it anytime to track progress."
+msgstr "下载现在都在下载标签页中 — 随时打开即可查看进度。"
 
 msgctxt "releaseNotes.continue"
 msgid "Continue"
@@ -646,14 +710,6 @@ msgstr "分享"
 msgctxt "share.footerTooltip"
 msgid "Share Arroxy"
 msgstr "分享 Arroxy"
-
-msgctxt "share.highValueBanner.body"
-msgid "Enjoying Arroxy? Help others discover it."
-msgstr "喜欢 Arroxy 吗？帮助其他人发现它。"
-
-msgctxt "share.highValueBanner.dismiss"
-msgid "Dismiss share suggestion"
-msgstr "关闭分享建议"
 
 msgctxt "share.shareAction"
 msgid "Share Arroxy"
@@ -1833,9 +1889,45 @@ msgctxt "wizard.url.clearAria"
 msgid "Clear URL"
 msgstr "清除 URL"
 
+msgctxt "wizard.url.clipboard.autofilledLink"
+msgid "Link added from clipboard"
+msgstr "已从剪贴板添加链接"
+
+msgctxt "wizard.url.clipboard.autofilledLinks_one"
+msgid "{{count}} link opened from clipboard"
+msgstr "已从剪贴板打开 {{count}} 个链接"
+
+msgctxt "wizard.url.clipboard.autofilledLinks_other"
+msgid "{{count}} links opened from clipboard"
+msgstr "已从剪贴板打开 {{count}} 个链接"
+
 msgctxt "wizard.url.clipboard.dialog.cancelButton"
 msgid "Cancel"
 msgstr "取消"
+
+msgctxt "wizard.url.clipboard.dismissCopiedLink"
+msgid "Dismiss copied link"
+msgstr "关闭复制的链接"
+
+msgctxt "wizard.url.clipboard.openCopiedLinks_one"
+msgid "Open {{count}} copied link"
+msgstr "打开 {{count}} 个复制的链接"
+
+msgctxt "wizard.url.clipboard.openCopiedLinks_other"
+msgid "Open {{count}} copied links"
+msgstr "打开 {{count}} 个复制的链接"
+
+msgctxt "wizard.url.clipboard.pendingLinkReady"
+msgid "Copied link ready"
+msgstr "复制的链接已准备好"
+
+msgctxt "wizard.url.clipboard.pendingLinksReady_one"
+msgid "{{count}} copied link ready"
+msgstr "{{count}} 个复制的链接已准备好"
+
+msgctxt "wizard.url.clipboard.pendingLinksReady_other"
+msgid "{{count}} copied links ready"
+msgstr "{{count}} 个复制的链接已准备好"
 
 msgctxt "wizard.url.clipboard.toggle"
 msgid "Watch clipboard"
@@ -1844,6 +1936,10 @@ msgstr "监听剪贴板"
 msgctxt "wizard.url.clipboard.toggleDescription"
 msgid "Auto-fill the URL field when you copy a video link."
 msgstr "复制 YouTube 链接时自动填充 URL 字段。"
+
+msgctxt "wizard.url.clipboard.useCopiedLink"
+msgid "Use copied link"
+msgstr "使用复制的链接"
 
 msgctxt "wizard.url.closeToTray.toggle"
 msgid "Hide to tray on close"
@@ -2185,6 +2281,18 @@ msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "活动配置文件"
 
+msgctxt "wizard.url.profile.badgeBuiltIn"
+msgid "Built-in"
+msgstr "内置"
+
+msgctxt "wizard.url.profile.badgeCustom"
+msgid "Custom"
+msgstr "自定义"
+
+msgctxt "wizard.url.profile.badgeModified"
+msgid "Modified"
+msgstr "已修改"
+
 msgctxt "wizard.url.profile.changeGlobalDestination"
 msgid "Change global destination"
 msgstr "更改全局保存位置"
@@ -2192,6 +2300,10 @@ msgstr "更改全局保存位置"
 msgctxt "wizard.url.profile.destinationFallback"
 msgid "Destination"
 msgstr "保存位置"
+
+msgctxt "wizard.url.profile.edit"
+msgid "Edit"
+msgstr "编辑"
 
 msgctxt "wizard.url.profile.editActive"
 msgid "Edit active profile"
@@ -2212,6 +2324,22 @@ msgstr "切换配置文件"
 msgctxt "wizard.url.profile.newProfile"
 msgid "New profile"
 msgstr "新建配置文件"
+
+msgctxt "wizard.url.profile.panelDescription"
+msgid "Create, select, edit, or remove reusable download setups."
+msgstr "创建、选择、编辑或移除可重复使用的下载设置。"
+
+msgctxt "wizard.url.profile.panelTitle"
+msgid "Download Profiles"
+msgstr "下载配置"
+
+msgctxt "wizard.url.profile.remove"
+msgid "Remove"
+msgstr "移除"
+
+msgctxt "wizard.url.profile.reset"
+msgid "Reset"
+msgstr "重置"
 
 msgctxt "wizard.url.profile.switchAria"
 msgid "Switch download profile: {{profileName}}"
@@ -2288,3 +2416,11 @@ msgstr "将视频 ID 添加到单个文件名"
 msgctxt "wizard.url.singleFilenameId.toggleDescription"
 msgid "Keeps one-off downloads unique when titles change or collide."
 msgstr "当标题变化或重复时，让单次下载保持唯一。"
+
+msgctxt "wizard.url.tabs.profiles"
+msgid "Profiles"
+msgstr "配置"
+
+msgctxt "wizard.url.tabs.settings"
+msgid "Settings"
+msgstr "设置"

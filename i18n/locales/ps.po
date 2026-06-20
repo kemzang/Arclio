@@ -375,33 +375,61 @@ msgctxt "presets.subtitle-only.label"
 msgid "Subtitles only"
 msgstr "یوازې ژباړلیکونه"
 
-msgctxt "queue.activeCount"
-msgid "{{count}} downloading · {{percent}}%"
-msgstr "{{count}} ډاونلوډیږي · {{percent}}%"
+msgctxt "queue.artifact.companion"
+msgid "Companion"
+msgstr "ملګری فایل"
 
-msgctxt "queue.cancelAll"
-msgid "Cancel all"
-msgstr "ټول لغوه کړئ"
+msgctxt "queue.artifact.description"
+msgid "Description"
+msgstr "تفصیل"
+
+msgctxt "queue.artifact.media"
+msgid "Media"
+msgstr "رسنۍ"
+
+msgctxt "queue.artifact.missing"
+msgid "Missing"
+msgstr "ورک"
+
+msgctxt "queue.artifact.subtitle"
+msgid "Subtitle"
+msgstr "ژباړلیک"
+
+msgctxt "queue.artifact.thumbnail"
+msgid "Thumbnail"
+msgstr "وړه انځور"
+
+msgctxt "queue.artifact.unknown"
+msgid "Artifact"
+msgstr "فایل"
 
 msgctxt "queue.cancelAllTitle"
 msgid "Cancel all active and pending downloads"
 msgstr "ټول فعال او انتظار کې ډاونلوډونه لغوه کړئ"
-
-msgctxt "queue.clear"
-msgid "Clear"
-msgstr "پاکول"
 
 msgctxt "queue.clearTitle"
 msgid "Clear completed downloads"
 msgstr "بشپړ شوي ډاونلوډونه پاکول"
 
 msgctxt "queue.empty"
-msgid "Downloads you queue will appear here"
-msgstr "هغه ډاونلوډونه چې تاسو کتار کې اچوئ دلته ښکاره کیږي"
+msgid "Queued downloads will appear here"
+msgstr "په کتار کې ډاونلوډونه به دلته ښکاره شي"
+
+msgctxt "queue.filterAll"
+msgid "All"
+msgstr "ټول"
+
+msgctxt "queue.filtersLabel"
+msgid "Queue status filters"
+msgstr "د کتار حالت چاڼګرونه"
+
+msgctxt "queue.globalActionsLabel"
+msgid "All items"
+msgstr "ټول توکي"
 
 msgctxt "queue.header"
-msgid "Download Queue"
-msgstr "د ډاونلوډ کتار"
+msgid "Downloads"
+msgstr "ډاونلوډونه"
 
 msgctxt "queue.item.cancel"
 msgid "Cancel"
@@ -411,29 +439,17 @@ msgctxt "queue.item.defaultError"
 msgid "Download failed"
 msgstr "ډاونلوډ ناکام شو"
 
-msgctxt "queue.item.doneAt"
-msgid "Done {{time}}"
-msgstr "{{time}} بشپړ شو"
-
-msgctxt "queue.item.hold"
-msgid "Hold"
-msgstr "ودرول"
-
-msgctxt "queue.item.openUrl"
-msgid "Open URL"
-msgstr "URL پرانیستل"
+msgctxt "queue.item.openDestinationFolder"
+msgid "Open destination folder"
+msgstr "د مقصد پوښۍ پرانیزئ"
 
 msgctxt "queue.item.pause"
 msgid "Pause"
 msgstr "درول"
 
-msgctxt "queue.item.paused"
-msgid "Paused"
-msgstr "درولی شوی"
-
-msgctxt "queue.item.priorityBadge"
-msgid "Priority"
-msgstr "لومړیتوب"
+msgctxt "queue.item.pendingOnly"
+msgid "Pending only"
+msgstr "یوازې پاتې"
 
 msgctxt "queue.item.pullNow"
 msgid "Pull now — skip the queue"
@@ -446,6 +462,18 @@ msgstr "لیرې کول"
 msgctxt "queue.item.resume"
 msgid "Resume"
 msgstr "دوام"
+
+msgctxt "queue.item.retry"
+msgid "Retry"
+msgstr "بیا هڅه وکړئ"
+
+msgctxt "queue.item.setLocation"
+msgid "Set location"
+msgstr "ځای وټاکئ"
+
+msgctxt "queue.item.setLocationHint"
+msgid "Select pending items to set location."
+msgstr "د ځای ټاکلو لپاره په تمه توکي وټاکئ."
 
 msgctxt "queue.item.statusCancelled"
 msgid "Cancelled"
@@ -475,45 +503,81 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "ډاونلوډ کېږي"
 
-msgctxt "queue.limitRate"
-msgid "Speed: {{value}}"
-msgstr "سرعت: {{value}}"
-
-msgctxt "queue.limitRateOff"
-msgid "Speed: Off"
-msgstr "سرعت: بند"
-
-msgctxt "queue.limitRateTitle"
-msgid "Bandwidth limit for downloads"
-msgstr "د ډاونلوډونو بینډوېډت حد"
-
-msgctxt "queue.noDownloads"
-msgid "No downloads yet."
-msgstr "لا هیڅ ډاونلوډ نشته."
-
-msgctxt "queue.pauseAll"
-msgid "Pause queue"
-msgstr "ټول ودروئ"
-
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "ټول فعال ډاونلوډونه ودروئ"
-
-msgctxt "queue.resumeAll"
-msgid "Resume queue"
-msgstr "قطار ته دوام ورکړئ"
 
 msgctxt "queue.resumeAllTitle"
 msgid "Resume paused downloads and let the queue keep going"
 msgstr "درول شوي ډاونلوډونه دوام کړئ او قطار روان پرېږدئ"
 
-msgctxt "queue.tip"
-msgid "Your download is queued below — open anytime to track progress."
-msgstr "ستاسو ډاونلوډ لاندې کتار شوی — پرمختګ تعقیبولو لپاره هر وخت پرانیستلی شئ."
+msgctxt "queue.selectedActionsLabel"
+msgid "Selected items"
+msgstr "ټاکل شوي توکي"
 
-msgctxt "queue.toggleTitle"
-msgid "Toggle download queue"
-msgstr "د ډاونلوډ کتار پرانیستل/تړل"
+msgctxt "queue.selectionSummary"
+msgid "{{selected}} selected · {{total}} total"
+msgstr "{{selected}} ټاکل شوي · ټول {{total}}"
+
+msgctxt "queue.tabLabel"
+msgid "Downloads"
+msgstr "ډاونلوډونه"
+
+msgctxt "queue.table.added"
+msgid "Added"
+msgstr "زیات شو"
+
+msgctxt "queue.table.artifacts"
+msgid "Artifacts"
+msgstr "وتلې فایلونه"
+
+msgctxt "queue.table.columns"
+msgid "Columns"
+msgstr "ستنې"
+
+msgctxt "queue.table.finished"
+msgid "Finished"
+msgstr "بشپړ شو"
+
+msgctxt "queue.table.format"
+msgid "Format"
+msgstr "بڼه"
+
+msgctxt "queue.table.hideArtifactsFor"
+msgid "Hide artifacts for {{title}}"
+msgstr "د {{title}} فایلونه پټ کړه"
+
+msgctxt "queue.table.notAvailable"
+msgid "—"
+msgstr "—"
+
+msgctxt "queue.table.outputTarget"
+msgid "Output target"
+msgstr "د وتلو هدف"
+
+msgctxt "queue.table.progress"
+msgid "Progress"
+msgstr "پرمختګ"
+
+msgctxt "queue.table.showArtifactsFor"
+msgid "Show artifacts for {{title}}"
+msgstr "د {{title}} فایلونه وښیه"
+
+msgctxt "queue.table.sortBy"
+msgid "Sort by {{label}}"
+msgstr "د {{label}} له مخې ترتیب کړه"
+
+msgctxt "queue.table.status"
+msgid "Status"
+msgstr "حالت"
+
+msgctxt "queue.table.title"
+msgid "Title"
+msgstr "سرلیک"
+
+msgctxt "queue.tabTip"
+msgid "Downloads live in the Downloads tab now — open it anytime to track progress."
+msgstr "ډاونلوډونه اوس د ډاونلوډونو ټب کې دي — د پرمختګ د کتلو لپاره یې هر وخت پرانیزئ."
 
 msgctxt "releaseNotes.continue"
 msgid "Continue"
@@ -646,14 +710,6 @@ msgstr "شریک کړئ"
 msgctxt "share.footerTooltip"
 msgid "Share Arroxy"
 msgstr "Arroxy شریک کړئ"
-
-msgctxt "share.highValueBanner.body"
-msgid "Enjoying Arroxy? Help others discover it."
-msgstr "ایا Arroxy خوند درکوي؟ نورو خلکو سره مرسته وکړئ چې ومومي."
-
-msgctxt "share.highValueBanner.dismiss"
-msgid "Dismiss share suggestion"
-msgstr "د شریکولو وړاندیز رد کړئ"
 
 msgctxt "share.shareAction"
 msgid "Share Arroxy"
@@ -1833,9 +1889,45 @@ msgctxt "wizard.url.clearAria"
 msgid "Clear URL"
 msgstr "URL پاکول"
 
+msgctxt "wizard.url.clipboard.autofilledLink"
+msgid "Link added from clipboard"
+msgstr "لینک له کلېپبورډه زیات شو"
+
+msgctxt "wizard.url.clipboard.autofilledLinks_one"
+msgid "{{count}} link opened from clipboard"
+msgstr "{{count}} لینک له کلېپبورډه پرانیستل شو"
+
+msgctxt "wizard.url.clipboard.autofilledLinks_other"
+msgid "{{count}} links opened from clipboard"
+msgstr "{{count}} لینکونه له کلېپبورډه پرانیستل شول"
+
 msgctxt "wizard.url.clipboard.dialog.cancelButton"
 msgid "Cancel"
 msgstr "لغوه کړه"
+
+msgctxt "wizard.url.clipboard.dismissCopiedLink"
+msgid "Dismiss copied link"
+msgstr "کاپي شوی لینک بند کړه"
+
+msgctxt "wizard.url.clipboard.openCopiedLinks_one"
+msgid "Open {{count}} copied link"
+msgstr "{{count}} کاپي شوی لینک پرانیزه"
+
+msgctxt "wizard.url.clipboard.openCopiedLinks_other"
+msgid "Open {{count}} copied links"
+msgstr "{{count}} کاپي شوي لینکونه پرانیزه"
+
+msgctxt "wizard.url.clipboard.pendingLinkReady"
+msgid "Copied link ready"
+msgstr "کاپي شوی لینک چمتو دی"
+
+msgctxt "wizard.url.clipboard.pendingLinksReady_one"
+msgid "{{count}} copied link ready"
+msgstr "{{count}} کاپي شوی لینک چمتو دی"
+
+msgctxt "wizard.url.clipboard.pendingLinksReady_other"
+msgid "{{count}} copied links ready"
+msgstr "{{count}} کاپي شوي لینکونه چمتو دي"
 
 msgctxt "wizard.url.clipboard.toggle"
 msgid "Watch clipboard"
@@ -1844,6 +1936,10 @@ msgstr "کلیپبورډ وګورئ"
 msgctxt "wizard.url.clipboard.toggleDescription"
 msgid "Auto-fill the URL field when you copy a video link."
 msgstr "کله چې تاسو یو YouTube لینک کاپي کړئ، د URL ساحه اتوماتیک ډکه کړئ."
+
+msgctxt "wizard.url.clipboard.useCopiedLink"
+msgid "Use copied link"
+msgstr "کاپي شوی لینک وکاروه"
 
 msgctxt "wizard.url.closeToTray.toggle"
 msgid "Hide to tray on close"
@@ -2185,6 +2281,18 @@ msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "فعال پروفایل"
 
+msgctxt "wizard.url.profile.badgeBuiltIn"
+msgid "Built-in"
+msgstr "دننه جوړ"
+
+msgctxt "wizard.url.profile.badgeCustom"
+msgid "Custom"
+msgstr "دودیز"
+
+msgctxt "wizard.url.profile.badgeModified"
+msgid "Modified"
+msgstr "بدل شوی"
+
 msgctxt "wizard.url.profile.changeGlobalDestination"
 msgid "Change global destination"
 msgstr "عمومي موخه بدله کړئ"
@@ -2192,6 +2300,10 @@ msgstr "عمومي موخه بدله کړئ"
 msgctxt "wizard.url.profile.destinationFallback"
 msgid "Destination"
 msgstr "موخه"
+
+msgctxt "wizard.url.profile.edit"
+msgid "Edit"
+msgstr "سمول"
 
 msgctxt "wizard.url.profile.editActive"
 msgid "Edit active profile"
@@ -2212,6 +2324,22 @@ msgstr "پروفایل بدل کړئ"
 msgctxt "wizard.url.profile.newProfile"
 msgid "New profile"
 msgstr "نوی پروفایل"
+
+msgctxt "wizard.url.profile.panelDescription"
+msgid "Create, select, edit, or remove reusable download setups."
+msgstr "د بیا کارولو وړ د ډاونلوډ امستنې جوړې، غوره، سمې یا لرې کړئ."
+
+msgctxt "wizard.url.profile.panelTitle"
+msgid "Download Profiles"
+msgstr "د ډاونلوډ پروفایلونه"
+
+msgctxt "wizard.url.profile.remove"
+msgid "Remove"
+msgstr "لرې کول"
+
+msgctxt "wizard.url.profile.reset"
+msgid "Reset"
+msgstr "بیا تنظیمول"
 
 msgctxt "wizard.url.profile.switchAria"
 msgid "Switch download profile: {{profileName}}"
@@ -2288,3 +2416,11 @@ msgstr "د یوازینو فایل نومونو ته د ویډیو ID ورزیا
 msgctxt "wizard.url.singleFilenameId.toggleDescription"
 msgid "Keeps one-off downloads unique when titles change or collide."
 msgstr "کله چې سرلیکونه بدل شي یا سره ټکر وکړي، یو ځلني ډاونلوډونه ځانګړي ساتي."
+
+msgctxt "wizard.url.tabs.profiles"
+msgid "Profiles"
+msgstr "پروفایلونه"
+
+msgctxt "wizard.url.tabs.settings"
+msgid "Settings"
+msgstr "امستنې"

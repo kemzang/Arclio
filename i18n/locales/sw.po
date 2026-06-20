@@ -375,33 +375,61 @@ msgctxt "presets.subtitle-only.label"
 msgid "Subtitles only"
 msgstr "Manukuu peke yake"
 
-msgctxt "queue.activeCount"
-msgid "{{count}} downloading · {{percent}}%"
-msgstr "{{count}} inapakua · {{percent}}%"
+msgctxt "queue.artifact.companion"
+msgid "Companion"
+msgstr "Faili saidizi"
 
-msgctxt "queue.cancelAll"
-msgid "Cancel all"
-msgstr "Ghairi vyote"
+msgctxt "queue.artifact.description"
+msgid "Description"
+msgstr "Maelezo"
+
+msgctxt "queue.artifact.media"
+msgid "Media"
+msgstr "Midia"
+
+msgctxt "queue.artifact.missing"
+msgid "Missing"
+msgstr "Haipo"
+
+msgctxt "queue.artifact.subtitle"
+msgid "Subtitle"
+msgstr "Manukuu"
+
+msgctxt "queue.artifact.thumbnail"
+msgid "Thumbnail"
+msgstr "Kijipicha"
+
+msgctxt "queue.artifact.unknown"
+msgid "Artifact"
+msgstr "Faili"
 
 msgctxt "queue.cancelAllTitle"
 msgid "Cancel all active and pending downloads"
 msgstr "Ghairi vipakuzi vyote vinavyoendelea na vinavyosubiri"
-
-msgctxt "queue.clear"
-msgid "Clear"
-msgstr "Futa"
 
 msgctxt "queue.clearTitle"
 msgid "Clear completed downloads"
 msgstr "Futa vipakuzi vilivyokamilika"
 
 msgctxt "queue.empty"
-msgid "Downloads you queue will appear here"
-msgstr "Vipakuzi unavyoweka kwenye foleni vitaonekana hapa"
+msgid "Queued downloads will appear here"
+msgstr "Vipakuliwa vilivyowekwa kwenye foleni vitaonekana hapa"
+
+msgctxt "queue.filterAll"
+msgid "All"
+msgstr "Zote"
+
+msgctxt "queue.filtersLabel"
+msgid "Queue status filters"
+msgstr "Vichujio vya hali ya foleni"
+
+msgctxt "queue.globalActionsLabel"
+msgid "All items"
+msgstr "Vipengee vyote"
 
 msgctxt "queue.header"
-msgid "Download Queue"
-msgstr "Foleni ya Kupakua"
+msgid "Downloads"
+msgstr "Vipakuliwa"
 
 msgctxt "queue.item.cancel"
 msgid "Cancel"
@@ -411,29 +439,17 @@ msgctxt "queue.item.defaultError"
 msgid "Download failed"
 msgstr "Upakuaji umeshindwa"
 
-msgctxt "queue.item.doneAt"
-msgid "Done {{time}}"
-msgstr "Imekamilika {{time}}"
-
-msgctxt "queue.item.hold"
-msgid "Hold"
-msgstr "Simama"
-
-msgctxt "queue.item.openUrl"
-msgid "Open URL"
-msgstr "Fungua URL"
+msgctxt "queue.item.openDestinationFolder"
+msgid "Open destination folder"
+msgstr "Fungua folda lengwa"
 
 msgctxt "queue.item.pause"
 msgid "Pause"
 msgstr "Simamisha"
 
-msgctxt "queue.item.paused"
-msgid "Paused"
-msgstr "Imesimamishwa"
-
-msgctxt "queue.item.priorityBadge"
-msgid "Priority"
-msgstr "Kipaumbele"
+msgctxt "queue.item.pendingOnly"
+msgid "Pending only"
+msgstr "Vinavyosubiri pekee"
 
 msgctxt "queue.item.pullNow"
 msgid "Pull now — skip the queue"
@@ -446,6 +462,18 @@ msgstr "Ondoa"
 msgctxt "queue.item.resume"
 msgid "Resume"
 msgstr "Endelea"
+
+msgctxt "queue.item.retry"
+msgid "Retry"
+msgstr "Jaribu tena"
+
+msgctxt "queue.item.setLocation"
+msgid "Set location"
+msgstr "Weka mahali"
+
+msgctxt "queue.item.setLocationHint"
+msgid "Select pending items to set location."
+msgstr "Chagua vipengee vinavyosubiri ili kuweka mahali."
 
 msgctxt "queue.item.statusCancelled"
 msgid "Cancelled"
@@ -475,45 +503,81 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "Inapakua"
 
-msgctxt "queue.limitRate"
-msgid "Speed: {{value}}"
-msgstr "Kasi: {{value}}"
-
-msgctxt "queue.limitRateOff"
-msgid "Speed: Off"
-msgstr "Kasi: Imezimwa"
-
-msgctxt "queue.limitRateTitle"
-msgid "Bandwidth limit for downloads"
-msgstr "Kikomo cha bandwidth kwa vipakuliwa"
-
-msgctxt "queue.noDownloads"
-msgid "No downloads yet."
-msgstr "Hakuna vipakuzi bado."
-
-msgctxt "queue.pauseAll"
-msgid "Pause queue"
-msgstr "Simamisha vyote"
-
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "Simamisha vipakuzi vyote vinavyoendelea"
-
-msgctxt "queue.resumeAll"
-msgid "Resume queue"
-msgstr "Endeleza foleni"
 
 msgctxt "queue.resumeAllTitle"
 msgid "Resume paused downloads and let the queue keep going"
 msgstr "Endeleza vipakuliwa vilivyosimamishwa na ruhusu foleni iendelee"
 
-msgctxt "queue.tip"
-msgid "Your download is queued below — open anytime to track progress."
-msgstr "Kipakuliwa chako kimewekwa kwenye foleni hapa chini — fungua wakati wowote kufuatilia maendeleo."
+msgctxt "queue.selectedActionsLabel"
+msgid "Selected items"
+msgstr "Vipengee vilivyochaguliwa"
 
-msgctxt "queue.toggleTitle"
-msgid "Toggle download queue"
-msgstr "Geuza foleni ya kupakua"
+msgctxt "queue.selectionSummary"
+msgid "{{selected}} selected · {{total}} total"
+msgstr "{{selected}} zimechaguliwa · jumla {{total}}"
+
+msgctxt "queue.tabLabel"
+msgid "Downloads"
+msgstr "Vipakuliwa"
+
+msgctxt "queue.table.added"
+msgid "Added"
+msgstr "Imeongezwa"
+
+msgctxt "queue.table.artifacts"
+msgid "Artifacts"
+msgstr "Faili za matokeo"
+
+msgctxt "queue.table.columns"
+msgid "Columns"
+msgstr "Safu wima"
+
+msgctxt "queue.table.finished"
+msgid "Finished"
+msgstr "Imekamilika"
+
+msgctxt "queue.table.format"
+msgid "Format"
+msgstr "Umbizo"
+
+msgctxt "queue.table.hideArtifactsFor"
+msgid "Hide artifacts for {{title}}"
+msgstr "Ficha faili za {{title}}"
+
+msgctxt "queue.table.notAvailable"
+msgid "—"
+msgstr "—"
+
+msgctxt "queue.table.outputTarget"
+msgid "Output target"
+msgstr "Lengo la matokeo"
+
+msgctxt "queue.table.progress"
+msgid "Progress"
+msgstr "Maendeleo"
+
+msgctxt "queue.table.showArtifactsFor"
+msgid "Show artifacts for {{title}}"
+msgstr "Onyesha faili za {{title}}"
+
+msgctxt "queue.table.sortBy"
+msgid "Sort by {{label}}"
+msgstr "Panga kwa {{label}}"
+
+msgctxt "queue.table.status"
+msgid "Status"
+msgstr "Hali"
+
+msgctxt "queue.table.title"
+msgid "Title"
+msgstr "Kichwa"
+
+msgctxt "queue.tabTip"
+msgid "Downloads live in the Downloads tab now — open it anytime to track progress."
+msgstr "Vipakuliwa sasa viko kwenye kichupo cha Vipakuliwa — kifungue wakati wowote kufuatilia maendeleo."
 
 msgctxt "releaseNotes.continue"
 msgid "Continue"
@@ -646,14 +710,6 @@ msgstr "Shiriki"
 msgctxt "share.footerTooltip"
 msgid "Share Arroxy"
 msgstr "Shiriki Arroxy"
-
-msgctxt "share.highValueBanner.body"
-msgid "Enjoying Arroxy? Help others discover it."
-msgstr "Unafurahia Arroxy? Saidia wengine kuigundua."
-
-msgctxt "share.highValueBanner.dismiss"
-msgid "Dismiss share suggestion"
-msgstr "Funga pendekezo la kushiriki"
 
 msgctxt "share.shareAction"
 msgid "Share Arroxy"
@@ -1833,9 +1889,45 @@ msgctxt "wizard.url.clearAria"
 msgid "Clear URL"
 msgstr "Futa URL"
 
+msgctxt "wizard.url.clipboard.autofilledLink"
+msgid "Link added from clipboard"
+msgstr "Kiungo kimeongezwa kutoka ubao wa kunakili"
+
+msgctxt "wizard.url.clipboard.autofilledLinks_one"
+msgid "{{count}} link opened from clipboard"
+msgstr "Kiungo {{count}} kimefunguliwa kutoka ubao wa kunakili"
+
+msgctxt "wizard.url.clipboard.autofilledLinks_other"
+msgid "{{count}} links opened from clipboard"
+msgstr "Viungo {{count}} vimefunguliwa kutoka ubao wa kunakili"
+
 msgctxt "wizard.url.clipboard.dialog.cancelButton"
 msgid "Cancel"
 msgstr "Ghairi"
+
+msgctxt "wizard.url.clipboard.dismissCopiedLink"
+msgid "Dismiss copied link"
+msgstr "Ondoa kiungo kilichonakiliwa"
+
+msgctxt "wizard.url.clipboard.openCopiedLinks_one"
+msgid "Open {{count}} copied link"
+msgstr "Fungua kiungo {{count}} kilichonakiliwa"
+
+msgctxt "wizard.url.clipboard.openCopiedLinks_other"
+msgid "Open {{count}} copied links"
+msgstr "Fungua viungo {{count}} vilivyonakiliwa"
+
+msgctxt "wizard.url.clipboard.pendingLinkReady"
+msgid "Copied link ready"
+msgstr "Kiungo kilichonakiliwa kiko tayari"
+
+msgctxt "wizard.url.clipboard.pendingLinksReady_one"
+msgid "{{count}} copied link ready"
+msgstr "Kiungo {{count}} kilichonakiliwa kiko tayari"
+
+msgctxt "wizard.url.clipboard.pendingLinksReady_other"
+msgid "{{count}} copied links ready"
+msgstr "Viungo {{count}} vilivyonakiliwa viko tayari"
 
 msgctxt "wizard.url.clipboard.toggle"
 msgid "Watch clipboard"
@@ -1844,6 +1936,10 @@ msgstr "Angalia ubao wa kunakili"
 msgctxt "wizard.url.clipboard.toggleDescription"
 msgid "Auto-fill the URL field when you copy a video link."
 msgstr "Jaza sehemu ya URL kiotomatiki unaponakili kiungo cha YouTube."
+
+msgctxt "wizard.url.clipboard.useCopiedLink"
+msgid "Use copied link"
+msgstr "Tumia kiungo kilichonakiliwa"
 
 msgctxt "wizard.url.closeToTray.toggle"
 msgid "Hide to tray on close"
@@ -2185,6 +2281,18 @@ msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "Wasifu unaotumika"
 
+msgctxt "wizard.url.profile.badgeBuiltIn"
+msgid "Built-in"
+msgstr "Imejengwa ndani"
+
+msgctxt "wizard.url.profile.badgeCustom"
+msgid "Custom"
+msgstr "Maalum"
+
+msgctxt "wizard.url.profile.badgeModified"
+msgid "Modified"
+msgstr "Imebadilishwa"
+
 msgctxt "wizard.url.profile.changeGlobalDestination"
 msgid "Change global destination"
 msgstr "Badilisha mahali pa kuhifadhi kwa jumla"
@@ -2192,6 +2300,10 @@ msgstr "Badilisha mahali pa kuhifadhi kwa jumla"
 msgctxt "wizard.url.profile.destinationFallback"
 msgid "Destination"
 msgstr "Mahali pa kuhifadhi"
+
+msgctxt "wizard.url.profile.edit"
+msgid "Edit"
+msgstr "Hariri"
 
 msgctxt "wizard.url.profile.editActive"
 msgid "Edit active profile"
@@ -2212,6 +2324,22 @@ msgstr "Badilisha wasifu"
 msgctxt "wizard.url.profile.newProfile"
 msgid "New profile"
 msgstr "Wasifu mpya"
+
+msgctxt "wizard.url.profile.panelDescription"
+msgid "Create, select, edit, or remove reusable download setups."
+msgstr "Unda, chagua, hariri, au ondoa mipangilio ya upakuaji inayoweza kutumika tena."
+
+msgctxt "wizard.url.profile.panelTitle"
+msgid "Download Profiles"
+msgstr "Wasifu wa upakuaji"
+
+msgctxt "wizard.url.profile.remove"
+msgid "Remove"
+msgstr "Ondoa"
+
+msgctxt "wizard.url.profile.reset"
+msgid "Reset"
+msgstr "Weka upya"
 
 msgctxt "wizard.url.profile.switchAria"
 msgid "Switch download profile: {{profileName}}"
@@ -2288,3 +2416,11 @@ msgstr "Ongeza ID ya video kwenye majina ya faili moja moja"
 msgctxt "wizard.url.singleFilenameId.toggleDescription"
 msgid "Keeps one-off downloads unique when titles change or collide."
 msgstr "Huweka upakuaji wa mara moja kuwa wa kipekee wakati vichwa vinabadilika au kugongana."
+
+msgctxt "wizard.url.tabs.profiles"
+msgid "Profiles"
+msgstr "Wasifu"
+
+msgctxt "wizard.url.tabs.settings"
+msgid "Settings"
+msgstr "Mipangilio"
