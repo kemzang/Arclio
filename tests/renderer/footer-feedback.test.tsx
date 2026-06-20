@@ -100,9 +100,10 @@ describe('Footer feedback controls', () => {
 		render(<App />)
 		await screen.findByTestId('app-footer')
 		expect(screen.queryByTestId('btn-debug')).not.toBeInTheDocument()
+		expect(screen.queryByTestId('btn-about-version')).not.toBeInTheDocument()
 		expect(screen.getByTestId('btn-discord')).toBeInTheDocument()
 		expect(screen.getByTestId('btn-feedback')).toBeInTheDocument()
-		expect(screen.getByTestId('btn-logs')).toBeInTheDocument()
+		expect(screen.queryByTestId('btn-logs')).not.toBeInTheDocument()
 	})
 
 	it('uses compact footer classes so mobile widths do not clip utility actions', async () => {
@@ -115,14 +116,11 @@ describe('Footer feedback controls', () => {
 		expect(screen.getByTestId('footer-left-controls').className).toContain('min-w-0')
 		expect(screen.getByTestId('footer-language-picker').className).toContain('[&_select]:max-w-[4.75rem]')
 		expect(screen.getByTestId('footer-actions').className).toContain('shrink-0')
-		expect(screen.getByTestId('btn-about-version').className).toContain('max-sm:hidden')
 		expect(screen.getByTestId('btn-about').className).toContain('max-sm:hidden')
 		expect(screen.getByTestId('btn-share-label').className).toContain('max-sm:sr-only')
 		expect(screen.getByTestId('btn-discord-label').className).toContain('max-sm:sr-only')
 		expect(screen.getByTestId('btn-feedback-label').className).toContain('max-sm:sr-only')
-		expect(screen.getByTestId('btn-logs-label').className).toContain('max-sm:sr-only')
 		expect(screen.getByTestId('btn-feedback').querySelector('[data-icon="inline-start"]')).toBeInTheDocument()
-		expect(screen.getByTestId('btn-logs').querySelector('[data-icon="inline-start"]')).toBeInTheDocument()
 	})
 
 	it('Discord footer button opens the community invite', async () => {
@@ -195,8 +193,9 @@ describe('Footer feedback controls', () => {
 		expect(mockAppApi.analytics.track).toHaveBeenCalledWith('feedback_diagnostic_uploaded', {report_id: reportId, raw_bytes: 42, compressed_bytes: 31, truncated: false})
 	})
 
-	it('Logs button opens the log directory', async () => {
+	it('Settings Logs button opens the log directory', async () => {
 		render(<App />)
+		fireEvent.click(await screen.findByText('Settings'))
 		fireEvent.click(await screen.findByTestId('btn-logs'))
 		await waitFor(() => {
 			expect(mockOpenLogsDir).toHaveBeenCalledOnce()

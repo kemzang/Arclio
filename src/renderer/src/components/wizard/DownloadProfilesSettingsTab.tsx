@@ -1,6 +1,6 @@
 import {useEffect, type ReactNode} from 'react'
 import {useTranslation} from 'react-i18next'
-import {AlertTriangle, Gauge} from 'lucide-react'
+import {AlertTriangle, FileText, Gauge} from 'lucide-react'
 import {DEFAULTS} from '@shared/constants.js'
 import {NATIVE_AUDIO_PREFERENCES} from '@shared/schemas.js'
 import type {BackdropRenderMode, CookiesBrowser, CookiesMode, NativeAudioPreference} from '@shared/types.js'
@@ -69,8 +69,25 @@ function SettingSwitch({id, label, description, checked, onCheckedChange, testId
 
 export function DownloadProfilesSettingsTab(): ReactNode {
 	const {t} = useTranslation()
-	const {advancedAutoOpen, advancedAutoTarget, settings, graphicsPolicy, setAdvancedAutoOpen, setClipboardWatchEnabled, setCookiesPath, setCookiesMode, setCookiesBrowser, setProxyUrl, setLimitRate, setBackdropRenderMode, setNativeAudioPreference, setIncludeIdInSingleFilenames, setCloseBehavior, setAnalyticsEnabled} =
-		useAppStore()
+	const {
+		advancedAutoOpen,
+		advancedAutoTarget,
+		settings,
+		graphicsPolicy,
+		openLogs,
+		setAdvancedAutoOpen,
+		setClipboardWatchEnabled,
+		setCookiesPath,
+		setCookiesMode,
+		setCookiesBrowser,
+		setProxyUrl,
+		setLimitRate,
+		setBackdropRenderMode,
+		setNativeAudioPreference,
+		setIncludeIdInSingleFilenames,
+		setCloseBehavior,
+		setAnalyticsEnabled
+	} = useAppStore()
 	const common = settings?.common
 	const cookiesPath = common?.cookiesPath ?? ''
 	const cookiesMode: CookiesMode = common?.cookiesMode ?? 'off'
@@ -294,6 +311,13 @@ export function DownloadProfilesSettingsTab(): ReactNode {
 					{platform !== 'darwin' ? <SettingSwitch id="profiles-settings-close-tray" label={t('wizard.url.closeToTray.toggle')} description={t('wizard.url.closeToTray.toggleDescription')} checked={common?.closeBehavior === 'tray'} onCheckedChange={checked => void setCloseBehavior(checked ? 'tray' : 'quit')} /> : null}
 
 					<SettingSwitch id="profiles-settings-analytics" label={t('wizard.url.analytics.toggle')} description={t('wizard.url.analytics.toggleDescription')} checked={common?.analyticsEnabled ?? true} onCheckedChange={checked => void setAnalyticsEnabled(checked)} />
+
+					<Field>
+						<Button type="button" variant="outline" size="sm" className="w-fit" onClick={() => void openLogs()} data-testid="btn-logs">
+							<FileText data-icon="inline-start" aria-hidden />
+							{t('app.logs')}
+						</Button>
+					</Field>
 				</FieldGroup>
 			</SettingsPanel>
 

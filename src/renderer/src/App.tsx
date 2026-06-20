@@ -1,6 +1,6 @@
 import {lazy, Suspense, useEffect, useState, type ReactNode} from 'react'
 import log from 'electron-log/renderer.js'
-import {Cpu, FileText, Info, MessageCircle, Paintbrush, Share2} from 'lucide-react'
+import {Cpu, Info, MessageCircle, Paintbrush, Share2} from 'lucide-react'
 import IconDiscord from '~icons/simple-icons/discord'
 import {useTranslation} from 'react-i18next'
 import {useShallow} from 'zustand/react/shallow'
@@ -33,7 +33,6 @@ const SHOW_SCENARIO_GALLERY = import.meta.env.MODE === 'browser-mock'
 const ShareDialog = lazy(() => import('./components/system/ShareDialog.js').then(module => ({default: module.ShareDialog})))
 const ScenarioGallery = lazy(() => import('./dev/ScenarioGallery.js').then(module => ({default: module.ScenarioGallery})))
 const FOOTER_ACTION_BUTTON_CLASS = 'footer-action-button h-6 rounded-md px-1.5 text-[13px] text-muted-foreground max-sm:size-6 max-sm:px-0'
-const FOOTER_VERSION_BUTTON_CLASS = 'footer-action-button h-6 rounded-md px-1.5 text-[11px] text-muted-foreground/60 tabular-nums max-sm:hidden'
 const FOOTER_COMPACT_LABEL_CLASS = 'max-sm:sr-only'
 const feedbackLogger = log.scope('feedback')
 type BackdropPreviewMode = 'gpu' | 'css'
@@ -87,11 +86,10 @@ function effectiveBackdropRenderMode(preferredMode: BackdropRenderMode | null, g
 
 export function App(): ReactNode {
 	const {t} = useTranslation()
-	const {initialized, initialize, openLogs, setSplashDismissed, splashDismissed, warmupBlocking, warmupDiagnostics, warmupProgress, settings, graphicsPolicy} = useAppStore(
+	const {initialized, initialize, setSplashDismissed, splashDismissed, warmupBlocking, warmupDiagnostics, warmupProgress, settings, graphicsPolicy} = useAppStore(
 		useShallow(state => ({
 			initialized: state.initialized,
 			initialize: state.initialize,
-			openLogs: state.openLogs,
 			setSplashDismissed: state.setSplashDismissed,
 			splashDismissed: state.splashDismissed,
 			warmupBlocking: state.warmupBlocking,
@@ -231,9 +229,6 @@ export function App(): ReactNode {
 						</div>
 					</div>
 					<div className="flex shrink-0 items-center gap-0.5 sm:gap-1" data-testid="footer-actions">
-						<Button type="button" variant="ghost" size="xs" className={FOOTER_VERSION_BUTTON_CLASS} onClick={() => setAboutDialogOpen(true)} title={t('about.openTitle')} data-testid="btn-about-version">
-							v{window.appVersion}
-						</Button>
 						<Button type="button" variant="ghost" size="xs" className={cn(FOOTER_ACTION_BUTTON_CLASS, 'max-sm:hidden')} onClick={() => setAboutDialogOpen(true)} title={t('about.openTitle')} data-testid="btn-about">
 							<Info data-icon="inline-start" aria-hidden />
 							{t('about.button')}
@@ -271,12 +266,6 @@ export function App(): ReactNode {
 								</span>
 							</Button>
 						</div>
-						<Button type="button" variant="ghost" size="xs" className={FOOTER_ACTION_BUTTON_CLASS} onClick={() => void openLogs()} aria-label={t('app.logs')} data-testid="btn-logs">
-							<FileText data-icon="inline-start" aria-hidden />
-							<span className={FOOTER_COMPACT_LABEL_CLASS} data-testid="btn-logs-label">
-								{t('app.logs')}
-							</span>
-						</Button>
 					</div>
 				</footer>
 
