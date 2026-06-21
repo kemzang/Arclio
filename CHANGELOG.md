@@ -14,6 +14,32 @@ _Nothing yet._
 
 ---
 
+## 0.4.1
+
+This patch release polishes the 0.4 line with a denser queue manager, clearer diagnostics, stronger checkout tooling, and refreshed user-facing docs.
+
+## Highlights
+
+### Queue Management
+
+- Reworked the downloads drawer into a queue manager with table controls, artifact visibility, and clearer toolbar actions.
+- Added selection-based queue actions and output-target move handling so completed files are easier to inspect and manage.
+- Improved queue diagnostics, shutdown behavior, progress parsing, and resume lifecycle coverage.
+
+### Workflow And Documentation Polish
+
+- Refined playlist collection copy and the domain glossary so review and queue language stays consistent.
+- Refreshed the README screenshots and localized feature copy for download profiles, bulk URLs, audio support, and advanced settings.
+- Updated the in-app and browser-mock scenarios that exercise queue and release-note surfaces.
+
+### Developer And Release Reliability
+
+- Hardened checkout bootstrap, doctor, and dev-smoke workflows for fresh worktrees and CI validation.
+- Tightened package publishing, dependency-audit scope, embedded-payload checks, and trusted publishing configuration.
+- Added ADRs for pause/resume semantics, subtitle handling, and binary distribution decisions.
+
+---
+
 ## 0.4.0
 
 The 0.4.0 stable release brings together everything from the 0.4.0 beta line: a full download-profile system, smarter audio handling, a more reliable binary runtime, stronger download recovery, and a broad UI and localization pass.
