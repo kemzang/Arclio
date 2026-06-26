@@ -13,7 +13,7 @@ import type {Phase, PhaseContext, PhaseOutcome} from './types.js'
 import {buildYtDlpSignal} from './phaseHelpers.js'
 
 async function setupTempDir(outputDir: string, jobId: string, preserve: boolean, overridePath?: string): Promise<string | undefined> {
-	const tempDir = overridePath ?? join(outputDir, '.arroxy-temp', jobId.slice(0, 8))
+	const tempDir = overridePath ?? join(outputDir, '.arclio-temp', jobId.slice(0, 8))
 	try {
 		if (!preserve) await rm(tempDir, {recursive: true, force: true})
 		await mkdir(tempDir, {recursive: true})
@@ -25,7 +25,7 @@ async function setupTempDir(outputDir: string, jobId: string, preserve: boolean,
 
 async function detectCachedInfoJson(tempDir: string | undefined): Promise<string | undefined> {
 	if (!tempDir) return undefined
-	const path = join(tempDir, '_arroxy.info.json')
+	const path = join(tempDir, '_arclio.info.json')
 	try {
 		const s = await stat(path)
 		return s.isFile() ? path : undefined
@@ -69,7 +69,7 @@ export function VideoPhase(embed: boolean): Phase {
 				// the drain so resume can pick up the .part files.
 				QueueResumeLifecycle.registerVideoTempDataCleanup(active, job.outputDir, tempDir, disposable => ctx.register(disposable))
 			}
-			// Resume hardening: if a prior spawn wrote _arroxy.info.json into the
+			// Resume hardening: if a prior spawn wrote _arclio.info.json into the
 			// preserved tempDir, feed it to yt-dlp so extraction is skipped on
 			// resume (signed-URL / format-ID / session-cookie drift cause spurious
 			// "Requested format is not available" failures otherwise).

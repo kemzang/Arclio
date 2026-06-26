@@ -1,6 +1,6 @@
-# Arroxy Domain Context
+# Arclio Domain Context
 
-The canonical glossary for Arroxy. Every entry below is a domain term you can use
+The canonical glossary for Arclio. Every entry below is a domain term you can use
 to explain how the app works — in a PR, a support reply, or a translation note —
 without any code detail. It is a glossary and nothing else: no module names, no
 function names, no constants, no decisions. Implementation lives in the code (the
@@ -99,7 +99,7 @@ The classification of a pasted URL as a single video, a playlist, a mix of both,
 _Avoid_: URL type, URL kind
 
 **Playlist**:
-A source URL that expands into multiple videos queued together — including a channel or a search, which Arroxy treats as playlists. The URL classifier may still tag the source as playlist, channel, or search for routing.
+A source URL that expands into multiple videos queued together — including a channel or a search, which Arclio treats as playlists. The URL classifier may still tag the source as playlist, channel, or search for routing.
 _Avoid_: collection, batch
 
 ### Profiles and quick download
@@ -125,15 +125,15 @@ _Avoid_: burned-in, hardcoded, baked-in subtitles
 ### Binaries and runtime
 
 **Dependency**:
-One of the external programs Arroxy drives to do its work — the downloader and the media tools it relies on.
+One of the external programs Arclio drives to do its work — the downloader and the media tools it relies on.
 _Avoid_: binary, tool, executable
 
 **Binary manifest**:
-The versioned list that tells Arroxy which managed binary build to fetch for the current platform.
+The versioned list that tells Arclio which managed binary build to fetch for the current platform.
 _Avoid_: index, build list
 
 **Managed binary**:
-A dependency Arroxy downloads and caches itself, as opposed to one bundled inside the app or found already installed on the system.
+A dependency Arclio downloads and caches itself, as opposed to one bundled inside the app or found already installed on the system.
 _Avoid_: downloaded binary, fetched binary
 
 **Warmup**:

@@ -15,7 +15,7 @@ afterEach(() => {
 })
 
 async function makeYtDlpVersionStub(): Promise<string> {
-	const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-ytdlp-probe-'))
+	const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-ytdlp-probe-'))
 	const stubPath = path.join(tempDir, process.platform === 'win32' ? 'yt-dlp.cmd' : 'yt-dlp')
 	const body = process.platform === 'win32' ? '@echo off\r\necho 2026.06.12\r\n' : '#!/bin/sh\necho "2026.06.12"\n'
 	await fs.writeFile(stubPath, body)
@@ -29,10 +29,10 @@ function ytDlpEntry(): RuntimeBinaryManifestEntry {
 
 async function runFailingManifestResolution(err: unknown): Promise<void> {
 	const originalPath = process.env.PATH
-	const emptyPathDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-empty-path-'))
+	const emptyPathDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-empty-path-'))
 	process.env.PATH = emptyPathDir
 	try {
-		const mgr = new BinaryManager('/tmp/arroxy-binary-analytics', {
+		const mgr = new BinaryManager('/tmp/arclio-binary-analytics', {
 			runtimeBinaryIndex: {candidatesFor: vi.fn(async () => [ytDlpEntry()])},
 			runtimeBinaryMaterializer: {
 				materialize: vi.fn(async () => {
@@ -67,18 +67,18 @@ describe('BinaryManager analytics', () => {
 	})
 
 	it('emits sanitized telemetry for binary version probe failures', async () => {
-		const mgr = new BinaryManager('/tmp/arroxy-binary-analytics')
+		const mgr = new BinaryManager('/tmp/arclio-binary-analytics')
 		const attempts: DependencyAttempt[] = []
 		const source: DependencySource = {kind: 'managed', channel: 'nightly', provider: 'github', url: 'https://example.com/yt-dlp.exe'}
 
-		const diag = await (mgr as unknown as {probeAndAccept: (id: 'yt-dlp', source: DependencySource, candidatePath: string, attempts: DependencyAttempt[]) => Promise<unknown>}).probeAndAccept('yt-dlp', source, path.join('/tmp', 'arroxy-missing-yt-dlp.exe'), attempts)
+		const diag = await (mgr as unknown as {probeAndAccept: (id: 'yt-dlp', source: DependencySource, candidatePath: string, attempts: DependencyAttempt[]) => Promise<unknown>}).probeAndAccept('yt-dlp', source, path.join('/tmp', 'arclio-missing-yt-dlp.exe'), attempts)
 
 		expect(diag).toBeNull()
 		expect(trackMain).toHaveBeenCalledWith('binary_probe_anomaly', {binary: 'ytdlp', outcome: 'failed', failure_kind: 'spawn_failed', code: 'ARX-004', source_kind: 'managed', source_channel: 'nightly', source_provider: 'github', elapsed_ms: expect.any(Number), timeout_ms: 30_000})
 	})
 
 	it('emits sanitized telemetry for slow successful binary version probes', async () => {
-		const mgr = new BinaryManager('/tmp/arroxy-binary-analytics')
+		const mgr = new BinaryManager('/tmp/arclio-binary-analytics')
 		const attempts: DependencyAttempt[] = []
 		const source: DependencySource = {kind: 'managed', channel: 'nightly', provider: 'github', url: 'https://example.com/yt-dlp'}
 		const now = vi.spyOn(Date, 'now').mockReturnValueOnce(1_000).mockReturnValueOnce(32_500)

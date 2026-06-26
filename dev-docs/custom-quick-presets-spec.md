@@ -43,7 +43,7 @@ Keep the current dialog concept and UI.
 Purpose:
 
 - Paste many links.
-- Edit the list inside Arroxy.
+- Edit the list inside Arclio.
 - Clean duplicates/rejected lines.
 - Avoid external notes/tables.
 

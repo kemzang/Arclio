@@ -3,7 +3,7 @@
 import {describe, expect, it, vi} from 'vitest'
 import {EventEmitter} from 'node:events'
 
-vi.mock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arroxy')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
+vi.mock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arclio')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
 
 import {QueueEventBridge} from '@main/services/QueueEventBridge.js'
 import type {QueueService} from '@main/services/QueueService.js'

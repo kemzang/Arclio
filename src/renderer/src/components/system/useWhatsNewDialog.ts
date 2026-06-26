@@ -31,7 +31,7 @@ export function useWhatsNewDialog(changelog: string, options: UseWhatsNewDialogO
 
 	function openFullNotes(): void {
 		if (!notes) return
-		void window.appApi.shell.openExternal(`https://github.com/antonio-orionus/Arroxy/releases/tag/v${notes.version}`)
+		void window.appApi.shell.openExternal(`https://github.com/antonio-orionus/Arclio/releases/tag/v${notes.version}`)
 	}
 
 	return {open: dialogOpen, notes, close, openFullNotes}

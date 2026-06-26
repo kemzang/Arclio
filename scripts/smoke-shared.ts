@@ -1,5 +1,5 @@
 // Shared URL resolution for the manual smoke scripts.
-// Order: ARROXY_SMOKE_URL env var > --url flag > first non-comment line of
+// Order: ARCLIO_SMOKE_URL env var > --url flag > first non-comment line of
 // youtube-urls.local.txt (gitignored). Throws if none of those produce a URL.
 
 import {existsSync, readFileSync} from 'node:fs'
@@ -24,10 +24,10 @@ export function readUrlFromLocalFile(): string | null {
 }
 
 export function resolveSmokeUrl(flagUrl?: string): string {
-	const envUrl = process.env.ARROXY_SMOKE_URL?.trim()
+	const envUrl = process.env.ARCLIO_SMOKE_URL?.trim()
 	if (envUrl) return envUrl
 	if (flagUrl?.trim()) return flagUrl.trim()
 	const fileUrl = readUrlFromLocalFile()
 	if (fileUrl) return fileUrl
-	throw new Error(`No smoke URL configured. Provide one via ARROXY_SMOKE_URL=, the --url flag, ` + `or the first non-comment line of ${LOCAL_FILE_NAME} (gitignored).`)
+	throw new Error(`No smoke URL configured. Provide one via ARCLIO_SMOKE_URL=, the --url flag, ` + `or the first non-comment line of ${LOCAL_FILE_NAME} (gitignored).`)
 }

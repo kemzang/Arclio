@@ -56,9 +56,9 @@ jobs:
         with:
           name: installer
           path: |
-            dist/Arroxy-win-x64-Setup.exe
-            dist/Arroxy-win-x64-Setup.exe.blockmap
-            dist/Arroxy-win-x64-Portable.exe
+            dist/Arclio-win-x64-Setup.exe
+            dist/Arclio-win-x64-Setup.exe.blockmap
+            dist/Arclio-win-x64-Portable.exe
             dist/latest.yml
           if-no-files-found: warn
           retention-days: 7
@@ -87,7 +87,7 @@ jobs:
       - name: Prepend fake JS runtimes and yt-dlp to PATH
         shell: pwsh
         run: |
-          $fake = Join-Path $env:RUNNER_TEMP 'arroxy fake tools Ω'
+          $fake = Join-Path $env:RUNNER_TEMP 'arclio fake tools Ω'
           New-Item -ItemType Directory -Force -Path $fake | Out-Null
           Set-Content -Path (Join-Path $fake 'node.cmd') -Value "@echo off`necho fake old node v10.0.0`nexit /b 0`n" -Encoding ascii
           Set-Content -Path (Join-Path $fake 'deno.cmd') -Value "@echo off`necho fake deno 2.0.0`nexit /b 0`n" -Encoding ascii
@@ -97,7 +97,7 @@ jobs:
       - name: Silent install (single cold cycle)
         shell: pwsh
         run: |
-          $inst = (Get-ChildItem ./installer/Arroxy-win-x64-Setup.exe | Select-Object -First 1).FullName
+          $inst = (Get-ChildItem ./installer/Arclio-win-x64-Setup.exe | Select-Object -First 1).FullName
           if (-not $inst) { throw "No installer artifact found in ./installer" }
           Write-Host "Testing: $inst"
 
@@ -108,28 +108,28 @@ jobs:
           Write-Host "Install exit: $($p.ExitCode) (${sec}s)"
           if ($p.ExitCode -ne 0) { throw "Silent install failed: exit $($p.ExitCode)" }
 
-          $appExe = "$env:LOCALAPPDATA\Programs\Arroxy\Arroxy.exe"
+          $appExe = "$env:LOCALAPPDATA\Programs\Arclio\Arclio.exe"
           if (-not (Test-Path $appExe)) { throw "Install reported success but $appExe missing" }
           Write-Host "Cold install passed"
 
       - name: Run installed app runtime smoke
         shell: pwsh
         env:
-          ARROXY_RUNTIME_SMOKE: '1'
+          ARCLIO_RUNTIME_SMOKE: '1'
         run: |
-          $appExe = "$env:LOCALAPPDATA\Programs\Arroxy\Arroxy.exe"
+          $appExe = "$env:LOCALAPPDATA\Programs\Arclio\Arclio.exe"
           if (-not (Test-Path $appExe)) { throw "Installed app missing at $appExe" }
           $logDir = Join-Path $env:RUNNER_TEMP 'runtime-smoke-logs'
           New-Item -ItemType Directory -Force -Path $logDir | Out-Null
           $stdout = Join-Path $logDir 'installed-runtime-smoke.out'
           $stderr = Join-Path $logDir 'installed-runtime-smoke.err'
-          $env:ELECTRON_USER_DATA = Join-Path $env:RUNNER_TEMP 'Arroxy Runtime Ω Installed'
+          $env:ELECTRON_USER_DATA = Join-Path $env:RUNNER_TEMP 'Arclio Runtime Ω Installed'
           Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue
           $p = Start-Process -FilePath $appExe -Wait -PassThru -RedirectStandardOutput $stdout -RedirectStandardError $stderr
           $exitCode = $p.ExitCode
           Get-Content $stdout -ErrorAction SilentlyContinue
           if (Test-Path $stderr) { Get-Content $stderr -ErrorAction SilentlyContinue | ForEach-Object { Write-Host $_ } }
-          Remove-Item Env:ARROXY_RUNTIME_SMOKE -ErrorAction SilentlyContinue
+          Remove-Item Env:ARCLIO_RUNTIME_SMOKE -ErrorAction SilentlyContinue
           Remove-Item Env:ELECTRON_USER_DATA -ErrorAction SilentlyContinue
           if ($null -eq $exitCode) { throw "Installed runtime smoke did not report an exit code" }
           if ($exitCode -ne 0) { throw "Installed runtime smoke failed: exit $exitCode" }
@@ -137,25 +137,25 @@ jobs:
       - name: Run portable app runtime smoke
         shell: pwsh
         env:
-          ARROXY_RUNTIME_SMOKE: '1'
+          ARCLIO_RUNTIME_SMOKE: '1'
         run: |
-          $portable = (Get-ChildItem ./installer/Arroxy-win-x64-Portable.exe | Select-Object -First 1).FullName
+          $portable = (Get-ChildItem ./installer/Arclio-win-x64-Portable.exe | Select-Object -First 1).FullName
           if (-not $portable) { throw "No portable artifact found in ./installer" }
-          $portableDir = Join-Path $env:RUNNER_TEMP 'Arroxy Portable Ω Path [test]'
+          $portableDir = Join-Path $env:RUNNER_TEMP 'Arclio Portable Ω Path [test]'
           New-Item -ItemType Directory -Force -Path $portableDir | Out-Null
-          $portableExe = Join-Path $portableDir 'Arroxy Portable Ω.exe'
+          $portableExe = Join-Path $portableDir 'Arclio Portable Ω.exe'
           Copy-Item $portable $portableExe -Force
           $logDir = Join-Path $env:RUNNER_TEMP 'runtime-smoke-logs'
           New-Item -ItemType Directory -Force -Path $logDir | Out-Null
           $stdout = Join-Path $logDir 'portable-runtime-smoke.out'
           $stderr = Join-Path $logDir 'portable-runtime-smoke.err'
-          $env:ELECTRON_USER_DATA = Join-Path $env:RUNNER_TEMP 'Arroxy Runtime Ω Portable'
+          $env:ELECTRON_USER_DATA = Join-Path $env:RUNNER_TEMP 'Arclio Runtime Ω Portable'
           Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue
           $p = Start-Process -FilePath $portableExe -Wait -PassThru -RedirectStandardOutput $stdout -RedirectStandardError $stderr
           $exitCode = $p.ExitCode
           Get-Content $stdout -ErrorAction SilentlyContinue
           if (Test-Path $stderr) { Get-Content $stderr -ErrorAction SilentlyContinue | ForEach-Object { Write-Host $_ } }
-          Remove-Item Env:ARROXY_RUNTIME_SMOKE -ErrorAction SilentlyContinue
+          Remove-Item Env:ARCLIO_RUNTIME_SMOKE -ErrorAction SilentlyContinue
           Remove-Item Env:ELECTRON_USER_DATA -ErrorAction SilentlyContinue
           if ($null -eq $exitCode) { throw "Portable runtime smoke did not report an exit code" }
           if ($exitCode -ne 0) { throw "Portable runtime smoke failed: exit $exitCode" }
@@ -164,7 +164,7 @@ jobs:
         if: always()
         shell: pwsh
         run: |
-          $uninst = "$env:LOCALAPPDATA\Programs\Arroxy\Uninstall Arroxy.exe"
+          $uninst = "$env:LOCALAPPDATA\Programs\Arclio\Uninstall Arclio.exe"
           if (-not (Test-Path $uninst)) {
             Write-Host "Uninstaller missing at $uninst"
             exit 0
@@ -173,8 +173,8 @@ jobs:
           Write-Host "Uninstall exit: $($u.ExitCode)"
           if ($u.ExitCode -ne 0) { throw "Silent uninstall failed: exit $($u.ExitCode)" }
 
-          if (Test-Path "$env:LOCALAPPDATA\Programs\Arroxy") {
-            throw "Uninstall left files at $env:LOCALAPPDATA\Programs\Arroxy"
+          if (Test-Path "$env:LOCALAPPDATA\Programs\Arclio") {
+            throw "Uninstall left files at $env:LOCALAPPDATA\Programs\Arclio"
           }
           Write-Host "Cold uninstall passed"
 
@@ -209,8 +209,8 @@ jobs:
           name: runtime-smoke-logs
           path: |
             ${{ runner.temp }}/runtime-smoke-logs
-            ${{ runner.temp }}/Arroxy Runtime Ω Installed/logs
-            ${{ runner.temp }}/Arroxy Runtime Ω Portable/logs
+            ${{ runner.temp }}/Arclio Runtime Ω Installed/logs
+            ${{ runner.temp }}/Arclio Runtime Ω Portable/logs
           if-no-files-found: ignore
           retention-days: 7
 
@@ -237,8 +237,8 @@ jobs:
       - name: 1x install + uninstall
         shell: pwsh
         run: |
-          $inst = (Get-ChildItem ./installer/Arroxy-win-x64-Setup.exe | Select-Object -First 1).FullName
-          $uninst = "$env:LOCALAPPDATA\Programs\Arroxy\Uninstall Arroxy.exe"
+          $inst = (Get-ChildItem ./installer/Arclio-win-x64-Setup.exe | Select-Object -First 1).FullName
+          $uninst = "$env:LOCALAPPDATA\Programs\Arclio\Uninstall Arclio.exe"
           $p = Start-Process -FilePath $inst -ArgumentList '/S' -Wait -PassThru
           if ($p.ExitCode -ne 0) { throw "Install: exit $($p.ExitCode)" }
           $u = Start-Process -FilePath $uninst -ArgumentList '/S' -Wait -PassThru
@@ -309,7 +309,7 @@ jobs:
           gh release upload "${{ github.ref_name }}" \
             --repo "${{ github.repository }}" \
             --clobber \
-            ./dist/Arroxy-win-x64-Setup.exe \
-            ./dist/Arroxy-win-x64-Setup.exe.blockmap \
-            ./dist/Arroxy-win-x64-Portable.exe \
+            ./dist/Arclio-win-x64-Setup.exe \
+            ./dist/Arclio-win-x64-Setup.exe.blockmap \
+            ./dist/Arclio-win-x64-Portable.exe \
             ./dist/latest.yml

@@ -16,7 +16,7 @@ import {setAnalyticsEnabled, setupAnalytics, trackCrashDetectedOncePerSession} f
 
 beforeEach(() => {
 	vi.clearAllMocks()
-	delete process.env.ARROXY_ANALYTICS_DEBUG
+	delete process.env.ARCLIO_ANALYTICS_DEBUG
 })
 
 describe('trackCrashDetectedOncePerSession', () => {

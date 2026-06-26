@@ -5,9 +5,9 @@ import crypto from 'node:crypto'
 import {expect, test, _electron as electron, type Page} from '@playwright/test'
 
 function defaultExePath(): string {
-	if (process.platform === 'win32') return path.join(process.cwd(), 'dist', 'win-unpacked', 'Arroxy.exe')
-	if (process.platform === 'darwin') return path.join(process.cwd(), 'dist', 'mac-arm64', 'Arroxy.app', 'Contents', 'MacOS', 'Arroxy')
-	return path.join(process.cwd(), 'dist', 'linux-unpacked', 'arroxy')
+	if (process.platform === 'win32') return path.join(process.cwd(), 'dist', 'win-unpacked', 'Arclio.exe')
+	if (process.platform === 'darwin') return path.join(process.cwd(), 'dist', 'mac-arm64', 'Arclio.app', 'Contents', 'MacOS', 'Arclio')
+	return path.join(process.cwd(), 'dist', 'linux-unpacked', 'arclio')
 }
 
 // On CI this is set by the workflow; locally falls back to the platform's default unpacked path.
@@ -87,8 +87,8 @@ test('packaged exe: downloads binaries, completes warmup, shows wizard', async (
 	// GitHub Releases on a cold runner.
 	test.setTimeout(WARMUP_TIMEOUT_MS + 60_000)
 
-	const tmpBase = process.env.ARROXY_COLD_TMPDIR ?? os.tmpdir()
-	const userDataDir = fs.mkdtempSync(path.join(tmpBase, 'arroxy-cold-'))
+	const tmpBase = process.env.ARCLIO_COLD_TMPDIR ?? os.tmpdir()
+	const userDataDir = fs.mkdtempSync(path.join(tmpBase, 'arclio-cold-'))
 
 	const baseEnv = Object.fromEntries(Object.entries(process.env).filter((e): e is [string, string] => typeof e[1] === 'string'))
 	delete baseEnv.ELECTRON_RUN_AS_NODE
@@ -123,7 +123,7 @@ test('packaged exe: downloads binaries, completes warmup, shows wizard', async (
 		await app.close()
 
 		// Copy diagnostics before cleanup so the CI artifact step can upload them.
-		captureColdStartDiagnostics(userDataDir, process.env.ARROXY_LOG_ARCHIVE)
+		captureColdStartDiagnostics(userDataDir, process.env.ARCLIO_LOG_ARCHIVE)
 
 		fs.rmSync(userDataDir, {recursive: true, force: true})
 	}

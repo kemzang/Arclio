@@ -1,7 +1,7 @@
 import {describe, expect, it, vi, beforeEach, afterEach} from 'vitest'
 
 // Must mock electron and electron-updater before importing the module under test
-vi.mock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arroxy')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
+vi.mock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arclio')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
 
 vi.mock('electron-updater', () => {
 	const au = {autoDownload: true, autoInstallOnAppQuit: true, on: vi.fn(), removeAllListeners: vi.fn(), setFeedURL: vi.fn(), checkForUpdates: vi.fn().mockResolvedValue(undefined), downloadUpdate: vi.fn().mockResolvedValue(undefined), quitAndInstall: vi.fn()}
@@ -70,7 +70,7 @@ describe('registerUpdaterHandlers', () => {
 	it('forwards installChannel from runtime detection', async () => {
 		vi.resetModules()
 		vi.doMock('@main/installChannel', () => ({detectInstallChannel: vi.fn().mockReturnValue('scoop')}))
-		vi.doMock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arroxy')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
+		vi.doMock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arclio')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
 		vi.doMock('electron-updater', () => {
 			const au = {autoDownload: true, autoInstallOnAppQuit: true, on: vi.fn(), removeAllListeners: vi.fn(), setFeedURL: vi.fn(), checkForUpdates: vi.fn().mockResolvedValue(undefined), downloadUpdate: vi.fn().mockResolvedValue(undefined), quitAndInstall: vi.fn()}
 			return {default: {autoUpdater: au}, autoUpdater: au}
@@ -98,7 +98,7 @@ describe('registerUpdaterHandlers', () => {
 	it('skips autoUpdater entirely when running under Flatpak', async () => {
 		vi.resetModules()
 		vi.doMock('@main/installChannel', () => ({detectInstallChannel: vi.fn().mockReturnValue('flatpak')}))
-		vi.doMock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arroxy')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
+		vi.doMock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arclio')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
 		vi.doMock('electron-updater', () => {
 			const au = {autoDownload: true, autoInstallOnAppQuit: true, on: vi.fn(), removeAllListeners: vi.fn(), setFeedURL: vi.fn(), checkForUpdates: vi.fn().mockResolvedValue(undefined), downloadUpdate: vi.fn().mockResolvedValue(undefined), quitAndInstall: vi.fn()}
 			return {default: {autoUpdater: au}, autoUpdater: au}
@@ -217,7 +217,7 @@ describe('registerUpdaterHandlers', () => {
 		for (const channel of ['scoop', 'homebrew', 'portable'] as const) {
 			vi.resetModules()
 			vi.doMock('@main/installChannel', () => ({detectInstallChannel: vi.fn().mockReturnValue(channel)}))
-			vi.doMock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arroxy')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
+			vi.doMock('electron', () => ({app: {getVersion: vi.fn().mockReturnValue('1.0.0'), getName: vi.fn().mockReturnValue('arclio')}, ipcMain: {handle: vi.fn(), removeHandler: vi.fn()}}))
 			vi.doMock('electron-updater', () => {
 				const au = {autoDownload: true, autoInstallOnAppQuit: true, on: vi.fn(), removeAllListeners: vi.fn(), setFeedURL: vi.fn(), checkForUpdates: vi.fn().mockResolvedValue(undefined), downloadUpdate: vi.fn().mockResolvedValue(undefined), quitAndInstall: vi.fn()}
 				return {default: {autoUpdater: au}, autoUpdater: au}

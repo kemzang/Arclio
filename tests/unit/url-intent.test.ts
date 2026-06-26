@@ -12,9 +12,9 @@ describe('classifyUrlIntent', () => {
 
 	it.each([
 		['https://www.youtube.com/playlist?list=PLtest', 'playlist'],
-		['https://www.youtube.com/@arroxy', 'channel'],
+		['https://www.youtube.com/@arclio', 'channel'],
 		['https://www.youtube.com/channel/UC123/videos', 'channel'],
-		['https://www.youtube.com/results?search_query=arroxy', 'search']
+		['https://www.youtube.com/results?search_query=arclio', 'search']
 	] as const)('%s -> obvious collection', (url, collection) => {
 		expect(classifyUrlIntent(url)).toMatchObject({kind: 'obvious-collection', collection, url})
 	})

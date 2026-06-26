@@ -10,7 +10,7 @@ People who want to pull video, audio, music, playlists, channels, or subtitles o
 
 ## Product Purpose
 
-Arroxy is a free, open-source desktop GUI wrapper around `yt-dlp` + `ffmpeg`. It exists to make the most capable downloader on the internet usable by people who would never run it from a shell, while not dumbing it down for the people who would. Success looks like: a first-time user pastes a link and gets a correct download with zero config; a power user reaches 4K/HDR, audio-only conversion, SponsorBlock, embedded vs sidecar subtitles, and playlist controls without fighting the UI. It runs entirely on the user's machine, ships no telemetry-by-default dark patterns, and stays out of the way. The product *is* the wizard → queue → file pipeline; the marketing site lives elsewhere.
+Arclio is a free, open-source desktop GUI wrapper around `yt-dlp` + `ffmpeg`. It exists to make the most capable downloader on the internet usable by people who would never run it from a shell, while not dumbing it down for the people who would. Success looks like: a first-time user pastes a link and gets a correct download with zero config; a power user reaches 4K/HDR, audio-only conversion, SponsorBlock, embedded vs sidecar subtitles, and playlist controls without fighting the UI. It runs entirely on the user's machine, ships no telemetry-by-default dark patterns, and stays out of the way. The product *is* the wizard → queue → file pipeline; the marketing site lives elsewhere.
 
 ## Brand Personality
 
@@ -18,7 +18,7 @@ Friendly, playful, approachable. Voice is warm and plain-spoken, never corporate
 
 ## Anti-references
 
-- **Sketchy downloader sites / freeware.** Ad-choked, fake-"Download" buttons, malware-adjacent, upsell-laden. Arroxy's entire positioning ("no ads, no bloat, no upsells") is the opposite. The UI must read as trustworthy and clean, never like the thing it replaces.
+- **Sketchy downloader sites / freeware.** Ad-choked, fake-"Download" buttons, malware-adjacent, upsell-laden. Arclio's entire positioning ("no ads, no bloat, no upsells") is the opposite. The UI must read as trustworthy and clean, never like the thing it replaces.
 - **Raw CLI / yt-dlp flag soup.** Don't expose argument complexity directly or make the surface feel power-user-only. The capability is there; the intimidation is not.
 - **Generic SaaS dashboard.** No cookie-cutter card grids, no hero-metric template, no AI-default app shell. This is a focused desktop tool, not a dashboard.
 - **Bloated legacy media suites.** Not heavy, not modal-stacked, not cluttered converter/burner UIs from a decade ago.

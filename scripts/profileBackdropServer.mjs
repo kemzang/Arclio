@@ -20,5 +20,5 @@ export function profileBackdropServerEnv(url, baseEnv = process.env) {
 		throw new Error(`Invalid renderer port in profile URL: ${parsed.port}`)
 	}
 
-	return {...baseEnv, ARROXY_RENDERER_PORT: String(port)}
+	return {...baseEnv, ARCLIO_RENDERER_PORT: String(port)}
 }

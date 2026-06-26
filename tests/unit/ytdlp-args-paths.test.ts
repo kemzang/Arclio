@@ -17,7 +17,7 @@ import {probeElectronNodeRuntime} from '@main/services/ytDlpJsRuntime.js'
 
 const URL = 'https://www.youtube.com/watch?v=test'
 const OUTPUT_DIR = '/downloads'
-const TEMP_DIR = '/downloads/.arroxy-temp/abcd1234'
+const TEMP_DIR = '/downloads/.arclio-temp/abcd1234'
 
 function makeFakeProcess(exitCode = 0) {
 	const proc = Object.assign(new EventEmitter(), {stdout: new EventEmitter(), stderr: new EventEmitter(), kill: vi.fn()})
@@ -46,7 +46,7 @@ function subtitleRequest(format: 'srt' | 'vtt'): YtDlpRequest {
 
 beforeEach(() => {
 	vi.clearAllMocks()
-	vi.mocked(probeElectronNodeRuntime).mockResolvedValue({ok: true, runtime: {kind: 'electron-node', executablePath: '/mock/Arroxy', version: '24.16.0'}, output: 'v24.16.0'})
+	vi.mocked(probeElectronNodeRuntime).mockResolvedValue({ok: true, runtime: {kind: 'electron-node', executablePath: '/mock/Arclio', version: '24.16.0'}, output: 'v24.16.0'})
 	vi.mocked(spawnYtDlp).mockReturnValue(makeFakeProcess(0) as never)
 })
 

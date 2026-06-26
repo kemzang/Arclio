@@ -16,7 +16,7 @@ describe('profile backdrop server launcher', () => {
 
 		const env = profileBackdropServerEnv('http://127.0.0.1:45678/?theme=dark&platform=linux&backdrop=1', {PATH: '/bin'})
 
-		expect(env).toMatchObject({PATH: '/bin', ARROXY_RENDERER_PORT: '45678'})
+		expect(env).toMatchObject({PATH: '/bin', ARCLIO_RENDERER_PORT: '45678'})
 	})
 
 	it('rejects auto-start for URLs without an explicit local renderer port', async () => {

@@ -151,7 +151,7 @@ const packageDirs = packageDirsFromWorkspaces(Array.isArray(rootPackage.workspac
 const packageRecords = packageDirs.map(dir => ({dir, packageJson: readJson(`${dir}/package.json`)}))
 const workspaceVersions = new Map(packageRecords.map(({packageJson}) => [packageJson.name, packageJson.version]).filter(([name, version]) => Boolean(name) && Boolean(version)))
 const publishablePackages = sortPublishablePackages(packageRecords.filter(({packageJson}) => packageJson.private !== true && Boolean(packageJson.name) && Boolean(packageJson.version)))
-const tempRoot = mkdtempSync(join(tmpdir(), 'arroxy-package-metadata-'))
+const tempRoot = mkdtempSync(join(tmpdir(), 'arclio-package-metadata-'))
 
 try {
 	for (const {dir, packageJson} of publishablePackages) {

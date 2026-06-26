@@ -38,6 +38,7 @@ import {FavoritesPage} from './pages/favorites/FavoritesPage.js'
 import {TagsPage} from './pages/tags/TagsPage.js'
 import {HistoryPage} from './pages/history/HistoryPage.js'
 import {SettingsPage} from './pages/settings/SettingsPage.js'
+import {PlayerPage} from './pages/player/PlayerPage.js'
 
 const SHOW_SCENARIO_GALLERY = import.meta.env.MODE === 'browser-mock'
 const ShareDialog = lazy(() => import('./components/system/ShareDialog.js').then(module => ({default: module.ShareDialog})))
@@ -86,7 +87,7 @@ function exitBackdropStage(): void {
 
 function shouldRenderStartupSplash(): boolean {
 	if (import.meta.env.MODE !== 'browser-mock') return true
-	return window.__arroxyBrowserMockShowStartupSplash === true
+	return window.__arclioBrowserMockShowStartupSplash === true
 }
 
 function effectiveBackdropRenderMode(preferredMode: BackdropRenderMode | null, graphicsPolicy: GraphicsPolicy | null): BackdropRenderMode {
@@ -226,6 +227,7 @@ function AppContent(): ReactNode {
 							<Routes>
 								<Route index element={<HomePage />} />
 								<Route path="library" element={<LibraryPage />} />
+								<Route path="library/:id" element={<PlayerPage />} />
 								<Route path="collections" element={<CollectionsPage />} />
 								<Route path="favorites" element={<FavoritesPage />} />
 								<Route path="tags" element={<TagsPage />} />

@@ -1,7 +1,7 @@
 {
 	"common": {"back": "返回", "cancel": "取消", "continue": "继续", "retry": "重试", "startOver": "重新开始"},
-	"app": {"feedback": "反馈", "logs": "日志", "feedbackNudge": "喜欢 Arroxy 吗?我很想听听你的想法! 💬", "zoomIn": "放大", "zoomOut": "缩小"},
-	"about": {"button": "关于", "openTitle": "关于 Arroxy", "tagline": "适用于 YouTube 和其他 2000+ 网站的快速友好下载器。", "websiteLink": "官网", "githubLink": "GitHub", "licenseLine": "MIT 许可证 · 作者 Antonio Orionus", "thirdPartyNotices": "查看第三方声明"},
+	"app": {"feedback": "反馈", "logs": "日志", "feedbackNudge": "喜欢 Arclio 吗?我很想听听你的想法! 💬", "zoomIn": "放大", "zoomOut": "缩小"},
+	"about": {"button": "关于", "openTitle": "关于 Arclio", "tagline": "适用于 YouTube 和其他 2000+ 网站的快速友好下载器。", "websiteLink": "官网", "githubLink": "GitHub", "licenseLine": "MIT 许可证 · 作者 Antonio Orionus", "thirdPartyNotices": "查看第三方声明"},
 	"titleBar": {"close": "关闭", "minimize": "最小化", "maximize": "最大化", "restore": "还原"},
 	"splash": {"greeting": "嘿,欢迎回来!", "warmup": "正在准备下载…", "downloading": "正在下载 {{binary}}…", "warmupFailedNoDiag": "初始化失败。打开设置日志查看详情。"},
 	"repair": {
@@ -68,11 +68,11 @@
 			"alreadyDownloaded": "已下载",
 			"probeLimitAlertTitle": "播放列表扫描已达上限",
 			"probeLimitAlertTitleGeneric": "扫描已达上限",
-			"probeLimitAlertDesc": "Arroxy 发现超过 {{count}} 个项目，当前扫描上限隐藏了其余内容。"
+			"probeLimitAlertDesc": "Arclio 发现超过 {{count}} 个项目，当前扫描上限隐藏了其余内容。"
 		},
 		"bulk": {
 			"title": "批量 URL",
-			"description": "粘贴视频、播放列表、频道、搜索或音频 URL。Arroxy 会在加入队列前清理重复项。",
+			"description": "粘贴视频、播放列表、频道、搜索或音频 URL。Arclio 会在加入队列前清理重复项。",
 			"textareaLabel": "URL 列表",
 			"textareaPlaceholder": "https://video.example/one\nhttps://video.example/two\nhttps://video.example/three",
 			"acceptedCount": "就绪",
@@ -90,11 +90,11 @@
 			"pickFromPlaylist": "从 Playlist 中挑选",
 			"quickWholePlaylist": "下载整个播放列表",
 			"playlistLimit": "播放列表探测限制：{{count}} 个项目",
-			"quickLimitDescription": "Arroxy 在将播放列表、频道或搜索结果加入队列前最多扫描的条目数。",
+			"quickLimitDescription": "Arclio 在将播放列表、频道或搜索结果加入队列前最多扫描的条目数。",
 			"singleTooltip": "使用 yt-dlp 单视频模式，因此会忽略此 URL 附带的播放列表。",
 			"quickSingleTooltip": "将一个下载加入队列，并忽略此 URL 附带的播放列表。",
 			"playlistTooltip": "使用 yt-dlp 播放列表模式，并在显示选择器前获取到你的探测限制。",
-			"quickPlaylistTooltip": "使用当前的快速下载配置，将每个已加载的播放列表条目加入队列。如果扫描达到你的上限，Arroxy 会在加入队列前询问。"
+			"quickPlaylistTooltip": "使用当前的快速下载配置，将每个已加载的播放列表条目加入队列。如果扫描达到你的上限，Arclio 会在加入队列前询问。"
 		},
 		"url": {
 			"heading": "从 URL 下载",
@@ -136,12 +136,12 @@
 			"bulkButton": "批量 URL",
 			"bulkTooltip": "添加多个 URL 并加入队列。",
 			"features": {
-				"heading": "Arroxy 能下载什么",
+				"heading": "Arclio 能下载什么",
 				"youtube": {"heading": "YouTube", "video": "视频", "channel": "频道", "playlist": "播放列表", "short": "Shorts", "music": "音乐", "podcast": "播客"},
 				"anySite": {"heading": "2000+ 个网站", "video": "视频", "videoPlaylist": "视频播放列表", "musicPlaylist": "音乐播放列表"},
 				"always": {"audioOnly": "纯音频", "subtitles": "字幕"}
 			},
-			"mascotIdle": "丢个链接，让 Arroxy 来拉取 ✨",
+			"mascotIdle": "丢个链接，让 Arclio 来拉取 ✨",
 			"mascotBusy": "正在后台下载… 我可以同时处理多个任务 😎",
 			"advanced": "高级",
 			"clearAria": "清除 URL",
@@ -184,14 +184,14 @@
 			"proxy": {"label": "Proxy URL", "description": "通过代理路由流量 — 适用于地区限制内容。", "placeholder": "http://host:port", "clear": "清除"},
 			"backdrop": {
 				"panelTitle": "外观与性能",
-				"panelDescription": "选择 Arroxy 在动画背景中使用多少动态效果。",
+				"panelDescription": "选择 Arclio 在动画背景中使用多少动态效果。",
 				"modeLabel": "背景质量",
 				"modeDescription": "从最丰富的动画效果切换到最佳性能。",
 				"cssOnlyLabel": "最佳性能",
 				"cssOnlyDescription": "仅使用 CSS，不进行 canvas 渲染。",
 				"gpuLabel": "最美观",
 				"gpuDescription": "支持时使用动画 WebGL 背景。",
-				"runtimeFallbackNotice": "此设备不支持硬件 WebGL，因此 Arroxy 正在使用性能背景。"
+				"runtimeFallbackNotice": "此设备不支持硬件 WebGL，因此 Arclio 正在使用性能背景。"
 			},
 			"limitRate": {
 				"label": "下载速度限制",
@@ -204,7 +204,7 @@
 			},
 			"playlistProbeLimit": {
 				"label": "要扫描的播放列表项目数",
-				"description": "打开播放列表、频道或搜索结果时，Arroxy 最多加载的条目数。",
+				"description": "打开播放列表、频道或搜索结果时，Arclio 最多加载的条目数。",
 				"option": "{{count}} 个项目",
 				"current": "当前上限：{{count}} 个项目",
 				"customValue": "自定义：{{count}} 个项目",
@@ -214,18 +214,18 @@
 				"customDialogCancel": "取消",
 				"customDialogSave": "保存上限",
 				"invalid": "请输入 1 到 5000 之间的整数",
-				"tooltip": "对应 yt-dlp 的 --playlist-end 参数：Arroxy 在构建选择器时仅请求这么多播放列表、频道或搜索条目。"
+				"tooltip": "对应 yt-dlp 的 --playlist-end 参数：Arclio 在构建选择器时仅请求这么多播放列表、频道或搜索条目。"
 			},
 			"nativeAudioPreference": {"label": "原生音频偏好", "description": "控制“最佳原生”会选择什么。手动音频行和 M4A/AAC 仍保持显式选择。", "compatible": "兼容立体声", "surround": "优先环绕声 / Dolby"},
 			"singleFilenameId": {"toggle": "将视频 ID 添加到单个文件名", "toggleDescription": "当标题变化或重复时，让单次下载保持唯一。"},
 			"networkPacing": {
 				"heading": "温和下载",
-				"description": "在每次下载时添加小等待，使 Arroxy 不会过于频繁地访问网站。除非另有说明，值的单位为秒。",
-				"presetLabel": "Arroxy 应该多谨慎？",
-				"tooltip": "这些等待发生在每次下载内部。Arroxy 仍然按顺序逐个处理队列中的下载任务。",
+				"description": "在每次下载时添加小等待，使 Arclio 不会过于频繁地访问网站。除非另有说明，值的单位为秒。",
+				"presetLabel": "Arclio 应该多谨慎？",
+				"tooltip": "这些等待发生在每次下载内部。Arclio 仍然按顺序逐个处理队列中的下载任务。",
 				"summary": "等待：{{requests}} 次检查间隔，{{downloads}} 媒体开始前，{{subtitles}} 字幕文件前。连接数：{{fragments}}。",
 				"presets": {"off": "关闭", "balanced": "均衡", "careful": "谨慎", "custom": "自定义"},
-				"tooltips": {"off": "仅使用 Arroxy 为媒体和字幕保留的小基准暂停。", "balanced": "默认。添加短暂停并使用一个下载连接。", "careful": "为大型播放列表或经常触达限制的网络添加更长的暂停。", "custom": "自行调整每次下载的高级控制参数。"},
+				"tooltips": {"off": "仅使用 Arclio 为媒体和字幕保留的小基准暂停。", "balanced": "默认。添加短暂停并使用一个下载连接。", "careful": "为大型播放列表或经常触达限制的网络添加更长的暂停。", "custom": "自行调整每次下载的高级控制参数。"},
 				"fields": {"sleepRequests": "元数据检查之间的等待", "sleepInterval": "媒体开始前暂停：最小值", "maxSleepInterval": "媒体开始前暂停：最大值", "sleepSubtitles": "字幕文件前等待", "concurrentFragments": "下载连接数"},
 				"units": {"seconds": "秒", "threads": "线程"}
 			},
@@ -234,9 +234,9 @@
 		},
 		"quickProgress": {
 			"title": "正在准备快速下载",
-			"description": "Arroxy 正在读取链接并应用 {{profileName}}。",
+			"description": "Arclio 正在读取链接并应用 {{profileName}}。",
 			"currentFallback": "当前链接",
-			"waitHint": "Arroxy 准备队列时请保持此窗口打开。",
+			"waitHint": "Arclio 准备队列时请保持此窗口打开。",
 			"failedCount_one": "{{count}} 个失败",
 			"failedCount_other": "{{count}} 个失败",
 			"cancel": "取消准备",
@@ -410,7 +410,7 @@
 		}
 	},
 	"update": {
-		"appVersion": "Arroxy {{version}}",
+		"appVersion": "Arclio {{version}}",
 		"isAvailable": "已发布",
 		"youHave": "— 当前版本 {{currentVersion}}",
 		"install": "安装并重启",
@@ -422,7 +422,7 @@
 		"installFailed": "更新失败",
 		"retry": "重试"
 	},
-	"releaseNotes": {"title": "Arroxy {{version}} 新增内容", "description": "你正在运行新的更新。以下是亮点。", "fullNotes": "完整发行说明 ↗", "continue": "继续"},
+	"releaseNotes": {"title": "Arclio {{version}} 新增内容", "description": "你正在运行新的更新。以下是亮点。", "fullNotes": "完整发行说明 ↗", "continue": "继续"},
 	"status": {
 		"preparingBinaries": "正在准备二进制文件…",
 		"mintingToken": "正在生成 YouTube 令牌…",
@@ -450,7 +450,7 @@
 	},
 	"errors": {
 		"ytdlp": {
-			"botBlock": "触发了机器人保护。你所使用的 IP 很可能已被标记（数据中心地址段或繁忙的 VPN 出口）。请更换 IP 或选择其他 VPN 节点后重试。如果持续失败，这可能是 YouTube 临时性的变动——Arroxy 会在启动时自动更新 yt-dlp，一旦上游发布修复，会自动生效。",
+			"botBlock": "触发了机器人保护。你所使用的 IP 很可能已被标记（数据中心地址段或繁忙的 VPN 出口）。请更换 IP 或选择其他 VPN 节点后重试。如果持续失败，这可能是 YouTube 临时性的变动——Arclio 会在启动时自动更新 yt-dlp，一旦上游发布修复，会自动生效。",
 			"ipBlock": "你的 IP 地址似乎被 YouTube 屏蔽。请稍后再试或使用 VPN。",
 			"rateLimit": "YouTube 正在限制请求频率。等一分钟后再重试。",
 			"ageRestricted": "该视频有年龄限制,未登录账号无法下载。",
@@ -461,7 +461,7 @@
 			"chunkTransferFailure": "服务器在传输过程中反复中断下载，yt-dlp 多次重试后放弃。此问题通常出现在最大的视频格式（4K HDR / 高码率 VP9）上。请重试、切换网络或 VPN，或选择分辨率较低的格式。",
 			"missingDependency": "yt-dlp 找不到 ffmpeg 或 ffprobe。请修复内置二进制文件，或设置 FFmpeg 位置，然后重试。",
 			"postprocessFailure": "yt-dlp 已完成下载，但后处理（合并 / mux / 转换）失败。这通常是 ffmpeg 的临时问题——请重试，如果仍然失败，请尝试其他格式组合。",
-			"parse": "无法解析网站的响应。yt-dlp 的提取器可能已过时。Arroxy 会在启动时自动更新 yt-dlp——请几分钟后再重试，等待修复发布。",
+			"parse": "无法解析网站的响应。yt-dlp 的提取器可能已过时。Arclio 会在启动时自动更新 yt-dlp——请几分钟后再重试，等待修复发布。",
 			"network": "网络错误。请检查你的连接并重试。",
 			"drmProtected": "该视频受 DRM 保护。yt-dlp 无法去除 DRM，因此无法下载该文件。",
 			"loginRequired": "该视频需要已登录的账号。请设置 cookies.txt（设置 → Cookies）后重试。",
@@ -487,22 +487,23 @@
 		"mp4Cap": "YouTube 不提供 1080p 以上的 H.264 — 自动限制为 1080p"
 	},
 	"formatLabel": {"audioFallback": "音频", "audioOnlyDot": "仅音频 · {{audio}}", "videoDot": "{{resolution}} · {{audio}}"},
-	"tray": {"tooltip": "Arroxy", "menu": {"statusIdle": "空闲", "statusActive_one": "1个下载中 · {{percent}}%", "statusActive_other": "{{count}}个下载中 · {{percent}}%", "open": "打开 Arroxy", "quit": "退出 Arroxy"}},
+	"tray": {"tooltip": "Arclio", "menu": {"statusIdle": "空闲", "statusActive_one": "1个下载中 · {{percent}}%", "statusActive_other": "{{count}}个下载中 · {{percent}}%", "open": "打开 Arclio", "quit": "退出 Arclio"}},
 	"dialogs": {
 		"quitWithActiveDownloads": {"message_one": "正在进行 {{count}} 个下载", "message_other": "正在进行 {{count}} 个下载", "detail": "暂停以便稍后继续，或取消以丢弃进度。", "confirm": "取消下载并退出", "pause": "暂停下载并退出", "keep": "继续下载"},
-		"closeToTray": {"message": "关闭时将 Arroxy 最小化到系统托盘？", "detail": "Arroxy 将继续运行并完成活动下载。可在高级设置中更改。", "hide": "最小化到托盘", "quit": "退出", "remember": "不再询问"},
-		"rendererCrashed": {"message": "Arroxy 遇到了一个问题", "detail": "渲染进程崩溃（{{reason}}）。请重新加载以重试。", "reload": "重新加载", "quit": "退出"}
+		"closeToTray": {"message": "关闭时将 Arclio 最小化到系统托盘？", "detail": "Arclio 将继续运行并完成活动下载。可在高级设置中更改。", "hide": "最小化到托盘", "quit": "退出", "remember": "不再询问"},
+		"rendererCrashed": {"message": "Arclio 遇到了一个问题", "detail": "渲染进程崩溃（{{reason}}）。请重新加载以重试。", "reload": "重新加载", "quit": "退出"}
 	},
 	"share": {
-		"title": "分享 Arroxy",
-		"description": "Arroxy 免费且开源。分享它可以帮助更多人发现它。",
+		"title": "分享 Arclio",
+		"description": "Arclio 免费且开源。分享它可以帮助更多人发现它。",
 		"copyLink": "复制链接",
 		"copied": "已复制！",
-		"defaultMessage": "Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
-		"footerTooltip": "分享 Arroxy",
+		"defaultMessage": "Arclio — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
+		"footerTooltip": "分享 Arclio",
 		"footerLabel": "分享",
-		"shareAction": "分享 Arroxy"
+		"shareAction": "分享 Arclio"
 	},
+	"search": {"placeholder": "Search…", "noResults": "No results", "media": "Media", "collection": "Collection", "tag": "Tag", "items": "items"},
 	"nav": {"home": "Home", "library": "Library", "collections": "Collections", "favorites": "Favorites", "tags": "Tags", "history": "History", "settings": "Settings"},
 	"library": {
 		"items": "items",

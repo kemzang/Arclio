@@ -5,9 +5,9 @@ export type Action = {kind: 'install'} | {kind: 'download'} | {kind: 'command'; 
 export function resolveAction(channel: InstallChannel, platform: NodeJS.Platform): Action {
 	switch (channel) {
 		case 'scoop':
-			return {kind: 'command', cmd: 'scoop update arroxy'}
+			return {kind: 'command', cmd: 'scoop update arclio'}
 		case 'homebrew':
-			return {kind: 'command', cmd: 'brew upgrade --cask arroxy'}
+			return {kind: 'command', cmd: 'brew upgrade --cask arclio'}
 		case 'winget':
 			return {kind: 'install'}
 		case 'portable':

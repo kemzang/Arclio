@@ -1,7 +1,7 @@
 {
 	"common": {"back": "နောက်သို့", "cancel": "ပယ်ဖျက်မည်", "continue": "ဆက်လက်သွားမည်", "retry": "ထပ်မံကြိုးစားမည်", "startOver": "အစကနေပြန်စမည်"},
-	"app": {"feedback": "အကြံပြုချက်", "logs": "မှတ်တမ်းများ", "feedbackNudge": "Arroxy ကိုနှစ်သက်ပါသလား? သင့်ထံမှကြားချင်ပါသည်! 💬", "zoomIn": "ချဲ့မည်", "zoomOut": "ချုံ့မည်"},
-	"about": {"button": "အကြောင်း", "openTitle": "Arroxy အကြောင်း", "tagline": "YouTube နှင့် အခြား site 2000+ အတွက် မြန်ဆန်ပြီး အသုံးရလွယ်သော downloader။", "websiteLink": "ဝက်ဘ်ဆိုက်", "githubLink": "GitHub", "licenseLine": "MIT လိုင်စင် · Antonio Orionus မှ", "thirdPartyNotices": "တတိယပါတီ သတိပေးချက်များ ကြည့်မည်"},
+	"app": {"feedback": "အကြံပြုချက်", "logs": "မှတ်တမ်းများ", "feedbackNudge": "Arclio ကိုနှစ်သက်ပါသလား? သင့်ထံမှကြားချင်ပါသည်! 💬", "zoomIn": "ချဲ့မည်", "zoomOut": "ချုံ့မည်"},
+	"about": {"button": "အကြောင်း", "openTitle": "Arclio အကြောင်း", "tagline": "YouTube နှင့် အခြား site 2000+ အတွက် မြန်ဆန်ပြီး အသုံးရလွယ်သော downloader။", "websiteLink": "ဝက်ဘ်ဆိုက်", "githubLink": "GitHub", "licenseLine": "MIT လိုင်စင် · Antonio Orionus မှ", "thirdPartyNotices": "တတိယပါတီ သတိပေးချက်များ ကြည့်မည်"},
 	"titleBar": {"close": "ပိတ်မည်", "minimize": "သေးငယ်အောင်လုပ်မည်", "maximize": "အများဆုံးချဲ့မည်", "restore": "ပြန်ရောက်မည်"},
 	"splash": {"greeting": "ဟေး၊ ကြိုဆိုပါသည်!", "warmup": "ဒေါင်းလုဒ်များကို ပြင်ဆင်နေသည်…", "downloading": "{{binary}} ဒေါင်းလုဒ်လုပ်နေသည်…", "warmupFailedNoDiag": "တပ်ဆင်မှုမအောင်မြင်ပါ။ အသေးစိတ်ကြည့်ရန် setup log ဖွင့်ပါ။"},
 	"repair": {
@@ -68,11 +68,11 @@
 			"alreadyDownloaded": "ဒေါင်းလုဒ်ပြီးသား",
 			"probeLimitAlertTitle": "Playlist scan ကန့်သတ်ထားသည်",
 			"probeLimitAlertTitleGeneric": "စကင်န်ကန့်သတ်ထားသည်",
-			"probeLimitAlertDesc": "Arroxy သည် {{count}} ထက်ပိုသော အကြောင်းအရာများ တွေ့ရှိသောကြောင့် လက်ရှိ scan ကန့်သတ်ချက်ကြောင့် ကျန်သောအရာများ ဖျောက်ထားသည်။"
+			"probeLimitAlertDesc": "Arclio သည် {{count}} ထက်ပိုသော အကြောင်းအရာများ တွေ့ရှိသောကြောင့် လက်ရှိ scan ကန့်သတ်ချက်ကြောင့် ကျန်သောအရာများ ဖျောက်ထားသည်။"
 		},
 		"bulk": {
 			"title": "URL အများအပြား",
-			"description": "video၊ playlist၊ channel၊ search သို့မဟုတ် audio URL များကို paste လုပ်ပါ။ Arroxy သည် queue ထဲမထည့်မီ duplicate များကို ရှင်းလင်းမည်။",
+			"description": "video၊ playlist၊ channel၊ search သို့မဟုတ် audio URL များကို paste လုပ်ပါ။ Arclio သည် queue ထဲမထည့်မီ duplicate များကို ရှင်းလင်းမည်။",
 			"textareaLabel": "URL စာရင်း",
 			"textareaPlaceholder": "https://video.example/one\nhttps://video.example/two\nhttps://video.example/three",
 			"acceptedCount": "အဆင်သင့်",
@@ -90,11 +90,11 @@
 			"pickFromPlaylist": "Playlist မှ ရွေးမည်",
 			"quickWholePlaylist": "playlist တစ်ခုလုံးကို ဒေါင်းလုဒ်လုပ်ပါ",
 			"playlistLimit": "Playlist စစ်ဆေးမှု ကန့်သတ်ချက်: {{count}} ခု",
-			"quickLimitDescription": "playlist၊ channel သို့မဟုတ် ရှာဖွေမှုရလဒ်ကို queue ထဲမထည့်မီ Arroxy စကန်ဖတ်မည့် အများဆုံး item အရေအတွက်။",
+			"quickLimitDescription": "playlist၊ channel သို့မဟုတ် ရှာဖွေမှုရလဒ်ကို queue ထဲမထည့်မီ Arclio စကန်ဖတ်မည့် အများဆုံး item အရေအတွက်။",
 			"singleTooltip": "ဤ URL နှင့်တွဲနေသော playlist ကို လျစ်လျူရှုရန် yt-dlp ၏ ဗီဒီယိုတစ်ခုချင်း မုဒ်ကို သုံးသည်။",
 			"quickSingleTooltip": "ဒေါင်းလုဒ်တစ်ခုကို queue ထဲထည့်ပြီး ဤ URL နှင့်တွဲထားသော playlist ကို လျစ်လျူရှုပါသည်။",
 			"playlistTooltip": "yt-dlp ၏ playlist မုဒ်ကို သုံးပြီး ရွေးချယ်ကိရိယာ မပြမီ သင့်ကန့်သတ်ချက်အထိ ယူသည်။",
-			"quickPlaylistTooltip": "တင်ပြီးသား playlist item တစ်ခုချင်းစီကို အသုံးပြုနေသော အမြန်ဒေါင်းလုဒ် ပရိုဖိုင်ဖြင့် queue ထဲထည့်ပါသည်။ စကန်ဖတ်မှုက သင့် limit ထိရောက်ပါက queue မထည့်မီ Arroxy က မေးပါမည်။"
+			"quickPlaylistTooltip": "တင်ပြီးသား playlist item တစ်ခုချင်းစီကို အသုံးပြုနေသော အမြန်ဒေါင်းလုဒ် ပရိုဖိုင်ဖြင့် queue ထဲထည့်ပါသည်။ စကန်ဖတ်မှုက သင့် limit ထိရောက်ပါက queue မထည့်မီ Arclio က မေးပါမည်။"
 		},
 		"url": {
 			"heading": "URL မှ ဒေါင်းလုဒ်လုပ်ရန်",
@@ -136,12 +136,12 @@
 			"bulkButton": "URL အများအပြား",
 			"bulkTooltip": "URL အများအပြားကို ထည့်ပြီး queue ထဲသို့ ထည့်ပါ။",
 			"features": {
-				"heading": "Arroxy ဆွဲထုတ်နိုင်သည်",
+				"heading": "Arclio ဆွဲထုတ်နိုင်သည်",
 				"youtube": {"heading": "YouTube", "video": "ဗီဒီယိုများ", "channel": "Channel များ", "playlist": "ပလေးလစ်များ", "short": "Shorts", "music": "တေးဂီတ", "podcast": "Podcast များ"},
 				"anySite": {"heading": "2000+ ဝဘ်ဆိုဒ်", "video": "ဗီဒီယိုများ", "videoPlaylist": "ဗီဒီယို playlist များ", "musicPlaylist": "တေးဂီတ playlist များ"},
 				"always": {"audioOnly": "အသံသာများ", "subtitles": "စာတန်းထိုးများ"}
 			},
-			"mascotIdle": "လင့်ခ်တစ်ခုထည့်ပြီး Arroxy ကို ဆွဲယူခိုင်းလိုက်ပါ ✨",
+			"mascotIdle": "လင့်ခ်တစ်ခုထည့်ပြီး Arclio ကို ဆွဲယူခိုင်းလိုက်ပါ ✨",
 			"mascotBusy": "နောက်ခံတွင် ဒေါင်းလုဒ်လုပ်နေသည်… ကျွန်ုပ် တစ်ချိန်တည်းလုပ်နိုင်သည် 😎",
 			"advanced": "အဆင့်မြင့်",
 			"clearAria": "URL ရှင်းလင်းမည်",
@@ -184,14 +184,14 @@
 			"proxy": {"label": "Proxy URL", "description": "Proxy မှတဆင့် traffic လမ်းကြောင်းလွှဲပါ — ဂျီဩဂရပ်ကန့်သတ်ချက်ရှိသော အကြောင်းအရာများအတွက် အသုံးဝင်သည်။", "placeholder": "http://host:port", "clear": "ရှင်းလင်း"},
 			"backdrop": {
 				"panelTitle": "အသွင်အပြင်နှင့် စွမ်းဆောင်ရည်",
-				"panelDescription": "Arroxy သည် လှုပ်ရှားနောက်ခံအတွက် လှုပ်ရှားမှုမည်မျှ အသုံးပြုမည်ကို ရွေးပါ။",
+				"panelDescription": "Arclio သည် လှုပ်ရှားနောက်ခံအတွက် လှုပ်ရှားမှုမည်မျှ အသုံးပြုမည်ကို ရွေးပါ။",
 				"modeLabel": "နောက်ခံ အရည်အသွေး",
 				"modeDescription": "အလှုပ်ရှားဆုံး အသွင်အပြင်မှ အကောင်းဆုံး စွမ်းဆောင်ရည်သို့ ရွှေ့ပါ။",
 				"cssOnlyLabel": "အကောင်းဆုံး စွမ်းဆောင်ရည်",
 				"cssOnlyDescription": "CSS သာအသုံးပြုမည်၊ canvas rendering မရှိပါ။",
 				"gpuLabel": "အလှဆုံး",
 				"gpuDescription": "ထောက်ပံ့ပါက လှုပ်ရှားနေသော WebGL နောက်ခံ။",
-				"runtimeFallbackNotice": "ဤစက်တွင် hardware WebGL မရရှိနိုင်သောကြောင့် Arroxy သည် စွမ်းဆောင်ရည် နောက်ခံကို အသုံးပြုနေသည်။"
+				"runtimeFallbackNotice": "ဤစက်တွင် hardware WebGL မရရှိနိုင်သောကြောင့် Arclio သည် စွမ်းဆောင်ရည် နောက်ခံကို အသုံးပြုနေသည်။"
 			},
 			"limitRate": {
 				"label": "ဒေါင်းလုဒ် အမြန်နှုန်း ကန့်သတ်ချက်",
@@ -204,7 +204,7 @@
 			},
 			"playlistProbeLimit": {
 				"label": "Scan လုပ်မည့် playlist အရေအတွက်",
-				"description": "Arroxy သည် playlist၊ channel သို့မဟုတ် ရှာဖွေမှုရလဒ်ကို ဖွင့်သောအခါ အများဆုံး entries မည်မျှ လုဒ်မည်ကို သတ်မှတ်သည်။",
+				"description": "Arclio သည် playlist၊ channel သို့မဟုတ် ရှာဖွေမှုရလဒ်ကို ဖွင့်သောအခါ အများဆုံး entries မည်မျှ လုဒ်မည်ကို သတ်မှတ်သည်။",
 				"option": "{{count}} ခု",
 				"current": "လက်ရှိ ကန့်သတ်ချက်: {{count}} ခု",
 				"customValue": "စိတ်ကြိုက်: {{count}} ခု",
@@ -214,19 +214,19 @@
 				"customDialogCancel": "မလုပ်တော့",
 				"customDialogSave": "ကန့်သတ်ချက် သိမ်းဆည်းမည်",
 				"invalid": "1 မှ 5000 အထိ ကိန်းပြည့်တစ်ခု အသုံးပြုပါ",
-				"tooltip": "yt-dlp --playlist-end နှင့် map ချိတ်ဆက်သည်: Arroxy သည် picker ဆောက်စဉ် ဤမျှ playlist၊ channel သို့မဟုတ် ရှာဖွေမှု entries များကိုသာ တောင်းဆိုသည်။"
+				"tooltip": "yt-dlp --playlist-end နှင့် map ချိတ်ဆက်သည်: Arclio သည် picker ဆောက်စဉ် ဤမျှ playlist၊ channel သို့မဟုတ် ရှာဖွေမှု entries များကိုသာ တောင်းဆိုသည်။"
 			},
 			"nativeAudioPreference": {"label": "မူရင်းအသံ ဦးစားပေးချက်", "description": "“Best native” က ဘာကိုရွေးမလဲဆိုတာ ထိန်းချုပ်သည်။ ကိုယ်တိုင်ရွေးသော အသံအတန်းများနှင့် M4A/AAC တို့သည် သီးသန့်ရွေးချယ်မှုအဖြစ် ဆက်ရှိသည်။", "compatible": "ကိုက်ညီသော စတီရီယို", "surround": "surround / Dolby ကို ဦးစားပေးပါ"},
 			"singleFilenameId": {"toggle": "တစ်ခုချင်း ဖိုင်အမည်များတွင် ဗီဒီယို ID ထည့်ရန်", "toggleDescription": "ခေါင်းစဉ်များ ပြောင်းလဲခြင်း သို့မဟုတ် တူညီခြင်း ဖြစ်သည့်အခါ တစ်ခုချင်း ဒေါင်းလုဒ်များကို မတူညီအောင် ထိန်းထားသည်။"},
 			"networkPacing": {
 				"heading": "ညင်သာသော ဒေါင်းလုဒ်",
-				"description": "ဒေါင်းလုဒ်တိုင်းတွင် ကဆိုင်းငံ့ချိန်များ ထည့်သွင်း၍ Arroxy သည် ဆိုက်ကို အလွန်ကြမ်းတမ်းစွာ မဖိအားပေးစေရန်။ တန်ဖိုးများသည် ဆက်ပြောရင်းမှတ်မှတ်ရမည်ပုံ အပါအဝင် ဒုတိယများဖြစ်သည်။",
-				"presetLabel": "Arroxy သည် မည်မျှ သတိကြီးသင့်သနည်း?",
-				"tooltip": "ဤဆိုင်းငံ့ချိန်များသည် ဒေါင်းလုဒ်တိုင်း၏ အတွင်းတွင် ဖြစ်သည်။ Arroxy သည် ပုံမှန် queue ဒေါင်းလုဒ်များကို တစ်ခုပြီးတစ်ခု ဆက်ထိန်းသည်။",
+				"description": "ဒေါင်းလုဒ်တိုင်းတွင် ကဆိုင်းငံ့ချိန်များ ထည့်သွင်း၍ Arclio သည် ဆိုက်ကို အလွန်ကြမ်းတမ်းစွာ မဖိအားပေးစေရန်။ တန်ဖိုးများသည် ဆက်ပြောရင်းမှတ်မှတ်ရမည်ပုံ အပါအဝင် ဒုတိယများဖြစ်သည်။",
+				"presetLabel": "Arclio သည် မည်မျှ သတိကြီးသင့်သနည်း?",
+				"tooltip": "ဤဆိုင်းငံ့ချိန်များသည် ဒေါင်းလုဒ်တိုင်း၏ အတွင်းတွင် ဖြစ်သည်။ Arclio သည် ပုံမှန် queue ဒေါင်းလုဒ်များကို တစ်ခုပြီးတစ်ခု ဆက်ထိန်းသည်။",
 				"summary": "ဆိုင်းငံ့ချိန်: {{requests}} စစ်ဆေးမှုများကြား၊ {{downloads}} media မစတင်မီ၊ {{subtitles}} စာတန်းထိုးဖိုင်များမတိုင်မီ။ ချိတ်ဆက်မှုများ: {{fragments}}.",
 				"presets": {"off": "ပိတ်ထားမည်", "balanced": "မျှတသော", "careful": "သတိကြီးသော", "custom": "စိတ်ကြိုက်"},
 				"tooltips": {
-					"off": "Arroxy သည် media နှင့် စာတန်းထိုးများအတွက် ထားသည့် အသေးငယ်သော baseline ခေတ္တရပ်ချိန်များသာ သုံးသည်။",
+					"off": "Arclio သည် media နှင့် စာတန်းထိုးများအတွက် ထားသည့် အသေးငယ်သော baseline ခေတ္တရပ်ချိန်များသာ သုံးသည်။",
 					"balanced": "မူရင်း။ တိုတောင်းသော ခေတ္တရပ်ချိန်များ ထည့်ပြီး ဒေါင်းလုဒ်ချိတ်ဆက်မှု တစ်ခုသုံးသည်။",
 					"careful": "ကန့်သတ်ချက်များ မကြာခဏ တွေ့ကြုံသော ကြီးသော playlist များ သို့မဟုတ် network များအတွက် ပိုရှည်သော ခေတ္တရပ်ချိန်များ ထည့်သည်။",
 					"custom": "ဒေါင်းလုဒ်တစ်ခုချင်းစီ၏ အဆင့်မြင့် ထိန်းချုပ်မှုများကို ကိုယ်တိုင် သတ်မှတ်ပါ။"
@@ -239,9 +239,9 @@
 		},
 		"quickProgress": {
 			"title": "အမြန်ဒေါင်းလုဒ် ပြင်ဆင်နေသည်",
-			"description": "Arroxy က လင့်ခ်ကို ဖတ်ပြီး {{profileName}} ကို အသုံးပြုနေသည်။",
+			"description": "Arclio က လင့်ခ်ကို ဖတ်ပြီး {{profileName}} ကို အသုံးပြုနေသည်။",
 			"currentFallback": "လက်ရှိလင့်ခ်",
-			"waitHint": "Arroxy က တန်းစီစာရင်းကို ပြင်ဆင်နေစဉ် ဤနေရာကို ဖွင့်ထားပါ။",
+			"waitHint": "Arclio က တန်းစီစာရင်းကို ပြင်ဆင်နေစဉ် ဤနေရာကို ဖွင့်ထားပါ။",
 			"failedCount_one": "{{count}} ခု မအောင်မြင်ပါ",
 			"failedCount_other": "{{count}} ခု မအောင်မြင်ပါ",
 			"cancel": "ပြင်ဆင်မှုကို ပယ်ဖျက်ပါ",
@@ -434,7 +434,7 @@
 		}
 	},
 	"update": {
-		"appVersion": "Arroxy {{version}}",
+		"appVersion": "Arclio {{version}}",
 		"isAvailable": "ရရှိနိုင်ပြီ",
 		"youHave": "— သင့်တွင် {{currentVersion}} ရှိသည်",
 		"install": "တပ်ဆင်ပြီး ပြန်စမည်",
@@ -446,7 +446,7 @@
 		"installFailed": "အပ်ဒိတ် မအောင်မြင်ပါ",
 		"retry": "ထပ်စမ်းမည်"
 	},
-	"releaseNotes": {"title": "Arroxy {{version}} တွင် အသစ်များ", "description": "သင်သည် အပ်ဒိတ်အသစ်ကို အသုံးပြုနေပါသည်။ အဓိကအချက်များကို ဖော်ပြထားသည်။", "fullNotes": "ဖြန့်ချိမှတ်တမ်း အပြည့်အစုံ ↗", "continue": "ဆက်လက်သွားမည်"},
+	"releaseNotes": {"title": "Arclio {{version}} တွင် အသစ်များ", "description": "သင်သည် အပ်ဒိတ်အသစ်ကို အသုံးပြုနေပါသည်။ အဓိကအချက်များကို ဖော်ပြထားသည်။", "fullNotes": "ဖြန့်ချိမှတ်တမ်း အပြည့်အစုံ ↗", "continue": "ဆက်လက်သွားမည်"},
 	"status": {
 		"preparingBinaries": "Binary ဖိုင်များပြင်ဆင်နေသည်…",
 		"mintingToken": "YouTube token ထုတ်နေသည်…",
@@ -474,7 +474,7 @@
 	},
 	"errors": {
 		"ytdlp": {
-			"botBlock": "Bot ကာကွယ်မှု အစပြုပြီ။ သင်သုံးနေသော IP သည် datacenter range သို့မဟုတ် သူများများသုံးသော VPN exit ဖြစ်၍ ပိတ်ဆို့ခံရနိုင်သည်။ သင့် IP ကို ပြောင်းပါ သို့မဟုတ် VPN endpoint အခြားတစ်ခုရွေးပြီး ထပ်ကြိုးစားပါ။ ဆက်မအောင်မြင်ပါက YouTube ၏ ယာယီပြောင်းလဲမှုဖြစ်နိုင်သည် — Arroxy သည် ဖွင့်သည့်အခါ yt-dlp ကို အလိုအလျောက်အပ်ဒိတ်လုပ်သောကြောင့် upstream မှ ပြင်ဆင်မှုရောက်သောအခါ အလိုလိုဖြေရှင်းသွားမည်ဖြစ်သည်။",
+			"botBlock": "Bot ကာကွယ်မှု အစပြုပြီ။ သင်သုံးနေသော IP သည် datacenter range သို့မဟုတ် သူများများသုံးသော VPN exit ဖြစ်၍ ပိတ်ဆို့ခံရနိုင်သည်။ သင့် IP ကို ပြောင်းပါ သို့မဟုတ် VPN endpoint အခြားတစ်ခုရွေးပြီး ထပ်ကြိုးစားပါ။ ဆက်မအောင်မြင်ပါက YouTube ၏ ယာယီပြောင်းလဲမှုဖြစ်နိုင်သည် — Arclio သည် ဖွင့်သည့်အခါ yt-dlp ကို အလိုအလျောက်အပ်ဒိတ်လုပ်သောကြောင့် upstream မှ ပြင်ဆင်မှုရောက်သောအခါ အလိုလိုဖြေရှင်းသွားမည်ဖြစ်သည်။",
 			"ipBlock": "သင့် IP လိပ်စာကို YouTube မှ ပိတ်ဆို့ထားနိုင်သည်။ နောက်မှပြန်ကြိုးစားပါ သို့ VPN သုံးပါ။",
 			"rateLimit": "YouTube မှ တောင်းဆိုမှုများကို နှုန်းကန့်သတ်နေသည်။ တစ်မိနစ်စောင့်ပြီး ထပ်ကြိုးစားပါ။",
 			"ageRestricted": "ဤဗီဒီယိုသည် အသက်အကန့်အသတ်ရှိပြီး login ဝင်ထားသော account မပါဘဲ ဒေါင်းလုဒ်မဆင်းနိုင်ပါ။",
@@ -485,7 +485,7 @@
 			"chunkTransferFailure": "ဆာဗာသည် ဒေါင်းလုဒ်လုပ်နေစဉ် အကြိမ်ကြိမ် ဖြတ်တောက်နေပြီး yt-dlp သည် ထပ်ကြိုးစားပြီးနောက် လက်လျှော့သွားသည်။ ၎င်းသည် အများအားဖြင့် အကြီးဆုံးဗီဒီယိုဖော်မတ်များ (4K HDR / bitrate မြင့် VP9) တွင် ဖြစ်တတ်သည်။ ထပ်ကြိုးစားပါ၊ network/VPN ပြောင်းပါ၊ သို့မဟုတ် resolution နိမ့်သောဖော်မတ်ကို ရွေးချယ်ပါ။",
 			"missingDependency": "yt-dlp သည် ffmpeg သို့မဟုတ် ffprobe ကို မတွေ့ပါ။ ထည့်သွင်းထားသော binary များကို ပြုပြင်ပါ သို့မဟုတ် FFmpeg တည်နေရာကို သတ်မှတ်ပြီးနောက် ထပ်ကြိုးစားပါ။",
 			"postprocessFailure": "yt-dlp ဒေါင်းလုဒ်လုပ်ခြင်းကို ပြီးစီးခဲ့သော်လည်း post-processing (merge / mux / convert) မအောင်မြင်ပါ။ ၎င်းသည် ခဏတာ ffmpeg ပြဿနာဖြစ်တတ်ပါသည် — ထပ်ကြိုးစားကြည့်ပါ၊ ဆက်လက်ဖြစ်နေပါက ဖော်မတ်ပေါင်းစပ်မှု အခြားတစ်ခုကို စမ်းကြည့်ပါ။",
-			"parse": "ဆိုက်မှ တုံ့ပြန်ချက်ကို parse မလုပ်နိုင်ပါ။ yt-dlp ၏ extractor သည် ခေတ်နောက်ကျနေပြီ ဖြစ်နိုင်သည်။ Arroxy သည် launch လုပ်သည့်အခါ yt-dlp ကို အလိုအလျောက် update လုပ်ပါသည် — ပြင်ဆင်မှု ထွက်ရှိပြီးနောက် မိနစ်အနည်းငယ်အကြာတွင် ထပ်ကြိုးစားကြည့်ပါ။",
+			"parse": "ဆိုက်မှ တုံ့ပြန်ချက်ကို parse မလုပ်နိုင်ပါ။ yt-dlp ၏ extractor သည် ခေတ်နောက်ကျနေပြီ ဖြစ်နိုင်သည်။ Arclio သည် launch လုပ်သည့်အခါ yt-dlp ကို အလိုအလျောက် update လုပ်ပါသည် — ပြင်ဆင်မှု ထွက်ရှိပြီးနောက် မိနစ်အနည်းငယ်အကြာတွင် ထပ်ကြိုးစားကြည့်ပါ။",
 			"network": "Network အမှား။ သင့်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်ကြိုးစားပါ။",
 			"drmProtected": "ဤဗီဒီယိုသည် DRM ကာကွယ်ထားသည်။ yt-dlp သည် DRM ကို ဖြုတ်နိုင်မည်မဟုတ်သောကြောင့် ဖိုင်ကို ဒေါင်းလုဒ်မဆင်းနိုင်ပါ။",
 			"loginRequired": "ဤဗီဒီယိုအတွက် login ဝင်ထားသော account လိုအပ်သည်။ cookies.txt တစ်ခု တပ်ဆင်ပါ (ဆက်တင် → Cookies) ပြီးနောက် ထပ်ကြိုးစားပါ။",
@@ -511,22 +511,23 @@
 		"mp4Cap": "YouTube တွင် 1080p အထက် H.264 မရှိပါ — 1080p သို့ အလိုအလျောက် ကန့်သတ်သည်"
 	},
 	"formatLabel": {"audioFallback": "အသံ", "audioOnlyDot": "အသံသာ · {{audio}}", "videoDot": "{{resolution}} · {{audio}}"},
-	"tray": {"tooltip": "Arroxy", "menu": {"statusIdle": "လုပ်ငန်းမရှိ", "statusActive_one": "1 ဒေါင်းလုဒ်လုပ်နေသည် · {{percent}}%", "statusActive_other": "{{count}} ဒေါင်းလုဒ်လုပ်နေသည် · {{percent}}%", "open": "Arroxy ဖွင့်မည်", "quit": "Arroxy ထွက်မည်"}},
+	"tray": {"tooltip": "Arclio", "menu": {"statusIdle": "လုပ်ငန်းမရှိ", "statusActive_one": "1 ဒေါင်းလုဒ်လုပ်နေသည် · {{percent}}%", "statusActive_other": "{{count}} ဒေါင်းလုဒ်လုပ်နေသည် · {{percent}}%", "open": "Arclio ဖွင့်မည်", "quit": "Arclio ထွက်မည်"}},
 	"dialogs": {
 		"quitWithActiveDownloads": {"message_one": "{{count}} ဒေါင်းလုဒ် လုပ်ဆောင်နေဆဲ", "message_other": "{{count}} ဒေါင်းလုဒ်များ လုပ်ဆောင်နေဆဲ", "detail": "နောက်မှ ပြန်စရန် ခေတ္တရပ်ပါ၊ သို့မဟုတ် တိုးတက်မှုကို စွန့်ပစ်ရန် ပယ်ဖျက်ပါ။", "confirm": "ဒေါင်းလုဒ်ပယ်ဖျက်ပြီး ထွက်မည်", "pause": "ဒေါင်းလုဒ်များ ရပ်နားပြီး ထွက်", "keep": "ဒေါင်းလုဒ်ဆက်လုပ်မည်"},
-		"closeToTray": {"message": "ပိတ်သောအခါ Arroxy ကို system tray သို့ ဝှက်မည်လား?", "detail": "Arroxy ဆက်လည်ပတ်ပြီး လက်ရှိဒေါင်းလုဒ်များ ပြီးဆုံးမည်။ နောက်မှ အဆင့်မြင့်ဆက်တင်တွင် ပြောင်းနိုင်သည်။", "hide": "Tray သို့ ဝှက်မည်", "quit": "ထွက်မည်", "remember": "နောက်ထပ်မမေးတော့ပါ"},
-		"rendererCrashed": {"message": "Arroxy တွင် ပြဿနာတစ်ခုဖြစ်ပေါ်ပါသည်", "detail": "Renderer လုပ်ငန်းစဉ် ပျက်ကွက်သွားပါသည် ({{reason}})။ ထပ်မံကြိုးစားရန် ပြန်ဖွင့်ပါ။", "reload": "ပြန်ဖွင့်မည်", "quit": "ထွက်မည်"}
+		"closeToTray": {"message": "ပိတ်သောအခါ Arclio ကို system tray သို့ ဝှက်မည်လား?", "detail": "Arclio ဆက်လည်ပတ်ပြီး လက်ရှိဒေါင်းလုဒ်များ ပြီးဆုံးမည်။ နောက်မှ အဆင့်မြင့်ဆက်တင်တွင် ပြောင်းနိုင်သည်။", "hide": "Tray သို့ ဝှက်မည်", "quit": "ထွက်မည်", "remember": "နောက်ထပ်မမေးတော့ပါ"},
+		"rendererCrashed": {"message": "Arclio တွင် ပြဿနာတစ်ခုဖြစ်ပေါ်ပါသည်", "detail": "Renderer လုပ်ငန်းစဉ် ပျက်ကွက်သွားပါသည် ({{reason}})။ ထပ်မံကြိုးစားရန် ပြန်ဖွင့်ပါ။", "reload": "ပြန်ဖွင့်မည်", "quit": "ထွက်မည်"}
 	},
 	"share": {
-		"title": "Arroxy မျှဝေမည်",
-		"description": "Arroxy သည် အခမဲ့ နှင့် ဖွင့်ရင်းမြစ်ဖြစ်သည်။ မျှဝေခြင်းသည် လူပိုများ ၎င်းကို ရှာဖွေတွေ့ရှိနိုင်ရန် ကူညီသည်။",
+		"title": "Arclio မျှဝေမည်",
+		"description": "Arclio သည် အခမဲ့ နှင့် ဖွင့်ရင်းမြစ်ဖြစ်သည်။ မျှဝေခြင်းသည် လူပိုများ ၎င်းကို ရှာဖွေတွေ့ရှိနိုင်ရန် ကူညီသည်။",
 		"copyLink": "လင့်ကိုကူးယူရန်",
 		"copied": "ကူးယူပြီး!",
-		"defaultMessage": "Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
-		"footerTooltip": "Arroxy ကိုမျှဝေရန်",
+		"defaultMessage": "Arclio — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
+		"footerTooltip": "Arclio ကိုမျှဝေရန်",
 		"footerLabel": "မျှဝေရန်",
-		"shareAction": "Arroxy ကိုမျှဝေရန်"
+		"shareAction": "Arclio ကိုမျှဝေရန်"
 	},
+	"search": {"placeholder": "Search…", "noResults": "No results", "media": "Media", "collection": "Collection", "tag": "Tag", "items": "items"},
 	"nav": {"home": "Home", "library": "Library", "collections": "Collections", "favorites": "Favorites", "tags": "Tags", "history": "History", "settings": "Settings"},
 	"library": {
 		"items": "items",

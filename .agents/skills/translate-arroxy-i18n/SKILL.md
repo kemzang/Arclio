@@ -1,11 +1,11 @@
 ---
-name: translate-arroxy-i18n
-description: Arroxy app i18n workflow. Use when changing English app copy, translating app locales, updating src/shared/i18n/locales JSON, updating i18n PO/POT catalogs, checking stale/out-of-sync translation keys, or answering whether app i18n is correct.
+name: translate-arclio-i18n
+description: Arclio app i18n workflow. Use when changing English app copy, translating app locales, updating src/shared/i18n/locales JSON, updating i18n PO/POT catalogs, checking stale/out-of-sync translation keys, or answering whether app i18n is correct.
 ---
 
-# Arroxy App i18n
+# Arclio App i18n
 
-Use this skill for Arroxy application translations and i18n audits.
+Use this skill for Arclio application translations and i18n audits.
 
 ## Files
 

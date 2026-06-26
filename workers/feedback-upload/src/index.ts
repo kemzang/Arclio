@@ -26,7 +26,7 @@ export default {
       if (!success) {
         return json({ error: 'rate_limited' }, 429, { 'Retry-After': '60' });
       }
-      if (request.headers.get('x-arroxy-upload') !== UPLOAD_HEADER) {
+      if (request.headers.get('x-arclio-upload') !== UPLOAD_HEADER) {
         return json({ error: 'bad_upload_marker' }, 400);
       }
       if (request.headers.get('content-encoding')?.toLowerCase() !== 'gzip') {
@@ -36,7 +36,7 @@ export default {
         return json({ error: 'unsupported_content_type' }, 415);
       }
 
-      const reportId = readReportId(request.headers.get('x-arroxy-report-id'));
+      const reportId = readReportId(request.headers.get('x-arclio-report-id'));
       const body = await readBodyWithLimit(request, MAX_COMPRESSED_BYTES);
       const key = `feedback/${new Date().toISOString().slice(0, 10)}/${reportId}.log.gz`;
       const sha256 = await sha256Hex(body);
@@ -49,9 +49,9 @@ export default {
         customMetadata: {
           reportId,
           sha256,
-          rawBytes: safeHeaderValue(request.headers.get('x-arroxy-raw-bytes')),
+          rawBytes: safeHeaderValue(request.headers.get('x-arclio-raw-bytes')),
           compressedBytes: String(body.byteLength),
-          truncated: safeHeaderValue(request.headers.get('x-arroxy-truncated'))
+          truncated: safeHeaderValue(request.headers.get('x-arclio-truncated'))
         }
       });
 

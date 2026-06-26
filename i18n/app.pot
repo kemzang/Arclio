@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Arroxy\n"
-"Report-Msgid-Bugs-To: https://github.com/antonio-orionus/Arroxy/issues\n"
+"Project-Id-Version: Arclio\n"
+"Report-Msgid-Bugs-To: https://github.com/antonio-orionus/Arclio/issues\n"
 "mime-version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +19,7 @@ msgid "MIT License · by Antonio Orionus"
 msgstr ""
 
 msgctxt "about.openTitle"
-msgid "About Arroxy"
+msgid "About Arclio"
 msgstr ""
 
 msgctxt "about.tagline"
@@ -39,7 +39,7 @@ msgid "Feedback"
 msgstr ""
 
 msgctxt "app.feedbackNudge"
-msgid "Enjoying Arroxy? I'd love to hear from you! 💬"
+msgid "Enjoying Arclio? I'd love to hear from you! 💬"
 msgstr ""
 
 msgctxt "app.logs"
@@ -75,7 +75,7 @@ msgid "Start over"
 msgstr ""
 
 msgctxt "dialogs.closeToTray.detail"
-msgid "Arroxy keeps running and finishes active downloads. Change this later in Advanced settings."
+msgid "Arclio keeps running and finishes active downloads. Change this later in Advanced settings."
 msgstr ""
 
 msgctxt "dialogs.closeToTray.hide"
@@ -83,7 +83,7 @@ msgid "Hide to tray"
 msgstr ""
 
 msgctxt "dialogs.closeToTray.message"
-msgid "Hide Arroxy to the system tray when closing?"
+msgid "Hide Arclio to the system tray when closing?"
 msgstr ""
 
 msgctxt "dialogs.closeToTray.quit"
@@ -123,7 +123,7 @@ msgid "The renderer process crashed ({{reason}}). Reload to try again."
 msgstr ""
 
 msgctxt "dialogs.rendererCrashed.message"
-msgid "Arroxy encountered a problem"
+msgid "Arclio encountered a problem"
 msgstr ""
 
 msgctxt "dialogs.rendererCrashed.quit"
@@ -139,7 +139,7 @@ msgid "This video is age-restricted and cannot be downloaded without a signed-in
 msgstr ""
 
 msgctxt "errors.ytdlp.botBlock"
-msgid "Bot protection triggered. The IP you're using is most likely flagged (datacenter range or busy VPN exit). Change your IP or pick a different VPN endpoint and retry. If it keeps failing, this may be a temporary site-side change — Arroxy auto-updates yt-dlp on launch, so the fix lands automatically once upstream ships it."
+msgid "Bot protection triggered. The IP you're using is most likely flagged (datacenter range or busy VPN exit). Change your IP or pick a different VPN endpoint and retry. If it keeps failing, this may be a temporary site-side change — Arclio auto-updates yt-dlp on launch, so the fix lands automatically once upstream ships it."
 msgstr ""
 
 msgctxt "errors.ytdlp.chunkTransferFailure"
@@ -175,7 +175,7 @@ msgid "Not enough disk space. Free up space and retry."
 msgstr ""
 
 msgctxt "errors.ytdlp.parse"
-msgid "Couldn't parse the response from the site. yt-dlp's extractor may have drifted. Arroxy auto-updates yt-dlp on launch — retry in a few minutes once the fix ships."
+msgid "Couldn't parse the response from the site. yt-dlp's extractor may have drifted. Arclio auto-updates yt-dlp on launch — retry in a few minutes once the fix ships."
 msgstr ""
 
 msgctxt "errors.ytdlp.postprocessFailure"
@@ -591,7 +591,7 @@ msgid "Full release notes ↗"
 msgstr ""
 
 msgctxt "releaseNotes.title"
-msgid "What's new in Arroxy {{version}}"
+msgid "What's new in Arclio {{version}}"
 msgstr ""
 
 msgctxt "repair.actions.cancel"
@@ -692,12 +692,12 @@ msgstr ""
 
 msgctxt "share.defaultMessage"
 msgid ""
-"Arroxy — free, open-source video downloader for Windows, macOS & Linux. Works with YouTube, Vimeo, Twitch, and 1850+ sites.\n"
+"Arclio — free, open-source video downloader for Windows, macOS & Linux. Works with YouTube, Vimeo, Twitch, and 1850+ sites.\n"
 "4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock"
 msgstr ""
 
 msgctxt "share.description"
-msgid "Arroxy is free and open-source. Sharing helps more people discover it."
+msgid "Arclio is free and open-source. Sharing helps more people discover it."
 msgstr ""
 
 msgctxt "share.footerLabel"
@@ -705,15 +705,15 @@ msgid "Share"
 msgstr ""
 
 msgctxt "share.footerTooltip"
-msgid "Share Arroxy"
+msgid "Share Arclio"
 msgstr ""
 
 msgctxt "share.shareAction"
-msgid "Share Arroxy"
+msgid "Share Arclio"
 msgstr ""
 
 msgctxt "share.title"
-msgid "Share Arroxy"
+msgid "Share Arclio"
 msgstr ""
 
 msgctxt "splash.downloading"
@@ -853,11 +853,11 @@ msgid "Restore"
 msgstr ""
 
 msgctxt "tray.menu.open"
-msgid "Open Arroxy"
+msgid "Open Arclio"
 msgstr ""
 
 msgctxt "tray.menu.quit"
-msgid "Quit Arroxy"
+msgid "Quit Arclio"
 msgstr ""
 
 msgctxt "tray.menu.statusActive_one"
@@ -873,11 +873,11 @@ msgid "Idle"
 msgstr ""
 
 msgctxt "tray.tooltip"
-msgid "Arroxy"
+msgid "Arclio"
 msgstr ""
 
 msgctxt "update.appVersion"
-msgid "Arroxy {{version}}"
+msgid "Arclio {{version}}"
 msgstr ""
 
 msgctxt "update.copied"
@@ -929,7 +929,7 @@ msgid "Ready"
 msgstr ""
 
 msgctxt "wizard.bulk.description"
-msgid "Paste video, playlist, channel, search, or audio URLs. Arroxy will clean duplicates before queueing."
+msgid "Paste video, playlist, channel, search, or audio URLs. Arclio will clean duplicates before queueing."
 msgstr ""
 
 msgctxt "wizard.bulk.emptyPreview"
@@ -1344,11 +1344,11 @@ msgid "Download only this video, or queue the whole playlist with your active Qu
 msgstr ""
 
 msgctxt "wizard.mixedPrompt.quickLimitDescription"
-msgid "Maximum entries Arroxy scans before queueing a playlist, channel, or search result."
+msgid "Maximum entries Arclio scans before queueing a playlist, channel, or search result."
 msgstr ""
 
 msgctxt "wizard.mixedPrompt.quickPlaylistTooltip"
-msgid "Queues every loaded playlist item with the active Quick Download profile. If the scan hits your limit, Arroxy asks before queueing."
+msgid "Queues every loaded playlist item with the active Quick Download profile. If the scan hits your limit, Arclio asks before queueing."
 msgstr ""
 
 msgctxt "wizard.mixedPrompt.quickSingleTooltip"
@@ -1616,7 +1616,7 @@ msgid "Current link"
 msgstr ""
 
 msgctxt "wizard.quickProgress.description"
-msgid "Arroxy is reading the link and applying {{profileName}}."
+msgid "Arclio is reading the link and applying {{profileName}}."
 msgstr ""
 
 msgctxt "wizard.quickProgress.failedCount_one"
@@ -1640,7 +1640,7 @@ msgid "Preparing Quick Download"
 msgstr ""
 
 msgctxt "wizard.quickProgress.waitHint"
-msgid "Keep this open while Arroxy prepares the queue."
+msgid "Keep this open while Arclio prepares the queue."
 msgstr ""
 
 msgctxt "wizard.sponsorblock.cat.filler"
@@ -1860,7 +1860,7 @@ msgid "Backdrop quality"
 msgstr ""
 
 msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arroxy uses for the animated backdrop."
+msgid "Choose how much motion Arclio uses for the animated backdrop."
 msgstr ""
 
 msgctxt "wizard.url.backdrop.panelTitle"
@@ -1868,7 +1868,7 @@ msgid "Appearance and performance"
 msgstr ""
 
 msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arroxy is using the performance backdrop."
+msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
 msgstr ""
 
 msgctxt "wizard.url.bulkButton"
@@ -2044,7 +2044,7 @@ msgid "Video playlists"
 msgstr ""
 
 msgctxt "wizard.url.features.heading"
-msgid "What Arroxy can pull"
+msgid "What Arclio can pull"
 msgstr ""
 
 msgctxt "wizard.url.features.youtube.channel"
@@ -2120,7 +2120,7 @@ msgid "Downloading in the background… I can multitask 😎"
 msgstr ""
 
 msgctxt "wizard.url.mascotIdle"
-msgid "Drop a link and let Arroxy pull it ✨"
+msgid "Drop a link and let Arclio pull it ✨"
 msgstr ""
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
@@ -2140,7 +2140,7 @@ msgid "Prefer surround / Dolby"
 msgstr ""
 
 msgctxt "wizard.url.networkPacing.description"
-msgid "Add small waits during each download so Arroxy does not hit the site too aggressively. Values are seconds unless noted."
+msgid "Add small waits during each download so Arclio does not hit the site too aggressively. Values are seconds unless noted."
 msgstr ""
 
 msgctxt "wizard.url.networkPacing.fields.concurrentFragments"
@@ -2168,7 +2168,7 @@ msgid "Gentle downloads"
 msgstr ""
 
 msgctxt "wizard.url.networkPacing.presetLabel"
-msgid "How cautious should Arroxy be?"
+msgid "How cautious should Arclio be?"
 msgstr ""
 
 msgctxt "wizard.url.networkPacing.presets.balanced"
@@ -2192,7 +2192,7 @@ msgid "Waits: {{requests}} between checks, {{downloads}} before media starts, {{
 msgstr ""
 
 msgctxt "wizard.url.networkPacing.tooltip"
-msgid "These waits happen inside each download. Arroxy still keeps normal queued downloads one-at-a-time."
+msgid "These waits happen inside each download. Arclio still keeps normal queued downloads one-at-a-time."
 msgstr ""
 
 msgctxt "wizard.url.networkPacing.tooltips.balanced"
@@ -2208,7 +2208,7 @@ msgid "Tune the advanced per-download controls yourself."
 msgstr ""
 
 msgctxt "wizard.url.networkPacing.tooltips.off"
-msgid "Uses only the small baseline pauses Arroxy keeps for media and subtitles."
+msgid "Uses only the small baseline pauses Arclio keeps for media and subtitles."
 msgstr ""
 
 msgctxt "wizard.url.networkPacing.units.seconds"
@@ -2252,7 +2252,7 @@ msgid "Custom: {{count}} items"
 msgstr ""
 
 msgctxt "wizard.url.playlistProbeLimit.description"
-msgid "Maximum entries Arroxy loads when a playlist, channel, or search result is opened."
+msgid "Maximum entries Arclio loads when a playlist, channel, or search result is opened."
 msgstr ""
 
 msgctxt "wizard.url.playlistProbeLimit.invalid"
@@ -2268,7 +2268,7 @@ msgid "{{count}} items"
 msgstr ""
 
 msgctxt "wizard.url.playlistProbeLimit.tooltip"
-msgid "Maps to yt-dlp --playlist-end: Arroxy only asks for this many playlist, channel, or search entries while building the picker."
+msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr ""
 
 msgctxt "wizard.url.profile.activeLabel"

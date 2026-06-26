@@ -24,7 +24,7 @@ afterEach(async () => {
 })
 
 async function tempDir(): Promise<string> {
-	const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-dev-env-'))
+	const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-dev-env-'))
 	tempDirs.push(dir)
 	return dir
 }
@@ -41,7 +41,7 @@ async function listenOn(port: number): Promise<net.Server> {
 
 async function occupyComputedPort(): Promise<{repoRoot: string; port: number}> {
 	for (let index = 0; index < 50; index += 1) {
-		const repoRoot = `/tmp/arroxy-port-test-${process.pid}-${index}`
+		const repoRoot = `/tmp/arclio-port-test-${process.pid}-${index}`
 		const port = computeDefaultRendererPort(repoRoot)
 		try {
 			await listenOn(port)
@@ -69,7 +69,7 @@ async function serveHttpOn(port: number): Promise<http.Server> {
 
 async function occupyComputedPortAndServeFallback(): Promise<{fallbackPort: number; repoRoot: string}> {
 	for (let index = 0; index < 50; index += 1) {
-		const repoRoot = `/tmp/arroxy-doctor-port-test-${process.pid}-${index}`
+		const repoRoot = `/tmp/arclio-doctor-port-test-${process.pid}-${index}`
 		const port = computeDefaultRendererPort(repoRoot)
 		try {
 			await listenOn(port)
@@ -92,67 +92,67 @@ async function occupyComputedPortAndServeFallback(): Promise<{fallbackPort: numb
 
 describe('dev-env pure helpers', () => {
 	it('computes a stable renderer port for the same repo root', () => {
-		const root = '/tmp/arroxy-alpha'
+		const root = '/tmp/arclio-alpha'
 		expect(computeDefaultRendererPort(root)).toBe(computeDefaultRendererPort(root))
 	})
 
 	it('computes renderer ports in the high development range', () => {
-		const port = computeDefaultRendererPort('/tmp/arroxy-alpha')
+		const port = computeDefaultRendererPort('/tmp/arclio-alpha')
 		expect(port).toBeGreaterThanOrEqual(20_000)
 		expect(port).toBeLessThanOrEqual(39_999)
 	})
 
 	it('usually separates different repo roots', () => {
-		expect(computeDefaultRendererPort('/tmp/arroxy-alpha')).not.toBe(computeDefaultRendererPort('/tmp/arroxy-beta'))
+		expect(computeDefaultRendererPort('/tmp/arclio-alpha')).not.toBe(computeDefaultRendererPort('/tmp/arclio-beta'))
 	})
 
-	it('uses ARROXY_RENDERER_PORT when provided', () => {
-		const env = resolveDevEnv({repoRoot: '/tmp/arroxy', env: {ARROXY_RENDERER_PORT: '23456'}})
+	it('uses ARCLIO_RENDERER_PORT when provided', () => {
+		const env = resolveDevEnv({repoRoot: '/tmp/arclio', env: {ARCLIO_RENDERER_PORT: '23456'}})
 		expect(env.rendererPort).toBe(23_456)
 		expect(env.rendererPortSource).toBe('override')
 	})
 
-	it('rejects invalid ARROXY_RENDERER_PORT', () => {
-		expect(() => resolveDevEnv({repoRoot: '/tmp/arroxy', env: {ARROXY_RENDERER_PORT: 'abc'}})).toThrow(/ARROXY_RENDERER_PORT/)
-		expect(() => resolveDevEnv({repoRoot: '/tmp/arroxy', env: {ARROXY_RENDERER_PORT: '70000'}})).toThrow(/ARROXY_RENDERER_PORT/)
+	it('rejects invalid ARCLIO_RENDERER_PORT', () => {
+		expect(() => resolveDevEnv({repoRoot: '/tmp/arclio', env: {ARCLIO_RENDERER_PORT: 'abc'}})).toThrow(/ARCLIO_RENDERER_PORT/)
+		expect(() => resolveDevEnv({repoRoot: '/tmp/arclio', env: {ARCLIO_RENDERER_PORT: '70000'}})).toThrow(/ARCLIO_RENDERER_PORT/)
 	})
 
 	it('uses ELECTRON_USER_DATA when provided', () => {
-		const env = resolveDevEnv({repoRoot: '/tmp/arroxy', env: {ELECTRON_USER_DATA: '/tmp/custom-user-data'}})
+		const env = resolveDevEnv({repoRoot: '/tmp/arclio', env: {ELECTRON_USER_DATA: '/tmp/custom-user-data'}})
 		expect(env.electronUserData).toBe('/tmp/custom-user-data')
 		expect(env.electronUserDataSource).toBe('override')
 	})
 
 	it('defaults Electron user data inside the repo root', () => {
-		const env = resolveDevEnv({repoRoot: '/tmp/arroxy', env: {}})
-		expect(env.electronUserData).toBe('/tmp/arroxy/.electron-user-data/dev')
+		const env = resolveDevEnv({repoRoot: '/tmp/arclio', env: {}})
+		expect(env.electronUserData).toBe('/tmp/arclio/.electron-user-data/dev')
 		expect(env.electronUserDataSource).toBe('computed')
 	})
 
-	it('uses ARROXY_DEV_TMP when provided', () => {
-		const env = resolveDevEnv({repoRoot: '/tmp/arroxy', env: {ARROXY_DEV_TMP: '/tmp/custom-tmp'}})
+	it('uses ARCLIO_DEV_TMP when provided', () => {
+		const env = resolveDevEnv({repoRoot: '/tmp/arclio', env: {ARCLIO_DEV_TMP: '/tmp/custom-tmp'}})
 		expect(env.tmpDir).toBe('/tmp/custom-tmp')
 		expect(env.tmpDirSource).toBe('override')
 	})
 
 	it('treats blank path overrides as absent', () => {
-		const env = resolveDevEnv({repoRoot: '/tmp/arroxy', env: {ELECTRON_USER_DATA: '   ', ARROXY_DEV_TMP: ''}})
+		const env = resolveDevEnv({repoRoot: '/tmp/arclio', env: {ELECTRON_USER_DATA: '   ', ARCLIO_DEV_TMP: ''}})
 
-		expect(env.electronUserData).toBe('/tmp/arroxy/.electron-user-data/dev')
+		expect(env.electronUserData).toBe('/tmp/arclio/.electron-user-data/dev')
 		expect(env.electronUserDataSource).toBe('computed')
-		expect(env.tmpDir).toBe('/tmp/arroxy/.tmp/dev')
+		expect(env.tmpDir).toBe('/tmp/arclio/.tmp/dev')
 		expect(env.tmpDirSource).toBe('computed')
 	})
 
 	it('defaults temp dir inside the repo root', () => {
-		const env = resolveDevEnv({repoRoot: '/tmp/arroxy', env: {}})
-		expect(env.tmpDir).toBe('/tmp/arroxy/.tmp/dev')
+		const env = resolveDevEnv({repoRoot: '/tmp/arclio', env: {}})
+		expect(env.tmpDir).toBe('/tmp/arclio/.tmp/dev')
 		expect(env.tmpDirSource).toBe('computed')
 	})
 
 	it('creates a serializable doctor report shape', () => {
-		const env = resolveDevEnv({repoRoot: '/tmp/arroxy', env: {ARROXY_RENDERER_PORT: '23456'}})
-		const report = createDoctorReport({repoRoot: '/tmp/arroxy', env, tools: {node: {name: 'node', expected: '24.16.0', actual: '24.16.0', ok: true}, bun: {name: 'bun', expected: '1.2.23', actual: '1.2.23', ok: true}}, checks: [{id: 'lockfile', label: 'bun.lock', ok: true, severity: 'required'}]})
+		const env = resolveDevEnv({repoRoot: '/tmp/arclio', env: {ARCLIO_RENDERER_PORT: '23456'}})
+		const report = createDoctorReport({repoRoot: '/tmp/arclio', env, tools: {node: {name: 'node', expected: '24.16.0', actual: '24.16.0', ok: true}, bun: {name: 'bun', expected: '1.2.23', actual: '1.2.23', ok: true}}, checks: [{id: 'lockfile', label: 'bun.lock', ok: true, severity: 'required'}]})
 
 		expect(report.ok).toBe(true)
 		expect(JSON.parse(JSON.stringify(report))).toEqual(report)
@@ -191,7 +191,7 @@ describe('dev-env pure helpers', () => {
 	it('allows browser tests to reuse an occupied override port', async () => {
 		const port = 41_234
 		await listenOn(port)
-		const env = resolveDevEnv({repoRoot: '/tmp/arroxy', env: {ARROXY_RENDERER_PORT: String(port)}})
+		const env = resolveDevEnv({repoRoot: '/tmp/arclio', env: {ARCLIO_RENDERER_PORT: String(port)}})
 
 		await expect(assertLauncherPortAvailable(env, 'browser-test')).resolves.toBeUndefined()
 		await expect(assertLauncherPortAvailable(env, 'mock')).rejects.toThrow()

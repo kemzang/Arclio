@@ -23,7 +23,7 @@ export function FeedbackDialog({open, onOpenChange}: FeedbackDialogProps): null 
 		logger.info('Opening Tally feedback popup', {reportId, source: 'footer'})
 
 		void openTallyPopup(TALLY_FEEDBACK_FORM_ID, {
-			key: `arroxy-feedback-${reportId}`,
+			key: `arclio-feedback-${reportId}`,
 			layout: 'modal',
 			width: 720,
 			overlay: true,

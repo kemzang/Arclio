@@ -136,7 +136,7 @@ describe('VideoPhase(embed=false)', () => {
 			active.mediaDownloadStarted = true
 			return NETWORK_ERROR
 		})
-		const active = makeActive({input: {...BASE_INPUT, probeInfoJsonPath: '/cache/stale.info.json'}, tempDir: '/tmp/arroxy-resume-info-json'})
+		const active = makeActive({input: {...BASE_INPUT, probeInfoJsonPath: '/cache/stale.info.json'}, tempDir: '/tmp/arclio-resume-info-json'})
 		const ctx: PhaseContext = {active, signal: active.signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
 
 		const outcome = await VideoPhase(false).run(ctx)
@@ -166,7 +166,7 @@ describe('VideoPhase(embed=false)', () => {
 	})
 
 	it('media transfer failure after media starts returns resume context', async () => {
-		const tempDir = '/tmp/arroxy-resume-media'
+		const tempDir = '/tmp/arclio-resume-media'
 		const ctx = makeCtx(NETWORK_ERROR, {tempDir, mediaDownloadStarted: true, mediaComponentPaths: [`${tempDir}/video.f137.webm.part`, `${tempDir}/video.f251.m4a.part`]})
 
 		const outcome = await VideoPhase(false).run(ctx)
@@ -179,7 +179,7 @@ describe('VideoPhase(embed=false)', () => {
 	})
 
 	it('rate-limit media failures preserve split component resume context', async () => {
-		const tempDir = '/tmp/arroxy-resume-rate'
+		const tempDir = '/tmp/arclio-resume-rate'
 		const ctx = makeCtx(RATE_LIMIT_ERROR, {tempDir, mediaDownloadStarted: true, mediaComponentPaths: [`${tempDir}/video.f137.webm.part`, `${tempDir}/video.f251.m4a.part`]})
 
 		const outcome = await VideoPhase(false).run(ctx)
@@ -190,7 +190,7 @@ describe('VideoPhase(embed=false)', () => {
 
 	it('postprocess and disk-full failures after media acquisition preserve postprocess resume context', async () => {
 		for (const failure of [POSTPROCESS_ERROR, DISK_FULL_ERROR]) {
-			const tempDir = `/tmp/arroxy-resume-${failure.errorKind}`
+			const tempDir = `/tmp/arclio-resume-${failure.errorKind}`
 			const ctx = makeCtx(failure, {tempDir, mediaDownloadStarted: true, mediaComponentPaths: [`${tempDir}/video.f137.webm`], mediaPath: `${tempDir}/video.webm`, mediaPostprocessStarted: true})
 
 			const outcome = await VideoPhase(false).run(ctx)
@@ -202,7 +202,7 @@ describe('VideoPhase(embed=false)', () => {
 
 	it('auth/content failures and pre-media network failures do not preserve resume context', async () => {
 		for (const failure of [EXIT_ERROR, NETWORK_ERROR]) {
-			const ctx = makeCtx(failure, {tempDir: '/tmp/arroxy-non-resumable'})
+			const ctx = makeCtx(failure, {tempDir: '/tmp/arclio-non-resumable'})
 
 			const outcome = await VideoPhase(false).run(ctx)
 
@@ -363,7 +363,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 	let outputDir: string
 
 	beforeEach(async () => {
-		outputDir = await mkdtemp(join(tmpdir(), 'arroxy-vp-'))
+		outputDir = await mkdtemp(join(tmpdir(), 'arclio-vp-'))
 	})
 
 	afterEach(async () => {
@@ -382,7 +382,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 	}
 
 	it('fresh start (active.tempDir undefined) → wipes existing temp dir contents', async () => {
-		const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8))
+		const expectedTempDir = join(outputDir, '.arclio-temp', 'job-1'.slice(0, 8))
 		await mkdir(expectedTempDir, {recursive: true})
 		const stalePart = join(expectedTempDir, 'leftover.f137.webm.part')
 		await writeFile(stalePart, 'stale')
@@ -395,7 +395,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 	})
 
 	it('resume (active.tempDir already set) → preserves .part file in temp dir', async () => {
-		const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8))
+		const expectedTempDir = join(outputDir, '.arclio-temp', 'job-1'.slice(0, 8))
 		await mkdir(expectedTempDir, {recursive: true})
 		const partFile = join(expectedTempDir, 'video.f337.webm.part')
 		await writeFile(partFile, 'partial-bytes')
@@ -407,10 +407,10 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 		expect(ctx.active.tempDir).toBe(expectedTempDir)
 	})
 
-	it('resume w/ cached _arroxy.info.json → passes loadInfoJsonPath to ytDlp.run', async () => {
-		const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8))
+	it('resume w/ cached _arclio.info.json → passes loadInfoJsonPath to ytDlp.run', async () => {
+		const expectedTempDir = join(outputDir, '.arclio-temp', 'job-1'.slice(0, 8))
 		await mkdir(expectedTempDir, {recursive: true})
-		const infoJsonPath = join(expectedTempDir, '_arroxy.info.json')
+		const infoJsonPath = join(expectedTempDir, '_arclio.info.json')
 		await writeFile(infoJsonPath, '{}')
 
 		const ctx = makeRealCtx({tempDir: expectedTempDir})
@@ -421,7 +421,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 	})
 
 	it('resume w/o cached info.json → loadInfoJsonPath undefined', async () => {
-		const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8))
+		const expectedTempDir = join(outputDir, '.arclio-temp', 'job-1'.slice(0, 8))
 		await mkdir(expectedTempDir, {recursive: true})
 
 		const ctx = makeRealCtx({tempDir: expectedTempDir})
@@ -432,9 +432,9 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 	})
 
 	it('fresh start → loadInfoJsonPath undefined even if stale info.json existed (tempDir wiped)', async () => {
-		const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8))
+		const expectedTempDir = join(outputDir, '.arclio-temp', 'job-1'.slice(0, 8))
 		await mkdir(expectedTempDir, {recursive: true})
-		await writeFile(join(expectedTempDir, '_arroxy.info.json'), '{}')
+		await writeFile(join(expectedTempDir, '_arclio.info.json'), '{}')
 
 		const ctx = makeRealCtx({})
 		await VideoPhase(false).run(ctx)
@@ -444,7 +444,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 	})
 
 	it('resume with missing temp dir → mkdir recreates it without throwing', async () => {
-		const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8))
+		const expectedTempDir = join(outputDir, '.arclio-temp', 'job-1'.slice(0, 8))
 
 		const ctx = makeRealCtx({tempDir: expectedTempDir})
 		const outcome = await VideoPhase(false).run(ctx)
@@ -454,7 +454,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 	})
 
 	it('resumable media failure preserves temp dir when disposables drain', async () => {
-		const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8))
+		const expectedTempDir = join(outputDir, '.arclio-temp', 'job-1'.slice(0, 8))
 		await mkdir(expectedTempDir, {recursive: true})
 		const partFile = join(expectedTempDir, 'video.f137.webm.part')
 		await writeFile(partFile, 'partial-bytes')
@@ -469,7 +469,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 	})
 
 	it('non-resumable failure deletes temp dir when disposables drain', async () => {
-		const expectedTempDir = join(outputDir, '.arroxy-temp', 'job-1'.slice(0, 8))
+		const expectedTempDir = join(outputDir, '.arclio-temp', 'job-1'.slice(0, 8))
 		await mkdir(expectedTempDir, {recursive: true})
 		const partFile = join(expectedTempDir, 'video.f137.webm.part')
 		await writeFile(partFile, 'partial-bytes')

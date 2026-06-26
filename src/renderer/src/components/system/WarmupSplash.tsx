@@ -71,7 +71,7 @@ export function WarmupSplash({initialized, warmupBlocking, warmupDiagnostics, wa
 						{t('splash.greeting')}
 					</p>
 				)}
-				<p className="splash-brand">Arroxy</p>
+				<p className="splash-brand">Arclio</p>
 				{showProgress ? (
 					<>
 						<p className="splash-name">{activeEntry ? t('splash.downloading', {binary: activeEntry.binary}) : t('splash.warmup')}</p>

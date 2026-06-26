@@ -379,7 +379,7 @@ describe('QueueManagerTab', () => {
 					status: 'done',
 					artifacts: [
 						{id: 'artifact:/downloads/video.info.json', kind: 'companion', path: '/downloads/video.info.json', fileName: 'video.info.json', discoveredAt: '2026-06-18T10:00:00.000Z'},
-						{id: 'artifact:/downloads/.arroxy-temp/item/_arroxy.info.json', kind: 'companion', path: '/downloads/.arroxy-temp/item/_arroxy.info.json', fileName: '_arroxy.info.json', discoveredAt: '2026-06-18T10:00:00.000Z'},
+						{id: 'artifact:/downloads/.arclio-temp/item/_arclio.info.json', kind: 'companion', path: '/downloads/.arclio-temp/item/_arclio.info.json', fileName: '_arclio.info.json', discoveredAt: '2026-06-18T10:00:00.000Z'},
 						{id: 'artifact:/internal/probe.info.json', kind: 'companion', path: '/internal/probe.info.json', fileName: 'probe.info.json', discoveredAt: '2026-06-18T10:00:00.000Z', internal: true}
 					]
 				})
@@ -391,7 +391,7 @@ describe('QueueManagerTab', () => {
 		fireEvent.click(within(row).getByRole('button', {name: /show artifacts/i}))
 
 		expect(screen.getByTestId('queue-artifacts-done')).toHaveTextContent('video.info.json')
-		expect(screen.getByTestId('queue-artifacts-done')).not.toHaveTextContent('_arroxy.info.json')
+		expect(screen.getByTestId('queue-artifacts-done')).not.toHaveTextContent('_arclio.info.json')
 		expect(screen.getByTestId('queue-artifacts-done')).not.toHaveTextContent('probe.info.json')
 	})
 

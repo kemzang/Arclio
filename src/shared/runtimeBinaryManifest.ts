@@ -20,7 +20,7 @@ export function runtimeBinaryArchFor(arch: NodeJS.Architecture = process.arch): 
 }
 
 export function runtimeBinaryCacheKey(entry: RuntimeBinaryManifestEntry): string {
-	return ['arroxy-artifact-v1', entry.id, entry.channel, entry.provider, entry.version, entry.platform, entry.arch, entry.sha256, String(entry.size), entry.format, normalizeRuntimeExecutablePath(entry.executablePath) ?? entry.executablePath].join('\0')
+	return ['arclio-artifact-v1', entry.id, entry.channel, entry.provider, entry.version, entry.platform, entry.arch, entry.sha256, String(entry.size), entry.format, normalizeRuntimeExecutablePath(entry.executablePath) ?? entry.executablePath].join('\0')
 }
 
 export function normalizeRuntimeExecutablePath(value: string): string | null {

@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Arroxy uses `electron-store` (JSON files) for persistence. This works for settings and queue state but doesn't scale for:
+Arclio uses `electron-store` (JSON files) for persistence. This works for settings and queue state but doesn't scale for:
 
 - Relational data (Media ↔ Collection ↔ Tag)
 - Full-text search (title, author, description)

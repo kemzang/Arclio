@@ -1,6 +1,6 @@
 ---
 name: glow-intensity-policy
-description: Where the bold neon-aurora glow belongs vs where calmer variants belong across Arroxy screens
+description: Where the bold neon-aurora glow belongs vs where calmer variants belong across Arclio screens
 metadata:
   type: feedback
 ---

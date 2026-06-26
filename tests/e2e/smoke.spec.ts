@@ -16,7 +16,7 @@ async function launchApp(userDataDir: string): Promise<ElectronApplication> {
 }
 
 test('app shell renders with expected structure', async () => {
-	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-e2e-shell-'))
+	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-e2e-shell-'))
 	const app = await launchApp(userDataDir)
 	const page = await app.firstWindow()
 
@@ -28,7 +28,7 @@ test('app shell renders with expected structure', async () => {
 })
 
 test('preload exposes appApi, platform, and appVersion', async () => {
-	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-e2e-preload-'))
+	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-e2e-preload-'))
 	const app = await launchApp(userDataDir)
 	const page = await app.firstWindow()
 
@@ -46,7 +46,7 @@ test('preload exposes appApi, platform, and appVersion', async () => {
 })
 
 test('window.require is NOT exposed (context isolation enforced)', async () => {
-	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-e2e-isolation-'))
+	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-e2e-isolation-'))
 	const app = await launchApp(userDataDir)
 	const page = await app.firstWindow()
 
@@ -59,7 +59,7 @@ test('window.require is NOT exposed (context isolation enforced)', async () => {
 })
 
 test('URL input is interactive', async () => {
-	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-e2e-url-'))
+	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-e2e-url-'))
 	const app = await launchApp(userDataDir)
 	const page = await app.firstWindow()
 

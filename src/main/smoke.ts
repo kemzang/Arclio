@@ -5,7 +5,7 @@
 //   - BinaryManager           (real yt-dlp binary)
 //   - ProbeService            (full 3-attempt ladder via runYtDlp)
 //
-// Triggered by setting ARROXY_SMOKE_URL. Skips creating the main window;
+// Triggered by setting ARCLIO_SMOKE_URL. Skips creating the main window;
 // reports to stdout; exits cleanly.
 
 import {nonEmpty} from '@shared/format.js'
@@ -27,7 +27,7 @@ const GREEN = '\x1b[32m'
 const YELLOW = '\x1b[33m'
 const RED = '\x1b[31m'
 const RESET = '\x1b[0m'
-export const LIVE_PROBE_SMOKE_RESULT_PREFIX = 'ARROXY_LIVE_PROBE_SMOKE_RESULT '
+export const LIVE_PROBE_SMOKE_RESULT_PREFIX = 'ARCLIO_LIVE_PROBE_SMOKE_RESULT '
 
 export interface LiveProbeSmokeReport {
 	liveProbeSmoke: true
@@ -255,5 +255,5 @@ export async function runSmokeMode(deps: SmokeDeps): Promise<number> {
 }
 
 export function readSmokeUrl(): string | null {
-	return nonEmpty(process.env.ARROXY_SMOKE_URL?.trim()) ?? null
+	return nonEmpty(process.env.ARCLIO_SMOKE_URL?.trim()) ?? null
 }

@@ -546,7 +546,7 @@ describe('QueueService — retry preserves lane', () => {
 
 	it('retrying a resumable error item reuses existing resume temp dir and clears context after start', async () => {
 		const {qs, ds} = makeService()
-		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-resume-retry-'))
+		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-resume-retry-'))
 		try {
 			ds.start.mockResolvedValue(jobResult('job-resume'))
 			qs.add([makeItem({id: 'a', status: 'error', error: {kind: 'network', raw: 'read reset'}, resumeContext: {kind: 'media-retry', tempDir, reason: 'media-transfer', failureKind: 'network'}})])
@@ -564,7 +564,7 @@ describe('QueueService — retry preserves lane', () => {
 
 	it('retrying with missing resume temp dir clears context and starts fresh', async () => {
 		const {qs, ds} = makeService()
-		const tempDir = path.join(os.tmpdir(), `arroxy-missing-${Date.now()}`)
+		const tempDir = path.join(os.tmpdir(), `arclio-missing-${Date.now()}`)
 		await fs.rm(tempDir, {recursive: true, force: true})
 		ds.start.mockResolvedValue(jobResult('job-fresh'))
 		qs.add([makeItem({id: 'a', status: 'error', error: {kind: 'network', raw: 'read reset'}, resumeContext: {kind: 'media-retry', tempDir, reason: 'media-transfer', failureKind: 'network'}})])
@@ -579,7 +579,7 @@ describe('QueueService — retry preserves lane', () => {
 
 	it('preserves resume context when retry start fails before DownloadService takes ownership', async () => {
 		const {qs, ds} = makeService()
-		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-resume-start-fail-'))
+		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-resume-start-fail-'))
 		await fs.writeFile(path.join(tempDir, 'video.part'), 'partial')
 		const resumeContext = {kind: 'media-retry' as const, tempDir, reason: 'media-transfer' as const, failureKind: 'network' as const}
 		ds.start.mockResolvedValueOnce({ok: false, error: {code: 'download', message: 'preflight failed'}})

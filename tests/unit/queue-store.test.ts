@@ -57,12 +57,12 @@ describe('QueueStore', () => {
 
 	it('round-trips failed media resume context', async () => {
 		const [store] = await tempStore()
-		const item = makeItem({id: 'resume', status: 'error', error: {kind: 'network', raw: 'read reset'}, resumeContext: {kind: 'media-retry', tempDir: '/tmp/.arroxy-temp/resume', reason: 'media-transfer', failureKind: 'network'}})
+		const item = makeItem({id: 'resume', status: 'error', error: {kind: 'network', raw: 'read reset'}, resumeContext: {kind: 'media-retry', tempDir: '/tmp/.arclio-temp/resume', reason: 'media-transfer', failureKind: 'network'}})
 		await store.save([item])
 
 		const loaded = await loadOk(store)
 		expect(loaded[0].status).toBe('error')
-		expect(loaded[0].resumeContext).toEqual({kind: 'media-retry', tempDir: '/tmp/.arroxy-temp/resume', reason: 'media-transfer', failureKind: 'network'})
+		expect(loaded[0].resumeContext).toEqual({kind: 'media-retry', tempDir: '/tmp/.arclio-temp/resume', reason: 'media-transfer', failureKind: 'network'})
 	})
 
 	it('round-trips probe info-json refs for restart-bound single-video jobs', async () => {
@@ -89,12 +89,12 @@ describe('QueueStore', () => {
 
 	it('preserves paused-active status + tempDir + lastJobId across save (resume context survives)', async () => {
 		const [store] = await tempStore()
-		const item = makeItem({id: 'e', status: 'paused-active', progressPercent: 40, tempDir: '/tmp/.arroxy-temp/abc', lastJobId: 'job-abc'})
+		const item = makeItem({id: 'e', status: 'paused-active', progressPercent: 40, tempDir: '/tmp/.arclio-temp/abc', lastJobId: 'job-abc'})
 		await store.save([item])
 
 		const loaded = await loadOk(store)
 		expect(loaded[0].status).toBe('paused-active')
-		expect(loaded[0].tempDir).toBe('/tmp/.arroxy-temp/abc')
+		expect(loaded[0].tempDir).toBe('/tmp/.arclio-temp/abc')
 		expect(loaded[0].lastJobId).toBe('job-abc')
 	})
 

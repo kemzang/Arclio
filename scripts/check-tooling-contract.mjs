@@ -291,7 +291,7 @@ for (const workflow of publishWorkflows) {
 }
 
 const npmFamilyCommands = findNpmFamilyCommands()
-assert(npmFamilyCommands.length === 0, `Arroxy-owned tooling must not use npm-family commands:\n${npmFamilyCommands.join('\n')}`)
+assert(npmFamilyCommands.length === 0, `Arclio-owned tooling must not use npm-family commands:\n${npmFamilyCommands.join('\n')}`)
 
 for (const {dir, packageJson} of packageRecords) {
 	assert(

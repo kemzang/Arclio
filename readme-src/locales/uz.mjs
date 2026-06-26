@@ -54,8 +54,8 @@ sudo apt install -y xvfb
 ### Klonlash va ishga tushirish
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # tavsiya; pinned tools qo'lda faollashtirilgan bo'lsa o'tkazib yuboring
 bun run bootstrap
 bun run doctor
@@ -70,14 +70,14 @@ bun run dist         # joriy OT uchun paketlash
 bun run dist:win     # supported host'da Windows targets paketlash
 \`\`\`
 
-> \`bun run bootstrap\` bog'liqliklarni o'rnatadi, Electron app bog'liqliklarini rebuild qiladi, Electron'ni tekshiradi, development uchun embedded ffmpeg/ffprobe tayyorlaydi va Playwright Chromium'ni o'rnatadi. yt-dlp runtime'da app data folder ichida manage qilinadi; ffmpeg va ffprobe har bir Arroxy relizi bilan bundled keladi.
+> \`bun run bootstrap\` bog'liqliklarni o'rnatadi, Electron app bog'liqliklarini rebuild qiladi, Electron'ni tekshiradi, development uchun embedded ffmpeg/ffprobe tayyorlaydi va Playwright Chromium'ni o'rnatadi. yt-dlp runtime'da app data folder ichida manage qilinadi; ffmpeg va ffprobe har bir Arclio relizi bilan bundled keladi.
 
 </details>`;
 
 export const uz = {
-  icon_alt: "Arroxy maskoti",
+  icon_alt: "Arclio maskoti",
   title:
-    "Arroxy — Windows, macOS va Linux uchun Bepul Ochiq Manbali YouTube (+ 2000 sayt) Yuklovchi",
+    "Arclio — Windows, macOS va Linux uchun Bepul Ochiq Manbali YouTube (+ 2000 sayt) Yuklovchi",
   read_in_label: "O'qing:",
   badge_release_alt: "Reliz",
   badge_build_alt: "Qurish",
@@ -91,12 +91,12 @@ export const uz = {
     "**YouTube va 2000+ qo'llab-quvvatlanadigan saytlardan** videolar, Shorts, musiqa, kanallar, podkastlar yoki audio treklarni yuklab oling — 60 fps da 4K HDR gacha yoki MP3 / AAC / Opus sifatida. Windows, macOS va Linuxda mahalliy ishlaydi. **Reklamalar yo'q, keraksiz narsalar yo'q, qo'shimcha taklif yo'q.**",
   cta_latest: "↓ Oxirgi Relizni Yuklab Olish",
   cta_website: "Veb-sayt",
-  demo_alt: "Arroxy demosi",
+  demo_alt: "Arclio demosi",
   star_cta:
-    "Agar Arroxy vaqtingizni tejasa, ⭐ boshqalarga topishga yordam beradi.",
+    "Agar Arclio vaqtingizni tejasa, ⭐ boshqalarga topishga yordam beradi.",
   ai_notice: "",
   toc_heading: "Mundarija",
-  why_h2: "Nima uchun Arroxy",
+  why_h2: "Nima uchun Arclio",
   features_h2: "Xususiyatlar",
   dl_h2: "Yuklab olish",
   privacy_h2: "Maxfiylik",
@@ -112,7 +112,7 @@ export const uz = {
   why_r6: "Platformalararo desktop ilovasi",
   why_r7: "Subtitrlar + SponsorBlock",
   why_summary:
-    "Arroxy bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl oling. Hisoblar yo'q, qo'shimcha takliflar yo'q, ma'lumot to'plash yo'q.",
+    "Arclio bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl oling. Hisoblar yo'q, qo'shimcha takliflar yo'q, ma'lumot to'plash yo'q.",
   feat_quality_h3: "Sifat va formatlar",
   feat_quality_1: "**4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p gacha",
   feat_quality_2:
@@ -132,7 +132,7 @@ export const uz = {
   feat_workflow_2:
     "**Markaziy yuklab olish navbati** — bitta, playlist, bulk yoki quick ishlarning barchasi jarayon, pauza, davom ettirish, bekor qilish, qayta urinish va ustuvorlik boshqaruvi uchun bir joyga tushadi",
   feat_workflow_3:
-    "**Bufer kuzatish** — YouTube havolasini nusxalang va Arroxy ilovaga qaytganingizda URL'ni avtomatik to'ldiradi (Kengaytirilgan sozlamalarda o'chirish/yoqish mumkin)",
+    "**Bufer kuzatish** — YouTube havolasini nusxalang va Arclio ilovaga qaytganingizda URL'ni avtomatik to'ldiradi (Kengaytirilgan sozlamalarda o'chirish/yoqish mumkin)",
   feat_workflow_4:
     "**URL'larni avtomatik tozalash** — kuzatish parametrlarini olib tashlaydi (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) va `youtube.com/redirect` havolalarini ochadi",
   feat_workflow_5:
@@ -160,7 +160,7 @@ export const uz = {
   feat_sites_3:
     "**Faqat audio va subtitrlar** har qanday qo'llab-quvvatlanadigan saytda ishlaydi, nafaqat YouTube'da",
   feat_sites_4:
-    "Sayt o'zgarsa, yt-dlp har hafta tuzatishlar chiqaradi va Arroxy ishga tushganda binarni avtomatik yangilaydi",
+    "Sayt o'zgarsa, yt-dlp har hafta tuzatishlar chiqaradi va Arclio ishga tushganda binarni avtomatik yangilaydi",
   shot1_cap:
     "<b>Tezkor yuklab olish bosh sahifasi</b><br/>URL joylang va faol profilingiz bilan darhol yuklab oling",
   shot2_cap:
@@ -201,26 +201,26 @@ export const uz = {
     "**Tavsiya:** avtomatik yangilanishlar va tezroq ishga tushish uchun NSIS o'rnatuvchisidan foydalaning. O'rnatishsiz, reyestrg'a ta'sir qilmaydigan variant uchun portable `.exe` dan foydalaning.",
   dl_win_smartscreen_h4: "Windows SmartScreen ogohlantirishи",
   dl_win_smartscreen_intro:
-    'Birinchi ishga tushirishda **"Windows protected your PC"** yoki **"Unknown publisher"** xabarini ko\'rishingiz mumkin. Bu `Arroxy-win-x64-Setup.exe` va `Arroxy-win-x64-Portable.exe` ikkisiga ham tegishli. Arroxy bepul va ochiq manbali dastur bo\'lib, Windows qurilmalari pulli sertifikat bilan imzolanmagan, shuning uchun SmartScreen ularni belgilaydi. Bu Arroxy xavfli ekanligini **avtomatik ravishda** anglatmaydi. Davom etish uchun:',
+    'Birinchi ishga tushirishda **"Windows protected your PC"** yoki **"Unknown publisher"** xabarini ko\'rishingiz mumkin. Bu `Arclio-win-x64-Setup.exe` va `Arclio-win-x64-Portable.exe` ikkisiga ham tegishli. Arclio bepul va ochiq manbali dastur bo\'lib, Windows qurilmalari pulli sertifikat bilan imzolanmagan, shuning uchun SmartScreen ularni belgilaydi. Bu Arclio xavfli ekanligini **avtomatik ravishda** anglatmaydi. Davom etish uchun:',
   dl_win_smartscreen_step1: "**More info** tugmasini bosing.",
   dl_win_smartscreen_step2: "**Run anyway** tugmasini bosing.",
   dl_win_smartscreen_official:
-    "Arroxy'ni faqat rasmiy GitHub Releases sahifasidan yuklab oling. Agar faylni boshqa saytdan olgan bo'lsangiz yoki kimdir sizga yuborgan bo'lsa, uni o'chirib, rasmiy manbadan yangi nusxa yuklab oling. Manba kodi ommaviy, shuning uchun xohlasangiz o'zingiz tekshirishingiz yoki Arroxy'ni mustaqil qurishingiz mumkin.",
+    "Arclio'ni faqat rasmiy GitHub Releases sahifasidan yuklab oling. Agar faylni boshqa saytdan olgan bo'lsangiz yoki kimdir sizga yuborgan bo'lsa, uni o'chirib, rasmiy manbadan yangi nusxa yuklab oling. Manba kodi ommaviy, shuning uchun xohlasangiz o'zingiz tekshirishingiz yoki Arclio'ni mustaqil qurishingiz mumkin.",
   dl_macos_h3: "macOS da birinchi ishga tushirish",
   dl_macos_warning:
-    "Arroxy hali kod imzosiga ega emas, shuning uchun macOS Gatekeeper birinchi ishga tushirishda ogohlantirish ko'rsatadi. Bu kutilgan holat — bu shikastlanish belgisi emas.",
+    "Arclio hali kod imzosiga ega emas, shuning uchun macOS Gatekeeper birinchi ishga tushirishda ogohlantirish ko'rsatadi. Bu kutilgan holat — bu shikastlanish belgisi emas.",
   dl_macos_m1_h4: "Tizim sozlamalari usuli (tavsiya etiladi):",
   dl_macos_step1:
-    "Arroxy ilova belgisiga sichqonchaning o'ng tugmasi bilan bosing va **Ochish** ni tanlang.",
+    "Arclio ilova belgisiga sichqonchaning o'ng tugmasi bilan bosing va **Ochish** ni tanlang.",
   dl_macos_step2:
     "Ogohlantirish dialogi paydo bo'ladi — **Bekor qilish** tugmasini bosing (*Axlat qutisiga o'tkazish* ni bosmang).",
   dl_macos_step3: "**Tizim Sozlamalari → Maxfiylik va Xavfsizlik** ni oching.",
   dl_macos_step4:
-    "Pastga siljib **Xavfsizlik** bo'limiga o'ting. Siz *\"Arroxy aniqlanmagan dasturchidan bo'lganligi sababli ishlatish bloklangan.\"* degan yozuvni ko'rasiz.",
+    "Pastga siljib **Xavfsizlik** bo'limiga o'ting. Siz *\"Arclio aniqlanmagan dasturchidan bo'lganligi sababli ishlatish bloklangan.\"* degan yozuvni ko'rasiz.",
   dl_macos_step5:
     "**Baribir ochish** tugmasini bosing va parolingiz yoki Touch ID bilan tasdiqlang.",
   dl_macos_after:
-    "5-qadamdan so'ng Arroxy odatda ochiladi va ogohlantirish boshqa ko'rinmaydi.",
+    "5-qadamdan so'ng Arclio odatda ochiladi va ogohlantirish boshqa ko'rinmaydi.",
   dl_macos_m2_h4: "Terminal usuli (rivojlangan foydalanuvchilar uchun):",
   dl_macos_note:
     "macOS qurilmalari Apple Silicon va Intel runnerlarida CI orqali ishlab chiqariladi. Muammolarga duch kelsangiz, iltimos [muammo oching](../../issues) — macOS foydalanuvchilaridan qayta aloqa macOS test siklini faol shakllantiradi.",
@@ -233,14 +233,14 @@ export const uz = {
   dl_linux_fuse_text:
     "Agar ishga tushirish hali ham muvaffaqiyatsiz bo'lsa, FUSE etishmayotgan bo'lishi mumkin:",
   dl_linux_flatpak_intro:
-    "**Flatpak (qumloq muhitdagi muqobil):** xuddi shu reliz sahifasidan `Arroxy-*.flatpak` ni yuklab oling.",
+    "**Flatpak (qumloq muhitdagi muqobil):** xuddi shu reliz sahifasidan `Arclio-*.flatpak` ni yuklab oling.",
 
   // ---- Reorganized install help (normie-first, manual-download primary) ----
   dl_warning_h3: "Nima uchun ogohlantirish ko'rishingiz mumkin",
   dl_warning_p1:
-    "Arroxy ochiq manbali va MIT litsenziyali. Windows va macOS qurilmalari **kod imzolanmagan** — Apple Developer ID va Windows EV kod imzolash sertifikatlari har biri yiliga yuzlab dollarga tushadi, buni mustaqil loyiha o'z hisobidan to'laydi. Bu imzolarsiz, Windows SmartScreen va macOS Gatekeeper birinchi ishga tushirishda ogohlantiradi. Ogohlantirishlar *operatsion tizimingiz nashriyotchini tanib olmasligini* anglatadi — bu Arroxy zararli dastur ekanligini anglatmaydi.",
+    "Arclio ochiq manbali va MIT litsenziyali. Windows va macOS qurilmalari **kod imzolanmagan** — Apple Developer ID va Windows EV kod imzolash sertifikatlari har biri yiliga yuzlab dollarga tushadi, buni mustaqil loyiha o'z hisobidan to'laydi. Bu imzolarsiz, Windows SmartScreen va macOS Gatekeeper birinchi ishga tushirishda ogohlantiradi. Ogohlantirishlar *operatsion tizimingiz nashriyotchini tanib olmasligini* anglatadi — bu Arclio zararli dastur ekanligini anglatmaydi.",
   dl_warning_p2:
-    "Arroxy ni o'zingiz tekshirishning uch yo'li, ortib boruvchi qat'iylikda:\n\n- **Manbani o'qing.** Har bir satr [GitHub](https://github.com/antonio-orionus/Arroxy) da mavjud va siz [manbadan yaratishingiz](#tech) mumkin.\n- **SHA256 ni tekshiring.** Faylingizni e'lon qilingan [`SHA256SUMS`](../../releases/latest) bilan solishtiring — pastdagi [Yuklab olishingizni tekshiring](#verify) ga qarang.\n- **Uchinchi tomon skanini o'tkazing.** Faylni [VirusTotal](https://www.virustotal.com) ga yuklang.",
+    "Arclio ni o'zingiz tekshirishning uch yo'li, ortib boruvchi qat'iylikda:\n\n- **Manbani o'qing.** Har bir satr [GitHub](https://github.com/antonio-orionus/Arclio) da mavjud va siz [manbadan yaratishingiz](#tech) mumkin.\n- **SHA256 ni tekshiring.** Faylingizni e'lon qilingan [`SHA256SUMS`](../../releases/latest) bilan solishtiring — pastdagi [Yuklab olishingizni tekshiring](#verify) ga qarang.\n- **Uchinchi tomon skanini o'tkazing.** Faylni [VirusTotal](https://www.virustotal.com) ga yuklang.",
 
   dl_win_first_h3: "Windows da birinchi ishga tushirish",
   shot_smartscreen_more_alt:
@@ -249,33 +249,33 @@ export const uz = {
     "More info kengaytirilgandan so'ng SmartScreen dialogi, \"Run anyway\" tugmasi ko'rsatilgan holda",
   dl_win_defender_h4: "Windows Defender fayl ni belgilasa yoki olib tashlasa",
   dl_win_defender_p:
-    "Defender evristikasi ba'zida imzalanmagan NSIS o'rnatuvchilari va Electron portableni shubhali deb belgilaydi. Agar Defender `Arroxy-win-x64-Setup.exe` yoki `Arroxy-win-x64-Portable.exe` ni karantinga olsa, uni **Windows Security → Virus & threat protection → Protection history** dan qayta tiklang, so'ng Arroxy bajariladigan faylini **Manage settings → Add or remove exclusions** ostida ruxsat etilgan element sifatida qo'shing. SmartScreen singari, bu ham aniqlanmagan zararli dastur emas, balki etishmayotgan nashriyotchi imzosi sababli yuzaga keladi.",
+    "Defender evristikasi ba'zida imzalanmagan NSIS o'rnatuvchilari va Electron portableni shubhali deb belgilaydi. Agar Defender `Arclio-win-x64-Setup.exe` yoki `Arclio-win-x64-Portable.exe` ni karantinga olsa, uni **Windows Security → Virus & threat protection → Protection history** dan qayta tiklang, so'ng Arclio bajariladigan faylini **Manage settings → Add or remove exclusions** ostida ruxsat etilgan element sifatida qo'shing. SmartScreen singari, bu ham aniqlanmagan zararli dastur emas, balki etishmayotgan nashriyotchi imzosi sababli yuzaga keladi.",
 
   dl_macos_first_h3: "macOS da birinchi ishga tushirish",
   dl_macos_intro:
-    "Arroxy hali macOS uchun kod imzolanmagan, shuning uchun Gatekeeper birinchi ishga tushirishni bloklaydi. Uni ruxsat etishning aniq yo'li macOS versiyangizga bog'liq — Sequoia 15 eski sichqonchaning o'ng tugmasi → Open usulini qattiqlashtirib qo'ydi.",
+    "Arclio hali macOS uchun kod imzolanmagan, shuning uchun Gatekeeper birinchi ishga tushirishni bloklaydi. Uni ruxsat etishning aniq yo'li macOS versiyangizga bog'liq — Sequoia 15 eski sichqonchaning o'ng tugmasi → Open usulini qattiqlashtirib qo'ydi.",
   dl_macos_sequoia_h4: "macOS Sequoia 15 va undan keyingi (joriy)",
   dl_macos_sequoia_intro:
     "Sequoia 15 va undan yangi versiyalarda, sichqonchaning o'ng tugmasi → Open ko'plab karantindagi ilovalar uchun Gatekeeper ni chetlab o'tmaydi. Buning o'rniga Tizim Sozlamalari panelidan foydalaning:",
   dl_macos_sequoia_step1:
-    "O'rnatilgan DMG dan `Arroxy.app` ni `/Applications` ga torting.",
+    "O'rnatilgan DMG dan `Arclio.app` ni `/Applications` ga torting.",
   dl_macos_sequoia_step2:
-    "Arroxy ni ikki marta bosing. Bloklash dialogi paydo bo'ladi — **Done** tugmasini bosing (*Move to Trash* ni bosmang).",
+    "Arclio ni ikki marta bosing. Bloklash dialogi paydo bo'ladi — **Done** tugmasini bosing (*Move to Trash* ni bosmang).",
   dl_macos_sequoia_step3:
-    "**System Settings → Privacy & Security** ni oching va **Security** bo'limiga suring. Siz *\"Arroxy was blocked to protect your Mac\"* (yoki shunga o'xshash xabar) ko'rasiz.",
+    "**System Settings → Privacy & Security** ni oching va **Security** bo'limiga suring. Siz *\"Arclio was blocked to protect your Mac\"* (yoki shunga o'xshash xabar) ko'rasiz.",
   dl_macos_sequoia_step4:
-    "**Open Anyway** tugmasini bosing, parolingiz yoki Touch ID bilan tasdiqlang, so'ng Arroxy ni `/Applications` dan qayta ishga tushiring.",
+    "**Open Anyway** tugmasini bosing, parolingiz yoki Touch ID bilan tasdiqlang, so'ng Arclio ni `/Applications` dan qayta ishga tushiring.",
   dl_macos_sonoma_h4: "macOS Sonoma 14 va undan oldingi",
   dl_macos_sonoma_step1:
-    "O'rnatilgan DMG dan `Arroxy.app` ni `/Applications` ga torting.",
+    "O'rnatilgan DMG dan `Arclio.app` ni `/Applications` ga torting.",
   dl_macos_sonoma_step2:
-    "`/Applications` dagi `Arroxy.app` ga sichqonchaning o'ng tugmasi bilan bosing (yoki Control-click) va **Open** ni tanlang.",
+    "`/Applications` dagi `Arclio.app` ga sichqonchaning o'ng tugmasi bilan bosing (yoki Control-click) va **Open** ni tanlang.",
   dl_macos_sonoma_step3:
-    "Ogohlantirish dialogida endi **Open** tugmasi bor — uni bosing va tasdiqlang. Arroxy odatda ochiladi va ogohlantirish boshqa ko'rinmaydi.",
+    "Ogohlantirish dialogida endi **Open** tugmasi bor — uni bosing va tasdiqlang. Arclio odatda ochiladi va ogohlantirish boshqa ko'rinmaydi.",
   dl_macos_damaged_h4:
     '"App is damaged" yoki doimiy Gatekeeper bloki — Terminal orqali tuzatish',
   dl_macos_damaged_p:
-    "Agar macOS *\"Arroxy is damaged and can't be opened\"* desa, yoki yuqoridagi qadamlarning hech biri blokni bartaraf etmasa, DMG dagi karantin atributi sabab (ba'zi brauzerlar va macOS ning o'zining translokatsiya xatti-harakati uni o'rnatadi). O'rnatilgan ilovadan uni o'chirib tashlang:",
+    "Agar macOS *\"Arclio is damaged and can't be opened\"* desa, yoki yuqoridagi qadamlarning hech biri blokni bartaraf etmasa, DMG dagi karantin atributi sabab (ba'zi brauzerlar va macOS ning o'zining translokatsiya xatti-harakati uni o'rnatadi). O'rnatilgan ilovadan uni o'chirib tashlang:",
   dl_macos_arch_note:
     "**Apple Silicon va Intel:** M seriyali Mac da (M1 / M2 / M3 / M4) `arm64` DMG ni yuklab oling. Intel Mac larda `x64` DMG ni yuklab oling. Noto'g'ri qurilmani ishga tushirish Rosetta orqali ishlaydi, lekin sezilarli darajada sekinroq.",
 
@@ -298,7 +298,7 @@ export const uz = {
   privacy_p1:
     "Yuklamalar YouTube'dan siz tanlagan papkaga to'g'ridan-to'g'ri [yt-dlp](https://github.com/yt-dlp/yt-dlp) orqali olinadi — hech narsa uchinchi tomon server orqali yo'naltirilmaydi. Ko'rish tarixi, yuklab olish tarixi, URL'lar va fayl mazmunlari qurilmangizda qoladi.",
   privacy_p2:
-    "Arroxy [OpenPanel](https://openpanel.dev) orqali anonim, agregat telemetriya yuboradi — ishga tushirishlar, OS, ilova versiyalari va nosozliklarni tushunish uchun yetarli. URL, video sarlavhasi, fayl yo‘li, hisob ma’lumoti, fingerprinting yoki shaxsiy ma’lumot yo‘q. Har bir o‘rnatish IDsi tasodifiy va shaxsingizga bog‘lanmagan. Sozlamalarda o‘chirib qo‘yishingiz mumkin.",
+    "Arclio [OpenPanel](https://openpanel.dev) orqali anonim, agregat telemetriya yuboradi — ishga tushirishlar, OS, ilova versiyalari va nosozliklarni tushunish uchun yetarli. URL, video sarlavhasi, fayl yo‘li, hisob ma’lumoti, fingerprinting yoki shaxsiy ma’lumot yo‘q. Har bir o‘rnatish IDsi tasodifiy va shaxsingizga bog‘lanmagan. Sozlamalarda o‘chirib qo‘yishingiz mumkin.",
   faq_q1: "Bu haqiqatan ham bepulmi?",
   faq_a1:
     "Ha — MIT litsenziyalangan, premium daraja yo'q, xususiyat cheklash yo'q.",
@@ -310,13 +310,13 @@ export const uz = {
     "Ha. Format menyusidan *faqat audio* ni tanlang va MP3, M4A/AAC, Opus yoki WAV ni belgilang.",
   faq_q4: "YouTube hisob yoki kukilar kerakmi?",
   faq_a4:
-    "Standart holatda — yo'q. Arroxy YouTube hisobi, tizimga kirish yoki kuki eksportisiz ishlaydi. Autentifikatsiya talab qiladigan kontent (masalan, yosh chegarasi qo'yilgan yoki faqat a'zolar uchun videolar) uchun Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash mavjud (Cookies source: file or browser). Standart holatda u o'chirilgan. Agar uni yoqsangiz, yt-dlp wiki sahifasida [kuki asosidagi avtomatlashtirish Google hisobini belgilashi mumkinligi haqida ogohlantirish berilgan](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); bunday holatda bir martalik hisob xavfsizroq tanlovdir.",
+    "Standart holatda — yo'q. Arclio YouTube hisobi, tizimga kirish yoki kuki eksportisiz ishlaydi. Autentifikatsiya talab qiladigan kontent (masalan, yosh chegarasi qo'yilgan yoki faqat a'zolar uchun videolar) uchun Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash mavjud (Cookies source: file or browser). Standart holatda u o'chirilgan. Agar uni yoqsangiz, yt-dlp wiki sahifasida [kuki asosidagi avtomatlashtirish Google hisobini belgilashi mumkinligi haqida ogohlantirish berilgan](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); bunday holatda bir martalik hisob xavfsizroq tanlovdir.",
   faq_q5: "YouTube nimadir o'zgartirsa ham ishlashda davom etadimi?",
   faq_a5:
-    "yt-dlp ishga tushirishda avtomatik yangilanadi, va YouTube biror narsani o'zgartirganda Arroxy tezlik bilan tuzatishlarni chiqaradi. Agar siz biron muammoga duch kelsangiz, Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash zaxira variant sifatida mavjud.",
-  faq_q6: "Arroxy qanday tillarda mavjud?",
+    "yt-dlp ishga tushirishda avtomatik yangilanadi, va YouTube biror narsani o'zgartirganda Arclio tezlik bilan tuzatishlarni chiqaradi. Agar siz biron muammoga duch kelsangiz, Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash zaxira variant sifatida mavjud.",
+  faq_q6: "Arclio qanday tillarda mavjud?",
   faq_a6:
-    "Yigirma bir, darhol tayyor: English, Español (ispan), Deutsch (nemis), Français (frantsuz), 日本語 (yapon), 中文 (xitoy), Русский (rus), Українська (ukrain), हिन्दी (hind), Afaan Oromoo, Kiswahili, O'zbekcha (o'zbek), Tiếng Việt (vyetnam), አማርኛ (amxar), العربية (arab), اردو (urdu), پښتو (pushtu), বাংলা (bengal), မြန်မာဘာသာ (birma), Ελληνικά (grek) va Српски (serb). Arroxy birinchi ishga tushirishda operatsion tizimingiz tilini avtomatik aniqlaydi va siz istalgan vaqtda asboblar panelindagi til tanlagichidan o'zgartirishingiz mumkin. Runtime locale JSON fayllari src/shared/i18n/locales/ ichida, tarjimonlarga mo'ljallangan PO kataloglari esa i18n/locales/ ichida — hissa qo'shish uchun GitHub'da PR oching.",
+    "Yigirma bir, darhol tayyor: English, Español (ispan), Deutsch (nemis), Français (frantsuz), 日本語 (yapon), 中文 (xitoy), Русский (rus), Українська (ukrain), हिन्दी (hind), Afaan Oromoo, Kiswahili, O'zbekcha (o'zbek), Tiếng Việt (vyetnam), አማርኛ (amxar), العربية (arab), اردو (urdu), پښتو (pushtu), বাংলা (bengal), မြန်မာဘာသာ (birma), Ελληνικά (grek) va Српски (serb). Arclio birinchi ishga tushirishda operatsion tizimingiz tilini avtomatik aniqlaydi va siz istalgan vaqtda asboblar panelindagi til tanlagichidan o'zgartirishingiz mumkin. Runtime locale JSON fayllari src/shared/i18n/locales/ ichida, tarjimonlarga mo'ljallangan PO kataloglari esa i18n/locales/ ichida — hissa qo'shish uchun GitHub'da PR oching.",
   faq_q7: "Boshqa narsalarni o'rnatishim kerakmi?",
   faq_a7:
     "Yo‘q. yt-dlp birinchi ishga tushirishda avtomatik yuklab olinadi va kompyuteringizda keshlanadi; ffmpeg va ffprobe ilova bilan birga keladi. Undan keyin qo‘shimcha sozlash shart emas.",
@@ -339,7 +339,7 @@ export const uz = {
     "YouTube bir nechta audio track berganda app bo'ylab og'zaki til track afzalligini sozlash va har bir profile uchun override qilish",
   plan_r6_name: "**App ichida browser sign-in**",
   plan_r6_desc:
-    "Arroxy ichida browser windows ochib, sign in qilish va site cookiesni qo'lda export qilmasdan ishlatish",
+    "Arclio ichida browser windows ochib, sign in qilish va site cookiesni qo'lda export qilmasdan ishlatish",
   plan_r8_name: "**Bir-click video download**",
   plan_r8_desc:
     "Active profile bilan detected yoki pasted URLdan video downloadni bir clickda boshlash",
@@ -359,7 +359,7 @@ export const uz = {
   tech_content: TECH_CONTENT,
   tos_h2: "Foydalanish shartlari",
   tos_note:
-    "Arroxy faqat shaxsiy, xususiy foydalanish uchun mo'ljallangan vosita. Siz yuklab olishlaringiz YouTube ning [Foydalanish Shartlari](https://www.youtube.com/t/terms) va yurisdiktsiyangizning mualliflik huquqi qonunlariga muvofiqligini ta'minlash uchun yagona javobgarsiz. Arroxy ni foydalanish huquqingiz bo'lmagan kontentni yuklab olish, ko'paytirish yoki tarqatish uchun ishlatmang. Ishlab chiquvchilar har qanday suiiste'mollik uchun javobgar emas.",
+    "Arclio faqat shaxsiy, xususiy foydalanish uchun mo'ljallangan vosita. Siz yuklab olishlaringiz YouTube ning [Foydalanish Shartlari](https://www.youtube.com/t/terms) va yurisdiktsiyangizning mualliflik huquqi qonunlariga muvofiqligini ta'minlash uchun yagona javobgarsiz. Arclio ni foydalanish huquqingiz bo'lmagan kontentni yuklab olish, ko'paytirish yoki tarqatish uchun ishlatmang. Ishlab chiquvchilar har qanday suiiste'mollik uchun javobgar emas.",
   footer_credit:
     'MIT Litsenziyasi · <a href="https://x.com/OrionusAI">@OrionusAI</a> tomonidan mehnat bilan yaratilgan',
 };

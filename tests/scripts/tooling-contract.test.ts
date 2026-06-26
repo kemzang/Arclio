@@ -11,7 +11,7 @@ afterEach(async () => {
 })
 
 async function tempRoot(): Promise<string> {
-	const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-tooling-contract-'))
+	const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-tooling-contract-'))
 	tempDirs.push(root)
 	return root
 }

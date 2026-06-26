@@ -9,10 +9,10 @@ describe('renderer startup shell', () => {
 		const html = readFileSync(join(root, 'src/renderer/index.html'), 'utf8')
 
 		expect(html).toContain('id="boot-splash"')
-		expect(html).toContain('Arroxy')
+		expect(html).toContain('Arclio')
 		expect(html).toContain('/mascot-main.png')
-		expect(html).toContain('Starting Arroxy')
-		expect(html).not.toContain('Arroxy is warming up')
+		expect(html).toContain('Starting Arclio')
+		expect(html).not.toContain('Arclio is warming up')
 		expect(html).toContain('id="root"')
 		expect(html.indexOf('id="boot-splash"')).toBeGreaterThanOrEqual(html.indexOf('id="root"'))
 	})

@@ -8,7 +8,7 @@ describe('ProbeInfoJsonCache', () => {
 	let dir: string
 
 	beforeEach(async () => {
-		dir = await mkdtemp(join(tmpdir(), 'arroxy-probe-info-'))
+		dir = await mkdtemp(join(tmpdir(), 'arclio-probe-info-'))
 	})
 
 	afterEach(async () => {

@@ -70,20 +70,20 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Render Flatpak manifest + metainfo from checked-in templates."
     )
-    parser.add_argument("--sha256", required=True, help="SHA256 of the Arroxy Linux tarball")
+    parser.add_argument("--sha256", required=True, help="SHA256 of the Arclio Linux tarball")
     parser.add_argument(
         "--archive-path",
         required=True,
-        help="Path to the local Arroxy Linux tarball, relative to the manifest directory",
+        help="Path to the local Arclio Linux tarball, relative to the manifest directory",
     )
     parser.add_argument(
         "--template",
-        default="flatpak/io.github.antonio_orionus.Arroxy.yml.in",
+        default="flatpak/io.github.antonio_orionus.Arclio.yml.in",
         help="Manifest template path",
     )
     parser.add_argument(
         "--output",
-        default="flatpak/io.github.antonio_orionus.Arroxy.yml",
+        default="flatpak/io.github.antonio_orionus.Arclio.yml",
         help="Rendered manifest path",
     )
     parser.add_argument(

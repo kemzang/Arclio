@@ -5,7 +5,7 @@ import {LIVE_PROBE_SMOKE_RESULT_PREFIX, parseLiveProbeSmokeResultLine, probeSmok
 const healthyReport: RuntimeSmokeReport = {
 	runtimeSmoke: true,
 	ok: true,
-	execPath: '/Applications/Arroxy.app/Contents/MacOS/Arroxy',
+	execPath: '/Applications/Arclio.app/Contents/MacOS/Arclio',
 	parentElectronRunAsNode: null,
 	nodeVersion: '24.16.0',
 	nodeMajor: 24,
@@ -16,7 +16,7 @@ const healthyReport: RuntimeSmokeReport = {
 		sourceLabel: 'managed',
 		ejsComponents: 'bundled-required',
 		remoteComponentsEnabled: false,
-		args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arroxy.app/Contents/MacOS/Arroxy'],
+		args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arclio.app/Contents/MacOS/Arclio'],
 		verbose: {hasNodeRuntime: true, hasUnsupportedNodeRuntime: false, hasYtDlpEjs: true, hasDenoRuntime: false, hasEjsNpmRemoteComponent: false, jsRuntimeLines: ['[debug] JS runtimes: node 24.16.0'], optionalLibraryLines: ['[debug] Optional libraries: curl_cffi-0.11.4, yt-dlp-ejs-0.3.0']}
 	},
 	failures: []
@@ -28,13 +28,13 @@ const healthyLiveProbeReport: LiveProbeSmokeReport = {
 	url: 'https://www.youtube.com/watch?v=abc123',
 	platform: 'darwin',
 	arch: 'arm64',
-	execPath: '/Applications/Arroxy.app/Contents/MacOS/Arroxy',
+	execPath: '/Applications/Arclio.app/Contents/MacOS/Arclio',
 	parentElectronRunAsNode: null,
 	ytDlp: {
 		path: '/tmp/runtime-cache/yt-dlp',
-		args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arroxy.app/Contents/MacOS/Arroxy', '--extractor-args', 'youtube:po_token=[REDACTED];visitor_data=[REDACTED]', '--dump-single-json', '--flat-playlist', '--no-playlist', 'https://www.youtube.com/watch?v=abc123'],
+		args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arclio.app/Contents/MacOS/Arclio', '--extractor-args', 'youtube:po_token=[REDACTED];visitor_data=[REDACTED]', '--dump-single-json', '--flat-playlist', '--no-playlist', 'https://www.youtube.com/watch?v=abc123'],
 		jsRuntime: 'electron-node',
-		jsRuntimePath: '/Applications/Arroxy.app/Contents/MacOS/Arroxy',
+		jsRuntimePath: '/Applications/Arclio.app/Contents/MacOS/Arclio',
 		jsRuntimeVersion: '24.16.0',
 		ejsComponents: 'bundled-required',
 		usesElectronNode: true,
@@ -46,8 +46,8 @@ const healthyLiveProbeReport: LiveProbeSmokeReport = {
 			{
 				ytDlpPath: '/tmp/runtime-cache/yt-dlp',
 				ffmpegPath: null,
-				args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arroxy.app/Contents/MacOS/Arroxy', '--extractor-args', 'youtube:po_token=[REDACTED];visitor_data=[REDACTED]', '--dump-single-json', '--flat-playlist', '--no-playlist', 'https://www.youtube.com/watch?v=abc123'],
-				jsRuntime: {jsRuntime: 'electron-node', jsRuntimePath: '/Applications/Arroxy.app/Contents/MacOS/Arroxy', jsRuntimeVersion: '24.16.0', ejsComponents: 'bundled-required'},
+				args: ['--no-js-runtimes', '--js-runtimes', 'node:/Applications/Arclio.app/Contents/MacOS/Arclio', '--extractor-args', 'youtube:po_token=[REDACTED];visitor_data=[REDACTED]', '--dump-single-json', '--flat-playlist', '--no-playlist', 'https://www.youtube.com/watch?v=abc123'],
+				jsRuntime: {jsRuntime: 'electron-node', jsRuntimePath: '/Applications/Arclio.app/Contents/MacOS/Arclio', jsRuntimeVersion: '24.16.0', ejsComponents: 'bundled-required'},
 				attempt: 'pot',
 				reMint: false
 			}
@@ -60,9 +60,9 @@ const healthyLiveProbeReport: LiveProbeSmokeReport = {
 }
 
 describe('runtime smoke contract', () => {
-	it('is enabled only by ARROXY_RUNTIME_SMOKE=1', () => {
-		expect(readRuntimeSmokeEnabled({ARROXY_RUNTIME_SMOKE: '1'})).toBe(true)
-		expect(readRuntimeSmokeEnabled({ARROXY_RUNTIME_SMOKE: '0'})).toBe(false)
+	it('is enabled only by ARCLIO_RUNTIME_SMOKE=1', () => {
+		expect(readRuntimeSmokeEnabled({ARCLIO_RUNTIME_SMOKE: '1'})).toBe(true)
+		expect(readRuntimeSmokeEnabled({ARCLIO_RUNTIME_SMOKE: '0'})).toBe(false)
 		expect(readRuntimeSmokeEnabled({})).toBe(false)
 	})
 

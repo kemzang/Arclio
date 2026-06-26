@@ -9,7 +9,7 @@ const repoRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const requireFromRepo = createRequire(join(repoRoot, 'package.json'))
 const bunx = process.platform === 'win32' ? 'bunx.cmd' : 'bunx'
 
-const tempDir = mkdtempSync(join(tmpdir(), 'arroxy-tooling-parity-'))
+const tempDir = mkdtempSync(join(tmpdir(), 'arclio-tooling-parity-'))
 const oxlintConfigPath = join(repoRoot, '.oxlintrc.json')
 
 const requiredRules = [

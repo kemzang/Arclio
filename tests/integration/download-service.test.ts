@@ -158,8 +158,8 @@ describe('DownloadService (mock mode)', () => {
 
 		// Resume validates the preserved tempDir exists on disk; create one in
 		// the OS temp tree so the stat() check succeeds.
-		const outputDir = await mkdir(join(tmpdir(), `arroxy-resume-${Date.now()}`), {recursive: true}).then(p => p ?? join(tmpdir(), `arroxy-resume-${Date.now()}`))
-		const tempDir = join(outputDir, '.arroxy-temp', 'paused-w')
+		const outputDir = await mkdir(join(tmpdir(), `arclio-resume-${Date.now()}`), {recursive: true}).then(p => p ?? join(tmpdir(), `arclio-resume-${Date.now()}`))
+		const tempDir = join(outputDir, '.arclio-temp', 'paused-w')
 		await mkdir(tempDir, {recursive: true})
 
 		const pausedJob: DownloadJob = {id: 'paused-with-tempdir', url: 'https://youtube.com/watch?v=tdir', outputDir, status: 'running', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()}
@@ -192,7 +192,7 @@ describe('DownloadService (mock mode)', () => {
 		const {service} = makeService()
 
 		const pausedJob: DownloadJob = {id: 'paused-missing-tempdir', url: 'https://youtube.com/watch?v=mtd', outputDir: '/tmp/mtd-out', status: 'running', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()}
-		const ghostTempDir = '/tmp/mtd-out/.arroxy-temp/never-existed'
+		const ghostTempDir = '/tmp/mtd-out/.arclio-temp/never-existed'
 		interface PausedDownload {
 			job: DownloadJob
 			input: {url: string; outputDir: string; job: PreparedJob}

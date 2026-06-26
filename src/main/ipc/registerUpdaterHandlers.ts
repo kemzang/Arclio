@@ -47,7 +47,7 @@ export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
 	// The channel must match the running version's semver tag so a beta install
 	// queries beta.yml (not latest.yml — which 404s on prerelease releases).
 	const {channel, allowPrerelease} = resolveUpdateChannel(app.getVersion())
-	autoUpdater.setFeedURL({provider: 'github', owner: 'antonio-orionus', repo: 'Arroxy', channel})
+	autoUpdater.setFeedURL({provider: 'github', owner: 'antonio-orionus', repo: 'Arclio', channel})
 	autoUpdater.channel = channel
 	autoUpdater.allowDowngrade = false // channel setter silently sets allowDowngrade=true; override it
 	autoUpdater.allowPrerelease = allowPrerelease

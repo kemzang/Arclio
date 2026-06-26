@@ -49,15 +49,15 @@ describe('planWorkflow — media', () => {
 		expect(adjacent(plan.args, '-f', '137+140')).toBe(true)
 		expect(adjacent(plan.args, '--paths', 'home:/out')).toBe(true)
 		expect(adjacent(plan.args, '--paths', 'temp:/out/.tmp/job')).toBe(true)
-		expect(adjacent(plan.args, '-o', 'infojson:/out/.tmp/job/_arroxy')).toBe(true)
+		expect(adjacent(plan.args, '-o', 'infojson:/out/.tmp/job/_arclio')).toBe(true)
 		expect(plan.args.at(-1)).toBe(URL)
 		expect(plan.facts.isMediaDownload).toBe(true)
 	})
 
 	it('plans load-info-json resume without passing the original URL', () => {
-		const plan = planWorkflow({kind: 'media', url: URL, output: {directory: '/out', tempDirectory: '/out/.tmp/job'}, selection: {formatId: 'hls-3217'}, resume: {loadInfoJsonPath: '/out/.tmp/job/_arroxy.info.json'}})
+		const plan = planWorkflow({kind: 'media', url: URL, output: {directory: '/out', tempDirectory: '/out/.tmp/job'}, selection: {formatId: 'hls-3217'}, resume: {loadInfoJsonPath: '/out/.tmp/job/_arclio.info.json'}})
 
-		expect(adjacent(plan.args, '--load-info-json', '/out/.tmp/job/_arroxy.info.json')).toBe(true)
+		expect(adjacent(plan.args, '--load-info-json', '/out/.tmp/job/_arclio.info.json')).toBe(true)
 		expect(plan.args).not.toContain(URL)
 	})
 

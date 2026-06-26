@@ -11,7 +11,7 @@ afterEach(async () => {
 })
 
 async function tempDir(): Promise<string> {
-	const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-fetch-embedded-host-'))
+	const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-fetch-embedded-host-'))
 	tempDirs.push(dir)
 	return dir
 }

@@ -1,7 +1,7 @@
 {
 	"common": {"back": "شاته", "cancel": "لغوه کړئ", "continue": "دوام ورکړه", "retry": "بیا هڅه وکړه", "startOver": "له سره پیل کړه"},
-	"app": {"feedback": "نظر", "logs": "لاګونه", "feedbackNudge": "ایا Arroxy خوند درکوي؟ ستاسو د اورولو شوق لرم! 💬", "zoomIn": "لویول", "zoomOut": "کوچنیول"},
-	"about": {"button": "د اړوند", "openTitle": "د Arroxy اړوند", "tagline": "د YouTube او 2000+ نورو سایټونو لپاره چټک او اسانه ډاونلوډر.", "websiteLink": "ویب پاڼه", "githubLink": "GitHub", "licenseLine": "MIT جواز · د Antonio Orionus لخوا", "thirdPartyNotices": "د دریم ډلې خبرتیاوې وګورئ"},
+	"app": {"feedback": "نظر", "logs": "لاګونه", "feedbackNudge": "ایا Arclio خوند درکوي؟ ستاسو د اورولو شوق لرم! 💬", "zoomIn": "لویول", "zoomOut": "کوچنیول"},
+	"about": {"button": "د اړوند", "openTitle": "د Arclio اړوند", "tagline": "د YouTube او 2000+ نورو سایټونو لپاره چټک او اسانه ډاونلوډر.", "websiteLink": "ویب پاڼه", "githubLink": "GitHub", "licenseLine": "MIT جواز · د Antonio Orionus لخوا", "thirdPartyNotices": "د دریم ډلې خبرتیاوې وګورئ"},
 	"titleBar": {"close": "تړل", "minimize": "کوچنی کول", "maximize": "لوی کول", "restore": "بیرته راوستل"},
 	"splash": {"greeting": "سلام، ښه راغلاست!", "warmup": "ډاونلوډونه چمتو کېږي…", "downloading": "{{binary}} ډاونلوډ کیږي…", "warmupFailedNoDiag": "نصب ناکام شو. د توضیحاتو لپاره د نصب لاګ خلاص کړئ."},
 	"repair": {
@@ -77,11 +77,11 @@
 			"alreadyDownloaded": "مخکې ډاونلوډ شوی",
 			"probeLimitAlertTitle": "د Playlist سکین محدود دی",
 			"probeLimitAlertTitleGeneric": "سکن محدود دی",
-			"probeLimitAlertDesc": "Arroxy له {{count}} څخه زیات توکي وموندل، نو اوسنی سکین حد پاتې توکي پټوي."
+			"probeLimitAlertDesc": "Arclio له {{count}} څخه زیات توکي وموندل، نو اوسنی سکین حد پاتې توکي پټوي."
 		},
 		"bulk": {
 			"title": "ډېر URLونه",
-			"description": "د ویډیو، playlist، channel، لټون، یا غږ URLونه پیسټ کړئ. Arroxy به تر قطار ته کولو مخکې تکراري لینکونه پاک کړي.",
+			"description": "د ویډیو، playlist، channel، لټون، یا غږ URLونه پیسټ کړئ. Arclio به تر قطار ته کولو مخکې تکراري لینکونه پاک کړي.",
 			"textareaLabel": "د URL لست",
 			"textareaPlaceholder": "https://video.example/one\nhttps://video.example/two\nhttps://video.example/three",
 			"acceptedCount": "چمتو",
@@ -99,11 +99,11 @@
 			"pickFromPlaylist": "له Playlist نه غوره کړئ",
 			"quickWholePlaylist": "ټول پلیلېسټ ډاونلوډ کړه",
 			"playlistLimit": "د پلی‌لېسټ کتنې حد: {{count}} توکي",
-			"quickLimitDescription": "تر ټولو زیات توکي چې Arroxy یې د پلیلېسټ، چینل یا لټون پایله قطار ته تر اضافه کولو مخکې سکین کوي.",
+			"quickLimitDescription": "تر ټولو زیات توکي چې Arclio یې د پلیلېسټ، چینل یا لټون پایله قطار ته تر اضافه کولو مخکې سکین کوي.",
 			"singleTooltip": "د yt-dlp د یوه ویډیو حالت کاروي، نو له دې URL سره تړلی پلی‌لېسټ له پامه غورځول کېږي.",
 			"quickSingleTooltip": "یو ډاونلوډ قطار ته اضافه کوي او له دې URL سره تړلی پلیلېسټ له پامه غورځوي.",
 			"playlistTooltip": "د yt-dlp د پلی‌لېسټ حالت کاروي او د انتخابګر تر ښودلو مخکې ستاسې تر ټاکلي حد پورې توکي راولي.",
-			"quickPlaylistTooltip": "هر بار شوی پلیلېسټ توکی د فعال چټک ډاونلوډ پروفایل سره قطار ته اضافه کوي. که سکین ستا حد ته ورسېږي، Arroxy به د قطار ته اضافه کولو مخکې پوښتنه وکړي."
+			"quickPlaylistTooltip": "هر بار شوی پلیلېسټ توکی د فعال چټک ډاونلوډ پروفایل سره قطار ته اضافه کوي. که سکین ستا حد ته ورسېږي، Arclio به د قطار ته اضافه کولو مخکې پوښتنه وکړي."
 		},
 		"url": {
 			"heading": "له URL څخه ډاونلوډ",
@@ -145,12 +145,12 @@
 			"bulkButton": "ډېر URLونه",
 			"bulkTooltip": "څو URLونه زیات او کتار ته یې واچوئ.",
 			"features": {
-				"heading": "Arroxy څه ډاونلوډ کولی شي",
+				"heading": "Arclio څه ډاونلوډ کولی شي",
 				"youtube": {"heading": "YouTube", "video": "ویډیوګانې", "channel": "چینلونه", "playlist": "د غږولو لړليکونه", "short": "Shorts", "music": "موسیقي", "podcast": "Podcastونه"},
 				"anySite": {"heading": "2000+ سایټونه", "video": "ویډیوګانې", "videoPlaylist": "د ویډیو Playlistونه", "musicPlaylist": "د موسیقۍ Playlistونه"},
 				"always": {"audioOnly": "یوازې غږونه", "subtitles": "ژباړلیکونه"}
 			},
-			"mascotIdle": "لینک واچوئ او Arroxy پرېږدئ چې یې راکښته کړي ✨",
+			"mascotIdle": "لینک واچوئ او Arclio پرېږدئ چې یې راکښته کړي ✨",
 			"mascotBusy": "شاتهپرده ډاونلوډ کیږي… زه کولی شم له ډیرو کارونو سره معامله وکړم 😎",
 			"advanced": "پرمختللي",
 			"clearAria": "URL پاکول",
@@ -193,14 +193,14 @@
 			"proxy": {"label": "Proxy URL", "description": "د پراکسي له لارې ترافیک لیږدول — د جغرافیایي محدودیتونو لرونکي مینځپانګې لپاره ګټور.", "placeholder": "http://host:port", "clear": "پاکول"},
 			"backdrop": {
 				"panelTitle": "بڼه او کړنه",
-				"panelDescription": "وټاکئ چې Arroxy د خوځنده شالید لپاره څومره حرکت وکاروي.",
+				"panelDescription": "وټاکئ چې Arclio د خوځنده شالید لپاره څومره حرکت وکاروي.",
 				"modeLabel": "د شالید کیفیت",
 				"modeDescription": "له تر ټولو خوځنده بڼې څخه غوره کړنې ته ولاړ شئ.",
 				"cssOnlyLabel": "غوره کړنه",
 				"cssOnlyDescription": "یوازې CSS، د canvas وړاندې کول نشته.",
 				"gpuLabel": "تر ټولو ښکلی",
 				"gpuDescription": "که ملاتړ ولري، خوځنده WebGL شالید.",
-				"runtimeFallbackNotice": "په دې وسیله کې د هارډویر WebGL شتون نه لري، نو Arroxy د غوره کړنې شالید کاروي."
+				"runtimeFallbackNotice": "په دې وسیله کې د هارډویر WebGL شتون نه لري، نو Arclio د غوره کړنې شالید کاروي."
 			},
 			"limitRate": {
 				"label": "د ډاونلوډ سرعت حد",
@@ -213,7 +213,7 @@
 			},
 			"playlistProbeLimit": {
 				"label": "د سکین لپاره د Playlist توکي",
-				"description": "هغه اعظمي ننوتونه چې Arroxy د یوه playlist، چینل، یا د لټون پایله خلاصیدو پرمهال بارومه.",
+				"description": "هغه اعظمي ننوتونه چې Arclio د یوه playlist، چینل، یا د لټون پایله خلاصیدو پرمهال بارومه.",
 				"option": "{{count}} توکي",
 				"current": "اوسنی حد: {{count}} توکي",
 				"customValue": "دودیز: {{count}} توکي",
@@ -223,19 +223,19 @@
 				"customDialogCancel": "لغوه کړئ",
 				"customDialogSave": "حد خوندي کړئ",
 				"invalid": "د 1 نه تر 5000 پورې بشپړ عدد وکاروئ",
-				"tooltip": "yt-dlp --playlist-end ته د لارښوونې لپاره: Arroxy د انتخاب جوړولو پرمهال یوازې د playlist، چینل، یا لټون له ننوتونو دومره غواړي."
+				"tooltip": "yt-dlp --playlist-end ته د لارښوونې لپاره: Arclio د انتخاب جوړولو پرمهال یوازې د playlist، چینل، یا لټون له ننوتونو دومره غواړي."
 			},
 			"nativeAudioPreference": {"label": "د اصلي آډیو غوره توب", "description": "دا کنټرولوي چې “Best native” څه ټاکي. لاسي آډیو کرښې او M4A/AAC ښکاره انتخابونه پاتې کېږي.", "compatible": "سازګار سټېریو", "surround": "surround / Dolby ته لومړیتوب ورکړئ"},
 			"singleFilenameId": {"toggle": "د یوازینو فایل نومونو ته د ویډیو ID ورزیات کړه", "toggleDescription": "کله چې سرلیکونه بدل شي یا سره ټکر وکړي، یو ځلني ډاونلوډونه ځانګړي ساتي."},
 			"networkPacing": {
 				"heading": "آرامه ډاونلوډونه",
-				"description": "د هر ډاونلوډ پرمهال کوچني انتظارونه اضافه کړئ ترڅو Arroxy سایټ ته ډیره زیاته فشار ونه وري. ارزښتونه ثانیې دي که نور ذکر نه وي.",
-				"presetLabel": "Arroxy باید څومره احتیاطي وي؟",
-				"tooltip": "دا انتظارونه د هر ډاونلوډ دننه کیږي. Arroxy بیا هم معمولي کتار شوي ډاونلوډونه یو پر یو ساتي.",
+				"description": "د هر ډاونلوډ پرمهال کوچني انتظارونه اضافه کړئ ترڅو Arclio سایټ ته ډیره زیاته فشار ونه وري. ارزښتونه ثانیې دي که نور ذکر نه وي.",
+				"presetLabel": "Arclio باید څومره احتیاطي وي؟",
+				"tooltip": "دا انتظارونه د هر ډاونلوډ دننه کیږي. Arclio بیا هم معمولي کتار شوي ډاونلوډونه یو پر یو ساتي.",
 				"summary": "انتظارونه: {{requests}} د چکونو تر مینځ، {{downloads}} د میډیا د پیلیدو دمخه، {{subtitles}} د ژباړلیک فایلونو دمخه. اتصالونه: {{fragments}}.",
 				"presets": {"off": "بند", "balanced": "متوازن", "careful": "احتیاطي", "custom": "دودیز"},
 				"tooltips": {
-					"off": "یوازې هغه کوچني اساسي وقفې کاروي چې Arroxy د میډیا او ژباړلیکونو لپاره ساتي.",
+					"off": "یوازې هغه کوچني اساسي وقفې کاروي چې Arclio د میډیا او ژباړلیکونو لپاره ساتي.",
 					"balanced": "ډیفالټ. لنډ وقفې اضافه کوي او یو ډاونلوډ اتصال کاروي.",
 					"careful": "د لویو Playlistونو یا هغو شبکو لپاره اوږده وقفې اضافه کوي چې ډیری وار محدودیتونو سره مخ کیږي.",
 					"custom": "د ډاونلوډ د پرمختللو کنټرولونو ترتیب پخپله وکړئ."
@@ -248,9 +248,9 @@
 		},
 		"quickProgress": {
 			"title": "چټک ډاونلوډ چمتو کېږي",
-			"description": "Arroxy لینک لولي او {{profileName}} پلي کوي.",
+			"description": "Arclio لینک لولي او {{profileName}} پلي کوي.",
 			"currentFallback": "اوسنی لینک",
-			"waitHint": "دا پرانیستی وساتئ تر څو Arroxy قطار چمتو کړي.",
+			"waitHint": "دا پرانیستی وساتئ تر څو Arclio قطار چمتو کړي.",
 			"failedCount_one": "{{count}} ناکام شو",
 			"failedCount_other": "{{count}} ناکام شول",
 			"cancel": "چمتووالی لغوه کړئ",
@@ -443,7 +443,7 @@
 		}
 	},
 	"update": {
-		"appVersion": "Arroxy {{version}}",
+		"appVersion": "Arclio {{version}}",
 		"isAvailable": "شتون لري",
 		"youHave": "— تاسو {{currentVersion}} لرئ",
 		"install": "نصب کړه او بیا پیل کړه",
@@ -455,7 +455,7 @@
 		"installFailed": "تازه کول ناکام شو",
 		"retry": "بیا هڅه وکړئ"
 	},
-	"releaseNotes": {"title": "په Arroxy {{version}} کې څه نوي دي", "description": "تاسو تازه اوسمهال کاروئ. دلته مهم ټکي دي.", "fullNotes": "بشپړ د خپرونې یادښتونه ↗", "continue": "دوام ورکړه"},
+	"releaseNotes": {"title": "په Arclio {{version}} کې څه نوي دي", "description": "تاسو تازه اوسمهال کاروئ. دلته مهم ټکي دي.", "fullNotes": "بشپړ د خپرونې یادښتونه ↗", "continue": "دوام ورکړه"},
 	"status": {
 		"preparingBinaries": "بائنري فایلونه چمتو کیږي…",
 		"mintingToken": "YouTube ټوکن جوړیږي…",
@@ -483,7 +483,7 @@
 	},
 	"errors": {
 		"ytdlp": {
-			"botBlock": "د بوټ محافظت فعال شو. ستاسو IP پته ډیره احتمال نښه شوې (د ډیټاسینټر رینج یا ګڼ کارونکي VPN وتلو ټکی). خپل IP بدل کړئ یا بل VPN پای ټکی غوره کړئ او بیا هڅه وکړئ. که چیرې لا هم ناکامه وي، دا ممکن د YouTube خوا لنډمهاله بدلون وي — Arroxy د پیل پر وخت yt-dlp اتوماتیک تازه کوي، نو سمون به چمتو شي کله چې د پروژې خوا لیږل شي.",
+			"botBlock": "د بوټ محافظت فعال شو. ستاسو IP پته ډیره احتمال نښه شوې (د ډیټاسینټر رینج یا ګڼ کارونکي VPN وتلو ټکی). خپل IP بدل کړئ یا بل VPN پای ټکی غوره کړئ او بیا هڅه وکړئ. که چیرې لا هم ناکامه وي، دا ممکن د YouTube خوا لنډمهاله بدلون وي — Arclio د پیل پر وخت yt-dlp اتوماتیک تازه کوي، نو سمون به چمتو شي کله چې د پروژې خوا لیږل شي.",
 			"ipBlock": "ستاسو IP پته ممکن د YouTube لخوا بنده شوې وي. وروسته بیا هڅه وکړئ یا VPN وکاروئ.",
 			"rateLimit": "YouTube غوښتنې محدودوي. یوه دقیقه انتظار کړئ بیا هڅه وکړئ.",
 			"ageRestricted": "دا ویډیو د عمر محدودیت لري او پرته د ننوتلي حساب نه شي ډاونلوډ کیدی.",
@@ -494,7 +494,7 @@
 			"chunkTransferFailure": "سرور د ډاونلوډ پرمهال وصل کول پرې کاوه او yt-dlp د بیا هڅولو وروسته مو پریښود. دا معمولاً د ترټولو لوی ویډیو فارمیټونو (4K HDR / لوړ بیټ ریټ VP9) سره پیښیږي. بیا هڅه وکړئ، شبکه/VPN بدل کړئ، یا ټیټ ریزولوشن فارمیټ غوره کړئ.",
 			"missingDependency": "yt-dlp ffmpeg یا ffprobe ونه موندل. بنډل شوي باینري فایلونه ترمیم کړئ یا د FFmpeg ځای وټاکئ، بیا هڅه وکړئ.",
 			"postprocessFailure": "yt-dlp ډاونلوډ بشپړ کړ خو وروستی پروسس (یوځای کول / mux / بدلون) ناکام شو. ډیری وختونه دا د ffmpeg لنډمهاله ستونزه ده — بیا هڅه وکړئ، او که دوام ولري، بل فارمیټ ترکیب وازمویئ.",
-			"parse": "د سایټ ځواب پارس نه شو. د yt-dlp استخراج کوونکی ممکن لرې شوی وي. Arroxy په پیلیدو سره yt-dlp په اتومات ډول تازه کوي — څو دقیقې وروسته بیا هڅه وکړئ کله چې اصلاح راشي.",
+			"parse": "د سایټ ځواب پارس نه شو. د yt-dlp استخراج کوونکی ممکن لرې شوی وي. Arclio په پیلیدو سره yt-dlp په اتومات ډول تازه کوي — څو دقیقې وروسته بیا هڅه وکړئ کله چې اصلاح راشي.",
 			"network": "د شبکې تېروتنه. خپله اړیکه وګورئ او بیا هڅه وکړئ.",
 			"drmProtected": "دا ویډیو د DRM لخوا خوندي دی. yt-dlp نشي کولی DRM لیرې کړي، نو فایل نشي ډاونلوډ کیدی.",
 			"loginRequired": "دا ویډیو د ننوتلي حساب ته اړتیا لري. یو cookies.txt تنظیم کړئ (تنظیمات → Cookies) او بیا هڅه وکړئ.",
@@ -520,7 +520,7 @@
 		"mp4Cap": "په YouTube کې له 1080p پورته H.264 نشته — په اتومات ډول 1080p ته محدودېږي"
 	},
 	"formatLabel": {"audioFallback": "غږ", "audioOnlyDot": "یوازې غږ · {{audio}}", "videoDot": "{{resolution}} · {{audio}}"},
-	"tray": {"tooltip": "Arroxy", "menu": {"statusIdle": "بیکار", "statusActive_one": "1 ډاونلوډیږي · {{percent}}%", "statusActive_other": "{{count}} ډاونلوډیږي · {{percent}}%", "open": "Arroxy پرانیستل", "quit": "Arroxy پریښودل"}},
+	"tray": {"tooltip": "Arclio", "menu": {"statusIdle": "بیکار", "statusActive_one": "1 ډاونلوډیږي · {{percent}}%", "statusActive_other": "{{count}} ډاونلوډیږي · {{percent}}%", "open": "Arclio پرانیستل", "quit": "Arclio پریښودل"}},
 	"dialogs": {
 		"quitWithActiveDownloads": {
 			"message_one": "{{count}} ډاونلوډ روان دی",
@@ -530,19 +530,20 @@
 			"pause": "ډاونلوډونه ودرول او وتل",
 			"keep": "ډاونلوډ دوام کړه"
 		},
-		"closeToTray": {"message": "ایا د تړولو پر وخت Arroxy سیسټم ټرې ته پټ کړو؟", "detail": "Arroxy کار کوي او فعال ډاونلوډونه بشپړوي. دا وروسته د پرمختللو تنظیماتو کې بدل کړئ.", "hide": "ټرې ته پټول", "quit": "وتل", "remember": "بیا مه پوښتئ"},
-		"rendererCrashed": {"message": "Arroxy ستونزې سره مخ شو", "detail": "د رینډرر پروسه کریش شوه ({{reason}}). بیا هڅه کولو لپاره بیا بار کړئ.", "reload": "بیا بار کړئ", "quit": "وتل"}
+		"closeToTray": {"message": "ایا د تړولو پر وخت Arclio سیسټم ټرې ته پټ کړو؟", "detail": "Arclio کار کوي او فعال ډاونلوډونه بشپړوي. دا وروسته د پرمختللو تنظیماتو کې بدل کړئ.", "hide": "ټرې ته پټول", "quit": "وتل", "remember": "بیا مه پوښتئ"},
+		"rendererCrashed": {"message": "Arclio ستونزې سره مخ شو", "detail": "د رینډرر پروسه کریش شوه ({{reason}}). بیا هڅه کولو لپاره بیا بار کړئ.", "reload": "بیا بار کړئ", "quit": "وتل"}
 	},
 	"share": {
-		"title": "Arroxy شریک کړئ",
-		"description": "Arroxy وړیا او خلاص سرچینه دی. شریکول نورو خلکو سره مرسته کوي چې ومومي.",
+		"title": "Arclio شریک کړئ",
+		"description": "Arclio وړیا او خلاص سرچینه دی. شریکول نورو خلکو سره مرسته کوي چې ومومي.",
 		"copyLink": "لینک کاپي کړئ",
 		"copied": "کاپي شو!",
-		"defaultMessage": "Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
-		"footerTooltip": "Arroxy شریک کړئ",
+		"defaultMessage": "Arclio — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
+		"footerTooltip": "Arclio شریک کړئ",
 		"footerLabel": "شریک کړئ",
-		"shareAction": "Arroxy شریک کړئ"
+		"shareAction": "Arclio شریک کړئ"
 	},
+	"search": {"placeholder": "Search…", "noResults": "No results", "media": "Media", "collection": "Collection", "tag": "Tag", "items": "items"},
 	"nav": {"home": "Home", "library": "Library", "collections": "Collections", "favorites": "Favorites", "tags": "Tags", "history": "History", "settings": "Settings"},
 	"library": {
 		"items": "items",

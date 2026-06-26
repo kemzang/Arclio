@@ -6,13 +6,13 @@ import {writeClipboard} from './fixtureWorkflow.js'
 test.describe.configure({mode: 'serial'})
 
 async function withClipboardWatchEnabled(run: () => Promise<void>): Promise<void> {
-	const previous = process.env.ARROXY_E2E_ENABLE_CLIPBOARD_WATCH
-	process.env.ARROXY_E2E_ENABLE_CLIPBOARD_WATCH = '1'
+	const previous = process.env.ARCLIO_E2E_ENABLE_CLIPBOARD_WATCH
+	process.env.ARCLIO_E2E_ENABLE_CLIPBOARD_WATCH = '1'
 	try {
 		await run()
 	} finally {
-		if (previous === undefined) delete process.env.ARROXY_E2E_ENABLE_CLIPBOARD_WATCH
-		else process.env.ARROXY_E2E_ENABLE_CLIPBOARD_WATCH = previous
+		if (previous === undefined) delete process.env.ARCLIO_E2E_ENABLE_CLIPBOARD_WATCH
+		else process.env.ARCLIO_E2E_ENABLE_CLIPBOARD_WATCH = previous
 	}
 }
 
@@ -22,8 +22,8 @@ test('Electron clipboard watcher fills single links, opens bulk links, and prese
 	await withClipboardWatchEnabled(async () => {
 		await withFixtureProductApp(
 			{
-				userDataPrefix: 'arroxy-fixture-clipboard-user-',
-				outputPrefix: 'arroxy-fixture-clipboard-out-',
+				userDataPrefix: 'arclio-fixture-clipboard-user-',
+				outputPrefix: 'arclio-fixture-clipboard-out-',
 				settings: settings => {
 					settings.common.clipboardWatchEnabled = true
 				}

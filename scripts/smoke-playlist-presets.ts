@@ -1,8 +1,8 @@
-// Real-network dry-run smoke for Arroxy playlist presets.
+// Real-network dry-run smoke for Arclio playlist presets.
 //
-// Arroxy splits playlists into per-video queue items, so this does NOT use
+// Arclio splits playlists into per-video queue items, so this does NOT use
 // yt-dlp native playlist downloads. It probes one YouTube item, caches the real
-// info JSON, then runs every UI-reachable PlaylistSelection through Arroxy's
+// info JSON, then runs every UI-reachable PlaylistSelection through Arclio's
 // mediaIntentSpec -> planWorkflow path with yt-dlp --load-info-json.
 //
 // Usage:
@@ -105,11 +105,11 @@ function findBinary(name: 'yt-dlp' | 'node', override?: string): string {
 	}
 
 	const exeName = process.platform === 'win32' ? `${name}.exe` : name
-	const userDataLinux = join(homedir(), '.config', 'arroxy')
-	const userDataMac = join(homedir(), 'Library', 'Application Support', 'Arroxy')
-	const userDataWin = process.env.APPDATA ? join(process.env.APPDATA, 'Arroxy') : ''
+	const userDataLinux = join(homedir(), '.config', 'arclio')
+	const userDataMac = join(homedir(), 'Library', 'Application Support', 'Arclio')
+	const userDataWin = process.env.APPDATA ? join(process.env.APPDATA, 'Arclio') : ''
 	const candidates = [
-		process.env[name === 'yt-dlp' ? 'YT_DLP_PATH' : 'ARROXY_SMOKE_NODE_PATH'],
+		process.env[name === 'yt-dlp' ? 'YT_DLP_PATH' : 'ARCLIO_SMOKE_NODE_PATH'],
 		join(userDataLinux, 'runtime-cache', 'binaries', exeName),
 		join(userDataMac, 'runtime-cache', 'binaries', exeName),
 		userDataWin ? join(userDataWin, 'runtime-cache', 'binaries', exeName) : null,
@@ -314,10 +314,10 @@ function describeSelection(info: SelectedInfo): string {
 
 async function main(): Promise<void> {
 	const cli = parseArgs(process.argv.slice(2))
-	const url = firstNonEmpty(cli.url, process.env.ARROXY_SMOKE_URL) ?? DEFAULT_URL
+	const url = firstNonEmpty(cli.url, process.env.ARCLIO_SMOKE_URL) ?? DEFAULT_URL
 	const ytDlpPath = findBinary('yt-dlp', cli.ytDlpPath)
 	const nodePath = findBinary('node', cli.nodePath)
-	const tempDir = await mkdtemp(join(tmpdir(), 'arroxy-playlist-smoke-'))
+	const tempDir = await mkdtemp(join(tmpdir(), 'arclio-playlist-smoke-'))
 	const infoJsonPath = join(tempDir, 'info.json')
 
 	console.log('Playlist preset smoke — real YouTube probe, yt-dlp dry-runs')

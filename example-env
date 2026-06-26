@@ -9,4 +9,4 @@ LANDING_OPENPANEL_CLIENT_SECRET=
 
 # Set to 1 to send analytics during `bun run dev`. Off by default — HMR
 # reloads would otherwise spam wizard_started / app_started.
-ARROXY_ANALYTICS_DEBUG=1
+ARCLIO_ANALYTICS_DEBUG=1

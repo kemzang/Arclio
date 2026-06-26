@@ -54,8 +54,8 @@ sudo apt install -y xvfb
 ### Clone na uendeshe
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # inapendekezwa; ruka kama umewezesha zana zilizopiniwa mwenyewe
 bun run bootstrap
 bun run doctor
@@ -70,14 +70,14 @@ bun run dist         # funga kwa OS ya sasa
 bun run dist:win     # funga malengo ya Windows kwenye host inayotumika
 \`\`\`
 
-> \`bun run bootstrap\` husakinisha utegemezi, hujenga upya utegemezi wa programu ya Electron, huthibitisha Electron, huandaa ffmpeg/ffprobe zilizopachikwa kwa maendeleo, na husakinisha Playwright Chromium. yt-dlp husimamiwa wakati wa runtime kwenye folda ya data ya programu; ffmpeg na ffprobe hujumuishwa katika kila toleo la Arroxy.
+> \`bun run bootstrap\` husakinisha utegemezi, hujenga upya utegemezi wa programu ya Electron, huthibitisha Electron, huandaa ffmpeg/ffprobe zilizopachikwa kwa maendeleo, na husakinisha Playwright Chromium. yt-dlp husimamiwa wakati wa runtime kwenye folda ya data ya programu; ffmpeg na ffprobe hujumuishwa katika kila toleo la Arclio.
 
 </details>`;
 
 export const sw = {
-  icon_alt: "Nembo ya Arroxy",
+  icon_alt: "Nembo ya Arclio",
   title:
-    "Arroxy — Kipakuzi Bure cha Chanzo Wazi cha YouTube (+ Tovuti 2000) kwa Windows, macOS na Linux",
+    "Arclio — Kipakuzi Bure cha Chanzo Wazi cha YouTube (+ Tovuti 2000) kwa Windows, macOS na Linux",
   read_in_label: "Soma kwa:",
   badge_release_alt: "Toleo",
   badge_build_alt: "Ujenzi",
@@ -91,11 +91,11 @@ export const sw = {
     "Pakua video, Shorts, muziki, vituo, podikasti, au nyimbo za sauti kutoka **YouTube na tovuti 2000+ zinazotumika** — hadi 4K HDR kwa fps 60, au kama MP3 / AAC / Opus. Inafanya kazi mahali hapo kwenye Windows, macOS, na Linux. **Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada.**",
   cta_latest: "↓ Pakua Toleo la Hivi Karibuni",
   cta_website: "Tovuti",
-  demo_alt: "Demo ya Arroxy",
-  star_cta: "Ikiwa Arroxy inakuokoa muda, ⭐ inasaidia wengine kuipata.",
+  demo_alt: "Demo ya Arclio",
+  star_cta: "Ikiwa Arclio inakuokoa muda, ⭐ inasaidia wengine kuipata.",
   ai_notice: "",
   toc_heading: "Yaliyomo",
-  why_h2: "Kwa Nini Arroxy",
+  why_h2: "Kwa Nini Arclio",
   features_h2: "Vipengele",
   dl_h2: "Pakua",
   privacy_h2: "Faragha",
@@ -111,7 +111,7 @@ export const sw = {
   why_r6: "Programu ya mezani inayofanya kazi kwenye mifumo yote",
   why_r7: "Manukuu + SponsorBlock",
   why_summary:
-    "Arroxy imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Hakuna akaunti, hakuna mauzo ya ziada, hakuna ukusanyaji wa data.",
+    "Arclio imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Hakuna akaunti, hakuna mauzo ya ziada, hakuna ukusanyaji wa data.",
   feat_quality_h3: "Ubora na fomati",
   feat_quality_1: "Hadi **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2:
@@ -131,7 +131,7 @@ export const sw = {
   feat_workflow_2:
     "**Foleni kuu ya upakuaji** — kazi ya single, playlist, bulk, au quick yote huingia sehemu moja kwa maendeleo, kusitisha, kuendelea, kughairi, kujaribu tena, na udhibiti wa kipaumbele",
   feat_workflow_3:
-    "**Ufuatiliaji wa ubao wa kunakili** — nakili kiungo cha YouTube na Arroxy itajaza URL kiotomatiki ukirejesha umakini kwenye programu (washa/zima katika mipangilio ya Kina)",
+    "**Ufuatiliaji wa ubao wa kunakili** — nakili kiungo cha YouTube na Arclio itajaza URL kiotomatiki ukirejesha umakini kwenye programu (washa/zima katika mipangilio ya Kina)",
   feat_workflow_4:
     "**Usafi wa URL kiotomatiki** — huondoa vigezo vya ufuatiliaji (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) na kufungua viungo vya `youtube.com/redirect`",
   feat_workflow_5:
@@ -159,7 +159,7 @@ export const sw = {
   feat_sites_3:
     "**Sauti pekee na manukuu** yanafanya kazi kwenye kila tovuti inayoungwa mkono, si YouTube peke yake",
   feat_sites_4:
-    "Tovuti ikibadilika, yt-dlp hutoa marekebisho kila wiki na Arroxy husasisha binary kiotomatiki wakati wa uzinduzi",
+    "Tovuti ikibadilika, yt-dlp hutoa marekebisho kila wiki na Arclio husasisha binary kiotomatiki wakati wa uzinduzi",
   shot1_cap:
     "<b>Ukurasa wa Upakuaji wa haraka</b><br/>Bandika URL na uipakue papo hapo kwa wasifu wako amilifu",
   shot2_cap:
@@ -200,26 +200,26 @@ export const sw = {
     "**Pendekezo:** tumia kisanidi cha NSIS kwa masasisho ya kiotomatiki na uzinduzi wa haraka. Tumia `.exe` inayobebeka kwa chaguo lisilo na usanidi na bila usajili.",
   dl_win_smartscreen_h4: "Onyo la Windows SmartScreen",
   dl_win_smartscreen_intro:
-    'Wakati wa uzinduzi wa kwanza unaweza kuona **"Windows protected your PC"** au **"Unknown publisher."** Hii inatumika kwa `Arroxy-win-x64-Setup.exe` na `Arroxy-win-x64-Portable.exe`. Arroxy ni bure na chanzo wazi, na ujenzi wa Windows haujasainiwa kwa cheti cha malipo, ndiyo maana SmartScreen huipiga bendera. Hii **haimaanishi** kiotomatiki kwamba Arroxy si salama. Ili kuendelea:',
+    'Wakati wa uzinduzi wa kwanza unaweza kuona **"Windows protected your PC"** au **"Unknown publisher."** Hii inatumika kwa `Arclio-win-x64-Setup.exe` na `Arclio-win-x64-Portable.exe`. Arclio ni bure na chanzo wazi, na ujenzi wa Windows haujasainiwa kwa cheti cha malipo, ndiyo maana SmartScreen huipiga bendera. Hii **haimaanishi** kiotomatiki kwamba Arclio si salama. Ili kuendelea:',
   dl_win_smartscreen_step1: "Bonyeza **More info**.",
   dl_win_smartscreen_step2: "Bonyeza **Run anyway**.",
   dl_win_smartscreen_official:
-    "Pakua Arroxy tu kutoka ukurasa rasmi wa GitHub Releases. Ukipata faili kutoka tovuti nyingine au mtu akikutumia, ifute na upakue nakala mpya kutoka chanzo rasmi. Msimbo wa chanzo ni wa umma, hivyo unaweza kuukagua au kuijenga Arroxy mwenyewe ukitaka.",
+    "Pakua Arclio tu kutoka ukurasa rasmi wa GitHub Releases. Ukipata faili kutoka tovuti nyingine au mtu akikutumia, ifute na upakue nakala mpya kutoka chanzo rasmi. Msimbo wa chanzo ni wa umma, hivyo unaweza kuukagua au kuijenga Arclio mwenyewe ukitaka.",
   dl_macos_h3: "Uzinduzi wa kwanza kwenye macOS",
   dl_macos_warning:
-    "Arroxy bado haijakaguliwa kwa msimbo, kwa hivyo macOS Gatekeeper itakuonya wakati wa uzinduzi wa kwanza. Hii inatarajiwa — si ishara ya uharibifu.",
+    "Arclio bado haijakaguliwa kwa msimbo, kwa hivyo macOS Gatekeeper itakuonya wakati wa uzinduzi wa kwanza. Hii inatarajiwa — si ishara ya uharibifu.",
   dl_macos_m1_h4: "Njia ya Mipangilio ya Mfumo (inayopendekezwa):",
   dl_macos_step1:
-    "Bonyeza kulia ikoni ya programu ya Arroxy na uchague **Open**.",
+    "Bonyeza kulia ikoni ya programu ya Arclio na uchague **Open**.",
   dl_macos_step2:
     "Sanduku la onyo linaonekana — bonyeza **Cancel** (usibonyeze *Move to Trash*).",
   dl_macos_step3: "Fungua **System Settings → Privacy & Security**.",
   dl_macos_step4:
-    'Tembeza hadi sehemu ya **Security**. Utaona *"Arroxy ilizuiwa kutumika kwa sababu haitoki kwa msanidi aliyetambuliwa."*',
+    'Tembeza hadi sehemu ya **Security**. Utaona *"Arclio ilizuiwa kutumika kwa sababu haitoki kwa msanidi aliyetambuliwa."*',
   dl_macos_step5:
     "Bonyeza **Open Anyway** na uthibitisha kwa nenosiri lako au Touch ID.",
   dl_macos_after:
-    "Baada ya hatua ya 5, Arroxy inafunguka kawaida na onyo halionekani tena.",
+    "Baada ya hatua ya 5, Arclio inafunguka kawaida na onyo halionekani tena.",
   dl_macos_m2_h4: "Njia ya Terminal (ya juu):",
   dl_macos_note:
     "Ujenzi wa macOS hufanywa kupitia CI kwenye vichakataji vya Apple Silicon na Intel. Ukipata matatizo, tafadhali [fungua tatizo](../../issues) — maoni kutoka kwa watumiaji wa macOS yanaathiri kikamilifu mzunguko wa majaribio ya macOS.",
@@ -231,14 +231,14 @@ export const sw = {
   dl_linux_m2_h4: "Terminal:",
   dl_linux_fuse_text: "Ikiwa uzinduzi bado unashindwa, huenda FUSE haipo:",
   dl_linux_flatpak_intro:
-    "**Flatpak (mbadala wenye sanduku):** pakua `Arroxy-*.flatpak` kutoka ukurasa huo huo wa toleo.",
+    "**Flatpak (mbadala wenye sanduku):** pakua `Arclio-*.flatpak` kutoka ukurasa huo huo wa toleo.",
 
   // ---- Reorganized install help (normie-first, manual-download primary) ----
   dl_warning_h3: "Kwa nini unaweza kuona onyo",
   dl_warning_p1:
-    "Arroxy ni chanzo wazi na ina leseni ya MIT. Ujenzi wa Windows na macOS **haujasainiwa kwa nambari** — cheti cha Apple Developer ID na Windows EV cha kutia saini msimbo huchangia mamia ya dola kwa mwaka, ambayo mradi wa kujitegemea hulipa mfukoni mwake. Bila saini hizo, Windows SmartScreen na macOS Gatekeeper watakuonya wakati wa uzinduzi wa kwanza. Maonyo hayo yanamaanisha *mfumo wako wa uendeshaji haukuitambua kampuni inayotoa programu* — hayamaanishi kwamba Arroxy ni programu hasidi.",
+    "Arclio ni chanzo wazi na ina leseni ya MIT. Ujenzi wa Windows na macOS **haujasainiwa kwa nambari** — cheti cha Apple Developer ID na Windows EV cha kutia saini msimbo huchangia mamia ya dola kwa mwaka, ambayo mradi wa kujitegemea hulipa mfukoni mwake. Bila saini hizo, Windows SmartScreen na macOS Gatekeeper watakuonya wakati wa uzinduzi wa kwanza. Maonyo hayo yanamaanisha *mfumo wako wa uendeshaji haukuitambua kampuni inayotoa programu* — hayamaanishi kwamba Arclio ni programu hasidi.",
   dl_warning_p2:
-    "Njia tatu za kuthibitisha Arroxy mwenyewe, kwa uthabiti unaozidi:\n\n- **Soma msimbo wa chanzo.** Kila mstari uko kwenye [GitHub](https://github.com/antonio-orionus/Arroxy) na unaweza [kuijenga kutoka chanzo](#tech).\n- **Angalia SHA256.** Linganisha faili yako na [`SHA256SUMS`](../../releases/latest) iliyochapishwa — tazama [Thibitisha upakuaji wako](#verify) hapa chini.\n- **Fanya ukaguzi wa tatu.** Pakia faili kwenye [VirusTotal](https://www.virustotal.com).",
+    "Njia tatu za kuthibitisha Arclio mwenyewe, kwa uthabiti unaozidi:\n\n- **Soma msimbo wa chanzo.** Kila mstari uko kwenye [GitHub](https://github.com/antonio-orionus/Arclio) na unaweza [kuijenga kutoka chanzo](#tech).\n- **Angalia SHA256.** Linganisha faili yako na [`SHA256SUMS`](../../releases/latest) iliyochapishwa — tazama [Thibitisha upakuaji wako](#verify) hapa chini.\n- **Fanya ukaguzi wa tatu.** Pakia faili kwenye [VirusTotal](https://www.virustotal.com).",
 
   dl_win_first_h3: "Uzinduzi wa kwanza wa Windows",
   shot_smartscreen_more_alt:
@@ -247,33 +247,33 @@ export const sw = {
     'SmartScreen dialog after expanding More info, showing the "Run anyway" button',
   dl_win_defender_h4: "Ikiwa Windows Defender inaweka bendera au kuondoa faili",
   dl_win_defender_p:
-    "Heuristics za Defender wakati mwingine huweka bendera kwenye visanidi visivyosainiwa vya NSIS na portable za Electron kama zinazoshukiwa. Ikiwa Defender inaweka karantini `Arroxy-win-x64-Setup.exe` au `Arroxy-win-x64-Portable.exe`, irudishe kutoka **Windows Security → Virus & threat protection → Protection history**, kisha ongeza faili inayoweza kutekelezwa ya Arroxy kama kipengele kinachoruhusiwa chini ya **Manage settings → Add or remove exclusions**. Kama ilivyo na SmartScreen, kisababishi ni saini ya mchapishaji inayokosekana, si programu hasidi iliyogunduliwa.",
+    "Heuristics za Defender wakati mwingine huweka bendera kwenye visanidi visivyosainiwa vya NSIS na portable za Electron kama zinazoshukiwa. Ikiwa Defender inaweka karantini `Arclio-win-x64-Setup.exe` au `Arclio-win-x64-Portable.exe`, irudishe kutoka **Windows Security → Virus & threat protection → Protection history**, kisha ongeza faili inayoweza kutekelezwa ya Arclio kama kipengele kinachoruhusiwa chini ya **Manage settings → Add or remove exclusions**. Kama ilivyo na SmartScreen, kisababishi ni saini ya mchapishaji inayokosekana, si programu hasidi iliyogunduliwa.",
 
   dl_macos_first_h3: "Uzinduzi wa kwanza wa macOS",
   dl_macos_intro:
-    "Arroxy bado haijasainiwa kwa nambari kwa macOS, kwa hivyo Gatekeeper itazuia uzinduzi wa kwanza. Njia halisi ya kuiruhusu inategemea toleo lako la macOS — Sequoia 15 ilifunga njia ya zamani ya kukwepa kwa kubonyeza kulia → Open.",
+    "Arclio bado haijasainiwa kwa nambari kwa macOS, kwa hivyo Gatekeeper itazuia uzinduzi wa kwanza. Njia halisi ya kuiruhusu inategemea toleo lako la macOS — Sequoia 15 ilifunga njia ya zamani ya kukwepa kwa kubonyeza kulia → Open.",
   dl_macos_sequoia_h4: "macOS Sequoia 15 na baadaye (ya sasa)",
   dl_macos_sequoia_intro:
     "Kwenye Sequoia 15 na toleo jipya zaidi, kubonyeza kulia → Open haizuii tena Gatekeeper kwa programu nyingi zilizowekwa karantini. Tumia paneli ya Mipangilio ya Mfumo badala yake:",
   dl_macos_sequoia_step1:
-    "Buruta `Arroxy.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.",
+    "Buruta `Arclio.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.",
   dl_macos_sequoia_step2:
-    "Bonyeza mara mbili Arroxy. Sanduku la mazungumzo la kuzuia linaonekana — bonyeza **Done** (usibonyeze *Move to Trash*).",
+    "Bonyeza mara mbili Arclio. Sanduku la mazungumzo la kuzuia linaonekana — bonyeza **Done** (usibonyeze *Move to Trash*).",
   dl_macos_sequoia_step3:
-    'Fungua **System Settings → Privacy & Security** na tembeza hadi sehemu ya **Security**. Utaona *"Arroxy was blocked to protect your Mac"* (au ujumbe unaofanana sana).',
+    'Fungua **System Settings → Privacy & Security** na tembeza hadi sehemu ya **Security**. Utaona *"Arclio was blocked to protect your Mac"* (au ujumbe unaofanana sana).',
   dl_macos_sequoia_step4:
-    "Bonyeza **Open Anyway**, thibitisha kwa nenosiri lako au Touch ID, kisha uzindue tena Arroxy kutoka `/Applications`.",
+    "Bonyeza **Open Anyway**, thibitisha kwa nenosiri lako au Touch ID, kisha uzindue tena Arclio kutoka `/Applications`.",
   dl_macos_sonoma_h4: "macOS Sonoma 14 na mapema zaidi",
   dl_macos_sonoma_step1:
-    "Buruta `Arroxy.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.",
+    "Buruta `Arclio.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.",
   dl_macos_sonoma_step2:
-    "Bonyeza kulia (au Control-bonyeza) `Arroxy.app` katika `/Applications` na uchague **Open**.",
+    "Bonyeza kulia (au Control-bonyeza) `Arclio.app` katika `/Applications` na uchague **Open**.",
   dl_macos_sonoma_step3:
-    "Sanduku la onyo sasa lina kitufe cha **Open** — bonyeza na uthibitishe. Arroxy inafunguka kawaida na onyo halitatokea tena.",
+    "Sanduku la onyo sasa lina kitufe cha **Open** — bonyeza na uthibitishe. Arclio inafunguka kawaida na onyo halitatokea tena.",
   dl_macos_damaged_h4:
     '"App is damaged" au kizuizi cha Gatekeeper kinachoendelea — suluhisho la Terminal',
   dl_macos_damaged_p:
-    'Ikiwa macOS inasema *"Arroxy is damaged and can\'t be opened"*, au hakuna hatua zilizo hapo juu zinazoondoa kizuizi, sifa ya karantini kwenye DMG ndiyo sababu (vivinjari vingine na tabia ya translocation ya macOS yenyewe huiweka). Iondoe kutoka kwa programu iliyosanikishwa:',
+    'Ikiwa macOS inasema *"Arclio is damaged and can\'t be opened"*, au hakuna hatua zilizo hapo juu zinazoondoa kizuizi, sifa ya karantini kwenye DMG ndiyo sababu (vivinjari vingine na tabia ya translocation ya macOS yenyewe huiweka). Iondoe kutoka kwa programu iliyosanikishwa:',
   dl_macos_arch_note:
     "**Apple Silicon vs Intel:** kwenye Mac ya mfululizo wa M (M1 / M2 / M3 / M4), pakua DMG ya `arm64`. Kwenye Mac za Intel, pakua DMG ya `x64`. Kuendesha build isiyo sahihi bado kunafanya kazi kupitia Rosetta lakini ni polepole zaidi kwa kiasi kinachoonekana.",
 
@@ -296,7 +296,7 @@ export const sw = {
   privacy_p1:
     "Maudhui hupakuliwa moja kwa moja kupitia [yt-dlp](https://github.com/yt-dlp/yt-dlp) kutoka YouTube hadi kwenye folda unayochagua — hakuna kitu kinachopita kwenye seva ya mtu wa tatu. Historia ya kutazama, historia ya kupakua, URL, na maudhui ya faili yanabaki kwenye kifaa chako.",
   privacy_p2:
-    "Arroxy hutuma telemetry isiyo na jina na ya jumla kupitia [OpenPanel](https://openpanel.dev) — ya kutosha kuelewa uzinduzi, OS, matoleo ya programu na ajali. Hakuna URLs, vichwa vya video, njia za faili, taarifa za akaunti, fingerprinting au data binafsi. Kitambulisho cha kila usakinishaji ni cha nasibu na hakihusiani na utambulisho wako. Unaweza kujiondoa katika Mipangilio.",
+    "Arclio hutuma telemetry isiyo na jina na ya jumla kupitia [OpenPanel](https://openpanel.dev) — ya kutosha kuelewa uzinduzi, OS, matoleo ya programu na ajali. Hakuna URLs, vichwa vya video, njia za faili, taarifa za akaunti, fingerprinting au data binafsi. Kitambulisho cha kila usakinishaji ni cha nasibu na hakihusiani na utambulisho wako. Unaweza kujiondoa katika Mipangilio.",
   faq_q1: "Je, ni bure kweli kweli?",
   faq_a1:
     "Ndiyo — leseni ya MIT, hakuna ngazi ya malipo, hakuna kizuizi cha vipengele.",
@@ -308,13 +308,13 @@ export const sw = {
     "Ndiyo. Chagua *sauti pekee* kwenye menyu ya fomati kisha uchague MP3, M4A/AAC, Opus au WAV.",
   faq_q4: "Je, ninahitaji akaunti ya YouTube au vidakuzi?",
   faq_a4:
-    "Kwa chaguomsingi, hapana — Arroxy hufanya kazi bila akaunti ya YouTube, kuingia, au kuhamisha vidakuzi. Usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina (Chanzo cha vidakuzi: faili au kivinjari) kwa maudhui yanayohitaji uthibitisho, kama vile video zenye vikwazo vya umri au za wanachama tu. Umezimwa kwa chaguomsingi. Ukiwasha, wiki ya yt-dlp inaeleza kwamba [otomatiki inayotegemea vidakuzi inaweza kuweka alama kwenye akaunti yako ya Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); akaunti ya kutupa ni chaguo salama zaidi katika hali hiyo.",
+    "Kwa chaguomsingi, hapana — Arclio hufanya kazi bila akaunti ya YouTube, kuingia, au kuhamisha vidakuzi. Usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina (Chanzo cha vidakuzi: faili au kivinjari) kwa maudhui yanayohitaji uthibitisho, kama vile video zenye vikwazo vya umri au za wanachama tu. Umezimwa kwa chaguomsingi. Ukiwasha, wiki ya yt-dlp inaeleza kwamba [otomatiki inayotegemea vidakuzi inaweza kuweka alama kwenye akaunti yako ya Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); akaunti ya kutupa ni chaguo salama zaidi katika hali hiyo.",
   faq_q5: "Je, itaendelea kufanya kazi YouTube ikibadilisha kitu?",
   faq_a5:
-    "yt-dlp husasishwa kiotomatiki wakati wa uzinduzi, na Arroxy hutuma marekebisho haraka YouTube inapobadilisha kitu. Iwapo utakutana na tatizo, usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina kama suluhisho la akiba.",
-  faq_q6: "Arroxy inapatikana katika lugha zipi?",
+    "yt-dlp husasishwa kiotomatiki wakati wa uzinduzi, na Arclio hutuma marekebisho haraka YouTube inapobadilisha kitu. Iwapo utakutana na tatizo, usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina kama suluhisho la akiba.",
+  faq_q6: "Arclio inapatikana katika lugha zipi?",
   faq_a6:
-    "Ishirini na moja, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kijerumani), Français (Kifaransa), 日本語 (Kijapani), 中文 (Kichina), Русский (Kirusi), Українська (Kiukraini), हिन्दी (Kihindi), Afaan Oromoo, Kiswahili, O'zbekcha (Kiuzbeki), Tiếng Việt (Kivietinamu), አማርኛ (Kiamhara), العربية (Kiarabu), اردو (Kiurdu), پښتو (Kipashto), বাংলা (Kibengali), မြန်မာဘာသာ (Kiburma), Ελληνικά (Kigiriki), na Српски (Kiserbia). Arroxy hugundua lugha ya mfumo wako wa uendeshaji wakati wa uzinduzi wa kwanza na unaweza kubadili wakati wowote kutoka kichaguo cha lugha kwenye upau wa zana. JSON za locale za runtime ziko src/shared/i18n/locales/, na katalogi za PO kwa watafsiri ziko i18n/locales/ — fungua PR kwenye GitHub kuchangia.",
+    "Ishirini na moja, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kijerumani), Français (Kifaransa), 日本語 (Kijapani), 中文 (Kichina), Русский (Kirusi), Українська (Kiukraini), हिन्दी (Kihindi), Afaan Oromoo, Kiswahili, O'zbekcha (Kiuzbeki), Tiếng Việt (Kivietinamu), አማርኛ (Kiamhara), العربية (Kiarabu), اردو (Kiurdu), پښتو (Kipashto), বাংলা (Kibengali), မြန်မာဘာသာ (Kiburma), Ελληνικά (Kigiriki), na Српски (Kiserbia). Arclio hugundua lugha ya mfumo wako wa uendeshaji wakati wa uzinduzi wa kwanza na unaweza kubadili wakati wowote kutoka kichaguo cha lugha kwenye upau wa zana. JSON za locale za runtime ziko src/shared/i18n/locales/, na katalogi za PO kwa watafsiri ziko i18n/locales/ — fungua PR kwenye GitHub kuchangia.",
   faq_q7: "Je, ninahitaji kusakinisha kitu kingine chochote?",
   faq_a7:
     "Hapana. yt-dlp hupakuliwa kiotomatiki wakati wa uzinduzi wa kwanza na kuhifadhiwa kwenye kifaa chako; ffmpeg na ffprobe huja pamoja na programu. Baada ya hapo, hakuna usanidi wa ziada unaohitajika.",
@@ -338,7 +338,7 @@ export const sw = {
     "Weka upendeleo wa track ya lugha ya mazungumzo kwa app nzima, na override kwa kila profile YouTube inapotoa track nyingi za sauti",
   plan_r6_name: "**Kuingia kwa browser ndani ya app**",
   plan_r6_desc:
-    "Fungua browser windows ndani ya Arroxy ili uingie na kutumia site cookies bila kuziexport mwenyewe",
+    "Fungua browser windows ndani ya Arclio ili uingie na kutumia site cookies bila kuziexport mwenyewe",
   plan_r8_name: "**Upakuaji wa video kwa click moja**",
   plan_r8_desc:
     "Anzisha video download kwa click moja kutoka URL iliyotambuliwa au kubandikwa ukitumia active profile",
@@ -357,7 +357,7 @@ export const sw = {
   tech_content: TECH_CONTENT,
   tos_h2: "Masharti ya matumizi",
   tos_note:
-    "Arroxy ni zana ya matumizi ya kibinafsi na ya faragha tu. Unawajibika peke yako kuhakikisha maudhui unayopakua yanafuata [Masharti ya Huduma](https://www.youtube.com/t/terms) ya YouTube na sheria za haki miliki za mamlaka yako. Usitumie Arroxy kupakua, kunakili, au kusambaza maudhui ambayo huna haki ya kuyatumia. Waendelezaji hawana jukumu lolote kwa matumizi mabaya.",
+    "Arclio ni zana ya matumizi ya kibinafsi na ya faragha tu. Unawajibika peke yako kuhakikisha maudhui unayopakua yanafuata [Masharti ya Huduma](https://www.youtube.com/t/terms) ya YouTube na sheria za haki miliki za mamlaka yako. Usitumie Arclio kupakua, kunakili, au kusambaza maudhui ambayo huna haki ya kuyatumia. Waendelezaji hawana jukumu lolote kwa matumizi mabaya.",
   footer_credit:
     'Leseni ya MIT · Imetengenezwa kwa uangalifu na <a href="https://x.com/OrionusAI">@OrionusAI</a>',
 };

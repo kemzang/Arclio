@@ -1,6 +1,6 @@
 # Tooling Contract
 
-Arroxy uses one root-owned monorepo tooling contract. Package-local configuration is allowed only when a package needs its own build, test, or registry publish surface.
+Arclio uses one root-owned monorepo tooling contract. Package-local configuration is allowed only when a package needs its own build, test, or registry publish surface.
 
 ## Authorities
 

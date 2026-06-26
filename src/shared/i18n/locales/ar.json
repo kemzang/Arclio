@@ -1,7 +1,7 @@
 {
 	"common": {"back": "رجوع", "cancel": "إلغاء", "continue": "متابعة", "retry": "إعادة المحاولة", "startOver": "البدء من جديد"},
-	"app": {"feedback": "ملاحظات", "logs": "السجلات", "feedbackNudge": "هل تستمتع بـ Arroxy؟ يسعدني سماع رأيك! 💬", "zoomIn": "تكبير", "zoomOut": "تصغير"},
-	"about": {"button": "حول", "openTitle": "حول Arroxy", "tagline": "محمّل سريع وسهل الاستخدام لـ YouTube وأكثر من 2000 موقع آخر.", "websiteLink": "موقع الويب", "githubLink": "GitHub", "licenseLine": "ترخيص MIT · بواسطة Antonio Orionus", "thirdPartyNotices": "عرض إشعارات الطرف الثالث"},
+	"app": {"feedback": "ملاحظات", "logs": "السجلات", "feedbackNudge": "هل تستمتع بـ Arclio؟ يسعدني سماع رأيك! 💬", "zoomIn": "تكبير", "zoomOut": "تصغير"},
+	"about": {"button": "حول", "openTitle": "حول Arclio", "tagline": "محمّل سريع وسهل الاستخدام لـ YouTube وأكثر من 2000 موقع آخر.", "websiteLink": "موقع الويب", "githubLink": "GitHub", "licenseLine": "ترخيص MIT · بواسطة Antonio Orionus", "thirdPartyNotices": "عرض إشعارات الطرف الثالث"},
 	"titleBar": {"close": "إغلاق", "minimize": "تصغير", "maximize": "تكبير", "restore": "استعادة"},
 	"splash": {"greeting": "مرحباً، أهلاً بعودتك!", "warmup": "جارٍ تحضير التنزيلات…", "downloading": "جارٍ تنزيل {{binary}}…", "warmupFailedNoDiag": "فشل الإعداد. افتح سجل الإعداد للاطلاع على التفاصيل."},
 	"repair": {
@@ -77,11 +77,11 @@
 			"alreadyDownloaded": "تم تنزيله بالفعل",
 			"probeLimitAlertTitle": "فحص قائمة التشغيل محدود",
 			"probeLimitAlertTitleGeneric": "الفحص محدود",
-			"probeLimitAlertDesc": "عثر Arroxy على أكثر من {{count}} عنصر، لذا يُخفي حد الفحص الحالي بقية العناصر."
+			"probeLimitAlertDesc": "عثر Arclio على أكثر من {{count}} عنصر، لذا يُخفي حد الفحص الحالي بقية العناصر."
 		},
 		"bulk": {
 			"title": "روابط متعددة",
-			"description": "الصق روابط فيديو أو قائمة تشغيل أو قناة أو بحث أو صوت. سيزيل Arroxy التكرارات قبل إضافتها إلى الطابور.",
+			"description": "الصق روابط فيديو أو قائمة تشغيل أو قناة أو بحث أو صوت. سيزيل Arclio التكرارات قبل إضافتها إلى الطابور.",
 			"textareaLabel": "قائمة الروابط",
 			"textareaPlaceholder": "https://video.example/one\nhttps://video.example/two\nhttps://video.example/three",
 			"acceptedCount": "جاهزة",
@@ -99,11 +99,11 @@
 			"pickFromPlaylist": "اختر من الـ Playlist",
 			"quickWholePlaylist": "نزّل قائمة التشغيل كاملة",
 			"playlistLimit": "حد فحص قائمة التشغيل: {{count}} عنصرًا",
-			"quickLimitDescription": "الحد الأقصى للعناصر التي يفحصها Arroxy قبل إضافة قائمة تشغيل أو قناة أو نتيجة بحث إلى قائمة الانتظار.",
+			"quickLimitDescription": "الحد الأقصى للعناصر التي يفحصها Arclio قبل إضافة قائمة تشغيل أو قناة أو نتيجة بحث إلى قائمة الانتظار.",
 			"singleTooltip": "يستخدم وضع الفيديو المفرد في yt-dlp بحيث يتم تجاهل قائمة التشغيل المرتبطة بهذا الرابط.",
 			"quickSingleTooltip": "يضيف تنزيلًا واحدًا إلى قائمة الانتظار ويتجاهل قائمة التشغيل المرفقة بعنوان URL هذا.",
 			"playlistTooltip": "يستخدم وضع قائمة التشغيل في yt-dlp ويجلب العناصر حتى حد الفحص قبل عرض أداة الاختيار.",
-			"quickPlaylistTooltip": "يضيف كل عنصر تم تحميله من قائمة التشغيل إلى قائمة الانتظار باستخدام ملف التنزيل السريع النشط. إذا وصل الفحص إلى حدك، فسيسألك Arroxy قبل الإضافة إلى قائمة الانتظار."
+			"quickPlaylistTooltip": "يضيف كل عنصر تم تحميله من قائمة التشغيل إلى قائمة الانتظار باستخدام ملف التنزيل السريع النشط. إذا وصل الفحص إلى حدك، فسيسألك Arclio قبل الإضافة إلى قائمة الانتظار."
 		},
 		"url": {
 			"heading": "تنزيل من رابط",
@@ -145,12 +145,12 @@
 			"bulkButton": "روابط متعددة",
 			"bulkTooltip": "أضف روابط متعددة وضعها في قائمة الانتظار.",
 			"features": {
-				"heading": "ما الذي يستطيع Arroxy سحبه",
+				"heading": "ما الذي يستطيع Arclio سحبه",
 				"youtube": {"heading": "YouTube", "video": "مقاطع فيديو", "channel": "القنوات", "playlist": "قوائم التشغيل", "short": "Shorts", "music": "الموسيقى", "podcast": "البودكاست"},
 				"anySite": {"heading": "2000+ موقع", "video": "مقاطع فيديو", "videoPlaylist": "قوائم تشغيل الفيديو", "musicPlaylist": "قوائم تشغيل الموسيقى"},
 				"always": {"audioOnly": "الصوت فقط", "subtitles": "الترجمات"}
 			},
-			"mascotIdle": "أرسل رابطًا ودع Arroxy يسحبه ✨",
+			"mascotIdle": "أرسل رابطًا ودع Arclio يسحبه ✨",
 			"mascotBusy": "جارٍ التنزيل في الخلفية… أستطيع تعدد المهام 😎",
 			"advanced": "متقدم",
 			"clearAria": "مسح الرابط",
@@ -193,14 +193,14 @@
 			"proxy": {"label": "Proxy URL", "description": "توجيه حركة البيانات عبر وكيل — مفيد للمحتوى المقيّد جغرافياً.", "placeholder": "http://host:port", "clear": "مسح"},
 			"backdrop": {
 				"panelTitle": "المظهر والأداء",
-				"panelDescription": "اختر مقدار الحركة التي يستخدمها Arroxy للخلفية المتحركة.",
+				"panelDescription": "اختر مقدار الحركة التي يستخدمها Arclio للخلفية المتحركة.",
 				"modeLabel": "جودة الخلفية",
 				"modeDescription": "انتقل من المظهر الأكثر حركة إلى أفضل أداء.",
 				"cssOnlyLabel": "أفضل أداء",
 				"cssOnlyDescription": "CSS فقط، بلا عرض canvas.",
 				"gpuLabel": "الأجمل",
 				"gpuDescription": "خلفية WebGL متحركة عند توفر الدعم.",
-				"runtimeFallbackNotice": "لا يتوفر WebGL عبر العتاد على هذا الجهاز، لذلك يستخدم Arroxy خلفية الأداء."
+				"runtimeFallbackNotice": "لا يتوفر WebGL عبر العتاد على هذا الجهاز، لذلك يستخدم Arclio خلفية الأداء."
 			},
 			"limitRate": {
 				"label": "حد سرعة التنزيل",
@@ -213,7 +213,7 @@
 			},
 			"playlistProbeLimit": {
 				"label": "عدد عناصر القائمة للفحص",
-				"description": "الحد الأقصى للإدخالات التي يحمّلها Arroxy عند فتح قائمة تشغيل أو قناة أو نتيجة بحث.",
+				"description": "الحد الأقصى للإدخالات التي يحمّلها Arclio عند فتح قائمة تشغيل أو قناة أو نتيجة بحث.",
 				"option": "{{count}} عناصر",
 				"current": "الحد الحالي: {{count}} عناصر",
 				"customValue": "مخصص: {{count}} عناصر",
@@ -223,19 +223,19 @@
 				"customDialogCancel": "إلغاء",
 				"customDialogSave": "حفظ الحد",
 				"invalid": "استخدم عدداً صحيحاً من 1 إلى 5000",
-				"tooltip": "يُعيَّن إلى yt-dlp --playlist-end: يطلب Arroxy هذا العدد فقط من إدخالات القائمة أو القناة أو البحث عند بناء أداة الاختيار."
+				"tooltip": "يُعيَّن إلى yt-dlp --playlist-end: يطلب Arclio هذا العدد فقط من إدخالات القائمة أو القناة أو البحث عند بناء أداة الاختيار."
 			},
 			"nativeAudioPreference": {"label": "تفضيل الصوت الأصلي", "description": "يتحكم فيما يختاره «أفضل أصلي». تبقى صفوف الصوت اليدوية وM4A/AAC اختيارات صريحة.", "compatible": "ستيريو متوافق", "surround": "تفضيل المحيطي / Dolby"},
 			"singleFilenameId": {"toggle": "إضافة معرّف الفيديو إلى أسماء الملفات الفردية", "toggleDescription": "يبقي التنزيلات الفردية فريدة عندما تتغير العناوين أو تتكرر."},
 			"networkPacing": {
 				"heading": "تنزيلات هادئة",
-				"description": "يضيف توقفات صغيرة أثناء كل تنزيل حتى لا يضغط Arroxy على الموقع بشكل مفرط. القيم بالثواني ما لم يُذكر غير ذلك.",
-				"presetLabel": "ما مدى حذر Arroxy؟",
-				"tooltip": "تحدث هذه التوقفات داخل كل تنزيل. لا يزال Arroxy يُبقي التنزيلات المتراصة في طابور واحدة تلو الأخرى.",
+				"description": "يضيف توقفات صغيرة أثناء كل تنزيل حتى لا يضغط Arclio على الموقع بشكل مفرط. القيم بالثواني ما لم يُذكر غير ذلك.",
+				"presetLabel": "ما مدى حذر Arclio؟",
+				"tooltip": "تحدث هذه التوقفات داخل كل تنزيل. لا يزال Arclio يُبقي التنزيلات المتراصة في طابور واحدة تلو الأخرى.",
 				"summary": "انتظار: {{requests}} بين الفحوصات، {{downloads}} قبل بدء الوسائط، {{subtitles}} قبل ملفات الترجمة. الاتصالات: {{fragments}}.",
 				"presets": {"off": "إيقاف", "balanced": "متوازن", "careful": "حذر", "custom": "مخصص"},
 				"tooltips": {
-					"off": "يستخدم فقط التوقفات الأساسية الصغيرة التي يحتفظ بها Arroxy للوسائط والترجمات.",
+					"off": "يستخدم فقط التوقفات الأساسية الصغيرة التي يحتفظ بها Arclio للوسائط والترجمات.",
 					"balanced": "الافتراضي. يضيف توقفات قصيرة ويستخدم اتصال تنزيل واحد.",
 					"careful": "يضيف توقفات أطول لقوائم التشغيل الكبيرة أو الشبكات التي تصل إلى الحدود بشكل متكرر.",
 					"custom": "اضبط بنفسك عناصر التحكم المتقدمة لكل تنزيل."
@@ -248,9 +248,9 @@
 		},
 		"quickProgress": {
 			"title": "تحضير التنزيل السريع",
-			"description": "يقرأ Arroxy الرابط ويطبّق {{profileName}}.",
+			"description": "يقرأ Arclio الرابط ويطبّق {{profileName}}.",
 			"currentFallback": "الرابط الحالي",
-			"waitHint": "أبقِ هذا مفتوحًا بينما يجهّز Arroxy قائمة الانتظار.",
+			"waitHint": "أبقِ هذا مفتوحًا بينما يجهّز Arclio قائمة الانتظار.",
 			"failedCount_one": "فشل {{count}}",
 			"failedCount_other": "فشل {{count}}",
 			"cancel": "إلغاء التحضير",
@@ -443,7 +443,7 @@
 		}
 	},
 	"update": {
-		"appVersion": "Arroxy {{version}}",
+		"appVersion": "Arclio {{version}}",
 		"isAvailable": "متاح",
 		"youHave": "— لديك {{currentVersion}}",
 		"install": "تثبيت وإعادة التشغيل",
@@ -455,7 +455,7 @@
 		"installFailed": "فشل التحديث",
 		"retry": "إعادة المحاولة"
 	},
-	"releaseNotes": {"title": "ما الجديد في Arroxy {{version}}", "description": "أنت تستخدم تحديثًا جديدًا. إليك أبرز ما فيه.", "fullNotes": "ملاحظات الإصدار الكاملة ↗", "continue": "متابعة"},
+	"releaseNotes": {"title": "ما الجديد في Arclio {{version}}", "description": "أنت تستخدم تحديثًا جديدًا. إليك أبرز ما فيه.", "fullNotes": "ملاحظات الإصدار الكاملة ↗", "continue": "متابعة"},
 	"status": {
 		"preparingBinaries": "جارٍ تحضير الثنائيات…",
 		"mintingToken": "جارٍ إنشاء رمز YouTube…",
@@ -483,7 +483,7 @@
 	},
 	"errors": {
 		"ytdlp": {
-			"botBlock": "تم تفعيل الحماية من الروبوتات. على الأرجح أن عنوان IP الذي تستخدمه مُعلَّم (نطاق مراكز البيانات أو نقطة خروج VPN مزدحمة). غيّر عنوان IP أو اختر نقطة اتصال VPN مختلفة وأعد المحاولة. إذا استمر الفشل، فقد يكون ذلك تغييراً مؤقتاً من جانب YouTube — يُحدّث Arroxy تلقائياً yt-dlp عند التشغيل، لذا سيصل الإصلاح تلقائياً بمجرد أن يُطلقه المصدر.",
+			"botBlock": "تم تفعيل الحماية من الروبوتات. على الأرجح أن عنوان IP الذي تستخدمه مُعلَّم (نطاق مراكز البيانات أو نقطة خروج VPN مزدحمة). غيّر عنوان IP أو اختر نقطة اتصال VPN مختلفة وأعد المحاولة. إذا استمر الفشل، فقد يكون ذلك تغييراً مؤقتاً من جانب YouTube — يُحدّث Arclio تلقائياً yt-dlp عند التشغيل، لذا سيصل الإصلاح تلقائياً بمجرد أن يُطلقه المصدر.",
 			"ipBlock": "يبدو أن عنوان IP الخاص بك محظور من قِبل YouTube. حاول لاحقاً أو استخدم VPN.",
 			"rateLimit": "تُقيّد YouTube الطلبات. انتظر دقيقة ثم حاول مجدداً.",
 			"ageRestricted": "هذا الفيديو مقيّد بالعمر ولا يمكن تنزيله بدون حساب مسجّل الدخول.",
@@ -494,7 +494,7 @@
 			"chunkTransferFailure": "استمر الخادم في قطع التنزيل في منتصفه وتخلى yt-dlp بعد محاولات متعددة. يحدث هذا عادةً مع أكبر صيغ الفيديو (4K HDR / VP9 عالي معدل البت). أعد المحاولة، أو غيّر الشبكة/VPN، أو اختر صيغة بدقة أقل.",
 			"missingDependency": "تعذّر على yt-dlp العثور على ffmpeg أو ffprobe. أصلح الثنائيات المضمّنة أو عيّن موقع FFmpeg، ثم أعد المحاولة.",
 			"postprocessFailure": "انتهى yt-dlp من التنزيل لكن المعالجة اللاحقة (دمج / mux / تحويل) فشلت. غالبًا ما تكون مشكلة ffmpeg مؤقتة — أعد المحاولة، وإذا استمرت المشكلة جرّب توليفة صيغ مختلفة.",
-			"parse": "تعذّر تحليل الاستجابة الواردة من الموقع. ربما تكون أداة الاستخراج في yt-dlp قد تأخّرت. يقوم Arroxy بتحديث yt-dlp تلقائيًا عند التشغيل — أعد المحاولة بعد بضع دقائق حالما يصدر الإصلاح.",
+			"parse": "تعذّر تحليل الاستجابة الواردة من الموقع. ربما تكون أداة الاستخراج في yt-dlp قد تأخّرت. يقوم Arclio بتحديث yt-dlp تلقائيًا عند التشغيل — أعد المحاولة بعد بضع دقائق حالما يصدر الإصلاح.",
 			"network": "خطأ في الشبكة. تحقق من اتصالك وأعد المحاولة.",
 			"drmProtected": "هذا الفيديو محمي بـ DRM. لا يستطيع yt-dlp إزالة DRM، لذا لا يمكن تنزيل الملف.",
 			"loginRequired": "هذا الفيديو يتطلب حساباً مسجّل الدخول. أعدّ cookies.txt (الإعدادات → Cookies) وأعد المحاولة.",
@@ -520,22 +520,23 @@
 		"mp4Cap": "H.264 أعلى من 1080p غير متاح على YouTube — يحد تلقائيًا إلى 1080p"
 	},
 	"formatLabel": {"audioFallback": "صوت", "audioOnlyDot": "صوت فقط · {{audio}}", "videoDot": "{{resolution}} · {{audio}}"},
-	"tray": {"tooltip": "Arroxy", "menu": {"statusIdle": "خامل", "statusActive_one": "1 جارٍ التنزيل · {{percent}}%", "statusActive_other": "{{count}} جارٍ التنزيل · {{percent}}%", "open": "فتح Arroxy", "quit": "الخروج من Arroxy"}},
+	"tray": {"tooltip": "Arclio", "menu": {"statusIdle": "خامل", "statusActive_one": "1 جارٍ التنزيل · {{percent}}%", "statusActive_other": "{{count}} جارٍ التنزيل · {{percent}}%", "open": "فتح Arclio", "quit": "الخروج من Arclio"}},
 	"dialogs": {
 		"quitWithActiveDownloads": {"message_one": "{{count}} تنزيل قيد التقدم", "message_other": "{{count}} تنزيلات قيد التقدم", "detail": "يمكنك الإيقاف مؤقتًا للاستئناف لاحقًا، أو الإلغاء للتخلي عن التقدم.", "confirm": "إلغاء التنزيلات والخروج", "pause": "إيقاف التنزيلات مؤقتًا والخروج", "keep": "الاستمرار في التنزيل"},
-		"closeToTray": {"message": "هل تريد إخفاء Arroxy في علبة النظام عند الإغلاق؟", "detail": "يستمر Arroxy في العمل وينهي التنزيلات النشطة. يمكنك تغيير ذلك لاحقاً في الإعدادات المتقدمة.", "hide": "الإخفاء في علبة النظام", "quit": "الخروج", "remember": "لا تسألني مجدداً"},
-		"rendererCrashed": {"message": "واجه Arroxy مشكلة", "detail": "تعطّلت عملية العرض ({{reason}}). أعد التحميل للمحاولة مجدداً.", "reload": "إعادة التحميل", "quit": "الخروج"}
+		"closeToTray": {"message": "هل تريد إخفاء Arclio في علبة النظام عند الإغلاق؟", "detail": "يستمر Arclio في العمل وينهي التنزيلات النشطة. يمكنك تغيير ذلك لاحقاً في الإعدادات المتقدمة.", "hide": "الإخفاء في علبة النظام", "quit": "الخروج", "remember": "لا تسألني مجدداً"},
+		"rendererCrashed": {"message": "واجه Arclio مشكلة", "detail": "تعطّلت عملية العرض ({{reason}}). أعد التحميل للمحاولة مجدداً.", "reload": "إعادة التحميل", "quit": "الخروج"}
 	},
 	"share": {
-		"title": "مشاركة Arroxy",
-		"description": "Arroxy مجاني ومفتوح المصدر. مشاركته تساعد المزيد من الأشخاص على اكتشافه.",
+		"title": "مشاركة Arclio",
+		"description": "Arclio مجاني ومفتوح المصدر. مشاركته تساعد المزيد من الأشخاص على اكتشافه.",
 		"copyLink": "نسخ الرابط",
 		"copied": "تم النسخ!",
-		"defaultMessage": "Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
-		"footerTooltip": "مشاركة Arroxy",
+		"defaultMessage": "Arclio — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
+		"footerTooltip": "مشاركة Arclio",
 		"footerLabel": "مشاركة",
-		"shareAction": "مشاركة Arroxy"
+		"shareAction": "مشاركة Arclio"
 	},
+	"search": {"placeholder": "Search…", "noResults": "No results", "media": "Media", "collection": "Collection", "tag": "Tag", "items": "items"},
 	"nav": {"home": "Home", "library": "Library", "collections": "Collections", "favorites": "Favorites", "tags": "Tags", "history": "History", "settings": "Settings"},
 	"library": {
 		"items": "items",

@@ -9,7 +9,7 @@ function read(path: string): string {
 }
 
 describe('release asset names', () => {
-	const stableAssets = ['Arroxy-win-x64-Setup.exe', 'Arroxy-win-x64-Portable.exe', 'Arroxy-mac-arm64.dmg', 'Arroxy-mac-x64.dmg', 'Arroxy-linux-x64.AppImage', 'Arroxy-linux-x64.tar.gz', 'Arroxy-linux-x64.flatpak']
+	const stableAssets = ['Arclio-win-x64-Setup.exe', 'Arclio-win-x64-Portable.exe', 'Arclio-mac-arm64.dmg', 'Arclio-mac-x64.dmg', 'Arclio-linux-x64.AppImage', 'Arclio-linux-x64.tar.gz', 'Arclio-linux-x64.flatpak']
 	const workflowText = () =>
 		readdirSync(join(root, '.github', 'workflows'))
 			.filter(file => file.endsWith('.yml') || file.endsWith('.yaml'))
@@ -48,8 +48,8 @@ describe('release asset names', () => {
 		const coldStart = read('.github/workflows/e2e-cold-start.yml')
 
 		expect(coldStart).toContain('Run packaged runtime smoke')
-		expect(coldStart).toContain("ARROXY_RUNTIME_SMOKE: '1'")
-		expect(coldStart).toContain('Arroxy Runtime Ω Cold')
+		expect(coldStart).toContain("ARCLIO_RUNTIME_SMOKE: '1'")
+		expect(coldStart).toContain('Arclio Runtime Ω Cold')
 		expect(coldStart).toContain('fake old node')
 		expect(coldStart).toContain('fake deno')
 		expect(coldStart).toContain('fake yt-dlp')
@@ -63,8 +63,8 @@ describe('release asset names', () => {
 		const coldStart = read('.github/workflows/e2e-cold-start.yml')
 
 		expect(coldStart).not.toContain('Run packaged live probe smoke')
-		expect(coldStart).not.toContain('ARROXY_SMOKE_URL')
-		expect(coldStart).not.toContain('ARROXY_LIVE_CANARY_URL')
+		expect(coldStart).not.toContain('ARCLIO_SMOKE_URL')
+		expect(coldStart).not.toContain('ARCLIO_LIVE_CANARY_URL')
 	})
 
 	it('smoke-tests Windows installed and portable artifacts before publish', () => {
@@ -73,9 +73,9 @@ describe('release asset names', () => {
 		expect(installer).toContain('bun run dist:win')
 		expect(installer).toContain('Run installed app runtime smoke')
 		expect(installer).toContain('Run portable app runtime smoke')
-		expect(installer).toContain('ARROXY_RUNTIME_SMOKE')
-		expect(installer).toContain('Arroxy Runtime Ω Installed')
-		expect(installer).toContain('Arroxy Portable Ω Path')
+		expect(installer).toContain('ARCLIO_RUNTIME_SMOKE')
+		expect(installer).toContain('Arclio Runtime Ω Installed')
+		expect(installer).toContain('Arclio Portable Ω Path')
 		expect(installer).toContain('runtime-smoke-logs')
 	})
 
@@ -83,11 +83,11 @@ describe('release asset names', () => {
 		const release = read('.github/workflows/release.yml')
 
 		expect(release).toContain('Run packaged runtime smoke')
-		expect(release).toContain("ARROXY_RUNTIME_SMOKE: '1'")
+		expect(release).toContain("ARCLIO_RUNTIME_SMOKE: '1'")
 		expect(release).toContain('libfuse2t64')
 		expect(release).not.toContain('Run Linux live probe canary')
-		expect(release).not.toContain('ARROXY_LIVE_CANARY_URL')
-		expect(release).not.toContain('ARROXY_SMOKE_URL')
+		expect(release).not.toContain('ARCLIO_LIVE_CANARY_URL')
+		expect(release).not.toContain('ARCLIO_SMOKE_URL')
 	})
 
 	it('keeps release workflow consumers on the same stable filenames', () => {
@@ -100,10 +100,10 @@ describe('release asset names', () => {
 			expect([release, installer, winget, flatpak].join('\n')).toContain(asset)
 		}
 
-		expect(winget).toContain("installers-regex: '^Arroxy-win-x64-Setup\\.exe$'")
-		expect(release).not.toContain('Arroxy-Setup-${VERSION}.exe')
-		expect(release).not.toContain('Arroxy-${VERSION}-arm64.dmg')
-		expect(flatpak).not.toContain('Arroxy-${VERSION}.tar.gz')
+		expect(winget).toContain("installers-regex: '^Arclio-win-x64-Setup\\.exe$'")
+		expect(release).not.toContain('Arclio-Setup-${VERSION}.exe')
+		expect(release).not.toContain('Arclio-${VERSION}-arm64.dmg')
+		expect(flatpak).not.toContain('Arclio-${VERSION}.tar.gz')
 	})
 
 	it('relies on immutable release attestations instead of workflow provenance attestations', () => {
@@ -146,7 +146,7 @@ describe('release asset names', () => {
 		expect(workflow).toContain('--validate')
 		expect(workflow).not.toContain('schedule:')
 		expect(workflow).not.toContain('contents: write')
-		expect(workflow).not.toContain('ARROXY_RUNTIME_INDEX_SIGNING_KEY')
+		expect(workflow).not.toContain('ARCLIO_RUNTIME_INDEX_SIGNING_KEY')
 		expect(workflow).not.toContain('gh release')
 	})
 
@@ -154,8 +154,8 @@ describe('release asset names', () => {
 		const release = read('.github/workflows/release.yml')
 
 		expect(release).toContain('Normalize Linux AppImage asset name')
-		expect(release).toContain('Arroxy-linux-x86_64.AppImage')
-		expect(release).toContain('Arroxy-linux-x64.AppImage')
+		expect(release).toContain('Arclio-linux-x86_64.AppImage')
+		expect(release).toContain('Arclio-linux-x64.AppImage')
 		expect(release).toContain('latest-linux.yml')
 		expect(release).toContain('.apiUrl')
 		expect(release).toContain('${builder_api_url#https://api.github.com/}')
@@ -166,9 +166,9 @@ describe('release asset names', () => {
 
 		expect(template).toContain('## <a id="install"></a>{{dl_h2}}')
 		for (const asset of stableAssets) {
-			expect(template).toContain(`https://github.com/antonio-orionus/Arroxy/releases/latest/download/${asset}`)
+			expect(template).toContain(`https://github.com/antonio-orionus/Arclio/releases/latest/download/${asset}`)
 		}
-		expect(template).toContain('https://github.com/antonio-orionus/Arroxy/releases/latest/download/SHA256SUMS')
+		expect(template).toContain('https://github.com/antonio-orionus/Arclio/releases/latest/download/SHA256SUMS')
 		expect(template).toContain('img.shields.io/badge/Windows-Setup-0078D4')
 		expect(template).not.toContain('| 🪟 Windows')
 		expect(template).not.toContain('| 🍎 macOS')
@@ -181,8 +181,8 @@ describe('release asset names', () => {
 		for (const file of readmes) {
 			const content = read(file)
 
-			expect(content).not.toContain('Arroxy-Setup-*.exe')
-			expect(content).not.toContain('Arroxy-Portable-*.exe')
+			expect(content).not.toContain('Arclio-Setup-*.exe')
+			expect(content).not.toContain('Arclio-Portable-*.exe')
 		}
 	})
 })

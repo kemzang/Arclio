@@ -52,7 +52,7 @@ describe('DownloadProfilesHome action rows', () => {
 		const panel = screen.getByTestId('profiles-download-panel')
 
 		expect(within(panel).getByTestId('profiles-mascot-header')).toBeInTheDocument()
-		expect(within(panel).getByTestId('profiles-mascot-copy')).toHaveTextContent('Drop a link and let Arroxy pull it ✨')
+		expect(within(panel).getByTestId('profiles-mascot-copy')).toHaveTextContent('Drop a link and let Arclio pull it ✨')
 		expect(within(panel).queryByText('Paste a video, playlist, channel, or search URL to get started.')).not.toBeInTheDocument()
 		expect(screen.queryByTestId('profiles-mascot-help')).not.toBeInTheDocument()
 	})

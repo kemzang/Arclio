@@ -61,6 +61,6 @@ describe('useWhatsNewDialog', () => {
 
 		fireEvent.click(await screen.findByRole('button', {name: 'Full release notes ↗'}))
 
-		expect(window.appApi.shell.openExternal).toHaveBeenCalledWith('https://github.com/antonio-orionus/Arroxy/releases/tag/v1.2.0')
+		expect(window.appApi.shell.openExternal).toHaveBeenCalledWith('https://github.com/antonio-orionus/Arclio/releases/tag/v1.2.0')
 	})
 })

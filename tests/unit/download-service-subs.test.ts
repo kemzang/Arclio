@@ -118,7 +118,7 @@ describe('DownloadService — sidecar mux after Merger + MoveFiles regressions',
 	let workDir: string
 
 	beforeEach(() => {
-		workDir = mkdtempSync(join(tmpdir(), 'arroxy-merger-move-'))
+		workDir = mkdtempSync(join(tmpdir(), 'arclio-merger-move-'))
 	})
 
 	afterEach(() => {
@@ -139,8 +139,8 @@ describe('DownloadService — sidecar mux after Merger + MoveFiles regressions',
 		}
 	}
 
-	it('passes the post-MoveFiles final path to ffmpeg, not the .arroxy-temp Merger path', async () => {
-		const tempVideoPath = join(workDir, '.arroxy-temp', 'abc1234', 'Title.mkv')
+	it('passes the post-MoveFiles final path to ffmpeg, not the .arclio-temp Merger path', async () => {
+		const tempVideoPath = join(workDir, '.arclio-temp', 'abc1234', 'Title.mkv')
 		const finalVideoPath = join(workDir, 'Title.mkv')
 		const subPath = join(workDir, 'Title.en.srt')
 		vi.mocked(spawnYtDlp).mockImplementation(makeMergerMoveSpawn(tempVideoPath, finalVideoPath, subPath, 'sub-bytes') as never)
@@ -204,7 +204,7 @@ describe('DownloadService — embed+auto muxing after subtitle dedupe', () => {
 	let workDir: string
 
 	beforeEach(() => {
-		workDir = mkdtempSync(join(tmpdir(), 'arroxy-mux-'))
+		workDir = mkdtempSync(join(tmpdir(), 'arclio-mux-'))
 	})
 
 	afterEach(() => {

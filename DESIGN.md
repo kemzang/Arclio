@@ -1,5 +1,5 @@
 ---
-name: Arroxy
+name: Arclio
 description: Free, open-source desktop downloader for YouTube + 2000 sites. Dark + light aurora modes, electric-blue signal, glass panels.
 colors:
   brand: "#1f69ff"
@@ -96,17 +96,17 @@ components:
     rounded: "{rounded.md}"
 ---
 
-# Design System: Arroxy
+# Design System: Arclio
 
 ## 1. Overview
 
 **Creative North Star: "The Aurora Console"**
 
-Arroxy is a console where one electric-blue signal does all the talking. In its native dark mode the window opens onto a near-black navy void with a soft aurora bloom drifting through the top corners; everything the user touches, the URL field, the split Quick Download/profile control, the action rows, sits on glass that catches that blue light along its edges. The mood is cinematic but never loud: color arrives as *signal*, a glowing primary action, a status pulse, a selected option, not as wallpaper. This is the friendly front of "friendly front, expert core": a non-technical user pastes a link into a calm, beautiful surface and feels like the machinery behind it is powerful and in control.
+Arclio is a console where one electric-blue signal does all the talking. In its native dark mode the window opens onto a near-black navy void with a soft aurora bloom drifting through the top corners; everything the user touches, the URL field, the split Quick Download/profile control, the action rows, sits on glass that catches that blue light along its edges. The mood is cinematic but never loud: color arrives as *signal*, a glowing primary action, a status pulse, a selected option, not as wallpaper. This is the friendly front of "friendly front, expert core": a non-technical user pastes a link into a calm, beautiful surface and feels like the machinery behind it is powerful and in control.
 
 The system ships **two complete skies**. Dark is the canvas it was born for; light is a true peer, not an afterthought. In light mode the void inverts to a luminous cool-blue *ocean field*, glass becomes frosted white with the same blue-lit edges, and the aurora bloom becomes cloud, horizon, and water wash. The same electric-blue signal and the same status colors carry across both; only the neutrals flip. A user toggling modes should feel the same product, lit differently, never two different apps.
 
-The system is unapologetically branded. It rejects the flat gray SaaS dashboard, the cookie-cutter card grid, and above all the ad-choked sketchy-downloader look that Arroxy exists to replace. Where a generic tool would ship neutral chrome, Arroxy commits to a single saturated identity (deep aurora navy + electric blue) and lets restraint come from *discipline*, not from desaturation: glow is reserved for things that are live, primary, or changing state. Glass is reserved for surfaces that float above the void. Used everywhere, both become slop; used as signal, they become the brand.
+The system is unapologetically branded. It rejects the flat gray SaaS dashboard, the cookie-cutter card grid, and above all the ad-choked sketchy-downloader look that Arclio exists to replace. Where a generic tool would ship neutral chrome, Arclio commits to a single saturated identity (deep aurora navy + electric blue) and lets restraint come from *discipline*, not from desaturation: glow is reserved for things that are live, primary, or changing state. Glass is reserved for surfaces that float above the void. Used everywhere, both become slop; used as signal, they become the brand.
 
 Navigation lives in a horizontal tab bar at the top (URL / Profiles / Settings), under a slim title bar. The primary screen is a vertical flow, not a grid: URL input → split Quick Download/profile control → Interactive / Bulk rows → mascot helper with capability matrix. The mascot appears at rest, never as decoration competing with content.
 
@@ -271,7 +271,7 @@ Glow carries meaning at two intensities: the soft edge gradient says "this is a 
 
 ### Don't:
 - **Don't** let it look like a **sketchy downloader site**: no ad-shaped blocks, no fake-button bait, no upsell chrome. The clean glass surface is the proof of trust.
-- **Don't** ship the **generic gray SaaS dashboard** or the identical icon+heading+text card grid. Arroxy commits to one saturated identity.
+- **Don't** ship the **generic gray SaaS dashboard** or the identical icon+heading+text card grid. Arclio commits to one saturated identity.
 - **Don't** expose **raw yt-dlp flag soup**; depth (formats, SponsorBlock, subtitle modes) lives behind the friendly wizard, never in the newcomer's face.
 - **Don't** make it a **bloated legacy media suite**: no modal stacks, no clutter. Exhaust inline/progressive before reaching for a modal.
 - **Don't** blur the background canvas or stack backdrop-blurs (One-Blur Rule). Blurring blurred glass turns it to mud and costs frames.

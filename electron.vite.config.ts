@@ -15,15 +15,15 @@ const {version} = require('./package.json') as {version: string}
 // `D:\\...` / `C:/...` — those must be treated as internal too, otherwise the
 // bundler keeps them as raw `require('D:\\a\\...')` calls that no other
 // machine can resolve. CI runner path `D:\\a\\<repo>\\<repo>\\src\\...` was
-// the original failure mode (Arroxy v0.3.2-beta.6 release).
+// the original failure mode (Arclio v0.3.2-beta.6 release).
 const WINDOWS_ABS_PATH = /^[a-zA-Z]:[\\/]/
 
 export function readRendererDevServerPort(env: Record<string, string | undefined> = process.env): number {
-	const raw = env.ARROXY_RENDERER_PORT
+	const raw = env.ARCLIO_RENDERER_PORT
 	if (!raw) return 5173
 	const port = Number(raw)
 	if (!Number.isInteger(port) || port < 1 || port > 65_535) {
-		throw new Error(`Invalid ARROXY_RENDERER_PORT: ${raw}`)
+		throw new Error(`Invalid ARCLIO_RENDERER_PORT: ${raw}`)
 	}
 	return port
 }
@@ -54,12 +54,12 @@ export default defineConfig(({mode}) => {
 	const env = loadEnv(mode, '.', '')
 	const openpanelClientId = env.OPENPANEL_CLIENT_ID ?? process.env.OPENPANEL_CLIENT_ID ?? ''
 	const openpanelClientSecret = env.OPENPANEL_CLIENT_SECRET ?? process.env.OPENPANEL_CLIENT_SECRET ?? ''
-	const arroxyAnalyticsDebug = env.ARROXY_ANALYTICS_DEBUG ?? process.env.ARROXY_ANALYTICS_DEBUG ?? ''
+	const arclioAnalyticsDebug = env.ARCLIO_ANALYTICS_DEBUG ?? process.env.ARCLIO_ANALYTICS_DEBUG ?? ''
 	const rendererDevServerPort = readRendererDevServerPort()
 
 	return {
 		main: {
-			define: {'process.env.OPENPANEL_CLIENT_ID': JSON.stringify(openpanelClientId), 'process.env.OPENPANEL_CLIENT_SECRET': JSON.stringify(openpanelClientSecret), 'process.env.ARROXY_ANALYTICS_DEBUG': JSON.stringify(arroxyAnalyticsDebug)},
+			define: {'process.env.OPENPANEL_CLIENT_ID': JSON.stringify(openpanelClientId), 'process.env.OPENPANEL_CLIENT_SECRET': JSON.stringify(openpanelClientSecret), 'process.env.ARCLIO_ANALYTICS_DEBUG': JSON.stringify(arclioAnalyticsDebug)},
 			resolve: {
 				alias: [
 					{find: '@main', replacement: path.resolve('src/main')},

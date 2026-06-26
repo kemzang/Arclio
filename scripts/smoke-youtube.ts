@@ -58,11 +58,11 @@ function findYtDlp(override?: string): string {
 		return override
 	}
 	const ytDlpName = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp'
-	// Linux/macOS userData root is `~/.config/arroxy`; Windows uses %APPDATA%/Arroxy.
+	// Linux/macOS userData root is `~/.config/arclio`; Windows uses %APPDATA%/Arclio.
 	// BinaryManager stores binaries under <userData>/runtime-cache/binaries/.
-	const userDataLinux = join(homedir(), '.config', 'arroxy')
-	const userDataMac = join(homedir(), 'Library', 'Application Support', 'Arroxy')
-	const userDataWin = process.env.APPDATA ? join(process.env.APPDATA, 'Arroxy') : ''
+	const userDataLinux = join(homedir(), '.config', 'arclio')
+	const userDataMac = join(homedir(), 'Library', 'Application Support', 'Arclio')
+	const userDataWin = process.env.APPDATA ? join(process.env.APPDATA, 'Arclio') : ''
 	const candidates = [
 		process.env.YT_DLP_PATH,
 		join(userDataLinux, 'runtime-cache', 'binaries', ytDlpName),

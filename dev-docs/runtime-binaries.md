@@ -11,17 +11,17 @@
 | Bundled fallback index       | `src/main/services/binary/BundledRuntimeBinaryIndex.ts` |
 | Local manifest dev wrapper   | `scripts/with-runtime-manifest.sh`                  |
 
-Arroxy owns yt-dlp runtime updates through a signed runtime-binary manifest. The app does not run `yt-dlp --update`, and it does not resolve upstream yt-dlp `latest` release URLs at runtime.
+Arclio owns yt-dlp runtime updates through a signed runtime-binary manifest. The app does not run `yt-dlp --update`, and it does not resolve upstream yt-dlp `latest` release URLs at runtime.
 
 ## Update model
 
-Runtime startup resolves the latest Arroxy runtime manifest from:
+Runtime startup resolves the latest Arclio runtime manifest from:
 
 ```text
-https://github.com/antonio-orionus/arroxy-runtime-binaries/releases/latest/download/runtime-index-v1.json
+https://github.com/antonio-orionus/arclio-runtime-binaries/releases/latest/download/runtime-index-v1.json
 ```
 
-That `latest` pointer is for Arroxy's manifest only. The manifest contents must list immutable upstream artifact URLs with concrete release versions, sizes, and SHA-256 hashes. Manifest validation rejects artifact URLs that contain `/latest`, requires HTTPS, and allowlists provider hosts.
+That `latest` pointer is for Arclio's manifest only. The manifest contents must list immutable upstream artifact URLs with concrete release versions, sizes, and SHA-256 hashes. Manifest validation rejects artifact URLs that contain `/latest`, requires HTTPS, and allowlists provider hosts.
 
 Each `RuntimeBinaryIndexService` instance loads the index once and caches it in memory. A newly published signed remote manifest is therefore picked up by a fresh app/service run, normally after restart, not by polling during an existing session.
 
@@ -49,15 +49,15 @@ For each source, the generator reads the release's `SHA2-256SUMS`, records the a
 `BinaryManager.resolveYtDlp()` tries candidates in this order:
 
 1. Manual override from settings.
-2. `ARROXY_YT_DLP_PATH`.
+2. `ARCLIO_YT_DLP_PATH`.
 3. Approved runtime manifest entries, in manifest order.
 4. Valid managed artifact cache entries, newest installed first.
 5. System `PATH` as the last resort.
 
 The runtime index source order is separate:
 
-1. Signed local manifest override (`ARROXY_RUNTIME_INDEX_FILE` + `ARROXY_RUNTIME_INDEX_SIG_FILE`; optional `ARROXY_RUNTIME_INDEX_PUBLIC_KEY_FILE`).
-2. Signed remote Arroxy manifest.
+1. Signed local manifest override (`ARCLIO_RUNTIME_INDEX_FILE` + `ARCLIO_RUNTIME_INDEX_SIG_FILE`; optional `ARCLIO_RUNTIME_INDEX_PUBLIC_KEY_FILE`).
+2. Signed remote Arclio manifest.
 3. Last-known-good cached manifest.
 4. Bundled fallback index.
 

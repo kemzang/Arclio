@@ -44,9 +44,9 @@ describe('feedback upload Worker', () => {
 		const {bucket, put} = makeBucket()
 		const {rateLimit, limit} = makeRateLimit()
 		const response = await worker.fetch(
-			new Request('https://arroxy.orionus.dev/api/feedback-diagnostics', {
+			new Request('https://arclio.orionus.dev/api/feedback-diagnostics', {
 				method: 'POST',
-				headers: {'x-arroxy-upload': 'feedback-diagnostic-v1', 'x-arroxy-report-id': reportId, 'content-type': 'application/gzip', 'content-encoding': 'gzip', 'x-arroxy-raw-bytes': '42', 'x-arroxy-truncated': 'false'},
+				headers: {'x-arclio-upload': 'feedback-diagnostic-v1', 'x-arclio-report-id': reportId, 'content-type': 'application/gzip', 'content-encoding': 'gzip', 'x-arclio-raw-bytes': '42', 'x-arclio-truncated': 'false'},
 				body: new Uint8Array([31, 139, 8, 0])
 			}),
 			makeEnv(bucket, rateLimit)
@@ -63,9 +63,9 @@ describe('feedback upload Worker', () => {
 
 	it('rejects browser-style or oversized requests before writing to R2', async () => {
 		const {bucket, put} = makeBucket()
-		const missingMarker = await worker.fetch(new Request('https://arroxy.orionus.dev/api/feedback-diagnostics', {method: 'POST', headers: {'content-type': 'application/gzip', 'content-encoding': 'gzip'}, body: new Uint8Array([1])}), makeEnv(bucket))
+		const missingMarker = await worker.fetch(new Request('https://arclio.orionus.dev/api/feedback-diagnostics', {method: 'POST', headers: {'content-type': 'application/gzip', 'content-encoding': 'gzip'}, body: new Uint8Array([1])}), makeEnv(bucket))
 		const tooLarge = await worker.fetch(
-			new Request('https://arroxy.orionus.dev/api/feedback-diagnostics', {method: 'POST', headers: {'x-arroxy-upload': 'feedback-diagnostic-v1', 'x-arroxy-report-id': reportId, 'content-type': 'application/gzip', 'content-encoding': 'gzip', 'content-length': '1500001'}, body: new Uint8Array([1])}),
+			new Request('https://arclio.orionus.dev/api/feedback-diagnostics', {method: 'POST', headers: {'x-arclio-upload': 'feedback-diagnostic-v1', 'x-arclio-report-id': reportId, 'content-type': 'application/gzip', 'content-encoding': 'gzip', 'content-length': '1500001'}, body: new Uint8Array([1])}),
 			{...makeEnv(bucket)}
 		)
 
@@ -78,7 +78,7 @@ describe('feedback upload Worker', () => {
 		const {bucket, put} = makeBucket()
 		const {rateLimit} = makeRateLimit(false)
 		const response = await worker.fetch(
-			new Request('https://arroxy.orionus.dev/api/feedback-diagnostics', {method: 'POST', headers: {'x-arroxy-upload': 'feedback-diagnostic-v1', 'x-arroxy-report-id': reportId, 'content-type': 'application/gzip', 'content-encoding': 'gzip', 'cf-connecting-ip': '203.0.113.10'}, body: new Uint8Array([31, 139, 8, 0])}),
+			new Request('https://arclio.orionus.dev/api/feedback-diagnostics', {method: 'POST', headers: {'x-arclio-upload': 'feedback-diagnostic-v1', 'x-arclio-report-id': reportId, 'content-type': 'application/gzip', 'content-encoding': 'gzip', 'cf-connecting-ip': '203.0.113.10'}, body: new Uint8Array([31, 139, 8, 0])}),
 			makeEnv(bucket, rateLimit)
 		)
 
@@ -91,7 +91,7 @@ describe('feedback upload Worker', () => {
 	it('rejects invalid report ids before writing to R2', async () => {
 		const {bucket, put} = makeBucket()
 		const response = await worker.fetch(
-			new Request('https://arroxy.orionus.dev/api/feedback-diagnostics', {method: 'POST', headers: {'x-arroxy-upload': 'feedback-diagnostic-v1', 'x-arroxy-report-id': 'report-123', 'content-type': 'application/gzip', 'content-encoding': 'gzip'}, body: new Uint8Array([31, 139, 8, 0])}),
+			new Request('https://arclio.orionus.dev/api/feedback-diagnostics', {method: 'POST', headers: {'x-arclio-upload': 'feedback-diagnostic-v1', 'x-arclio-report-id': 'report-123', 'content-type': 'application/gzip', 'content-encoding': 'gzip'}, body: new Uint8Array([31, 139, 8, 0])}),
 			makeEnv(bucket)
 		)
 

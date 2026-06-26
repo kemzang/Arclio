@@ -119,7 +119,7 @@ afterEach(() => {
 })
 
 function makePluginRoot(): string {
-	const parent = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-ytdlp-plugin-parent-'))
+	const parent = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-ytdlp-plugin-parent-'))
 	const root = path.join(parent, 'yt-dlp-plugins')
 	tempRoots.push(parent)
 	fs.mkdirSync(path.join(root, 'yt_dlp_plugins'), {recursive: true})
@@ -144,7 +144,7 @@ describe('redactArgs', () => {
 describe('YtDlp — E2E harness args', () => {
 	it('prepends deterministic plugin args and --newline for download runs only in gated E2E mode', async () => {
 		const pluginRoot = makePluginRoot()
-		const e2eMode = resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: pluginRoot}, {isPackaged: false})
+		const e2eMode = resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: pluginRoot}, {isPackaged: false})
 
 		await makeYtDlp({e2eMode}).run(mediaRequest())
 
@@ -153,7 +153,7 @@ describe('YtDlp — E2E harness args', () => {
 
 	it('uses harness-only fast media retry args for download runs in gated E2E mode', async () => {
 		const pluginRoot = makePluginRoot()
-		const e2eMode = resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: pluginRoot}, {isPackaged: false})
+		const e2eMode = resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: pluginRoot}, {isPackaged: false})
 
 		await makeYtDlp({e2eMode}).run(mediaRequest())
 
@@ -165,7 +165,7 @@ describe('YtDlp — E2E harness args', () => {
 
 	it('prepends deterministic plugin args without --newline for probe runs', async () => {
 		const pluginRoot = makePluginRoot()
-		const e2eMode = resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: pluginRoot}, {isPackaged: false})
+		const e2eMode = resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: pluginRoot}, {isPackaged: false})
 
 		await makeYtDlp({e2eMode}).run({kind: 'probe', url: URL})
 
@@ -893,7 +893,7 @@ describe('YtDlp — js-runtimes', () => {
 	})
 
 	it('uses Electron Node in the gated E2E harness', async () => {
-		const e2eMode = resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: makePluginRoot()}, {isPackaged: false})
+		const e2eMode = resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: makePluginRoot()}, {isPackaged: false})
 		const ytDlp = makeYtDlp({e2eMode})
 		await ytDlp.run({kind: 'probe', url: URL})
 		const args = getArgs()

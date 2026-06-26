@@ -170,7 +170,7 @@ async function sourceForgeYtDlpEntries(downloadRoot: string, cache: Map<string, 
 }
 
 export async function generateRuntimeBinaryIndex(options: {cacheRoot?: string} = {}): Promise<RuntimeBinaryIndex> {
-	const cacheRoot = options.cacheRoot ?? (await fsPromises.mkdtemp(path.join(os.tmpdir(), 'arroxy-runtime-manifest-')))
+	const cacheRoot = options.cacheRoot ?? (await fsPromises.mkdtemp(path.join(os.tmpdir(), 'arclio-runtime-manifest-')))
 	const downloadRoot = path.join(cacheRoot, 'generator-downloads')
 	const cache = new Map<string, Promise<ArtifactMetadata>>()
 	await fsPromises.mkdir(downloadRoot, {recursive: true})
@@ -247,7 +247,7 @@ function hasFlag(args: string[], name: string): boolean {
 }
 
 function defaultCacheRoot(): string {
-	return path.join(os.tmpdir(), 'arroxy-runtime-binary-manifest-cache')
+	return path.join(os.tmpdir(), 'arclio-runtime-binary-manifest-cache')
 }
 
 function parseGenerateOptions(args: string[]): GenerateOptions {
@@ -265,7 +265,7 @@ function parseValidateOptions(args: string[]): ValidateOptions {
 function parseSignOptions(args: string[]): SignOptions {
 	const manifestPath = optionValue(args, '--manifest') ?? path.join('dist', 'runtime-binaries', MANIFEST_FILE_NAME)
 	const outPath = optionValue(args, '--out') ?? path.join(path.dirname(manifestPath), SIGNATURE_FILE_NAME)
-	return {manifestPath, outPath, privateKeyEnv: optionValue(args, '--private-key-env') ?? 'ARROXY_RUNTIME_INDEX_SIGNING_KEY'}
+	return {manifestPath, outPath, privateKeyEnv: optionValue(args, '--private-key-env') ?? 'ARCLIO_RUNTIME_INDEX_SIGNING_KEY'}
 }
 
 function parseLocalOptions(args: string[]): LocalOptions {
@@ -347,11 +347,11 @@ async function localCommand(args: string[]): Promise<void> {
 	const absoluteSignaturePath = path.resolve(signaturePath)
 	const absolutePublicKeyPath = path.resolve(options.publicKeyPath)
 	const env = [
-		`export ARROXY_RUNTIME_INDEX_FILE=${shellQuote(absoluteManifestPath)}`,
-		`export ARROXY_RUNTIME_INDEX_SIG_FILE=${shellQuote(absoluteSignaturePath)}`,
-		`export ARROXY_RUNTIME_INDEX_PUBLIC_KEY_FILE=${shellQuote(absolutePublicKeyPath)}`,
-		"export ARROXY_RUNTIME_INDEX_URL='off'",
-		"export ARROXY_RUNTIME_INDEX_SIG_URL='off'"
+		`export ARCLIO_RUNTIME_INDEX_FILE=${shellQuote(absoluteManifestPath)}`,
+		`export ARCLIO_RUNTIME_INDEX_SIG_FILE=${shellQuote(absoluteSignaturePath)}`,
+		`export ARCLIO_RUNTIME_INDEX_PUBLIC_KEY_FILE=${shellQuote(absolutePublicKeyPath)}`,
+		"export ARCLIO_RUNTIME_INDEX_URL='off'",
+		"export ARCLIO_RUNTIME_INDEX_SIG_URL='off'"
 	].join('\n')
 	await fsPromises.writeFile(options.envFile, `${env}\n`)
 

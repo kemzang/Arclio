@@ -77,10 +77,10 @@ flatpak/.flatpak-builder/
 flatpak/builddir/
 flatpak/repo/
 flatpak/flathub.json
-flatpak/io.github.antonio_orionus.Arroxy.yml
-flatpak/io.github.antonio_orionus.Arroxy.metainfo.xml
+flatpak/io.github.antonio_orionus.Arclio.yml
+flatpak/io.github.antonio_orionus.Arclio.metainfo.xml
 flatpak/*.flatpak
-flatpak/Arroxy-*.tar.gz
+flatpak/Arclio-*.tar.gz
 .flatpak-builder/
 build-dir/
 private

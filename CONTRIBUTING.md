@@ -1,4 +1,4 @@
-# Contributing to Arroxy
+# Contributing to Arclio
 
 Thanks for thinking about contributing! Bug reports, fixes, and small features are all welcome.
 
@@ -8,7 +8,7 @@ This document covers the essentials. If anything is unclear, open an issue and a
 
 ### Branch policy
 
-Arroxy uses a single long-lived branch, **`main`**. Open contributor PRs against `main`. Feature work happens on short-lived feature branches in your fork and merges into `main` when ready.
+Arclio uses a single long-lived branch, **`main`**. Open contributor PRs against `main`. Feature work happens on short-lived feature branches in your fork and merges into `main` when ready.
 
 ### Contributor flow
 
@@ -26,7 +26,7 @@ Arroxy uses a single long-lived branch, **`main`**. Open contributor PRs against
 
 ### Registry package flows
 
-`yt-dlp-bridge` and `ytdlp-errors` live under `packages/` and are published to npmjs.com from this repository. Package PRs use the same Arroxy CI gate as app PRs.
+`yt-dlp-bridge` and `ytdlp-errors` live under `packages/` and are published to npmjs.com from this repository. Package PRs use the same Arclio CI gate as app PRs.
 
 Maintainers publish `yt-dlp-bridge` by bumping `packages/yt-dlp-bridge/package.json`, merging to `main`, then pushing a tag named `yt-dlp-bridge-vX.Y.Z`.
 
@@ -36,11 +36,11 @@ Both registry workflows build tarballs with Bun, then publish through registry t
 
 ## Reporting bugs / requesting features
 
-Use the [issue templates](https://github.com/antonio-orionus/Arroxy/issues/new/choose). For bugs, include:
+Use the [issue templates](https://github.com/antonio-orionus/Arclio/issues/new/choose). For bugs, include:
 
 - OS + version (e.g. Windows 11 23H2, macOS 14.4, Ubuntu 24.04)
 - Install channel (NSIS installer, Portable, Scoop, Homebrew, Winget, AppImage, tar.gz, Flatpak, DMG)
-- Arroxy version (visible in the title bar / Settings)
+- Arclio version (visible in the title bar / Settings)
 - A URL or scenario that reproduces it, plus the failure mode (error text, log line, screenshot)
 
 ## Local development
@@ -58,8 +58,8 @@ Bun installs JavaScript dependencies, but it does not replace native OS prerequi
 Run `bun run doctor` after setup. It reports the specific missing tool or artifact when possible.
 
 ```bash
-git clone https://github.com/antonio-orionus/Arroxy.git
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio.git
+cd Arclio
 mise install
 bun run bootstrap
 bun run doctor
@@ -118,4 +118,4 @@ For a fresh-Windows-box bootstrap, see `scripts/build/build-windows.ps1`.
 
 ## Licensing
 
-Arroxy is MIT-licensed. By submitting a PR you agree your contribution is licensed under the same terms.
+Arclio is MIT-licensed. By submitting a PR you agree your contribution is licensed under the same terms.

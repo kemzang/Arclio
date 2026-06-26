@@ -189,7 +189,7 @@ describe('Footer feedback controls', () => {
 		expect(mockTallyOpenPopup).toHaveBeenCalledWith(
 			'Ek6M8B',
 			expect.objectContaining({
-				key: expect.stringMatching(/^arroxy-feedback-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/),
+				key: expect.stringMatching(/^arclio-feedback-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/),
 				autoClose: 3000,
 				hiddenFields: expect.objectContaining({
 					app_version: '1.2.3',

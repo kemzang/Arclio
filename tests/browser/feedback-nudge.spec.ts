@@ -22,7 +22,7 @@ test('feedback nudge appears after delay and shows mascot + message', async ({pa
 	await page.waitForSelector('[data-testid="feedback-nudge"]', {timeout: 2_000})
 
 	await expect(page.getByTestId('feedback-nudge')).toBeVisible()
-	await expect(page.getByTestId('feedback-nudge')).toContainText('Enjoying Arroxy')
+	await expect(page.getByTestId('feedback-nudge')).toContainText('Enjoying Arclio')
 
 	await page.screenshot({path: 'tests/browser/screenshots/nudge-visible.png', fullPage: false})
 })

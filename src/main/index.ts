@@ -58,7 +58,7 @@ log.info('boot', {platform: process.platform, arch: process.arch, release: os.re
 
 const isMockBackend = process.env.MOCK_BACKEND === '1'
 const e2eMode = resolveE2eHarnessMode(process.env, {isPackaged: app.isPackaged})
-const gpuMode = process.env.ARROXY_GPU_MODE
+const gpuMode = process.env.ARCLIO_GPU_MODE
 
 for (const commandLineSwitch of e2eMode.commandLineSwitches) {
 	app.commandLine.appendSwitch(commandLineSwitch)
@@ -85,7 +85,7 @@ if (gpuMode === 'force') {
 	app.disableHardwareAcceleration()
 	log.info('gpu mode applied', {mode: gpuMode})
 } else if (gpuMode && gpuMode !== 'auto') {
-	log.warn('unknown ARROXY_GPU_MODE ignored', {value: gpuMode})
+	log.warn('unknown ARCLIO_GPU_MODE ignored', {value: gpuMode})
 }
 
 if (process.env.ELECTRON_USER_DATA) {
@@ -102,7 +102,7 @@ try {
 		const cfg = JSON.parse(raw) as {'disable-hardware-acceleration'?: boolean}
 		if (cfg['disable-hardware-acceleration']) {
 			if (gpuMode === 'force' || gpuMode === 'swiftshader') {
-				log.info('argv.json hardware acceleration disable ignored because ARROXY_GPU_MODE overrides it', {mode: gpuMode})
+				log.info('argv.json hardware acceleration disable ignored because ARCLIO_GPU_MODE overrides it', {mode: gpuMode})
 			} else {
 				app.disableHardwareAcceleration()
 				log.info('argv.json applied', {'disable-hardware-acceleration': true})
@@ -155,7 +155,7 @@ function createMainWindow(backgroundColor: string): BrowserWindow {
 		height: winState.height,
 		minWidth: WINDOW_MIN_WIDTH,
 		minHeight: WINDOW_MIN_HEIGHT,
-		title: 'Arroxy',
+		title: 'Arclio',
 		frame: false,
 		titleBarStyle: 'hidden',
 		autoHideMenuBar: true,
@@ -224,7 +224,7 @@ if (hasSingleInstanceLock) {
 		// present after `get()`. Empty string fallback keeps TS happy without
 		// weakening the type elsewhere.
 		const installId = initialSettings.common.installId ?? ''
-		const isDev = !!process.env.ELECTRON_RENDERER_URL || isMockBackend || e2eMode.enabled || !!process.env.ARROXY_SMOKE_URL || readRuntimeSmokeEnabled()
+		const isDev = !!process.env.ELECTRON_RENDERER_URL || isMockBackend || e2eMode.enabled || !!process.env.ARCLIO_SMOKE_URL || readRuntimeSmokeEnabled()
 		const cpuModel = os.cpus()[0]?.model ?? 'unknown'
 		const osLocale = app.getLocale()
 		if (!e2eMode.disableAnalytics) {

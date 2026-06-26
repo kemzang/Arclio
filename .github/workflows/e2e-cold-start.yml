@@ -71,11 +71,11 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" = "macOS" ]; then
-            exe=$(find dist -name "Arroxy" -path "*/MacOS/Arroxy" 2>/dev/null | head -1)
+            exe=$(find dist -name "Arclio" -path "*/MacOS/Arclio" 2>/dev/null | head -1)
           elif [ "$RUNNER_OS" = "Windows" ]; then
-            exe="dist/win-unpacked/Arroxy.exe"
+            exe="dist/win-unpacked/Arclio.exe"
           else
-            exe="dist/linux-unpacked/arroxy"
+            exe="dist/linux-unpacked/arclio"
           fi
           echo "PACKAGED_EXE=$GITHUB_WORKSPACE/$exe" >> "$GITHUB_ENV"
 
@@ -85,7 +85,7 @@ jobs:
       - name: Prepend fake JS runtimes and yt-dlp to PATH
         shell: bash
         run: |
-          fake="$RUNNER_TEMP/arroxy fake tools Ω"
+          fake="$RUNNER_TEMP/arclio fake tools Ω"
           mkdir -p "$fake"
           if [ "$RUNNER_OS" = "Windows" ]; then
             cat > "$fake/node.cmd" <<'EOF'
@@ -124,15 +124,15 @@ jobs:
       - name: Run packaged runtime smoke
         shell: bash
         env:
-          ARROXY_RUNTIME_SMOKE: '1'
-          ELECTRON_USER_DATA: ${{ runner.temp }}/Arroxy Runtime Ω Cold
-          ARROXY_LOG_ARCHIVE: ${{ runner.temp }}/arroxy-cold-logs
-          ARROXY_BINARY_DOWNLOAD_MAX_MS: '120000'
+          ARCLIO_RUNTIME_SMOKE: '1'
+          ELECTRON_USER_DATA: ${{ runner.temp }}/Arclio Runtime Ω Cold
+          ARCLIO_LOG_ARCHIVE: ${{ runner.temp }}/arclio-cold-logs
+          ARCLIO_BINARY_DOWNLOAD_MAX_MS: '120000'
         run: |
-          mkdir -p "$ARROXY_LOG_ARCHIVE"
+          mkdir -p "$ARCLIO_LOG_ARCHIVE"
           unset ELECTRON_RUN_AS_NODE
-          stdout="$ARROXY_LOG_ARCHIVE/runtime-smoke.out"
-          stderr="$ARROXY_LOG_ARCHIVE/runtime-smoke.err"
+          stdout="$ARCLIO_LOG_ARCHIVE/runtime-smoke.out"
+          stderr="$ARCLIO_LOG_ARCHIVE/runtime-smoke.err"
           set +e
           if [ "$RUNNER_OS" = "Linux" ]; then
             xvfb-run -a "$PACKAGED_EXE" >"$stdout" 2>"$stderr"
@@ -152,9 +152,9 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Continue'
-          $diag = Join-Path $env:RUNNER_TEMP 'arroxy-windows-diagnostics'
+          $diag = Join-Path $env:RUNNER_TEMP 'arclio-windows-diagnostics'
           New-Item -ItemType Directory -Force -Path $diag | Out-Null
-          "ARROXY_WINDOWS_DIAG_DIR=$diag" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "ARCLIO_WINDOWS_DIAG_DIR=$diag" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
           $channels = @(
             'Microsoft-Windows-Windows Defender/Operational',
@@ -174,9 +174,9 @@ jobs:
       - name: Run cold-start E2E
         shell: bash
         env:
-          ARROXY_COLD_TMPDIR: ${{ runner.temp }}
-          ARROXY_LOG_ARCHIVE: ${{ runner.temp }}/arroxy-cold-logs
-          ARROXY_BINARY_DOWNLOAD_MAX_MS: '120000'
+          ARCLIO_COLD_TMPDIR: ${{ runner.temp }}
+          ARCLIO_LOG_ARCHIVE: ${{ runner.temp }}/arclio-cold-logs
+          ARCLIO_BINARY_DOWNLOAD_MAX_MS: '120000'
         run: |
           if [ "$RUNNER_OS" = "Linux" ]; then
             xvfb-run -a bunx playwright test tests/e2e/cold-start.spec.ts --config playwright.config.ts
@@ -189,7 +189,7 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Continue'
-          $diag = if ($env:ARROXY_WINDOWS_DIAG_DIR) { $env:ARROXY_WINDOWS_DIAG_DIR } else { Join-Path $env:RUNNER_TEMP 'arroxy-windows-diagnostics' }
+          $diag = if ($env:ARCLIO_WINDOWS_DIAG_DIR) { $env:ARCLIO_WINDOWS_DIAG_DIR } else { Join-Path $env:RUNNER_TEMP 'arclio-windows-diagnostics' }
           New-Item -ItemType Directory -Force -Path $diag | Out-Null
 
           Get-Date -Format o | Out-File -FilePath (Join-Path $diag 'collected-at.txt') -Encoding utf8
@@ -233,7 +233,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: cold-start-logs-${{ matrix.label }}
-          path: ${{ runner.temp }}/arroxy-cold-logs
+          path: ${{ runner.temp }}/arclio-cold-logs
           if-no-files-found: ignore
           retention-days: 7
 
@@ -242,7 +242,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: cold-start-windows-diagnostics
-          path: ${{ runner.temp }}/arroxy-windows-diagnostics
+          path: ${{ runner.temp }}/arclio-windows-diagnostics
           if-no-files-found: ignore
           retention-days: 7
 

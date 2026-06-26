@@ -6,7 +6,7 @@ import {BROWSER_MOCK_LAUNCH_MODES, buildScenarioAppApiState, getScenario, normal
 import {applyThemeLive, readKnobs, RTL_LANGS} from './dev/browserMockKnobs.js'
 import {buildProbeErrorForKind} from './dev/scenarios/probeScenarios.js'
 
-const BROWSER_MOCK_LAUNCH_STORAGE_KEY = 'arroxy:browserMockLaunch'
+const BROWSER_MOCK_LAUNCH_STORAGE_KEY = 'arclio:browserMockLaunch'
 
 function isBrowserMockLaunchMode(value: string | null): value is BrowserMockLaunchMode {
 	return value != null && (BROWSER_MOCK_LAUNCH_MODES as readonly string[]).includes(value)
@@ -86,7 +86,7 @@ export function installBrowserMock(): void {
 	const knobs = readKnobs(location)
 	const launchMode = readBrowserMockLaunchMode()
 	const scenarioState = buildScenarioAppApiState(readBrowserMockScenario(), readUrlParams(location), knobs)
-	;(window as Window & {__arroxyBrowserMockShowStartupSplash?: boolean}).__arroxyBrowserMockShowStartupSplash = shouldShowBrowserMockStartupSplash({launchMode, warmUp: scenarioState.warmUp})
+	;(window as Window & {__arclioBrowserMockShowStartupSplash?: boolean}).__arclioBrowserMockShowStartupSplash = shouldShowBrowserMockStartupSplash({launchMode, warmUp: scenarioState.warmUp})
 
 	// Apply theme immediately so the first render uses the right colour scheme.
 	applyThemeLive(knobs.theme)
@@ -117,7 +117,7 @@ export function installBrowserMock(): void {
 
 	let settings: AppSettings = scenarioState.settings
 
-	;(window as Window & {__arroxyMockEmitClipboardUrl?: (url: string) => void}).__arroxyMockEmitClipboardUrl = url => {
+	;(window as Window & {__arclioMockEmitClipboardUrl?: (url: string) => void}).__arclioMockEmitClipboardUrl = url => {
 		clipboardUrlListeners.forEach(listener => listener(url))
 	}
 
@@ -406,7 +406,7 @@ export function installBrowserMock(): void {
 
 		dialog: {
 			chooseFolder: async () => {
-				const paths = ['/home/user/Downloads', '/home/user/Videos', '/home/user/Desktop', '/tmp/arroxy-downloads']
+				const paths = ['/home/user/Downloads', '/home/user/Videos', '/home/user/Desktop', '/tmp/arclio-downloads']
 				const path = paths[Math.floor(Math.random() * paths.length)]
 				await delay(200)
 				return {ok: true, data: {path}}

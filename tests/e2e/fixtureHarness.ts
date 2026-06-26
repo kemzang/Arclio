@@ -130,7 +130,7 @@ function bundledFfmpegPath(): string {
 	const arch = process.arch === 'arm64' ? 'arm64' : 'x64'
 	const bundled = path.join(process.cwd(), 'build', 'embedded', `${process.platform}-${arch}`, `ffmpeg${ext}`)
 	if (fs.existsSync(bundled)) return bundled
-	return process.env.ARROXY_FFMPEG_PATH ?? 'ffmpeg'
+	return process.env.ARCLIO_FFMPEG_PATH ?? 'ffmpeg'
 }
 
 function ffmpegEnv(ffmpegPath: string): NodeJS.ProcessEnv {
@@ -143,7 +143,7 @@ function ffmpegEnv(ffmpegPath: string): NodeJS.ProcessEnv {
 }
 
 async function generateSplitMediaBuffers(): Promise<SplitMediaBuffers> {
-	const dir = await fsPromises.mkdtemp(path.join(os.tmpdir(), 'arroxy-fixture-split-media-'))
+	const dir = await fsPromises.mkdtemp(path.join(os.tmpdir(), 'arclio-fixture-split-media-'))
 	const videoPath = path.join(dir, 'video.mp4')
 	const audioPath = path.join(dir, 'audio.m4a')
 	const ffmpegPath = bundledFfmpegPath()
@@ -396,7 +396,7 @@ export async function startDenyProxy(): Promise<DenyProxy> {
 	const server = http.createServer((req, res) => {
 		requests.push({method: req.method ?? 'GET', target: req.url ?? ''})
 		res.writeHead(502, {'Content-Type': 'text/plain; charset=utf-8'})
-		res.end('External network is disabled for Arroxy fixture E2E')
+		res.end('External network is disabled for Arclio fixture E2E')
 	})
 	server.on('connect', (req, socket) => {
 		requests.push({method: 'CONNECT', target: req.url ?? ''})
@@ -442,13 +442,13 @@ async function pathCandidate(): Promise<string | null> {
 function appCacheCandidates(): string[] {
 	const exe = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp'
 	if (process.platform === 'win32') {
-		return [process.env.LOCALAPPDATA, process.env.APPDATA].filter((value): value is string => !!value).map(root => path.join(root, 'arroxy', 'runtime-cache', 'binaries', exe))
+		return [process.env.LOCALAPPDATA, process.env.APPDATA].filter((value): value is string => !!value).map(root => path.join(root, 'arclio', 'runtime-cache', 'binaries', exe))
 	}
 	if (process.platform === 'darwin') {
-		return [path.join(os.homedir(), 'Library', 'Application Support', 'arroxy', 'runtime-cache', 'binaries', exe)]
+		return [path.join(os.homedir(), 'Library', 'Application Support', 'arclio', 'runtime-cache', 'binaries', exe)]
 	}
 	const configRoot = process.env.XDG_CONFIG_HOME ?? path.join(os.homedir(), '.config')
-	return [path.join(configRoot, 'arroxy', 'runtime-cache', 'binaries', exe)]
+	return [path.join(configRoot, 'arclio', 'runtime-cache', 'binaries', exe)]
 }
 
 function ytDlpAssetName(): string {
@@ -476,7 +476,7 @@ async function downloadYtDlp(destination: string): Promise<void> {
 }
 
 export async function ensureYtDlpPath(): Promise<string> {
-	const envCandidates = [process.env.ARROXY_YT_DLP_PATH, process.env.YT_DLP_PATH].filter((value): value is string => !!value)
+	const envCandidates = [process.env.ARCLIO_YT_DLP_PATH, process.env.YT_DLP_PATH].filter((value): value is string => !!value)
 	const pathFromPath = await pathCandidate()
 	const candidates = [...envCandidates, ...(pathFromPath ? [pathFromPath] : []), ...appCacheCandidates()]
 	for (const candidate of candidates) {
@@ -484,7 +484,7 @@ export async function ensureYtDlpPath(): Promise<string> {
 	}
 
 	const exe = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp'
-	const destination = path.join(os.tmpdir(), 'arroxy-e2e-runtime-cache', exe)
+	const destination = path.join(os.tmpdir(), 'arclio-e2e-runtime-cache', exe)
 	if (await canRunYtDlp(destination)) return destination
 	await downloadYtDlp(destination)
 	if (await canRunYtDlp(destination)) return destination
@@ -501,13 +501,13 @@ export async function ensureHostEmbeddedBinaries(): Promise<void> {
 
 export function buildFixtureEnv(input: {userDataDir: string; fixtureServer: FixtureServer; denyProxy: DenyProxy; ytDlpPath: string}): Record<string, string> {
 	const env: Record<string, string> = Object.fromEntries(Object.entries(process.env).filter((entry): entry is [string, string] => typeof entry[1] === 'string'))
-	env.ARROXY_E2E = '1'
+	env.ARCLIO_E2E = '1'
 	env.ELECTRON_USER_DATA = input.userDataDir
-	env.ARROXY_E2E_YTDLP_PLUGIN_DIR = FIXTURE_PLUGIN_ROOT
-	env.ARROXY_E2E_FIXTURE_BASE_URL = input.fixtureServer.baseUrl
-	env.ARROXY_E2E_FIXTURE_CATALOG_PATH = FIXTURE_MEDIA_CATALOG_PATH
-	env.ARROXY_YT_DLP_PATH = input.ytDlpPath
-	env.ARROXY_E2E_DENY_PROXY_URL = input.denyProxy.proxyUrl
+	env.ARCLIO_E2E_YTDLP_PLUGIN_DIR = FIXTURE_PLUGIN_ROOT
+	env.ARCLIO_E2E_FIXTURE_BASE_URL = input.fixtureServer.baseUrl
+	env.ARCLIO_E2E_FIXTURE_CATALOG_PATH = FIXTURE_MEDIA_CATALOG_PATH
+	env.ARCLIO_YT_DLP_PATH = input.ytDlpPath
+	env.ARCLIO_E2E_DENY_PROXY_URL = input.denyProxy.proxyUrl
 	env.HTTP_PROXY = input.denyProxy.proxyUrl
 	env.HTTPS_PROXY = input.denyProxy.proxyUrl
 	env.ALL_PROXY = input.denyProxy.proxyUrl

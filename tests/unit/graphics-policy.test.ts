@@ -76,14 +76,14 @@ describe('graphics policy', () => {
 	})
 
 	it('ignores the software WebGL override in packaged production', () => {
-		const policy = buildGraphicsPolicy({isPackaged: true, env: {ARROXY_BACKDROP_SOFTWARE: '1'}, featureStatus: {...HEALTHY_FEATURES, webgl: 'disabled_off'}, gpuInfo: {gpuDevice: [{deviceString: 'Google SwiftShader'}]}})
+		const policy = buildGraphicsPolicy({isPackaged: true, env: {ARCLIO_BACKDROP_SOFTWARE: '1'}, featureStatus: {...HEALTHY_FEATURES, webgl: 'disabled_off'}, gpuInfo: {gpuDevice: [{deviceString: 'Google SwiftShader'}]}})
 
 		expect(policy.backdrop.forceRenderMode).toBe('css-only')
 		expect(policy.backdrop.softwareWebglAllowed).toBe(false)
 	})
 
 	it('allows software WebGL only for explicit non-packaged dev runs', () => {
-		const policy = buildGraphicsPolicy({isPackaged: false, env: {ARROXY_BACKDROP_SOFTWARE: '1'}, featureStatus: {...HEALTHY_FEATURES, gpu_compositing: 'disabled_software', webgl: 'disabled_off'}, gpuInfo: {gpuDevice: [{deviceString: 'Google SwiftShader'}]}})
+		const policy = buildGraphicsPolicy({isPackaged: false, env: {ARCLIO_BACKDROP_SOFTWARE: '1'}, featureStatus: {...HEALTHY_FEATURES, gpu_compositing: 'disabled_software', webgl: 'disabled_off'}, gpuInfo: {gpuDevice: [{deviceString: 'Google SwiftShader'}]}})
 
 		expect(policy.backdrop.forceRenderMode).toBeNull()
 		expect(policy.backdrop.softwareWebglAllowed).toBe(true)

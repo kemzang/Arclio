@@ -9,7 +9,7 @@ from yt_dlp.utils import ExtractorError
 
 
 def _fixture_catalog_path():
-    configured = os.environ.get('ARROXY_E2E_FIXTURE_CATALOG_PATH')
+    configured = os.environ.get('ARCLIO_E2E_FIXTURE_CATALOG_PATH')
     if configured:
         return Path(configured)
     return Path(__file__).resolve().parents[3] / 'fixture-media-catalog.json'
@@ -20,7 +20,7 @@ def _fixture_catalog():
         with _fixture_catalog_path().open('r', encoding='utf-8') as handle:
             return json.load(handle)
     except Exception as err:
-        raise ExtractorError(f'Could not load Arroxy fixture media catalog: {err}')
+        raise ExtractorError(f'Could not load Arclio fixture media catalog: {err}')
 
 
 def _fixture_playlist_id_pattern():
@@ -31,7 +31,7 @@ def _fixture_video(catalog, video_id):
     for video in catalog['videos']:
         if video['id'] == video_id:
             return video
-    raise ExtractorError(f'Unknown Arroxy fixture video id: {video_id}')
+    raise ExtractorError(f'Unknown Arclio fixture video id: {video_id}')
 
 
 def _fixture_title(catalog, video_id):
@@ -59,18 +59,18 @@ def _fixture_formats(catalog, base_url, video_id):
     return formats
 
 
-class ArroxyFixtureYoutubeIE(YoutubeIE, plugin_name='arroxyfixture'):
+class ArclioFixtureYoutubeIE(YoutubeIE, plugin_name='arcliofixture'):
     _VALID_URL = r'https?://(?:www\.)?youtube\.com/watch\?(?:[^#]+&)?v=(?P<id>ARX[0-9A-Z]{8})(?:[&#].*)?$'
 
     def _fixture_base_url(self):
-        base_url = os.environ.get('ARROXY_E2E_FIXTURE_BASE_URL')
+        base_url = os.environ.get('ARCLIO_E2E_FIXTURE_BASE_URL')
         if not base_url:
-            raise ExtractorError('ARROXY_E2E_FIXTURE_BASE_URL is required for Arroxy fixture extraction')
+            raise ExtractorError('ARCLIO_E2E_FIXTURE_BASE_URL is required for Arclio fixture extraction')
         return base_url.rstrip('/')
 
     def _notify_fixture_probe(self, base_url, video_id):
         try:
-            request = urllib.request.Request(f'{base_url}/probe/{video_id}', headers={'User-Agent': 'arroxy-fixture-e2e'})
+            request = urllib.request.Request(f'{base_url}/probe/{video_id}', headers={'User-Agent': 'arclio-fixture-e2e'})
             with urllib.request.urlopen(request, timeout=60):
                 return
         except Exception as err:
@@ -87,10 +87,10 @@ class ArroxyFixtureYoutubeIE(YoutubeIE, plugin_name='arroxyfixture'):
         return {
             'id': video_id,
             'title': title,
-            'description': f'Deterministic Arroxy E2E fixture for {video_id}',
+            'description': f'Deterministic Arclio E2E fixture for {video_id}',
             'duration': 42,
-            'uploader': 'Arroxy Fixtures',
-            'channel': 'Arroxy Fixtures',
+            'uploader': 'Arclio Fixtures',
+            'channel': 'Arclio Fixtures',
             'webpage_url': url,
             'thumbnail': f'{base_url}/thumbnails/{video_id}.jpg',
             'thumbnails': [
@@ -115,7 +115,7 @@ class ArroxyFixtureYoutubeIE(YoutubeIE, plugin_name='arroxyfixture'):
         }
 
 
-class ArroxyFixtureYoutubeTabIE(YoutubeTabIE, plugin_name='arroxyfixture'):
+class ArclioFixtureYoutubeTabIE(YoutubeTabIE, plugin_name='arcliofixture'):
     _VALID_URL = rf'https?://(?:www\.)?youtube\.com/playlist\?list=(?P<id>{_fixture_playlist_id_pattern()})(?:[&#].*)?$'
 
     def _real_extract(self, url):
@@ -123,10 +123,10 @@ class ArroxyFixtureYoutubeTabIE(YoutubeTabIE, plugin_name='arroxyfixture'):
         catalog = _fixture_catalog()
         playlist = catalog['playlist']
         if playlist_id != playlist['id']:
-            raise ExtractorError(f'Unknown Arroxy fixture playlist id: {playlist_id}')
-        base_url = os.environ.get('ARROXY_E2E_FIXTURE_BASE_URL', '').rstrip('/')
+            raise ExtractorError(f'Unknown Arclio fixture playlist id: {playlist_id}')
+        base_url = os.environ.get('ARCLIO_E2E_FIXTURE_BASE_URL', '').rstrip('/')
         if not base_url:
-            raise ExtractorError('ARROXY_E2E_FIXTURE_BASE_URL is required for Arroxy fixture extraction')
+            raise ExtractorError('ARCLIO_E2E_FIXTURE_BASE_URL is required for Arclio fixture extraction')
 
         entries = []
         for index, video_id in enumerate(playlist['videoIds'], start=1):

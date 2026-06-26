@@ -7,23 +7,23 @@
 
 **{{read_in_label}}** {{LANG_NAV}}
 
-[![{{badge_release_alt}}](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![{{badge_build_alt}}](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![{{badge_website_alt}}](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![{{badge_license_alt}}](https://img.shields.io/badge/license-MIT-green) ![{{badge_platforms_alt}}](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![{{badge_i18n_alt}}](https://img.shields.io/badge/i18n-21_languages-blue)
+[![{{badge_release_alt}}](https://img.shields.io/github/v/release/antonio-orionus/Arclio?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arclio/releases/latest) [![{{badge_build_alt}}](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arclio/release.yml?label=Build)](https://github.com/antonio-orionus/Arclio/actions/workflows/release.yml) [![{{badge_website_alt}}](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![{{badge_license_alt}}](https://img.shields.io/badge/license-MIT-green) ![{{badge_platforms_alt}}](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![{{badge_i18n_alt}}](https://img.shields.io/badge/i18n-21_languages-blue)
 
 {{hero_desc}}
 
-[**{{cta_latest}}**](#install) &nbsp;·&nbsp; [**{{cta_website}}**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**{{cta_latest}}**](#install) &nbsp;·&nbsp; [**{{cta_website}}**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 [![{{discord_badge_text}}](https://img.shields.io/badge/{{discord_badge_encoded}}-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
 
 <img src="build/demo.gif" alt="{{demo_alt}}" width="720" />
 
-<img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" width="720" />
+<img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
 {{star_cta}}
 
 </div>
 
-> **What is Arroxy?** Arroxy is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arroxy), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arroxy), Flatpak, AppImage, and direct download.
+> **What is Arclio?** Arclio is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arclio), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arclio), Flatpak, AppImage, and direct download.
 >
 > _Last updated: 2026-06-17._
 
@@ -47,12 +47,12 @@
 
 | {{dl_platform_col}} | {{dl_format_col}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Portable.exe)                                                                                                                                                                                                        |
-| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-x64.dmg)                                                                                                                                                                                                                     |
-| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.tar.gz) |
-| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Portable.exe)                                                                                                                                                                                                        |
+| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-x64.dmg)                                                                                                                                                                                                                     |
+| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.tar.gz) |
+| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
-[**{{dl_grab}}**](https://github.com/antonio-orionus/Arroxy/releases/latest)
+[**{{dl_grab}}**](https://github.com/antonio-orionus/Arclio/releases/latest)
 
 ### <a id="why-warning"></a>{{dl_warning_h3}}
 
@@ -102,7 +102,7 @@
 {{dl_macos_damaged_p}}
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Arroxy.app
+xattr -dr com.apple.quarantine /Applications/Arclio.app
 ```
 
 {{dl_macos_arch_note}}
@@ -118,8 +118,8 @@ xattr -dr com.apple.quarantine /Applications/Arroxy.app
 **{{dl_linux_m2_h4}}**
 
 ```bash
-chmod +x Arroxy-linux-x64.AppImage
-./Arroxy-linux-x64.AppImage
+chmod +x Arclio-linux-x64.AppImage
+./Arclio-linux-x64.AppImage
 ```
 
 {{dl_linux_fuse_text}}
@@ -140,8 +140,8 @@ sudo pacman -S fuse2
 {{dl_linux_flatpak_intro}}
 
 ```bash
-flatpak install --user Arroxy-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arroxy
+flatpak install --user Arclio-linux-x64.flatpak
+flatpak run io.github.antonio_orionus.Arclio
 ```
 
 <details>
@@ -152,19 +152,19 @@ flatpak run io.github.antonio_orionus.Arroxy
 **{{dl_verify_win_label}}**
 
 ```powershell
-certutil -hashfile Arroxy-win-x64-Setup.exe SHA256
+certutil -hashfile Arclio-win-x64-Setup.exe SHA256
 ```
 
 **{{dl_verify_mac_label}}**
 
 ```bash
-shasum -a 256 Arroxy-mac-arm64.dmg
+shasum -a 256 Arclio-mac-arm64.dmg
 ```
 
 **{{dl_verify_linux_label}}**
 
 ```bash
-sha256sum Arroxy-linux-x64.AppImage
+sha256sum Arclio-linux-x64.AppImage
 ```
 
 {{dl_verify_vt_text}}
@@ -178,10 +178,10 @@ sha256sum Arroxy-linux-x64.AppImage
 
 | {{dl_channel_col}} | {{dl_command_col}}                                                                                |
 | ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
-| Flatpak            | `flatpak install --user Arroxy-linux-x64.flatpak`                                                 |
+| Winget             | `winget install AntonioOrionus.Arclio`                                                            |
+| Scoop              | `scoop bucket add arclio https://github.com/antonio-orionus/scoop-bucket && scoop install arclio` |
+| Homebrew           | `brew tap antonio-orionus/arclio && brew install --cask arclio`                                   |
+| Flatpak            | `flatpak install --user Arclio-linux-x64.flatpak`                                                 |
 
 </details>
 
@@ -206,7 +206,7 @@ sha256sum Arroxy-linux-x64.AppImage
 
 {{why_intro}}
 
-|            | Arroxy | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
+|            | Arclio | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
 | ---------- | :----: | :-----------------: | :---------: | :------------------------: | :----------------: |
 | {{why_r1}} |   ✅   |         ⚠️          |     ✅      |             ⚠️             |         ⚠️         |
 | {{why_r2}} |   ✅   |         ❌          |     ❌      |             ❌             |         ⚠️         |
@@ -262,16 +262,16 @@ sha256sum Arroxy-linux-x64.AppImage
 
 <table align="center" width="100%">
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" /><br/><sub>{{shot1_cap}}</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arroxy — Download profiles" /><br/><sub>{{shot2_cap}}</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" /><br/><sub>{{shot1_cap}}</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arclio — Download profiles" /><br/><sub>{{shot2_cap}}</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arroxy — Multi-language audio" /><br/><sub>{{shot3_cap}}</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arroxy — Surround / Dolby audio" /><br/><sub>{{shot4_cap}}</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arclio — Multi-language audio" /><br/><sub>{{shot3_cap}}</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arclio — Surround / Dolby audio" /><br/><sub>{{shot4_cap}}</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arroxy — Bulk URL mode" /><br/><sub>{{shot5_cap}}</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arroxy — Parallel download queue" /><br/><sub>{{shot6_cap}}</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arclio — Bulk URL mode" /><br/><sub>{{shot5_cap}}</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arclio — Parallel download queue" /><br/><sub>{{shot6_cap}}</sub></td>
   </tr>
 </table>
 
@@ -348,33 +348,33 @@ sha256sum Arroxy-linux-x64.AppImage
 
 ### App won't open / no window appears
 
-The Arroxy process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
+The Arclio process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
 
 **1. Check the log.** It records startup, GPU info, and any crash. Path:
 
 | Platform | Path                             |
 | -------- | -------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\logs\main.log` |
-| macOS    | `~/Library/Logs/Arroxy/main.log` |
-| Linux    | `~/.config/Arroxy/logs/main.log` |
+| Windows  | `%APPDATA%\Arclio\logs\main.log` |
+| macOS    | `~/Library/Logs/Arclio/main.log` |
+| Linux    | `~/.config/Arclio/logs/main.log` |
 
 **2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
 
 ```bash
 # Windows (Portable) — PowerShell, run from the folder containing the exe
-.\Arroxy-win-x64-Portable.exe --disable-gpu
+.\Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Portable) — Command Prompt (cmd.exe), from the same folder
-Arroxy-win-x64-Portable.exe --disable-gpu
+Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Installed) — works in both PowerShell and cmd.exe
-"%LOCALAPPDATA%\Programs\Arroxy\Arroxy.exe" --disable-gpu
+"%LOCALAPPDATA%\Programs\Arclio\Arclio.exe" --disable-gpu
 
 # macOS
-/Applications/Arroxy.app/Contents/MacOS/Arroxy --disable-gpu
+/Applications/Arclio.app/Contents/MacOS/Arclio --disable-gpu
 
 # Linux (AppImage)
-./Arroxy-linux-x64.AppImage --disable-gpu
+./Arclio-linux-x64.AppImage --disable-gpu
 ```
 
 If that works, the GPU/driver is the cause. Make the change permanent (next step).
@@ -383,9 +383,9 @@ If that works, the GPU/driver is the cause. Make the change permanent (next step
 
 | Platform | Path                                             |
 | -------- | ------------------------------------------------ |
-| Windows  | `%APPDATA%\Arroxy\argv.json`                     |
-| macOS    | `~/Library/Application Support/Arroxy/argv.json` |
-| Linux    | `~/.config/Arroxy/argv.json`                     |
+| Windows  | `%APPDATA%\Arclio\argv.json`                     |
+| macOS    | `~/Library/Application Support/Arclio/argv.json` |
+| Linux    | `~/.config/Arclio/argv.json`                     |
 
 With contents:
 
@@ -393,7 +393,7 @@ With contents:
 { "disable-hardware-acceleration": true }
 ```
 
-Arroxy reads this before opening any window, so it works even when the window never appeared.
+Arclio reads this before opening any window, so it works even when the window never appeared.
 
 **4. Other flags worth trying** (combine if needed): `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
 
@@ -409,11 +409,11 @@ Arroxy reads this before opening any window, so it works even when the window ne
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=antonio-orionus%2FArroxy&type=timeline&legend=top-left">
+<a href="https://www.star-history.com/?repos=antonio-orionus%2FArclio&type=timeline&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
  </picture>
 </a>
 

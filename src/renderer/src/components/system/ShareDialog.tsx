@@ -31,7 +31,7 @@ import IconPocket from '~icons/simple-icons/pocket'
 import IconBuffer from '~icons/simple-icons/buffer'
 import IconDiaspora from '~icons/simple-icons/diaspora'
 
-const SHARE_URL = 'https://arroxy.orionus.dev'
+const SHARE_URL = 'https://arclio.orionus.dev'
 
 // Viber dropped: viber://forward URL is rejected by shell.openExternal's
 // http(s)-only allowlist (fileHandlers.ts), so the button silently did nothing.

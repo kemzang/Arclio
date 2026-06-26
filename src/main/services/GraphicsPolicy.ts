@@ -92,7 +92,7 @@ function makePolicy(input: GraphicsPolicyInput, forceRenderMode: GraphicsPolicy[
 	return {
 		backdrop: {
 			forceRenderMode,
-			softwareWebglAllowed: !input.isPackaged && input.env.ARROXY_BACKDROP_SOFTWARE === '1',
+			softwareWebglAllowed: !input.isPackaged && input.env.ARCLIO_BACKDROP_SOFTWARE === '1',
 			...(fallbackReason ? {fallbackReason} : {}),
 			...(renderer ? {renderer} : {}),
 			...(devices.length > 0 ? {devices} : {}),
@@ -102,7 +102,7 @@ function makePolicy(input: GraphicsPolicyInput, forceRenderMode: GraphicsPolicy[
 }
 
 export function buildGraphicsPolicy(input: GraphicsPolicyInput): GraphicsPolicy {
-	const softwareWebglAllowed = !input.isPackaged && input.env.ARROXY_BACKDROP_SOFTWARE === '1'
+	const softwareWebglAllowed = !input.isPackaged && input.env.ARCLIO_BACKDROP_SOFTWARE === '1'
 	const rendererDiagnostics = collectRendererDiagnostics(input.gpuInfo)
 	const featureStatusUsable = input.featureStatusUsable ?? true
 

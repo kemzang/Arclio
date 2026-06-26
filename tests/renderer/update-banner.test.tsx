@@ -10,13 +10,13 @@ function makeInfo(overrides: Partial<UpdateAvailablePayload> = {}): UpdateAvaila
 
 describe('resolveAction', () => {
 	it('scoop → command regardless of platform', () => {
-		expect(resolveAction('scoop', 'win32')).toEqual({kind: 'command', cmd: 'scoop update arroxy'})
-		expect(resolveAction('scoop', 'darwin')).toEqual({kind: 'command', cmd: 'scoop update arroxy'})
+		expect(resolveAction('scoop', 'win32')).toEqual({kind: 'command', cmd: 'scoop update arclio'})
+		expect(resolveAction('scoop', 'darwin')).toEqual({kind: 'command', cmd: 'scoop update arclio'})
 	})
 
 	it('homebrew → command regardless of platform', () => {
-		expect(resolveAction('homebrew', 'darwin')).toEqual({kind: 'command', cmd: 'brew upgrade --cask arroxy'})
-		expect(resolveAction('homebrew', 'linux')).toEqual({kind: 'command', cmd: 'brew upgrade --cask arroxy'})
+		expect(resolveAction('homebrew', 'darwin')).toEqual({kind: 'command', cmd: 'brew upgrade --cask arclio'})
+		expect(resolveAction('homebrew', 'linux')).toEqual({kind: 'command', cmd: 'brew upgrade --cask arclio'})
 	})
 
 	it('winget → install regardless of platform', () => {
@@ -55,7 +55,7 @@ describe('UpdateBanner', () => {
 
 	it('renders both version numbers', () => {
 		render(<UpdateBanner info={makeInfo()} installing={false} installError={null} onInstall={vi.fn()} onDownload={vi.fn()} onDismiss={vi.fn()} />)
-		expect(screen.getByText('Arroxy 1.2.0')).toBeInTheDocument()
+		expect(screen.getByText('Arclio 1.2.0')).toBeInTheDocument()
 		expect(screen.getByText(/you have 0\.0\.1/)).toBeInTheDocument()
 	})
 
@@ -83,13 +83,13 @@ describe('UpdateBanner', () => {
 		window.platform = 'win32'
 		const onDismiss = vi.fn()
 		render(<UpdateBanner info={makeInfo({installChannel: 'scoop'})} installing={false} installError={null} onInstall={vi.fn()} onDownload={vi.fn()} onDismiss={onDismiss} />)
-		expect(screen.getByTestId('update-command')).toHaveTextContent('scoop update arroxy')
+		expect(screen.getByTestId('update-command')).toHaveTextContent('scoop update arclio')
 
 		await act(async () => {
 			fireEvent.click(screen.getByRole('button', {name: /Copy command/i}))
 		})
 
-		expect(navigator.clipboard.writeText).toHaveBeenCalledWith('scoop update arroxy')
+		expect(navigator.clipboard.writeText).toHaveBeenCalledWith('scoop update arclio')
 		expect(screen.getByTestId('update-banner')).toBeInTheDocument()
 		expect(onDismiss).not.toHaveBeenCalled()
 	})
@@ -97,13 +97,13 @@ describe('UpdateBanner', () => {
 	it('renders homebrew command + copy button; clipboard receives the command', async () => {
 		window.platform = 'darwin'
 		render(<UpdateBanner info={makeInfo({installChannel: 'homebrew'})} installing={false} installError={null} onInstall={vi.fn()} onDownload={vi.fn()} onDismiss={vi.fn()} />)
-		expect(screen.getByTestId('update-command')).toHaveTextContent('brew upgrade --cask arroxy')
+		expect(screen.getByTestId('update-command')).toHaveTextContent('brew upgrade --cask arclio')
 
 		await act(async () => {
 			fireEvent.click(screen.getByRole('button', {name: /Copy command/i}))
 		})
 
-		expect(navigator.clipboard.writeText).toHaveBeenCalledWith('brew upgrade --cask arroxy')
+		expect(navigator.clipboard.writeText).toHaveBeenCalledWith('brew upgrade --cask arclio')
 	})
 
 	it('copy button swaps icon to CopyCheck for ~2 s, then reverts', async () => {

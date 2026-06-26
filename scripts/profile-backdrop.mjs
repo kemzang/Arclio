@@ -40,7 +40,7 @@ function usage() {
 }
 
 function parseArgs(argv) {
-	const args = {url: defaultUrl, durationMs: 8000, warmupMs: 1500, presetNames: [], headless: null, channel: process.env.ARROXY_PROFILE_CHANNEL ?? 'chrome', autoServer: true, output: null, forceGpuFlags: false, forceSoftwareRenderer: false, cpuThrottleRate: 1, cpuCores: null}
+	const args = {url: defaultUrl, durationMs: 8000, warmupMs: 1500, presetNames: [], headless: null, channel: process.env.ARCLIO_PROFILE_CHANNEL ?? 'chrome', autoServer: true, output: null, forceGpuFlags: false, forceSoftwareRenderer: false, cpuThrottleRate: 1, cpuCores: null}
 
 	for (const arg of argv) {
 		if (arg === '--help' || arg === '-h') {
@@ -131,10 +131,10 @@ function stableHash(value) {
 }
 
 function readRendererPort() {
-	const raw = process.env.ARROXY_RENDERER_PORT?.trim()
+	const raw = process.env.ARCLIO_RENDERER_PORT?.trim()
 	if (!raw) return 20_000 + (stableHash(repoRoot) % 20_000)
 	const port = Number(raw)
-	if (!Number.isInteger(port) || port < 1 || port > 65_535) throw new Error(`Invalid ARROXY_RENDERER_PORT: ${raw}`)
+	if (!Number.isInteger(port) || port < 1 || port > 65_535) throw new Error(`Invalid ARCLIO_RENDERER_PORT: ${raw}`)
 	return port
 }
 
@@ -157,8 +157,8 @@ function positiveNumber(raw, label) {
 }
 
 function defaultHeadless() {
-	if (process.env.ARROXY_PROFILE_HEADLESS === '1') return true
-	if (process.env.ARROXY_PROFILE_HEADED === '1') return false
+	if (process.env.ARCLIO_PROFILE_HEADLESS === '1') return true
+	if (process.env.ARCLIO_PROFILE_HEADED === '1') return false
 	if (process.platform === 'darwin' || process.platform === 'win32') return false
 	return !process.env.DISPLAY && !process.env.WAYLAND_DISPLAY
 }

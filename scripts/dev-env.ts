@@ -88,14 +88,14 @@ export function computeDefaultRendererPort(repoRoot: string): number {
 
 export function resolveDevEnv(input: {repoRoot: string; env?: Record<string, string | undefined>}): DevEnvPaths {
 	const env = input.env ?? process.env
-	const rendererPortOverride = nonBlankOverride(env.ARROXY_RENDERER_PORT)
+	const rendererPortOverride = nonBlankOverride(env.ARCLIO_RENDERER_PORT)
 	const electronUserDataOverride = nonBlankOverride(env.ELECTRON_USER_DATA)
-	const tmpDirOverride = nonBlankOverride(env.ARROXY_DEV_TMP)
+	const tmpDirOverride = nonBlankOverride(env.ARCLIO_DEV_TMP)
 
 	return {
 		repoRoot: input.repoRoot,
 		rendererHost: RENDERER_HOST,
-		rendererPort: rendererPortOverride ? parsePort(rendererPortOverride, 'ARROXY_RENDERER_PORT') : computeDefaultRendererPort(input.repoRoot),
+		rendererPort: rendererPortOverride ? parsePort(rendererPortOverride, 'ARCLIO_RENDERER_PORT') : computeDefaultRendererPort(input.repoRoot),
 		rendererPortSource: rendererPortOverride ? 'override' : 'computed',
 		electronUserData: electronUserDataOverride ?? path.join(input.repoRoot, '.electron-user-data', 'dev'),
 		electronUserDataSource: electronUserDataOverride ? 'override' : 'computed',
@@ -236,7 +236,7 @@ async function ensureDevDirs(env: DevEnvPaths): Promise<void> {
 }
 
 function buildChildEnv(env: DevEnvPaths): NodeJS.ProcessEnv {
-	return {...process.env, ARROXY_RENDERER_PORT: String(env.rendererPort), ELECTRON_USER_DATA: env.electronUserData, ARROXY_DEV_TMP: env.tmpDir, TMPDIR: env.tmpDir, TMP: env.tmpDir, TEMP: env.tmpDir}
+	return {...process.env, ARCLIO_RENDERER_PORT: String(env.rendererPort), ELECTRON_USER_DATA: env.electronUserData, ARCLIO_DEV_TMP: env.tmpDir, TMPDIR: env.tmpDir, TMP: env.tmpDir, TEMP: env.tmpDir}
 }
 
 export async function spawnChecked(command: string, args: string[], options: SpawnOptions & {cwd: string; env: NodeJS.ProcessEnv}): Promise<void> {
@@ -535,7 +535,7 @@ async function runDoctor(json: boolean): Promise<void> {
 async function assertOverridePortAvailable(env: DevEnvPaths): Promise<void> {
 	if (env.rendererPortSource !== 'override') return
 	if (await isPortAvailable(env.rendererHost, env.rendererPort)) return
-	throw new Error(`ARROXY_RENDERER_PORT ${env.rendererPort} is already in use on ${env.rendererHost}`)
+	throw new Error(`ARCLIO_RENDERER_PORT ${env.rendererPort} is already in use on ${env.rendererHost}`)
 }
 
 export async function assertLauncherPortAvailable(env: DevEnvPaths, launcher: LauncherName): Promise<void> {
@@ -596,10 +596,10 @@ function applyElectronLauncherEnv(env: NodeJS.ProcessEnv, options: LauncherEnvOp
 	if (options.sandbox) delete childEnv.ELECTRON_DISABLE_SANDBOX
 	else childEnv.ELECTRON_DISABLE_SANDBOX = '1'
 
-	if (options.gpu === 'force') childEnv.ARROXY_GPU_MODE = 'force'
+	if (options.gpu === 'force') childEnv.ARCLIO_GPU_MODE = 'force'
 	if (options.gpu === 'swiftshader') {
-		childEnv.ARROXY_GPU_MODE = 'swiftshader'
-		childEnv.ARROXY_BACKDROP_SOFTWARE = '1'
+		childEnv.ARCLIO_GPU_MODE = 'swiftshader'
+		childEnv.ARCLIO_BACKDROP_SOFTWARE = '1'
 	}
 
 	return childEnv

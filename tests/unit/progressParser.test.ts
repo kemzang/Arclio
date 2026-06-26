@@ -180,11 +180,11 @@ describe('ProgressParser — subtitle-only progress', () => {
 		const parser = new ProgressParser(vi.fn(), vi.fn(), emitArtifact)
 		const active = makeActive(BASE_INPUT_SINGLE_FORMAT)
 
-		parser.consume(active, '[download] Destination: /tmp/.arroxy-temp/job/video.en.srt')
-		parser.consume(active, '[MoveFiles] Moving file "/tmp/.arroxy-temp/job/video.en.srt" to "/tmp/video.en.srt"')
+		parser.consume(active, '[download] Destination: /tmp/.arclio-temp/job/video.en.srt')
+		parser.consume(active, '[MoveFiles] Moving file "/tmp/.arclio-temp/job/video.en.srt" to "/tmp/video.en.srt"')
 
 		expect(active.subtitlePaths).toEqual(['/tmp/video.en.srt'])
-		expect(emitArtifact).toHaveBeenCalledWith({jobId: 'job-1', path: '/tmp/video.en.srt', kind: 'subtitle', fromPath: '/tmp/.arroxy-temp/job/video.en.srt', at: '2024-01-01T00:00:00.000Z'})
+		expect(emitArtifact).toHaveBeenCalledWith({jobId: 'job-1', path: '/tmp/video.en.srt', kind: 'subtitle', fromPath: '/tmp/.arclio-temp/job/video.en.srt', at: '2024-01-01T00:00:00.000Z'})
 	})
 
 	it('emits artifact events for generated sidecar files', () => {
@@ -205,10 +205,10 @@ describe('ProgressParser — subtitle-only progress', () => {
 	it('marks cached probe info-json artifact events as internal', () => {
 		const emitArtifact = vi.fn()
 		const parser = new ProgressParser(vi.fn(), vi.fn(), emitArtifact)
-		const active = makeActive({...BASE_INPUT_SINGLE_FORMAT, probeInfoJsonPath: '/tmp/.arroxy/probe.info.json'})
+		const active = makeActive({...BASE_INPUT_SINGLE_FORMAT, probeInfoJsonPath: '/tmp/.arclio/probe.info.json'})
 
-		parser.consume(active, '[info] Writing video metadata as JSON to: /tmp/.arroxy/probe.info.json')
+		parser.consume(active, '[info] Writing video metadata as JSON to: /tmp/.arclio/probe.info.json')
 
-		expect(emitArtifact).toHaveBeenCalledWith({jobId: 'job-1', path: '/tmp/.arroxy/probe.info.json', kind: 'companion', at: '2024-01-01T00:00:00.000Z', internal: true})
+		expect(emitArtifact).toHaveBeenCalledWith({jobId: 'job-1', path: '/tmp/.arclio/probe.info.json', kind: 'companion', at: '2024-01-01T00:00:00.000Z', internal: true})
 	})
 })

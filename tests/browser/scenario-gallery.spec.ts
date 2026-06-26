@@ -197,10 +197,10 @@ test('probe error dropdown shows all error kinds', async ({page}) => {
 
 test('update scenarios render channel-specific actions', async ({page}) => {
 	await openScenario(page, 'update-homebrew')
-	await expect(page.getByTestId('update-command')).toHaveText('brew upgrade --cask arroxy')
+	await expect(page.getByTestId('update-command')).toHaveText('brew upgrade --cask arclio')
 
 	await openScenario(page, 'update-scoop')
-	await expect(page.getByTestId('update-command')).toHaveText('scoop update arroxy')
+	await expect(page.getByTestId('update-command')).toHaveText('scoop update arclio')
 
 	await openScenario(page, 'update-portable')
 	await expect(page.getByTestId('update-banner').getByRole('link', {name: 'Download'})).toBeVisible()

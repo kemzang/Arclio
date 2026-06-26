@@ -160,7 +160,7 @@ grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7
 All share URLs use `encodeURIComponent`. Default share text comes from `i18next.t('share.defaultMessage')`. URL constant:
 
 ```ts
-const SHARE_URL = 'https://arroxy.orionus.dev';
+const SHARE_URL = 'https://arclio.orionus.dev';
 ```
 
 External open uses `window.appApi.shell.openExternal(url)` (Electron IPC → OS default browser/handler) — **not** `window.open`.
@@ -189,7 +189,7 @@ Uses `navigator.clipboard.writeText(SHARE_URL)`. Renders `Copy` ↔ `CopyCheck` 
 | SmartDrawer high-value banner action button       | `SmartDrawer.tsx`   | `share-high-value-banner-action` | `'high-value-inline'` | manual click on passive banner |
 | Milestone modal (3rd / 25th / 100th download)     | `systemSlice.ts`    | (dialog renders directly)        | `'milestone'`         | automatic                      |
 
-The previous per-completed-item Share2 icon button (`btn-share-item` in `QueueItemCard.tsx`) was removed — visually adjacent to a downloaded file, the share icon read as "share this file" rather than "share Arroxy". Manual share access remains via the four other surfaces.
+The previous per-completed-item Share2 icon button (`btn-share-item` in `QueueItemCard.tsx`) was removed — visually adjacent to a downloaded file, the share icon read as "share this file" rather than "share Arclio". Manual share access remains via the four other surfaces.
 
 Wizard card × dismiss: `data-testid="share-inline-card-dismiss"` → `setShareInlineCardDismissed()`.
 SmartDrawer banner × dismiss: `data-testid="share-high-value-banner-dismiss"` → `setShareHighValueBannerDismissed()`.
@@ -214,7 +214,7 @@ All events go through `track(name, props)` (`src/renderer/src/lib/analytics.ts`)
 | `share_prompt_impression`            | `{ via: ShareTrigger }`                   | `SmartDrawer.tsx` `useEffect`                   | First time the high-value banner becomes visible. Deduped via `useRef`.                                               |
 | `share_prompt_dismissed`             | `{ via: ShareTrigger }`                   | `setShareHighValueBannerDismissed()`            | Banner × click.                                                                                                       |
 
-Verifying allowlist parity: with `ARROXY_ANALYTICS_DEBUG=1` set, the dev branch of `trackMain` throws on unknown events / props.
+Verifying allowlist parity: with `ARCLIO_ANALYTICS_DEBUG=1` set, the dev branch of `trackMain` throws on unknown events / props.
 
 ---
 
@@ -225,7 +225,7 @@ Verifying allowlist parity: with `ARROXY_ANALYTICS_DEBUG=1` set, the dev branch 
 Keys:
 
 ```
-share.title                  // dialog header — "Share Arroxy"
+share.title                  // dialog header — "Share Arclio"
 share.description            // dialog subtitle
 share.copyLink               // copy-link button label
 share.copied                 // copy-link button label after click
@@ -244,7 +244,7 @@ Brand/platform names are **not** in the i18n machinery. Hardcoded in `SOCIAL_DES
 Default English message (line break preserved on Telegram/WhatsApp/Email/Mastodon/Bluesky/Threads; collapsed to space on X/Reddit/Facebook/LinkedIn):
 
 ```
-Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.
+Arclio — free, open-source YouTube downloader for Windows, macOS & Linux.
 4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock
 ```
 

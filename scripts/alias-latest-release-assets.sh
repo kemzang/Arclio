@@ -5,7 +5,7 @@ set -euo pipefail
 # It uploads versionless aliases to the current latest release without
 # modifying existing versioned assets or latest*.yml updater metadata.
 
-repo="${REPO:-antonio-orionus/Arroxy}"
+repo="${REPO:-antonio-orionus/Arclio}"
 tag="${1:-}"
 
 if [[ -z "$tag" ]]; then
@@ -19,16 +19,16 @@ trap 'rm -rf "$tmp"' EXIT
 assets="$(gh release view "$tag" --repo "$repo" --json assets --jq '.assets[].name')"
 
 pairs=(
-  "Arroxy-Setup-${version}.exe|Arroxy-win-x64-Setup.exe"
-  "Arroxy-Setup-${version}.exe.blockmap|Arroxy-win-x64-Setup.exe.blockmap"
-  "Arroxy-Portable-${version}.exe|Arroxy-win-x64-Portable.exe"
-  "Arroxy-${version}-arm64.dmg|Arroxy-mac-arm64.dmg"
-  "Arroxy-${version}-arm64.dmg.blockmap|Arroxy-mac-arm64.dmg.blockmap"
-  "Arroxy-${version}-x64.dmg|Arroxy-mac-x64.dmg"
-  "Arroxy-${version}-x64.dmg.blockmap|Arroxy-mac-x64.dmg.blockmap"
-  "Arroxy-${version}.AppImage|Arroxy-linux-x64.AppImage"
-  "Arroxy-${version}.tar.gz|Arroxy-linux-x64.tar.gz"
-  "Arroxy-${version}.flatpak|Arroxy-linux-x64.flatpak"
+  "Arclio-Setup-${version}.exe|Arclio-win-x64-Setup.exe"
+  "Arclio-Setup-${version}.exe.blockmap|Arclio-win-x64-Setup.exe.blockmap"
+  "Arclio-Portable-${version}.exe|Arclio-win-x64-Portable.exe"
+  "Arclio-${version}-arm64.dmg|Arclio-mac-arm64.dmg"
+  "Arclio-${version}-arm64.dmg.blockmap|Arclio-mac-arm64.dmg.blockmap"
+  "Arclio-${version}-x64.dmg|Arclio-mac-x64.dmg"
+  "Arclio-${version}-x64.dmg.blockmap|Arclio-mac-x64.dmg.blockmap"
+  "Arclio-${version}.AppImage|Arclio-linux-x64.AppImage"
+  "Arclio-${version}.tar.gz|Arclio-linux-x64.tar.gz"
+  "Arclio-${version}.flatpak|Arclio-linux-x64.flatpak"
 )
 
 uploaded=0

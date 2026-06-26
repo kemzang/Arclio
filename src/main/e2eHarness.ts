@@ -32,7 +32,7 @@ export interface E2eHarnessMode {
 const E2E_COMMAND_LINE_SWITCHES = ['disable-background-networking', 'disable-component-update', 'disable-domain-reliability', 'no-pings'] as const
 
 function isE2eHarnessEnabled(env: NodeJS.ProcessEnv, gate: HarnessGate): boolean {
-	return env.ARROXY_E2E === '1' && (!gate.isPackaged || env.ARROXY_ENABLE_E2E_HARNESS === '1')
+	return env.ARCLIO_E2E === '1' && (!gate.isPackaged || env.ARCLIO_ENABLE_E2E_HARNESS === '1')
 }
 
 function applyE2eAppSettingsDefaults(defaults: AppSettings, allowClipboardWatch: boolean): AppSettings {
@@ -46,17 +46,17 @@ function applyProxyEnv(env: NodeJS.ProcessEnv, proxyUrl: string | undefined): No
 
 function validatePluginRoot(pluginRoot: string | undefined): string {
 	if (!pluginRoot) {
-		throw new Error('ARROXY_E2E_YTDLP_PLUGIN_DIR is required when ARROXY_E2E=1')
+		throw new Error('ARCLIO_E2E_YTDLP_PLUGIN_DIR is required when ARCLIO_E2E=1')
 	}
 	if (!path.isAbsolute(pluginRoot)) {
-		throw new Error('ARROXY_E2E_YTDLP_PLUGIN_DIR must be an absolute path')
+		throw new Error('ARCLIO_E2E_YTDLP_PLUGIN_DIR must be an absolute path')
 	}
 	if (!fs.existsSync(pluginRoot) || !fs.statSync(pluginRoot).isDirectory()) {
-		throw new Error(`ARROXY_E2E_YTDLP_PLUGIN_DIR does not exist or is not a directory: ${pluginRoot}`)
+		throw new Error(`ARCLIO_E2E_YTDLP_PLUGIN_DIR does not exist or is not a directory: ${pluginRoot}`)
 	}
 	const namespaceRoot = path.join(pluginRoot, 'yt_dlp_plugins')
 	if (!fs.existsSync(namespaceRoot) || !fs.statSync(namespaceRoot).isDirectory()) {
-		throw new Error(`ARROXY_E2E_YTDLP_PLUGIN_DIR must contain yt_dlp_plugins/: ${pluginRoot}`)
+		throw new Error(`ARCLIO_E2E_YTDLP_PLUGIN_DIR must contain yt_dlp_plugins/: ${pluginRoot}`)
 	}
 	return pluginRoot
 }
@@ -66,12 +66,12 @@ export function resolveE2eHarnessMode(env: NodeJS.ProcessEnv = process.env, gate
 		return {enabled: false, disableAnalytics: false, disableUpdater: false, allowClipboardWatch: true, useMockTokenProvider: false, commandLineSwitches: [], applyAppSettingsDefaults: defaults => defaults, applySpawnEnv: baseEnv => ({...baseEnv}), ytDlpArgs: () => [], downloadRetryPolicy: undefined}
 	}
 
-	const pluginRoot = validatePluginRoot(env.ARROXY_E2E_YTDLP_PLUGIN_DIR)
-	const allowClipboardWatch = env.ARROXY_E2E_ENABLE_CLIPBOARD_WATCH === '1'
+	const pluginRoot = validatePluginRoot(env.ARCLIO_E2E_YTDLP_PLUGIN_DIR)
+	const allowClipboardWatch = env.ARCLIO_E2E_ENABLE_CLIPBOARD_WATCH === '1'
 	// yt-dlp's --plugin-dirs iterates DIR/* and looks for yt_dlp_plugins inside
 	// each child. The env var names the trusted plugin root, so pass its parent.
 	const pluginContainer = path.dirname(pluginRoot)
-	const denyProxyUrl = env.ARROXY_E2E_DENY_PROXY_URL
+	const denyProxyUrl = env.ARCLIO_E2E_DENY_PROXY_URL
 
 	return {
 		enabled: true,

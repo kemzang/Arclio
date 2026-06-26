@@ -1,6 +1,6 @@
 {
-  "appId": "com.arroxy.app",
-  "productName": "Arroxy",
+  "appId": "com.arclio.app",
+  "productName": "Arclio",
   "afterPack": "./build/afterPack.mjs",
   "beforeBuild": "./build/beforeBuild.mjs",
   "electronFuses": {
@@ -65,6 +65,6 @@
   "publish": {
     "provider": "github",
     "owner": "antonio-orionus",
-    "repo": "Arroxy"
+    "repo": "Arclio"
   }
 }

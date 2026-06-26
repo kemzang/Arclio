@@ -46,13 +46,13 @@ Use `docs/adr/0001-slug.md` style files for those decisions. Keep them concise.
 
 **TDD for non-trivial changes.** Write failing tests first, implement minimally, then refactor. Skip only for typo fixes and single-line edits.
 
-**Translation workflow.** Use the `translate-arroxy-i18n` project skill for app locale changes, PO/POT sync, generated locale JSON, and i18n audits.
+**Translation workflow.** Use the `translate-arclio-i18n` project skill for app locale changes, PO/POT sync, generated locale JSON, and i18n audits.
 
 **Session scope.** Treat every agent session as scoped to the task context it was given. Other agents may be working in parallel on the same branch, so do not repair, reformat, revert, or restructure files outside your current scope just because you notice a problem there.
 
 ### Agent Skills
 
-- **translate-arroxy-i18n** — manages app locale updates, gettext PO/POT sync, runtime locale JSON generation, and i18n audit commands. Entry point: `.agents/skills/translate-arroxy-i18n/SKILL.md`.
+- **translate-arclio-i18n** — manages app locale updates, gettext PO/POT sync, runtime locale JSON generation, and i18n audit commands. Entry point: `.agents/skills/translate-arclio-i18n/SKILL.md`.
 
 ---
 
@@ -99,7 +99,7 @@ Keep installable third-party skills out of Git. Their source directories under `
 bun run agents:skills:restore
 ```
 
-Only tiny project-owned, non-installable skills stay tracked under `./.agents/skills/`. Do not add `.claude/skills/` to Git; that directory is local/generated only. If a new public skill is useful for Arroxy, add it through the Skills CLI so `skills-lock.json` records the source and hash instead of committing the skill's source tree.
+Only tiny project-owned, non-installable skills stay tracked under `./.agents/skills/`. Do not add `.claude/skills/` to Git; that directory is local/generated only. If a new public skill is useful for Arclio, add it through the Skills CLI so `skills-lock.json` records the source and hash instead of committing the skill's source tree.
 
 ---
 
@@ -156,9 +156,9 @@ When adding idempotent IPC registration (`ipcMain.removeHandler()`, `autoUpdater
 
 ---
 
-## Arroxy Testing Architecture
+## Arclio Testing Architecture
 
-Arroxy is an Electron desktop app. Do not let React/component testing habits replace product workflow validation. A bug found through real user actions such as paste, metadata loading, wizard navigation, queue controls, pause/resume/cancel, or file output must be verified through the layer that can exercise those actions in the real app.
+Arclio is an Electron desktop app. Do not let React/component testing habits replace product workflow validation. A bug found through real user actions such as paste, metadata loading, wizard navigation, queue controls, pause/resume/cancel, or file output must be verified through the layer that can exercise those actions in the real app.
 
 Fixture Product E2E is the **acceptance owner for real user workflows**, not the default test type for every behavior. Keep it to a small number of strong scenarios per risk group. Local rules, rendering states, process-supervision failures, and startup/security checks still belong in their cheaper owning layers.
 
@@ -168,9 +168,9 @@ Fixture Product E2E is the **acceptance owner for real user workflows**, not the
 - **Renderer tests** (`tests/renderer`, jsdom): use for renderer-local state and component contracts when the behavior is too small to justify a full app launch. Do not use these as acceptance tests for download, probe, queue, or filesystem workflows.
 - **Scenario Workbench** (`tests/browser`, `bun run dev:mock`): use browser-mock and the scenario gallery for visual inspection, layout stress, screenshots, and fast review of many UI states. This proves how a state looks, not whether the real product workflow works.
 - **Mock Electron smoke tests** (`tests/e2e` with `MOCK_BACKEND=1`): use for app shell, preload bridge, context isolation, startup resilience, and mocked persistence checks. Do not use this layer for normal download acceptance.
-- **Fixture Product E2E** (`ARROXY_E2E=1`): use as the acceptance layer for real product workflows that require real Electron, real IPC, real yt-dlp, filesystem output, or realistic user interaction. This layer runs real Electron, real IPC, real `ProbeService`, real `DownloadService`, real `QueueService`, real filesystem effects, and real spawned yt-dlp, while only the video platform is deterministic through the fixture extractor plugin, local media server, and deny proxy.
+- **Fixture Product E2E** (`ARCLIO_E2E=1`): use as the acceptance layer for real product workflows that require real Electron, real IPC, real yt-dlp, filesystem output, or realistic user interaction. This layer runs real Electron, real IPC, real `ProbeService`, real `DownloadService`, real `QueueService`, real filesystem effects, and real spawned yt-dlp, while only the video platform is deterministic through the fixture extractor plugin, local media server, and deny proxy.
 - **Cold-start packaged E2E**: use for packaged binary/warmup behavior, managed binary downloads, and production bootstrapping. Keep it narrow because it is slow.
-- **Live smoke tests**: use only to detect real YouTube/yt-dlp drift. They are external, flaky by nature, and must not be the acceptance gate for Arroxy product workflow correctness.
+- **Live smoke tests**: use only to detect real YouTube/yt-dlp drift. They are external, flaky by nature, and must not be the acceptance gate for Arclio product workflow correctness.
 
 ### Choosing the right test
 
@@ -203,7 +203,7 @@ For each risk group, add Fixture Product E2E only for behavior that needs real a
 ### Workflow feedback rules
 
 - Prefer visible UI milestones first: title appears, row count changes, progress/status changes, buttons enable/disable, queue card reaches the expected state.
-- Use E2E-only diagnostics only when visible UI is insufficient. Gate diagnostics behind `ARROXY_E2E=1`; never expose them in normal packaged production.
+- Use E2E-only diagnostics only when visible UI is insufficient. Gate diagnostics behind `ARCLIO_E2E=1`; never expose them in normal packaged production.
 - Use filesystem assertions for download outcomes. A completed queue item is not enough if the expected output file is missing or implausible.
 - Use the deny proxy request log as an oracle. Deterministic fixture tests must fail if yt-dlp reaches non-local network.
 - Avoid hardcoded sleeps. Wait for specific UI, diagnostic, process, filesystem, or network milestones.
@@ -236,10 +236,10 @@ If browser automation needs a fixed URL, pin the port through the wrapper instea
 
 ```bash
 # POSIX shells
-ARROXY_RENDERER_PORT=5173 bun run dev:mock
+ARCLIO_RENDERER_PORT=5173 bun run dev:mock
 
 # PowerShell
-$env:ARROXY_RENDERER_PORT = "5173"; bun run dev:mock
+$env:ARCLIO_RENDERER_PORT = "5173"; bun run dev:mock
 ```
 
 Only bypass the wrapper when you intentionally need a custom Vite invocation, such as a different port or one-off debugging flags:
@@ -255,21 +255,21 @@ For realtime interaction with the real Electron renderer, expose Electron CDP th
 
 ```bash
 REMOTE_DEBUGGING_PORT=9333 bun run dev
-agent-browser --session arroxy-electron connect 9333
-agent-browser --session arroxy-electron snapshot -i
+agent-browser --session arclio-electron connect 9333
+agent-browser --session arclio-electron snapshot -i
 ```
 
-Use this for live app inspection when behavior depends on the real preload bridge, IPC, native shell, or Electron rendering. In Linux headless shells only, wrap the launch with `xvfb-run -a`; on a desktop session, macOS, or Windows, launch normally without `xvfb-run`. If another dev server is already running, isolate the session with `ARROXY_RENDERER_PORT`, `ELECTRON_USER_DATA`, and `ARROXY_DEV_TMP`. Playwright can attach to the same endpoint with `chromium.connectOverCDP('http://127.0.0.1:9333')`, but prefer it for scripted proofs, traces, or fallback JS rather than first-pass interactive exploration.
+Use this for live app inspection when behavior depends on the real preload bridge, IPC, native shell, or Electron rendering. In Linux headless shells only, wrap the launch with `xvfb-run -a`; on a desktop session, macOS, or Windows, launch normally without `xvfb-run`. If another dev server is already running, isolate the session with `ARCLIO_RENDERER_PORT`, `ELECTRON_USER_DATA`, and `ARCLIO_DEV_TMP`. Playwright can attach to the same endpoint with `chromium.connectOverCDP('http://127.0.0.1:9333')`, but prefer it for scripted proofs, traces, or fallback JS rather than first-pass interactive exploration.
 
 ### agent-browser workflow
 
 1. `agent-browser skills get core` before the first browser task in a session.
-2. `agent-browser --session arroxy-ui --args "--no-sandbox" open http://127.0.0.1:<doctor-port>/` when Chromium sandboxing fails in the dev VM.
-3. `agent-browser --session arroxy-ui set viewport 1190 768` to check breakpoint behavior.
-4. `agent-browser --session arroxy-ui snapshot -i` for interactive refs.
-5. `agent-browser --session arroxy-ui screenshot output/playwright/<name>.png` for review artifacts.
-6. `agent-browser --session arroxy-ui console` / `agent-browser --session arroxy-ui errors` for runtime issues.
-7. `agent-browser --session arroxy-ui close` after the visual pass.
+2. `agent-browser --session arclio-ui --args "--no-sandbox" open http://127.0.0.1:<doctor-port>/` when Chromium sandboxing fails in the dev VM.
+3. `agent-browser --session arclio-ui set viewport 1190 768` to check breakpoint behavior.
+4. `agent-browser --session arclio-ui snapshot -i` for interactive refs.
+5. `agent-browser --session arclio-ui screenshot output/playwright/<name>.png` for review artifacts.
+6. `agent-browser --session arclio-ui console` / `agent-browser --session arclio-ui errors` for runtime issues.
+7. `agent-browser --session arclio-ui close` after the visual pass.
 
 ### Playwright fallback
 
@@ -304,7 +304,7 @@ async (page) => {
       extraHTTPHeaders: { 'Accept-Language': 'hi-IN,hi;q=0.9,en;q=0.5' }
     });
   const p = await context.newPage();
-  await p.goto('https://arroxy.orionus.dev/');
+  await p.goto('https://arclio.orionus.dev/');
   await p.waitForTimeout(1500); // let inline redirect script fire
   const result = { url: p.url(), title: await p.title() };
   await context.close();
@@ -337,9 +337,9 @@ bun run profile:backdrop     # browser-side FPS / fallback profiler
 bun run profile:backdrop:weak # forced software + 2 reported cores + 4x CPU throttle
 ```
 
-On the Ubuntu VMware dev VM observed on 2026-06-09, Xorg had VMware DRI2/DRI3 direct rendering enabled, but Electron/Chrome still logged `MESA-LOADER: failed to open dri_gbm.so: Permission denied` and `WebGL1 blocklisted`. `gpu:probe:force` stayed `gl=none`, while `gpu:probe:swiftshader` enabled WebGL through `ANGLE ... SwiftShader`. Use `bun run dev:swiftshader` only for VM visual iteration; it is CPU WebGL and intentionally opt-in via `ARROXY_BACKDROP_SOFTWARE=1`.
+On the Ubuntu VMware dev VM observed on 2026-06-09, Xorg had VMware DRI2/DRI3 direct rendering enabled, but Electron/Chrome still logged `MESA-LOADER: failed to open dri_gbm.so: Permission denied` and `WebGL1 blocklisted`. `gpu:probe:force` stayed `gl=none`, while `gpu:probe:swiftshader` enabled WebGL through `ANGLE ... SwiftShader`. Use `bun run dev:swiftshader` only for VM visual iteration; it is CPU WebGL and intentionally opt-in via `ARCLIO_BACKDROP_SOFTWARE=1`.
 
-Backdrop fallback is adaptive, not screenshot-based: `AppBackdrop` chooses the dark aurora or light ocean scene, then `CanvasSceneHost` probes WebGL on a scratch canvas first, rejects software renderers unless `backdropSoftware=1` / `ARROXY_BACKDROP_SOFTWARE=1` opts in, then draws the selected scene's static Canvas2D fallback at the current viewport size. The component keeps separate WebGL and Canvas2D canvases because once a canvas owns a WebGL context it cannot be reused for Canvas2D. In the no-GPU Electron fallback path, do not redraw Canvas2D during live window resize; stretch the existing bitmap and redraw once after resize settles. Use `backdropDebug=1` or `localStorage.backdropDebug = '1'` to log fallback mode decisions, resize scheduling, draw timing, and backing-store sizes. CSS gradients are only the last fallback when Canvas2D is unavailable.
+Backdrop fallback is adaptive, not screenshot-based: `AppBackdrop` chooses the dark aurora or light ocean scene, then `CanvasSceneHost` probes WebGL on a scratch canvas first, rejects software renderers unless `backdropSoftware=1` / `ARCLIO_BACKDROP_SOFTWARE=1` opts in, then draws the selected scene's static Canvas2D fallback at the current viewport size. The component keeps separate WebGL and Canvas2D canvases because once a canvas owns a WebGL context it cannot be reused for Canvas2D. In the no-GPU Electron fallback path, do not redraw Canvas2D during live window resize; stretch the existing bitmap and redraw once after resize settles. Use `backdropDebug=1` or `localStorage.backdropDebug = '1'` to log fallback mode decisions, resize scheduling, draw timing, and backing-store sizes. CSS gradients are only the last fallback when Canvas2D is unavailable.
 
 If testing Electron sandbox as the GPU blocker, the local Electron helper may need setuid before `bun run gpu:probe:sandbox` / `bun run dev:sandbox`:
 
@@ -354,7 +354,7 @@ sudo chmod 4755 node_modules/.bun/electron@42.3.0/node_modules/electron/dist/chr
 
 Config (style, aliases, icon library, CSS entry) lives in `components.json`. Runtime deps already present: `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react`.
 
-shadcn/ui is the primary source for renderer UI primitives. Before inventing custom controls, panels, form layouts, option groups, empty states, callouts, badges, or grouped inputs, first reuse an installed shadcn component or install the needed component through the shadcn CLI. Prefer composition of shadcn primitives (`Field`, `InputGroup`, `ButtonGroup`, `ToggleGroup`, `Card`, `Alert`, `Empty`, `Separator`, `Badge`, etc.) over raw styled `div`/`button` markup. Custom primitives are acceptable only when shadcn has no fitting component or the component encodes Arroxy-specific product behavior.
+shadcn/ui is the primary source for renderer UI primitives. Before inventing custom controls, panels, form layouts, option groups, empty states, callouts, badges, or grouped inputs, first reuse an installed shadcn component or install the needed component through the shadcn CLI. Prefer composition of shadcn primitives (`Field`, `InputGroup`, `ButtonGroup`, `ToggleGroup`, `Card`, `Alert`, `Empty`, `Separator`, `Badge`, etc.) over raw styled `div`/`button` markup. Custom primitives are acceptable only when shadcn has no fitting component or the component encodes Arclio-specific product behavior.
 
 **Do not add Radix.** This project does **not** use `@radix-ui/*` — the `base-nova` registry doesn't depend on Radix primitives. Don't add Radix deps or assume Radix is available.
 
@@ -372,7 +372,7 @@ shadcn/ui is the primary source for renderer UI primitives. Before inventing cus
 
 ## Layout Breakpoints
 
-Arroxy uses Tailwind v4 default mobile-first breakpoints: `sm` 640px, `md` 768px, `lg` 1024px, `xl` 1280px, `2xl` 1536px. There are no custom Tailwind breakpoint overrides.
+Arclio uses Tailwind v4 default mobile-first breakpoints: `sm` 640px, `md` 768px, `lg` 1024px, `xl` 1280px, `2xl` 1536px. There are no custom Tailwind breakpoint overrides.
 
 The real Electron window has min size `720x680` and default size `900x760`, so production normally starts above `sm` and around `md`; `<640px` is mainly browser-mock/test coverage.
 
@@ -394,17 +394,17 @@ Container format is NOT a subtitle concern: `subtitleMode === 'embed'` passes `-
 
 Renderer shows `<UpdateBanner>` between title bar and content area; `resolveAction(channel, platform)` picks the UX:
 
-- `scoop` → copy-command for `scoop update arroxy`
-- `homebrew` → copy-command for `brew upgrade --cask arroxy`
-- `portable` → "Download ↗" link to https://arroxy.orionus.dev/ (NSIS auto-update can't run from a %TEMP% extract)
-- `direct` on darwin → "Download ↗" link to https://arroxy.orionus.dev/ (DMG is unsigned, can't self-update)
+- `scoop` → copy-command for `scoop update arclio`
+- `homebrew` → copy-command for `brew upgrade --cask arclio`
+- `portable` → "Download ↗" link to https://arclio.orionus.dev/ (NSIS auto-update can't run from a %TEMP% extract)
+- `direct` on darwin → "Download ↗" link to https://arclio.orionus.dev/ (DMG is unsigned, can't self-update)
 - `direct` on win/linux (and `winget`) → "Install & Restart" button → invokes `updater:install` → main calls `downloadUpdate()` → on `update-downloaded` calls `quitAndInstall(false, true)`
 
 ### Known gap: Linux tar.gz never sees the banner
 
 On Linux, electron-updater's default updater is `AppImageUpdater` (no `package-type` file shipped — we only build AppImage + tar.gz). `AppImageUpdater.isUpdaterActive()` returns `false` when `process.env.APPIMAGE` is unset, which silently short-circuits `AppUpdater.checkForUpdates()` (returns `null`, logs `"APPIMAGE env is not defined, current application is not an AppImage"`, never emits `update-available`). So tar.gz Linux users get **no update banner at all** — not an error, just silence. Verified in `node_modules/electron-updater/out/AppImageUpdater.js:17-28` and `AppUpdater.js:253-256`.
 
-**Decision: do not fix.** Audience is small (most Linux users get AppImage or Flatpak). Fixing would require bypassing electron-updater for this case and hitting `https://api.github.com/repos/antonio-orionus/Arroxy/releases/latest` directly to drive our own `updater:available` IPC.
+**Decision: do not fix.** Audience is small (most Linux users get AppImage or Flatpak). Fixing would require bypassing electron-updater for this case and hitting `https://api.github.com/repos/antonio-orionus/Arclio/releases/latest` directly to drive our own `updater:available` IPC.
 
 ### IPC + types
 
@@ -486,9 +486,9 @@ git push --follow-tags
 
 Windows is built separately via a dedicated Windows Installer workflow (smoke-testable before publish); `publish-release` polls up to 15min until the Windows Setup + Portable `.exe` artifacts appear before generating `SHA256SUMS` and un-drafting the release.
 
-Arroxy uses GitHub immutable releases for release asset integrity and the GitHub release asset verification UI. The workflow finishes all mutable release work while the release is still a draft, then publishes/undrafts as the last step. `actions/attest` is intentionally not used for release assets; immutable releases create release attestations for the published assets, while workflow provenance attestations are a separate SLSA/build-chain concern. Keep `SHA256SUMS` for package-manager hashes and offline verification; keep updater metadata (`latest*.yml`) and blockmaps outside the checksum contract.
+Arclio uses GitHub immutable releases for release asset integrity and the GitHub release asset verification UI. The workflow finishes all mutable release work while the release is still a draft, then publishes/undrafts as the last step. `actions/attest` is intentionally not used for release assets; immutable releases create release attestations for the published assets, while workflow provenance attestations are a separate SLSA/build-chain concern. Keep `SHA256SUMS` for package-manager hashes and offline verification; keep updater metadata (`latest*.yml`) and blockmaps outside the checksum contract.
 
-`.github/workflows/release_to_winget.yml` triggers on the `released` event: once `publish-release` un-drafts the release, the SHA-pinned `vedantmgoyal9/winget-releaser` action runs `komac update AntonioOrionus.Arroxy --submit` → opens a PR against `microsoft/winget-pkgs`. Microsoft reviewers merge within hours-to-a-day. Keep that third-party action pinned to a full commit SHA because it receives `WINGET_TOKEN`.
+`.github/workflows/release_to_winget.yml` triggers on the `released` event: once `publish-release` un-drafts the release, the SHA-pinned `vedantmgoyal9/winget-releaser` action runs `komac update AntonioOrionus.Arclio --submit` → opens a PR against `microsoft/winget-pkgs`. Microsoft reviewers merge within hours-to-a-day. Keep that third-party action pinned to a full commit SHA because it receives `WINGET_TOKEN`.
 
 ### Required GitHub repo secret
 
@@ -500,15 +500,15 @@ Despite the name, this single token authenticates Scoop, Homebrew, **and** Winge
 
 ### Initial Winget submission (one-time, done)
 
-The `vedantmgoyal9/winget-releaser` action can only **update** an existing winget package, not create one. For Arroxy this was done once via [komac](https://github.com/russellbanks/Komac) (`komac new AntonioOrionus.Arroxy …`) → submitted PR [microsoft/winget-pkgs#365414](https://github.com/microsoft/winget-pkgs/pull/365414). Future tag pushes auto-bump the existing manifest with no manual work.
+The `vedantmgoyal9/winget-releaser` action can only **update** an existing winget package, not create one. For Arclio this was done once via [komac](https://github.com/russellbanks/Komac) (`komac new AntonioOrionus.Arclio …`) → submitted PR [microsoft/winget-pkgs#365414](https://github.com/microsoft/winget-pkgs/pull/365414). Future tag pushes auto-bump the existing manifest with no manual work.
 
 If we ever change the PackageIdentifier, repeat that one-time submission for the new identifier and update `release_to_winget.yml`.
 
 ### External repos this pipeline writes to
 
-- [`antonio-orionus/scoop-bucket`](https://github.com/antonio-orionus/scoop-bucket) — single `bucket/arroxy.json` manifest, auto-bumped per release
-- [`antonio-orionus/homebrew-arroxy`](https://github.com/antonio-orionus/homebrew-arroxy) — single `Casks/arroxy.rb` cask with `on_arm`/`on_intel` stanzas, auto-bumped per release
-- [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs) — community repo; PRs land at `manifests/a/AntonioOrionus/Arroxy/<version>/`
+- [`antonio-orionus/scoop-bucket`](https://github.com/antonio-orionus/scoop-bucket) — single `bucket/arclio.json` manifest, auto-bumped per release
+- [`antonio-orionus/homebrew-arclio`](https://github.com/antonio-orionus/homebrew-arclio) — single `Casks/arclio.rb` cask with `on_arm`/`on_intel` stanzas, auto-bumped per release
+- [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs) — community repo; PRs land at `manifests/a/AntonioOrionus/Arclio/<version>/`
 
 GitHub Releases ships: NSIS installer, portable `.exe`, arm64 DMG, x64 DMG, AppImage, tar.gz source, and a Flatpak bundle. No Snap / AUR — community can maintain those if demand appears.
 
@@ -516,7 +516,7 @@ GitHub Releases ships: NSIS installer, portable `.exe`, arm64 DMG, x64 DMG, AppI
 
 ## Binary distribution strategy
 
-Arroxy ships three third-party binaries. They split into two camps based on update cadence:
+Arclio ships three third-party binaries. They split into two camps based on update cadence:
 
 | Binary           | Strategy                                        | Source                                                | Why                                                                                            |
 | ---------------- | ----------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
@@ -525,7 +525,7 @@ Arroxy ships three third-party binaries. They split into two camps based on upda
 
 ### Electron-as-Node security note
 
-`electron-builder.json5` intentionally keeps the `runAsNode` fuse enabled because Arroxy uses its packaged Electron executable as yt-dlp's Node runtime. `ELECTRON_RUN_AS_NODE=1` must only be added to the yt-dlp child-process environment, never to `process.env` or persisted config. Packaged runtime smoke tests assert this fuse behavior, Node >=22, child-env isolation, managed yt-dlp selection, and bundled EJS availability.
+`electron-builder.json5` intentionally keeps the `runAsNode` fuse enabled because Arclio uses its packaged Electron executable as yt-dlp's Node runtime. `ELECTRON_RUN_AS_NODE=1` must only be added to the yt-dlp child-process environment, never to `process.env` or persisted config. Packaged runtime smoke tests assert this fuse behavior, Node >=22, child-env isolation, managed yt-dlp selection, and bundled EJS availability.
 
 ### How embed works
 
@@ -537,7 +537,7 @@ Arroxy ships three third-party binaries. They split into two camps based on upda
 
 ### License attribution
 
-`THIRD_PARTY_NOTICES.txt` ships at `<resources>/` via top-level `extraResources`. Covers ffmpeg (GPLv3) and yt-dlp (Unlicense). Arroxy stays MIT — spawn ≠ link, no GPL propagation into our code.
+`THIRD_PARTY_NOTICES.txt` ships at `<resources>/` via top-level `extraResources`. Covers ffmpeg (GPLv3) and yt-dlp (Unlicense). Arclio stays MIT — spawn ≠ link, no GPL propagation into our code.
 
 ### Smoke parity
 
@@ -555,7 +555,7 @@ README files (English + 20 locales) are **generated** — never edit them direct
 
 The build script validates **key parity** — if any locale is missing a key that `en` has (or has an extra key), the build fails loudly. Every new string must be translated into every supported language.
 
-The landing site (`arroxy.orionus.dev`) lives in a separate repo: [antonio-orionus/arroxy-web](https://github.com/antonio-orionus/arroxy-web). Don't update landing copy from here — open a PR there instead.
+The landing site (`arclio.orionus.dev`) lives in a separate repo: [antonio-orionus/arclio-web](https://github.com/antonio-orionus/arclio-web). Don't update landing copy from here — open a PR there instead.
 
 ### Adding a new feature
 
@@ -572,7 +572,7 @@ Do **not** hardcode the locale list or count anywhere in code, docs, or memory. 
 | Renderer + main process (i18n) | `SUPPORTED_LANGS` in [`src/shared/schemas.ts`](src/shared/schemas.ts) | `SupportedLang` (re-exported from [`src/shared/i18n/types.ts`](src/shared/i18n/types.ts)) |
 | README build                   | `LOCALES` in [`readme-src/strings.mjs`](readme-src/strings.mjs)       | —                                                                                         |
 
-Both must stay in lockstep with the landing-site locale list in the `arroxy-web` repo. The `en` locale is the canonical reference; the build script and the `WidenStrings<EnTranslation>` type (see `src/shared/i18n/types.ts`) diff every other locale against it.
+Both must stay in lockstep with the landing-site locale list in the `arclio-web` repo. The `en` locale is the canonical reference; the build script and the `WidenStrings<EnTranslation>` type (see `src/shared/i18n/types.ts`) diff every other locale against it.
 
 ### What NOT to edit directly
 

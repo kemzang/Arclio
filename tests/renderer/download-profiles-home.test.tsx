@@ -64,18 +64,18 @@ describe('DownloadProfilesHome downloads tab', () => {
 		act(() => useAppStore.setState({queue: [makeItem({id: 'first-queued-video', title: 'First queued video', status: 'pending'})]}))
 
 		expect(screen.getByTestId('queue-tab-first-run-cue')).toHaveTextContent('Downloads tab')
-		expect(localStorage.getItem('arroxy_seen_queue_tab_tip')).toBe('1')
+		expect(localStorage.getItem('arclio_seen_queue_tab_tip')).toBe('1')
 	})
 
 	it('shows the Downloads tab mascot cue on launch when existing queue items are present', () => {
 		render(<DownloadProfilesHome />)
 
 		expect(screen.getByTestId('queue-tab-first-run-cue')).toHaveTextContent('Downloads tab')
-		expect(localStorage.getItem('arroxy_seen_queue_tab_tip')).toBe('1')
+		expect(localStorage.getItem('arclio_seen_queue_tab_tip')).toBe('1')
 	})
 
 	it('shows the new Downloads tab cue even when the old smart drawer tip was seen', () => {
-		localStorage.setItem('arroxy_seen_queue_tip', '1')
+		localStorage.setItem('arclio_seen_queue_tip', '1')
 		useAppStore.setState({queue: []})
 		render(<DownloadProfilesHome />)
 
@@ -85,7 +85,7 @@ describe('DownloadProfilesHome downloads tab', () => {
 	})
 
 	it('does not show the Downloads tab cue after the new tab tip was seen', () => {
-		localStorage.setItem('arroxy_seen_queue_tab_tip', '1')
+		localStorage.setItem('arclio_seen_queue_tab_tip', '1')
 		useAppStore.setState({queue: []})
 		render(<DownloadProfilesHome />)
 

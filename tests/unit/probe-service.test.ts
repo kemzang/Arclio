@@ -44,7 +44,7 @@ function makeProbeService(mockMode = false, cache?: ProbeInfoJsonCache): ProbeSe
 
 beforeEach(() => {
 	vi.clearAllMocks()
-	vi.mocked(probeElectronNodeRuntime).mockResolvedValue({ok: true, runtime: {kind: 'electron-node', executablePath: '/mock/Arroxy', version: '24.16.0'}, output: 'v24.16.0'})
+	vi.mocked(probeElectronNodeRuntime).mockResolvedValue({ok: true, runtime: {kind: 'electron-node', executablePath: '/mock/Arclio', version: '24.16.0'}, output: 'v24.16.0'})
 })
 
 describe('ProbeService — mockMode', () => {

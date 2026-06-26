@@ -586,7 +586,7 @@ function appendCallerOutputArgs(args: string[], input: CallerMediaWorkflowInput,
 		args.push('-o', `${input.output.directory}/${template}`)
 	}
 	if (input.output.tempDirectory && !skipDownload && input.resume?.writeInfoJson !== false) {
-		args.push('--write-info-json', '-o', `infojson:${input.output.tempDirectory}/${input.resume?.infoJsonBaseName ?? '_arroxy'}`)
+		args.push('--write-info-json', '-o', `infojson:${input.output.tempDirectory}/${input.resume?.infoJsonBaseName ?? '_arclio'}`)
 	}
 }
 

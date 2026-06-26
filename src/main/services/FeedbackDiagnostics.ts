@@ -7,7 +7,7 @@ const gzipAsync = promisify(gzip)
 
 export const FEEDBACK_DIAGNOSTIC_TAIL_BYTES = 1024 * 1024
 const FEEDBACK_DIAGNOSTIC_UPLOAD_TIMEOUT_MS = 10_000
-const DEFAULT_FEEDBACK_DIAGNOSTICS_ENDPOINT = 'https://arroxy.orionus.dev/api/feedback-diagnostics'
+const DEFAULT_FEEDBACK_DIAGNOSTICS_ENDPOINT = 'https://arclio.orionus.dev/api/feedback-diagnostics'
 const REPORT_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
 export interface FeedbackDiagnosticPayloadInput {
@@ -63,7 +63,7 @@ export async function createFeedbackDiagnosticPayload({logPath}: FeedbackDiagnos
 	}
 }
 
-export async function uploadFeedbackDiagnostic({endpoint = process.env.ARROXY_FEEDBACK_DIAGNOSTICS_URL ?? DEFAULT_FEEDBACK_DIAGNOSTICS_ENDPOINT, fetchImpl = fetch, logPath, reportId, timeoutMs = FEEDBACK_DIAGNOSTIC_UPLOAD_TIMEOUT_MS}: UploadFeedbackDiagnosticInput): Promise<UploadFeedbackDiagnosticResult> {
+export async function uploadFeedbackDiagnostic({endpoint = process.env.ARCLIO_FEEDBACK_DIAGNOSTICS_URL ?? DEFAULT_FEEDBACK_DIAGNOSTICS_ENDPOINT, fetchImpl = fetch, logPath, reportId, timeoutMs = FEEDBACK_DIAGNOSTIC_UPLOAD_TIMEOUT_MS}: UploadFeedbackDiagnosticInput): Promise<UploadFeedbackDiagnosticResult> {
 	const normalizedReportId = normalizeReportId(reportId)
 	const payload = await createFeedbackDiagnosticPayload({logPath})
 	const controller = new AbortController()
@@ -76,14 +76,14 @@ export async function uploadFeedbackDiagnostic({endpoint = process.env.ARROXY_FE
 		response = await fetchImpl(endpoint, {
 			method: 'POST',
 			headers: {
-				'x-arroxy-upload': 'feedback-diagnostic-v1',
-				'x-arroxy-report-id': normalizedReportId,
+				'x-arclio-upload': 'feedback-diagnostic-v1',
+				'x-arclio-report-id': normalizedReportId,
 				'content-type': 'application/gzip',
 				'content-encoding': 'gzip',
-				'x-arroxy-raw-bytes': String(payload.rawBytes),
-				'x-arroxy-compressed-bytes': String(payload.compressedBytes),
-				'x-arroxy-truncated': String(payload.truncated),
-				'x-arroxy-sha256': payload.sha256
+				'x-arclio-raw-bytes': String(payload.rawBytes),
+				'x-arclio-compressed-bytes': String(payload.compressedBytes),
+				'x-arclio-truncated': String(payload.truncated),
+				'x-arclio-sha256': payload.sha256
 			},
 			body: bufferToArrayBuffer(payload.body),
 			signal: controller.signal

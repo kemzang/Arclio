@@ -40,7 +40,7 @@ function errorStatus(jobId: string): StatusEvent {
 	return {jobId, stage: 'error', statusKey: 'ytdlpProcessError', at: new Date().toISOString(), error: {kind: 'unknown', raw: 'yt-dlp exited 1'}}
 }
 
-const RESUME_CONTEXT: QueueResumeContext = {kind: 'media-retry', tempDir: '/tmp/.arroxy-temp/resume', reason: 'media-transfer', failureKind: 'network'}
+const RESUME_CONTEXT: QueueResumeContext = {kind: 'media-retry', tempDir: '/tmp/.arclio-temp/resume', reason: 'media-transfer', failureKind: 'network'}
 
 function progressEvent(jobId: string, percent: number): ProgressEvent {
 	return {jobId, percent, line: `${percent}%`, at: new Date().toISOString()}
@@ -228,7 +228,7 @@ describe('QueueService — selection-aware actions', () => {
 
 describe('QueueService — output target changes', () => {
 	it('updates output target for a pending item that never started without moving files', async () => {
-		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-queue-set-location-'))
+		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-queue-set-location-'))
 		try {
 			const fromDir = path.join(root, 'from')
 			const toDir = path.join(root, 'to')
@@ -253,7 +253,7 @@ describe('QueueService — output target changes', () => {
 	})
 
 	it('skips pending items that already started', async () => {
-		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-queue-started-pending-'))
+		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-queue-started-pending-'))
 		try {
 			const fromDir = path.join(root, 'from')
 			const toDir = path.join(root, 'to')
@@ -274,11 +274,11 @@ describe('QueueService — output target changes', () => {
 	})
 
 	it('skips retried pending items with resume context', async () => {
-		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-queue-resume-pending-'))
+		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-queue-resume-pending-'))
 		try {
 			const fromDir = path.join(root, 'from')
 			const toDir = path.join(root, 'to')
-			const tempDir = path.join(root, '.arroxy-temp', 'resume')
+			const tempDir = path.join(root, '.arclio-temp', 'resume')
 			await fs.mkdir(tempDir, {recursive: true})
 			const {qs} = makeService()
 			qs.add([makeItem({id: 'resume-pending', status: 'pending', outputDir: fromDir, progressPercent: 0, resumeContext: {...RESUME_CONTEXT, tempDir}})])
@@ -296,7 +296,7 @@ describe('QueueService — output target changes', () => {
 	})
 
 	it('skips completed items instead of moving artifacts', async () => {
-		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-queue-skip-done-'))
+		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-queue-skip-done-'))
 		try {
 			const fromDir = path.join(root, 'from')
 			const toDir = path.join(root, 'to')
@@ -321,11 +321,11 @@ describe('QueueService — output target changes', () => {
 	})
 
 	it('skips a running item instead of racing an active downloader during output-target change', async () => {
-		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-queue-active-move-'))
+		const root = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-queue-active-move-'))
 		try {
 			const fromDir = path.join(root, 'from')
 			const toDir = path.join(root, 'to')
-			const tempDir = path.join(fromDir, '.arroxy-temp', 'job-run')
+			const tempDir = path.join(fromDir, '.arclio-temp', 'job-run')
 			await fs.mkdir(tempDir, {recursive: true})
 			await fs.writeFile(path.join(tempDir, 'partial.part'), 'partial')
 			await fs.writeFile(path.join(fromDir, 'video.mkv'), 'media')
@@ -365,7 +365,7 @@ describe('QueueService — output target changes', () => {
 describe('resume — cross-restart path', () => {
 	it('passes tempDir from QueueItem to downloadService.start() when no in-memory paused job exists', async () => {
 		const {qs, ds} = makeService()
-		const savedTempDir = '/tmp/arroxy-test/072a2c22'
+		const savedTempDir = '/tmp/arclio-test/072a2c22'
 
 		qs.add([makeItem({id: 'r-1', status: 'paused-active', lastJobId: 'old-job-id', tempDir: savedTempDir})])
 
@@ -599,7 +599,7 @@ describe('QueueService — bulk persist coalescing', () => {
 	})
 
 	it('cancelAll cleans preserved resume temp dirs on pending retried items', async () => {
-		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-resume-cancel-all-'))
+		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-resume-cancel-all-'))
 		await fs.writeFile(path.join(tempDir, 'video.part'), 'partial')
 		const pending = makeItem({id: 'pending-resume', status: 'pending', resumeContext: {...RESUME_CONTEXT, tempDir}})
 		const store: QueueStore = {load: vi.fn().mockResolvedValue(ok({items: [pending], schedulerPaused: true})), save: vi.fn().mockResolvedValue(ok(undefined))} as unknown as QueueStore
@@ -645,7 +645,7 @@ describe('QueueService — bulk persist coalescing', () => {
 
 	it('remove cleans preserved resume temp dir', async () => {
 		const {qs} = makeService()
-		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-resume-remove-'))
+		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-resume-remove-'))
 		await fs.writeFile(path.join(tempDir, 'video.part'), 'partial')
 		qs.add([makeItem({id: 'remove-resume', status: 'error', error: {kind: 'network', raw: 'fail'}, resumeContext: {...RESUME_CONTEXT, tempDir}})])
 
@@ -684,7 +684,7 @@ describe('QueueService — bulk persist coalescing', () => {
 
 	it('clearCompleted cleans preserved resume temp dirs on failed items', async () => {
 		const {qs} = makeService()
-		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-resume-clear-'))
+		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-resume-clear-'))
 		await fs.writeFile(path.join(tempDir, 'video.part'), 'partial')
 		qs.add([makeItem({id: 'clear-resume', status: 'error', error: {kind: 'network', raw: 'fail'}, resumeContext: {...RESUME_CONTEXT, tempDir}})])
 

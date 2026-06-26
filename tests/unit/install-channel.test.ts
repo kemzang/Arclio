@@ -31,46 +31,46 @@ describe('detectInstallChannel', () => {
 
 	it('detects scoop from a user-scope execPath on win32', async () => {
 		setPlatform('win32')
-		setExecPath('C:\\Users\\tester\\scoop\\apps\\arroxy\\current\\Arroxy.exe')
+		setExecPath('C:\\Users\\tester\\scoop\\apps\\arclio\\current\\Arclio.exe')
 		const {detectInstallChannel} = await import('@main/installChannel.js')
-		expect(detectInstallChannel('arroxy')).toBe('scoop')
+		expect(detectInstallChannel('arclio')).toBe('scoop')
 	})
 
 	it('detects scoop from a global-scope execPath on win32', async () => {
 		setPlatform('win32')
-		setExecPath('C:\\ProgramData\\scoop\\apps\\arroxy\\current\\Arroxy.exe')
+		setExecPath('C:\\ProgramData\\scoop\\apps\\arclio\\current\\Arclio.exe')
 		const {detectInstallChannel} = await import('@main/installChannel.js')
-		expect(detectInstallChannel('arroxy')).toBe('scoop')
+		expect(detectInstallChannel('arclio')).toBe('scoop')
 	})
 
 	it('falls back to direct on win32 when execPath is a normal NSIS install', async () => {
 		setPlatform('win32')
-		setExecPath('C:\\Users\\tester\\AppData\\Local\\Programs\\Arroxy\\Arroxy.exe')
+		setExecPath('C:\\Users\\tester\\AppData\\Local\\Programs\\Arclio\\Arclio.exe')
 		const {detectInstallChannel} = await import('@main/installChannel.js')
-		expect(detectInstallChannel('arroxy')).toBe('direct')
+		expect(detectInstallChannel('arclio')).toBe('direct')
 	})
 
 	it('detects portable on win32 when PORTABLE_EXECUTABLE_FILE is set', async () => {
 		setPlatform('win32')
-		setExecPath('C:\\Users\\tester\\Downloads\\Arroxy-portable.exe')
-		process.env.PORTABLE_EXECUTABLE_FILE = 'C:\\Users\\tester\\Downloads\\Arroxy-portable.exe'
+		setExecPath('C:\\Users\\tester\\Downloads\\Arclio-portable.exe')
+		process.env.PORTABLE_EXECUTABLE_FILE = 'C:\\Users\\tester\\Downloads\\Arclio-portable.exe'
 		const {detectInstallChannel} = await import('@main/installChannel.js')
-		expect(detectInstallChannel('arroxy')).toBe('portable')
+		expect(detectInstallChannel('arclio')).toBe('portable')
 	})
 
 	it('scoop wins over portable detection (scoop installs do not set PORTABLE_EXECUTABLE_FILE in practice)', async () => {
 		setPlatform('win32')
-		setExecPath('C:\\Users\\tester\\scoop\\apps\\arroxy\\current\\Arroxy.exe')
+		setExecPath('C:\\Users\\tester\\scoop\\apps\\arclio\\current\\Arclio.exe')
 		process.env.PORTABLE_EXECUTABLE_FILE = 'whatever'
 		const {detectInstallChannel} = await import('@main/installChannel.js')
-		expect(detectInstallChannel('arroxy')).toBe('scoop')
+		expect(detectInstallChannel('arclio')).toBe('scoop')
 	})
 
 	it('detects homebrew on darwin when Caskroom directory exists for the given app name', async () => {
 		setPlatform('darwin')
-		vi.doMock('node:fs', () => ({default: {existsSync: (p: string) => p === '/opt/homebrew/Caskroom/arroxy'}}))
+		vi.doMock('node:fs', () => ({default: {existsSync: (p: string) => p === '/opt/homebrew/Caskroom/arclio'}}))
 		const {detectInstallChannel} = await import('@main/installChannel.js')
-		expect(detectInstallChannel('arroxy')).toBe('homebrew')
+		expect(detectInstallChannel('arclio')).toBe('homebrew')
 		vi.doUnmock('node:fs')
 	})
 
@@ -79,7 +79,7 @@ describe('detectInstallChannel', () => {
 		vi.doMock('node:fs', () => ({default: {existsSync: (p: string) => p === '/opt/homebrew/Caskroom/foobar'}}))
 		const {detectInstallChannel} = await import('@main/installChannel.js')
 		expect(detectInstallChannel('foobar')).toBe('homebrew')
-		expect(detectInstallChannel('arroxy')).toBe('direct')
+		expect(detectInstallChannel('arclio')).toBe('direct')
 		vi.doUnmock('node:fs')
 	})
 
@@ -87,7 +87,7 @@ describe('detectInstallChannel', () => {
 		setPlatform('darwin')
 		vi.doMock('node:fs', () => ({default: {existsSync: () => false}}))
 		const {detectInstallChannel} = await import('@main/installChannel.js')
-		expect(detectInstallChannel('arroxy')).toBe('direct')
+		expect(detectInstallChannel('arclio')).toBe('direct')
 		vi.doUnmock('node:fs')
 	})
 
@@ -95,7 +95,7 @@ describe('detectInstallChannel', () => {
 		setPlatform('linux')
 		vi.doMock('node:fs', () => ({default: {existsSync: () => false}}))
 		const {detectInstallChannel} = await import('@main/installChannel.js')
-		expect(detectInstallChannel('arroxy')).toBe('direct')
+		expect(detectInstallChannel('arclio')).toBe('direct')
 		vi.doUnmock('node:fs')
 	})
 
@@ -103,7 +103,7 @@ describe('detectInstallChannel', () => {
 		setPlatform('linux')
 		vi.doMock('node:fs', () => ({default: {existsSync: (p: string) => p === '/.flatpak-info'}}))
 		const {detectInstallChannel} = await import('@main/installChannel.js')
-		expect(detectInstallChannel('arroxy')).toBe('flatpak')
+		expect(detectInstallChannel('arclio')).toBe('flatpak')
 		vi.doUnmock('node:fs')
 	})
 })

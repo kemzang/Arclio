@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {useTranslation} from 'react-i18next'
 import {Search, Grid3X3, List, Heart, Library} from 'lucide-react'
 import {cn} from '@renderer/lib/utils.js'
@@ -8,6 +9,7 @@ import {Input} from '@renderer/components/ui/input.js'
 
 export function LibraryPage(): React.JSX.Element {
 	const {t} = useTranslation()
+	const navigate = useNavigate()
 	const [media, setMedia] = useState<LibraryMediaWithAssets[]>([])
 	const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 	const [search, setSearch] = useState('')
@@ -115,7 +117,18 @@ export function LibraryPage(): React.JSX.Element {
 			) : viewMode === 'grid' ? (
 				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
 					{media.map(item => (
-						<div key={item.id} className="group relative rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--glass-tile)] hover:shadow-lg transition-shadow cursor-pointer">
+						<div
+							key={item.id}
+							role="button"
+							tabIndex={0}
+							onClick={(): void => {
+								void navigate(`/library/${item.id}`)
+							}}
+							onKeyDown={(e): void => {
+								if (e.key === 'Enter') void navigate(`/library/${item.id}`)
+							}}
+							className="group relative rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--glass-tile)] hover:shadow-lg transition-shadow cursor-pointer"
+						>
 							<div className="aspect-video bg-muted relative">
 								{item.thumbnailUrl ? <img src={item.thumbnailUrl} alt={item.title} className="w-full h-full object-cover" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)]">{item.mediaType === 'video' ? '🎬' : '🎵'}</div>}
 								{item.duration && <span className="absolute bottom-1 right-1 text-xs bg-black/70 text-white px-1.5 py-0.5 rounded">{formatDuration(item.duration)}</span>}
@@ -148,7 +161,18 @@ export function LibraryPage(): React.JSX.Element {
 			) : (
 				<div className="space-y-1">
 					{media.map(item => (
-						<div key={item.id} className="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--glass-tile)] cursor-pointer transition-colors">
+						<div
+							key={item.id}
+							role="button"
+							tabIndex={0}
+							onClick={(): void => {
+								void navigate(`/library/${item.id}`)
+							}}
+							onKeyDown={(e): void => {
+								if (e.key === 'Enter') void navigate(`/library/${item.id}`)
+							}}
+							className="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--glass-tile)] cursor-pointer transition-colors"
+						>
 							<div className="w-24 aspect-video rounded-lg overflow-hidden bg-muted shrink-0">
 								{item.thumbnailUrl ? <img src={item.thumbnailUrl} alt={item.title} className="w-full h-full object-cover" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)]">{item.mediaType === 'video' ? '🎬' : '🎵'}</div>}
 							</div>

@@ -334,7 +334,7 @@ export interface ProbeInput {
 	// forces playlist enumeration.
 	playlistMode?: ProbePlaylistMode
 	// Probe-time scope for playlist/channel/search enumeration. Downloads still
-	// split into Arroxy queue items after this filtered flat probe.
+	// split into Arclio queue items after this filtered flat probe.
 	playlistScope?: PlaylistScope
 }
 

@@ -53,7 +53,7 @@ function buildLargeQueueItems(): QueueItem[] {
 			finishedAt: status === QUEUE_STATUS.done || status === QUEUE_STATUS.error ? new Date(Date.UTC(2026, 5, 19, 11, 0, index)).toISOString() : null,
 			error: status === QUEUE_STATUS.error ? {kind: 'network', raw: 'Large queue fixture failure'} : null,
 			artifacts: status === QUEUE_STATUS.done ? [artifact({id: `ql-media-${n}`, kind: 'media', path: `/home/user/Downloads/large-queue-${n}.webm`, fileName: `large-queue-${n}.webm`, sizeBytes: 24_000_000 + n})] : [],
-			...(status === QUEUE_STATUS.pausedActive ? {lastJobId: `large-job-${n}`, tempDir: `/tmp/arroxy-large-${n}`} : {})
+			...(status === QUEUE_STATUS.pausedActive ? {lastJobId: `large-job-${n}`, tempDir: `/tmp/arclio-large-${n}`} : {})
 		})
 	})
 }
@@ -73,7 +73,7 @@ function buildArtifactItems(): QueueItem['artifacts'] {
 	return [
 		artifact({id: 'qa-media', kind: 'media', path: '/home/user/Downloads/scenario-video.mkv', fileName: 'scenario-video.mkv', sizeBytes: 143_250_432}),
 		artifact({id: 'qa-subtitle', kind: 'subtitle', path: '/home/user/Downloads/scenario-video.en.vtt', fileName: 'scenario-video.en.vtt', sizeBytes: 18_204}),
-		artifact({id: 'qa-probe-info', kind: 'unknown', path: '/tmp/arroxy/probe/scenario.info.json', fileName: 'scenario.info.json', internal: true})
+		artifact({id: 'qa-probe-info', kind: 'unknown', path: '/tmp/arclio/probe/scenario.info.json', fileName: 'scenario.info.json', internal: true})
 	]
 }
 

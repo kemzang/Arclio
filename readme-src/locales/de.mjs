@@ -54,8 +54,8 @@ sudo apt install -y xvfb
 ### Klonen & starten
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # empfohlen; überspringen, wenn die gepinnten Tools manuell aktiv sind
 bun run bootstrap
 bun run doctor
@@ -70,14 +70,14 @@ bun run dist         # für aktuelles OS paketieren
 bun run dist:win     # Windows-Ziele auf unterstütztem Host paketieren
 \`\`\`
 
-> \`bun run bootstrap\` installiert Abhängigkeiten, baut Electron-App-Abhängigkeiten neu, prüft Electron, bereitet eingebettete ffmpeg/ffprobe für die Entwicklung vor und installiert Playwright Chromium. yt-dlp wird zur Laufzeit im App-Datenordner verwaltet; ffmpeg und ffprobe sind in jedem Arroxy-Release enthalten.
+> \`bun run bootstrap\` installiert Abhängigkeiten, baut Electron-App-Abhängigkeiten neu, prüft Electron, bereitet eingebettete ffmpeg/ffprobe für die Entwicklung vor und installiert Playwright Chromium. yt-dlp wird zur Laufzeit im App-Datenordner verwaltet; ffmpeg und ffprobe sind in jedem Arclio-Release enthalten.
 
 </details>`;
 
 export const de = {
-  icon_alt: "Arroxy Maskottchen",
+  icon_alt: "Arclio Maskottchen",
   title:
-    "Arroxy — Kostenloser Open-Source YouTube (+ 2000 Seiten) Downloader für Windows, macOS & Linux",
+    "Arclio — Kostenloser Open-Source YouTube (+ 2000 Seiten) Downloader für Windows, macOS & Linux",
   read_in_label: "Sprache:",
   badge_release_alt: "Release",
   badge_build_alt: "Build",
@@ -91,12 +91,12 @@ export const de = {
     "Lade Videos, Shorts, Musik, Kanäle, Podcasts oder Audiotracks von **YouTube und 2000+ unterstützten Seiten** herunter — bis zu 4K HDR mit 60 fps, oder als MP3 / AAC / Opus. Läuft lokal auf Windows, macOS und Linux. **Keine Werbung, kein Bloat, kein Upselling.**",
   cta_latest: "↓ Neueste Version herunterladen",
   cta_website: "Webseite",
-  demo_alt: "Arroxy Demo",
-  star_cta: "Wenn Arroxy dir Zeit spart, hilft ein ⭐ anderen, es zu finden.",
+  demo_alt: "Arclio Demo",
+  star_cta: "Wenn Arclio dir Zeit spart, hilft ein ⭐ anderen, es zu finden.",
   ai_notice:
     "> 🌐 Dies ist eine KI-gestützte Übersetzung. Die [englische README](README.md) ist die maßgebliche Quelle. Fehler entdeckt? [PRs sind willkommen](../../pulls).",
   toc_heading: "Inhalt",
-  why_h2: "Warum Arroxy",
+  why_h2: "Warum Arclio",
   features_h2: "Funktionen",
   dl_h2: "Download",
   privacy_h2: "Datenschutz",
@@ -112,7 +112,7 @@ export const de = {
   why_r6: "Plattformübergreifende Desktop-App",
   why_r7: "Untertitel + SponsorBlock",
   why_summary:
-    "Arroxy ist für eine Sache gebaut: URL einfügen, saubere lokale Datei erhalten. Keine Konten, kein Upselling, keine Datensammlung.",
+    "Arclio ist für eine Sache gebaut: URL einfügen, saubere lokale Datei erhalten. Keine Konten, kein Upselling, keine Datensammlung.",
   feat_quality_h3: "Qualität & Formate",
   feat_quality_1: "Bis zu **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2:
@@ -132,7 +132,7 @@ export const de = {
   feat_workflow_2:
     "**Zentrale Download-Warteschlange** — jeder Einzel-, Playlist-, Bulk- oder Quick-Job landet an einem Ort für Fortschritt, Pausieren, Fortsetzen, Abbrechen, Wiederholen und Priorität",
   feat_workflow_3:
-    "**Zwischenablage-Überwachung** — kopiere einen YouTube-Link und Arroxy füllt die URL automatisch aus, wenn du die App wieder fokussierst (in den erweiterten Einstellungen umschaltbar)",
+    "**Zwischenablage-Überwachung** — kopiere einen YouTube-Link und Arclio füllt die URL automatisch aus, wenn du die App wieder fokussierst (in den erweiterten Einstellungen umschaltbar)",
   feat_workflow_4:
     "**URLs automatisch bereinigen** — entfernt Tracking-Parameter (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) und löst `youtube.com/redirect`-Links auf",
   feat_workflow_5:
@@ -160,7 +160,7 @@ export const de = {
   feat_sites_3:
     "**Nur Audio und Untertitel** funktionieren auf jeder unterstützten Seite, nicht nur auf YouTube",
   feat_sites_4:
-    "Ändert sich eine Seite, liefert yt-dlp wöchentlich Fixes und Arroxy aktualisiert das Binary beim Start automatisch",
+    "Ändert sich eine Seite, liefert yt-dlp wöchentlich Fixes und Arclio aktualisiert das Binary beim Start automatisch",
   shot1_cap:
     "<b>Quick-Download-Startseite</b><br/>URL einfügen und sofort mit deinem aktiven Profil herunterladen",
   shot2_cap:
@@ -201,26 +201,26 @@ export const de = {
     "**Empfehlung:** Nimm den NSIS Installer für Auto-Updates und schnelleren Start. Nimm die portable `.exe` für eine Option ohne Installation und ohne Registry-Einträge.",
   dl_win_smartscreen_h4: "Windows SmartScreen-Warnung",
   dl_win_smartscreen_intro:
-    'Beim ersten Start kann **"Windows protected your PC"** oder **"Unknown publisher"** erscheinen. Das gilt sowohl für `Arroxy-win-x64-Setup.exe` als auch für `Arroxy-win-x64-Portable.exe`. Arroxy ist kostenlos und Open Source, und die Windows-Builds sind nicht mit einem kostenpflichtigen Zertifikat signiert, weshalb SmartScreen sie markiert. Das bedeutet **nicht** automatisch, dass Arroxy unsicher ist. So geht es weiter:',
+    'Beim ersten Start kann **"Windows protected your PC"** oder **"Unknown publisher"** erscheinen. Das gilt sowohl für `Arclio-win-x64-Setup.exe` als auch für `Arclio-win-x64-Portable.exe`. Arclio ist kostenlos und Open Source, und die Windows-Builds sind nicht mit einem kostenpflichtigen Zertifikat signiert, weshalb SmartScreen sie markiert. Das bedeutet **nicht** automatisch, dass Arclio unsicher ist. So geht es weiter:',
   dl_win_smartscreen_step1: "Klicke auf **More info**.",
   dl_win_smartscreen_step2: "Klicke auf **Run anyway**.",
   dl_win_smartscreen_official:
-    "Lade Arroxy nur von der offiziellen GitHub Releases-Seite herunter. Wenn du die Datei von einer anderen Website bekommen hast oder jemand sie dir geschickt hat, lösche sie und lade eine frische Kopie von der offiziellen Quelle herunter. Der Quellcode ist öffentlich, du kannst ihn also selbst prüfen oder Arroxy selbst kompilieren.",
+    "Lade Arclio nur von der offiziellen GitHub Releases-Seite herunter. Wenn du die Datei von einer anderen Website bekommen hast oder jemand sie dir geschickt hat, lösche sie und lade eine frische Kopie von der offiziellen Quelle herunter. Der Quellcode ist öffentlich, du kannst ihn also selbst prüfen oder Arclio selbst kompilieren.",
   dl_macos_h3: "Erststart unter macOS",
   dl_macos_warning:
-    "Arroxy ist noch nicht code-signiert, daher warnt macOS Gatekeeper beim ersten Start. Das ist erwartet — kein Zeichen für eine Beschädigung.",
+    "Arclio ist noch nicht code-signiert, daher warnt macOS Gatekeeper beim ersten Start. Das ist erwartet — kein Zeichen für eine Beschädigung.",
   dl_macos_m1_h4: "Methode über Systemeinstellungen (empfohlen):",
   dl_macos_step1:
-    "Rechtsklick auf das Arroxy-App-Symbol und **Öffnen** wählen.",
+    "Rechtsklick auf das Arclio-App-Symbol und **Öffnen** wählen.",
   dl_macos_step2:
     "Der Warndialog erscheint — klicke auf **Abbrechen** (nicht auf *In den Papierkorb*)).",
   dl_macos_step3: "Öffne **Systemeinstellungen → Datenschutz & Sicherheit**.",
   dl_macos_step4:
-    'Scroll runter zum Abschnitt **Sicherheit**. Dort steht _„Arroxy wurde blockiert, weil es nicht von einem identifizierten Entwickler stammt."_',
+    'Scroll runter zum Abschnitt **Sicherheit**. Dort steht _„Arclio wurde blockiert, weil es nicht von einem identifizierten Entwickler stammt."_',
   dl_macos_step5:
     "Klicke auf **Trotzdem öffnen** und bestätige mit deinem Passwort oder Touch ID.",
   dl_macos_after:
-    "Nach Schritt 5 öffnet sich Arroxy normal und die Warnung erscheint nie wieder.",
+    "Nach Schritt 5 öffnet sich Arclio normal und die Warnung erscheint nie wieder.",
   dl_macos_m2_h4: "Terminal-Methode (fortgeschritten):",
   dl_macos_note:
     "macOS-Builds werden per CI auf Apple Silicon- und Intel-Runnern erstellt. Falls Probleme auftreten, bitte [ein Issue öffnen](../../issues) — Feedback von macOS-Nutzern beeinflusst aktiv den macOS-Testzyklus.",
@@ -233,14 +233,14 @@ export const de = {
   dl_linux_fuse_text:
     "Falls der Start trotzdem fehlschlägt, fehlt möglicherweise FUSE:",
   dl_linux_flatpak_intro:
-    "**Flatpak (sandboxed Alternative):** Lade `Arroxy-*.flatpak` von derselben Release-Seite herunter.",
+    "**Flatpak (sandboxed Alternative):** Lade `Arclio-*.flatpak` von derselben Release-Seite herunter.",
 
   // ---- Reorganized install help (normie-first, manual-download primary) ----
   dl_warning_h3: "Warum du möglicherweise eine Warnung siehst",
   dl_warning_p1:
-    "Arroxy ist Open Source und MIT-lizenziert. Die Windows- und macOS-Builds sind **nicht code-signiert** — Apple Developer ID und Windows EV Code-Signing-Zertifikate kosten jeweils mehrere Hundert Dollar im Jahr, die ein Indie-Projekt aus eigener Tasche zahlt. Ohne diese Signaturen warnen Windows SmartScreen und macOS Gatekeeper beim ersten Start. Die Warnungen bedeuten *dein Betriebssystem erkennt den Herausgeber nicht* — sie bedeuten nicht, dass Arroxy Malware ist.",
+    "Arclio ist Open Source und MIT-lizenziert. Die Windows- und macOS-Builds sind **nicht code-signiert** — Apple Developer ID und Windows EV Code-Signing-Zertifikate kosten jeweils mehrere Hundert Dollar im Jahr, die ein Indie-Projekt aus eigener Tasche zahlt. Ohne diese Signaturen warnen Windows SmartScreen und macOS Gatekeeper beim ersten Start. Die Warnungen bedeuten *dein Betriebssystem erkennt den Herausgeber nicht* — sie bedeuten nicht, dass Arclio Malware ist.",
   dl_warning_p2:
-    "Drei Wege, Arroxy selbst zu überprüfen, in aufsteigender Genauigkeit:\n\n- **Quellcode lesen.** Jede Zeile steht auf [GitHub](https://github.com/antonio-orionus/Arroxy) und du kannst [es aus dem Quellcode bauen](#tech).\n- **SHA256 prüfen.** Vergleiche deine Datei mit der veröffentlichten [`SHA256SUMS`](../../releases/latest) — siehe [Download verifizieren](#verify) unten.\n- **Drittanbieter-Scan.** Lade die Datei bei [VirusTotal](https://www.virustotal.com) hoch.",
+    "Drei Wege, Arclio selbst zu überprüfen, in aufsteigender Genauigkeit:\n\n- **Quellcode lesen.** Jede Zeile steht auf [GitHub](https://github.com/antonio-orionus/Arclio) und du kannst [es aus dem Quellcode bauen](#tech).\n- **SHA256 prüfen.** Vergleiche deine Datei mit der veröffentlichten [`SHA256SUMS`](../../releases/latest) — siehe [Download verifizieren](#verify) unten.\n- **Drittanbieter-Scan.** Lade die Datei bei [VirusTotal](https://www.virustotal.com) hoch.",
 
   dl_win_first_h3: "Windows-Erststart",
   shot_smartscreen_more_alt:
@@ -249,33 +249,33 @@ export const de = {
     'SmartScreen dialog after expanding More info, showing the "Run anyway" button',
   dl_win_defender_h4: "Wenn Windows Defender die Datei markiert oder entfernt",
   dl_win_defender_p:
-    "Defender-Heuristiken markieren unsignierte NSIS-Installer und Electron-Portables manchmal als verdächtig. Wenn Defender `Arroxy-win-x64-Setup.exe` oder `Arroxy-win-x64-Portable.exe` in Quarantäne stellt, stelle sie aus **Windows Security → Virus & threat protection → Protection history** wieder her und füge die Arroxy-Executable als erlaubtes Element unter **Manage settings → Add or remove exclusions** hinzu. Wie bei SmartScreen ist der Auslöser die fehlende Herausgebersignatur, nicht erkannte Malware.",
+    "Defender-Heuristiken markieren unsignierte NSIS-Installer und Electron-Portables manchmal als verdächtig. Wenn Defender `Arclio-win-x64-Setup.exe` oder `Arclio-win-x64-Portable.exe` in Quarantäne stellt, stelle sie aus **Windows Security → Virus & threat protection → Protection history** wieder her und füge die Arclio-Executable als erlaubtes Element unter **Manage settings → Add or remove exclusions** hinzu. Wie bei SmartScreen ist der Auslöser die fehlende Herausgebersignatur, nicht erkannte Malware.",
 
   dl_macos_first_h3: "macOS-Erststart",
   dl_macos_intro:
-    "Arroxy ist noch nicht code-signiert für macOS, daher blockiert Gatekeeper den ersten Start. Der genaue Weg, um es zu erlauben, hängt von deiner macOS-Version ab — Sequoia 15 hat die alte Rechtsklick → Öffnen-Umgehung verschärft.",
+    "Arclio ist noch nicht code-signiert für macOS, daher blockiert Gatekeeper den ersten Start. Der genaue Weg, um es zu erlauben, hängt von deiner macOS-Version ab — Sequoia 15 hat die alte Rechtsklick → Öffnen-Umgehung verschärft.",
   dl_macos_sequoia_h4: "macOS Sequoia 15 und neuer (aktuell)",
   dl_macos_sequoia_intro:
     "Ab Sequoia 15 umgeht Rechtsklick → Öffnen Gatekeeper für viele unter Quarantäne stehende Apps nicht mehr. Nutze stattdessen die Systemeinstellungen:",
   dl_macos_sequoia_step1:
-    "Ziehe `Arroxy.app` aus dem eingehängten DMG nach `/Applications`.",
+    "Ziehe `Arclio.app` aus dem eingehängten DMG nach `/Applications`.",
   dl_macos_sequoia_step2:
-    "Doppelklicke auf Arroxy. Der Blockierdialog erscheint — klicke auf **Done** (klicke nicht auf *Move to Trash*).",
+    "Doppelklicke auf Arclio. Der Blockierdialog erscheint — klicke auf **Done** (klicke nicht auf *Move to Trash*).",
   dl_macos_sequoia_step3:
-    'Öffne **System Settings → Privacy & Security** und scrolle zum Abschnitt **Security**. Du siehst *"Arroxy was blocked to protect your Mac"* (oder eine nahezu identische Meldung).',
+    'Öffne **System Settings → Privacy & Security** und scrolle zum Abschnitt **Security**. Du siehst *"Arclio was blocked to protect your Mac"* (oder eine nahezu identische Meldung).',
   dl_macos_sequoia_step4:
-    "Klicke auf **Open Anyway**, bestätige mit deinem Passwort oder Touch ID, und starte Arroxy dann aus `/Applications` neu.",
+    "Klicke auf **Open Anyway**, bestätige mit deinem Passwort oder Touch ID, und starte Arclio dann aus `/Applications` neu.",
   dl_macos_sonoma_h4: "macOS Sonoma 14 und älter",
   dl_macos_sonoma_step1:
-    "Ziehe `Arroxy.app` aus dem eingehängten DMG nach `/Applications`.",
+    "Ziehe `Arclio.app` aus dem eingehängten DMG nach `/Applications`.",
   dl_macos_sonoma_step2:
-    "Rechtsklick (oder Control-Klick) auf `Arroxy.app` in `/Applications` und wähle **Open**.",
+    "Rechtsklick (oder Control-Klick) auf `Arclio.app` in `/Applications` und wähle **Open**.",
   dl_macos_sonoma_step3:
-    "Der Warndialog hat nun einen **Open**-Button — klicke ihn und bestätige. Arroxy öffnet sich normal und die Warnung erscheint nie wieder.",
+    "Der Warndialog hat nun einen **Open**-Button — klicke ihn und bestätige. Arclio öffnet sich normal und die Warnung erscheint nie wieder.",
   dl_macos_damaged_h4:
     '"App is damaged" oder anhaltende Gatekeeper-Blockierung — Terminal-Fix',
   dl_macos_damaged_p:
-    "Wenn macOS sagt *\"Arroxy is damaged and can't be opened\"*, oder keiner der obigen Schritte die Blockierung aufhebt, ist das Quarantäne-Attribut auf dem DMG die Ursache (manche Browser und macOS's eigenes Translocation-Verhalten setzen es). Entferne es von der installierten App:",
+    "Wenn macOS sagt *\"Arclio is damaged and can't be opened\"*, oder keiner der obigen Schritte die Blockierung aufhebt, ist das Quarantäne-Attribut auf dem DMG die Ursache (manche Browser und macOS's eigenes Translocation-Verhalten setzen es). Entferne es von der installierten App:",
   dl_macos_arch_note:
     "**Apple Silicon vs Intel:** auf einem Mac der M-Serie (M1 / M2 / M3 / M4) lade das `arm64`-DMG herunter. Auf Intel-Macs lade das `x64`-DMG. Der falsche Build funktioniert auch über Rosetta, ist aber spürbar langsamer.",
 
@@ -298,7 +298,7 @@ export const de = {
   privacy_p1:
     "Downloads werden direkt über [yt-dlp](https://github.com/yt-dlp/yt-dlp) von YouTube in den von dir gewählten Ordner geholt — nichts wird über einen Drittanbieter-Server geleitet. Verlauf, Download-Historie, URLs und Dateiinhalte bleiben auf deinem Gerät.",
   privacy_p2:
-    "Arroxy sendet anonyme, aggregierte Telemetrie über [OpenPanel](https://openpanel.dev) — gerade genug, um Starts, OS, App-Versionen und Abstürze zu verstehen. Keine URLs, Video-Titel, Dateipfade, Kontodaten, Fingerprinting oder personenbezogenen Daten. Die ID pro Installation ist zufällig und nicht mit deiner Identität verknüpft. Du kannst das in den Einstellungen deaktivieren.",
+    "Arclio sendet anonyme, aggregierte Telemetrie über [OpenPanel](https://openpanel.dev) — gerade genug, um Starts, OS, App-Versionen und Abstürze zu verstehen. Keine URLs, Video-Titel, Dateipfade, Kontodaten, Fingerprinting oder personenbezogenen Daten. Die ID pro Installation ist zufällig und nicht mit deiner Identität verknüpft. Du kannst das in den Einstellungen deaktivieren.",
   faq_q1: "Ist es wirklich kostenlos?",
   faq_a1: "Ja — MIT-Lizenz, keine Premium-Stufe, keine Funktionsbarrieren.",
   faq_q2: "Welche Videoqualitäten kann ich herunterladen?",
@@ -309,13 +309,13 @@ export const de = {
     "Ja. Wähle im Formatmenü *nur Audio* und dann MP3, M4A/AAC, Opus oder WAV.",
   faq_q4: "Brauche ich ein YouTube-Konto oder Cookies?",
   faq_a4:
-    "Standardmäßig nein — Arroxy funktioniert ohne YouTube-Konto, Login oder Cookie-Export. Optionale Cookie-Unterstützung steht in den erweiterten Einstellungen zur Verfügung (Cookies source: file or browser) für Inhalte, die eine Authentifizierung erfordern, etwa altersbeschränkte oder Mitglieder-only-Videos. Sie ist standardmäßig deaktiviert. Wenn du sie aktivierst, weist das yt-dlp-Wiki darauf hin, dass [Cookie-basierte Automatisierung ein Google-Konto markieren kann](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); ein Wegwerf-Konto ist in dem Fall die sicherere Wahl.",
+    "Standardmäßig nein — Arclio funktioniert ohne YouTube-Konto, Login oder Cookie-Export. Optionale Cookie-Unterstützung steht in den erweiterten Einstellungen zur Verfügung (Cookies source: file or browser) für Inhalte, die eine Authentifizierung erfordern, etwa altersbeschränkte oder Mitglieder-only-Videos. Sie ist standardmäßig deaktiviert. Wenn du sie aktivierst, weist das yt-dlp-Wiki darauf hin, dass [Cookie-basierte Automatisierung ein Google-Konto markieren kann](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); ein Wegwerf-Konto ist in dem Fall die sicherere Wahl.",
   faq_q5: "Funktioniert es weiter, wenn YouTube etwas ändert?",
   faq_a5:
-    "yt-dlp wird beim Start automatisch aktualisiert, und Arroxy liefert zügig Fixes, sobald YouTube etwas ändert. Falls du doch einmal auf ein Problem stößt, steht in den erweiterten Einstellungen optionale Cookie-Unterstützung als Fallback bereit.",
-  faq_q6: "In welchen Sprachen ist Arroxy verfügbar?",
+    "yt-dlp wird beim Start automatisch aktualisiert, und Arclio liefert zügig Fixes, sobald YouTube etwas ändert. Falls du doch einmal auf ein Problem stößt, steht in den erweiterten Einstellungen optionale Cookie-Unterstützung als Fallback bereit.",
+  faq_q6: "In welchen Sprachen ist Arclio verfügbar?",
   faq_a6:
-    "Einundzwanzig, direkt out of the box: English, Español (Spanisch), Deutsch, Français (Französisch), 日本語 (Japanisch), 中文 (Chinesisch), Русский (Russisch), Українська (Ukrainisch), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Usbekisch), Tiếng Việt (Vietnamesisch), አማርኛ (Amharisch), العربية (Arabisch), اردو (Urdu), پښتو (Paschto), বাংলা (Bengalisch), မြန်မာဘာသာ (Birmanisch), Ελληνικά (Griechisch) und Српски (Serbisch). Arroxy erkennt deine Betriebssystem-Sprache beim ersten Start und du kannst jederzeit über die Sprachauswahl in der Symbolleiste wechseln. Die Runtime-Locale-JSON-Dateien liegen in src/shared/i18n/locales/, und die PO-Kataloge für Übersetzer liegen in i18n/locales/ — öffne einen PR auf GitHub, um beizutragen.",
+    "Einundzwanzig, direkt out of the box: English, Español (Spanisch), Deutsch, Français (Französisch), 日本語 (Japanisch), 中文 (Chinesisch), Русский (Russisch), Українська (Ukrainisch), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Usbekisch), Tiếng Việt (Vietnamesisch), አማርኛ (Amharisch), العربية (Arabisch), اردو (Urdu), پښتو (Paschto), বাংলা (Bengalisch), မြန်မာဘာသာ (Birmanisch), Ελληνικά (Griechisch) und Српски (Serbisch). Arclio erkennt deine Betriebssystem-Sprache beim ersten Start und du kannst jederzeit über die Sprachauswahl in der Symbolleiste wechseln. Die Runtime-Locale-JSON-Dateien liegen in src/shared/i18n/locales/, und die PO-Kataloge für Übersetzer liegen in i18n/locales/ — öffne einen PR auf GitHub, um beizutragen.",
   faq_q7: "Muss ich etwas zusätzlich installieren?",
   faq_a7:
     "Nein. yt-dlp wird beim ersten Start automatisch heruntergeladen und auf deinem Rechner gecacht; ffmpeg und ffprobe werden mit der App geliefert. Danach ist keine weitere Einrichtung nötig.",
@@ -338,7 +338,7 @@ export const de = {
     "App-weite bevorzugte Sprachspur festlegen, mit Überschreibungen pro Profil, wenn YouTube mehrere Audiospuren anbietet",
   plan_r6_name: "**Browser-Anmeldung in der App**",
   plan_r6_desc:
-    "Browserfenster in Arroxy öffnen, damit du dich anmelden und Website-Cookies nutzen kannst, ohne sie manuell zu exportieren",
+    "Browserfenster in Arclio öffnen, damit du dich anmelden und Website-Cookies nutzen kannst, ohne sie manuell zu exportieren",
   plan_r8_name: "**Video-Download mit einem Klick**",
   plan_r8_desc:
     "Einen Video-Download mit deinem aktiven Profil per Klick aus einer erkannten oder eingefügten URL starten",
@@ -357,7 +357,7 @@ export const de = {
   tech_content: TECH_CONTENT,
   tos_h2: "Nutzungsbedingungen",
   tos_note:
-    "Arroxy ist ein Werkzeug ausschließlich für den persönlichen, privaten Gebrauch. Du bist allein dafür verantwortlich, dass deine Downloads den [YouTube-AGB](https://www.youtube.com/t/terms) und dem Urheberrecht deines Landes entsprechen. Verwende Arroxy nicht, um Inhalte herunterzuladen, zu vervielfältigen oder zu verbreiten, an denen du keine Rechte hast. Die Entwickler haften nicht für Missbrauch.",
+    "Arclio ist ein Werkzeug ausschließlich für den persönlichen, privaten Gebrauch. Du bist allein dafür verantwortlich, dass deine Downloads den [YouTube-AGB](https://www.youtube.com/t/terms) und dem Urheberrecht deines Landes entsprechen. Verwende Arclio nicht, um Inhalte herunterzuladen, zu vervielfältigen oder zu verbreiten, an denen du keine Rechte hast. Die Entwickler haften nicht für Missbrauch.",
   footer_credit:
     'MIT-Lizenz · Mit Sorgfalt gemacht von <a href="https://x.com/OrionusAI">@OrionusAI</a>',
 };

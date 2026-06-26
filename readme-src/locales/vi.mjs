@@ -54,8 +54,8 @@ sudo apt install -y xvfb
 ### Clone & chạy
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # khuyến nghị; bỏ qua nếu đã kích hoạt thủ công các công cụ đã ghim
 bun run bootstrap
 bun run doctor
@@ -70,14 +70,14 @@ bun run dist         # đóng gói cho OS hiện tại
 bun run dist:win     # đóng gói mục tiêu Windows trên host được hỗ trợ
 \`\`\`
 
-> \`bun run bootstrap\` cài dependencies, rebuild dependencies của app Electron, xác minh Electron, chuẩn bị ffmpeg/ffprobe nhúng cho phát triển và cài Playwright Chromium. yt-dlp được quản lý lúc runtime trong thư mục dữ liệu ứng dụng; ffmpeg và ffprobe được đóng gói trong mọi bản phát hành Arroxy.
+> \`bun run bootstrap\` cài dependencies, rebuild dependencies của app Electron, xác minh Electron, chuẩn bị ffmpeg/ffprobe nhúng cho phát triển và cài Playwright Chromium. yt-dlp được quản lý lúc runtime trong thư mục dữ liệu ứng dụng; ffmpeg và ffprobe được đóng gói trong mọi bản phát hành Arclio.
 
 </details>`;
 
 export const vi = {
-  icon_alt: "Linh vật Arroxy",
+  icon_alt: "Linh vật Arclio",
   title:
-    "Arroxy — Trình tải YouTube (+ 2000 trang) miễn phí và mã nguồn mở cho Windows, macOS & Linux",
+    "Arclio — Trình tải YouTube (+ 2000 trang) miễn phí và mã nguồn mở cho Windows, macOS & Linux",
   read_in_label: "Đọc bằng:",
   badge_release_alt: "Phiên bản",
   badge_build_alt: "Build",
@@ -92,12 +92,12 @@ export const vi = {
     "Tải xuống video, Shorts, nhạc, kênh, podcast hoặc bản nhạc từ **YouTube và hơn 2000 trang được hỗ trợ** — lên tới 4K HDR ở 60 fps, hoặc dưới dạng MP3 / AAC / Opus. Chạy hoàn toàn cục bộ trên Windows, macOS và Linux. **Không quảng cáo, không phồng to, không bán thêm.**",
   cta_latest: "↓ Tải phiên bản mới nhất",
   cta_website: "Trang web",
-  demo_alt: "Demo Arroxy",
+  demo_alt: "Demo Arclio",
   star_cta:
-    "Nếu Arroxy giúp bạn tiết kiệm thời gian, một ⭐ sẽ giúp người khác tìm thấy nó.",
+    "Nếu Arclio giúp bạn tiết kiệm thời gian, một ⭐ sẽ giúp người khác tìm thấy nó.",
   ai_notice: "",
   toc_heading: "Mục lục",
-  why_h2: "Tại sao chọn Arroxy",
+  why_h2: "Tại sao chọn Arclio",
   features_h2: "Tính năng",
   dl_h2: "Tải xuống",
   privacy_h2: "Quyền riêng tư",
@@ -113,7 +113,7 @@ export const vi = {
   why_r6: "Ứng dụng máy tính để bàn đa nền tảng",
   why_r7: "Phụ đề + SponsorBlock",
   why_summary:
-    "Arroxy được xây dựng cho một mục đích duy nhất: dán URL, nhận file cục bộ sạch. Không tài khoản, không upsell, không thu thập dữ liệu.",
+    "Arclio được xây dựng cho một mục đích duy nhất: dán URL, nhận file cục bộ sạch. Không tài khoản, không upsell, không thu thập dữ liệu.",
   feat_quality_h3: "Chất lượng & định dạng",
   feat_quality_1: "Lên tới **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2:
@@ -134,7 +134,7 @@ export const vi = {
   feat_workflow_2:
     "**Hàng đợi tải xuống trung tâm** — mọi tác vụ đơn lẻ, playlist, hàng loạt hoặc nhanh đều vào một nơi để theo dõi tiến độ, tạm dừng, tiếp tục, hủy, thử lại và điều chỉnh ưu tiên",
   feat_workflow_3:
-    "**Theo dõi clipboard** — sao chép liên kết YouTube và Arroxy tự điền URL khi bạn chuyển lại ứng dụng (bật/tắt trong Cài đặt nâng cao)",
+    "**Theo dõi clipboard** — sao chép liên kết YouTube và Arclio tự điền URL khi bạn chuyển lại ứng dụng (bật/tắt trong Cài đặt nâng cao)",
   feat_workflow_4:
     "**Tự làm sạch URL** — loại bỏ các tham số theo dõi (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) và mở gói các liên kết `youtube.com/redirect`",
   feat_workflow_5:
@@ -162,7 +162,7 @@ export const vi = {
   feat_sites_3:
     "**Chỉ âm thanh và phụ đề** hoạt động trên mọi trang được hỗ trợ, không chỉ YouTube",
   feat_sites_4:
-    "Nếu một trang thay đổi, yt-dlp phát hành bản sửa lỗi hàng tuần và Arroxy tự động cập nhật nhị phân khi khởi động",
+    "Nếu một trang thay đổi, yt-dlp phát hành bản sửa lỗi hàng tuần và Arclio tự động cập nhật nhị phân khi khởi động",
   shot1_cap:
     "<b>Trang Tải nhanh</b><br/>Dán URL và tải ngay với hồ sơ đang dùng",
   shot2_cap:
@@ -203,26 +203,26 @@ export const vi = {
     "**Khuyến nghị:** sử dụng NSIS installer để có tự động cập nhật và khởi động nhanh hơn. Dùng portable `.exe` nếu bạn muốn không cần cài đặt, không ghi registry.",
   dl_win_smartscreen_h4: "Cảnh báo Windows SmartScreen",
   dl_win_smartscreen_intro:
-    'Khi khởi động lần đầu, bạn có thể thấy **"Windows protected your PC"** hoặc **"Unknown publisher."** Điều này áp dụng cho cả `Arroxy-win-x64-Setup.exe` và `Arroxy-win-x64-Portable.exe`. Arroxy là phần mềm miễn phí và mã nguồn mở, các bản build trên Windows không được ký mã bằng chứng chỉ có phí, đó là lý do SmartScreen gắn cờ chúng. Điều này **không** tự động có nghĩa là Arroxy không an toàn. Để tiếp tục:',
+    'Khi khởi động lần đầu, bạn có thể thấy **"Windows protected your PC"** hoặc **"Unknown publisher."** Điều này áp dụng cho cả `Arclio-win-x64-Setup.exe` và `Arclio-win-x64-Portable.exe`. Arclio là phần mềm miễn phí và mã nguồn mở, các bản build trên Windows không được ký mã bằng chứng chỉ có phí, đó là lý do SmartScreen gắn cờ chúng. Điều này **không** tự động có nghĩa là Arclio không an toàn. Để tiếp tục:',
   dl_win_smartscreen_step1: "Nhấp **More info**.",
   dl_win_smartscreen_step2: "Nhấp **Run anyway**.",
   dl_win_smartscreen_official:
-    "Chỉ tải Arroxy từ trang GitHub Releases chính thức. Nếu bạn tải file từ trang web khác hoặc ai đó gửi cho bạn, hãy xóa nó và tải bản sao mới từ nguồn chính thức. Mã nguồn là công khai, vì vậy bạn có thể tự kiểm tra hoặc tự build Arroxy nếu muốn.",
+    "Chỉ tải Arclio từ trang GitHub Releases chính thức. Nếu bạn tải file từ trang web khác hoặc ai đó gửi cho bạn, hãy xóa nó và tải bản sao mới từ nguồn chính thức. Mã nguồn là công khai, vì vậy bạn có thể tự kiểm tra hoặc tự build Arclio nếu muốn.",
   dl_macos_h3: "Lần đầu khởi động trên macOS",
   dl_macos_warning:
-    "Arroxy chưa được ký mã, nên macOS Gatekeeper sẽ cảnh báo khi khởi động lần đầu. Đây là điều bình thường — không phải dấu hiệu file bị hỏng.",
+    "Arclio chưa được ký mã, nên macOS Gatekeeper sẽ cảnh báo khi khởi động lần đầu. Đây là điều bình thường — không phải dấu hiệu file bị hỏng.",
   dl_macos_m1_h4: "Phương pháp System Settings (được khuyến nghị):",
   dl_macos_step1:
-    "Nhấp chuột phải vào biểu tượng ứng dụng Arroxy và chọn **Open**.",
+    "Nhấp chuột phải vào biểu tượng ứng dụng Arclio và chọn **Open**.",
   dl_macos_step2:
     "Hộp thoại cảnh báo hiện ra — nhấp **Cancel** (đừng nhấp *Move to Trash*).",
   dl_macos_step3: "Mở **System Settings → Privacy & Security**.",
   dl_macos_step4:
-    'Cuộn xuống phần **Security**. Bạn sẽ thấy *"Arroxy was blocked from use because it is not from an identified developer."*',
+    'Cuộn xuống phần **Security**. Bạn sẽ thấy *"Arclio was blocked from use because it is not from an identified developer."*',
   dl_macos_step5:
     "Nhấp **Open Anyway** và xác nhận bằng mật khẩu hoặc Touch ID.",
   dl_macos_after:
-    "Sau bước 5, Arroxy mở bình thường và cảnh báo sẽ không xuất hiện lại nữa.",
+    "Sau bước 5, Arclio mở bình thường và cảnh báo sẽ không xuất hiện lại nữa.",
   dl_macos_m2_h4: "Phương pháp Terminal (nâng cao):",
   dl_macos_note:
     "Các bản build macOS được tạo qua CI trên máy chủ Apple Silicon và Intel. Nếu gặp sự cố, vui lòng [mở issue](../../issues) — phản hồi từ người dùng macOS ảnh hưởng trực tiếp đến chu kỳ kiểm thử macOS.",
@@ -234,14 +234,14 @@ export const vi = {
   dl_linux_m2_h4: "Terminal:",
   dl_linux_fuse_text: "Nếu vẫn không khởi động được, bạn có thể thiếu FUSE:",
   dl_linux_flatpak_intro:
-    "**Flatpak (lựa chọn thay thế sandbox):** tải `Arroxy-*.flatpak` từ cùng trang phát hành.",
+    "**Flatpak (lựa chọn thay thế sandbox):** tải `Arclio-*.flatpak` từ cùng trang phát hành.",
 
   // ---- Reorganized install help (normie-first, manual-download primary) ----
   dl_warning_h3: "Tại sao bạn có thể thấy cảnh báo",
   dl_warning_p1:
-    "Arroxy là phần mềm mã nguồn mở theo giấy phép MIT. Các bản build trên Windows và macOS **không được ký mã** — chứng chỉ Apple Developer ID và Windows EV code-signing mỗi loại tốn hàng trăm đô la mỗi năm, một dự án độc lập phải tự chi trả. Không có những chữ ký đó, Windows SmartScreen và macOS Gatekeeper sẽ cảnh báo khi khởi động lần đầu. Các cảnh báo có nghĩa là *hệ điều hành của bạn không nhận ra nhà phát hành* — không có nghĩa là Arroxy là phần mềm độc hại.",
+    "Arclio là phần mềm mã nguồn mở theo giấy phép MIT. Các bản build trên Windows và macOS **không được ký mã** — chứng chỉ Apple Developer ID và Windows EV code-signing mỗi loại tốn hàng trăm đô la mỗi năm, một dự án độc lập phải tự chi trả. Không có những chữ ký đó, Windows SmartScreen và macOS Gatekeeper sẽ cảnh báo khi khởi động lần đầu. Các cảnh báo có nghĩa là *hệ điều hành của bạn không nhận ra nhà phát hành* — không có nghĩa là Arclio là phần mềm độc hại.",
   dl_warning_p2:
-    "Ba cách để tự xác minh Arroxy, theo mức độ nghiêm ngặt tăng dần:\n\n- **Đọc mã nguồn.** Mọi dòng đều có trên [GitHub](https://github.com/antonio-orionus/Arroxy) và bạn có thể [tự build từ nguồn](#tech).\n- **Kiểm tra SHA256.** So sánh file của bạn với [`SHA256SUMS`](../../releases/latest) đã công bố — xem [Xác minh tải xuống](#verify) bên dưới.\n- **Chạy quét của bên thứ ba.** Tải file lên [VirusTotal](https://www.virustotal.com).",
+    "Ba cách để tự xác minh Arclio, theo mức độ nghiêm ngặt tăng dần:\n\n- **Đọc mã nguồn.** Mọi dòng đều có trên [GitHub](https://github.com/antonio-orionus/Arclio) và bạn có thể [tự build từ nguồn](#tech).\n- **Kiểm tra SHA256.** So sánh file của bạn với [`SHA256SUMS`](../../releases/latest) đã công bố — xem [Xác minh tải xuống](#verify) bên dưới.\n- **Chạy quét của bên thứ ba.** Tải file lên [VirusTotal](https://www.virustotal.com).",
 
   dl_win_first_h3: "Lần đầu khởi động trên Windows",
   shot_smartscreen_more_alt:
@@ -250,31 +250,31 @@ export const vi = {
     'Hộp thoại SmartScreen sau khi mở rộng More info, hiển thị nút "Run anyway"',
   dl_win_defender_h4: "Nếu Windows Defender gắn cờ hoặc xóa file",
   dl_win_defender_p:
-    "Heuristic của Defender đôi khi gắn cờ các trình cài đặt NSIS không được ký và Electron portable là đáng ngờ. Nếu Defender cách ly `Arroxy-win-x64-Setup.exe` hoặc `Arroxy-win-x64-Portable.exe`, hãy khôi phục nó từ **Windows Security → Virus & threat protection → Protection history**, sau đó thêm file thực thi Arroxy làm mục được phép trong **Manage settings → Add or remove exclusions**. Cũng giống SmartScreen, nguyên nhân là thiếu chữ ký nhà phát hành, không phải phần mềm độc hại bị phát hiện.",
+    "Heuristic của Defender đôi khi gắn cờ các trình cài đặt NSIS không được ký và Electron portable là đáng ngờ. Nếu Defender cách ly `Arclio-win-x64-Setup.exe` hoặc `Arclio-win-x64-Portable.exe`, hãy khôi phục nó từ **Windows Security → Virus & threat protection → Protection history**, sau đó thêm file thực thi Arclio làm mục được phép trong **Manage settings → Add or remove exclusions**. Cũng giống SmartScreen, nguyên nhân là thiếu chữ ký nhà phát hành, không phải phần mềm độc hại bị phát hiện.",
 
   dl_macos_first_h3: "Lần đầu khởi động trên macOS",
   dl_macos_intro:
-    "Arroxy chưa được ký mã cho macOS, vì vậy Gatekeeper sẽ chặn lần khởi động đầu tiên. Cách cho phép chính xác phụ thuộc vào phiên bản macOS của bạn — Sequoia 15 đã siết chặt cách bỏ qua cũ bằng chuột phải → Open.",
+    "Arclio chưa được ký mã cho macOS, vì vậy Gatekeeper sẽ chặn lần khởi động đầu tiên. Cách cho phép chính xác phụ thuộc vào phiên bản macOS của bạn — Sequoia 15 đã siết chặt cách bỏ qua cũ bằng chuột phải → Open.",
   dl_macos_sequoia_h4: "macOS Sequoia 15 trở lên (hiện tại)",
   dl_macos_sequoia_intro:
     "Trên Sequoia 15 và mới hơn, chuột phải → Open không còn bỏ qua Gatekeeper cho nhiều ứng dụng bị cách ly. Thay vào đó, hãy dùng bảng System Settings:",
-  dl_macos_sequoia_step1: "Kéo `Arroxy.app` từ DMG đã gắn vào `/Applications`.",
+  dl_macos_sequoia_step1: "Kéo `Arclio.app` từ DMG đã gắn vào `/Applications`.",
   dl_macos_sequoia_step2:
-    "Nhấp đúp vào Arroxy. Hộp thoại chặn xuất hiện — nhấp **Done** (đừng nhấp *Move to Trash*).",
+    "Nhấp đúp vào Arclio. Hộp thoại chặn xuất hiện — nhấp **Done** (đừng nhấp *Move to Trash*).",
   dl_macos_sequoia_step3:
-    'Mở **System Settings → Privacy & Security** và cuộn đến phần **Security**. Bạn sẽ thấy *"Arroxy was blocked to protect your Mac"* (hoặc thông báo gần giống).',
+    'Mở **System Settings → Privacy & Security** và cuộn đến phần **Security**. Bạn sẽ thấy *"Arclio was blocked to protect your Mac"* (hoặc thông báo gần giống).',
   dl_macos_sequoia_step4:
-    "Nhấp **Open Anyway**, xác nhận bằng mật khẩu hoặc Touch ID, sau đó khởi động lại Arroxy từ `/Applications`.",
+    "Nhấp **Open Anyway**, xác nhận bằng mật khẩu hoặc Touch ID, sau đó khởi động lại Arclio từ `/Applications`.",
   dl_macos_sonoma_h4: "macOS Sonoma 14 và cũ hơn",
-  dl_macos_sonoma_step1: "Kéo `Arroxy.app` từ DMG đã gắn vào `/Applications`.",
+  dl_macos_sonoma_step1: "Kéo `Arclio.app` từ DMG đã gắn vào `/Applications`.",
   dl_macos_sonoma_step2:
-    "Nhấp chuột phải (hoặc Control-click) vào `Arroxy.app` trong `/Applications` và chọn **Open**.",
+    "Nhấp chuột phải (hoặc Control-click) vào `Arclio.app` trong `/Applications` và chọn **Open**.",
   dl_macos_sonoma_step3:
-    "Hộp thoại cảnh báo bây giờ có nút **Open** — nhấp vào đó và xác nhận. Arroxy mở bình thường và cảnh báo sẽ không xuất hiện lại nữa.",
+    "Hộp thoại cảnh báo bây giờ có nút **Open** — nhấp vào đó và xác nhận. Arclio mở bình thường và cảnh báo sẽ không xuất hiện lại nữa.",
   dl_macos_damaged_h4:
     '"App is damaged" hoặc Gatekeeper chặn liên tục — sửa bằng Terminal',
   dl_macos_damaged_p:
-    'Nếu macOS báo *"Arroxy is damaged and can\'t be opened"*, hoặc không có bước nào ở trên giải quyết được, thuộc tính cách ly trên DMG là nguyên nhân (một số trình duyệt và hành vi translocation của macOS tự đặt nó). Xóa nó khỏi ứng dụng đã cài đặt:',
+    'Nếu macOS báo *"Arclio is damaged and can\'t be opened"*, hoặc không có bước nào ở trên giải quyết được, thuộc tính cách ly trên DMG là nguyên nhân (một số trình duyệt và hành vi translocation của macOS tự đặt nó). Xóa nó khỏi ứng dụng đã cài đặt:',
   dl_macos_arch_note:
     "**Apple Silicon vs Intel:** trên Mac dòng M (M1 / M2 / M3 / M4), hãy tải DMG `arm64`. Trên Mac Intel, tải DMG `x64`. Chạy bản build sai vẫn hoạt động qua Rosetta nhưng sẽ chậm hơn đáng kể.",
 
@@ -297,7 +297,7 @@ export const vi = {
   privacy_p1:
     "Tải xuống được lấy trực tiếp qua [yt-dlp](https://github.com/yt-dlp/yt-dlp) từ YouTube đến thư mục bạn chọn — không có gì đi qua máy chủ bên thứ ba. Lịch sử xem, lịch sử tải xuống, URL và nội dung file vẫn ở trên thiết bị của bạn.",
   privacy_p2:
-    "Arroxy gửi telemetry ẩn danh, tổng hợp qua [OpenPanel](https://openpanel.dev) — vừa đủ để hiểu lượt khởi động, OS, phiên bản ứng dụng và sự cố. Không có URL, tiêu đề video, đường dẫn tệp, thông tin tài khoản, fingerprinting hay dữ liệu cá nhân. ID cho mỗi lần cài đặt là ngẫu nhiên và không gắn với danh tính của bạn. Bạn có thể tắt trong Cài đặt.",
+    "Arclio gửi telemetry ẩn danh, tổng hợp qua [OpenPanel](https://openpanel.dev) — vừa đủ để hiểu lượt khởi động, OS, phiên bản ứng dụng và sự cố. Không có URL, tiêu đề video, đường dẫn tệp, thông tin tài khoản, fingerprinting hay dữ liệu cá nhân. ID cho mỗi lần cài đặt là ngẫu nhiên và không gắn với danh tính của bạn. Bạn có thể tắt trong Cài đặt.",
   faq_q1: "Thực sự miễn phí không?",
   faq_a1: "Có — giấy phép MIT, không có gói cao cấp, không khóa tính năng.",
   faq_q2: "Tôi có thể tải xuống chất lượng video nào?",
@@ -308,13 +308,13 @@ export const vi = {
     "Có. Chọn *chỉ âm thanh* trong menu định dạng rồi chọn MP3, M4A/AAC, Opus hoặc WAV.",
   faq_q4: "Tôi có cần tài khoản YouTube hay cookie không?",
   faq_a4:
-    "Mặc định là không — Arroxy hoạt động mà không cần tài khoản YouTube, đăng nhập hay xuất cookie. Hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao (Cookies source: file or browser) cho nội dung yêu cầu xác thực, chẳng hạn như video giới hạn độ tuổi hoặc dành riêng cho thành viên. Mặc định tính năng này tắt. Nếu bạn bật nó, wiki của yt-dlp lưu ý rằng [tự động hóa dựa trên cookie có thể gắn cờ tài khoản Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); trong trường hợp đó, tài khoản dùng một lần là lựa chọn an toàn hơn.",
+    "Mặc định là không — Arclio hoạt động mà không cần tài khoản YouTube, đăng nhập hay xuất cookie. Hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao (Cookies source: file or browser) cho nội dung yêu cầu xác thực, chẳng hạn như video giới hạn độ tuổi hoặc dành riêng cho thành viên. Mặc định tính năng này tắt. Nếu bạn bật nó, wiki của yt-dlp lưu ý rằng [tự động hóa dựa trên cookie có thể gắn cờ tài khoản Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); trong trường hợp đó, tài khoản dùng một lần là lựa chọn an toàn hơn.",
   faq_q5: "Ứng dụng có tiếp tục hoạt động khi YouTube thay đổi gì đó không?",
   faq_a5:
-    "yt-dlp được cập nhật tự động khi khởi động, và Arroxy nhanh chóng phát hành các bản sửa lỗi khi YouTube thay đổi điều gì đó. Nếu bạn vẫn gặp sự cố, hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao như một phương án dự phòng.",
-  faq_q6: "Arroxy có sẵn bằng những ngôn ngữ nào?",
+    "yt-dlp được cập nhật tự động khi khởi động, và Arclio nhanh chóng phát hành các bản sửa lỗi khi YouTube thay đổi điều gì đó. Nếu bạn vẫn gặp sự cố, hỗ trợ cookie tùy chọn có sẵn trong Cài đặt nâng cao như một phương án dự phòng.",
+  faq_q6: "Arclio có sẵn bằng những ngôn ngữ nào?",
   faq_a6:
-    "Hai mươi mốt ngôn ngữ, có sẵn ngay khi cài đặt: English, Español (Tây Ban Nha), Deutsch (Đức), Français (Pháp), 日本語 (Nhật), 中文 (Trung Quốc), Русский (Nga), Українська (Ukraine), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Việt Nam), አማርኛ (Amharic), العربية (Ả Rập), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Miến Điện), Ελληνικά (Hy Lạp) và Српски (Serbia). Arroxy tự động phát hiện ngôn ngữ hệ điều hành của bạn khi khởi động lần đầu và bạn có thể chuyển đổi bất cứ lúc nào từ bộ chọn ngôn ngữ trên thanh công cụ. JSON locale dùng lúc chạy nằm trong src/shared/i18n/locales/, còn catalog PO dành cho người dịch nằm trong i18n/locales/ — mở PR trên GitHub để đóng góp.",
+    "Hai mươi mốt ngôn ngữ, có sẵn ngay khi cài đặt: English, Español (Tây Ban Nha), Deutsch (Đức), Français (Pháp), 日本語 (Nhật), 中文 (Trung Quốc), Русский (Nga), Українська (Ukraine), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Việt Nam), አማርኛ (Amharic), العربية (Ả Rập), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Miến Điện), Ελληνικά (Hy Lạp) và Српски (Serbia). Arclio tự động phát hiện ngôn ngữ hệ điều hành của bạn khi khởi động lần đầu và bạn có thể chuyển đổi bất cứ lúc nào từ bộ chọn ngôn ngữ trên thanh công cụ. JSON locale dùng lúc chạy nằm trong src/shared/i18n/locales/, còn catalog PO dành cho người dịch nằm trong i18n/locales/ — mở PR trên GitHub để đóng góp.",
   faq_q7: "Tôi có cần cài đặt thêm gì không?",
   faq_a7:
     "Không. yt-dlp được tải xuống tự động khi khởi động lần đầu và được lưu vào bộ nhớ đệm trên máy của bạn; ffmpeg và ffprobe đi kèm với ứng dụng. Sau đó, không cần thiết lập thêm gì.",
@@ -337,7 +337,7 @@ export const vi = {
     "Đặt tùy chọn track ngôn ngữ nói cho toàn app, với override theo từng profile khi YouTube cung cấp nhiều track âm thanh",
   plan_r6_name: "**Đăng nhập bằng browser trong app**",
   plan_r6_desc:
-    "Mở browser windows bên trong Arroxy để đăng nhập và dùng site cookies mà không cần export thủ công",
+    "Mở browser windows bên trong Arclio để đăng nhập và dùng site cookies mà không cần export thủ công",
   plan_r8_name: "**Tải video bằng một click**",
   plan_r8_desc:
     "Bắt đầu video download bằng một click từ URL được phát hiện hoặc đã dán bằng active profile",
@@ -356,7 +356,7 @@ export const vi = {
   tech_content: TECH_CONTENT,
   tos_h2: "Điều khoản sử dụng",
   tos_note:
-    "Arroxy là công cụ chỉ dành cho mục đích sử dụng cá nhân, riêng tư. Bạn hoàn toàn chịu trách nhiệm đảm bảo các tải xuống của mình tuân thủ [Điều khoản dịch vụ](https://www.youtube.com/t/terms) của YouTube và luật bản quyền tại khu vực pháp lý của bạn. Không sử dụng Arroxy để tải xuống, sao chép hoặc phân phối nội dung mà bạn không có quyền sử dụng. Các nhà phát triển không chịu trách nhiệm về bất kỳ hành vi lạm dụng nào.",
+    "Arclio là công cụ chỉ dành cho mục đích sử dụng cá nhân, riêng tư. Bạn hoàn toàn chịu trách nhiệm đảm bảo các tải xuống của mình tuân thủ [Điều khoản dịch vụ](https://www.youtube.com/t/terms) của YouTube và luật bản quyền tại khu vực pháp lý của bạn. Không sử dụng Arclio để tải xuống, sao chép hoặc phân phối nội dung mà bạn không có quyền sử dụng. Các nhà phát triển không chịu trách nhiệm về bất kỳ hành vi lạm dụng nào.",
   footer_credit:
     'Giấy phép MIT · Được tạo ra với tâm huyết bởi <a href="https://x.com/OrionusAI">@OrionusAI</a>',
 };

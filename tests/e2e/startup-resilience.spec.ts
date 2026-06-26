@@ -16,7 +16,7 @@ async function launchApp(userDataDir: string): Promise<ElectronApplication> {
 }
 
 test('corrupted settings.json → app still reaches shell', async () => {
-	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-e2e-corrupt-settings-'))
+	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-e2e-corrupt-settings-'))
 	fs.writeFileSync(path.join(userDataDir, 'settings.json'), 'not valid json', 'utf-8')
 
 	const app = await launchApp(userDataDir)
@@ -30,7 +30,7 @@ test('corrupted settings.json → app still reaches shell', async () => {
 })
 
 test('corrupted queue.json → app still reaches shell', async () => {
-	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-e2e-corrupt-queue-'))
+	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-e2e-corrupt-queue-'))
 	fs.writeFileSync(path.join(userDataDir, 'queue.json'), '{ broken', 'utf-8')
 
 	const app = await launchApp(userDataDir)
@@ -43,7 +43,7 @@ test('corrupted queue.json → app still reaches shell', async () => {
 })
 
 test('seeded pending queue → Queue Manager hydrates from persisted store', async () => {
-	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-e2e-seeded-queue-'))
+	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-e2e-seeded-queue-'))
 
 	// Write a queue.json that has one pending item — simulates an unfinished
 	// download from a previous session. The app should re-hydrate it in Queue

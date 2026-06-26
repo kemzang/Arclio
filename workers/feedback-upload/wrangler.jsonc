@@ -1,6 +1,6 @@
 {
 	"$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
-	"name": "arroxy-feedback-upload",
+	"name": "arclio-feedback-upload",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-06-08",
 	"observability": {
@@ -9,14 +9,14 @@
 	},
 	"routes": [
 		{
-			"pattern": "arroxy.orionus.dev/api/feedback-diagnostics",
+			"pattern": "arclio.orionus.dev/api/feedback-diagnostics",
 			"zone_name": "orionus.dev"
 		}
 	],
 	"r2_buckets": [
 		{
 			"binding": "FEEDBACK_LOGS",
-			"bucket_name": "arroxy-feedback-diagnostics"
+			"bucket_name": "arclio-feedback-diagnostics"
 		}
 	],
 	"ratelimits": [

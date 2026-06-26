@@ -29,7 +29,7 @@ describe('parseBulkUrls', () => {
 	})
 
 	it('accepts and classifies YouTube playlist, channel, search, and mixed watch URLs', () => {
-		const result = parseBulkUrls('https://www.youtube.com/playlist?list=PLtest https://www.youtube.com/@arroxy https://www.youtube.com/results?search_query=arroxy https://www.youtube.com/watch?v=abc123&list=PLtest')
+		const result = parseBulkUrls('https://www.youtube.com/playlist?list=PLtest https://www.youtube.com/@arclio https://www.youtube.com/results?search_query=arclio https://www.youtube.com/watch?v=abc123&list=PLtest')
 
 		expect(result.accepted.map(item => item.kind)).toEqual(['playlist', 'channel', 'search', 'mixed'])
 		expect(result.rejected).toEqual([])
@@ -82,7 +82,7 @@ describe('extractYouTubeVideoId', () => {
 	it('does not derive ids for playlist/channel URLs', () => {
 		expect(extractYouTubeVideoId('https://www.youtube.com/playlist?list=PLtest')).toBeNull()
 		expect(extractYouTubeVideoId('https://www.youtube.com/watch?v=abc123&list=PLtest')).toBeNull()
-		expect(extractYouTubeVideoId('https://www.youtube.com/@arroxy')).toBeNull()
+		expect(extractYouTubeVideoId('https://www.youtube.com/@arclio')).toBeNull()
 	})
 })
 
@@ -91,8 +91,8 @@ describe('classifyBulkUrlKind', () => {
 		['https://www.youtube.com/watch?v=abc123', 'single'],
 		['https://www.youtube.com/watch?v=abc123&list=PLtest', 'mixed'],
 		['https://www.youtube.com/playlist?list=PLtest', 'playlist'],
-		['https://www.youtube.com/@arroxy', 'channel'],
-		['https://www.youtube.com/results?search_query=arroxy', 'search'],
+		['https://www.youtube.com/@arclio', 'channel'],
+		['https://www.youtube.com/results?search_query=arclio', 'search'],
 		['https://vimeo.com/123', 'unknown']
 	] as const)('%s -> %s', (url, kind) => {
 		expect(classifyBulkUrlKind(url)).toBe(kind)

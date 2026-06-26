@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.antonio_orionus.Arroxy</id>
+  <id>io.github.antonio_orionus.Arclio</id>
 
-  <name>Arroxy</name>
+  <name>Arclio</name>
   <summary>YouTube downloader for video, audio, and subtitles</summary>
   <summary xml:lang="de">YouTube Downloader für Video, Audio und Untertitel</summary>
   <summary xml:lang="es">Descargador de YouTube para vídeo, audio y subtítulos</summary>
@@ -18,7 +18,7 @@
 
   <description>
     <p>
-      Arroxy is a free open-source YouTube downloader built around a simple step-by-step
+      Arclio is a free open-source YouTube downloader built around a simple step-by-step
       wizard. Paste a URL, pick a format and quality, choose where to save, and download —
       no command-line flags, no terminal required.
     </p>
@@ -35,10 +35,10 @@
     </ul>
   </description>
 
-  <launchable type="desktop-id">io.github.antonio_orionus.Arroxy.desktop</launchable>
+  <launchable type="desktop-id">io.github.antonio_orionus.Arclio.desktop</launchable>
 
-  <url type="homepage">https://github.com/antonio-orionus/Arroxy</url>
-  <url type="bugtracker">https://github.com/antonio-orionus/Arroxy/issues</url>
+  <url type="homepage">https://github.com/antonio-orionus/Arclio</url>
+  <url type="bugtracker">https://github.com/antonio-orionus/Arclio/issues</url>
 
   <keywords>
     <keyword>youtube</keyword>
@@ -59,23 +59,23 @@
   <screenshots>
     <screenshot type="default">
       <caption>Paste a URL to get started</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arroxy/main/build/Main-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Main-screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Pick your quality and format</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arroxy/main/build/Choosing-format-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Choosing-format-screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Choose where to save</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arroxy/main/build/Choosing-destination-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Choosing-destination-screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Download queue with parallel progress</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arroxy/main/build/Downloading-in-parallel-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Downloading-in-parallel-screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Subtitle language and format selection</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arroxy/main/build/Subtitles-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Subtitles-screenshot.png</image>
     </screenshot>
   </screenshots>
 

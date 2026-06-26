@@ -118,8 +118,8 @@ export function sha256HexToSri(sha256Hex: string): string {
 
 // Network plumbing handled by `make-fetch-happen`: redirects, proxy support,
 // timeout support, and HTTP-semantics-aware request retry. Stream truncation is
-// still handled by Arroxy because the app owns partial-file and range policy.
-const HTTP_HEADERS: Record<string, string> = {'user-agent': 'arroxy/1.0'}
+// still handled by Arclio because the app owns partial-file and range policy.
+const HTTP_HEADERS: Record<string, string> = {'user-agent': 'arclio/1.0'}
 const HTTP_RETRY = {retries: 5, factor: 2, minTimeout: 1_000, maxTimeout: 60_000, randomize: true}
 const HTTP_TIMEOUT = {request: 600_000}
 
@@ -214,7 +214,7 @@ function positiveIntegerEnv(name: string): number | undefined {
 }
 
 function downloadMaxDurationMs(): number {
-	return positiveIntegerEnv('ARROXY_BINARY_DOWNLOAD_MAX_MS') ?? HTTP_TIMEOUT.request
+	return positiveIntegerEnv('ARCLIO_BINARY_DOWNLOAD_MAX_MS') ?? HTTP_TIMEOUT.request
 }
 
 function normalizeDownloadFileOptions(allowPartialRetryOrOptions: boolean | DownloadFileOptions, signal?: AbortSignal): NormalizedDownloadFileOptions {

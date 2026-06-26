@@ -33,7 +33,7 @@ describe('WarmupSplash', () => {
 		render(<WarmupSplash initialized={false} warmupBlocking={[]} warmupDiagnostics={null} warmupProgress={null} showGreeting={false} />)
 
 		expect(screen.getByTestId('splash-overlay')).toHaveTextContent('Preparing downloads')
-		expect(screen.getByTestId('splash-overlay')).not.toHaveTextContent('Starting Arroxy')
+		expect(screen.getByTestId('splash-overlay')).not.toHaveTextContent('Starting Arclio')
 	})
 
 	it('keeps concrete binary download progress and byte counts', () => {

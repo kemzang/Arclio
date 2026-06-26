@@ -5,7 +5,7 @@ import {rmSync, existsSync} from 'fs'
 import {join} from 'path'
 import {homedir, platform} from 'os'
 
-const APP_NAME = 'arroxy'
+const APP_NAME = 'arclio'
 
 function userDataPath() {
 	switch (platform()) {

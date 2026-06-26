@@ -54,8 +54,8 @@ sudo apt install -y xvfb
 ### ቅዳና አሂድ
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # የሚመከር፤ pinned tools በእጅ ካነቃችሁ ይዝለሉት
 bun run bootstrap
 bun run doctor
@@ -70,14 +70,14 @@ bun run dist         # package for current OS
 bun run dist:win     # supported host ላይ Windows targets package ማድረግ
 \`\`\`
 
-> \`bun run bootstrap\` dependencies ይጭናል፣ Electron app dependencies rebuild ያደርጋል፣ Electron ያረጋግጣል፣ ለ development embedded ffmpeg/ffprobe ያዘጋጃል፣ እና Playwright Chromium ይጭናል። yt-dlp በ runtime ውስጥ app data folder ይ managed ይሆናል፤ ffmpeg እና ffprobe ከእያንዳንዱ የArroxy release ጋር bundled ይመጣሉ።
+> \`bun run bootstrap\` dependencies ይጭናል፣ Electron app dependencies rebuild ያደርጋል፣ Electron ያረጋግጣል፣ ለ development embedded ffmpeg/ffprobe ያዘጋጃል፣ እና Playwright Chromium ይጭናል። yt-dlp በ runtime ውስጥ app data folder ይ managed ይሆናል፤ ffmpeg እና ffprobe ከእያንዳንዱ የArclio release ጋር bundled ይመጣሉ።
 
 </details>`;
 
 export const am = {
-  icon_alt: "የ Arroxy መሸፈኛ",
+  icon_alt: "የ Arclio መሸፈኛ",
   title:
-    "Arroxy — ነፃ ምን ኮድ ያለው YouTube (+ 2000 ጣቢያ) አውራጅ ለ Windows, macOS እና Linux",
+    "Arclio — ነፃ ምን ኮድ ያለው YouTube (+ 2000 ጣቢያ) አውራጅ ለ Windows, macOS እና Linux",
   read_in_label: "አንብብ በ:",
   badge_release_alt: "ስሪት",
   badge_build_alt: "ግንባታ",
@@ -92,11 +92,11 @@ export const am = {
     "ቪዲዮዎች፣ Shorts፣ ሙዚቃ፣ ቻናሎች፣ ፖድካስቶች ወይም የድምፅ ትራኮች ከ**YouTube እና ከ2000+ ተደገፉ ጣቢያዎች** ያውርዱ — እስከ 4K HDR በ60 fps፣ ወይም MP3 / AAC / Opus። በ Windows፣ macOS፣ እና Linux ላይ አካባቢያዊ ሆኖ ይሠራል። **ምንም ማስታወቂያ፣ ምንም ብዝሃ ሸቀጥ፣ ምንም ተጨማሪ ሽያጭ።**",
   cta_latest: "↓ የቅርብ ጊዜ ስሪት አውርድ",
   cta_website: "ድር ጣቢያ",
-  demo_alt: "የ Arroxy ማሳያ",
-  star_cta: "Arroxy ጊዜ ካስቆጠበዎ፣ ⭐ ሌሎች እንዲያገኙት ይረዳል።",
+  demo_alt: "የ Arclio ማሳያ",
+  star_cta: "Arclio ጊዜ ካስቆጠበዎ፣ ⭐ ሌሎች እንዲያገኙት ይረዳል።",
   ai_notice: "",
   toc_heading: "ዝርዝር",
-  why_h2: "ለምን Arroxy",
+  why_h2: "ለምን Arclio",
   features_h2: "ባህሪያት",
   dl_h2: "አውርድ",
   privacy_h2: "ግላዊነት",
@@ -112,7 +112,7 @@ export const am = {
   why_r6: "ለሁሉም ዓይነት ሥርዓቶች የሚሠራ የዴስክቶፕ አፕ",
   why_r7: "ንዑስ ርዕሶች + SponsorBlock",
   why_summary:
-    "Arroxy ለአንድ ነገር ብቻ ተሠርቷል: URL ይለጥፉ፣ ንጹህ አካባቢያዊ ፋይል ያግኙ። ምንም ሒሳቦች፣ ምንም ሽያጭ፣ ምንም የዳታ ስብስብ።",
+    "Arclio ለአንድ ነገር ብቻ ተሠርቷል: URL ይለጥፉ፣ ንጹህ አካባቢያዊ ፋይል ያግኙ። ምንም ሒሳቦች፣ ምንም ሽያጭ፣ ምንም የዳታ ስብስብ።",
   feat_quality_h3: "ጥራት እና ቅርጸቶች",
   feat_quality_1: "እስከ **4K UHD (2160p)**፣ 1440p፣ 1080p፣ 720p፣ 480p፣ 360p",
   feat_quality_2: "**ፈጣን የፍሬም ፍጥነት** እንዳለ ተጠብቆ — 60 fps፣ 120 fps፣ HDR",
@@ -129,7 +129,7 @@ export const am = {
   feat_workflow_2:
     "**ማዕከላዊ የማውረድ ወረፋ** — ነጠላ፣ playlist፣ bulk፣ ወይም quick ሥራ ሁሉ ለሂደት፣ ለማቆም፣ ለመቀጠል፣ ለመሰረዝ፣ እንደገና ለመሞከር እና ለቅድሚያ ቁጥጥር በአንድ ቦታ ይመጣል",
   feat_workflow_3:
-    "**ክሊፕቦርድ ክትትል** — YouTube ሊንክ ቅዱ እና Arroxy ወደ አፕ ሲመለሱ URL ን አውቶሜቲክ ይሙላሉ (በ Advanced settings ውስጥ ያብሩ/ያጥፉ)",
+    "**ክሊፕቦርድ ክትትል** — YouTube ሊንክ ቅዱ እና Arclio ወደ አፕ ሲመለሱ URL ን አውቶሜቲክ ይሙላሉ (በ Advanced settings ውስጥ ያብሩ/ያጥፉ)",
   feat_workflow_4:
     "**URL ን ራስ ሰር ያጥሩ** — ትራኪንግ ፓራሜትሮችን (`si`፣ `pp`፣ `utm_*`፣ `fbclid`፣ `gclid`) ያስወግዳሉ እና `youtube.com/redirect` ሊንኮችን ያሰናስሉ",
   feat_workflow_5: "**ትሬ ሁነታ** — መስኮቱን መዝጋት ማውረዶቹን በጀርባ ያስቀጥላሉ",
@@ -154,7 +154,7 @@ export const am = {
   feat_sites_3:
     "**ኦዲዮ ብቻ እና ጽሑፍ ርዕሶች** ሁሉም ተደጋፊ ጣቢያዎች ላይ ይሠራሉ፣ YouTube ብቻ ሳይሆን",
   feat_sites_4:
-    "ጣቢያ ሲቀይር yt-dlp በሳምንት ውስጥ ማሻሻያዎችን ይልካሉ፣ Arroxy ደግሞ ሲጀምር binary ን ራስ-ሰር ያዘምናሉ",
+    "ጣቢያ ሲቀይር yt-dlp በሳምንት ውስጥ ማሻሻያዎችን ይልካሉ፣ Arclio ደግሞ ሲጀምር binary ን ራስ-ሰር ያዘምናሉ",
   shot1_cap: "<b>የፈጣን ማውረድ መነሻ</b><br/>URL ይለጥፉ እና በነቃ መገለጫዎ ወዲያውኑ ያውርዱ",
   shot2_cap:
     "<b>እንደገና ጥቅም ላይ የሚውሉ የማውረድ መገለጫዎች</b><br/>ቅርጸት፣ ጥራት እና ውጤትን እንደ ቅድመ-ቅንብር ያስቀምጡ — በእያንዳንዱ ማውረድ ይጠቀሙ",
@@ -191,23 +191,23 @@ export const am = {
     "**ምክር:** ለራስ ሰር ዝማኔዎች እና ፈጣን ጅምር NSIS ጫኝ ይጠቀሙ። ምንም ጫሌ፣ ምንም ሬጂስትሪ ለሌለው አማራጭ ተጓዥ `.exe` ይጠቀሙ።",
   dl_win_smartscreen_h4: "Windows SmartScreen ማስጠንቀቂያ",
   dl_win_smartscreen_intro:
-    'በመጀመሪያ ጊዜ ሲጀምሩ **"Windows protected your PC"** ወይም **"Unknown publisher"** ሊያዩ ይችላሉ። ይህ ለ `Arroxy-win-x64-Setup.exe` እና `Arroxy-win-x64-Portable.exe` ሁለቱም ይሠራሉ። Arroxy ነፃ እና ምን ኮድ ያለው ሲሆን የ Windows ቅጅዎቹ ባለ ክፍያ የምስክር ወረቀት ተፈርመዋ አይደሉም፣ ስለዚህ SmartScreen ያሳዩዋቸዋል። ይህ Arroxy ደህና ያልሆነ ማለት **አልሆነም**። ለቀጠሉ:',
+    'በመጀመሪያ ጊዜ ሲጀምሩ **"Windows protected your PC"** ወይም **"Unknown publisher"** ሊያዩ ይችላሉ። ይህ ለ `Arclio-win-x64-Setup.exe` እና `Arclio-win-x64-Portable.exe` ሁለቱም ይሠራሉ። Arclio ነፃ እና ምን ኮድ ያለው ሲሆን የ Windows ቅጅዎቹ ባለ ክፍያ የምስክር ወረቀት ተፈርመዋ አይደሉም፣ ስለዚህ SmartScreen ያሳዩዋቸዋል። ይህ Arclio ደህና ያልሆነ ማለት **አልሆነም**። ለቀጠሉ:',
   dl_win_smartscreen_step1: "**More info** ጠቅ ያድርጉ።",
   dl_win_smartscreen_step2: "**Run anyway** ጠቅ ያድርጉ።",
   dl_win_smartscreen_official:
-    "Arroxy'ን ከይፋዊው GitHub Releases ገጽ ብቻ ያውርዱ። ፋይሉን ሌላ ድር ጣቢያ ካወረዱ ወይም ሌሎች ከላኩልዎ፣ ሰርዘው ከይፋዊ ምንጩ አዲስ ቅጅ ያውርዱ። ምንጩ ህዝባዊ ስለሆነ ራስዎ ሊፈትሹ ወይም Arroxy'ን ሊሠሩ ይችላሉ።",
+    "Arclio'ን ከይፋዊው GitHub Releases ገጽ ብቻ ያውርዱ። ፋይሉን ሌላ ድር ጣቢያ ካወረዱ ወይም ሌሎች ከላኩልዎ፣ ሰርዘው ከይፋዊ ምንጩ አዲስ ቅጅ ያውርዱ። ምንጩ ህዝባዊ ስለሆነ ራስዎ ሊፈትሹ ወይም Arclio'ን ሊሠሩ ይችላሉ።",
   dl_macos_h3: "በ macOS ላይ ለመጀመሪያ ጊዜ አስጀምር",
   dl_macos_warning:
-    "Arroxy ገና ኮድ አልተፈረመበትም፣ ስለዚህ macOS Gatekeeper በመጀመሪያ አስጀማሪ ሲያስጠነቅቅዎ ይጠብቁ። ይህ ተጠበቀ ነው — የጉዳት ምልክት አይደለም።",
+    "Arclio ገና ኮድ አልተፈረመበትም፣ ስለዚህ macOS Gatekeeper በመጀመሪያ አስጀማሪ ሲያስጠነቅቅዎ ይጠብቁ። ይህ ተጠበቀ ነው — የጉዳት ምልክት አይደለም።",
   dl_macos_m1_h4: "የሥርዓት ቅንብሮች ዘዴ (ምከረ):",
-  dl_macos_step1: "የ Arroxy አፕ አዶ ላይ ቀኝ ጠቅ ያድርጉ እና **Open** ይምረጡ።",
+  dl_macos_step1: "የ Arclio አፕ አዶ ላይ ቀኝ ጠቅ ያድርጉ እና **Open** ይምረጡ።",
   dl_macos_step2:
     "የማስጠንቀቂያ መልዕክት ሳጥን ይታያሉ — **Cancel** ጠቅ ያድርጉ (*Move to Trash* አይጫኑ)።",
   dl_macos_step3: "**System Settings → Privacy & Security** ይክፈቱ።",
   dl_macos_step4:
-    'ወደ **Security** ክፍል ያሸብልሉ። *"Arroxy was blocked from use because it is not from an identified developer."* ያዩሉ።',
+    'ወደ **Security** ክፍል ያሸብልሉ። *"Arclio was blocked from use because it is not from an identified developer."* ያዩሉ።',
   dl_macos_step5: "**Open Anyway** ጠቅ ያድርጉ እና በይለፍ ቃልዎ ወይም Touch ID ያረጋግጡ።",
-  dl_macos_after: "ደረጃ 5 ከተከናወነ በኋላ፣ Arroxy በተለምዶ ይከፈቱ እናም ማስጠንቀቂያ ሁሌ አይታዩም።",
+  dl_macos_after: "ደረጃ 5 ከተከናወነ በኋላ፣ Arclio በተለምዶ ይከፈቱ እናም ማስጠንቀቂያ ሁሌ አይታዩም።",
   dl_macos_m2_h4: "የቴርሚናል ዘዴ (ተሂሳዊ):",
   dl_macos_note:
     "macOS ሕንጻዎች ከ Apple Silicon እና Intel ሩጫዎች በ CI ላይ ይሠራሉ። ችግር ካጋጠምዎ፣ [ጉዳይ ይክፈቱ](../../issues) — ከ macOS ተጠቃሚዎች ያለው ምላሽ የ macOS ፈተና ዑደቱን ቀጥታ ይቀርፃሉ።",
@@ -219,14 +219,14 @@ export const am = {
   dl_linux_m2_h4: "ቴርሚናል:",
   dl_linux_fuse_text: "አስጀምሩ አሁንም ሳይሠራ ቢቀር፣ FUSE ጎደለ ሊሆን ይችላሉ:",
   dl_linux_flatpak_intro:
-    "**Flatpak (ለቅርቅብ አማራጭ):** `Arroxy-*.flatpak` ን ከተመሳሳዩ ስሪት ገጽ ያውርዱ።",
+    "**Flatpak (ለቅርቅብ አማራጭ):** `Arclio-*.flatpak` ን ከተመሳሳዩ ስሪት ገጽ ያውርዱ።",
 
   // ---- Reorganized install help (normie-first, manual-download primary) ----
   dl_warning_h3: "ለምን ማስጠንቀቂያ ሊታዩዎ ይችላሉ",
   dl_warning_p1:
-    "Arroxy ምን ኮድ ያለው (open-source) እና MIT ፈቃድ ያለው ነው። የ Windows እና macOS ቅጅዎቹ **ኮድ አልተፈረመባቸውም** — Apple Developer ID እና Windows EV ኮድ-ፊርማ ሰርቲፊኬቶቹ እያንዳንዳቸው በዓመት በመቶዎች ዶላር ያስወጣሉ፣ ይህ ነጻ ፕሮጀክት ከኪሳቸው ይከፍላሉ። ያነዚህ ፊርሞች ሳይኖሩ፣ Windows SmartScreen እና macOS Gatekeeper በመጀመሪያ አስጀማሪ ያስጠነቅቋቸዋል። ማስጠንቀቂያዎቹ *ሥርዓተ ክወናዎ ናሸርን አይለይም* ማለት ናቸው — Arroxy ተንኮል-አዘል ሶፍትዌር ነው ማለት አይደሉም።",
+    "Arclio ምን ኮድ ያለው (open-source) እና MIT ፈቃድ ያለው ነው። የ Windows እና macOS ቅጅዎቹ **ኮድ አልተፈረመባቸውም** — Apple Developer ID እና Windows EV ኮድ-ፊርማ ሰርቲፊኬቶቹ እያንዳንዳቸው በዓመት በመቶዎች ዶላር ያስወጣሉ፣ ይህ ነጻ ፕሮጀክት ከኪሳቸው ይከፍላሉ። ያነዚህ ፊርሞች ሳይኖሩ፣ Windows SmartScreen እና macOS Gatekeeper በመጀመሪያ አስጀማሪ ያስጠነቅቋቸዋል። ማስጠንቀቂያዎቹ *ሥርዓተ ክወናዎ ናሸርን አይለይም* ማለት ናቸው — Arclio ተንኮል-አዘል ሶፍትዌር ነው ማለት አይደሉም።",
   dl_warning_p2:
-    "Arroxy ን ራስዎ ለማረጋገጥ ሦስት መንገዶች፣ ከፍ እያለ በሚሄድ ጥብቅነት:\n\n- **ምንጩን ያንብቡ።** ሁሉም መስመሮች [GitHub](https://github.com/antonio-orionus/Arroxy) ላይ ናቸው፣ እናም [ከምንጩ ሊሠሩ](#tech) ይችላሉ።\n- **SHA256ን ያረጋግጡ።** ፋይልዎን ከታተሙት [`SHA256SUMS`](../../releases/latest) ጋር ያዛምዱ — ከዚህ በታች [ማውረዱን ያረጋግጡ](#verify) ይመልከቱ።\n- **የሦስተኛ ወገን ቅኝት ያካሂዱ።** ፋይሉን ወደ [VirusTotal](https://www.virustotal.com) ይጫኑ።",
+    "Arclio ን ራስዎ ለማረጋገጥ ሦስት መንገዶች፣ ከፍ እያለ በሚሄድ ጥብቅነት:\n\n- **ምንጩን ያንብቡ።** ሁሉም መስመሮች [GitHub](https://github.com/antonio-orionus/Arclio) ላይ ናቸው፣ እናም [ከምንጩ ሊሠሩ](#tech) ይችላሉ።\n- **SHA256ን ያረጋግጡ።** ፋይልዎን ከታተሙት [`SHA256SUMS`](../../releases/latest) ጋር ያዛምዱ — ከዚህ በታች [ማውረዱን ያረጋግጡ](#verify) ይመልከቱ።\n- **የሦስተኛ ወገን ቅኝት ያካሂዱ።** ፋይሉን ወደ [VirusTotal](https://www.virustotal.com) ይጫኑ።",
 
   dl_win_first_h3: "Windows ላይ ለመጀመሪያ ጊዜ አስጀምር",
   shot_smartscreen_more_alt:
@@ -235,32 +235,32 @@ export const am = {
     'More info ከተከፈተ በኋላ SmartScreen መልዕክት ሳጥን፣ "Run anyway" ቁልፍ ከሚታይ ጋር',
   dl_win_defender_h4: "Windows Defender ፋይሉን ቢሰምናቸው ወይም ቢያስወግዳቸው",
   dl_win_defender_p:
-    "Defender ሂዩሪስቲክስ አንዳንድ ጊዜ ያልተፈረሙ NSIS ጫኞችን እና Electron ተጓዥዎችን ጥርጣሬ አዘል ብሎ ሊሰምናቸው ይችላሉ። Defender `Arroxy-win-x64-Setup.exe` ወይም `Arroxy-win-x64-Portable.exe` ን ካቆጠቆጠ፣ ከ **Windows Security → Virus & threat protection → Protection history** ይመልሱ፣ ከዛ Arroxy ን ሊፈጸም የሚችልን ፋይል **Manage settings → Add or remove exclusions** ስር ፈቀደ ሆኖ ያክሉ። እንደ SmartScreen ሁሉ፣ ምክንያቱ አልተገኘ ተንኮል-አዘል ሶፍትዌር ሳይሆን የጎደለ ናሸር ፊርማ ነው።",
+    "Defender ሂዩሪስቲክስ አንዳንድ ጊዜ ያልተፈረሙ NSIS ጫኞችን እና Electron ተጓዥዎችን ጥርጣሬ አዘል ብሎ ሊሰምናቸው ይችላሉ። Defender `Arclio-win-x64-Setup.exe` ወይም `Arclio-win-x64-Portable.exe` ን ካቆጠቆጠ፣ ከ **Windows Security → Virus & threat protection → Protection history** ይመልሱ፣ ከዛ Arclio ን ሊፈጸም የሚችልን ፋይል **Manage settings → Add or remove exclusions** ስር ፈቀደ ሆኖ ያክሉ። እንደ SmartScreen ሁሉ፣ ምክንያቱ አልተገኘ ተንኮል-አዘል ሶፍትዌር ሳይሆን የጎደለ ናሸር ፊርማ ነው።",
 
   dl_macos_first_h3: "macOS ላይ ለመጀመሪያ ጊዜ አስጀምር",
   dl_macos_intro:
-    "Arroxy ለ macOS ኮድ ሳይፈርም ስለሆነ፣ Gatekeeper ለመጀመሪያ አስጀምሩ ያግዳሉ። እሱን ለመፍቀድ ያለው ትክክለኛ ዘዴ macOS ስሪቶ ላይ ይወሰናሉ — Sequoia 15 ቀድሞ ያለውን ቀኝ-ጠቅ → Open ማለፊያ አጥብቋቸዋሉ።",
+    "Arclio ለ macOS ኮድ ሳይፈርም ስለሆነ፣ Gatekeeper ለመጀመሪያ አስጀምሩ ያግዳሉ። እሱን ለመፍቀድ ያለው ትክክለኛ ዘዴ macOS ስሪቶ ላይ ይወሰናሉ — Sequoia 15 ቀድሞ ያለውን ቀኝ-ጠቅ → Open ማለፊያ አጥብቋቸዋሉ።",
   dl_macos_sequoia_h4: "macOS Sequoia 15 እና ከዚህ በኋላ (ወቅታዊ)",
   dl_macos_sequoia_intro:
     "Sequoia 15 እና አዳዲስ ስሪቶቹ ላይ፣ ቀኝ-ጠቅ → Open ለብዙ ቆጠቡ አፖቹ Gatekeeper ን ያሳልፋቸዋሉ አልሆነም። ምትክ ሥርዓት ቅንብሮች ፓነልን ይጠቀሙ:",
   dl_macos_sequoia_step1:
-    "ከተቀጠለው DMG ውስጥ `Arroxy.app` ን ወደ `/Applications` ጎትቱ።",
+    "ከተቀጠለው DMG ውስጥ `Arclio.app` ን ወደ `/Applications` ጎትቱ።",
   dl_macos_sequoia_step2:
-    "Arroxy ን ሁለቴ ጠቅ ያድርጉ። የማገጃ መልዕክት ሳጥን ይታያሉ — **Done** ጠቅ ያድርጉ (*Move to Trash* አይጫኑ)።",
+    "Arclio ን ሁለቴ ጠቅ ያድርጉ። የማገጃ መልዕክት ሳጥን ይታያሉ — **Done** ጠቅ ያድርጉ (*Move to Trash* አይጫኑ)።",
   dl_macos_sequoia_step3:
-    '**System Settings → Privacy & Security** ይክፈቱ እና ወደ **Security** ክፍሉ ያሸብልሉ። *"Arroxy was blocked to protect your Mac"* (ወይም ቅርብ ተመሳሳይ መልዕክት) ያዩሉ።',
+    '**System Settings → Privacy & Security** ይክፈቱ እና ወደ **Security** ክፍሉ ያሸብልሉ። *"Arclio was blocked to protect your Mac"* (ወይም ቅርብ ተመሳሳይ መልዕክት) ያዩሉ።',
   dl_macos_sequoia_step4:
-    "**Open Anyway** ጠቅ ያድርጉ፣ በይለፍ ቃልዎ ወይም Touch ID ያረጋግጡ፣ ከዛ Arroxy ን ከ `/Applications` ያስጀምሩ።",
+    "**Open Anyway** ጠቅ ያድርጉ፣ በይለፍ ቃልዎ ወይም Touch ID ያረጋግጡ፣ ከዛ Arclio ን ከ `/Applications` ያስጀምሩ።",
   dl_macos_sonoma_h4: "macOS Sonoma 14 እና ከዚህ ቀደም",
   dl_macos_sonoma_step1:
-    "ከተቀጠለው DMG ውስጥ `Arroxy.app` ን ወደ `/Applications` ጎትቱ።",
+    "ከተቀጠለው DMG ውስጥ `Arclio.app` ን ወደ `/Applications` ጎትቱ።",
   dl_macos_sonoma_step2:
-    "በ `/Applications` ውስጥ `Arroxy.app` ን ቀኝ-ጠቅ ያድርጉ (ወይም Control-click) እና **Open** ይምረጡ።",
+    "በ `/Applications` ውስጥ `Arclio.app` ን ቀኝ-ጠቅ ያድርጉ (ወይም Control-click) እና **Open** ይምረጡ።",
   dl_macos_sonoma_step3:
-    "የማስጠንቀቂያ መልዕክት ሳጥን አሁን **Open** ቁልፍ አለው — ጠቅ ያድርጉ እና ያረጋግጡ። Arroxy በተለምዶ ይከፈቱ እናም ማስጠንቀቂያ ሁሌ አይታዩም።",
+    "የማስጠንቀቂያ መልዕክት ሳጥን አሁን **Open** ቁልፍ አለው — ጠቅ ያድርጉ እና ያረጋግጡ። Arclio በተለምዶ ይከፈቱ እናም ማስጠንቀቂያ ሁሌ አይታዩም።",
   dl_macos_damaged_h4: '"App is damaged" ወይም ቀጣይ Gatekeeper ማገጃ — Terminal ዘዴ',
   dl_macos_damaged_p:
-    'macOS *"Arroxy is damaged and can\'t be opened"* ቢል፣ ወይም ከላይ ያሉት ምንም ቃምሶዎች ማገጃውን ባያስወግዱ፣ DMG ላይ ያለው ቆጠቡ ባህሪ ምክንያቱ ነው (አንዳንድ ብሮውዘሮች እና macOS ራሱ የ translocation ባህሪ ያቀናጁ)። ከተጫነው አፕ ያስወግዱ:',
+    'macOS *"Arclio is damaged and can\'t be opened"* ቢል፣ ወይም ከላይ ያሉት ምንም ቃምሶዎች ማገጃውን ባያስወግዱ፣ DMG ላይ ያለው ቆጠቡ ባህሪ ምክንያቱ ነው (አንዳንድ ብሮውዘሮች እና macOS ራሱ የ translocation ባህሪ ያቀናጁ)። ከተጫነው አፕ ያስወግዱ:',
   dl_macos_arch_note:
     "**Apple Silicon vs Intel:** M-ሰሪ Mac ላይ (M1 / M2 / M3 / M4)፣ `arm64` DMG ያውርዱ። Intel Mac ላይ፣ `x64` DMG ያውርዱ። የተሳሳተ ቅጅ ማሂደት Rosetta በኩል ይሠራሉ ነገር ግን በግልጽ ዘገምተኛ ነው።",
 
@@ -282,7 +282,7 @@ export const am = {
   privacy_p1:
     "ማውረዶቹ ቀጥታ በ [yt-dlp](https://github.com/yt-dlp/yt-dlp) ከ YouTube ወደ መረጡት አቃፊ ይወርዳሉ — ምንም ሦስተኛ ወገን ሰርቨር አይሆንም። የእይታ ታሪክ፣ የማውረድ ታሪክ፣ URLs፣ እና የፋይሎቹ ይዘቶች በመሳሪያዎ ላይ ይቆያሉ።",
   privacy_p2:
-    "Arroxy ስም-አልባ፣ የተጠቃለለ telemetry በ [OpenPanel](https://openpanel.dev) ይልካል — ጅምሮችን፣ OS፣ የአፕ ስሪቶችን እና ብልሽቶችን ለመረዳት ብቻ። URLs፣ የቪዲዮ ርዕሶች፣ የፋይል መንገዶች፣ የመለያ መረጃ፣ fingerprinting ወይም የግል ዳታ የለም። የእያንዳንዱ ጭነት ID የዘፈቀደ ነው እና ከማንነትዎ ጋር አይያያዝም። በSettings ውስጥ opt out ማድረግ ይችላሉ።",
+    "Arclio ስም-አልባ፣ የተጠቃለለ telemetry በ [OpenPanel](https://openpanel.dev) ይልካል — ጅምሮችን፣ OS፣ የአፕ ስሪቶችን እና ብልሽቶችን ለመረዳት ብቻ። URLs፣ የቪዲዮ ርዕሶች፣ የፋይል መንገዶች፣ የመለያ መረጃ፣ fingerprinting ወይም የግል ዳታ የለም። የእያንዳንዱ ጭነት ID የዘፈቀደ ነው እና ከማንነትዎ ጋር አይያያዝም። በSettings ውስጥ opt out ማድረግ ይችላሉ።",
   faq_q1: "በርግጥ ነፃ ነው?",
   faq_a1: "አዎ — MIT ፈቃድ አለው፣ ምንም ፕሪሚየም ደረጃ፣ ምንም ባህሪ ቁጥጥር የለም።",
   faq_q2: "ምን ዓይነት ቪዲዮ ጥራቶች ማውረድ እችላሉ?",
@@ -292,13 +292,13 @@ export const am = {
   faq_a3: "አዎ። በፎርማት ሜኑ ውስጥ *ኦዲዮ ብቻ* ምረጥ እና MP3፣ M4A/AAC፣ Opus ወይም WAV ምረጥ።",
   faq_q4: "YouTube ሒሳብ ወይም ኩኪዎች ያስፈልጉናሉ?",
   faq_a4:
-    "በነባሪ፣ አይ — Arroxy ያለ YouTube ሒሳብ፣ ግባ ወይም ኩኪ ማውጣት ይሠራል። እንደ ዕድሜ-የተገደቡ ወይም የአባላት-ብቻ ቪዲዮዎች ላሉ ማረጋገጫ ለሚፈልጉ ይዘቶች በተራቀቁ ቅንብሮች ውስጥ ተመራጭ የኩኪ ድጋፍ አለ (Cookies source: file or browser)። በነባሪ የጠፋ ነው። ካበሩት፣ የ yt-dlp ዊኪ [በኩኪ ላይ የተመሠረተ አውቶሜሽን የ Google ሒሳብን ሊያመለክት እንደሚችል](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) ያስታውቃሉ፤ በዚያ ሁኔታ ጊዜያዊ ሒሳብ ጥንቃቄ ያለው ምርጫ ነው።",
+    "በነባሪ፣ አይ — Arclio ያለ YouTube ሒሳብ፣ ግባ ወይም ኩኪ ማውጣት ይሠራል። እንደ ዕድሜ-የተገደቡ ወይም የአባላት-ብቻ ቪዲዮዎች ላሉ ማረጋገጫ ለሚፈልጉ ይዘቶች በተራቀቁ ቅንብሮች ውስጥ ተመራጭ የኩኪ ድጋፍ አለ (Cookies source: file or browser)። በነባሪ የጠፋ ነው። ካበሩት፣ የ yt-dlp ዊኪ [በኩኪ ላይ የተመሠረተ አውቶሜሽን የ Google ሒሳብን ሊያመለክት እንደሚችል](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) ያስታውቃሉ፤ በዚያ ሁኔታ ጊዜያዊ ሒሳብ ጥንቃቄ ያለው ምርጫ ነው።",
   faq_q5: "YouTube ሲቀያየር አሁንም ይሠራሉ?",
   faq_a5:
-    "yt-dlp በማስነሻ ላይ ራስ ሰር ይዘመናሉ፣ እናም YouTube አንድ ነገር ሲቀይር Arroxy እርማቶችን በፍጥነት ያደርሳሉ። ችግር ካጋጠምዎ፣ በተራቀቁ ቅንብሮች ውስጥ እንደ ዳግም መመለሻ ተመራጭ የኩኪ ድጋፍ አለ።",
-  faq_q6: "Arroxy በምን ቋንቋዎች ይገኛሉ?",
+    "yt-dlp በማስነሻ ላይ ራስ ሰር ይዘመናሉ፣ እናም YouTube አንድ ነገር ሲቀይር Arclio እርማቶችን በፍጥነት ያደርሳሉ። ችግር ካጋጠምዎ፣ በተራቀቁ ቅንብሮች ውስጥ እንደ ዳግም መመለሻ ተመራጭ የኩኪ ድጋፍ አለ።",
+  faq_q6: "Arclio በምን ቋንቋዎች ይገኛሉ?",
   faq_a6:
-    "ሃያ አንድ፣ ከሳጥን ውጭ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek) እና Српски (Serbian)። Arroxy በመጀመሪያ ጊዜ ሲጀምሩ የስርዓተ ምOS ቋንቋዎን ራስ-ሰር ያወቃል፣ ከመሳሪያ አሞሌ የቋንቋ ምርጫ ማንኛውም ጊዜ መቀየር ይችላሉ። የruntime locale JSON ፋይሎች በ src/shared/i18n/locales/ ውስጥ ናቸው፣ ለተርጓሚዎች የሆኑ PO catalogs ደግሞ በ i18n/locales/ ውስጥ ናቸው — ለማዋጮ GitHub ላይ PR ይክፈቱ።",
+    "ሃያ አንድ፣ ከሳጥን ውጭ: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek) እና Српски (Serbian)። Arclio በመጀመሪያ ጊዜ ሲጀምሩ የስርዓተ ምOS ቋንቋዎን ራስ-ሰር ያወቃል፣ ከመሳሪያ አሞሌ የቋንቋ ምርጫ ማንኛውም ጊዜ መቀየር ይችላሉ። የruntime locale JSON ፋይሎች በ src/shared/i18n/locales/ ውስጥ ናቸው፣ ለተርጓሚዎች የሆኑ PO catalogs ደግሞ በ i18n/locales/ ውስጥ ናቸው — ለማዋጮ GitHub ላይ PR ይክፈቱ።",
   faq_q7: "ሌላ ነገር ጫን ያስፈልጋሉ?",
   faq_a7:
     "አይ። yt-dlp በመጀመሪያ አስጀማሪ ራስ-ሰር ይወርዳል እና በማሽንዎ ላይ ይቀመጣል፤ ffmpeg እና ffprobe ከአፑ ጋር ይመጣሉ። ከዚያ ተጨማሪ setup አያስፈልግም።",
@@ -321,7 +321,7 @@ export const am = {
     "YouTube ብዙ የድምጽ ትራኮች ሲሰጥ በapp ሙሉ የንግግር ቋንቋ ትራክ ምርጫ ያዘጋጁ፣ በprofile ደረጃ override ያድርጉ",
   plan_r6_name: "**በመተግበሪያው ውስጥ browser sign-in**",
   plan_r6_desc:
-    "በArroxy ውስጥ browser windows ክፈቱ፣ እንዲገቡ እና site cookies በእጅ ሳይexport እንዲጠቀሙ",
+    "በArclio ውስጥ browser windows ክፈቱ፣ እንዲገቡ እና site cookies በእጅ ሳይexport እንዲጠቀሙ",
   plan_r8_name: "**አንድ-click ቪዲዮ ማውረድ**",
   plan_r8_desc: "በactive profile የተገኘ ወይም የተለጠፈ URL ቪዲዮ ማውረድን በአንድ click ጀምሩ",
   plan_r3_name: "**የተጠናከረ ዳግም ሙከራ መልሶ ማገገም**",
@@ -338,7 +338,7 @@ export const am = {
   tech_content: TECH_CONTENT,
   tos_h2: "የአጠቃቀም ደንቦች",
   tos_note:
-    "Arroxy ለግል፣ ሚስጥራዊ አጠቃቀም ብቻ ሶፍትዌር ነው። ማውረዶቹ የ YouTube [የአገልግሎት ደንቦቹን](https://www.youtube.com/t/terms) እና የቦታዎ የቅጂ መብት ሕጎቹን ማክበር ሙሉ ኃላፊነትዎ ነው። Arroxy ን ለማውረድ፣ ለማባዛት ወይም ሊጠቀሙበት የማይፈቅዱ ይዘቶችን ለማሰራጨት አይጠቀሙ። ገንቢዎቹ ለምን ዓይነት አላግባብ አጠቃቀም ኃላፊነት አይወስዱም።",
+    "Arclio ለግል፣ ሚስጥራዊ አጠቃቀም ብቻ ሶፍትዌር ነው። ማውረዶቹ የ YouTube [የአገልግሎት ደንቦቹን](https://www.youtube.com/t/terms) እና የቦታዎ የቅጂ መብት ሕጎቹን ማክበር ሙሉ ኃላፊነትዎ ነው። Arclio ን ለማውረድ፣ ለማባዛት ወይም ሊጠቀሙበት የማይፈቅዱ ይዘቶችን ለማሰራጨት አይጠቀሙ። ገንቢዎቹ ለምን ዓይነት አላግባብ አጠቃቀም ኃላፊነት አይወስዱም።",
   footer_credit:
     'MIT License · Made with care by <a href="https://x.com/OrionusAI">@OrionusAI</a>',
 };

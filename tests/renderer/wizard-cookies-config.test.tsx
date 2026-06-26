@@ -181,7 +181,7 @@ describe('advanced network settings', () => {
 		render(<StepUrlInput />)
 		openSettingsTab()
 
-		expect(screen.getByTestId('profiles-settings-backdrop-mode-fallback')).toHaveTextContent('Hardware WebGL is unavailable on this device, so Arroxy is using the performance backdrop.')
+		expect(screen.getByTestId('profiles-settings-backdrop-mode-fallback')).toHaveTextContent('Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop.')
 	})
 
 	it('does not show a runtime fallback notice when the user selected CSS-only', async () => {

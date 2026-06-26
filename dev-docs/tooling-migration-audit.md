@@ -8,7 +8,7 @@ Current operational policy lives in [`dev-docs/tooling-contract.md`](tooling-con
 
 ## Implemented Decision
 
-Arroxy migrated in one phase from direct ESLint + Prettier scripts to:
+Arclio migrated in one phase from direct ESLint + Prettier scripts to:
 
 - Biome 2.4.16 for formatting and syntax/parser gating.
 - Oxlint 1.68.0 for linting.

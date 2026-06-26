@@ -1,7 +1,7 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-  Build Arroxy from source on a fresh Windows machine.
+  Build Arclio from source on a fresh Windows machine.
 
 .DESCRIPTION
   End-to-end automation:
@@ -21,14 +21,14 @@
   Re-runnable. Idempotent. Does not require admin.
 
 .PARAMETER RepoPath
-  Path to the Arroxy source. Default: current directory.
+  Path to the Arclio source. Default: current directory.
 
 .PARAMETER CloneRef
-  If set, ignores RepoPath and clones github.com/antonio-orionus/Arroxy
-  at this tag/branch into ./Arroxy-src. Example: -CloneRef v0.3.1
+  If set, ignores RepoPath and clones github.com/antonio-orionus/Arclio
+  at this tag/branch into ./Arclio-src. Example: -CloneRef v0.3.1
 
 .PARAMETER OutputDir
-  Where to copy the final artifacts. Default: Desktop\Arroxy-build.
+  Where to copy the final artifacts. Default: Desktop\Arclio-build.
 
 .PARAMETER Launch
   Launch the portable .exe after a successful build.
@@ -42,13 +42,13 @@
 
 .EXAMPLE
   pwsh -ExecutionPolicy Bypass -File scripts\build\build-windows.ps1 -CloneRef v0.3.1 -Launch
-  Clone v0.3.1 from GitHub, build, copy to Desktop\Arroxy-build, launch portable.
+  Clone v0.3.1 from GitHub, build, copy to Desktop\Arclio-build, launch portable.
 #>
 [CmdletBinding()]
 param(
   [string]$RepoPath  = (Get-Location).Path,
   [string]$CloneRef  = '',
-  [string]$OutputDir = (Join-Path ([Environment]::GetFolderPath('Desktop')) 'Arroxy-build'),
+  [string]$OutputDir = (Join-Path ([Environment]::GetFolderPath('Desktop')) 'Arclio-build'),
   [switch]$Launch,
   [switch]$OpenOutput
 )
@@ -75,14 +75,14 @@ function Test-CommandExists {
 }
 
 function Test-Avx2Support {
-  if (-not ('Arroxy.CpuFeature' -as [type])) {
-    Add-Type -Namespace 'Arroxy' -Name 'CpuFeature' -MemberDefinition @'
+  if (-not ('Arclio.CpuFeature' -as [type])) {
+    Add-Type -Namespace 'Arclio' -Name 'CpuFeature' -MemberDefinition @'
 [System.Runtime.InteropServices.DllImport("kernel32.dll")]
 public static extern bool IsProcessorFeaturePresent(uint feature);
 '@ | Out-Null
   }
   # 40 = PF_AVX2_INSTRUCTIONS_AVAILABLE
-  return [Arroxy.CpuFeature]::IsProcessorFeaturePresent(40)
+  return [Arclio.CpuFeature]::IsProcessorFeaturePresent(40)
 }
 
 function Test-WingetAvailable {
@@ -198,8 +198,8 @@ Write-Ok "winget present"
 # ---- repo resolution -------------------------------------------------------
 
 if ($CloneRef -ne '') {
-  $RepoPath = Join-Path (Get-Location).Path 'Arroxy-src'
-  Write-Step "fetching antonio-orionus/Arroxy@$CloneRef -> $RepoPath"
+  $RepoPath = Join-Path (Get-Location).Path 'Arclio-src'
+  Write-Step "fetching antonio-orionus/Arclio@$CloneRef -> $RepoPath"
   if (-not (Test-CommandExists 'git')) {
     Install-WingetPackage -Id 'Git.Git' -Label 'Git for Windows'
     Update-EnvPath
@@ -207,7 +207,7 @@ if ($CloneRef -ne '') {
   if (Test-Path $RepoPath) {
     Write-Notice "$RepoPath already exists; reusing it as-is. Delete it manually for a clean clone."
   } else {
-    git clone --depth 1 --branch $CloneRef https://github.com/antonio-orionus/Arroxy.git $RepoPath
+    git clone --depth 1 --branch $CloneRef https://github.com/antonio-orionus/Arclio.git $RepoPath
     if ($LASTEXITCODE -ne 0) { throw "git clone failed (rc=$LASTEXITCODE)" }
   }
 }
@@ -216,11 +216,11 @@ if (-not (Test-Path (Join-Path $RepoPath 'package.json'))) {
   throw "No package.json at '$RepoPath'. Pass -RepoPath <dir> or -CloneRef <tag>."
 }
 $pkg = Get-Content (Join-Path $RepoPath 'package.json') -Raw | ConvertFrom-Json
-if ($pkg.name -ne 'arroxy') {
-  throw "package.json at '$RepoPath' does not look like Arroxy (name='$($pkg.name)')."
+if ($pkg.name -ne 'arclio') {
+  throw "package.json at '$RepoPath' does not look like Arclio (name='$($pkg.name)')."
 }
 $RepoPath = (Resolve-Path $RepoPath).Path
-Write-Ok "repo: $RepoPath (arroxy@$($pkg.version))"
+Write-Ok "repo: $RepoPath (arclio@$($pkg.version))"
 
 # ---- tooling ---------------------------------------------------------------
 
@@ -331,7 +331,7 @@ try {
       throw "$sevenZa missing -- bun install did not populate node_modules\7zip-bin"
     }
 
-    $archive = Join-Path $env:TEMP 'arroxy-winCodeSign-2.6.0.7z'
+    $archive = Join-Path $env:TEMP 'arclio-winCodeSign-2.6.0.7z'
     if (-not (Test-Path $archive)) {
       Write-Host "    downloading winCodeSign-2.6.0.7z (5.5 MB)..."
       Invoke-WebRequest -UseBasicParsing `
@@ -379,9 +379,9 @@ Write-Step "copying artifacts to $OutputDir"
 New-Item -ItemType Directory -Path $OutputDir -Force | Out-Null
 $distDir = Join-Path $RepoPath 'dist'
 $artifacts = Get-ChildItem $distDir -File -ErrorAction SilentlyContinue |
-  Where-Object { $_.Name -match '^Arroxy-win-x64-(Setup|Portable)\.exe$' }
+  Where-Object { $_.Name -match '^Arclio-win-x64-(Setup|Portable)\.exe$' }
 if (-not $artifacts) {
-  throw "no Arroxy installers found in $distDir (build said success -- check output above)"
+  throw "no Arclio installers found in $distDir (build said success -- check output above)"
 }
 $copied = @()
 foreach ($a in $artifacts) {
@@ -398,7 +398,7 @@ if ($OpenOutput) {
   Start-Process explorer.exe -ArgumentList $OutputDir
 }
 if ($Launch) {
-  $portable = $copied | Where-Object { $_ -match 'Arroxy-win-x64-Portable' } | Select-Object -First 1
+  $portable = $copied | Where-Object { $_ -match 'Arclio-win-x64-Portable' } | Select-Object -First 1
   if ($portable) {
     Start-Process $portable
     Write-Ok "launched $portable"

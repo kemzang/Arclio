@@ -45,7 +45,7 @@ describe('planQueueAction', () => {
 		const result = planQueueAction('change-output-target', [
 			makeItem({id: 'fresh', status: 'pending', lastJobId: undefined, tempDir: undefined, progressPercent: 0}),
 			makeItem({id: 'started-pending', status: 'pending', lastJobId: 'job-old', progressPercent: 0}),
-			makeItem({id: 'resume-pending', status: 'pending', progressPercent: 0, resumeContext: {kind: 'media-retry', tempDir: '/tmp/.arroxy-temp/resume', reason: 'media-transfer', failureKind: 'network'}}),
+			makeItem({id: 'resume-pending', status: 'pending', progressPercent: 0, resumeContext: {kind: 'media-retry', tempDir: '/tmp/.arclio-temp/resume', reason: 'media-transfer', failureKind: 'network'}}),
 			makeItem({id: 'running', status: 'running'}),
 			makeItem({id: 'active', status: 'paused-active'}),
 			makeItem({id: 'held', status: 'paused-held'}),

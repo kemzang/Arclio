@@ -100,11 +100,11 @@ export class RuntimeBinaryIndexService implements RuntimeBinaryIndexProvider {
 
 	constructor(userDataPath: string, options: RuntimeBinaryIndexServiceOptions = {}) {
 		this.manifestDir = path.join(userDataPath, 'runtime-cache', 'manifests')
-		this.localIndexPath = options.localIndexPath === undefined ? envPath('ARROXY_RUNTIME_INDEX_FILE') : options.localIndexPath
-		this.localSignaturePath = options.localSignaturePath === undefined ? envPath('ARROXY_RUNTIME_INDEX_SIG_FILE') : options.localSignaturePath
-		this.localPublicKeyPath = options.localPublicKeyPath === undefined ? envPath('ARROXY_RUNTIME_INDEX_PUBLIC_KEY_FILE') : options.localPublicKeyPath
-		this.remoteIndexUrl = options.remoteIndexUrl === undefined ? envUrl('ARROXY_RUNTIME_INDEX_URL', RUNTIME_BINARY_INDEX_URL) : options.remoteIndexUrl
-		this.remoteSignatureUrl = options.remoteSignatureUrl === undefined ? envUrl('ARROXY_RUNTIME_INDEX_SIG_URL', RUNTIME_BINARY_INDEX_SIGNATURE_URL) : options.remoteSignatureUrl
+		this.localIndexPath = options.localIndexPath === undefined ? envPath('ARCLIO_RUNTIME_INDEX_FILE') : options.localIndexPath
+		this.localSignaturePath = options.localSignaturePath === undefined ? envPath('ARCLIO_RUNTIME_INDEX_SIG_FILE') : options.localSignaturePath
+		this.localPublicKeyPath = options.localPublicKeyPath === undefined ? envPath('ARCLIO_RUNTIME_INDEX_PUBLIC_KEY_FILE') : options.localPublicKeyPath
+		this.remoteIndexUrl = options.remoteIndexUrl === undefined ? envUrl('ARCLIO_RUNTIME_INDEX_URL', RUNTIME_BINARY_INDEX_URL) : options.remoteIndexUrl
+		this.remoteSignatureUrl = options.remoteSignatureUrl === undefined ? envUrl('ARCLIO_RUNTIME_INDEX_SIG_URL', RUNTIME_BINARY_INDEX_SIGNATURE_URL) : options.remoteSignatureUrl
 		this.publicKeyPem = options.publicKeyPem ?? RUNTIME_BINARY_INDEX_PUBLIC_KEY_PEM
 		this.bundledIndex = options.bundledIndex ?? BUNDLED_RUNTIME_BINARY_INDEX
 		this.fetchText = options.fetchText ?? downloadText

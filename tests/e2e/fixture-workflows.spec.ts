@@ -37,8 +37,8 @@ test('Electron quick download applies the active Download Profile to a fixture v
 
 	await withFixtureProductApp(
 		{
-			userDataPrefix: 'arroxy-fixture-profile-quick-user-',
-			outputPrefix: 'arroxy-fixture-profile-quick-out-',
+			userDataPrefix: 'arclio-fixture-profile-quick-user-',
+			outputPrefix: 'arclio-fixture-profile-quick-out-',
 			settings: settings => {
 				configureSmallFileQuickProfile(settings)
 			}
@@ -61,7 +61,7 @@ test('Electron quick download applies the active Download Profile to a fixture v
 test('Electron Quick Download playlist queues entries and writes an ordered M3U', async () => {
 	test.setTimeout(220_000)
 
-	await withFixtureProductApp({userDataPrefix: 'arroxy-fixture-quick-playlist-user-', outputPrefix: 'arroxy-fixture-quick-playlist-out-', settings: configureSmallFileQuickProfile}, async ({page, outputDir, urls, files}) => {
+	await withFixtureProductApp({userDataPrefix: 'arclio-fixture-quick-playlist-user-', outputPrefix: 'arclio-fixture-quick-playlist-out-', settings: configureSmallFileQuickProfile}, async ({page, outputDir, urls, files}) => {
 		await page.locator('[data-testid="profiles-main-input"]').fill(urls.playlist())
 		await page.locator('[data-testid="profiles-quick-download"]').click()
 
@@ -83,8 +83,8 @@ test('Electron Quick Download capped playlist can queue the globally loaded slic
 
 	await withFixtureProductApp(
 		{
-			userDataPrefix: 'arroxy-fixture-quick-playlist-cap-queue-user-',
-			outputPrefix: 'arroxy-fixture-quick-playlist-cap-queue-out-',
+			userDataPrefix: 'arclio-fixture-quick-playlist-cap-queue-user-',
+			outputPrefix: 'arclio-fixture-quick-playlist-cap-queue-out-',
 			settings: settings => {
 				configureSmallFileQuickProfile(settings)
 				settings.common.playlistProbeLimit = 2
@@ -95,7 +95,7 @@ test('Electron Quick Download capped playlist can queue the globally loaded slic
 			await page.locator('[data-testid="profiles-quick-download"]').click()
 
 			await expect(page.locator('[data-testid="quick-playlist-cap-dialog"]')).toBeVisible({timeout: 60_000})
-			await expect(page.locator('[data-testid="quick-playlist-cap-dialog"]')).toContainText('Arroxy loaded 2 items using the current limit of 2')
+			await expect(page.locator('[data-testid="quick-playlist-cap-dialog"]')).toContainText('Arclio loaded 2 items using the current limit of 2')
 			await page.locator('[data-testid="quick-playlist-cap-queue-loaded"]').click()
 
 			await expect(page.locator('[data-testid="quick-playlist-cap-dialog"]')).toBeHidden({timeout: 20_000})
@@ -116,8 +116,8 @@ test('Electron Quick Download capped playlist can increase the global cap and re
 
 	await withFixtureProductApp(
 		{
-			userDataPrefix: 'arroxy-fixture-quick-playlist-cap-retry-user-',
-			outputPrefix: 'arroxy-fixture-quick-playlist-cap-retry-out-',
+			userDataPrefix: 'arclio-fixture-quick-playlist-cap-retry-user-',
+			outputPrefix: 'arclio-fixture-quick-playlist-cap-retry-out-',
 			settings: settings => {
 				configureSmallFileQuickProfile(settings)
 				settings.common.playlistProbeLimit = 2
@@ -149,8 +149,8 @@ test('Electron full single-video wizard completes media and sidecar subtitles', 
 
 	await withFixtureProductApp(
 		{
-			userDataPrefix: 'arroxy-fixture-full-single-user-',
-			outputPrefix: 'arroxy-fixture-full-single-out-',
+			userDataPrefix: 'arclio-fixture-full-single-user-',
+			outputPrefix: 'arclio-fixture-full-single-out-',
 			settings: settings => {
 				settings.single.lastSubtitleLanguages = ['en']
 				settings.single.lastSubtitleMode = 'sidecar'
@@ -175,7 +175,7 @@ test('Electron full single-video wizard completes media and sidecar subtitles', 
 test('Electron true playlist URL queues entries and writes an ordered M3U', async () => {
 	test.setTimeout(220_000)
 
-	await withFixtureProductApp({userDataPrefix: 'arroxy-fixture-playlist-user-', outputPrefix: 'arroxy-fixture-playlist-out-'}, async ({page, outputDir, urls, files}) => {
+	await withFixtureProductApp({userDataPrefix: 'arclio-fixture-playlist-user-', outputPrefix: 'arclio-fixture-playlist-out-'}, async ({page, outputDir, urls, files}) => {
 		await preparePlaylistConfirm(page, urls.playlist())
 		await expect(page.locator('[data-testid="confirm-playlist"]')).toContainText('Fixture Playlist')
 		await expect(page.locator('[data-testid="confirm-items"]')).toContainText(String(FIXTURE_PLAYLIST_VIDEO_IDS.length))
@@ -194,7 +194,7 @@ test('Electron true playlist URL queues entries and writes an ordered M3U', asyn
 test('Electron bulk metadata concurrency and back/next navigation reach completed queue files', async () => {
 	test.setTimeout(240_000)
 
-	await withFixtureProductApp({behavior: {metadataDelayMs: 2_000}, userDataPrefix: 'arroxy-fixture-electron-user-', outputPrefix: 'arroxy-fixture-electron-out-'}, async ({app, page, fixtureServer, urls, files}) => {
+	await withFixtureProductApp({behavior: {metadataDelayMs: 2_000}, userDataPrefix: 'arclio-fixture-electron-user-', outputPrefix: 'arclio-fixture-electron-out-'}, async ({app, page, fixtureServer, urls, files}) => {
 		const rawBulkText = [...urls.videos(FIXTURE_VIDEO_IDS), urls.video(FIXTURE_VIDEO_IDS[0])].join('\n')
 		await startBulkFromClipboard(page, app, rawBulkText)
 		await expect(page.locator('[data-testid="bulk-url-valid-count"]')).toContainText('10')
@@ -239,8 +239,8 @@ test('Electron bulk Quick Download shows preparation progress and queues fixture
 	await withFixtureProductApp(
 		{
 			behavior: {metadataDelayMs: 1_500},
-			userDataPrefix: 'arroxy-fixture-bulk-quick-user-',
-			outputPrefix: 'arroxy-fixture-bulk-quick-out-',
+			userDataPrefix: 'arclio-fixture-bulk-quick-user-',
+			outputPrefix: 'arclio-fixture-bulk-quick-out-',
 			settings: settings => {
 				configureSmallFileQuickProfile(settings)
 			}

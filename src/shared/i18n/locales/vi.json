@@ -1,7 +1,7 @@
 {
 	"common": {"back": "Quay lại", "cancel": "Hủy", "continue": "Tiếp tục", "retry": "Thử lại", "startOver": "Bắt đầu lại"},
-	"app": {"feedback": "Phản hồi", "logs": "Nhật ký", "feedbackNudge": "Bạn thích Arroxy không? Tôi rất muốn nghe ý kiến của bạn! 💬", "zoomIn": "Phóng to", "zoomOut": "Thu nhỏ"},
-	"about": {"button": "Giới thiệu", "openTitle": "Giới thiệu về Arroxy", "tagline": "Trình tải xuống nhanh, thân thiện cho YouTube và hơn 2000 trang web khác.", "websiteLink": "Trang web", "githubLink": "GitHub", "licenseLine": "Giấy phép MIT · bởi Antonio Orionus", "thirdPartyNotices": "Xem thông báo bên thứ ba"},
+	"app": {"feedback": "Phản hồi", "logs": "Nhật ký", "feedbackNudge": "Bạn thích Arclio không? Tôi rất muốn nghe ý kiến của bạn! 💬", "zoomIn": "Phóng to", "zoomOut": "Thu nhỏ"},
+	"about": {"button": "Giới thiệu", "openTitle": "Giới thiệu về Arclio", "tagline": "Trình tải xuống nhanh, thân thiện cho YouTube và hơn 2000 trang web khác.", "websiteLink": "Trang web", "githubLink": "GitHub", "licenseLine": "Giấy phép MIT · bởi Antonio Orionus", "thirdPartyNotices": "Xem thông báo bên thứ ba"},
 	"titleBar": {"close": "Đóng", "minimize": "Thu nhỏ", "maximize": "Phóng to", "restore": "Khôi phục"},
 	"splash": {"greeting": "Xin chào, chào mừng bạn quay lại!", "warmup": "Đang chuẩn bị tải xuống…", "downloading": "Đang tải xuống {{binary}}…", "warmupFailedNoDiag": "Thiết lập thất bại. Mở nhật ký thiết lập để xem chi tiết."},
 	"repair": {
@@ -77,11 +77,11 @@
 			"alreadyDownloaded": "Đã tải xuống",
 			"probeLimitAlertTitle": "Quét playlist đã bị giới hạn",
 			"probeLimitAlertTitleGeneric": "Quét đã bị giới hạn",
-			"probeLimitAlertDesc": "Arroxy tìm thấy nhiều hơn {{count}} mục, vì vậy giới hạn quét hiện tại đang ẩn phần còn lại."
+			"probeLimitAlertDesc": "Arclio tìm thấy nhiều hơn {{count}} mục, vì vậy giới hạn quét hiện tại đang ẩn phần còn lại."
 		},
 		"bulk": {
 			"title": "URL hàng loạt",
-			"description": "Dán URL video, danh sách phát, kênh, tìm kiếm hoặc âm thanh. Arroxy sẽ loại bỏ trùng lặp trước khi đưa vào hàng đợi.",
+			"description": "Dán URL video, danh sách phát, kênh, tìm kiếm hoặc âm thanh. Arclio sẽ loại bỏ trùng lặp trước khi đưa vào hàng đợi.",
 			"textareaLabel": "Danh sách URL",
 			"textareaPlaceholder": "https://video.example/one\nhttps://video.example/two\nhttps://video.example/three",
 			"acceptedCount": "Sẵn sàng",
@@ -99,11 +99,11 @@
 			"pickFromPlaylist": "Chọn từ Playlist",
 			"quickWholePlaylist": "Tải toàn bộ playlist",
 			"playlistLimit": "Giới hạn dò playlist: {{count}} mục",
-			"quickLimitDescription": "Số mục tối đa Arroxy quét trước khi đưa playlist, kênh hoặc kết quả tìm kiếm vào hàng đợi.",
+			"quickLimitDescription": "Số mục tối đa Arclio quét trước khi đưa playlist, kênh hoặc kết quả tìm kiếm vào hàng đợi.",
 			"singleTooltip": "Dùng chế độ video đơn của yt-dlp để bỏ qua playlist gắn với URL này.",
 			"quickSingleTooltip": "Đưa một lượt tải vào hàng đợi và bỏ qua playlist gắn với URL này.",
 			"playlistTooltip": "Dùng chế độ playlist của yt-dlp và lấy đến giới hạn dò playlist trước khi hiện bộ chọn.",
-			"quickPlaylistTooltip": "Đưa mọi mục playlist đã tải vào hàng đợi bằng hồ sơ Tải nhanh đang hoạt động. Nếu lần quét chạm giới hạn của bạn, Arroxy sẽ hỏi trước khi đưa vào hàng đợi."
+			"quickPlaylistTooltip": "Đưa mọi mục playlist đã tải vào hàng đợi bằng hồ sơ Tải nhanh đang hoạt động. Nếu lần quét chạm giới hạn của bạn, Arclio sẽ hỏi trước khi đưa vào hàng đợi."
 		},
 		"url": {
 			"heading": "Tải xuống từ URL",
@@ -145,12 +145,12 @@
 			"bulkButton": "URL hàng loạt",
 			"bulkTooltip": "Thêm và xếp hàng nhiều URL.",
 			"features": {
-				"heading": "Arroxy có thể tải gì",
+				"heading": "Arclio có thể tải gì",
 				"youtube": {"heading": "YouTube", "video": "Video", "channel": "Kênh", "playlist": "Danh sách phát", "short": "Shorts", "music": "Nhạc", "podcast": "Podcast"},
 				"anySite": {"heading": "2000+ trang web", "video": "Video", "videoPlaylist": "Danh sách phát video", "musicPlaylist": "Danh sách phát nhạc"},
 				"always": {"audioOnly": "Chỉ âm thanh", "subtitles": "Phụ đề"}
 			},
-			"mascotIdle": "Thả một liên kết và để Arroxy kéo về ✨",
+			"mascotIdle": "Thả một liên kết và để Arclio kéo về ✨",
 			"mascotBusy": "Đang tải xuống trong nền… Tôi có thể làm nhiều việc cùng lúc 😎",
 			"advanced": "Nâng cao",
 			"clearAria": "Xóa URL",
@@ -193,14 +193,14 @@
 			"proxy": {"label": "URL Proxy", "description": "Chuyển lưu lượng qua proxy — hữu ích cho nội dung bị chặn theo khu vực.", "placeholder": "http://host:port", "clear": "Xóa"},
 			"backdrop": {
 				"panelTitle": "Giao diện và hiệu năng",
-				"panelDescription": "Chọn mức chuyển động Arroxy dùng cho nền động.",
+				"panelDescription": "Chọn mức chuyển động Arclio dùng cho nền động.",
 				"modeLabel": "Chất lượng nền",
 				"modeDescription": "Chuyển từ giao diện nhiều chuyển động nhất sang hiệu năng tốt nhất.",
 				"cssOnlyLabel": "Hiệu năng tốt nhất",
 				"cssOnlyDescription": "Chỉ dùng CSS, không kết xuất canvas.",
 				"gpuLabel": "Đẹp nhất",
 				"gpuDescription": "Nền WebGL động khi được hỗ trợ.",
-				"runtimeFallbackNotice": "WebGL phần cứng không khả dụng trên thiết bị này, nên Arroxy đang dùng phông nền hiệu năng."
+				"runtimeFallbackNotice": "WebGL phần cứng không khả dụng trên thiết bị này, nên Arclio đang dùng phông nền hiệu năng."
 			},
 			"limitRate": {
 				"label": "Giới hạn tốc độ tải",
@@ -213,7 +213,7 @@
 			},
 			"playlistProbeLimit": {
 				"label": "Số mục playlist cần quét",
-				"description": "Số mục tối đa Arroxy tải khi mở một playlist, kênh hoặc kết quả tìm kiếm.",
+				"description": "Số mục tối đa Arclio tải khi mở một playlist, kênh hoặc kết quả tìm kiếm.",
 				"option": "{{count}} mục",
 				"current": "Giới hạn hiện tại: {{count}} mục",
 				"customValue": "Tùy chỉnh: {{count}} mục",
@@ -223,19 +223,19 @@
 				"customDialogCancel": "Hủy",
 				"customDialogSave": "Lưu giới hạn",
 				"invalid": "Nhập số nguyên từ 1 đến 5000",
-				"tooltip": "Tương ứng với yt-dlp --playlist-end: Arroxy chỉ yêu cầu số mục này từ playlist, kênh hoặc kết quả tìm kiếm khi tạo bộ chọn."
+				"tooltip": "Tương ứng với yt-dlp --playlist-end: Arclio chỉ yêu cầu số mục này từ playlist, kênh hoặc kết quả tìm kiếm khi tạo bộ chọn."
 			},
 			"nativeAudioPreference": {"label": "Tùy chọn âm thanh gốc", "description": "Kiểm soát lựa chọn của “Best native”. Các hàng âm thanh thủ công và M4A/AAC vẫn là lựa chọn rõ ràng.", "compatible": "Stereo tương thích", "surround": "Ưu tiên surround / Dolby"},
 			"singleFilenameId": {"toggle": "Thêm ID video vào tên tệp đơn lẻ", "toggleDescription": "Giữ các lượt tải một lần là duy nhất khi tiêu đề thay đổi hoặc trùng nhau."},
 			"networkPacing": {
 				"heading": "Tải xuống nhẹ nhàng",
-				"description": "Thêm khoảng dừng nhỏ trong mỗi lần tải xuống để Arroxy không truy cập trang web quá mức. Giá trị tính bằng giây trừ khi có ghi chú.",
-				"presetLabel": "Arroxy nên thận trọng mức nào?",
-				"tooltip": "Các khoảng dừng này xảy ra bên trong mỗi lần tải xuống. Arroxy vẫn duy trì tải xuống trong hàng đợi theo thứ tự từng cái một.",
+				"description": "Thêm khoảng dừng nhỏ trong mỗi lần tải xuống để Arclio không truy cập trang web quá mức. Giá trị tính bằng giây trừ khi có ghi chú.",
+				"presetLabel": "Arclio nên thận trọng mức nào?",
+				"tooltip": "Các khoảng dừng này xảy ra bên trong mỗi lần tải xuống. Arclio vẫn duy trì tải xuống trong hàng đợi theo thứ tự từng cái một.",
 				"summary": "Chờ: {{requests}} giữa các lần kiểm tra, {{downloads}} trước khi media bắt đầu, {{subtitles}} trước các tệp phụ đề. Kết nối: {{fragments}}.",
 				"presets": {"off": "Tắt", "balanced": "Cân bằng", "careful": "Cẩn thận", "custom": "Tùy chỉnh"},
 				"tooltips": {
-					"off": "Chỉ sử dụng các khoảng dừng cơ bản nhỏ mà Arroxy duy trì cho media và phụ đề.",
+					"off": "Chỉ sử dụng các khoảng dừng cơ bản nhỏ mà Arclio duy trì cho media và phụ đề.",
 					"balanced": "Mặc định. Thêm các khoảng dừng ngắn và sử dụng một kết nối tải xuống.",
 					"careful": "Thêm khoảng dừng dài hơn cho danh sách phát lớn hoặc mạng thường xuyên bị giới hạn.",
 					"custom": "Tự điều chỉnh các điều khiển tải xuống nâng cao."
@@ -248,9 +248,9 @@
 		},
 		"quickProgress": {
 			"title": "Đang chuẩn bị Tải nhanh",
-			"description": "Arroxy đang đọc liên kết và áp dụng {{profileName}}.",
+			"description": "Arclio đang đọc liên kết và áp dụng {{profileName}}.",
 			"currentFallback": "Liên kết hiện tại",
-			"waitHint": "Giữ cửa sổ này mở trong khi Arroxy chuẩn bị hàng đợi.",
+			"waitHint": "Giữ cửa sổ này mở trong khi Arclio chuẩn bị hàng đợi.",
 			"failedCount_one": "{{count}} thất bại",
 			"failedCount_other": "{{count}} thất bại",
 			"cancel": "Hủy chuẩn bị",
@@ -443,7 +443,7 @@
 		}
 	},
 	"update": {
-		"appVersion": "Arroxy {{version}}",
+		"appVersion": "Arclio {{version}}",
 		"isAvailable": "đã có sẵn",
 		"youHave": "— bạn đang dùng {{currentVersion}}",
 		"install": "Cài đặt & Khởi động lại",
@@ -455,7 +455,7 @@
 		"installFailed": "Cập nhật thất bại",
 		"retry": "Thử lại"
 	},
-	"releaseNotes": {"title": "Có gì mới trong Arroxy {{version}}", "description": "Bạn đang dùng bản cập nhật mới. Đây là các điểm nổi bật.", "fullNotes": "Ghi chú phát hành đầy đủ ↗", "continue": "Tiếp tục"},
+	"releaseNotes": {"title": "Có gì mới trong Arclio {{version}}", "description": "Bạn đang dùng bản cập nhật mới. Đây là các điểm nổi bật.", "fullNotes": "Ghi chú phát hành đầy đủ ↗", "continue": "Tiếp tục"},
 	"status": {
 		"preparingBinaries": "Đang chuẩn bị các tệp nhị phân…",
 		"mintingToken": "Đang tạo token YouTube…",
@@ -483,7 +483,7 @@
 	},
 	"errors": {
 		"ytdlp": {
-			"botBlock": "Đã kích hoạt bảo vệ bot. Địa chỉ IP bạn đang dùng rất có thể đã bị gắn cờ (dải địa chỉ trung tâm dữ liệu hoặc điểm thoát VPN bận). Hãy đổi IP hoặc chọn điểm kết nối VPN khác rồi thử lại. Nếu vẫn thất bại, đây có thể là thay đổi tạm thời từ phía YouTube — Arroxy tự động cập nhật yt-dlp khi khởi động, vì vậy bản sửa lỗi sẽ tự động áp dụng khi upstream phát hành.",
+			"botBlock": "Đã kích hoạt bảo vệ bot. Địa chỉ IP bạn đang dùng rất có thể đã bị gắn cờ (dải địa chỉ trung tâm dữ liệu hoặc điểm thoát VPN bận). Hãy đổi IP hoặc chọn điểm kết nối VPN khác rồi thử lại. Nếu vẫn thất bại, đây có thể là thay đổi tạm thời từ phía YouTube — Arclio tự động cập nhật yt-dlp khi khởi động, vì vậy bản sửa lỗi sẽ tự động áp dụng khi upstream phát hành.",
 			"ipBlock": "Địa chỉ IP của bạn dường như bị YouTube chặn. Hãy thử lại sau hoặc dùng VPN.",
 			"rateLimit": "YouTube đang giới hạn tốc độ yêu cầu. Hãy đợi một phút rồi thử lại.",
 			"ageRestricted": "Video này bị giới hạn độ tuổi và không thể tải xuống nếu không có tài khoản đã đăng nhập.",
@@ -494,7 +494,7 @@
 			"chunkTransferFailure": "Máy chủ liên tục ngắt kết nối giữa chừng và yt-dlp đã bỏ cuộc sau nhiều lần thử lại. Lỗi này thường xảy ra với các định dạng video lớn nhất (4K HDR / VP9 bitrate cao). Hãy thử lại, đổi mạng/VPN, hoặc chọn định dạng độ phân giải thấp hơn.",
 			"missingDependency": "yt-dlp không tìm thấy ffmpeg hoặc ffprobe. Hãy sửa các tệp nhị phân đi kèm hoặc đặt vị trí FFmpeg, rồi thử lại.",
 			"postprocessFailure": "yt-dlp đã tải xong nhưng quá trình xử lý hậu kỳ (gộp / mux / chuyển đổi) bị lỗi. Thường đây là sự cố tạm thời của ffmpeg — hãy thử lại, và nếu vẫn lỗi thì thử một tổ hợp định dạng khác.",
-			"parse": "Không thể phân tích phản hồi từ trang web. Bộ trích xuất của yt-dlp có thể đã lỗi thời. Arroxy tự động cập nhật yt-dlp khi khởi chạy — hãy thử lại sau vài phút khi bản sửa lỗi được phát hành.",
+			"parse": "Không thể phân tích phản hồi từ trang web. Bộ trích xuất của yt-dlp có thể đã lỗi thời. Arclio tự động cập nhật yt-dlp khi khởi chạy — hãy thử lại sau vài phút khi bản sửa lỗi được phát hành.",
 			"network": "Lỗi mạng. Hãy kiểm tra kết nối và thử lại.",
 			"drmProtected": "Video này được bảo vệ bởi DRM. yt-dlp không thể gỡ DRM, vì vậy tệp không thể được tải xuống.",
 			"loginRequired": "Video này yêu cầu tài khoản đã đăng nhập. Hãy thiết lập cookies.txt (Cài đặt → Cookies) và thử lại.",
@@ -528,22 +528,23 @@
 		"mp4Cap": "H.264 trên 1080p không có trên YouTube — tự động giới hạn ở 1080p"
 	},
 	"formatLabel": {"audioFallback": "Âm thanh", "audioOnlyDot": "Chỉ âm thanh · {{audio}}", "videoDot": "{{resolution}} · {{audio}}"},
-	"tray": {"tooltip": "Arroxy", "menu": {"statusIdle": "Đang chờ", "statusActive_one": "1 đang tải · {{percent}}%", "statusActive_other": "{{count}} đang tải · {{percent}}%", "open": "Mở Arroxy", "quit": "Thoát Arroxy"}},
+	"tray": {"tooltip": "Arclio", "menu": {"statusIdle": "Đang chờ", "statusActive_one": "1 đang tải · {{percent}}%", "statusActive_other": "{{count}} đang tải · {{percent}}%", "open": "Mở Arclio", "quit": "Thoát Arclio"}},
 	"dialogs": {
 		"quitWithActiveDownloads": {"message_one": "{{count}} tải xuống đang tiến hành", "message_other": "{{count}} tải xuống đang tiến hành", "detail": "Tạm dừng để tiếp tục sau, hoặc hủy để bỏ tiến trình.", "confirm": "Hủy tải xuống & Thoát", "pause": "Tạm dừng tải và thoát", "keep": "Tiếp tục tải xuống"},
-		"closeToTray": {"message": "Ẩn Arroxy xuống khay hệ thống khi đóng?", "detail": "Arroxy vẫn tiếp tục chạy và hoàn thành các tải xuống đang hoạt động. Thay đổi điều này sau trong cài đặt Nâng cao.", "hide": "Ẩn xuống khay", "quit": "Thoát", "remember": "Không hỏi lại"},
-		"rendererCrashed": {"message": "Arroxy đã gặp sự cố", "detail": "Tiến trình renderer bị crash ({{reason}}). Tải lại để thử lại.", "reload": "Tải lại", "quit": "Thoát"}
+		"closeToTray": {"message": "Ẩn Arclio xuống khay hệ thống khi đóng?", "detail": "Arclio vẫn tiếp tục chạy và hoàn thành các tải xuống đang hoạt động. Thay đổi điều này sau trong cài đặt Nâng cao.", "hide": "Ẩn xuống khay", "quit": "Thoát", "remember": "Không hỏi lại"},
+		"rendererCrashed": {"message": "Arclio đã gặp sự cố", "detail": "Tiến trình renderer bị crash ({{reason}}). Tải lại để thử lại.", "reload": "Tải lại", "quit": "Thoát"}
 	},
 	"share": {
-		"title": "Chia sẻ Arroxy",
-		"description": "Arroxy miễn phí và mã nguồn mở. Chia sẻ giúp nhiều người hơn khám phá ra nó.",
+		"title": "Chia sẻ Arclio",
+		"description": "Arclio miễn phí và mã nguồn mở. Chia sẻ giúp nhiều người hơn khám phá ra nó.",
 		"copyLink": "Sao chép liên kết",
 		"copied": "Đã sao chép!",
-		"defaultMessage": "Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
-		"footerTooltip": "Chia sẻ Arroxy",
+		"defaultMessage": "Arclio — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
+		"footerTooltip": "Chia sẻ Arclio",
 		"footerLabel": "Chia sẻ",
-		"shareAction": "Chia sẻ Arroxy"
+		"shareAction": "Chia sẻ Arclio"
 	},
+	"search": {"placeholder": "Search…", "noResults": "No results", "media": "Media", "collection": "Collection", "tag": "Tag", "items": "items"},
 	"nav": {"home": "Home", "library": "Library", "collections": "Collections", "favorites": "Favorites", "tags": "Tags", "history": "History", "settings": "Settings"},
 	"library": {
 		"items": "items",

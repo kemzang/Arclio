@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Smoke test every third-party binary URL source Arroxy currently depends on:
+# Smoke test every third-party binary URL source Arclio currently depends on:
 #   - yt-dlp nightly + stable runtime downloads, including SourceForge fallback
 #   - build-time embedded ffmpeg/ffprobe sources used by fetch-embedded.sh
 #

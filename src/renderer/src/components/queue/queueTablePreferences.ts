@@ -14,7 +14,7 @@ export interface QueueTablePreferences {
 	columnVisibility: Record<QueueTableColumnId, boolean>
 }
 
-const STORAGE_KEY = 'arroxy.queueTablePreferences.v1'
+const STORAGE_KEY = 'arclio.queueTablePreferences.v1'
 const COLUMN_ID_SET = new Set<string>(QUEUE_TABLE_COLUMN_IDS)
 const LOCKED_VISIBLE_COLUMNS = new Set<QueueTableColumnId>(['title', 'status'])
 

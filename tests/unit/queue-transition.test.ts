@@ -6,7 +6,7 @@ import type {PreparedJob, EmbedOptions, SponsorBlockOptions} from '@shared/prepa
 const EMBED_OFF: EmbedOptions = {chapters: false, metadata: false, thumbnail: false, description: false, thumbnailSidecar: false}
 const SB_OFF: SponsorBlockOptions = {mode: 'off'}
 const PREPARED: PreparedJob = {kind: 'single-format', extractor: 'youtube', extractorKey: 'Youtube', formatId: '137+251', preset: 'custom', sponsorBlock: SB_OFF, embed: EMBED_OFF}
-const RESUME_CONTEXT: QueueResumeContext = {kind: 'media-retry', tempDir: '/tmp/.arroxy-temp/resume', reason: 'media-transfer', failureKind: 'network'}
+const RESUME_CONTEXT: QueueResumeContext = {kind: 'media-retry', tempDir: '/tmp/.arclio-temp/resume', reason: 'media-transfer', failureKind: 'network'}
 
 function makeItem(overrides: Partial<QueueItem> = {}): QueueItem {
 	const base: QueueItem = {
@@ -51,10 +51,10 @@ describe('transition', () => {
 
 	it('paused-active → status=paused-active + clears progressDetail + records tempDir', () => {
 		const start = makeItem({status: 'running', progressDetail: '1.4 MiB/s'})
-		const next = transition(start, {kind: 'paused-active', tempDir: '/tmp/.arroxy-temp/x'})
+		const next = transition(start, {kind: 'paused-active', tempDir: '/tmp/.arclio-temp/x'})
 		expect(next.status).toBe('paused-active')
 		expect(next.progressDetail).toBeNull()
-		expect(next.tempDir).toBe('/tmp/.arroxy-temp/x')
+		expect(next.tempDir).toBe('/tmp/.arclio-temp/x')
 	})
 
 	it('paused-held → status=paused-held + clears progressDetail', () => {

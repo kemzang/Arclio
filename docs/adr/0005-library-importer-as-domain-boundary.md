@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-The download engine (Arroxy) must remain independent of the library domain. Two entry points must converge on the same Media creation logic:
+The download engine (Arclio) must remain independent of the library domain. Two entry points must converge on the same Media creation logic:
 
 1. Download completion (yt-dlp finishes)
 2. Folder import (user adds existing files to library)

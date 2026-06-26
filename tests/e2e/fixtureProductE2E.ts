@@ -84,8 +84,8 @@ export async function withFixtureProductApp(options: FixtureProductOptions, run:
 	const ytDlpPath = await prepareFixtureRuntime()
 	const fixtureServer = await startFixtureServer(options.behavior)
 	const denyProxy = await startDenyProxy()
-	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), options.userDataPrefix ?? 'arroxy-fixture-user-'))
-	const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), options.outputPrefix ?? 'arroxy-fixture-out-'))
+	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), options.userDataPrefix ?? 'arclio-fixture-user-'))
+	const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), options.outputPrefix ?? 'arclio-fixture-out-'))
 	writeE2eSettings(userDataDir, outputDir, options.settings)
 
 	let app: ElectronApplication | null = null
@@ -121,8 +121,8 @@ export async function withFixtureYtDlp(options: FixtureYtDlpOptions, run: (ctx: 
 	const ytDlpPath = await prepareFixtureRuntime()
 	const fixtureServer = await startFixtureServer(options.behavior)
 	const denyProxy = await startDenyProxy()
-	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), options.userDataPrefix ?? 'arroxy-fixture-ytdlp-user-'))
-	const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), options.outputPrefix ?? 'arroxy-fixture-ytdlp-out-'))
+	const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), options.userDataPrefix ?? 'arclio-fixture-ytdlp-user-'))
+	const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), options.outputPrefix ?? 'arclio-fixture-ytdlp-out-'))
 	const env = buildFixtureEnv({userDataDir, fixtureServer, denyProxy, ytDlpPath})
 
 	try {

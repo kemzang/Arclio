@@ -29,7 +29,7 @@ export function useUpdateChannel(): UpdateChannelState {
 	}
 
 	function download(): void {
-		void window.appApi.shell.openExternal('https://arroxy.orionus.dev/')
+		void window.appApi.shell.openExternal('https://arclio.orionus.dev/')
 		setInfo(null)
 	}
 

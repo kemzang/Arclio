@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Arroxy stores download data as a flat `QueueItem` with `file_path` on the item itself. This model assumes one file per download. Arclio needs to:
+Arclio stores download data as a flat `QueueItem` with `file_path` on the item itself. This model assumes one file per download. Arclio needs to:
 
 - Support multiple files per content (video + subtitles + thumbnail + description)
 - Distinguish logical content from physical files

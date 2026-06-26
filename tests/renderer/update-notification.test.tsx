@@ -115,7 +115,7 @@ describe('UpdateBanner integration in App', () => {
 			capturedListener!({version: '3.1.0', currentVersion: '2.5.1', installChannel: 'direct'})
 		})
 
-		expect(screen.getByText('Arroxy 3.1.0')).toBeInTheDocument()
+		expect(screen.getByText('Arclio 3.1.0')).toBeInTheDocument()
 		expect(screen.getByText(/you have 2\.5\.1/)).toBeInTheDocument()
 	})
 
@@ -185,7 +185,7 @@ describe('UpdateBanner integration in App', () => {
 			fireEvent.click(screen.getByText('Download ↗'))
 		})
 
-		expect(openExternal).toHaveBeenCalledWith('https://arroxy.orionus.dev/')
+		expect(openExternal).toHaveBeenCalledWith('https://arclio.orionus.dev/')
 	})
 
 	it('Download ↗ dismisses the banner after clicking', async () => {

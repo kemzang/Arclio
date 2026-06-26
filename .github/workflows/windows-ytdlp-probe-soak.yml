@@ -107,7 +107,7 @@ jobs:
             $handler.AllowAutoRedirect = $true
             $client = [System.Net.Http.HttpClient]::new($handler)
             try {
-              $client.DefaultRequestHeaders.UserAgent.ParseAdd('Arroxy-CI-yt-dlp-probe-soak')
+              $client.DefaultRequestHeaders.UserAgent.ParseAdd('Arclio-CI-yt-dlp-probe-soak')
               $response = $client.GetAsync($Url, [System.Net.Http.HttpCompletionOption]::ResponseHeadersRead).GetAwaiter().GetResult()
               $response.EnsureSuccessStatusCode()
               $inputStream = $response.Content.ReadAsStreamAsync().GetAwaiter().GetResult()

@@ -54,8 +54,8 @@ sudo apt install -y xvfb
 ### クローンして実行
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # 推奨。固定バージョンのツールを手動で有効化済みならスキップ
 bun run bootstrap
 bun run doctor
@@ -70,14 +70,14 @@ bun run dist         # 現在の OS 向けパッケージ
 bun run dist:win     # 対応ホストで Windows ターゲットをパッケージ
 \`\`\`
 
-> \`bun run bootstrap\` は依存関係をインストールし、Electron アプリ依存を rebuild し、Electron を検証し、開発用の埋め込み ffmpeg/ffprobe を準備し、Playwright Chromium をインストールします。yt-dlp は実行時にアプリデータフォルダで管理され、ffmpeg と ffprobe はすべての Arroxy リリースに同梱されています。
+> \`bun run bootstrap\` は依存関係をインストールし、Electron アプリ依存を rebuild し、Electron を検証し、開発用の埋め込み ffmpeg/ffprobe を準備し、Playwright Chromium をインストールします。yt-dlp は実行時にアプリデータフォルダで管理され、ffmpeg と ffprobe はすべての Arclio リリースに同梱されています。
 
 </details>`;
 
 export const ja = {
-  icon_alt: "Arroxy マスコット",
+  icon_alt: "Arclio マスコット",
   title:
-    "Arroxy — Windows・macOS・Linux 向け無料オープンソース YouTube（+ 2000 サイト）ダウンローダー",
+    "Arclio — Windows・macOS・Linux 向け無料オープンソース YouTube（+ 2000 サイト）ダウンローダー",
   read_in_label: "言語：",
   badge_release_alt: "リリース",
   badge_build_alt: "ビルド",
@@ -92,13 +92,13 @@ export const ja = {
     "**YouTube と 2000 以上の対応サイト**から動画・Shorts・音楽・チャンネル・ポッドキャスト・音声トラックをダウンロード — 最大 4K HDR 60fps、または MP3 / AAC / Opus として。Windows、macOS、Linux でローカル動作。**広告なし、余計なものなし、アップセルなし。**",
   cta_latest: "↓ 最新リリースをダウンロード",
   cta_website: "ウェブサイト",
-  demo_alt: "Arroxy デモ",
+  demo_alt: "Arclio デモ",
   star_cta:
-    "Arroxy が役に立ったなら、⭐ で他のユーザーへの周知を助けてください。",
+    "Arclio が役に立ったなら、⭐ で他のユーザーへの周知を助けてください。",
   ai_notice:
     "> 🌐 これは AI 翻訳です。[英語版 README](README.md) が情報のソースです。誤りを見つけたら [PR を歓迎します](../../pulls)。",
   toc_heading: "目次",
-  why_h2: "なぜ Arroxy？",
+  why_h2: "なぜ Arclio？",
   features_h2: "機能",
   dl_h2: "ダウンロード",
   privacy_h2: "プライバシー",
@@ -114,7 +114,7 @@ export const ja = {
   why_r6: "クロスプラットフォームのデスクトップアプリ",
   why_r7: "字幕 + SponsorBlock",
   why_summary:
-    "Arroxy はひとつのことのために作られています：URL を貼って、クリーンなローカルファイルを得る。アカウントなし、アップセルなし、データ収集なし。",
+    "Arclio はひとつのことのために作られています：URL を貼って、クリーンなローカルファイルを得る。アカウントなし、アップセルなし、データ収集なし。",
   feat_quality_h3: "画質・フォーマット",
   feat_quality_1: "最大 **4K UHD（2160p）**、1440p、1080p、720p、480p、360p",
   feat_quality_2: "**ハイフレームレート**をそのまま保存 — 60 fps、120 fps、HDR",
@@ -133,7 +133,7 @@ export const ja = {
   feat_workflow_2:
     "**中央ダウンロードキュー** — 単体、プレイリスト、一括、クイックの各ジョブが一か所に入り、進行状況、一時停止、再開、キャンセル、再試行、優先度を管理できます",
   feat_workflow_3:
-    "**クリップボード監視** — YouTube リンクをコピーすると、アプリにフォーカスを戻したときに Arroxy が URL を自動入力（詳細設定でトグル切替可能）",
+    "**クリップボード監視** — YouTube リンクをコピーすると、アプリにフォーカスを戻したときに Arclio が URL を自動入力（詳細設定でトグル切替可能）",
   feat_workflow_4:
     "**URL 自動クリーンアップ** — トラッキングパラメータ（`si`、`pp`、`utm_*`、`fbclid`、`gclid`）を除去し、`youtube.com/redirect` リンクを展開",
   feat_workflow_5:
@@ -161,7 +161,7 @@ export const ja = {
   feat_sites_3:
     "**音声のみと字幕**は YouTube だけでなく、すべての対応サイトで機能します",
   feat_sites_4:
-    "サイトが変更されても、yt-dlp は毎週修正をリリースし、Arroxy は起動時にバイナリを自動更新します",
+    "サイトが変更されても、yt-dlp は毎週修正をリリースし、Arclio は起動時にバイナリを自動更新します",
   shot1_cap:
     "<b>クイックダウンロードのホーム</b><br/>URLを貼り付け、アクティブなプロファイルですぐにダウンロード",
   shot2_cap:
@@ -201,25 +201,25 @@ export const ja = {
     "**おすすめ：** 自動アップデートと高速起動には NSIS インストーラを使用。インストール不要・レジストリ非変更のオプションにはポータブル `.exe` を使用。",
   dl_win_smartscreen_h4: "Windows SmartScreen の警告",
   dl_win_smartscreen_intro:
-    "初回起動時に **«Windows protected your PC»** または **«Unknown publisher»** が表示されることがあります。これは `Arroxy-win-x64-Setup.exe` と `Arroxy-win-x64-Portable.exe` の両方に該当します。Arroxy は無料のオープンソースソフトウェアであり、Windows ビルドには有料の証明書によるコード署名がないため、SmartScreen がフラグを立てます。これは Arroxy が危険であることを**自動的に**意味するわけではありません。続行するには：",
+    "初回起動時に **«Windows protected your PC»** または **«Unknown publisher»** が表示されることがあります。これは `Arclio-win-x64-Setup.exe` と `Arclio-win-x64-Portable.exe` の両方に該当します。Arclio は無料のオープンソースソフトウェアであり、Windows ビルドには有料の証明書によるコード署名がないため、SmartScreen がフラグを立てます。これは Arclio が危険であることを**自動的に**意味するわけではありません。続行するには：",
   dl_win_smartscreen_step1: "**More info** をクリック。",
   dl_win_smartscreen_step2: "**Run anyway** をクリック。",
   dl_win_smartscreen_official:
-    "Arroxy は必ず公式の GitHub Releases ページからダウンロードしてください。他のウェブサイトから入手したファイルや、誰かから送られてきたファイルは削除し、公式ソースから新しいコピーをダウンロードしてください。ソースコードは公開されているため、ご自身で確認したり、Arroxy をビルドしたりすることも可能です。",
+    "Arclio は必ず公式の GitHub Releases ページからダウンロードしてください。他のウェブサイトから入手したファイルや、誰かから送られてきたファイルは削除し、公式ソースから新しいコピーをダウンロードしてください。ソースコードは公開されているため、ご自身で確認したり、Arclio をビルドしたりすることも可能です。",
   dl_macos_h3: "macOS の初回起動",
   dl_macos_warning:
-    "Arroxy はまだコード署名されていないため、初回起動時に macOS Gatekeeper が警告を表示します。これは想定内の動作であり、ファイルが破損しているわけではありません。",
+    "Arclio はまだコード署名されていないため、初回起動時に macOS Gatekeeper が警告を表示します。これは想定内の動作であり、ファイルが破損しているわけではありません。",
   dl_macos_m1_h4: "システム設定を使う方法（推奨）：",
-  dl_macos_step1: "Arroxy のアプリアイコンを右クリックして **開く** を選択。",
+  dl_macos_step1: "Arclio のアプリアイコンを右クリックして **開く** を選択。",
   dl_macos_step2:
     "警告ダイアログが表示されたら **キャンセル** をクリック（*ゴミ箱に入れる* は押さない）。",
   dl_macos_step3: "**システム設定 → プライバシーとセキュリティ** を開く。",
   dl_macos_step4:
-    '**セキュリティ** セクションまでスクロール。*"Arroxy は確認済みの開発元のものではないためブロックされました"* と表示されています。',
+    '**セキュリティ** セクションまでスクロール。*"Arclio は確認済みの開発元のものではないためブロックされました"* と表示されています。',
   dl_macos_step5:
     "**このまま開く** をクリックし、パスワードまたは Touch ID で確認。",
   dl_macos_after:
-    "手順 5 のあとは Arroxy が通常通り開き、警告は二度と表示されません。",
+    "手順 5 のあとは Arclio が通常通り開き、警告は二度と表示されません。",
   dl_macos_m2_h4: "ターミナルを使う方法（上級者向け）：",
   dl_macos_note:
     "macOS ビルドは Apple Silicon と Intel の CI ランナーで生成されます。問題が発生した場合は [issue を開いて](../../issues) ください — macOS ユーザーからのフィードバックが macOS のテストサイクルを積極的に形成します。",
@@ -232,14 +232,14 @@ export const ja = {
   dl_linux_fuse_text:
     "それでも起動しない場合、FUSE が不足している可能性があります：",
   dl_linux_flatpak_intro:
-    "**Flatpak（サンドボックス版）：** 同じリリースページから `Arroxy-*.flatpak` をダウンロード。",
+    "**Flatpak（サンドボックス版）：** 同じリリースページから `Arclio-*.flatpak` をダウンロード。",
 
   // ---- Reorganized install help (normie-first, manual-download primary) ----
   dl_warning_h3: "警告が表示される理由",
   dl_warning_p1:
-    "Arroxy はオープンソースで MIT ライセンスのソフトウェアです。Windows および macOS のビルドは**コード署名されていません** — Apple Developer ID と Windows EV のコード署名証明書はそれぞれ年間数百ドルかかり、個人プロジェクトでは自己負担になります。署名がない場合、Windows SmartScreen と macOS Gatekeeper は初回起動時に警告を表示します。これらの警告は*OS が発行元を認識していない*ことを意味するものであり、Arroxy がマルウェアであることを示すものではありません。",
+    "Arclio はオープンソースで MIT ライセンスのソフトウェアです。Windows および macOS のビルドは**コード署名されていません** — Apple Developer ID と Windows EV のコード署名証明書はそれぞれ年間数百ドルかかり、個人プロジェクトでは自己負担になります。署名がない場合、Windows SmartScreen と macOS Gatekeeper は初回起動時に警告を表示します。これらの警告は*OS が発行元を認識していない*ことを意味するものであり、Arclio がマルウェアであることを示すものではありません。",
   dl_warning_p2:
-    "自分で Arroxy を検証する 3 つの方法（厳密さの高い順）：\n\n- **ソースコードを読む。** すべての行は [GitHub](https://github.com/antonio-orionus/Arroxy) にあり、[ソースからビルド](#tech)することもできます。\n- **SHA256 を確認する。** ダウンロードしたファイルを公開済みの [`SHA256SUMS`](../../releases/latest) と照合してください — 下記の[ダウンロードの検証](#verify)を参照。\n- **サードパーティのスキャンを実行する。** [VirusTotal](https://www.virustotal.com) にファイルをアップロード。",
+    "自分で Arclio を検証する 3 つの方法（厳密さの高い順）：\n\n- **ソースコードを読む。** すべての行は [GitHub](https://github.com/antonio-orionus/Arclio) にあり、[ソースからビルド](#tech)することもできます。\n- **SHA256 を確認する。** ダウンロードしたファイルを公開済みの [`SHA256SUMS`](../../releases/latest) と照合してください — 下記の[ダウンロードの検証](#verify)を参照。\n- **サードパーティのスキャンを実行する。** [VirusTotal](https://www.virustotal.com) にファイルをアップロード。",
 
   dl_win_first_h3: "Windows 初回起動",
   shot_smartscreen_more_alt:
@@ -248,33 +248,33 @@ export const ja = {
     'SmartScreen dialog after expanding More info, showing the "Run anyway" button',
   dl_win_defender_h4: "Windows Defender がファイルをフラグまたは削除した場合",
   dl_win_defender_p:
-    "Defender のヒューリスティックは、署名されていない NSIS インストーラーや Electron のポータブル版を不審として検出することがあります。Defender が `Arroxy-win-x64-Setup.exe` または `Arroxy-win-x64-Portable.exe` を隔離した場合は、**Windows Security → Virus & threat protection → Protection history** から復元し、**Manage settings → Add or remove exclusions** で Arroxy の実行ファイルを許可リストに追加してください。SmartScreen と同様に、トリガーとなるのは発行元署名の欠如であり、マルウェアの検出ではありません。",
+    "Defender のヒューリスティックは、署名されていない NSIS インストーラーや Electron のポータブル版を不審として検出することがあります。Defender が `Arclio-win-x64-Setup.exe` または `Arclio-win-x64-Portable.exe` を隔離した場合は、**Windows Security → Virus & threat protection → Protection history** から復元し、**Manage settings → Add or remove exclusions** で Arclio の実行ファイルを許可リストに追加してください。SmartScreen と同様に、トリガーとなるのは発行元署名の欠如であり、マルウェアの検出ではありません。",
 
   dl_macos_first_h3: "macOS 初回起動",
   dl_macos_intro:
-    "Arroxy はまだ macOS 向けのコード署名が行われていないため、Gatekeeper が初回起動をブロックします。許可する方法は macOS のバージョンによって異なります — Sequoia 15 では旧来の右クリック → 開く による回避策が制限されました。",
+    "Arclio はまだ macOS 向けのコード署名が行われていないため、Gatekeeper が初回起動をブロックします。許可する方法は macOS のバージョンによって異なります — Sequoia 15 では旧来の右クリック → 開く による回避策が制限されました。",
   dl_macos_sequoia_h4: "macOS Sequoia 15 以降（現行）",
   dl_macos_sequoia_intro:
     "Sequoia 15 以降では、右クリック → 開く では多くの隔離済みアプリの Gatekeeper をバイパスできなくなりました。代わりにシステム設定パネルを使用してください：",
   dl_macos_sequoia_step1:
-    "マウントした DMG から `Arroxy.app` を `/Applications` にドラッグ。",
+    "マウントした DMG から `Arclio.app` を `/Applications` にドラッグ。",
   dl_macos_sequoia_step2:
-    "Arroxy をダブルクリックするとブロックダイアログが表示されます — **Done** をクリック（*Move to Trash* はクリックしない）。",
+    "Arclio をダブルクリックするとブロックダイアログが表示されます — **Done** をクリック（*Move to Trash* はクリックしない）。",
   dl_macos_sequoia_step3:
-    '**System Settings → Privacy & Security** を開き、**Security** セクションまでスクロール。*"Arroxy was blocked to protect your Mac"*（または同様のメッセージ）が表示されます。',
+    '**System Settings → Privacy & Security** を開き、**Security** セクションまでスクロール。*"Arclio was blocked to protect your Mac"*（または同様のメッセージ）が表示されます。',
   dl_macos_sequoia_step4:
-    "**Open Anyway** をクリックし、パスワードまたは Touch ID で確認後、`/Applications` から Arroxy を再起動してください。",
+    "**Open Anyway** をクリックし、パスワードまたは Touch ID で確認後、`/Applications` から Arclio を再起動してください。",
   dl_macos_sonoma_h4: "macOS Sonoma 14 以前",
   dl_macos_sonoma_step1:
-    "マウントした DMG から `Arroxy.app` を `/Applications` にドラッグ。",
+    "マウントした DMG から `Arclio.app` を `/Applications` にドラッグ。",
   dl_macos_sonoma_step2:
-    "`/Applications` 内の `Arroxy.app` を右クリック（または Control-クリック）して **Open** を選択。",
+    "`/Applications` 内の `Arclio.app` を右クリック（または Control-クリック）して **Open** を選択。",
   dl_macos_sonoma_step3:
-    "警告ダイアログに **Open** ボタンが表示されます — クリックして確認。Arroxy が正常に開き、以後警告は表示されません。",
+    "警告ダイアログに **Open** ボタンが表示されます — クリックして確認。Arclio が正常に開き、以後警告は表示されません。",
   dl_macos_damaged_h4:
     '"App is damaged" または Gatekeeper の継続的なブロック — Terminal による修正',
   dl_macos_damaged_p:
-    'macOS が *"Arroxy is damaged and can\'t be opened"* と表示する場合、または上記の手順でブロックが解除できない場合、原因は DMG の隔離属性です（一部のブラウザや macOS 自体のトランスロケーション動作が設定します）。インストール済みアプリからその属性を削除してください：',
+    'macOS が *"Arclio is damaged and can\'t be opened"* と表示する場合、または上記の手順でブロックが解除できない場合、原因は DMG の隔離属性です（一部のブラウザや macOS 自体のトランスロケーション動作が設定します）。インストール済みアプリからその属性を削除してください：',
   dl_macos_arch_note:
     "**Apple Silicon vs Intel：** M シリーズ Mac（M1 / M2 / M3 / M4）では `arm64` DMG をダウンロード。Intel Mac では `x64` DMG をダウンロード。誤ったビルドも Rosetta 経由で動作しますが、速度は明らかに遅くなります。",
 
@@ -297,7 +297,7 @@ export const ja = {
   privacy_p1:
     "ダウンロードは [yt-dlp](https://github.com/yt-dlp/yt-dlp) 経由で YouTube から選択したフォルダへ直接取得されます — サードパーティのサーバーは経由しません。視聴履歴、ダウンロード履歴、URL、ファイルの内容はすべてあなたのデバイスに留まります。",
   privacy_p2:
-    "Arroxy は [OpenPanel](https://openpanel.dev) 経由で匿名・集計されたテレメトリーを送信します — 起動数、OS、アプリバージョン、クラッシュを把握するための最低限だけです。URL、動画タイトル、ファイルパス、アカウント情報、フィンガープリンティング、個人データはありません。インストールごとの ID はランダムで、あなたの身元には結びつきません。設定からオプトアウトできます。",
+    "Arclio は [OpenPanel](https://openpanel.dev) 経由で匿名・集計されたテレメトリーを送信します — 起動数、OS、アプリバージョン、クラッシュを把握するための最低限だけです。URL、動画タイトル、ファイルパス、アカウント情報、フィンガープリンティング、個人データはありません。インストールごとの ID はランダムで、あなたの身元には結びつきません。設定からオプトアウトできます。",
   faq_q1: "本当に無料ですか？",
   faq_a1: "はい — MIT ライセンス、プレミアム層なし、機能ゲートなし。",
   faq_q2: "どの動画品質をダウンロードできますか？",
@@ -308,13 +308,13 @@ export const ja = {
     "はい。形式メニューで*音声のみ*を選び、MP3、M4A/AAC、Opus、WAV を選択できます。",
   faq_q4: "YouTube アカウントや Cookie が必要ですか？",
   faq_a4:
-    "デフォルトでは不要です — Arroxy は YouTube アカウント、ログイン、Cookie のエクスポートなしで動作します。年齢制限付きやメンバー限定動画など、認証が必要なコンテンツのために、詳細設定にオプションの Cookie サポート（Cookies source: file or browser）が用意されています。デフォルトはオフです。有効化する場合、yt-dlp の wiki は [Cookie ベースの自動化が Google アカウントにフラグを立てる可能性がある](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) と注意しています。その場合は使い捨てアカウントの利用が安全です。",
+    "デフォルトでは不要です — Arclio は YouTube アカウント、ログイン、Cookie のエクスポートなしで動作します。年齢制限付きやメンバー限定動画など、認証が必要なコンテンツのために、詳細設定にオプションの Cookie サポート（Cookies source: file or browser）が用意されています。デフォルトはオフです。有効化する場合、yt-dlp の wiki は [Cookie ベースの自動化が Google アカウントにフラグを立てる可能性がある](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) と注意しています。その場合は使い捨てアカウントの利用が安全です。",
   faq_q5: "YouTube が変更したら使えなくなりますか？",
   faq_a5:
-    "yt-dlp は起動時に自動更新され、YouTube に変更があれば Arroxy も迅速に修正をリリースします。万が一問題が発生した場合は、フォールバックとして詳細設定にオプションの Cookie サポートが用意されています。",
-  faq_q6: "Arroxy は何言語に対応していますか？",
+    "yt-dlp は起動時に自動更新され、YouTube に変更があれば Arclio も迅速に修正をリリースします。万が一問題が発生した場合は、フォールバックとして詳細設定にオプションの Cookie サポートが用意されています。",
+  faq_q6: "Arclio は何言語に対応していますか？",
   faq_a6:
-    "21 言語に標準対応：English、Español（スペイン語）、Deutsch（ドイツ語）、Français（フランス語）、日本語、中文（中国語）、Русский（ロシア語）、Українська（ウクライナ語）、हिन्दी（ヒンディー語）、Afaan Oromoo、Kiswahili、O'zbekcha（ウズベク語）、Tiếng Việt（ベトナム語）、አማርኛ（アムハラ語）、العربية（アラビア語）、اردو（ウルドゥー語）、پښتو（パシュトー語）、বাংলা（ベンガル語）、မြန်မာဘာသာ（ビルマ語）、Ελληνικά（ギリシャ語）、Српски（セルビア語）。Arroxy は初回起動時に OS の言語を自動検出し、ツールバーの言語選択でいつでも切り替え可能です。実行時のロケール JSON は src/shared/i18n/locales/ にあり、翻訳者向けの PO カタログは i18n/locales/ にあります。貢献するには GitHub で PR を開いてください。",
+    "21 言語に標準対応：English、Español（スペイン語）、Deutsch（ドイツ語）、Français（フランス語）、日本語、中文（中国語）、Русский（ロシア語）、Українська（ウクライナ語）、हिन्दी（ヒンディー語）、Afaan Oromoo、Kiswahili、O'zbekcha（ウズベク語）、Tiếng Việt（ベトナム語）、አማርኛ（アムハラ語）、العربية（アラビア語）、اردو（ウルドゥー語）、پښتو（パシュトー語）、বাংলা（ベンガル語）、မြန်မာဘာသာ（ビルマ語）、Ελληνικά（ギリシャ語）、Српски（セルビア語）。Arclio は初回起動時に OS の言語を自動検出し、ツールバーの言語選択でいつでも切り替え可能です。実行時のロケール JSON は src/shared/i18n/locales/ にあり、翻訳者向けの PO カタログは i18n/locales/ にあります。貢献するには GitHub で PR を開いてください。",
   faq_q7: "他に何かインストールが必要ですか？",
   faq_a7:
     "いいえ。yt-dlp は初回起動時に自動ダウンロードされてマシンにキャッシュされます。ffmpeg と ffprobe はアプリに同梱されています。それ以降は追加のセットアップ不要です。",
@@ -337,7 +337,7 @@ export const ja = {
     "YouTube が複数の音声トラックを提供する場合に、アプリ全体の優先言語トラックを設定し、プロファイルごとに上書き",
   plan_r6_name: "**アプリ内ブラウザーサインイン**",
   plan_r6_desc:
-    "Arroxy 内でブラウザーウィンドウを開き、手動で cookies をエクスポートせずにサインインしてサイト cookies を使用",
+    "Arclio 内でブラウザーウィンドウを開き、手動で cookies をエクスポートせずにサインインしてサイト cookies を使用",
   plan_r8_name: "**ワンクリック動画ダウンロード**",
   plan_r8_desc:
     "検出または貼り付けた URL から、アクティブなプロファイルで動画ダウンロードをワンクリック開始",
@@ -356,7 +356,7 @@ export const ja = {
   tech_content: TECH_CONTENT,
   tos_h2: "利用規約",
   tos_note:
-    "Arroxy は個人的・私的利用のみを目的としたツールです。ダウンロードが YouTube の[利用規約](https://www.youtube.com/t/terms)およびあなたの法域の著作権法に準拠することはあなた自身の責任です。権利を持たないコンテンツのダウンロード・複製・配布に Arroxy を使用しないでください。開発者は誤用に対して一切の責任を負いません。",
+    "Arclio は個人的・私的利用のみを目的としたツールです。ダウンロードが YouTube の[利用規約](https://www.youtube.com/t/terms)およびあなたの法域の著作権法に準拠することはあなた自身の責任です。権利を持たないコンテンツのダウンロード・複製・配布に Arclio を使用しないでください。開発者は誤用に対して一切の責任を負いません。",
   footer_credit:
     'MIT ライセンス · <a href="https://x.com/OrionusAI">@OrionusAI</a> が心を込めて制作',
 };

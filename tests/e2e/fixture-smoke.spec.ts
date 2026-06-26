@@ -11,7 +11,7 @@ test.describe.configure({mode: 'serial'})
 test('fixture plugin metadata smoke returns YouTube-shaped local info', async () => {
 	test.setTimeout(90_000)
 
-	await withFixtureYtDlp({userDataPrefix: 'arroxy-fixture-metadata-'}, async ({fixtureServer, urls, runYtDlp}) => {
+	await withFixtureYtDlp({userDataPrefix: 'arclio-fixture-metadata-'}, async ({fixtureServer, urls, runYtDlp}) => {
 		const result = await runYtDlp(['--ignore-config', '--plugin-dirs', FIXTURE_PLUGIN_DIR_ARG, '--no-cache-dir', '--dump-single-json', urls.video(FIXTURE_VIDEO_IDS[0])], 60_000)
 
 		expect(result.exitCode, result.stderr).toBe(0)
@@ -39,7 +39,7 @@ test('fixture plugin metadata smoke returns YouTube-shaped local info', async ()
 test('fixture plugin playlist metadata smoke returns flat YouTube-shaped entries', async () => {
 	test.setTimeout(90_000)
 
-	await withFixtureYtDlp({userDataPrefix: 'arroxy-fixture-playlist-metadata-'}, async ({urls, runYtDlp}) => {
+	await withFixtureYtDlp({userDataPrefix: 'arclio-fixture-playlist-metadata-'}, async ({urls, runYtDlp}) => {
 		const result = await runYtDlp(['--ignore-config', '--plugin-dirs', FIXTURE_PLUGIN_DIR_ARG, '--no-cache-dir', '--dump-single-json', '--flat-playlist', urls.playlist()], 60_000)
 
 		expect(result.exitCode, result.stderr).toBe(0)
@@ -60,7 +60,7 @@ test('fixture plugin playlist metadata smoke returns flat YouTube-shaped entries
 test('fixture plugin direct download smoke writes a real file through yt-dlp', async () => {
 	test.setTimeout(120_000)
 
-	await withFixtureYtDlp({userDataPrefix: 'arroxy-fixture-download-user-', outputPrefix: 'arroxy-fixture-download-out-'}, async ({outputDir, urls, runYtDlp}) => {
+	await withFixtureYtDlp({userDataPrefix: 'arclio-fixture-download-user-', outputPrefix: 'arclio-fixture-download-out-'}, async ({outputDir, urls, runYtDlp}) => {
 		const result = await runYtDlp(['--ignore-config', '--plugin-dirs', FIXTURE_PLUGIN_DIR_ARG, '--no-cache-dir', '--newline', '-f', '18', '-o', path.join(outputDir, '%(id)s.%(ext)s'), urls.video(FIXTURE_VIDEO_IDS[0])], 90_000)
 
 		expect(result.exitCode, result.stderr).toBe(0)

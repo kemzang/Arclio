@@ -120,7 +120,7 @@ describe('DownloadService — postprocess ENOSPC reclassification', () => {
 
 describe('DownloadService — retry temp dir ownership', () => {
 	it('cleans a supplied retry temp dir when preflight fails before VideoPhase owns it', async () => {
-		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-retry-preflight-'))
+		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-retry-preflight-'))
 		await fs.writeFile(path.join(tempDir, 'video.part'), 'partial')
 		vi.mocked(checkDiskSpace).mockResolvedValueOnce({ok: false, freeBytes: 50_000_000, requiredBytes: 200 * 1024 * 1024})
 
@@ -135,7 +135,7 @@ describe('DownloadService — retry temp dir ownership', () => {
 	})
 
 	it('preserves a supplied retry temp dir when VideoPhase creates a fresh resume context', async () => {
-		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-retry-video-'))
+		const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-retry-video-'))
 		const mediaPart = path.join(tempDir, 'video.f137.mp4.part')
 		await fs.writeFile(mediaPart, 'partial')
 		vi.mocked(checkDiskSpace).mockResolvedValueOnce({ok: true, freeBytes: 50_000_000_000, requiredBytes: 200 * 1024 * 1024})

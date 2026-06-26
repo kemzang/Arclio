@@ -43,7 +43,7 @@ jobs:
           import os
           import urllib.request
 
-          repo = "antonio-orionus/Arroxy"
+          repo = "antonio-orionus/Arclio"
           token = os.environ.get("GITHUB_TOKEN")
           headers = {"Accept": "application/vnd.github+json"}
           if token:
@@ -72,7 +72,7 @@ jobs:
           with urllib.request.urlopen(checksum_req) as response:
               checksums = response.read().decode("utf-8")
 
-          targets = ["Arroxy-linux-x64.tar.gz", f"Arroxy-{version}.tar.gz"]
+          targets = ["Arclio-linux-x64.tar.gz", f"Arclio-{version}.tar.gz"]
           hash_value = None
           for line in checksums.splitlines():
               if any(target in line for target in targets):
@@ -91,8 +91,8 @@ jobs:
         run: |
           VERSION="${{ steps.resolve.outputs.version }}"
           gh release download "v${VERSION}" \
-            --repo antonio-orionus/Arroxy \
-            --pattern "Arroxy-linux-x64.tar.gz" \
+            --repo antonio-orionus/Arclio \
+            --pattern "Arclio-linux-x64.tar.gz" \
             --dir flatpak
       - name: Render temporary manifest
         run: |
@@ -100,15 +100,15 @@ jobs:
           VERSION="${{ steps.resolve.outputs.version }}"
           python3 scripts/render-flatpak-manifest.py \
             --sha256 "${{ steps.resolve.outputs.sha256 }}" \
-            --archive-path "Arroxy-linux-x64.tar.gz" \
-            --template flatpak/io.github.antonio_orionus.Arroxy.yml.in \
-            --output flatpak/io.github.antonio_orionus.Arroxy.yml \
-            --metainfo-template flatpak/io.github.antonio_orionus.Arroxy.metainfo.xml.in \
-            --metainfo-output flatpak/io.github.antonio_orionus.Arroxy.metainfo.xml
+            --archive-path "Arclio-linux-x64.tar.gz" \
+            --template flatpak/io.github.antonio_orionus.Arclio.yml.in \
+            --output flatpak/io.github.antonio_orionus.Arclio.yml \
+            --metainfo-template flatpak/io.github.antonio_orionus.Arclio.metainfo.xml.in \
+            --metainfo-output flatpak/io.github.antonio_orionus.Arclio.metainfo.xml
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         id: build
         with:
-          bundle: arroxy.flatpak
-          manifest-path: flatpak/io.github.antonio_orionus.Arroxy.yml
+          bundle: arclio.flatpak
+          manifest-path: flatpak/io.github.antonio_orionus.Arclio.yml
           cache-key: flatpak-builder-${{ hashFiles('flatpak/**') }}
           verbose: true

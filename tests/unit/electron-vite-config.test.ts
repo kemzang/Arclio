@@ -30,19 +30,19 @@ describe('electron.vite.config', () => {
 	// `C:/...`. Treating those as external left raw `require('D:\\a\\...')`
 	// calls in the bundled preload, breaking every downstream machine
 	// (CI-built v0.3.2-beta.6 portable failed with `module not found:
-	// D:\\a\\Arroxy\\Arroxy\\src\\shared/ipc.js`).
+	// D:\\a\\Arclio\\Arclio\\src\\shared/ipc.js`).
 	it('treats Windows absolute paths as internal', () => {
-		expect(isExternalPreloadBuildImport('D:\\a\\Arroxy\\Arroxy\\src\\shared\\ipc.js')).toBe(false)
-		expect(isExternalPreloadBuildImport('D:/a/Arroxy/Arroxy/src/shared/ipc.js')).toBe(false)
-		expect(isExternalPreloadBuildImport('C:\\work\\arroxy\\src\\preload\\createPreloadApi.ts')).toBe(false)
-		expect(isExternalMainBuildImport('D:\\a\\Arroxy\\Arroxy\\src\\shared\\types.ts')).toBe(false)
-		expect(isExternalMainBuildImport('C:/work/arroxy/src/main/index.ts')).toBe(false)
+		expect(isExternalPreloadBuildImport('D:\\a\\Arclio\\Arclio\\src\\shared\\ipc.js')).toBe(false)
+		expect(isExternalPreloadBuildImport('D:/a/Arclio/Arclio/src/shared/ipc.js')).toBe(false)
+		expect(isExternalPreloadBuildImport('C:\\work\\arclio\\src\\preload\\createPreloadApi.ts')).toBe(false)
+		expect(isExternalMainBuildImport('D:\\a\\Arclio\\Arclio\\src\\shared\\types.ts')).toBe(false)
+		expect(isExternalMainBuildImport('C:/work/arclio/src/main/index.ts')).toBe(false)
 	})
 
-	it('reads the renderer dev-server port from ARROXY_RENDERER_PORT', () => {
+	it('reads the renderer dev-server port from ARCLIO_RENDERER_PORT', () => {
 		expect(readRendererDevServerPort({})).toBe(5173)
-		expect(readRendererDevServerPort({ARROXY_RENDERER_PORT: '23456'})).toBe(23_456)
-		expect(() => readRendererDevServerPort({ARROXY_RENDERER_PORT: 'abc'})).toThrow(/ARROXY_RENDERER_PORT/)
-		expect(() => readRendererDevServerPort({ARROXY_RENDERER_PORT: '70000'})).toThrow(/ARROXY_RENDERER_PORT/)
+		expect(readRendererDevServerPort({ARCLIO_RENDERER_PORT: '23456'})).toBe(23_456)
+		expect(() => readRendererDevServerPort({ARCLIO_RENDERER_PORT: 'abc'})).toThrow(/ARCLIO_RENDERER_PORT/)
+		expect(() => readRendererDevServerPort({ARCLIO_RENDERER_PORT: '70000'})).toThrow(/ARCLIO_RENDERER_PORT/)
 	})
 })

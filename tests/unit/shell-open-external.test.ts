@@ -5,7 +5,7 @@ import {describe, expect, it, vi, beforeEach} from 'vitest'
 const handleCalls: {channel: string; fn: (e: unknown, payload: unknown) => unknown}[] = []
 
 vi.mock('electron', () => ({
-	app: {getName: vi.fn().mockReturnValue('arroxy'), getVersion: vi.fn().mockReturnValue('1.0.0'), getPath: vi.fn().mockReturnValue('/tmp')},
+	app: {getName: vi.fn().mockReturnValue('arclio'), getVersion: vi.fn().mockReturnValue('1.0.0'), getPath: vi.fn().mockReturnValue('/tmp')},
 	dialog: {showOpenDialog: vi.fn()},
 	shell: {openPath: vi.fn(), openExternal: vi.fn().mockResolvedValue(undefined), showItemInFolder: vi.fn()},
 	ipcMain: {

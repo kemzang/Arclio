@@ -104,7 +104,7 @@ function trackBinaryProbeAnomaly(id: DependencyId, source: DependencySource, out
 // Resolve absolute path to a build-time-embedded ffmpeg/ffprobe binary.
 //
 // Production: binaries ship via electron-builder `extraResources`, so they
-// land in `process.resourcesPath` (Mac: Arroxy.app/Contents/Resources, Win:
+// land in `process.resourcesPath` (Mac: Arclio.app/Contents/Resources, Win:
 // <install>/resources, Linux AppImage: /tmp/.mount_*/resources).
 //
 // Development: scripts/build/fetch-embedded.sh populates
@@ -163,15 +163,15 @@ export class BinaryManager {
 	}
 
 	getYtDlpPath(): string {
-		return this.resolved['yt-dlp'] ?? process.env.ARROXY_YT_DLP_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp')
+		return this.resolved['yt-dlp'] ?? process.env.ARCLIO_YT_DLP_PATH ?? path.join(this.cacheDir, process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp')
 	}
 
 	getFfmpegPath(): string {
-		return this.resolved.ffmpeg ?? process.env.ARROXY_FFMPEG_PATH ?? bundledBinaryPath('ffmpeg')
+		return this.resolved.ffmpeg ?? process.env.ARCLIO_FFMPEG_PATH ?? bundledBinaryPath('ffmpeg')
 	}
 
 	getFfprobePath(): string {
-		return this.resolved.ffprobe ?? process.env.ARROXY_FFPROBE_PATH ?? bundledBinaryPath('ffprobe')
+		return this.resolved.ffprobe ?? process.env.ARCLIO_FFPROBE_PATH ?? bundledBinaryPath('ffprobe')
 	}
 
 	// Probe-and-record helper used by every resolve chain. Runs the binary's
@@ -219,9 +219,9 @@ export class BinaryManager {
 			if (diag) return diag
 		}
 
-		const envPath = process.env.ARROXY_YT_DLP_PATH
+		const envPath = process.env.ARCLIO_YT_DLP_PATH
 		if (envPath) {
-			const source: DependencySource = {kind: 'envOverride', path: envPath, envVar: 'ARROXY_YT_DLP_PATH'}
+			const source: DependencySource = {kind: 'envOverride', path: envPath, envVar: 'ARCLIO_YT_DLP_PATH'}
 			const diag = await this.probeAndAccept(id, source, envPath, attempts, onProgress, signal)
 			if (diag) return diag
 		}
@@ -423,7 +423,7 @@ export class BinaryManager {
 			return failed
 		}
 
-		const [ffmpeg, ffprobe] = await Promise.all([resolveOne('ffmpeg', overrides?.ffmpeg, 'ARROXY_FFMPEG_PATH'), resolveOne('ffprobe', overrides?.ffprobe, 'ARROXY_FFPROBE_PATH')])
+		const [ffmpeg, ffprobe] = await Promise.all([resolveOne('ffmpeg', overrides?.ffmpeg, 'ARCLIO_FFMPEG_PATH'), resolveOne('ffprobe', overrides?.ffprobe, 'ARCLIO_FFPROBE_PATH')])
 		return {ffmpeg, ffprobe}
 	}
 

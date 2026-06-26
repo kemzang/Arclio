@@ -1,4 +1,4 @@
-# Arroxy Dual-Deploy Architecture Plan
+# Arclio Dual-Deploy Architecture Plan
 
 > Status: design proposal. Not yet executed.
 > Author/owner: Antonio (OrionusAI@proton.me).
@@ -6,10 +6,10 @@
 
 ## 1. Goal
 
-Ship Arroxy in two distribution modes from one codebase:
+Ship Arclio in two distribution modes from one codebase:
 
 1. **Electron desktop app** (current): packaged for Windows/macOS/Linux via electron-builder, distributed through Scoop/Homebrew/Winget/Flatpak/GitHub Releases.
-2. **Self-hosted server**: single docker image (`ghcr.io/antonio-orionus/arroxy:latest`) deployable via `docker compose up`, fits homelab stacks alongside *arr suite, Traefik/Caddy/nginx-proxy-manager, Portainer, etc.
+2. **Self-hosted server**: single docker image (`ghcr.io/antonio-orionus/arclio:latest`) deployable via `docker compose up`, fits homelab stacks alongside *arr suite, Traefik/Caddy/nginx-proxy-manager, Portainer, etc.
 
 Constraint: **no logic duplication**. ~95% of code lives in shared `core/` + `shared/` consumed by both shells. Each shell is a thin (~15-20 file) glue layer.
 
@@ -35,7 +35,7 @@ Constraint: **no logic duplication**. ~95% of code lives in shared `core/` + `sh
 - yt-dlp invocation in `VideoPhase` (no `Downloader` interface).
 - ffmpeg-only post-processing in `SidecarSubsPhase`.
 - yt-dlp stderr regex parsing in `progressParser.ts`.
-- Resume across restart reads `_arroxy.info.json` (yt-dlp-specific cache).
+- Resume across restart reads `_arclio.info.json` (yt-dlp-specific cache).
 
 ## 3. Architecture: Hexagonal (Ports & Adapters)
 
@@ -183,11 +183,11 @@ Clock is shared: `SystemClock` in `core/factory/`, `FakeClock` in `tests/fakes/`
 
 ### Adapter notes
 
-- **EnvPaths** reads `ARROXY_DATA_DIR`, `ARROXY_DOWNLOADS_DIR`, `ARROXY_LOG_DIR`, `ARROXY_BIN_DIR`, `ARROXY_TEMP_DIR` with sensible defaults (`/data`, `/downloads`, `/data/logs`, `/data/bin`, `/tmp/arroxy`).
+- **EnvPaths** reads `ARCLIO_DATA_DIR`, `ARCLIO_DOWNLOADS_DIR`, `ARCLIO_LOG_DIR`, `ARCLIO_BIN_DIR`, `ARCLIO_TEMP_DIR` with sensible defaults (`/data`, `/downloads`, `/data/logs`, `/data/bin`, `/tmp/arclio`).
 - **PinoLogger** emits NDJSON to stdout; standard for container logging stacks (Loki, Vector, Datadog).
-- **HttpPotProvider** POSTs to `ARROXY_POT_PROVIDER_URL` (bgutil-ytdlp-pot-provider sidecar). Falls back to bypass mode if env unset (degraded YT support).
+- **HttpPotProvider** POSTs to `ARCLIO_POT_PROVIDER_URL` (bgutil-ytdlp-pot-provider sidecar). Falls back to bypass mode if env unset (degraded YT support).
 - **UploadCookieResolver** reads from `${dataDir}/cookies/{netscape|json}` files uploaded via API. Browser auto-extraction unavailable in container.
-- **WebhookNotifier** POSTs to `ARROXY_WEBHOOK_URL` if set; no-op otherwise.
+- **WebhookNotifier** POSTs to `ARCLIO_WEBHOOK_URL` if set; no-op otherwise.
 - **WsEventBus** broadcasts to all authenticated ws clients. Snapshot sent on connect.
 
 ## 6. Contract: tRPC + Zod (Duplication Killer #1)
@@ -296,7 +296,7 @@ interface PotProvider {
 ```
 
 - `ElectronPotProvider` → current HiddenWindow code, unchanged.
-- `HttpPotProvider` → POSTs to `ARROXY_POT_PROVIDER_URL`.
+- `HttpPotProvider` → POSTs to `ARCLIO_POT_PROVIDER_URL`.
 - Optional future `BypassPotProvider` for graceful degradation.
 
 `YtDlp` service takes `PotProvider` via constructor. Service has zero knowledge of how token is obtained.
@@ -321,8 +321,8 @@ WORKDIR /app
 COPY --from=build /app/dist/server ./
 COPY --from=build /app/dist/web ./public
 ENV NODE_ENV=production \
-    ARROXY_DATA_DIR=/data \
-    ARROXY_DOWNLOADS_DIR=/downloads \
+    ARCLIO_DATA_DIR=/data \
+    ARCLIO_DOWNLOADS_DIR=/downloads \
     PORT=8000
 EXPOSE 8000
 VOLUME ["/data", "/downloads"]
@@ -341,39 +341,39 @@ CMD ["node", "server.js"]
 
 ```yaml
 services:
-  arroxy:
-    image: ghcr.io/antonio-orionus/arroxy:latest
-    container_name: arroxy
+  arclio:
+    image: ghcr.io/antonio-orionus/arclio:latest
+    container_name: arclio
     restart: unless-stopped
     ports:
       - "8000:8000"
     volumes:
-      - ./arroxy/data:/data
+      - ./arclio/data:/data
       - /mnt/media/youtube:/downloads
     environment:
-      ARROXY_POT_PROVIDER_URL: http://pot-provider:4416
-      ARROXY_AUTH_PASSWORD_HASH: ${ARROXY_PASS_HASH}
+      ARCLIO_POT_PROVIDER_URL: http://pot-provider:4416
+      ARCLIO_AUTH_PASSWORD_HASH: ${ARCLIO_PASS_HASH}
       TZ: Europe/Berlin
     depends_on:
       - pot-provider
     labels:
       - traefik.enable=true
-      - traefik.http.routers.arroxy.rule=Host(`arroxy.home.lan`)
-      - traefik.http.services.arroxy.loadbalancer.server.port=8000
+      - traefik.http.routers.arclio.rule=Host(`arclio.home.lan`)
+      - traefik.http.services.arclio.loadbalancer.server.port=8000
 
   pot-provider:
     image: brainicism/bgutil-ytdlp-pot-provider:latest
-    container_name: arroxy-pot-provider
+    container_name: arclio-pot-provider
     restart: unless-stopped
 ```
 
-Drop-in alongside *arr stack. Reverse-proxy aware (X-Forwarded-* honored by Hono middleware). Optional sub-path mount via `ARROXY_BASE_PATH=/arroxy` env (Vite `base` configured at build, runtime served from same prefix).
+Drop-in alongside *arr stack. Reverse-proxy aware (X-Forwarded-* honored by Hono middleware). Optional sub-path mount via `ARCLIO_BASE_PATH=/arclio` env (Vite `base` configured at build, runtime served from same prefix).
 
 ## 11. Auth (Server Only)
 
 Homelab norm: single admin user, possibly behind Authelia/Authentik. Build small, don't reinvent.
 
-- First-run setup: env `ARROXY_AUTH_PASSWORD_HASH` set → use it. Unset → generate random password, log it to stdout once (sonarr-style "admin password = XYZ" first-boot message).
+- First-run setup: env `ARCLIO_AUTH_PASSWORD_HASH` set → use it. Unset → generate random password, log it to stdout once (sonarr-style "admin password = XYZ" first-boot message).
 - Library: **lucia-auth** v3 or hand-rolled (session table + bcrypt).
 - Cookie: `httpOnly`, `Secure` (when behind HTTPS proxy), `SameSite=Lax`.
 - Trust proxy: `X-Forwarded-For`, `X-Forwarded-Proto`, `X-Forwarded-Host`. Hono middleware.
@@ -394,7 +394,7 @@ Homelab norm: single admin user, possibly behind Authelia/Authentik. Build small
     "build:electron": "electron-vite build && bun run check:preload-bundle",
     "build:server":   "tsup src/shell/server/server.ts --format esm --target node22 --tree-shake",
     "build:web":      "vite build --config src/renderer/vite.config.mjs --mode web",
-    "docker:build":   "docker buildx build --platform linux/amd64,linux/arm64 -t arroxy ."
+    "docker:build":   "docker buildx build --platform linux/amd64,linux/arm64 -t arclio ."
   }
 }
 ```
@@ -434,7 +434,7 @@ Homelab norm: single admin user, possibly behind Authelia/Authentik. Build small
 - `tsc -p tsconfig.core.json` — hard boundary on core deps.
 - `grep -rE "require\(['\"]electron['\"]\)" dist/server/` must be empty.
 - `docker buildx build --platform linux/amd64,linux/arm64` on every PR.
-- Publish to `ghcr.io/antonio-orionus/arroxy:{version,latest,beta}` on tag matrix:
+- Publish to `ghcr.io/antonio-orionus/arclio:{version,latest,beta}` on tag matrix:
   - Stable tag (`v1.2.3`) → `:1.2.3` + `:latest`.
   - Beta tag (`v1.2.3-beta.1`) → `:1.2.3-beta.1` + `:beta`.
 
@@ -563,11 +563,11 @@ Strict order. Steps 1-4 are pure refactor (desktop-only, ships independently). S
 | Channel | Before | After |
 |---|---|---|
 | GitHub Releases | NSIS, portable.exe, DMG (arm64/x64), AppImage, tar.gz, Flatpak | unchanged |
-| Scoop | `arroxy.json` manifest | unchanged |
-| Homebrew | `arroxy.rb` cask | unchanged |
-| Winget | `AntonioOrionus.Arroxy` | unchanged |
+| Scoop | `arclio.json` manifest | unchanged |
+| Homebrew | `arclio.rb` cask | unchanged |
+| Winget | `AntonioOrionus.Arclio` | unchanged |
 | Flatpak | bundle | unchanged |
-| **ghcr.io** | — | **`arroxy:{version,latest,beta}` multi-arch image (NEW)** |
+| **ghcr.io** | — | **`arclio:{version,latest,beta}` multi-arch image (NEW)** |
 
 Existing release pipeline (`release.yml`) unchanged. Docker job (`publish-docker.yml`) added in parallel.
 

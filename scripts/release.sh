@@ -178,4 +178,4 @@ git push --follow-tags
 echo
 echo "✓ pushed $TAG"
 echo "  watch CI:  gh run watch"
-echo "  release:   https://github.com/antonio-orionus/Arroxy/releases/tag/$TAG"
+echo "  release:   https://github.com/antonio-orionus/Arclio/releases/tag/$TAG"

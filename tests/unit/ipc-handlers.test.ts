@@ -9,7 +9,7 @@ const handleCalls: {channel: string; fn: (e: unknown, payload: unknown) => unkno
 const removeHandlerCalls: string[] = []
 
 vi.mock('electron', () => ({
-	app: {getName: vi.fn().mockReturnValue('arroxy'), getVersion: vi.fn().mockReturnValue('1.0.0'), getPath: vi.fn().mockReturnValue('/tmp')},
+	app: {getName: vi.fn().mockReturnValue('arclio'), getVersion: vi.fn().mockReturnValue('1.0.0'), getPath: vi.fn().mockReturnValue('/tmp')},
 	dialog: {showOpenDialog: vi.fn()},
 	shell: {openPath: vi.fn(), openExternal: vi.fn(), showItemInFolder: vi.fn()},
 	ipcMain: {
@@ -388,7 +388,7 @@ describe('registerIpcHandlers', () => {
 			}
 		})
 
-		it.each(['/Users/monterey/Library/Application Support/arroxy/logs/main.log', '/Users/monterey/Library/Application Support/Arroxy/logs/main.log'])('logs:openDir reveals the active macOS main.log path (%s)', async logPath => {
+		it.each(['/Users/monterey/Library/Application Support/arclio/logs/main.log', '/Users/monterey/Library/Application Support/Arclio/logs/main.log'])('logs:openDir reveals the active macOS main.log path (%s)', async logPath => {
 			const originalPlatform = Object.getOwnPropertyDescriptor(process, 'platform')!
 			Object.defineProperty(process, 'platform', {value: 'darwin', configurable: true})
 			vi.mocked(log.transports.file.getFile).mockReturnValue({path: logPath} as ReturnType<typeof log.transports.file.getFile>)
@@ -408,7 +408,7 @@ describe('registerIpcHandlers', () => {
 		})
 
 		it('logs:uploadFeedbackDiagnostic uploads a compressed log diagnostic', async () => {
-			const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arroxy-ipc-feedback-'))
+			const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'arclio-ipc-feedback-'))
 			const logPath = path.join(tempDir, 'main.log')
 			await fs.writeFile(logPath, 'diagnostic log\n')
 			vi.mocked(log.transports.file.getFile).mockReturnValue({path: logPath} as ReturnType<typeof log.transports.file.getFile>)
@@ -426,7 +426,7 @@ describe('registerIpcHandlers', () => {
 				expect(result.data).toMatchObject({reportId, rawBytes: 15, truncated: false})
 				expect(result.data?.compressedBytes).toBeGreaterThan(0)
 				expect(result.data?.sha256).toMatch(/^[a-f0-9]{64}$/)
-				expect(fetchImpl).toHaveBeenCalledWith(expect.any(String), expect.objectContaining({headers: expect.objectContaining({'x-arroxy-report-id': reportId})}))
+				expect(fetchImpl).toHaveBeenCalledWith(expect.any(String), expect.objectContaining({headers: expect.objectContaining({'x-arclio-report-id': reportId})}))
 			} finally {
 				vi.unstubAllGlobals()
 				await fs.rm(tempDir, {force: true, recursive: true})

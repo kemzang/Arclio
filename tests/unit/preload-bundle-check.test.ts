@@ -14,14 +14,14 @@ describe('preload bundle checker', () => {
 
 	it('rejects machine-local and source imports that should have been bundled', () => {
 		const findings = findUnsafePreloadRequires(`
-      require("D:\\\\a\\\\Arroxy\\\\Arroxy\\\\src\\\\shared\\\\ipc.js");
-      require("C:/work/arroxy/src/preload/createPreloadApi.js");
-      require("/tmp/arroxy/src/shared/ipc.js");
+      require("D:\\\\a\\\\Arclio\\\\Arclio\\\\src\\\\shared\\\\ipc.js");
+      require("C:/work/arclio/src/preload/createPreloadApi.js");
+      require("/tmp/arclio/src/shared/ipc.js");
       require("@shared/ipc.js");
       require("@preload/createPreloadApi.js");
       require("./createPreloadApi.js");
     `)
 
-		expect(findings.map(finding => finding.specifier)).toEqual(['D:\\\\a\\\\Arroxy\\\\Arroxy\\\\src\\\\shared\\\\ipc.js', 'C:/work/arroxy/src/preload/createPreloadApi.js', '/tmp/arroxy/src/shared/ipc.js', '@shared/ipc.js', '@preload/createPreloadApi.js', './createPreloadApi.js'])
+		expect(findings.map(finding => finding.specifier)).toEqual(['D:\\\\a\\\\Arclio\\\\Arclio\\\\src\\\\shared\\\\ipc.js', 'C:/work/arclio/src/preload/createPreloadApi.js', '/tmp/arclio/src/shared/ipc.js', '@shared/ipc.js', '@preload/createPreloadApi.js', './createPreloadApi.js'])
 	})
 })

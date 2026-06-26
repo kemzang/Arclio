@@ -9,7 +9,7 @@ import {resolveE2eHarnessMode} from '@main/e2eHarness.js'
 const tempRoots: string[] = []
 
 function makePluginRoot(): string {
-	const parent = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-e2e-plugin-parent-'))
+	const parent = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-e2e-plugin-parent-'))
 	const root = path.join(parent, 'yt-dlp-plugins')
 	tempRoots.push(parent)
 	fs.mkdirSync(path.join(root, 'yt_dlp_plugins'), {recursive: true})
@@ -24,7 +24,7 @@ afterEach(() => {
 
 describe('resolveE2eHarnessMode', () => {
 	it('returns a disabled mode when the gated harness is not active', () => {
-		const mode = resolveE2eHarnessMode({ARROXY_E2E_YTDLP_PLUGIN_DIR: '/tmp/anything'}, {isPackaged: false})
+		const mode = resolveE2eHarnessMode({ARCLIO_E2E_YTDLP_PLUGIN_DIR: '/tmp/anything'}, {isPackaged: false})
 
 		expect(mode.enabled).toBe(false)
 		expect(mode.disableAnalytics).toBe(false)
@@ -37,23 +37,23 @@ describe('resolveE2eHarnessMode', () => {
 	})
 
 	it('does not enable in packaged builds unless the explicit harness override is set', () => {
-		expect(resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: '/tmp/anything'}, {isPackaged: true}).enabled).toBe(false)
-		expect(resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_ENABLE_E2E_HARNESS: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: makePluginRoot()}, {isPackaged: true}).enabled).toBe(true)
+		expect(resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: '/tmp/anything'}, {isPackaged: true}).enabled).toBe(false)
+		expect(resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_ENABLE_E2E_HARNESS: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: makePluginRoot()}, {isPackaged: true}).enabled).toBe(true)
 	})
 
 	it('requires an absolute plugin root in active E2E mode', () => {
-		expect(() => resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: 'tests/e2e/yt-dlp-plugins'}, {isPackaged: false})).toThrow(/absolute/)
+		expect(() => resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: 'tests/e2e/yt-dlp-plugins'}, {isPackaged: false})).toThrow(/absolute/)
 	})
 
 	it('requires the plugin root to contain yt_dlp_plugins', () => {
-		const root = fs.mkdtempSync(path.join(os.tmpdir(), 'arroxy-e2e-bad-plugin-'))
+		const root = fs.mkdtempSync(path.join(os.tmpdir(), 'arclio-e2e-bad-plugin-'))
 		tempRoots.push(root)
-		expect(() => resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: root}, {isPackaged: false})).toThrow(/yt_dlp_plugins/)
+		expect(() => resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: root}, {isPackaged: false})).toThrow(/yt_dlp_plugins/)
 	})
 
 	it('adds deterministic plugin args and newline only for download runs', () => {
 		const root = makePluginRoot()
-		const mode = resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: root}, {isPackaged: false})
+		const mode = resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: root}, {isPackaged: false})
 		const probeArgs = mode.ytDlpArgs({isProbe: true})
 		const downloadArgs = mode.ytDlpArgs({isProbe: false})
 
@@ -64,7 +64,7 @@ describe('resolveE2eHarnessMode', () => {
 
 	it('centralizes app defaults, network switches, proxy env, and mode policy', () => {
 		const root = makePluginRoot()
-		const mode = resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: root, ARROXY_E2E_DENY_PROXY_URL: 'http://127.0.0.1:1234'}, {isPackaged: false})
+		const mode = resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: root, ARCLIO_E2E_DENY_PROXY_URL: 'http://127.0.0.1:1234'}, {isPackaged: false})
 		const defaults = mode.applyAppSettingsDefaults(defaultAppSettings('/downloads'))
 		const spawnEnv = mode.applySpawnEnv({PATH: '/bin'})
 
@@ -83,8 +83,8 @@ describe('resolveE2eHarnessMode', () => {
 
 	it('keeps clipboard watching disabled in E2E unless explicitly opted in', () => {
 		const root = makePluginRoot()
-		const disabled = resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: root}, {isPackaged: false})
-		const enabled = resolveE2eHarnessMode({ARROXY_E2E: '1', ARROXY_E2E_ENABLE_CLIPBOARD_WATCH: '1', ARROXY_E2E_YTDLP_PLUGIN_DIR: root}, {isPackaged: false})
+		const disabled = resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: root}, {isPackaged: false})
+		const enabled = resolveE2eHarnessMode({ARCLIO_E2E: '1', ARCLIO_E2E_ENABLE_CLIPBOARD_WATCH: '1', ARCLIO_E2E_YTDLP_PLUGIN_DIR: root}, {isPackaged: false})
 
 		expect(disabled.applyAppSettingsDefaults(defaultAppSettings('/downloads')).common.clipboardWatchEnabled).toBe(false)
 		expect(enabled.allowClipboardWatch).toBe(true)

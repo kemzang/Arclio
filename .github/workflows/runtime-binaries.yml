@@ -35,4 +35,4 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Generate and smoke current host manifest
-        run: bun scripts/build/runtimeBinaryManifest.ts generate --out dist/runtime-binaries/runtime-index-v1.json --cache-root "$RUNNER_TEMP/arroxy-runtime-binary-manifest" --validate
+        run: bun scripts/build/runtimeBinaryManifest.ts generate --out dist/runtime-binaries/runtime-index-v1.json --cache-root "$RUNNER_TEMP/arclio-runtime-binary-manifest" --validate

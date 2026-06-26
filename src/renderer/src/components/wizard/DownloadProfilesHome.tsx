@@ -34,7 +34,7 @@ import downloadingImg from '../../assets/Downloading.png'
 type ProfilesTab = 'download' | 'queue' | 'profiles' | 'settings'
 const PROFILE_TABS = ['download', 'queue', 'profiles', 'settings'] as const satisfies readonly ProfilesTab[]
 const DownloadProfileEditor = lazy(() => import('./DownloadProfileEditor.js').then(module => ({default: module.DownloadProfileEditor})))
-const QUEUE_TAB_TIP_STORAGE_KEY = 'arroxy_seen_queue_tab_tip'
+const QUEUE_TAB_TIP_STORAGE_KEY = 'arclio_seen_queue_tab_tip'
 const QUEUE_TAB_TIP_VISIBLE_MS = 5_000
 
 function tabFromHash(hash = window.location.hash): ProfilesTab {
@@ -162,7 +162,7 @@ function downloadMascotHelp({activeProfileName, hasActiveDownloads, hasInput, in
 	}
 
 	if (inputType === 'Mixed URL') {
-		return {key: 'mixed', title: 'Mixed URL', body: 'This link points at one video inside a collection. Arroxy will ask which one you want before probing.', points: ['Choose video or collection', 'No silent playlist choice'], image: hiImg}
+		return {key: 'mixed', title: 'Mixed URL', body: 'This link points at one video inside a collection. Arclio will ask which one you want before probing.', points: ['Choose video or collection', 'No silent playlist choice'], image: hiImg}
 	}
 
 	if (inputType === 'Single URL') {

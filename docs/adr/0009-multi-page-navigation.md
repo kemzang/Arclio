@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Arroxy is a single-page wizard with no router. Navigation is state-driven via Zustand (`wizardStep`). This works for a download-focused app but doesn't support multiple distinct pages (Library, Collections, Player, etc.).
+Arclio is a single-page wizard with no router. Navigation is state-driven via Zustand (`wizardStep`). This works for a download-focused app but doesn't support multiple distinct pages (Library, Collections, Player, etc.).
 
 Arclio needs:
 - Persistent sidebar navigation
@@ -22,7 +22,7 @@ Introduce **react-router v7**. Sidebar navigation replaces the tab strip. Existi
 
 | Path | Page | Description |
 |------|------|-------------|
-| `/` | Home | Wizard landing (existing Arroxy flow, unchanged) |
+| `/` | Home | Wizard landing (existing Arclio flow, unchanged) |
 | `/library` | Library | Grid/list view of all media |
 | `/library/:id` | Player | Single media playback |
 | `/collections` | Collections | Collection list |

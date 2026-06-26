@@ -52,7 +52,7 @@ async function sourceAnalyticsEventNames(): Promise<string[]> {
 
 beforeEach(() => {
 	vi.clearAllMocks()
-	delete process.env.ARROXY_ANALYTICS_DEBUG
+	delete process.env.ARCLIO_ANALYTICS_DEBUG
 })
 
 describe('allowlist validation', () => {
@@ -189,7 +189,7 @@ describe('identify + global properties', () => {
 				model_name: 'Intel(R) Core(TM) i7-12700H',
 				os_locale: 'en-US',
 				app_locale: 'es',
-				sdk_client_version: 'arroxy/1.2.3'
+				sdk_client_version: 'arclio/1.2.3'
 			})
 		})
 		expect(setGlobalPropertiesMock).toHaveBeenCalledTimes(1)
@@ -244,8 +244,8 @@ describe('dev-mode debug opt-in', () => {
 		expect(ctorMock).not.toHaveBeenCalled()
 	})
 
-	it('initializes OpenPanel in dev when ARROXY_ANALYTICS_DEBUG=1', () => {
-		process.env.ARROXY_ANALYTICS_DEBUG = '1'
+	it('initializes OpenPanel in dev when ARCLIO_ANALYTICS_DEBUG=1', () => {
+		process.env.ARCLIO_ANALYTICS_DEBUG = '1'
 		setupAnalytics('client-id', 'client-secret', true, 'install-id-test')
 		expect(ctorMock).toHaveBeenCalledTimes(1)
 		const opts = ctorMock.mock.calls[0][0]
@@ -254,7 +254,7 @@ describe('dev-mode debug opt-in', () => {
 	})
 
 	it('still skips when no credentials, even with debug flag', () => {
-		process.env.ARROXY_ANALYTICS_DEBUG = '1'
+		process.env.ARCLIO_ANALYTICS_DEBUG = '1'
 		setupAnalytics(undefined, undefined, true, 'install-id-test')
 		expect(ctorMock).not.toHaveBeenCalled()
 	})

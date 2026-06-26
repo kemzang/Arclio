@@ -54,8 +54,8 @@ sudo apt install -y xvfb
 ### 克隆并运行
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # 推荐；如果已手动启用固定版本工具，可跳过
 bun run bootstrap
 bun run doctor
@@ -70,14 +70,14 @@ bun run dist         # 为当前系统打包
 bun run dist:win     # 在受支持的主机上打包 Windows 目标
 \`\`\`
 
-> \`bun run bootstrap\` 会安装依赖、重建 Electron 应用依赖、验证 Electron、为开发准备嵌入式 ffmpeg/ffprobe，并安装 Playwright Chromium。yt-dlp 在运行时由应用数据目录管理；ffmpeg 和 ffprobe 随每个 Arroxy 版本一起提供。
+> \`bun run bootstrap\` 会安装依赖、重建 Electron 应用依赖、验证 Electron、为开发准备嵌入式 ffmpeg/ffprobe，并安装 Playwright Chromium。yt-dlp 在运行时由应用数据目录管理；ffmpeg 和 ffprobe 随每个 Arclio 版本一起提供。
 
 </details>`;
 
 export const zh = {
-  icon_alt: "Arroxy 吉祥物",
+  icon_alt: "Arclio 吉祥物",
   title:
-    "Arroxy — 免费开源 YouTube（+ 2000 个网站）下载器，支持 Windows、macOS 和 Linux",
+    "Arclio — 免费开源 YouTube（+ 2000 个网站）下载器，支持 Windows、macOS 和 Linux",
   read_in_label: "阅读语言：",
   badge_release_alt: "发布",
   badge_build_alt: "构建",
@@ -91,12 +91,12 @@ export const zh = {
     "从 **YouTube 和 2000+ 个支持的网站**下载视频、Shorts、音乐、频道、播客或音轨 — 最高 4K HDR 60 fps，或导出为 MP3 / AAC / Opus。在 Windows、macOS 和 Linux 本地运行。**无广告、无冗余、无追加销售。**",
   cta_latest: "↓ 下载最新版本",
   cta_website: "官网",
-  demo_alt: "Arroxy 演示",
-  star_cta: "如果 Arroxy 帮你节省了时间，点个 ⭐ 让更多人发现它。",
+  demo_alt: "Arclio 演示",
+  star_cta: "如果 Arclio 帮你节省了时间，点个 ⭐ 让更多人发现它。",
   ai_notice:
     "> 🌐 这是 AI 辅助翻译。[英文 README](README.md) 是真实来源。发现错误？欢迎 [提交 PR](../../pulls)。",
   toc_heading: "目录",
-  why_h2: "为什么选 Arroxy",
+  why_h2: "为什么选 Arclio",
   features_h2: "功能特性",
   dl_h2: "下载",
   privacy_h2: "隐私",
@@ -112,7 +112,7 @@ export const zh = {
   why_r6: "跨平台桌面应用",
   why_r7: "字幕 + SponsorBlock",
   why_summary:
-    "Arroxy 只做一件事：粘贴链接，获取干净的本地文件。无账号、无追加销售、无数据收集。",
+    "Arclio 只做一件事：粘贴链接，获取干净的本地文件。无账号、无追加销售、无数据收集。",
   feat_quality_h3: "画质与格式",
   feat_quality_1: "最高 **4K UHD（2160p）**、1440p、1080p、720p、480p、360p",
   feat_quality_2: "**高帧率**原样保留 — 60 fps、120 fps、HDR",
@@ -129,7 +129,7 @@ export const zh = {
   feat_workflow_2:
     "**中央下载队列** — 单个、播放列表、批量或快速任务都会进入同一个地方，用于查看进度、暂停、继续、取消、重试和控制优先级",
   feat_workflow_3:
-    "**剪贴板监控** — 复制 YouTube 链接后切回应用，Arroxy 自动填入 URL（可在高级设置中切换）",
+    "**剪贴板监控** — 复制 YouTube 链接后切回应用，Arclio 自动填入 URL（可在高级设置中切换）",
   feat_workflow_4:
     "**自动清理 URL** — 剥除跟踪参数（`si`、`pp`、`utm_*`、`fbclid`、`gclid`）并解包 `youtube.com/redirect` 跳转链接",
   feat_workflow_5: "**托盘模式** — 关闭窗口后下载在后台继续运行",
@@ -153,7 +153,7 @@ export const zh = {
     "**通过 yt-dlp 支持 2000+ 个其他网站** — Vimeo、Twitch、Twitter/X、TikTok、SoundCloud、Bandcamp、Bilibili、BBC iPlayer、archive.org 等众多网站",
   feat_sites_3: "**仅音频和字幕**在所有支持的网站上均可使用，不限于 YouTube",
   feat_sites_4:
-    "若某个网站发生变化，yt-dlp 每周发布修复，Arroxy 在启动时自动更新二进制文件",
+    "若某个网站发生变化，yt-dlp 每周发布修复，Arclio 在启动时自动更新二进制文件",
   shot1_cap: "<b>快速下载主页</b><br/>粘贴网址，用当前配置一键下载",
   shot2_cap:
     "<b>可复用的下载配置</b><br/>将格式、画质和输出保存为预设——每次下载复用",
@@ -189,22 +189,22 @@ export const zh = {
     "**建议：** 使用 NSIS 安装版以获得自动更新和更快的启动速度。使用便携版 `.exe` 实现免安装、不写注册表。",
   dl_win_smartscreen_h4: "Windows SmartScreen 警告",
   dl_win_smartscreen_intro:
-    "首次启动时，您可能会看到 **«Windows protected your PC»** 或 **«Unknown publisher»**。这适用于 `Arroxy-win-x64-Setup.exe` 和 `Arroxy-win-x64-Portable.exe`。Arroxy 是免费开源软件，Windows 版本未使用付费证书签名，这正是 SmartScreen 标记它们的原因。这**不**代表 Arroxy 自动就是不安全的。要继续操作：",
+    "首次启动时，您可能会看到 **«Windows protected your PC»** 或 **«Unknown publisher»**。这适用于 `Arclio-win-x64-Setup.exe` 和 `Arclio-win-x64-Portable.exe`。Arclio 是免费开源软件，Windows 版本未使用付费证书签名，这正是 SmartScreen 标记它们的原因。这**不**代表 Arclio 自动就是不安全的。要继续操作：",
   dl_win_smartscreen_step1: "点击 **More info**。",
   dl_win_smartscreen_step2: "点击 **Run anyway**。",
   dl_win_smartscreen_official:
-    "请仅从官方 GitHub Releases 页面下载 Arroxy。如果您从其他网站获取了该文件，或有人发送给您，请删除它并从官方来源重新下载。源代码是公开的，如果您愿意，可以自行审查或编译 Arroxy。",
+    "请仅从官方 GitHub Releases 页面下载 Arclio。如果您从其他网站获取了该文件，或有人发送给您，请删除它并从官方来源重新下载。源代码是公开的，如果您愿意，可以自行审查或编译 Arclio。",
   dl_macos_h3: "macOS 首次启动",
   dl_macos_warning:
-    "Arroxy 尚未代码签名，因此 macOS Gatekeeper 会在首次启动时发出警告。这是预期行为 — 并不表示文件损坏。",
+    "Arclio 尚未代码签名，因此 macOS Gatekeeper 会在首次启动时发出警告。这是预期行为 — 并不表示文件损坏。",
   dl_macos_m1_h4: "系统设置方式（推荐）：",
-  dl_macos_step1: "右键点击 Arroxy 应用图标，选择 **打开**。",
+  dl_macos_step1: "右键点击 Arclio 应用图标，选择 **打开**。",
   dl_macos_step2: "出现警告对话框 — 点击 **取消**（不要点击*移到废纸篓*）。",
   dl_macos_step3: "打开 **系统设置 → 隐私与安全性**。",
   dl_macos_step4:
-    '滚动到 **安全性** 部分。你会看到 *"Arroxy 已被阻止使用，因为它不是由可识别的开发者提供的。"*',
+    '滚动到 **安全性** 部分。你会看到 *"Arclio 已被阻止使用，因为它不是由可识别的开发者提供的。"*',
   dl_macos_step5: "点击 **仍然打开**，然后用密码或 Touch ID 确认。",
-  dl_macos_after: "完成第 5 步后，Arroxy 正常打开，以后不再显示此警告。",
+  dl_macos_after: "完成第 5 步后，Arclio 正常打开，以后不再显示此警告。",
   dl_macos_m2_h4: "终端方式（高级）：",
   dl_macos_note:
     "macOS 构建通过 CI 在 Apple Silicon 和 Intel runner 上生成。如遇问题，请 [提交 issue](../../issues) — macOS 用户的反馈会直接影响 macOS 测试周期。",
@@ -215,14 +215,14 @@ export const zh = {
   dl_linux_m2_h4: "终端：",
   dl_linux_fuse_text: "如果仍无法启动，可能缺少 FUSE：",
   dl_linux_flatpak_intro:
-    "**Flatpak（沙箱版）：** 从同一发布页下载 `Arroxy-*.flatpak`。",
+    "**Flatpak（沙箱版）：** 从同一发布页下载 `Arclio-*.flatpak`。",
 
   // ---- Reorganized install help (normie-first, manual-download primary) ----
   dl_warning_h3: "为什么可能会看到警告",
   dl_warning_p1:
-    "Arroxy 是开源软件，采用 MIT 许可证。Windows 和 macOS 版本**未经代码签名** — Apple Developer ID 和 Windows EV 代码签名证书每年各需数百美元，对于独立项目来说完全自掏腰包。没有这些签名，Windows SmartScreen 和 macOS Gatekeeper 在首次启动时会向你发出警告。这些警告的意思是*你的系统不认识该发布者* — 并不意味着 Arroxy 是恶意软件。",
+    "Arclio 是开源软件，采用 MIT 许可证。Windows 和 macOS 版本**未经代码签名** — Apple Developer ID 和 Windows EV 代码签名证书每年各需数百美元，对于独立项目来说完全自掏腰包。没有这些签名，Windows SmartScreen 和 macOS Gatekeeper 在首次启动时会向你发出警告。这些警告的意思是*你的系统不认识该发布者* — 并不意味着 Arclio 是恶意软件。",
   dl_warning_p2:
-    "三种自行验证 Arroxy 的方式，按严格程度递增：\n\n- **查看源码。** 每一行都在 [GitHub](https://github.com/antonio-orionus/Arroxy) 上，你也可以[从源码构建](#tech)。\n- **校验 SHA256。** 将你的文件与发布的 [`SHA256SUMS`](../../releases/latest) 对比 — 见下方[验证你的下载](#verify)。\n- **运行第三方扫描。** 将文件上传至 [VirusTotal](https://www.virustotal.com)。",
+    "三种自行验证 Arclio 的方式，按严格程度递增：\n\n- **查看源码。** 每一行都在 [GitHub](https://github.com/antonio-orionus/Arclio) 上，你也可以[从源码构建](#tech)。\n- **校验 SHA256。** 将你的文件与发布的 [`SHA256SUMS`](../../releases/latest) 对比 — 见下方[验证你的下载](#verify)。\n- **运行第三方扫描。** 将文件上传至 [VirusTotal](https://www.virustotal.com)。",
 
   dl_win_first_h3: "Windows 首次启动",
   shot_smartscreen_more_alt:
@@ -231,31 +231,31 @@ export const zh = {
     'SmartScreen dialog after expanding More info, showing the "Run anyway" button',
   dl_win_defender_h4: "如果 Windows Defender 标记或删除了文件",
   dl_win_defender_p:
-    "Defender 启发式规则有时会将未签名的 NSIS 安装包和 Electron 便携版标记为可疑。如果 Defender 隔离了 `Arroxy-win-x64-Setup.exe` 或 `Arroxy-win-x64-Portable.exe`，请从 **Windows Security → Virus & threat protection → Protection history** 还原，然后在 **Manage settings → Add or remove exclusions** 中将 Arroxy 可执行文件添加为允许项。与 SmartScreen 一样，触发原因是缺少发布者签名，而非检测到恶意软件。",
+    "Defender 启发式规则有时会将未签名的 NSIS 安装包和 Electron 便携版标记为可疑。如果 Defender 隔离了 `Arclio-win-x64-Setup.exe` 或 `Arclio-win-x64-Portable.exe`，请从 **Windows Security → Virus & threat protection → Protection history** 还原，然后在 **Manage settings → Add or remove exclusions** 中将 Arclio 可执行文件添加为允许项。与 SmartScreen 一样，触发原因是缺少发布者签名，而非检测到恶意软件。",
 
   dl_macos_first_h3: "macOS 首次启动",
   dl_macos_intro:
-    "Arroxy 尚未为 macOS 进行代码签名，因此 Gatekeeper 会阻止首次启动。具体的解除方式取决于你的 macOS 版本 — Sequoia 15 收紧了旧的右键 → 打开绕过方式。",
+    "Arclio 尚未为 macOS 进行代码签名，因此 Gatekeeper 会阻止首次启动。具体的解除方式取决于你的 macOS 版本 — Sequoia 15 收紧了旧的右键 → 打开绕过方式。",
   dl_macos_sequoia_h4: "macOS Sequoia 15 及更高版本（当前）",
   dl_macos_sequoia_intro:
     "在 Sequoia 15 及更新版本中，右键 → 打开对许多被隔离的应用不再能绕过 Gatekeeper。请改用系统设置面板：",
-  dl_macos_sequoia_step1: "将 `Arroxy.app` 从挂载的 DMG 拖入 `/Applications`。",
+  dl_macos_sequoia_step1: "将 `Arclio.app` 从挂载的 DMG 拖入 `/Applications`。",
   dl_macos_sequoia_step2:
-    "双击 Arroxy，出现阻止对话框 — 点击 **Done**（不要点击 *Move to Trash*）。",
+    "双击 Arclio，出现阻止对话框 — 点击 **Done**（不要点击 *Move to Trash*）。",
   dl_macos_sequoia_step3:
-    '打开 **System Settings → Privacy & Security**，滚动到 **Security** 部分。你会看到 *"Arroxy was blocked to protect your Mac"*（或类似提示）。',
+    '打开 **System Settings → Privacy & Security**，滚动到 **Security** 部分。你会看到 *"Arclio was blocked to protect your Mac"*（或类似提示）。',
   dl_macos_sequoia_step4:
-    "点击 **Open Anyway**，用密码或 Touch ID 确认，然后从 `/Applications` 重新启动 Arroxy。",
+    "点击 **Open Anyway**，用密码或 Touch ID 确认，然后从 `/Applications` 重新启动 Arclio。",
   dl_macos_sonoma_h4: "macOS Sonoma 14 及更早版本",
-  dl_macos_sonoma_step1: "将 `Arroxy.app` 从挂载的 DMG 拖入 `/Applications`。",
+  dl_macos_sonoma_step1: "将 `Arclio.app` 从挂载的 DMG 拖入 `/Applications`。",
   dl_macos_sonoma_step2:
-    "在 `/Applications` 中右键（或 Control-单击）`Arroxy.app`，选择 **Open**。",
+    "在 `/Applications` 中右键（或 Control-单击）`Arclio.app`，选择 **Open**。",
   dl_macos_sonoma_step3:
-    "警告对话框现在有 **Open** 按钮 — 点击它并确认。Arroxy 正常打开，此后警告不再出现。",
+    "警告对话框现在有 **Open** 按钮 — 点击它并确认。Arclio 正常打开，此后警告不再出现。",
   dl_macos_damaged_h4:
     '"App is damaged" 或持续的 Gatekeeper 拦截 — Terminal 修复方法',
   dl_macos_damaged_p:
-    '如果 macOS 显示 *"Arroxy is damaged and can\'t be opened"*，或以上步骤均无法解除拦截，原因是 DMG 上的隔离属性（某些浏览器和 macOS 自身的文件位置转换机制会设置该属性）。从已安装的应用中清除该属性：',
+    '如果 macOS 显示 *"Arclio is damaged and can\'t be opened"*，或以上步骤均无法解除拦截，原因是 DMG 上的隔离属性（某些浏览器和 macOS 自身的文件位置转换机制会设置该属性）。从已安装的应用中清除该属性：',
   dl_macos_arch_note:
     "**Apple Silicon vs Intel：** 在搭载 M 系列芯片（M1 / M2 / M3 / M4）的 Mac 上，请下载 `arm64` DMG。在 Intel Mac 上，请下载 `x64` DMG。运行错误版本仍可通过 Rosetta 启动，但速度会明显变慢。",
 
@@ -277,7 +277,7 @@ export const zh = {
   privacy_p1:
     "下载通过 [yt-dlp](https://github.com/yt-dlp/yt-dlp) 直接从 YouTube 获取到你选择的文件夹 — 不经过任何第三方服务器。观看历史、下载历史、URL 和文件内容均保留在你的设备上。",
   privacy_p2:
-    "Arroxy 通过 [OpenPanel](https://openpanel.dev) 发送匿名聚合遥测数据 — 仅用于了解启动次数、OS、应用版本和崩溃。无 URL、无视频标题、无文件路径、无账号信息、无指纹识别、无个人数据。每次安装的 ID 是随机的，不与你的身份绑定。你可以在设置中选择退出。",
+    "Arclio 通过 [OpenPanel](https://openpanel.dev) 发送匿名聚合遥测数据 — 仅用于了解启动次数、OS、应用版本和崩溃。无 URL、无视频标题、无文件路径、无账号信息、无指纹识别、无个人数据。每次安装的 ID 是随机的，不与你的身份绑定。你可以在设置中选择退出。",
   faq_q1: "真的免费吗？",
   faq_a1: "是的 — MIT 许可证，无付费版，无功能门槛。",
   faq_q2: "能下载哪些视频画质？",
@@ -288,13 +288,13 @@ export const zh = {
     "可以。在格式菜单里选择*仅音频*，然后选择 MP3、M4A/AAC、Opus 或 WAV。",
   faq_q4: "需要 YouTube 账号或 Cookie 吗？",
   faq_a4:
-    "默认不需要 — Arroxy 无需 YouTube 账号、登录或导出 Cookie 即可工作。对于需要身份验证的内容（例如年龄限制或仅会员可见的视频），高级设置中提供可选的 Cookie 支持（Cookies source: file or browser）。该选项默认关闭。如果你启用它，yt-dlp 的 wiki 指出[基于 Cookie 的自动化可能会标记 Google 账号](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)；这种情况下使用一次性账号是更安全的选择。",
+    "默认不需要 — Arclio 无需 YouTube 账号、登录或导出 Cookie 即可工作。对于需要身份验证的内容（例如年龄限制或仅会员可见的视频），高级设置中提供可选的 Cookie 支持（Cookies source: file or browser）。该选项默认关闭。如果你启用它，yt-dlp 的 wiki 指出[基于 Cookie 的自动化可能会标记 Google 账号](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)；这种情况下使用一次性账号是更安全的选择。",
   faq_q5: "YouTube 更新后还能继续使用吗？",
   faq_a5:
-    "yt-dlp 在启动时自动更新，YouTube 一旦发生变化，Arroxy 会及时发布修复。如果你确实遇到问题，高级设置中提供可选的 Cookie 支持作为后备方案。",
-  faq_q6: "Arroxy 支持哪些语言？",
+    "yt-dlp 在启动时自动更新，YouTube 一旦发生变化，Arclio 会及时发布修复。如果你确实遇到问题，高级设置中提供可选的 Cookie 支持作为后备方案。",
+  faq_q6: "Arclio 支持哪些语言？",
   faq_a6:
-    "开箱即用支持二十一种：English、Español（西班牙语）、Deutsch（德语）、Français（法语）、日本語（日语）、中文、Русский（俄语）、Українська（乌克兰语）、हिन्दी（印地语）、Afaan Oromoo、Kiswahili、O'zbekcha（乌兹别克语）、Tiếng Việt（越南语）、አማርኛ（阿姆哈拉语）、العربية（阿拉伯语）、اردو（乌尔都语）、پښتو（普什图语）、বাংলা（孟加拉语）、မြန်မာဘာသာ（缅甸语）、Ελληνικά（希腊语）和 Српски（塞尔维亚语）。Arroxy 在首次启动时自动检测系统语言，随时可在工具栏的语言选择器中切换。运行时语言 JSON 位于 src/shared/i18n/locales/，面向译者的 PO 目录位于 i18n/locales/ — 可在 GitHub 上发 PR 贡献。",
+    "开箱即用支持二十一种：English、Español（西班牙语）、Deutsch（德语）、Français（法语）、日本語（日语）、中文、Русский（俄语）、Українська（乌克兰语）、हिन्दी（印地语）、Afaan Oromoo、Kiswahili、O'zbekcha（乌兹别克语）、Tiếng Việt（越南语）、አማርኛ（阿姆哈拉语）、العربية（阿拉伯语）、اردو（乌尔都语）、پښتو（普什图语）、বাংলা（孟加拉语）、မြန်မာဘာသာ（缅甸语）、Ελληνικά（希腊语）和 Српски（塞尔维亚语）。Arclio 在首次启动时自动检测系统语言，随时可在工具栏的语言选择器中切换。运行时语言 JSON 位于 src/shared/i18n/locales/，面向译者的 PO 目录位于 i18n/locales/ — 可在 GitHub 上发 PR 贡献。",
   faq_q7: "需要额外安装其他软件吗？",
   faq_a7:
     "不需要。yt-dlp 会在首次启动时自动下载并缓存到你的机器上；ffmpeg 和 ffprobe 随应用一起提供。之后无需任何额外配置。",
@@ -317,7 +317,7 @@ export const zh = {
     "当 YouTube 提供多个音轨时，设置全应用默认口语音轨，并允许每个配置单独覆盖",
   plan_r6_name: "**应用内浏览器登录**",
   plan_r6_desc:
-    "在 Arroxy 内打开浏览器窗口，登录并使用站点 cookies，无需手动导出",
+    "在 Arclio 内打开浏览器窗口，登录并使用站点 cookies，无需手动导出",
   plan_r8_name: "**一键视频下载**",
   plan_r8_desc: "使用当前配置，从检测到或粘贴的 URL 一键开始视频下载",
   plan_r3_name: "**更强的重试恢复**",
@@ -332,7 +332,7 @@ export const zh = {
   tech_content: TECH_CONTENT,
   tos_h2: "使用条款",
   tos_note:
-    "Arroxy 仅供个人私人使用。你需要自行确保下载行为符合 YouTube 的[服务条款](https://www.youtube.com/t/terms)及你所在地区的版权法律。请勿使用 Arroxy 下载、复制或分发你不享有权利的内容。开发者对任何滥用行为不承担责任。",
+    "Arclio 仅供个人私人使用。你需要自行确保下载行为符合 YouTube 的[服务条款](https://www.youtube.com/t/terms)及你所在地区的版权法律。请勿使用 Arclio 下载、复制或分发你不享有权利的内容。开发者对任何滥用行为不承担责任。",
   footer_credit:
     'MIT 许可证 · 由 <a href="https://x.com/OrionusAI">@OrionusAI</a> 用心打造',
 };

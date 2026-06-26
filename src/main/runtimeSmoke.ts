@@ -9,7 +9,7 @@ const RED = '\x1b[31m'
 const RESET = '\x1b[0m'
 const RUNTIME_SMOKE_TIMEOUT_MS = 60_000
 
-export const RUNTIME_SMOKE_RESULT_PREFIX = 'ARROXY_RUNTIME_SMOKE_RESULT '
+export const RUNTIME_SMOKE_RESULT_PREFIX = 'ARCLIO_RUNTIME_SMOKE_RESULT '
 
 export interface YtDlpVerboseRuntimeSummary {
 	hasNodeRuntime: boolean
@@ -121,7 +121,7 @@ function spawnText(file: string, args: string[], opts: {env: NodeJS.ProcessEnv; 
 }
 
 export function readRuntimeSmokeEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
-	return env.ARROXY_RUNTIME_SMOKE === '1'
+	return env.ARCLIO_RUNTIME_SMOKE === '1'
 }
 
 export function summarizeYtDlpVerboseRuntime(text: string): YtDlpVerboseRuntimeSummary {

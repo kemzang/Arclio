@@ -10,7 +10,7 @@ test('Electron queue controls handle hold, priority, cancel, pause queue, and re
 	test.setTimeout(180_000)
 	const [firstId, secondId, thirdId] = FIXTURE_VIDEO_IDS
 
-	await withFixtureProductApp({behavior: {mediaSlowIds: [firstId, secondId, thirdId]}, userDataPrefix: 'arroxy-fixture-controls-user-', outputPrefix: 'arroxy-fixture-controls-out-'}, async ({app, page, urls, queue, files}) => {
+	await withFixtureProductApp({behavior: {mediaSlowIds: [firstId, secondId, thirdId]}, userDataPrefix: 'arclio-fixture-controls-user-', outputPrefix: 'arclio-fixture-controls-out-'}, async ({app, page, urls, queue, files}) => {
 		await startBulkFromClipboard(page, app, [firstId, secondId, thirdId].map(urls.video).join('\n'))
 		await expect(page.locator('[data-testid="bulk-url-valid-count"]')).toContainText('3')
 		await page.locator('[data-testid="bulk-url-confirm"]').click()
@@ -53,7 +53,7 @@ test('Electron metadata failure surfaces retry and recovers', async () => {
 	test.setTimeout(120_000)
 	const videoId = FIXTURE_VIDEO_IDS[3]
 
-	await withFixtureProductApp({behavior: {metadataFailureIds: [videoId]}, userDataPrefix: 'arroxy-fixture-metadata-retry-user-', outputPrefix: 'arroxy-fixture-metadata-retry-out-'}, async ({page, fixtureServer, urls}) => {
+	await withFixtureProductApp({behavior: {metadataFailureIds: [videoId]}, userDataPrefix: 'arclio-fixture-metadata-retry-user-', outputPrefix: 'arclio-fixture-metadata-retry-out-'}, async ({page, fixtureServer, urls}) => {
 		await page.locator('[data-testid="profiles-main-input"]').fill(urls.video(videoId))
 		await page.locator('[data-testid="profiles-interactive-download"]').click()
 		await expect(page.locator('[data-testid="step-error"]')).toBeVisible({timeout: 60_000})
@@ -73,7 +73,7 @@ test('Electron media failure can be retried to a completed output file', async (
 	test.setTimeout(160_000)
 	const videoId = FIXTURE_VIDEO_IDS[4]
 
-	await withFixtureProductApp({behavior: {mediaFailureIds: [videoId]}, userDataPrefix: 'arroxy-fixture-media-retry-user-', outputPrefix: 'arroxy-fixture-media-retry-out-'}, async ({page, fixtureServer, queue, files}) => {
+	await withFixtureProductApp({behavior: {mediaFailureIds: [videoId]}, userDataPrefix: 'arclio-fixture-media-retry-user-', outputPrefix: 'arclio-fixture-media-retry-out-'}, async ({page, fixtureServer, queue, files}) => {
 		await prepareSingleConfirm(page, videoId)
 		await page.locator('[data-testid="btn-download-now"]').click()
 		await queue.expectStatus('Fixture Video 5', 'error', 90_000)
@@ -95,7 +95,7 @@ test('Electron split media failure preserves temp artifacts and retries from res
 	const videoId = SPLIT_MEDIA_VIDEO_ID
 	const title = 'Fixture Video 11'
 
-	await withFixtureProductApp({behavior: {mediaFormatTruncateIds: [`${videoId}:140`]}, userDataPrefix: 'arroxy-fixture-split-resume-user-', outputPrefix: 'arroxy-fixture-split-resume-out-'}, async ({page, fixtureServer, queue, files}) => {
+	await withFixtureProductApp({behavior: {mediaFormatTruncateIds: [`${videoId}:140`]}, userDataPrefix: 'arclio-fixture-split-resume-user-', outputPrefix: 'arclio-fixture-split-resume-out-'}, async ({page, fixtureServer, queue, files}) => {
 		await prepareSingleConfirm(page, videoId)
 		await page.locator('[data-testid="btn-download-now"]').click()
 		await queue.expectStatus(title, 'error', 120_000)
@@ -137,8 +137,8 @@ test('Electron sidecar subtitle failure completes the video with a subtitle warn
 	await withFixtureProductApp(
 		{
 			behavior: {subtitleFailureIds: [videoId]},
-			userDataPrefix: 'arroxy-fixture-subtitle-soft-user-',
-			outputPrefix: 'arroxy-fixture-subtitle-soft-out-',
+			userDataPrefix: 'arclio-fixture-subtitle-soft-user-',
+			outputPrefix: 'arclio-fixture-subtitle-soft-out-',
 			settings: settings => {
 				settings.single.lastSubtitleLanguages = ['en']
 				settings.single.lastSubtitleMode = 'sidecar'
@@ -162,7 +162,7 @@ test('Electron paused active fixture download resumes after app relaunch', async
 	test.setTimeout(180_000)
 	const videoId = FIXTURE_VIDEO_IDS[6]
 
-	await withFixtureProductApp({behavior: {mediaSlowIds: [videoId]}, userDataPrefix: 'arroxy-fixture-restart-user-', outputPrefix: 'arroxy-fixture-restart-out-'}, async ({page, queue, files, relaunch}) => {
+	await withFixtureProductApp({behavior: {mediaSlowIds: [videoId]}, userDataPrefix: 'arclio-fixture-restart-user-', outputPrefix: 'arclio-fixture-restart-out-'}, async ({page, queue, files, relaunch}) => {
 		await prepareSingleConfirm(page, videoId)
 		await page.locator('[data-testid="btn-download-now"]').click()
 		await queue.expectStatus('Fixture Video 7', 'running', 60_000)

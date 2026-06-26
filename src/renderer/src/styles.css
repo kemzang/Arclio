@@ -32,14 +32,14 @@
 	--text-label--font-weight: 700;
 	--text-caption: 0.6875rem;
 	--text-caption--line-height: 1.3;
-	/* Primary brand color: Arroxi Blue — the One Voice, identical in both skies */
-	--brand: hsl(220, 100%, 56%);
-	--brand-dim: hsl(220 100% 56% / 0.12);
-	--brand-hover: hsl(220, 100%, 65%);
-	--icon-tile-ink: hsl(220 100% 94%);
+	/* Primary brand color: Arclio Purple — the One Voice, identical in both skies */
+	--brand: hsl(265, 89%, 60%);
+	--brand-dim: hsl(265 89% 60% / 0.12);
+	--brand-hover: hsl(265, 89%, 65%);
+	--icon-tile-ink: hsl(265 89% 94%);
 	--text-glass-muted: hsl(229 36% 78%);
 	/* --brand-glow and --glow-border are mode-aware; defined per sky in :root / .dark */
-	/* Status colors from Arroxi brand palette */
+	/* Status colors from Arclio brand palette */
 	--color-status-done: hsl(153, 74%, 45%);
 	--color-status-done-glow: hsl(153 74% 45% / 0.05);
 	--color-status-paused: hsl(40, 100%, 63%);
@@ -1217,12 +1217,12 @@ body {
 	--glass-cyan: hsl(198 100% 62% / 0.26);
 	--glass-violet: hsl(266 88% 66% / 0.18);
 	--glass-sheen: hsl(0 0% 100% / 0.9);
-	--glow-border: hsl(210 100% 55% / 0.44);
+	--glow-border: hsl(265 89% 60% / 0.44);
 	/* Lighter edge gradient over the field — same hue arc, lower alpha */
-	--glow-gradient: linear-gradient(135deg, hsl(198 100% 58% / 0.68), hsl(220 100% 56% / 0.26) 48%, hsl(266 85% 62% / 0.54));
-	--glow-gradient-hot: linear-gradient(120deg, hsl(198 100% 56% / 0.86), hsl(220 100% 56% / 0.52) 50%, hsl(268 88% 60% / 0.72));
-	--inner-bloom: hsl(214 100% 64% / 0.24);
-	--brand-glow: hsl(214 100% 56% / 0.32);
+	--glow-gradient: linear-gradient(135deg, hsl(198 100% 58% / 0.68), hsl(265 89% 60% / 0.26) 48%, hsl(266 85% 62% / 0.54));
+	--glow-gradient-hot: linear-gradient(120deg, hsl(198 100% 56% / 0.86), hsl(265 89% 60% / 0.52) 50%, hsl(268 88% 60% / 0.72));
+	--inner-bloom: hsl(265 89% 60% / 0.24);
+	--brand-glow: hsl(265, 89%, 60%);
 	--splash-progress-track: hsl(220 18% 58% / 0.24);
 	--panel-glow: 0 0 34px -13px hsl(210 100% 56% / 0.34), 0 10px 30px -18px hsl(225 60% 26% / 0.28);
 	--backdrop-accent:
@@ -1356,12 +1356,12 @@ body {
 	--glass-cyan: hsl(196 100% 62% / 0.18);
 	--glass-violet: hsl(270 96% 62% / 0.15);
 	--glass-sheen: hsl(205 100% 84% / 0.2);
-	--glow-border: hsl(200 100% 78% / 0.72);
+	--glow-border: hsl(265 89% 60% / 0.72);
 	/* Neon edge gradient: cyan → blue → violet, painted on border-box */
-	--glow-gradient: linear-gradient(135deg, hsl(192 100% 82% / 0.76), hsl(214 100% 68% / 0.34) 46%, hsl(268 96% 76% / 0.62));
-	--glow-gradient-hot: linear-gradient(120deg, hsl(188 100% 82% / 0.86), hsl(210 100% 70% / 0.62) 48%, hsl(278 98% 76% / 0.78));
-	--inner-bloom: hsl(212 100% 52% / 0.26);
-	--brand-glow: hsl(218 100% 55% / 0.34);
+	--glow-gradient: linear-gradient(135deg, hsl(192 100% 82% / 0.76), hsl(265 89% 60% / 0.34) 46%, hsl(268 96% 76% / 0.62));
+	--glow-gradient-hot: linear-gradient(120deg, hsl(188 100% 82% / 0.86), hsl(265 89% 60% / 0.62) 48%, hsl(278 98% 76% / 0.78));
+	--inner-bloom: hsl(265 89% 60% / 0.26);
+	--brand-glow: hsl(265, 89%, 60%);
 	--splash-progress-track: hsl(0 0% 100% / 0.09);
 	--panel-glow: 0 0 42px -16px hsl(212 100% 54% / 0.36), 0 18px 54px -20px hsl(228 92% 2% / 0.96);
 	--quick-card-ink: hsl(240 40% 96%);

@@ -26,7 +26,7 @@ function changeSingleOutputTarget(host: QueueOutputTargetMoveHost, item: QueueIt
 async function ensureWritableDirectory(outputDir: string): Promise<Result<void>> {
 	try {
 		await mkdir(outputDir, {recursive: true})
-		const probePath = join(outputDir, `.arroxy-write-test-${process.pid}-${randomUUID()}`)
+		const probePath = join(outputDir, `.arclio-write-test-${process.pid}-${randomUUID()}`)
 		await writeFile(probePath, '')
 		await unlink(probePath)
 		return ok(undefined)

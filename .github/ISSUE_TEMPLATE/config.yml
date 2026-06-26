@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Ask a Question
-    url: https://github.com/antonio-orionus/Arroxy/discussions
+    url: https://github.com/antonio-orionus/Arclio/discussions
     about: General questions and community support
   - name: Report a Security Vulnerability
-    url: https://github.com/antonio-orionus/Arroxy/security/advisories/new
+    url: https://github.com/antonio-orionus/Arclio/security/advisories/new
     about: Please report security issues here, not in public issues

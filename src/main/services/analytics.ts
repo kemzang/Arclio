@@ -93,7 +93,7 @@ function buildBrowserishUserAgent(info?: DeviceInfo): string {
 		osPart = `X11; Linux ${linuxArch}`
 	}
 	const appVer = info?.appVersion ?? '0.0.0'
-	return `Mozilla/5.0 (${osPart}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36 Arroxy/${appVer}`
+	return `Mozilla/5.0 (${osPart}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36 Arclio/${appVer}`
 }
 
 function buildDefaultPayload(info: DeviceInfo): Record<string, string> {
@@ -112,7 +112,7 @@ function buildDefaultPayload(info: DeviceInfo): Record<string, string> {
 		model_name: info.modelName.slice(0, 64),
 		os_locale: info.osLocale,
 		app_locale: info.appLocale,
-		sdk_client_version: `arroxy/${info.appVersion}`
+		sdk_client_version: `arclio/${info.appVersion}`
 	}
 }
 
@@ -126,14 +126,14 @@ const _seenCrashSignatures = new Set<string>()
 //
 // In dev we stay fully offline by default — HMR reloads would otherwise spam
 // `wizard_started` / `app_started` and pollute prod stats. Set
-// ARROXY_ANALYTICS_DEBUG=1 to opt in.
+// ARCLIO_ANALYTICS_DEBUG=1 to opt in.
 export function setupAnalytics(clientId: string | undefined, clientSecret: string | undefined, isDev: boolean, installId: string, deviceInfo?: DeviceInfo): void {
 	_dev = isDev
 	_op = null
 	_on = false
 	_seenCrashSignatures.clear()
 	if (!clientId || !clientSecret) return
-	const debugOptIn = process.env.ARROXY_ANALYTICS_DEBUG === '1'
+	const debugOptIn = process.env.ARCLIO_ANALYTICS_DEBUG === '1'
 	if (isDev && !debugOptIn) return
 	_op = new OpenPanel({
 		clientId,

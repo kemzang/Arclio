@@ -54,8 +54,8 @@ sudo apt install -y xvfb
 ### ক্লোন করুন ও চালান
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # সুপারিশকৃত; pinned tools ম্যানুয়ালি সক্রিয় থাকলে বাদ দিন
 bun run bootstrap
 bun run doctor
@@ -70,14 +70,14 @@ bun run dist         # বর্তমান OS-এর জন্য প্যা
 bun run dist:win     # supported host-এ Windows targets প্যাকেজ করুন
 \`\`\`
 
-> \`bun run bootstrap\` dependencies ইনস্টল করে, Electron app dependencies rebuild করে, Electron যাচাই করে, development-এর জন্য embedded ffmpeg/ffprobe প্রস্তুত করে, এবং Playwright Chromium ইনস্টল করে। yt-dlp runtime-এ app data folder-এ manage হয়; ffmpeg ও ffprobe প্রতিটি Arroxy release-এর সাথেই bundled থাকে।
+> \`bun run bootstrap\` dependencies ইনস্টল করে, Electron app dependencies rebuild করে, Electron যাচাই করে, development-এর জন্য embedded ffmpeg/ffprobe প্রস্তুত করে, এবং Playwright Chromium ইনস্টল করে। yt-dlp runtime-এ app data folder-এ manage হয়; ffmpeg ও ffprobe প্রতিটি Arclio release-এর সাথেই bundled থাকে।
 
 </details>`;
 
 export const bn = {
-  icon_alt: "Arroxy মাসকট",
+  icon_alt: "Arclio মাসকট",
   title:
-    "Arroxy — Windows, macOS ও Linux-এর জন্য বিনামূল্যে ওপেন-সোর্স YouTube (+ ২০০০ সাইট) ডাউনলোডার",
+    "Arclio — Windows, macOS ও Linux-এর জন্য বিনামূল্যে ওপেন-সোর্স YouTube (+ ২০০০ সাইট) ডাউনলোডার",
   read_in_label: "পড়ুন:",
   badge_release_alt: "রিলিজ",
   badge_build_alt: "বিল্ড",
@@ -92,12 +92,12 @@ export const bn = {
     "**YouTube ও ২০০০+ সমর্থিত সাইট** থেকে ভিডিও, Shorts, সংগীত, চ্যানেল, পডকাস্ট বা অডিও ট্র্যাক ডাউনলোড করুন — 60 fps-এ 4K HDR পর্যন্ত, অথবা MP3 / AAC / Opus হিসেবে। Windows, macOS ও Linux-এ লোকালি চলে। **কোনো বিজ্ঞাপন নেই, কোনো ব্লোট নেই, কোনো আপসেল নেই।**",
   cta_latest: "↓ সর্বশেষ রিলিজ ডাউনলোড করুন",
   cta_website: "ওয়েবসাইট",
-  demo_alt: "Arroxy ডেমো",
+  demo_alt: "Arclio ডেমো",
   star_cta:
-    "Arroxy যদি আপনার সময় বাঁচায়, তাহলে একটি ⭐ অন্যদের খুঁজে পেতে সাহায্য করে।",
+    "Arclio যদি আপনার সময় বাঁচায়, তাহলে একটি ⭐ অন্যদের খুঁজে পেতে সাহায্য করে।",
   ai_notice: "",
   toc_heading: "বিষয়বস্তু",
-  why_h2: "কেন Arroxy",
+  why_h2: "কেন Arclio",
   features_h2: "বৈশিষ্ট্যসমূহ",
   dl_h2: "ডাউনলোড",
   privacy_h2: "গোপনীয়তা",
@@ -113,7 +113,7 @@ export const bn = {
   why_r6: "ক্রস-প্ল্যাটফর্ম ডেস্কটপ অ্যাপ",
   why_r7: "সাবটাইটেল + SponsorBlock",
   why_summary:
-    "Arroxy একটি কাজের জন্য তৈরি: URL পেস্ট করুন, একটি পরিষ্কার লোকাল ফাইল পান। কোনো অ্যাকাউন্ট নেই, কোনো আপসেল নেই, কোনো ডেটা সংগ্রহ নেই।",
+    "Arclio একটি কাজের জন্য তৈরি: URL পেস্ট করুন, একটি পরিষ্কার লোকাল ফাইল পান। কোনো অ্যাকাউন্ট নেই, কোনো আপসেল নেই, কোনো ডেটা সংগ্রহ নেই।",
   feat_quality_h3: "মান ও ফরম্যাট",
   feat_quality_1: "**4K UHD (2160p)** পর্যন্ত, 1440p, 1080p, 720p, 480p, 360p",
   feat_quality_2: "**হাই ফ্রেম রেট** যেমন আছে তেমনই — 60 fps, 120 fps, HDR",
@@ -132,7 +132,7 @@ export const bn = {
   feat_workflow_2:
     "**কেন্দ্রীয় ডাউনলোড queue** — একক, playlist, bulk, বা quick কাজ সবই progress, pause, resume, cancel, retry, এবং priority control-এর জন্য এক জায়গায় আসে",
   feat_workflow_3:
-    "**ক্লিপবোর্ড ওয়াচ** — একটি YouTube লিঙ্ক কপি করুন এবং অ্যাপে ফিরলে Arroxy স্বয়ংক্রিয়ভাবে URL পূরণ করে (অ্যাডভান্সড সেটিংসে টগল করুন)",
+    "**ক্লিপবোর্ড ওয়াচ** — একটি YouTube লিঙ্ক কপি করুন এবং অ্যাপে ফিরলে Arclio স্বয়ংক্রিয়ভাবে URL পূরণ করে (অ্যাডভান্সড সেটিংসে টগল করুন)",
   feat_workflow_4:
     "**অটো-ক্লিন URLs** — ট্র্যাকিং প্যারামিটার (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) সরিয়ে দেয় এবং `youtube.com/redirect` লিঙ্ক খুলে দেয়",
   feat_workflow_5:
@@ -160,7 +160,7 @@ export const bn = {
   feat_sites_3:
     "**শুধু অডিও ও সাবটাইটেল** সমস্ত সমর্থিত সাইটে কাজ করে, শুধু YouTube-এ নয়",
   feat_sites_4:
-    "কোনো সাইট পরিবর্তিত হলে, yt-dlp সাপ্তাহিক ফিক্স পাঠায় এবং Arroxy লঞ্চে বাইনারি অটো-আপডেট করে",
+    "কোনো সাইট পরিবর্তিত হলে, yt-dlp সাপ্তাহিক ফিক্স পাঠায় এবং Arclio লঞ্চে বাইনারি অটো-আপডেট করে",
   shot1_cap:
     "<b>দ্রুত ডাউনলোড হোম</b><br/>একটি URL পেস্ট করুন এবং আপনার সক্রিয় প্রোফাইল দিয়ে সঙ্গে সঙ্গে ডাউনলোড করুন",
   shot2_cap:
@@ -201,25 +201,25 @@ export const bn = {
     "**সুপারিশ:** অটো-আপডেট ও দ্রুত স্টার্টআপের জন্য NSIS ইনস্টলার ব্যবহার করুন। ইনস্টলেশন ও রেজিস্ট্রি-মুক্ত বিকল্পের জন্য পোর্টেবল `.exe` ব্যবহার করুন।",
   dl_win_smartscreen_h4: "Windows SmartScreen সতর্কতা",
   dl_win_smartscreen_intro:
-    'প্রথম চালুতে আপনি **"Windows protected your PC"** বা **"Unknown publisher."** দেখতে পারেন। এটি `Arroxy-win-x64-Setup.exe` এবং `Arroxy-win-x64-Portable.exe` উভয়ের ক্ষেত্রে প্রযোজ্য। Arroxy বিনামূল্যে ও ওপেন-সোর্স এবং Windows বিল্ডগুলো পেইড সার্টিফিকেট দিয়ে কোড-সাইন করা নয়, এ কারণে SmartScreen ফ্ল্যাগ করে। এর মানে **স্বয়ংক্রিয়ভাবে** এই নয় যে Arroxy অনিরাপদ। চালিয়ে যেতে:',
+    'প্রথম চালুতে আপনি **"Windows protected your PC"** বা **"Unknown publisher."** দেখতে পারেন। এটি `Arclio-win-x64-Setup.exe` এবং `Arclio-win-x64-Portable.exe` উভয়ের ক্ষেত্রে প্রযোজ্য। Arclio বিনামূল্যে ও ওপেন-সোর্স এবং Windows বিল্ডগুলো পেইড সার্টিফিকেট দিয়ে কোড-সাইন করা নয়, এ কারণে SmartScreen ফ্ল্যাগ করে। এর মানে **স্বয়ংক্রিয়ভাবে** এই নয় যে Arclio অনিরাপদ। চালিয়ে যেতে:',
   dl_win_smartscreen_step1: "**More info** ক্লিক করুন।",
   dl_win_smartscreen_step2: "**Run anyway** ক্লিক করুন।",
   dl_win_smartscreen_official:
-    "শুধুমাত্র অফিশিয়াল GitHub Releases পেজ থেকে Arroxy ডাউনলোড করুন। অন্য ওয়েবসাইট থেকে পেলে বা কেউ পাঠালে সেটি মুছে ফেলুন এবং অফিশিয়াল সোর্স থেকে নতুন করে ডাউনলোড করুন। সোর্স কোড পাবলিক, তাই ইচ্ছে করলে আপনি নিজে পরীক্ষা করতে বা Arroxy বিল্ড করতে পারবেন।",
+    "শুধুমাত্র অফিশিয়াল GitHub Releases পেজ থেকে Arclio ডাউনলোড করুন। অন্য ওয়েবসাইট থেকে পেলে বা কেউ পাঠালে সেটি মুছে ফেলুন এবং অফিশিয়াল সোর্স থেকে নতুন করে ডাউনলোড করুন। সোর্স কোড পাবলিক, তাই ইচ্ছে করলে আপনি নিজে পরীক্ষা করতে বা Arclio বিল্ড করতে পারবেন।",
   dl_macos_h3: "macOS-এ প্রথমবার চালু করা",
   dl_macos_warning:
-    "Arroxy এখনো কোড-সাইন করা নয়, তাই প্রথম চালুতে macOS Gatekeeper সতর্কবার্তা দেখাবে। এটি প্রত্যাশিত — এটি ক্ষতির কোনো চিহ্ন নয়।",
+    "Arclio এখনো কোড-সাইন করা নয়, তাই প্রথম চালুতে macOS Gatekeeper সতর্কবার্তা দেখাবে। এটি প্রত্যাশিত — এটি ক্ষতির কোনো চিহ্ন নয়।",
   dl_macos_m1_h4: "সিস্টেম সেটিংস পদ্ধতি (প্রস্তাবিত):",
-  dl_macos_step1: "Arroxy অ্যাপ আইকনে রাইট-ক্লিক করুন এবং **Open** বেছে নিন।",
+  dl_macos_step1: "Arclio অ্যাপ আইকনে রাইট-ক্লিক করুন এবং **Open** বেছে নিন।",
   dl_macos_step2:
     "সতর্কতা ডায়ালগ আসবে — **Cancel** ক্লিক করুন (*Move to Trash* ক্লিক করবেন না)।",
   dl_macos_step3: "**System Settings → Privacy & Security** খুলুন।",
   dl_macos_step4:
-    '**Security** বিভাগে স্ক্রল করুন। দেখতে পাবেন *"Arroxy was blocked from use because it is not from an identified developer."*',
+    '**Security** বিভাগে স্ক্রল করুন। দেখতে পাবেন *"Arclio was blocked from use because it is not from an identified developer."*',
   dl_macos_step5:
     "**Open Anyway** ক্লিক করুন এবং আপনার পাসওয়ার্ড বা Touch ID দিয়ে নিশ্চিত করুন।",
   dl_macos_after:
-    "ধাপ ৫-এর পরে Arroxy স্বাভাবিকভাবে খুলবে এবং সতর্কবার্তা আর কখনো দেখাবে না।",
+    "ধাপ ৫-এর পরে Arclio স্বাভাবিকভাবে খুলবে এবং সতর্কবার্তা আর কখনো দেখাবে না।",
   dl_macos_m2_h4: "টার্মিনাল পদ্ধতি (অ্যাডভান্সড):",
   dl_macos_note:
     "macOS বিল্ডগুলো CI-তে Apple Silicon ও Intel রানারে তৈরি হয়। সমস্যা হলে [একটি ইস্যু খুলুন](../../issues) — macOS ব্যবহারকারীদের মতামত সক্রিয়ভাবে macOS টেস্টিং চক্রকে রূপ দেয়।",
@@ -231,14 +231,14 @@ export const bn = {
   dl_linux_m2_h4: "টার্মিনাল:",
   dl_linux_fuse_text: "চালু না হলে, FUSE অনুপস্থিত থাকতে পারে:",
   dl_linux_flatpak_intro:
-    "**Flatpak (স্যান্ডবক্সড বিকল্প):** একই রিলিজ পেজ থেকে `Arroxy-*.flatpak` ডাউনলোড করুন।",
+    "**Flatpak (স্যান্ডবক্সড বিকল্প):** একই রিলিজ পেজ থেকে `Arclio-*.flatpak` ডাউনলোড করুন।",
 
   // ---- Reorganized install help (normie-first, manual-download primary) ----
   dl_warning_h3: "কেন আপনি সতর্কবার্তা দেখতে পাচ্ছেন",
   dl_warning_p1:
-    "Arroxy ওপেন-সোর্স এবং MIT-লাইসেন্সকৃত। Windows এবং macOS বিল্ডগুলো **কোড-সাইন করা নয়** — Apple Developer ID এবং Windows EV কোড-সাইনিং সার্টিফিকেটের প্রতিটির জন্য বছরে কয়েকশো ডলার খরচ হয়, যা একটি ইন্ডি প্রজেক্ট নিজের পকেট থেকে দেয়। এই সিগনেচার ছাড়া, Windows SmartScreen এবং macOS Gatekeeper প্রথম লঞ্চে আপনাকে সতর্ক করবে। সতর্কবার্তার মানে হলো *আপনার OS প্রকাশকটিকে চেনে না* — এর মানে এই নয় যে Arroxy ম্যালওয়্যার।",
+    "Arclio ওপেন-সোর্স এবং MIT-লাইসেন্সকৃত। Windows এবং macOS বিল্ডগুলো **কোড-সাইন করা নয়** — Apple Developer ID এবং Windows EV কোড-সাইনিং সার্টিফিকেটের প্রতিটির জন্য বছরে কয়েকশো ডলার খরচ হয়, যা একটি ইন্ডি প্রজেক্ট নিজের পকেট থেকে দেয়। এই সিগনেচার ছাড়া, Windows SmartScreen এবং macOS Gatekeeper প্রথম লঞ্চে আপনাকে সতর্ক করবে। সতর্কবার্তার মানে হলো *আপনার OS প্রকাশকটিকে চেনে না* — এর মানে এই নয় যে Arclio ম্যালওয়্যার।",
   dl_warning_p2:
-    "তিনটি উপায়ে নিজেই Arroxy যাচাই করুন, ক্রমবর্ধমান কঠোরতায়:\n\n- **সোর্স পড়ুন।** প্রতিটি লাইন [GitHub](https://github.com/antonio-orionus/Arroxy)-এ আছে এবং আপনি [সোর্স থেকে বিল্ড করতে](#tech) পারবেন।\n- **SHA256 মিলিয়ে দেখুন।** প্রকাশিত [`SHA256SUMS`](../../releases/latest) এর সাথে আপনার ফাইল মেলান — নিচে [আপনার ডাউনলোড যাচাই করুন](#verify) দেখুন।\n- **তৃতীয়-পক্ষ স্ক্যান চালান।** ফাইলটি [VirusTotal](https://www.virustotal.com)-এ আপলোড করুন।",
+    "তিনটি উপায়ে নিজেই Arclio যাচাই করুন, ক্রমবর্ধমান কঠোরতায়:\n\n- **সোর্স পড়ুন।** প্রতিটি লাইন [GitHub](https://github.com/antonio-orionus/Arclio)-এ আছে এবং আপনি [সোর্স থেকে বিল্ড করতে](#tech) পারবেন।\n- **SHA256 মিলিয়ে দেখুন।** প্রকাশিত [`SHA256SUMS`](../../releases/latest) এর সাথে আপনার ফাইল মেলান — নিচে [আপনার ডাউনলোড যাচাই করুন](#verify) দেখুন।\n- **তৃতীয়-পক্ষ স্ক্যান চালান।** ফাইলটি [VirusTotal](https://www.virustotal.com)-এ আপলোড করুন।",
 
   dl_win_first_h3: "Windows প্রথম লঞ্চ",
   shot_smartscreen_more_alt:
@@ -247,33 +247,33 @@ export const bn = {
     'More info প্রসারিত করার পর SmartScreen ডায়ালগ, "Run anyway" বোতামটি দেখাচ্ছে',
   dl_win_defender_h4: "Windows Defender যদি ফাইলটি ফ্ল্যাগ বা সরিয়ে দেয়",
   dl_win_defender_p:
-    "Defender হিউরিস্টিক্স কখনো কখনো আনসাইনড NSIS ইনস্টলার এবং Electron পোর্টেবলগুলোকে সন্দেহজনক হিসেবে চিহ্নিত করে। যদি Defender `Arroxy-win-x64-Setup.exe` বা `Arroxy-win-x64-Portable.exe` কোয়ারেন্টিনে রাখে, **Windows Security → Virus & threat protection → Protection history** থেকে পুনরুদ্ধার করুন, তারপর **Manage settings → Add or remove exclusions** এর অধীনে Arroxy এক্সিকিউটেবলটিকে অনুমোদিত আইটেম হিসেবে যোগ করুন। SmartScreen-এর মতোই, ট্রিগারটি হলো অনুপস্থিত প্রকাশক সিগনেচার, কোনো ম্যালওয়্যার শনাক্তি নয়।",
+    "Defender হিউরিস্টিক্স কখনো কখনো আনসাইনড NSIS ইনস্টলার এবং Electron পোর্টেবলগুলোকে সন্দেহজনক হিসেবে চিহ্নিত করে। যদি Defender `Arclio-win-x64-Setup.exe` বা `Arclio-win-x64-Portable.exe` কোয়ারেন্টিনে রাখে, **Windows Security → Virus & threat protection → Protection history** থেকে পুনরুদ্ধার করুন, তারপর **Manage settings → Add or remove exclusions** এর অধীনে Arclio এক্সিকিউটেবলটিকে অনুমোদিত আইটেম হিসেবে যোগ করুন। SmartScreen-এর মতোই, ট্রিগারটি হলো অনুপস্থিত প্রকাশক সিগনেচার, কোনো ম্যালওয়্যার শনাক্তি নয়।",
 
   dl_macos_first_h3: "macOS প্রথম লঞ্চ",
   dl_macos_intro:
-    "Arroxy এখনো macOS-এর জন্য কোড-সাইন করা হয়নি, তাই Gatekeeper প্রথম লঞ্চটি ব্লক করবে। এটি অনুমোদন দেওয়ার সঠিক পদ্ধতি আপনার macOS ভার্সনের উপর নির্ভর করে — Sequoia 15 পুরনো রাইট-ক্লিক → Open বাইপাসটি কঠোর করে দিয়েছে।",
+    "Arclio এখনো macOS-এর জন্য কোড-সাইন করা হয়নি, তাই Gatekeeper প্রথম লঞ্চটি ব্লক করবে। এটি অনুমোদন দেওয়ার সঠিক পদ্ধতি আপনার macOS ভার্সনের উপর নির্ভর করে — Sequoia 15 পুরনো রাইট-ক্লিক → Open বাইপাসটি কঠোর করে দিয়েছে।",
   dl_macos_sequoia_h4: "macOS Sequoia 15 এবং পরবর্তী (বর্তমান)",
   dl_macos_sequoia_intro:
     "Sequoia 15 এবং নতুনে, রাইট-ক্লিক → Open আর অনেক কোয়ারেন্টিনড অ্যাপের জন্য Gatekeeper বাইপাস করে না। পরিবর্তে System Settings প্যানেল ব্যবহার করুন:",
   dl_macos_sequoia_step1:
-    "মাউন্ট করা DMG থেকে `Arroxy.app` টেনে `/Applications`-এ রাখুন।",
+    "মাউন্ট করা DMG থেকে `Arclio.app` টেনে `/Applications`-এ রাখুন।",
   dl_macos_sequoia_step2:
-    "Arroxy ডাবল-ক্লিক করুন। ব্লক ডায়ালগ দেখা যাবে — **Done** ক্লিক করুন (*Move to Trash* ক্লিক করবেন না)।",
+    "Arclio ডাবল-ক্লিক করুন। ব্লক ডায়ালগ দেখা যাবে — **Done** ক্লিক করুন (*Move to Trash* ক্লিক করবেন না)।",
   dl_macos_sequoia_step3:
-    '**System Settings → Privacy & Security** খুলুন এবং **Security** বিভাগে স্ক্রল করুন। দেখবেন *"Arroxy was blocked to protect your Mac"* (বা অনুরূপ বার্তা)।',
+    '**System Settings → Privacy & Security** খুলুন এবং **Security** বিভাগে স্ক্রল করুন। দেখবেন *"Arclio was blocked to protect your Mac"* (বা অনুরূপ বার্তা)।',
   dl_macos_sequoia_step4:
-    "**Open Anyway** ক্লিক করুন, আপনার পাসওয়ার্ড বা Touch ID দিয়ে নিশ্চিত করুন, তারপর `/Applications` থেকে Arroxy পুনরায় চালু করুন।",
+    "**Open Anyway** ক্লিক করুন, আপনার পাসওয়ার্ড বা Touch ID দিয়ে নিশ্চিত করুন, তারপর `/Applications` থেকে Arclio পুনরায় চালু করুন।",
   dl_macos_sonoma_h4: "macOS Sonoma 14 এবং পুরনো",
   dl_macos_sonoma_step1:
-    "মাউন্ট করা DMG থেকে `Arroxy.app` টেনে `/Applications`-এ রাখুন।",
+    "মাউন্ট করা DMG থেকে `Arclio.app` টেনে `/Applications`-এ রাখুন।",
   dl_macos_sonoma_step2:
-    "`/Applications`-এ `Arroxy.app`-এ রাইট-ক্লিক (বা Control-ক্লিক) করুন এবং **Open** বেছে নিন।",
+    "`/Applications`-এ `Arclio.app`-এ রাইট-ক্লিক (বা Control-ক্লিক) করুন এবং **Open** বেছে নিন।",
   dl_macos_sonoma_step3:
-    "সতর্কতা ডায়ালগে এখন **Open** বোতাম আছে — এটিতে ক্লিক করুন এবং নিশ্চিত করুন। Arroxy স্বাভাবিকভাবে খুলবে এবং সতর্কবার্তা আর কখনো দেখাবে না।",
+    "সতর্কতা ডায়ালগে এখন **Open** বোতাম আছে — এটিতে ক্লিক করুন এবং নিশ্চিত করুন। Arclio স্বাভাবিকভাবে খুলবে এবং সতর্কবার্তা আর কখনো দেখাবে না।",
   dl_macos_damaged_h4:
     '"App is damaged" অথবা ক্রমাগত Gatekeeper ব্লক — Terminal ফিক্স',
   dl_macos_damaged_p:
-    'যদি macOS বলে *"Arroxy is damaged and can\'t be opened"*, অথবা উপরের পদক্ষেপগুলোর কোনোটিই ব্লক পরিষ্কার না করে, তাহলে DMG-এর কোয়ারেন্টিন অ্যাট্রিবিউটই কারণ (কিছু ব্রাউজার এবং macOS নিজস্ব ট্র্যান্সলোকেশন আচরণ এটি সেট করে)। ইনস্টল করা অ্যাপ থেকে এটি সরিয়ে দিন:',
+    'যদি macOS বলে *"Arclio is damaged and can\'t be opened"*, অথবা উপরের পদক্ষেপগুলোর কোনোটিই ব্লক পরিষ্কার না করে, তাহলে DMG-এর কোয়ারেন্টিন অ্যাট্রিবিউটই কারণ (কিছু ব্রাউজার এবং macOS নিজস্ব ট্র্যান্সলোকেশন আচরণ এটি সেট করে)। ইনস্টল করা অ্যাপ থেকে এটি সরিয়ে দিন:',
   dl_macos_arch_note:
     "**Apple Silicon বনাম Intel:** M-সিরিজ Mac (M1 / M2 / M3 / M4)-এ `arm64` DMG ডাউনলোড করুন। Intel Mac-এ `x64` DMG ডাউনলোড করুন। ভুল বিল্ড চালানো Rosetta-র মাধ্যমে কাজ করবে তবে উল্লেখযোগ্যভাবে ধীর হবে।",
 
@@ -296,7 +296,7 @@ export const bn = {
   privacy_p1:
     "ডাউনলোডগুলো সরাসরি [yt-dlp](https://github.com/yt-dlp/yt-dlp)-এর মাধ্যমে YouTube থেকে আপনার বেছে নেওয়া ফোল্ডারে আনা হয় — কোনো থার্ড-পার্টি সার্ভারের মধ্য দিয়ে যায় না। দেখার ইতিহাস, ডাউনলোড ইতিহাস, URL ও ফাইলের বিষয়বস্তু আপনার ডিভাইসেই থাকে।",
   privacy_p2:
-    "Arroxy [OpenPanel](https://openpanel.dev)-এর মাধ্যমে বেনামী, সমষ্টিগত টেলিমেট্রি পাঠায় — চালু হওয়া, OS, অ্যাপ সংস্করণ ও ক্র্যাশ বোঝার জন্য যতটা দরকার। কোনো URL, ভিডিও শিরোনাম, ফাইল পাথ, অ্যাকাউন্ট তথ্য, ফিঙ্গারপ্রিন্টিং বা ব্যক্তিগত ডেটা নেই। প্রতি-ইনস্টল ID এলোমেলো এবং আপনার পরিচয়ের সাথে যুক্ত নয়। সেটিংসে অপ্ট আউট করতে পারবেন।",
+    "Arclio [OpenPanel](https://openpanel.dev)-এর মাধ্যমে বেনামী, সমষ্টিগত টেলিমেট্রি পাঠায় — চালু হওয়া, OS, অ্যাপ সংস্করণ ও ক্র্যাশ বোঝার জন্য যতটা দরকার। কোনো URL, ভিডিও শিরোনাম, ফাইল পাথ, অ্যাকাউন্ট তথ্য, ফিঙ্গারপ্রিন্টিং বা ব্যক্তিগত ডেটা নেই। প্রতি-ইনস্টল ID এলোমেলো এবং আপনার পরিচয়ের সাথে যুক্ত নয়। সেটিংসে অপ্ট আউট করতে পারবেন।",
   faq_q1: "এটি কি সত্যিই বিনামূল্যে?",
   faq_a1:
     "হ্যাঁ — MIT লাইসেন্স, কোনো প্রিমিয়াম টায়ার নেই, কোনো ফিচার গেটিং নেই।",
@@ -308,13 +308,13 @@ export const bn = {
     "হ্যাঁ। format মেনু থেকে *শুধু অডিও* বেছে নিন, তারপর MP3, M4A/AAC, Opus বা WAV নির্বাচন করুন।",
   faq_q4: "আমার কি YouTube অ্যাকাউন্ট বা কুকিজ দরকার?",
   faq_a4:
-    "ডিফল্টভাবে, না — Arroxy YouTube অ্যাকাউন্ট, লগইন বা কুকি এক্সপোর্ট ছাড়াই কাজ করে। বয়স-সীমাবদ্ধ বা শুধুমাত্র সদস্যদের জন্য ভিডিওর মতো প্রমাণীকরণের প্রয়োজন এমন কনটেন্টের জন্য Advanced settings-এ ঐচ্ছিক কুকি সাপোর্ট পাওয়া যায় (Cookies source: file or browser)। ডিফল্টভাবে এটি বন্ধ থাকে। আপনি যদি এটি চালু করেন, yt-dlp-এর উইকি উল্লেখ করে যে [কুকি-ভিত্তিক অটোমেশন একটি Google অ্যাকাউন্টকে ফ্ল্যাগ করতে পারে](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); সেক্ষেত্রে একটি অস্থায়ী অ্যাকাউন্টই নিরাপদ পছন্দ।",
+    "ডিফল্টভাবে, না — Arclio YouTube অ্যাকাউন্ট, লগইন বা কুকি এক্সপোর্ট ছাড়াই কাজ করে। বয়স-সীমাবদ্ধ বা শুধুমাত্র সদস্যদের জন্য ভিডিওর মতো প্রমাণীকরণের প্রয়োজন এমন কনটেন্টের জন্য Advanced settings-এ ঐচ্ছিক কুকি সাপোর্ট পাওয়া যায় (Cookies source: file or browser)। ডিফল্টভাবে এটি বন্ধ থাকে। আপনি যদি এটি চালু করেন, yt-dlp-এর উইকি উল্লেখ করে যে [কুকি-ভিত্তিক অটোমেশন একটি Google অ্যাকাউন্টকে ফ্ল্যাগ করতে পারে](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); সেক্ষেত্রে একটি অস্থায়ী অ্যাকাউন্টই নিরাপদ পছন্দ।",
   faq_q5: "YouTube কিছু পরিবর্তন করলেও কি এটি কাজ করতে থাকবে?",
   faq_a5:
-    "yt-dlp চালুর সময় স্বয়ংক্রিয়ভাবে আপডেট হয়, এবং YouTube কিছু পরিবর্তন করলে Arroxy দ্রুত ফিক্স পাঠায়। যদি কখনো সমস্যায় পড়েন, ফলব্যাক হিসেবে Advanced settings-এ ঐচ্ছিক কুকি সাপোর্ট পাওয়া যায়।",
-  faq_q6: "Arroxy কোন ভাষায় পাওয়া যায়?",
+    "yt-dlp চালুর সময় স্বয়ংক্রিয়ভাবে আপডেট হয়, এবং YouTube কিছু পরিবর্তন করলে Arclio দ্রুত ফিক্স পাঠায়। যদি কখনো সমস্যায় পড়েন, ফলব্যাক হিসেবে Advanced settings-এ ঐচ্ছিক কুকি সাপোর্ট পাওয়া যায়।",
+  faq_q6: "Arclio কোন ভাষায় পাওয়া যায়?",
   faq_a6:
-    "একুশটি, বাক্সের বাইরে: English, Español (স্পেনিশ), Deutsch (জার্মান), Français (ফরাসি), 日本語 (জাপানি), 中文 (চীনা), Русский (রাশিয়ান), Українська (ইউক্রেনিয়ান), हिन्दी (হিন্দি), Afaan Oromoo, Kiswahili, O'zbekcha (উজবেক), Tiếng Việt (ভিয়েতনামি), አማርኛ (আমহারিক), العربية (আরবি), اردو (উর্দু), پښتو (পশতু), বাংলা, မြန်မာဘာသာ (বার্মিজ), Ελληνικά (গ্রিক), এবং Српски (সার্বিয়ান)। Arroxy প্রথম চালুতে আপনার অপারেটিং সিস্টেমের ভাষা স্বয়ংক্রিয়ভাবে শনাক্ত করে এবং আপনি টুলবারের ভাষা পিকার থেকে যেকোনো সময় পরিবর্তন করতে পারেন। রানটাইম লোকেল JSON src/shared/i18n/locales/-এ থাকে, আর অনুবাদকদের জন্য PO ক্যাটালগ i18n/locales/-এ থাকে — অবদান রাখতে GitHub-এ একটি PR খুলুন।",
+    "একুশটি, বাক্সের বাইরে: English, Español (স্পেনিশ), Deutsch (জার্মান), Français (ফরাসি), 日本語 (জাপানি), 中文 (চীনা), Русский (রাশিয়ান), Українська (ইউক্রেনিয়ান), हिन्दी (হিন্দি), Afaan Oromoo, Kiswahili, O'zbekcha (উজবেক), Tiếng Việt (ভিয়েতনামি), አማርኛ (আমহারিক), العربية (আরবি), اردو (উর্দু), پښتو (পশতু), বাংলা, မြန်မာဘာသာ (বার্মিজ), Ελληνικά (গ্রিক), এবং Српски (সার্বিয়ান)। Arclio প্রথম চালুতে আপনার অপারেটিং সিস্টেমের ভাষা স্বয়ংক্রিয়ভাবে শনাক্ত করে এবং আপনি টুলবারের ভাষা পিকার থেকে যেকোনো সময় পরিবর্তন করতে পারেন। রানটাইম লোকেল JSON src/shared/i18n/locales/-এ থাকে, আর অনুবাদকদের জন্য PO ক্যাটালগ i18n/locales/-এ থাকে — অবদান রাখতে GitHub-এ একটি PR খুলুন।",
   faq_q7: "আমাকে কি আর কিছু ইনস্টল করতে হবে?",
   faq_a7:
     "না। yt-dlp প্রথম চালুতে স্বয়ংক্রিয়ভাবে ডাউনলোড হয়ে আপনার মেশিনে ক্যাশ হয়; ffmpeg ও ffprobe অ্যাপের সাথেই আসে। এরপর কোনো অতিরিক্ত সেটআপ দরকার নেই।",
@@ -337,7 +337,7 @@ export const bn = {
     "YouTube একাধিক অডিও ট্র্যাক দিলে পুরো app-এর জন্য কথ্য-ভাষার track preference সেট করুন, আর প্রতিটি profile-এ override করুন",
   plan_r6_name: "**অ্যাপের ভেতর browser sign-in**",
   plan_r6_desc:
-    "Arroxy-র ভেতর browser windows খুলে সাইন ইন করুন এবং site cookies ম্যানুয়ালি export না করেই ব্যবহার করুন",
+    "Arclio-র ভেতর browser windows খুলে সাইন ইন করুন এবং site cookies ম্যানুয়ালি export না করেই ব্যবহার করুন",
   plan_r8_name: "**এক-ক্লিক ভিডিও ডাউনলোড**",
   plan_r8_desc:
     "active profile ব্যবহার করে detected বা pasted URL থেকে এক ক্লিকে ভিডিও ডাউনলোড শুরু করুন",
@@ -356,7 +356,7 @@ export const bn = {
   tech_content: TECH_CONTENT,
   tos_h2: "ব্যবহারের শর্তাবলী",
   tos_note:
-    "Arroxy শুধুমাত্র ব্যক্তিগত, ব্যক্তিগত ব্যবহারের জন্য একটি টুল। আপনার ডাউনলোড YouTube-এর [Terms of Service](https://www.youtube.com/t/terms) ও আপনার এখতিয়ারের কপিরাইট আইন মেনে চলছে কিনা তা নিশ্চিত করা সম্পূর্ণরূপে আপনার দায়িত্ব। এমন বিষয়বস্তু ডাউনলোড, পুনরুৎপাদন বা বিতরণ করতে Arroxy ব্যবহার করবেন না যা ব্যবহার করার অধিকার আপনার নেই। ডেভেলপাররা যেকোনো অপব্যবহারের জন্য দায়ী নন।",
+    "Arclio শুধুমাত্র ব্যক্তিগত, ব্যক্তিগত ব্যবহারের জন্য একটি টুল। আপনার ডাউনলোড YouTube-এর [Terms of Service](https://www.youtube.com/t/terms) ও আপনার এখতিয়ারের কপিরাইট আইন মেনে চলছে কিনা তা নিশ্চিত করা সম্পূর্ণরূপে আপনার দায়িত্ব। এমন বিষয়বস্তু ডাউনলোড, পুনরুৎপাদন বা বিতরণ করতে Arclio ব্যবহার করবেন না যা ব্যবহার করার অধিকার আপনার নেই। ডেভেলপাররা যেকোনো অপব্যবহারের জন্য দায়ী নন।",
   footer_credit:
     'MIT লাইসেন্স · <a href="https://x.com/OrionusAI">@OrionusAI</a>-এর যত্ন দিয়ে তৈরি',
 };

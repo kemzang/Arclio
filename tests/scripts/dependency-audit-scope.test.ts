@@ -2,7 +2,7 @@ import {describe, expect, it} from 'vitest'
 
 import {dependencyAuditRequired} from '../../scripts/dependencyAuditScope.js'
 
-const basePackage = {name: 'arroxy', version: '0.4.0', scripts: {dev: 'bun run dev'}, dependencies: {react: '19.2.7'}, devDependencies: {vitest: '4.0.15'}, overrides: {esbuild: '0.28.1'}}
+const basePackage = {name: 'arclio', version: '0.4.0', scripts: {dev: 'bun run dev'}, dependencies: {react: '19.2.7'}, devDependencies: {vitest: '4.0.15'}, overrides: {esbuild: '0.28.1'}}
 
 describe('dependency audit scope', () => {
 	it('skips audit when package.json changes do not affect the dependency graph', () => {

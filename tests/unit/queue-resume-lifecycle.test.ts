@@ -43,7 +43,7 @@ function makeItem(overrides: Partial<QueueItem> = {}): QueueItem {
 
 describe('QueueResumeLifecycle', () => {
 	it('builds media-transfer retry context only after media evidence exists', () => {
-		const tempDir = '/tmp/arroxy-resume'
+		const tempDir = '/tmp/arclio-resume'
 		const active = makeActive({tempDir})
 
 		expect(QueueResumeLifecycle.buildResumeContext(active, {kind: 'network', raw: 'reset'})).toBeUndefined()
@@ -54,7 +54,7 @@ describe('QueueResumeLifecycle', () => {
 	})
 
 	it('builds postprocess retry context only after acquired media exists', () => {
-		const tempDir = '/tmp/arroxy-postprocess'
+		const tempDir = '/tmp/arclio-postprocess'
 		const active = makeActive({tempDir})
 
 		QueueResumeLifecycle.markMediaPostprocessStarted(active)
@@ -65,7 +65,7 @@ describe('QueueResumeLifecycle', () => {
 	})
 
 	it('validates preserved temp dirs and rejects missing ones', async () => {
-		const tempDir = await mkdtemp(join(tmpdir(), 'arroxy-resume-lifecycle-'))
+		const tempDir = await mkdtemp(join(tmpdir(), 'arclio-resume-lifecycle-'))
 		try {
 			await expect(QueueResumeLifecycle.validateTempDir(tempDir)).resolves.toBe(tempDir)
 			await expect(QueueResumeLifecycle.validateTempDir(join(tempDir, 'missing'))).resolves.toBeUndefined()
@@ -75,8 +75,8 @@ describe('QueueResumeLifecycle', () => {
 	})
 
 	it('cleans temp data unless the active job owns a matching resume context', async () => {
-		const outputDir = await mkdtemp(join(tmpdir(), 'arroxy-resume-cleanup-'))
-		const tempDir = join(outputDir, '.arroxy-temp', 'job-1')
+		const outputDir = await mkdtemp(join(tmpdir(), 'arclio-resume-cleanup-'))
+		const tempDir = join(outputDir, '.arclio-temp', 'job-1')
 		await mkdir(tempDir, {recursive: true})
 		await writeFile(join(outputDir, 'download.part'), 'partial')
 		await writeFile(join(outputDir, 'keep.txt'), 'keep')
@@ -90,8 +90,8 @@ describe('QueueResumeLifecycle', () => {
 		await expect(access(join(outputDir, 'download.part'))).rejects.toThrow()
 		await expect(access(join(outputDir, 'keep.txt'))).resolves.toBeUndefined()
 
-		const preservedOutputDir = await mkdtemp(join(tmpdir(), 'arroxy-resume-preserved-'))
-		const preservedTempDir = join(preservedOutputDir, '.arroxy-temp', 'job-2')
+		const preservedOutputDir = await mkdtemp(join(tmpdir(), 'arclio-resume-preserved-'))
+		const preservedTempDir = join(preservedOutputDir, '.arclio-temp', 'job-2')
 		await mkdir(preservedTempDir, {recursive: true})
 		await writeFile(join(preservedTempDir, 'nested.part'), 'partial', {flag: 'w'})
 		const preservedActive = makeActive({tempDir: preservedTempDir, resumeContext: {kind: 'media-retry', tempDir: preservedTempDir, reason: 'media-transfer', failureKind: 'network'}})

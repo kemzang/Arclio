@@ -3,7 +3,7 @@ import type {QueueArtifact, QueueArtifactKind} from './types.js'
 const SUBTITLE_EXTENSIONS = new Set(['srt', 'vtt', 'ass'])
 const THUMBNAIL_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp'])
 const MEDIA_EXTENSIONS = new Set(['mp4', 'mkv', 'webm', 'mov', 'avi', 'flv', 'mp3', 'm4a', 'opus', 'ogg', 'wav', 'flac'])
-const INTERNAL_ARTIFACT_FILE_NAMES = new Set(['_arroxy.info.json'])
+const INTERNAL_ARTIFACT_FILE_NAMES = new Set(['_arclio.info.json'])
 
 function fileNameFromPath(path: string): string {
 	return path.split(/[\\/]/).filter(Boolean).at(-1) ?? path

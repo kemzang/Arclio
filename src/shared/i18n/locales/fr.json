@@ -1,7 +1,7 @@
 {
 	"common": {"back": "Retour", "cancel": "Annuler", "continue": "Continuer", "retry": "Réessayer", "startOver": "Recommencer"},
-	"app": {"feedback": "Commentaires", "logs": "Journaux", "feedbackNudge": "Tu apprécies Arroxy ? J'adorerais avoir ton avis ! 💬", "zoomIn": "Zoom avant", "zoomOut": "Zoom arrière"},
-	"about": {"button": "À propos", "openTitle": "À propos d'Arroxy", "tagline": "Téléchargeur rapide et convivial pour YouTube et plus de 2000 autres sites.", "websiteLink": "Site web", "githubLink": "GitHub", "licenseLine": "Licence MIT · par Antonio Orionus", "thirdPartyNotices": "Voir les mentions tierces"},
+	"app": {"feedback": "Commentaires", "logs": "Journaux", "feedbackNudge": "Tu apprécies Arclio ? J'adorerais avoir ton avis ! 💬", "zoomIn": "Zoom avant", "zoomOut": "Zoom arrière"},
+	"about": {"button": "À propos", "openTitle": "À propos d'Arclio", "tagline": "Téléchargeur rapide et convivial pour YouTube et plus de 2000 autres sites.", "websiteLink": "Site web", "githubLink": "GitHub", "licenseLine": "Licence MIT · par Antonio Orionus", "thirdPartyNotices": "Voir les mentions tierces"},
 	"titleBar": {"close": "Fermer", "minimize": "Réduire", "maximize": "Agrandir", "restore": "Restaurer"},
 	"splash": {"greeting": "Salut, content de te revoir !", "warmup": "Préparation des téléchargements…", "downloading": "Téléchargement de {{binary}}…", "warmupFailedNoDiag": "Échec de la configuration. Ouvre le journal de configuration pour plus de détails."},
 	"repair": {
@@ -77,11 +77,11 @@
 			"alreadyDownloaded": "Déjà téléchargé",
 			"probeLimitAlertTitle": "Le scan de la playlist est limité",
 			"probeLimitAlertTitleGeneric": "L’analyse est limitée",
-			"probeLimitAlertDesc": "Arroxy a trouvé plus de {{count}} éléments, donc la limite de scan actuelle masque le reste."
+			"probeLimitAlertDesc": "Arclio a trouvé plus de {{count}} éléments, donc la limite de scan actuelle masque le reste."
 		},
 		"bulk": {
 			"title": "URLs en lot",
-			"description": "Collez des URLs de vidéos, playlists, chaînes, recherches ou audio. Arroxy nettoiera les doublons avant la mise en file.",
+			"description": "Collez des URLs de vidéos, playlists, chaînes, recherches ou audio. Arclio nettoiera les doublons avant la mise en file.",
 			"textareaLabel": "Liste d’URLs",
 			"textareaPlaceholder": "https://video.example/one\nhttps://video.example/two\nhttps://video.example/three",
 			"acceptedCount": "Prêtes",
@@ -99,11 +99,11 @@
 			"pickFromPlaylist": "Choisir dans la Playlist",
 			"quickWholePlaylist": "Télécharger toute la playlist",
 			"playlistLimit": "Limite d’analyse de playlist : {{count}} éléments",
-			"quickLimitDescription": "Nombre maximal d’éléments qu’Arroxy analyse avant d’ajouter une playlist, une chaîne ou un résultat de recherche à la file.",
+			"quickLimitDescription": "Nombre maximal d’éléments qu’Arclio analyse avant d’ajouter une playlist, une chaîne ou un résultat de recherche à la file.",
 			"singleTooltip": "Utilise le mode vidéo seule de yt-dlp afin d’ignorer la playlist attachée à cette URL.",
 			"quickSingleTooltip": "Ajoute un seul téléchargement à la file et ignore la playlist attachée à cette URL.",
 			"playlistTooltip": "Utilise le mode playlist de yt-dlp et récupère jusqu’à votre limite avant d’afficher le sélecteur.",
-			"quickPlaylistTooltip": "Ajoute chaque élément chargé de la playlist à la file avec le profil Téléchargement rapide actif. Si l’analyse atteint ta limite, Arroxy demande confirmation avant d’ajouter à la file."
+			"quickPlaylistTooltip": "Ajoute chaque élément chargé de la playlist à la file avec le profil Téléchargement rapide actif. Si l’analyse atteint ta limite, Arclio demande confirmation avant d’ajouter à la file."
 		},
 		"url": {
 			"heading": "Télécharger depuis une URL",
@@ -145,12 +145,12 @@
 			"bulkButton": "URLs en lot",
 			"bulkTooltip": "Ajoutez plusieurs URLs et placez-les dans la file.",
 			"features": {
-				"heading": "Ce qu'Arroxy peut récupérer",
+				"heading": "Ce qu'Arclio peut récupérer",
 				"youtube": {"heading": "YouTube", "video": "Vidéos", "channel": "Chaînes", "playlist": "Listes de lecture", "short": "Shorts", "music": "Musique", "podcast": "Podcasts"},
 				"anySite": {"heading": "2000+ sites", "video": "Vidéos", "videoPlaylist": "Playlists vidéo", "musicPlaylist": "Playlists musicales"},
 				"always": {"audioOnly": "Audio uniquement", "subtitles": "Sous-titres"}
 			},
-			"mascotIdle": "Dépose un lien et laisse Arroxy le récupérer ✨",
+			"mascotIdle": "Dépose un lien et laisse Arclio le récupérer ✨",
 			"mascotBusy": "Téléchargement en arrière-plan… je peux faire plusieurs choses à la fois 😎",
 			"advanced": "Avancé",
 			"clearAria": "Effacer l'URL",
@@ -193,14 +193,14 @@
 			"proxy": {"label": "Proxy URL", "description": "Acheminer le trafic via un proxy — utile pour les contenus géo-restreints.", "placeholder": "http://host:port", "clear": "Effacer"},
 			"backdrop": {
 				"panelTitle": "Apparence et performances",
-				"panelDescription": "Choisissez la quantité de mouvement utilisée par Arroxy pour l’arrière-plan animé.",
+				"panelDescription": "Choisissez la quantité de mouvement utilisée par Arclio pour l’arrière-plan animé.",
 				"modeLabel": "Qualité de l’arrière-plan",
 				"modeDescription": "Passez de l’apparence la plus animée aux meilleures performances.",
 				"cssOnlyLabel": "Meilleures performances",
 				"cssOnlyDescription": "CSS uniquement, sans rendu canvas.",
 				"gpuLabel": "Le plus beau",
 				"gpuDescription": "Arrière-plan WebGL animé lorsque pris en charge.",
-				"runtimeFallbackNotice": "WebGL matériel n’est pas disponible sur cet appareil, Arroxy utilise donc l’arrière-plan de performance."
+				"runtimeFallbackNotice": "WebGL matériel n’est pas disponible sur cet appareil, Arclio utilise donc l’arrière-plan de performance."
 			},
 			"limitRate": {
 				"label": "Limite de vitesse de téléchargement",
@@ -213,7 +213,7 @@
 			},
 			"playlistProbeLimit": {
 				"label": "Éléments de playlist à scanner",
-				"description": "Nombre maximum d'entrées qu'Arroxy charge lors de l'ouverture d'une playlist, d'une chaîne ou d'un résultat de recherche.",
+				"description": "Nombre maximum d'entrées qu'Arclio charge lors de l'ouverture d'une playlist, d'une chaîne ou d'un résultat de recherche.",
 				"option": "{{count}} éléments",
 				"current": "Limite actuelle : {{count}} éléments",
 				"customValue": "Personnalisé : {{count}} éléments",
@@ -223,19 +223,19 @@
 				"customDialogCancel": "Annuler",
 				"customDialogSave": "Enregistrer la limite",
 				"invalid": "Utilisez un nombre entier de 1 à 5000",
-				"tooltip": "Correspond à yt-dlp --playlist-end : Arroxy ne demande que ce nombre d'entrées de playlist, chaîne ou recherche lors de la construction du sélecteur."
+				"tooltip": "Correspond à yt-dlp --playlist-end : Arclio ne demande que ce nombre d'entrées de playlist, chaîne ou recherche lors de la construction du sélecteur."
 			},
 			"nativeAudioPreference": {"label": "Préférence audio native", "description": "Contrôle ce que choisit « Meilleur natif ». Les lignes audio manuelles et M4A/AAC restent explicites.", "compatible": "Stéréo compatible", "surround": "Préférer le surround / Dolby"},
 			"singleFilenameId": {"toggle": "Ajouter l’ID vidéo aux noms de fichiers individuels", "toggleDescription": "Garde les téléchargements ponctuels uniques lorsque les titres changent ou se ressemblent."},
 			"networkPacing": {
 				"heading": "Téléchargements en douceur",
-				"description": "Ajoute de petites pauses pendant chaque téléchargement afin qu'Arroxy ne sollicite pas le site de manière trop agressive. Les valeurs sont en secondes sauf indication contraire.",
-				"presetLabel": "Jusqu'à quel point Arroxy doit-il être prudent ?",
-				"tooltip": "Ces pauses se produisent à l'intérieur de chaque téléchargement. Arroxy continue à traiter les téléchargements en file un par un.",
+				"description": "Ajoute de petites pauses pendant chaque téléchargement afin qu'Arclio ne sollicite pas le site de manière trop agressive. Les valeurs sont en secondes sauf indication contraire.",
+				"presetLabel": "Jusqu'à quel point Arclio doit-il être prudent ?",
+				"tooltip": "Ces pauses se produisent à l'intérieur de chaque téléchargement. Arclio continue à traiter les téléchargements en file un par un.",
 				"summary": "Pauses : {{requests}} entre vérifications, {{downloads}} avant le début du média, {{subtitles}} avant les fichiers de sous-titres. Connexions : {{fragments}}.",
 				"presets": {"off": "Désactivé", "balanced": "Équilibré", "careful": "Prudent", "custom": "Personnalisé"},
 				"tooltips": {
-					"off": "Utilise uniquement les petites pauses de base qu'Arroxy conserve pour les médias et les sous-titres.",
+					"off": "Utilise uniquement les petites pauses de base qu'Arclio conserve pour les médias et les sous-titres.",
 					"balanced": "Par défaut. Ajoute de courtes pauses et utilise une seule connexion de téléchargement.",
 					"careful": "Ajoute de plus longues pauses pour les grandes playlists ou les réseaux qui atteignent souvent les limites.",
 					"custom": "Ajustez vous-même les contrôles avancés par téléchargement."
@@ -248,9 +248,9 @@
 		},
 		"quickProgress": {
 			"title": "Préparation du téléchargement rapide",
-			"description": "Arroxy lit le lien et applique {{profileName}}.",
+			"description": "Arclio lit le lien et applique {{profileName}}.",
 			"currentFallback": "Lien actuel",
-			"waitHint": "Garde cette fenêtre ouverte pendant qu’Arroxy prépare la file.",
+			"waitHint": "Garde cette fenêtre ouverte pendant qu’Arclio prépare la file.",
 			"failedCount_one": "{{count}} échec",
 			"failedCount_other": "{{count}} échecs",
 			"cancel": "Annuler la préparation",
@@ -443,7 +443,7 @@
 		}
 	},
 	"update": {
-		"appVersion": "Arroxy {{version}}",
+		"appVersion": "Arclio {{version}}",
 		"isAvailable": "est disponible",
 		"youHave": "— tu as la {{currentVersion}}",
 		"install": "Installer et redémarrer",
@@ -455,7 +455,7 @@
 		"installFailed": "Échec de la mise à jour",
 		"retry": "Réessayer"
 	},
-	"releaseNotes": {"title": "Nouveautés d'Arroxy {{version}}", "description": "Vous utilisez une mise à jour récente. Voici les points forts.", "fullNotes": "Notes de version complètes ↗", "continue": "Continuer"},
+	"releaseNotes": {"title": "Nouveautés d'Arclio {{version}}", "description": "Vous utilisez une mise à jour récente. Voici les points forts.", "fullNotes": "Notes de version complètes ↗", "continue": "Continuer"},
 	"status": {
 		"preparingBinaries": "Préparation des binaires…",
 		"mintingToken": "Génération du jeton YouTube…",
@@ -483,7 +483,7 @@
 	},
 	"errors": {
 		"ytdlp": {
-			"botBlock": "Protection anti-bot déclenchée. L'IP que tu utilises est très probablement signalée (plage de datacenter ou sortie VPN très sollicitée). Change ton IP ou choisis un autre point de sortie VPN et réessaie. Si le problème persiste, il peut s'agir d'un changement temporaire côté YouTube — Arroxy met à jour yt-dlp automatiquement au démarrage, donc le correctif sera appliqué dès que la mise à jour sera disponible en amont.",
+			"botBlock": "Protection anti-bot déclenchée. L'IP que tu utilises est très probablement signalée (plage de datacenter ou sortie VPN très sollicitée). Change ton IP ou choisis un autre point de sortie VPN et réessaie. Si le problème persiste, il peut s'agir d'un changement temporaire côté YouTube — Arclio met à jour yt-dlp automatiquement au démarrage, donc le correctif sera appliqué dès que la mise à jour sera disponible en amont.",
 			"ipBlock": "Ton adresse IP semble bloquée par YouTube. Réessaie plus tard ou utilise un VPN.",
 			"rateLimit": "YouTube limite le débit des requêtes. Attends une minute puis réessaie.",
 			"ageRestricted": "Cette vidéo est limitée par âge et ne peut pas être téléchargée sans compte connecté.",
@@ -494,7 +494,7 @@
 			"chunkTransferFailure": "Le serveur a interrompu le téléchargement en cours de route à plusieurs reprises et yt-dlp a abandonné après plusieurs tentatives. Cela touche généralement les formats vidéo les plus lourds (4K HDR / VP9 haut débit). Réessaie, change de réseau/VPN ou sélectionne un format de résolution inférieure.",
 			"missingDependency": "yt-dlp n'a pas trouvé ffmpeg ni ffprobe. Répare les binaires intégrés ou définis un emplacement FFmpeg, puis réessaie.",
 			"postprocessFailure": "yt-dlp a terminé le téléchargement, mais le post-traitement (fusion / mux / conversion) a échoué. C’est souvent un souci ffmpeg passager — réessaie, et si ça persiste, essaie une autre combinaison de formats.",
-			"parse": "Impossible d’analyser la réponse du site. L’extracteur de yt-dlp est peut-être désynchronisé. Arroxy met yt-dlp à jour automatiquement au démarrage — réessaie dans quelques minutes, le temps que le correctif arrive.",
+			"parse": "Impossible d’analyser la réponse du site. L’extracteur de yt-dlp est peut-être désynchronisé. Arclio met yt-dlp à jour automatiquement au démarrage — réessaie dans quelques minutes, le temps que le correctif arrive.",
 			"network": "Erreur réseau. Vérifie ta connexion et réessaie.",
 			"drmProtected": "Cette vidéo est protégée par DRM. yt-dlp ne peut pas supprimer le DRM, donc le fichier ne peut pas être téléchargé.",
 			"loginRequired": "Cette vidéo nécessite un compte connecté. Configure un cookies.txt (Paramètres → Cookies) et réessaie.",
@@ -528,7 +528,7 @@
 		"mp4Cap": "H.264 au-dessus de 1080p n’est pas disponible sur YouTube — limité automatiquement à 1080p"
 	},
 	"formatLabel": {"audioFallback": "Audio", "audioOnlyDot": "Audio seul · {{audio}}", "videoDot": "{{resolution}} · {{audio}}"},
-	"tray": {"tooltip": "Arroxy", "menu": {"statusIdle": "Inactif", "statusActive_one": "1 téléchargement · {{percent}}%", "statusActive_other": "{{count}} téléchargements · {{percent}}%", "open": "Ouvrir Arroxy", "quit": "Quitter Arroxy"}},
+	"tray": {"tooltip": "Arclio", "menu": {"statusIdle": "Inactif", "statusActive_one": "1 téléchargement · {{percent}}%", "statusActive_other": "{{count}} téléchargements · {{percent}}%", "open": "Ouvrir Arclio", "quit": "Quitter Arclio"}},
 	"dialogs": {
 		"quitWithActiveDownloads": {
 			"message_one": "{{count}} téléchargement en cours",
@@ -538,39 +538,40 @@
 			"pause": "Mettre en pause et quitter",
 			"keep": "Continuer le téléchargement"
 		},
-		"closeToTray": {"message": "Masquer Arroxy dans la barre des tâches lors de la fermeture ?", "detail": "Arroxy continue et termine les téléchargements actifs. Modifiez cela dans Paramètres avancés.", "hide": "Masquer dans la barre", "quit": "Quitter", "remember": "Ne plus demander"},
-		"rendererCrashed": {"message": "Arroxy a rencontré un problème", "detail": "Le processus de rendu a planté ({{reason}}). Rechargez pour réessayer.", "reload": "Recharger", "quit": "Quitter"}
+		"closeToTray": {"message": "Masquer Arclio dans la barre des tâches lors de la fermeture ?", "detail": "Arclio continue et termine les téléchargements actifs. Modifiez cela dans Paramètres avancés.", "hide": "Masquer dans la barre", "quit": "Quitter", "remember": "Ne plus demander"},
+		"rendererCrashed": {"message": "Arclio a rencontré un problème", "detail": "Le processus de rendu a planté ({{reason}}). Rechargez pour réessayer.", "reload": "Recharger", "quit": "Quitter"}
 	},
 	"share": {
-		"title": "Partager Arroxy",
-		"description": "Arroxy est gratuit et open-source. Le partager aide davantage de personnes à le découvrir.",
+		"title": "Partager Arclio",
+		"description": "Arclio est gratuit et open-source. Le partager aide davantage de personnes à le découvrir.",
 		"copyLink": "Copier le lien",
 		"copied": "Copié !",
-		"defaultMessage": "Arroxy — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
-		"footerTooltip": "Partager Arroxy",
+		"defaultMessage": "Arclio — free, open-source YouTube downloader for Windows, macOS & Linux.\n4K · HDR · MP3 · Shorts · Subtitles · SponsorBlock",
+		"footerTooltip": "Partager Arclio",
 		"footerLabel": "Partager",
-		"shareAction": "Partager Arroxy"
+		"shareAction": "Partager Arclio"
 	},
-	"nav": {"home": "Home", "library": "Library", "collections": "Collections", "favorites": "Favorites", "tags": "Tags", "history": "History", "settings": "Settings"},
+	"search": {"placeholder": "Search…", "noResults": "No results", "media": "Media", "collection": "Collection", "tag": "Tag", "items": "items"},
+	"nav": {"home": "Accueil", "library": "Bibliothèque", "collections": "Collections", "favorites": "Favoris", "tags": "Tags", "history": "Historique", "settings": "Paramètres"},
 	"library": {
-		"items": "items",
-		"searchPlaceholder": "Search by title, author, description…",
-		"all": "All",
-		"video": "Video",
+		"items": "éléments",
+		"searchPlaceholder": "Rechercher par titre, auteur, description…",
+		"all": "Tous",
+		"video": "Vidéo",
 		"audio": "Audio",
-		"sortNewest": "Newest first",
-		"sortOldest": "Oldest first",
-		"sortTitleAZ": "Title A-Z",
-		"sortTitleZA": "Title Z-A",
-		"sortLongest": "Longest",
-		"sortShortest": "Shortest",
-		"empty": "Your library is empty",
-		"emptyHint": "Download a video to get started",
-		"missing": "Missing"
+		"sortNewest": "Plus récents",
+		"sortOldest": "Plus anciens",
+		"sortTitleAZ": "Titre A-Z",
+		"sortTitleZA": "Titre Z-A",
+		"sortLongest": "Plus longs",
+		"sortShortest": "Plus courts",
+		"empty": "Votre bibliothèque est vide",
+		"emptyHint": "Téléchargez une vidéo pour commencer",
+		"missing": "Manquant"
 	},
-	"collections": {"create": "New collection", "namePlaceholder": "Collection name", "save": "Create", "cancel": "Cancel", "empty": "No collections yet", "emptyHint": "Create a collection to organize your media"},
-	"favorites": {"empty": "No favorites yet", "emptyHint": "Mark a media as favorite to see it here"},
-	"tags": {"create": "New tag", "namePlaceholder": "Tag name", "save": "Create", "cancel": "Cancel", "empty": "No tags yet", "emptyHint": "Create a tag to categorize your media"},
-	"history": {"downloads": "Downloads", "playback": "Playback", "today": "Today", "yesterday": "Yesterday", "thisWeek": "This week", "thisMonth": "This month", "empty": "No download history", "emptyPlayback": "No playback history", "playCount": "{{count}} play", "completed": "Completed"},
-	"settings": {"comingSoon": "Settings coming soon", "comingSoonHint": "Settings will be available in a future update"}
+	"collections": {"create": "Nouvelle collection", "namePlaceholder": "Nom de la collection", "save": "Créer", "cancel": "Annuler", "empty": "Aucune collection", "emptyHint": "Créez une collection pour organiser vos médias"},
+	"favorites": {"empty": "Aucun favori", "emptyHint": "Marquez un média comme favori pour le voir ici"},
+	"tags": {"create": "Nouveau tag", "namePlaceholder": "Nom du tag", "save": "Créer", "cancel": "Annuler", "empty": "Aucun tag", "emptyHint": "Créez un tag pour catégoriser vos médias"},
+	"history": {"downloads": "Téléchargements", "playback": "Lecture", "today": "Aujourd'hui", "yesterday": "Hier", "thisWeek": "Cette semaine", "thisMonth": "Ce mois", "empty": "Aucun historique de téléchargement", "emptyPlayback": "Aucun historique de lecture", "playCount": "{{count}} lecture", "completed": "Terminé"},
+	"settings": {"comingSoon": "Paramètres bientôt disponibles", "comingSoonHint": "Les paramètres seront disponibles dans une future mise à jour"}
 }

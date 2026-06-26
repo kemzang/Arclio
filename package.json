@@ -1,8 +1,8 @@
 {
-	"name": "arroxy",
+	"name": "arclio",
 	"version": "0.4.1",
 	"private": true,
-	"description": "Arroxy - YouTube downloader app",
+	"description": "Arclio - Personal multimedia library",
 	"type": "module",
 	"main": "out/main/index.js",
 	"packageManager": "bun@1.2.23",

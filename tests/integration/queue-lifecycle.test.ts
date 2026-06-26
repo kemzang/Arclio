@@ -56,7 +56,7 @@ async function boot(dir: string, normalCap = 1, ceiling = 4) {
 	// override per scenario.
 	let n = 0
 	ds.start.mockImplementation(() => Promise.resolve(jobResult(`job-${++n}`)))
-	ds.pause.mockResolvedValue(ok({paused: true, tempDir: '/tmp/.arroxy-temp/sim'}))
+	ds.pause.mockResolvedValue(ok({paused: true, tempDir: '/tmp/.arclio-temp/sim'}))
 	ds.resume.mockResolvedValue(ok({resumed: true}))
 	ds.cancel.mockResolvedValue(ok({cancelled: true}))
 
@@ -92,14 +92,14 @@ describe('queue lifecycle — quit and reload', () => {
 	it('add 4 → pauseAll → quit/reload → resumeAll — first item re-spawns with persisted tempDir', async () => {
 		const dir = await tempUserData()
 		const first = await boot(dir)
-		first.ds.pause.mockResolvedValue(ok({paused: true, tempDir: '/tmp/.arroxy-temp/keep-me'}))
+		first.ds.pause.mockResolvedValue(ok({paused: true, tempDir: '/tmp/.arclio-temp/keep-me'}))
 		first.qs.add([makeItem({id: 'a', status: 'pending'}), makeItem({id: 'b', status: 'pending'}), makeItem({id: 'c', status: 'pending'}), makeItem({id: 'd', status: 'pending'})])
 		await vi.waitFor(() => expect(first.qs.snapshot().find(i => i.id === 'a')?.status).toBe('running'))
 		await first.qs.pauseAll()
 		await flushMicrotasks()
 
 		const second = await boot(dir)
-		expect(second.qs.snapshot().find(i => i.id === 'a')?.tempDir).toBe('/tmp/.arroxy-temp/keep-me')
+		expect(second.qs.snapshot().find(i => i.id === 'a')?.tempDir).toBe('/tmp/.arclio-temp/keep-me')
 
 		await second.qs.resumeAll()
 		await flushMicrotasks()
@@ -108,7 +108,7 @@ describe('queue lifecycle — quit and reload', () => {
 		expect(second.qs.snapshot().find(i => i.id === 'a')?.status).toBe('running')
 		// Re-spawn must thread the persisted tempDir so yt-dlp picks up .part files.
 		expect(second.ds.start).toHaveBeenCalledTimes(1)
-		expect(second.ds.start.mock.calls[0]?.[0]).toMatchObject({tempDir: '/tmp/.arroxy-temp/keep-me'})
+		expect(second.ds.start.mock.calls[0]?.[0]).toMatchObject({tempDir: '/tmp/.arclio-temp/keep-me'})
 		// cap=1 means b/c/d stay pending.
 		expect(second.qs.snapshot().filter(i => i.status === 'pending')).toHaveLength(3)
 	})

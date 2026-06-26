@@ -48,11 +48,11 @@ describe('queue artifacts', () => {
 		expect(markMissingArtifacts([media, subtitles], new Set(['/tmp/video.en.vtt']))).toEqual([media, {...subtitles, missing: true}])
 	})
 
-	it('filters internal artifacts by explicit marker and Arroxy sidecar name', () => {
+	it('filters internal artifacts by explicit marker and Arclio sidecar name', () => {
 		const media = queueArtifactFromPath('/tmp/video.mkv', {discoveredAt: '2026-06-18T10:00:00.000Z'})
 		const userVisibleInfoJson = queueArtifactFromPath('/tmp/video.info.json', {discoveredAt: '2026-06-18T10:00:00.000Z'})
-		const internalResumeInfoJson = queueArtifactFromPath('/tmp/.arroxy-temp/job/_arroxy.info.json', {discoveredAt: '2026-06-18T10:00:00.000Z'})
-		const internalProbeInfoJson = {...queueArtifactFromPath('/tmp/.arroxy/probe.info.json', {discoveredAt: '2026-06-18T10:00:00.000Z'}), internal: true}
+		const internalResumeInfoJson = queueArtifactFromPath('/tmp/.arclio-temp/job/_arclio.info.json', {discoveredAt: '2026-06-18T10:00:00.000Z'})
+		const internalProbeInfoJson = {...queueArtifactFromPath('/tmp/.arclio/probe.info.json', {discoveredAt: '2026-06-18T10:00:00.000Z'}), internal: true}
 
 		expect(internalResumeInfoJson.internal).toBe(true)
 		expect(visibleQueueArtifacts([media, userVisibleInfoJson, internalResumeInfoJson, internalProbeInfoJson])).toEqual([media, userVisibleInfoJson])

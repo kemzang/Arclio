@@ -145,7 +145,7 @@ describe('Feedback nudge', () => {
 		})
 
 		expect(screen.getByTestId('feedback-nudge')).toBeInTheDocument()
-		expect(screen.getByText("Enjoying Arroxy? I'd love to hear from you! 💬")).toBeInTheDocument()
+		expect(screen.getByText("Enjoying Arclio? I'd love to hear from you! 💬")).toBeInTheDocument()
 		expect(mockTallyOpenPopup).not.toHaveBeenCalled()
 	})
 

@@ -1,11 +1,11 @@
 import {defineConfig} from '@playwright/test'
 
 function readRendererPort(): number {
-	const raw = process.env.ARROXY_RENDERER_PORT
+	const raw = process.env.ARCLIO_RENDERER_PORT
 	if (!raw) return 5173
 	const port = Number(raw)
 	if (!Number.isInteger(port) || port < 1 || port > 65_535) {
-		throw new Error(`Invalid ARROXY_RENDERER_PORT: ${raw}`)
+		throw new Error(`Invalid ARCLIO_RENDERER_PORT: ${raw}`)
 	}
 	return port
 }

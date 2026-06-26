@@ -63,7 +63,7 @@ describe('App renderer', () => {
 
 	it('renders the app heading and URL input', async () => {
 		render(<App />)
-		expect(await screen.findByTestId('title-bar')).toHaveTextContent('Arroxy')
+		expect(await screen.findByTestId('title-bar')).toHaveTextContent('Arclio')
 		expect(await screen.findByText('Download from URL')).toBeInTheDocument()
 		expect(await screen.findByTestId('profiles-main-input')).toBeInTheDocument()
 	})

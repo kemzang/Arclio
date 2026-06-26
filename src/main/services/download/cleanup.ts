@@ -27,7 +27,7 @@ export async function cleanupPartFiles(outputDir: string): Promise<void> {
 	}
 }
 
-// Recursively remove a tempDir and its parent (.arroxy-temp) iff the parent
+// Recursively remove a tempDir and its parent (.arclio-temp) iff the parent
 // becomes empty. Logs at WARN if the tempDir itself can't be removed; benign
 // failures on the parent (ENOTEMPTY/ENOENT/EPERM) are silent.
 export async function cleanupTempDirByPath(tempDir: string): Promise<void> {

@@ -146,7 +146,7 @@ describe('ClipboardWatcher', () => {
 
 	it('fires for a URL already on clipboard at enable time', () => {
 		// Cold-start scenario: user copies a URL in the browser, then opens (or
-		// focuses) Arroxy. The URL was on the clipboard before enable; we still
+		// focuses) Arclio. The URL was on the clipboard before enable; we still
 		// want to surface it.
 		const url = yt('preexisting')
 		const reader = {readText: vi.fn().mockReturnValue(url)}
