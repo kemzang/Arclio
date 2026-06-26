@@ -551,7 +551,7 @@
 		"footerLabel": "Partager",
 		"shareAction": "Partager Arclio"
 	},
-	"search": {"placeholder": "Search…", "noResults": "No results", "media": "Media", "collection": "Collection", "tag": "Tag", "items": "items"},
+	"search": {"placeholder": "Rechercher…", "noResults": "Aucun résultat", "media": "Média", "collection": "Collection", "tag": "Tag", "items": "éléments"},
 	"nav": {"home": "Accueil", "library": "Bibliothèque", "collections": "Collections", "favorites": "Favoris", "tags": "Tags", "history": "Historique", "settings": "Paramètres"},
 	"library": {
 		"items": "éléments",
@@ -563,8 +563,8 @@
 		"sortOldest": "Plus anciens",
 		"sortTitleAZ": "Titre A-Z",
 		"sortTitleZA": "Titre Z-A",
-		"sortLongest": "Plus longs",
-		"sortShortest": "Plus courts",
+		"sortLongest": "Plus long",
+		"sortShortest": "Plus court",
 		"empty": "Votre bibliothèque est vide",
 		"emptyHint": "Téléchargez une vidéo pour commencer",
 		"missing": "Manquant"
@@ -573,22 +573,33 @@
 	"collectionDetail": {"back": "Retour aux collections", "empty": "Aucun média dans cette collection", "emptyHint": "Ajoutez des médias depuis la bibliothèque", "removeFromCollection": "Retirer de la collection"},
 	"favorites": {"empty": "Aucun favori", "emptyHint": "Marquez un média comme favori pour le voir ici"},
 	"tags": {"create": "Nouveau tag", "namePlaceholder": "Nom du tag", "save": "Créer", "cancel": "Annuler", "empty": "Aucun tag", "emptyHint": "Créez un tag pour catégoriser vos médias"},
-	"history": {"downloads": "Téléchargements", "playback": "Lecture", "today": "Aujourd'hui", "yesterday": "Hier", "thisWeek": "Cette semaine", "thisMonth": "Ce mois", "empty": "Aucun historique de téléchargement", "emptyPlayback": "Aucun historique de lecture", "playCount": "{{count}} lecture", "completed": "Terminé"},
+	"history": {
+		"downloads": "Téléchargements",
+		"playback": "Lecture",
+		"today": "Aujourd'hui",
+		"yesterday": "Hier",
+		"thisWeek": "Cette semaine",
+		"thisMonth": "Ce mois-ci",
+		"empty": "Aucun historique de téléchargement",
+		"emptyPlayback": "Aucun historique de lecture",
+		"playCount": "{{count}} lecture",
+		"completed": "Terminé"
+	},
+	"player": {"back": "Retour à la bibliothèque", "noMedia": "Média introuvable", "noAsset": "Aucun fichier lisible trouvé", "subtitles": "Sous-titres", "speed": "Vitesse"},
 	"settings": {
 		"title": "Paramètres",
-		"outputDir": "Dossier de sortie",
+		"outputDir": "Répertoire de sortie",
 		"outputDirDescription": "Où les fichiers téléchargés sont enregistrés",
 		"change": "Modifier",
 		"language": "Langue",
 		"languageDescription": "Langue d'affichage de l'application",
 		"theme": "Thème",
 		"themeDescription": "Apparence de l'application",
-		"clipboardWatch": "Surveillance du presse-papiers",
-		"clipboardWatchDescription": "Détecter automatiquement les URL dans le presse-papiers",
+		"clipboardWatch": "Surveiller le presse-papiers",
+		"clipboardWatchDescription": "Détecter automatiquement les URLs dans le presse-papiers",
 		"writeSubtitles": "Écrire les sous-titres",
 		"writeSubtitlesDescription": "Télécharger les fichiers de sous-titres par défaut",
-		"embedThumbnail": "Intégrer la miniature",
-		"embedThumbnailDescription": "Intégrer la miniature dans le fichier média"
-	},
-	"player": {"back": "Retour à la bibliothèque", "noMedia": "Média introuvable", "noAsset": "Aucun fichier lisible trouvé", "subtitles": "Sous-titres", "speed": "Vitesse"}
+		"embedThumbnail": "Incorporer la miniature",
+		"embedThumbnailDescription": "Incorporer la miniature dans le fichier média"
+	}
 }

@@ -2445,3 +2445,279 @@ msgctxt "player.speed"
 msgid "Speed"
 msgstr "速度"
 
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "検索…"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "結果なし"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "メディア"
+
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "コレクション"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "タグ"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "アイテム"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "ホーム"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "ライブラリ"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "コレクション"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "お気に入り"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "タグ"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "履歴"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "設定"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "アイテム"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "タイトル、著者、説明で検索…"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "すべて"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "動画"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "音声"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "新しい順"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "古い順"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "タイトル A-Z"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "タイトル Z-A"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "最長"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "最短"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "ライブラリは空です"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "動画をダウンロードして始めましょう"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "不明"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "新しいコレクション"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "コレクション名"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "作成"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "コレクションがありません"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "メディアを整理するコレクションを作成"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "コレクションに戻る"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "このコレクションにメディアがありません"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "ライブラリからメディアを追加"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "コレクションから削除"
+
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "お気に入りがありません"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "メディアをお気に入りとしてマーク"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "新しいタグ"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "タグ名"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "作成"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "タグがありません"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "メディアを分類するタグを作成"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "ダウンロード"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "再生"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "今日"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "昨日"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "今週"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "今月"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "ダウンロード履歴なし"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "再生履歴なし"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} 回再生"
+
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "完了"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "設定"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "出力ディレクトリ"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "ダウンロードファイルの保存先"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "変更"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "言語"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "アプリの表示言語"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "テーマ"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "アプリの外観"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "クリップボード監視"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "クリップボードのURLを自動検出"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "字幕を書き込む"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "デフォルトで字幕ファイルをダウンロード"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "サムネイルを埋め込む"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "メディアファイルにサムネイルを埋め込む"

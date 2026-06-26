@@ -1,29 +1,29 @@
 <div align="center">
-  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy maskoti" width="180" />
+  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arclio maskoti" width="180" />
 
-# Arroxy — Windows, macOS va Linux uchun Bepul Ochiq Manbali YouTube (+ 2000 sayt) Yuklovchi
+# Arclio — Windows, macOS va Linux uchun Bepul Ochiq Manbali YouTube (+ 2000 sayt) Yuklovchi
 
 **4K · 1080p60 · HDR · Surround/Dolby audio · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **O'qing:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · **O'zbekcha** · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![Reliz](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Qurish](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Veb-sayt](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Litsenziya](https://img.shields.io/badge/license-MIT-green) ![Platformalar](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Tillar](https://img.shields.io/badge/i18n-21_languages-blue)
+[![Reliz](https://img.shields.io/github/v/release/antonio-orionus/Arclio?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arclio/releases/latest) [![Qurish](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arclio/release.yml?label=Build)](https://github.com/antonio-orionus/Arclio/actions/workflows/release.yml) [![Veb-sayt](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![Litsenziya](https://img.shields.io/badge/license-MIT-green) ![Platformalar](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Tillar](https://img.shields.io/badge/i18n-21_languages-blue)
 
 **YouTube va 2000+ qo'llab-quvvatlanadigan saytlardan** videolar, Shorts, musiqa, kanallar, podkastlar yoki audio treklarni yuklab oling — 60 fps da 4K HDR gacha yoki MP3 / AAC / Opus sifatida. Windows, macOS va Linuxda mahalliy ishlaydi. **Reklamalar yo'q, keraksiz narsalar yo'q, qo'shimcha taklif yo'q.**
 
-[**↓ Oxirgi Relizni Yuklab Olish**](#install) &nbsp;·&nbsp; [**Veb-sayt**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ Oxirgi Relizni Yuklab Olish**](#install) &nbsp;·&nbsp; [**Veb-sayt**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 [![Discord hamjamiyatiga qo'shiling](https://img.shields.io/badge/Discord%20hamjamiyatiga%20qo%27shiling-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
 
-<img src="build/demo.gif" alt="Arroxy demosi" width="720" />
+<img src="build/demo.gif" alt="Arclio demosi" width="720" />
 
-<img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" width="720" />
+<img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
-Agar Arroxy vaqtingizni tejasa, ⭐ boshqalarga topishga yordam beradi.
+Agar Arclio vaqtingizni tejasa, ⭐ boshqalarga topishga yordam beradi.
 
 </div>
 
-> **What is Arroxy?** Arroxy is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arroxy), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arroxy), Flatpak, AppImage, and direct download.
+> **What is Arclio?** Arclio is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arclio), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arclio), Flatpak, AppImage, and direct download.
 >
 > _Last updated: 2026-06-17._
 
@@ -32,7 +32,7 @@ Agar Arroxy vaqtingizni tejasa, ⭐ boshqalarga topishga yordam beradi.
 ## Mundarija
 
 - [Yuklab olish](#install)
-- [Nima uchun Arroxy](#why)
+- [Nima uchun Arclio](#why)
 - [Xususiyatlar](#features)
 - [Maxfiylik](#privacy)
 - [Ko'p so'raladigan savollar](#faq)
@@ -45,26 +45,26 @@ Agar Arroxy vaqtingizni tejasa, ⭐ boshqalarga topishga yordam beradi.
 
 | Platforma | Format                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Portable.exe)                                                                                                                                                                                                        |
-| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-x64.dmg)                                                                                                                                                                                                                     |
-| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.tar.gz) |
-| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Portable.exe)                                                                                                                                                                                                        |
+| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-x64.dmg)                                                                                                                                                                                                                     |
+| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.tar.gz) |
+| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
-[**Oxirgi relizni oling →**](https://github.com/antonio-orionus/Arroxy/releases/latest)
+[**Oxirgi relizni oling →**](https://github.com/antonio-orionus/Arclio/releases/latest)
 
 ### <a id="why-warning"></a>Nima uchun ogohlantirish ko'rishingiz mumkin
 
-Arroxy ochiq manbali va MIT litsenziyali. Windows va macOS qurilmalari **kod imzolanmagan** — Apple Developer ID va Windows EV kod imzolash sertifikatlari har biri yiliga yuzlab dollarga tushadi, buni mustaqil loyiha o'z hisobidan to'laydi. Bu imzolarsiz, Windows SmartScreen va macOS Gatekeeper birinchi ishga tushirishda ogohlantiradi. Ogohlantirishlar *operatsion tizimingiz nashriyotchini tanib olmasligini* anglatadi — bu Arroxy zararli dastur ekanligini anglatmaydi.
+Arclio ochiq manbali va MIT litsenziyali. Windows va macOS qurilmalari **kod imzolanmagan** — Apple Developer ID va Windows EV kod imzolash sertifikatlari har biri yiliga yuzlab dollarga tushadi, buni mustaqil loyiha o'z hisobidan to'laydi. Bu imzolarsiz, Windows SmartScreen va macOS Gatekeeper birinchi ishga tushirishda ogohlantiradi. Ogohlantirishlar *operatsion tizimingiz nashriyotchini tanib olmasligini* anglatadi — bu Arclio zararli dastur ekanligini anglatmaydi.
 
-Arroxy ni o'zingiz tekshirishning uch yo'li, ortib boruvchi qat'iylikda:
+Arclio ni o'zingiz tekshirishning uch yo'li, ortib boruvchi qat'iylikda:
 
-- **Manbani o'qing.** Har bir satr [GitHub](https://github.com/antonio-orionus/Arroxy) da mavjud va siz [manbadan yaratishingiz](#tech) mumkin.
+- **Manbani o'qing.** Har bir satr [GitHub](https://github.com/antonio-orionus/Arclio) da mavjud va siz [manbadan yaratishingiz](#tech) mumkin.
 - **SHA256 ni tekshiring.** Faylingizni e'lon qilingan [`SHA256SUMS`](../../releases/latest) bilan solishtiring — pastdagi [Yuklab olishingizni tekshiring](#verify) ga qarang.
 - **Uchinchi tomon skanini o'tkazing.** Faylni [VirusTotal](https://www.virustotal.com) ga yuklang.
 
 ### <a id="windows-first-launch"></a>Windows da birinchi ishga tushirish
 
-Birinchi ishga tushirishda **"Windows protected your PC"** yoki **"Unknown publisher"** xabarini ko'rishingiz mumkin. Bu `Arroxy-win-x64-Setup.exe` va `Arroxy-win-x64-Portable.exe` ikkisiga ham tegishli. Arroxy bepul va ochiq manbali dastur bo'lib, Windows qurilmalari pulli sertifikat bilan imzolanmagan, shuning uchun SmartScreen ularni belgilaydi. Bu Arroxy xavfli ekanligini **avtomatik ravishda** anglatmaydi. Davom etish uchun:
+Birinchi ishga tushirishda **"Windows protected your PC"** yoki **"Unknown publisher"** xabarini ko'rishingiz mumkin. Bu `Arclio-win-x64-Setup.exe` va `Arclio-win-x64-Portable.exe` ikkisiga ham tegishli. Arclio bepul va ochiq manbali dastur bo'lib, Windows qurilmalari pulli sertifikat bilan imzolanmagan, shuning uchun SmartScreen ularni belgilaydi. Bu Arclio xavfli ekanligini **avtomatik ravishda** anglatmaydi. Davom etish uchun:
 
 <div align="center">
   <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialogi, "More info" havolasi ta'kidlangan holda" />
@@ -76,35 +76,35 @@ Birinchi ishga tushirishda **"Windows protected your PC"** yoki **"Unknown publi
 
 #### Windows Defender fayl ni belgilasa yoki olib tashlasa
 
-Defender evristikasi ba'zida imzalanmagan NSIS o'rnatuvchilari va Electron portableni shubhali deb belgilaydi. Agar Defender `Arroxy-win-x64-Setup.exe` yoki `Arroxy-win-x64-Portable.exe` ni karantinga olsa, uni **Windows Security → Virus & threat protection → Protection history** dan qayta tiklang, so'ng Arroxy bajariladigan faylini **Manage settings → Add or remove exclusions** ostida ruxsat etilgan element sifatida qo'shing. SmartScreen singari, bu ham aniqlanmagan zararli dastur emas, balki etishmayotgan nashriyotchi imzosi sababli yuzaga keladi.
+Defender evristikasi ba'zida imzalanmagan NSIS o'rnatuvchilari va Electron portableni shubhali deb belgilaydi. Agar Defender `Arclio-win-x64-Setup.exe` yoki `Arclio-win-x64-Portable.exe` ni karantinga olsa, uni **Windows Security → Virus & threat protection → Protection history** dan qayta tiklang, so'ng Arclio bajariladigan faylini **Manage settings → Add or remove exclusions** ostida ruxsat etilgan element sifatida qo'shing. SmartScreen singari, bu ham aniqlanmagan zararli dastur emas, balki etishmayotgan nashriyotchi imzosi sababli yuzaga keladi.
 
-> Arroxy'ni faqat rasmiy GitHub Releases sahifasidan yuklab oling. Agar faylni boshqa saytdan olgan bo'lsangiz yoki kimdir sizga yuborgan bo'lsa, uni o'chirib, rasmiy manbadan yangi nusxa yuklab oling. Manba kodi ommaviy, shuning uchun xohlasangiz o'zingiz tekshirishingiz yoki Arroxy'ni mustaqil qurishingiz mumkin.
+> Arclio'ni faqat rasmiy GitHub Releases sahifasidan yuklab oling. Agar faylni boshqa saytdan olgan bo'lsangiz yoki kimdir sizga yuborgan bo'lsa, uni o'chirib, rasmiy manbadan yangi nusxa yuklab oling. Manba kodi ommaviy, shuning uchun xohlasangiz o'zingiz tekshirishingiz yoki Arclio'ni mustaqil qurishingiz mumkin.
 
 ### <a id="macos-first-launch"></a>macOS da birinchi ishga tushirish
 
-Arroxy hali macOS uchun kod imzolanmagan, shuning uchun Gatekeeper birinchi ishga tushirishni bloklaydi. Uni ruxsat etishning aniq yo'li macOS versiyangizga bog'liq — Sequoia 15 eski sichqonchaning o'ng tugmasi → Open usulini qattiqlashtirib qo'ydi.
+Arclio hali macOS uchun kod imzolanmagan, shuning uchun Gatekeeper birinchi ishga tushirishni bloklaydi. Uni ruxsat etishning aniq yo'li macOS versiyangizga bog'liq — Sequoia 15 eski sichqonchaning o'ng tugmasi → Open usulini qattiqlashtirib qo'ydi.
 
 #### macOS Sequoia 15 va undan keyingi (joriy)
 
 Sequoia 15 va undan yangi versiyalarda, sichqonchaning o'ng tugmasi → Open ko'plab karantindagi ilovalar uchun Gatekeeper ni chetlab o'tmaydi. Buning o'rniga Tizim Sozlamalari panelidan foydalaning:
 
-1. O'rnatilgan DMG dan `Arroxy.app` ni `/Applications` ga torting.
-2. Arroxy ni ikki marta bosing. Bloklash dialogi paydo bo'ladi — **Done** tugmasini bosing (*Move to Trash* ni bosmang).
-3. **System Settings → Privacy & Security** ni oching va **Security** bo'limiga suring. Siz *"Arroxy was blocked to protect your Mac"* (yoki shunga o'xshash xabar) ko'rasiz.
-4. **Open Anyway** tugmasini bosing, parolingiz yoki Touch ID bilan tasdiqlang, so'ng Arroxy ni `/Applications` dan qayta ishga tushiring.
+1. O'rnatilgan DMG dan `Arclio.app` ni `/Applications` ga torting.
+2. Arclio ni ikki marta bosing. Bloklash dialogi paydo bo'ladi — **Done** tugmasini bosing (*Move to Trash* ni bosmang).
+3. **System Settings → Privacy & Security** ni oching va **Security** bo'limiga suring. Siz *"Arclio was blocked to protect your Mac"* (yoki shunga o'xshash xabar) ko'rasiz.
+4. **Open Anyway** tugmasini bosing, parolingiz yoki Touch ID bilan tasdiqlang, so'ng Arclio ni `/Applications` dan qayta ishga tushiring.
 
 #### macOS Sonoma 14 va undan oldingi
 
-1. O'rnatilgan DMG dan `Arroxy.app` ni `/Applications` ga torting.
-2. `/Applications` dagi `Arroxy.app` ga sichqonchaning o'ng tugmasi bilan bosing (yoki Control-click) va **Open** ni tanlang.
-3. Ogohlantirish dialogida endi **Open** tugmasi bor — uni bosing va tasdiqlang. Arroxy odatda ochiladi va ogohlantirish boshqa ko'rinmaydi.
+1. O'rnatilgan DMG dan `Arclio.app` ni `/Applications` ga torting.
+2. `/Applications` dagi `Arclio.app` ga sichqonchaning o'ng tugmasi bilan bosing (yoki Control-click) va **Open** ni tanlang.
+3. Ogohlantirish dialogida endi **Open** tugmasi bor — uni bosing va tasdiqlang. Arclio odatda ochiladi va ogohlantirish boshqa ko'rinmaydi.
 
 #### "App is damaged" yoki doimiy Gatekeeper bloki — Terminal orqali tuzatish
 
-Agar macOS *"Arroxy is damaged and can't be opened"* desa, yoki yuqoridagi qadamlarning hech biri blokni bartaraf etmasa, DMG dagi karantin atributi sabab (ba'zi brauzerlar va macOS ning o'zining translokatsiya xatti-harakati uni o'rnatadi). O'rnatilgan ilovadan uni o'chirib tashlang:
+Agar macOS *"Arclio is damaged and can't be opened"* desa, yoki yuqoridagi qadamlarning hech biri blokni bartaraf etmasa, DMG dagi karantin atributi sabab (ba'zi brauzerlar va macOS ning o'zining translokatsiya xatti-harakati uni o'rnatadi). O'rnatilgan ilovadan uni o'chirib tashlang:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Arroxy.app
+xattr -dr com.apple.quarantine /Applications/Arclio.app
 ```
 
 **Apple Silicon va Intel:** M seriyali Mac da (M1 / M2 / M3 / M4) `arm64` DMG ni yuklab oling. Intel Mac larda `x64` DMG ni yuklab oling. Noto'g'ri qurilmani ishga tushirish Rosetta orqali ishlaydi, lekin sezilarli darajada sekinroq.
@@ -120,8 +120,8 @@ AppImagelar to'g'ridan-to'g'ri ishlaydi — o'rnatish shart emas. Faqat faylni b
 **Terminal:**
 
 ```bash
-chmod +x Arroxy-linux-x64.AppImage
-./Arroxy-linux-x64.AppImage
+chmod +x Arclio-linux-x64.AppImage
+./Arclio-linux-x64.AppImage
 ```
 
 Agar ishga tushirish hali ham muvaffaqiyatsiz bo'lsa, FUSE etishmayotgan bo'lishi mumkin:
@@ -139,11 +139,11 @@ sudo pacman -S fuse2
 
 **Ixtiyoriy ish stoli integratsiyasi:** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) ni bir marta o'rnating va siz ikki marta bosgandagi har qanday AppImage avtomatik ravishda ishga tushiruvchi menyungizga ro'yxatdan o'tkaziladi — qo'lda `.desktop` fayli talab qilinmaydi.
 
-**Flatpak (qumloq muhitdagi muqobil):** xuddi shu reliz sahifasidan `Arroxy-*.flatpak` ni yuklab oling.
+**Flatpak (qumloq muhitdagi muqobil):** xuddi shu reliz sahifasidan `Arclio-*.flatpak` ni yuklab oling.
 
 ```bash
-flatpak install --user Arroxy-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arroxy
+flatpak install --user Arclio-linux-x64.flatpak
+flatpak run io.github.antonio_orionus.Arclio
 ```
 
 <details>
@@ -154,19 +154,19 @@ Har bir reliz binarylar bilan birga `SHA256SUMS` faylini e'lon qiladi. Yuklab ol
 **Windows (PowerShell yoki Command Prompt):**
 
 ```powershell
-certutil -hashfile Arroxy-win-x64-Setup.exe SHA256
+certutil -hashfile Arclio-win-x64-Setup.exe SHA256
 ```
 
 **macOS (Terminal):**
 
 ```bash
-shasum -a 256 Arroxy-mac-arm64.dmg
+shasum -a 256 Arclio-mac-arm64.dmg
 ```
 
 **Linux (Terminal):**
 
 ```bash
-sha256sum Arroxy-linux-x64.AppImage
+sha256sum Arclio-linux-x64.AppImage
 ```
 
 Uchinchi tomon zararli dastur skanini istaysizmi? Faylni [VirusTotal](https://www.virustotal.com) da yuklang. Kichik vositalardan bir nechta umumiy evristik belgilash imzalanmagan Electron ilovalar uchun odatiy holat; yirik vositalardan keng tarqalgan aniqlanishlar haqiqiy muammo bo'lar edi.
@@ -180,10 +180,10 @@ Paket menejeri allaqachon ishlatayapsizmi? Qo'lda yuklab olish yo'lidan o'tishin
 
 | Kanal | Buyruq                                                                                |
 | ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
-| Flatpak            | `flatpak install --user Arroxy-linux-x64.flatpak`                                                 |
+| Winget             | `winget install AntonioOrionus.Arclio`                                                            |
+| Scoop              | `scoop bucket add arclio https://github.com/antonio-orionus/scoop-bucket && scoop install arclio` |
+| Homebrew           | `brew tap antonio-orionus/arclio && brew install --cask arclio`                                   |
+| Flatpak            | `flatpak install --user Arclio-linux-x64.flatpak`                                                 |
 
 </details>
 
@@ -204,11 +204,11 @@ Paket menejeri allaqachon ishlatayapsizmi? Qo'lda yuklab olish yo'lidan o'tishin
 
 ---
 
-## <a id="why"></a>Nima uchun Arroxy
+## <a id="why"></a>Nima uchun Arclio
 
 Eng keng tarqalgan muqobillar bilan yon-yon taqqoslash:
 
-|            | Arroxy | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
+|            | Arclio | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
 | ---------- | :----: | :-----------------: | :---------: | :------------------------: | :----------------: |
 | Bepul, premium daraja yo'q |   ✅   |         ⚠️          |     ✅      |             ⚠️             |         ⚠️         |
 | Ochiq manba |   ✅   |         ❌          |     ❌      |             ❌             |         ⚠️         |
@@ -218,7 +218,7 @@ Eng keng tarqalgan muqobillar bilan yon-yon taqqoslash:
 | Platformalararo desktop ilovasi |   ✅   |         ✅          |     ✅      |            N/A             |         ❌         |
 | Subtitrlar + SponsorBlock |   ✅   |         ⚠️          |     ❌      |             ❌             |         ❌         |
 
-Arroxy bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl oling. Hisoblar yo'q, qo'shimcha takliflar yo'q, ma'lumot to'plash yo'q.
+Arclio bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl oling. Hisoblar yo'q, qo'shimcha takliflar yo'q, ma'lumot to'plash yo'q.
 
 ---
 
@@ -241,7 +241,7 @@ Arroxy bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl olin
 
 - **Moslashuvchan boshlash rejimlari** — boshqariladigan bitta yuklab olish, playlist/kanal tanlagichi, URLlarni ommaviy joylash yoki saqlangan standartlar bilan Quick Downloadni tanlang
 - **Markaziy yuklab olish navbati** — bitta, playlist, bulk yoki quick ishlarning barchasi jarayon, pauza, davom ettirish, bekor qilish, qayta urinish va ustuvorlik boshqaruvi uchun bir joyga tushadi
-- **Bufer kuzatish** — YouTube havolasini nusxalang va Arroxy ilovaga qaytganingizda URL'ni avtomatik to'ldiradi (Kengaytirilgan sozlamalarda o'chirish/yoqish mumkin)
+- **Bufer kuzatish** — YouTube havolasini nusxalang va Arclio ilovaga qaytganingizda URL'ni avtomatik to'ldiradi (Kengaytirilgan sozlamalarda o'chirish/yoqish mumkin)
 - **URL'larni avtomatik tozalash** — kuzatish parametrlarini olib tashlaydi (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) va `youtube.com/redirect` havolalarini ochadi
 - **Tray rejimi** — oynani yopish yuklamalarni fon rejimida davom ettiradi
 - **21 til** — tizim tilini avtomatik aniqlaydi, istalgan vaqt almashtirish mumkin
@@ -260,20 +260,20 @@ Arroxy bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl olin
 - **YouTube to'liq** — Videolar, Shorts, Kanallar, Pleylistlar, YouTube Music va Podkastlar birinchi darajali manbalar sifatida ishlaydi
 - **2000+ boshqa saytlar** yt-dlp orqali — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org va boshqalar
 - **Faqat audio va subtitrlar** har qanday qo'llab-quvvatlanadigan saytda ishlaydi, nafaqat YouTube'da
-- Sayt o'zgarsa, yt-dlp har hafta tuzatishlar chiqaradi va Arroxy ishga tushganda binarni avtomatik yangilaydi
+- Sayt o'zgarsa, yt-dlp har hafta tuzatishlar chiqaradi va Arclio ishga tushganda binarni avtomatik yangilaydi
 
 <table align="center" width="100%">
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" /><br/><sub><b>Tezkor yuklab olish bosh sahifasi</b><br/>URL joylang va faol profilingiz bilan darhol yuklab oling</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arroxy — Download profiles" /><br/><sub><b>Qayta ishlatiladigan yuklash profillari</b><br/>Format, sifat va chiqishni shablon sifatida saqlang — har yuklashda qayta ishlating</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" /><br/><sub><b>Tezkor yuklab olish bosh sahifasi</b><br/>URL joylang va faol profilingiz bilan darhol yuklab oling</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arclio — Download profiles" /><br/><sub><b>Qayta ishlatiladigan yuklash profillari</b><br/>Format, sifat va chiqishni shablon sifatida saqlang — har yuklashda qayta ishlating</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arroxy — Multi-language audio" /><br/><sub><b>Ko'p tilli audio yo'llari</b><br/>Video taqdim etgan aniq audio tilini tanlang</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arroxy — Surround / Dolby audio" /><br/><sub><b>Surround / Dolby audio</b><br/>5.1 va Dolby yo'llari aniqlanadi va saqlanadi</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arclio — Multi-language audio" /><br/><sub><b>Ko'p tilli audio yo'llari</b><br/>Video taqdim etgan aniq audio tilini tanlang</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arclio — Surround / Dolby audio" /><br/><sub><b>Surround / Dolby audio</b><br/>5.1 va Dolby yo'llari aniqlanadi va saqlanadi</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arroxy — Bulk URL mode" /><br/><sub><b>Ommaviy URL rejimi</b><br/>Ro'yxat joylang, nusxalarni avtomatik olib tashlang, hammasini birato'la navbatga qo'ying</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arroxy — Parallel download queue" /><br/><sub><b>Parallel yuklash navbati</b><br/>Bir vaqtning o'zida bir nechta yuklash, jonli jarayon bilan</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arclio — Bulk URL mode" /><br/><sub><b>Ommaviy URL rejimi</b><br/>Ro'yxat joylang, nusxalarni avtomatik olib tashlang, hammasini birato'la navbatga qo'ying</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arclio — Parallel download queue" /><br/><sub><b>Parallel yuklash navbati</b><br/>Bir vaqtning o'zida bir nechta yuklash, jonli jarayon bilan</sub></td>
   </tr>
 </table>
 
@@ -283,7 +283,7 @@ Arroxy bir narsa uchun yaratilgan: URL'ni joylashtiring, toza mahalliy fayl olin
 
 Yuklamalar YouTube'dan siz tanlagan papkaga to'g'ridan-to'g'ri [yt-dlp](https://github.com/yt-dlp/yt-dlp) orqali olinadi — hech narsa uchinchi tomon server orqali yo'naltirilmaydi. Ko'rish tarixi, yuklab olish tarixi, URL'lar va fayl mazmunlari qurilmangizda qoladi.
 
-Arroxy [OpenPanel](https://openpanel.dev) orqali anonim, agregat telemetriya yuboradi — ishga tushirishlar, OS, ilova versiyalari va nosozliklarni tushunish uchun yetarli. URL, video sarlavhasi, fayl yo‘li, hisob ma’lumoti, fingerprinting yoki shaxsiy ma’lumot yo‘q. Har bir o‘rnatish IDsi tasodifiy va shaxsingizga bog‘lanmagan. Sozlamalarda o‘chirib qo‘yishingiz mumkin.
+Arclio [OpenPanel](https://openpanel.dev) orqali anonim, agregat telemetriya yuboradi — ishga tushirishlar, OS, ilova versiyalari va nosozliklarni tushunish uchun yetarli. URL, video sarlavhasi, fayl yo‘li, hisob ma’lumoti, fingerprinting yoki shaxsiy ma’lumot yo‘q. Har bir o‘rnatish IDsi tasodifiy va shaxsingizga bog‘lanmagan. Sozlamalarda o‘chirib qo‘yishingiz mumkin.
 
 ---
 
@@ -299,13 +299,13 @@ YouTube uzatadigan har qanday narsa: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 3
 Ha. Format menyusidan *faqat audio* ni tanlang va MP3, M4A/AAC, Opus yoki WAV ni belgilang.
 
 **YouTube hisob yoki kukilar kerakmi?**
-Standart holatda — yo'q. Arroxy YouTube hisobi, tizimga kirish yoki kuki eksportisiz ishlaydi. Autentifikatsiya talab qiladigan kontent (masalan, yosh chegarasi qo'yilgan yoki faqat a'zolar uchun videolar) uchun Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash mavjud (Cookies source: file or browser). Standart holatda u o'chirilgan. Agar uni yoqsangiz, yt-dlp wiki sahifasida [kuki asosidagi avtomatlashtirish Google hisobini belgilashi mumkinligi haqida ogohlantirish berilgan](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); bunday holatda bir martalik hisob xavfsizroq tanlovdir.
+Standart holatda — yo'q. Arclio YouTube hisobi, tizimga kirish yoki kuki eksportisiz ishlaydi. Autentifikatsiya talab qiladigan kontent (masalan, yosh chegarasi qo'yilgan yoki faqat a'zolar uchun videolar) uchun Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash mavjud (Cookies source: file or browser). Standart holatda u o'chirilgan. Agar uni yoqsangiz, yt-dlp wiki sahifasida [kuki asosidagi avtomatlashtirish Google hisobini belgilashi mumkinligi haqida ogohlantirish berilgan](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); bunday holatda bir martalik hisob xavfsizroq tanlovdir.
 
 **YouTube nimadir o'zgartirsa ham ishlashda davom etadimi?**
-yt-dlp ishga tushirishda avtomatik yangilanadi, va YouTube biror narsani o'zgartirganda Arroxy tezlik bilan tuzatishlarni chiqaradi. Agar siz biron muammoga duch kelsangiz, Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash zaxira variant sifatida mavjud.
+yt-dlp ishga tushirishda avtomatik yangilanadi, va YouTube biror narsani o'zgartirganda Arclio tezlik bilan tuzatishlarni chiqaradi. Agar siz biron muammoga duch kelsangiz, Kengaytirilgan sozlamalarda ixtiyoriy kuki qo'llab-quvvatlash zaxira variant sifatida mavjud.
 
-**Arroxy qanday tillarda mavjud?**
-Yigirma bir, darhol tayyor: English, Español (ispan), Deutsch (nemis), Français (frantsuz), 日本語 (yapon), 中文 (xitoy), Русский (rus), Українська (ukrain), हिन्दी (hind), Afaan Oromoo, Kiswahili, O'zbekcha (o'zbek), Tiếng Việt (vyetnam), አማርኛ (amxar), العربية (arab), اردو (urdu), پښتو (pushtu), বাংলা (bengal), မြန်မာဘာသာ (birma), Ελληνικά (grek) va Српски (serb). Arroxy birinchi ishga tushirishda operatsion tizimingiz tilini avtomatik aniqlaydi va siz istalgan vaqtda asboblar panelindagi til tanlagichidan o'zgartirishingiz mumkin. Runtime locale JSON fayllari src/shared/i18n/locales/ ichida, tarjimonlarga mo'ljallangan PO kataloglari esa i18n/locales/ ichida — hissa qo'shish uchun GitHub'da PR oching.
+**Arclio qanday tillarda mavjud?**
+Yigirma bir, darhol tayyor: English, Español (ispan), Deutsch (nemis), Français (frantsuz), 日本語 (yapon), 中文 (xitoy), Русский (rus), Українська (ukrain), हिन्दी (hind), Afaan Oromoo, Kiswahili, O'zbekcha (o'zbek), Tiếng Việt (vyetnam), አማርኛ (amxar), العربية (arab), اردو (urdu), پښتو (pushtu), বাংলা (bengal), မြန်မာဘာသာ (birma), Ελληνικά (grek) va Српски (serb). Arclio birinchi ishga tushirishda operatsion tizimingiz tilini avtomatik aniqlaydi va siz istalgan vaqtda asboblar panelindagi til tanlagichidan o'zgartirishingiz mumkin. Runtime locale JSON fayllari src/shared/i18n/locales/ ichida, tarjimonlarga mo'ljallangan PO kataloglari esa i18n/locales/ ichida — hissa qo'shish uchun GitHub'da PR oching.
 
 **Boshqa narsalarni o'rnatishim kerakmi?**
 Yo‘q. yt-dlp birinchi ishga tushirishda avtomatik yuklab olinadi va kompyuteringizda keshlanadi; ffmpeg va ffprobe ilova bilan birga keladi. Undan keyin qo‘shimcha sozlash shart emas.
@@ -329,7 +329,7 @@ Hali rejalashtirilgan — taxminan ustuvorlik tartibida:
 | ---------------- | ---------------- |
 | **Playlist va kanal filtrlari** | Playlist yoki kanalni ro‘yxatlashda sana oralig‘i filtrlari |
 | **YouTube audio track afzalliklari** | YouTube bir nechta audio track berganda app bo'ylab og'zaki til track afzalligini sozlash va har bir profile uchun override qilish |
-| **App ichida browser sign-in** | Arroxy ichida browser windows ochib, sign in qilish va site cookiesni qo'lda export qilmasdan ishlatish |
+| **App ichida browser sign-in** | Arclio ichida browser windows ochib, sign in qilish va site cookiesni qo'lda export qilmasdan ishlatish |
 | **Bir-click video download** | Active profile bilan detected yoki pasted URLdan video downloadni bir clickda boshlash |
 | **Kuchliroq retry recovery** | Ishonchsiz yoki muammoli internet connection sabab uzilgan yuklab olishlar uchun yangi retry yo'li |
 | **To'liq download manager drawer** | Queue drawerni to'liqroq managerga aylantirish, queued items uchun destination folderlarni o'zgartirish bilan |
@@ -398,8 +398,8 @@ sudo apt install -y xvfb
 ### Klonlash va ishga tushirish
 
 ```bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # tavsiya; pinned tools qo'lda faollashtirilgan bo'lsa o'tkazib yuboring
 bun run bootstrap
 bun run doctor
@@ -414,7 +414,7 @@ bun run dist         # joriy OT uchun paketlash
 bun run dist:win     # supported host'da Windows targets paketlash
 ```
 
-> `bun run bootstrap` bog'liqliklarni o'rnatadi, Electron app bog'liqliklarini rebuild qiladi, Electron'ni tekshiradi, development uchun embedded ffmpeg/ffprobe tayyorlaydi va Playwright Chromium'ni o'rnatadi. yt-dlp runtime'da app data folder ichida manage qilinadi; ffmpeg va ffprobe har bir Arroxy relizi bilan bundled keladi.
+> `bun run bootstrap` bog'liqliklarni o'rnatadi, Electron app bog'liqliklarini rebuild qiladi, Electron'ni tekshiradi, development uchun embedded ffmpeg/ffprobe tayyorlaydi va Playwright Chromium'ni o'rnatadi. yt-dlp runtime'da app data folder ichida manage qilinadi; ffmpeg va ffprobe har bir Arclio relizi bilan bundled keladi.
 
 </details>
 
@@ -424,33 +424,33 @@ bun run dist:win     # supported host'da Windows targets paketlash
 
 ### App won't open / no window appears
 
-The Arroxy process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
+The Arclio process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
 
 **1. Check the log.** It records startup, GPU info, and any crash. Path:
 
 | Platform | Path                             |
 | -------- | -------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\logs\main.log` |
-| macOS    | `~/Library/Logs/Arroxy/main.log` |
-| Linux    | `~/.config/Arroxy/logs/main.log` |
+| Windows  | `%APPDATA%\Arclio\logs\main.log` |
+| macOS    | `~/Library/Logs/Arclio/main.log` |
+| Linux    | `~/.config/Arclio/logs/main.log` |
 
 **2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
 
 ```bash
 # Windows (Portable) — PowerShell, run from the folder containing the exe
-.\Arroxy-win-x64-Portable.exe --disable-gpu
+.\Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Portable) — Command Prompt (cmd.exe), from the same folder
-Arroxy-win-x64-Portable.exe --disable-gpu
+Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Installed) — works in both PowerShell and cmd.exe
-"%LOCALAPPDATA%\Programs\Arroxy\Arroxy.exe" --disable-gpu
+"%LOCALAPPDATA%\Programs\Arclio\Arclio.exe" --disable-gpu
 
 # macOS
-/Applications/Arroxy.app/Contents/MacOS/Arroxy --disable-gpu
+/Applications/Arclio.app/Contents/MacOS/Arclio --disable-gpu
 
 # Linux (AppImage)
-./Arroxy-linux-x64.AppImage --disable-gpu
+./Arclio-linux-x64.AppImage --disable-gpu
 ```
 
 If that works, the GPU/driver is the cause. Make the change permanent (next step).
@@ -459,9 +459,9 @@ If that works, the GPU/driver is the cause. Make the change permanent (next step
 
 | Platform | Path                                             |
 | -------- | ------------------------------------------------ |
-| Windows  | `%APPDATA%\Arroxy\argv.json`                     |
-| macOS    | `~/Library/Application Support/Arroxy/argv.json` |
-| Linux    | `~/.config/Arroxy/argv.json`                     |
+| Windows  | `%APPDATA%\Arclio\argv.json`                     |
+| macOS    | `~/Library/Application Support/Arclio/argv.json` |
+| Linux    | `~/.config/Arclio/argv.json`                     |
 
 With contents:
 
@@ -469,7 +469,7 @@ With contents:
 { "disable-hardware-acceleration": true }
 ```
 
-Arroxy reads this before opening any window, so it works even when the window never appeared.
+Arclio reads this before opening any window, so it works even when the window never appeared.
 
 **4. Other flags worth trying** (combine if needed): `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
 
@@ -481,15 +481,15 @@ Arroxy reads this before opening any window, so it works even when the window ne
 
 ## Foydalanish shartlari
 
-Arroxy faqat shaxsiy, xususiy foydalanish uchun mo'ljallangan vosita. Siz yuklab olishlaringiz YouTube ning [Foydalanish Shartlari](https://www.youtube.com/t/terms) va yurisdiktsiyangizning mualliflik huquqi qonunlariga muvofiqligini ta'minlash uchun yagona javobgarsiz. Arroxy ni foydalanish huquqingiz bo'lmagan kontentni yuklab olish, ko'paytirish yoki tarqatish uchun ishlatmang. Ishlab chiquvchilar har qanday suiiste'mollik uchun javobgar emas.
+Arclio faqat shaxsiy, xususiy foydalanish uchun mo'ljallangan vosita. Siz yuklab olishlaringiz YouTube ning [Foydalanish Shartlari](https://www.youtube.com/t/terms) va yurisdiktsiyangizning mualliflik huquqi qonunlariga muvofiqligini ta'minlash uchun yagona javobgarsiz. Arclio ni foydalanish huquqingiz bo'lmagan kontentni yuklab olish, ko'paytirish yoki tarqatish uchun ishlatmang. Ishlab chiquvchilar har qanday suiiste'mollik uchun javobgar emas.
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=antonio-orionus%2FArroxy&type=timeline&legend=top-left">
+<a href="https://www.star-history.com/?repos=antonio-orionus%2FArclio&type=timeline&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
  </picture>
 </a>
 

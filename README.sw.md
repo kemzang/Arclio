@@ -1,29 +1,29 @@
 <div align="center">
-  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Nembo ya Arroxy" width="180" />
+  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Nembo ya Arclio" width="180" />
 
-# Arroxy — Kipakuzi Bure cha Chanzo Wazi cha YouTube (+ Tovuti 2000) kwa Windows, macOS na Linux
+# Arclio — Kipakuzi Bure cha Chanzo Wazi cha YouTube (+ Tovuti 2000) kwa Windows, macOS na Linux
 
 **4K · 1080p60 · HDR · Surround/Dolby audio · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Soma kwa:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · **Kiswahili** · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![Toleo](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Ujenzi](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Tovuti](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Leseni](https://img.shields.io/badge/license-MIT-green) ![Majukwaa](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Lugha](https://img.shields.io/badge/i18n-21_languages-blue)
+[![Toleo](https://img.shields.io/github/v/release/antonio-orionus/Arclio?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arclio/releases/latest) [![Ujenzi](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arclio/release.yml?label=Build)](https://github.com/antonio-orionus/Arclio/actions/workflows/release.yml) [![Tovuti](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![Leseni](https://img.shields.io/badge/license-MIT-green) ![Majukwaa](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Lugha](https://img.shields.io/badge/i18n-21_languages-blue)
 
 Pakua video, Shorts, muziki, vituo, podikasti, au nyimbo za sauti kutoka **YouTube na tovuti 2000+ zinazotumika** — hadi 4K HDR kwa fps 60, au kama MP3 / AAC / Opus. Inafanya kazi mahali hapo kwenye Windows, macOS, na Linux. **Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada.**
 
-[**↓ Pakua Toleo la Hivi Karibuni**](#install) &nbsp;·&nbsp; [**Tovuti**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ Pakua Toleo la Hivi Karibuni**](#install) &nbsp;·&nbsp; [**Tovuti**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 [![Jiunge na jumuiya ya Discord](https://img.shields.io/badge/Jiunge%20na%20jumuiya%20ya%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
 
-<img src="build/demo.gif" alt="Demo ya Arroxy" width="720" />
+<img src="build/demo.gif" alt="Demo ya Arclio" width="720" />
 
-<img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" width="720" />
+<img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
-Ikiwa Arroxy inakuokoa muda, ⭐ inasaidia wengine kuipata.
+Ikiwa Arclio inakuokoa muda, ⭐ inasaidia wengine kuipata.
 
 </div>
 
-> **What is Arroxy?** Arroxy is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arroxy), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arroxy), Flatpak, AppImage, and direct download.
+> **What is Arclio?** Arclio is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arclio), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arclio), Flatpak, AppImage, and direct download.
 >
 > _Last updated: 2026-06-17._
 
@@ -32,7 +32,7 @@ Ikiwa Arroxy inakuokoa muda, ⭐ inasaidia wengine kuipata.
 ## Yaliyomo
 
 - [Pakua](#install)
-- [Kwa Nini Arroxy](#why)
+- [Kwa Nini Arclio](#why)
 - [Vipengele](#features)
 - [Faragha](#privacy)
 - [Maswali Yanayoulizwa Mara kwa Mara](#faq)
@@ -45,26 +45,26 @@ Ikiwa Arroxy inakuokoa muda, ⭐ inasaidia wengine kuipata.
 
 | Jukwaa | Fomati                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Portable.exe)                                                                                                                                                                                                        |
-| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-x64.dmg)                                                                                                                                                                                                                     |
-| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.tar.gz) |
-| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Portable.exe)                                                                                                                                                                                                        |
+| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-x64.dmg)                                                                                                                                                                                                                     |
+| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.tar.gz) |
+| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
-[**Pata toleo la hivi karibuni →**](https://github.com/antonio-orionus/Arroxy/releases/latest)
+[**Pata toleo la hivi karibuni →**](https://github.com/antonio-orionus/Arclio/releases/latest)
 
 ### <a id="why-warning"></a>Kwa nini unaweza kuona onyo
 
-Arroxy ni chanzo wazi na ina leseni ya MIT. Ujenzi wa Windows na macOS **haujasainiwa kwa nambari** — cheti cha Apple Developer ID na Windows EV cha kutia saini msimbo huchangia mamia ya dola kwa mwaka, ambayo mradi wa kujitegemea hulipa mfukoni mwake. Bila saini hizo, Windows SmartScreen na macOS Gatekeeper watakuonya wakati wa uzinduzi wa kwanza. Maonyo hayo yanamaanisha *mfumo wako wa uendeshaji haukuitambua kampuni inayotoa programu* — hayamaanishi kwamba Arroxy ni programu hasidi.
+Arclio ni chanzo wazi na ina leseni ya MIT. Ujenzi wa Windows na macOS **haujasainiwa kwa nambari** — cheti cha Apple Developer ID na Windows EV cha kutia saini msimbo huchangia mamia ya dola kwa mwaka, ambayo mradi wa kujitegemea hulipa mfukoni mwake. Bila saini hizo, Windows SmartScreen na macOS Gatekeeper watakuonya wakati wa uzinduzi wa kwanza. Maonyo hayo yanamaanisha *mfumo wako wa uendeshaji haukuitambua kampuni inayotoa programu* — hayamaanishi kwamba Arclio ni programu hasidi.
 
-Njia tatu za kuthibitisha Arroxy mwenyewe, kwa uthabiti unaozidi:
+Njia tatu za kuthibitisha Arclio mwenyewe, kwa uthabiti unaozidi:
 
-- **Soma msimbo wa chanzo.** Kila mstari uko kwenye [GitHub](https://github.com/antonio-orionus/Arroxy) na unaweza [kuijenga kutoka chanzo](#tech).
+- **Soma msimbo wa chanzo.** Kila mstari uko kwenye [GitHub](https://github.com/antonio-orionus/Arclio) na unaweza [kuijenga kutoka chanzo](#tech).
 - **Angalia SHA256.** Linganisha faili yako na [`SHA256SUMS`](../../releases/latest) iliyochapishwa — tazama [Thibitisha upakuaji wako](#verify) hapa chini.
 - **Fanya ukaguzi wa tatu.** Pakia faili kwenye [VirusTotal](https://www.virustotal.com).
 
 ### <a id="windows-first-launch"></a>Uzinduzi wa kwanza wa Windows
 
-Wakati wa uzinduzi wa kwanza unaweza kuona **"Windows protected your PC"** au **"Unknown publisher."** Hii inatumika kwa `Arroxy-win-x64-Setup.exe` na `Arroxy-win-x64-Portable.exe`. Arroxy ni bure na chanzo wazi, na ujenzi wa Windows haujasainiwa kwa cheti cha malipo, ndiyo maana SmartScreen huipiga bendera. Hii **haimaanishi** kiotomatiki kwamba Arroxy si salama. Ili kuendelea:
+Wakati wa uzinduzi wa kwanza unaweza kuona **"Windows protected your PC"** au **"Unknown publisher."** Hii inatumika kwa `Arclio-win-x64-Setup.exe` na `Arclio-win-x64-Portable.exe`. Arclio ni bure na chanzo wazi, na ujenzi wa Windows haujasainiwa kwa cheti cha malipo, ndiyo maana SmartScreen huipiga bendera. Hii **haimaanishi** kiotomatiki kwamba Arclio si salama. Ili kuendelea:
 
 <div align="center">
   <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted" />
@@ -76,35 +76,35 @@ Wakati wa uzinduzi wa kwanza unaweza kuona **"Windows protected your PC"** au **
 
 #### Ikiwa Windows Defender inaweka bendera au kuondoa faili
 
-Heuristics za Defender wakati mwingine huweka bendera kwenye visanidi visivyosainiwa vya NSIS na portable za Electron kama zinazoshukiwa. Ikiwa Defender inaweka karantini `Arroxy-win-x64-Setup.exe` au `Arroxy-win-x64-Portable.exe`, irudishe kutoka **Windows Security → Virus & threat protection → Protection history**, kisha ongeza faili inayoweza kutekelezwa ya Arroxy kama kipengele kinachoruhusiwa chini ya **Manage settings → Add or remove exclusions**. Kama ilivyo na SmartScreen, kisababishi ni saini ya mchapishaji inayokosekana, si programu hasidi iliyogunduliwa.
+Heuristics za Defender wakati mwingine huweka bendera kwenye visanidi visivyosainiwa vya NSIS na portable za Electron kama zinazoshukiwa. Ikiwa Defender inaweka karantini `Arclio-win-x64-Setup.exe` au `Arclio-win-x64-Portable.exe`, irudishe kutoka **Windows Security → Virus & threat protection → Protection history**, kisha ongeza faili inayoweza kutekelezwa ya Arclio kama kipengele kinachoruhusiwa chini ya **Manage settings → Add or remove exclusions**. Kama ilivyo na SmartScreen, kisababishi ni saini ya mchapishaji inayokosekana, si programu hasidi iliyogunduliwa.
 
-> Pakua Arroxy tu kutoka ukurasa rasmi wa GitHub Releases. Ukipata faili kutoka tovuti nyingine au mtu akikutumia, ifute na upakue nakala mpya kutoka chanzo rasmi. Msimbo wa chanzo ni wa umma, hivyo unaweza kuukagua au kuijenga Arroxy mwenyewe ukitaka.
+> Pakua Arclio tu kutoka ukurasa rasmi wa GitHub Releases. Ukipata faili kutoka tovuti nyingine au mtu akikutumia, ifute na upakue nakala mpya kutoka chanzo rasmi. Msimbo wa chanzo ni wa umma, hivyo unaweza kuukagua au kuijenga Arclio mwenyewe ukitaka.
 
 ### <a id="macos-first-launch"></a>Uzinduzi wa kwanza wa macOS
 
-Arroxy bado haijasainiwa kwa nambari kwa macOS, kwa hivyo Gatekeeper itazuia uzinduzi wa kwanza. Njia halisi ya kuiruhusu inategemea toleo lako la macOS — Sequoia 15 ilifunga njia ya zamani ya kukwepa kwa kubonyeza kulia → Open.
+Arclio bado haijasainiwa kwa nambari kwa macOS, kwa hivyo Gatekeeper itazuia uzinduzi wa kwanza. Njia halisi ya kuiruhusu inategemea toleo lako la macOS — Sequoia 15 ilifunga njia ya zamani ya kukwepa kwa kubonyeza kulia → Open.
 
 #### macOS Sequoia 15 na baadaye (ya sasa)
 
 Kwenye Sequoia 15 na toleo jipya zaidi, kubonyeza kulia → Open haizuii tena Gatekeeper kwa programu nyingi zilizowekwa karantini. Tumia paneli ya Mipangilio ya Mfumo badala yake:
 
-1. Buruta `Arroxy.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.
-2. Bonyeza mara mbili Arroxy. Sanduku la mazungumzo la kuzuia linaonekana — bonyeza **Done** (usibonyeze *Move to Trash*).
-3. Fungua **System Settings → Privacy & Security** na tembeza hadi sehemu ya **Security**. Utaona *"Arroxy was blocked to protect your Mac"* (au ujumbe unaofanana sana).
-4. Bonyeza **Open Anyway**, thibitisha kwa nenosiri lako au Touch ID, kisha uzindue tena Arroxy kutoka `/Applications`.
+1. Buruta `Arclio.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.
+2. Bonyeza mara mbili Arclio. Sanduku la mazungumzo la kuzuia linaonekana — bonyeza **Done** (usibonyeze *Move to Trash*).
+3. Fungua **System Settings → Privacy & Security** na tembeza hadi sehemu ya **Security**. Utaona *"Arclio was blocked to protect your Mac"* (au ujumbe unaofanana sana).
+4. Bonyeza **Open Anyway**, thibitisha kwa nenosiri lako au Touch ID, kisha uzindue tena Arclio kutoka `/Applications`.
 
 #### macOS Sonoma 14 na mapema zaidi
 
-1. Buruta `Arroxy.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.
-2. Bonyeza kulia (au Control-bonyeza) `Arroxy.app` katika `/Applications` na uchague **Open**.
-3. Sanduku la onyo sasa lina kitufe cha **Open** — bonyeza na uthibitishe. Arroxy inafunguka kawaida na onyo halitatokea tena.
+1. Buruta `Arclio.app` kutoka kwenye DMG iliyopachikwa hadi `/Applications`.
+2. Bonyeza kulia (au Control-bonyeza) `Arclio.app` katika `/Applications` na uchague **Open**.
+3. Sanduku la onyo sasa lina kitufe cha **Open** — bonyeza na uthibitishe. Arclio inafunguka kawaida na onyo halitatokea tena.
 
 #### "App is damaged" au kizuizi cha Gatekeeper kinachoendelea — suluhisho la Terminal
 
-Ikiwa macOS inasema *"Arroxy is damaged and can't be opened"*, au hakuna hatua zilizo hapo juu zinazoondoa kizuizi, sifa ya karantini kwenye DMG ndiyo sababu (vivinjari vingine na tabia ya translocation ya macOS yenyewe huiweka). Iondoe kutoka kwa programu iliyosanikishwa:
+Ikiwa macOS inasema *"Arclio is damaged and can't be opened"*, au hakuna hatua zilizo hapo juu zinazoondoa kizuizi, sifa ya karantini kwenye DMG ndiyo sababu (vivinjari vingine na tabia ya translocation ya macOS yenyewe huiweka). Iondoe kutoka kwa programu iliyosanikishwa:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Arroxy.app
+xattr -dr com.apple.quarantine /Applications/Arclio.app
 ```
 
 **Apple Silicon vs Intel:** kwenye Mac ya mfululizo wa M (M1 / M2 / M3 / M4), pakua DMG ya `arm64`. Kwenye Mac za Intel, pakua DMG ya `x64`. Kuendesha build isiyo sahihi bado kunafanya kazi kupitia Rosetta lakini ni polepole zaidi kwa kiasi kinachoonekana.
@@ -120,8 +120,8 @@ AppImages zinaendesha moja kwa moja — hakuna usanidi. Unahitaji tu kuweka fail
 **Terminal:**
 
 ```bash
-chmod +x Arroxy-linux-x64.AppImage
-./Arroxy-linux-x64.AppImage
+chmod +x Arclio-linux-x64.AppImage
+./Arclio-linux-x64.AppImage
 ```
 
 Ikiwa uzinduzi bado unashindwa, huenda FUSE haipo:
@@ -139,11 +139,11 @@ sudo pacman -S fuse2
 
 **Uunganishaji wa hiari wa desktop:** sakinisha [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) mara moja, na AppImage yoyote unayobonyeza mara mbili itasajiliwa kiotomatiki kwenye menyu yako ya uzinduzi — hakuna faili ya `.desktop` ya mkono inayohitajika.
 
-**Flatpak (mbadala wenye sanduku):** pakua `Arroxy-*.flatpak` kutoka ukurasa huo huo wa toleo.
+**Flatpak (mbadala wenye sanduku):** pakua `Arclio-*.flatpak` kutoka ukurasa huo huo wa toleo.
 
 ```bash
-flatpak install --user Arroxy-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arroxy
+flatpak install --user Arclio-linux-x64.flatpak
+flatpak run io.github.antonio_orionus.Arclio
 ```
 
 <details>
@@ -154,19 +154,19 @@ Kila toleo linachapisha faili ya `SHA256SUMS` pamoja na faili za binary. Ili kua
 **Windows (PowerShell or Command Prompt):**
 
 ```powershell
-certutil -hashfile Arroxy-win-x64-Setup.exe SHA256
+certutil -hashfile Arclio-win-x64-Setup.exe SHA256
 ```
 
 **macOS (Terminal):**
 
 ```bash
-shasum -a 256 Arroxy-mac-arm64.dmg
+shasum -a 256 Arclio-mac-arm64.dmg
 ```
 
 **Linux (Terminal):**
 
 ```bash
-sha256sum Arroxy-linux-x64.AppImage
+sha256sum Arclio-linux-x64.AppImage
 ```
 
 Unataka ukaguzi wa programu hasidi wa mtu wa tatu? Pakia faili kwenye [VirusTotal](https://www.virustotal.com). Bendera chache za heuristic za jumla kutoka kwa injini ndogo ni za kawaida kwa programu za Electron zisizosainiwa; ugunduzi ulioenea kutoka kwa injini kubwa ungekuwa wasiwasi wa kweli.
@@ -180,10 +180,10 @@ Tayari unatumia meneja wa pakiti? Unaweza kuruka njia ya upakuaji wa mkono.
 
 | Njia | Amri                                                                                |
 | ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
-| Flatpak            | `flatpak install --user Arroxy-linux-x64.flatpak`                                                 |
+| Winget             | `winget install AntonioOrionus.Arclio`                                                            |
+| Scoop              | `scoop bucket add arclio https://github.com/antonio-orionus/scoop-bucket && scoop install arclio` |
+| Homebrew           | `brew tap antonio-orionus/arclio && brew install --cask arclio`                                   |
+| Flatpak            | `flatpak install --user Arclio-linux-x64.flatpak`                                                 |
 
 </details>
 
@@ -204,11 +204,11 @@ Tayari unatumia meneja wa pakiti? Unaweza kuruka njia ya upakuaji wa mkono.
 
 ---
 
-## <a id="why"></a>Kwa Nini Arroxy
+## <a id="why"></a>Kwa Nini Arclio
 
 Ulinganisho wa pamoja na mbadala za kawaida zaidi:
 
-|            | Arroxy | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
+|            | Arclio | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
 | ---------- | :----: | :-----------------: | :---------: | :------------------------: | :----------------: |
 | Bure, hakuna ngazi ya malipo |   ✅   |         ⚠️          |     ✅      |             ⚠️             |         ⚠️         |
 | Chanzo wazi |   ✅   |         ❌          |     ❌      |             ❌             |         ⚠️         |
@@ -218,7 +218,7 @@ Ulinganisho wa pamoja na mbadala za kawaida zaidi:
 | Programu ya mezani inayofanya kazi kwenye mifumo yote |   ✅   |         ✅          |     ✅      |            N/A             |         ❌         |
 | Manukuu + SponsorBlock |   ✅   |         ⚠️          |     ❌      |             ❌             |         ❌         |
 
-Arroxy imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Hakuna akaunti, hakuna mauzo ya ziada, hakuna ukusanyaji wa data.
+Arclio imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Hakuna akaunti, hakuna mauzo ya ziada, hakuna ukusanyaji wa data.
 
 ---
 
@@ -241,7 +241,7 @@ Arroxy imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Ha
 
 - **Njia rahisi za kuanza** — chagua upakuaji mmoja unaoongozwa, kichagua playlist/channel, kubandika URL nyingi, au Quick Download kwa mipangilio chaguomsingi iliyohifadhiwa
 - **Foleni kuu ya upakuaji** — kazi ya single, playlist, bulk, au quick yote huingia sehemu moja kwa maendeleo, kusitisha, kuendelea, kughairi, kujaribu tena, na udhibiti wa kipaumbele
-- **Ufuatiliaji wa ubao wa kunakili** — nakili kiungo cha YouTube na Arroxy itajaza URL kiotomatiki ukirejesha umakini kwenye programu (washa/zima katika mipangilio ya Kina)
+- **Ufuatiliaji wa ubao wa kunakili** — nakili kiungo cha YouTube na Arclio itajaza URL kiotomatiki ukirejesha umakini kwenye programu (washa/zima katika mipangilio ya Kina)
 - **Usafi wa URL kiotomatiki** — huondoa vigezo vya ufuatiliaji (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) na kufungua viungo vya `youtube.com/redirect`
 - **Hali ya tray** — kufunga dirisha kunaacha maudhui kuendelea kupakuliwa nyuma ya skrini
 - **Lugha 21** — hugundua kiotomatiki lugha ya mfumo, inaweza kubadilishwa wakati wowote
@@ -260,20 +260,20 @@ Arroxy imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Ha
 - **YouTube kamili** — Video, Shorts, Vituo, Orodha za Kucheza, YouTube Music na Podikasti zinashughulikiwa kama vyanzo vya daraja la kwanza
 - **Tovuti 2000+ nyingine** kupitia yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org na nyingi zaidi
 - **Sauti pekee na manukuu** yanafanya kazi kwenye kila tovuti inayoungwa mkono, si YouTube peke yake
-- Tovuti ikibadilika, yt-dlp hutoa marekebisho kila wiki na Arroxy husasisha binary kiotomatiki wakati wa uzinduzi
+- Tovuti ikibadilika, yt-dlp hutoa marekebisho kila wiki na Arclio husasisha binary kiotomatiki wakati wa uzinduzi
 
 <table align="center" width="100%">
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" /><br/><sub><b>Ukurasa wa Upakuaji wa haraka</b><br/>Bandika URL na uipakue papo hapo kwa wasifu wako amilifu</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arroxy — Download profiles" /><br/><sub><b>Wasifu wa upakuaji unaoweza kutumika tena</b><br/>Hifadhi muundo, ubora na matokeo kama mipangilio — tumia tena kwa kila upakuaji</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" /><br/><sub><b>Ukurasa wa Upakuaji wa haraka</b><br/>Bandika URL na uipakue papo hapo kwa wasifu wako amilifu</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arclio — Download profiles" /><br/><sub><b>Wasifu wa upakuaji unaoweza kutumika tena</b><br/>Hifadhi muundo, ubora na matokeo kama mipangilio — tumia tena kwa kila upakuaji</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arroxy — Multi-language audio" /><br/><sub><b>Nyimbo za sauti za lugha nyingi</b><br/>Chagua lugha kamili ya sauti inayokuja na video</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arroxy — Surround / Dolby audio" /><br/><sub><b>Sauti ya Surround / Dolby</b><br/>Nyimbo za 5.1 na Dolby zinatambuliwa na kuhifadhiwa</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arclio — Multi-language audio" /><br/><sub><b>Nyimbo za sauti za lugha nyingi</b><br/>Chagua lugha kamili ya sauti inayokuja na video</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arclio — Surround / Dolby audio" /><br/><sub><b>Sauti ya Surround / Dolby</b><br/>Nyimbo za 5.1 na Dolby zinatambuliwa na kuhifadhiwa</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arroxy — Bulk URL mode" /><br/><sub><b>Hali ya URL nyingi</b><br/>Bandika orodha, ondoa nakala kiotomatiki, panga zote kwa pamoja</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arroxy — Parallel download queue" /><br/><sub><b>Foleni ya upakuaji sambamba</b><br/>Upakuaji kadhaa kwa wakati mmoja na maendeleo ya moja kwa moja</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arclio — Bulk URL mode" /><br/><sub><b>Hali ya URL nyingi</b><br/>Bandika orodha, ondoa nakala kiotomatiki, panga zote kwa pamoja</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arclio — Parallel download queue" /><br/><sub><b>Foleni ya upakuaji sambamba</b><br/>Upakuaji kadhaa kwa wakati mmoja na maendeleo ya moja kwa moja</sub></td>
   </tr>
 </table>
 
@@ -283,7 +283,7 @@ Arroxy imejengwa kwa jambo moja: bandika URL, pata faili safi la mahali hapo. Ha
 
 Maudhui hupakuliwa moja kwa moja kupitia [yt-dlp](https://github.com/yt-dlp/yt-dlp) kutoka YouTube hadi kwenye folda unayochagua — hakuna kitu kinachopita kwenye seva ya mtu wa tatu. Historia ya kutazama, historia ya kupakua, URL, na maudhui ya faili yanabaki kwenye kifaa chako.
 
-Arroxy hutuma telemetry isiyo na jina na ya jumla kupitia [OpenPanel](https://openpanel.dev) — ya kutosha kuelewa uzinduzi, OS, matoleo ya programu na ajali. Hakuna URLs, vichwa vya video, njia za faili, taarifa za akaunti, fingerprinting au data binafsi. Kitambulisho cha kila usakinishaji ni cha nasibu na hakihusiani na utambulisho wako. Unaweza kujiondoa katika Mipangilio.
+Arclio hutuma telemetry isiyo na jina na ya jumla kupitia [OpenPanel](https://openpanel.dev) — ya kutosha kuelewa uzinduzi, OS, matoleo ya programu na ajali. Hakuna URLs, vichwa vya video, njia za faili, taarifa za akaunti, fingerprinting au data binafsi. Kitambulisho cha kila usakinishaji ni cha nasibu na hakihusiani na utambulisho wako. Unaweza kujiondoa katika Mipangilio.
 
 ---
 
@@ -299,13 +299,13 @@ Chochote YouTube kinatoa: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, pamoja
 Ndiyo. Chagua *sauti pekee* kwenye menyu ya fomati kisha uchague MP3, M4A/AAC, Opus au WAV.
 
 **Je, ninahitaji akaunti ya YouTube au vidakuzi?**
-Kwa chaguomsingi, hapana — Arroxy hufanya kazi bila akaunti ya YouTube, kuingia, au kuhamisha vidakuzi. Usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina (Chanzo cha vidakuzi: faili au kivinjari) kwa maudhui yanayohitaji uthibitisho, kama vile video zenye vikwazo vya umri au za wanachama tu. Umezimwa kwa chaguomsingi. Ukiwasha, wiki ya yt-dlp inaeleza kwamba [otomatiki inayotegemea vidakuzi inaweza kuweka alama kwenye akaunti yako ya Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); akaunti ya kutupa ni chaguo salama zaidi katika hali hiyo.
+Kwa chaguomsingi, hapana — Arclio hufanya kazi bila akaunti ya YouTube, kuingia, au kuhamisha vidakuzi. Usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina (Chanzo cha vidakuzi: faili au kivinjari) kwa maudhui yanayohitaji uthibitisho, kama vile video zenye vikwazo vya umri au za wanachama tu. Umezimwa kwa chaguomsingi. Ukiwasha, wiki ya yt-dlp inaeleza kwamba [otomatiki inayotegemea vidakuzi inaweza kuweka alama kwenye akaunti yako ya Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); akaunti ya kutupa ni chaguo salama zaidi katika hali hiyo.
 
 **Je, itaendelea kufanya kazi YouTube ikibadilisha kitu?**
-yt-dlp husasishwa kiotomatiki wakati wa uzinduzi, na Arroxy hutuma marekebisho haraka YouTube inapobadilisha kitu. Iwapo utakutana na tatizo, usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina kama suluhisho la akiba.
+yt-dlp husasishwa kiotomatiki wakati wa uzinduzi, na Arclio hutuma marekebisho haraka YouTube inapobadilisha kitu. Iwapo utakutana na tatizo, usaidizi wa hiari wa vidakuzi unapatikana katika Mipangilio ya Kina kama suluhisho la akiba.
 
-**Arroxy inapatikana katika lugha zipi?**
-Ishirini na moja, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kijerumani), Français (Kifaransa), 日本語 (Kijapani), 中文 (Kichina), Русский (Kirusi), Українська (Kiukraini), हिन्दी (Kihindi), Afaan Oromoo, Kiswahili, O'zbekcha (Kiuzbeki), Tiếng Việt (Kivietinamu), አማርኛ (Kiamhara), العربية (Kiarabu), اردو (Kiurdu), پښتو (Kipashto), বাংলা (Kibengali), မြန်မာဘာသာ (Kiburma), Ελληνικά (Kigiriki), na Српски (Kiserbia). Arroxy hugundua lugha ya mfumo wako wa uendeshaji wakati wa uzinduzi wa kwanza na unaweza kubadili wakati wowote kutoka kichaguo cha lugha kwenye upau wa zana. JSON za locale za runtime ziko src/shared/i18n/locales/, na katalogi za PO kwa watafsiri ziko i18n/locales/ — fungua PR kwenye GitHub kuchangia.
+**Arclio inapatikana katika lugha zipi?**
+Ishirini na moja, kutoka mwanzoni: English, Español (Kihispania), Deutsch (Kijerumani), Français (Kifaransa), 日本語 (Kijapani), 中文 (Kichina), Русский (Kirusi), Українська (Kiukraini), हिन्दी (Kihindi), Afaan Oromoo, Kiswahili, O'zbekcha (Kiuzbeki), Tiếng Việt (Kivietinamu), አማርኛ (Kiamhara), العربية (Kiarabu), اردو (Kiurdu), پښتو (Kipashto), বাংলা (Kibengali), မြန်မာဘာသာ (Kiburma), Ελληνικά (Kigiriki), na Српски (Kiserbia). Arclio hugundua lugha ya mfumo wako wa uendeshaji wakati wa uzinduzi wa kwanza na unaweza kubadili wakati wowote kutoka kichaguo cha lugha kwenye upau wa zana. JSON za locale za runtime ziko src/shared/i18n/locales/, na katalogi za PO kwa watafsiri ziko i18n/locales/ — fungua PR kwenye GitHub kuchangia.
 
 **Je, ninahitaji kusakinisha kitu kingine chochote?**
 Hapana. yt-dlp hupakuliwa kiotomatiki wakati wa uzinduzi wa kwanza na kuhifadhiwa kwenye kifaa chako; ffmpeg na ffprobe huja pamoja na programu. Baada ya hapo, hakuna usanidi wa ziada unaohitajika.
@@ -329,7 +329,7 @@ Bado imepangwa — takriban kwa mpangilio wa kipaumbele:
 | ---------------- | ---------------- |
 | **Vichujio vya orodha za kucheza na vituo** | Vichujio vya muda wa tarehe unapoorodhesha playlist au channel |
 | **Mapendeleo ya track za sauti za YouTube** | Weka upendeleo wa track ya lugha ya mazungumzo kwa app nzima, na override kwa kila profile YouTube inapotoa track nyingi za sauti |
-| **Kuingia kwa browser ndani ya app** | Fungua browser windows ndani ya Arroxy ili uingie na kutumia site cookies bila kuziexport mwenyewe |
+| **Kuingia kwa browser ndani ya app** | Fungua browser windows ndani ya Arclio ili uingie na kutumia site cookies bila kuziexport mwenyewe |
 | **Upakuaji wa video kwa click moja** | Anzisha video download kwa click moja kutoka URL iliyotambuliwa au kubandikwa ukitumia active profile |
 | **Urejeshaji imara kwa retry** | Njia mpya ya retry kwa upakuaji uliokatizwa na miunganisho ya internet isiyotegemeka au yenye matatizo |
 | **Drawer kamili ya msimamizi wa upakuaji** | Kubadilisha queue drawer kuwa manager kamili zaidi, ikijumuisha kubadilisha folder za destination kwa vipengee vilivyo kwenye foleni |
@@ -398,8 +398,8 @@ sudo apt install -y xvfb
 ### Clone na uendeshe
 
 ```bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # inapendekezwa; ruka kama umewezesha zana zilizopiniwa mwenyewe
 bun run bootstrap
 bun run doctor
@@ -414,7 +414,7 @@ bun run dist         # funga kwa OS ya sasa
 bun run dist:win     # funga malengo ya Windows kwenye host inayotumika
 ```
 
-> `bun run bootstrap` husakinisha utegemezi, hujenga upya utegemezi wa programu ya Electron, huthibitisha Electron, huandaa ffmpeg/ffprobe zilizopachikwa kwa maendeleo, na husakinisha Playwright Chromium. yt-dlp husimamiwa wakati wa runtime kwenye folda ya data ya programu; ffmpeg na ffprobe hujumuishwa katika kila toleo la Arroxy.
+> `bun run bootstrap` husakinisha utegemezi, hujenga upya utegemezi wa programu ya Electron, huthibitisha Electron, huandaa ffmpeg/ffprobe zilizopachikwa kwa maendeleo, na husakinisha Playwright Chromium. yt-dlp husimamiwa wakati wa runtime kwenye folda ya data ya programu; ffmpeg na ffprobe hujumuishwa katika kila toleo la Arclio.
 
 </details>
 
@@ -424,33 +424,33 @@ bun run dist:win     # funga malengo ya Windows kwenye host inayotumika
 
 ### App won't open / no window appears
 
-The Arroxy process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
+The Arclio process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
 
 **1. Check the log.** It records startup, GPU info, and any crash. Path:
 
 | Platform | Path                             |
 | -------- | -------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\logs\main.log` |
-| macOS    | `~/Library/Logs/Arroxy/main.log` |
-| Linux    | `~/.config/Arroxy/logs/main.log` |
+| Windows  | `%APPDATA%\Arclio\logs\main.log` |
+| macOS    | `~/Library/Logs/Arclio/main.log` |
+| Linux    | `~/.config/Arclio/logs/main.log` |
 
 **2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
 
 ```bash
 # Windows (Portable) — PowerShell, run from the folder containing the exe
-.\Arroxy-win-x64-Portable.exe --disable-gpu
+.\Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Portable) — Command Prompt (cmd.exe), from the same folder
-Arroxy-win-x64-Portable.exe --disable-gpu
+Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Installed) — works in both PowerShell and cmd.exe
-"%LOCALAPPDATA%\Programs\Arroxy\Arroxy.exe" --disable-gpu
+"%LOCALAPPDATA%\Programs\Arclio\Arclio.exe" --disable-gpu
 
 # macOS
-/Applications/Arroxy.app/Contents/MacOS/Arroxy --disable-gpu
+/Applications/Arclio.app/Contents/MacOS/Arclio --disable-gpu
 
 # Linux (AppImage)
-./Arroxy-linux-x64.AppImage --disable-gpu
+./Arclio-linux-x64.AppImage --disable-gpu
 ```
 
 If that works, the GPU/driver is the cause. Make the change permanent (next step).
@@ -459,9 +459,9 @@ If that works, the GPU/driver is the cause. Make the change permanent (next step
 
 | Platform | Path                                             |
 | -------- | ------------------------------------------------ |
-| Windows  | `%APPDATA%\Arroxy\argv.json`                     |
-| macOS    | `~/Library/Application Support/Arroxy/argv.json` |
-| Linux    | `~/.config/Arroxy/argv.json`                     |
+| Windows  | `%APPDATA%\Arclio\argv.json`                     |
+| macOS    | `~/Library/Application Support/Arclio/argv.json` |
+| Linux    | `~/.config/Arclio/argv.json`                     |
 
 With contents:
 
@@ -469,7 +469,7 @@ With contents:
 { "disable-hardware-acceleration": true }
 ```
 
-Arroxy reads this before opening any window, so it works even when the window never appeared.
+Arclio reads this before opening any window, so it works even when the window never appeared.
 
 **4. Other flags worth trying** (combine if needed): `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
 
@@ -481,15 +481,15 @@ Arroxy reads this before opening any window, so it works even when the window ne
 
 ## Masharti ya matumizi
 
-Arroxy ni zana ya matumizi ya kibinafsi na ya faragha tu. Unawajibika peke yako kuhakikisha maudhui unayopakua yanafuata [Masharti ya Huduma](https://www.youtube.com/t/terms) ya YouTube na sheria za haki miliki za mamlaka yako. Usitumie Arroxy kupakua, kunakili, au kusambaza maudhui ambayo huna haki ya kuyatumia. Waendelezaji hawana jukumu lolote kwa matumizi mabaya.
+Arclio ni zana ya matumizi ya kibinafsi na ya faragha tu. Unawajibika peke yako kuhakikisha maudhui unayopakua yanafuata [Masharti ya Huduma](https://www.youtube.com/t/terms) ya YouTube na sheria za haki miliki za mamlaka yako. Usitumie Arclio kupakua, kunakili, au kusambaza maudhui ambayo huna haki ya kuyatumia. Waendelezaji hawana jukumu lolote kwa matumizi mabaya.
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=antonio-orionus%2FArroxy&type=timeline&legend=top-left">
+<a href="https://www.star-history.com/?repos=antonio-orionus%2FArclio&type=timeline&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
  </picture>
 </a>
 

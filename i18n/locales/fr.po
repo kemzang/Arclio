@@ -2445,3 +2445,279 @@ msgctxt "player.speed"
 msgid "Speed"
 msgstr "Vitesse"
 
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Rechercher…"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Aucun résultat"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Média"
+
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Collection"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Tag"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "éléments"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Accueil"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Bibliothèque"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Collections"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Favoris"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Tags"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Historique"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Paramètres"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "éléments"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Rechercher par titre, auteur, description…"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Tous"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Vidéo"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Audio"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Plus récents"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Plus anciens"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Titre A-Z"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Titre Z-A"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Plus long"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Plus court"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Votre bibliothèque est vide"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Téléchargez une vidéo pour commencer"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Manquant"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Nouvelle collection"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Nom de la collection"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Créer"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Aucune collection"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Créez une collection pour organiser vos médias"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Retour aux collections"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Aucun média dans cette collection"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Ajoutez des médias depuis la bibliothèque"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Retirer de la collection"
+
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Aucun favori"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Marquez un média comme favori pour le voir ici"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Nouveau tag"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Nom du tag"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Créer"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Aucun tag"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Créez un tag pour catégoriser vos médias"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Téléchargements"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Lecture"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Aujourd'hui"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Hier"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Cette semaine"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Ce mois-ci"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Aucun historique de téléchargement"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Aucun historique de lecture"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} lecture"
+
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Terminé"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Paramètres"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Répertoire de sortie"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Où les fichiers téléchargés sont enregistrés"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Modifier"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Langue"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Langue d'affichage de l'application"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Thème"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Apparence de l'application"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Surveiller le presse-papiers"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Détecter automatiquement les URLs dans le presse-papiers"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Écrire les sous-titres"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Télécharger les fichiers de sous-titres par défaut"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Incorporer la miniature"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Incorporer la miniature dans le fichier média"

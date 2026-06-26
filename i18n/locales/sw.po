@@ -2445,3 +2445,279 @@ msgctxt "player.speed"
 msgid "Speed"
 msgstr "Kasi"
 
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Tafuta…"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Hakuna matokeo"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Midia"
+
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Mkusanyiko"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Lebo"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "vitu"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Nyumbani"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Maktaba"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Mikusanyiko"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Vipendwa"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Lebo"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Historia"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Mipangilio"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "vitu"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Tafuta kwa kichwa, mwandishi, maelezo…"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Zote"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Sauti"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Mpya kwanza"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Zamani kwanza"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Kichwa A-Z"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Kichwa Z-A"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Ndefu zaidi"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Fupi zaidi"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Maktaba yako ni tupu"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Pakua video kuanza"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Inakosekana"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Mkusanyiko mpya"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Jina la mkusanyiko"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Unda"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Ghairi"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Hakuna mikusanyiko bado"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Unda mkusanyiko kupanga midia yako"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Rudi kwa mikusanyiko"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Hakuna midia katika mkusanyiko huu"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Ongeza midia kutoka maktaba"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Ondoa kutoka mkusanyiko"
+
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Hakuna vipendwa bado"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Weka alama ya kipendwa kwenye midia kuiona hapa"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Lebo mpya"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Jina la lebo"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Unda"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Ghairi"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Hakuna lebo bado"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Unda lebo kupanga midia yako"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Upakuaji"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Uchezaji"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Leo"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Jana"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Wiki hii"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Mwezi huu"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Hakuna historia ya upakuaji"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Hakuna historia ya uchezaji"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "Uchezaji {{count}}"
+
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Imekamilika"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Mipangilio"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Saraka ya pato"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Ambapo faili zilizopakuliwa zinahifadhiwa"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Badilisha"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Lugha"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Lugha ya onyesho la programu"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Mandhari"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Muonekano wa programu"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Ufuatiliaji wa ubao wa kunakili"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Gundua URL kiotomatiki kwenye ubao wa kunakili"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Andika manukuu"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Pakua faili za manukuu kwa chaguomsingi"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Pachua picha ndogo"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Pachua picha ndogo kwenye faili ya midia"

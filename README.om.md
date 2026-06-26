@@ -1,29 +1,29 @@
 <div align="center">
-  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy mascot" width="180" />
+  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arclio mascot" width="180" />
 
-# Arroxy — Buufataa YouTube (+ Saayitii 2000) Bilisaa fi Madda Banaa Windows, macOS & Linux
+# Arclio — Buufataa YouTube (+ Saayitii 2000) Bilisaa fi Madda Banaa Windows, macOS & Linux
 
 **4K · 1080p60 · HDR · Surround/Dolby audio · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Afaan:** **Afaan Oromoo** · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![Baasii](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Ijaarsaa](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Marsariitii](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Hayyama](https://img.shields.io/badge/license-MIT-green) ![Platformoota](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Afaanonni](https://img.shields.io/badge/i18n-21_languages-blue)
+[![Baasii](https://img.shields.io/github/v/release/antonio-orionus/Arclio?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arclio/releases/latest) [![Ijaarsaa](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arclio/release.yml?label=Build)](https://github.com/antonio-orionus/Arclio/actions/workflows/release.yml) [![Marsariitii](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![Hayyama](https://img.shields.io/badge/license-MIT-green) ![Platformoota](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Afaanonni](https://img.shields.io/badge/i18n-21_languages-blue)
 
 Viidiyoo, Shorts, muuziqaa, chaanaalota, podkaastota, ykn sagalee **YouTube fi saayitiiwwan 2000+** irraa buufi — hanga 4K HDR 60 fps, ykn MP3 / AAC / Opus. Windows, macOS, fi Linux irratti naannoo kee keessatti hojeta. **Beeksisni hin jiru, wanti dabalataa hin jiru, gurguurtaan dabalaataa hin jiru.**
 
-[**↓ Baasii Haaraa Buusi**](#install) &nbsp;·&nbsp; [**Marsariitii**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ Baasii Haaraa Buusi**](#install) &nbsp;·&nbsp; [**Marsariitii**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 [![Hawaasa Discord itti makami](https://img.shields.io/badge/Hawaasa%20Discord%20itti%20makami-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
 
-<img src="build/demo.gif" alt="Arroxy demo" width="720" />
+<img src="build/demo.gif" alt="Arclio demo" width="720" />
 
-<img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" width="720" />
+<img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
-Arroxy yeroo si oolfate, ⭐ tokko kan biroo argachuu isaaniif gargaara.
+Arclio yeroo si oolfate, ⭐ tokko kan biroo argachuu isaaniif gargaara.
 
 </div>
 
-> **What is Arroxy?** Arroxy is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arroxy), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arroxy), Flatpak, AppImage, and direct download.
+> **What is Arclio?** Arclio is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arclio), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arclio), Flatpak, AppImage, and direct download.
 >
 > _Last updated: 2026-06-17._
 
@@ -32,7 +32,7 @@ Arroxy yeroo si oolfate, ⭐ tokko kan biroo argachuu isaaniif gargaara.
 ## Qabiyyee
 
 - [Buusi](#install)
-- [Maaliif Arroxy](#why)
+- [Maaliif Arclio](#why)
 - [Amaloota](#features)
 - [Icciitii](#privacy)
 - [Gaaffilee Deddeebii](#faq)
@@ -45,26 +45,26 @@ Arroxy yeroo si oolfate, ⭐ tokko kan biroo argachuu isaaniif gargaara.
 
 | Platform | Format                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Portable.exe)                                                                                                                                                                                                        |
-| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-x64.dmg)                                                                                                                                                                                                                     |
-| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.tar.gz) |
-| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Portable.exe)                                                                                                                                                                                                        |
+| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-x64.dmg)                                                                                                                                                                                                                     |
+| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.tar.gz) |
+| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
-[**Baasii haaraa fudhachuu →**](https://github.com/antonio-orionus/Arroxy/releases/latest)
+[**Baasii haaraa fudhachuu →**](https://github.com/antonio-orionus/Arclio/releases/latest)
 
 ### <a id="why-warning"></a>Maaliif akeekkachiisa arguu dandeessa
 
-Arroxy madda banaa fi hayyama MIT qaba. Ijaarsonni Windows fi macOS **mallattoo hin qaban** — ragaaleen Apple Developer ID fi Windows EV mallattoo koodii kafaltii waggaatti dhibba doolara baay'ee waan gaafataniif, pirojektiin self-funded baasii kana mataa isaarraa kafala. Mallattoo sana malee, Windows SmartScreen fi macOS Gatekeeper yeroo jalqabaatti si akeekachisuu. Akeekkachiisni kun *siistamni kee maxxantiisa hin beeku* jechuudha — Arroxy malwaare dha jechuuf miti.
+Arclio madda banaa fi hayyama MIT qaba. Ijaarsonni Windows fi macOS **mallattoo hin qaban** — ragaaleen Apple Developer ID fi Windows EV mallattoo koodii kafaltii waggaatti dhibba doolara baay'ee waan gaafataniif, pirojektiin self-funded baasii kana mataa isaarraa kafala. Mallattoo sana malee, Windows SmartScreen fi macOS Gatekeeper yeroo jalqabaatti si akeekachisuu. Akeekkachiisni kun *siistamni kee maxxantiisa hin beeku* jechuudha — Arclio malwaare dha jechuuf miti.
 
-Haala sadii Arroxy ofii keetiin mirkaneessuuf, kutaa cimina irraa cimina gaditti:
+Haala sadii Arclio ofii keetiin mirkaneessuuf, kutaa cimina irraa cimina gaditti:
 
-- **Koodii madda dubbisi.** Sarara hundi [GitHub](https://github.com/antonio-orionus/Arroxy) irratti jira fi [madda irraa ijaaruuf](#tech) ni danda'ama.
+- **Koodii madda dubbisi.** Sarara hundi [GitHub](https://github.com/antonio-orionus/Arclio) irratti jira fi [madda irraa ijaaruuf](#tech) ni danda'ama.
 - **SHA256 mirkaneessi.** Faayila kee [`SHA256SUMS`](../../releases/latest) maxxanfame walitti bira qabbi — armaan gadii [Buufannoo kee mirkaneessi](#verify) ilaali.
 - **Sakattaa miilaafi baasii.** Faayila [VirusTotal](https://www.virustotal.com) irratti fe'i.
 
 ### <a id="windows-first-launch"></a>Windows yeroo jalqabaa eegaluu
 
-Jalqaba banuu irratti **"Windows protected your PC"** ykn **"Unknown publisher"** arguu dandeessa. Kun `Arroxy-win-x64-Setup.exe` fi `Arroxy-win-x64-Portable.exe` lameeniifuu hojjeta. Arroxy bilisaa fi madda banaa dha, ijaarsonni Windows mallattoo kafaltii hin qabne waliin hin mallatteffamne, kanaafuu SmartScreen mallattoo isaanirratti kaa'a. Kun Arroxy nageenya hin qabu **jechuuf** of-hordofaan miti. Itti fufuuf:
+Jalqaba banuu irratti **"Windows protected your PC"** ykn **"Unknown publisher"** arguu dandeessa. Kun `Arclio-win-x64-Setup.exe` fi `Arclio-win-x64-Portable.exe` lameeniifuu hojjeta. Arclio bilisaa fi madda banaa dha, ijaarsonni Windows mallattoo kafaltii hin qabne waliin hin mallatteffamne, kanaafuu SmartScreen mallattoo isaanirratti kaa'a. Kun Arclio nageenya hin qabu **jechuuf** of-hordofaan miti. Itti fufuuf:
 
 <div align="center">
   <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted" />
@@ -76,35 +76,35 @@ Jalqaba banuu irratti **"Windows protected your PC"** ykn **"Unknown publisher"*
 
 #### Windows Defender faayila mallattaa itti kaa'e ykn haqe yoo ta'e
 
-Heuristics Defender sometimes flag unsigned NSIS installers fi Electron portables akka shakkisiisoo. Defender `Arroxy-win-x64-Setup.exe` ykn `Arroxy-win-x64-Portable.exe` karantinii keessa kaa'e yoo ta'e, **Windows Security → Virus & threat protection → Protection history** irraa deebi'i, erga Arroxy executable **Manage settings → Add or remove exclusions** jalatti wantoota hayyamamaniitti dabalii. SmartScreen wajjin akkuma, kasaara mallattoo maxxantii dhabuu irraa dhufa, malwaare argamuuurraa miti.
+Heuristics Defender sometimes flag unsigned NSIS installers fi Electron portables akka shakkisiisoo. Defender `Arclio-win-x64-Setup.exe` ykn `Arclio-win-x64-Portable.exe` karantinii keessa kaa'e yoo ta'e, **Windows Security → Virus & threat protection → Protection history** irraa deebi'i, erga Arclio executable **Manage settings → Add or remove exclusions** jalatti wantoota hayyamamaniitti dabalii. SmartScreen wajjin akkuma, kasaara mallattoo maxxantii dhabuu irraa dhufa, malwaare argamuuurraa miti.
 
-> Arroxy fuula GitHub Releases mirkaneessaatii qofa buufi. Faayila marsariitii biraatii argatte ykn namni tokko si erge yoo ta'e, haqii fi ganda mirkaneessaatii faayila haaraa buufi. Koodii madda ummataadhaan banaa waan ta'eef, of irraadhaa sakatta'uu ykn Arroxy of irraadhaa ijaaru dandeessa.
+> Arclio fuula GitHub Releases mirkaneessaatii qofa buufi. Faayila marsariitii biraatii argatte ykn namni tokko si erge yoo ta'e, haqii fi ganda mirkaneessaatii faayila haaraa buufi. Koodii madda ummataadhaan banaa waan ta'eef, of irraadhaa sakatta'uu ykn Arclio of irraadhaa ijaaru dandeessa.
 
 ### <a id="macos-first-launch"></a>macOS yeroo jalqabaa eegaluu
 
-Arroxy ammallee macOS'f mallattoo hin qabdu, kanaafuu Gatekeeper yeroo jalqabaa ni dhorka. Hayyama kennuuf karaan sirrii macOS version keetiin murteeffama — Sequoia 15 mirga-cuqaasuu → banuu darbuu dulloomaa cime.
+Arclio ammallee macOS'f mallattoo hin qabdu, kanaafuu Gatekeeper yeroo jalqabaa ni dhorka. Hayyama kennuuf karaan sirrii macOS version keetiin murteeffama — Sequoia 15 mirga-cuqaasuu → banuu darbuu dulloomaa cime.
 
 #### macOS Sequoia 15 fi booda (ammaa)
 
 Sequoia 15 fi haaraa irraatti, mirga-cuqaasuu → banuu apps heddu quarantine jiran Gatekeeper hin darbu. System Settings panel fayyadami:
 
-1. `Arroxy.app` DMG ramadame irraa `/Applications` tti harkisi.
-2. Arroxy lama-cuqaasi. Diyaalogiin dhorkaaf ni mul'ata — **Done** cuqaasi (*Move to Trash* hin cuqasin).
-3. **System Settings → Privacy & Security** bani fi kutaa **Security** hamma gaditti deemi. *"Arroxy was blocked to protect your Mac"* (ykn ergaa itti dhiyaatu) ni argita.
-4. **Open Anyway** cuqaasi, jecha darbii keetin ykn Touch ID waliin mirkaneessi, erga Arroxy `/Applications` irraa deebi'ii eegali.
+1. `Arclio.app` DMG ramadame irraa `/Applications` tti harkisi.
+2. Arclio lama-cuqaasi. Diyaalogiin dhorkaaf ni mul'ata — **Done** cuqaasi (*Move to Trash* hin cuqasin).
+3. **System Settings → Privacy & Security** bani fi kutaa **Security** hamma gaditti deemi. *"Arclio was blocked to protect your Mac"* (ykn ergaa itti dhiyaatu) ni argita.
+4. **Open Anyway** cuqaasi, jecha darbii keetin ykn Touch ID waliin mirkaneessi, erga Arclio `/Applications` irraa deebi'ii eegali.
 
 #### macOS Sonoma 14 fi dura
 
-1. `Arroxy.app` DMG ramadame irraa `/Applications` tti harkisi.
-2. `Arroxy.app` `/Applications` keessatti mirga-cuqaasi (ykn Control-cuqaasi) fi **Open** filadhu.
-3. Diyaalogiin akeekkachiisaa amma **Open** button qaba — cuqaasii mirkaneessi. Arroxy salphaan ni banama fi akeekkachiisni ammas hin mul'atu.
+1. `Arclio.app` DMG ramadame irraa `/Applications` tti harkisi.
+2. `Arclio.app` `/Applications` keessatti mirga-cuqaasi (ykn Control-cuqaasi) fi **Open** filadhu.
+3. Diyaalogiin akeekkachiisaa amma **Open** button qaba — cuqaasii mirkaneessi. Arclio salphaan ni banama fi akeekkachiisni ammas hin mul'atu.
 
 #### "App is damaged" ykn Gatekeeper dhorku cimaa — Terminal dursaa
 
-macOS *"Arroxy is damaged and can't be opened"* jedhe yoo ta'e, ykn tarkaanfiiwwan armaan olii hanga tokkollee dhorkuu hin baasnee, qabiyyeen quarantine DMG irratti sababii (biraawzarootni muraasaa fi macOS mataa isaa translocation behavior waan qindaa'aniif). App fayyadu irraa balleessi:
+macOS *"Arclio is damaged and can't be opened"* jedhe yoo ta'e, ykn tarkaanfiiwwan armaan olii hanga tokkollee dhorkuu hin baasnee, qabiyyeen quarantine DMG irratti sababii (biraawzarootni muraasaa fi macOS mataa isaa translocation behavior waan qindaa'aniif). App fayyadu irraa balleessi:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Arroxy.app
+xattr -dr com.apple.quarantine /Applications/Arclio.app
 ```
 
 **Apple Silicon vs Intel:** Mac M-series (M1 / M2 / M3 / M4) irratti, `arm64` DMG buusi. Intel Macs irratti, `x64` DMG buusi. Ijaarsaa dogoggora oofuu Rosetta fayyadamuudhaan hojjeta garuu ifa gadi bu'aa.
@@ -120,8 +120,8 @@ AppImages kallattiin oofuu — fayyadu hin barbaachisu. Faayila akka hojjetu gal
 **Terminal:**
 
 ```bash
-chmod +x Arroxy-linux-x64.AppImage
-./Arroxy-linux-x64.AppImage
+chmod +x Arclio-linux-x64.AppImage
+./Arclio-linux-x64.AppImage
 ```
 
 Eegaluun yoo ammallee fashale, FUSE dhabu danda'a:
@@ -139,11 +139,11 @@ sudo pacman -S fuse2
 
 **Walitti makoo desktop filannoo:** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) yeroo tokkoo fayyadi, AppImage lama-cuqaaste kamiyyuu launcher menu keessatti of-dursuudhaan galmeeffama — faayila `.desktop` harkaan barbaachisu hin jiru.
 
-**Flatpak (filannoo sandboxed):** `Arroxy-*.flatpak` gara fuula baasii sanuma irraa buusi.
+**Flatpak (filannoo sandboxed):** `Arclio-*.flatpak` gara fuula baasii sanuma irraa buusi.
 
 ```bash
-flatpak install --user Arroxy-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arroxy
+flatpak install --user Arclio-linux-x64.flatpak
+flatpak run io.github.antonio_orionus.Arclio
 ```
 
 <details>
@@ -154,19 +154,19 @@ Baasii hundi faayila `SHA256SUMS` binary waliin maxxansa. Buufannoon kee darbuu 
 **Windows (PowerShell or Command Prompt):**
 
 ```powershell
-certutil -hashfile Arroxy-win-x64-Setup.exe SHA256
+certutil -hashfile Arclio-win-x64-Setup.exe SHA256
 ```
 
 **macOS (Terminal):**
 
 ```bash
-shasum -a 256 Arroxy-mac-arm64.dmg
+shasum -a 256 Arclio-mac-arm64.dmg
 ```
 
 **Linux (Terminal):**
 
 ```bash
-sha256sum Arroxy-linux-x64.AppImage
+sha256sum Arclio-linux-x64.AppImage
 ```
 
 Sakattaa malwaare miilaafi baasii barbaaddaa? Faayila [VirusTotal](https://www.virustotal.com) irratti fe'i. Mallattoo heuristic yeroo muraasaa injinii xiqqaa irraa arguu Electron apps mallattoo hin qabne bira darbaa; injinii gurguddoo irraa arguu bal'aa rakkoo dhugaa ta'a.
@@ -180,10 +180,10 @@ Durumaa package manager fayyadamtaa? Karaa buufannoo harkaa darbuu dandeessa.
 
 | Chaanaalii | Ajajaa                                                                                |
 | ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
-| Flatpak            | `flatpak install --user Arroxy-linux-x64.flatpak`                                                 |
+| Winget             | `winget install AntonioOrionus.Arclio`                                                            |
+| Scoop              | `scoop bucket add arclio https://github.com/antonio-orionus/scoop-bucket && scoop install arclio` |
+| Homebrew           | `brew tap antonio-orionus/arclio && brew install --cask arclio`                                   |
+| Flatpak            | `flatpak install --user Arclio-linux-x64.flatpak`                                                 |
 
 </details>
 
@@ -204,11 +204,11 @@ Durumaa package manager fayyadamtaa? Karaa buufannoo harkaa darbuu dandeessa.
 
 ---
 
-## <a id="why"></a>Maaliif Arroxy
+## <a id="why"></a>Maaliif Arclio
 
 Waltajjii maayyii walitti bira qabuu filannoolee beekamoo wajjin:
 
-|            | Arroxy | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
+|            | Arclio | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
 | ---------- | :----: | :-----------------: | :---------: | :------------------------: | :----------------: |
 | Bilisaa, sadarkaa kafaltii hin qabu |   ✅   |         ⚠️          |     ✅      |             ⚠️             |         ⚠️         |
 | Madda banaa |   ✅   |         ❌          |     ❌      |             ❌             |         ⚠️         |
@@ -218,7 +218,7 @@ Waltajjii maayyii walitti bira qabuu filannoolee beekamoo wajjin:
 | App desktop platformoota hundaaf |   ✅   |         ✅          |     ✅      |            N/A             |         ❌         |
 | Subtitle + SponsorBlock |   ✅   |         ⚠️          |     ❌      |             ❌             |         ❌         |
 
-Arroxy waan tokko qofaaf ijaarame: URL maxxansi, faayila naannoo qulqulluu argadhu. Akkaawuntiin hin jiru, gurgurtaa dabalaataa hin jiru, odeeffannoo walitti qabuu hin jiru.
+Arclio waan tokko qofaaf ijaarame: URL maxxansi, faayila naannoo qulqulluu argadhu. Akkaawuntiin hin jiru, gurgurtaa dabalaataa hin jiru, odeeffannoo walitti qabuu hin jiru.
 
 ---
 
@@ -241,7 +241,7 @@ Arroxy waan tokko qofaaf ijaarame: URL maxxansi, faayila naannoo qulqulluu argad
 
 - **Haalawwan jalqabaa jijjiiramaa** — buusuu tokko qajeelfamaan, filannoo playlist/channel, URL hedduu maxxansuu, ykn Quick Download filannoowwan duraan kuufamaniin filadhu
 - **Tarree buusuu giddugaleessaa** — hojii tokko, playlist, bulk, ykn quick hundi bakka tokkotti walitti dhufa: adeemsa, dhaabuu, itti fufsiisuu, haquu, irra deebi’uu, fi dursa to’achuuf
-- **Eegaa clipboard** — link YouTube koppiisi Arroxy URL of-hordofaa guutu yeroo app deebi'itu (Advanced settings keessatti jijjiiri)
+- **Eegaa clipboard** — link YouTube koppiisi Arclio URL of-hordofaa guutu yeroo app deebi'itu (Advanced settings keessatti jijjiiri)
 - **URL of-qulqulleessa** — params hordoffii (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) haqa fi linkiiwwan `youtube.com/redirect` bana
 - **Haala tray** — window cufuu buufannoo duubatti itti fufsisee hojechisisa
 - **Afaan 21** — afaan siistamaa of-danda'ee addaan baafata, yeroo kamiyyuu jijjiiruu danda'ama
@@ -260,20 +260,20 @@ Arroxy waan tokko qofaaf ijaarame: URL maxxansi, faayila naannoo qulqulluu argad
 - **YouTube guutummaatti** — Viidiyoowwan, Shorts, Chaanaalota, Playlistoota, YouTube Music fi Podkaastota madda sadarkaa jalqabaa ta'aniin hojjetamu
 - **Saayitiiwwan 2000+ biroo** yt-dlp fayyadamuudhaan — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org fi kanneen biroo heddu
 - **Audio qofa fi subtitle** saayitii deeggara hunda irratti hojjeta, YouTube qofa irratti miti
-- Saayitiin yoo jijjiirames, yt-dlp torban hunda sirreessa erga, Arroxy immoo binary-n yeroo eegaluu ofumaan haaromsa
+- Saayitiin yoo jijjiirames, yt-dlp torban hunda sirreessa erga, Arclio immoo binary-n yeroo eegaluu ofumaan haaromsa
 
 <table align="center" width="100%">
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" /><br/><sub><b>Fuula Buufata saffisaa</b><br/>URL maxxansiitii profaayilii kee kan socho'aadhaan battalumatti buufadhu</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arroxy — Download profiles" /><br/><sub><b>Profaayiloota buufannaa irra deebi'anii fayyadaman</b><br/>Bocaa, qulqullinaa fi bahii akka durtii olkaa'i — buufannaa hundaaf irra deebi'ii fayyadami</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" /><br/><sub><b>Fuula Buufata saffisaa</b><br/>URL maxxansiitii profaayilii kee kan socho'aadhaan battalumatti buufadhu</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arclio — Download profiles" /><br/><sub><b>Profaayiloota buufannaa irra deebi'anii fayyadaman</b><br/>Bocaa, qulqullinaa fi bahii akka durtii olkaa'i — buufannaa hundaaf irra deebi'ii fayyadami</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arroxy — Multi-language audio" /><br/><sub><b>Sirna sagalee afaan baay'ee</b><br/>Afaan sagalee sirrii viidiyoon qabu filadhu</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arroxy — Surround / Dolby audio" /><br/><sub><b>Sagalee Surround / Dolby</b><br/>Sirni 5.1 fi Dolby ni adda baafamu, ni eegamu</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arclio — Multi-language audio" /><br/><sub><b>Sirna sagalee afaan baay'ee</b><br/>Afaan sagalee sirrii viidiyoon qabu filadhu</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arclio — Surround / Dolby audio" /><br/><sub><b>Sagalee Surround / Dolby</b><br/>Sirni 5.1 fi Dolby ni adda baafamu, ni eegamu</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arroxy — Bulk URL mode" /><br/><sub><b>Haala URL baay'ee</b><br/>Tarree maxxansi, irra deebii ofumaan haqi, hunda yeroo tokkotti tarreessi</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arroxy — Parallel download queue" /><br/><sub><b>Tarree buufannaa walqixaa</b><br/>Buufannaa hedduu yeroo tokkotti, guddina kallattiidhaan</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arclio — Bulk URL mode" /><br/><sub><b>Haala URL baay'ee</b><br/>Tarree maxxansi, irra deebii ofumaan haqi, hunda yeroo tokkotti tarreessi</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arclio — Parallel download queue" /><br/><sub><b>Tarree buufannaa walqixaa</b><br/>Buufannaa hedduu yeroo tokkotti, guddina kallattiidhaan</sub></td>
   </tr>
 </table>
 
@@ -283,7 +283,7 @@ Arroxy waan tokko qofaaf ijaarame: URL maxxansi, faayila naannoo qulqulluu argad
 
 Buufannoonni kallattiin [yt-dlp](https://github.com/yt-dlp/yt-dlp) fayyadamuudhaan YouTube irraa foldera filatteetti darbamu — miila-seerri hunduu sarara servera sadarkaa-sadaffaa tokko keessa darbuu hin qabu. Seenaa ilaaluu, seenaa buufannoo, URLs, fi qabiyyee faayilaa meeshaa kee irratti hafu.
 
-Arroxy telemetrii maqaa-dhabduu walitti makamaa [OpenPanel](https://openpanel.dev) fayyadamuudhaan erga — eegaluu, OS, version app fi kufaatii hubachuuf qofa. URL, mata-duree viidiyoo, karaa faayilaa, odeeffannoo account, fingerprinting yookaan data dhuunfaa hin jiru. ID install tokkoon tokkoo tasaa dha, eenyummaa keetti hin hidhamu. Settings keessatti dhaabuu dandeessa.
+Arclio telemetrii maqaa-dhabduu walitti makamaa [OpenPanel](https://openpanel.dev) fayyadamuudhaan erga — eegaluu, OS, version app fi kufaatii hubachuuf qofa. URL, mata-duree viidiyoo, karaa faayilaa, odeeffannoo account, fingerprinting yookaan data dhuunfaa hin jiru. ID install tokkoon tokkoo tasaa dha, eenyummaa keetti hin hidhamu. Settings keessatti dhaabuu dandeessa.
 
 ---
 
@@ -299,13 +299,13 @@ YouTube tajaajiluu danda'u: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, saga
 Eeyyee. Menu format keessaa *audio qofa* filadhu, booda MP3, M4A/AAC, Opus yookaan WAV filadhu.
 
 **Akkaawuntii YouTube ykn kuukkii barbaachisaa?**
-Durtii, lakki — Arroxy akkaawuntii YouTube, seensuu, ykn ergaa kuukkii malee hojeeta. Deeggarsi kuukkii filannoof Qindoomina Olaanaa keessa jira (Madda Kuukkii: faayila ykn biraawzara) qabiyyee mirkaneessuu barbaadu, kan akka viidiyoowwan umurii daangeffaman ykn miseensoota qofaaf, fayyadamuuf. Durtii dhaabbatee jira. Yoo dandeessistee, dookumentii yt-dlp [automatic kuukkii irratti hundaa'u akkaawuntii Google mallatteessisuu danda'a](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) jedha; akkaawuntiin gatamuu danda'u haala kanatti filannoo nageenya qabeessa dha.
+Durtii, lakki — Arclio akkaawuntii YouTube, seensuu, ykn ergaa kuukkii malee hojeeta. Deeggarsi kuukkii filannoof Qindoomina Olaanaa keessa jira (Madda Kuukkii: faayila ykn biraawzara) qabiyyee mirkaneessuu barbaadu, kan akka viidiyoowwan umurii daangeffaman ykn miseensoota qofaaf, fayyadamuuf. Durtii dhaabbatee jira. Yoo dandeessistee, dookumentii yt-dlp [automatic kuukkii irratti hundaa'u akkaawuntii Google mallatteessisuu danda'a](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) jedha; akkaawuntiin gatamuu danda'u haala kanatti filannoo nageenya qabeessa dha.
 
 **YouTube waan tokko jijjiirte itti fufaa hojeta?**
-yt-dlp yeroo eegaluu irratti ofumaan haaromfama, fi Arroxy yeroo YouTube waan tokko jijjiirtu ariitiidhaan sirreessa erga. Yoo rakkoo argattan, deeggarsi kuukkii filannoof Qindoomina Olaanaa keessa akka filannoo deebii argama.
+yt-dlp yeroo eegaluu irratti ofumaan haaromfama, fi Arclio yeroo YouTube waan tokko jijjiirtu ariitiidhaan sirreessa erga. Yoo rakkoo argattan, deeggarsi kuukkii filannoof Qindoomina Olaanaa keessa akka filannoo deebii argama.
 
-**Arroxy afaan meeqa keessatti argamu?**
-Digdamatokkoo, yeroo jalqabaatii: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), fi Српски (Serbian). Arroxy afaan mana-hojii kee sirna hojjetaa irratti yeroo jalqabaatti ofumaa argata, yeroo kamiiyyuu toolbar irraa filataa afaan jijjiiruu dandeessa. Runtime locale JSON src/shared/i18n/locales/ keessa jira; PO catalog hiiktotaaf ta'an immoo i18n/locales/ keessa jiru — gargaaruf GitHub irratti PR bani.
+**Arclio afaan meeqa keessatti argamu?**
+Digdamatokkoo, yeroo jalqabaatii: English, Español (Spanish), Deutsch (German), Français (French), 日本語 (Japanese), 中文 (Chinese), Русский (Russian), Українська (Ukrainian), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Uzbek), Tiếng Việt (Vietnamese), አማርኛ (Amharic), العربية (Arabic), اردو (Urdu), پښتو (Pashto), বাংলা (Bengali), မြန်မာဘာသာ (Burmese), Ελληνικά (Greek), fi Српски (Serbian). Arclio afaan mana-hojii kee sirna hojjetaa irratti yeroo jalqabaatti ofumaa argata, yeroo kamiiyyuu toolbar irraa filataa afaan jijjiiruu dandeessa. Runtime locale JSON src/shared/i18n/locales/ keessa jira; PO catalog hiiktotaaf ta'an immoo i18n/locales/ keessa jiru — gargaaruf GitHub irratti PR bani.
 
 **Waan biraa fayyadu barbaachisaa?**
 Lakki. yt-dlp jalqaba banuu irratti ofumaan buufamee meeshaa kee irratti kuufama; ffmpeg fi ffprobe app waliin dhufu. Sana booda qindaaʼinni dabalataa hin barbaachisu.
@@ -329,7 +329,7 @@ Amma iyyuu karoorfame — tilmaamaan tartiiba dursaatiin:
 | ---------------- | ---------------- |
 | **Playlist & chaanaalii hojjettoota** | Yeroo playlist ykn channel sakatta’an filtraroota guyyaa |
 | **Filannoo track sagalee YouTube** | Yoo YouTube track sagalee heddu dhiyeesse, filannoo track afaan dubbii app guutuu keessatti kaa’i; profile tokkoon tokkoon isaatti override godhi |
-| **Browser sign-in app keessa** | Browser windows Arroxy keessa bani, akka sign in gootuu fi site cookies osoo harkaan export hin godhin fayyadamtuuf |
+| **Browser sign-in app keessa** | Browser windows Arclio keessa bani, akka sign in gootuu fi site cookies osoo harkaan export hin godhin fayyadamtuuf |
 | **Video click tokkoon buusuu** | Active profile kee fayyadamuun URL argame ykn maxxanfame irraa video download click tokkoon eegali |
 | **Deebisanii yaaluun deebisuu cimaa** | Buufannoowwan walitti hidhamiinsa internetii hin tasgabboofne ykn rakkoo qabuun citeef karaa retry haaraa |
 | **Drawer download manager guutuu** | Queue drawer gara manager guutuutti guddisuu, items queue keessa jiranif destination folder jijjiiruu dabalatee |
@@ -398,8 +398,8 @@ sudo apt install -y xvfb
 ### Clone fi itti fayyadami
 
 ```bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # kan gorfamu; pinned tools harkaan hojiirra oolchan yoo ta'e dhiisi
 bun run bootstrap
 bun run doctor
@@ -414,7 +414,7 @@ bun run dist         # OS ammaa kanaaf qindeessi
 bun run dist:win     # supported host irratti Windows targets package godhi
 ```
 
-> `bun run bootstrap` dependencies fe'a, Electron app dependencies rebuild godha, Electron mirkaneessa, development'f embedded ffmpeg/ffprobe qopheessa, Playwright Chromium fe'a. yt-dlp runtime irratti app data folder keessatti manage ta'a; ffmpeg fi ffprobe release Arroxy hunda waliin bundled ta'u.
+> `bun run bootstrap` dependencies fe'a, Electron app dependencies rebuild godha, Electron mirkaneessa, development'f embedded ffmpeg/ffprobe qopheessa, Playwright Chromium fe'a. yt-dlp runtime irratti app data folder keessatti manage ta'a; ffmpeg fi ffprobe release Arclio hunda waliin bundled ta'u.
 
 </details>
 
@@ -424,33 +424,33 @@ bun run dist:win     # supported host irratti Windows targets package godhi
 
 ### App won't open / no window appears
 
-The Arroxy process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
+The Arclio process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
 
 **1. Check the log.** It records startup, GPU info, and any crash. Path:
 
 | Platform | Path                             |
 | -------- | -------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\logs\main.log` |
-| macOS    | `~/Library/Logs/Arroxy/main.log` |
-| Linux    | `~/.config/Arroxy/logs/main.log` |
+| Windows  | `%APPDATA%\Arclio\logs\main.log` |
+| macOS    | `~/Library/Logs/Arclio/main.log` |
+| Linux    | `~/.config/Arclio/logs/main.log` |
 
 **2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
 
 ```bash
 # Windows (Portable) — PowerShell, run from the folder containing the exe
-.\Arroxy-win-x64-Portable.exe --disable-gpu
+.\Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Portable) — Command Prompt (cmd.exe), from the same folder
-Arroxy-win-x64-Portable.exe --disable-gpu
+Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Installed) — works in both PowerShell and cmd.exe
-"%LOCALAPPDATA%\Programs\Arroxy\Arroxy.exe" --disable-gpu
+"%LOCALAPPDATA%\Programs\Arclio\Arclio.exe" --disable-gpu
 
 # macOS
-/Applications/Arroxy.app/Contents/MacOS/Arroxy --disable-gpu
+/Applications/Arclio.app/Contents/MacOS/Arclio --disable-gpu
 
 # Linux (AppImage)
-./Arroxy-linux-x64.AppImage --disable-gpu
+./Arclio-linux-x64.AppImage --disable-gpu
 ```
 
 If that works, the GPU/driver is the cause. Make the change permanent (next step).
@@ -459,9 +459,9 @@ If that works, the GPU/driver is the cause. Make the change permanent (next step
 
 | Platform | Path                                             |
 | -------- | ------------------------------------------------ |
-| Windows  | `%APPDATA%\Arroxy\argv.json`                     |
-| macOS    | `~/Library/Application Support/Arroxy/argv.json` |
-| Linux    | `~/.config/Arroxy/argv.json`                     |
+| Windows  | `%APPDATA%\Arclio\argv.json`                     |
+| macOS    | `~/Library/Application Support/Arclio/argv.json` |
+| Linux    | `~/.config/Arclio/argv.json`                     |
 
 With contents:
 
@@ -469,7 +469,7 @@ With contents:
 { "disable-hardware-acceleration": true }
 ```
 
-Arroxy reads this before opening any window, so it works even when the window never appeared.
+Arclio reads this before opening any window, so it works even when the window never appeared.
 
 **4. Other flags worth trying** (combine if needed): `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
 
@@ -481,15 +481,15 @@ Arroxy reads this before opening any window, so it works even when the window ne
 
 ## Hayyama fayyadamuu
 
-Arroxy meeshaa fayyadama dhuunfaa, dhoksaa qofaaf. Buufannoonni kee Dambii Tajaajilaaf YouTube [Terms of Service](https://www.youtube.com/t/terms) fi seeraa mirga-qopheessaa naannoo keetii wajjin walsimuu mirkaneessuu qofaaf itti gaafatamaa taata. Arroxy fayyadamuudhaan mirgaa hin qabne qabiyyee buusuu, haaromsu, ykn raabsuu hin godhin. Guddiftoonni misooma dogoggoraa kamiifis itti gaafatamu hin qaban.
+Arclio meeshaa fayyadama dhuunfaa, dhoksaa qofaaf. Buufannoonni kee Dambii Tajaajilaaf YouTube [Terms of Service](https://www.youtube.com/t/terms) fi seeraa mirga-qopheessaa naannoo keetii wajjin walsimuu mirkaneessuu qofaaf itti gaafatamaa taata. Arclio fayyadamuudhaan mirgaa hin qabne qabiyyee buusuu, haaromsu, ykn raabsuu hin godhin. Guddiftoonni misooma dogoggoraa kamiifis itti gaafatamu hin qaban.
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=antonio-orionus%2FArroxy&type=timeline&legend=top-left">
+<a href="https://www.star-history.com/?repos=antonio-orionus%2FArclio&type=timeline&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
  </picture>
 </a>
 

@@ -1,29 +1,29 @@
 <div align="center">
-  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy Maskottchen" width="180" />
+  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arclio Maskottchen" width="180" />
 
-# Arroxy — Kostenloser Open-Source YouTube (+ 2000 Seiten) Downloader für Windows, macOS & Linux
+# Arclio — Kostenloser Open-Source YouTube (+ 2000 Seiten) Downloader für Windows, macOS & Linux
 
 **4K · 1080p60 · HDR · Surround/Dolby audio · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Sprache:** [Afaan Oromoo](README.om.md) · **Deutsch** · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![Release](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Build](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Webseite](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![License](https://img.shields.io/badge/license-MIT-green) ![Platforms](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Languages](https://img.shields.io/badge/i18n-21_languages-blue)
+[![Release](https://img.shields.io/github/v/release/antonio-orionus/Arclio?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arclio/releases/latest) [![Build](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arclio/release.yml?label=Build)](https://github.com/antonio-orionus/Arclio/actions/workflows/release.yml) [![Webseite](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![License](https://img.shields.io/badge/license-MIT-green) ![Platforms](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Languages](https://img.shields.io/badge/i18n-21_languages-blue)
 
 Lade Videos, Shorts, Musik, Kanäle, Podcasts oder Audiotracks von **YouTube und 2000+ unterstützten Seiten** herunter — bis zu 4K HDR mit 60 fps, oder als MP3 / AAC / Opus. Läuft lokal auf Windows, macOS und Linux. **Keine Werbung, kein Bloat, kein Upselling.**
 
-[**↓ Neueste Version herunterladen**](#install) &nbsp;·&nbsp; [**Webseite**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ Neueste Version herunterladen**](#install) &nbsp;·&nbsp; [**Webseite**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 [![Discord-Community beitreten](https://img.shields.io/badge/Discord%2DCommunity%20beitreten-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
 
-<img src="build/demo.gif" alt="Arroxy Demo" width="720" />
+<img src="build/demo.gif" alt="Arclio Demo" width="720" />
 
-<img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" width="720" />
+<img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
-Wenn Arroxy dir Zeit spart, hilft ein ⭐ anderen, es zu finden.
+Wenn Arclio dir Zeit spart, hilft ein ⭐ anderen, es zu finden.
 
 </div>
 
-> **What is Arroxy?** Arroxy is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arroxy), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arroxy), Flatpak, AppImage, and direct download.
+> **What is Arclio?** Arclio is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arclio), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arclio), Flatpak, AppImage, and direct download.
 >
 > _Last updated: 2026-06-17._
 
@@ -34,7 +34,7 @@ Wenn Arroxy dir Zeit spart, hilft ein ⭐ anderen, es zu finden.
 ## Inhalt
 
 - [Download](#install)
-- [Warum Arroxy](#why)
+- [Warum Arclio](#why)
 - [Funktionen](#features)
 - [Datenschutz](#privacy)
 - [Häufig gestellte Fragen](#faq)
@@ -47,26 +47,26 @@ Wenn Arroxy dir Zeit spart, hilft ein ⭐ anderen, es zu finden.
 
 | Plattform | Format                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Portable.exe)                                                                                                                                                                                                        |
-| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-x64.dmg)                                                                                                                                                                                                                     |
-| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.tar.gz) |
-| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Portable.exe)                                                                                                                                                                                                        |
+| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-x64.dmg)                                                                                                                                                                                                                     |
+| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.tar.gz) |
+| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
-[**Neuesten Release holen →**](https://github.com/antonio-orionus/Arroxy/releases/latest)
+[**Neuesten Release holen →**](https://github.com/antonio-orionus/Arclio/releases/latest)
 
 ### <a id="why-warning"></a>Warum du möglicherweise eine Warnung siehst
 
-Arroxy ist Open Source und MIT-lizenziert. Die Windows- und macOS-Builds sind **nicht code-signiert** — Apple Developer ID und Windows EV Code-Signing-Zertifikate kosten jeweils mehrere Hundert Dollar im Jahr, die ein Indie-Projekt aus eigener Tasche zahlt. Ohne diese Signaturen warnen Windows SmartScreen und macOS Gatekeeper beim ersten Start. Die Warnungen bedeuten *dein Betriebssystem erkennt den Herausgeber nicht* — sie bedeuten nicht, dass Arroxy Malware ist.
+Arclio ist Open Source und MIT-lizenziert. Die Windows- und macOS-Builds sind **nicht code-signiert** — Apple Developer ID und Windows EV Code-Signing-Zertifikate kosten jeweils mehrere Hundert Dollar im Jahr, die ein Indie-Projekt aus eigener Tasche zahlt. Ohne diese Signaturen warnen Windows SmartScreen und macOS Gatekeeper beim ersten Start. Die Warnungen bedeuten *dein Betriebssystem erkennt den Herausgeber nicht* — sie bedeuten nicht, dass Arclio Malware ist.
 
-Drei Wege, Arroxy selbst zu überprüfen, in aufsteigender Genauigkeit:
+Drei Wege, Arclio selbst zu überprüfen, in aufsteigender Genauigkeit:
 
-- **Quellcode lesen.** Jede Zeile steht auf [GitHub](https://github.com/antonio-orionus/Arroxy) und du kannst [es aus dem Quellcode bauen](#tech).
+- **Quellcode lesen.** Jede Zeile steht auf [GitHub](https://github.com/antonio-orionus/Arclio) und du kannst [es aus dem Quellcode bauen](#tech).
 - **SHA256 prüfen.** Vergleiche deine Datei mit der veröffentlichten [`SHA256SUMS`](../../releases/latest) — siehe [Download verifizieren](#verify) unten.
 - **Drittanbieter-Scan.** Lade die Datei bei [VirusTotal](https://www.virustotal.com) hoch.
 
 ### <a id="windows-first-launch"></a>Windows-Erststart
 
-Beim ersten Start kann **"Windows protected your PC"** oder **"Unknown publisher"** erscheinen. Das gilt sowohl für `Arroxy-win-x64-Setup.exe` als auch für `Arroxy-win-x64-Portable.exe`. Arroxy ist kostenlos und Open Source, und die Windows-Builds sind nicht mit einem kostenpflichtigen Zertifikat signiert, weshalb SmartScreen sie markiert. Das bedeutet **nicht** automatisch, dass Arroxy unsicher ist. So geht es weiter:
+Beim ersten Start kann **"Windows protected your PC"** oder **"Unknown publisher"** erscheinen. Das gilt sowohl für `Arclio-win-x64-Setup.exe` als auch für `Arclio-win-x64-Portable.exe`. Arclio ist kostenlos und Open Source, und die Windows-Builds sind nicht mit einem kostenpflichtigen Zertifikat signiert, weshalb SmartScreen sie markiert. Das bedeutet **nicht** automatisch, dass Arclio unsicher ist. So geht es weiter:
 
 <div align="center">
   <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted" />
@@ -78,35 +78,35 @@ Beim ersten Start kann **"Windows protected your PC"** oder **"Unknown publisher
 
 #### Wenn Windows Defender die Datei markiert oder entfernt
 
-Defender-Heuristiken markieren unsignierte NSIS-Installer und Electron-Portables manchmal als verdächtig. Wenn Defender `Arroxy-win-x64-Setup.exe` oder `Arroxy-win-x64-Portable.exe` in Quarantäne stellt, stelle sie aus **Windows Security → Virus & threat protection → Protection history** wieder her und füge die Arroxy-Executable als erlaubtes Element unter **Manage settings → Add or remove exclusions** hinzu. Wie bei SmartScreen ist der Auslöser die fehlende Herausgebersignatur, nicht erkannte Malware.
+Defender-Heuristiken markieren unsignierte NSIS-Installer und Electron-Portables manchmal als verdächtig. Wenn Defender `Arclio-win-x64-Setup.exe` oder `Arclio-win-x64-Portable.exe` in Quarantäne stellt, stelle sie aus **Windows Security → Virus & threat protection → Protection history** wieder her und füge die Arclio-Executable als erlaubtes Element unter **Manage settings → Add or remove exclusions** hinzu. Wie bei SmartScreen ist der Auslöser die fehlende Herausgebersignatur, nicht erkannte Malware.
 
-> Lade Arroxy nur von der offiziellen GitHub Releases-Seite herunter. Wenn du die Datei von einer anderen Website bekommen hast oder jemand sie dir geschickt hat, lösche sie und lade eine frische Kopie von der offiziellen Quelle herunter. Der Quellcode ist öffentlich, du kannst ihn also selbst prüfen oder Arroxy selbst kompilieren.
+> Lade Arclio nur von der offiziellen GitHub Releases-Seite herunter. Wenn du die Datei von einer anderen Website bekommen hast oder jemand sie dir geschickt hat, lösche sie und lade eine frische Kopie von der offiziellen Quelle herunter. Der Quellcode ist öffentlich, du kannst ihn also selbst prüfen oder Arclio selbst kompilieren.
 
 ### <a id="macos-first-launch"></a>macOS-Erststart
 
-Arroxy ist noch nicht code-signiert für macOS, daher blockiert Gatekeeper den ersten Start. Der genaue Weg, um es zu erlauben, hängt von deiner macOS-Version ab — Sequoia 15 hat die alte Rechtsklick → Öffnen-Umgehung verschärft.
+Arclio ist noch nicht code-signiert für macOS, daher blockiert Gatekeeper den ersten Start. Der genaue Weg, um es zu erlauben, hängt von deiner macOS-Version ab — Sequoia 15 hat die alte Rechtsklick → Öffnen-Umgehung verschärft.
 
 #### macOS Sequoia 15 und neuer (aktuell)
 
 Ab Sequoia 15 umgeht Rechtsklick → Öffnen Gatekeeper für viele unter Quarantäne stehende Apps nicht mehr. Nutze stattdessen die Systemeinstellungen:
 
-1. Ziehe `Arroxy.app` aus dem eingehängten DMG nach `/Applications`.
-2. Doppelklicke auf Arroxy. Der Blockierdialog erscheint — klicke auf **Done** (klicke nicht auf *Move to Trash*).
-3. Öffne **System Settings → Privacy & Security** und scrolle zum Abschnitt **Security**. Du siehst *"Arroxy was blocked to protect your Mac"* (oder eine nahezu identische Meldung).
-4. Klicke auf **Open Anyway**, bestätige mit deinem Passwort oder Touch ID, und starte Arroxy dann aus `/Applications` neu.
+1. Ziehe `Arclio.app` aus dem eingehängten DMG nach `/Applications`.
+2. Doppelklicke auf Arclio. Der Blockierdialog erscheint — klicke auf **Done** (klicke nicht auf *Move to Trash*).
+3. Öffne **System Settings → Privacy & Security** und scrolle zum Abschnitt **Security**. Du siehst *"Arclio was blocked to protect your Mac"* (oder eine nahezu identische Meldung).
+4. Klicke auf **Open Anyway**, bestätige mit deinem Passwort oder Touch ID, und starte Arclio dann aus `/Applications` neu.
 
 #### macOS Sonoma 14 und älter
 
-1. Ziehe `Arroxy.app` aus dem eingehängten DMG nach `/Applications`.
-2. Rechtsklick (oder Control-Klick) auf `Arroxy.app` in `/Applications` und wähle **Open**.
-3. Der Warndialog hat nun einen **Open**-Button — klicke ihn und bestätige. Arroxy öffnet sich normal und die Warnung erscheint nie wieder.
+1. Ziehe `Arclio.app` aus dem eingehängten DMG nach `/Applications`.
+2. Rechtsklick (oder Control-Klick) auf `Arclio.app` in `/Applications` und wähle **Open**.
+3. Der Warndialog hat nun einen **Open**-Button — klicke ihn und bestätige. Arclio öffnet sich normal und die Warnung erscheint nie wieder.
 
 #### "App is damaged" oder anhaltende Gatekeeper-Blockierung — Terminal-Fix
 
-Wenn macOS sagt *"Arroxy is damaged and can't be opened"*, oder keiner der obigen Schritte die Blockierung aufhebt, ist das Quarantäne-Attribut auf dem DMG die Ursache (manche Browser und macOS's eigenes Translocation-Verhalten setzen es). Entferne es von der installierten App:
+Wenn macOS sagt *"Arclio is damaged and can't be opened"*, oder keiner der obigen Schritte die Blockierung aufhebt, ist das Quarantäne-Attribut auf dem DMG die Ursache (manche Browser und macOS's eigenes Translocation-Verhalten setzen es). Entferne es von der installierten App:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Arroxy.app
+xattr -dr com.apple.quarantine /Applications/Arclio.app
 ```
 
 **Apple Silicon vs Intel:** auf einem Mac der M-Serie (M1 / M2 / M3 / M4) lade das `arm64`-DMG herunter. Auf Intel-Macs lade das `x64`-DMG. Der falsche Build funktioniert auch über Rosetta, ist aber spürbar langsamer.
@@ -122,8 +122,8 @@ AppImages werden direkt ausgeführt — keine Installation nötig. Du musst die 
 **Terminal:**
 
 ```bash
-chmod +x Arroxy-linux-x64.AppImage
-./Arroxy-linux-x64.AppImage
+chmod +x Arclio-linux-x64.AppImage
+./Arclio-linux-x64.AppImage
 ```
 
 Falls der Start trotzdem fehlschlägt, fehlt möglicherweise FUSE:
@@ -141,11 +141,11 @@ sudo pacman -S fuse2
 
 **Optionale Desktop-Integration:** installiere [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) einmalig, und jede AppImage, auf die du doppelklickst, wird automatisch in deinem Launcher-Menü registriert — keine manuelle `.desktop`-Datei nötig.
 
-**Flatpak (sandboxed Alternative):** Lade `Arroxy-*.flatpak` von derselben Release-Seite herunter.
+**Flatpak (sandboxed Alternative):** Lade `Arclio-*.flatpak` von derselben Release-Seite herunter.
 
 ```bash
-flatpak install --user Arroxy-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arroxy
+flatpak install --user Arclio-linux-x64.flatpak
+flatpak run io.github.antonio_orionus.Arclio
 ```
 
 <details>
@@ -156,19 +156,19 @@ Jedes Release veröffentlicht eine `SHA256SUMS`-Datei zusammen mit den Binärdat
 **Windows (PowerShell or Command Prompt):**
 
 ```powershell
-certutil -hashfile Arroxy-win-x64-Setup.exe SHA256
+certutil -hashfile Arclio-win-x64-Setup.exe SHA256
 ```
 
 **macOS (Terminal):**
 
 ```bash
-shasum -a 256 Arroxy-mac-arm64.dmg
+shasum -a 256 Arclio-mac-arm64.dmg
 ```
 
 **Linux (Terminal):**
 
 ```bash
-sha256sum Arroxy-linux-x64.AppImage
+sha256sum Arclio-linux-x64.AppImage
 ```
 
 Möchtest du einen Drittanbieter-Malware-Scan? Lade die Datei bei [VirusTotal](https://www.virustotal.com) hoch. Eine Handvoll generischer Heuristik-Flags von kleineren Engines ist bei unsignierten Electron-Apps normal; weit verbreitete Erkennungen durch große Engines wären ein echter Anlass zur Sorge.
@@ -182,10 +182,10 @@ Verwendest du bereits einen Paketmanager? Du kannst den manuellen Download-Weg �
 
 | Kanal | Befehl                                                                                |
 | ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
-| Flatpak            | `flatpak install --user Arroxy-linux-x64.flatpak`                                                 |
+| Winget             | `winget install AntonioOrionus.Arclio`                                                            |
+| Scoop              | `scoop bucket add arclio https://github.com/antonio-orionus/scoop-bucket && scoop install arclio` |
+| Homebrew           | `brew tap antonio-orionus/arclio && brew install --cask arclio`                                   |
+| Flatpak            | `flatpak install --user Arclio-linux-x64.flatpak`                                                 |
 
 </details>
 
@@ -206,11 +206,11 @@ Verwendest du bereits einen Paketmanager? Du kannst den manuellen Download-Weg �
 
 ---
 
-## <a id="why"></a>Warum Arroxy
+## <a id="why"></a>Warum Arclio
 
 Ein direkter Vergleich mit den gängigsten Alternativen:
 
-|            | Arroxy | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
+|            | Arclio | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
 | ---------- | :----: | :-----------------: | :---------: | :------------------------: | :----------------: |
 | Kostenlos, keine Premium-Stufe |   ✅   |         ⚠️          |     ✅      |             ⚠️             |         ⚠️         |
 | Open Source |   ✅   |         ❌          |     ❌      |             ❌             |         ⚠️         |
@@ -220,7 +220,7 @@ Ein direkter Vergleich mit den gängigsten Alternativen:
 | Plattformübergreifende Desktop-App |   ✅   |         ✅          |     ✅      |            N/A             |         ❌         |
 | Untertitel + SponsorBlock |   ✅   |         ⚠️          |     ❌      |             ❌             |         ❌         |
 
-Arroxy ist für eine Sache gebaut: URL einfügen, saubere lokale Datei erhalten. Keine Konten, kein Upselling, keine Datensammlung.
+Arclio ist für eine Sache gebaut: URL einfügen, saubere lokale Datei erhalten. Keine Konten, kein Upselling, keine Datensammlung.
 
 ---
 
@@ -243,7 +243,7 @@ Arroxy ist für eine Sache gebaut: URL einfügen, saubere lokale Datei erhalten.
 
 - **Flexible Startmodi** — wähle einen geführten Einzel-Download, eine Playlist-/Kanal-Auswahl, Bulk-URL-Eingabe oder Quick Download mit gespeicherten Standardwerten
 - **Zentrale Download-Warteschlange** — jeder Einzel-, Playlist-, Bulk- oder Quick-Job landet an einem Ort für Fortschritt, Pausieren, Fortsetzen, Abbrechen, Wiederholen und Priorität
-- **Zwischenablage-Überwachung** — kopiere einen YouTube-Link und Arroxy füllt die URL automatisch aus, wenn du die App wieder fokussierst (in den erweiterten Einstellungen umschaltbar)
+- **Zwischenablage-Überwachung** — kopiere einen YouTube-Link und Arclio füllt die URL automatisch aus, wenn du die App wieder fokussierst (in den erweiterten Einstellungen umschaltbar)
 - **URLs automatisch bereinigen** — entfernt Tracking-Parameter (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) und löst `youtube.com/redirect`-Links auf
 - **Tray-Modus** — das Schließen des Fensters lässt Downloads im Hintergrund weiterlaufen
 - **21 Sprachen** — erkennt automatisch die Systemsprache, jederzeit umschaltbar
@@ -262,20 +262,20 @@ Arroxy ist für eine Sache gebaut: URL einfügen, saubere lokale Datei erhalten.
 - **YouTube, vollständig** — Videos, Shorts, Kanäle, Playlists, YouTube Music und Podcasts werden als erstklassige Quellen behandelt
 - **2000+ weitere Seiten** via yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org und viele mehr
 - **Nur Audio und Untertitel** funktionieren auf jeder unterstützten Seite, nicht nur auf YouTube
-- Ändert sich eine Seite, liefert yt-dlp wöchentlich Fixes und Arroxy aktualisiert das Binary beim Start automatisch
+- Ändert sich eine Seite, liefert yt-dlp wöchentlich Fixes und Arclio aktualisiert das Binary beim Start automatisch
 
 <table align="center" width="100%">
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" /><br/><sub><b>Quick-Download-Startseite</b><br/>URL einfügen und sofort mit deinem aktiven Profil herunterladen</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arroxy — Download profiles" /><br/><sub><b>Wiederverwendbare Download-Profile</b><br/>Format, Qualität und Ausgabe als Voreinstellung speichern – pro Download wiederverwenden</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" /><br/><sub><b>Quick-Download-Startseite</b><br/>URL einfügen und sofort mit deinem aktiven Profil herunterladen</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arclio — Download profiles" /><br/><sub><b>Wiederverwendbare Download-Profile</b><br/>Format, Qualität und Ausgabe als Voreinstellung speichern – pro Download wiederverwenden</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arroxy — Multi-language audio" /><br/><sub><b>Mehrsprachige Audiospuren</b><br/>Genau die Audiosprache wählen, die ein Video mitbringt</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arroxy — Surround / Dolby audio" /><br/><sub><b>Surround-/Dolby-Audio</b><br/>5.1- und Dolby-Spuren erkannt und erhalten</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arclio — Multi-language audio" /><br/><sub><b>Mehrsprachige Audiospuren</b><br/>Genau die Audiosprache wählen, die ein Video mitbringt</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arclio — Surround / Dolby audio" /><br/><sub><b>Surround-/Dolby-Audio</b><br/>5.1- und Dolby-Spuren erkannt und erhalten</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arroxy — Bulk URL mode" /><br/><sub><b>Massen-URL-Modus</b><br/>Liste einfügen, automatisch entdoppeln, alle auf einmal einreihen</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arroxy — Parallel download queue" /><br/><sub><b>Paralleler Download-Verlauf</b><br/>Mehrere Downloads gleichzeitig mit Live-Fortschritt</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arclio — Bulk URL mode" /><br/><sub><b>Massen-URL-Modus</b><br/>Liste einfügen, automatisch entdoppeln, alle auf einmal einreihen</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arclio — Parallel download queue" /><br/><sub><b>Paralleler Download-Verlauf</b><br/>Mehrere Downloads gleichzeitig mit Live-Fortschritt</sub></td>
   </tr>
 </table>
 
@@ -285,7 +285,7 @@ Arroxy ist für eine Sache gebaut: URL einfügen, saubere lokale Datei erhalten.
 
 Downloads werden direkt über [yt-dlp](https://github.com/yt-dlp/yt-dlp) von YouTube in den von dir gewählten Ordner geholt — nichts wird über einen Drittanbieter-Server geleitet. Verlauf, Download-Historie, URLs und Dateiinhalte bleiben auf deinem Gerät.
 
-Arroxy sendet anonyme, aggregierte Telemetrie über [OpenPanel](https://openpanel.dev) — gerade genug, um Starts, OS, App-Versionen und Abstürze zu verstehen. Keine URLs, Video-Titel, Dateipfade, Kontodaten, Fingerprinting oder personenbezogenen Daten. Die ID pro Installation ist zufällig und nicht mit deiner Identität verknüpft. Du kannst das in den Einstellungen deaktivieren.
+Arclio sendet anonyme, aggregierte Telemetrie über [OpenPanel](https://openpanel.dev) — gerade genug, um Starts, OS, App-Versionen und Abstürze zu verstehen. Keine URLs, Video-Titel, Dateipfade, Kontodaten, Fingerprinting oder personenbezogenen Daten. Die ID pro Installation ist zufällig und nicht mit deiner Identität verknüpft. Du kannst das in den Einstellungen deaktivieren.
 
 ---
 
@@ -301,13 +301,13 @@ Alles, was YouTube anbietet: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, plu
 Ja. Wähle im Formatmenü *nur Audio* und dann MP3, M4A/AAC, Opus oder WAV.
 
 **Brauche ich ein YouTube-Konto oder Cookies?**
-Standardmäßig nein — Arroxy funktioniert ohne YouTube-Konto, Login oder Cookie-Export. Optionale Cookie-Unterstützung steht in den erweiterten Einstellungen zur Verfügung (Cookies source: file or browser) für Inhalte, die eine Authentifizierung erfordern, etwa altersbeschränkte oder Mitglieder-only-Videos. Sie ist standardmäßig deaktiviert. Wenn du sie aktivierst, weist das yt-dlp-Wiki darauf hin, dass [Cookie-basierte Automatisierung ein Google-Konto markieren kann](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); ein Wegwerf-Konto ist in dem Fall die sicherere Wahl.
+Standardmäßig nein — Arclio funktioniert ohne YouTube-Konto, Login oder Cookie-Export. Optionale Cookie-Unterstützung steht in den erweiterten Einstellungen zur Verfügung (Cookies source: file or browser) für Inhalte, die eine Authentifizierung erfordern, etwa altersbeschränkte oder Mitglieder-only-Videos. Sie ist standardmäßig deaktiviert. Wenn du sie aktivierst, weist das yt-dlp-Wiki darauf hin, dass [Cookie-basierte Automatisierung ein Google-Konto markieren kann](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); ein Wegwerf-Konto ist in dem Fall die sicherere Wahl.
 
 **Funktioniert es weiter, wenn YouTube etwas ändert?**
-yt-dlp wird beim Start automatisch aktualisiert, und Arroxy liefert zügig Fixes, sobald YouTube etwas ändert. Falls du doch einmal auf ein Problem stößt, steht in den erweiterten Einstellungen optionale Cookie-Unterstützung als Fallback bereit.
+yt-dlp wird beim Start automatisch aktualisiert, und Arclio liefert zügig Fixes, sobald YouTube etwas ändert. Falls du doch einmal auf ein Problem stößt, steht in den erweiterten Einstellungen optionale Cookie-Unterstützung als Fallback bereit.
 
-**In welchen Sprachen ist Arroxy verfügbar?**
-Einundzwanzig, direkt out of the box: English, Español (Spanisch), Deutsch, Français (Französisch), 日本語 (Japanisch), 中文 (Chinesisch), Русский (Russisch), Українська (Ukrainisch), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Usbekisch), Tiếng Việt (Vietnamesisch), አማርኛ (Amharisch), العربية (Arabisch), اردو (Urdu), پښتو (Paschto), বাংলা (Bengalisch), မြန်မာဘာသာ (Birmanisch), Ελληνικά (Griechisch) und Српски (Serbisch). Arroxy erkennt deine Betriebssystem-Sprache beim ersten Start und du kannst jederzeit über die Sprachauswahl in der Symbolleiste wechseln. Die Runtime-Locale-JSON-Dateien liegen in src/shared/i18n/locales/, und die PO-Kataloge für Übersetzer liegen in i18n/locales/ — öffne einen PR auf GitHub, um beizutragen.
+**In welchen Sprachen ist Arclio verfügbar?**
+Einundzwanzig, direkt out of the box: English, Español (Spanisch), Deutsch, Français (Französisch), 日本語 (Japanisch), 中文 (Chinesisch), Русский (Russisch), Українська (Ukrainisch), हिन्दी (Hindi), Afaan Oromoo, Kiswahili, O'zbekcha (Usbekisch), Tiếng Việt (Vietnamesisch), አማርኛ (Amharisch), العربية (Arabisch), اردو (Urdu), پښتو (Paschto), বাংলা (Bengalisch), မြန်မာဘာသာ (Birmanisch), Ελληνικά (Griechisch) und Српски (Serbisch). Arclio erkennt deine Betriebssystem-Sprache beim ersten Start und du kannst jederzeit über die Sprachauswahl in der Symbolleiste wechseln. Die Runtime-Locale-JSON-Dateien liegen in src/shared/i18n/locales/, und die PO-Kataloge für Übersetzer liegen in i18n/locales/ — öffne einen PR auf GitHub, um beizutragen.
 
 **Muss ich etwas zusätzlich installieren?**
 Nein. yt-dlp wird beim ersten Start automatisch heruntergeladen und auf deinem Rechner gecacht; ffmpeg und ffprobe werden mit der App geliefert. Danach ist keine weitere Einrichtung nötig.
@@ -331,7 +331,7 @@ Weiter geplant — grob nach Priorität sortiert:
 | ---------------- | ---------------- |
 | **Playlist- & Kanal-Filter** | Datumsfilter beim Einlesen einer Playlist oder eines Kanals |
 | **YouTube-Audiospur-Präferenzen** | App-weite bevorzugte Sprachspur festlegen, mit Überschreibungen pro Profil, wenn YouTube mehrere Audiospuren anbietet |
-| **Browser-Anmeldung in der App** | Browserfenster in Arroxy öffnen, damit du dich anmelden und Website-Cookies nutzen kannst, ohne sie manuell zu exportieren |
+| **Browser-Anmeldung in der App** | Browserfenster in Arclio öffnen, damit du dich anmelden und Website-Cookies nutzen kannst, ohne sie manuell zu exportieren |
 | **Video-Download mit einem Klick** | Einen Video-Download mit deinem aktiven Profil per Klick aus einer erkannten oder eingefügten URL starten |
 | **Stärkere Wiederaufnahme nach Fehlern** | Ein neuer Retry-Pfad für Downloads, die durch unzuverlässige oder problematische Internetverbindungen unterbrochen werden |
 | **Vollwertiger Download-Manager-Drawer** | Den Queue-Drawer zu einem volleren Manager ausbauen, inklusive Zielordner-Wechsel für eingereihte Elemente |
@@ -400,8 +400,8 @@ sudo apt install -y xvfb
 ### Klonen & starten
 
 ```bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # empfohlen; überspringen, wenn die gepinnten Tools manuell aktiv sind
 bun run bootstrap
 bun run doctor
@@ -416,7 +416,7 @@ bun run dist         # für aktuelles OS paketieren
 bun run dist:win     # Windows-Ziele auf unterstütztem Host paketieren
 ```
 
-> `bun run bootstrap` installiert Abhängigkeiten, baut Electron-App-Abhängigkeiten neu, prüft Electron, bereitet eingebettete ffmpeg/ffprobe für die Entwicklung vor und installiert Playwright Chromium. yt-dlp wird zur Laufzeit im App-Datenordner verwaltet; ffmpeg und ffprobe sind in jedem Arroxy-Release enthalten.
+> `bun run bootstrap` installiert Abhängigkeiten, baut Electron-App-Abhängigkeiten neu, prüft Electron, bereitet eingebettete ffmpeg/ffprobe für die Entwicklung vor und installiert Playwright Chromium. yt-dlp wird zur Laufzeit im App-Datenordner verwaltet; ffmpeg und ffprobe sind in jedem Arclio-Release enthalten.
 
 </details>
 
@@ -426,33 +426,33 @@ bun run dist:win     # Windows-Ziele auf unterstütztem Host paketieren
 
 ### App won't open / no window appears
 
-The Arroxy process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
+The Arclio process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
 
 **1. Check the log.** It records startup, GPU info, and any crash. Path:
 
 | Platform | Path                             |
 | -------- | -------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\logs\main.log` |
-| macOS    | `~/Library/Logs/Arroxy/main.log` |
-| Linux    | `~/.config/Arroxy/logs/main.log` |
+| Windows  | `%APPDATA%\Arclio\logs\main.log` |
+| macOS    | `~/Library/Logs/Arclio/main.log` |
+| Linux    | `~/.config/Arclio/logs/main.log` |
 
 **2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
 
 ```bash
 # Windows (Portable) — PowerShell, run from the folder containing the exe
-.\Arroxy-win-x64-Portable.exe --disable-gpu
+.\Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Portable) — Command Prompt (cmd.exe), from the same folder
-Arroxy-win-x64-Portable.exe --disable-gpu
+Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Installed) — works in both PowerShell and cmd.exe
-"%LOCALAPPDATA%\Programs\Arroxy\Arroxy.exe" --disable-gpu
+"%LOCALAPPDATA%\Programs\Arclio\Arclio.exe" --disable-gpu
 
 # macOS
-/Applications/Arroxy.app/Contents/MacOS/Arroxy --disable-gpu
+/Applications/Arclio.app/Contents/MacOS/Arclio --disable-gpu
 
 # Linux (AppImage)
-./Arroxy-linux-x64.AppImage --disable-gpu
+./Arclio-linux-x64.AppImage --disable-gpu
 ```
 
 If that works, the GPU/driver is the cause. Make the change permanent (next step).
@@ -461,9 +461,9 @@ If that works, the GPU/driver is the cause. Make the change permanent (next step
 
 | Platform | Path                                             |
 | -------- | ------------------------------------------------ |
-| Windows  | `%APPDATA%\Arroxy\argv.json`                     |
-| macOS    | `~/Library/Application Support/Arroxy/argv.json` |
-| Linux    | `~/.config/Arroxy/argv.json`                     |
+| Windows  | `%APPDATA%\Arclio\argv.json`                     |
+| macOS    | `~/Library/Application Support/Arclio/argv.json` |
+| Linux    | `~/.config/Arclio/argv.json`                     |
 
 With contents:
 
@@ -471,7 +471,7 @@ With contents:
 { "disable-hardware-acceleration": true }
 ```
 
-Arroxy reads this before opening any window, so it works even when the window never appeared.
+Arclio reads this before opening any window, so it works even when the window never appeared.
 
 **4. Other flags worth trying** (combine if needed): `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
 
@@ -483,15 +483,15 @@ Arroxy reads this before opening any window, so it works even when the window ne
 
 ## Nutzungsbedingungen
 
-Arroxy ist ein Werkzeug ausschließlich für den persönlichen, privaten Gebrauch. Du bist allein dafür verantwortlich, dass deine Downloads den [YouTube-AGB](https://www.youtube.com/t/terms) und dem Urheberrecht deines Landes entsprechen. Verwende Arroxy nicht, um Inhalte herunterzuladen, zu vervielfältigen oder zu verbreiten, an denen du keine Rechte hast. Die Entwickler haften nicht für Missbrauch.
+Arclio ist ein Werkzeug ausschließlich für den persönlichen, privaten Gebrauch. Du bist allein dafür verantwortlich, dass deine Downloads den [YouTube-AGB](https://www.youtube.com/t/terms) und dem Urheberrecht deines Landes entsprechen. Verwende Arclio nicht, um Inhalte herunterzuladen, zu vervielfältigen oder zu verbreiten, an denen du keine Rechte hast. Die Entwickler haften nicht für Missbrauch.
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=antonio-orionus%2FArroxy&type=timeline&legend=top-left">
+<a href="https://www.star-history.com/?repos=antonio-orionus%2FArclio&type=timeline&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
  </picture>
 </a>
 

@@ -1,29 +1,29 @@
 <div align="center">
-  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arroxy маскота" width="180" />
+  <img src="src/renderer/src/assets/App-icon-HQ.png" alt="Arclio маскота" width="180" />
 
-# Arroxy — Бесплатни open-source YouTube (+ 2000 сајтова) преузимач за Windows, macOS и Linux
+# Arclio — Бесплатни open-source YouTube (+ 2000 сајтова) преузимач за Windows, macOS и Linux
 
 **4K · 1080p60 · HDR · Surround/Dolby audio · Playlists · MP3 · Shorts · Music · Channels · Subtitles · SponsorBlock · +2000 sites**
 
 **Читај на:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · **Српски** · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![Издање](https://img.shields.io/github/v/release/antonio-orionus/Arroxy?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arroxy/releases/latest) [![Изградња](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arroxy/release.yml?label=Build)](https://github.com/antonio-orionus/Arroxy/actions/workflows/release.yml) [![Веб-сајт](https://img.shields.io/badge/website-arroxy.orionus.dev-blueviolet)](https://arroxy.orionus.dev/) ![Лиценца](https://img.shields.io/badge/license-MIT-green) ![Платформе](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Језици](https://img.shields.io/badge/i18n-21_languages-blue)
+[![Издање](https://img.shields.io/github/v/release/antonio-orionus/Arclio?label=Release&color=blueviolet)](https://github.com/antonio-orionus/Arclio/releases/latest) [![Изградња](https://img.shields.io/github/actions/workflow/status/antonio-orionus/Arclio/release.yml?label=Build)](https://github.com/antonio-orionus/Arclio/actions/workflows/release.yml) [![Веб-сајт](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![Лиценца](https://img.shields.io/badge/license-MIT-green) ![Платформе](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Језици](https://img.shields.io/badge/i18n-21_languages-blue)
 
 Преузимајте видео снимке, Shorts, музику, каналe, подкасте или аудио записе са **YouTube-а и 2000+ подржаних сајтова** — до 4K HDR при 60 fps, или у MP3 / AAC / Opus формату. Ради локално на Windows-у, macOS-у и Linux-у. **Без реклама, без непотребног, без додатне продаје.**
 
-[**↓ Преузмите најновије издање**](#install) &nbsp;·&nbsp; [**Веб-сајт**](https://arroxy.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ Преузмите најновије издање**](#install) &nbsp;·&nbsp; [**Веб-сајт**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 [![Придружите се Discord заједници](https://img.shields.io/badge/%D0%9F%D1%80%D0%B8%D0%B4%D1%80%D1%83%D0%B6%D0%B8%D1%82%D0%B5%20%D1%81%D0%B5%20Discord%20%D0%B7%D0%B0%D1%98%D0%B5%D0%B4%D0%BD%D0%B8%D1%86%D0%B8-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
 
-<img src="build/demo.gif" alt="Arroxy демонстрација" width="720" />
+<img src="build/demo.gif" alt="Arclio демонстрација" width="720" />
 
-<img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" width="720" />
+<img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
-Ако вам Arroxy уштеди времена, ⭐ помаже другима да га пронађу.
+Ако вам Arclio уштеди времена, ⭐ помаже другима да га пронађу.
 
 </div>
 
-> **What is Arroxy?** Arroxy is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arroxy), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arroxy), Flatpak, AppImage, and direct download.
+> **What is Arclio?** Arclio is a free, open-source desktop GUI that downloads videos, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp)-supported sites. It runs on Windows 10/11, macOS 11+ (Intel + Apple Silicon), and Linux (AppImage, Flatpak, tar.gz). MIT licensed. No account, no ads, no usage limits. Distributed via [Winget](https://winget.run/pkg/AntonioOrionus/Arclio), [Scoop](https://github.com/antonio-orionus/scoop-bucket), [Homebrew Cask](https://github.com/antonio-orionus/homebrew-arclio), Flatpak, AppImage, and direct download.
 >
 > _Last updated: 2026-06-17._
 
@@ -32,7 +32,7 @@
 ## Садржај
 
 - [Преузимање](#install)
-- [Зашто Arroxy](#why)
+- [Зашто Arclio](#why)
 - [Функционалности](#features)
 - [Приватност](#privacy)
 - [ЧПП](#faq)
@@ -45,26 +45,26 @@
 
 | Платформа | Формат                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-win-x64-Portable.exe)                                                                                                                                                                                                        |
-| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-mac-x64.dmg)                                                                                                                                                                                                                     |
-| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/Arroxy-linux-x64.tar.gz) |
-| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arroxy/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Windows             | [![Windows Setup](https://img.shields.io/badge/Windows-Setup-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Setup.exe) [![Windows Portable](https://img.shields.io/badge/Windows-Portable-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-win-x64-Portable.exe)                                                                                                                                                                                                        |
+| macOS               | [![macOS Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-arm64.dmg) [![macOS Intel](https://img.shields.io/badge/macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-mac-x64.dmg)                                                                                                                                                                                                                     |
+| Linux               | [![Linux AppImage](https://img.shields.io/badge/Linux-AppImage-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.AppImage) [![Linux Flatpak](https://img.shields.io/badge/Linux-Flatpak-4A90D9?style=for-the-badge&logo=flathub&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.flatpak) [![Linux tar.gz](https://img.shields.io/badge/Linux-tar.gz-6B7280?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/Arclio-linux-x64.tar.gz) |
+| Verify              | [![SHA256 Checksums](https://img.shields.io/badge/SHA256-Checksums-4B5563?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonio-orionus/Arclio/releases/latest/download/SHA256SUMS)                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
-[**Преузмите најновије издање →**](https://github.com/antonio-orionus/Arroxy/releases/latest)
+[**Преузмите најновије издање →**](https://github.com/antonio-orionus/Arclio/releases/latest)
 
 ### <a id="why-warning"></a>Зашто можете видети упозорење
 
-Arroxy је open-source пројекат са MIT лиценцом. Windows и macOS верзије **нису потписане кодом** — сертификати Apple Developer ID и Windows EV за потписивање кода коштају стотине долара годишње, које независни пројекат плаћа из сопственог џепа. Без тих потписа, Windows SmartScreen и macOS Gatekeeper ће вас упозорити при првом покретању. Упозорења значе *да ваш оперативни систем не препознаје издавача* — не значе да је Arroxy малвер.
+Arclio је open-source пројекат са MIT лиценцом. Windows и macOS верзије **нису потписане кодом** — сертификати Apple Developer ID и Windows EV за потписивање кода коштају стотине долара годишње, које независни пројекат плаћа из сопственог џепа. Без тих потписа, Windows SmartScreen и macOS Gatekeeper ће вас упозорити при првом покретању. Упозорења значе *да ваш оперативни систем не препознаје издавача* — не значе да је Arclio малвер.
 
-Три начина да сами проверите Arroxy, по растућој строгости:
+Три начина да сами проверите Arclio, по растућој строгости:
 
-- **Прочитајте изворни код.** Свака линија је на [GitHub](https://github.com/antonio-orionus/Arroxy)-у и можете [изградити апликацију из изворног кода](#tech).
+- **Прочитајте изворни код.** Свака линија је на [GitHub](https://github.com/antonio-orionus/Arclio)-у и можете [изградити апликацију из изворног кода](#tech).
 - **Проверите SHA256.** Упоредите свој фајл са објављеним [`SHA256SUMS`](../../releases/latest) — погледајте [Верификујте преузимање](#verify) испод.
 - **Покрените скенирање треће стране.** Отпремите фајл на [VirusTotal](https://www.virustotal.com).
 
 ### <a id="windows-first-launch"></a>Windows: прво покретање
 
-При prvom покретању можете видети **«Windows protected your PC»** или **«Unknown publisher»**. Ово се односи на `Arroxy-win-x64-Setup.exe` и `Arroxy-win-x64-Portable.exe`. Arroxy је бесплатан и отвореног кода, а Windows верзије нису потписане плаћеним сертификатом — због тога SmartScreen означава ове фајлове. То **не** значи аутоматски да је Arroxy несигуран. Да бисте наставили:
+При prvom покретању можете видети **«Windows protected your PC»** или **«Unknown publisher»**. Ово се односи на `Arclio-win-x64-Setup.exe` и `Arclio-win-x64-Portable.exe`. Arclio је бесплатан и отвореног кода, а Windows верзије нису потписане плаћеним сертификатом — због тога SmartScreen означава ове фајлове. То **не** значи аутоматски да је Arclio несигуран. Да бисте наставили:
 
 <div align="center">
   <img src="build/win-smartscreen-more-info.png" width="46%" alt="SmartScreen "Windows protected your PC" dialog with the "More info" link highlighted" />
@@ -76,35 +76,35 @@ Arroxy је open-source пројекат са MIT лиценцом. Windows и m
 
 #### Ако Windows Defender означи или уклони фајл
 
-Defender хеуристика понекад означава непотписане NSIS инсталатере и Electron преносиве верзије као сумњиве. Ако Defender стави у карантин `Arroxy-win-x64-Setup.exe` или `Arroxy-win-x64-Portable.exe`, вратите га из **Windows Security → Virus & threat protection → Protection history**, а затим додајте Arroxy извршни фајл као дозвољену ставку под **Manage settings → Add or remove exclusions**. Као и у случају SmartScreen-а, покретач је недостајући потпис издавача, а не откривен малвер.
+Defender хеуристика понекад означава непотписане NSIS инсталатере и Electron преносиве верзије као сумњиве. Ако Defender стави у карантин `Arclio-win-x64-Setup.exe` или `Arclio-win-x64-Portable.exe`, вратите га из **Windows Security → Virus & threat protection → Protection history**, а затим додајте Arclio извршни фајл као дозвољену ставку под **Manage settings → Add or remove exclusions**. Као и у случају SmartScreen-а, покретач је недостајући потпис издавача, а не откривен малвер.
 
-> Преузимајте Arroxy искључиво са званичне GitHub Releases странице. Ако сте добили фајл са другог сајта или вам је неко послао, обришите га и преузмите свежу копију из званичног извора. Изворни код је јаван, тако да га можете сами прегледати или компајлирати ако желите.
+> Преузимајте Arclio искључиво са званичне GitHub Releases странице. Ако сте добили фајл са другог сајта или вам је неко послао, обришите га и преузмите свежу копију из званичног извора. Изворни код је јаван, тако да га можете сами прегледати или компајлирати ако желите.
 
 ### <a id="macos-first-launch"></a>macOS: прво покретање
 
-Arroxy још увек није потписан кодом за macOS, па ће Gatekeeper блокирати прво покретање. Тачан начин да га дозволите зависи од верзије macOS-а — Sequoia 15 је затегла стари обилазак преко десног клика → Отвори.
+Arclio још увек није потписан кодом за macOS, па ће Gatekeeper блокирати прво покретање. Тачан начин да га дозволите зависи од верзије macOS-а — Sequoia 15 је затегла стари обилазак преко десног клика → Отвори.
 
 #### macOS Sequoia 15 и новије (актуелно)
 
 На Sequoia 15 и новијим верзијама, десни клик → Отвори више не заобилази Gatekeeper за многе апликације у карантину. Уместо тога користите панел Системских подешавања:
 
-1. Превуците `Arroxy.app` са монтираног DMG у `/Applications`.
-2. Двокликните Arroxy. Приказује се дијалог блокирања — кликните **Done** (не кликајте *Move to Trash*).
-3. Отворите **System Settings → Privacy & Security** и скролујте до одељка **Security**. Видећете *"Arroxy was blocked to protect your Mac"* (или сличну поруку).
-4. Кликните **Open Anyway**, потврдите лозинком или Touch ID-ом, а затим поново покрените Arroxy из `/Applications`.
+1. Превуците `Arclio.app` са монтираног DMG у `/Applications`.
+2. Двокликните Arclio. Приказује се дијалог блокирања — кликните **Done** (не кликајте *Move to Trash*).
+3. Отворите **System Settings → Privacy & Security** и скролујте до одељка **Security**. Видећете *"Arclio was blocked to protect your Mac"* (или сличну поруку).
+4. Кликните **Open Anyway**, потврдите лозинком или Touch ID-ом, а затим поново покрените Arclio из `/Applications`.
 
 #### macOS Sonoma 14 и старије
 
-1. Превуците `Arroxy.app` са монтираног DMG у `/Applications`.
-2. Десним кликом (или Control-кликом) кликните на `Arroxy.app` у `/Applications` и одаберите **Open**.
-3. Дијалог упозорења сада има дугме **Open** — кликните га и потврдите. Arroxy се отвара нормално и упозорење се никад више не приказује.
+1. Превуците `Arclio.app` са монтираног DMG у `/Applications`.
+2. Десним кликом (или Control-кликом) кликните на `Arclio.app` у `/Applications` и одаберите **Open**.
+3. Дијалог упозорења сада има дугме **Open** — кликните га и потврдите. Arclio се отвара нормално и упозорење се никад више не приказује.
 
 #### "App is damaged" или упорна блокада Gatekeeper-а — исправка путем Terminal-а
 
-Ако macOS каже *"Arroxy is damaged and can't be opened"*, или ниједан од горњих корака не уклони блокаду, узрок је атрибут карантина на DMG-у (неки претраживачи и macOS-ово сопствено понашање трансположења га постављају). Уклоните га са инсталиране апликације:
+Ако macOS каже *"Arclio is damaged and can't be opened"*, или ниједан од горњих корака не уклони блокаду, узрок је атрибут карантина на DMG-у (неки претраживачи и macOS-ово сопствено понашање трансположења га постављају). Уклоните га са инсталиране апликације:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Arroxy.app
+xattr -dr com.apple.quarantine /Applications/Arclio.app
 ```
 
 **Apple Silicon vs Intel:** на Mac рачунару са процесором серије M (M1 / M2 / M3 / M4), преузмите DMG за `arm64`. На Intel Mac рачунарима, преузмите DMG за `x64`. Покретање погрешне верзије ради преко Rosetta, али је приметно спорије.
@@ -120,8 +120,8 @@ AppImage-ови се покрећу директно — без инсталац
 **Терминал:**
 
 ```bash
-chmod +x Arroxy-linux-x64.AppImage
-./Arroxy-linux-x64.AppImage
+chmod +x Arclio-linux-x64.AppImage
+./Arclio-linux-x64.AppImage
 ```
 
 Ако покретање и даље не успе, можда недостаје FUSE:
@@ -139,11 +139,11 @@ sudo pacman -S fuse2
 
 **Опционална интеграција са десктопом:** инсталирајте [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) једном, и свака AppImage коју двокликнете аутоматски се региструје у менију покретача — без ручног креирања `.desktop` фајлова.
 
-**Flatpak (алтернатива у песковнику):** преузмите `Arroxy-*.flatpak` са исте странице издања.
+**Flatpak (алтернатива у песковнику):** преузмите `Arclio-*.flatpak` са исте странице издања.
 
 ```bash
-flatpak install --user Arroxy-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arroxy
+flatpak install --user Arclio-linux-x64.flatpak
+flatpak run io.github.antonio_orionus.Arclio
 ```
 
 <details>
@@ -154,19 +154,19 @@ flatpak run io.github.antonio_orionus.Arroxy
 **Windows (PowerShell or Command Prompt):**
 
 ```powershell
-certutil -hashfile Arroxy-win-x64-Setup.exe SHA256
+certutil -hashfile Arclio-win-x64-Setup.exe SHA256
 ```
 
 **macOS (Terminal):**
 
 ```bash
-shasum -a 256 Arroxy-mac-arm64.dmg
+shasum -a 256 Arclio-mac-arm64.dmg
 ```
 
 **Linux (Terminal):**
 
 ```bash
-sha256sum Arroxy-linux-x64.AppImage
+sha256sum Arclio-linux-x64.AppImage
 ```
 
 Желите скенирање малвера треће стране? Отпремите фајл на [VirusTotal](https://www.virustotal.com). Неколико генеричко-хеуристичких означавања од стране мањих машина је нормално за непотписане Electron апликације; масовна откривања од стране главних машина би представљала прави разлог за забринутост.
@@ -180,10 +180,10 @@ sha256sum Arroxy-linux-x64.AppImage
 
 | Канал | Команда                                                                                |
 | ------------------ | ------------------------------------------------------------------------------------------------- |
-| Winget             | `winget install AntonioOrionus.Arroxy`                                                            |
-| Scoop              | `scoop bucket add arroxy https://github.com/antonio-orionus/scoop-bucket && scoop install arroxy` |
-| Homebrew           | `brew tap antonio-orionus/arroxy && brew install --cask arroxy`                                   |
-| Flatpak            | `flatpak install --user Arroxy-linux-x64.flatpak`                                                 |
+| Winget             | `winget install AntonioOrionus.Arclio`                                                            |
+| Scoop              | `scoop bucket add arclio https://github.com/antonio-orionus/scoop-bucket && scoop install arclio` |
+| Homebrew           | `brew tap antonio-orionus/arclio && brew install --cask arclio`                                   |
+| Flatpak            | `flatpak install --user Arclio-linux-x64.flatpak`                                                 |
 
 </details>
 
@@ -204,11 +204,11 @@ sha256sum Arroxy-linux-x64.AppImage
 
 ---
 
-## <a id="why"></a>Зашто Arroxy
+## <a id="why"></a>Зашто Arclio
 
 Поређење са најчешћим алтернативама:
 
-|            | Arroxy | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
+|            | Arclio | 4K Video Downloader | JDownloader | Y2Mate / online converters | Browser extensions |
 | ---------- | :----: | :-----------------: | :---------: | :------------------------: | :----------------: |
 | Бесплатно, без премијум нивоа |   ✅   |         ⚠️          |     ✅      |             ⚠️             |         ⚠️         |
 | Отворени код |   ✅   |         ❌          |     ❌      |             ❌             |         ⚠️         |
@@ -218,7 +218,7 @@ sha256sum Arroxy-linux-x64.AppImage
 | Кроссплатформна десктоп апликација |   ✅   |         ✅          |     ✅      |            N/A             |         ❌         |
 | Титлови + SponsorBlock |   ✅   |         ⚠️          |     ❌      |             ❌             |         ❌         |
 
-Arroxy је направљен за једну ствар: налепите URL, добијете чист локални фајл. Без налога, без додатне продаје, без прикупљања података.
+Arclio је направљен за једну ствар: налепите URL, добијете чист локални фајл. Без налога, без додатне продаје, без прикупљања података.
 
 ---
 
@@ -241,7 +241,7 @@ Arroxy је направљен за једну ствар: налепите URL,
 
 - **Флексибилни начини покретања** — изабери вођено једно преузимање, бирач playlist/channel, bulk URL paste или Quick Download са сачуваним подразумеваним опцијама
 - **Централни ред за преузимања** — сваки single, playlist, bulk или quick посао стиже на једно место за напредак, паузу, наставак, отказивање, поновни покушај и контролу приоритета
-- **Праћење клипборда** — копирајте YouTube линк и Arroxy аутоматски попуњава URL кад се вратите у апликацију (укључиво у напредним подешавањима)
+- **Праћење клипборда** — копирајте YouTube линк и Arclio аутоматски попуњава URL кад се вратите у апликацију (укључиво у напредним подешавањима)
 - **Аутоматско чишћење URL-ова** — уклања параметре праћења (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) и распакује `youtube.com/redirect` линкове
 - **Режим трака** — затварање прозора одржава преузимања у позадини
 - **21 језик** — аутоматски препознаје системски локал, може се мењати у свако доба
@@ -260,20 +260,20 @@ Arroxy је направљен за једну ствар: налепите URL,
 - **YouTube — у потпуности** — видео снимци, Shorts, канали, пlejliste, YouTube Music и подкасти обрађени као извори прве класе
 - **2000+ других сajтова** преко yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org и многи други
 - **Само аудио и титлови** раде на свaком подржаном сaјту, не само на YouTube-у
-- Ако сajт промени нешто, yt-dlp испоручује исправке недељно, а Arroxy аутоматски ажурира бинарни фajл при покретању
+- Ако сajт промени нешто, yt-dlp испоручује исправке недељно, а Arclio аутоматски ажурира бинарни фajл при покретању
 
 <table align="center" width="100%">
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arroxy — Quick Download home" /><br/><sub><b>Почетна брзог преузимања</b><br/>Налепите URL и одмах преузмите са активним профилом</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arroxy — Download profiles" /><br/><sub><b>Поново употребљиви профили преузимања</b><br/>Сачувајте формат, квалитет и излаз као поставке — користите за свако преузимање</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" /><br/><sub><b>Почетна брзог преузимања</b><br/>Налепите URL и одмах преузмите са активним профилом</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Download-profiles-screenshot.png" alt="Arclio — Download profiles" /><br/><sub><b>Поново употребљиви профили преузимања</b><br/>Сачувајте формат, квалитет и излаз као поставке — користите за свако преузимање</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arroxy — Multi-language audio" /><br/><sub><b>Вишејезичне аудио траке</b><br/>Изаберите тачан језик звука који видео носи</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arroxy — Surround / Dolby audio" /><br/><sub><b>Сараунд / Dolby звук</b><br/>Траке 5.1 и Dolby се препознају и чувају</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Multi-lang-audio-support-screenshot.png" alt="Arclio — Multi-language audio" /><br/><sub><b>Вишејезичне аудио траке</b><br/>Изаберите тачан језик звука који видео носи</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Dolby-audio-support-screenshot.png" alt="Arclio — Surround / Dolby audio" /><br/><sub><b>Сараунд / Dolby звук</b><br/>Траке 5.1 и Dolby се препознају и чувају</sub></td>
   </tr>
   <tr>
-    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arroxy — Bulk URL mode" /><br/><sub><b>Режим масовних URL-ова</b><br/>Налепите листу, аутоматско уклањање дупликата, ставите све у ред одједном</sub></td>
-    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arroxy — Parallel download queue" /><br/><sub><b>Паралелни ред преузимања</b><br/>Више преузимања истовремено уз праћење уживо</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Bulk-urls-mode-screenshot.png" alt="Arclio — Bulk URL mode" /><br/><sub><b>Режим масовних URL-ова</b><br/>Налепите листу, аутоматско уклањање дупликата, ставите све у ред одједном</sub></td>
+    <td width="50%" valign="top" align="center"><img src="build/Downloading-in-parallel-screenshot.png" alt="Arclio — Parallel download queue" /><br/><sub><b>Паралелни ред преузимања</b><br/>Више преузимања истовремено уз праћење уживо</sub></td>
   </tr>
 </table>
 
@@ -283,7 +283,7 @@ Arroxy је направљен за једну ствар: налепите URL,
 
 Преузимања се преузимају директно преко [yt-dlp](https://github.com/yt-dlp/yt-dlp) са YouTube-а у фасциклу коју одаберете — ништа не пролази кроз сервер треће стране. Историја гледања, историја преузимања, URL-ови и садржај фајлова остају на вашем уређају.
 
-Arroxy шаље анонимну, збирну телеметрију преко [OpenPanel](https://openpanel.dev) — само довољно да се разумеју покретања, OS, верзије апликације и рушења. Без URL-ова, наслова видеа, путања датотека, података о налогу, fingerprinting-а или личних података. ID по инсталацији је насумичан и није повезан са вашим идентитетом. Можете се одјавити у Подешавањима.
+Arclio шаље анонимну, збирну телеметрију преко [OpenPanel](https://openpanel.dev) — само довољно да се разумеју покретања, OS, верзије апликације и рушења. Без URL-ова, наслова видеа, путања датотека, података о налогу, fingerprinting-а или личних података. ID по инсталацији је насумичан и није повезан са вашим идентитетом. Можете се одјавити у Подешавањима.
 
 ---
 
@@ -299,13 +299,13 @@ Arroxy шаље анонимну, збирну телеметрију преко
 Da. Izaberi *samo audio* u meniju formata, pa zatim MP3, M4A/AAC, Opus ili WAV.
 
 **Да ли треба YouTube налог или колачићи?**
-Подразумевано, не — Arroxy ради без YouTube налога, пријаве или извоза колачића. Опциона подршка за колачиће доступна је у Напредним подешавањима (Извор колачића: фајл или претраживач) за садржај који захтева аутентификацију, попут видеа са старосним ограничењем или доступних само члановима. Подразумевано је искључена. Ако је омогућите, документација yt-dlp-а напомиње да [аутоматизација заснована на колачићима може означити ваш Google налог](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); у том случају је безбедније користити налог за једнократну употребу.
+Подразумевано, не — Arclio ради без YouTube налога, пријаве или извоза колачића. Опциона подршка за колачиће доступна је у Напредним подешавањима (Извор колачића: фајл или претраживач) за садржај који захтева аутентификацију, попут видеа са старосним ограничењем или доступних само члановима. Подразумевано је искључена. Ако је омогућите, документација yt-dlp-а напомиње да [аутоматизација заснована на колачићима може означити ваш Google налог](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies); у том случају је безбедније користити налог за једнократну употребу.
 
 **Хоће ли наставити да ради кад YouTube нешто промени?**
-yt-dlp се аутоматски ажурира при покретању, а Arroxy брзо испоручује исправке кад YouTube нешто промени. Ако ипак наиђете на проблем, у Напредним подешавањима је на располагању опциона подршка за колачиће као резервна опција.
+yt-dlp се аутоматски ажурира при покретању, а Arclio брзо испоручује исправке кад YouTube нешто промени. Ако ипак наиђете на проблем, у Напредним подешавањима је на располагању опциона подршка за колачиће као резервна опција.
 
-**На којим је језицима Arroxy доступан?**
-Двадесет и један, одмах из кутије: English, Español (шпански), Deutsch (немачки), Français (француски), 日本語 (јапански), 中文 (кинески), Русский (руски), Українська (украјински), हिन्दी (хинди), Afaan Oromoo (оромо), Kiswahili (свахили), O'zbekcha (узбечки), Tiếng Việt (вијетнамски), አማርኛ (амхарски), العربية (арапски), اردو (урду), پښتو (пашто), বাংলা (бенгалски), မြန်မာဘာသာ (бурмански), Ελληνικά (грчки) и Српски. Arroxy аутоматски препознаје језик вашег оперативног система при prvom покретању и можете да пређете на други у сваком тренутку преко бирача језика у траци са алаткама. Runtime JSON датотеке локализације налазе се у src/shared/i18n/locales/, а PO каталози за преводиоце у i18n/locales/ — отворите PR на GitHub-у да допринесете.
+**На којим је језицима Arclio доступан?**
+Двадесет и један, одмах из кутије: English, Español (шпански), Deutsch (немачки), Français (француски), 日本語 (јапански), 中文 (кинески), Русский (руски), Українська (украјински), हिन्दी (хинди), Afaan Oromoo (оромо), Kiswahili (свахили), O'zbekcha (узбечки), Tiếng Việt (вијетнамски), አማርኛ (амхарски), العربية (арапски), اردو (урду), پښتو (пашто), বাংলা (бенгалски), မြန်မာဘာသာ (бурмански), Ελληνικά (грчки) и Српски. Arclio аутоматски препознаје језик вашег оперативног система при prvom покретању и можете да пређете на други у сваком тренутку преко бирача језика у траци са алаткама. Runtime JSON датотеке локализације налазе се у src/shared/i18n/locales/, а PO каталози за преводиоце у i18n/locales/ — отворите PR на GitHub-у да допринесете.
 
 **Да ли треба да инсталирам нешто друго?**
 Не. yt-dlp се аутоматски преузима при првом покретању и кешира на вашем рачунару; ffmpeg и ffprobe стижу уз апликацију. Након тога није потребно додатно подешавање.
@@ -329,7 +329,7 @@ yt-dlp се аутоматски ажурира при покретању, а Ar
 | ---------------- | ---------------- |
 | **Филтери плејлисти и канала** | Date-range filters при набрајању playlist-а или channel-а |
 | **Подешавања YouTube аудио трака** | Подесите жељену говорну језичку траку за целу апликацију, уз override по профилу када YouTube нуди више аудио трака |
-| **Пријава кроз browser у апликацији** | Отварање browser windows унутар Arroxy-ја за пријаву и коришћење site cookies без ручног export-а |
+| **Пријава кроз browser у апликацији** | Отварање browser windows унутар Arclio-ја за пријаву и коришћење site cookies без ручног export-а |
 | **Видео преузимање једним кликом** | Покрените video download једним кликом из препознатог или налепљеног URL-а користећи активни профил |
 | **Јаче recovery преко retry механизма** | Нова retry путања за преузимања прекинута непоузданом или проблематичном интернет везом |
 | **Пун drawer менаџер преузимања** | Претворити queue drawer у потпунији менаџер, укључујући промену одредишних фасцикли за ставке у реду |
@@ -398,8 +398,8 @@ sudo apt install -y xvfb
 ### Клонирање и покретање
 
 ```bash
-git clone https://github.com/antonio-orionus/Arroxy
-cd Arroxy
+git clone https://github.com/antonio-orionus/Arclio
+cd Arclio
 mise install           # препоручено; прескочите ако су pinned алати ручно активирани
 bun run bootstrap
 bun run doctor
@@ -414,7 +414,7 @@ bun run dist         # package for current OS
 bun run dist:win     # пакетирање Windows циљева на подржаном хосту
 ```
 
-> `bun run bootstrap` инсталира зависности, поново гради зависности Electron апликације, проверава Electron, припрема уграђене ffmpeg/ffprobe за развој и инсталира Playwright Chromium. yt-dlp се управља у runtime-у у фасцикли података апликације; ffmpeg и ffprobe су укључени у свако Arroxy издање.
+> `bun run bootstrap` инсталира зависности, поново гради зависности Electron апликације, проверава Electron, припрема уграђене ffmpeg/ffprobe за развој и инсталира Playwright Chromium. yt-dlp се управља у runtime-у у фасцикли података апликације; ffmpeg и ffprobe су укључени у свако Arclio издање.
 
 </details>
 
@@ -424,33 +424,33 @@ bun run dist:win     # пакетирање Windows циљева на подрж
 
 ### App won't open / no window appears
 
-The Arroxy process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
+The Arclio process starts but no window shows up. Most often this is a GPU driver hang during startup. Try, in order:
 
 **1. Check the log.** It records startup, GPU info, and any crash. Path:
 
 | Platform | Path                             |
 | -------- | -------------------------------- |
-| Windows  | `%APPDATA%\Arroxy\logs\main.log` |
-| macOS    | `~/Library/Logs/Arroxy/main.log` |
-| Linux    | `~/.config/Arroxy/logs/main.log` |
+| Windows  | `%APPDATA%\Arclio\logs\main.log` |
+| macOS    | `~/Library/Logs/Arclio/main.log` |
+| Linux    | `~/.config/Arclio/logs/main.log` |
 
 **2. Launch with hardware acceleration disabled.** Open a terminal / Command Prompt and run the executable with a flag:
 
 ```bash
 # Windows (Portable) — PowerShell, run from the folder containing the exe
-.\Arroxy-win-x64-Portable.exe --disable-gpu
+.\Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Portable) — Command Prompt (cmd.exe), from the same folder
-Arroxy-win-x64-Portable.exe --disable-gpu
+Arclio-win-x64-Portable.exe --disable-gpu
 
 # Windows (Installed) — works in both PowerShell and cmd.exe
-"%LOCALAPPDATA%\Programs\Arroxy\Arroxy.exe" --disable-gpu
+"%LOCALAPPDATA%\Programs\Arclio\Arclio.exe" --disable-gpu
 
 # macOS
-/Applications/Arroxy.app/Contents/MacOS/Arroxy --disable-gpu
+/Applications/Arclio.app/Contents/MacOS/Arclio --disable-gpu
 
 # Linux (AppImage)
-./Arroxy-linux-x64.AppImage --disable-gpu
+./Arclio-linux-x64.AppImage --disable-gpu
 ```
 
 If that works, the GPU/driver is the cause. Make the change permanent (next step).
@@ -459,9 +459,9 @@ If that works, the GPU/driver is the cause. Make the change permanent (next step
 
 | Platform | Path                                             |
 | -------- | ------------------------------------------------ |
-| Windows  | `%APPDATA%\Arroxy\argv.json`                     |
-| macOS    | `~/Library/Application Support/Arroxy/argv.json` |
-| Linux    | `~/.config/Arroxy/argv.json`                     |
+| Windows  | `%APPDATA%\Arclio\argv.json`                     |
+| macOS    | `~/Library/Application Support/Arclio/argv.json` |
+| Linux    | `~/.config/Arclio/argv.json`                     |
 
 With contents:
 
@@ -469,7 +469,7 @@ With contents:
 { "disable-hardware-acceleration": true }
 ```
 
-Arroxy reads this before opening any window, so it works even when the window never appeared.
+Arclio reads this before opening any window, so it works even when the window never appeared.
 
 **4. Other flags worth trying** (combine if needed): `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
 
@@ -481,15 +481,15 @@ Arroxy reads this before opening any window, so it works even when the window ne
 
 ## Услови коришћења
 
-Arroxy је алат искључиво за личну, приватну употребу. Ви сте искључиво одговорни за осигурање да ваша преузимања буду у складу са [Условима коришћења](https://www.youtube.com/t/terms) YouTube-а и законима о ауторским правима у вашој јурисдикцији. Немојте користити Arroxy за преузимање, репродукцију или дистрибуцију садржаја за који немате право коришћења. Програмери нису одговорни за злоупотребу.
+Arclio је алат искључиво за личну, приватну употребу. Ви сте искључиво одговорни за осигурање да ваша преузимања буду у складу са [Условима коришћења](https://www.youtube.com/t/terms) YouTube-а и законима о ауторским правима у вашој јурисдикцији. Немојте користити Arclio за преузимање, репродукцију или дистрибуцију садржаја за који немате право коришћења. Програмери нису одговорни за злоупотребу.
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=antonio-orionus%2FArroxy&type=timeline&legend=top-left">
+<a href="https://www.star-history.com/?repos=antonio-orionus%2FArclio&type=timeline&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arroxy&type=timeline&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=antonio-orionus/Arclio&type=timeline&legend=top-left" />
  </picture>
 </a>
 

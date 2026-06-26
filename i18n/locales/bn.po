@@ -2445,3 +2445,279 @@ msgctxt "player.speed"
 msgid "Speed"
 msgstr "গতি"
 
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "অনুসন্ধান…"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "কোন ফলাফল নেই"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "মিডিয়া"
+
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "সংগ্রহ"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "ট্যাগ"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "আইটেম"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "হোম"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "লাইব্রেরি"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "সংগ্রহ"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "প্রিয়"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "ট্যাগ"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "ইতিহাস"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "সেটিংস"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "আইটেম"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "শিরোনাম, লেখক, বিবরণ দ্বারা অনুসন্ধান…"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "সব"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "ভিডিও"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "অডিও"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "নতুন প্রথমে"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "পুরাতন প্রথমে"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "শিরোনাম অ-জ"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "শিরোনাম জ-অ"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "দীর্ঘতম"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "ক্ষুদ্রতম"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "আপনার লাইব্রেরি খালি"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "শুরু করতে একটি ভিডিও ডাউনলোড করুন"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "অনুপস্থিত"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "নতুন সংগ্রহ"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "সংগ্রহের নাম"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "তৈরি"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "বাতিল"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "এখনো কোনো সংগ্রহ নেই"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "আপনার মিডিয়া সংগঠিত করতে একটি সংগ্রহ তৈরি করুন"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "সংগ্রহে ফিরুন"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "এই সংগ্রহে কোনো মিডিয়া নেই"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "লাইব্রেরি থেকে মিডিয়া যোগ করুন"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "সংগ্রহ থেকে সরান"
+
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "এখনো কোনো প্রিয় নেই"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "এখানে দেখতে মিডিয়াকে প্রিয় হিসেবে চিহ্নিত করুন"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "নতুন ট্যাগ"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "ট্যাগের নাম"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "তৈরি"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "বাতিল"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "এখনো কোনো ট্যাগ নেই"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "আপনার মিডিয়া শ্রেণীবদ্ধ করতে একটি ট্যাগ তৈরি করুন"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "ডাউনলোড"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "প্লেব্যাক"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "আজ"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "গতকাল"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "এই সপ্তাহ"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "এই মাস"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "কোনো ডাউনলোড ইতিহাস নেই"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "কোনো প্লেব্যাক ইতিহাস নেই"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} প্লে"
+
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "সম্পন্ন"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "সেটিংস"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "আউটপুট ডিরেক্টরি"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "ডাউনলোড করা ফাইল কোথায় সংরক্ষিত হয়"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "পরিবর্তন"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "ভাষা"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "অ্যাপ্লিকেশনের প্রদর্শন ভাষা"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "থিম"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "অ্যাপ্লিকেশনের চেহারা"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "ক্লিপবোর্ড ওয়াচ"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "ক্লিপবোর্ডে URL স্বয়ংক্রিয়ভাবে সনাক্ত করুন"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "সাবটাইটেল লিখুন"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "ডিফল্টভাবে সাবটাইটেল ফাইল ডাউনলোড করুন"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "থাম্বনেইল এম্বেড"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "মিডিয়া ফাইলে থাম্বনেইল এম্বেড করুন"

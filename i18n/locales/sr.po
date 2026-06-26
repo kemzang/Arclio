@@ -2445,3 +2445,279 @@ msgctxt "player.speed"
 msgid "Speed"
 msgstr "Брзина"
 
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Претрага…"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Нема резултата"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Медији"
+
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Колекција"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Ознака"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "ставке"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Почетна"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Библиотека"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Колекције"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Омиљено"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Ознаке"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Историја"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Подешавања"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "ставке"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Претрага по наслову, аутору, опису…"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Све"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Видео"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Аудио"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Најновије прво"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Најстарије прво"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Наслов А-Ш"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Наслов Ш-А"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Најдуже"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Најкраће"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Ваша библиотека је празна"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Преузмите видео да бисте почели"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Недостаје"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Нова колекција"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Назив колекције"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Направи"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Откажи"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Нема колекција"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Направите колекцију за организацију медија"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Назад на колекције"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Нема медија у овој колекцији"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Додајте медије из библиотеке"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Уклони из колекције"
+
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Нема омиљених"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Означите медиј као омиљени"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Нова ознака"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Назив ознаке"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Направи"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Откажи"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Нема ознака"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Направите ознаку за категоризацију медија"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Преузимања"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Репродукција"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Данас"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Јуче"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Ове недеље"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Овог месеца"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Нема историје преузимања"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Нема историје репродукције"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} репродукција"
+
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Завршено"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Подешавања"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Излазни директоријум"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Где се чувају преузете датотеке"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Промени"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Језик"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Језик приказа апликације"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Тема"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Изглед апликације"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Надзор клипборда"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Аутоматски откриј URL адресе у клипборду"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Пиши титлове"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Подразумевано преузимај датотеке титлова"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Угради сличицу"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Угради сличицу у медијску датотеку"

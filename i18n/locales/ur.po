@@ -2445,3 +2445,279 @@ msgctxt "player.speed"
 msgid "Speed"
 msgstr "رفتار"
 
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "تلاش…"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "کوئی نتیجہ نہیں"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "میڈیا"
+
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "مجموعہ"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "ٹیگ"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "آئٹمز"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "ہوم"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "لائبریری"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "مجموعے"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "پسندیدہ"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "ٹیگز"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "تاریخ"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "ترتیبات"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "آئٹمز"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "عنوان، مصنف، تفصیل سے تلاش کریں…"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "سب"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "ویڈیو"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "آڈیو"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "نیا پہلے"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "پرانا پہلے"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "عنوان ا-ی"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "عنوان ی-ا"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "سب سے لمبا"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "سب سے چھوٹا"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "آپ کی لائبریری خالی ہے"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "شروع کرنے کے لیے ویڈیو ڈاؤن لوڈ کریں"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "غائب"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "نیا مجموعہ"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "مجموعے کا نام"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "بنائیں"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "منسوخ"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "ابھی کوئی مجموعے نہیں"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "اپنے میڈیا کو منظم کرنے کے لیے مجموعہ بنائیں"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "مجموعوں پر واپس"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "اس مجموعے میں کوئی میڈیا نہیں"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "لائبریری سے میڈیا شامل کریں"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "مجموعے سے ہٹائیں"
+
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "ابھی کوئی پسندیدہ نہیں"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "میڈیا کو پسندیدہ کے طور پر نشان زد کریں"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "نیا ٹیگ"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "ٹیگ کا نام"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "بنائیں"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "منسوخ"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "ابھی کوئی ٹیگز نہیں"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "اپنے میڈیا کی درجہ بندی کے لیے ٹیگ بنائیں"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "ڈاؤن لوڈز"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "پلے بیک"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "آج"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "کل"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "اس ہفتے"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "اس ماہ"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "کوئی ڈاؤن لوڈ تاریخ نہیں"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "کوئی پلے بیک تاریخ نہیں"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} پلے"
+
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "مکمل"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "ترتیبات"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "آؤٹ پٹ ڈائریکٹری"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "ڈاؤن لوڈ فائلیں کہاں محفوظ ہوتی ہیں"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "تبدیل"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "زبان"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "ایپلیکیشن کی دکھائی زبان"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "تھیم"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "ایپلیکیشن کا ظہور"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "کلپ بورڈ واچ"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "کلپ بورڈ میں URLs خودکار دریافت کریں"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "ذیلی عنوانات لکھیں"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "ذیلی عنوان فائلیں ڈیفالٹ سے ڈاؤن لوڈ کریں"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "تھمب نیل شامل کریں"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "میڈیا فائل میں تھمب نیل شامل کریں"
