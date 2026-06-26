@@ -9,6 +9,7 @@ import type {SettingsStore} from '@main/stores/SettingsStore.js'
 import type {QueueService} from '@main/services/QueueService.js'
 import type {ClipboardWatcher} from '@main/services/ClipboardWatcher.js'
 import type {PlaylistManifestStore} from '@main/stores/PlaylistManifestStore.js'
+import type {DrizzleDatabase} from '@main/db/connection.js'
 import {DownloadEventBridge} from '@main/services/DownloadEventBridge.js'
 import {QueueEventBridge} from '@main/services/QueueEventBridge.js'
 import {ProbeEventBridge} from '@main/services/ProbeEventBridge.js'
@@ -22,6 +23,7 @@ import {registerQueueHandlers} from './queueHandlers.js'
 import {registerAnalyticsHandlers} from './analyticsHandlers.js'
 import {registerDiagnosticsHandlers} from './diagnosticsHandlers.js'
 import {registerPlaylistHandlers} from './playlistHandlers.js'
+import {registerLibraryHandlers} from './libraryHandlers.js'
 
 export interface IpcDependencies {
 	mainWindow: BrowserWindow
@@ -35,6 +37,7 @@ export interface IpcDependencies {
 	clipboardWatcher: ClipboardWatcher
 	playlistManifestStore: PlaylistManifestStore
 	graphicsPolicyProvider: () => Promise<GraphicsPolicy>
+	libraryDb: DrizzleDatabase
 }
 
 let activeDownloadBridge: DownloadEventBridge | null = null
@@ -42,7 +45,7 @@ let activeQueueBridge: QueueEventBridge | null = null
 let activeProbeBridge: ProbeEventBridge | null = null
 
 export function registerIpcHandlers(deps: IpcDependencies): void {
-	const {mainWindow, downloadService, probeService, settingsStore, queueService, binaryManager, tokenService, languageRef, clipboardWatcher, playlistManifestStore, graphicsPolicyProvider} = deps
+	const {mainWindow, downloadService, probeService, settingsStore, queueService, binaryManager, tokenService, languageRef, clipboardWatcher, playlistManifestStore, graphicsPolicyProvider, libraryDb} = deps
 
 	const warmupService = new WarmupService({binaryManager, tokenService, window: mainWindow})
 	registerAppHandlers({warmupService, binaryManager, languageRef, graphicsPolicyProvider})
@@ -54,6 +57,7 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	registerAnalyticsHandlers()
 	registerDiagnosticsHandlers()
 	registerPlaylistHandlers(playlistManifestStore, settingsStore)
+	registerLibraryHandlers(libraryDb)
 
 	activeDownloadBridge?.detach()
 	activeDownloadBridge = new DownloadEventBridge(downloadService, mainWindow)

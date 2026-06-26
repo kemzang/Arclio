@@ -102,4 +102,146 @@ export interface AppApi {
 	analytics: {track(name: string, props?: Record<string, string | number | boolean>): void}
 	diagnostics: {logWizardStep(snapshot: WizardStepSnapshot): void}
 	playlist: {scanFolder(input: {outputDir: string; videoIds: string[]}): Promise<Result<{matchedIds: string[]}>>; registerManifest(manifest: PlaylistManifest): Promise<Result<void>>}
+	library: {
+		media: {
+			list(filters?: LibraryMediaListFilters): Promise<LibraryMediaWithAssets[]>
+			get(id: string): Promise<LibraryMediaWithAssets | null>
+			search(query: string, limit?: number): Promise<LibraryMedia[]>
+			setFavorite(id: string, isFavorite: boolean): Promise<void>
+			setStatus(id: string, status: LibraryMediaStatus): Promise<void>
+			delete(id: string): Promise<boolean>
+			count(): Promise<number>
+			countByStatus(): Promise<Record<string, number>>
+		}
+		collection: {
+			list(): Promise<LibraryCollectionWithCount[]>
+			get(id: string): Promise<LibraryCollection | null>
+			create(data: {name: string; description?: string; icon?: string; color?: string}): Promise<LibraryCollection>
+			update(id: string, data: {name?: string; description?: string; icon?: string; color?: string}): Promise<LibraryCollection | null>
+			delete(id: string): Promise<boolean>
+			addMedia(collectionId: string, mediaId: string): Promise<void>
+			removeMedia(collectionId: string, mediaId: string): Promise<void>
+			getMediaIds(collectionId: string): Promise<string[]>
+			getForMedia(mediaId: string): Promise<string[]>
+		}
+		tag: {
+			list(): Promise<LibraryTagWithCount[]>
+			create(data: {name: string; color?: string}): Promise<LibraryTag>
+			update(id: string, data: {name?: string; color?: string}): Promise<LibraryTag | null>
+			delete(id: string): Promise<boolean>
+			addToMedia(tagId: string, mediaId: string): Promise<void>
+			removeFromMedia(tagId: string, mediaId: string): Promise<void>
+			getForMedia(mediaId: string): Promise<LibraryTag[]>
+			getMediaIds(tagId: string): Promise<string[]>
+		}
+		playback: {updatePosition(mediaId: string, position: number, duration: number): Promise<void>; getByMedia(mediaId: string): Promise<LibraryPlaybackHistory | null>; listRecent(limit?: number): Promise<LibraryPlaybackHistory[]>}
+		downloadHistory: {list(options?: {status?: string; limit?: number; offset?: number}): Promise<LibraryDownloadHistory[]>; count(): Promise<number>; countByStatus(): Promise<Record<string, number>>}
+	}
+}
+
+// ── Library types ────────────────────────────────────────────────────────────
+
+export type LibraryMediaStatus = 'AVAILABLE' | 'MISSING' | 'CORRUPTED' | 'DELETED'
+
+export interface LibraryMedia {
+	id: string
+	title: string
+	description: string | null
+	author: string | null
+	url: string
+	sourceKey: string | null
+	sourceType: string
+	duration: number | null
+	mediaType: string
+	thumbnailUrl: string | null
+	thumbnailPath: string | null
+	status: LibraryMediaStatus
+	isFavorite: number
+	createdBy: string
+	downloadDate: string
+	createdAt: string
+	updatedAt: string
+}
+
+export interface LibraryAsset {
+	id: string
+	mediaId: string
+	kind: string
+	path: string
+	fileName: string
+	sizeBytes: number | null
+	mimeType: string | null
+	status: string
+	createdAt: string
+}
+
+export interface LibraryMediaWithAssets extends LibraryMedia {
+	assets: LibraryAsset[]
+	totalSize: number | null
+}
+
+export interface LibraryMediaListFilters {
+	search?: string
+	mediaType?: 'video' | 'audio'
+	status?: string
+	isFavorite?: boolean
+	sourceType?: string
+	collectionId?: string
+	tagId?: string
+	sortBy?: 'title' | 'download_date' | 'created_at' | 'duration'
+	sortOrder?: 'asc' | 'desc'
+	limit?: number
+	offset?: number
+}
+
+export interface LibraryCollection {
+	id: string
+	name: string
+	description: string | null
+	icon: string | null
+	color: string | null
+	sortOrder: number
+	createdAt: string
+	updatedAt: string
+}
+
+export interface LibraryCollectionWithCount extends LibraryCollection {
+	mediaCount: number
+	coverThumbnailUrl: string | null
+}
+
+export interface LibraryTag {
+	id: string
+	name: string
+	color: string | null
+	createdAt: string
+}
+
+export interface LibraryTagWithCount extends LibraryTag {
+	mediaCount: number
+}
+
+export interface LibraryPlaybackHistory {
+	id: string
+	mediaId: string
+	lastPosition: number
+	duration: number | null
+	playCount: number
+	completed: number
+	lastOpenedAt: string
+	createdAt: string
+}
+
+export interface LibraryDownloadHistory {
+	id: string
+	url: string
+	outputDir: string | null
+	mediaId: string | null
+	status: string
+	errorKind: string | null
+	errorRaw: string | null
+	formatId: string | null
+	durationMs: number | null
+	finishedAt: string
+	createdAt: string
 }

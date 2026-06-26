@@ -5,7 +5,7 @@ import {lightOceanScene} from './lightOcean/scene.js'
 import {CanvasSceneHost} from './CanvasSceneHost.js'
 import type {BackdropColorScheme} from './types.js'
 
-export function AppBackdrop({colorScheme, renderMode = 'gpu', softwareWebglAllowed = false}: {colorScheme: BackdropColorScheme; renderMode?: BackdropRenderMode; softwareWebglAllowed?: boolean}): ReactNode {
+export function AppBackdrop({colorScheme = 'dark', renderMode = 'gpu', softwareWebglAllowed = false}: {colorScheme?: BackdropColorScheme; renderMode?: BackdropRenderMode; softwareWebglAllowed?: boolean}): ReactNode {
 	const scene = colorScheme === 'dark' ? darkAuroraScene : lightOceanScene
 	return <CanvasSceneHost key={`${scene.id}-${renderMode}-${softwareWebglAllowed ? 'software' : 'hardware'}`} scene={scene} renderMode={renderMode} softwareWebglAllowed={softwareWebglAllowed} />
 }

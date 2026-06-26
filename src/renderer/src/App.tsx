@@ -1,4 +1,5 @@
 import {lazy, Suspense, useEffect, useState, type ReactNode} from 'react'
+import {HashRouter, Routes, Route} from 'react-router-dom'
 import log from 'electron-log/renderer.js'
 import {Cpu, Info, MessageCircle, Paintbrush, Share2} from 'lucide-react'
 import IconDiscord from '~icons/simple-icons/discord'
@@ -11,6 +12,7 @@ import {useAppStore} from './store/useAppStore.js'
 import {AppBackdrop} from './components/layout/background/AppBackdrop.js'
 import type {BackdropColorScheme} from './components/layout/background/types.js'
 import {TitleBar} from './components/layout/TitleBar.js'
+import {Sidebar} from './components/layout/Sidebar.js'
 import {WizardPanel} from './components/layout/WizardPanel.js'
 import {WarmupSplash} from './components/system/WarmupSplash.js'
 import {FeedbackNudge} from './components/system/FeedbackNudge.js'
@@ -28,6 +30,14 @@ import {ButtonGroup} from './components/ui/button-group.js'
 import {TooltipProvider} from './components/ui/tooltip.js'
 import {cn} from './lib/utils.js'
 import changelogText from '../../../CHANGELOG.md?raw'
+
+// Pages
+import {LibraryPage} from './pages/library/LibraryPage.js'
+import {CollectionsPage} from './pages/collections/CollectionsPage.js'
+import {FavoritesPage} from './pages/favorites/FavoritesPage.js'
+import {TagsPage} from './pages/tags/TagsPage.js'
+import {HistoryPage} from './pages/history/HistoryPage.js'
+import {SettingsPage} from './pages/settings/SettingsPage.js'
 
 const SHOW_SCENARIO_GALLERY = import.meta.env.MODE === 'browser-mock'
 const ShareDialog = lazy(() => import('./components/system/ShareDialog.js').then(module => ({default: module.ShareDialog})))
@@ -84,7 +94,15 @@ function effectiveBackdropRenderMode(preferredMode: BackdropRenderMode | null, g
 	return graphicsPolicy.backdrop.forceRenderMode ?? preferredMode
 }
 
-export function App(): ReactNode {
+function HomePage(): ReactNode {
+	return (
+		<div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden" data-testid="wizard-scrollport">
+			<WizardPanel />
+		</div>
+	)
+}
+
+function AppContent(): ReactNode {
 	const {t} = useTranslation()
 	const {initialized, initialize, setSplashDismissed, splashDismissed, warmupBlocking, warmupDiagnostics, warmupProgress, settings, graphicsPolicy} = useAppStore(
 		useShallow(state => ({
@@ -147,8 +165,7 @@ export function App(): ReactNode {
 		return () => clearTimeout(t)
 	}, [showNudge])
 
-	// Backdrop isolation stage (browser-mock only): strips all chrome so the animated
-	// background can be tuned on its own. Reach it via `?backdrop=1` or the gallery button.
+	// Backdrop isolation stage (browser-mock only)
 	if (isBackdropOnlyStage()) {
 		const activeBackdropPreview = BACKDROP_PREVIEW_MODES.find(mode => mode.id === backdropPreviewMode) ?? BACKDROP_PREVIEW_MODES[0]
 		const applyBackdropPreviewMode = (mode: BackdropPreviewMode): void => {
@@ -195,18 +212,27 @@ export function App(): ReactNode {
 	}
 
 	return (
-		<TooltipProvider>
+		<>
 			<div className="relative flex flex-col h-screen w-screen overflow-hidden" data-testid="app-root">
 				<AppBackdrop key={`${colorScheme}-${backdropRenderMode}-${softwareWebglAllowed ? 'software' : 'hardware'}`} colorScheme={colorScheme} renderMode={backdropRenderMode} softwareWebglAllowed={softwareWebglAllowed} />
 				<TitleBar />
 
 				{update.info && <UpdateBanner info={update.info} installing={update.installing} installError={update.error} onInstall={update.install} onDownload={update.download} onDismiss={update.dismiss} />}
 
-				<div className="flex min-h-0 flex-1 flex-col overflow-hidden" data-testid="app-content">
-					<div className="flex min-h-0 flex-1 flex-col overflow-hidden" style={{zoom: uiZoom}}>
-						<div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden" data-testid="wizard-scrollport">
-							<WizardPanel />
-						</div>
+				<div className="flex min-h-0 flex-1 overflow-hidden" data-testid="app-content">
+					<div className="flex min-h-0 flex-1 overflow-hidden" style={{zoom: uiZoom}}>
+						<Sidebar />
+						<main className="flex-1 overflow-y-auto overflow-x-hidden">
+							<Routes>
+								<Route index element={<HomePage />} />
+								<Route path="library" element={<LibraryPage />} />
+								<Route path="collections" element={<CollectionsPage />} />
+								<Route path="favorites" element={<FavoritesPage />} />
+								<Route path="tags" element={<TagsPage />} />
+								<Route path="history" element={<HistoryPage />} />
+								<Route path="settings" element={<SettingsPage />} />
+							</Routes>
+						</main>
 					</div>
 				</div>
 
@@ -284,6 +310,16 @@ export function App(): ReactNode {
 					</Suspense>
 				) : null}
 			</div>
-		</TooltipProvider>
+		</>
+	)
+}
+
+export function App(): ReactNode {
+	return (
+		<HashRouter>
+			<TooltipProvider>
+				<AppContent />
+			</TooltipProvider>
+		</HashRouter>
 	)
 }

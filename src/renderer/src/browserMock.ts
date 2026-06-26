@@ -613,6 +613,33 @@ export function installBrowserMock(): void {
 				return {ok: true as const, data: {matchedIds: []}}
 			},
 			registerManifest: () => Promise.resolve({ok: true as const, data: undefined})
+		},
+
+		library: {
+			media: {list: () => Promise.resolve([]), get: () => Promise.resolve(null), search: () => Promise.resolve([]), setFavorite: () => Promise.resolve(), setStatus: () => Promise.resolve(), delete: () => Promise.resolve(false), count: () => Promise.resolve(0), countByStatus: () => Promise.resolve({})},
+			collection: {
+				list: () => Promise.resolve([]),
+				get: () => Promise.resolve(null),
+				create: (data: {name: string}) => Promise.resolve({id: 'mock', name: data.name, description: null, icon: null, color: null, sortOrder: 0, createdAt: '', updatedAt: ''}),
+				update: () => Promise.resolve(null),
+				delete: () => Promise.resolve(false),
+				addMedia: () => Promise.resolve(),
+				removeMedia: () => Promise.resolve(),
+				getMediaIds: () => Promise.resolve([]),
+				getForMedia: () => Promise.resolve([])
+			},
+			tag: {
+				list: () => Promise.resolve([]),
+				create: (data: {name: string}) => Promise.resolve({id: 'mock', name: data.name, color: null, createdAt: ''}),
+				update: () => Promise.resolve(null),
+				delete: () => Promise.resolve(false),
+				addToMedia: () => Promise.resolve(),
+				removeFromMedia: () => Promise.resolve(),
+				getForMedia: () => Promise.resolve([]),
+				getMediaIds: () => Promise.resolve([])
+			},
+			playback: {updatePosition: () => Promise.resolve(), getByMedia: () => Promise.resolve(null), listRecent: () => Promise.resolve([])},
+			downloadHistory: {list: () => Promise.resolve([]), count: () => Promise.resolve(0), countByStatus: () => Promise.resolve({})}
 		}
 	}
 

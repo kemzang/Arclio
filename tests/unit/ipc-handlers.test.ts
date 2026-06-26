@@ -68,6 +68,7 @@ function makeDeps() {
 		clipboardWatcher: clipboardWatcher as never,
 		playlistManifestStore: {save: vi.fn(), get: vi.fn(), remove: vi.fn()} as never,
 		graphicsPolicyProvider: vi.fn().mockResolvedValue({backdrop: {forceRenderMode: null, softwareWebglAllowed: false}}),
+		libraryDb: {} as never,
 		_raw: {downloadService, probeService, mainWindow, queueService, settingsStore, languageRef, clipboardWatcher}
 	}
 }

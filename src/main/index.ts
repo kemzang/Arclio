@@ -26,6 +26,8 @@ import {QueueStore} from '@main/stores/QueueStore.js'
 import {PlaylistManifestStore} from '@main/stores/PlaylistManifestStore.js'
 import {writePlaylistM3u} from '@main/services/playlistM3u.js'
 import {ClipboardWatcher, watcherWindowFromBrowserWindow} from '@main/services/ClipboardWatcher.js'
+import {LibraryImporter} from '@main/services/LibraryImporter.js'
+import {getLibraryDb} from '@main/db/connection.js'
 import {HiddenWindowTokenProvider} from '@main/token/providers/HiddenWindowTokenProvider.js'
 import {MockTokenProvider} from '@main/token/providers/MockTokenProvider.js'
 import {defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT} from '@shared/constants.js'
@@ -252,6 +254,10 @@ if (hasSingleInstanceLock) {
 		const queueService = new QueueService(queueStore, downloadService, undefined, undefined, {manifestStore: playlistManifestStore, writeM3u: writePlaylistM3u}, probeInfoJsonCache)
 		await queueService.init()
 
+		// Library: SQLite database + importer service
+		const libraryDb = getLibraryDb()
+		new LibraryImporter(libraryDb, queueService, probeInfoJsonCache)
+
 		// Headless smoke mode — exercises PoT scrape + retry ladder against real
 		// YouTube using production services, then exits. No window created.
 		const smokeUrl = readSmokeUrl()
@@ -366,7 +372,7 @@ if (hasSingleInstanceLock) {
 		const clipboardWatcher = new ClipboardWatcher(watcherWindowFromBrowserWindow(mainWindow))
 		clipboardWatcher.setEnabled(initialSettings.common.clipboardWatchEnabled)
 
-		registerIpcHandlers({mainWindow, binaryManager, downloadService, probeService, settingsStore, queueService, tokenService, languageRef, clipboardWatcher, playlistManifestStore, graphicsPolicyProvider})
+		registerIpcHandlers({mainWindow, binaryManager, downloadService, probeService, settingsStore, queueService, tokenService, languageRef, clipboardWatcher, playlistManifestStore, graphicsPolicyProvider, libraryDb})
 
 		if (!e2eMode.disableUpdater) {
 			registerUpdaterHandlers(mainWindow)

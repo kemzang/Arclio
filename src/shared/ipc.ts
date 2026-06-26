@@ -58,5 +58,41 @@ export const IPC_CHANNELS = {
 	dialogChooseExecutable: 'dialog:chooseExecutable',
 	shellOpenBinariesDir: 'shell:openBinariesDir',
 	playlistScanFolder: 'playlist:scanFolder',
-	playlistRegisterManifest: 'playlist:registerManifest'
+	playlistRegisterManifest: 'playlist:registerManifest',
+	// Library — media
+	libraryMediaList: 'library:media:list',
+	libraryMediaGet: 'library:media:get',
+	libraryMediaSearch: 'library:media:search',
+	libraryMediaSetFavorite: 'library:media:setFavorite',
+	libraryMediaSetStatus: 'library:media:setStatus',
+	libraryMediaDelete: 'library:media:delete',
+	libraryMediaCount: 'library:media:count',
+	libraryMediaCountByStatus: 'library:media:countByStatus',
+	// Library — collections
+	libraryCollectionList: 'library:collection:list',
+	libraryCollectionGet: 'library:collection:get',
+	libraryCollectionCreate: 'library:collection:create',
+	libraryCollectionUpdate: 'library:collection:update',
+	libraryCollectionDelete: 'library:collection:delete',
+	libraryCollectionAddMedia: 'library:collection:addMedia',
+	libraryCollectionRemoveMedia: 'library:collection:removeMedia',
+	libraryCollectionGetMediaIds: 'library:collection:getMediaIds',
+	libraryCollectionGetForMedia: 'library:collection:getForMedia',
+	// Library — tags
+	libraryTagList: 'library:tag:list',
+	libraryTagCreate: 'library:tag:create',
+	libraryTagUpdate: 'library:tag:update',
+	libraryTagDelete: 'library:tag:delete',
+	libraryTagAddToMedia: 'library:tag:addToMedia',
+	libraryTagRemoveFromMedia: 'library:tag:removeFromMedia',
+	libraryTagGetForMedia: 'library:tag:getForMedia',
+	libraryTagGetMediaIds: 'library:tag:getMediaIds',
+	// Library — playback history
+	libraryPlaybackUpdatePosition: 'library:playback:updatePosition',
+	libraryPlaybackGetByMedia: 'library:playback:getByMedia',
+	libraryPlaybackListRecent: 'library:playback:listRecent',
+	// Library — download history
+	libraryDownloadHistoryList: 'library:downloadHistory:list',
+	libraryDownloadHistoryCount: 'library:downloadHistory:count',
+	libraryDownloadHistoryCountByStatus: 'library:downloadHistory:countByStatus'
 } as const

@@ -542,5 +542,27 @@
 		"footerTooltip": "Arroxy شریک کړئ",
 		"footerLabel": "شریک کړئ",
 		"shareAction": "Arroxy شریک کړئ"
-	}
+	},
+	"nav": {"home": "Home", "library": "Library", "collections": "Collections", "favorites": "Favorites", "tags": "Tags", "history": "History", "settings": "Settings"},
+	"library": {
+		"items": "items",
+		"searchPlaceholder": "Search by title, author, description…",
+		"all": "All",
+		"video": "Video",
+		"audio": "Audio",
+		"sortNewest": "Newest first",
+		"sortOldest": "Oldest first",
+		"sortTitleAZ": "Title A-Z",
+		"sortTitleZA": "Title Z-A",
+		"sortLongest": "Longest",
+		"sortShortest": "Shortest",
+		"empty": "Your library is empty",
+		"emptyHint": "Download a video to get started",
+		"missing": "Missing"
+	},
+	"collections": {"create": "New collection", "namePlaceholder": "Collection name", "save": "Create", "cancel": "Cancel", "empty": "No collections yet", "emptyHint": "Create a collection to organize your media"},
+	"favorites": {"empty": "No favorites yet", "emptyHint": "Mark a media as favorite to see it here"},
+	"tags": {"create": "New tag", "namePlaceholder": "Tag name", "save": "Create", "cancel": "Cancel", "empty": "No tags yet", "emptyHint": "Create a tag to categorize your media"},
+	"history": {"downloads": "Downloads", "playback": "Playback", "today": "Today", "yesterday": "Yesterday", "thisWeek": "This week", "thisMonth": "This month", "empty": "No download history", "emptyPlayback": "No playback history", "playCount": "{{count}} play", "completed": "Completed"},
+	"settings": {"comingSoon": "Settings coming soon", "comingSoonHint": "Settings will be available in a future update"}
 }

@@ -57,7 +57,42 @@ const mockAppApi = {
 	updater: {onUpdateAvailable: vi.fn().mockReturnValue(() => undefined), install: vi.fn().mockResolvedValue(undefined)},
 	analytics: {track: vi.fn()},
 	diagnostics: {logWizardStep: vi.fn()},
-	playlist: {scanFolder: vi.fn().mockResolvedValue({ok: true, data: {matchedIds: []}}), registerManifest: vi.fn().mockResolvedValue({ok: true, data: undefined})}
+	playlist: {scanFolder: vi.fn().mockResolvedValue({ok: true, data: {matchedIds: []}}), registerManifest: vi.fn().mockResolvedValue({ok: true, data: undefined})},
+	library: {
+		media: {
+			list: vi.fn().mockResolvedValue([]),
+			get: vi.fn().mockResolvedValue(null),
+			search: vi.fn().mockResolvedValue([]),
+			setFavorite: vi.fn().mockResolvedValue(undefined),
+			setStatus: vi.fn().mockResolvedValue(undefined),
+			delete: vi.fn().mockResolvedValue(false),
+			count: vi.fn().mockResolvedValue(0),
+			countByStatus: vi.fn().mockResolvedValue({})
+		},
+		collection: {
+			list: vi.fn().mockResolvedValue([]),
+			get: vi.fn().mockResolvedValue(null),
+			create: vi.fn().mockImplementation((data: {name: string}) => Promise.resolve({id: 'mock', name: data.name, description: null, icon: null, color: null, sortOrder: 0, createdAt: '', updatedAt: ''})),
+			update: vi.fn().mockResolvedValue(null),
+			delete: vi.fn().mockResolvedValue(false),
+			addMedia: vi.fn().mockResolvedValue(undefined),
+			removeMedia: vi.fn().mockResolvedValue(undefined),
+			getMediaIds: vi.fn().mockResolvedValue([]),
+			getForMedia: vi.fn().mockResolvedValue([])
+		},
+		tag: {
+			list: vi.fn().mockResolvedValue([]),
+			create: vi.fn().mockImplementation((data: {name: string}) => Promise.resolve({id: 'mock', name: data.name, color: null, createdAt: ''})),
+			update: vi.fn().mockResolvedValue(null),
+			delete: vi.fn().mockResolvedValue(false),
+			addToMedia: vi.fn().mockResolvedValue(undefined),
+			removeFromMedia: vi.fn().mockResolvedValue(undefined),
+			getForMedia: vi.fn().mockResolvedValue([]),
+			getMediaIds: vi.fn().mockResolvedValue([])
+		},
+		playback: {updatePosition: vi.fn().mockResolvedValue(undefined), getByMedia: vi.fn().mockResolvedValue(null), listRecent: vi.fn().mockResolvedValue([])},
+		downloadHistory: {list: vi.fn().mockResolvedValue([]), count: vi.fn().mockResolvedValue(0), countByStatus: vi.fn().mockResolvedValue({})}
+	}
 }
 
 function resetStore() {

@@ -143,6 +143,45 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 		},
 		analytics: {track: (name, props) => ipcRenderer.send(IPC_CHANNELS.analyticsTrack, {name, props})},
 		diagnostics: {logWizardStep: snapshot => ipcRenderer.send(IPC_CHANNELS.diagnosticsLogWizardStep, snapshot)},
-		playlist: {scanFolder: input => ipcRenderer.invoke(IPC_CHANNELS.playlistScanFolder, input), registerManifest: manifest => ipcRenderer.invoke(IPC_CHANNELS.playlistRegisterManifest, manifest)}
+		playlist: {scanFolder: input => ipcRenderer.invoke(IPC_CHANNELS.playlistScanFolder, input), registerManifest: manifest => ipcRenderer.invoke(IPC_CHANNELS.playlistRegisterManifest, manifest)},
+		library: {
+			media: {
+				list: filters => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaList, filters),
+				get: id => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaGet, id),
+				search: (query, limit) => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaSearch, query, limit),
+				setFavorite: (id, isFavorite) => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaSetFavorite, id, isFavorite),
+				setStatus: (id, status) => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaSetStatus, id, status),
+				delete: id => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaDelete, id),
+				count: () => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaCount),
+				countByStatus: () => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaCountByStatus)
+			},
+			collection: {
+				list: () => ipcRenderer.invoke(IPC_CHANNELS.libraryCollectionList),
+				get: id => ipcRenderer.invoke(IPC_CHANNELS.libraryCollectionGet, id),
+				create: data => ipcRenderer.invoke(IPC_CHANNELS.libraryCollectionCreate, data),
+				update: (id, data) => ipcRenderer.invoke(IPC_CHANNELS.libraryCollectionUpdate, id, data),
+				delete: id => ipcRenderer.invoke(IPC_CHANNELS.libraryCollectionDelete, id),
+				addMedia: (collectionId, mediaId) => ipcRenderer.invoke(IPC_CHANNELS.libraryCollectionAddMedia, collectionId, mediaId),
+				removeMedia: (collectionId, mediaId) => ipcRenderer.invoke(IPC_CHANNELS.libraryCollectionRemoveMedia, collectionId, mediaId),
+				getMediaIds: collectionId => ipcRenderer.invoke(IPC_CHANNELS.libraryCollectionGetMediaIds, collectionId),
+				getForMedia: mediaId => ipcRenderer.invoke(IPC_CHANNELS.libraryCollectionGetForMedia, mediaId)
+			},
+			tag: {
+				list: () => ipcRenderer.invoke(IPC_CHANNELS.libraryTagList),
+				create: data => ipcRenderer.invoke(IPC_CHANNELS.libraryTagCreate, data),
+				update: (id, data) => ipcRenderer.invoke(IPC_CHANNELS.libraryTagUpdate, id, data),
+				delete: id => ipcRenderer.invoke(IPC_CHANNELS.libraryTagDelete, id),
+				addToMedia: (tagId, mediaId) => ipcRenderer.invoke(IPC_CHANNELS.libraryTagAddToMedia, tagId, mediaId),
+				removeFromMedia: (tagId, mediaId) => ipcRenderer.invoke(IPC_CHANNELS.libraryTagRemoveFromMedia, tagId, mediaId),
+				getForMedia: mediaId => ipcRenderer.invoke(IPC_CHANNELS.libraryTagGetForMedia, mediaId),
+				getMediaIds: tagId => ipcRenderer.invoke(IPC_CHANNELS.libraryTagGetMediaIds, tagId)
+			},
+			playback: {
+				updatePosition: (mediaId, position, duration) => ipcRenderer.invoke(IPC_CHANNELS.libraryPlaybackUpdatePosition, mediaId, position, duration),
+				getByMedia: mediaId => ipcRenderer.invoke(IPC_CHANNELS.libraryPlaybackGetByMedia, mediaId),
+				listRecent: limit => ipcRenderer.invoke(IPC_CHANNELS.libraryPlaybackListRecent, limit)
+			},
+			downloadHistory: {list: options => ipcRenderer.invoke(IPC_CHANNELS.libraryDownloadHistoryList, options), count: () => ipcRenderer.invoke(IPC_CHANNELS.libraryDownloadHistoryCount), countByStatus: () => ipcRenderer.invoke(IPC_CHANNELS.libraryDownloadHistoryCountByStatus)}
+		}
 	}
 }
