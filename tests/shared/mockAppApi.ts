@@ -118,7 +118,8 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 				getMediaIds: vi.fn().mockResolvedValue([])
 			},
 			playback: {updatePosition: vi.fn().mockResolvedValue(undefined), getByMedia: vi.fn().mockResolvedValue(null), listRecent: vi.fn().mockResolvedValue([])},
-			downloadHistory: {list: vi.fn().mockResolvedValue([]), count: vi.fn().mockResolvedValue(0), countByStatus: vi.fn().mockResolvedValue({})}
+			downloadHistory: {list: vi.fn().mockResolvedValue([]), count: vi.fn().mockResolvedValue(0), countByStatus: vi.fn().mockResolvedValue({})},
+			events: {onMediaCreated: vi.fn().mockReturnValue(() => undefined)}
 		}
 	}
 }

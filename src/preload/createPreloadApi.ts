@@ -181,7 +181,16 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 				getByMedia: mediaId => ipcRenderer.invoke(IPC_CHANNELS.libraryPlaybackGetByMedia, mediaId),
 				listRecent: limit => ipcRenderer.invoke(IPC_CHANNELS.libraryPlaybackListRecent, limit)
 			},
-			downloadHistory: {list: options => ipcRenderer.invoke(IPC_CHANNELS.libraryDownloadHistoryList, options), count: () => ipcRenderer.invoke(IPC_CHANNELS.libraryDownloadHistoryCount), countByStatus: () => ipcRenderer.invoke(IPC_CHANNELS.libraryDownloadHistoryCountByStatus)}
+			downloadHistory: {list: options => ipcRenderer.invoke(IPC_CHANNELS.libraryDownloadHistoryList, options), count: () => ipcRenderer.invoke(IPC_CHANNELS.libraryDownloadHistoryCount), countByStatus: () => ipcRenderer.invoke(IPC_CHANNELS.libraryDownloadHistoryCountByStatus)},
+			events: {
+				onMediaCreated: listener => {
+					const wrapped = (_: unknown, data: {id: string; title: string; mediaType: string}): void => listener(data)
+					ipcRenderer.on(IPC_CHANNELS.libraryMediaCreated, wrapped)
+					return () => {
+						ipcRenderer.removeListener(IPC_CHANNELS.libraryMediaCreated, wrapped)
+					}
+				}
+			}
 		}
 	}
 }

@@ -256,7 +256,7 @@ if (hasSingleInstanceLock) {
 
 		// Library: SQLite database + importer service
 		const libraryDb = getLibraryDb()
-		new LibraryImporter(libraryDb, queueService, probeInfoJsonCache)
+		const libraryImporter = new LibraryImporter(libraryDb, queueService)
 
 		// Headless smoke mode — exercises PoT scrape + retry ladder against real
 		// YouTube using production services, then exits. No window created.
@@ -279,6 +279,7 @@ if (hasSingleInstanceLock) {
 		}
 
 		const mainWindow = createMainWindow(resolveMainWindowBackgroundColor(initialSettings.common.uiTheme, nativeTheme.shouldUseDarkColors))
+		libraryImporter.setMainWindow(mainWindow)
 
 		contextMenu({window: mainWindow.webContents, showSaveImageAs: true, showCopyImageAddress: true, showInspectElement: !app.isPackaged})
 

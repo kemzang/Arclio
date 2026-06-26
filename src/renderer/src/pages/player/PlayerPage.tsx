@@ -2,7 +2,6 @@ import {useState, useEffect, useRef, useCallback, useMemo} from 'react'
 import {useParams, useNavigate} from 'react-router-dom'
 import {useTranslation} from 'react-i18next'
 import {ArrowLeft, Film, Music, AlertCircle} from 'lucide-react'
-// @ts-expect-error plyr has broken type declarations
 import Plyr from 'plyr'
 import 'plyr/dist/plyr.css'
 import type {LibraryMediaWithAssets, LibraryPlaybackHistory} from '@shared/api.js'

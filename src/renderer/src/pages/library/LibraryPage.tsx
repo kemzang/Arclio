@@ -28,6 +28,15 @@ export function LibraryPage(): React.JSX.Element {
 		}
 	}, [sortBy, sortOrder, mediaTypeFilter, search])
 
+	// Refresh library when a new media is created from a download
+	useEffect(() => {
+		const unsub = window.appApi.library.events.onMediaCreated(() => {
+			const filters: LibraryMediaListFilters = {sortBy, sortOrder, mediaType: mediaTypeFilter, search: search || undefined}
+			void window.appApi.library.media.list(filters).then(setMedia)
+		})
+		return unsub
+	}, [sortBy, sortOrder, mediaTypeFilter, search])
+
 	const toggleFavorite = async (id: string, current: boolean): Promise<void> => {
 		await window.appApi.library.media.setFavorite(id, !current)
 		const filters: LibraryMediaListFilters = {sortBy, sortOrder, mediaType: mediaTypeFilter, search: search || undefined}

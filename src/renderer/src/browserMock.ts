@@ -639,7 +639,8 @@ export function installBrowserMock(): void {
 				getMediaIds: () => Promise.resolve([])
 			},
 			playback: {updatePosition: () => Promise.resolve(), getByMedia: () => Promise.resolve(null), listRecent: () => Promise.resolve([])},
-			downloadHistory: {list: () => Promise.resolve([]), count: () => Promise.resolve(0), countByStatus: () => Promise.resolve({})}
+			downloadHistory: {list: () => Promise.resolve([]), count: () => Promise.resolve(0), countByStatus: () => Promise.resolve({})},
+			events: {onMediaCreated: () => () => {}}
 		}
 	}
 

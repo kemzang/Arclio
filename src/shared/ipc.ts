@@ -94,5 +94,7 @@ export const IPC_CHANNELS = {
 	// Library — download history
 	libraryDownloadHistoryList: 'library:downloadHistory:list',
 	libraryDownloadHistoryCount: 'library:downloadHistory:count',
-	libraryDownloadHistoryCountByStatus: 'library:downloadHistory:countByStatus'
+	libraryDownloadHistoryCountByStatus: 'library:downloadHistory:countByStatus',
+	// Library events — main → renderer
+	libraryMediaCreated: 'library:media:created'
 } as const

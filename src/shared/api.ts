@@ -136,6 +136,7 @@ export interface AppApi {
 		}
 		playback: {updatePosition(mediaId: string, position: number, duration: number): Promise<void>; getByMedia(mediaId: string): Promise<LibraryPlaybackHistory | null>; listRecent(limit?: number): Promise<LibraryPlaybackHistory[]>}
 		downloadHistory: {list(options?: {status?: string; limit?: number; offset?: number}): Promise<LibraryDownloadHistory[]>; count(): Promise<number>; countByStatus(): Promise<Record<string, number>>}
+		events: {onMediaCreated(listener: (data: {id: string; title: string; mediaType: string}) => void): () => void}
 	}
 }
 

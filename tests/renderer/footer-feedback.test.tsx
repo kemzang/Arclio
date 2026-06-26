@@ -91,7 +91,8 @@ const mockAppApi = {
 			getMediaIds: vi.fn().mockResolvedValue([])
 		},
 		playback: {updatePosition: vi.fn().mockResolvedValue(undefined), getByMedia: vi.fn().mockResolvedValue(null), listRecent: vi.fn().mockResolvedValue([])},
-		downloadHistory: {list: vi.fn().mockResolvedValue([]), count: vi.fn().mockResolvedValue(0), countByStatus: vi.fn().mockResolvedValue({})}
+		downloadHistory: {list: vi.fn().mockResolvedValue([]), count: vi.fn().mockResolvedValue(0), countByStatus: vi.fn().mockResolvedValue({})},
+		events: {onMediaCreated: vi.fn().mockReturnValue(() => undefined)}
 	}
 }
 
@@ -230,7 +231,16 @@ describe('Footer feedback controls', () => {
 
 	it('Settings Logs button opens the log directory', async () => {
 		render(<App />)
-		fireEvent.click(await screen.findByText('Settings'))
+		// Find the wizard scrollport and click the Settings tab within it
+		const wizardScrollport = await screen.findByTestId('wizard-scrollport')
+		// The Settings tab is a TabsTrigger with value="settings"
+		const tabs = wizardScrollport.querySelectorAll('button')
+		for (const tab of tabs) {
+			if (tab.textContent?.includes('Settings')) {
+				fireEvent.click(tab)
+				break
+			}
+		}
 		fireEvent.click(await screen.findByTestId('btn-logs'))
 		await waitFor(() => {
 			expect(mockOpenLogsDir).toHaveBeenCalledOnce()
