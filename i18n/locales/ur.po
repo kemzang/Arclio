@@ -2424,3 +2424,24 @@ msgstr "پروفائلز"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "ترتیبات"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "لائبریری پر واپس"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "میڈیا نہیں ملا"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "کوئی چلانے کے قابل فائل نہیں ملی"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "ذیلی عنوانات"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "رفتار"
+

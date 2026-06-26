@@ -2424,3 +2424,24 @@ msgstr "配置"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "设置"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "返回媒体库"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "未找到媒体"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "未找到可播放文件"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "字幕"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "速度"
+

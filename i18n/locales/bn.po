@@ -2424,3 +2424,24 @@ msgstr "প্রোফাইল"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "সেটিংস"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "লাইব্রেরিতে ফিরুন"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "মিডিয়া পাওয়া যায়নি"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "কোনো চালানোযোগ্য ফাইল পাওয়া যায়নি"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "সাবটাইটেল"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "গতি"
+

@@ -2424,3 +2424,24 @@ msgstr "ပရိုဖိုင်များ"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "ဆက်တင်များ"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "စာကြည့်တိုက်သို့ ပြန်သွားရန်"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "မီဒီယာ ရှာမတွေ့ပါ"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "ဖွင့်နိုင်သော ဖိုင် ရှာမတွေ့ပါ"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "စာတန်းထိုးများ"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "အမြန်နှုန်း"
+

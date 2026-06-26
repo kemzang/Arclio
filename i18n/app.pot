@@ -54,6 +54,46 @@ msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr ""
 
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr ""
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr ""
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr ""
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr ""
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr ""
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr ""
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr ""
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr ""
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr ""
+
 msgctxt "common.back"
 msgid "Back"
 msgstr ""
@@ -198,6 +238,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr ""
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr ""
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr ""
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr ""
@@ -210,8 +258,152 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr ""
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr ""
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr ""
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr ""
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr ""
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr ""
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr ""
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr ""
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr ""
+
+msgctxt "history.today"
+msgid "Today"
+msgstr ""
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr ""
+
 msgctxt "language.label"
 msgid "Language"
+msgstr ""
+
+msgctxt "library.all"
+msgid "All"
+msgstr ""
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr ""
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr ""
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr ""
+
+msgctxt "library.items"
+msgid "items"
+msgstr ""
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr ""
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr ""
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr ""
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr ""
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr ""
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr ""
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr ""
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr ""
+
+msgctxt "library.video"
+msgid "Video"
+msgstr ""
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr ""
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr ""
+
+msgctxt "nav.history"
+msgid "History"
+msgstr ""
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr ""
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr ""
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr ""
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr ""
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr ""
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr ""
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr ""
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr ""
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
 msgstr ""
 
 msgctxt "playlistPresets.audioFormat.best"
@@ -682,6 +874,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr ""
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr ""
+
+msgctxt "search.items"
+msgid "items"
+msgstr ""
+
+msgctxt "search.media"
+msgid "Media"
+msgstr ""
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr ""
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr ""
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr ""
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr ""
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr ""
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr ""
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr ""
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr ""
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr ""
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr ""
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr ""
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr ""
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr ""
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr ""
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr ""
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr ""
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr ""
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr ""
@@ -822,6 +1094,30 @@ msgstr ""
 
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
+msgstr ""
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr ""
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr ""
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr ""
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr ""
+
+msgctxt "tags.save"
+msgid "Create"
 msgstr ""
 
 msgctxt "theme.dark"

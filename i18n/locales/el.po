@@ -2424,3 +2424,24 @@ msgstr "Προφίλ"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Ρυθμίσεις"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Πίσω στη βιβλιοθήκη"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Δεν βρέθηκε μέσο"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Δεν βρέθηκε αρχείο για αναπαραγωγή"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Υπότιτλοι"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Ταχύτητα"
+

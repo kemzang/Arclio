@@ -2424,3 +2424,24 @@ msgstr "Wasifu"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Mipangilio"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Rudi kwenye maktaba"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Media haijapatikana"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Hakuna faili inayoweza kuchezwa imepatikana"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Manukuu"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Kasi"
+

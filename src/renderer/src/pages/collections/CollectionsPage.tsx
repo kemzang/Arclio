@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {useTranslation} from 'react-i18next'
 import {Plus, FolderHeart, Trash2, Edit2} from 'lucide-react'
 import type {LibraryCollectionWithCount} from '@shared/api.js'
@@ -6,6 +7,7 @@ import {Button} from '@renderer/components/ui/button.js'
 import {Input} from '@renderer/components/ui/input.js'
 
 export function CollectionsPage(): React.JSX.Element {
+	const navigate = useNavigate()
 	const {t} = useTranslation()
 	const [collections, setCollections] = useState<LibraryCollectionWithCount[]>([])
 	const [isCreating, setIsCreating] = useState(false)
@@ -71,7 +73,16 @@ export function CollectionsPage(): React.JSX.Element {
 			) : (
 				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 					{collections.map(col => (
-						<div key={col.id} className="group relative rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--glass-tile)] hover:shadow-lg transition-shadow cursor-pointer p-4">
+						<div
+							key={col.id}
+							role="button"
+							tabIndex={0}
+							onClick={() => void navigate(`/collections/${col.id}`)}
+							onKeyDown={e => {
+								if (e.key === 'Enter') void navigate(`/collections/${col.id}`)
+							}}
+							className="group relative rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--glass-tile)] hover:shadow-lg transition-shadow cursor-pointer p-4"
+						>
 							<div className="flex items-center gap-3 mb-3">
 								{col.coverThumbnailUrl ? (
 									<img src={col.coverThumbnailUrl} alt="" className="w-12 h-12 rounded-lg object-cover" />
@@ -89,10 +100,18 @@ export function CollectionsPage(): React.JSX.Element {
 							</div>
 							{col.description && <p className="text-xs text-[var(--text-subtle)] line-clamp-2">{col.description}</p>}
 							<div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-								<Button variant="ghost" size="icon" className="size-7">
+								<Button variant="ghost" size="icon" className="size-7" onClick={e => e.stopPropagation()}>
 									<Edit2 className="size-3" />
 								</Button>
-								<Button variant="ghost" size="icon" className="size-7 text-destructive" onClick={() => void handleDelete(col.id)}>
+								<Button
+									variant="ghost"
+									size="icon"
+									className="size-7 text-destructive"
+									onClick={e => {
+										e.stopPropagation()
+										void handleDelete(col.id)
+									}}
+								>
 									<Trash2 className="size-3" />
 								</Button>
 							</div>

@@ -2424,3 +2424,24 @@ msgstr "Profillar"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Sozlamalar"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Kutubxonaga qaytish"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Media topilmadi"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Oʻynatiladigan fayl topilmadi"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Subtitrlar"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Tezlik"
+

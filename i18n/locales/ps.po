@@ -2424,3 +2424,24 @@ msgstr "پروفایلونه"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "امستنې"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "کتابتون ته بیرته"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "میډیا ونه موندل شوه"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "د چلولو وړ فایل ونه موندل شو"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "فرعي لیکنې"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "سرعت"
+

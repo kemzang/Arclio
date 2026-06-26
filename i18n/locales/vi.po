@@ -2424,3 +2424,24 @@ msgstr "Hồ sơ"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Cài đặt"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Quay lại thư viện"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Không tìm thấy phương tiện"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Không tìm thấy tệp có thể phát"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Phụ đề"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Tốc độ"
+

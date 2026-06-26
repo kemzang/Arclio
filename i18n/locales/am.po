@@ -2424,3 +2424,24 @@ msgstr "መገለጫዎች"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "ቅንብሮች"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "ወደ ቤተ-መጽሐፍት ተመለስ"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "ሚዲያ አልተገኘም"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "ሊጫወት የሚችል ፋይል አልተገኘም"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "የግርጌ ጽሑፎች"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "ፍጥነት"
+

@@ -563,6 +563,7 @@
 		"missing": "Falta"
 	},
 	"collections": {"create": "Nueva colección", "namePlaceholder": "Nombre de la colección", "save": "Crear", "cancel": "Cancelar", "empty": "Aún no hay colecciones", "emptyHint": "Crea una colección para organizar tus medios"},
+	"collectionDetail": {"back": "Volver a colecciones", "empty": "No hay medios en esta colección", "emptyHint": "Agrega medios desde la biblioteca", "removeFromCollection": "Quitar de la colección"},
 	"favorites": {"empty": "Aún no hay favoritos", "emptyHint": "Marca un medio como favorito para verlo aquí"},
 	"tags": {"create": "Nueva etiqueta", "namePlaceholder": "Nombre de la etiqueta", "save": "Crear", "cancel": "Cancelar", "empty": "Aún no hay etiquetas", "emptyHint": "Crea una etiqueta para categorizar tus medios"},
 	"history": {
@@ -578,5 +579,21 @@
 		"playCount_other": "{{count}} reproducciones",
 		"completed": "Completado"
 	},
-	"settings": {"comingSoon": "Ajustes próximamente", "comingSoonHint": "Los ajustes estarán disponibles en una futura actualización"}
+	"settings": {
+		"title": "Ajustes",
+		"outputDir": "Carpeta de salida",
+		"outputDirDescription": "Dónde se guardan los archivos descargados",
+		"change": "Cambiar",
+		"language": "Idioma",
+		"languageDescription": "Idioma de visualización de la aplicación",
+		"theme": "Tema",
+		"themeDescription": "Apariencia de la aplicación",
+		"clipboardWatch": "Monitoreo del portapapeles",
+		"clipboardWatchDescription": "Detectar automáticamente URL en el portapapeles",
+		"writeSubtitles": "Escribir subtítulos",
+		"writeSubtitlesDescription": "Descargar archivos de subtítulos por defecto",
+		"embedThumbnail": "Incrustar miniatura",
+		"embedThumbnailDescription": "Incrustar miniatura en el archivo multimedia"
+	},
+	"player": {"back": "Volver a la biblioteca", "noMedia": "Medio no encontrado", "noAsset": "No se encontró archivo reproducible", "subtitles": "Subtítulos", "speed": "Velocidad"}
 }

@@ -34,6 +34,7 @@ import changelogText from '../../../CHANGELOG.md?raw'
 // Pages
 import {LibraryPage} from './pages/library/LibraryPage.js'
 import {CollectionsPage} from './pages/collections/CollectionsPage.js'
+import {CollectionDetailPage} from './pages/collections/CollectionDetailPage.js'
 import {FavoritesPage} from './pages/favorites/FavoritesPage.js'
 import {TagsPage} from './pages/tags/TagsPage.js'
 import {HistoryPage} from './pages/history/HistoryPage.js'
@@ -229,6 +230,7 @@ function AppContent(): ReactNode {
 								<Route path="library" element={<LibraryPage />} />
 								<Route path="library/:id" element={<PlayerPage />} />
 								<Route path="collections" element={<CollectionsPage />} />
+								<Route path="collections/:id" element={<CollectionDetailPage />} />
 								<Route path="favorites" element={<FavoritesPage />} />
 								<Route path="tags" element={<TagsPage />} />
 								<Route path="history" element={<HistoryPage />} />

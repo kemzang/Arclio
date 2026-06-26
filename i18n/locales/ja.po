@@ -2424,3 +2424,24 @@ msgstr "プロファイル"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "設定"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "ライブラリに戻る"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "メディアが見つかりません"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "再生可能なファイルが見つかりません"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "字幕"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "速度"
+

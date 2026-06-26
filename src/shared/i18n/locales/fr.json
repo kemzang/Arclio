@@ -570,8 +570,25 @@
 		"missing": "Manquant"
 	},
 	"collections": {"create": "Nouvelle collection", "namePlaceholder": "Nom de la collection", "save": "Créer", "cancel": "Annuler", "empty": "Aucune collection", "emptyHint": "Créez une collection pour organiser vos médias"},
+	"collectionDetail": {"back": "Retour aux collections", "empty": "Aucun média dans cette collection", "emptyHint": "Ajoutez des médias depuis la bibliothèque", "removeFromCollection": "Retirer de la collection"},
 	"favorites": {"empty": "Aucun favori", "emptyHint": "Marquez un média comme favori pour le voir ici"},
 	"tags": {"create": "Nouveau tag", "namePlaceholder": "Nom du tag", "save": "Créer", "cancel": "Annuler", "empty": "Aucun tag", "emptyHint": "Créez un tag pour catégoriser vos médias"},
 	"history": {"downloads": "Téléchargements", "playback": "Lecture", "today": "Aujourd'hui", "yesterday": "Hier", "thisWeek": "Cette semaine", "thisMonth": "Ce mois", "empty": "Aucun historique de téléchargement", "emptyPlayback": "Aucun historique de lecture", "playCount": "{{count}} lecture", "completed": "Terminé"},
-	"settings": {"comingSoon": "Paramètres bientôt disponibles", "comingSoonHint": "Les paramètres seront disponibles dans une future mise à jour"}
+	"settings": {
+		"title": "Paramètres",
+		"outputDir": "Dossier de sortie",
+		"outputDirDescription": "Où les fichiers téléchargés sont enregistrés",
+		"change": "Modifier",
+		"language": "Langue",
+		"languageDescription": "Langue d'affichage de l'application",
+		"theme": "Thème",
+		"themeDescription": "Apparence de l'application",
+		"clipboardWatch": "Surveillance du presse-papiers",
+		"clipboardWatchDescription": "Détecter automatiquement les URL dans le presse-papiers",
+		"writeSubtitles": "Écrire les sous-titres",
+		"writeSubtitlesDescription": "Télécharger les fichiers de sous-titres par défaut",
+		"embedThumbnail": "Intégrer la miniature",
+		"embedThumbnailDescription": "Intégrer la miniature dans le fichier média"
+	},
+	"player": {"back": "Retour à la bibliothèque", "noMedia": "Média introuvable", "noAsset": "Aucun fichier lisible trouvé", "subtitles": "Sous-titres", "speed": "Vitesse"}
 }

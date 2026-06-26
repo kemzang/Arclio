@@ -570,8 +570,25 @@
 		"missing": "Fehlt"
 	},
 	"collections": {"create": "Neue Sammlung", "namePlaceholder": "Sammlungsname", "save": "Erstellen", "cancel": "Abbrechen", "empty": "Noch keine Sammlungen", "emptyHint": "Erstellen Sie eine Sammlung, um Ihre Medien zu organisieren"},
+	"collectionDetail": {"back": "Zurück zu Sammlungen", "empty": "Keine Medien in dieser Sammlung", "emptyHint": "Medien aus der Bibliothek hinzufügen", "removeFromCollection": "Aus Sammlung entfernen"},
 	"favorites": {"empty": "Noch keine Favoriten", "emptyHint": "Markieren Sie ein Medium als Favorit, um es hier zu sehen"},
 	"tags": {"create": "Neuer Tag", "namePlaceholder": "Tag-Name", "save": "Erstellen", "cancel": "Abbrechen", "empty": "Noch keine Tags", "emptyHint": "Erstellen Sie einen Tag, um Ihre Medien zu kategorisieren"},
 	"history": {"downloads": "Downloads", "playback": "Wiedergabe", "today": "Heute", "yesterday": "Gestern", "thisWeek": "Diese Woche", "thisMonth": "Diesen Monat", "empty": "Kein Download-Verlauf", "emptyPlayback": "Kein Wiedergabe-Verlauf", "playCount": "{{count}} Wiedergabe", "completed": "Abgeschlossen"},
-	"settings": {"comingSoon": "Einstellungen kommen bald", "comingSoonHint": "Einstellungen werden in einem zukünftigen Update verfügbar sein"}
+	"settings": {
+		"title": "Einstellungen",
+		"outputDir": "Ausgabeverzeichnis",
+		"outputDirDescription": "Wo heruntergeladene Dateien gespeichert werden",
+		"change": "Ändern",
+		"language": "Sprache",
+		"languageDescription": "Anzeigesprache der Anwendung",
+		"theme": "Design",
+		"themeDescription": "Erscheinungsbild der Anwendung",
+		"clipboardWatch": "Zwischenablage überwachen",
+		"clipboardWatchDescription": "URLs automatisch in der Zwischenablage erkennen",
+		"writeSubtitles": "Untertitel schreiben",
+		"writeSubtitlesDescription": "Untertiteldateien standardmäßig herunterladen",
+		"embedThumbnail": "Miniaturbild einbetten",
+		"embedThumbnailDescription": "Miniaturbild in Mediendatei einbetten"
+	},
+	"player": {"back": "Zurück zur Bibliothek", "noMedia": "Medien nicht gefunden", "noAsset": "Keine abspielbare Datei gefunden", "subtitles": "Untertitel", "speed": "Geschwindigkeit"}
 }

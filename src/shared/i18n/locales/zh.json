@@ -522,8 +522,25 @@
 		"missing": "Missing"
 	},
 	"collections": {"create": "New collection", "namePlaceholder": "Collection name", "save": "Create", "cancel": "Cancel", "empty": "No collections yet", "emptyHint": "Create a collection to organize your media"},
+	"collectionDetail": {"back": "Back to collections", "empty": "No media in this collection", "emptyHint": "Add media from the library", "removeFromCollection": "Remove from collection"},
 	"favorites": {"empty": "No favorites yet", "emptyHint": "Mark a media as favorite to see it here"},
 	"tags": {"create": "New tag", "namePlaceholder": "Tag name", "save": "Create", "cancel": "Cancel", "empty": "No tags yet", "emptyHint": "Create a tag to categorize your media"},
 	"history": {"downloads": "Downloads", "playback": "Playback", "today": "Today", "yesterday": "Yesterday", "thisWeek": "This week", "thisMonth": "This month", "empty": "No download history", "emptyPlayback": "No playback history", "playCount": "{{count}} play", "completed": "Completed"},
-	"settings": {"comingSoon": "Settings coming soon", "comingSoonHint": "Settings will be available in a future update"}
+	"settings": {
+		"title": "Settings",
+		"outputDir": "Output directory",
+		"outputDirDescription": "Where downloaded files are saved",
+		"change": "Change",
+		"language": "Language",
+		"languageDescription": "Display language for the application",
+		"theme": "Theme",
+		"themeDescription": "Appearance of the application",
+		"clipboardWatch": "Clipboard watch",
+		"clipboardWatchDescription": "Automatically detect URLs in clipboard",
+		"writeSubtitles": "Write subtitles",
+		"writeSubtitlesDescription": "Download subtitle files by default",
+		"embedThumbnail": "Embed thumbnail",
+		"embedThumbnailDescription": "Embed thumbnail in media file"
+	},
+	"player": {"back": "返回媒体库", "noMedia": "未找到媒体", "noAsset": "未找到可播放文件", "subtitles": "字幕", "speed": "速度"}
 }

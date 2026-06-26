@@ -2424,3 +2424,24 @@ msgstr "الملفات الشخصية"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "الإعدادات"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "العودة إلى المكتبة"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "الوسائط غير موجودة"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "لم يتم العثور على ملف قابل للتشغيل"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "الترجمات"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "السرعة"
+
