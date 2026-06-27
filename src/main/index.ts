@@ -2,6 +2,15 @@ import path from 'node:path'
 import fs from 'node:fs'
 import os from 'node:os'
 import {app, BrowserWindow, dialog, nativeTheme} from 'electron'
+
+// Electron 42+ defaults to native Wayland on Linux. Several Wayland sessions
+// (VMware guests, snap-confined shells, older Mesa stacks) crash with SIGSEGV
+// during the first BrowserWindow construction. Relaunch under X11/XWayland
+// before any window is created.
+if (process.platform === 'linux' && process.env.XDG_SESSION_TYPE === 'wayland' && (app.isPackaged || process.env.ARCLIO_FORCE_WAYLAND_RELAUNCH === '1') && !process.argv.includes('--ozone-platform=x11')) {
+	app.relaunch({args: ['--ozone-platform=x11', ...process.argv.slice(1)]})
+	app.quit()
+}
 import log from 'electron-log/main.js'
 import {IPC_CHANNELS} from '@shared/ipc.js'
 import type {GraphicsPolicy} from '@shared/types.js'
