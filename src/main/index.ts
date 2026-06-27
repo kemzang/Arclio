@@ -84,6 +84,12 @@ if (gpuMode === 'force') {
 } else if (gpuMode === 'software') {
 	app.disableHardwareAcceleration()
 	log.info('gpu mode applied', {mode: gpuMode})
+} else if (gpuMode === 'disabled') {
+	app.disableHardwareAcceleration()
+	for (const commandLineSwitch of ['disable-gpu', 'disable-gpu-compositing', 'in-process-gpu', 'no-sandbox']) {
+		appendChromiumSwitch(commandLineSwitch)
+	}
+	log.info('gpu mode applied', {mode: gpuMode, switches: ['disable-gpu', 'disable-gpu-compositing', 'in-process-gpu', 'no-sandbox']})
 } else if (gpuMode && gpuMode !== 'auto') {
 	log.warn('unknown ARCLIO_GPU_MODE ignored', {value: gpuMode})
 }

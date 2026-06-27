@@ -19,6 +19,7 @@
 		"dev": "bun scripts/dev-env.ts run electron",
 		"dev:gpu": "bun scripts/dev-env.ts run electron --gpu=force",
 		"dev:swiftshader": "bun scripts/dev-env.ts run electron --gpu=swiftshader",
+		"dev:gpu-disabled": "bun scripts/dev-env.ts run electron --gpu=disabled",
 		"dev:sandbox": "bun scripts/dev-env.ts run electron --sandbox",
 		"dev:fresh": "bun scripts/dev-env.ts run electron --fresh",
 		"dev:mock": "bun scripts/dev-env.ts run mock",

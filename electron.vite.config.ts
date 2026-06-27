@@ -31,6 +31,7 @@ export function readRendererDevServerPort(env: Record<string, string | undefined
 export function isExternalMainBuildImport(id: string): boolean {
 	if (id === 'electron' || id.startsWith('electron/')) return true
 	if (id.startsWith('node:')) return true
+	if (id === 'better-sqlite3' || id.startsWith('better-sqlite3/')) return true
 	if (id.startsWith('@main/') || id.startsWith('@shared/')) return false
 	if (/^[./]/.test(id)) return false
 	if (WINDOWS_ABS_PATH.test(id)) return false

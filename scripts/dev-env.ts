@@ -236,7 +236,12 @@ async function ensureDevDirs(env: DevEnvPaths): Promise<void> {
 }
 
 function buildChildEnv(env: DevEnvPaths): NodeJS.ProcessEnv {
-	return {...process.env, ARCLIO_RENDERER_PORT: String(env.rendererPort), ELECTRON_USER_DATA: env.electronUserData, ARCLIO_DEV_TMP: env.tmpDir, TMPDIR: env.tmpDir, TMP: env.tmpDir, TEMP: env.tmpDir}
+	// ELECTRON_RUN_AS_NODE must be cleared — VSCode and other Electron-based
+	// editors set it for their child processes, but it makes our Electron binary
+	// run as plain Node.js, which breaks `import { BrowserWindow } from 'electron'`.
+	const childEnv = {...process.env, ARCLIO_RENDERER_PORT: String(env.rendererPort), ELECTRON_USER_DATA: env.electronUserData, ARCLIO_DEV_TMP: env.tmpDir, TMPDIR: env.tmpDir, TMP: env.tmpDir, TEMP: env.tmpDir}
+	delete childEnv.ELECTRON_RUN_AS_NODE
+	return childEnv
 }
 
 export async function spawnChecked(command: string, args: string[], options: SpawnOptions & {cwd: string; env: NodeJS.ProcessEnv}): Promise<void> {
@@ -586,6 +591,10 @@ function parseElectronLauncherOptions(args: string[]): LauncherEnvOptions & {fre
 			options.gpu = 'swiftshader'
 			continue
 		}
+		if (arg === '--gpu=disabled') {
+			options.gpu = 'disabled'
+			continue
+		}
 		throw new Error(`Unknown electron launcher option: ${arg}`)
 	}
 	return options
@@ -599,6 +608,10 @@ function applyElectronLauncherEnv(env: NodeJS.ProcessEnv, options: LauncherEnvOp
 	if (options.gpu === 'force') childEnv.ARCLIO_GPU_MODE = 'force'
 	if (options.gpu === 'swiftshader') {
 		childEnv.ARCLIO_GPU_MODE = 'swiftshader'
+		childEnv.ARCLIO_BACKDROP_SOFTWARE = '1'
+	}
+	if (options.gpu === 'disabled') {
+		childEnv.ARCLIO_GPU_MODE = 'disabled'
 		childEnv.ARCLIO_BACKDROP_SOFTWARE = '1'
 	}
 
