@@ -605,6 +605,14 @@ function applyElectronLauncherEnv(env: NodeJS.ProcessEnv, options: LauncherEnvOp
 	if (options.sandbox) delete childEnv.ELECTRON_DISABLE_SANDBOX
 	else childEnv.ELECTRON_DISABLE_SANDBOX = '1'
 
+	// In dev on Linux/Wayland, force XWayland upfront so Electron never attempts
+	// native Wayland and the main process never needs to relaunch. The relaunch
+	// path (ARCLIO_FORCE_WAYLAND_RELAUNCH) races with the Vite dev server and
+	// causes ERR_CONNECTION_REFUSED on the first renderer load.
+	if (process.platform === 'linux' && (env.XDG_SESSION_TYPE === 'wayland' || env.WAYLAND_DISPLAY)) {
+		childEnv.ELECTRON_OZONE_PLATFORM_HINT = 'x11'
+	}
+
 	if (options.gpu === 'force') childEnv.ARCLIO_GPU_MODE = 'force'
 	if (options.gpu === 'swiftshader') {
 		childEnv.ARCLIO_GPU_MODE = 'swiftshader'
