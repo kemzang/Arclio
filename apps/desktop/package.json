@@ -1,0 +1,1 @@
+{"name": "@arclio/desktop", "version": "0.0.1", "private": true, "type": "module", "main": "src/main/index.ts", "exports": {"./main": "./src/main/index.ts", "./preload": "./src/preload/index.ts", "./renderer": "./src/renderer/index.ts"}, "dependencies": {"@arclio/core": "workspace:*"}}

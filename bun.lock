@@ -14,11 +14,11 @@
         "@testing-library/dom": "10.4.1",
         "@url-sanitize/clearurls": "2.0.2",
         "@url-sanitize/core": "2.0.2",
-        "better-sqlite3": "^12.11.1",
+        "better-sqlite3": "12.11.1",
         "cacache": "21.0.1",
         "class-variance-authority": "0.7.1",
         "clsx": "2.1.1",
-        "drizzle-orm": "^0.45.2",
+        "drizzle-orm": "0.45.2",
         "electron-context-menu": "4.1.2",
         "electron-log": "5.4.4",
         "electron-store": "11.0.2",
@@ -27,11 +27,11 @@
         "i18next": "26.3.1",
         "lucide-react": "1.17.0",
         "make-fetch-happen": "15.0.6",
-        "plyr": "^3.8.4",
+        "plyr": "3.8.4",
         "react": "19.2.7",
         "react-dom": "19.2.7",
         "react-i18next": "17.0.8",
-        "react-router-dom": "^7.18.0",
+        "react-router-dom": "7.18.0",
         "shadcn": "4.11.0",
         "tailwind-merge": "3.6.0",
         "tw-animate-css": "1.4.0",
@@ -51,7 +51,7 @@
         "@tailwindcss/vite": "4.3.0",
         "@testing-library/jest-dom": "6.9.1",
         "@testing-library/react": "16.3.2",
-        "@types/better-sqlite3": "^7.6.13",
+        "@types/better-sqlite3": "7.6.13",
         "@types/cacache": "20.0.1",
         "@types/gettext-parser": "9.0.0",
         "@types/make-fetch-happen": "10.0.4",
@@ -61,7 +61,7 @@
         "@types/yauzl": "3.3.0",
         "@vitejs/plugin-react": "6.0.2",
         "concurrently": "10.0.3",
-        "drizzle-kit": "^0.31.10",
+        "drizzle-kit": "0.31.10",
         "electron": "42.4.0",
         "electron-builder": "26.15.2",
         "electron-vite": "5.0.0",
@@ -83,6 +83,137 @@
         "vite": "8.0.16",
         "vitest": "4.1.8",
       },
+    },
+    "apps/desktop": {
+      "name": "@arclio/desktop",
+      "version": "0.0.1",
+      "dependencies": {
+        "@arclio/core": "workspace:*",
+      },
+    },
+    "infrastructure/ffmpeg": {
+      "name": "@arclio/ffmpeg",
+      "version": "0.0.1",
+    },
+    "infrastructure/filesystem": {
+      "name": "@arclio/filesystem",
+      "version": "0.0.1",
+    },
+    "infrastructure/network": {
+      "name": "@arclio/network",
+      "version": "0.0.1",
+    },
+    "infrastructure/sqlite": {
+      "name": "@arclio/sqlite",
+      "version": "0.0.1",
+    },
+    "infrastructure/yt-dlp": {
+      "name": "@arclio/yt-dlp",
+      "version": "0.0.1",
+    },
+    "packages/ai": {
+      "name": "@arclio/ai",
+      "version": "0.0.1",
+    },
+    "packages/application": {
+      "name": "@arclio/application",
+      "version": "0.0.1",
+      "dependencies": {
+        "@arclio/events": "workspace:*",
+      },
+    },
+    "packages/auth": {
+      "name": "@arclio/auth",
+      "version": "0.0.1",
+    },
+    "packages/cloud": {
+      "name": "@arclio/cloud",
+      "version": "0.0.1",
+    },
+    "packages/converter": {
+      "name": "@arclio/converter",
+      "version": "0.0.1",
+    },
+    "packages/core": {
+      "name": "@arclio/core",
+      "version": "0.0.1",
+      "dependencies": {
+        "@arclio/events": "workspace:*",
+      },
+    },
+    "packages/downloader": {
+      "name": "@arclio/downloader",
+      "version": "0.0.1",
+    },
+    "packages/events": {
+      "name": "@arclio/events",
+      "version": "0.0.1",
+    },
+    "packages/import-export": {
+      "name": "@arclio/import-export",
+      "version": "0.0.1",
+    },
+    "packages/library": {
+      "name": "@arclio/library",
+      "version": "0.0.1",
+      "dependencies": {
+        "@arclio/media": "workspace:*",
+        "@arclio/media-indexer": "workspace:*",
+      },
+    },
+    "packages/media": {
+      "name": "@arclio/media",
+      "version": "0.0.1",
+    },
+    "packages/media-indexer": {
+      "name": "@arclio/media-indexer",
+      "version": "0.0.1",
+      "dependencies": {
+        "@arclio/media": "workspace:*",
+      },
+    },
+    "packages/metadata": {
+      "name": "@arclio/metadata",
+      "version": "0.0.1",
+      "dependencies": {
+        "@arclio/media": "workspace:*",
+      },
+    },
+    "packages/pipelines": {
+      "name": "@arclio/pipelines",
+      "version": "0.0.1",
+    },
+    "packages/plugins": {
+      "name": "@arclio/plugins",
+      "version": "0.0.1",
+    },
+    "packages/search": {
+      "name": "@arclio/search",
+      "version": "0.0.1",
+    },
+    "packages/share": {
+      "name": "@arclio/share",
+      "version": "0.0.1",
+    },
+    "packages/shared-types": {
+      "name": "@arclio/shared-types",
+      "version": "0.0.1",
+    },
+    "packages/sources": {
+      "name": "@arclio/sources",
+      "version": "0.0.1",
+    },
+    "packages/sync": {
+      "name": "@arclio/sync",
+      "version": "0.0.1",
+    },
+    "packages/thumbnail": {
+      "name": "@arclio/thumbnail",
+      "version": "0.0.1",
+    },
+    "packages/viewer": {
+      "name": "@arclio/viewer",
+      "version": "0.0.1",
     },
     "packages/yt-dlp-bridge": {
       "name": "yt-dlp-bridge",
@@ -132,6 +263,62 @@
     "@apm-js-collab/code-transformer-bundler-plugins": ["@apm-js-collab/code-transformer-bundler-plugins@0.5.0", "", { "dependencies": { "@apm-js-collab/code-transformer": "^0.15.0", "es-module-lexer": "^2.1.0", "magic-string": "^0.30.21", "module-details-from-path": "^1.0.4" } }, "sha512-YxLBY5nGlurL7QeJLq6e5g0ouBpAp0pwgyA/5rHXEXwhiPLn9ZHbT+Y2LlP90GT872cSocfjWRYu/fnpuBudNQ=="],
 
     "@apm-js-collab/tracing-hooks": ["@apm-js-collab/tracing-hooks@0.10.0", "", { "dependencies": { "@apm-js-collab/code-transformer": "^0.15.0", "debug": "^4.4.1", "module-details-from-path": "^1.0.4" } }, "sha512-2/Z3NTewJTruUkmsSnBC5bJlLNUd9keuD1OLlTEpim4FyLhm6m2Rnfv+wrFdUvFfhmH8CRdiDZBqBrn+wyaGuA=="],
+
+    "@arclio/ai": ["@arclio/ai@workspace:packages/ai"],
+
+    "@arclio/application": ["@arclio/application@workspace:packages/application"],
+
+    "@arclio/auth": ["@arclio/auth@workspace:packages/auth"],
+
+    "@arclio/cloud": ["@arclio/cloud@workspace:packages/cloud"],
+
+    "@arclio/converter": ["@arclio/converter@workspace:packages/converter"],
+
+    "@arclio/core": ["@arclio/core@workspace:packages/core"],
+
+    "@arclio/desktop": ["@arclio/desktop@workspace:apps/desktop"],
+
+    "@arclio/downloader": ["@arclio/downloader@workspace:packages/downloader"],
+
+    "@arclio/events": ["@arclio/events@workspace:packages/events"],
+
+    "@arclio/ffmpeg": ["@arclio/ffmpeg@workspace:infrastructure/ffmpeg"],
+
+    "@arclio/filesystem": ["@arclio/filesystem@workspace:infrastructure/filesystem"],
+
+    "@arclio/import-export": ["@arclio/import-export@workspace:packages/import-export"],
+
+    "@arclio/library": ["@arclio/library@workspace:packages/library"],
+
+    "@arclio/media": ["@arclio/media@workspace:packages/media"],
+
+    "@arclio/media-indexer": ["@arclio/media-indexer@workspace:packages/media-indexer"],
+
+    "@arclio/metadata": ["@arclio/metadata@workspace:packages/metadata"],
+
+    "@arclio/network": ["@arclio/network@workspace:infrastructure/network"],
+
+    "@arclio/pipelines": ["@arclio/pipelines@workspace:packages/pipelines"],
+
+    "@arclio/plugins": ["@arclio/plugins@workspace:packages/plugins"],
+
+    "@arclio/search": ["@arclio/search@workspace:packages/search"],
+
+    "@arclio/share": ["@arclio/share@workspace:packages/share"],
+
+    "@arclio/shared-types": ["@arclio/shared-types@workspace:packages/shared-types"],
+
+    "@arclio/sources": ["@arclio/sources@workspace:packages/sources"],
+
+    "@arclio/sqlite": ["@arclio/sqlite@workspace:infrastructure/sqlite"],
+
+    "@arclio/sync": ["@arclio/sync@workspace:packages/sync"],
+
+    "@arclio/thumbnail": ["@arclio/thumbnail@workspace:packages/thumbnail"],
+
+    "@arclio/viewer": ["@arclio/viewer@workspace:packages/viewer"],
+
+    "@arclio/yt-dlp": ["@arclio/yt-dlp@workspace:infrastructure/yt-dlp"],
 
     "@asamuzakjp/css-color": ["@asamuzakjp/css-color@5.1.11", "", { "dependencies": { "@asamuzakjp/generational-cache": "^1.0.1", "@csstools/css-calc": "^3.2.0", "@csstools/css-color-parser": "^4.1.0", "@csstools/css-parser-algorithms": "^4.0.0", "@csstools/css-tokenizer": "^4.0.0" } }, "sha512-KVw6qIiCTUQhByfTd78h2yD1/00waTmm9uy/R7Ck/ctUyAPj+AEDLkQIdJW0T8+qGgj3j5bpNKK7Q3G+LedJWg=="],
 

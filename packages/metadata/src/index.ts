@@ -1,0 +1,6 @@
+export {MetadataExtractor} from './MetadataExtractor'
+export type {BaseMetadata, VideoMetadata, AudioMetadata, DocumentMetadata, ComicMetadata, MediaMetadata} from './types'
+export type {VideoMetadataFields} from './VideoMetadata'
+export type {AudioMetadataFields} from './AudioMetadata'
+export type {DocumentMetadataFields} from './DocumentMetadata'
+export type {ComicMetadataFields} from './ComicMetadata'

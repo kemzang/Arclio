@@ -2,56 +2,60 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "workspaces": {
     ".": {
-      "entry": [
-        "src/main/index.ts",
-        "src/preload/index.cts",
-        "src/renderer/src/main.tsx",
-        "electron.vite.config.ts",
-        "scripts/**/*.ts"
-      ],
-      "project": [
-        "src/**/*.{ts,tsx}",
-        "scripts/**/*.ts",
-        "tests/**/*.{ts,tsx}"
-      ]
+      "entry": ["src/main/index.ts", "src/preload/index.cts", "src/renderer/src/main.tsx", "electron.vite.config.ts", "scripts/**/*.ts"],
+      "project": ["src/**/*.{ts,tsx}", "scripts/**/*.ts", "tests/**/*.{ts,tsx}"]
     },
-    "packages/yt-dlp-bridge": {
-      "project": [
-        "src/**/*.ts",
-        "tests/**/*.ts"
-      ]
-    },
-    "packages/ytdlp-errors": {
-      "project": [
-        "src/**/*.ts",
-        "tests/**/*.ts",
-        "scripts/**/*.mjs",
-        "*.config.ts"
-      ]
-    }
+    "packages/yt-dlp-bridge": { "project": ["src/**/*.ts", "tests/**/*.ts"] },
+    "packages/ytdlp-errors": { "project": ["src/**/*.ts", "tests/**/*.ts", "scripts/**/*.mjs", "*.config.ts"] },
+    "packages/events": { "project": ["src/**/*.ts"] },
+    "packages/shared-types": { "project": ["src/**/*.ts"] },
+    "packages/media": { "project": ["src/**/*.ts"] },
+    "packages/metadata": { "project": ["src/**/*.ts"] },
+    "packages/thumbnail": { "project": ["src/**/*.ts"] },
+    "packages/library": { "project": ["src/**/*.ts"] },
+    "packages/viewer": { "project": ["src/**/*.ts"] },
+    "packages/converter": { "project": ["src/**/*.ts"] },
+    "packages/sources": { "project": ["src/**/*.ts"] },
+    "packages/media-indexer": { "project": ["src/**/*.ts"] },
+    "packages/search": { "project": ["src/**/*.ts"] },
+    "packages/pipelines": { "project": ["src/**/*.ts"] },
+    "packages/application": { "project": ["src/**/*.ts"] },
+    "packages/core": { "project": ["src/**/*.ts"] },
+    "packages/downloader": { "project": ["src/**/*.ts"] },
+    "packages/plugins": { "project": ["src/**/*.ts"] },
+    "packages/ai": { "project": ["src/**/*.ts"] },
+    "packages/sync": { "project": ["src/**/*.ts"] },
+    "packages/cloud": { "project": ["src/**/*.ts"] },
+    "packages/auth": { "project": ["src/**/*.ts"] },
+    "packages/share": { "project": ["src/**/*.ts"] },
+    "packages/import-export": { "project": ["src/**/*.ts"] },
+    "infrastructure/sqlite": { "project": ["src/**/*.ts"] },
+    "infrastructure/filesystem": { "project": ["src/**/*.ts"] },
+    "infrastructure/yt-dlp": { "project": ["src/**/*.ts"] },
+    "infrastructure/ffmpeg": { "project": ["src/**/*.ts"] },
+    "infrastructure/network": { "project": ["src/**/*.ts"] },
+    "apps/desktop": { "project": ["src/**/*.{ts,tsx}"] }
   },
   "ignore": [
-    "src/renderer/src/components/ui/**"
+    "src/renderer/src/components/ui/**",
+    "apps/desktop/src/renderer/main.tsx",
+    "apps/desktop/src/renderer/vite.config.ts",
+    "src/main/db/index.ts",
+    "src/renderer/src/layouts/AppLayout.tsx",
+    "src/main/db/connection.ts"
   ],
-  "ignoreExportsUsedInFile": {
-    "interface": true,
-    "type": true
-  },
   "ignoreDependencies": [
     "@fontsource/jetbrains-mono",
     "@fontsource/poppins",
     "@iconify-json/logos",
     "@iconify-json/simple-icons",
     "shadcn",
-		"tw-animate-css",
-		"tailwindcss",
-		"@svgr/plugin-jsx"
-	],
-	"ignoreBinaries": [
-		"msgmerge",
-		"taskkill"
-	],
-  "ignoreUnresolved": [
-    "~icons/.*"
-  ]
+    "tw-animate-css",
+    "tailwindcss",
+    "@svgr/plugin-jsx",
+    "drizzle-kit"
+  ],
+  "ignoreExportsUsedInFile": { "interface": true, "type": true },
+  "ignoreBinaries": ["msgmerge", "taskkill"],
+  "ignoreUnresolved": ["~icons/.*"]
 }
