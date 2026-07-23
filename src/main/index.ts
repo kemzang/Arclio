@@ -11,6 +11,13 @@ if (process.platform === 'linux' && process.env.XDG_SESSION_TYPE === 'wayland' &
 	app.relaunch({args: ['--ozone-platform=x11', ...process.argv.slice(1)]})
 	app.quit()
 }
+
+// VMware / broken GPU drivers: GPU process segfaults (exit_code=139) on both
+// Wayland and X11 in dev environments. Disable GPU entirely to prevent silent
+// crashes. Packaged builds keep GPU enabled for normal hardware.
+if (process.platform === 'linux' && !app.isPackaged && !process.argv.includes('--disable-gpu')) {
+	app.commandLine.appendSwitch('disable-gpu')
+}
 import log from 'electron-log/main.js'
 import {IPC_CHANNELS} from '@shared/ipc.js'
 import type {GraphicsPolicy} from '@shared/types.js'
@@ -163,20 +170,7 @@ function createMainWindow(backgroundColor: string): BrowserWindow {
 	const winState = windowStateKeeper({defaultWidth: WINDOW_DEFAULT_WIDTH, defaultHeight: WINDOW_DEFAULT_HEIGHT})
 	const preloadPath = resolveMainWindowPreloadPath(import.meta.dirname)
 
-	const window = new BrowserWindow({
-		x: winState.x,
-		y: winState.y,
-		width: winState.width,
-		height: winState.height,
-		minWidth: WINDOW_MIN_WIDTH,
-		minHeight: WINDOW_MIN_HEIGHT,
-		title: 'Arclio',
-		frame: false,
-		titleBarStyle: 'hidden',
-		autoHideMenuBar: true,
-		backgroundColor,
-		webPreferences: {preload: preloadPath, contextIsolation: true, nodeIntegration: false}
-	})
+	const window = new BrowserWindow({x: winState.x, y: winState.y, width: winState.width, height: winState.height, minWidth: WINDOW_MIN_WIDTH, minHeight: WINDOW_MIN_HEIGHT, title: 'Arclio', frame: true, backgroundColor, webPreferences: {preload: preloadPath, contextIsolation: true, nodeIntegration: false}})
 
 	registerPreloadDiagnostics(window, preloadPath)
 	winState.manage(window)
