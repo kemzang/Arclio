@@ -30,7 +30,7 @@ export function AboutDialog(): ReactNode {
 		<Dialog open={aboutDialogOpen} onOpenChange={setAboutDialogOpen}>
 			<DialogContent data-testid="about-dialog">
 				<DialogHeader className="items-center text-center">
-					<img src={appIcon} alt="" width={72} height={72} className="rounded-xl shadow-sm" draggable={false} />
+					<img src={appIcon} alt="" width={72} height={72} className="rounded-xl shadow-sm logo-breathe" draggable={false} />
 					<DialogTitle className="text-lg">Arclio</DialogTitle>
 					<span className="text-xs text-muted-foreground tabular-nums">v{window.appVersion}</span>
 					<DialogDescription className="text-center">{t('about.tagline')}</DialogDescription>

@@ -75,7 +75,7 @@ export function TitleBar(): ReactNode {
 			{isMac && <MacControls isMaximized={isMaximized} />}
 
 			<span className={cn('flex-1 flex items-center gap-1.5 text-xs font-medium text-muted-foreground tracking-wide', isMac ? 'justify-center' : 'pl-1')}>
-				<img src={appIcon} alt="" width={14} height={14} className="opacity-70" draggable={false} />
+				<img src={appIcon} alt="" width={14} height={14} className="opacity-70 logo-float" draggable={false} />
 				Arclio
 			</span>
 

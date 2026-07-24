@@ -1128,6 +1128,32 @@ body {
 	animation: feedback-btn-pulse 1.4s ease-in-out infinite;
 }
 
+/* ── Logo float animation ──────────────────────────────── */
+@keyframes logo-float {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-1.5px);
+	}
+}
+@keyframes logo-breathe {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.04);
+	}
+}
+.logo-float {
+	animation: logo-float 3s ease-in-out infinite;
+}
+.logo-breathe {
+	animation: logo-breathe 4s ease-in-out infinite;
+}
+
 @theme inline {
 	--font-heading: var(--font-sans);
 	--font-sans: "Poppins", sans-serif;

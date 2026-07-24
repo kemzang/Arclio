@@ -1,7 +1,7 @@
 import {EventEmitter} from 'node:events'
 import {extname} from 'node:path'
 import electronLog from 'electron-log/main.js'
-import chokidar from 'chokidar'
+import * as chokidar from 'chokidar'
 import type {IndexerService} from '@main/services/IndexerService.js'
 
 const logger = electronLog.scope('sources')
@@ -110,7 +110,6 @@ export class SourcesService extends EventEmitter {
 		const source = this.sources.get(id)
 		if (!source) return {indexed: 0, errors: 0}
 
-		const fs = await import('node:fs/promises')
 		const {readdirRecursive} = await import('./sourceUtils.js')
 		const files = await readdirRecursive(source.path)
 		const mediaFiles = files.filter(f => WATCHED_EXTENSIONS.has(extname(f).toLowerCase()))
@@ -150,14 +149,16 @@ export class SourcesService extends EventEmitter {
 			const existing = this.debounceTimers.get(key)
 			if (existing) clearTimeout(existing)
 
-			const timer = setTimeout(async () => {
-				this.debounceTimers.delete(key)
-				const result = await this.indexerService.indexFile(filePath, {sourceKey: source.id})
-				if (result.success) {
-					this.emit('fileAdded', {sourceId: source.id, path: filePath, mediaId: result.mediaId})
-				} else {
-					this.emit('error', {sourceId: source.id, error: result.error ?? 'Unknown error'})
-				}
+			const timer = setTimeout(() => {
+				void (async () => {
+					this.debounceTimers.delete(key)
+					const result = await this.indexerService.indexFile(filePath, {sourceKey: source.id})
+					if (result.success) {
+						this.emit('fileAdded', {sourceId: source.id, path: filePath, mediaId: result.mediaId})
+					} else {
+						this.emit('error', {sourceId: source.id, error: result.error ?? 'Unknown error'})
+					}
+				})()
 			}, 2000)
 			this.debounceTimers.set(key, timer)
 		})
@@ -181,8 +182,9 @@ export class SourcesService extends EventEmitter {
 			this.debounceTimers.set(key, timer)
 		})
 
-		watcher.on('error', error => {
-			this.emit('error', {sourceId: source.id, error: error.message})
+		watcher.on('error', err => {
+			const message = err instanceof Error ? err.message : String(err)
+			this.emit('error', {sourceId: source.id, error: message})
 		})
 
 		this.watchers.set(source.id, watcher)
