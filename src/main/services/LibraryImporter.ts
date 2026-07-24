@@ -6,6 +6,7 @@ import type {BrowserWindow} from 'electron'
 import {createMediaRepository} from '../db/repositories/mediaRepository.js'
 import {createAssetRepository} from '../db/repositories/assetRepository.js'
 import {createDownloadHistoryRepository} from '../db/repositories/downloadHistoryRepository.js'
+import type {MetadataService} from './MetadataService.js'
 import electronLog from 'electron-log'
 
 const logger = electronLog.scope('library-importer')
@@ -19,7 +20,8 @@ export class LibraryImporter {
 
 	constructor(
 		db: DrizzleDatabase,
-		private readonly queueService: QueueService
+		private readonly queueService: QueueService,
+		private readonly metadataService?: MetadataService
 	) {
 		this.mediaRepo = createMediaRepository(db)
 		this.assetRepo = createAssetRepository(db)
@@ -80,6 +82,14 @@ export class LibraryImporter {
 			this.downloadHistoryRepo.create({url: item.url, outputDir: item.outputDir, mediaId: mediaRecord.id, status: 'completed', formatId: item.job.kind === 'single-format' ? item.job.formatId : undefined, durationMs: null, finishedAt: item.finishedAt ?? new Date().toISOString()})
 
 			logger.info('Media created from download', {mediaId: mediaRecord.id, title: mediaRecord.title, assetCount: mediaArtifacts.length})
+
+			// Extract metadata asynchronously
+			if (this.metadataService && mediaArtifacts.length > 0) {
+				const mainArtifact = mediaArtifacts.find(a => a.kind === 'media')
+				if (mainArtifact) {
+					this.metadataService.extractAndSave(mainArtifact.path, mediaRecord.id, mediaType).catch((err: unknown) => logger.error('Metadata extraction failed for downloaded media', {mediaId: mediaRecord.id, error: err instanceof Error ? err.message : String(err)}))
+				}
+			}
 
 			this.notifyRenderer('library:media:created', {id: mediaRecord.id, title: mediaRecord.title, mediaType: mediaRecord.mediaType})
 		} catch (error) {

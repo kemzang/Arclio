@@ -14,6 +14,9 @@ import {DownloadEventBridge} from '@main/services/DownloadEventBridge.js'
 import {QueueEventBridge} from '@main/services/QueueEventBridge.js'
 import {ProbeEventBridge} from '@main/services/ProbeEventBridge.js'
 import {WarmupService} from '@main/services/WarmupService.js'
+import {MetadataService} from '@main/services/MetadataService.js'
+import {ThumbnailService} from '@main/services/ThumbnailService.js'
+import {IndexerService} from '@main/services/IndexerService.js'
 import {registerAppHandlers} from './appHandlers.js'
 import {registerWindowHandlers} from './windowHandlers.js'
 import {registerDownloadHandlers} from './downloadHandlers.js'
@@ -24,6 +27,9 @@ import {registerAnalyticsHandlers} from './analyticsHandlers.js'
 import {registerDiagnosticsHandlers} from './diagnosticsHandlers.js'
 import {registerPlaylistHandlers} from './playlistHandlers.js'
 import {registerLibraryHandlers} from './libraryHandlers.js'
+import {registerMetadataHandlers} from './metadataHandlers.js'
+import {registerThumbnailHandlers} from './thumbnailHandlers.js'
+import {registerIndexerHandlers} from './indexerHandlers.js'
 
 export interface IpcDependencies {
 	mainWindow: BrowserWindow
@@ -48,6 +54,9 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	const {mainWindow, downloadService, probeService, settingsStore, queueService, binaryManager, tokenService, languageRef, clipboardWatcher, playlistManifestStore, graphicsPolicyProvider, libraryDb} = deps
 
 	const warmupService = new WarmupService({binaryManager, tokenService, window: mainWindow})
+	const metadataService = new MetadataService(libraryDb, binaryManager)
+	const thumbnailService = new ThumbnailService({ffmpegPath: binaryManager.getFfmpegPath()})
+	const indexerService = new IndexerService(libraryDb, {metadataService, thumbnailService})
 	registerAppHandlers({warmupService, binaryManager, languageRef, graphicsPolicyProvider})
 	registerWindowHandlers(mainWindow)
 	registerDownloadHandlers({downloadService, probeService, settingsStore})
@@ -58,6 +67,9 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	registerDiagnosticsHandlers()
 	registerPlaylistHandlers(playlistManifestStore, settingsStore)
 	registerLibraryHandlers(libraryDb)
+	registerMetadataHandlers(metadataService)
+	registerThumbnailHandlers(thumbnailService)
+	registerIndexerHandlers(indexerService)
 
 	activeDownloadBridge?.detach()
 	activeDownloadBridge = new DownloadEventBridge(downloadService, mainWindow)

@@ -41,4 +41,13 @@ export interface ComicMetadata extends BaseMetadata {
 	issueNumber?: number
 }
 
-export type MediaMetadata = VideoMetadata | AudioMetadata | DocumentMetadata | ComicMetadata
+export interface ImageMetadata extends BaseMetadata {
+	mediaType: 'image'
+	width: number
+	height: number
+	format: string
+	colorSpace?: string
+	exif?: Record<string, unknown>
+}
+
+export type MediaMetadata = VideoMetadata | AudioMetadata | DocumentMetadata | ComicMetadata | ImageMetadata

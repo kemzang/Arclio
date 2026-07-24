@@ -11,9 +11,10 @@ export const media = sqliteTable('media', {
 	sourceKey: text('source_key'),
 	sourceType: text('source_type').notNull().default('UNKNOWN'),
 	duration: real('duration'),
-	mediaType: text('media_type').notNull(), // 'video' | 'audio'
+	mediaType: text('media_type').notNull(), // 'video' | 'audio' | 'document' | 'comic' | 'image'
 	thumbnailUrl: text('thumbnail_url'),
 	thumbnailPath: text('thumbnail_path'),
+	metadata: text('metadata'), // JSON blob of extracted metadata
 	status: text('status').notNull().default('AVAILABLE'), // 'AVAILABLE' | 'MISSING' | 'CORRUPTED' | 'DELETED'
 	isFavorite: int('is_favorite').notNull().default(0),
 	createdBy: text('created_by').notNull().default('DOWNLOAD'), // 'DOWNLOAD' | 'IMPORT' | 'SYNC' | 'API'

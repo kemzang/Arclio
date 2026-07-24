@@ -191,6 +191,15 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 					}
 				}
 			}
-		}
+		},
+		metadata: {extract: (filePath, mediaType) => ipcRenderer.invoke('metadata:extract', filePath, mediaType), extractAndSave: (filePath, mediaId, mediaType) => ipcRenderer.invoke('metadata:extractAndSave', filePath, mediaId, mediaType), extractBatch: filePaths => ipcRenderer.invoke('metadata:extractBatch', filePaths)},
+		thumbnail: {
+			generate: (mediaId, filePath, mediaType) => ipcRenderer.invoke('thumbnail:generate', mediaId, filePath, mediaType),
+			get: mediaId => ipcRenderer.invoke('thumbnail:get', mediaId),
+			regenerate: (mediaId, filePath, mediaType) => ipcRenderer.invoke('thumbnail:regenerate', mediaId, filePath, mediaType),
+			delete: mediaId => ipcRenderer.invoke('thumbnail:delete', mediaId),
+			getUrl: mediaId => ipcRenderer.invoke('thumbnail:getUrl', mediaId)
+		},
+		indexer: {indexFile: (filePath, options) => ipcRenderer.invoke('indexer:indexFile', filePath, options), indexFiles: filePaths => ipcRenderer.invoke('indexer:indexFiles', filePaths)}
 	}
 }

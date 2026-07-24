@@ -641,7 +641,16 @@ export function installBrowserMock(): void {
 			playback: {updatePosition: () => Promise.resolve(), getByMedia: () => Promise.resolve(null), listRecent: () => Promise.resolve([])},
 			downloadHistory: {list: () => Promise.resolve([]), count: () => Promise.resolve(0), countByStatus: () => Promise.resolve({})},
 			events: {onMediaCreated: () => () => {}}
-		}
+		},
+		metadata: {extract: () => Promise.resolve({mediaType: 'video', title: 'Mock', duration: 120, fileSize: 1000000, createdAt: '', modifiedAt: '', codec: 'h264', resolution: '1920x1080', fps: 30, bitrate: 5000000}), extractAndSave: () => Promise.resolve({success: true}), extractBatch: () => Promise.resolve([])},
+		thumbnail: {
+			generate: () => Promise.resolve({success: true, thumbnailPath: '/mock/thumbnail.jpg'}),
+			get: () => Promise.resolve('/mock/thumbnail.jpg'),
+			regenerate: () => Promise.resolve({success: true, thumbnailPath: '/mock/thumbnail.jpg'}),
+			delete: () => Promise.resolve(true),
+			getUrl: () => Promise.resolve('file:///mock/thumbnail.jpg')
+		},
+		indexer: {indexFile: () => Promise.resolve({success: true, mediaId: 'mock'}), indexFiles: () => Promise.resolve([])}
 	}
 
 	;(window as unknown as {appApi: AppApi}).appApi = mock

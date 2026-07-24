@@ -138,6 +138,15 @@ export interface AppApi {
 		downloadHistory: {list(options?: {status?: string; limit?: number; offset?: number}): Promise<LibraryDownloadHistory[]>; count(): Promise<number>; countByStatus(): Promise<Record<string, number>>}
 		events: {onMediaCreated(listener: (data: {id: string; title: string; mediaType: string}) => void): () => void}
 	}
+	metadata: {extract(filePath: string, mediaType?: string): Promise<MediaMetadataResult>; extractAndSave(filePath: string, mediaId: string, mediaType?: string): Promise<MetadataExtractResult>; extractBatch(filePaths: string[]): Promise<MetadataExtractResult[]>}
+	thumbnail: {
+		generate(mediaId: string, filePath: string, mediaType: string): Promise<ThumbnailResult>
+		get(mediaId: string): Promise<string | null>
+		regenerate(mediaId: string, filePath: string, mediaType: string): Promise<ThumbnailResult>
+		delete(mediaId: string): Promise<boolean>
+		getUrl(mediaId: string): Promise<string>
+	}
+	indexer: {indexFile(filePath: string, options?: {title?: string; sourceKey?: string}): Promise<IndexerResult>; indexFiles(filePaths: string[]): Promise<IndexerResult[]>}
 }
 
 // ── Library types ────────────────────────────────────────────────────────────
@@ -156,6 +165,7 @@ export interface LibraryMedia {
 	mediaType: string
 	thumbnailUrl: string | null
 	thumbnailPath: string | null
+	metadata: Record<string, unknown> | null
 	status: LibraryMediaStatus
 	isFavorite: number
 	createdBy: string
@@ -183,7 +193,7 @@ export interface LibraryMediaWithAssets extends LibraryMedia {
 
 export interface LibraryMediaListFilters {
 	search?: string
-	mediaType?: 'video' | 'audio'
+	mediaType?: 'video' | 'audio' | 'document' | 'comic' | 'image'
 	status?: string
 	isFavorite?: boolean
 	sourceType?: string
@@ -245,4 +255,55 @@ export interface LibraryDownloadHistory {
 	durationMs: number | null
 	finishedAt: string
 	createdAt: string
+}
+
+// ── Metadata types ───────────────────────────────────────────────────────────
+
+export interface MediaMetadataResult {
+	mediaType: string
+	title: string
+	duration?: number
+	fileSize: number
+	createdAt: string
+	modifiedAt: string
+	codec?: string
+	resolution?: string
+	fps?: number
+	bitrate?: number
+	audioCodec?: string
+	sampleRate?: number
+	channels?: number
+	artist?: string
+	album?: string
+	trackNumber?: number
+	pageCount?: number
+	author?: string
+	language?: string
+	width?: number
+	height?: number
+	format?: string
+	colorSpace?: string
+	exif?: Record<string, unknown>
+	publisher?: string
+	series?: string
+	issueNumber?: number
+}
+
+export interface MetadataExtractResult {
+	success: boolean
+	mediaId?: string
+	metadata?: MediaMetadataResult
+	error?: string
+}
+
+export interface ThumbnailResult {
+	success: boolean
+	thumbnailPath?: string
+	error?: string
+}
+
+export interface IndexerResult {
+	success: boolean
+	mediaId?: string
+	error?: string
 }

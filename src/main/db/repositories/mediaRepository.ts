@@ -10,7 +10,7 @@ export interface MediaWithAssets extends Media {
 
 export interface MediaListFilters {
 	search?: string
-	mediaType?: 'video' | 'audio'
+	mediaType?: 'video' | 'audio' | 'document' | 'comic' | 'image'
 	status?: string
 	isFavorite?: boolean
 	sourceType?: string
@@ -30,6 +30,7 @@ export interface MediaRepo {
 	delete(id: string): boolean
 	setFavorite(id: string, isFavorite: boolean): void
 	setStatus(id: string, status: 'AVAILABLE' | 'MISSING' | 'CORRUPTED' | 'DELETED'): void
+	setMetadata(id: string, metadata: Record<string, unknown>): void
 	search(query: string, limit?: number): Media[]
 	count(): number
 	countByStatus(): Record<string, number>
@@ -148,6 +149,13 @@ export function createMediaRepository(db: DrizzleDatabase): MediaRepo {
 
 		setStatus(id: string, status: 'AVAILABLE' | 'MISSING' | 'CORRUPTED' | 'DELETED'): void {
 			db.update(media).set({status, updatedAt: new Date().toISOString()}).where(eq(media.id, id)).run()
+		},
+
+		setMetadata(id: string, metadata: Record<string, unknown>): void {
+			db.update(media)
+				.set({metadata: JSON.stringify(metadata), updatedAt: new Date().toISOString()})
+				.where(eq(media.id, id))
+				.run()
 		},
 
 		search(query: string, limit = 20): Media[] {

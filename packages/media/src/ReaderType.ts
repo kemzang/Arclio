@@ -1,5 +1,5 @@
 import {z} from 'zod'
-import type {MediaType} from './MediaTypes'
+import type {MediaType} from './MediaTypes.js'
 
 export const readerTypeSchema = z.enum(['plyr-video', 'plyr-audio', 'pdf', 'comic-archive', 'image-viewer'])
 export type ReaderType = z.infer<typeof readerTypeSchema>

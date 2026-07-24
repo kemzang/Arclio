@@ -43,6 +43,7 @@ import {PlaylistManifestStore} from '@main/stores/PlaylistManifestStore.js'
 import {writePlaylistM3u} from '@main/services/playlistM3u.js'
 import {ClipboardWatcher, watcherWindowFromBrowserWindow} from '@main/services/ClipboardWatcher.js'
 import {LibraryImporter} from '@main/services/LibraryImporter.js'
+import {MetadataService} from '@main/services/MetadataService.js'
 import {getLibraryDb} from '@main/db/connection.js'
 import {HiddenWindowTokenProvider} from '@main/token/providers/HiddenWindowTokenProvider.js'
 import {MockTokenProvider} from '@main/token/providers/MockTokenProvider.js'
@@ -265,7 +266,8 @@ if (hasSingleInstanceLock) {
 
 		// Library: SQLite database + importer service
 		const libraryDb = getLibraryDb()
-		const libraryImporter = new LibraryImporter(libraryDb, queueService)
+		const metadataService = new MetadataService(libraryDb, binaryManager)
+		const libraryImporter = new LibraryImporter(libraryDb, queueService, metadataService)
 
 		// Headless smoke mode — exercises PoT scrape + retry ladder against real
 		// YouTube using production services, then exits. No window created.

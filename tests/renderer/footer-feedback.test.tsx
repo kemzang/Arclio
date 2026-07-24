@@ -93,7 +93,16 @@ const mockAppApi = {
 		playback: {updatePosition: vi.fn().mockResolvedValue(undefined), getByMedia: vi.fn().mockResolvedValue(null), listRecent: vi.fn().mockResolvedValue([])},
 		downloadHistory: {list: vi.fn().mockResolvedValue([]), count: vi.fn().mockResolvedValue(0), countByStatus: vi.fn().mockResolvedValue({})},
 		events: {onMediaCreated: vi.fn().mockReturnValue(() => undefined)}
-	}
+	},
+	metadata: {extract: vi.fn().mockResolvedValue({mediaType: 'video', title: 'Mock', duration: 120, fileSize: 1000000, createdAt: '', modifiedAt: ''}), extractAndSave: vi.fn().mockResolvedValue({success: true}), extractBatch: vi.fn().mockResolvedValue([])},
+	thumbnail: {
+		generate: vi.fn().mockResolvedValue({success: true, thumbnailPath: '/mock/thumbnail.jpg'}),
+		get: vi.fn().mockResolvedValue('/mock/thumbnail.jpg'),
+		regenerate: vi.fn().mockResolvedValue({success: true, thumbnailPath: '/mock/thumbnail.jpg'}),
+		delete: vi.fn().mockResolvedValue(true),
+		getUrl: vi.fn().mockResolvedValue('file:///mock/thumbnail.jpg')
+	},
+	indexer: {indexFile: vi.fn().mockResolvedValue({success: true, mediaId: 'mock'}), indexFiles: vi.fn().mockResolvedValue([])}
 }
 
 function resetStore() {
