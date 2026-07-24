@@ -49,7 +49,7 @@ export function ComicViewer({fileUrl, title}: ComicViewer): React.JSX.Element {
 			const imageEntries: {fileName: string; index: number}[] = []
 			let idx = 0
 
-			zipfile.on('entry', entry => {
+			zipfile.on('entry', (entry: {fileName: string}) => {
 				if (entry.fileName.endsWith('/')) {
 					zipfile.readEntry()
 					return
@@ -71,7 +71,7 @@ export function ComicViewer({fileUrl, title}: ComicViewer): React.JSX.Element {
 				let loaded = 0
 
 				for (const entry of imageEntries) {
-					zipfile.openReadStream(entry.fileName, (openErr, readStream) => {
+					zipfile.openReadStream(entry as import('yauzl').Entry, (openErr, readStream) => {
 						if (openErr || !readStream) {
 							loaded++
 							if (loaded === imageEntries.length) {
@@ -112,7 +112,7 @@ export function ComicViewer({fileUrl, title}: ComicViewer): React.JSX.Element {
 				}
 			})
 
-			zipfile.on('error', e => {
+			zipfile.on('error', (e: Error) => {
 				if (!cancelled) {
 					setError(e.message)
 					setLoading(false)

@@ -80,7 +80,7 @@ export function SearchPage(): React.JSX.Element {
 		void navigate(item.mediaType === 'video' || item.mediaType === 'audio' ? `/library/${item.id}` : `/viewer/${item.id}`)
 	}
 
-	const hasActiveFilters = filters.mediaType || filters.isFavorite !== undefined || query
+	const hasActiveFilters = Boolean(filters.mediaType) || filters.isFavorite !== undefined || Boolean(query)
 
 	return (
 		<div className="flex flex-col h-full">
