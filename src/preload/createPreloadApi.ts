@@ -200,6 +200,13 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 			delete: mediaId => ipcRenderer.invoke('thumbnail:delete', mediaId),
 			getUrl: mediaId => ipcRenderer.invoke('thumbnail:getUrl', mediaId)
 		},
-		indexer: {indexFile: (filePath, options) => ipcRenderer.invoke('indexer:indexFile', filePath, options), indexFiles: filePaths => ipcRenderer.invoke('indexer:indexFiles', filePaths)}
+		indexer: {indexFile: (filePath, options) => ipcRenderer.invoke('indexer:indexFile', filePath, options), indexFiles: filePaths => ipcRenderer.invoke('indexer:indexFiles', filePaths)},
+		sources: {
+			add: (path, watchEnabled) => ipcRenderer.invoke('sources:add', path, watchEnabled),
+			remove: id => ipcRenderer.invoke('sources:remove', id),
+			list: () => ipcRenderer.invoke('sources:list'),
+			toggleWatch: (id, enabled) => ipcRenderer.invoke('sources:toggleWatch', id, enabled),
+			scan: id => ipcRenderer.invoke('sources:scan', id)
+		}
 	}
 }

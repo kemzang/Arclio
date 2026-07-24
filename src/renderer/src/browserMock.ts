@@ -650,7 +650,8 @@ export function installBrowserMock(): void {
 			delete: () => Promise.resolve(true),
 			getUrl: () => Promise.resolve('file:///mock/thumbnail.jpg')
 		},
-		indexer: {indexFile: () => Promise.resolve({success: true, mediaId: 'mock'}), indexFiles: () => Promise.resolve([])}
+		indexer: {indexFile: () => Promise.resolve({success: true, mediaId: 'mock'}), indexFiles: () => Promise.resolve([])},
+		sources: {add: () => Promise.resolve({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: () => Promise.resolve(), list: () => Promise.resolve([]), toggleWatch: () => Promise.resolve(), scan: () => Promise.resolve({indexed: 0, errors: 0})}
 	}
 
 	;(window as unknown as {appApi: AppApi}).appApi = mock

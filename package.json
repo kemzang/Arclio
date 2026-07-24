@@ -115,6 +115,7 @@
 		"@url-sanitize/core": "2.0.2",
 		"better-sqlite3": "12.11.1",
 		"cacache": "21.0.1",
+		"chokidar": "^5.0.0",
 		"class-variance-authority": "0.7.1",
 		"clsx": "2.1.1",
 		"drizzle-orm": "0.45.2",
@@ -126,6 +127,7 @@
 		"i18next": "26.3.1",
 		"lucide-react": "1.17.0",
 		"make-fetch-happen": "15.0.6",
+		"pdf-lib": "1.17.1",
 		"plyr": "3.8.4",
 		"react": "19.2.7",
 		"react-dom": "19.2.7",
@@ -139,8 +141,7 @@
 		"yt-dlp-bridge": "workspace:*",
 		"ytdlp-errors": "workspace:*",
 		"zod": "4.4.3",
-		"zustand": "5.0.14",
-		"pdf-lib": "1.17.1"
+		"zustand": "5.0.14"
 	},
 	"overrides": {
 		"fast-uri": "^3.1.2",

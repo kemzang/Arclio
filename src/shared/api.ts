@@ -147,6 +147,7 @@ export interface AppApi {
 		getUrl(mediaId: string): Promise<string>
 	}
 	indexer: {indexFile(filePath: string, options?: {title?: string; sourceKey?: string}): Promise<IndexerResult>; indexFiles(filePaths: string[]): Promise<IndexerResult[]>}
+	sources: {add(path: string, watchEnabled?: boolean): Promise<WatchedSource>; remove(id: string): Promise<void>; list(): Promise<WatchedSource[]>; toggleWatch(id: string, enabled: boolean): Promise<void>; scan(id: string): Promise<{indexed: number; errors: number}>}
 }
 
 // ── Library types ────────────────────────────────────────────────────────────
@@ -306,4 +307,11 @@ export interface IndexerResult {
 	success: boolean
 	mediaId?: string
 	error?: string
+}
+
+export interface WatchedSource {
+	id: string
+	path: string
+	watchEnabled: boolean
+	createdAt: string
 }

@@ -133,6 +133,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 			delete: vi.fn().mockResolvedValue(true),
 			getUrl: vi.fn().mockResolvedValue('file:///mock/thumbnail.jpg')
 		},
-		indexer: {indexFile: vi.fn().mockResolvedValue({success: true, mediaId: 'mock'}), indexFiles: vi.fn().mockResolvedValue([])}
+		indexer: {indexFile: vi.fn().mockResolvedValue({success: true, mediaId: 'mock'}), indexFiles: vi.fn().mockResolvedValue([])},
+		sources: {add: vi.fn().mockResolvedValue({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: vi.fn().mockResolvedValue(undefined), list: vi.fn().mockResolvedValue([]), toggleWatch: vi.fn().mockResolvedValue(undefined), scan: vi.fn().mockResolvedValue({indexed: 0, errors: 0})}
 	}
 }
