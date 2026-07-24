@@ -1,12 +1,13 @@
 import {NavLink} from 'react-router-dom'
 import {useTranslation} from 'react-i18next'
-import {Download, Library, FolderHeart, Star, Tag, Clock, Settings} from 'lucide-react'
+import {Download, Library, FolderHeart, Star, Tag, Clock, Settings, Search} from 'lucide-react'
 import {cn} from '@renderer/lib/utils.js'
 import {GlobalSearch} from '@renderer/components/search/GlobalSearch.js'
 
 const NAV_ITEMS: Array<{to: string; icon: typeof Download; labelKey: string; end?: boolean}> = [
 	{to: '/', icon: Download, labelKey: 'nav.home', end: true},
 	{to: '/library', icon: Library, labelKey: 'nav.library'},
+	{to: '/search', icon: Search, labelKey: 'nav.search'},
 	{to: '/collections', icon: FolderHeart, labelKey: 'nav.collections'},
 	{to: '/favorites', icon: Star, labelKey: 'nav.favorites'},
 	{to: '/tags', icon: Tag, labelKey: 'nav.tags'},
