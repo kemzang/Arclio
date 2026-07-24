@@ -134,6 +134,14 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 			getUrl: vi.fn().mockResolvedValue('file:///mock/thumbnail.jpg')
 		},
 		indexer: {indexFile: vi.fn().mockResolvedValue({success: true, mediaId: 'mock'}), indexFiles: vi.fn().mockResolvedValue([])},
-		sources: {add: vi.fn().mockResolvedValue({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: vi.fn().mockResolvedValue(undefined), list: vi.fn().mockResolvedValue([]), toggleWatch: vi.fn().mockResolvedValue(undefined), scan: vi.fn().mockResolvedValue({indexed: 0, errors: 0})}
+		sources: {add: vi.fn().mockResolvedValue({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: vi.fn().mockResolvedValue(undefined), list: vi.fn().mockResolvedValue([]), toggleWatch: vi.fn().mockResolvedValue(undefined), scan: vi.fn().mockResolvedValue({indexed: 0, errors: 0})},
+		converter: {
+			convert: vi.fn().mockResolvedValue({success: true, outputPath: '/mock/converted.mp4'}),
+			convertVideo: vi.fn().mockResolvedValue({success: true, outputPath: '/mock/converted.mp4'}),
+			convertAudio: vi.fn().mockResolvedValue({success: true, outputPath: '/mock/converted.mp3'}),
+			convertImage: vi.fn().mockResolvedValue({success: true, outputPath: '/mock/converted.jpg'}),
+			extractAudio: vi.fn().mockResolvedValue({success: true, outputPath: '/mock/audio.mp3'}),
+			createGif: vi.fn().mockResolvedValue({success: true, outputPath: '/mock/animation.gif'})
+		}
 	}
 }

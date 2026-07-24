@@ -651,7 +651,15 @@ export function installBrowserMock(): void {
 			getUrl: () => Promise.resolve('file:///mock/thumbnail.jpg')
 		},
 		indexer: {indexFile: () => Promise.resolve({success: true, mediaId: 'mock'}), indexFiles: () => Promise.resolve([])},
-		sources: {add: () => Promise.resolve({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: () => Promise.resolve(), list: () => Promise.resolve([]), toggleWatch: () => Promise.resolve(), scan: () => Promise.resolve({indexed: 0, errors: 0})}
+		sources: {add: () => Promise.resolve({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: () => Promise.resolve(), list: () => Promise.resolve([]), toggleWatch: () => Promise.resolve(), scan: () => Promise.resolve({indexed: 0, errors: 0})},
+		converter: {
+			convert: () => Promise.resolve({success: true, outputPath: '/mock/converted.mp4'}),
+			convertVideo: () => Promise.resolve({success: true, outputPath: '/mock/converted.mp4'}),
+			convertAudio: () => Promise.resolve({success: true, outputPath: '/mock/converted.mp3'}),
+			convertImage: () => Promise.resolve({success: true, outputPath: '/mock/converted.jpg'}),
+			extractAudio: () => Promise.resolve({success: true, outputPath: '/mock/audio.mp3'}),
+			createGif: () => Promise.resolve({success: true, outputPath: '/mock/animation.gif'})
+		}
 	}
 
 	;(window as unknown as {appApi: AppApi}).appApi = mock

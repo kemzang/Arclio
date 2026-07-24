@@ -148,6 +148,14 @@ export interface AppApi {
 	}
 	indexer: {indexFile(filePath: string, options?: {title?: string; sourceKey?: string}): Promise<IndexerResult>; indexFiles(filePaths: string[]): Promise<IndexerResult[]>}
 	sources: {add(path: string, watchEnabled?: boolean): Promise<WatchedSource>; remove(id: string): Promise<void>; list(): Promise<WatchedSource[]>; toggleWatch(id: string, enabled: boolean): Promise<void>; scan(id: string): Promise<{indexed: number; errors: number}>}
+	converter: {
+		convert(inputPath: string, format: string, options?: Record<string, unknown>, outputDir?: string): Promise<ConversionResult>
+		convertVideo(inputPath: string, options?: {format?: string; codec?: string; resolution?: string; crf?: number; trimStart?: string; trimEnd?: string}): Promise<ConversionResult>
+		convertAudio(inputPath: string, options?: {format?: string; bitrate?: string; sampleRate?: number}): Promise<ConversionResult>
+		convertImage(inputPath: string, options?: {format?: string; width?: number; height?: number; quality?: number}): Promise<ConversionResult>
+		extractAudio(videoPath: string, format?: string): Promise<ConversionResult>
+		createGif(videoPath: string, options?: {fps?: number; width?: number; duration?: number}): Promise<ConversionResult>
+	}
 }
 
 // ── Library types ────────────────────────────────────────────────────────────
@@ -314,4 +322,10 @@ export interface WatchedSource {
 	path: string
 	watchEnabled: boolean
 	createdAt: string
+}
+
+export interface ConversionResult {
+	success: boolean
+	outputPath?: string
+	error?: string
 }

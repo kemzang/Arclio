@@ -207,6 +207,14 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 			list: () => ipcRenderer.invoke('sources:list'),
 			toggleWatch: (id, enabled) => ipcRenderer.invoke('sources:toggleWatch', id, enabled),
 			scan: id => ipcRenderer.invoke('sources:scan', id)
+		},
+		converter: {
+			convert: (inputPath, format, options, outputDir) => ipcRenderer.invoke('converter:convert', inputPath, format, options, outputDir),
+			convertVideo: (inputPath, options) => ipcRenderer.invoke('converter:convertVideo', inputPath, options),
+			convertAudio: (inputPath, options) => ipcRenderer.invoke('converter:convertAudio', inputPath, options),
+			convertImage: (inputPath, options) => ipcRenderer.invoke('converter:convertImage', inputPath, options),
+			extractAudio: (videoPath, format) => ipcRenderer.invoke('converter:extractAudio', videoPath, format),
+			createGif: (videoPath, options) => ipcRenderer.invoke('converter:createGif', videoPath, options)
 		}
 	}
 }

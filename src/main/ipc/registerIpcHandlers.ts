@@ -18,6 +18,7 @@ import {MetadataService} from '@main/services/MetadataService.js'
 import {ThumbnailService} from '@main/services/ThumbnailService.js'
 import {IndexerService} from '@main/services/IndexerService.js'
 import {SourcesService} from '@main/services/SourcesService.js'
+import {ConverterService} from '@main/services/ConverterService.js'
 import {registerAppHandlers} from './appHandlers.js'
 import {registerWindowHandlers} from './windowHandlers.js'
 import {registerDownloadHandlers} from './downloadHandlers.js'
@@ -32,6 +33,7 @@ import {registerMetadataHandlers} from './metadataHandlers.js'
 import {registerThumbnailHandlers} from './thumbnailHandlers.js'
 import {registerIndexerHandlers} from './indexerHandlers.js'
 import {registerSourcesHandlers} from './sourcesHandlers.js'
+import {registerConverterHandlers} from './converterHandlers.js'
 
 export interface IpcDependencies {
 	mainWindow: BrowserWindow
@@ -60,6 +62,7 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	const thumbnailService = new ThumbnailService({ffmpegPath: binaryManager.getFfmpegPath()})
 	const indexerService = new IndexerService(libraryDb, {metadataService, thumbnailService})
 	const sourcesService = new SourcesService(indexerService)
+	const converterService = new ConverterService(binaryManager.getFfmpegPath())
 	registerAppHandlers({warmupService, binaryManager, languageRef, graphicsPolicyProvider})
 	registerWindowHandlers(mainWindow)
 	registerDownloadHandlers({downloadService, probeService, settingsStore})
@@ -74,6 +77,7 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	registerThumbnailHandlers(thumbnailService)
 	registerIndexerHandlers(indexerService)
 	registerSourcesHandlers(sourcesService)
+	registerConverterHandlers(converterService)
 
 	activeDownloadBridge?.detach()
 	activeDownloadBridge = new DownloadEventBridge(downloadService, mainWindow)
