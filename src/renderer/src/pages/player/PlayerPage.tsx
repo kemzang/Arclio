@@ -70,6 +70,13 @@ export function PlayerPage(): React.JSX.Element {
 	const isAudio = primaryAsset?.kind === 'audio'
 	const assetPath = primaryAsset?.path
 
+	// Redirect to UnifiedViewer for non-video/audio types
+	useEffect(() => {
+		if (media && !primaryAsset && (media.mediaType === 'document' || media.mediaType === 'comic' || media.mediaType === 'image')) {
+			void navigate(`/viewer/${id}`)
+		}
+	}, [media, primaryAsset, navigate, id])
+
 	const savePosition = useCallback(() => {
 		if (!id || !videoRef.current || videoRef.current.paused) return
 		const {currentTime, duration} = videoRef.current

@@ -40,6 +40,7 @@ import {TagsPage} from './pages/tags/TagsPage.js'
 import {HistoryPage} from './pages/history/HistoryPage.js'
 import {SettingsPage} from './pages/settings/SettingsPage.js'
 import {PlayerPage} from './pages/player/PlayerPage.js'
+import {UnifiedViewer} from './pages/viewer/UnifiedViewer.js'
 
 const SHOW_SCENARIO_GALLERY = import.meta.env.MODE === 'browser-mock'
 const ShareDialog = lazy(() => import('./components/system/ShareDialog.js').then(module => ({default: module.ShareDialog})))
@@ -229,6 +230,7 @@ function AppContent(): ReactNode {
 								<Route index element={<HomePage />} />
 								<Route path="library" element={<LibraryPage />} />
 								<Route path="library/:id" element={<PlayerPage />} />
+								<Route path="viewer/:id" element={<UnifiedViewer />} />
 								<Route path="collections" element={<CollectionsPage />} />
 								<Route path="collections/:id" element={<CollectionDetailPage />} />
 								<Route path="favorites" element={<FavoritesPage />} />
