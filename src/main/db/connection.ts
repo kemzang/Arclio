@@ -46,9 +46,6 @@ export function getLibraryDb(): ReturnType<typeof drizzle<typeof schema>> {
       updated_at TEXT NOT NULL
     );
 
-    -- Migration: add metadata column if it doesn't exist (SQLite doesn't support ADD COLUMN IF NOT EXISTS)
-    ALTER TABLE media ADD COLUMN metadata TEXT;
-
     CREATE INDEX IF NOT EXISTS idx_media_source_key ON media(source_key);
     CREATE INDEX IF NOT EXISTS idx_media_source_type ON media(source_type);
     CREATE INDEX IF NOT EXISTS idx_media_author ON media(author);
@@ -142,11 +139,11 @@ export function getLibraryDb(): ReturnType<typeof drizzle<typeof schema>> {
     CREATE INDEX IF NOT EXISTS idx_download_history_media ON download_history(media_id);
   `)
 
-	// Migration: add metadata column to existing databases
-	try {
+	// Migration: add metadata column if it doesn't exist in older databases
+	const columns = sqlite.pragma("table_info('media')") as Array<{name: string}>[]
+	const hasMetadataColumn = columns.some(c => c.name === 'metadata')
+	if (!hasMetadataColumn) {
 		sqlite.exec(`ALTER TABLE media ADD COLUMN metadata TEXT`)
-	} catch {
-		// Column already exists, ignore
 	}
 
 	// FTS5 virtual table for full-text search
