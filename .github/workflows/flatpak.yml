@@ -43,7 +43,7 @@ jobs:
           import os
           import urllib.request
 
-          repo = "antonio-orionus/Arclio"
+          repo = "kemzang/Arclio"
           token = os.environ.get("GITHUB_TOKEN")
           headers = {"Accept": "application/vnd.github+json"}
           if token:
@@ -91,7 +91,7 @@ jobs:
         run: |
           VERSION="${{ steps.resolve.outputs.version }}"
           gh release download "v${VERSION}" \
-            --repo antonio-orionus/Arclio \
+            --repo kemzang/Arclio \
             --pattern "Arclio-linux-x64.tar.gz" \
             --dir flatpak
       - name: Render temporary manifest

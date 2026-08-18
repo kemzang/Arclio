@@ -64,7 +64,7 @@
   },
   "publish": {
     "provider": "github",
-    "owner": "antonio-orionus",
+    "owner": "kemzang",
     "repo": "Arclio"
   }
 }

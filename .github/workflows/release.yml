@@ -484,7 +484,7 @@ jobs:
           GH_TOKEN: ${{ secrets.ARCLIO_WEB_DISPATCH_TOKEN || secrets.WINGET_TOKEN }}
           REF_NAME: ${{ github.ref_name }}
         run: |
-          gh api repos/antonio-orionus/arclio-web/dispatches \
+          gh api repos/kemzang-Bryan/arclio_web/dispatches \
             --method POST \
             -f event_type=arclio-release \
             -f client_payload[tag]="$REF_NAME" \
@@ -500,7 +500,7 @@ jobs:
       - name: Checkout bucket
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
-          repository: antonio-orionus/scoop-bucket
+          repository: kemzang/scoop-bucket
           token: ${{ secrets.WINGET_TOKEN }}
       - name: Download SHA256SUMS
         run: gh release download ${{ github.ref_name }} --repo ${{ github.repository }} --pattern SHA256SUMS
@@ -518,7 +518,7 @@ jobs:
           fi
           jq --arg v "$VERSION" --arg h "$HASH" --arg p "$PORTABLE" \
             '.version = $v
-             | .url = "https://github.com/antonio-orionus/Arclio/releases/download/v\($v)/\($p)"
+             | .url = "https://github.com/kemzang/Arclio/releases/download/v\($v)/\($p)"
              | .hash = "sha256:\($h)"
              | .bin = $p
              | .shortcuts = [[$p, "Arclio"]]' \
@@ -541,7 +541,7 @@ jobs:
       - name: Checkout tap
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
-          repository: antonio-orionus/homebrew-arclio
+          repository: kemzang/homebrew-arclio
           token: ${{ secrets.WINGET_TOKEN }}
       - name: Download SHA256SUMS
         run: gh release download ${{ github.ref_name }} --repo ${{ github.repository }} --pattern SHA256SUMS
@@ -569,16 +569,16 @@ jobs:
 
             on_arm do
               sha256 "${HASH_ARM}"
-              url "https://github.com/antonio-orionus/Arclio/releases/download/v#{version}/Arclio-mac-arm64.dmg"
+              url "https://github.com/kemzang/Arclio/releases/download/v#{version}/Arclio-mac-arm64.dmg"
             end
             on_intel do
               sha256 "${HASH_X64}"
-              url "https://github.com/antonio-orionus/Arclio/releases/download/v#{version}/Arclio-mac-x64.dmg"
+              url "https://github.com/kemzang/Arclio/releases/download/v#{version}/Arclio-mac-x64.dmg"
             end
 
             name "Arclio"
             desc "YouTube downloader"
-            homepage "https://github.com/antonio-orionus/Arclio"
+            homepage "https://github.com/kemzang/Arclio"
 
             app "Arclio.app"
 

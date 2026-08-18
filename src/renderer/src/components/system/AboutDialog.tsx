@@ -10,8 +10,8 @@ import {useAppStore} from '../../store/useAppStore.js'
 import appIcon from '../../assets/App-icon-HQ.png'
 
 const WEBSITE_URL = 'https://arclio.orionus.dev/'
-const GITHUB_URL = 'https://github.com/antonio-orionus/Arclio'
-const NOTICES_URL = 'https://github.com/antonio-orionus/Arclio/blob/main/THIRD_PARTY_NOTICES.txt'
+const GITHUB_URL = 'https://github.com/kemzang/Arclio'
+const NOTICES_URL = 'https://github.com/kemzang/Arclio/blob/main/THIRD_PARTY_NOTICES.txt'
 
 function openExternalUrl(url: string): void {
 	void window.appApi.shell.openExternal(url)
