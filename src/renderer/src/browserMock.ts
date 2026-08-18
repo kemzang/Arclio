@@ -375,6 +375,10 @@ export function installBrowserMock(): void {
 			update: patch => {
 				settings = {common: {...settings.common, ...(patch.common ?? {})}, single: {...settings.single, ...(patch.single ?? {})}, playlist: {...settings.playlist, ...(patch.playlist ?? {})}, profiles: {...settings.profiles, ...(patch.profiles ?? {})}}
 				return Promise.resolve({ok: true, data: {...settings}} as const)
+			},
+			reset: () => {
+				settings = scenarioState.settings
+				return Promise.resolve({ok: true, data: {...settings}} as const)
 			}
 		},
 
@@ -648,9 +652,12 @@ export function installBrowserMock(): void {
 			get: () => Promise.resolve('/mock/thumbnail.jpg'),
 			regenerate: () => Promise.resolve({success: true, thumbnailPath: '/mock/thumbnail.jpg'}),
 			delete: () => Promise.resolve(true),
-			getUrl: () => Promise.resolve('file:///mock/thumbnail.jpg')
+			getUrl: () => Promise.resolve('file:///mock/thumbnail.jpg'),
+			clearCache: () => Promise.resolve({removed: 0, freedBytes: 0})
 		},
 		indexer: {indexFile: () => Promise.resolve({success: true, mediaId: 'mock'}), indexFiles: () => Promise.resolve([])},
+		// Archive reading needs the main process; browser-mock has no comic fixtures.
+		archive: {listPages: () => Promise.resolve({pages: [], error: 'Archive reading is unavailable in browser-mock mode'}), readPage: () => Promise.resolve({ok: false as const, error: 'Archive reading is unavailable in browser-mock mode'}), close: () => Promise.resolve()},
 		sources: {add: () => Promise.resolve({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: () => Promise.resolve(), list: () => Promise.resolve([]), toggleWatch: () => Promise.resolve(), scan: () => Promise.resolve({indexed: 0, errors: 0})},
 		converter: {
 			convert: () => Promise.resolve({success: true, outputPath: '/mock/converted.mp4'}),

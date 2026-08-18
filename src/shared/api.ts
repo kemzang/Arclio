@@ -34,6 +34,7 @@ import type {
 	WizardStepSnapshot
 } from './types.js'
 import type {PlaylistManifest} from './playlistManifest.js'
+import type {ConversionFormat} from './schemas.js'
 
 export interface SettingsPatch {
 	common?: Partial<CommonSettings>
@@ -68,7 +69,7 @@ export interface AppApi {
 		pause(input?: PauseDownloadInput): Promise<Result<PauseDownloadOutput>>
 		resume(input: {jobId: string}): Promise<Result<{resumed: boolean; job?: DownloadJob}>>
 	}
-	settings: {get(): Promise<Result<AppSettings>>; update(input: SettingsPatch): Promise<Result<AppSettings>>}
+	settings: {get(): Promise<Result<AppSettings>>; update(input: SettingsPatch): Promise<Result<AppSettings>>; reset(): Promise<Result<AppSettings>>}
 	shell: {openFolder(path?: string): Promise<Result<{opened: boolean}>>; openExternal(url: string): Promise<Result<{opened: boolean}>>; openBinariesDir(): Promise<Result<{opened: boolean}>>}
 	logs: {openDir(): Promise<Result<{opened: boolean}>>; uploadFeedbackDiagnostic(input: {reportId: string}): Promise<Result<FeedbackDiagnosticUpload>>}
 	dialog: {chooseFolder(defaultPath?: string): Promise<Result<{path: string | null}>>; chooseFile(): Promise<Result<{path: string | null}>>; chooseExecutable(binary: DependencyId): Promise<Result<{path: string | null}>>}
@@ -145,15 +146,17 @@ export interface AppApi {
 		regenerate(mediaId: string, filePath: string, mediaType: string): Promise<ThumbnailResult>
 		delete(mediaId: string): Promise<boolean>
 		getUrl(mediaId: string): Promise<string>
+		clearCache(): Promise<{removed: number; freedBytes: number}>
 	}
 	indexer: {indexFile(filePath: string, options?: {title?: string; sourceKey?: string}): Promise<IndexerResult>; indexFiles(filePaths: string[]): Promise<IndexerResult[]>}
+	archive: {listPages(archivePath: string): Promise<ArchivePageList>; readPage(archivePath: string, entryName: string): Promise<ArchivePageData>; close(): Promise<void>}
 	sources: {add(path: string, watchEnabled?: boolean): Promise<WatchedSource>; remove(id: string): Promise<void>; list(): Promise<WatchedSource[]>; toggleWatch(id: string, enabled: boolean): Promise<void>; scan(id: string): Promise<{indexed: number; errors: number}>}
 	converter: {
-		convert(inputPath: string, format: string, options?: Record<string, unknown>, outputDir?: string): Promise<ConversionResult>
-		convertVideo(inputPath: string, options?: {format?: string; codec?: string; resolution?: string; crf?: number; trimStart?: string; trimEnd?: string}): Promise<ConversionResult>
-		convertAudio(inputPath: string, options?: {format?: string; bitrate?: string; sampleRate?: number}): Promise<ConversionResult>
-		convertImage(inputPath: string, options?: {format?: string; width?: number; height?: number; quality?: number}): Promise<ConversionResult>
-		extractAudio(videoPath: string, format?: string): Promise<ConversionResult>
+		convert(inputPath: string, format: ConversionFormat, options?: Record<string, unknown>, outputDir?: string): Promise<ConversionResult>
+		convertVideo(inputPath: string, options?: {format?: ConversionFormat; codec?: string; resolution?: string; crf?: number; trimStart?: string; trimEnd?: string}): Promise<ConversionResult>
+		convertAudio(inputPath: string, options?: {format?: ConversionFormat; bitrate?: string; sampleRate?: number}): Promise<ConversionResult>
+		convertImage(inputPath: string, options?: {format?: ConversionFormat; width?: number; height?: number; quality?: number}): Promise<ConversionResult>
+		extractAudio(videoPath: string, format?: ConversionFormat): Promise<ConversionResult>
 		createGif(videoPath: string, options?: {fps?: number; width?: number; duration?: number}): Promise<ConversionResult>
 	}
 }
@@ -316,6 +319,14 @@ export interface IndexerResult {
 	mediaId?: string
 	error?: string
 }
+
+/** Image entry names inside a comic archive, in reading order. */
+export interface ArchivePageList {
+	pages: string[]
+	error?: string
+}
+
+export type ArchivePageData = {ok: true; data: Uint8Array<ArrayBuffer>; mimeType: string} | {ok: false; error: string}
 
 export interface WatchedSource {
 	id: string

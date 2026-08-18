@@ -44,7 +44,7 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 			pause: (input = {}) => ipcRenderer.invoke(IPC_CHANNELS.downloadsPause, input),
 			resume: input => ipcRenderer.invoke(IPC_CHANNELS.downloadsResume, input)
 		},
-		settings: {get: () => ipcRenderer.invoke(IPC_CHANNELS.settingsGet), update: input => ipcRenderer.invoke(IPC_CHANNELS.settingsUpdate, input)},
+		settings: {get: () => ipcRenderer.invoke(IPC_CHANNELS.settingsGet), update: input => ipcRenderer.invoke(IPC_CHANNELS.settingsUpdate, input), reset: () => ipcRenderer.invoke(IPC_CHANNELS.settingsReset)},
 		shell: {openFolder: targetPath => ipcRenderer.invoke(IPC_CHANNELS.shellOpenFolder, targetPath), openExternal: url => ipcRenderer.invoke(IPC_CHANNELS.shellOpenExternal, url), openBinariesDir: () => ipcRenderer.invoke(IPC_CHANNELS.shellOpenBinariesDir)},
 		logs: {openDir: () => ipcRenderer.invoke(IPC_CHANNELS.logsOpenDir), uploadFeedbackDiagnostic: input => ipcRenderer.invoke(IPC_CHANNELS.logsUploadFeedbackDiagnostic, input)},
 		dialog: {chooseFolder: (defaultPath?: string) => ipcRenderer.invoke(IPC_CHANNELS.chooseFolder, defaultPath), chooseFile: () => ipcRenderer.invoke(IPC_CHANNELS.chooseFile), chooseExecutable: binary => ipcRenderer.invoke(IPC_CHANNELS.dialogChooseExecutable, binary)},
@@ -198,9 +198,11 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 			get: mediaId => ipcRenderer.invoke('thumbnail:get', mediaId),
 			regenerate: (mediaId, filePath, mediaType) => ipcRenderer.invoke('thumbnail:regenerate', mediaId, filePath, mediaType),
 			delete: mediaId => ipcRenderer.invoke('thumbnail:delete', mediaId),
-			getUrl: mediaId => ipcRenderer.invoke('thumbnail:getUrl', mediaId)
+			getUrl: mediaId => ipcRenderer.invoke('thumbnail:getUrl', mediaId),
+			clearCache: () => ipcRenderer.invoke('thumbnail:clearCache')
 		},
 		indexer: {indexFile: (filePath, options) => ipcRenderer.invoke('indexer:indexFile', filePath, options), indexFiles: filePaths => ipcRenderer.invoke('indexer:indexFiles', filePaths)},
+		archive: {listPages: archivePath => ipcRenderer.invoke('archive:listPages', archivePath), readPage: (archivePath, entryName) => ipcRenderer.invoke('archive:readPage', archivePath, entryName), close: () => ipcRenderer.invoke('archive:close')},
 		sources: {
 			add: (path, watchEnabled) => ipcRenderer.invoke('sources:add', path, watchEnabled),
 			remove: id => ipcRenderer.invoke('sources:remove', id),

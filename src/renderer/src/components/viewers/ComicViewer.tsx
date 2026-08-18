@@ -1,137 +1,117 @@
 import {useState, useEffect, useCallback, useRef} from 'react'
 import {ChevronLeft, ChevronRight, Maximize2} from 'lucide-react'
 import {Button} from '@renderer/components/ui/button.js'
-import * as Yauzl from 'yauzl'
 
 interface ComicViewerProps {
-	fileUrl: string
+	filePath: string
 	title: string
 }
 
-interface ComicPage {
-	index: number
-	url: string
-}
+type ReadingDirection = 'ltr' | 'rtl' | 'vertical'
 
-export function ComicViewer({fileUrl, title}: ComicViewer): React.JSX.Element {
-	const [pages, setPages] = useState<ComicPage[]>([])
+/** Pages kept as blob URLs around the current position; older ones are revoked. */
+const PAGE_CACHE_LIMIT = 12
+
+export function ComicViewer({filePath, title}: ComicViewerProps): React.JSX.Element {
+	const [pageNames, setPageNames] = useState<string[]>([])
 	const [currentPage, setCurrentPage] = useState(0)
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
-	const [readingMode, setReadingMode] = useState<'ltr' | 'rtl' | 'vertical'>('rtl')
+	const [readingMode, setReadingMode] = useState<ReadingDirection>('rtl')
+	const [pageUrls, setPageUrls] = useState<Record<string, string>>({})
 	const containerRef = useRef<HTMLDivElement>(null)
+	const urlCacheRef = useRef<Map<string, string>>(new Map())
 
+	// Load the archive's page list. Bytes are fetched lazily per page below.
+	// The component is mounted with `key={filePath}`, so a different comic gets a
+	// fresh instance and this effect never has to reset state for a new file.
 	useEffect(() => {
 		let cancelled = false
-		setLoading(true)
-		setPages([])
-		setCurrentPage(0)
 
-		// Convert file:// URL to path
-		const filePath = fileUrl.replace('file://', '')
-
-		Yauzl.open(filePath, {lazyEntries: false}, (err, zipfile) => {
-			if (err) {
-				if (!cancelled) {
-					setError(err.message)
-					setLoading(false)
-				}
-				return
-			}
-			if (!zipfile) {
-				if (!cancelled) {
-					setError('Failed to open comic file')
-					setLoading(false)
-				}
-				return
-			}
-
-			const imageEntries: {fileName: string; index: number}[] = []
-			let idx = 0
-
-			zipfile.on('entry', (entry: {fileName: string}) => {
-				if (entry.fileName.endsWith('/')) {
-					zipfile.readEntry()
-					return
-				}
-
-				if (/\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(entry.fileName)) {
-					imageEntries.push({fileName: entry.fileName, index: idx++})
-				}
-				zipfile.readEntry()
-			})
-
-			zipfile.on('end', () => {
+		window.appApi.archive
+			.listPages(filePath)
+			.then(result => {
 				if (cancelled) return
-
-				// Sort entries by filename for correct page order
-				imageEntries.sort((a, b) => a.fileName.localeCompare(b.fileName, undefined, {numeric: true}))
-
-				const loadedPages: ComicPage[] = []
-				let loaded = 0
-
-				for (const entry of imageEntries) {
-					zipfile.openReadStream(entry as import('yauzl').Entry, (openErr, readStream) => {
-						if (openErr || !readStream) {
-							loaded++
-							if (loaded === imageEntries.length) {
-								if (!cancelled) {
-									setPages(loadedPages)
-									setLoading(false)
-								}
-								zipfile.close()
-							}
-							return
-						}
-
-						const chunks: Buffer[] = []
-						readStream.on('data', (chunk: Buffer) => chunks.push(chunk))
-						readStream.on('end', () => {
-							const blob = new Blob([Buffer.concat(chunks)])
-							const url = URL.createObjectURL(blob)
-							loadedPages.push({index: entry.index, url})
-							loaded++
-
-							if (loaded === imageEntries.length) {
-								if (!cancelled) {
-									setPages(loadedPages)
-									setLoading(false)
-								}
-								zipfile.close()
-							}
-						})
-					})
-				}
-
-				if (imageEntries.length === 0) {
-					if (!cancelled) {
-						setError('No images found in comic file')
-						setLoading(false)
-					}
-					zipfile.close()
+				if (result.error) {
+					setError(result.error)
+				} else if (result.pages.length === 0) {
+					setError('No images found in comic file')
+				} else {
+					setPageNames(result.pages)
 				}
 			})
-
-			zipfile.on('error', (e: Error) => {
-				if (!cancelled) {
-					setError(e.message)
-					setLoading(false)
-				}
+			.catch((e: unknown) => {
+				if (!cancelled) setError(e instanceof Error ? e.message : String(e))
 			})
-
-			zipfile.readEntry()
-		})
+			.finally(() => {
+				if (!cancelled) setLoading(false)
+			})
 
 		return () => {
 			cancelled = true
 		}
-	}, [fileUrl])
+	}, [filePath])
+
+	// Release the main-process archive handle and every blob URL on unmount.
+	useEffect(() => {
+		const cache = urlCacheRef.current
+		return () => {
+			for (const url of cache.values()) URL.revokeObjectURL(url)
+			cache.clear()
+			void window.appApi.archive.close()
+		}
+	}, [])
+
+	// Fetch the current page plus its immediate neighbours so paging feels instant.
+	useEffect(() => {
+		if (pageNames.length === 0) return
+		let cancelled = false
+
+		const wanted = [currentPage, currentPage + 1, currentPage - 1].filter(index => index >= 0 && index < pageNames.length).map(index => pageNames[index])
+
+		void (async () => {
+			for (const name of wanted) {
+				if (cancelled) return
+				if (urlCacheRef.current.has(name)) continue
+
+				const page = await window.appApi.archive.readPage(filePath, name)
+				if (cancelled) return
+				if (!page.ok) {
+					if (name === pageNames[currentPage]) setError(page.error)
+					continue
+				}
+
+				const url = URL.createObjectURL(new Blob([page.data], {type: page.mimeType}))
+				urlCacheRef.current.set(name, url)
+				setPageUrls(previous => ({...previous, [name]: url}))
+			}
+
+			// Trim the cache, keeping the pages nearest the current position.
+			if (urlCacheRef.current.size > PAGE_CACHE_LIMIT) {
+				const keep = new Set(pageNames.slice(Math.max(0, currentPage - PAGE_CACHE_LIMIT / 2), currentPage + PAGE_CACHE_LIMIT / 2))
+				for (const [name, url] of urlCacheRef.current) {
+					if (keep.has(name)) continue
+					URL.revokeObjectURL(url)
+					urlCacheRef.current.delete(name)
+					setPageUrls(previous => {
+						const next = {...previous}
+						delete next[name]
+						return next
+					})
+				}
+			}
+		})()
+
+		return () => {
+			cancelled = true
+		}
+	}, [currentPage, filePath, pageNames])
 
 	const goToPage = useCallback(
 		(page: number) => {
-			setCurrentPage(p => Math.max(0, Math.min(pages.length - 1, page)))
+			setCurrentPage(Math.max(0, Math.min(pageNames.length - 1, page)))
 		},
-		[pages.length]
+		[pageNames.length]
 	)
 
 	const handleKeyDown = useCallback(
@@ -152,15 +132,6 @@ export function ComicViewer({fileUrl, title}: ComicViewer): React.JSX.Element {
 		return () => window.removeEventListener('keydown', handleKeyDown)
 	}, [handleKeyDown])
 
-	// Cleanup blob URLs
-	useEffect(() => {
-		return () => {
-			for (const page of pages) {
-				URL.revokeObjectURL(page.url)
-			}
-		}
-	}, [pages])
-
 	if (loading) {
 		return (
 			<div className="flex items-center justify-center h-full">
@@ -169,7 +140,7 @@ export function ComicViewer({fileUrl, title}: ComicViewer): React.JSX.Element {
 		)
 	}
 
-	if (error || pages.length === 0) {
+	if (error || pageNames.length === 0) {
 		return (
 			<div className="flex flex-col items-center justify-center h-full gap-4 text-[var(--text-subtle)]">
 				<p className="text-lg font-medium">{error ?? 'No pages found'}</p>
@@ -177,7 +148,8 @@ export function ComicViewer({fileUrl, title}: ComicViewer): React.JSX.Element {
 		)
 	}
 
-	const currentPageData = pages[currentPage]
+	const currentName = pageNames[currentPage]
+	const currentUrl = pageUrls[currentName]
 
 	return (
 		<div className="flex flex-col h-full" ref={containerRef}>
@@ -187,9 +159,9 @@ export function ComicViewer({fileUrl, title}: ComicViewer): React.JSX.Element {
 						<ChevronLeft className="size-4" />
 					</Button>
 					<span className="text-sm">
-						{currentPage + 1} / {pages.length}
+						{currentPage + 1} / {pageNames.length}
 					</span>
-					<Button variant="ghost" size="sm" disabled={currentPage >= pages.length - 1} onClick={() => goToPage(currentPage + 1)}>
+					<Button variant="ghost" size="sm" disabled={currentPage >= pageNames.length - 1} onClick={() => goToPage(currentPage + 1)}>
 						<ChevronRight className="size-4" />
 					</Button>
 				</div>
@@ -203,9 +175,7 @@ export function ComicViewer({fileUrl, title}: ComicViewer): React.JSX.Element {
 					</Button>
 				</div>
 			</div>
-			<div className="flex-1 overflow-auto flex items-center justify-center bg-black">
-				<img src={currentPageData.url} alt={`Page ${currentPage + 1}`} className="max-h-full max-w-full object-contain" />
-			</div>
+			<div className="flex-1 overflow-auto flex items-center justify-center bg-black">{currentUrl ? <img src={currentUrl} alt={`Page ${currentPage + 1}`} className="max-h-full max-w-full object-contain" /> : <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />}</div>
 		</div>
 	)
 }

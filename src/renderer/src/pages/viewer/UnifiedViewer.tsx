@@ -75,7 +75,7 @@ export function UnifiedViewer(): React.JSX.Element {
 	const assetPath = primaryAsset?.path
 	const fileUrl = assetPath ? `file://${assetPath}` : ''
 
-	const renderViewer = () => {
+	const renderViewer = (): React.JSX.Element => {
 		if (!assetPath) {
 			return (
 				<div className="flex flex-col items-center justify-center h-full gap-4 text-[var(--text-subtle)]">
@@ -85,13 +85,15 @@ export function UnifiedViewer(): React.JSX.Element {
 			)
 		}
 
+		// `key` on each viewer: opening a different file remounts it, so the
+		// viewers start from clean state instead of resetting themselves.
 		switch (media.mediaType) {
 			case 'document':
-				return <PdfViewer fileUrl={fileUrl} title={media.title} />
+				return <PdfViewer key={fileUrl} fileUrl={fileUrl} title={media.title} />
 			case 'comic':
-				return <ComicViewer fileUrl={fileUrl} title={media.title} />
+				return <ComicViewer key={assetPath} filePath={assetPath} title={media.title} />
 			case 'image':
-				return <ImageViewer fileUrl={fileUrl} title={media.title} />
+				return <ImageViewer key={fileUrl} fileUrl={fileUrl} title={media.title} />
 			default:
 				return (
 					<div className="flex flex-col items-center justify-center h-full gap-4 text-[var(--text-subtle)]">
