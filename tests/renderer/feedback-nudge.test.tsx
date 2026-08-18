@@ -4,11 +4,16 @@ import {beforeEach, afterEach, describe, expect, it, vi} from 'vitest'
 import {App} from '@renderer/App.js'
 import {useAppStore} from '@renderer/store/useAppStore.js'
 import {ok} from '../shared/fixtures.js'
+import {buildMockAppApi} from '../shared/mockAppApi.js'
 
 const mockOpenExternal = vi.fn().mockResolvedValue(ok({opened: true}))
 const mockTallyOpenPopup = vi.fn()
 
+// Spread the shared builder first so namespaces this suite does not exercise
+// stay in sync with AppApi; the overrides below carry the assertion-critical
+// return shapes.
 const mockAppApi = {
+	...buildMockAppApi(),
 	app: {
 		warmUp: vi.fn().mockResolvedValue(ok({completed: true, dependencies: {}, blockingFailures: [], cancelled: false})),
 		cancelWarmup: vi.fn().mockResolvedValue(undefined),
@@ -26,7 +31,7 @@ const mockAppApi = {
 		pause: vi.fn().mockResolvedValue(ok({paused: true})),
 		resume: vi.fn().mockResolvedValue(ok({resumed: false}))
 	},
-	settings: {get: vi.fn().mockResolvedValue(ok({defaultOutputDir: '/tmp', rememberLastOutputDir: true})), update: vi.fn()},
+	settings: {get: vi.fn().mockResolvedValue(ok({defaultOutputDir: '/tmp', rememberLastOutputDir: true})), update: vi.fn(), reset: vi.fn()},
 	shell: {openFolder: vi.fn().mockResolvedValue(ok({opened: true})), openExternal: mockOpenExternal, openBinariesDir: vi.fn().mockResolvedValue(ok({opened: true}))},
 	logs: {openDir: vi.fn().mockResolvedValue(ok({opened: true})), uploadFeedbackDiagnostic: vi.fn(async ({reportId}: {reportId: string}) => ok({reportId, diagnosticUrl: null, rawBytes: 42, compressedBytes: 31, truncated: false, sha256: 'a'.repeat(64)}))},
 	dialog: {chooseFolder: vi.fn().mockResolvedValue(ok({path: '/tmp'})), chooseFile: vi.fn().mockResolvedValue(ok({path: null})), chooseExecutable: vi.fn().mockResolvedValue(ok({path: null}))},
@@ -53,52 +58,7 @@ const mockAppApi = {
 	updater: {onUpdateAvailable: vi.fn().mockReturnValue(() => undefined), install: vi.fn().mockResolvedValue(undefined)},
 	analytics: {track: vi.fn()},
 	diagnostics: {logWizardStep: vi.fn()},
-	playlist: {scanFolder: vi.fn().mockResolvedValue({ok: true, data: {matchedIds: []}}), registerManifest: vi.fn().mockResolvedValue({ok: true, data: undefined})},
-	library: {
-		media: {
-			list: vi.fn().mockResolvedValue([]),
-			get: vi.fn().mockResolvedValue(null),
-			search: vi.fn().mockResolvedValue([]),
-			setFavorite: vi.fn().mockResolvedValue(undefined),
-			setStatus: vi.fn().mockResolvedValue(undefined),
-			delete: vi.fn().mockResolvedValue(false),
-			count: vi.fn().mockResolvedValue(0),
-			countByStatus: vi.fn().mockResolvedValue({})
-		},
-		collection: {
-			list: vi.fn().mockResolvedValue([]),
-			get: vi.fn().mockResolvedValue(null),
-			create: vi.fn().mockImplementation((data: {name: string}) => Promise.resolve({id: 'mock', name: data.name, description: null, icon: null, color: null, sortOrder: 0, createdAt: '', updatedAt: ''})),
-			update: vi.fn().mockResolvedValue(null),
-			delete: vi.fn().mockResolvedValue(false),
-			addMedia: vi.fn().mockResolvedValue(undefined),
-			removeMedia: vi.fn().mockResolvedValue(undefined),
-			getMediaIds: vi.fn().mockResolvedValue([]),
-			getForMedia: vi.fn().mockResolvedValue([])
-		},
-		tag: {
-			list: vi.fn().mockResolvedValue([]),
-			create: vi.fn().mockImplementation((data: {name: string}) => Promise.resolve({id: 'mock', name: data.name, color: null, createdAt: ''})),
-			update: vi.fn().mockResolvedValue(null),
-			delete: vi.fn().mockResolvedValue(false),
-			addToMedia: vi.fn().mockResolvedValue(undefined),
-			removeFromMedia: vi.fn().mockResolvedValue(undefined),
-			getForMedia: vi.fn().mockResolvedValue([]),
-			getMediaIds: vi.fn().mockResolvedValue([])
-		},
-		playback: {updatePosition: vi.fn().mockResolvedValue(undefined), getByMedia: vi.fn().mockResolvedValue(null), listRecent: vi.fn().mockResolvedValue([])},
-		downloadHistory: {list: vi.fn().mockResolvedValue([]), count: vi.fn().mockResolvedValue(0), countByStatus: vi.fn().mockResolvedValue({})},
-		events: {onMediaCreated: vi.fn().mockReturnValue(() => undefined)}
-	},
-	metadata: {extract: vi.fn().mockResolvedValue({mediaType: 'video', title: 'Mock', duration: 120, fileSize: 1000000, createdAt: '', modifiedAt: ''}), extractAndSave: vi.fn().mockResolvedValue({success: true}), extractBatch: vi.fn().mockResolvedValue([])},
-	thumbnail: {
-		generate: vi.fn().mockResolvedValue({success: true, thumbnailPath: '/mock/thumbnail.jpg'}),
-		get: vi.fn().mockResolvedValue('/mock/thumbnail.jpg'),
-		regenerate: vi.fn().mockResolvedValue({success: true, thumbnailPath: '/mock/thumbnail.jpg'}),
-		delete: vi.fn().mockResolvedValue(true),
-		getUrl: vi.fn().mockResolvedValue('file:///mock/thumbnail.jpg')
-	},
-	indexer: {indexFile: vi.fn().mockResolvedValue({success: true, mediaId: 'mock'}), indexFiles: vi.fn().mockResolvedValue([])}
+	playlist: {scanFolder: vi.fn().mockResolvedValue({ok: true, data: {matchedIds: []}}), registerManifest: vi.fn().mockResolvedValue({ok: true, data: undefined})}
 }
 
 function resetStore() {

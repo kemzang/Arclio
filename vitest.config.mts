@@ -10,6 +10,11 @@ const aliasObj = {
 	'yt-dlp-bridge/redaction': path.resolve('packages/yt-dlp-bridge/src/redaction.ts'),
 	'yt-dlp-bridge': path.resolve('packages/yt-dlp-bridge/src/index.ts'),
 	'ytdlp-errors': path.resolve('packages/ytdlp-errors/src/index.ts'),
+	// Workspace packages are consumed by source path, mirroring the `@arclio/*`
+	// entries in tsconfig.json. Without these, any test that reaches
+	// MetadataService fails to resolve the import.
+	'@arclio/metadata': path.resolve('packages/metadata/src/index.ts'),
+	'@arclio/media': path.resolve('packages/media/src/index.ts'),
 	'electron-log/main.js': path.resolve('tests/__mocks__/electron-log-main.ts'),
 	'electron-log/renderer.js': path.resolve('tests/__mocks__/electron-log-renderer.ts'),
 	electron: path.resolve('tests/__mocks__/electron.ts')

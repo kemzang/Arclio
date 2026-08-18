@@ -62,7 +62,18 @@ function makeDeps() {
 		probeService: probeService as never,
 		settingsStore: settingsStore as never,
 		queueService: queueService as never,
-		binaryManager: {ensureYtDlp: vi.fn(), ensureFFmpeg: vi.fn(), ensureFFprobe: vi.fn(), installYtDlpWithHomebrew: vi.fn().mockResolvedValue('/opt/homebrew/bin/yt-dlp'), installYtDlpWithWinget: vi.fn().mockResolvedValue('C:\\Users\\mock\\AppData\\Local\\Microsoft\\WinGet\\Links\\yt-dlp.exe')} as never,
+		// getFfmpegPath/getFfprobePath are read synchronously when
+		// registerIpcHandlers constructs the metadata, thumbnail and converter
+		// services, so the stub has to provide them.
+		binaryManager: {
+			ensureYtDlp: vi.fn(),
+			ensureFFmpeg: vi.fn(),
+			ensureFFprobe: vi.fn(),
+			getFfmpegPath: vi.fn().mockReturnValue('/mock/ffmpeg'),
+			getFfprobePath: vi.fn().mockReturnValue('/mock/ffprobe'),
+			installYtDlpWithHomebrew: vi.fn().mockResolvedValue('/opt/homebrew/bin/yt-dlp'),
+			installYtDlpWithWinget: vi.fn().mockResolvedValue('C:\\Users\\mock\\AppData\\Local\\Microsoft\\WinGet\\Links\\yt-dlp.exe')
+		} as never,
 		tokenService: {warmUp: vi.fn()} as never,
 		languageRef: languageRef as never,
 		clipboardWatcher: clipboardWatcher as never,

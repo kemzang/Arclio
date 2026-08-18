@@ -57,7 +57,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 			pause: vi.fn().mockResolvedValue(ok({paused: true})),
 			resume: vi.fn().mockResolvedValue(ok({resumed: false}))
 		},
-		settings: {get: vi.fn().mockResolvedValue(ok(settings)), update: vi.fn().mockResolvedValue(ok(settings))},
+		settings: {get: vi.fn().mockResolvedValue(ok(settings)), update: vi.fn().mockResolvedValue(ok(settings)), reset: vi.fn().mockResolvedValue(ok(settings))},
 		shell: {openFolder: vi.fn().mockResolvedValue(ok({opened: true})), openExternal: vi.fn().mockResolvedValue(ok({opened: true})), openBinariesDir: vi.fn().mockResolvedValue(ok({opened: true}))},
 		logs: {openDir: vi.fn().mockResolvedValue(ok({opened: true})), uploadFeedbackDiagnostic: vi.fn(({reportId}: {reportId: string}) => Promise.resolve(ok({reportId, diagnosticUrl: null, rawBytes: 42, compressedBytes: 31, truncated: false, sha256: 'a'.repeat(64)})))},
 		dialog: {chooseFolder: vi.fn().mockResolvedValue(ok({path: '/tmp'})), chooseFile: vi.fn().mockResolvedValue(ok({path: null})), chooseExecutable: vi.fn().mockResolvedValue(ok({path: null}))},
@@ -131,9 +131,11 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 			get: vi.fn().mockResolvedValue('/mock/thumbnail.jpg'),
 			regenerate: vi.fn().mockResolvedValue({success: true, thumbnailPath: '/mock/thumbnail.jpg'}),
 			delete: vi.fn().mockResolvedValue(true),
-			getUrl: vi.fn().mockResolvedValue('file:///mock/thumbnail.jpg')
+			getUrl: vi.fn().mockResolvedValue('file:///mock/thumbnail.jpg'),
+			clearCache: vi.fn().mockResolvedValue({removed: 0, freedBytes: 0})
 		},
 		indexer: {indexFile: vi.fn().mockResolvedValue({success: true, mediaId: 'mock'}), indexFiles: vi.fn().mockResolvedValue([])},
+		archive: {listPages: vi.fn().mockResolvedValue({pages: []}), readPage: vi.fn().mockResolvedValue({ok: false, error: 'mock'}), close: vi.fn().mockResolvedValue(undefined)},
 		sources: {add: vi.fn().mockResolvedValue({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: vi.fn().mockResolvedValue(undefined), list: vi.fn().mockResolvedValue([]), toggleWatch: vi.fn().mockResolvedValue(undefined), scan: vi.fn().mockResolvedValue({indexed: 0, errors: 0})},
 		converter: {
 			convert: vi.fn().mockResolvedValue({success: true, outputPath: '/mock/converted.mp4'}),
