@@ -1,11 +1,14 @@
-import {useState, useEffect, useCallback} from 'react'
+import {useState, useCallback} from 'react'
 import {Document, Page, pdfjs} from 'react-pdf'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 import 'react-pdf/dist/Page/TextLayer.css'
 import {ZoomIn, ZoomOut, ChevronLeft, ChevronRight} from 'lucide-react'
+import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 import {Button} from '@renderer/components/ui/button.js'
 
-pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
+// Bundled locally on purpose. Fetching the worker from a CDN would make PDF
+// viewing fail with no network and leak a request per document opened.
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerUrl
 
 interface PdfViewerProps {
 	fileUrl: string
@@ -22,10 +25,8 @@ export function PdfViewer({fileUrl, title}: PdfViewerProps): React.JSX.Element {
 		setPageNumber(1)
 	}, [])
 
-	useEffect(() => {
-		setPageNumber(1)
-		setNumPages(null)
-	}, [fileUrl])
+	// No reset-on-`fileUrl`-change effect: the component is mounted with
+	// `key={fileUrl}`, so a different document gets a fresh instance.
 
 	return (
 		<div className="flex flex-col h-full">

@@ -40,10 +40,13 @@ import {TagsPage} from './pages/tags/TagsPage.js'
 import {HistoryPage} from './pages/history/HistoryPage.js'
 import {SettingsPage} from './pages/settings/SettingsPage.js'
 import {PlayerPage} from './pages/player/PlayerPage.js'
-import {UnifiedViewer} from './pages/viewer/UnifiedViewer.js'
 import {SearchPage} from './pages/search/SearchPage.js'
+import {ConverterPage} from './pages/converter/ConverterPage.js'
 
 const SHOW_SCENARIO_GALLERY = import.meta.env.MODE === 'browser-mock'
+// Split out of the initial bundle: it pulls in pdfjs, which is large and needs
+// browser-only globals (DOMMatrix) that are absent unless a document is opened.
+const UnifiedViewer = lazy(() => import('./pages/viewer/UnifiedViewer.js').then(module => ({default: module.UnifiedViewer})))
 const ShareDialog = lazy(() => import('./components/system/ShareDialog.js').then(module => ({default: module.ShareDialog})))
 const ScenarioGallery = lazy(() => import('./dev/ScenarioGallery.js').then(module => ({default: module.ScenarioGallery})))
 const FOOTER_ACTION_BUTTON_CLASS = 'footer-action-button h-6 rounded-md px-1.5 text-[13px] text-muted-foreground max-sm:size-6 max-sm:px-0'
@@ -227,19 +230,22 @@ function AppContent(): ReactNode {
 					<div className="flex min-h-0 flex-1 overflow-hidden" style={{zoom: uiZoom}}>
 						<Sidebar />
 						<main className="flex-1 overflow-y-auto overflow-x-hidden">
-							<Routes>
-								<Route index element={<HomePage />} />
-								<Route path="library" element={<LibraryPage />} />
-								<Route path="library/:id" element={<PlayerPage />} />
-								<Route path="viewer/:id" element={<UnifiedViewer />} />
-								<Route path="search" element={<SearchPage />} />
-								<Route path="collections" element={<CollectionsPage />} />
-								<Route path="collections/:id" element={<CollectionDetailPage />} />
-								<Route path="favorites" element={<FavoritesPage />} />
-								<Route path="tags" element={<TagsPage />} />
-								<Route path="history" element={<HistoryPage />} />
-								<Route path="settings" element={<SettingsPage />} />
-							</Routes>
+							<Suspense fallback={null}>
+								<Routes>
+									<Route index element={<HomePage />} />
+									<Route path="library" element={<LibraryPage />} />
+									<Route path="library/:id" element={<PlayerPage />} />
+									<Route path="viewer/:id" element={<UnifiedViewer />} />
+									<Route path="search" element={<SearchPage />} />
+									<Route path="converter" element={<ConverterPage />} />
+									<Route path="collections" element={<CollectionsPage />} />
+									<Route path="collections/:id" element={<CollectionDetailPage />} />
+									<Route path="favorites" element={<FavoritesPage />} />
+									<Route path="tags" element={<TagsPage />} />
+									<Route path="history" element={<HistoryPage />} />
+									<Route path="settings" element={<SettingsPage />} />
+								</Routes>
+							</Suspense>
 						</main>
 					</div>
 				</div>
