@@ -1,27 +1,13 @@
 import {EventEmitter} from 'node:events'
 import {spawn} from 'node:child_process'
-import {access, constants, stat} from 'node:fs/promises'
+import {access, constants} from 'node:fs/promises'
 import {extname, basename, join, dirname} from 'node:path'
-import {randomUUID} from 'node:crypto'
 import electronLog from 'electron-log/main.js'
+import {imageConversionFormatSchema, type ConversionFormat, type ImageConversionFormat} from '@shared/schemas.js'
 
 const logger = electronLog.scope('converter')
 
-export type ConversionFormat = 'mp4' | 'mkv' | 'webm' | 'avi' | 'mp3' | 'aac' | 'flac' | 'ogg' | 'wav' | 'opus' | 'jpg' | 'png' | 'webp' | 'avif' | 'gif'
-
-export interface ConversionTask {
-	id: string
-	inputPath: string
-	outputPath: string
-	format: ConversionFormat
-	options?: ConversionOptions
-	status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled'
-	progress: number
-	error?: string
-	createdAt: string
-	startedAt?: string
-	finishedAt?: string
-}
+export type {ConversionFormat}
 
 export interface ConversionOptions {
 	// Video options
@@ -56,16 +42,7 @@ export interface ConversionResult {
 	error?: string
 }
 
-export interface ConverterEvents {
-	taskAdded: (task: ConversionTask) => void
-	taskStarted: (task: ConversionTask) => void
-	taskProgress: (task: ConversionTask) => void
-	taskCompleted: (task: ConversionTask) => void
-	taskFailed: (task: ConversionTask) => void
-	taskCancelled: (task: ConversionTask) => void
-}
-
-function buildFFmpegArgs(inputPath: string, outputPath: string, format: ConversionFormat, options?: ConversionOptions): string[] {
+export function buildFFmpegArgs(inputPath: string, outputPath: string, format: ConversionFormat, options?: ConversionOptions): string[] {
 	const args: string[] = ['-i', inputPath]
 
 	// Video codec
@@ -86,14 +63,18 @@ function buildFFmpegArgs(inputPath: string, outputPath: string, format: Conversi
 		args.push('-c:a', 'libopus')
 	}
 
-	// Resolution
-	if (options?.resolution) {
-		args.push('-vf', `scale=${options.resolution}`)
-	}
+	// Video filters are emitted as a single -vf chain below: ffmpeg keeps only
+	// the last -vf flag, so passing it twice silently discards the earlier one.
+	const videoFilters: string[] = []
 
-	// FPS
-	if (options?.fps) {
-		args.push('-r', String(options.fps))
+	if (format === 'gif') {
+		// GIF needs an explicit frame rate, and lanczos scaling to stay legible.
+		videoFilters.push(`fps=${options?.fps ?? 10}`)
+		videoFilters.push(`scale=${options?.resolution ?? '320:-1'}:flags=lanczos`)
+	} else {
+		if (options?.resolution) videoFilters.push(`scale=${options.resolution}`)
+		// For GIF the rate is already set by the fps filter above.
+		if (options?.fps) args.push('-r', String(options.fps))
 	}
 
 	// CRF (quality)
@@ -139,9 +120,12 @@ function buildFFmpegArgs(inputPath: string, outputPath: string, format: Conversi
 		args.push('-preset', options.preset)
 	}
 
-	// GIF specific
+	if (videoFilters.length > 0) {
+		args.push('-vf', videoFilters.join(','))
+	}
+
 	if (format === 'gif') {
-		args.push('-vf', 'fps=10,scale=320:-1:flags=lanczos', '-loop', '0')
+		args.push('-loop', '0')
 	}
 
 	// Output
@@ -152,8 +136,6 @@ function buildFFmpegArgs(inputPath: string, outputPath: string, format: Conversi
 
 export class ConverterService extends EventEmitter {
 	private readonly ffmpegPath: string
-	private readonly tasks = new Map<string, ConversionTask>()
-	private readonly runningProcesses = new Map<string, ReturnType<typeof spawn>>()
 
 	constructor(ffmpegPath: string) {
 		super()
@@ -204,30 +186,23 @@ export class ConverterService extends EventEmitter {
 		const format = options.format ?? 'jpg'
 
 		// For images, use sharp instead of ffmpeg
-		if (['jpg', 'png', 'webp', 'avif'].includes(format)) {
-			return this.convertImageWithSharp(inputPath, format, options)
+		const imageFormat = imageConversionFormatSchema.safeParse(format)
+		if (imageFormat.success) {
+			return this.convertImageWithSharp(inputPath, imageFormat.data, options)
 		}
 
 		return this.convert(inputPath, format, {width: options.width, height: options.height, quality: options.quality})
 	}
 
 	async extractAudio(videoPath: string, format: ConversionFormat = 'mp3'): Promise<ConversionResult> {
-		const ext = extname(videoPath)
-		const baseName = basename(videoPath, ext)
-		const outputPath = join(dirname(videoPath), `${baseName}.${format}`)
-
 		return this.convert(videoPath, format, {videoCodec: 'none', audioCodec: format === 'mp3' ? 'libmp3lame' : format === 'flac' ? 'flac' : 'aac'}, dirname(videoPath))
 	}
 
 	async createGif(videoPath: string, options: {fps?: number; width?: number; duration?: number} = {}): Promise<ConversionResult> {
-		const ext = extname(videoPath)
-		const baseName = basename(videoPath, ext)
-		const outputPath = join(dirname(videoPath), `${baseName}.gif`)
-
 		return this.convert(videoPath, 'gif', {fps: options.fps ?? 10, resolution: options.width ? `${options.width}:-1` : undefined, trimEnd: options.duration ? `00:00:${options.duration}` : undefined})
 	}
 
-	private async convertImageWithSharp(inputPath: string, format: string, options: {width?: number; height?: number; quality?: number}): Promise<ConversionResult> {
+	private async convertImageWithSharp(inputPath: string, format: ImageConversionFormat, options: {width?: number; height?: number; quality?: number}): Promise<ConversionResult> {
 		try {
 			const sharp = (await import('sharp')).default
 			const ext = extname(inputPath)
@@ -253,8 +228,6 @@ export class ConverterService extends EventEmitter {
 				case 'avif':
 					await image.avif({quality: options.quality ?? 50}).toFile(outputPath)
 					break
-				default:
-					return {success: false, error: `Unsupported image format: ${format}`}
 			}
 
 			return {success: true, outputPath}

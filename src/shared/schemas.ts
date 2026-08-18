@@ -42,6 +42,23 @@ export const subtitleFormatSchema = z.enum(['srt', 'vtt', 'ass'])
 export type SubtitleFormat = z.infer<typeof subtitleFormatSchema>
 export const SUBTITLE_FORMATS = subtitleFormatSchema.options
 
+// What a library item *is*, independent of its file format: a `.cbz` and a
+// `.cbr` are both `comic`. Drives library filters, viewer selection, metadata
+// extraction, and thumbnail generation.
+export const mediaTypeSchema = z.enum(['video', 'audio', 'document', 'comic', 'image'])
+export type MediaType = z.infer<typeof mediaTypeSchema>
+export const MEDIA_TYPES = mediaTypeSchema.options
+
+// Converter output containers/codecs. Renderer-supplied values reach ffmpeg
+// argument construction, so the boundary parses against this schema rather than
+// trusting the string.
+export const conversionFormatSchema = z.enum(['mp4', 'mkv', 'webm', 'avi', 'mp3', 'aac', 'flac', 'ogg', 'wav', 'opus', 'jpg', 'png', 'webp', 'avif', 'gif'])
+export type ConversionFormat = z.infer<typeof conversionFormatSchema>
+
+/** Image formats handled by sharp rather than ffmpeg. */
+export const imageConversionFormatSchema = z.enum(['jpg', 'png', 'webp', 'avif'])
+export type ImageConversionFormat = z.infer<typeof imageConversionFormatSchema>
+
 export const sponsorBlockModeSchema = z.enum(['off', 'mark', 'remove'])
 export type SponsorBlockMode = z.infer<typeof sponsorBlockModeSchema>
 export const SPONSORBLOCK_MODES = sponsorBlockModeSchema.options
