@@ -1,13 +1,12 @@
 import {useState, useCallback} from 'react'
 import {useTranslation} from 'react-i18next'
-import {FolderOpen, Globe, Monitor, Clipboard, Subtitles, Image, Download, Library, HardDrive, Settings, Zap, Shield, Info, FolderPlus, Trash2, RotateCcw} from 'lucide-react'
+import {FolderOpen, Globe, Monitor, Clipboard, Subtitles, Image, Download, Library, Settings, Zap, Shield, Info, FolderPlus, Trash2, RotateCcw} from 'lucide-react'
 import {SUPPORTED_LANGS, LANGUAGE_NATIVE_NAMES, type SupportedLang} from '@shared/i18n/index.js'
 import {useAppStore} from '../../store/useAppStore.js'
 import {Button} from '../../components/ui/button.js'
 import {Switch} from '../../components/ui/switch.js'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '../../components/ui/select.js'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../components/ui/tabs.js'
-import {Input} from '../../components/ui/input.js'
 import {ThemeToggle} from '../../components/system/ThemeToggle.js'
 
 const TABS = [
@@ -22,12 +21,24 @@ const TABS = [
 
 export function SettingsPage(): React.JSX.Element {
 	const {t} = useTranslation()
-	const {settings, language, setLanguage} = useAppStore()
+	const {settings, language, setLanguage, applySettingsPatch, resetSettings} = useAppStore()
 	const [activeTab, setActiveTab] = useState('general')
+	const [cacheStatus, setCacheStatus] = useState<string | null>(null)
 
-	const updateSettings = useCallback(async (patch: Parameters<typeof window.appApi.settings.update>[0]) => {
-		await window.appApi.settings.update(patch)
+	// Routed through the store so the controls reflect the saved value; calling
+	// the IPC bridge directly leaves the rendered state stale.
+	const updateSettings = applySettingsPatch
+
+	const handleClearThumbnailCache = useCallback(async () => {
+		setCacheStatus(null)
+		const {removed, freedBytes} = await window.appApi.thumbnail.clearCache()
+		const megabytes = freedBytes / (1024 * 1024)
+		setCacheStatus(removed === 0 ? 'Cache already empty' : `Removed ${removed} thumbnail${removed === 1 ? '' : 's'} (${megabytes.toFixed(1)} MB)`)
 	}, [])
+
+	const handleResetSettings = useCallback(async () => {
+		await resetSettings()
+	}, [resetSettings])
 
 	const handleChangeOutputDir = useCallback(async () => {
 		const result = await window.appApi.dialog.chooseFolder(settings?.common.defaultOutputDir)
@@ -62,16 +73,16 @@ export function SettingsPage(): React.JSX.Element {
 				</TabsList>
 
 				<TabsContent value="general" className="flex-1 space-y-4 mt-4">
-					<SettingsSection icon={FolderOpen} title="Output Directory" description="Default location for downloaded files">
+					<SettingsSection icon={FolderOpen} title={t('settings.outputDir')} description={t('settings.outputDirDescription')}>
 						<div className="flex items-center gap-2">
 							<code className="text-xs bg-muted px-2 py-1 rounded max-w-[200px] truncate">{common.defaultOutputDir}</code>
-							<Button variant="outline" size="sm" onClick={handleChangeOutputDir}>
-								Change
+							<Button variant="outline" size="sm" onClick={() => void handleChangeOutputDir()}>
+								{t('settings.change')}
 							</Button>
 						</div>
 					</SettingsSection>
 
-					<SettingsSection icon={Globe} title="Language" description="Application display language">
+					<SettingsSection icon={Globe} title={t('settings.language')} description={t('settings.languageDescription')}>
 						<Select value={language} onValueChange={handleLanguageChange}>
 							<SelectTrigger className="w-[180px]">
 								<SelectValue />
@@ -86,53 +97,30 @@ export function SettingsPage(): React.JSX.Element {
 						</Select>
 					</SettingsSection>
 
-					<SettingsSection icon={Monitor} title="Theme" description="Application appearance">
+					<SettingsSection icon={Monitor} title={t('settings.theme')} description={t('settings.themeDescription')}>
 						<ThemeToggle />
 					</SettingsSection>
 
-					<SettingsSection icon={Clipboard} title="Clipboard Watch" description="Automatically detect URLs from clipboard">
+					<SettingsSection icon={Clipboard} title={t('settings.clipboardWatch')} description={t('settings.clipboardWatchDescription')}>
 						<Switch checked={common.clipboardWatchEnabled} onCheckedChange={checked => void updateSettings({common: {clipboardWatchEnabled: checked}})} />
 					</SettingsSection>
 				</TabsContent>
 
 				<TabsContent value="downloads" className="flex-1 space-y-4 mt-4">
-					<SettingsSection icon={Subtitles} title="Download Subtitles" description="Automatically download subtitles for videos">
+					<SettingsSection icon={Subtitles} title={t('settings.writeSubtitles')} description={t('settings.writeSubtitlesDescription')}>
 						<Switch checked={(settings.single.lastSubtitleLanguages?.length ?? 0) > 0} onCheckedChange={checked => void updateSettings({single: {lastSubtitleLanguages: checked ? ['en'] : []}})} />
 					</SettingsSection>
 
-					<SettingsSection icon={Image} title="Embed Thumbnail" description="Embed thumbnail into downloaded video file">
+					<SettingsSection icon={Image} title={t('settings.embedThumbnail')} description={t('settings.embedThumbnailDescription')}>
 						<Switch checked={common.embedThumbnail ?? false} onCheckedChange={checked => void updateSettings({common: {embedThumbnail: checked}})} />
-					</SettingsSection>
-
-					<SettingsSection icon={Download} title="Concurrent Downloads" description="Number of simultaneous downloads">
-						<Input
-							type="number"
-							min={1}
-							max={5}
-							value={common.concurrentDownloads ?? 2}
-							onChange={e => {
-								const val = parseInt(e.target.value, 10)
-								if (!isNaN(val) && val >= 1 && val <= 5) {
-									void updateSettings({common: {concurrentDownloads: val}})
-								}
-							}}
-							className="w-20"
-						/>
 					</SettingsSection>
 				</TabsContent>
 
 				<TabsContent value="library" className="flex-1 space-y-4 mt-4">
-					<SettingsSection icon={Library} title="Library Auto-Import" description="Automatically add downloaded files to library">
-						<Switch checked={common.autoImport ?? true} onCheckedChange={checked => void updateSettings({common: {autoImport: checked}})} />
-					</SettingsSection>
-
-					<SettingsSection icon={HardDrive} title="Metadata Extraction" description="Extract metadata from media files">
-						<Switch checked={common.extractMetadata ?? true} onCheckedChange={checked => void updateSettings({common: {extractMetadata: checked}})} />
-					</SettingsSection>
-
-					<SettingsSection icon={Image} title="Thumbnail Generation" description="Generate thumbnails for media files">
-						<Switch checked={common.generateThumbnails ?? true} onCheckedChange={checked => void updateSettings({common: {generateThumbnails: checked}})} />
-					</SettingsSection>
+					<div className="text-sm text-[var(--text-subtle)]">
+						<p>Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library.</p>
+						<p className="mt-2">Use the Library page to browse, tag, and organize what has been indexed.</p>
+					</div>
 				</TabsContent>
 
 				<TabsContent value="sources" className="flex-1 space-y-4 mt-4">
@@ -143,52 +131,21 @@ export function SettingsPage(): React.JSX.Element {
 				</TabsContent>
 
 				<TabsContent value="converter" className="flex-1 space-y-4 mt-4">
-					<SettingsSection icon={Zap} title="Default Video Format" description="Default output format for video conversion">
-						<Select value="mp4" onValueChange={() => {}}>
-							<SelectTrigger className="w-[120px]">
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="mp4">MP4</SelectItem>
-								<SelectItem value="mkv">MKV</SelectItem>
-								<SelectItem value="webm">WebM</SelectItem>
-							</SelectContent>
-						</Select>
-					</SettingsSection>
-
-					<SettingsSection icon={Zap} title="Default Audio Format" description="Default output format for audio conversion">
-						<Select value="mp3" onValueChange={() => {}}>
-							<SelectTrigger className="w-[120px]">
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="mp3">MP3</SelectItem>
-								<SelectItem value="aac">AAC</SelectItem>
-								<SelectItem value="flac">FLAC</SelectItem>
-								<SelectItem value="opus">Opus</SelectItem>
-							</SelectContent>
-						</Select>
-					</SettingsSection>
+					<div className="text-sm text-[var(--text-subtle)]">
+						<p>Conversion options are chosen per file, so a single default would not cover video, audio, and image targets.</p>
+						<p className="mt-2">Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF.</p>
+					</div>
 				</TabsContent>
 
 				<TabsContent value="viewer" className="flex-1 space-y-4 mt-4">
-					<SettingsSection icon={Monitor} title="Comic Reading Mode" description="Default reading direction for comics">
-						<Select value="rtl" onValueChange={() => {}}>
-							<SelectTrigger className="w-[120px]">
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="rtl">RTL (Manga)</SelectItem>
-								<SelectItem value="ltr">LTR (Western)</SelectItem>
-								<SelectItem value="vertical">Vertical</SelectItem>
-							</SelectContent>
-						</Select>
-					</SettingsSection>
+					<div className="text-sm text-[var(--text-subtle)]">
+						<p>Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally.</p>
+					</div>
 				</TabsContent>
 
 				<TabsContent value="advanced" className="flex-1 space-y-4 mt-4">
 					<SettingsSection icon={Info} title="Application Version" description="Current version of Arclio">
-						<code className="text-xs bg-muted px-2 py-1 rounded">v0.4.1</code>
+						<code className="text-xs bg-muted px-2 py-1 rounded">v{window.appVersion}</code>
 					</SettingsSection>
 
 					<SettingsSection icon={FolderOpen} title="Open Log Directory" description="View application logs for debugging">
@@ -197,27 +154,15 @@ export function SettingsPage(): React.JSX.Element {
 						</Button>
 					</SettingsSection>
 
-					<SettingsSection icon={Trash2} title="Clear Thumbnail Cache" description="Remove all generated thumbnails">
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => {
-								// TODO: Implement cache clear
-							}}
-						>
+					<SettingsSection icon={Trash2} title="Clear Thumbnail Cache" description={cacheStatus ?? 'Remove all generated thumbnails. They are recreated on demand.'}>
+						<Button variant="outline" size="sm" onClick={() => void handleClearThumbnailCache()}>
 							<Trash2 className="size-4 mr-1" />
 							Clear Cache
 						</Button>
 					</SettingsSection>
 
 					<SettingsSection icon={RotateCcw} title="Reset Settings" description="Restore all settings to defaults">
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => {
-								// TODO: Implement settings reset
-							}}
-						>
+						<Button variant="outline" size="sm" onClick={() => void handleResetSettings()}>
 							<RotateCcw className="size-4 mr-1" />
 							Reset
 						</Button>

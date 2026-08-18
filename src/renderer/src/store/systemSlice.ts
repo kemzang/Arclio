@@ -1,4 +1,5 @@
 import type {AppSettings, DependencyId, DownloadProfile, DownloadProfileRef} from '@shared/types.js'
+import type {SettingsPatch} from '@shared/api.js'
 import {DEFAULTS} from '@shared/constants.js'
 import {DEFAULT_DOWNLOAD_PROFILES_PREFS, normalizeDownloadProfilesPrefs, removeDownloadProfileFromPrefs, saveDownloadProfileToPrefs} from '@shared/downloadProfiles.js'
 import {i18next, pickLanguage, isRtl} from '@shared/i18n/index.js'
@@ -49,6 +50,30 @@ async function applyCommonPatchAsync(get: GetState, set: SetState, label: string
 	const previous = get().settings
 	if (previous) set({settings: {...previous, common: {...previous.common, ...patch}}})
 	const result = await window.appApi.settings.update({common: patch})
+	if (!result.ok) {
+		if (previous) set({settings: previous})
+		notify.settingsSaveFailed(label, result.error)
+		return
+	}
+	set({settings: result.data})
+}
+
+// Generic form of the above for callers (the Settings page) that patch across
+// more than one settings section. Same optimistic-update-then-rollback contract.
+async function applySettingsPatchAsync(get: GetState, set: SetState, label: string, patch: SettingsPatch): Promise<void> {
+	const previous = get().settings
+	if (previous) {
+		set({
+			settings: {
+				...previous,
+				common: patch.common ? {...previous.common, ...patch.common} : previous.common,
+				single: patch.single ? {...previous.single, ...patch.single} : previous.single,
+				playlist: patch.playlist ? {...previous.playlist, ...patch.playlist} : previous.playlist,
+				profiles: patch.profiles ? {...previous.profiles, ...patch.profiles} : previous.profiles
+			}
+		})
+	}
+	const result = await window.appApi.settings.update(patch)
 	if (!result.ok) {
 		if (previous) set({settings: previous})
 		notify.settingsSaveFailed(label, result.error)
@@ -378,6 +403,19 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 
 		setClipboardWatchEnabled: async enabled => {
 			await applyCommonPatchAsync(get, set, 'clipboardWatchEnabled', {clipboardWatchEnabled: enabled})
+		},
+
+		applySettingsPatch: async patch => {
+			await applySettingsPatchAsync(get, set, 'settingsPage', patch)
+		},
+
+		resetSettings: async () => {
+			const result = await window.appApi.settings.reset()
+			if (!result.ok) {
+				notify.settingsSaveFailed('reset', result.error)
+				return
+			}
+			set({settings: result.data})
 		},
 
 		setCloseBehavior: async value => {

@@ -34,12 +34,6 @@ export interface IndexerResult {
 	error?: string
 }
 
-export interface IndexerEvents {
-	indexed: (event: {mediaId: string; title: string; mediaType: string; path: string}) => void
-	failed: (event: {path: string; error: string}) => void
-	progress: (event: {current: number; total: number; path: string}) => void
-}
-
 export class IndexerService extends EventEmitter {
 	private readonly mediaRepo: ReturnType<typeof createMediaRepository>
 	private readonly assetRepo: ReturnType<typeof createAssetRepository>

@@ -36,11 +36,6 @@ export interface MetadataExtractResult {
 	error?: string
 }
 
-export interface MetadataServiceEvents {
-	extracted: (event: {mediaId: string; metadata: MediaMetadata}) => void
-	failed: (event: {mediaId?: string; filePath: string; error: string}) => void
-}
-
 export class MetadataService extends EventEmitter {
 	private readonly extractor: MetadataExtractor
 	private readonly mediaRepo: ReturnType<typeof createMediaRepository>

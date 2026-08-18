@@ -127,7 +127,7 @@ interface EmbeddedPayloadStatus {
 
 interface LauncherEnvOptions {
 	sandbox?: boolean
-	gpu?: 'force' | 'swiftshader'
+	gpu?: 'force' | 'swiftshader' | 'disabled'
 }
 
 type LauncherName = 'electron' | 'mock' | 'browser-test' | 'browser-smoke'
@@ -239,7 +239,7 @@ function buildChildEnv(env: DevEnvPaths): NodeJS.ProcessEnv {
 	// ELECTRON_RUN_AS_NODE must be cleared — VSCode and other Electron-based
 	// editors set it for their child processes, but it makes our Electron binary
 	// run as plain Node.js, which breaks `import { BrowserWindow } from 'electron'`.
-	const childEnv = {...process.env, ARCLIO_RENDERER_PORT: String(env.rendererPort), ELECTRON_USER_DATA: env.electronUserData, ARCLIO_DEV_TMP: env.tmpDir, TMPDIR: env.tmpDir, TMP: env.tmpDir, TEMP: env.tmpDir}
+	const childEnv: NodeJS.ProcessEnv = {...process.env, ARCLIO_RENDERER_PORT: String(env.rendererPort), ELECTRON_USER_DATA: env.electronUserData, ARCLIO_DEV_TMP: env.tmpDir, TMPDIR: env.tmpDir, TMP: env.tmpDir, TEMP: env.tmpDir}
 	delete childEnv.ELECTRON_RUN_AS_NODE
 	return childEnv
 }

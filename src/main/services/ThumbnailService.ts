@@ -280,4 +280,37 @@ export class ThumbnailService {
 		const thumbnailPath = getThumbnailPath(mediaId, this.cacheDir)
 		return `file://${thumbnailPath}`
 	}
+
+	/**
+	 * Deletes every generated thumbnail. Thumbnails are a derived cache, so this
+	 * is non-destructive: anything cleared is regenerated on next access.
+	 */
+	async clearCache(): Promise<{removed: number; freedBytes: number}> {
+		const {readdir, stat, unlink} = await import('node:fs/promises')
+		let removed = 0
+		let freedBytes = 0
+
+		let entries: string[]
+		try {
+			entries = await readdir(this.cacheDir)
+		} catch {
+			return {removed: 0, freedBytes: 0}
+		}
+
+		for (const entry of entries) {
+			if (!entry.endsWith('.jpg')) continue
+			const target = join(this.cacheDir, entry)
+			try {
+				const info = await stat(target)
+				await unlink(target)
+				removed++
+				freedBytes += info.size
+			} catch {
+				// Already gone or locked — nothing to reclaim for this entry.
+			}
+		}
+
+		logger.info(`Cleared thumbnail cache: ${removed} files, ${freedBytes} bytes`)
+		return {removed, freedBytes}
+	}
 }

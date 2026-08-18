@@ -140,7 +140,7 @@ export function getLibraryDb(): ReturnType<typeof drizzle<typeof schema>> {
   `)
 
 	// Migration: add metadata column if it doesn't exist in older databases
-	const columns = sqlite.pragma("table_info('media')") as Array<{name: string}>[]
+	const columns = sqlite.pragma("table_info('media')") as Array<{name: string}>
 	const hasMetadataColumn = columns.some(c => c.name === 'metadata')
 	if (!hasMetadataColumn) {
 		sqlite.exec(`ALTER TABLE media ADD COLUMN metadata TEXT`)

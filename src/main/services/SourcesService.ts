@@ -53,13 +53,6 @@ export interface WatchedSource {
 	createdAt: string
 }
 
-export interface SourceEvents {
-	fileAdded: (event: {sourceId: string; path: string; mediaId?: string}) => void
-	fileRemoved: (event: {sourceId: string; path: string}) => void
-	fileChanged: (event: {sourceId: string; path: string}) => void
-	error: (event: {sourceId: string; error: string}) => void
-}
-
 export class SourcesService extends EventEmitter {
 	private readonly watchers = new Map<string, chokidar.FSWatcher>()
 	private readonly sources = new Map<string, WatchedSource>()

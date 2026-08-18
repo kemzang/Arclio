@@ -19,7 +19,7 @@ export async function readdirRecursive(dir: string): Promise<string[]> {
 
 	try {
 		await walk(dir)
-	} catch (error) {
+	} catch {
 		// Directory doesn't exist or can't be read
 	}
 

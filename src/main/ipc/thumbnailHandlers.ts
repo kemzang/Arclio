@@ -21,4 +21,9 @@ export function registerThumbnailHandlers(thumbnailService: ThumbnailService): v
 	ipcMain.handle('thumbnail:getUrl', (_event, mediaId: string) => {
 		return thumbnailService.getThumbnailUrl(mediaId)
 	})
+
+	ipcMain.removeHandler('thumbnail:clearCache')
+	ipcMain.handle('thumbnail:clearCache', async () => {
+		return thumbnailService.clearCache()
+	})
 }

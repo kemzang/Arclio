@@ -40,6 +40,7 @@ import type {
 	WizardMode
 } from '@shared/types.js'
 import type {Result} from '@shared/result.js'
+import type {SettingsPatch} from '@shared/api.js'
 import type {AudioSelection} from '@shared/schemas.js'
 import type {IncompleteCookiesConfigIssue} from '@shared/cookiesConfig.js'
 import type {QuickDownloadFailure} from './wizard/quickDownloadFeedback.js'
@@ -313,6 +314,8 @@ export interface SystemSlice {
 	setPacingSleepSubtitles: (value: number | undefined) => Promise<void>
 	setPacingConcurrentFragments: (value: number | undefined) => Promise<void>
 	setClipboardWatchEnabled: (enabled: boolean) => Promise<void>
+	applySettingsPatch: (patch: SettingsPatch) => Promise<void>
+	resetSettings: () => Promise<void>
 	setCloseBehavior: (value: 'tray' | 'quit') => Promise<void>
 	setAnalyticsEnabled: (enabled: boolean) => Promise<void>
 	setActiveDownloadProfile: (ref: DownloadProfileRef) => Promise<void>

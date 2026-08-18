@@ -31,4 +31,16 @@ export function registerSettingsHandlers(deps: SettingsHandlerDeps): void {
 		}
 		return ok(updated)
 	})
+
+	handleRaw(IPC_CHANNELS.settingsReset, async () => {
+		try {
+			const restored = await settingsStore.reset()
+			// Side effects that track settings must follow the restored values.
+			clipboardWatcher.setEnabled(restored.common.clipboardWatchEnabled)
+			setAnalyticsEnabled(restored.common.analyticsEnabled ?? true)
+			return ok({...restored, common: {...restored.common, commonPaths: buildCommonPaths()}})
+		} catch (error) {
+			return toUnknownFailure(error)
+		}
+	})
 }

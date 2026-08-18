@@ -168,6 +168,23 @@ export class SettingsStore {
 		return this.store.store
 	}
 
+	/**
+	 * Restores every user-facing preference to its default.
+	 *
+	 * Install identity is deliberately carried over: `installId` is the anonymous
+	 * analytics profile, and the first-run/launch counters drive onboarding.
+	 * Clearing those would make an existing install look brand new rather than
+	 * merely reset its preferences.
+	 */
+	async reset(): Promise<AppSettings> {
+		const {installId, firstRunCompleted, launchCount, lastReleaseNotesVersionShown} = this.store.store.common
+		const restored: AppSettings = {...this.defaults, common: {...this.defaults.common, installId, firstRunCompleted, launchCount, lastReleaseNotesVersionShown}}
+		this.store.clear()
+		this.store.set(restored)
+		await Promise.resolve()
+		return this.store.store
+	}
+
 	async recordLaunch(): Promise<{settings: AppSettings; isFirstRun: boolean; launchCount: number}> {
 		const current = this.store.store
 		const isFirstRun = !current.common.firstRunCompleted
