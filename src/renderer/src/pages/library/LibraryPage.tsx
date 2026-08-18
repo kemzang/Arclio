@@ -6,6 +6,8 @@ import {cn} from '@renderer/lib/utils.js'
 import type {LibraryMediaWithAssets, LibraryMediaListFilters} from '@shared/api.js'
 import {Button} from '@renderer/components/ui/button.js'
 import {Input} from '@renderer/components/ui/input.js'
+import {MEDIA_TYPE_OPTIONS, mediaTypeEmoji, mediaRouteFor} from '@renderer/lib/mediaTypeMeta.js'
+import type {MediaType} from '@shared/schemas.js'
 
 export function LibraryPage(): React.JSX.Element {
 	const {t} = useTranslation()
@@ -15,7 +17,7 @@ export function LibraryPage(): React.JSX.Element {
 	const [search, setSearch] = useState('')
 	const [sortBy, setSortBy] = useState<LibraryMediaListFilters['sortBy']>('download_date')
 	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
-	const [mediaTypeFilter, setMediaTypeFilter] = useState<'video' | 'audio' | 'document' | 'comic' | 'image' | undefined>()
+	const [mediaTypeFilter, setMediaTypeFilter] = useState<MediaType | undefined>()
 
 	useEffect(() => {
 		let cancelled = false
@@ -81,12 +83,15 @@ export function LibraryPage(): React.JSX.Element {
 					<Button variant={mediaTypeFilter === undefined ? 'secondary' : 'ghost'} size="sm" onClick={() => setMediaTypeFilter(undefined)}>
 						{t('library.all')}
 					</Button>
-					<Button variant={mediaTypeFilter === 'video' ? 'secondary' : 'ghost'} size="sm" onClick={() => setMediaTypeFilter('video')}>
-						{t('library.video')}
-					</Button>
-					<Button variant={mediaTypeFilter === 'audio' ? 'secondary' : 'ghost'} size="sm" onClick={() => setMediaTypeFilter('audio')}>
-						{t('library.audio')}
-					</Button>
+					{MEDIA_TYPE_OPTIONS.map(option => {
+						const label = t(option.labelKey, option.fallbackLabel)
+						return (
+							<Button key={option.value} variant={mediaTypeFilter === option.value ? 'secondary' : 'ghost'} size="sm" onClick={() => setMediaTypeFilter(option.value)} title={label}>
+								<span aria-hidden="true">{option.emoji}</span>
+								<span className="ml-1 max-lg:sr-only">{label}</span>
+							</Button>
+						)
+					})}
 				</div>
 
 				<select
@@ -131,19 +136,15 @@ export function LibraryPage(): React.JSX.Element {
 							role="button"
 							tabIndex={0}
 							onClick={(): void => {
-								void navigate(item.mediaType === 'video' || item.mediaType === 'audio' ? `/library/${item.id}` : `/viewer/${item.id}`)
+								void navigate(mediaRouteFor(item.id, item.mediaType))
 							}}
 							onKeyDown={(e): void => {
-								if (e.key === 'Enter') void navigate(item.mediaType === 'video' || item.mediaType === 'audio' ? `/library/${item.id}` : `/viewer/${item.id}`)
+								if (e.key === 'Enter') void navigate(mediaRouteFor(item.id, item.mediaType))
 							}}
 							className="group relative rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--glass-tile)] hover:shadow-lg transition-shadow cursor-pointer"
 						>
 							<div className="aspect-video bg-muted relative">
-								{item.thumbnailPath ? (
-									<img src={`file://${item.thumbnailPath}`} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
-								) : (
-									<div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)]">{item.mediaType === 'video' ? '🎬' : item.mediaType === 'audio' ? '🎵' : item.mediaType === 'document' ? '📄' : item.mediaType === 'comic' ? '📚' : '🖼️'}</div>
-								)}
+								{item.thumbnailPath ? <img src={`file://${item.thumbnailPath}`} alt={item.title} className="w-full h-full object-cover" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)]">{mediaTypeEmoji(item.mediaType)}</div>}
 								{item.duration && <span className="absolute bottom-1 right-1 text-xs bg-black/70 text-white px-1.5 py-0.5 rounded">{formatDuration(item.duration)}</span>}
 								{item.status === 'MISSING' && (
 									<div className="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -179,19 +180,15 @@ export function LibraryPage(): React.JSX.Element {
 							role="button"
 							tabIndex={0}
 							onClick={(): void => {
-								void navigate(item.mediaType === 'video' || item.mediaType === 'audio' ? `/library/${item.id}` : `/viewer/${item.id}`)
+								void navigate(mediaRouteFor(item.id, item.mediaType))
 							}}
 							onKeyDown={(e): void => {
-								if (e.key === 'Enter') void navigate(item.mediaType === 'video' || item.mediaType === 'audio' ? `/library/${item.id}` : `/viewer/${item.id}`)
+								if (e.key === 'Enter') void navigate(mediaRouteFor(item.id, item.mediaType))
 							}}
 							className="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--glass-tile)] cursor-pointer transition-colors"
 						>
 							<div className="w-24 aspect-video rounded-lg overflow-hidden bg-muted shrink-0">
-								{item.thumbnailPath ? (
-									<img src={`file://${item.thumbnailPath}`} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
-								) : (
-									<div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)]">{item.mediaType === 'video' ? '🎬' : item.mediaType === 'audio' ? '🎵' : item.mediaType === 'document' ? '📄' : item.mediaType === 'comic' ? '📚' : '🖼️'}</div>
-								)}
+								{item.thumbnailPath ? <img src={`file://${item.thumbnailPath}`} alt={item.title} className="w-full h-full object-cover" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)]">{mediaTypeEmoji(item.mediaType)}</div>}
 							</div>
 							<div className="flex-1 min-w-0">
 								<p className="text-sm font-medium truncate">{item.title}</p>

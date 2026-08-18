@@ -5,15 +5,7 @@ import {Search, Filter, X, Grid3X3, List} from 'lucide-react'
 import type {LibraryMediaWithAssets, LibraryMediaListFilters} from '@shared/api.js'
 import {Button} from '@renderer/components/ui/button.js'
 import {Input} from '@renderer/components/ui/input.js'
-import {cn} from '@renderer/lib/utils.js'
-
-const MEDIA_TYPES = [
-	{value: 'video', label: 'Video', emoji: '🎬'},
-	{value: 'audio', label: 'Audio', emoji: '🎵'},
-	{value: 'document', label: 'Document', emoji: '📄'},
-	{value: 'comic', label: 'Comic', emoji: '📚'},
-	{value: 'image', label: 'Image', emoji: '🖼️'}
-] as const
+import {MEDIA_TYPE_OPTIONS, mediaTypeEmoji, mediaRouteFor} from '@renderer/lib/mediaTypeMeta.js'
 
 const SORT_OPTIONS = [
 	{value: 'download_date', label: 'Date added'},
@@ -53,11 +45,11 @@ export function SearchPage(): React.JSX.Element {
 		return () => clearTimeout(timeout)
 	}, [query, filters, performSearch])
 
-	const handleMediaTypeToggle = (type: string) => {
+	const handleMediaTypeToggle = (type: string): void => {
 		setFilters(f => ({...f, mediaType: f.mediaType === type ? undefined : (type as LibraryMediaListFilters['mediaType'])}))
 	}
 
-	const clearFilters = () => {
+	const clearFilters = (): void => {
 		setFilters({mediaType: undefined, sortBy: 'download_date', sortOrder: 'desc', isFavorite: undefined})
 		setQuery('')
 	}
@@ -76,8 +68,8 @@ export function SearchPage(): React.JSX.Element {
 		return mb >= 1024 ? `${(mb / 1024).toFixed(1)} GB` : `${mb.toFixed(0)} MB`
 	}
 
-	const handleItemClick = (item: LibraryMediaWithAssets) => {
-		void navigate(item.mediaType === 'video' || item.mediaType === 'audio' ? `/library/${item.id}` : `/viewer/${item.id}`)
+	const handleItemClick = (item: LibraryMediaWithAssets): void => {
+		void navigate(mediaRouteFor(item.id, item.mediaType))
 	}
 
 	const hasActiveFilters = Boolean(filters.mediaType) || filters.isFavorite !== undefined || Boolean(query)
@@ -113,9 +105,9 @@ export function SearchPage(): React.JSX.Element {
 					<div className="space-y-3 pt-2 border-t border-[var(--border)]">
 						<div className="flex items-center gap-2 flex-wrap">
 							<span className="text-xs font-medium text-[var(--text-subtle)]">Type:</span>
-							{MEDIA_TYPES.map(type => (
+							{MEDIA_TYPE_OPTIONS.map(type => (
 								<Button key={type.value} variant={filters.mediaType === type.value ? 'default' : 'outline'} size="sm" onClick={() => handleMediaTypeToggle(type.value)}>
-									{type.emoji} {type.label}
+									{type.emoji} {t(type.labelKey, type.fallbackLabel)}
 								</Button>
 							))}
 						</div>
@@ -177,11 +169,7 @@ export function SearchPage(): React.JSX.Element {
 										className="group relative rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--glass-tile)] hover:shadow-lg transition-shadow cursor-pointer"
 									>
 										<div className="aspect-video bg-muted relative">
-											{item.thumbnailPath ? (
-												<img src={`file://${item.thumbnailPath}`} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
-											) : (
-												<div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)] text-2xl">{MEDIA_TYPES.find(t => t.value === item.mediaType)?.emoji ?? '📁'}</div>
-											)}
+											{item.thumbnailPath ? <img src={`file://${item.thumbnailPath}`} alt={item.title} className="w-full h-full object-cover" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)] text-2xl">{mediaTypeEmoji(item.mediaType)}</div>}
 											{item.duration && <span className="absolute bottom-1 right-1 text-xs bg-black/70 text-white px-1.5 py-0.5 rounded">{formatDuration(item.duration)}</span>}
 										</div>
 										<div className="p-3">
@@ -209,11 +197,7 @@ export function SearchPage(): React.JSX.Element {
 										className="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--glass-tile)] cursor-pointer transition-colors"
 									>
 										<div className="w-24 aspect-video rounded-lg overflow-hidden bg-muted shrink-0">
-											{item.thumbnailPath ? (
-												<img src={`file://${item.thumbnailPath}`} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
-											) : (
-												<div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)] text-xl">{MEDIA_TYPES.find(t => t.value === item.mediaType)?.emoji ?? '📁'}</div>
-											)}
+											{item.thumbnailPath ? <img src={`file://${item.thumbnailPath}`} alt={item.title} className="w-full h-full object-cover" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)] text-xl">{mediaTypeEmoji(item.mediaType)}</div>}
 										</div>
 										<div className="flex-1 min-w-0">
 											<p className="text-sm font-medium truncate">{item.title}</p>

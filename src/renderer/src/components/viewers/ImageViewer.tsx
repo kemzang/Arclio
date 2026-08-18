@@ -1,3 +1,9 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex --
+   The pan/zoom surface below is a custom canvas-like widget. No ARIA role
+   describes "draggable, zoomable image viewport", and labelling it a button
+   would misreport it to assistive tech. It is instead made focusable and fully
+   keyboard-operable (arrows pan, +/- zoom, 0 resets), which is what these rules
+   exist to guarantee. */
 import {useState, useCallback, useRef} from 'react'
 import {ZoomIn, ZoomOut, Maximize2, RotateCw} from 'lucide-react'
 import {Button} from '@renderer/components/ui/button.js'
@@ -40,6 +46,40 @@ export function ImageViewer({fileUrl, title}: ImageViewerProps): React.JSX.Eleme
 		setScale(s => Math.max(0.1, Math.min(5, s + delta)))
 	}, [])
 
+	// Keyboard equivalents for the pointer gestures, so panning and zooming are
+	// reachable without a mouse.
+	const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+		const step = e.shiftKey ? 50 : 15
+		switch (e.key) {
+			case 'ArrowLeft':
+				setPosition(p => ({...p, x: p.x + step}))
+				break
+			case 'ArrowRight':
+				setPosition(p => ({...p, x: p.x - step}))
+				break
+			case 'ArrowUp':
+				setPosition(p => ({...p, y: p.y + step}))
+				break
+			case 'ArrowDown':
+				setPosition(p => ({...p, y: p.y - step}))
+				break
+			case '+':
+			case '=':
+				setScale(s => Math.min(5, s + 0.1))
+				break
+			case '-':
+				setScale(s => Math.max(0.1, s - 0.1))
+				break
+			case '0':
+				setScale(1)
+				setPosition({x: 0, y: 0})
+				break
+			default:
+				return
+		}
+		e.preventDefault()
+	}, [])
+
 	return (
 		<div className="flex flex-col h-full">
 			<div className="flex items-center justify-between px-4 py-2 border-b border-[var(--border)] bg-[var(--bg-secondary)]">
@@ -65,7 +105,20 @@ export function ImageViewer({fileUrl, title}: ImageViewerProps): React.JSX.Eleme
 					</Button>
 				</div>
 			</div>
-			<div className="flex-1 overflow-hidden flex items-center justify-center bg-[var(--bg-primary)] cursor-grab active:cursor-grabbing" onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onWheel={handleWheel}>
+			{/* Custom pan/zoom surface: drag to move, wheel to scale. `application`
+			    tells assistive tech the region handles its own pointer gestures. */}
+			<div
+				role="application"
+				aria-label={title}
+				tabIndex={0}
+				className="flex-1 overflow-hidden flex items-center justify-center bg-[var(--bg-primary)] cursor-grab active:cursor-grabbing focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--brand)]"
+				onMouseDown={handleMouseDown}
+				onMouseMove={handleMouseMove}
+				onMouseUp={handleMouseUp}
+				onMouseLeave={handleMouseUp}
+				onWheel={handleWheel}
+				onKeyDown={handleKeyDown}
+			>
 				<img src={fileUrl} alt={title} className="max-h-full max-w-full object-contain select-none" style={{transform: `scale(${scale}) rotate(${rotation}deg) translate(${position.x / scale}px, ${position.y / scale}px)`, transition: isDragging ? 'none' : 'transform 0.1s ease-out'}} draggable={false} />
 			</div>
 		</div>
