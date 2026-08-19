@@ -14,6 +14,34 @@ _Nothing yet._
 
 ---
 
+## 0.4.2-beta.1
+
+First release published from the project's new home. This beta brings a real desktop viewer for comics and archives, a working Converter page, library filtering by media type, and a startup crash fix — plus the housekeeping needed to publish safely from here on.
+
+## Highlights
+
+### Fixed A Startup Crash
+
+- The comic/archive viewer imported a Node-only library directly in the renderer, which crashed the app on launch in some environments. Archive reading now happens in the main process over IPC, with pages loaded on demand instead of all at once.
+
+### Converter, For Real This Time
+
+- Added the Converter page — the conversion backend existed but had no UI to reach it.
+- Fixed a bug where GIF exports silently ignored the requested width and frame rate (ffmpeg only keeps the last `-vf` flag, and the code was passing two).
+- Converter IPC now validates every request against a shared schema instead of trusting renderer input.
+
+### Library, All Five Media Types
+
+- Video, audio, documents, comics, and images are now all filterable in the Library and Search pages — the other four were being indexed but couldn't be found.
+- The PDF viewer's worker is bundled locally instead of fetched from a CDN, so PDFs open offline and without a per-document network request.
+
+### Housekeeping
+
+- Fixed a settings/migration/dev-launcher cluster of type errors, and removed two settings toggles that wrote to fields nothing read.
+- Rebased the release pipeline (GitHub Releases, Scoop, Homebrew, Flatpak, in-app update checks) to point at this repository.
+
+---
+
 ## 0.4.1
 
 This patch release polishes the 0.4 line with a denser queue manager, clearer diagnostics, stronger checkout tooling, and refreshed user-facing docs.
