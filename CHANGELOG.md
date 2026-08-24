@@ -1,6 +1,6 @@
 # Changelog
 
-All notable user-facing changes to Arroxy.
+All notable user-facing changes to Arclio.
 
 This file is the source of truth for release notes. The release workflow reads the section matching the pushed tag (e.g. `## 0.3.5-beta.1`) and posts it as the GitHub Release body. Auto-generated "What's Changed" PR list + Full Changelog link is appended automatically.
 
