@@ -136,6 +136,13 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 		},
 		indexer: {indexFile: vi.fn().mockResolvedValue({success: true, mediaId: 'mock'}), indexFiles: vi.fn().mockResolvedValue([])},
 		archive: {listPages: vi.fn().mockResolvedValue({pages: []}), readPage: vi.fn().mockResolvedValue({ok: false, error: 'mock'}), close: vi.fn().mockResolvedValue(undefined)},
+		account: {
+			status: vi.fn().mockResolvedValue({connected: false, canStoreCredentials: true}),
+			beginPairing: vi.fn().mockResolvedValue({userCode: 'WXYZ-2346', verificationUrl: 'https://example.test/pair', expiresAt: Date.now() + 600_000}),
+			awaitPairing: vi.fn().mockResolvedValue({ok: true, status: {connected: true, canStoreCredentials: true}}),
+			cancelPairing: vi.fn().mockResolvedValue(undefined),
+			disconnect: vi.fn().mockResolvedValue({connected: false, canStoreCredentials: true})
+		},
 		sources: {add: vi.fn().mockResolvedValue({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: vi.fn().mockResolvedValue(undefined), list: vi.fn().mockResolvedValue([]), toggleWatch: vi.fn().mockResolvedValue(undefined), scan: vi.fn().mockResolvedValue({indexed: 0, errors: 0})},
 		converter: {
 			convert: vi.fn().mockResolvedValue({success: true, outputPath: '/mock/converted.mp4'}),

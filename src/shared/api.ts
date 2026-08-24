@@ -150,6 +150,9 @@ export interface AppApi {
 	}
 	indexer: {indexFile(filePath: string, options?: {title?: string; sourceKey?: string}): Promise<IndexerResult>; indexFiles(filePaths: string[]): Promise<IndexerResult[]>}
 	archive: {listPages(archivePath: string): Promise<ArchivePageList>; readPage(archivePath: string, entryName: string): Promise<ArchivePageData>; close(): Promise<void>}
+	// Account — device pairing. The device token deliberately never appears in
+	// this surface: the renderer shows the code and reacts to the status.
+	account: {status(): Promise<AccountStatus>; beginPairing(): Promise<PairingHandle>; awaitPairing(): Promise<AwaitPairingResult>; cancelPairing(): Promise<void>; disconnect(): Promise<AccountStatus>}
 	sources: {add(path: string, watchEnabled?: boolean): Promise<WatchedSource>; remove(id: string): Promise<void>; list(): Promise<WatchedSource[]>; toggleWatch(id: string, enabled: boolean): Promise<void>; scan(id: string): Promise<{indexed: number; errors: number}>}
 	converter: {
 		convert(inputPath: string, format: ConversionFormat, options?: Record<string, unknown>, outputDir?: string): Promise<ConversionResult>
@@ -340,3 +343,19 @@ export interface ConversionResult {
 	outputPath?: string
 	error?: string
 }
+
+export interface AccountStatus {
+	connected: boolean
+	accountEmail?: string
+	deviceId?: string
+	/** False when the OS cannot protect a token at rest; connecting is refused. */
+	canStoreCredentials: boolean
+}
+
+export interface PairingHandle {
+	userCode: string
+	verificationUrl: string
+	expiresAt: number
+}
+
+export type AwaitPairingResult = {ok: true; status: AccountStatus} | {ok: false; reason: 'expired' | 'denied' | 'cancelled' | 'failed'}

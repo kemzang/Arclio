@@ -203,6 +203,7 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 		},
 		indexer: {indexFile: (filePath, options) => ipcRenderer.invoke('indexer:indexFile', filePath, options), indexFiles: filePaths => ipcRenderer.invoke('indexer:indexFiles', filePaths)},
 		archive: {listPages: archivePath => ipcRenderer.invoke('archive:listPages', archivePath), readPage: (archivePath, entryName) => ipcRenderer.invoke('archive:readPage', archivePath, entryName), close: () => ipcRenderer.invoke('archive:close')},
+		account: {status: () => ipcRenderer.invoke('account:status'), beginPairing: () => ipcRenderer.invoke('account:beginPairing'), awaitPairing: () => ipcRenderer.invoke('account:awaitPairing'), cancelPairing: () => ipcRenderer.invoke('account:cancelPairing'), disconnect: () => ipcRenderer.invoke('account:disconnect')},
 		sources: {
 			add: (path, watchEnabled) => ipcRenderer.invoke('sources:add', path, watchEnabled),
 			remove: id => ipcRenderer.invoke('sources:remove', id),

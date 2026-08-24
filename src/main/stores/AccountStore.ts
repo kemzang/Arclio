@@ -35,11 +35,23 @@ export interface StoredAccount {
 }
 
 export class AccountStore {
-	private readonly store: Store<AccountData>
+	private instance: Store<AccountData> | null = null
+	private readonly cwd: string | undefined
 
 	/** `cwd` exists so tests can point the store at a temp directory, matching SettingsStore. */
 	constructor(cwd?: string) {
-		this.store = new Store<AccountData>({name: 'account', defaults: {}, ...(cwd ? {cwd} : {})})
+		this.cwd = cwd
+	}
+
+	/**
+	 * Opened on first use rather than in the constructor: electron-store resolves
+	 * an app path as soon as it is instantiated, so building the service would
+	 * otherwise touch the filesystem — and fail anywhere the Electron app object
+	 * is not fully initialised.
+	 */
+	private get store(): Store<AccountData> {
+		this.instance ??= new Store<AccountData>({name: 'account', defaults: {}, ...(this.cwd ? {cwd: this.cwd} : {})})
+		return this.instance
 	}
 
 	/** Whether the platform can protect a token at rest. */

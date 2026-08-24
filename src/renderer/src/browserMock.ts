@@ -658,6 +658,15 @@ export function installBrowserMock(): void {
 		indexer: {indexFile: () => Promise.resolve({success: true, mediaId: 'mock'}), indexFiles: () => Promise.resolve([])},
 		// Archive reading needs the main process; browser-mock has no comic fixtures.
 		archive: {listPages: () => Promise.resolve({pages: [], error: 'Archive reading is unavailable in browser-mock mode'}), readPage: () => Promise.resolve({ok: false as const, error: 'Archive reading is unavailable in browser-mock mode'}), close: () => Promise.resolve()},
+		// Pairing needs a real browser round-trip and OS credential storage, so
+		// browser-mock reports a disconnected account that cannot be connected.
+		account: {
+			status: () => Promise.resolve({connected: false, canStoreCredentials: false}),
+			beginPairing: () => Promise.reject(new Error('Pairing is unavailable in browser-mock mode')),
+			awaitPairing: () => Promise.resolve({ok: false as const, reason: 'failed' as const}),
+			cancelPairing: () => Promise.resolve(),
+			disconnect: () => Promise.resolve({connected: false, canStoreCredentials: false})
+		},
 		sources: {add: () => Promise.resolve({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: () => Promise.resolve(), list: () => Promise.resolve([]), toggleWatch: () => Promise.resolve(), scan: () => Promise.resolve({indexed: 0, errors: 0})},
 		converter: {
 			convert: () => Promise.resolve({success: true, outputPath: '/mock/converted.mp4'}),

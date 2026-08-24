@@ -97,5 +97,12 @@ export const IPC_CHANNELS = {
 	libraryDownloadHistoryCount: 'library:downloadHistory:count',
 	libraryDownloadHistoryCountByStatus: 'library:downloadHistory:countByStatus',
 	// Library events — main → renderer
-	libraryMediaCreated: 'library:media:created'
+	libraryMediaCreated: 'library:media:created',
+	// Account — device pairing. The device token never crosses to the renderer;
+	// only the code to display and the resulting status do.
+	accountStatus: 'account:status',
+	accountBeginPairing: 'account:beginPairing',
+	accountAwaitPairing: 'account:awaitPairing',
+	accountCancelPairing: 'account:cancelPairing',
+	accountDisconnect: 'account:disconnect'
 } as const

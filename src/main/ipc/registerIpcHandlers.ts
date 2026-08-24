@@ -36,6 +36,8 @@ import {registerIndexerHandlers} from './indexerHandlers.js'
 import {registerSourcesHandlers} from './sourcesHandlers.js'
 import {registerConverterHandlers} from './converterHandlers.js'
 import {registerArchiveHandlers} from './archiveHandlers.js'
+import {registerAccountHandlers} from './accountHandlers.js'
+import {AccountService} from '@main/services/AccountService.js'
 
 export interface IpcDependencies {
 	mainWindow: BrowserWindow
@@ -66,6 +68,7 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	const sourcesService = new SourcesService(indexerService)
 	const converterService = new ConverterService(binaryManager.getFfmpegPath())
 	const archiveService = new ArchiveService()
+	const accountService = new AccountService()
 	registerAppHandlers({warmupService, binaryManager, languageRef, graphicsPolicyProvider})
 	registerWindowHandlers(mainWindow)
 	registerDownloadHandlers({downloadService, probeService, settingsStore})
@@ -82,6 +85,7 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	registerSourcesHandlers(sourcesService)
 	registerConverterHandlers(converterService)
 	registerArchiveHandlers(archiveService)
+	registerAccountHandlers(accountService)
 
 	activeDownloadBridge?.detach()
 	activeDownloadBridge = new DownloadEventBridge(downloadService, mainWindow)
