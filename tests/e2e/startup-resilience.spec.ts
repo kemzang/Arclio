@@ -2,6 +2,8 @@ import path from 'node:path'
 import os from 'node:os'
 import fs from 'node:fs'
 import {expect, test, _electron as electron, type ElectronApplication} from '@playwright/test'
+import {resolveElectronCliArgs} from '../../scripts/dev-env.js'
+import {ensureYtDlpPath} from './fixtureHarness.js'
 
 function buildEnv(userDataDir: string): Record<string, string> {
 	const env: Record<string, string> = Object.fromEntries(Object.entries(process.env).filter((entry): entry is [string, string] => typeof entry[1] === 'string'))
@@ -12,7 +14,15 @@ function buildEnv(userDataDir: string): Record<string, string> {
 }
 
 async function launchApp(userDataDir: string): Promise<ElectronApplication> {
-	return electron.launch({args: [path.join(process.cwd(), 'out/main/index.js')], env: buildEnv(userDataDir)})
+	const env = buildEnv(userDataDir)
+	// MOCK_BACKEND mocks the token/probe/download services but NOT warmup, which
+	// still resolves yt-dlp for real. Each test uses a fresh ELECTRON_USER_DATA,
+	// so without this the runtime cache is empty and every run re-downloads
+	// ~30MB from GitHub — slow, network-dependent, and long enough that the
+	// warmup splash keeps covering the shell. Point warmup at a binary the
+	// harness already resolved (shared cache) instead.
+	env.ARCLIO_YT_DLP_PATH = await ensureYtDlpPath()
+	return electron.launch({args: [path.join(process.cwd(), 'out/main/index.js'), ...resolveElectronCliArgs(process.env)], env})
 }
 
 test('corrupted settings.json → app still reaches shell', async () => {
@@ -48,8 +58,15 @@ test('seeded pending queue → Queue Manager hydrates from persisted store', asy
 	// Write a queue.json that has one pending item — simulates an unfinished
 	// download from a previous session. The app should re-hydrate it in Queue
 	// Manager.
+	//
+	// The scheduler is seeded paused on purpose. It auto-starts persisted pending
+	// work on launch (correct behaviour: resume after a restart), and under
+	// MOCK_BACKEND the mocked DownloadService finishes instantly — so an unpaused
+	// seed races straight through pending → running → done and this test can
+	// never observe the hydrated state it exists to check.
 	const outputDir = os.tmpdir()
 	const queueData = {
+		schedulerPaused: true,
 		items: [
 			{
 				id: 'test-item-1',
@@ -76,7 +93,17 @@ test('seeded pending queue → Queue Manager hydrates from persisted store', asy
 	const page = await app.firstWindow()
 
 	await expect(page.locator('[data-testid="app-root"]')).toBeVisible({timeout: 15_000})
-	await page.getByRole('tab', {name: /^queue/i}).click()
+	// WarmupSplash covers the shell until warmup settles and swallows pointer
+	// events, so clicking straight after app-root appears races it and fails with
+	// "splash-overlay intercepts pointer events". Once it reaches `fading` it sets
+	// pointer-events: none, so waiting for the blocking states to clear is the
+	// real milestone — waiting for it to unmount is stricter than necessary.
+	await expect(page.locator('[data-testid="splash-overlay"]:not([data-state="fading"])')).toHaveCount(0, {timeout: 30_000})
+
+	// Selected by test id, not by accessible name: the tab is labelled from
+	// `queue.tabLabel`, which is translated ("Downloads" / "Téléchargements"),
+	// so a name matcher depends on the host locale the app boots in.
+	await page.locator('[data-testid="profiles-tab-queue"]').click()
 	await expect(page.locator('[data-testid="queue-manager-tab"]')).toBeVisible()
 	await expect(page.locator('[data-testid="queue-manager-row-test-item-1"]')).toHaveAttribute('data-status', 'pending')
 	await expect(page.locator('[data-testid="queue-manager-row-test-item-1"] [data-testid="queue-title"]')).toContainText('Seeded pending item')

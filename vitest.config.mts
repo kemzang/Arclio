@@ -31,10 +31,11 @@ const alias = [...Object.entries(aliasObj).map(([find, replacement]) => ({find, 
 // full App tree and drive it through userEvent, and `bun run check` runs the
 // test lane concurrently with typecheck/knip/madge/lint. Under that contention
 // heavy specs blew the default timeout and the mandated quality gate failed with
-// ~50 timeouts and zero assertion failures. These budgets are generous enough to
-// absorb a loaded machine while still catching a genuine hang.
-const TEST_TIMEOUT_MS = 20_000
-const HOOK_TIMEOUT_MS = 20_000
+// ~50 timeouts and zero assertion failures. The heaviest renderer specs were
+// still measured at ~22s under that contention, so the budget is generous
+// enough to absorb a loaded machine while still catching a genuine hang.
+const TEST_TIMEOUT_MS = 30_000
+const HOOK_TIMEOUT_MS = 30_000
 
 export default defineConfig({
 	test: {
