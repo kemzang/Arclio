@@ -30,8 +30,9 @@ import IconSkype from '~icons/logos/skype'
 import IconPocket from '~icons/simple-icons/pocket'
 import IconBuffer from '~icons/simple-icons/buffer'
 import IconDiaspora from '~icons/simple-icons/diaspora'
+import {SITE_URL} from '@shared/constants.js'
 
-const SHARE_URL = 'https://arclio.orionus.dev'
+const SHARE_URL = SITE_URL
 
 // Viber dropped: viber://forward URL is rejected by shell.openExternal's
 // http(s)-only allowlist (fileHandlers.ts), so the button silently did nothing.

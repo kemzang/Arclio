@@ -2,12 +2,13 @@ import fs from 'node:fs/promises'
 import {createHash} from 'node:crypto'
 import {gzip} from 'node:zlib'
 import {promisify} from 'node:util'
+import {FEEDBACK_DIAGNOSTICS_ENDPOINT} from '@shared/constants.js'
 
 const gzipAsync = promisify(gzip)
 
 export const FEEDBACK_DIAGNOSTIC_TAIL_BYTES = 1024 * 1024
 const FEEDBACK_DIAGNOSTIC_UPLOAD_TIMEOUT_MS = 10_000
-const DEFAULT_FEEDBACK_DIAGNOSTICS_ENDPOINT = 'https://arclio.orionus.dev/api/feedback-diagnostics'
+const DEFAULT_FEEDBACK_DIAGNOSTICS_ENDPOINT = FEEDBACK_DIAGNOSTICS_ENDPOINT
 const REPORT_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
 export interface FeedbackDiagnosticPayloadInput {

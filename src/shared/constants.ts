@@ -3,6 +3,12 @@ import type {AppSettings} from './types.js'
 
 export const DISCORD_URL = 'https://discord.gg/ueGvXwQH8y'
 
+// Public site. Single source of truth — the update banner, the About dialog,
+// the share dialog and the diagnostics endpoint all derive from this, so
+// moving to a new domain is one edit here instead of five across the codebase.
+export const SITE_URL = 'https://arclio.orionus.dev'
+export const FEEDBACK_DIAGNOSTICS_ENDPOINT = `${SITE_URL}/api/feedback-diagnostics`
+
 // Defaults — single source. Anywhere that needs a fallback for a missing field
 // (initial state, persistence migration, test fixtures, IPC fallback) must
 // import from here so changes propagate everywhere.

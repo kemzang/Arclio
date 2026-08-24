@@ -2,14 +2,14 @@ import {type ReactNode} from 'react'
 import {useTranslation} from 'react-i18next'
 import {ExternalLink, Share2} from 'lucide-react'
 import IconDiscord from '~icons/simple-icons/discord'
-import {DISCORD_URL} from '@shared/constants.js'
+import {DISCORD_URL, SITE_URL} from '@shared/constants.js'
 import {SourceCapabilityStrip} from '../shared/SourceCapabilityStrip.js'
 import {Button} from '../ui/button.js'
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '../ui/dialog.js'
 import {useAppStore} from '../../store/useAppStore.js'
 import appIcon from '../../assets/App-icon-HQ.png'
 
-const WEBSITE_URL = 'https://arclio.orionus.dev/'
+const WEBSITE_URL = `${SITE_URL}/`
 const GITHUB_URL = 'https://github.com/kemzang/Arclio'
 const NOTICES_URL = 'https://github.com/kemzang/Arclio/blob/main/THIRD_PARTY_NOTICES.txt'
 

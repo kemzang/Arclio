@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import type {UpdateAvailablePayload} from '@shared/types.js'
+import {SITE_URL} from '@shared/constants.js'
 
 export interface UpdateChannelState {
 	info: UpdateAvailablePayload | null
@@ -29,7 +30,7 @@ export function useUpdateChannel(): UpdateChannelState {
 	}
 
 	function download(): void {
-		void window.appApi.shell.openExternal('https://arclio.orionus.dev/')
+		void window.appApi.shell.openExternal(`${SITE_URL}/`)
 		setInfo(null)
 	}
 
