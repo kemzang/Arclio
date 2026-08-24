@@ -22,6 +22,7 @@
 			"@preload/*": ["./src/preload/*"],
 			"@renderer/*": ["./src/renderer/src/*"],
 			"@shared/*": ["./src/shared/*"],
+			"@arclio/auth": ["./packages/auth/src/index.ts"],
 			"@arclio/media": ["./packages/media/src/index.ts"],
 			"@arclio/metadata": ["./packages/metadata/src/index.ts"],
 			"yt-dlp-bridge": ["./packages/yt-dlp-bridge/src/index.ts"],
@@ -29,5 +30,5 @@
 			"ytdlp-errors": ["./packages/ytdlp-errors/src/index.ts"]
 		}
 	},
-	"include": ["src", "electron.vite.config.ts", "vitest.config.mts", "playwright.config.ts", "playwright.browser.config.ts", "tests", "scripts", "workers", "packages/yt-dlp-bridge/src", "packages/yt-dlp-bridge/tests", "packages/ytdlp-errors/src", "packages/ytdlp-errors/tests"]
+	"include": ["src", "electron.vite.config.ts", "vitest.config.mts", "playwright.config.ts", "playwright.browser.config.ts", "tests", "scripts", "workers", "packages/yt-dlp-bridge/src", "packages/yt-dlp-bridge/tests", "packages/ytdlp-errors/src", "packages/ytdlp-errors/tests", "packages/auth/src"]
 }
