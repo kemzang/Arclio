@@ -8,6 +8,7 @@ import {pathToFileURL} from 'node:url'
 import {promisify} from 'node:util'
 import {checkEmbeddedPayload, hostEmbeddedTarget} from './build/embeddedPayload.js'
 
+const OZONE_X11_ARG = '--ozone-platform=x11' as const
 const RENDERER_HOST = '127.0.0.1' as const
 const RENDERER_PORT_BASE = 20_000
 const RENDERER_PORT_RANGE = 20_000
@@ -600,7 +601,25 @@ function parseElectronLauncherOptions(args: string[]): LauncherEnvOptions & {fre
 	return options
 }
 
-function applyElectronLauncherEnv(env: NodeJS.ProcessEnv, options: LauncherEnvOptions): NodeJS.ProcessEnv {
+/**
+ * Extra argv forwarded to the Electron process spawned by `electron-vite dev`.
+ *
+ * On a Wayland session Electron 42 segfaults inside the first
+ * `new BrowserWindow()`, killing the app before any window appears. Forcing
+ * XWayland avoids it, but only through real Electron argv: the ozone platform is
+ * resolved from the command line before main module code runs, so neither
+ * `ELECTRON_OZONE_PLATFORM_HINT` nor `app.commandLine.appendSwitch` takes
+ * effect. Setting `ELECTRON_CLI_ARGS` in the child env does not work either —
+ * electron-vite's CLI overwrites that variable with its own `--` passthrough
+ * args — so these must be appended after `--` on the electron-vite command line.
+ */
+export function resolveElectronCliArgs(env: NodeJS.ProcessEnv, platform: NodeJS.Platform = process.platform): string[] {
+	if (platform !== 'linux') return []
+	if (env.XDG_SESSION_TYPE !== 'wayland' && !env.WAYLAND_DISPLAY) return []
+	return [OZONE_X11_ARG]
+}
+
+export function applyElectronLauncherEnv(env: NodeJS.ProcessEnv, options: LauncherEnvOptions, platform: NodeJS.Platform = process.platform): NodeJS.ProcessEnv {
 	const childEnv = {...env}
 	if (options.sandbox) delete childEnv.ELECTRON_DISABLE_SANDBOX
 	else childEnv.ELECTRON_DISABLE_SANDBOX = '1'
@@ -609,7 +628,11 @@ function applyElectronLauncherEnv(env: NodeJS.ProcessEnv, options: LauncherEnvOp
 	// native Wayland and the main process never needs to relaunch. The relaunch
 	// path (ARCLIO_FORCE_WAYLAND_RELAUNCH) races with the Vite dev server and
 	// causes ERR_CONNECTION_REFUSED on the first renderer load.
-	if (process.platform === 'linux' && (env.XDG_SESSION_TYPE === 'wayland' || env.WAYLAND_DISPLAY)) {
+	//
+	// The hint alone is NOT enough — see resolveElectronCliArgs. It is still set
+	// so that running the Electron binary directly (outside electron-vite) picks
+	// the same platform.
+	if (platform === 'linux' && (env.XDG_SESSION_TYPE === 'wayland' || env.WAYLAND_DISPLAY)) {
 		childEnv.ELECTRON_OZONE_PLATFORM_HINT = 'x11'
 	}
 
@@ -643,7 +666,10 @@ async function runLauncher(args: string[]): Promise<void> {
 		const options = parseElectronLauncherOptions(launcherArgs)
 		if (options.fresh) await clearFreshMainLog(env)
 		await ensureEmbeddedHostBinaries(repoRoot, baseEnv)
-		await spawnChecked(commandName('bun'), ['run', 'electron-vite', 'dev'], {cwd: repoRoot, env: applyElectronLauncherEnv(baseEnv, options)})
+		const electronEnv = applyElectronLauncherEnv(baseEnv, options)
+		const electronCliArgs = resolveElectronCliArgs(electronEnv)
+		const electronViteArgs = ['run', 'electron-vite', 'dev', ...(electronCliArgs.length > 0 ? ['--', ...electronCliArgs] : [])]
+		await spawnChecked(commandName('bun'), electronViteArgs, {cwd: repoRoot, env: electronEnv})
 		return
 	}
 

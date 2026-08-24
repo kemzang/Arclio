@@ -6,7 +6,7 @@ import os from 'node:os'
 import path from 'node:path'
 import {afterEach, describe, expect, it} from 'vitest'
 
-import {assertLauncherPortAvailable, computeDefaultRendererPort, createDoctorReport, createToolVersionMismatchMessage, resolveDevEnv, resolveDoctorDevEnv, resolveRuntimeDevEnv} from '../../scripts/dev-env.js'
+import {applyElectronLauncherEnv, assertLauncherPortAvailable, computeDefaultRendererPort, createDoctorReport, createToolVersionMismatchMessage, resolveDevEnv, resolveDoctorDevEnv, resolveElectronCliArgs, resolveRuntimeDevEnv} from '../../scripts/dev-env.js'
 
 const servers: net.Server[] = []
 const tempDirs: string[] = []
@@ -232,5 +232,30 @@ describe('dev-env pure helpers', () => {
 
 		expect(process.listenerCount('SIGINT')).toBe(beforeSigint)
 		expect(process.listenerCount('SIGTERM')).toBe(beforeSigterm)
+	})
+	it('forces the x11 ozone platform through real Electron argv on a Wayland session', () => {
+		// Neither ELECTRON_OZONE_PLATFORM_HINT nor app.commandLine.appendSwitch works:
+		// Electron 42 resolves the ozone platform from the real command line before
+		// main module code runs, and the first new BrowserWindow() otherwise segfaults.
+		expect(resolveElectronCliArgs({XDG_SESSION_TYPE: 'wayland'}, 'linux')).toEqual(['--ozone-platform=x11'])
+	})
+
+	it('detects a Wayland session from WAYLAND_DISPLAY alone', () => {
+		expect(resolveElectronCliArgs({WAYLAND_DISPLAY: 'wayland-0'}, 'linux')).toEqual(['--ozone-platform=x11'])
+	})
+
+	it('forwards no extra Electron argv on a non-Wayland Linux session', () => {
+		expect(resolveElectronCliArgs({XDG_SESSION_TYPE: 'x11'}, 'linux')).toEqual([])
+	})
+
+	it('forwards no extra Electron argv off Linux even when Wayland vars leak in', () => {
+		expect(resolveElectronCliArgs({XDG_SESSION_TYPE: 'wayland'}, 'win32')).toEqual([])
+	})
+
+	it('still exports the ozone platform hint for direct Electron invocations', () => {
+		const result = applyElectronLauncherEnv({XDG_SESSION_TYPE: 'wayland'}, {}, 'linux')
+
+		expect(result.ELECTRON_OZONE_PLATFORM_HINT).toBe('x11')
+		expect(applyElectronLauncherEnv({XDG_SESSION_TYPE: 'x11'}, {}, 'linux').ELECTRON_OZONE_PLATFORM_HINT).toBeUndefined()
 	})
 })
