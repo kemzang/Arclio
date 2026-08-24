@@ -18,6 +18,10 @@ async function withServer(handler: http.RequestListener, run: (url: string) => P
 		if (!address || typeof address === 'string') throw new Error('test server did not bind to a TCP port')
 		await run(`http://127.0.0.1:${address.port}`)
 	} finally {
+		// Several specs abort mid-response, which leaves the socket open: plain
+		// server.close() then waits for it to drain and the test hangs until the
+		// suite timeout instead of finishing. Drop live connections first.
+		server.closeAllConnections()
 		await new Promise<void>((resolve, reject) => {
 			server.close(err => (err ? reject(err) : resolve()))
 		})
@@ -53,7 +57,15 @@ describe('BinaryDownloader', () => {
 					res.on('close', () => clearInterval(interval))
 				},
 				async url => {
-					await expect(downloadFile(url, destination, undefined, {maxDurationMs: 50, stallTimeoutMs: 1000})).rejects.toThrow(DownloadStalledError)
+					// maxDurationMs is also handed to make-fetch-happen as its per-request
+					// timeout, and that layer retries 5 times with exponential backoff
+					// (~31s total) without honouring the abort signal between attempts. A
+					// budget under the connect time therefore trips the retry ladder instead
+					// of the duration cap. Keep it comfortably above connect latency: the
+					// stream still needs hours to deliver its advertised 1MiB at 1 byte/10ms,
+					// so the duration cap is unambiguously what fires, and stallTimeoutMs
+					// stays above the 10ms byte interval so the stall path cannot win.
+					await expect(downloadFile(url, destination, undefined, {maxDurationMs: 2_000, stallTimeoutMs: 5_000})).rejects.toThrow(DownloadStalledError)
 				}
 			)
 

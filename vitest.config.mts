@@ -27,11 +27,20 @@ const aliasObj = {
 // every `~icons/*` to a single inert SVG stub.
 const alias = [...Object.entries(aliasObj).map(([find, replacement]) => ({find, replacement})), {find: /^~icons\/.*/, replacement: path.resolve('tests/__mocks__/icons-stub.tsx')}]
 
+// Vitest's 5s default is too tight for this suite: the jsdom projects render the
+// full App tree and drive it through userEvent, and `bun run check` runs the
+// test lane concurrently with typecheck/knip/madge/lint. Under that contention
+// heavy specs blew the default timeout and the mandated quality gate failed with
+// ~50 timeouts and zero assertion failures. These budgets are generous enough to
+// absorb a loaded machine while still catching a genuine hang.
+const TEST_TIMEOUT_MS = 20_000
+const HOOK_TIMEOUT_MS = 20_000
+
 export default defineConfig({
 	test: {
 		projects: [
-			{resolve: {alias}, test: {name: 'node', globals: true, include: ['tests/**/*.test.ts'], environment: 'node', setupFiles: ['tests/setup.ts']}},
-			{resolve: {alias}, test: {name: 'jsdom', globals: true, include: ['tests/**/*.test.tsx'], environment: 'jsdom', setupFiles: ['tests/setup.ts']}}
+			{resolve: {alias}, test: {name: 'node', globals: true, include: ['tests/**/*.test.ts'], environment: 'node', setupFiles: ['tests/setup.ts'], testTimeout: TEST_TIMEOUT_MS, hookTimeout: HOOK_TIMEOUT_MS}},
+			{resolve: {alias}, test: {name: 'jsdom', globals: true, include: ['tests/**/*.test.tsx'], environment: 'jsdom', setupFiles: ['tests/setup.ts'], testTimeout: TEST_TIMEOUT_MS, hookTimeout: HOOK_TIMEOUT_MS}}
 		]
 	}
 })
