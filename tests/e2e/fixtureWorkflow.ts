@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import {expect, _electron as electron, type ElectronApplication, type Page, type Locator} from '@playwright/test'
+import {resolveElectronCliArgs} from '../../scripts/dev-env.js'
 import {buildFixtureElectronEnv, ensureHostEmbeddedBinaries, ensureYtDlpPath, fixtureUrl, type DenyProxy, type FixtureServer, type FixtureServerRequest} from './fixtureHarness.js'
 
 let fixtureRuntimePromise: Promise<string> | null = null
@@ -74,7 +75,7 @@ export async function writeClipboard(app: ElectronApplication, text: string): Pr
 }
 
 export async function launchFixtureApp(ytDlpPath: string, input: {userDataDir: string; fixtureServer: FixtureServer; denyProxy: DenyProxy}): Promise<{app: ElectronApplication; page: Page}> {
-	const app = await electron.launch({args: [path.join(process.cwd(), 'out', 'main', 'index.js')], env: buildFixtureElectronEnv({userDataDir: input.userDataDir, fixtureServer: input.fixtureServer, denyProxy: input.denyProxy, ytDlpPath})})
+	const app = await electron.launch({args: [path.join(process.cwd(), 'out', 'main', 'index.js'), ...resolveElectronCliArgs(process.env)], env: buildFixtureElectronEnv({userDataDir: input.userDataDir, fixtureServer: input.fixtureServer, denyProxy: input.denyProxy, ytDlpPath})})
 	const page = await app.firstWindow()
 	await expect(page.locator('[data-testid="app-root"]')).toBeVisible({timeout: 60_000})
 	await expect(page.locator('[data-testid="profiles-main-input"]')).toBeVisible()

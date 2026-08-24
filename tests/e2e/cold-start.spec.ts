@@ -3,6 +3,7 @@ import os from 'node:os'
 import fs from 'node:fs'
 import crypto from 'node:crypto'
 import {expect, test, _electron as electron, type Page} from '@playwright/test'
+import {resolveElectronCliArgs} from '../../scripts/dev-env.js'
 
 function defaultExePath(): string {
 	if (process.platform === 'win32') return path.join(process.cwd(), 'dist', 'win-unpacked', 'Arclio.exe')
@@ -95,6 +96,7 @@ test('packaged exe: downloads binaries, completes warmup, shows wizard', async (
 
 	const app = await electron.launch({
 		executablePath: PACKAGED_EXE,
+		args: resolveElectronCliArgs(process.env),
 		env: {
 			...baseEnv,
 			ELECTRON_USER_DATA: userDataDir

@@ -2,6 +2,7 @@ import path from 'node:path'
 import os from 'node:os'
 import fs from 'node:fs'
 import {expect, test, _electron as electron, type ElectronApplication} from '@playwright/test'
+import {resolveElectronCliArgs} from '../../scripts/dev-env.js'
 
 function buildEnv(userDataDir: string): Record<string, string> {
 	const env: Record<string, string> = Object.fromEntries(Object.entries(process.env).filter((entry): entry is [string, string] => typeof entry[1] === 'string'))
@@ -12,7 +13,10 @@ function buildEnv(userDataDir: string): Record<string, string> {
 }
 
 async function launchApp(userDataDir: string): Promise<ElectronApplication> {
-	return electron.launch({args: [path.join(process.cwd(), 'out/main/index.js')], env: buildEnv(userDataDir)})
+	// Same x11 forcing as the dev launcher: on a Wayland session Electron
+	// segfaults inside the first BrowserWindow, which surfaces here only as
+	// "Target page, context or browser has been closed".
+	return electron.launch({args: [path.join(process.cwd(), 'out/main/index.js'), ...resolveElectronCliArgs(process.env)], env: buildEnv(userDataDir)})
 }
 
 test('app shell renders with expected structure', async () => {
