@@ -1,9 +1,9 @@
-Arroxy — Third-party software notices
+Arclio — Third-party software notices
 ======================================
 
-Arroxy itself is licensed under the MIT license. The third-party tools
-listed below are used by Arroxy. Each tool is invoked as a separate
-subprocess; their licenses do not propagate to Arroxy's source code.
+Arclio itself is licensed under the MIT license. The third-party tools
+listed below are used by Arclio. Each tool is invoked as a separate
+subprocess; their licenses do not propagate to Arclio's source code.
 
 -----------------------------------------------------------------------
 1. FFmpeg + FFprobe (https://ffmpeg.org/)
@@ -30,11 +30,11 @@ License: The Unlicense (public domain dedication)
 
 yt-dlp is downloaded at runtime from https://github.com/yt-dlp/yt-dlp
 (stable channel) or https://github.com/yt-dlp/yt-dlp-nightly-builds
-(nightly channel). It is not bundled with Arroxy's installer.
+(nightly channel). It is not bundled with Arclio's installer.
 
 Full Unlicense text: https://unlicense.org/
 
 -----------------------------------------------------------------------
-Arroxy License (MIT)
+Arclio License (MIT)
 -----------------------------------------------------------------------
 See LICENSE in the project root.

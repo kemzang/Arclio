@@ -1,4 +1,4 @@
-# Arroxy Feedback Upload Worker
+# Arclio Feedback Upload Worker
 
 Stores automatic feedback diagnostic log uploads in a private Cloudflare R2 bucket after a user submits the Tally feedback form.
 
@@ -8,7 +8,7 @@ Endpoint:
 POST https://arroxy.orionus.dev/api/feedback-diagnostics
 ```
 
-The desktop app opens Tally immediately. If the user submits the form, Arroxy uploads a gzip-compressed, redacted tail of `main.log` with the same renderer-generated `report_id` that was sent to Tally as a hidden field. The Worker stores the object in R2 under that report id and returns the same id to the app.
+The desktop app opens Tally immediately. If the user submits the form, Arclio uploads a gzip-compressed, redacted tail of `main.log` with the same renderer-generated `report_id` that was sent to Tally as a hidden field. The Worker stores the object in R2 under that report id and returns the same id to the app.
 
 ## Deploy
 
@@ -33,7 +33,7 @@ The route in `wrangler.jsonc` assumes `orionus.dev` is already on Cloudflare and
 
 ## Required Cloudflare Hardening
 
-Do not put a secret in Arroxy. The app is open source and desktop binaries are inspectable, so the endpoint must be safe as a public ingest endpoint.
+Do not put a secret in Arclio. The app is open source and desktop binaries are inspectable, so the endpoint must be safe as a public ingest endpoint.
 
 Configure these in Cloudflare:
 
