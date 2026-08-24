@@ -125,6 +125,7 @@
 		"electron-store": "11.0.2",
 		"electron-updater": "6.8.9",
 		"electron-window-state": "5.0.3",
+		"fast-xml-parser": "5.11.0",
 		"i18next": "26.3.1",
 		"lucide-react": "1.17.0",
 		"make-fetch-happen": "15.0.6",

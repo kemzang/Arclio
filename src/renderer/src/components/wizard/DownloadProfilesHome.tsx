@@ -421,7 +421,7 @@ export function DownloadProfilesHome(): ReactNode {
 							<Link2 data-icon="inline-start" aria-hidden />
 							{t('wizard.steps.url')}
 						</TabsTrigger>
-						<TabsTrigger value="queue" data-queue-active={queueIsActive ? 'true' : undefined} className={cn('downloads-tab-trigger h-12 flex-[1.22_1_0] rounded-full border-0 px-3 text-[14px] data-active:border-transparent', queueIsActive && 'queue-tab-working')}>
+						<TabsTrigger value="queue" data-testid="profiles-tab-queue" data-queue-active={queueIsActive ? 'true' : undefined} className={cn('downloads-tab-trigger h-12 flex-[1.22_1_0] rounded-full border-0 px-3 text-[14px] data-active:border-transparent', queueIsActive && 'queue-tab-working')}>
 							<Inbox data-icon="inline-start" aria-hidden />
 							{t('queue.tabLabel')}
 							{queueCount > 0 ? (

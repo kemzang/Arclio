@@ -109,24 +109,42 @@ export function documentPlaceholderLabel(documentPath: string): string {
 	return ext ? ext.toUpperCase() : 'Document'
 }
 
+/** Writes an already-decoded raster to the thumbnail box as a flattened JPEG. */
+async function writeThumbnailFromImage(image: Buffer, outputPath: string): Promise<void> {
+	const sharp = (await import('sharp')).default
+	await sharp(image)
+		.resize(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT, {fit: 'inside', background: {r: 0, g: 0, b: 0, alpha: 0}})
+		.flatten({background: {r: 255, g: 255, b: 255}})
+		.jpeg({quality: THUMBNAIL_QUALITY})
+		.toFile(outputPath)
+}
+
 async function generateDocumentThumbnail(documentPath: string, outputPath: string): Promise<void> {
-	// PDFs get a real first-page render. Every other document format in
-	// DOCUMENT_EXTS (.epub, .doc, .docx, .txt, .rtf, .odt) has no rasteriser
-	// here, so it falls back to a placeholder labelled with its own format.
-	if (extname(documentPath).toLowerCase() === '.pdf') {
+	// PDFs are rasterised from their first page, EPUBs use the cover art already
+	// packed in the container. The remaining DOCUMENT_EXTS (.doc, .docx, .txt,
+	// .rtf, .odt) have no renderer here and fall back to a labelled placeholder.
+	//
+	// Both paths are best-effort: a corrupt, encrypted or unusual file must not
+	// fail the whole indexing pass, so any failure drops to the placeholder.
+	const extension = extname(documentPath).toLowerCase()
+
+	if (extension === '.pdf') {
 		try {
 			const {renderPdfFirstPage} = await import('@main/services/PdfThumbnailRenderer.js')
-			const png = await renderPdfFirstPage(documentPath, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT)
-			const sharp = (await import('sharp')).default
-			await sharp(png)
-				.flatten({background: {r: 255, g: 255, b: 255}})
-				.jpeg({quality: THUMBNAIL_QUALITY})
-				.toFile(outputPath)
+			await writeThumbnailFromImage(await renderPdfFirstPage(documentPath, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT), outputPath)
 			return
 		} catch (error) {
-			// A corrupt, encrypted or password-protected PDF must not fail the
-			// whole indexing pass — fall through to the placeholder.
 			logger.warn('PDF thumbnail render failed, using placeholder', {documentPath, error: error instanceof Error ? error.message : String(error)})
+		}
+	}
+
+	if (extension === '.epub') {
+		try {
+			const {extractEpubCover} = await import('@main/services/EpubCoverExtractor.js')
+			await writeThumbnailFromImage(await extractEpubCover(documentPath), outputPath)
+			return
+		} catch (error) {
+			logger.warn('EPUB cover extraction failed, using placeholder', {documentPath, error: error instanceof Error ? error.message : String(error)})
 		}
 	}
 
