@@ -1,6 +1,6 @@
 import {spawn} from 'node:child_process'
 import {access, constants, mkdir} from 'node:fs/promises'
-import {join} from 'node:path'
+import {extname, join} from 'node:path'
 import {app} from 'electron'
 import electronLog from 'electron-log/main.js'
 
@@ -97,17 +97,40 @@ async function generateImageThumbnail(imagePath: string, outputPath: string): Pr
 		.toFile(outputPath)
 }
 
-async function generatePdfThumbnail(_pdfPath: string, outputPath: string): Promise<void> {
-	// For PDF, we'll try to use ffmpeg to extract the first page
-	// If ffmpeg fails, we'll create a placeholder
-	try {
-		// Try to read the PDF and convert first page to image
-		// This requires pdf2image or similar, which we don't have
-		// For now, create a placeholder
-		await createPlaceholderThumbnail(outputPath, 'PDF')
-	} catch {
-		await createPlaceholderThumbnail(outputPath, 'PDF')
+/**
+ * Label drawn on a document placeholder thumbnail.
+ *
+ * The `document` media type covers every DOCUMENT_EXTS entry (.pdf, .epub,
+ * .doc, .docx, .txt, .rtf, .odt), so the label is derived from the file itself
+ * rather than hardcoded — a .docx used to be shown as "PDF".
+ */
+export function documentPlaceholderLabel(documentPath: string): string {
+	const ext = extname(documentPath).replace('.', '')
+	return ext ? ext.toUpperCase() : 'Document'
+}
+
+async function generateDocumentThumbnail(documentPath: string, outputPath: string): Promise<void> {
+	// PDFs get a real first-page render. Every other document format in
+	// DOCUMENT_EXTS (.epub, .doc, .docx, .txt, .rtf, .odt) has no rasteriser
+	// here, so it falls back to a placeholder labelled with its own format.
+	if (extname(documentPath).toLowerCase() === '.pdf') {
+		try {
+			const {renderPdfFirstPage} = await import('@main/services/PdfThumbnailRenderer.js')
+			const png = await renderPdfFirstPage(documentPath, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT)
+			const sharp = (await import('sharp')).default
+			await sharp(png)
+				.flatten({background: {r: 255, g: 255, b: 255}})
+				.jpeg({quality: THUMBNAIL_QUALITY})
+				.toFile(outputPath)
+			return
+		} catch (error) {
+			// A corrupt, encrypted or password-protected PDF must not fail the
+			// whole indexing pass — fall through to the placeholder.
+			logger.warn('PDF thumbnail render failed, using placeholder', {documentPath, error: error instanceof Error ? error.message : String(error)})
+		}
 	}
+
+	await createPlaceholderThumbnail(outputPath, documentPlaceholderLabel(documentPath))
 }
 
 async function generateComicThumbnail(comicPath: string, outputPath: string): Promise<void> {
@@ -223,7 +246,7 @@ export class ThumbnailService {
 					await generateImageThumbnail(filePath, outputPath)
 					break
 				case 'document':
-					await generatePdfThumbnail(filePath, outputPath)
+					await generateDocumentThumbnail(filePath, outputPath)
 					break
 				case 'comic':
 					await generateComicThumbnail(filePath, outputPath)
