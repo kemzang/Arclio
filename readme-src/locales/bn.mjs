@@ -54,7 +54,7 @@ sudo apt install -y xvfb
 ### ক্লোন করুন ও চালান
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arclio
+git clone https://github.com/kemzang/Arclio
 cd Arclio
 mise install           # সুপারিশকৃত; pinned tools ম্যানুয়ালি সক্রিয় থাকলে বাদ দিন
 bun run bootstrap
@@ -238,7 +238,7 @@ export const bn = {
   dl_warning_p1:
     "Arclio ওপেন-সোর্স এবং MIT-লাইসেন্সকৃত। Windows এবং macOS বিল্ডগুলো **কোড-সাইন করা নয়** — Apple Developer ID এবং Windows EV কোড-সাইনিং সার্টিফিকেটের প্রতিটির জন্য বছরে কয়েকশো ডলার খরচ হয়, যা একটি ইন্ডি প্রজেক্ট নিজের পকেট থেকে দেয়। এই সিগনেচার ছাড়া, Windows SmartScreen এবং macOS Gatekeeper প্রথম লঞ্চে আপনাকে সতর্ক করবে। সতর্কবার্তার মানে হলো *আপনার OS প্রকাশকটিকে চেনে না* — এর মানে এই নয় যে Arclio ম্যালওয়্যার।",
   dl_warning_p2:
-    "তিনটি উপায়ে নিজেই Arclio যাচাই করুন, ক্রমবর্ধমান কঠোরতায়:\n\n- **সোর্স পড়ুন।** প্রতিটি লাইন [GitHub](https://github.com/antonio-orionus/Arclio)-এ আছে এবং আপনি [সোর্স থেকে বিল্ড করতে](#tech) পারবেন।\n- **SHA256 মিলিয়ে দেখুন।** প্রকাশিত [`SHA256SUMS`](../../releases/latest) এর সাথে আপনার ফাইল মেলান — নিচে [আপনার ডাউনলোড যাচাই করুন](#verify) দেখুন।\n- **তৃতীয়-পক্ষ স্ক্যান চালান।** ফাইলটি [VirusTotal](https://www.virustotal.com)-এ আপলোড করুন।",
+    "তিনটি উপায়ে নিজেই Arclio যাচাই করুন, ক্রমবর্ধমান কঠোরতায়:\n\n- **সোর্স পড়ুন।** প্রতিটি লাইন [GitHub](https://github.com/kemzang/Arclio)-এ আছে এবং আপনি [সোর্স থেকে বিল্ড করতে](#tech) পারবেন।\n- **SHA256 মিলিয়ে দেখুন।** প্রকাশিত [`SHA256SUMS`](../../releases/latest) এর সাথে আপনার ফাইল মেলান — নিচে [আপনার ডাউনলোড যাচাই করুন](#verify) দেখুন।\n- **তৃতীয়-পক্ষ স্ক্যান চালান।** ফাইলটি [VirusTotal](https://www.virustotal.com)-এ আপলোড করুন।",
 
   dl_win_first_h3: "Windows প্রথম লঞ্চ",
   shot_smartscreen_more_alt:

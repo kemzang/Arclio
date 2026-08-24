@@ -36,7 +36,7 @@ Both registry workflows build tarballs with Bun, then publish through registry t
 
 ## Reporting bugs / requesting features
 
-Use the [issue templates](https://github.com/antonio-orionus/Arclio/issues/new/choose). For bugs, include:
+Use the [issue templates](https://github.com/kemzang/Arclio/issues/new/choose). For bugs, include:
 
 - OS + version (e.g. Windows 11 23H2, macOS 14.4, Ubuntu 24.04)
 - Install channel (NSIS installer, Portable, Scoop, Homebrew, Winget, AppImage, tar.gz, Flatpak, DMG)
@@ -58,7 +58,7 @@ Bun installs JavaScript dependencies, but it does not replace native OS prerequi
 Run `bun run doctor` after setup. It reports the specific missing tool or artifact when possible.
 
 ```bash
-git clone https://github.com/antonio-orionus/Arclio.git
+git clone https://github.com/kemzang/Arclio.git
 cd Arclio
 mise install
 bun run bootstrap

@@ -28,7 +28,7 @@ jobs:
 
       - uses: vedantmgoyal9/winget-releaser@7bd472be23763def6e16bd06cc8b1cdfab0e2fd5
         with:
-          identifier: AntonioOrionus.Arclio
+          identifier: Kemzang.Arclio
           installers-regex: '^Arclio-win-x64-Setup\.exe$'
           token: ${{ secrets.WINGET_TOKEN }}
           release-tag: ${{ steps.get_latest.outputs.tag }}

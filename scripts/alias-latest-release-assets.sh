@@ -5,7 +5,7 @@ set -euo pipefail
 # It uploads versionless aliases to the current latest release without
 # modifying existing versioned assets or latest*.yml updater metadata.
 
-repo="${REPO:-antonio-orionus/Arclio}"
+repo="${REPO:-kemzang/Arclio}"
 tag="${1:-}"
 
 if [[ -z "$tag" ]]; then

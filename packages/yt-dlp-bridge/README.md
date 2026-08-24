@@ -2,14 +2,14 @@
 
 [![registry version](https://img.shields.io/npm/v/yt-dlp-bridge.svg)](https://www.npmjs.com/package/yt-dlp-bridge)
 [![registry downloads](https://img.shields.io/npm/dm/yt-dlp-bridge.svg)](https://www.npmjs.com/package/yt-dlp-bridge)
-[![CI](https://github.com/antonio-orionus/Arclio/actions/workflows/ci.yml/badge.svg)](https://github.com/antonio-orionus/Arclio/actions/workflows/ci.yml)
+[![CI](https://github.com/kemzang/Arclio/actions/workflows/ci.yml/badge.svg)](https://github.com/kemzang/Arclio/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 TypeScript library for safe, no-shell `yt-dlp` integration in Node.js services: workflow planning, argv generation, command facts, environment checks, process execution, output parsing, secret redaction, filesystem policy, and structured errors.
 
 `yt-dlp-bridge` is intentionally app-agnostic. It is used by Arclio and `yt-dlp-mcp-server`, but it does not own Electron token minting, binary resolution, retries, queue lifecycle, settings stores, plugin installation, or UI progress policy.
 
-Source and contributions live in the Arclio monorepo at [`packages/yt-dlp-bridge`](https://github.com/antonio-orionus/Arclio/tree/main/packages/yt-dlp-bridge).
+Source and contributions live in the Arclio monorepo at [`packages/yt-dlp-bridge`](https://github.com/kemzang/Arclio/tree/main/packages/yt-dlp-bridge).
 
 - [Install](#install)
 - [Features](#features)
@@ -301,7 +301,7 @@ import { redactArgs } from "yt-dlp-bridge/redaction";
 ## Development
 
 ```bash
-git clone https://github.com/antonio-orionus/Arclio.git
+git clone https://github.com/kemzang/Arclio.git
 cd Arclio
 mise install           # recommended; skip if you manually activated the pinned tools
 bun run bootstrap
@@ -326,7 +326,7 @@ bun run bootstrap
 
 **`outputTemplate must not contain parent-directory traversal`** - Relative templates cannot contain `..` segments unless `YTDLP_MCP_ALLOW_ARBITRARY_OUTPUT_PATHS=true`.
 
-Bugs and feature requests: [GitHub Issues](https://github.com/antonio-orionus/Arclio/issues).
+Bugs and feature requests: [GitHub Issues](https://github.com/kemzang/Arclio/issues).
 
 ## License
 

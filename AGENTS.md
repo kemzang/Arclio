@@ -404,7 +404,7 @@ Renderer shows `<UpdateBanner>` between title bar and content area; `resolveActi
 
 On Linux, electron-updater's default updater is `AppImageUpdater` (no `package-type` file shipped — we only build AppImage + tar.gz). `AppImageUpdater.isUpdaterActive()` returns `false` when `process.env.APPIMAGE` is unset, which silently short-circuits `AppUpdater.checkForUpdates()` (returns `null`, logs `"APPIMAGE env is not defined, current application is not an AppImage"`, never emits `update-available`). So tar.gz Linux users get **no update banner at all** — not an error, just silence. Verified in `node_modules/electron-updater/out/AppImageUpdater.js:17-28` and `AppUpdater.js:253-256`.
 
-**Decision: do not fix.** Audience is small (most Linux users get AppImage or Flatpak). Fixing would require bypassing electron-updater for this case and hitting `https://api.github.com/repos/antonio-orionus/Arclio/releases/latest` directly to drive our own `updater:available` IPC.
+**Decision: do not fix.** Audience is small (most Linux users get AppImage or Flatpak). Fixing would require bypassing electron-updater for this case and hitting `https://api.github.com/repos/kemzang/Arclio/releases/latest` directly to drive our own `updater:available` IPC.
 
 ### IPC + types
 
@@ -488,7 +488,7 @@ Windows is built separately via a dedicated Windows Installer workflow (smoke-te
 
 Arclio uses GitHub immutable releases for release asset integrity and the GitHub release asset verification UI. The workflow finishes all mutable release work while the release is still a draft, then publishes/undrafts as the last step. `actions/attest` is intentionally not used for release assets; immutable releases create release attestations for the published assets, while workflow provenance attestations are a separate SLSA/build-chain concern. Keep `SHA256SUMS` for package-manager hashes and offline verification; keep updater metadata (`latest*.yml`) and blockmaps outside the checksum contract.
 
-`.github/workflows/release_to_winget.yml` triggers on the `released` event: once `publish-release` un-drafts the release, the SHA-pinned `vedantmgoyal9/winget-releaser` action runs `komac update AntonioOrionus.Arclio --submit` → opens a PR against `microsoft/winget-pkgs`. Microsoft reviewers merge within hours-to-a-day. Keep that third-party action pinned to a full commit SHA because it receives `WINGET_TOKEN`.
+`.github/workflows/release_to_winget.yml` triggers on the `released` event: once `publish-release` un-drafts the release, the SHA-pinned `vedantmgoyal9/winget-releaser` action runs `komac update Kemzang.Arclio --submit` → opens a PR against `microsoft/winget-pkgs`. Microsoft reviewers merge within hours-to-a-day. Keep that third-party action pinned to a full commit SHA because it receives `WINGET_TOKEN`.
 
 ### Required GitHub repo secret
 
@@ -500,15 +500,15 @@ Despite the name, this single token authenticates Scoop, Homebrew, **and** Winge
 
 ### Initial Winget submission (one-time, done)
 
-The `vedantmgoyal9/winget-releaser` action can only **update** an existing winget package, not create one. For Arclio this was done once via [komac](https://github.com/russellbanks/Komac) (`komac new AntonioOrionus.Arclio …`) → submitted PR [microsoft/winget-pkgs#365414](https://github.com/microsoft/winget-pkgs/pull/365414). Future tag pushes auto-bump the existing manifest with no manual work.
+The `vedantmgoyal9/winget-releaser` action can only **update** an existing winget package, not create one. For Arclio this was done once via [komac](https://github.com/russellbanks/Komac) (`komac new Kemzang.Arclio …`) → submitted PR [microsoft/winget-pkgs#365414](https://github.com/microsoft/winget-pkgs/pull/365414). Future tag pushes auto-bump the existing manifest with no manual work.
 
 If we ever change the PackageIdentifier, repeat that one-time submission for the new identifier and update `release_to_winget.yml`.
 
 ### External repos this pipeline writes to
 
-- [`antonio-orionus/scoop-bucket`](https://github.com/antonio-orionus/scoop-bucket) — single `bucket/arclio.json` manifest, auto-bumped per release
-- [`antonio-orionus/homebrew-arclio`](https://github.com/antonio-orionus/homebrew-arclio) — single `Casks/arclio.rb` cask with `on_arm`/`on_intel` stanzas, auto-bumped per release
-- [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs) — community repo; PRs land at `manifests/a/AntonioOrionus/Arclio/<version>/`
+- [`kemzang/scoop-bucket`](https://github.com/kemzang/scoop-bucket) — single `bucket/arclio.json` manifest, auto-bumped per release
+- [`kemzang/homebrew-arclio`](https://github.com/kemzang/homebrew-arclio) — single `Casks/arclio.rb` cask with `on_arm`/`on_intel` stanzas, auto-bumped per release
+- [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs) — community repo; PRs land at `manifests/k/Kemzang/Arclio/<version>/`
 
 GitHub Releases ships: NSIS installer, portable `.exe`, arm64 DMG, x64 DMG, AppImage, tar.gz source, and a Flatpak bundle. No Snap / AUR — community can maintain those if demand appears.
 
@@ -555,7 +555,7 @@ README files (English + 20 locales) are **generated** — never edit them direct
 
 The build script validates **key parity** — if any locale is missing a key that `en` has (or has an extra key), the build fails loudly. Every new string must be translated into every supported language.
 
-The landing site (`arclio.orionus.dev`) lives in a separate repo: [antonio-orionus/arclio-web](https://github.com/antonio-orionus/arclio-web). Don't update landing copy from here — open a PR there instead.
+The landing site (`arclio.orionus.dev`) lives in a separate repo: [kemzang-Bryan/arclio_web](https://github.com/kemzang-Bryan/arclio_web). Don't update landing copy from here — open a PR there instead.
 
 ### Adding a new feature
 

@@ -54,7 +54,7 @@ sudo apt install -y xvfb
 ### Клонирање и покретање
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arclio
+git clone https://github.com/kemzang/Arclio
 cd Arclio
 mise install           # препоручено; прескочите ако су pinned алати ручно активирани
 bun run bootstrap
@@ -240,7 +240,7 @@ export const sr = {
   dl_warning_p1:
     "Arclio је open-source пројекат са MIT лиценцом. Windows и macOS верзије **нису потписане кодом** — сертификати Apple Developer ID и Windows EV за потписивање кода коштају стотине долара годишње, које независни пројекат плаћа из сопственог џепа. Без тих потписа, Windows SmartScreen и macOS Gatekeeper ће вас упозорити при првом покретању. Упозорења значе *да ваш оперативни систем не препознаје издавача* — не значе да је Arclio малвер.",
   dl_warning_p2:
-    "Три начина да сами проверите Arclio, по растућој строгости:\n\n- **Прочитајте изворни код.** Свака линија је на [GitHub](https://github.com/antonio-orionus/Arclio)-у и можете [изградити апликацију из изворног кода](#tech).\n- **Проверите SHA256.** Упоредите свој фајл са објављеним [`SHA256SUMS`](../../releases/latest) — погледајте [Верификујте преузимање](#verify) испод.\n- **Покрените скенирање треће стране.** Отпремите фајл на [VirusTotal](https://www.virustotal.com).",
+    "Три начина да сами проверите Arclio, по растућој строгости:\n\n- **Прочитајте изворни код.** Свака линија је на [GitHub](https://github.com/kemzang/Arclio)-у и можете [изградити апликацију из изворног кода](#tech).\n- **Проверите SHA256.** Упоредите свој фајл са објављеним [`SHA256SUMS`](../../releases/latest) — погледајте [Верификујте преузимање](#verify) испод.\n- **Покрените скенирање треће стране.** Отпремите фајл на [VirusTotal](https://www.virustotal.com).",
 
   dl_win_first_h3: "Windows: прво покретање",
   shot_smartscreen_more_alt:

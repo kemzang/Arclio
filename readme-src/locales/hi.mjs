@@ -54,7 +54,7 @@ sudo apt install -y xvfb
 ### क्लोन करें और चलाएँ
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arclio
+git clone https://github.com/kemzang/Arclio
 cd Arclio
 mise install           # सुझाया गया; pinned tools मैन्युअली सक्रिय हों तो छोड़ दें
 bun run bootstrap
@@ -240,7 +240,7 @@ export const hi = {
   dl_warning_p1:
     "Arclio ओपन-सोर्स और MIT-लाइसेंस्ड है। Windows और macOS बिल्ड **कोड-साइन्ड नहीं हैं** — Apple Developer ID और Windows EV कोड-साइनिंग सर्टिफ़िकेट में हर साल सैकड़ों डॉलर का खर्च होता है, जो एक इंडी प्रोजेक्ट अपनी जेब से भरता है। उन सिग्नेचर के बिना Windows SmartScreen और macOS Gatekeeper पहले लॉन्च पर चेतावनी देंगे। चेतावनी का मतलब है *आपका OS प्रकाशक को नहीं पहचानता* — इसका मतलब यह नहीं कि Arclio मैलवेयर है।",
   dl_warning_p2:
-    "Arclio को ख़ुद वेरीफ़ाई करने के तीन तरीक़े, बढ़ती कठोरता के क्रम में:\n\n- **सोर्स पढ़ें।** हर लाइन [GitHub](https://github.com/antonio-orionus/Arclio) पर है और आप [सोर्स से बिल्ड कर सकते हैं](#tech)।\n- **SHA256 जाँचें।** अपनी फ़ाइल को प्रकाशित [`SHA256SUMS`](../../releases/latest) से मिलाएँ — नीचे [अपना डाउनलोड वेरीफ़ाई करें](#verify) देखें।\n- **थर्ड-पार्टी स्कैन चलाएँ।** फ़ाइल को [VirusTotal](https://www.virustotal.com) पर अपलोड करें।",
+    "Arclio को ख़ुद वेरीफ़ाई करने के तीन तरीक़े, बढ़ती कठोरता के क्रम में:\n\n- **सोर्स पढ़ें।** हर लाइन [GitHub](https://github.com/kemzang/Arclio) पर है और आप [सोर्स से बिल्ड कर सकते हैं](#tech)।\n- **SHA256 जाँचें।** अपनी फ़ाइल को प्रकाशित [`SHA256SUMS`](../../releases/latest) से मिलाएँ — नीचे [अपना डाउनलोड वेरीफ़ाई करें](#verify) देखें।\n- **थर्ड-पार्टी स्कैन चलाएँ।** फ़ाइल को [VirusTotal](https://www.virustotal.com) पर अपलोड करें।",
 
   dl_win_first_h3: "Windows पहला लॉन्च",
   shot_smartscreen_more_alt:

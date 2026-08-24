@@ -8,7 +8,8 @@
 	"packageManager": "bun@1.2.23",
 	"engines": {"node": "24.16.0", "bun": "1.2.23"},
 	"workspaces": ["packages/*", "infrastructure/*", "apps/*"],
-	"author": {"name": "Antonio Orionus", "email": "orionusAI@proton.me", "url": "https://x.com/OrionusAI"},
+	"author": {"name": "Bryan Kemzang", "email": "bryankemzang@gmail.com"},
+	"contributors": [{"name": "Antonio Orionus", "url": "https://x.com/OrionusAI"}],
 	"license": "MIT",
 	"scripts": {
 		"agents:skills:restore": "bunx skills experimental_install",

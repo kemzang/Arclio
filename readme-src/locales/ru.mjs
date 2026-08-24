@@ -54,7 +54,7 @@ sudo apt install -y xvfb
 ### Клонирование и запуск
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arclio
+git clone https://github.com/kemzang/Arclio
 cd Arclio
 mise install           # рекомендуется; пропустите, если закреплённые инструменты активированы вручную
 bun run bootstrap
@@ -242,7 +242,7 @@ export const ru = {
   dl_warning_p1:
     "Arclio — открытый проект с лицензией MIT. Сборки для Windows и macOS **не подписаны кодом** — сертификаты Apple Developer ID и Windows EV для подписи кода стоят сотни долларов в год, и независимый проект платит за них из своего кармана. Без этих подписей Windows SmartScreen и macOS Gatekeeper будут предупреждать вас при первом запуске. Предупреждения означают *что ваша ОС не распознаёт издателя* — они не говорят о том, что Arclio является вредоносным ПО.",
   dl_warning_p2:
-    "Три способа проверить Arclio самостоятельно, в порядке нарастающей строгости:\n\n- **Прочитайте исходный код.** Каждая строка находится на [GitHub](https://github.com/antonio-orionus/Arclio), и вы можете [собрать Arclio из исходников](#tech).\n- **Проверьте SHA256.** Сравните свой файл с опубликованным [`SHA256SUMS`](../../releases/latest) — см. [Проверьте ваш загрузку](#verify) ниже.\n- **Запустите стороннее сканирование.** Загрузите файл на [VirusTotal](https://www.virustotal.com).",
+    "Три способа проверить Arclio самостоятельно, в порядке нарастающей строгости:\n\n- **Прочитайте исходный код.** Каждая строка находится на [GitHub](https://github.com/kemzang/Arclio), и вы можете [собрать Arclio из исходников](#tech).\n- **Проверьте SHA256.** Сравните свой файл с опубликованным [`SHA256SUMS`](../../releases/latest) — см. [Проверьте ваш загрузку](#verify) ниже.\n- **Запустите стороннее сканирование.** Загрузите файл на [VirusTotal](https://www.virustotal.com).",
 
   dl_win_first_h3: "Windows: первый запуск",
   shot_smartscreen_more_alt:

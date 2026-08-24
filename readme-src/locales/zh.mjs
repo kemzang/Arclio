@@ -54,7 +54,7 @@ sudo apt install -y xvfb
 ### 克隆并运行
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arclio
+git clone https://github.com/kemzang/Arclio
 cd Arclio
 mise install           # 推荐；如果已手动启用固定版本工具，可跳过
 bun run bootstrap
@@ -222,7 +222,7 @@ export const zh = {
   dl_warning_p1:
     "Arclio 是开源软件，采用 MIT 许可证。Windows 和 macOS 版本**未经代码签名** — Apple Developer ID 和 Windows EV 代码签名证书每年各需数百美元，对于独立项目来说完全自掏腰包。没有这些签名，Windows SmartScreen 和 macOS Gatekeeper 在首次启动时会向你发出警告。这些警告的意思是*你的系统不认识该发布者* — 并不意味着 Arclio 是恶意软件。",
   dl_warning_p2:
-    "三种自行验证 Arclio 的方式，按严格程度递增：\n\n- **查看源码。** 每一行都在 [GitHub](https://github.com/antonio-orionus/Arclio) 上，你也可以[从源码构建](#tech)。\n- **校验 SHA256。** 将你的文件与发布的 [`SHA256SUMS`](../../releases/latest) 对比 — 见下方[验证你的下载](#verify)。\n- **运行第三方扫描。** 将文件上传至 [VirusTotal](https://www.virustotal.com)。",
+    "三种自行验证 Arclio 的方式，按严格程度递增：\n\n- **查看源码。** 每一行都在 [GitHub](https://github.com/kemzang/Arclio) 上，你也可以[从源码构建](#tech)。\n- **校验 SHA256。** 将你的文件与发布的 [`SHA256SUMS`](../../releases/latest) 对比 — 见下方[验证你的下载](#verify)。\n- **运行第三方扫描。** 将文件上传至 [VirusTotal](https://www.virustotal.com)。",
 
   dl_win_first_h3: "Windows 首次启动",
   shot_smartscreen_more_alt:

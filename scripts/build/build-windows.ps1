@@ -24,7 +24,7 @@
   Path to the Arclio source. Default: current directory.
 
 .PARAMETER CloneRef
-  If set, ignores RepoPath and clones github.com/antonio-orionus/Arclio
+  If set, ignores RepoPath and clones github.com/kemzang/Arclio
   at this tag/branch into ./Arclio-src. Example: -CloneRef v0.3.1
 
 .PARAMETER OutputDir
@@ -199,7 +199,7 @@ Write-Ok "winget present"
 
 if ($CloneRef -ne '') {
   $RepoPath = Join-Path (Get-Location).Path 'Arclio-src'
-  Write-Step "fetching antonio-orionus/Arclio@$CloneRef -> $RepoPath"
+  Write-Step "fetching kemzang/Arclio@$CloneRef -> $RepoPath"
   if (-not (Test-CommandExists 'git')) {
     Install-WingetPackage -Id 'Git.Git' -Label 'Git for Windows'
     Update-EnvPath
@@ -207,7 +207,7 @@ if ($CloneRef -ne '') {
   if (Test-Path $RepoPath) {
     Write-Notice "$RepoPath already exists; reusing it as-is. Delete it manually for a clean clone."
   } else {
-    git clone --depth 1 --branch $CloneRef https://github.com/antonio-orionus/Arclio.git $RepoPath
+    git clone --depth 1 --branch $CloneRef https://github.com/kemzang/Arclio.git $RepoPath
     if ($LASTEXITCODE -ne 0) { throw "git clone failed (rc=$LASTEXITCODE)" }
   }
 }

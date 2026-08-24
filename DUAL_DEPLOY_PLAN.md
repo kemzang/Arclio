@@ -9,7 +9,7 @@
 Ship Arclio in two distribution modes from one codebase:
 
 1. **Electron desktop app** (current): packaged for Windows/macOS/Linux via electron-builder, distributed through Scoop/Homebrew/Winget/Flatpak/GitHub Releases.
-2. **Self-hosted server**: single docker image (`ghcr.io/antonio-orionus/arclio:latest`) deployable via `docker compose up`, fits homelab stacks alongside *arr suite, Traefik/Caddy/nginx-proxy-manager, Portainer, etc.
+2. **Self-hosted server**: single docker image (`ghcr.io/kemzang/arclio:latest`) deployable via `docker compose up`, fits homelab stacks alongside *arr suite, Traefik/Caddy/nginx-proxy-manager, Portainer, etc.
 
 Constraint: **no logic duplication**. ~95% of code lives in shared `core/` + `shared/` consumed by both shells. Each shell is a thin (~15-20 file) glue layer.
 
@@ -342,7 +342,7 @@ CMD ["node", "server.js"]
 ```yaml
 services:
   arclio:
-    image: ghcr.io/antonio-orionus/arclio:latest
+    image: ghcr.io/kemzang/arclio:latest
     container_name: arclio
     restart: unless-stopped
     ports:
@@ -434,7 +434,7 @@ Homelab norm: single admin user, possibly behind Authelia/Authentik. Build small
 - `tsc -p tsconfig.core.json` — hard boundary on core deps.
 - `grep -rE "require\(['\"]electron['\"]\)" dist/server/` must be empty.
 - `docker buildx build --platform linux/amd64,linux/arm64` on every PR.
-- Publish to `ghcr.io/antonio-orionus/arclio:{version,latest,beta}` on tag matrix:
+- Publish to `ghcr.io/kemzang/arclio:{version,latest,beta}` on tag matrix:
   - Stable tag (`v1.2.3`) → `:1.2.3` + `:latest`.
   - Beta tag (`v1.2.3-beta.1`) → `:1.2.3-beta.1` + `:beta`.
 
@@ -565,7 +565,7 @@ Strict order. Steps 1-4 are pure refactor (desktop-only, ships independently). S
 | GitHub Releases | NSIS, portable.exe, DMG (arm64/x64), AppImage, tar.gz, Flatpak | unchanged |
 | Scoop | `arclio.json` manifest | unchanged |
 | Homebrew | `arclio.rb` cask | unchanged |
-| Winget | `AntonioOrionus.Arclio` | unchanged |
+| Winget | `Kemzang.Arclio` | unchanged |
 | Flatpak | bundle | unchanged |
 | **ghcr.io** | — | **`arclio:{version,latest,beta}` multi-arch image (NEW)** |
 

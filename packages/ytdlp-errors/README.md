@@ -1,6 +1,6 @@
 # ytdlp-errors
 
-[![npm](https://img.shields.io/npm/v/ytdlp-errors.svg)](https://www.npmjs.com/package/ytdlp-errors) [![CI](https://github.com/antonio-orionus/Arclio/actions/workflows/ci.yml/badge.svg)](https://github.com/antonio-orionus/Arclio/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/v/ytdlp-errors.svg)](https://www.npmjs.com/package/ytdlp-errors) [![CI](https://github.com/kemzang/Arclio/actions/workflows/ci.yml/badge.svg)](https://github.com/kemzang/Arclio/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Classify yt-dlp stderr into a closed taxonomy of error kinds. Zero dependencies, pure regex, ESM + CJS, snapshot-tested against upstream yt-dlp source.
 

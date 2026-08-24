@@ -166,9 +166,9 @@ describe('release asset names', () => {
 
 		expect(template).toContain('## <a id="install"></a>{{dl_h2}}')
 		for (const asset of stableAssets) {
-			expect(template).toContain(`https://github.com/antonio-orionus/Arclio/releases/latest/download/${asset}`)
+			expect(template).toContain(`https://github.com/kemzang/Arclio/releases/latest/download/${asset}`)
 		}
-		expect(template).toContain('https://github.com/antonio-orionus/Arclio/releases/latest/download/SHA256SUMS')
+		expect(template).toContain('https://github.com/kemzang/Arclio/releases/latest/download/SHA256SUMS')
 		expect(template).toContain('img.shields.io/badge/Windows-Setup-0078D4')
 		expect(template).not.toContain('| 🪟 Windows')
 		expect(template).not.toContain('| 🍎 macOS')

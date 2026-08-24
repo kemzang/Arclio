@@ -54,7 +54,7 @@ sudo apt install -y xvfb
 ### Κλωνοποίηση & εκτέλεση
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arclio
+git clone https://github.com/kemzang/Arclio
 cd Arclio
 mise install           # προτείνεται· παραλείψτε το αν ενεργοποιήσατε χειροκίνητα τα pinned tools
 bun run bootstrap
@@ -242,7 +242,7 @@ export const el = {
   dl_warning_p1:
     "Το Arclio είναι ανοιχτού κώδικα και αδειοδοτημένο με MIT. Τα builds για Windows και macOS **δεν υπογράφονται ψηφιακά** — τα πιστοποιητικά Apple Developer ID και Windows EV code-signing κοστίζουν εκατοντάδες δολάρια το χρόνο, που ένα indie project πληρώνει από την τσέπη του. Χωρίς αυτές τις υπογραφές, το Windows SmartScreen και το macOS Gatekeeper θα σας προειδοποιήσουν κατά την πρώτη εκκίνηση. Οι προειδοποιήσεις σημαίνουν *ότι το OS σας δεν αναγνωρίζει τον εκδότη* — δεν σημαίνουν ότι το Arclio είναι κακόβουλο λογισμικό.",
   dl_warning_p2:
-    "Τρεις τρόποι να επαληθεύσετε το Arclio μόνοι σας, με αυξανόμενη αυστηρότητα:\n\n- **Διαβάστε τον πηγαίο κώδικα.** Κάθε γραμμή βρίσκεται στο [GitHub](https://github.com/antonio-orionus/Arclio) και μπορείτε να [κατασκευάσετε από τον πηγαίο κώδικα](#tech).\n- **Ελέγξτε το SHA256.** Αντιστοιχίστε το αρχείο σας με το δημοσιευμένο [`SHA256SUMS`](../../releases/latest) — δείτε παρακάτω [Επαληθεύστε τη λήψη σας](#verify).\n- **Εκτελέστε σάρωση τρίτου.** Ανεβάστε το αρχείο στο [VirusTotal](https://www.virustotal.com).",
+    "Τρεις τρόποι να επαληθεύσετε το Arclio μόνοι σας, με αυξανόμενη αυστηρότητα:\n\n- **Διαβάστε τον πηγαίο κώδικα.** Κάθε γραμμή βρίσκεται στο [GitHub](https://github.com/kemzang/Arclio) και μπορείτε να [κατασκευάσετε από τον πηγαίο κώδικα](#tech).\n- **Ελέγξτε το SHA256.** Αντιστοιχίστε το αρχείο σας με το δημοσιευμένο [`SHA256SUMS`](../../releases/latest) — δείτε παρακάτω [Επαληθεύστε τη λήψη σας](#verify).\n- **Εκτελέστε σάρωση τρίτου.** Ανεβάστε το αρχείο στο [VirusTotal](https://www.virustotal.com).",
 
   dl_win_first_h3: "Windows — πρώτη εκκίνηση",
   shot_smartscreen_more_alt:

@@ -54,7 +54,7 @@ sudo apt install -y xvfb
 ### Clone & run
 
 \`\`\`bash
-git clone https://github.com/antonio-orionus/Arclio
+git clone https://github.com/kemzang/Arclio
 cd Arclio
 mise install           # recommended; skip if you manually activated the pinned tools
 bun run bootstrap
@@ -235,7 +235,7 @@ export const en = {
   dl_warning_p1:
     "Arclio is open-source and MIT-licensed. The Windows and macOS builds are **not code-signed** — Apple Developer ID and Windows EV code-signing certificates each cost hundreds of dollars per year, which an indie project pays out of pocket. Without those signatures, Windows SmartScreen and macOS Gatekeeper will warn you on first launch. The warnings mean *your OS doesn't recognize the publisher* — they don't mean Arclio is malware.",
   dl_warning_p2:
-    "Three ways to verify Arclio yourself, in increasing rigor:\n\n- **Read the source.** Every line is on [GitHub](https://github.com/antonio-orionus/Arclio) and you can [build it from source](#tech).\n- **Check the SHA256.** Match your file against the published [`SHA256SUMS`](https://github.com/antonio-orionus/Arclio/releases/latest/download/SHA256SUMS) — see [Verify your download](#verify) below.\n- **Run a third-party scan.** Upload the file to [VirusTotal](https://www.virustotal.com).",
+    "Three ways to verify Arclio yourself, in increasing rigor:\n\n- **Read the source.** Every line is on [GitHub](https://github.com/kemzang/Arclio) and you can [build it from source](#tech).\n- **Check the SHA256.** Match your file against the published [`SHA256SUMS`](https://github.com/kemzang/Arclio/releases/latest/download/SHA256SUMS) — see [Verify your download](#verify) below.\n- **Run a third-party scan.** Upload the file to [VirusTotal](https://www.virustotal.com).",
 
   dl_win_first_h3: "Windows first launch",
   shot_smartscreen_more_alt:

@@ -37,8 +37,8 @@
 
   <launchable type="desktop-id">io.github.antonio_orionus.Arclio.desktop</launchable>
 
-  <url type="homepage">https://github.com/antonio-orionus/Arclio</url>
-  <url type="bugtracker">https://github.com/antonio-orionus/Arclio/issues</url>
+  <url type="homepage">https://github.com/kemzang/Arclio</url>
+  <url type="bugtracker">https://github.com/kemzang/Arclio/issues</url>
 
   <keywords>
     <keyword>youtube</keyword>
@@ -59,23 +59,23 @@
   <screenshots>
     <screenshot type="default">
       <caption>Paste a URL to get started</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Main-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Main-screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Pick your quality and format</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Choosing-format-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Choosing-format-screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Choose where to save</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Choosing-destination-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Choosing-destination-screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Download queue with parallel progress</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Downloading-in-parallel-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Downloading-in-parallel-screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Subtitle language and format selection</caption>
-      <image>https://raw.githubusercontent.com/antonio-orionus/Arclio/main/build/Subtitles-screenshot.png</image>
+      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Subtitles-screenshot.png</image>
     </screenshot>
   </screenshots>
 

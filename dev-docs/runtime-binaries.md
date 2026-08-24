@@ -18,7 +18,7 @@ Arclio owns yt-dlp runtime updates through a signed runtime-binary manifest. The
 Runtime startup resolves the latest Arclio runtime manifest from:
 
 ```text
-https://github.com/antonio-orionus/arclio-runtime-binaries/releases/latest/download/runtime-index-v1.json
+https://github.com/kemzang-Bryan/arclio-runtime-binaries/releases/latest/download/runtime-index-v1.json
 ```
 
 That `latest` pointer is for Arclio's manifest only. The manifest contents must list immutable upstream artifact URLs with concrete release versions, sizes, and SHA-256 hashes. Manifest validation rejects artifact URLs that contain `/latest`, requires HTTPS, and allowlists provider hosts.
