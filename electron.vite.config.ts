@@ -32,6 +32,11 @@ export function isExternalMainBuildImport(id: string): boolean {
 	if (id === 'electron' || id.startsWith('electron/')) return true
 	if (id.startsWith('node:')) return true
 	if (id === 'better-sqlite3' || id.startsWith('better-sqlite3/')) return true
+	// Prebuilt native binding (loads a platform-specific .node). Bundling it
+	// would inline the loader and break the `.node` resolution, exactly like
+	// better-sqlite3. electron-builder ships node_modules and auto-unpacks
+	// native modules from the asar, so a runtime bare import resolves.
+	if (id === '@napi-rs/canvas' || id.startsWith('@napi-rs/canvas/')) return true
 	if (id.startsWith('@main/') || id.startsWith('@shared/')) return false
 	if (/^[./]/.test(id)) return false
 	if (WINDOWS_ABS_PATH.test(id)) return false
