@@ -1,6 +1,6 @@
 import {useState, useCallback} from 'react'
 import {useTranslation} from 'react-i18next'
-import {FolderOpen, Globe, Monitor, Clipboard, Subtitles, Image, Download, Library, Settings, Zap, Shield, Info, FolderPlus, Trash2, RotateCcw} from 'lucide-react'
+import {FolderOpen, Globe, Monitor, Clipboard, Subtitles, Image, Download, Library, Settings, Zap, Shield, Info, FolderPlus, Trash2, RotateCcw, UserRound} from 'lucide-react'
 import {SUPPORTED_LANGS, LANGUAGE_NATIVE_NAMES, type SupportedLang} from '@shared/i18n/index.js'
 import {useAppStore} from '../../store/useAppStore.js'
 import {Button} from '../../components/ui/button.js'
@@ -8,6 +8,7 @@ import {Switch} from '../../components/ui/switch.js'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '../../components/ui/select.js'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../components/ui/tabs.js'
 import {ThemeToggle} from '../../components/system/ThemeToggle.js'
+import {AccountPanel} from '../../components/system/AccountPanel.js'
 
 const TABS = [
 	{id: 'general', icon: Settings, label: 'General'},
@@ -16,6 +17,7 @@ const TABS = [
 	{id: 'sources', icon: FolderPlus, label: 'Sources'},
 	{id: 'converter', icon: Zap, label: 'Converter'},
 	{id: 'viewer', icon: Monitor, label: 'Viewer'},
+	{id: 'account', icon: UserRound, label: 'Account'},
 	{id: 'advanced', icon: Shield, label: 'Advanced'}
 ] as const
 
@@ -141,6 +143,10 @@ export function SettingsPage(): React.JSX.Element {
 					<div className="text-sm text-[var(--text-subtle)]">
 						<p>Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally.</p>
 					</div>
+				</TabsContent>
+
+				<TabsContent value="account" className="flex-1 space-y-4 mt-4">
+					<AccountPanel />
 				</TabsContent>
 
 				<TabsContent value="advanced" className="flex-1 space-y-4 mt-4">
