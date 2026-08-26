@@ -667,6 +667,7 @@ export function installBrowserMock(): void {
 			cancelPairing: () => Promise.resolve(),
 			disconnect: () => Promise.resolve({connected: false, canStoreCredentials: false})
 		},
+		sync: {now: () => Promise.resolve({status: 'skipped' as const, reason: 'not-connected' as const}), state: () => Promise.resolve({running: false, lastRunAt: null, lastOutcome: null})},
 		sources: {add: () => Promise.resolve({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: () => Promise.resolve(), list: () => Promise.resolve([]), toggleWatch: () => Promise.resolve(), scan: () => Promise.resolve({indexed: 0, errors: 0})},
 		converter: {
 			convert: () => Promise.resolve({success: true, outputPath: '/mock/converted.mp4'}),

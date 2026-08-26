@@ -37,6 +37,11 @@ import {registerSourcesHandlers} from './sourcesHandlers.js'
 import {registerConverterHandlers} from './converterHandlers.js'
 import {registerArchiveHandlers} from './archiveHandlers.js'
 import {registerAccountHandlers} from './accountHandlers.js'
+import {registerSyncHandlers} from './syncHandlers.js'
+import {SyncService} from '@main/services/SyncService.js'
+import {SyncScheduler} from '@main/services/SyncScheduler.js'
+import {createMediaRepository} from '@main/db/repositories/mediaRepository.js'
+import {AccountStore} from '@main/stores/AccountStore.js'
 import {AccountService} from '@main/services/AccountService.js'
 
 export interface IpcDependencies {
@@ -68,7 +73,14 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	const sourcesService = new SourcesService(indexerService)
 	const converterService = new ConverterService(binaryManager.getFfmpegPath())
 	const archiveService = new ArchiveService()
-	const accountService = new AccountService()
+	// One store shared by both services: the account owns the credentials and the
+	// sync cursor, and both must be cleared together on disconnect.
+	const accountStore = new AccountStore()
+	const accountService = new AccountService({store: accountStore})
+	const syncScheduler = new SyncScheduler(new SyncService(createMediaRepository(libraryDb), accountStore))
+	// Started only once an account exists: an unpaired app must not wake up every
+	// 15 minutes to discover it has nothing to do.
+	if (accountService.status().connected) syncScheduler.start()
 	registerAppHandlers({warmupService, binaryManager, languageRef, graphicsPolicyProvider})
 	registerWindowHandlers(mainWindow)
 	registerDownloadHandlers({downloadService, probeService, settingsStore})
@@ -85,7 +97,8 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	registerSourcesHandlers(sourcesService)
 	registerConverterHandlers(converterService)
 	registerArchiveHandlers(archiveService)
-	registerAccountHandlers(accountService)
+	registerAccountHandlers(accountService, syncScheduler)
+	registerSyncHandlers(syncScheduler)
 
 	activeDownloadBridge?.detach()
 	activeDownloadBridge = new DownloadEventBridge(downloadService, mainWindow)

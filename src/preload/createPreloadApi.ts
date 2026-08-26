@@ -211,6 +211,7 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 			toggleWatch: (id, enabled) => ipcRenderer.invoke('sources:toggleWatch', id, enabled),
 			scan: id => ipcRenderer.invoke('sources:scan', id)
 		},
+		sync: {now: () => ipcRenderer.invoke('sync:now'), state: () => ipcRenderer.invoke('sync:state')},
 		converter: {
 			convert: (inputPath, format, options, outputDir) => ipcRenderer.invoke('converter:convert', inputPath, format, options, outputDir),
 			convertVideo: (inputPath, options) => ipcRenderer.invoke('converter:convertVideo', inputPath, options),

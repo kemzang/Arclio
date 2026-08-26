@@ -153,6 +153,7 @@ export interface AppApi {
 	// Account — device pairing. The device token deliberately never appears in
 	// this surface: the renderer shows the code and reacts to the status.
 	account: {status(): Promise<AccountStatus>; beginPairing(): Promise<PairingHandle>; awaitPairing(): Promise<AwaitPairingResult>; cancelPairing(): Promise<void>; disconnect(): Promise<AccountStatus>}
+	sync: {now(): Promise<SyncOutcome>; state(): Promise<SyncState>}
 	sources: {add(path: string, watchEnabled?: boolean): Promise<WatchedSource>; remove(id: string): Promise<void>; list(): Promise<WatchedSource[]>; toggleWatch(id: string, enabled: boolean): Promise<void>; scan(id: string): Promise<{indexed: number; errors: number}>}
 	converter: {
 		convert(inputPath: string, format: ConversionFormat, options?: Record<string, unknown>, outputDir?: string): Promise<ConversionResult>
@@ -359,3 +360,12 @@ export interface PairingHandle {
 }
 
 export type AwaitPairingResult = {ok: true; status: AccountStatus} | {ok: false; reason: 'expired' | 'denied' | 'cancelled' | 'failed'}
+
+export type SyncOutcome = {status: 'skipped'; reason: 'not-connected'} | {status: 'ok'; pulled: number; pushed: number; deleted: number} | {status: 'unauthorized'} | {status: 'failed'; error: string}
+
+export interface SyncState {
+	/** True while a round is running; a second request is refused rather than queued. */
+	running: boolean
+	lastRunAt: number | null
+	lastOutcome: SyncOutcome | null
+}

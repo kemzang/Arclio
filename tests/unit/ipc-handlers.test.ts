@@ -11,6 +11,9 @@ const removeHandlerCalls: string[] = []
 vi.mock('electron', () => ({
 	app: {getName: vi.fn().mockReturnValue('arclio'), getVersion: vi.fn().mockReturnValue('1.0.0'), getPath: vi.fn().mockReturnValue('/tmp')},
 	dialog: {showOpenDialog: vi.fn()},
+	// AccountService reads safeStorage while IPC handlers are registered, to
+	// decide whether to start the sync scheduler.
+	safeStorage: {isEncryptionAvailable: vi.fn().mockReturnValue(false), encryptString: vi.fn(), decryptString: vi.fn()},
 	shell: {openPath: vi.fn(), openExternal: vi.fn(), showItemInFolder: vi.fn()},
 	ipcMain: {
 		handle: vi.fn().mockImplementation((channel: string, fn: (e: unknown, payload: unknown) => unknown) => {

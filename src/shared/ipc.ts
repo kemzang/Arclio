@@ -104,5 +104,8 @@ export const IPC_CHANNELS = {
 	accountBeginPairing: 'account:beginPairing',
 	accountAwaitPairing: 'account:awaitPairing',
 	accountCancelPairing: 'account:cancelPairing',
-	accountDisconnect: 'account:disconnect'
+	accountDisconnect: 'account:disconnect',
+	// Library sync
+	syncNow: 'sync:now',
+	syncState: 'sync:state'
 } as const

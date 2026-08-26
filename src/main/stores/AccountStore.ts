@@ -74,8 +74,18 @@ export class AccountStore {
 	}
 
 	load(): StoredAccount | null {
-		const encrypted = this.store.get('encryptedDeviceToken')
-		const deviceId = this.store.get('deviceId')
+		// An unopenable store means "not connected", not a crash. The app is fully
+		// usable without an account, so a corrupt or unavailable settings file must
+		// never take startup down with it.
+		let encrypted: string | undefined
+		let deviceId: string | undefined
+		try {
+			encrypted = this.store.get('encryptedDeviceToken')
+			deviceId = this.store.get('deviceId')
+		} catch (error) {
+			logger.warn('Account store unreadable; treating device as not connected', {error: error instanceof Error ? error.message : String(error)})
+			return null
+		}
 		if (!encrypted || !deviceId) return null
 		if (!AccountStore.encryptionAvailable()) {
 			logger.warn('Stored device token cannot be read: OS encryption unavailable')

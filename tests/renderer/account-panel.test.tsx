@@ -6,13 +6,15 @@ import {buildMockAppApi} from '../shared/mockAppApi.js'
 // The shared builder keeps untouched namespaces in sync with AppApi; the
 // account namespace is redeclared here so the assertions can drive it.
 const account = {status: vi.fn(), beginPairing: vi.fn(), awaitPairing: vi.fn(), cancelPairing: vi.fn().mockResolvedValue(undefined), disconnect: vi.fn()}
-const api = {...buildMockAppApi(), account}
+const sync = {now: vi.fn(), state: vi.fn()}
+const api = {...buildMockAppApi(), account, sync}
 
 beforeEach(() => {
 	vi.clearAllMocks()
 	Object.defineProperty(window, 'appApi', {value: api, writable: true, configurable: true})
 	account.status.mockResolvedValue({connected: false, canStoreCredentials: true})
 	account.cancelPairing.mockResolvedValue(undefined)
+	sync.state.mockResolvedValue({running: false, lastRunAt: null, lastOutcome: null})
 })
 
 describe('AccountPanel', () => {
@@ -76,5 +78,43 @@ describe('AccountPanel', () => {
 
 		await screen.findByText(/this device is connected/i)
 		expect(container.textContent).not.toContain('super-secret')
+	})
+
+	it('offers a manual sync once connected and reports what moved', async () => {
+		account.status.mockResolvedValue({connected: true, accountEmail: 'a@b.test', deviceId: 'dev-1', canStoreCredentials: true})
+		sync.now.mockResolvedValue({status: 'ok', pulled: 3, pushed: 1, deleted: 0})
+		render(<AccountPanel />)
+
+		fireEvent.click(await screen.findByRole('button', {name: /sync now/i}))
+
+		expect(await screen.findByText(/3 received/i)).toBeInTheDocument()
+		expect(screen.getByText(/1 sent/i)).toBeInTheDocument()
+	})
+
+	it('says so plainly when there was nothing to move', async () => {
+		account.status.mockResolvedValue({connected: true, deviceId: 'dev-1', canStoreCredentials: true})
+		sync.now.mockResolvedValue({status: 'ok', pulled: 0, pushed: 0, deleted: 0})
+		render(<AccountPanel />)
+
+		fireEvent.click(await screen.findByRole('button', {name: /sync now/i}))
+
+		expect(await screen.findByText(/already up to date/i)).toBeInTheDocument()
+	})
+
+	it('tells the user to reconnect when the device was revoked', async () => {
+		account.status.mockResolvedValue({connected: true, deviceId: 'dev-1', canStoreCredentials: true})
+		sync.now.mockResolvedValue({status: 'unauthorized'})
+		render(<AccountPanel />)
+
+		fireEvent.click(await screen.findByRole('button', {name: /sync now/i}))
+
+		expect(await screen.findByText(/disconnected from your account/i)).toBeInTheDocument()
+	})
+
+	it('does not offer syncing before an account is connected', async () => {
+		render(<AccountPanel />)
+
+		await screen.findByRole('button', {name: /connect/i})
+		expect(screen.queryByRole('button', {name: /sync now/i})).not.toBeInTheDocument()
 	})
 })

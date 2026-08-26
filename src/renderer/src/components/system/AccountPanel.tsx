@@ -1,11 +1,24 @@
 import {useCallback, useEffect, useState} from 'react'
-import {Check, Copy, ExternalLink, Loader2, LogOut, ShieldAlert} from 'lucide-react'
-import type {AccountStatus, PairingHandle} from '@shared/api.js'
+import {Check, Copy, ExternalLink, Loader2, LogOut, RefreshCw, ShieldAlert} from 'lucide-react'
+import type {AccountStatus, PairingHandle, SyncOutcome} from '@shared/api.js'
 import {Button} from '../ui/button.js'
 
 type Phase = 'idle' | 'starting' | 'waiting' | 'failed'
 
 const FAILURE_MESSAGE: Record<string, string> = {expired: 'The code expired before it was approved. Start again.', denied: 'That request was declined in the browser.', cancelled: 'Connection cancelled.', failed: 'Something went wrong while connecting. Please try again.'}
+
+/** Turns a sync result into something worth reading, rather than a status code. */
+function describeSync(outcome: SyncOutcome | null): string {
+	if (!outcome) return 'Runs automatically in the background, and whenever you ask.'
+	if (outcome.status === 'ok') {
+		if (outcome.pulled === 0 && outcome.pushed === 0 && outcome.deleted === 0) return 'Already up to date.'
+		const parts = [outcome.pulled > 0 ? `${outcome.pulled} received` : '', outcome.pushed > 0 ? `${outcome.pushed} sent` : '', outcome.deleted > 0 ? `${outcome.deleted} removed` : ''].filter(Boolean)
+		return parts.join(' · ')
+	}
+	if (outcome.status === 'unauthorized') return 'This device was disconnected from your account. Connect it again.'
+	if (outcome.status === 'failed') return 'Last sync failed. It will try again on its own.'
+	return 'Connect an account to sync.'
+}
 
 /**
  * Connects this machine to an Arclio account.
@@ -19,6 +32,8 @@ export function AccountPanel(): React.JSX.Element {
 	const [pairing, setPairing] = useState<PairingHandle | null>(null)
 	const [message, setMessage] = useState('')
 	const [copied, setCopied] = useState(false)
+	const [syncing, setSyncing] = useState(false)
+	const [syncOutcome, setSyncOutcome] = useState<SyncOutcome | null>(null)
 
 	useEffect(() => {
 		let cancelled = false
@@ -73,6 +88,15 @@ export function AccountPanel(): React.JSX.Element {
 		setTimeout(() => setCopied(false), 2000)
 	}, [pairing])
 
+	const runSync = useCallback(async () => {
+		setSyncing(true)
+		try {
+			setSyncOutcome(await window.appApi.sync.now())
+		} finally {
+			setSyncing(false)
+		}
+	}, [])
+
 	if (!status) return <div className="p-4" />
 
 	if (!status.canStoreCredentials) {
@@ -89,18 +113,34 @@ export function AccountPanel(): React.JSX.Element {
 
 	if (status.connected) {
 		return (
-			<div className="flex items-start justify-between gap-4 p-4 rounded-lg border border-[var(--border)] bg-card">
-				<div className="flex items-start gap-3 min-w-0">
-					<Check className="size-5 mt-0.5 text-[var(--status-done)] shrink-0" />
-					<div className="min-w-0">
-						<p className="text-sm font-medium">This device is connected</p>
-						<p className="text-xs text-[var(--text-subtle)] truncate">{status.accountEmail ?? 'Your library syncs across your devices.'}</p>
+			<div className="space-y-4">
+				<div className="flex items-start justify-between gap-4 p-4 rounded-lg border border-[var(--border)] bg-card">
+					<div className="flex items-start gap-3 min-w-0">
+						<Check className="size-5 mt-0.5 text-[var(--status-done)] shrink-0" />
+						<div className="min-w-0">
+							<p className="text-sm font-medium">This device is connected</p>
+							<p className="text-xs text-[var(--text-subtle)] truncate">{status.accountEmail ?? 'Your library syncs across your devices.'}</p>
+						</div>
 					</div>
+					<Button variant="outline" size="sm" className="shrink-0" onClick={() => void disconnect()}>
+						<LogOut className="size-4 mr-1" />
+						Disconnect
+					</Button>
 				</div>
-				<Button variant="outline" size="sm" className="shrink-0" onClick={() => void disconnect()}>
-					<LogOut className="size-4 mr-1" />
-					Disconnect
-				</Button>
+
+				<div className="flex items-start justify-between gap-4 p-4 rounded-lg border border-[var(--border)] bg-card">
+					<div className="flex items-start gap-3 min-w-0">
+						<RefreshCw className="size-5 mt-0.5 text-[var(--text-subtle)] shrink-0" />
+						<div className="min-w-0">
+							<p className="text-sm font-medium">Library sync</p>
+							<p className="text-xs text-[var(--text-subtle)]">{describeSync(syncOutcome)}</p>
+						</div>
+					</div>
+					<Button variant="outline" size="sm" className="shrink-0" disabled={syncing} onClick={() => void runSync()}>
+						{syncing ? <Loader2 className="size-4 mr-1 animate-spin" /> : <RefreshCw className="size-4 mr-1" />}
+						Sync now
+					</Button>
+				</div>
 			</div>
 		)
 	}
