@@ -24,6 +24,19 @@ export class SyncAuthError extends Error {
 	}
 }
 
+/**
+ * Thrown when the account's plan does not cover this device.
+ *
+ * Distinct from an auth failure: the credential is valid and re-pairing would
+ * change nothing. The user has to upgrade, or sync from their original device.
+ */
+export class SyncPlanError extends Error {
+	constructor(readonly reason: string) {
+		super(`Plan does not allow syncing: ${reason}`)
+		this.name = 'SyncPlanError'
+	}
+}
+
 export class SyncClient {
 	private readonly baseUrl: string
 	private readonly deviceToken: string
@@ -41,6 +54,12 @@ export class SyncClient {
 		// stale. That is a distinct outcome from a transient failure: the caller
 		// must stop retrying and ask the user to connect again.
 		if (response.status === 401) throw new SyncAuthError()
+		// 402 is the plan gate. Retrying cannot help, so it must not be folded in
+		// with transient failures the scheduler will try again.
+		if (response.status === 402) {
+			const body = (await response.json().catch(() => ({}))) as {reason?: string}
+			throw new SyncPlanError(body.reason ?? 'plan_required')
+		}
 		if (!response.ok) throw new Error(`Sync failed: HTTP ${response.status}`)
 		return response
 	}

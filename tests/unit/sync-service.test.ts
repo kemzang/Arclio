@@ -172,3 +172,18 @@ describe('SyncService', () => {
 		vi.unstubAllGlobals()
 	})
 })
+
+describe('SyncService plan gate', () => {
+	it('reports a plan refusal without dropping the credentials', async () => {
+		// A 402 means upgrade, not re-pair: clearing the account here would make the
+		// user redo a pairing that was never the problem.
+		const {repo} = fakeRepo()
+		const account = fakeAccount()
+		vi.stubGlobal('fetch', mockFetch([{status: 402, body: {error: 'plan_required', reason: 'device_limit'}}]))
+
+		await expect(new SyncService(repo, account.store, 'https://example.test').sync()).resolves.toEqual({status: 'requires-plan', reason: 'device_limit'})
+		expect(account.store.clear).not.toHaveBeenCalled()
+		expect(account.store.setSyncCursor).not.toHaveBeenCalled()
+		vi.unstubAllGlobals()
+	})
+})

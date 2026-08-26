@@ -15,6 +15,9 @@ function describeSync(outcome: SyncOutcome | null): string {
 		const parts = [outcome.pulled > 0 ? `${outcome.pulled} received` : '', outcome.pushed > 0 ? `${outcome.pushed} sent` : '', outcome.deleted > 0 ? `${outcome.deleted} removed` : ''].filter(Boolean)
 		return parts.join(' · ')
 	}
+	if (outcome.status === 'requires-plan') {
+		return outcome.reason === 'device_limit' ? 'Free accounts sync one device. Upgrade to Pro to sync this one too.' : 'Your plan does not cover syncing this device.'
+	}
 	if (outcome.status === 'unauthorized') return 'This device was disconnected from your account. Connect it again.'
 	if (outcome.status === 'failed') return 'Last sync failed. It will try again on its own.'
 	return 'Connect an account to sync.'

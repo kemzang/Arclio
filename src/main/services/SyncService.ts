@@ -1,13 +1,11 @@
 import log from 'electron-log/main.js'
-import {SyncClient, reconcile, toSyncRecord, type SyncRecord} from '@arclio/cloud'
-import {SyncAuthError} from '@arclio/cloud'
+import {SyncAuthError, SyncClient, SyncPlanError, reconcile, toSyncRecord, type SyncRecord} from '@arclio/cloud'
 import type {MediaRepo} from '@main/db/repositories/mediaRepository.js'
 import type {AccountStore} from '@main/stores/AccountStore.js'
+import type {SyncOutcome} from '@shared/api.js'
 import {SITE_URL} from '@shared/constants.js'
 
 const logger = log.scope('sync')
-
-export type SyncOutcome = {status: 'skipped'; reason: 'not-connected'} | {status: 'ok'; pulled: number; pushed: number; deleted: number} | {status: 'unauthorized'} | {status: 'failed'; error: string}
 
 /**
  * Runs one sync round between the local library and the account.
@@ -81,6 +79,12 @@ export class SyncService {
 			logger.info('Sync completed', {pulled: upserts.length, pushed: toPush.length, deleted: deletions.length})
 			return {status: 'ok', pulled: upserts.length, pushed: toPush.length, deleted: deletions.length}
 		} catch (error) {
+			if (error instanceof SyncPlanError) {
+				// The credential is fine; the plan is not. Report it so the UI can
+				// explain the difference instead of showing a generic failure.
+				logger.info('Sync refused by plan', {reason: error.reason})
+				return {status: 'requires-plan', reason: error.reason}
+			}
 			if (error instanceof SyncAuthError) {
 				// Revoked from the account page, or the token no longer exists. Retrying
 				// cannot help, so drop the local credentials and let the UI offer

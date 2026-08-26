@@ -117,4 +117,16 @@ describe('AccountPanel', () => {
 		await screen.findByRole('button', {name: /connect/i})
 		expect(screen.queryByRole('button', {name: /sync now/i})).not.toBeInTheDocument()
 	})
+
+	it('explains the free device limit instead of showing a generic failure', async () => {
+		// The credential is fine and re-pairing would change nothing, so the copy
+		// has to point at the plan rather than at a connection problem.
+		account.status.mockResolvedValue({connected: true, deviceId: 'dev-1', canStoreCredentials: true})
+		sync.now.mockResolvedValue({status: 'requires-plan', reason: 'device_limit'})
+		render(<AccountPanel />)
+
+		fireEvent.click(await screen.findByRole('button', {name: /sync now/i}))
+
+		expect(await screen.findByText(/free accounts sync one device/i)).toBeInTheDocument()
+	})
 })
