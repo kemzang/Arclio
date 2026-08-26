@@ -25,6 +25,8 @@ interface AccountData {
 	/** Kept in the clear on purpose: shown in the UI, useless to an attacker. */
 	accountEmail?: string
 	pairedAt?: number
+	/** How far this device has read the account's sync stream. */
+	syncCursor?: string
 }
 
 export interface StoredAccount {
@@ -93,7 +95,18 @@ export class AccountStore {
 		}
 	}
 
+	/** Sync cursor. Lives here so disconnecting drops it too: a cursor from one
+	 *  account would silently skip another account's history. */
+	getSyncCursor(): string | null {
+		return this.store.get('syncCursor') ?? null
+	}
+
+	setSyncCursor(cursor: string): void {
+		this.store.set('syncCursor', cursor)
+	}
+
 	clear(): void {
+		this.store.delete('syncCursor')
 		this.store.delete('encryptedDeviceToken')
 		this.store.delete('deviceId')
 		this.store.delete('accountEmail')
