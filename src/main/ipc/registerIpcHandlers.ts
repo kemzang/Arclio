@@ -41,6 +41,8 @@ import {registerSyncHandlers} from './syncHandlers.js'
 import {SyncService} from '@main/services/SyncService.js'
 import {SyncScheduler} from '@main/services/SyncScheduler.js'
 import {createMediaRepository} from '@main/db/repositories/mediaRepository.js'
+import {createTagRepository} from '@main/db/repositories/tagRepository.js'
+import {createCollectionRepository} from '@main/db/repositories/collectionRepository.js'
 import {AccountStore} from '@main/stores/AccountStore.js'
 import {AccountService} from '@main/services/AccountService.js'
 
@@ -77,7 +79,7 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	// sync cursor, and both must be cleared together on disconnect.
 	const accountStore = new AccountStore()
 	const accountService = new AccountService({store: accountStore})
-	const syncScheduler = new SyncScheduler(new SyncService(createMediaRepository(libraryDb), accountStore))
+	const syncScheduler = new SyncScheduler(new SyncService(createMediaRepository(libraryDb), accountStore, undefined, createTagRepository(libraryDb), createCollectionRepository(libraryDb)))
 	// Started only once an account exists: an unpaired app must not wake up every
 	// 15 minutes to discover it has nothing to do.
 	if (accountService.status().connected) syncScheduler.start()

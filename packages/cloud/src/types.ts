@@ -13,6 +13,17 @@ export interface SyncRecord {
 	mediaType: string
 	duration: number | null
 	isFavorite: boolean
+	/**
+	 * Tag and collection membership, by NAME rather than id.
+	 *
+	 * The same tag created on two machines has two different ids but means one
+	 * thing, so names are what actually travel; each device resolves them against
+	 * its own rows and creates what is missing. The trade-off is that renaming a
+	 * tag reads as removing one and adding another — acceptable while membership
+	 * is what users care about.
+	 */
+	tags: string[]
+	collections: string[]
 	/** ISO timestamp. Drives last-write-wins reconciliation. */
 	updatedAt: string
 	/** Set when the record was deleted; kept so a deletion propagates. */

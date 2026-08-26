@@ -21,6 +21,8 @@ interface LocalMedia {
 	mediaType: string
 	duration: number | null
 	isFavorite: boolean | number
+	tags?: string[]
+	collections?: string[]
 	updatedAt: string
 	deletedAt?: string | null
 	/** Present on the local row; deliberately dropped on the way out. */
@@ -35,7 +37,21 @@ interface LocalMedia {
  * `media` table must not silently start uploading it.
  */
 export function toSyncRecord(media: LocalMedia): SyncRecord {
-	return {id: media.id, title: media.title, url: media.url, sourceKey: media.sourceKey, mediaType: media.mediaType, duration: media.duration, isFavorite: Boolean(media.isFavorite), updatedAt: media.updatedAt, deletedAt: media.deletedAt ?? null}
+	// Sorted so two devices holding the same memberships produce identical
+	// payloads, which keeps the comparison stable.
+	return {
+		id: media.id,
+		title: media.title,
+		url: media.url,
+		sourceKey: media.sourceKey,
+		mediaType: media.mediaType,
+		duration: media.duration,
+		isFavorite: Boolean(media.isFavorite),
+		tags: [...(media.tags ?? [])].sort(),
+		collections: [...(media.collections ?? [])].sort(),
+		updatedAt: media.updatedAt,
+		deletedAt: media.deletedAt ?? null
+	}
 }
 
 /**

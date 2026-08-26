@@ -31,8 +31,11 @@ function fakeRepo(initial: Row[] = []) {
 			}),
 			create: vi.fn((data: Omit<Row, 'id'>) => {
 				const id = `new-${rows.size + 1}`
-				rows.set(id, {...data, id} as Row)
-				return null
+				const created = {...data, id} as Row
+				rows.set(id, created)
+				// The real repository returns the created row; SyncService needs its id
+				// to attach tag and collection membership.
+				return created
 			}),
 			delete: vi.fn((id: string) => rows.delete(id))
 		} as unknown as MediaRepo

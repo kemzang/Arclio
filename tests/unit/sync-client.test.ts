@@ -12,7 +12,7 @@ function client(responses: Response[]) {
 	return {client: new SyncClient({baseUrl: 'https://example.test/', deviceToken: 'tok-123', fetch: fetchImpl as unknown as typeof fetch}), fetchImpl}
 }
 
-const record: SyncRecord = {id: 'm1', title: 'Clip', url: 'https://example.test/v', sourceKey: null, mediaType: 'video', duration: null, isFavorite: false, updatedAt: '2026-01-01T00:00:00.000Z', deletedAt: null}
+const record: SyncRecord = {id: 'm1', title: 'Clip', url: 'https://example.test/v', sourceKey: null, mediaType: 'video', duration: null, isFavorite: false, tags: [], collections: [], updatedAt: '2026-01-01T00:00:00.000Z', deletedAt: null}
 
 describe('SyncClient', () => {
 	it('sends the device token as a bearer credential', async () => {

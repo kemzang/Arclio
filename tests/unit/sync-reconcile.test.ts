@@ -2,7 +2,7 @@ import {describe, expect, it} from 'vitest'
 import {mergeRecord, reconcile, toSyncRecord, type SyncRecord} from '@arclio/cloud'
 
 function record(overrides: Partial<SyncRecord> = {}): SyncRecord {
-	return {id: 'm1', title: 'Clip', url: 'https://example.test/v', sourceKey: 'youtube:abc', mediaType: 'video', duration: 120, isFavorite: false, updatedAt: '2026-01-01T00:00:00.000Z', deletedAt: null, ...overrides}
+	return {id: 'm1', title: 'Clip', url: 'https://example.test/v', sourceKey: 'youtube:abc', mediaType: 'video', duration: 120, isFavorite: false, tags: [], collections: [], updatedAt: '2026-01-01T00:00:00.000Z', deletedAt: null, ...overrides}
 }
 
 describe('toSyncRecord', () => {
@@ -13,7 +13,7 @@ describe('toSyncRecord', () => {
 
 		expect(JSON.stringify(wire)).not.toContain('/home/bryan')
 		expect(JSON.stringify(wire)).not.toContain('secret')
-		expect(Object.keys(wire).sort()).toEqual(['deletedAt', 'duration', 'id', 'isFavorite', 'mediaType', 'sourceKey', 'title', 'updatedAt', 'url'])
+		expect(Object.keys(wire).sort()).toEqual(['collections', 'deletedAt', 'duration', 'id', 'isFavorite', 'mediaType', 'sourceKey', 'tags', 'title', 'updatedAt', 'url'])
 	})
 
 	it('normalises the SQLite integer favourite flag to a boolean', () => {
@@ -101,5 +101,28 @@ describe('reconcile', () => {
 
 		expect(result.upserts.map(r => r.id).sort()).toEqual(['a', 'b'])
 		expect(result.toPush).toEqual([])
+	})
+})
+
+describe('membership projection', () => {
+	it('carries tag and collection names, sorted for a stable comparison', () => {
+		const wire = toSyncRecord({id: 'm1', title: 't', url: 'u', sourceKey: null, mediaType: 'video', duration: null, isFavorite: 0, updatedAt: 'x', tags: ['zeta', 'alpha'], collections: ['Zoo', 'Ete']})
+
+		expect(wire.tags).toEqual(['alpha', 'zeta'])
+		expect(wire.collections).toEqual(['Ete', 'Zoo'])
+	})
+
+	it('defaults to empty lists when a device has no memberships', () => {
+		const wire = toSyncRecord({id: 'm1', title: 't', url: 'u', sourceKey: null, mediaType: 'video', duration: null, isFavorite: 0, updatedAt: 'x'})
+
+		expect(wire.tags).toEqual([])
+		expect(wire.collections).toEqual([])
+	})
+
+	it('does not mutate the caller arrays while sorting', () => {
+		const tags = ['zeta', 'alpha']
+		toSyncRecord({id: 'm1', title: 't', url: 'u', sourceKey: null, mediaType: 'video', duration: null, isFavorite: 0, updatedAt: 'x', tags})
+
+		expect(tags).toEqual(['zeta', 'alpha'])
 	})
 })
