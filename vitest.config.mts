@@ -14,6 +14,7 @@ const aliasObj = {
 	// entries in tsconfig.json. Without these, any test that reaches
 	// MetadataService fails to resolve the import.
 	'@arclio/auth': path.resolve('packages/auth/src/index.ts'),
+	'@arclio/cloud': path.resolve('packages/cloud/src/index.ts'),
 	'@arclio/metadata': path.resolve('packages/metadata/src/index.ts'),
 	'@arclio/media': path.resolve('packages/media/src/index.ts'),
 	'electron-log/main.js': path.resolve('tests/__mocks__/electron-log-main.ts'),
