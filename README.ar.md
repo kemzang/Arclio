@@ -13,8 +13,6 @@
 
 [**↓ تنزيل أحدث إصدار**](#install) &nbsp;·&nbsp; [**الموقع الإلكتروني**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-[![انضم إلى مجتمع Discord](https://img.shields.io/badge/%D8%A7%D9%86%D8%B6%D9%85%20%D8%A5%D9%84%D9%89%20%D9%85%D8%AC%D8%AA%D9%85%D8%B9%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
-
 <img src="build/demo.gif" alt="عرض توضيحي لـ Arclio" width="720" />
 
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />

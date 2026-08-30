@@ -2,10 +2,9 @@ import {lazy, Suspense, useEffect, useState, type ReactNode} from 'react'
 import {HashRouter, Routes, Route} from 'react-router-dom'
 import log from 'electron-log/renderer.js'
 import {Cpu, Info, MessageCircle, Paintbrush, Share2} from 'lucide-react'
-import IconDiscord from '~icons/simple-icons/discord'
 import {useTranslation} from 'react-i18next'
 import {useShallow} from 'zustand/react/shallow'
-import {DEFAULTS, DISCORD_URL} from '@shared/constants.js'
+import {DEFAULTS} from '@shared/constants.js'
 import {ZOOM_MIN, ZOOM_MAX, ZOOM_STEP, type UiTheme} from '@shared/schemas.js'
 import type {BackdropRenderMode, GraphicsPolicy} from '@shared/types.js'
 import {useAppStore} from './store/useAppStore.js'
@@ -79,10 +78,6 @@ function resolveColorScheme(uiTheme: UiTheme, systemPrefersDark: boolean): Backd
 function previewModeToRenderMode(mode: BackdropPreviewMode): 'css-only' | 'gpu' {
 	if (mode === 'css') return 'css-only'
 	return 'gpu'
-}
-
-function openDiscord(): void {
-	void window.appApi.shell.openExternal(DISCORD_URL)
 }
 
 function exitBackdropStage(): void {
@@ -277,12 +272,6 @@ function AppContent(): ReactNode {
 							<Share2 data-icon="inline-start" aria-hidden />
 							<span className={FOOTER_COMPACT_LABEL_CLASS} data-testid="btn-share-label">
 								{t('share.footerLabel')}
-							</span>
-						</Button>
-						<Button type="button" variant="ghost" size="xs" className={FOOTER_ACTION_BUTTON_CLASS} onClick={openDiscord} title="Discord" aria-label="Discord" data-testid="btn-discord">
-							<IconDiscord data-icon="inline-start" aria-hidden />
-							<span className={FOOTER_COMPACT_LABEL_CLASS} data-testid="btn-discord-label">
-								Discord
 							</span>
 						</Button>
 						<div className="relative inline-flex h-6 items-center">

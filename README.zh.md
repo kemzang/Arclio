@@ -13,8 +13,6 @@
 
 [**↓ 下载最新版本**](#install) &nbsp;·&nbsp; [**官网**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-[![加入 Discord 社群](https://img.shields.io/badge/%E5%8A%A0%E5%85%A5%20Discord%20%E7%A4%BE%E7%BE%A4-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
-
 <img src="build/demo.gif" alt="Arclio 演示" width="720" />
 
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />

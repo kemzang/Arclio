@@ -73,11 +73,11 @@ vec4 aurora(vec3 ro, vec3 rd) {
     vec2 p = bpos.zx;
     float rzt = triNoise2d(p, 0.06);
     vec4 col2 = vec4(0.0, 0.0, 0.0, rzt);
-    // Brand recolor: cyan → blue → violet swept across the sky (replaces nimitz's green).
+    // Brand recolor: cyan → blue → amber swept across the sky (replaces nimitz's green).
     float h = clamp(gl_FragCoord.x / uRes.x * 0.95 + i / 120.0, 0.0, 1.0);
     vec3 c1 = vec3(0.22, 0.95, 1.0);
     vec3 c2 = vec3(0.25, 0.45, 1.0);
-    vec3 c3 = vec3(0.70, 0.30, 1.0);
+    vec3 c3 = vec3(1.0, 0.65, 0.22);
     vec3 tint = h < 0.5 ? mix(c1, c2, h * 2.0) : mix(c2, c3, (h - 0.5) * 2.0);
     col2.rgb = tint * rzt;
     avgCol = mix(avgCol, col2, 0.5);
@@ -110,10 +110,10 @@ vec4 nearAurora(vec2 q) {
 
   vec3 cyan = vec3(0.18, 0.92, 1.0);
   vec3 blue = vec3(0.25, 0.45, 1.0);
-  vec3 violet = vec3(0.76, 0.28, 1.0);
+  vec3 amber = vec3(1.0, 0.68, 0.25);
   vec3 mint = vec3(0.56, 1.0, 0.78);
   vec3 tint = mix(cyan, blue, smoothstep(0.22, 0.6, x));
-  tint = mix(tint, violet, smoothstep(0.62, 1.0, x));
+  tint = mix(tint, amber, smoothstep(0.62, 1.0, x));
   tint = mix(tint, mint, wave * smoothstep(0.18, 0.5, x) * (1.0 - smoothstep(0.62, 0.92, x)) * 0.5);
 
   float alpha = clamp(intensity * 0.55, 0.0, 0.72);

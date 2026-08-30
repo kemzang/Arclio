@@ -13,8 +13,6 @@
 
 [**↓ Oxirgi Relizni Yuklab Olish**](#install) &nbsp;·&nbsp; [**Veb-sayt**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-[![Discord hamjamiyatiga qo'shiling](https://img.shields.io/badge/Discord%20hamjamiyatiga%20qo%27shiling-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ueGvXwQH8y)
-
 <img src="build/demo.gif" alt="Arclio demosi" width="720" />
 
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />

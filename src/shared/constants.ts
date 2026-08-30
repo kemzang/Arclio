@@ -1,8 +1,6 @@
 import type {SubtitleMode, SubtitleFormat, SponsorBlockMode, SponsorBlockCategory, UiTheme, BackdropRenderMode, NetworkPacingPreset, NativeAudioPreference} from './schemas.js'
 import type {AppSettings} from './types.js'
 
-export const DISCORD_URL = 'https://discord.gg/ueGvXwQH8y'
-
 // Public site. Single source of truth — the update banner, the About dialog,
 // the share dialog and the diagnostics endpoint all derive from this, so
 // moving to a new domain is one edit here instead of five across the codebase.
