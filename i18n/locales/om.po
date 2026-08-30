@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "Marsariitii"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "Fuula tokko siif banneerra. Achitti koodii kana mirkaneessi:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "Browser kee keessatti xumuri"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "Haquu"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "Walitti fidi"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "Filannoo dha. Arclio guutummaatti offline hojjeta — herregni qofti meeshaalee kee gidduutti walsimsiisuu mana kitaabaa dabala."
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "Manni kitaabaa kee meeshaalee kee gidduutti walsimsiifama."
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "Meeshaan kun walitti fidameera"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "Herrega walitti fidi"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "Koodii garagalchi"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "Adda baasi"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "Walitti fiduun haqameera."
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "Gaaffiin sun browser keessatti diddameera."
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "Koodiin osoo hin mirkanaaʼin dura yeroon isaa darbeera. Irra deebiʼii jalqabi."
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "Yeroo walitti fidnu rakkoon uumameera. Maaloo irra deebiʼii yaali."
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "Fuula irra deebiʼii bani"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "Walitti fiduu jalqabuu hin dandeenye. Interneetii kee mirkaneessi."
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "Herregni bilisaa meeshaa tokko walsimsiisa. Kanas walsimsiisuuf gara Pro guddisi."
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "Walsimsiisuun dhumaa hin milkoofne. Ofumaan irra deebiʼee yaala."
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "Duubaan ofumaan hojjeta, akkasumas yeroo ati gaafattu hunda."
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "Amma walsimsiisi"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "Karoorri kee walsimsiisuu meeshaa kanaa hin hammatu."
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "{{count}} fudhatame"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "{{count}} haqame"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "Meeshaan kun herrega kee irraa adda baʼeera. Irra deebiʼii walitti fidi."
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "{{count}} ergame"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "Walsimsiisuu mana kitaabaa"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "Duraanuu haaraa dha."
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "Herrega"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "Irra deebiʼii yaali"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio tokenii herregaa eeguuf kuusaa furtuu sirnaa bira gaʼuu hin dandeenye, kanaaf walitti fiduun dhaabbateera. Kan hafe hundi ni hojjeta — herregni qofti walsimsiisuu mana kitaabaa dabala."
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "Sirna kana irratti herregni hin argamu"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "Mirkaneessa kee eegaa jirra…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "Yaada"
@@ -54,6 +182,46 @@ msgstr "Guddisi"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "Xiqqeessi"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Gara walitti qabamootatti deebi'i"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Miidiyaan walitti qabama kana keessa hin jiru"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Mana kitaabaa irraa miidiyaa dabali"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Walitti qabama keessaa baasi"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Haquu"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Walitti qabama haaraa"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Walitti qabamni hin jiru"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Miidiyaa kee qindeessuuf walitti qabama uumi"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Maqaa walitti qabamaa"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Uumi"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "URL kana yt-dlp hin deeggaru. Marsariitota yt-dlp deeggaru keessaa hidhaa biraa yaali."
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Jaalatamni hin jiru"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Miidiyaa jaalatama akka ta'e mallatteessi asitti arguuf"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "Sagalee"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Xumurame"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Buufannoo"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Seenaa buufannoo hin jiru"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Seenaa taphannaa hin jiru"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Taphannaa"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} taphannaa"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Ji'a kana"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Torban kana"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Har'a"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Kaleessa"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "Afaan"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Hunda"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Sagalee"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Mana kitaabaa kee duwwaa dha"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Viidiyoo buufadhu jalqabuuf"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "wantoota"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Dhabe"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Maqaa, barreessaa, ibsa barbaali…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Dheeraa"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Haaraa jalqaba"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Duraanii jalqaba"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Gabaabaa"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Maqaa A-Z"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Maqaa Z-A"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Viidiyoo"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Walitti qabamoota"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Jaalatamoota"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Seenaa"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Fuula jalqabaa"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Mana kitaabaa"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Qindaa'ina"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Mallattoolee"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Gara perpacha deebi'i"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Faayilii taphatamu hin argamne"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Miidiyaan hin argamne"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Saffisa"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Barreeffama gadii"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "Qindaa'inni gargaarsa kee gaafata"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Walitti qabama"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "wantoota"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Miidiyaa"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Bu'aan hin jiru"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Barbaali…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Mallattoo"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Jijjiiri"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Hordoffii gabatee barreeffamaa"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "URL gabatee barreeffamaa keessatti ofumaan adda baasi"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Suura xiqqoo galchi"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Suura xiqqoo faayilii miidiyaa keessatti galchi"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Afaan"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Afaan agarsiisa applicationii"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Galeelaa badii"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Faayiloonni buufaman eessa kuusamu"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Bifa"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Mul'ata applicationii"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Qindaa'ina"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Barreeffama gadii barreessi"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Faayilii barreeffama gadii durtiidhaan buufadhu"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "Garagalfame!"
@@ -826,6 +1226,30 @@ msgstr "yt-dlp koodii {{code}} wajjin bahe"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "Dogoggora prosessii yt-dlp: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Haquu"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Mallattoo haaraa"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Mallattoonni hin jiran"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Miidiyaa kee ramaduuf mallattoo uumi"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Maqaa mallattoo"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Uumi"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,299 +2848,3 @@ msgstr "Profaayilota"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Qindaaʼinoota"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "Gara perpacha deebi'i"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "Miidiyaan hin argamne"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "Faayilii taphatamu hin argamne"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "Barreeffama gadii"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Saffisa"
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "Barbaali…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "Bu'aan hin jiru"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "Miidiyaa"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "Walitti qabama"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "Mallattoo"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "wantoota"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "Fuula jalqabaa"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "Mana kitaabaa"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "Walitti qabamoota"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "Jaalatamoota"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "Mallattoolee"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "Seenaa"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "Qindaa'ina"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "wantoota"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "Maqaa, barreessaa, ibsa barbaali…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "Hunda"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "Viidiyoo"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "Sagalee"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "Haaraa jalqaba"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "Duraanii jalqaba"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "Maqaa A-Z"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "Maqaa Z-A"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "Dheeraa"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "Gabaabaa"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "Mana kitaabaa kee duwwaa dha"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "Viidiyoo buufadhu jalqabuuf"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "Dhabe"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "Walitti qabama haaraa"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "Maqaa walitti qabamaa"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "Uumi"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "Haquu"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "Walitti qabamni hin jiru"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "Miidiyaa kee qindeessuuf walitti qabama uumi"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "Gara walitti qabamootatti deebi'i"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "Miidiyaan walitti qabama kana keessa hin jiru"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "Mana kitaabaa irraa miidiyaa dabali"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "Walitti qabama keessaa baasi"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "Jaalatamni hin jiru"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "Miidiyaa jaalatama akka ta'e mallatteessi asitti arguuf"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "Mallattoo haaraa"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "Maqaa mallattoo"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "Uumi"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "Haquu"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "Mallattoonni hin jiran"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "Miidiyaa kee ramaduuf mallattoo uumi"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "Buufannoo"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "Taphannaa"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "Har'a"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "Kaleessa"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "Torban kana"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "Ji'a kana"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "Seenaa buufannoo hin jiru"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "Seenaa taphannaa hin jiru"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} taphannaa"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "Xumurame"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Qindaa'ina"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "Galeelaa badii"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "Faayiloonni buufaman eessa kuusamu"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "Jijjiiri"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "Afaan"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "Afaan agarsiisa applicationii"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "Bifa"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "Mul'ata applicationii"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "Hordoffii gabatee barreeffamaa"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "URL gabatee barreeffamaa keessatti ofumaan adda baasi"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "Barreeffama gadii barreessi"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "Faayilii barreeffama gadii durtiidhaan buufadhu"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "Suura xiqqoo galchi"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "Suura xiqqoo faayilii miidiyaa keessatti galchi"

@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "Veb-sayt"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "Siz uchun sahifa ochdik. Oʻsha yerda bu kodni tasdiqlang:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "Brauzeringizda yakunlang"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "Ulash"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "Ixtiyoriy. Arclio toʻliq oflayn ishlaydi — hisob faqat qurilmalaringiz oʻrtasida kutubxona sinxronizatsiyasini qoʻshadi."
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "Kutubxonangiz qurilmalaringiz oʻrtasida sinxronlanadi."
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "Bu qurilma ulangan"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "Hisobni ulash"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "Kodni nusxalash"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "Uzish"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "Ulanish bekor qilindi."
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "Bu soʻrov brauzerda rad etildi."
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "Kod tasdiqlanishidan oldin muddati tugadi. Qaytadan boshlang."
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "Ulanishda xatolik yuz berdi. Iltimos, qayta urinib koʻring."
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "Sahifani qayta ochish"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "Ulanishni boshlab boʻlmadi. Internet aloqangizni tekshiring."
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "Bepul hisoblar bitta qurilmani sinxronlaydi. Buni ham sinxronlash uchun Pro’ga oʻting."
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "Oxirgi sinxronizatsiya muvaffaqiyatsiz tugadi. U oʻzi qayta urinadi."
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "Fon rejimida avtomatik ishlaydi va siz soʻraganingizda ham."
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "Hozir sinxronlash"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "Rejangiz bu qurilmani sinxronlashni qamrab olmaydi."
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "{{count}} qabul qilindi"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "{{count}} olib tashlandi"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "Bu qurilma hisobingizdan uzildi. Uni qaytadan ulang."
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "{{count}} yuborildi"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "Kutubxona sinxronizatsiyasi"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "Allaqachon dolzarb."
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "Hisob"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "Qayta urinish"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio hisob tokenini himoya qilish uchun tizim kalitlar omboriga kira olmadi, shuning uchun ulanish oʻchirilgan. Qolgan hammasi ishlaydi — hisob faqat kutubxona sinxronizatsiyasini qoʻshadi."
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "Bu tizimda hisob mavjud emas"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "Tasdiqlashingizni kutmoqdamiz…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "Fikr-mulohaza"
@@ -54,6 +182,46 @@ msgstr "Kattalashtirish"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "Kichraytirish"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "To'plamlarga qaytish"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Bu to'plamda media yo'q"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Kutubxonadan media qo'shing"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "To'plamdan olib tashlash"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Yangi to'plam"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "To'plamlar yo'q"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Medialaringizni tartiblash uchun to'plam yarating"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "To'plam nomi"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Yaratish"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "Bu URL yt-dlp tomonidan qo'llab-quvvatlanmaydi. yt-dlp qo'llab-quvvatlaydigan saytlardan boshqa havolani sinab ko'ring."
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Sevimlilar yo'q"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Mediani sevimli sifatida belgilang"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "Audio"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Tugallangan"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Yuklab olishlar"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Yuklab olish tarixi yo'q"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Ijro tarixi yo'q"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Ijro"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} ijro"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Shu oy"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Shu hafta"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Bugun"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Kecha"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "Til"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Barchasi"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Audio"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Kutubxonangiz bo'sh"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Boshlash uchun video yuklab oling"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "elementlar"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Yo'qolgan"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Sarlavha, muallif, tavsif bo'yicha qidirish…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Eng uzoq"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Eng yangi"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Eng eski"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Eng qisqa"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Sarlavha A-Z"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Sarlavha Z-A"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "To'plamlar"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Sevimlilar"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Tarix"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Bosh sahifa"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Kutubxona"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Sozlamalar"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Teglar"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Kutubxonaga qaytish"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Oʻynatiladigan fayl topilmadi"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Media topilmadi"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Tezlik"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Subtitrlar"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "Sozlash sizning yordamingizga muhtoj"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "To'plam"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "elementlar"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Media"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Natija yo'q"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Qidirish…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Teg"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "O'zgartirish"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Xotira kuzatuvi"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Xotiradagi URL'larni avtomatik aniqlash"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Miniatyura joylash"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Miniatyrani media faylga joylash"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Til"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Ilova ko'rsatish tili"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Chiqish papkasi"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Yuklab olingan fayllar qayerga saqlanadi"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Mavzu"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Ilova ko'rinishi"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Sozlamalar"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Subtitrlar yozish"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Subtitr fayllarini standart yuklab olish"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "Nusxalandi!"
@@ -826,6 +1226,30 @@ msgstr "yt-dlp {{code}} kodi bilan chiqdi"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "yt-dlp jarayon xatosi: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Yangi teg"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Teglar yo'q"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Medialaringizni tasniflash uchun teg yarating"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Teg nomi"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Yaratish"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "Profillar"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Sozlamalar"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "Kutubxonaga qaytish"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "Media topilmadi"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "Oʻynatiladigan fayl topilmadi"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "Subtitrlar"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Tezlik"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "Qidirish…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "Natija yo'q"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "Media"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "To'plam"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "Teg"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "elementlar"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "Bosh sahifa"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "Kutubxona"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "To'plamlar"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "Sevimlilar"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "Teglar"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "Tarix"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "Sozlamalar"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "elementlar"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "Sarlavha, muallif, tavsif bo'yicha qidirish…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "Barchasi"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "Video"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "Audio"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "Eng yangi"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "Eng eski"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "Sarlavha A-Z"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "Sarlavha Z-A"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "Eng uzoq"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "Eng qisqa"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "Kutubxonangiz bo'sh"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "Boshlash uchun video yuklab oling"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "Yo'qolgan"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "Yangi to'plam"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "To'plam nomi"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "Yaratish"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "Bekor qilish"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "To'plamlar yo'q"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "Medialaringizni tartiblash uchun to'plam yarating"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "To'plamlarga qaytish"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "Bu to'plamda media yo'q"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "Kutubxonadan media qo'shing"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "To'plamdan olib tashlash"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "Sevimlilar yo'q"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "Mediani sevimli sifatida belgilang"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "Yangi teg"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "Teg nomi"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "Yaratish"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "Bekor qilish"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "Teglar yo'q"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "Medialaringizni tasniflash uchun teg yarating"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "Yuklab olishlar"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "Ijro"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "Bugun"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "Kecha"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "Shu hafta"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "Shu oy"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "Yuklab olish tarixi yo'q"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "Ijro tarixi yo'q"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} ijro"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "Tugallangan"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Sozlamalar"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "Chiqish papkasi"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "Yuklab olingan fayllar qayerga saqlanadi"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "O'zgartirish"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "Til"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "Ilova ko'rsatish tili"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "Mavzu"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "Ilova ko'rinishi"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "Xotira kuzatuvi"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "Xotiradagi URL'larni avtomatik aniqlash"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "Subtitrlar yozish"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "Subtitr fayllarini standart yuklab olish"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "Miniatyura joylash"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "Miniatyrani media faylga joylash"

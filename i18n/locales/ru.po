@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "Сайт"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "Мы открыли для вас страницу. Подтвердите там этот код:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "Завершите в браузере"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "Отмена"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "Подключить"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "Необязательно. Arclio полностью работает офлайн — аккаунт лишь добавляет синхронизацию библиотеки между вашими устройствами."
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "Ваша библиотека синхронизируется между устройствами."
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "Это устройство подключено"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "Подключить аккаунт"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "Копировать код"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "Отключить"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "Подключение отменено."
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "Этот запрос был отклонён в браузере."
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "Срок действия кода истёк до подтверждения. Начните заново."
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "При подключении что-то пошло не так. Попробуйте ещё раз."
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "Открыть страницу снова"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "Не удалось начать подключение. Проверьте интернет-соединение."
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "Бесплатные аккаунты синхронизируют одно устройство. Перейдите на Pro, чтобы синхронизировать и это."
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "Последняя синхронизация не удалась. Она повторится сама."
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "Выполняется автоматически в фоне и по вашему запросу."
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "Синхронизировать"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "Ваш тариф не покрывает синхронизацию этого устройства."
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "получено: {{count}}"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "удалено: {{count}}"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "Это устройство было отключено от вашего аккаунта. Подключите его снова."
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "отправлено: {{count}}"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "Синхронизация библиотеки"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "Уже актуально."
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "Аккаунт"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "Повторить"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio не смог обратиться к системному хранилищу ключей, чтобы защитить токен аккаунта, поэтому подключение отключено. Всё остальное работает — аккаунт лишь добавляет синхронизацию."
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "Аккаунт недоступен в этой системе"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "Ожидаем вашего подтверждения…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "Обратная связь"
@@ -54,6 +182,46 @@ msgstr "Увеличить"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "Уменьшить"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Назад к коллекциям"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Нет медиа в этой коллекции"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Добавьте медиа из библиотеки"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Удалить из коллекции"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Отмена"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Новая коллекция"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Нет коллекций"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Создайте коллекцию для организации медиа"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Название коллекции"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Создать"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "Этот URL не поддерживается yt-dlp. Попробуйте другую ссылку с любого сайта, поддерживаемого yt-dlp."
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Нет избранного"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Отметьте медиа как избранное"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "Аудио"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Завершено"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Загрузки"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Нет истории загрузок"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Нет истории воспроизведения"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Воспроизведение"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} воспроизведение"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Этот месяц"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Эта неделя"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Сегодня"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Вчера"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "Язык"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Все"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Аудио"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Ваша библиотека пуста"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Скачайте видео, чтобы начать"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "элементы"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Отсутствует"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Поиск по названию, автору, описанию…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Самое длинное"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Сначала новые"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Сначала старые"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Самое короткое"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Название А-Я"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Название Я-А"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Видео"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Коллекции"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Избранное"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "История"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Главная"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Библиотека"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Настройки"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Теги"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Назад к библиотеке"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Не найден воспроизводимый файл"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Медиа не найдено"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Скорость"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Субтитры"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "Настройке нужна твоя помощь"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Коллекция"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "элементы"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Медиа"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Нет результатов"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Поиск…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Тег"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Изменить"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Мониторинг буфера обмена"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Автоматически обнаруживать URL в буфере обмена"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Встраивать миниатюру"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Встраивать миниатюру в медиафайл"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Язык"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Язык отображения приложения"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Каталог вывода"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Где сохраняются загруженные файлы"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Тема"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Внешний вид приложения"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Настройки"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Записывать субтитры"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Загружать файлы субтитров по умолчанию"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "Скопировано!"
@@ -826,6 +1226,30 @@ msgstr "yt-dlp завершился с кодом {{code}}"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "Ошибка процесса yt-dlp: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Отмена"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Новый тег"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Нет тегов"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Создайте тег для категоризации медиа"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Название тега"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Создать"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "Профили"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Настройки"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "Назад к библиотеке"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "Медиа не найдено"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "Не найден воспроизводимый файл"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "Субтитры"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Скорость"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "Поиск…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "Нет результатов"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "Медиа"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "Коллекция"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "Тег"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "элементы"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "Главная"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "Библиотека"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "Коллекции"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "Избранное"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "Теги"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "История"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "Настройки"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "элементы"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "Поиск по названию, автору, описанию…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "Все"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "Видео"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "Аудио"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "Сначала новые"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "Сначала старые"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "Название А-Я"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "Название Я-А"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "Самое длинное"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "Самое короткое"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "Ваша библиотека пуста"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "Скачайте видео, чтобы начать"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "Отсутствует"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "Новая коллекция"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "Название коллекции"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "Создать"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "Отмена"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "Нет коллекций"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "Создайте коллекцию для организации медиа"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "Назад к коллекциям"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "Нет медиа в этой коллекции"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "Добавьте медиа из библиотеки"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "Удалить из коллекции"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "Нет избранного"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "Отметьте медиа как избранное"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "Новый тег"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "Название тега"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "Создать"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "Отмена"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "Нет тегов"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "Создайте тег для категоризации медиа"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "Загрузки"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "Воспроизведение"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "Сегодня"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "Вчера"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "Эта неделя"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "Этот месяц"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "Нет истории загрузок"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "Нет истории воспроизведения"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} воспроизведение"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "Завершено"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Настройки"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "Каталог вывода"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "Где сохраняются загруженные файлы"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "Изменить"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "Язык"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "Язык отображения приложения"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "Тема"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "Внешний вид приложения"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "Мониторинг буфера обмена"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "Автоматически обнаруживать URL в буфере обмена"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "Записывать субтитры"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "Загружать файлы субтитров по умолчанию"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "Встраивать миниатюру"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "Встраивать миниатюру в медиафайл"

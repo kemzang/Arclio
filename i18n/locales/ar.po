@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "موقع الويب"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "فتحنا لك صفحة. أكّد هذا الرمز هناك:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "أكمل في المتصفح"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "ربط"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "اختياري. يعمل Arclio دون اتصال بالكامل — الحساب يضيف فقط مزامنة المكتبة بين أجهزتك."
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "تتم مزامنة مكتبتك بين أجهزتك."
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "هذا الجهاز مرتبط"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "ربط حساب"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "نسخ الرمز"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "قطع الاتصال"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "تم إلغاء الاتصال."
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "تم رفض هذا الطلب في المتصفح."
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "انتهت صلاحية الرمز قبل الموافقة عليه. ابدأ من جديد."
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "حدث خطأ أثناء الاتصال. يرجى المحاولة مرة أخرى."
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "إعادة فتح الصفحة"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "تعذّر بدء الاتصال. تحقق من اتصالك بالإنترنت."
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "الحسابات المجانية تزامن جهازًا واحدًا. قم بالترقية إلى Pro لمزامنة هذا الجهاز أيضًا."
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "فشلت آخر مزامنة. ستعيد المحاولة تلقائيًا."
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "تعمل تلقائيًا في الخلفية، وعندما تطلبها."
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "المزامنة الآن"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "خطتك لا تغطي مزامنة هذا الجهاز."
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "{{count}} مستلَم"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "{{count}} محذوف"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "تم فصل هذا الجهاز عن حسابك. أعد ربطه."
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "{{count}} مُرسَل"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "مزامنة المكتبة"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "محدَّث بالفعل."
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "الحساب"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "إعادة المحاولة"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "لم يتمكن Arclio من الوصول إلى مخزن مفاتيح النظام لحماية رمز الحساب، لذا تم تعطيل الربط. كل شيء آخر يعمل — الحساب يضيف فقط مزامنة المكتبة."
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "الحساب غير متاح على هذا النظام"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "في انتظار موافقتك…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "ملاحظات"
@@ -54,6 +182,46 @@ msgstr "تكبير"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "تصغير"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "العودة إلى المجموعات"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "لا توجد وسائط في هذه المجموعة"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "أضف وسائط من المكتبة"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "إزالة من المجموعة"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "مجموعة جديدة"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "لا توجد مجموعات"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "أنشئ مجموعة لتنظيم وسائطك"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "اسم المجموعة"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "إنشاء"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "هذا الرابط غير مدعوم من yt-dlp. جرّب رابطًا آخر من أي موقع يدعمه yt-dlp."
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "لا توجد مفضلة"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "ضع علامة مفضلة على وسيط لرؤيته هنا"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "صوت"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "مكتمل"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "التنزيلات"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "لا سجل تنزيلات"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "لا سجل تشغيل"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "التشغيل"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} تشغيل"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "هذا الشهر"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "هذا الأسبوع"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "اليوم"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "أمس"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "اللغة"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "الكل"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "صوت"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "مكتبتك فارغة"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "حمّل فيديو للبدء"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "عناصر"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "مفقود"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "بحث بالعنوان، المؤلف، الوصف…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "الأطول"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "الأحدث أولاً"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "الأقدم أولاً"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "الأقصر"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "العنوان أ-ي"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "العنوان ي-أ"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "فيديو"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "المجموعات"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "المفضلة"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "السجل"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "الرئيسية"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "المكتبة"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "الإعدادات"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "العلامات"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "العودة إلى المكتبة"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "لم يتم العثور على ملف قابل للتشغيل"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "الوسائط غير موجودة"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "السرعة"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "الترجمات"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "الإعداد يحتاج مساعدتك"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "مجموعة"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "عناصر"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "وسائط"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "لا نتائج"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "بحث…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "علامة"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "تغيير"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "مراقبة الحافظة"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "اكتشاف الروابط في الحافظة تلقائياً"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "تضمين الصورة المصغرة"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "تضمين الصورة المصغرة في ملف الوسائط"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "اللغة"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "لغة عرض التطبيق"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "دليل الإخراج"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "أين يتم حفظ الملفات المنزلة"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "السمة"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "مظهر التطبيق"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "الإعدادات"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "كتابة الترجمات"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "تنزيل ملفات الترجمة افتراضياً"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "تم النسخ!"
@@ -826,6 +1226,30 @@ msgstr "خرج yt-dlp بالرمز {{code}}"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "خطأ في عملية yt-dlp: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "علامة جديدة"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "لا توجد علامات"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "أنشئ علامة لتصنيف وسائطك"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "اسم العلامة"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "إنشاء"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "الملفات الشخصية"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "الإعدادات"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "العودة إلى المكتبة"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "الوسائط غير موجودة"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "لم يتم العثور على ملف قابل للتشغيل"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "الترجمات"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "السرعة"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "بحث…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "لا نتائج"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "وسائط"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "مجموعة"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "علامة"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "عناصر"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "الرئيسية"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "المكتبة"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "المجموعات"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "المفضلة"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "العلامات"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "السجل"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "الإعدادات"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "عناصر"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "بحث بالعنوان، المؤلف، الوصف…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "الكل"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "فيديو"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "صوت"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "الأحدث أولاً"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "الأقدم أولاً"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "العنوان أ-ي"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "العنوان ي-أ"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "الأطول"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "الأقصر"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "مكتبتك فارغة"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "حمّل فيديو للبدء"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "مفقود"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "مجموعة جديدة"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "اسم المجموعة"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "إنشاء"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "إلغاء"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "لا توجد مجموعات"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "أنشئ مجموعة لتنظيم وسائطك"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "العودة إلى المجموعات"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "لا توجد وسائط في هذه المجموعة"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "أضف وسائط من المكتبة"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "إزالة من المجموعة"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "لا توجد مفضلة"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "ضع علامة مفضلة على وسيط لرؤيته هنا"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "علامة جديدة"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "اسم العلامة"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "إنشاء"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "إلغاء"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "لا توجد علامات"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "أنشئ علامة لتصنيف وسائطك"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "التنزيلات"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "التشغيل"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "اليوم"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "أمس"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "هذا الأسبوع"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "هذا الشهر"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "لا سجل تنزيلات"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "لا سجل تشغيل"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} تشغيل"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "مكتمل"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "الإعدادات"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "دليل الإخراج"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "أين يتم حفظ الملفات المنزلة"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "تغيير"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "اللغة"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "لغة عرض التطبيق"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "السمة"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "مظهر التطبيق"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "مراقبة الحافظة"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "اكتشاف الروابط في الحافظة تلقائياً"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "كتابة الترجمات"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "تنزيل ملفات الترجمة افتراضياً"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "تضمين الصورة المصغرة"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "تضمين الصورة المصغرة في ملف الوسائط"

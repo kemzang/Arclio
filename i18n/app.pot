@@ -34,6 +34,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr ""
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr ""
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr ""
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr ""
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr ""
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr ""
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr ""
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr ""
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr ""
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr ""
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr ""
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr ""
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr ""
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr ""
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr ""
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr ""
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr ""
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr ""
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr ""
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr ""
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr ""
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr ""
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr ""
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr ""
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr ""
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr ""
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr ""
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr ""
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr ""
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr ""
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr ""
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr ""
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr ""

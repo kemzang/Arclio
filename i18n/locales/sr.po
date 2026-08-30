@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "Веб-сајт"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "Отворили смо страницу за вас. Потврдите тамо овај код:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "Завршите у прегледачу"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "Откажи"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "Повежи"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "Опционо. Arclio ради потпуно офлајн — налог само додаје синхронизацију библиотеке између ваших уређаја."
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "Ваша библиотека се синхронизује између уређаја."
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "Овај уређај је повезан"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "Повежи налог"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "Копирај код"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "Прекини везу"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "Повезивање отказано."
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "Тај захтев је одбијен у прегледачу."
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "Код је истекао пре одобрења. Почните поново."
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "Дошло је до грешке при повезивању. Покушајте поново."
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "Поново отвори страницу"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "Није могуће започети повезивање. Проверите интернет везу."
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "Бесплатни налози синхронизују један уређај. Пређите на Pro да синхронизујете и овај."
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "Последња синхронизација није успела. Покушаће поново сама."
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "Покреће се аутоматски у позадини и на ваш захтев."
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "Синхронизуј"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "Ваш план не покрива синхронизацију овог уређаја."
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "примљено: {{count}}"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "уклоњено: {{count}}"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "Овај уређај је одвојен од вашег налога. Повежите га поново."
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "послато: {{count}}"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "Синхронизација библиотеке"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "Већ је ажурно."
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "Налог"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "Покушај поново"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio није могао да приступи системском привеску да заштити токен налога, па је повезивање онемогућено. Све остало ради — налог само додаје синхронизацију."
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "Налог није доступан на овом систему"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "Чекамо вашу потврду…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "Повратна информација"
@@ -54,6 +182,46 @@ msgstr "Увећај"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "Умањи"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Назад на колекције"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Нема медија у овој колекцији"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Додајте медије из библиотеке"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Уклони из колекције"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Откажи"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Нова колекција"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Нема колекција"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Направите колекцију за организацију медија"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Назив колекције"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Направи"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "Тај URL није подржан у yt-dlp. Пробајте други линк са било ког сајта који yt-dlp подржава."
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Нема омиљених"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Означите медиј као омиљени"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "Звук"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Завршено"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Преузимања"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Нема историје преузимања"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Нема историје репродукције"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Репродукција"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} репродукција"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Овог месеца"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Ове недеље"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Данас"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Јуче"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "Језик"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Све"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Аудио"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Ваша библиотека је празна"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Преузмите видео да бисте почели"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "ставке"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Недостаје"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Претрага по наслову, аутору, опису…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Најдуже"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Најновије прво"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Најстарије прво"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Најкраће"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Наслов А-Ш"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Наслов Ш-А"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Видео"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Колекције"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Омиљено"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Историја"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Почетна"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Библиотека"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Подешавања"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Ознаке"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Назад на библиотеку"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Није пронађена датотека за репродукцију"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Медијум није пронађен"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Брзина"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Титлови"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "Подешавању је потребна твоја помоћ"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Колекција"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "ставке"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Медији"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Нема резултата"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Претрага…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Ознака"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Промени"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Надзор клипборда"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Аутоматски откриј URL адресе у клипборду"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Угради сличицу"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Угради сличицу у медијску датотеку"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Језик"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Језик приказа апликације"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Излазни директоријум"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Где се чувају преузете датотеке"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Тема"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Изглед апликације"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Подешавања"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Пиши титлове"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Подразумевано преузимај датотеке титлова"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "Копирано!"
@@ -826,6 +1226,30 @@ msgstr "yt-dlp је завршио са кодом {{code}}"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "Грешка yt-dlp процеса: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Откажи"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Нова ознака"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Нема ознака"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Направите ознаку за категоризацију медија"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Назив ознаке"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Направи"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "Профили"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Подешавања"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "Назад на библиотеку"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "Медијум није пронађен"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "Није пронађена датотека за репродукцију"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "Титлови"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Брзина"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "Претрага…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "Нема резултата"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "Медији"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "Колекција"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "Ознака"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "ставке"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "Почетна"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "Библиотека"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "Колекције"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "Омиљено"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "Ознаке"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "Историја"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "Подешавања"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "ставке"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "Претрага по наслову, аутору, опису…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "Све"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "Видео"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "Аудио"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "Најновије прво"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "Најстарије прво"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "Наслов А-Ш"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "Наслов Ш-А"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "Најдуже"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "Најкраће"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "Ваша библиотека је празна"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "Преузмите видео да бисте почели"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "Недостаје"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "Нова колекција"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "Назив колекције"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "Направи"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "Откажи"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "Нема колекција"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "Направите колекцију за организацију медија"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "Назад на колекције"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "Нема медија у овој колекцији"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "Додајте медије из библиотеке"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "Уклони из колекције"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "Нема омиљених"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "Означите медиј као омиљени"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "Нова ознака"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "Назив ознаке"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "Направи"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "Откажи"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "Нема ознака"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "Направите ознаку за категоризацију медија"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "Преузимања"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "Репродукција"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "Данас"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "Јуче"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "Ове недеље"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "Овог месеца"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "Нема историје преузимања"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "Нема историје репродукције"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} репродукција"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "Завршено"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Подешавања"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "Излазни директоријум"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "Где се чувају преузете датотеке"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "Промени"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "Језик"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "Језик приказа апликације"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "Тема"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "Изглед апликације"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "Надзор клипборда"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "Аутоматски откриј URL адресе у клипборду"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "Пиши титлове"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "Подразумевано преузимај датотеке титлова"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "Угради сличицу"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "Угради сличицу у медијску датотеку"

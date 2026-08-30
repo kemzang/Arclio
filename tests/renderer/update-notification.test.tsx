@@ -1,5 +1,6 @@
 import {render, screen, fireEvent, act} from '@testing-library/react'
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+import {SITE_URL} from '@shared/constants.js'
 import {App} from '@renderer/App.js'
 import {useAppStore} from '@renderer/store/useAppStore.js'
 import type {AppApi} from '@shared/api.js'
@@ -185,7 +186,9 @@ describe('UpdateBanner integration in App', () => {
 			fireEvent.click(screen.getByText('Download ↗'))
 		})
 
-		expect(openExternal).toHaveBeenCalledWith('https://arclio.orionus.dev/')
+		// Derived from SITE_URL so the assertion follows the product to its real
+		// domain instead of pinning a host that has already moved once.
+		expect(openExternal).toHaveBeenCalledWith(`${SITE_URL}/`)
 	})
 
 	it('Download ↗ dismisses the banner after clicking', async () => {

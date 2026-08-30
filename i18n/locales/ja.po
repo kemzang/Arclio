@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "公式サイト"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "ページを開きました。そこでこのコードを確認してください:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "ブラウザで完了してください"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "接続"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "任意です。Arclio は完全にオフラインで動作します — アカウントは端末間のライブラリ同期を追加するだけです。"
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "ライブラリが端末間で同期されます。"
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "この端末は接続されています"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "アカウントを接続"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "コードをコピー"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "切断"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "接続をキャンセルしました。"
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "そのリクエストはブラウザで拒否されました。"
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "承認される前にコードの有効期限が切れました。もう一度お試しください。"
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "接続中に問題が発生しました。もう一度お試しください。"
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "ページを再度開く"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "接続を開始できませんでした。インターネット接続を確認してください。"
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "無料アカウントは 1 台の端末を同期できます。この端末も同期するには Pro にアップグレードしてください。"
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "前回の同期に失敗しました。自動的に再試行します。"
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "バックグラウンドで自動的に実行され、必要なときにも実行できます。"
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "今すぐ同期"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "ご利用のプランではこの端末の同期は対象外です。"
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "{{count}} 件受信"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "{{count}} 件削除"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "この端末はアカウントから切断されました。もう一度接続してください。"
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "{{count}} 件送信"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "ライブラリ同期"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "すでに最新です。"
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "アカウント"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "再試行"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio はアカウントトークンを保護するためのシステムキーリングにアクセスできなかったため、接続は無効です。他の機能はすべて動作します — アカウントはライブラリ同期を追加するだけです。"
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "このシステムではアカウントを利用できません"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "承認をお待ちしています…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "フィードバック"
@@ -54,6 +182,46 @@ msgstr "拡大"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "縮小"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "コレクションに戻る"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "このコレクションにメディアがありません"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "ライブラリからメディアを追加"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "コレクションから削除"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "新しいコレクション"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "コレクションがありません"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "メディアを整理するコレクションを作成"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "コレクション名"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "作成"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "その URL は yt-dlp でサポートされていません。yt-dlp がサポートするサイトの別のリンクを試してください。"
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "お気に入りがありません"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "メディアをお気に入りとしてマーク"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "音声"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "完了"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "ダウンロード"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "ダウンロード履歴なし"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "再生履歴なし"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "再生"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} 回再生"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "今月"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "今週"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "今日"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "昨日"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "言語"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "すべて"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "音声"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "ライブラリは空です"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "動画をダウンロードして始めましょう"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "アイテム"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "不明"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "タイトル、著者、説明で検索…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "最長"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "新しい順"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "古い順"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "最短"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "タイトル A-Z"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "タイトル Z-A"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "動画"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "コレクション"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "お気に入り"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "履歴"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "ホーム"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "ライブラリ"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "設定"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "タグ"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "ライブラリに戻る"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "再生可能なファイルが見つかりません"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "メディアが見つかりません"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "速度"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "字幕"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "セットアップにサポートが必要です"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "コレクション"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "アイテム"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "メディア"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "結果なし"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "検索…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "タグ"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "変更"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "クリップボード監視"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "クリップボードのURLを自動検出"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "サムネイルを埋め込む"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "メディアファイルにサムネイルを埋め込む"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "言語"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "アプリの表示言語"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "出力ディレクトリ"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "ダウンロードファイルの保存先"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "テーマ"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "アプリの外観"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "設定"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "字幕を書き込む"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "デフォルトで字幕ファイルをダウンロード"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "コピーしました！"
@@ -826,6 +1226,30 @@ msgstr "yt-dlpがコード{{code}}で終了しました"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "yt-dlpプロセスエラー: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "新しいタグ"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "タグがありません"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "メディアを分類するタグを作成"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "タグ名"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "作成"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "プロファイル"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "設定"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "ライブラリに戻る"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "メディアが見つかりません"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "再生可能なファイルが見つかりません"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "字幕"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "速度"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "検索…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "結果なし"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "メディア"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "コレクション"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "タグ"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "アイテム"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "ホーム"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "ライブラリ"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "コレクション"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "お気に入り"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "タグ"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "履歴"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "設定"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "アイテム"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "タイトル、著者、説明で検索…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "すべて"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "動画"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "音声"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "新しい順"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "古い順"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "タイトル A-Z"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "タイトル Z-A"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "最長"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "最短"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "ライブラリは空です"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "動画をダウンロードして始めましょう"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "不明"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "新しいコレクション"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "コレクション名"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "作成"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "キャンセル"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "コレクションがありません"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "メディアを整理するコレクションを作成"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "コレクションに戻る"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "このコレクションにメディアがありません"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "ライブラリからメディアを追加"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "コレクションから削除"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "お気に入りがありません"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "メディアをお気に入りとしてマーク"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "新しいタグ"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "タグ名"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "作成"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "キャンセル"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "タグがありません"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "メディアを分類するタグを作成"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "ダウンロード"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "再生"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "今日"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "昨日"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "今週"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "今月"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "ダウンロード履歴なし"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "再生履歴なし"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} 回再生"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "完了"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "設定"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "出力ディレクトリ"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "ダウンロードファイルの保存先"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "変更"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "言語"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "アプリの表示言語"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "テーマ"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "アプリの外観"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "クリップボード監視"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "クリップボードのURLを自動検出"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "字幕を書き込む"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "デフォルトで字幕ファイルをダウンロード"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "サムネイルを埋め込む"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "メディアファイルにサムネイルを埋め込む"

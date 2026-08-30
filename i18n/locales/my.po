@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "ဝက်ဘ်ဆိုက်"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "သင့်အတွက် စာမျက်နှာတစ်ခုဖွင့်ပေးထားသည်။ ထိုနေရာတွင် ဤကုဒ်ကို အတည်ပြုပါ:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "သင့်ဘရောက်ဇာတွင် ပြီးဆုံးအောင်လုပ်ပါ"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "ပယ်ဖျက်ရန်"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "ချိတ်ဆက်ရန်"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "ရွေးချယ်နိုင်သည်။ Arclio သည် အော့ဖ်လိုင်းတွင် အပြည့်အဝအလုပ်လုပ်သည် — အကောင့်သည် သင့်စက်များအကြား စာကြည့်တိုက်ထပ်တူပြုမှုကိုသာ ထပ်ဖြည့်ပေးသည်။"
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "သင့်စာကြည့်တိုက်သည် သင့်စက်များအကြား ထပ်တူပြုသည်။"
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "ဤစက်ကို ချိတ်ဆက်ထားသည်"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "အကောင့်ချိတ်ဆက်ရန်"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "ကုဒ်ကူးရန်"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "ချိတ်ဆက်မှုဖြုတ်ရန်"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "ချိတ်ဆက်မှုကို ပယ်ဖျက်လိုက်သည်။"
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "ထိုတောင်းဆိုချက်ကို ဘရောက်ဇာတွင် ငြင်းပယ်ခဲ့သည်။"
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "အတည်မပြုမီ ကုဒ်သက်တမ်းကုန်သွားသည်။ ပြန်စပါ။"
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "ချိတ်ဆက်စဉ် တစ်ခုခုမှားယွင်းသွားသည်။ ထပ်ကြိုးစားပါ။"
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "စာမျက်နှာပြန်ဖွင့်ရန်"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "ချိတ်ဆက်မှုမစတင်နိုင်ပါ။ သင့်အင်တာနက်ချိတ်ဆက်မှုကို စစ်ဆေးပါ။"
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "အခမဲ့အကောင့်များသည် စက်တစ်လုံးကို ထပ်တူပြုသည်။ ဤစက်ကိုပါ ထပ်တူပြုရန် Pro သို့ အဆင့်မြှင့်ပါ။"
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "နောက်ဆုံးထပ်တူပြုမှု မအောင်မြင်ပါ။ ၎င်းသည် အလိုအလျောက် ပြန်ကြိုးစားပါမည်။"
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "နောက်ခံတွင် အလိုအလျောက်လုပ်ဆောင်ပြီး၊ သင်တောင်းဆိုသည့်အခါတိုင်းလည်း လုပ်ဆောင်သည်။"
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "ယခုထပ်တူပြုရန်"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "သင့်အစီအစဉ်တွင် ဤစက်၏ထပ်တူပြုမှု မပါဝင်ပါ။"
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "{{count}} လက်ခံရရှိ"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "{{count}} ဖယ်ရှားပြီး"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "ဤစက်ကို သင့်အကောင့်မှ ချိတ်ဆက်မှုဖြုတ်လိုက်သည်။ ပြန်ချိတ်ဆက်ပါ။"
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "{{count}} ပို့ပြီး"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "စာကြည့်တိုက်ထပ်တူပြုမှု"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "နောက်ဆုံးအခြေအနေဖြစ်နေပြီ။"
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "အကောင့်"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "ထပ်ကြိုးစားရန်"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio သည် အကောင့်တိုကင်ကို ကာကွယ်ရန် စနစ်သော့တွဲကို မရောက်ရှိနိုင်ခဲ့သဖြင့် ချိတ်ဆက်ခြင်းကို ပိတ်ထားသည်။ ကျန်အရာအားလုံး အလုပ်လုပ်သည် — အကောင့်သည် စာကြည့်တိုက်ထပ်တူပြုမှုကိုသာ ထပ်ဖြည့်ပေးသည်။"
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "ဤစနစ်တွင် အကောင့်မရရှိနိုင်ပါ"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "သင့်ခွင့်ပြုချက်ကို စောင့်ဆိုင်းနေသည်…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "အကြံပြုချက်"
@@ -54,6 +182,46 @@ msgstr "ချဲ့မည်"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "ချုံ့မည်"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "ကောက်နှုတ်ချက်များသို့ ပြန်သွားရန်"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "ဤကောက်နှုတ်ချက်တွင် မီဒီယာ မရှိပါ"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "စာကြည့်တိုက်မှ မီဒီယာ ထည့်ပါ"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "ကောက်နှုတ်ချက်မှ ဖယ်ရှားရန်"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "ပယ်ဖျက်"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "ကောက်နှုတ်ချက်အသစ်"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "ကောက်နှုတ်ချက် မရှိသေးပါ"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "သင့်မီဒီယာ စီစဉ်ရန် ကောက်နှုတ်ချက် ဖန်တီးပါ"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "ကောက်နှုတ်ချက် အမည်"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "ဖန်တီး"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "ထို URL ကို yt-dlp မထောက်ပံ့ပါ။ yt-dlp ထောက်ပံ့သော site များမှ အခြား link တစ်ခုကို စမ်းကြည့်ပါ။"
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "အကြိုက်ဆုံး မရှိသေးပါ"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "ဤနေရာတွင် ရှုရန် မီဒီယာကို အကြိုက်ဆုံးအဖြစ် အမှတ်အသားပြုပါ"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "အသံ"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "ပြီးစီး"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "ဒေါင်းလုဒ်များ"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "ဒေါင်းလုဒ် မှတ်တမ်း မရှိပါ"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "ဖွင့်ခြင်း မှတ်တမ်း မရှိပါ"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "ဖွင့်ခြင်း"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} ကြိမ် ဖွင့်"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "ဤလ"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "ဤအပတ်"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "ယနေ့"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "မနေ့က"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "ဘာသာစကား"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "အားလုံး"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "အသံ"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "သင့်စာကြည့်တိုက် ဗလာဖြစ်နေသည်"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "စတင်ရန် ဗီဒီယို ဒေါင်းလုဒ်လုပ်ပါ"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "အရာများ"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "ပျောက်ဆုံး"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "ခေါင်းစဉ်၊ စာရေးသူ၊ ဖော်ပြချက်ဖြင့် ရှာဖွေ…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "အရှည်ဆုံး"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "အသစ်ဆုံး"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "အဟောင်းဆုံး"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "အတိုဆုံး"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "ခေါင်းစဉ် က-ဟ"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "ခေါင်းစဉ် ဟ-က"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "ဗီဒီယို"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "ကောက်နှုတ်ချက်များ"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "အကြိုက်ဆုံး"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "မှတ်တမ်း"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "ပင်မ"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "စာကြည့်တိုက်"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "ဆက်တင်များ"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "အမှတ်အသားများ"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "စာကြည့်တိုက်သို့ ပြန်သွားရန်"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "ဖွင့်နိုင်သော ဖိုင် ရှာမတွေ့ပါ"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "မီဒီယာ ရှာမတွေ့ပါ"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "အမြန်နှုန်း"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "စာတန်းထိုးများ"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "တပ်ဆင်မှုတွင် သင့်အကူအညီလိုပါသည်"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "ကောက်နှုတ်ချက်"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "အရာများ"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "မီဒီယာ"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "ရလဒ်မရှိပါ"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "ရှာဖွေ…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "အမှတ်အသား"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "ပြောင်းလဲ"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "ကလစ်ဘုတ် ကြည့်ရှု"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "ကလစ်ဘုတ်တွင် URL များ အလိုအလျောက် ရှာဖွေ"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "ပုံငယ် ထည့်သွင်း"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "မီဒီယာ ဖိုင်တွင် ပုံငယ် ထည့်သွင်းပါ"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "ဘာသာစကား"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "အပလီကေးရှင်း ပြသ ဘာသာစကား"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "အထွက် လမ်းညွှန်"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "ဒေါင်းလုဒ်လုပ်ထားသော ဖိုင်များ ဘယ်မှာ သိမ်းထားသလဲ"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "အပြင်အဆင်"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "အပလီကေးရှင်း ပုံပန်း"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "ဆက်တင်များ"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "စာတန်းထိုးများ ရေးပါ"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "စာတန်းထိုး ဖိုင်များ ပုံသေ ဒေါင်းလုဒ်လုပ်ပါ"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "ကူးယူပြီး!"
@@ -826,6 +1226,30 @@ msgstr "yt-dlp သည် code {{code}} ဖြင့်ထွက်သွား�
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "yt-dlp လုပ်ငန်းစဉ်အမှား: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "ပယ်ဖျက်"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "အမှတ်အသားအသစ်"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "အမှတ်အသား မရှိသေးပါ"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "သင့်မီဒီယာ အမျိုးအစားခွဲရန် အမှတ်အသား ဖန်တီးပါ"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "အမှတ်အသား အမည်"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "ဖန်တီး"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "ပရိုဖိုင်များ"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "ဆက်တင်များ"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "စာကြည့်တိုက်သို့ ပြန်သွားရန်"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "မီဒီယာ ရှာမတွေ့ပါ"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "ဖွင့်နိုင်သော ဖိုင် ရှာမတွေ့ပါ"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "စာတန်းထိုးများ"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "အမြန်နှုန်း"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "ရှာဖွေ…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "ရလဒ်မရှိပါ"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "မီဒီယာ"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "ကောက်နှုတ်ချက်"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "အမှတ်အသား"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "အရာများ"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "ပင်မ"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "စာကြည့်တိုက်"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "ကောက်နှုတ်ချက်များ"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "အကြိုက်ဆုံး"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "အမှတ်အသားများ"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "မှတ်တမ်း"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "ဆက်တင်များ"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "အရာများ"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "ခေါင်းစဉ်၊ စာရေးသူ၊ ဖော်ပြချက်ဖြင့် ရှာဖွေ…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "အားလုံး"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "ဗီဒီယို"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "အသံ"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "အသစ်ဆုံး"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "အဟောင်းဆုံး"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "ခေါင်းစဉ် က-ဟ"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "ခေါင်းစဉ် ဟ-က"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "အရှည်ဆုံး"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "အတိုဆုံး"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "သင့်စာကြည့်တိုက် ဗလာဖြစ်နေသည်"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "စတင်ရန် ဗီဒီယို ဒေါင်းလုဒ်လုပ်ပါ"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "ပျောက်ဆုံး"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "ကောက်နှုတ်ချက်အသစ်"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "ကောက်နှုတ်ချက် အမည်"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "ဖန်တီး"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "ပယ်ဖျက်"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "ကောက်နှုတ်ချက် မရှိသေးပါ"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "သင့်မီဒီယာ စီစဉ်ရန် ကောက်နှုတ်ချက် ဖန်တီးပါ"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "ကောက်နှုတ်ချက်များသို့ ပြန်သွားရန်"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "ဤကောက်နှုတ်ချက်တွင် မီဒီယာ မရှိပါ"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "စာကြည့်တိုက်မှ မီဒီယာ ထည့်ပါ"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "ကောက်နှုတ်ချက်မှ ဖယ်ရှားရန်"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "အကြိုက်ဆုံး မရှိသေးပါ"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "ဤနေရာတွင် ရှုရန် မီဒီယာကို အကြိုက်ဆုံးအဖြစ် အမှတ်အသားပြုပါ"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "အမှတ်အသားအသစ်"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "အမှတ်အသား အမည်"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "ဖန်တီး"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "ပယ်ဖျက်"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "အမှတ်အသား မရှိသေးပါ"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "သင့်မီဒီယာ အမျိုးအစားခွဲရန် အမှတ်အသား ဖန်တီးပါ"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "ဒေါင်းလုဒ်များ"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "ဖွင့်ခြင်း"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "ယနေ့"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "မနေ့က"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "ဤအပတ်"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "ဤလ"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "ဒေါင်းလုဒ် မှတ်တမ်း မရှိပါ"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "ဖွင့်ခြင်း မှတ်တမ်း မရှိပါ"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} ကြိမ် ဖွင့်"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "ပြီးစီး"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "ဆက်တင်များ"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "အထွက် လမ်းညွှန်"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "ဒေါင်းလုဒ်လုပ်ထားသော ဖိုင်များ ဘယ်မှာ သိမ်းထားသလဲ"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "ပြောင်းလဲ"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "ဘာသာစကား"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "အပလီကေးရှင်း ပြသ ဘာသာစကား"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "အပြင်အဆင်"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "အပလီကေးရှင်း ပုံပန်း"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "ကလစ်ဘုတ် ကြည့်ရှု"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "ကလစ်ဘုတ်တွင် URL များ အလိုအလျောက် ရှာဖွေ"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "စာတန်းထိုးများ ရေးပါ"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "စာတန်းထိုး ဖိုင်များ ပုံသေ ဒေါင်းလုဒ်လုပ်ပါ"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "ပုံငယ် ထည့်သွင်း"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "မီဒီယာ ဖိုင်တွင် ပုံငယ် ထည့်သွင်းပါ"

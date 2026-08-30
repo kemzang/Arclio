@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "Trang web"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "Chúng tôi đã mở một trang cho bạn. Hãy xác nhận mã này ở đó:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "Hoàn tất trong trình duyệt"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "Hủy"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "Kết nối"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "Tùy chọn. Arclio hoạt động hoàn toàn ngoại tuyến — tài khoản chỉ thêm khả năng đồng bộ thư viện giữa các thiết bị của bạn."
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "Thư viện của bạn được đồng bộ giữa các thiết bị."
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "Thiết bị này đã được kết nối"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "Kết nối tài khoản"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "Sao chép mã"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "Ngắt kết nối"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "Đã hủy kết nối."
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "Yêu cầu đó đã bị từ chối trong trình duyệt."
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "Mã đã hết hạn trước khi được phê duyệt. Hãy bắt đầu lại."
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "Đã xảy ra sự cố khi kết nối. Vui lòng thử lại."
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "Mở lại trang"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "Không thể bắt đầu kết nối. Hãy kiểm tra kết nối internet của bạn."
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "Tài khoản miễn phí đồng bộ một thiết bị. Nâng cấp lên Pro để đồng bộ cả thiết bị này."
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "Lần đồng bộ trước thất bại. Nó sẽ tự thử lại."
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "Chạy tự động trong nền, và bất cứ khi nào bạn yêu cầu."
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "Đồng bộ ngay"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "Gói của bạn không bao gồm việc đồng bộ thiết bị này."
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "nhận {{count}}"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "xóa {{count}}"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "Thiết bị này đã bị ngắt khỏi tài khoản của bạn. Hãy kết nối lại."
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "gửi {{count}}"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "Đồng bộ thư viện"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "Đã cập nhật."
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "Tài khoản"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "Thử lại"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio không thể truy cập kho khóa hệ thống để bảo vệ mã thông báo tài khoản, nên việc kết nối bị tắt. Mọi thứ khác vẫn hoạt động — tài khoản chỉ thêm khả năng đồng bộ thư viện."
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "Tài khoản không khả dụng trên hệ thống này"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "Đang chờ bạn phê duyệt…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "Phản hồi"
@@ -54,6 +182,46 @@ msgstr "Phóng to"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "Thu nhỏ"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Quay lại bộ sưu tập"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Không có phương tiện trong bộ sưu tập này"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Thêm phương tiện từ thư viện"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Xóa khỏi bộ sưu tập"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Hủy"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Bộ sưu tập mới"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Chưa có bộ sưu tập"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Tạo bộ sưu tập để sắp xếp phương tiện"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Tên bộ sưu tập"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Tạo"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "URL đó không được yt-dlp hỗ trợ. Hãy thử một liên kết khác từ bất kỳ trang web nào được yt-dlp hỗ trợ."
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Chưa có yêu thích"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Đánh dấu phương tiện là yêu thích để xem ở đây"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "Âm thanh"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Hoàn thành"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Tải xuống"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Không có lịch sử tải xuống"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Không có lịch sử phát"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Phát"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} lần phát"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Tháng này"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Tuần này"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Hôm nay"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Hôm qua"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "Ngôn ngữ"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Tất cả"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Âm thanh"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Thư viện của bạn trống"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Tải video để bắt đầu"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "mục"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Thiếu"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Tìm theo tiêu đề, tác giả, mô tả…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Dài nhất"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Mới nhất"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Cũ nhất"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Ngắn nhất"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Tiêu đề A-Z"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Tiêu đề Z-A"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Bộ sưu tập"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Yêu thích"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Lịch sử"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Trang chủ"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Thư viện"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Cài đặt"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Thẻ"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Quay lại thư viện"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Không tìm thấy tệp có thể phát"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Không tìm thấy phương tiện"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Tốc độ"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Phụ đề"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "Thiết lập cần sự giúp đỡ của bạn"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Bộ sưu tập"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "mục"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Phương tiện"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Không có kết quả"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Tìm kiếm…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Thẻ"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Thay đổi"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Theo dõi khay nhớ tạm"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Tự động phát hiện URL trong khay nhớ tạm"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Nhúng hình thu nhỏ"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Nhúng hình thu nhỏ vào tệp phương tiện"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Ngôn ngữ hiển thị ứng dụng"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Thư mục đầu ra"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Nơi lưu tệp tải xuống"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Giao diện"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Diện mạo ứng dụng"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Cài đặt"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Ghi phụ đề"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Tải tệp phụ đề mặc định"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "Đã sao chép!"
@@ -826,6 +1226,30 @@ msgstr "yt-dlp thoát với mã {{code}}"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "Lỗi tiến trình yt-dlp: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Hủy"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Thẻ mới"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Chưa có thẻ"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Tạo thẻ để phân loại phương tiện"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Tên thẻ"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Tạo"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "Hồ sơ"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Cài đặt"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "Quay lại thư viện"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "Không tìm thấy phương tiện"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "Không tìm thấy tệp có thể phát"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "Phụ đề"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Tốc độ"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "Tìm kiếm…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "Không có kết quả"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "Phương tiện"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "Bộ sưu tập"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "Thẻ"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "mục"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "Trang chủ"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "Thư viện"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "Bộ sưu tập"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "Yêu thích"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "Thẻ"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "Lịch sử"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "Cài đặt"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "mục"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "Tìm theo tiêu đề, tác giả, mô tả…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "Tất cả"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "Video"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "Âm thanh"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "Mới nhất"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "Cũ nhất"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "Tiêu đề A-Z"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "Tiêu đề Z-A"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "Dài nhất"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "Ngắn nhất"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "Thư viện của bạn trống"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "Tải video để bắt đầu"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "Thiếu"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "Bộ sưu tập mới"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "Tên bộ sưu tập"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "Tạo"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "Hủy"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "Chưa có bộ sưu tập"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "Tạo bộ sưu tập để sắp xếp phương tiện"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "Quay lại bộ sưu tập"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "Không có phương tiện trong bộ sưu tập này"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "Thêm phương tiện từ thư viện"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "Xóa khỏi bộ sưu tập"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "Chưa có yêu thích"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "Đánh dấu phương tiện là yêu thích để xem ở đây"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "Thẻ mới"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "Tên thẻ"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "Tạo"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "Hủy"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "Chưa có thẻ"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "Tạo thẻ để phân loại phương tiện"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "Tải xuống"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "Phát"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "Hôm nay"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "Hôm qua"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "Tuần này"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "Tháng này"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "Không có lịch sử tải xuống"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "Không có lịch sử phát"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} lần phát"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "Hoàn thành"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Cài đặt"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "Thư mục đầu ra"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "Nơi lưu tệp tải xuống"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "Thay đổi"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "Ngôn ngữ"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "Ngôn ngữ hiển thị ứng dụng"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "Giao diện"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "Diện mạo ứng dụng"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "Theo dõi khay nhớ tạm"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "Tự động phát hiện URL trong khay nhớ tạm"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "Ghi phụ đề"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "Tải tệp phụ đề mặc định"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "Nhúng hình thu nhỏ"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "Nhúng hình thu nhỏ vào tệp phương tiện"

@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "Сайт"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "Ми відкрили для вас сторінку. Підтвердьте там цей код:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "Завершіть у браузері"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "Підключити"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "Необовʼязково. Arclio повністю працює офлайн — обліковий запис лише додає синхронізацію бібліотеки між вашими пристроями."
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "Ваша бібліотека синхронізується між пристроями."
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "Цей пристрій підключено"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "Підключити обліковий запис"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "Копіювати код"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "Відключити"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "Підключення скасовано."
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "Цей запит відхилено в браузері."
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "Термін дії коду минув до підтвердження. Почніть знову."
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "Під час підключення сталася помилка. Спробуйте ще раз."
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "Відкрити сторінку знову"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "Не вдалося розпочати підключення. Перевірте зʼєднання з інтернетом."
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "Безкоштовні облікові записи синхронізують один пристрій. Перейдіть на Pro, щоб синхронізувати й цей."
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "Остання синхронізація не вдалася. Вона повториться сама."
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "Виконується автоматично у фоні та на ваш запит."
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "Синхронізувати"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "Ваш тариф не охоплює синхронізацію цього пристрою."
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "отримано: {{count}}"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "вилучено: {{count}}"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "Цей пристрій відключено від вашого облікового запису. Підключіть його знову."
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "надіслано: {{count}}"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "Синхронізація бібліотеки"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "Уже актуально."
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "Обліковий запис"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "Спробувати ще раз"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio не зміг звернутися до системного сховища ключів, щоб захистити токен облікового запису, тому підключення вимкнено. Усе інше працює — обліковий запис лише додає синхронізацію."
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "Обліковий запис недоступний у цій системі"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "Очікуємо на ваше підтвердження…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "Зворотний зв'язок"
@@ -54,6 +182,46 @@ msgstr "Збільшити"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "Зменшити"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Назад до колекцій"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Немає медіа в цій колекції"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Додайте медіа з бібліотеки"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Видалити з колекції"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Нова колекція"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Немає колекцій"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Створіть колекцію для організації медіа"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Назва колекції"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Створити"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "Цей URL не підтримується yt-dlp. Спробуйте інше посилання з будь-якого сайту, який підтримує yt-dlp."
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Немає обраного"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Позначте медіа як обране"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "Аудіо"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Завершено"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Завантаження"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Немає історії завантажень"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Немає історії відтворення"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Відтворення"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} відтворення"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Цього місяця"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Цього тижня"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Сьогодні"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Вчора"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "Мова"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Усі"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Аудіо"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Ваша бібліотека порожня"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Завантажте відео, щоб почати"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "елементи"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Відсутній"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Пошук за назвою, автором, описом…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Найдовше"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Спочатку нові"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Спочатку старі"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Найкоротше"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Назва А-Я"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Назва Я-А"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Відео"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Колекції"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Обране"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Історія"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Головна"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Бібліотека"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Налаштування"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Теги"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Назад до бібліотеки"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Не знайдено відтворюваний файл"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Медіа не знайдено"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Швидкість"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Субтитри"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "Налаштування потребує твоєї допомоги"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Колекція"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "елементи"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Медіа"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Немає результатів"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Пошук…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Тег"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Змінити"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Моніторинг буфера обміну"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Автоматично виявляти URL у буфері обміну"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Вбудовувати мініатюру"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Вбудовувати мініатюру в медіафайл"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Мова"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Мова відображення додатку"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Каталог виводу"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Де зберігаються завантажені файли"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Тема"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Вигляд додатку"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Налаштування"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Записувати субтитри"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Завантажувати файли субтитрів за замовчуванням"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "Скопійовано!"
@@ -826,6 +1226,30 @@ msgstr "yt-dlp завершився з кодом {{code}}"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "Помилка процесу yt-dlp: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Новий тег"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Немає тегів"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Створіть тег для категоризації медіа"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Назва тега"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Створити"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "Профілі"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Налаштування"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "Назад до бібліотеки"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "Медіа не знайдено"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "Не знайдено відтворюваний файл"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "Субтитри"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Швидкість"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "Пошук…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "Немає результатів"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "Медіа"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "Колекція"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "Тег"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "елементи"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "Головна"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "Бібліотека"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "Колекції"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "Обране"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "Теги"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "Історія"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "Налаштування"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "елементи"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "Пошук за назвою, автором, описом…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "Усі"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "Відео"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "Аудіо"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "Спочатку нові"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "Спочатку старі"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "Назва А-Я"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "Назва Я-А"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "Найдовше"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "Найкоротше"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "Ваша бібліотека порожня"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "Завантажте відео, щоб почати"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "Відсутній"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "Нова колекція"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "Назва колекції"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "Створити"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "Скасувати"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "Немає колекцій"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "Створіть колекцію для організації медіа"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "Назад до колекцій"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "Немає медіа в цій колекції"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "Додайте медіа з бібліотеки"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "Видалити з колекції"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "Немає обраного"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "Позначте медіа як обране"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "Новий тег"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "Назва тега"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "Створити"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "Скасувати"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "Немає тегів"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "Створіть тег для категоризації медіа"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "Завантаження"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "Відтворення"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "Сьогодні"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "Вчора"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "Цього тижня"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "Цього місяця"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "Немає історії завантажень"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "Немає історії відтворення"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} відтворення"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "Завершено"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Налаштування"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "Каталог виводу"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "Де зберігаються завантажені файли"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "Змінити"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "Мова"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "Мова відображення додатку"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "Тема"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "Вигляд додатку"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "Моніторинг буфера обміну"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "Автоматично виявляти URL у буфері обміну"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "Записувати субтитри"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "Завантажувати файли субтитрів за замовчуванням"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "Вбудовувати мініатюру"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "Вбудовувати мініатюру в медіафайл"

@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "Ιστότοπος"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "Ανοίξαμε μια σελίδα για εσάς. Επιβεβαιώστε εκεί αυτόν τον κωδικό:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "Ολοκληρώστε στο πρόγραμμα περιήγησης"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "Σύνδεση"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "Προαιρετικό. Το Arclio λειτουργεί πλήρως εκτός σύνδεσης — ένας λογαριασμός προσθέτει μόνο τον συγχρονισμό της βιβλιοθήκης μεταξύ των συσκευών σας."
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "Η βιβλιοθήκη σας συγχρονίζεται μεταξύ των συσκευών σας."
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "Αυτή η συσκευή είναι συνδεδεμένη"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "Σύνδεση λογαριασμού"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "Αντιγραφή κωδικού"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "Αποσύνδεση"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "Η σύνδεση ακυρώθηκε."
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "Αυτό το αίτημα απορρίφθηκε στο πρόγραμμα περιήγησης."
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "Ο κωδικός έληξε πριν εγκριθεί. Ξεκινήστε ξανά."
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "Κάτι πήγε στραβά κατά τη σύνδεση. Δοκιμάστε ξανά."
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "Άνοιγμα σελίδας ξανά"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "Δεν ήταν δυνατή η έναρξη της σύνδεσης. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο."
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "Οι δωρεάν λογαριασμοί συγχρονίζουν μία συσκευή. Αναβαθμίστε σε Pro για να συγχρονίσετε και αυτήν."
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "Ο τελευταίος συγχρονισμός απέτυχε. Θα δοκιμάσει ξανά από μόνος του."
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "Εκτελείται αυτόματα στο παρασκήνιο, και όποτε το ζητήσετε."
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "Συγχρονισμός τώρα"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "Το πρόγραμμά σας δεν καλύπτει τον συγχρονισμό αυτής της συσκευής."
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "ελήφθησαν {{count}}"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "αφαιρέθηκαν {{count}}"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "Αυτή η συσκευή αποσυνδέθηκε από τον λογαριασμό σας. Συνδέστε την ξανά."
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "στάλθηκαν {{count}}"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "Συγχρονισμός βιβλιοθήκης"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "Ήδη ενημερωμένο."
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "Λογαριασμός"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "Δοκιμάστε ξανά"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Το Arclio δεν μπόρεσε να προσπελάσει μια κλειδοθήκη συστήματος για να προστατεύσει ένα διακριτικό λογαριασμού, οπότε η σύνδεση είναι απενεργοποιημένη. Όλα τα υπόλοιπα λειτουργούν — ένας λογαριασμός προσθέτει μόνο τον συγχρονισμό."
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "Ο λογαριασμός δεν είναι διαθέσιμος σε αυτό το σύστημα"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "Αναμονή για την έγκρισή σας…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "Σχόλια"
@@ -54,6 +182,46 @@ msgstr "Μεγέθυνση"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "Σμίκρυνση"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Πίσω στις συλλογές"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Δεν υπάρχουν πολυμέσα σε αυτή τη συλλογή"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Προσθέστε πολυμέσα από τη βιβλιοθήκη"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Αφαίρεση από τη συλλογή"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Νέα συλλογή"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Δεν υπάρχουν συλλογές"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Δημιουργήστε συλλογή για οργάνωση πολυμέσων"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Όνομα συλλογής"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Δημιουργία"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "Αυτό το URL δεν υποστηρίζεται από το yt-dlp. Δοκίμασε διαφορετικό σύνδεσμο από οποιονδήποτε ιστότοπο που υποστηρίζει το yt-dlp."
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Δεν υπάρχουν αγαπημένα"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Σημειώστε πολυμέσο ως αγαπημένο"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "Ήχος"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Ολοκληρώθηκε"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Λήψεις"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Δεν υπάρχει ιστορικό λήψεων"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Δεν υπάρχει ιστορικό αναπαραγωγής"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Αναπαραγωγή"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} αναπαραγωγή"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Αυτό τον μήνα"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Αυτή την εβδομάδα"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Σήμερα"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Χθες"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "Γλώσσα"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Όλα"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Ήχος"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Η βιβλιοθήκη σας είναι κενή"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Κατεβάστε ένα βίντεο για να ξεκινήσετε"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "αντικείμενα"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Λείπει"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Αναζήτηση по τίτλο, συγγραφέα, περιγραφή…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Μεγαλύτερο"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Νεότερα πρώτα"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Παλαιότερα πρώτα"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Μικρότερο"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Τίτλος Α-Ω"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Τίτλος Ω-Α"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Βίντεο"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Συλλογές"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Αγαπημένα"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Ιστορικό"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Αρχική"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Βιβλιοθήκη"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Ετικέτες"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Πίσω στη βιβλιοθήκη"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Δεν βρέθηκε αρχείο για αναπαραγωγή"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Δεν βρέθηκε μέσο"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Ταχύτητα"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Υπότιτλοι"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "Η ρύθμιση χρειάζεται τη βοήθειά σου"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Συλλογή"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "αντικείμενα"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Πολυμέσα"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Χωρίς αποτελέσματα"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Αναζήτηση…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Ετικέτα"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Αλλαγή"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Παρακολούθηση προχείρου"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Αυτόματη ανίχνευση URL στο πρόχειρο"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Ενσωμάτωση μικρογραφίας"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Ενσωμάτωση μικρογραφίας στο αρχείο πολυμέσων"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Γλώσσα"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Γλώσσα εμφάνισης εφαρμογής"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Κατάλογος εξόδου"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Πού αποθηκεύονται τα αρχεία"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Θέμα"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Εμφάνιση εφαρμογής"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Εγγραφή υποτίτλων"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Λήψη αρχείων υποτίτλων από προεπιλογή"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "Αντιγράφηκε!"
@@ -826,6 +1226,30 @@ msgstr "Το yt-dlp έγινε έξοδος με κωδικό {{code}}"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "Σφάλμα διαδικασίας yt-dlp: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Νέα ετικέτα"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Δεν υπάρχουν ετικέτες"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Δημιουργήστε ετικέτα για κατηγοριοποίηση"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Όνομα ετικέτας"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Δημιουργία"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "Προφίλ"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Ρυθμίσεις"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "Πίσω στη βιβλιοθήκη"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "Δεν βρέθηκε μέσο"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "Δεν βρέθηκε αρχείο για αναπαραγωγή"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "Υπότιτλοι"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Ταχύτητα"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "Αναζήτηση…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "Χωρίς αποτελέσματα"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "Πολυμέσα"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "Συλλογή"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "Ετικέτα"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "αντικείμενα"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "Αρχική"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "Βιβλιοθήκη"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "Συλλογές"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "Αγαπημένα"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "Ετικέτες"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "Ιστορικό"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "Ρυθμίσεις"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "αντικείμενα"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "Αναζήτηση по τίτλο, συγγραφέα, περιγραφή…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "Όλα"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "Βίντεο"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "Ήχος"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "Νεότερα πρώτα"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "Παλαιότερα πρώτα"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "Τίτλος Α-Ω"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "Τίτλος Ω-Α"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "Μεγαλύτερο"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "Μικρότερο"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "Η βιβλιοθήκη σας είναι κενή"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "Κατεβάστε ένα βίντεο για να ξεκινήσετε"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "Λείπει"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "Νέα συλλογή"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "Όνομα συλλογής"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "Δημιουργία"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "Ακύρωση"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "Δεν υπάρχουν συλλογές"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "Δημιουργήστε συλλογή για οργάνωση πολυμέσων"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "Πίσω στις συλλογές"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "Δεν υπάρχουν πολυμέσα σε αυτή τη συλλογή"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "Προσθέστε πολυμέσα από τη βιβλιοθήκη"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "Αφαίρεση από τη συλλογή"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "Δεν υπάρχουν αγαπημένα"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "Σημειώστε πολυμέσο ως αγαπημένο"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "Νέα ετικέτα"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "Όνομα ετικέτας"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "Δημιουργία"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "Ακύρωση"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "Δεν υπάρχουν ετικέτες"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "Δημιουργήστε ετικέτα για κατηγοριοποίηση"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "Λήψεις"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "Αναπαραγωγή"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "Σήμερα"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "Χθες"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "Αυτή την εβδομάδα"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "Αυτό τον μήνα"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "Δεν υπάρχει ιστορικό λήψεων"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "Δεν υπάρχει ιστορικό αναπαραγωγής"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} αναπαραγωγή"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "Ολοκληρώθηκε"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Ρυθμίσεις"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "Κατάλογος εξόδου"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "Πού αποθηκεύονται τα αρχεία"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "Αλλαγή"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "Γλώσσα"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "Γλώσσα εμφάνισης εφαρμογής"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "Θέμα"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "Εμφάνιση εφαρμογής"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "Παρακολούθηση προχείρου"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "Αυτόματη ανίχνευση URL στο πρόχειρο"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "Εγγραφή υποτίτλων"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "Λήψη αρχείων υποτίτλων από προεπιλογή"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "Ενσωμάτωση μικρογραφίας"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "Ενσωμάτωση μικρογραφίας στο αρχείο πολυμέσων"

@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "ওয়েবসাইট"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "আমরা আপনার জন্য একটি পৃষ্ঠা খুলেছি। সেখানে এই কোডটি নিশ্চিত করুন:"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "আপনার ব্রাউজারে সম্পূর্ণ করুন"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "বাতিল"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "সংযুক্ত করুন"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "ঐচ্ছিক। Arclio সম্পূর্ণ অফলাইনে কাজ করে — অ্যাকাউন্ট শুধু আপনার ডিভাইসগুলোর মধ্যে লাইব্রেরি সিঙ্ক যোগ করে।"
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "আপনার লাইব্রেরি আপনার ডিভাইসগুলোর মধ্যে সিঙ্ক হয়।"
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "এই ডিভাইসটি সংযুক্ত"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "অ্যাকাউন্ট সংযুক্ত করুন"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "কোড কপি করুন"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "সংযোগ বিচ্ছিন্ন করুন"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "সংযোগ বাতিল হয়েছে।"
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "সেই অনুরোধটি ব্রাউজারে প্রত্যাখ্যান করা হয়েছে।"
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "অনুমোদনের আগেই কোডের মেয়াদ শেষ হয়েছে। আবার শুরু করুন।"
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "সংযোগ করার সময় সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "পৃষ্ঠা আবার খুলুন"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "সংযোগ শুরু করা যায়নি। আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন।"
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "বিনামূল্যের অ্যাকাউন্ট একটি ডিভাইস সিঙ্ক করে। এটিও সিঙ্ক করতে Pro-তে আপগ্রেড করুন।"
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "শেষ সিঙ্ক ব্যর্থ হয়েছে। এটি নিজেই আবার চেষ্টা করবে।"
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "পটভূমিতে স্বয়ংক্রিয়ভাবে চলে, এবং যখনই আপনি চান।"
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "এখনই সিঙ্ক করুন"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "আপনার প্ল্যান এই ডিভাইসের সিঙ্ক অন্তর্ভুক্ত করে না।"
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "{{count}} প্রাপ্ত"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "{{count}} সরানো"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "এই ডিভাইসটি আপনার অ্যাকাউন্ট থেকে বিচ্ছিন্ন করা হয়েছে। এটি আবার সংযুক্ত করুন।"
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "{{count}} পাঠানো"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "লাইব্রেরি সিঙ্ক"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "ইতিমধ্যে হালনাগাদ।"
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "অ্যাকাউন্ট"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "আবার চেষ্টা করুন"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio অ্যাকাউন্ট টোকেন সুরক্ষিত রাখতে সিস্টেম কীরিং-এ পৌঁছাতে পারেনি, তাই সংযোগ নিষ্ক্রিয়। বাকি সবকিছু কাজ করে — অ্যাকাউন্ট শুধু লাইব্রেরি সিঙ্ক যোগ করে।"
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "এই সিস্টেমে অ্যাকাউন্ট উপলব্ধ নয়"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "আপনার অনুমোদনের অপেক্ষায়…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "মতামত"
@@ -54,6 +182,46 @@ msgstr "জুম ইন"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "জুম আউট"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "সংগ্রহে ফিরুন"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "এই সংগ্রহে কোনো মিডিয়া নেই"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "লাইব্রেরি থেকে মিডিয়া যোগ করুন"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "সংগ্রহ থেকে সরান"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "বাতিল"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "নতুন সংগ্রহ"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "এখনো কোনো সংগ্রহ নেই"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "আপনার মিডিয়া সংগঠিত করতে একটি সংগ্রহ তৈরি করুন"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "সংগ্রহের নাম"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "তৈরি"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "এই URL টি yt-dlp সমর্থন করে না। yt-dlp সমর্থিত যেকোনো সাইটের অন্য একটি লিংক চেষ্টা করুন।"
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "এখনো কোনো প্রিয় নেই"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "এখানে দেখতে মিডিয়াকে প্রিয় হিসেবে চিহ্নিত করুন"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "অডিও"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "সম্পন্ন"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "ডাউনলোড"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "কোনো ডাউনলোড ইতিহাস নেই"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "কোনো প্লেব্যাক ইতিহাস নেই"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "প্লেব্যাক"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} প্লে"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "এই মাস"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "এই সপ্তাহ"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "আজ"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "গতকাল"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "ভাষা"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "সব"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "অডিও"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "আপনার লাইব্রেরি খালি"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "শুরু করতে একটি ভিডিও ডাউনলোড করুন"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "আইটেম"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "অনুপস্থিত"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "শিরোনাম, লেখক, বিবরণ দ্বারা অনুসন্ধান…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "দীর্ঘতম"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "নতুন প্রথমে"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "পুরাতন প্রথমে"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "ক্ষুদ্রতম"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "শিরোনাম অ-জ"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "শিরোনাম জ-অ"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "ভিডিও"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "সংগ্রহ"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "প্রিয়"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "ইতিহাস"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "হোম"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "লাইব্রেরি"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "সেটিংস"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "ট্যাগ"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "লাইব্রেরিতে ফিরুন"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "কোনো চালানোযোগ্য ফাইল পাওয়া যায়নি"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "মিডিয়া পাওয়া যায়নি"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "গতি"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "সাবটাইটেল"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "সেটআপে আপনার সাহায্য দরকার"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "সংগ্রহ"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "আইটেম"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "মিডিয়া"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "কোন ফলাফল নেই"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "অনুসন্ধান…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "ট্যাগ"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "পরিবর্তন"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "ক্লিপবোর্ড ওয়াচ"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "ক্লিপবোর্ডে URL স্বয়ংক্রিয়ভাবে সনাক্ত করুন"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "থাম্বনেইল এম্বেড"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "মিডিয়া ফাইলে থাম্বনেইল এম্বেড করুন"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "ভাষা"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "অ্যাপ্লিকেশনের প্রদর্শন ভাষা"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "আউটপুট ডিরেক্টরি"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "ডাউনলোড করা ফাইল কোথায় সংরক্ষিত হয়"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "থিম"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "অ্যাপ্লিকেশনের চেহারা"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "সেটিংস"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "সাবটাইটেল লিখুন"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "ডিফল্টভাবে সাবটাইটেল ফাইল ডাউনলোড করুন"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "কপি হয়েছে!"
@@ -826,6 +1226,30 @@ msgstr "yt-dlp {{code}} কোড দিয়ে বন্ধ হয়েছ�
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "yt-dlp প্রক্রিয়া ত্রুটি: {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "বাতিল"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "নতুন ট্যাগ"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "এখনো কোনো ট্যাগ নেই"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "আপনার মিডিয়া শ্রেণীবদ্ধ করতে একটি ট্যাগ তৈরি করুন"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "ট্যাগের নাম"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "তৈরি"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "প্রোফাইল"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "সেটিংস"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "লাইব্রেরিতে ফিরুন"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "মিডিয়া পাওয়া যায়নি"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "কোনো চালানোযোগ্য ফাইল পাওয়া যায়নি"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "সাবটাইটেল"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "গতি"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "অনুসন্ধান…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "কোন ফলাফল নেই"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "মিডিয়া"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "সংগ্রহ"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "ট্যাগ"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "আইটেম"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "হোম"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "লাইব্রেরি"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "সংগ্রহ"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "প্রিয়"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "ট্যাগ"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "ইতিহাস"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "সেটিংস"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "আইটেম"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "শিরোনাম, লেখক, বিবরণ দ্বারা অনুসন্ধান…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "সব"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "ভিডিও"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "অডিও"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "নতুন প্রথমে"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "পুরাতন প্রথমে"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "শিরোনাম অ-জ"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "শিরোনাম জ-অ"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "দীর্ঘতম"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "ক্ষুদ্রতম"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "আপনার লাইব্রেরি খালি"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "শুরু করতে একটি ভিডিও ডাউনলোড করুন"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "অনুপস্থিত"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "নতুন সংগ্রহ"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "সংগ্রহের নাম"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "তৈরি"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "বাতিল"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "এখনো কোনো সংগ্রহ নেই"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "আপনার মিডিয়া সংগঠিত করতে একটি সংগ্রহ তৈরি করুন"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "সংগ্রহে ফিরুন"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "এই সংগ্রহে কোনো মিডিয়া নেই"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "লাইব্রেরি থেকে মিডিয়া যোগ করুন"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "সংগ্রহ থেকে সরান"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "এখনো কোনো প্রিয় নেই"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "এখানে দেখতে মিডিয়াকে প্রিয় হিসেবে চিহ্নিত করুন"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "নতুন ট্যাগ"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "ট্যাগের নাম"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "তৈরি"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "বাতিল"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "এখনো কোনো ট্যাগ নেই"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "আপনার মিডিয়া শ্রেণীবদ্ধ করতে একটি ট্যাগ তৈরি করুন"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "ডাউনলোড"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "প্লেব্যাক"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "আজ"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "গতকাল"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "এই সপ্তাহ"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "এই মাস"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "কোনো ডাউনলোড ইতিহাস নেই"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "কোনো প্লেব্যাক ইতিহাস নেই"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} প্লে"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "সম্পন্ন"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "সেটিংস"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "আউটপুট ডিরেক্টরি"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "ডাউনলোড করা ফাইল কোথায় সংরক্ষিত হয়"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "পরিবর্তন"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "ভাষা"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "অ্যাপ্লিকেশনের প্রদর্শন ভাষা"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "থিম"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "অ্যাপ্লিকেশনের চেহারা"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "ক্লিপবোর্ড ওয়াচ"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "ক্লিপবোর্ডে URL স্বয়ংক্রিয়ভাবে সনাক্ত করুন"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "সাবটাইটেল লিখুন"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "ডিফল্টভাবে সাবটাইটেল ফাইল ডাউনলোড করুন"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "থাম্বনেইল এম্বেড"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "মিডিয়া ফাইলে থাম্বনেইল এম্বেড করুন"

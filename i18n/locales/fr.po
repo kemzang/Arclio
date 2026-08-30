@@ -35,6 +35,134 @@ msgctxt "about.websiteLink"
 msgid "Website"
 msgstr "Site web"
 
+msgctxt "account.browserDescription"
+msgid "We opened a page for you. Confirm this code there:"
+msgstr "Nous avons ouvert une page pour vous. Confirmez-y ce code :"
+
+msgctxt "account.browserTitle"
+msgid "Finish in your browser"
+msgstr "Terminez dans votre navigateur"
+
+msgctxt "account.cancel"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "account.connect"
+msgid "Connect"
+msgstr "Connecter"
+
+msgctxt "account.connectDescription"
+msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgstr "Facultatif. Arclio fonctionne entièrement hors ligne — un compte ajoute seulement la synchronisation de la bibliothèque entre vos appareils."
+
+msgctxt "account.connectedDescription"
+msgid "Your library syncs across your devices."
+msgstr "Votre bibliothèque se synchronise entre vos appareils."
+
+msgctxt "account.connectedTitle"
+msgid "This device is connected"
+msgstr "Cet appareil est connecté"
+
+msgctxt "account.connectTitle"
+msgid "Connect an account"
+msgstr "Connecter un compte"
+
+msgctxt "account.copyCode"
+msgid "Copy code"
+msgstr "Copier le code"
+
+msgctxt "account.disconnect"
+msgid "Disconnect"
+msgstr "Déconnecter"
+
+msgctxt "account.pairingCancelled"
+msgid "Connection cancelled."
+msgstr "Connexion annulée."
+
+msgctxt "account.pairingDenied"
+msgid "That request was declined in the browser."
+msgstr "Cette demande a été refusée dans le navigateur."
+
+msgctxt "account.pairingExpired"
+msgid "The code expired before it was approved. Start again."
+msgstr "Le code a expiré avant d'être approuvé. Recommencez."
+
+msgctxt "account.pairingFailed"
+msgid "Something went wrong while connecting. Please try again."
+msgstr "Un problème est survenu pendant la connexion. Veuillez réessayer."
+
+msgctxt "account.reopenPage"
+msgid "Reopen page"
+msgstr "Rouvrir la page"
+
+msgctxt "account.startFailed"
+msgid "Could not start the connection. Check your internet connection."
+msgstr "Impossible de démarrer la connexion. Vérifiez votre connexion internet."
+
+msgctxt "account.syncDeviceLimit"
+msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
+msgstr "Les comptes gratuits synchronisent un appareil. Passez à Pro pour synchroniser celui-ci aussi."
+
+msgctxt "account.syncFailed"
+msgid "Last sync failed. It will try again on its own."
+msgstr "La dernière synchronisation a échoué. Elle réessaiera d’elle-même."
+
+msgctxt "account.syncIdle"
+msgid "Runs automatically in the background, and whenever you ask."
+msgstr "S'exécute automatiquement en arrière-plan, et à votre demande."
+
+msgctxt "account.syncNow"
+msgid "Sync now"
+msgstr "Synchroniser"
+
+msgctxt "account.syncPlanBlocked"
+msgid "Your plan does not cover syncing this device."
+msgstr "Votre offre ne couvre pas la synchronisation de cet appareil."
+
+msgctxt "account.syncReceived"
+msgid "{{count}} received"
+msgstr "{{count}} reçus"
+
+msgctxt "account.syncRemoved"
+msgid "{{count}} removed"
+msgstr "{{count}} supprimés"
+
+msgctxt "account.syncRevoked"
+msgid "This device was disconnected from your account. Connect it again."
+msgstr "Cet appareil a été déconnecté de votre compte. Reconnectez-le."
+
+msgctxt "account.syncSent"
+msgid "{{count}} sent"
+msgstr "{{count}} envoyés"
+
+msgctxt "account.syncTitle"
+msgid "Library sync"
+msgstr "Synchronisation de la bibliothèque"
+
+msgctxt "account.syncUpToDate"
+msgid "Already up to date."
+msgstr "Déjà à jour."
+
+msgctxt "account.tab"
+msgid "Account"
+msgstr "Compte"
+
+msgctxt "account.tryAgain"
+msgid "Try again"
+msgstr "Réessayer"
+
+msgctxt "account.unavailableDescription"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgstr "Arclio n'a pas pu accéder à un trousseau système pour protéger un jeton de compte, la connexion est donc désactivée. Tout le reste fonctionne — un compte ajoute seulement la synchronisation."
+
+msgctxt "account.unavailableTitle"
+msgid "Account unavailable on this system"
+msgstr "Compte indisponible sur ce système"
+
+msgctxt "account.waiting"
+msgid "Waiting for you to approve…"
+msgstr "En attente de votre approbation…"
+
 msgctxt "app.feedback"
 msgid "Feedback"
 msgstr "Commentaires"
@@ -54,6 +182,46 @@ msgstr "Zoom avant"
 msgctxt "app.zoomOut"
 msgid "Zoom out"
 msgstr "Zoom arrière"
+
+msgctxt "collectionDetail.back"
+msgid "Back to collections"
+msgstr "Retour aux collections"
+
+msgctxt "collectionDetail.empty"
+msgid "No media in this collection"
+msgstr "Aucun média dans cette collection"
+
+msgctxt "collectionDetail.emptyHint"
+msgid "Add media from the library"
+msgstr "Ajoutez des médias depuis la bibliothèque"
+
+msgctxt "collectionDetail.removeFromCollection"
+msgid "Remove from collection"
+msgstr "Retirer de la collection"
+
+msgctxt "collections.cancel"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "collections.create"
+msgid "New collection"
+msgstr "Nouvelle collection"
+
+msgctxt "collections.empty"
+msgid "No collections yet"
+msgstr "Aucune collection"
+
+msgctxt "collections.emptyHint"
+msgid "Create a collection to organize your media"
+msgstr "Créez une collection pour organiser vos médias"
+
+msgctxt "collections.namePlaceholder"
+msgid "Collection name"
+msgstr "Nom de la collection"
+
+msgctxt "collections.save"
+msgid "Create"
+msgstr "Créer"
 
 msgctxt "common.back"
 msgid "Back"
@@ -199,6 +367,14 @@ msgctxt "errors.ytdlp.unsupportedUrl"
 msgid "That URL isn't supported by yt-dlp. Try a different link from any of yt-dlp's supported sites."
 msgstr "Cette URL n'est pas prise en charge par yt-dlp. Essayez un autre lien provenant d'un site pris en charge par yt-dlp."
 
+msgctxt "favorites.empty"
+msgid "No favorites yet"
+msgstr "Aucun favori"
+
+msgctxt "favorites.emptyHint"
+msgid "Mark a media as favorite to see it here"
+msgstr "Marquez un média comme favori pour le voir ici"
+
 msgctxt "formatLabel.audioFallback"
 msgid "Audio"
 msgstr "Audio"
@@ -211,9 +387,153 @@ msgctxt "formatLabel.videoDot"
 msgid "{{resolution}} · {{audio}}"
 msgstr "{{resolution}} · {{audio}}"
 
+msgctxt "history.completed"
+msgid "Completed"
+msgstr "Terminé"
+
+msgctxt "history.downloads"
+msgid "Downloads"
+msgstr "Téléchargements"
+
+msgctxt "history.empty"
+msgid "No download history"
+msgstr "Aucun historique de téléchargement"
+
+msgctxt "history.emptyPlayback"
+msgid "No playback history"
+msgstr "Aucun historique de lecture"
+
+msgctxt "history.playback"
+msgid "Playback"
+msgstr "Lecture"
+
+msgctxt "history.playCount"
+msgid "{{count}} play"
+msgstr "{{count}} lecture"
+
+msgctxt "history.thisMonth"
+msgid "This month"
+msgstr "Ce mois-ci"
+
+msgctxt "history.thisWeek"
+msgid "This week"
+msgstr "Cette semaine"
+
+msgctxt "history.today"
+msgid "Today"
+msgstr "Aujourd'hui"
+
+msgctxt "history.yesterday"
+msgid "Yesterday"
+msgstr "Hier"
+
 msgctxt "language.label"
 msgid "Language"
 msgstr "Langue"
+
+msgctxt "library.all"
+msgid "All"
+msgstr "Tous"
+
+msgctxt "library.audio"
+msgid "Audio"
+msgstr "Audio"
+
+msgctxt "library.empty"
+msgid "Your library is empty"
+msgstr "Votre bibliothèque est vide"
+
+msgctxt "library.emptyHint"
+msgid "Download a video to get started"
+msgstr "Téléchargez une vidéo pour commencer"
+
+msgctxt "library.items"
+msgid "items"
+msgstr "éléments"
+
+msgctxt "library.missing"
+msgid "Missing"
+msgstr "Manquant"
+
+msgctxt "library.searchPlaceholder"
+msgid "Search by title, author, description…"
+msgstr "Rechercher par titre, auteur, description…"
+
+msgctxt "library.sortLongest"
+msgid "Longest"
+msgstr "Plus long"
+
+msgctxt "library.sortNewest"
+msgid "Newest first"
+msgstr "Plus récents"
+
+msgctxt "library.sortOldest"
+msgid "Oldest first"
+msgstr "Plus anciens"
+
+msgctxt "library.sortShortest"
+msgid "Shortest"
+msgstr "Plus court"
+
+msgctxt "library.sortTitleAZ"
+msgid "Title A-Z"
+msgstr "Titre A-Z"
+
+msgctxt "library.sortTitleZA"
+msgid "Title Z-A"
+msgstr "Titre Z-A"
+
+msgctxt "library.video"
+msgid "Video"
+msgstr "Vidéo"
+
+msgctxt "nav.collections"
+msgid "Collections"
+msgstr "Collections"
+
+msgctxt "nav.favorites"
+msgid "Favorites"
+msgstr "Favoris"
+
+msgctxt "nav.history"
+msgid "History"
+msgstr "Historique"
+
+msgctxt "nav.home"
+msgid "Home"
+msgstr "Accueil"
+
+msgctxt "nav.library"
+msgid "Library"
+msgstr "Bibliothèque"
+
+msgctxt "nav.settings"
+msgid "Settings"
+msgstr "Paramètres"
+
+msgctxt "nav.tags"
+msgid "Tags"
+msgstr "Tags"
+
+msgctxt "player.back"
+msgid "Back to library"
+msgstr "Retour à la bibliothèque"
+
+msgctxt "player.noAsset"
+msgid "No playable file found"
+msgstr "Aucun fichier lisible trouvé"
+
+msgctxt "player.noMedia"
+msgid "Media not found"
+msgstr "Média introuvable"
+
+msgctxt "player.speed"
+msgid "Speed"
+msgstr "Vitesse"
+
+msgctxt "player.subtitles"
+msgid "Subtitles"
+msgstr "Sous-titres"
 
 msgctxt "playlistPresets.audioFormat.best"
 msgid "Audio (best)"
@@ -683,6 +1003,86 @@ msgctxt "repair.title"
 msgid "Setup needs your help"
 msgstr "La configuration nécessite votre aide"
 
+msgctxt "search.collection"
+msgid "Collection"
+msgstr "Collection"
+
+msgctxt "search.items"
+msgid "items"
+msgstr "éléments"
+
+msgctxt "search.media"
+msgid "Media"
+msgstr "Média"
+
+msgctxt "search.noResults"
+msgid "No results"
+msgstr "Aucun résultat"
+
+msgctxt "search.placeholder"
+msgid "Search…"
+msgstr "Rechercher…"
+
+msgctxt "search.tag"
+msgid "Tag"
+msgstr "Tag"
+
+msgctxt "settings.change"
+msgid "Change"
+msgstr "Modifier"
+
+msgctxt "settings.clipboardWatch"
+msgid "Clipboard watch"
+msgstr "Surveiller le presse-papiers"
+
+msgctxt "settings.clipboardWatchDescription"
+msgid "Automatically detect URLs in clipboard"
+msgstr "Détecter automatiquement les URLs dans le presse-papiers"
+
+msgctxt "settings.embedThumbnail"
+msgid "Embed thumbnail"
+msgstr "Incorporer la miniature"
+
+msgctxt "settings.embedThumbnailDescription"
+msgid "Embed thumbnail in media file"
+msgstr "Incorporer la miniature dans le fichier média"
+
+msgctxt "settings.language"
+msgid "Language"
+msgstr "Langue"
+
+msgctxt "settings.languageDescription"
+msgid "Display language for the application"
+msgstr "Langue d'affichage de l'application"
+
+msgctxt "settings.outputDir"
+msgid "Output directory"
+msgstr "Répertoire de sortie"
+
+msgctxt "settings.outputDirDescription"
+msgid "Where downloaded files are saved"
+msgstr "Où les fichiers téléchargés sont enregistrés"
+
+msgctxt "settings.theme"
+msgid "Theme"
+msgstr "Thème"
+
+msgctxt "settings.themeDescription"
+msgid "Appearance of the application"
+msgstr "Apparence de l'application"
+
+msgctxt "settings.title"
+msgid "Settings"
+msgstr "Paramètres"
+
+msgctxt "settings.writeSubtitles"
+msgid "Write subtitles"
+msgstr "Écrire les sous-titres"
+
+msgctxt "settings.writeSubtitlesDescription"
+msgid "Download subtitle files by default"
+msgstr "Télécharger les fichiers de sous-titres par défaut"
+
 msgctxt "share.copied"
 msgid "Copied!"
 msgstr "Copié !"
@@ -826,6 +1226,30 @@ msgstr "yt-dlp s'est terminé avec le code {{code}}"
 msgctxt "status.ytdlpProcessError"
 msgid "yt-dlp process error: {{error}}"
 msgstr "Erreur du processus yt-dlp : {{error}}"
+
+msgctxt "tags.cancel"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "tags.create"
+msgid "New tag"
+msgstr "Nouveau tag"
+
+msgctxt "tags.empty"
+msgid "No tags yet"
+msgstr "Aucun tag"
+
+msgctxt "tags.emptyHint"
+msgid "Create a tag to categorize your media"
+msgstr "Créez un tag pour catégoriser vos médias"
+
+msgctxt "tags.namePlaceholder"
+msgid "Tag name"
+msgstr "Nom du tag"
+
+msgctxt "tags.save"
+msgid "Create"
+msgstr "Créer"
 
 msgctxt "theme.dark"
 msgid "Dark mode"
@@ -2424,300 +2848,3 @@ msgstr "Profils"
 msgctxt "wizard.url.tabs.settings"
 msgid "Settings"
 msgstr "Réglages"
-
-msgctxt "player.back"
-msgid "Back to library"
-msgstr "Retour à la bibliothèque"
-
-msgctxt "player.noMedia"
-msgid "Media not found"
-msgstr "Média introuvable"
-
-msgctxt "player.noAsset"
-msgid "No playable file found"
-msgstr "Aucun fichier lisible trouvé"
-
-msgctxt "player.subtitles"
-msgid "Subtitles"
-msgstr "Sous-titres"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Vitesse"
-
-
-msgctxt "search.placeholder"
-msgid "Search…"
-msgstr "Rechercher…"
-
-msgctxt "search.noResults"
-msgid "No results"
-msgstr "Aucun résultat"
-
-msgctxt "search.media"
-msgid "Media"
-msgstr "Média"
-
-msgctxt "search.collection"
-msgid "Collection"
-msgstr "Collection"
-
-msgctxt "search.tag"
-msgid "Tag"
-msgstr "Tag"
-
-msgctxt "search.items"
-msgid "items"
-msgstr "éléments"
-
-msgctxt "nav.home"
-msgid "Home"
-msgstr "Accueil"
-
-msgctxt "nav.library"
-msgid "Library"
-msgstr "Bibliothèque"
-
-msgctxt "nav.collections"
-msgid "Collections"
-msgstr "Collections"
-
-msgctxt "nav.favorites"
-msgid "Favorites"
-msgstr "Favoris"
-
-msgctxt "nav.tags"
-msgid "Tags"
-msgstr "Tags"
-
-msgctxt "nav.history"
-msgid "History"
-msgstr "Historique"
-
-msgctxt "nav.settings"
-msgid "Settings"
-msgstr "Paramètres"
-
-msgctxt "library.items"
-msgid "items"
-msgstr "éléments"
-
-msgctxt "library.searchPlaceholder"
-msgid "Search by title, author, description…"
-msgstr "Rechercher par titre, auteur, description…"
-
-msgctxt "library.all"
-msgid "All"
-msgstr "Tous"
-
-msgctxt "library.video"
-msgid "Video"
-msgstr "Vidéo"
-
-msgctxt "library.audio"
-msgid "Audio"
-msgstr "Audio"
-
-msgctxt "library.sortNewest"
-msgid "Newest first"
-msgstr "Plus récents"
-
-msgctxt "library.sortOldest"
-msgid "Oldest first"
-msgstr "Plus anciens"
-
-msgctxt "library.sortTitleAZ"
-msgid "Title A-Z"
-msgstr "Titre A-Z"
-
-msgctxt "library.sortTitleZA"
-msgid "Title Z-A"
-msgstr "Titre Z-A"
-
-msgctxt "library.sortLongest"
-msgid "Longest"
-msgstr "Plus long"
-
-msgctxt "library.sortShortest"
-msgid "Shortest"
-msgstr "Plus court"
-
-msgctxt "library.empty"
-msgid "Your library is empty"
-msgstr "Votre bibliothèque est vide"
-
-msgctxt "library.emptyHint"
-msgid "Download a video to get started"
-msgstr "Téléchargez une vidéo pour commencer"
-
-msgctxt "library.missing"
-msgid "Missing"
-msgstr "Manquant"
-
-msgctxt "collections.create"
-msgid "New collection"
-msgstr "Nouvelle collection"
-
-msgctxt "collections.namePlaceholder"
-msgid "Collection name"
-msgstr "Nom de la collection"
-
-msgctxt "collections.save"
-msgid "Create"
-msgstr "Créer"
-
-msgctxt "collections.cancel"
-msgid "Cancel"
-msgstr "Annuler"
-
-msgctxt "collections.empty"
-msgid "No collections yet"
-msgstr "Aucune collection"
-
-msgctxt "collections.emptyHint"
-msgid "Create a collection to organize your media"
-msgstr "Créez une collection pour organiser vos médias"
-
-msgctxt "collectionDetail.back"
-msgid "Back to collections"
-msgstr "Retour aux collections"
-
-msgctxt "collectionDetail.empty"
-msgid "No media in this collection"
-msgstr "Aucun média dans cette collection"
-
-msgctxt "collectionDetail.emptyHint"
-msgid "Add media from the library"
-msgstr "Ajoutez des médias depuis la bibliothèque"
-
-msgctxt "collectionDetail.removeFromCollection"
-msgid "Remove from collection"
-msgstr "Retirer de la collection"
-
-msgctxt "favorites.empty"
-msgid "No favorites yet"
-msgstr "Aucun favori"
-
-msgctxt "favorites.emptyHint"
-msgid "Mark a media as favorite to see it here"
-msgstr "Marquez un média comme favori pour le voir ici"
-
-msgctxt "tags.create"
-msgid "New tag"
-msgstr "Nouveau tag"
-
-msgctxt "tags.namePlaceholder"
-msgid "Tag name"
-msgstr "Nom du tag"
-
-msgctxt "tags.save"
-msgid "Create"
-msgstr "Créer"
-
-msgctxt "tags.cancel"
-msgid "Cancel"
-msgstr "Annuler"
-
-msgctxt "tags.empty"
-msgid "No tags yet"
-msgstr "Aucun tag"
-
-msgctxt "tags.emptyHint"
-msgid "Create a tag to categorize your media"
-msgstr "Créez un tag pour catégoriser vos médias"
-
-msgctxt "history.downloads"
-msgid "Downloads"
-msgstr "Téléchargements"
-
-msgctxt "history.playback"
-msgid "Playback"
-msgstr "Lecture"
-
-msgctxt "history.today"
-msgid "Today"
-msgstr "Aujourd'hui"
-
-msgctxt "history.yesterday"
-msgid "Yesterday"
-msgstr "Hier"
-
-msgctxt "history.thisWeek"
-msgid "This week"
-msgstr "Cette semaine"
-
-msgctxt "history.thisMonth"
-msgid "This month"
-msgstr "Ce mois-ci"
-
-msgctxt "history.empty"
-msgid "No download history"
-msgstr "Aucun historique de téléchargement"
-
-msgctxt "history.emptyPlayback"
-msgid "No playback history"
-msgstr "Aucun historique de lecture"
-
-msgctxt "history.playCount"
-msgid "{{count}} play"
-msgstr "{{count}} lecture"
-
-msgctxt "history.completed"
-msgid "Completed"
-msgstr "Terminé"
-
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Paramètres"
-
-msgctxt "settings.outputDir"
-msgid "Output directory"
-msgstr "Répertoire de sortie"
-
-msgctxt "settings.outputDirDescription"
-msgid "Where downloaded files are saved"
-msgstr "Où les fichiers téléchargés sont enregistrés"
-
-msgctxt "settings.change"
-msgid "Change"
-msgstr "Modifier"
-
-msgctxt "settings.language"
-msgid "Language"
-msgstr "Langue"
-
-msgctxt "settings.languageDescription"
-msgid "Display language for the application"
-msgstr "Langue d'affichage de l'application"
-
-msgctxt "settings.theme"
-msgid "Theme"
-msgstr "Thème"
-
-msgctxt "settings.themeDescription"
-msgid "Appearance of the application"
-msgstr "Apparence de l'application"
-
-msgctxt "settings.clipboardWatch"
-msgid "Clipboard watch"
-msgstr "Surveiller le presse-papiers"
-
-msgctxt "settings.clipboardWatchDescription"
-msgid "Automatically detect URLs in clipboard"
-msgstr "Détecter automatiquement les URLs dans le presse-papiers"
-
-msgctxt "settings.writeSubtitles"
-msgid "Write subtitles"
-msgstr "Écrire les sous-titres"
-
-msgctxt "settings.writeSubtitlesDescription"
-msgid "Download subtitle files by default"
-msgstr "Télécharger les fichiers de sous-titres par défaut"
-
-msgctxt "settings.embedThumbnail"
-msgid "Embed thumbnail"
-msgstr "Incorporer la miniature"
-
-msgctxt "settings.embedThumbnailDescription"
-msgid "Embed thumbnail in media file"
-msgstr "Incorporer la miniature dans le fichier média"
