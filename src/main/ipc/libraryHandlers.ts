@@ -1,12 +1,59 @@
 import {ipcMain} from 'electron'
+import {z} from 'zod'
+import {IPC_CHANNELS} from '@shared/ipc.js'
+import {mediaStatusSchema, mediaSortBySchema} from '@shared/schemas.js'
 import type {DrizzleDatabase} from '@main/db/connection.js'
 import {createMediaRepository} from '@main/db/repositories/mediaRepository.js'
 import {createCollectionRepository} from '@main/db/repositories/collectionRepository.js'
 import {createTagRepository} from '@main/db/repositories/tagRepository.js'
 import {createPlaybackRepository} from '@main/db/repositories/playbackRepository.js'
 import {createDownloadHistoryRepository} from '@main/db/repositories/downloadHistoryRepository.js'
-import type {MediaListFilters} from '@main/db/repositories/mediaRepository.js'
 
+const idSchema = z.string().min(1)
+const nameSchema = z.string().min(1).max(200)
+
+const mediaListFiltersSchema = z
+	.object({
+		search: z.string().min(1).optional(),
+		mediaType: z.enum(['video', 'audio', 'document', 'comic', 'image']).optional(),
+		status: z.string().optional(),
+		isFavorite: z.boolean().optional(),
+		sourceType: z.string().optional(),
+		collectionId: z.string().optional(),
+		tagId: z.string().optional(),
+		sortBy: mediaSortBySchema.optional(),
+		sortOrder: z.enum(['asc', 'desc']).optional(),
+		limit: z.number().int().positive().optional(),
+		offset: z.number().int().nonnegative().optional()
+	})
+	.optional()
+
+const collectionDataSchema = z.object({name: nameSchema, description: z.string().optional(), icon: z.string().optional(), color: z.string().optional()})
+const collectionUpdateSchema = collectionDataSchema.partial()
+const tagDataSchema = z.object({name: nameSchema, color: z.string().optional()})
+const tagUpdateSchema = tagDataSchema.partial()
+const downloadHistoryOptionsSchema = z.object({status: z.string().optional(), limit: z.number().int().positive().optional(), offset: z.number().int().nonnegative().optional()}).optional()
+
+// better-sqlite3 throws a raw Error with a SQLITE_CONSTRAINT* `code` on a
+// UNIQUE/FOREIGN KEY violation — e.g. creating a tag whose name already
+// exists, or linking a media/collection/tag id that doesn't exist. Left
+// unhandled, the renderer sees that raw driver message instead of an
+// actionable one.
+function isConstraintError(err: unknown): boolean {
+	return err instanceof Error && 'code' in err && typeof (err as {code?: unknown}).code === 'string' && (err as {code: string}).code.startsWith('SQLITE_CONSTRAINT')
+}
+
+function friendlyConstraintMessage(context: string, err: unknown): Error {
+	if (isConstraintError(err)) return new Error(`${context}: value already exists or references a missing record`)
+	return err instanceof Error ? err : new Error(String(err))
+}
+
+// Every handler is (re)registered idempotently (removeHandler first) and
+// validates its payload before it reaches a repository — these repos call
+// straight into better-sqlite3 with no validation of their own, so an
+// invalid enum value (status, mediaType, sortBy) or a raw SQL constraint
+// violation used to reach the renderer as an unhandled rejection carrying
+// internal driver/query detail instead of a clear, expected error.
 export function registerLibraryHandlers(db: DrizzleDatabase): void {
 	const mediaRepo = createMediaRepository(db)
 	const collectionRepo = createCollectionRepository(db)
@@ -16,135 +63,134 @@ export function registerLibraryHandlers(db: DrizzleDatabase): void {
 
 	// ── Media ──────────────────────────────────────────────────────────────────
 
-	ipcMain.handle('library:media:list', (_event, filters?: MediaListFilters) => {
-		return mediaRepo.list(filters)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaList)
+	ipcMain.handle(IPC_CHANNELS.libraryMediaList, (_event, filters: unknown) => mediaRepo.list(mediaListFiltersSchema.parse(filters)))
 
-	ipcMain.handle('library:media:get', (_event, id: string) => {
-		return mediaRepo.getById(id)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaGet)
+	ipcMain.handle(IPC_CHANNELS.libraryMediaGet, (_event, id: unknown) => mediaRepo.getById(idSchema.parse(id)))
 
-	ipcMain.handle('library:media:search', (_event, query: string, limit?: number) => {
-		return mediaRepo.search(query, limit)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaSearch)
+	ipcMain.handle(IPC_CHANNELS.libraryMediaSearch, (_event, query: unknown, limit: unknown) => mediaRepo.search(z.string().parse(query), z.number().int().positive().optional().parse(limit)))
 
-	ipcMain.handle('library:media:setFavorite', (_event, id: string, isFavorite: boolean) => {
-		mediaRepo.setFavorite(id, isFavorite)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaSetFavorite)
+	ipcMain.handle(IPC_CHANNELS.libraryMediaSetFavorite, (_event, id: unknown, isFavorite: unknown) => mediaRepo.setFavorite(idSchema.parse(id), z.boolean().parse(isFavorite)))
 
-	ipcMain.handle('library:media:setStatus', (_event, id: string, status: string) => {
-		mediaRepo.setStatus(id, status as 'AVAILABLE' | 'MISSING' | 'CORRUPTED' | 'DELETED')
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaSetStatus)
+	ipcMain.handle(IPC_CHANNELS.libraryMediaSetStatus, (_event, id: unknown, status: unknown) => mediaRepo.setStatus(idSchema.parse(id), mediaStatusSchema.parse(status)))
 
-	ipcMain.handle('library:media:delete', (_event, id: string) => {
-		return mediaRepo.delete(id)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaDelete)
+	ipcMain.handle(IPC_CHANNELS.libraryMediaDelete, (_event, id: unknown) => mediaRepo.delete(idSchema.parse(id)))
 
-	ipcMain.handle('library:media:count', () => {
-		return mediaRepo.count()
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaCount)
+	ipcMain.handle(IPC_CHANNELS.libraryMediaCount, () => mediaRepo.count())
 
-	ipcMain.handle('library:media:countByStatus', () => {
-		return mediaRepo.countByStatus()
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaCountByStatus)
+	ipcMain.handle(IPC_CHANNELS.libraryMediaCountByStatus, () => mediaRepo.countByStatus())
 
 	// ── Collection ─────────────────────────────────────────────────────────────
 
-	ipcMain.handle('library:collection:list', () => {
-		return collectionRepo.list()
+	ipcMain.removeHandler(IPC_CHANNELS.libraryCollectionList)
+	ipcMain.handle(IPC_CHANNELS.libraryCollectionList, () => collectionRepo.list())
+
+	ipcMain.removeHandler(IPC_CHANNELS.libraryCollectionGet)
+	ipcMain.handle(IPC_CHANNELS.libraryCollectionGet, (_event, id: unknown) => collectionRepo.getById(idSchema.parse(id)))
+
+	ipcMain.removeHandler(IPC_CHANNELS.libraryCollectionCreate)
+	ipcMain.handle(IPC_CHANNELS.libraryCollectionCreate, (_event, data: unknown) => {
+		try {
+			return collectionRepo.create(collectionDataSchema.parse(data))
+		} catch (err) {
+			throw friendlyConstraintMessage('Collection creation failed', err)
+		}
 	})
 
-	ipcMain.handle('library:collection:get', (_event, id: string) => {
-		return collectionRepo.getById(id)
+	ipcMain.removeHandler(IPC_CHANNELS.libraryCollectionUpdate)
+	ipcMain.handle(IPC_CHANNELS.libraryCollectionUpdate, (_event, id: unknown, data: unknown) => collectionRepo.update(idSchema.parse(id), collectionUpdateSchema.parse(data)))
+
+	ipcMain.removeHandler(IPC_CHANNELS.libraryCollectionDelete)
+	ipcMain.handle(IPC_CHANNELS.libraryCollectionDelete, (_event, id: unknown) => collectionRepo.delete(idSchema.parse(id)))
+
+	ipcMain.removeHandler(IPC_CHANNELS.libraryCollectionAddMedia)
+	ipcMain.handle(IPC_CHANNELS.libraryCollectionAddMedia, (_event, collectionId: unknown, mediaId: unknown) => {
+		try {
+			collectionRepo.addMedia(idSchema.parse(collectionId), idSchema.parse(mediaId))
+		} catch (err) {
+			throw friendlyConstraintMessage('Adding media to collection failed', err)
+		}
 	})
 
-	ipcMain.handle('library:collection:create', (_event, data: {name: string; description?: string; icon?: string; color?: string}) => {
-		return collectionRepo.create(data)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryCollectionRemoveMedia)
+	ipcMain.handle(IPC_CHANNELS.libraryCollectionRemoveMedia, (_event, collectionId: unknown, mediaId: unknown) => collectionRepo.removeMedia(idSchema.parse(collectionId), idSchema.parse(mediaId)))
 
-	ipcMain.handle('library:collection:update', (_event, id: string, data: {name?: string; description?: string; icon?: string; color?: string}) => {
-		return collectionRepo.update(id, data)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryCollectionGetMediaIds)
+	ipcMain.handle(IPC_CHANNELS.libraryCollectionGetMediaIds, (_event, collectionId: unknown) => collectionRepo.getMediaIds(idSchema.parse(collectionId)))
 
-	ipcMain.handle('library:collection:delete', (_event, id: string) => {
-		return collectionRepo.delete(id)
-	})
-
-	ipcMain.handle('library:collection:addMedia', (_event, collectionId: string, mediaId: string) => {
-		collectionRepo.addMedia(collectionId, mediaId)
-	})
-
-	ipcMain.handle('library:collection:removeMedia', (_event, collectionId: string, mediaId: string) => {
-		collectionRepo.removeMedia(collectionId, mediaId)
-	})
-
-	ipcMain.handle('library:collection:getMediaIds', (_event, collectionId: string) => {
-		return collectionRepo.getMediaIds(collectionId)
-	})
-
-	ipcMain.handle('library:collection:getForMedia', (_event, mediaId: string) => {
-		return collectionRepo.getCollectionIdsForMedia(mediaId)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryCollectionGetForMedia)
+	ipcMain.handle(IPC_CHANNELS.libraryCollectionGetForMedia, (_event, mediaId: unknown) => collectionRepo.getCollectionIdsForMedia(idSchema.parse(mediaId)))
 
 	// ── Tag ────────────────────────────────────────────────────────────────────
 
-	ipcMain.handle('library:tag:list', () => {
-		return tagRepo.list()
+	ipcMain.removeHandler(IPC_CHANNELS.libraryTagList)
+	ipcMain.handle(IPC_CHANNELS.libraryTagList, () => tagRepo.list())
+
+	ipcMain.removeHandler(IPC_CHANNELS.libraryTagCreate)
+	ipcMain.handle(IPC_CHANNELS.libraryTagCreate, (_event, data: unknown) => {
+		try {
+			return tagRepo.create(tagDataSchema.parse(data))
+		} catch (err) {
+			throw friendlyConstraintMessage('Tag creation failed', err)
+		}
 	})
 
-	ipcMain.handle('library:tag:create', (_event, data: {name: string; color?: string}) => {
-		return tagRepo.create(data)
+	ipcMain.removeHandler(IPC_CHANNELS.libraryTagUpdate)
+	ipcMain.handle(IPC_CHANNELS.libraryTagUpdate, (_event, id: unknown, data: unknown) => {
+		try {
+			return tagRepo.update(idSchema.parse(id), tagUpdateSchema.parse(data))
+		} catch (err) {
+			throw friendlyConstraintMessage('Tag update failed', err)
+		}
 	})
 
-	ipcMain.handle('library:tag:update', (_event, id: string, data: {name?: string; color?: string}) => {
-		return tagRepo.update(id, data)
+	ipcMain.removeHandler(IPC_CHANNELS.libraryTagDelete)
+	ipcMain.handle(IPC_CHANNELS.libraryTagDelete, (_event, id: unknown) => tagRepo.delete(idSchema.parse(id)))
+
+	ipcMain.removeHandler(IPC_CHANNELS.libraryTagAddToMedia)
+	ipcMain.handle(IPC_CHANNELS.libraryTagAddToMedia, (_event, tagId: unknown, mediaId: unknown) => {
+		try {
+			tagRepo.addToMedia(idSchema.parse(tagId), idSchema.parse(mediaId))
+		} catch (err) {
+			throw friendlyConstraintMessage('Adding tag to media failed', err)
+		}
 	})
 
-	ipcMain.handle('library:tag:delete', (_event, id: string) => {
-		return tagRepo.delete(id)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryTagRemoveFromMedia)
+	ipcMain.handle(IPC_CHANNELS.libraryTagRemoveFromMedia, (_event, tagId: unknown, mediaId: unknown) => tagRepo.removeFromMedia(idSchema.parse(tagId), idSchema.parse(mediaId)))
 
-	ipcMain.handle('library:tag:addToMedia', (_event, tagId: string, mediaId: string) => {
-		tagRepo.addToMedia(tagId, mediaId)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryTagGetForMedia)
+	ipcMain.handle(IPC_CHANNELS.libraryTagGetForMedia, (_event, mediaId: unknown) => tagRepo.getTagsForMedia(idSchema.parse(mediaId)))
 
-	ipcMain.handle('library:tag:removeFromMedia', (_event, tagId: string, mediaId: string) => {
-		tagRepo.removeFromMedia(tagId, mediaId)
-	})
-
-	ipcMain.handle('library:tag:getForMedia', (_event, mediaId: string) => {
-		return tagRepo.getTagsForMedia(mediaId)
-	})
-
-	ipcMain.handle('library:tag:getMediaIds', (_event, tagId: string) => {
-		return tagRepo.getMediaIdsForTag(tagId)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryTagGetMediaIds)
+	ipcMain.handle(IPC_CHANNELS.libraryTagGetMediaIds, (_event, tagId: unknown) => tagRepo.getMediaIdsForTag(idSchema.parse(tagId)))
 
 	// ── Playback History ───────────────────────────────────────────────────────
 
-	ipcMain.handle('library:playback:updatePosition', (_event, mediaId: string, position: number, duration: number) => {
-		playbackRepo.updatePosition(mediaId, position, duration)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryPlaybackUpdatePosition)
+	ipcMain.handle(IPC_CHANNELS.libraryPlaybackUpdatePosition, (_event, mediaId: unknown, position: unknown, duration: unknown) => playbackRepo.updatePosition(idSchema.parse(mediaId), z.number().nonnegative().parse(position), z.number().nonnegative().parse(duration)))
 
-	ipcMain.handle('library:playback:getByMedia', (_event, mediaId: string) => {
-		return playbackRepo.getByMediaId(mediaId)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryPlaybackGetByMedia)
+	ipcMain.handle(IPC_CHANNELS.libraryPlaybackGetByMedia, (_event, mediaId: unknown) => playbackRepo.getByMediaId(idSchema.parse(mediaId)))
 
-	ipcMain.handle('library:playback:listRecent', (_event, limit?: number) => {
-		return playbackRepo.listRecent(limit)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryPlaybackListRecent)
+	ipcMain.handle(IPC_CHANNELS.libraryPlaybackListRecent, (_event, limit: unknown) => playbackRepo.listRecent(z.number().int().positive().optional().parse(limit)))
 
 	// ── Download History ───────────────────────────────────────────────────────
 
-	ipcMain.handle('library:downloadHistory:list', (_event, options?: {status?: string; limit?: number; offset?: number}) => {
-		return downloadHistoryRepo.list(options)
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryDownloadHistoryList)
+	ipcMain.handle(IPC_CHANNELS.libraryDownloadHistoryList, (_event, options: unknown) => downloadHistoryRepo.list(downloadHistoryOptionsSchema.parse(options)))
 
-	ipcMain.handle('library:downloadHistory:count', () => {
-		return downloadHistoryRepo.count()
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryDownloadHistoryCount)
+	ipcMain.handle(IPC_CHANNELS.libraryDownloadHistoryCount, () => downloadHistoryRepo.count())
 
-	ipcMain.handle('library:downloadHistory:countByStatus', () => {
-		return downloadHistoryRepo.countByStatus()
-	})
+	ipcMain.removeHandler(IPC_CHANNELS.libraryDownloadHistoryCountByStatus)
+	ipcMain.handle(IPC_CHANNELS.libraryDownloadHistoryCountByStatus, () => downloadHistoryRepo.countByStatus())
 }

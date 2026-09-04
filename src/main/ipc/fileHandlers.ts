@@ -1,4 +1,5 @@
 import path from 'node:path'
+import {stat} from 'node:fs/promises'
 import {app, dialog, shell, type BrowserWindow} from 'electron'
 import log from 'electron-log/main.js'
 import {IPC_CHANNELS} from '@shared/ipc.js'
@@ -40,6 +41,15 @@ export function registerFileHandlers(mainWindow: BrowserWindow, binaryManager: B
 		try {
 			const requestedPath = typeof payload === 'string' && payload.length > 0 ? payload : null
 			const target = requestedPath ?? app.getPath('downloads')
+			// shell.openPath() on a file launches it via the OS's file
+			// association — on an executable/script, that's arbitrary code
+			// execution. This channel is meant to open a *folder* (output dir,
+			// log dir, cache dir); requiring the target to actually be a
+			// directory closes that path off for a compromised renderer without
+			// restricting which directories the user can open (output dirs are
+			// legitimately anywhere on disk).
+			const info = await stat(target).catch(() => null)
+			if (!info || !info.isDirectory()) return toIpcFailure(`Not a directory: ${target}`)
 			const response = await shell.openPath(target)
 			if (response) return toIpcFailure(response)
 			return ok({opened: true})

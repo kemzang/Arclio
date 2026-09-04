@@ -61,8 +61,18 @@ export function createMediaRepository(db: DrizzleDatabase): MediaRepo {
 			const conditions = []
 
 			if (filters.search) {
-				// Use FTS5 for full-text search
-				const ftsResults = db.all(sql`SELECT rowid FROM media_fts WHERE media_fts MATCH ${filters.search}`) as {rowid: number}[]
+				// Use FTS5 for full-text search. The query is free-text typed by the
+				// user (global search box) — FTS5's MATCH syntax treats characters
+				// like `"`, `-`, `AND`/`OR`, and unbalanced parens as operators, so
+				// an ordinary search phrase can be invalid FTS5 syntax. Treat a
+				// syntax error as "no results" rather than letting a raw SQLite
+				// exception reach the renderer.
+				let ftsResults: {rowid: number}[]
+				try {
+					ftsResults = db.all(sql`SELECT rowid FROM media_fts WHERE media_fts MATCH ${filters.search}`) as {rowid: number}[]
+				} catch {
+					return []
+				}
 				if (ftsResults.length === 0) return []
 				const rowids = ftsResults.map((r: {rowid: number}) => r.rowid)
 				conditions.push(
@@ -88,8 +98,10 @@ export function createMediaRepository(db: DrizzleDatabase): MediaRepo {
 
 			const where = conditions.length > 0 ? and(...conditions) : undefined
 
-			// Sorting
-			const sortColumn = {title: media.title, download_date: media.downloadDate, created_at: media.createdAt, duration: media.duration}[filters.sortBy ?? 'download_date']
+			// Sorting. Falls back to download_date for an unrecognized sortBy
+			// instead of passing `undefined` to orderBy() (which throws deep
+			// inside drizzle) — defense in depth alongside IPC-layer validation.
+			const sortColumn = {title: media.title, download_date: media.downloadDate, created_at: media.createdAt, duration: media.duration}[filters.sortBy ?? 'download_date'] ?? media.downloadDate
 
 			const orderFn = filters.sortOrder === 'asc' ? asc : desc
 
@@ -159,8 +171,14 @@ export function createMediaRepository(db: DrizzleDatabase): MediaRepo {
 		},
 
 		search(query: string, limit = 20): Media[] {
-			const results = db.all(sql`SELECT media.* FROM media_fts JOIN media ON media.rowid = media_fts.rowid WHERE media_fts MATCH ${query} ORDER BY rank LIMIT ${limit}`)
-			return results as Media[]
+			try {
+				const results = db.all(sql`SELECT media.* FROM media_fts JOIN media ON media.rowid = media_fts.rowid WHERE media_fts MATCH ${query} ORDER BY rank LIMIT ${limit}`)
+				return results as Media[]
+			} catch {
+				// Same rationale as list()'s search filter — free-text user input,
+				// not a trusted FTS5 query string.
+				return []
+			}
 		},
 
 		count(): number {

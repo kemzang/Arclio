@@ -259,6 +259,16 @@ export type RuntimeBinaryIndex = z.infer<typeof runtimeBinaryIndexSchema>
 export const queueItemStatusSchema = z.enum(['pending', 'running', 'paused-held', 'paused-active', 'done', 'error', 'cancelled'])
 export type QueueItemStatus = z.infer<typeof queueItemStatusSchema>
 
+// Library media lifecycle status (media.status column). Previously validated
+// with a bare `as` cast at the IPC boundary — any string from the renderer
+// reached the DB write unchecked. SSOT here per schemas.ts convention.
+// (media.mediaType already has mediaTypeSchema/MediaType above.)
+export const mediaStatusSchema = z.enum(['AVAILABLE', 'MISSING', 'CORRUPTED', 'DELETED'])
+export type MediaStatus = z.infer<typeof mediaStatusSchema>
+
+export const mediaSortBySchema = z.enum(['title', 'download_date', 'created_at', 'duration'])
+export type MediaSortBy = z.infer<typeof mediaSortBySchema>
+
 // Lane controls how the scheduler treats an item. `normal` items respect the
 // single-slot cap and the inter-job sleep window — typical queue flow.
 // `priority` items spawn alongside whatever is running and bypass the sleep
