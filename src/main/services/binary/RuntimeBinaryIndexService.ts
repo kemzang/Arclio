@@ -1,6 +1,7 @@
 import {verify as verifySignature} from 'node:crypto'
 import fsPromises from 'node:fs/promises'
 import path from 'node:path'
+import {app} from 'electron'
 import log from 'electron-log/main.js'
 import {runtimeBinaryCacheKey, runtimeEntriesForCurrentTarget, validateRuntimeBinaryIndex} from '@shared/runtimeBinaryManifest.js'
 import type {RuntimeBinaryId, RuntimeBinaryIndex, RuntimeBinaryManifestEntry} from '@shared/types.js'
@@ -45,13 +46,22 @@ export interface RuntimeBinaryIndexServiceOptions {
 	logger?: RuntimeBinaryIndexLogger
 }
 
+// Packaged builds must not honor these overrides — they exist purely for the
+// local dev workflow (bun run dev:local-manifest / scripts/with-runtime-manifest.sh).
+// Without this gate, anything that can set an env var for the packaged
+// process (a malicious installer polluting the user's shell profile, a
+// compromised shortcut) could redirect binary resolution to an arbitrary
+// index + public key + binary, bypassing the pinned Ed25519 trust anchor
+// entirely.
 function envUrl(name: string, fallback: string): string | null {
+	if (app.isPackaged) return fallback
 	const raw = process.env[name]?.trim()
 	if (raw === 'off' || raw === '0') return null
 	return raw && raw.length > 0 ? raw : fallback
 }
 
 function envPath(name: string): string | null {
+	if (app.isPackaged) return null
 	const raw = process.env[name]?.trim()
 	return raw && raw.length > 0 ? raw : null
 }

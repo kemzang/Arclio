@@ -36,6 +36,13 @@ export class WarmupService {
 	private currentRun: Promise<Result<WarmUpOutput>> | null = null
 	private lastResult: Result<WarmUpOutput> | null = null
 	private currentController: AbortController | null = null
+	// Bumped on every run() call. A force-run aborts the in-flight run's
+	// controller but does not await its settlement before starting a new one
+	// — both executeRun() calls are briefly in flight together. Without this
+	// guard, whichever happened to settle *last* wins the lastResult write,
+	// which could be the superseded/aborted run if cancellation took a
+	// moment to actually stop its network calls.
+	private runGeneration = 0
 
 	constructor(private readonly deps: WarmupServiceDeps) {}
 
@@ -55,13 +62,14 @@ export class WarmupService {
 			// its diagnostics aren't overwritten mid-completion by the new run.
 			this.currentController?.abort()
 		}
+		const generation = ++this.runGeneration
 		const controller = new AbortController()
 		this.currentController = controller
 		const promise = this.executeRun(controller.signal)
 		this.currentRun = promise
 		promise
 			.then(result => {
-				this.lastResult = result
+				if (generation === this.runGeneration) this.lastResult = result
 			})
 			.catch(() => {
 				/* lastResult stays as previous; currentRun cleared below */

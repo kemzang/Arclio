@@ -85,6 +85,39 @@ describe('WarmupService', () => {
 		expect(second.data.blockingFailures).toEqual([])
 	})
 
+	it('regression: a stale superseded run settling after its force-replacement does not clobber lastResult', async () => {
+		let resolveFirst!: (d: DependencyDiagnostic) => void
+		let resolveSecond!: (d: DependencyDiagnostic) => void
+		const firstPromise = new Promise<DependencyDiagnostic>(r => {
+			resolveFirst = r
+		})
+		const secondPromise = new Promise<DependencyDiagnostic>(r => {
+			resolveSecond = r
+		})
+		const resolveYtDlp = vi.fn().mockReturnValueOnce(firstPromise).mockReturnValueOnce(secondPromise)
+		const bm = {invalidateResolved: vi.fn(), resolveYtDlp, resolveFFmpegPair: vi.fn().mockResolvedValue({ffmpeg: diag('ffmpeg', 'runnable'), ffprobe: diag('ffprobe', 'runnable')})} as unknown as BinaryManager
+		const svc = new WarmupService({binaryManager: bm, tokenService: noopToken})
+
+		const first = svc.run()
+		// force() aborts run #1's controller but does not await its settlement
+		// before starting run #2 — both executeRun() calls are briefly in
+		// flight together, exactly like production when cancellation takes a
+		// moment to actually stop an in-progress network call.
+		const second = svc.run({force: true})
+
+		// The newer run (#2) settles first.
+		resolveSecond(diag('yt-dlp', 'runnable'))
+		const secondResult = await second
+		expect(svc.getLastResult()).toEqual(secondResult)
+		if (secondResult.ok) expect(secondResult.data.completed).toBe(true)
+
+		// The stale, superseded run (#1) finally settles too, with a
+		// DIFFERENT (failed) diagnostic. It must not overwrite lastResult.
+		resolveFirst(diag('yt-dlp', 'failed'))
+		await first
+		expect(svc.getLastResult()).toEqual(secondResult)
+	})
+
 	it('memoizes in-flight runs without force', async () => {
 		let resolveYt!: (d: DependencyDiagnostic) => void
 		const ytPromise = new Promise<DependencyDiagnostic>(r => {

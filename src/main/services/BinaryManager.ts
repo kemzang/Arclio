@@ -5,6 +5,7 @@ import {app} from 'electron'
 import log from 'electron-log/main.js'
 
 import {trackMain} from '@main/services/analytics.js'
+import {checkDiskSpace} from '@main/utils/diskSpace.js'
 import {FAILURE_CODE, type BinaryOverrides, type DependencyAttempt, type DependencyDiagnostic, type DependencyFailure, type DependencyId, type DependencySource, type RuntimeBinaryManifestEntry, type StatusKey} from '@shared/types.js'
 import {probeArgs, probeBinary, probeTimeoutMs, whereOnPath, classifyProbeError, fallbackPathCandidates} from './binary/BinaryProbe.js'
 import {classifyDownloadError, downloadErrorDetails, parseShaLine, parseStandaloneSha256, parsePowerShellFileHash, sha256ForFile, wrapDownloadProgressEmitter, parseContentRangeStart, resolvePartialResponseMode, type DownloadProgressCallback, type ProgressEmitter} from './binary/BinaryDownloader.js'
@@ -15,6 +16,21 @@ import {ArtifactMaterializeError, artifactErrorToDependencyFailureKind, type Art
 import {RuntimeBinaryIndexService, type RuntimeBinaryIndexProvider} from './binary/RuntimeBinaryIndexService.js'
 
 type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | number>) => void
+
+// Thrown by ensureYtDlp() instead of a plain Error so callers that care can
+// distinguish e.g. permission_denied (antivirus quarantine) from timeout or
+// download_failed instead of only getting a flattened message string —
+// resolveYtDlp() already computes this per-attempt classification; throwing
+// a bare Error discarded it.
+export class DependencyResolutionError extends Error {
+	constructor(
+		message: string,
+		readonly failure: DependencyFailure | undefined
+	) {
+		super(message)
+		this.name = 'DependencyResolutionError'
+	}
+}
 
 interface ResolveOptions {
 	overrides?: BinaryOverrides
@@ -307,6 +323,14 @@ export class BinaryManager {
 		const startedAt = Date.now()
 		onProgress?.({binary: entry.id, phase: 'downloading', source})
 		opts.onStatus?.('downloadingBinary', {name: entry.id})
+		// Proactive check before spending bandwidth: a near-full disk otherwise
+		// only surfaces as a raw ENOSPC mid-write/extract, deep inside the
+		// materializer, after downloading however much of the archive fit.
+		const diskCheck = await checkDiskSpace(this.artifactCacheDir, entry.size)
+		if (!diskCheck.ok) {
+			this.recordManagedFailure(entry.id, attempts, source, onProgress, new ArtifactMaterializeError('DISK', `Insufficient disk space for ${entry.id} at ${this.artifactCacheDir} (need ~${diskCheck.requiredBytes ?? entry.size} bytes, have ${diskCheck.freeBytes ?? 'unknown'})`), Date.now() - startedAt)
+			return null
+		}
 		try {
 			const result = await this.runtimeBinaryMaterializer.materialize(entry, {cacheRoot: this.artifactCacheDir, onDownloadProgress: makeDownloadProgress(entry.id, source, onProgress), onExtracting: () => onProgress?.({binary: entry.id, phase: 'extracting', source}), signal})
 			const diag = await this.probeAndAccept(entry.id, source, result.executablePath, attempts, onProgress, signal)
@@ -405,7 +429,7 @@ export class BinaryManager {
 			: undefined
 		const diag = await this.resolveYtDlp({onStatus, onProgress})
 		if (diag.state !== 'runnable' || !diag.resolvedPath) {
-			throw new Error(diag.failure?.message ?? 'yt-dlp could not be resolved')
+			throw new DependencyResolutionError(diag.failure?.message ?? 'yt-dlp could not be resolved', diag.failure)
 		}
 		return diag.resolvedPath
 	}
