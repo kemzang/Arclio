@@ -262,6 +262,20 @@ export class QueueService extends EventEmitter {
 			return fail(createAppError('validation', `cannot resume item in status ${item.status}`))
 		}
 
+		// Respect the concurrency cap even though this is the "explicit single
+		// item" path. Without this guard, a multi-select Resume over N
+		// paused-active items calls this once per item and spawns N processes
+		// in parallel — the same "resume → 10 in parallel" bug resumeAll()
+		// guards against, reachable here via applySelectionAction. When no
+		// slot is free, defer to the scheduler: patch back to pending
+		// (preserving tempDir/lastJobId so a later spawn still picks up the
+		// .part files) instead of resuming/spawning immediately.
+		if (!this.hasScheduleSlot(item)) {
+			logger.info('resume: deferred to scheduler (no free slot)', {itemId, lane: item.lane, snapshot: this.statusSummary()})
+			this.commit({kind: 'patch', itemId, reason: 'resume:deferred-capacity', patcher: prev => ({...prev, status: QUEUE_STATUS.pending, progressDetail: null})})
+			return ok(undefined)
+		}
+
 		// Try in-session resume first; if main has no record (cross-restart),
 		// fall back to a fresh start with --continue picking up the .part.
 		if (item.lastJobId) {
@@ -668,6 +682,19 @@ export class QueueService extends EventEmitter {
 			clearTimeout(this.sleepTimer)
 			this.sleepTimer = null
 		}
+	}
+
+	// Single-item capacity check mirroring recomputeSchedule's own accounting
+	// (activeCount includes running + paused-active + mid-spawn items; the
+	// normal lane additionally respects normalCap). Used by resume() so an
+	// explicit per-item resume cannot exceed the same cap the auto-scheduler
+	// enforces for pending items.
+	private hasScheduleSlot(item: QueueItem): boolean {
+		const activeCount = this.spawning.size + this.items.filter(i => i.status === QUEUE_STATUS.running || i.status === QUEUE_STATUS.pausedActive).length
+		if (activeCount > this.maxConcurrent) return false
+		if (item.lane === 'priority') return true
+		const normalRunning = this.items.filter(i => i.status === QUEUE_STATUS.running && i.lane === 'normal').length
+		return normalRunning < this.normalCap
 	}
 
 	private beginSpawn(itemId: string): void {

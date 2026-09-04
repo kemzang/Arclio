@@ -844,6 +844,44 @@ describe('QueueService — two-lane heavy scenarios', () => {
 		expect(ds.start.mock.calls[0]?.[0]).toMatchObject({tempDir: '/tmp/resume-here'})
 	})
 
+	it('regression: resume() on a single paused-active item respects the normal-lane cap, NOT parallel spawns', async () => {
+		const {qs, ds} = makeServiceCeiling(1, 4)
+		ds.resume.mockResolvedValue(ok({resumed: true}))
+
+		qs.add([makeItem({id: 'a', status: 'paused-active', lane: 'normal', lastJobId: 'job-a', tempDir: '/tmp/a'}), makeItem({id: 'b', status: 'paused-active', lane: 'normal', lastJobId: 'job-b', tempDir: '/tmp/b'}), makeItem({id: 'c', status: 'paused-active', lane: 'normal', lastJobId: 'job-c', tempDir: '/tmp/c'})])
+
+		// Simulates a multi-select "Resume" calling resume() once per selected
+		// item (queueSelectionActionApply's loop) — before the fix each call
+		// bypassed the cap and resumed unconditionally.
+		await qs.resume('a')
+		await qs.resume('b')
+		await qs.resume('c')
+
+		expect(ds.resume).toHaveBeenCalledTimes(1)
+		expect(ds.resume).toHaveBeenCalledWith('job-a')
+		const snap = qs.snapshot()
+		expect(snap.find(i => i.id === 'a')?.status).toBe('running')
+		expect(snap.find(i => i.id === 'b')?.status).toBe('pending')
+		expect(snap.find(i => i.id === 'c')?.status).toBe('pending')
+		// Deferred items keep their tempDir/lastJobId so a later scheduler
+		// spawn still picks up the .part files.
+		expect(snap.find(i => i.id === 'b')?.tempDir).toBe('/tmp/b')
+	})
+
+	it('regression: multi-select applySelectionAction("resume", …) over paused-active items respects the cap', async () => {
+		const {qs, ds} = makeServiceCeiling(1, 4)
+		ds.resume.mockResolvedValue(ok({resumed: true}))
+
+		qs.add([makeItem({id: 'a', status: 'paused-active', lane: 'normal', lastJobId: 'job-a', tempDir: '/tmp/a'}), makeItem({id: 'b', status: 'paused-active', lane: 'normal', lastJobId: 'job-b', tempDir: '/tmp/b'}), makeItem({id: 'c', status: 'paused-active', lane: 'normal', lastJobId: 'job-c', tempDir: '/tmp/c'})])
+
+		const result = await qs.applySelectionAction('resume', ['a', 'b', 'c'])
+
+		expect(result.ok).toBe(true)
+		expect(ds.resume).toHaveBeenCalledTimes(1)
+		expect(qs.snapshot().filter(i => i.status === 'running')).toHaveLength(1)
+		expect(qs.snapshot().filter(i => i.status === 'pending')).toHaveLength(2)
+	})
+
 	it('cancel single pending item while paused does NOT unpause the queue', async () => {
 		const {qs, ds} = makeServiceCeiling(1, 4)
 		jobMock(ds)
