@@ -72,7 +72,16 @@ export function buildFFmpegArgs(inputPath: string, outputPath: string, format: C
 		videoFilters.push(`fps=${options?.fps ?? 10}`)
 		videoFilters.push(`scale=${options?.resolution ?? '320:-1'}:flags=lanczos`)
 	} else {
-		if (options?.resolution) videoFilters.push(`scale=${options.resolution}`)
+		if (options?.resolution) {
+			videoFilters.push(`scale=${options.resolution}`)
+		} else if (options?.width || options?.height) {
+			// convertImage() falls back to this ffmpeg path for image formats
+			// sharp doesn't cover, passing width/height (not resolution) — those
+			// were silently dropped here, so a requested resize never happened.
+			// ffmpeg's scale filter takes "-1" to preserve aspect ratio on
+			// whichever dimension wasn't given.
+			videoFilters.push(`scale=${options.width ?? -1}:${options.height ?? -1}`)
+		}
 		// For GIF the rate is already set by the fps filter above.
 		if (options?.fps) args.push('-r', String(options.fps))
 	}

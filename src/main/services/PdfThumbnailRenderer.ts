@@ -48,6 +48,29 @@ function resolveStandardFontDataUrl(): string | undefined {
 	}
 }
 
+// PDFs are rasterised from arbitrary user-imported/library files — a
+// corrupted or pathologically complex page (deeply nested vector paths,
+// malformed content streams pdf.js loops trying to recover from) can hang
+// getDocument()/page.render() indefinitely. Without a bound, that stalls the
+// main-process thumbnail pipeline with no way for the caller to give up.
+const RENDER_TIMEOUT_MS = 30_000
+
+function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
+	return new Promise<T>((resolve, reject) => {
+		const timer = setTimeout(() => reject(new Error(message)), ms)
+		promise.then(
+			value => {
+				clearTimeout(timer)
+				resolve(value)
+			},
+			err => {
+				clearTimeout(timer)
+				reject(err)
+			}
+		)
+	})
+}
+
 export async function renderPdfFirstPage(pdfPath: string, maxWidth: number, maxHeight: number): Promise<Buffer> {
 	const canvasModule = await loadCanvasModule()
 	// The legacy build is the one that runs outside a browser bundler.
@@ -65,7 +88,7 @@ export async function renderPdfFirstPage(pdfPath: string, maxWidth: number, maxH
 	})
 
 	try {
-		const document = await task.promise
+		const document = await withTimeout(task.promise, RENDER_TIMEOUT_MS, `Timed out loading PDF after ${RENDER_TIMEOUT_MS}ms: ${pdfPath}`)
 		const page = await document.getPage(1)
 		const unscaled = page.getViewport({scale: 1})
 		// `fit: inside` semantics — scale by the tighter axis so the page fits the
@@ -79,7 +102,13 @@ export async function renderPdfFirstPage(pdfPath: string, maxWidth: number, maxH
 		context.fillStyle = '#ffffff'
 		context.fillRect(0, 0, canvas.width, canvas.height)
 
-		await page.render({canvasContext: context as unknown as CanvasRenderingContext2D, viewport, canvas: canvas as unknown as HTMLCanvasElement}).promise
+		const renderTask = page.render({canvasContext: context as unknown as CanvasRenderingContext2D, viewport, canvas: canvas as unknown as HTMLCanvasElement})
+		try {
+			await withTimeout(renderTask.promise, RENDER_TIMEOUT_MS, `Timed out rendering PDF page after ${RENDER_TIMEOUT_MS}ms: ${pdfPath}`)
+		} catch (err) {
+			renderTask.cancel()
+			throw err
+		}
 
 		return canvas.toBuffer('image/png')
 	} finally {

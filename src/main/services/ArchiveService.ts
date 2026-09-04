@@ -88,11 +88,29 @@ interface OpenArchiveHandle {
  */
 export class ArchiveService {
 	private handle: OpenArchiveHandle | null = null
+	// Serializes every public method below. Without this, two overlapping
+	// calls for different archives (fast page-forward while switching comics,
+	// a prefetch racing a close) could interleave: handleFor's
+	// check-then-open-then-cache is not atomic, so one call could close()
+	// the handle a concurrent readEntryBytes() was still streaming from, or
+	// two calls opening the same not-yet-cached path could each open their
+	// own zipFile and have the second silently overwrite (and orphan/leak)
+	// the first's handle in `this.handle`.
+	private queue: Promise<unknown> = Promise.resolve()
+
+	private enqueue<T>(fn: () => Promise<T>): Promise<T> {
+		const result = this.queue.then(fn, fn)
+		this.queue = result.then(
+			() => undefined,
+			() => undefined
+		)
+		return result
+	}
 
 	private async handleFor(archivePath: string): Promise<OpenArchiveHandle> {
 		if (this.handle?.archivePath === archivePath) return this.handle
 
-		this.close()
+		this.closeHandle()
 
 		const zipFile = await openArchive(archivePath)
 		try {
@@ -109,33 +127,41 @@ export class ArchiveService {
 
 	/** Sorted list of image entry names inside the archive. */
 	async listPages(archivePath: string): Promise<ArchivePageList> {
-		try {
-			const handle = await this.handleFor(archivePath)
-			return {pages: handle.sortedNames}
-		} catch (error) {
-			return {pages: [], error: error instanceof Error ? error.message : String(error)}
-		}
+		return this.enqueue(async () => {
+			try {
+				const handle = await this.handleFor(archivePath)
+				return {pages: handle.sortedNames}
+			} catch (error) {
+				return {pages: [], error: error instanceof Error ? error.message : String(error)}
+			}
+		})
 	}
 
 	/** Raw bytes for a single archive entry, transferred to the renderer as a Uint8Array. */
 	async readPage(archivePath: string, entryName: string): Promise<ArchivePageData> {
-		try {
-			const handle = await this.handleFor(archivePath)
-			const entry = handle.entriesByName.get(entryName)
-			if (!entry) {
-				return {ok: false, error: `Entry not found in archive: ${entryName}`}
-			}
+		return this.enqueue(async () => {
+			try {
+				const handle = await this.handleFor(archivePath)
+				const entry = handle.entriesByName.get(entryName)
+				if (!entry) {
+					return {ok: false, error: `Entry not found in archive: ${entryName}`}
+				}
 
-			const bytes = await readEntryBytes(handle.zipFile, entry)
-			return {ok: true, data: new Uint8Array(bytes), mimeType: mimeTypeFor(entryName)}
-		} catch (error) {
-			return {ok: false, error: error instanceof Error ? error.message : String(error)}
-		}
+				const bytes = await readEntryBytes(handle.zipFile, entry)
+				return {ok: true, data: new Uint8Array(bytes), mimeType: mimeTypeFor(entryName)}
+			} catch (error) {
+				return {ok: false, error: error instanceof Error ? error.message : String(error)}
+			}
+		})
+	}
+
+	private closeHandle(): void {
+		this.handle?.zipFile.close()
+		this.handle = null
 	}
 
 	/** Releases the cached archive handle. Called when the viewer closes. */
-	close(): void {
-		this.handle?.zipFile.close()
-		this.handle = null
+	async close(): Promise<void> {
+		return this.enqueue(() => Promise.resolve(this.closeHandle()))
 	}
 }

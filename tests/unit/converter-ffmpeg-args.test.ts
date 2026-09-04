@@ -49,6 +49,32 @@ describe('buildFFmpegArgs', () => {
 		expect(valueAfter(args, '-vf')).toBe('scale=1280:-2')
 	})
 
+	it("regression: falls back to width/height when resolution is not given (convertImage's ffmpeg path)", () => {
+		// convertImage() passes {width, height} (not resolution) when a
+		// requested image format falls through to this ffmpeg path instead of
+		// sharp — buildFFmpegArgs used to only ever look at options.resolution,
+		// so the resize was silently dropped.
+		const args = buildFFmpegArgs('/in.png', '/out.jpg', 'jpg', {width: 320, height: 240})
+		expect(countFlag(args, '-vf')).toBe(1)
+		expect(valueAfter(args, '-vf')).toBe('scale=320:240')
+	})
+
+	it('regression: width-only preserves aspect ratio via scale=-1 on the other axis', () => {
+		const args = buildFFmpegArgs('/in.png', '/out.jpg', 'jpg', {width: 320})
+		expect(valueAfter(args, '-vf')).toBe('scale=320:-1')
+	})
+
+	it('regression: height-only preserves aspect ratio via scale=-1 on the other axis', () => {
+		const args = buildFFmpegArgs('/in.png', '/out.jpg', 'jpg', {height: 240})
+		expect(valueAfter(args, '-vf')).toBe('scale=-1:240')
+	})
+
+	it('resolution wins over width/height when both are somehow given', () => {
+		const args = buildFFmpegArgs('/in.mp4', '/out.mp4', 'mp4', {resolution: '1280:-2', width: 320, height: 240})
+		expect(countFlag(args, '-vf')).toBe(1)
+		expect(valueAfter(args, '-vf')).toBe('scale=1280:-2')
+	})
+
 	it('picks a default audio codec per container', () => {
 		expect(valueAfter(buildFFmpegArgs('/in.mp4', '/out.mp3', 'mp3'), '-c:a')).toBe('libmp3lame')
 		expect(valueAfter(buildFFmpegArgs('/in.mp4', '/out.opus', 'opus'), '-c:a')).toBe('libopus')

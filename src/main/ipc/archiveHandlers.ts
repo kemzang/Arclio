@@ -13,7 +13,7 @@ export function registerArchiveHandlers(archiveService: ArchiveService): void {
 	})
 
 	ipcMain.removeHandler('archive:close')
-	ipcMain.handle('archive:close', _event => {
-		archiveService.close()
+	ipcMain.handle('archive:close', async _event => {
+		await archiveService.close()
 	})
 }

@@ -107,7 +107,7 @@ describe('ArchiveService', () => {
 		expect(error).toBeUndefined()
 		// Natural sort: page2 before page10, and the .txt entry is excluded.
 		expect(pages).toEqual(['page1.png', 'page2.png', 'page10.png'])
-		service.close()
+		await service.close()
 	})
 
 	it('reads an entry back as bytes with its mime type', async () => {
@@ -118,7 +118,7 @@ describe('ArchiveService', () => {
 		if (!page.ok) return
 		expect(page.mimeType).toBe('image/png')
 		expect(Buffer.from(page.data)).toEqual(PNG)
-		service.close()
+		await service.close()
 	})
 
 	it('serves repeated reads from one open handle', async () => {
@@ -128,7 +128,7 @@ describe('ArchiveService', () => {
 
 		expect(first.ok).toBe(true)
 		expect(second.ok).toBe(true)
-		service.close()
+		await service.close()
 	})
 
 	it('reports an archive with no images as empty rather than failing', async () => {
@@ -137,7 +137,7 @@ describe('ArchiveService', () => {
 
 		expect(pages).toEqual([])
 		expect(error).toBeUndefined()
-		service.close()
+		await service.close()
 	})
 
 	it('returns an error for a missing archive instead of throwing', async () => {
@@ -146,7 +146,7 @@ describe('ArchiveService', () => {
 
 		expect(pages).toEqual([])
 		expect(error).toBeTruthy()
-		service.close()
+		await service.close()
 	})
 
 	it('returns an error for an entry that is not in the archive', async () => {
@@ -156,7 +156,7 @@ describe('ArchiveService', () => {
 		expect(page.ok).toBe(false)
 		if (page.ok) return
 		expect(page.error).toContain('missing.png')
-		service.close()
+		await service.close()
 	})
 
 	it('switches cleanly between archives', async () => {
@@ -164,6 +164,31 @@ describe('ArchiveService', () => {
 		expect((await service.listPages(comicPath)).pages).toHaveLength(3)
 		expect((await service.listPages(emptyPath)).pages).toHaveLength(0)
 		expect((await service.listPages(comicPath)).pages).toHaveLength(3)
-		service.close()
+		await service.close()
+	})
+
+	it('regression: switching to a different archive mid-read does not close the handle a read is still streaming from', async () => {
+		// Precise reproduction: comicPath is already cached (its zipFile open),
+		// then a read from that cached handle is started (real async I/O, so
+		// it yields past its first await) *before* a call for a different
+		// archive arrives. Before serializing handleFor()/close(), the second
+		// call's handleFor() saw a cache miss and called close() synchronously
+		// — closing the very zipFile the first call's readEntryBytes() was
+		// still mid-stream on.
+		const comicPath2 = join(workDir, 'book2.cbz')
+		await writeZip(comicPath2, [{name: 'onlypage.png', body: PNG}])
+		const service = new ArchiveService()
+
+		// Prime the cache for comicPath.
+		await service.listPages(comicPath)
+
+		const [fromComic1, fromComic2] = await Promise.all([service.readPage(comicPath, 'page1.png'), service.readPage(comicPath2, 'onlypage.png')])
+
+		expect(fromComic1.ok).toBe(true)
+		if (fromComic1.ok) expect(Buffer.from(fromComic1.data)).toEqual(PNG)
+		expect(fromComic2.ok).toBe(true)
+		if (fromComic2.ok) expect(Buffer.from(fromComic2.data)).toEqual(PNG)
+
+		await service.close()
 	})
 })

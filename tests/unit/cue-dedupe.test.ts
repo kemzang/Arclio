@@ -33,7 +33,7 @@ describe('dedupeCues — algorithm branches', () => {
 	})
 
 	it('extends prev.end when cue text is a substring of prev (instant cue)', () => {
-		// Second cue's duration is < 150ms (start - end is negative which is < 150),
+		// Second cue's own duration (end - start = 20ms) is < NEAR_ZERO_DURATION_MS,
 		// and its text appears in prev. Prev should swallow it and extend.
 		const out = collect([
 			{start: 0, end: 5000, text: 'hello there friend'},
@@ -42,6 +42,25 @@ describe('dedupeCues — algorithm branches', () => {
 		expect(out).toHaveLength(1)
 		expect(out[0].text).toBe('hello there friend')
 		expect(out[0].end).toBeGreaterThanOrEqual(5070)
+	})
+
+	it('regression: does not merge a substring-matching cue with a substantial duration of its own', () => {
+		// cue.end - cue.start = 3000ms — a real, deliberately-timed caption, not
+		// an instant rolling-caption artifact — even though its text happens to
+		// be a substring of prev's. Three words keeps it out of the unrelated
+		// short-tail-fold branch (<=2 words) so this isolates only the
+		// near-zero-duration check. The buggy version of that check compared
+		// `cue.start - cue.end < 150` (always true for any valid start < end
+		// cue, since the result is negative), which merged *every*
+		// substring-matching cue regardless of its actual duration — silently
+		// swallowing this whole cue and stretching prev.end over it.
+		const out = collect([
+			{start: 0, end: 5000, text: 'hello there my dear friend'},
+			{start: 6000, end: 9000, text: 'there my dear'}
+		])
+		expect(out).toHaveLength(2)
+		expect(out[0]).toMatchObject({start: 0, end: 5000, text: 'hello there my dear friend'})
+		expect(out[1]).toMatchObject({start: 6000, end: 9000, text: 'there my dear'})
 	})
 
 	it('rolling pattern: drops first line of cue when it equals last line of prev', () => {

@@ -13,7 +13,7 @@ export interface Cue {
 
 // Tunables. Names instead of magic numbers so tests + future tweaks have a
 // shared vocabulary. Values inherited from Parabolic's reference implementation.
-const NEAR_ZERO_DURATION_MS = 150 // cue.start - cue.end < this → "instant" cue
+const NEAR_ZERO_DURATION_MS = 150 // cue.end - cue.start < this → "instant" cue
 const SHORT_TAIL_WORD_THRESHOLD = 2 // ≤N words on the trailing line → fold into prev
 const SOLO_WORD_MIN_LENGTH = 2 // single-word prev shorter than this isn't a sentinel
 
@@ -53,7 +53,7 @@ function* dedupeCuesRaw(cues: Iterable<Cue>): Generator<Cue> {
 		if (cue.text.length === 0) continue
 
 		// react-doctor-disable-next-line react-doctor/js-set-map-lookups -- string containment, not array lookup
-		if (cue.start - cue.end < NEAR_ZERO_DURATION_MS && prev.text.includes(cue.text)) {
+		if (cue.end - cue.start < NEAR_ZERO_DURATION_MS && prev.text.includes(cue.text)) {
 			prev.end = cue.end
 			continue
 		}
