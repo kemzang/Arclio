@@ -123,6 +123,31 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
 		expect(shouldAbort?.()).toBe(true)
 	})
 
+	it('regression: cancel during dedupeSubtitleFiles → returns cancelled, not completed (sidecar-only)', async () => {
+		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, subtitles: {...BASE_JOB.subtitles!, writeAuto: true}}}, subtitlePaths: ['/tmp/video.en.srt']})
+		vi.mocked(dedupeSubtitleFiles).mockImplementationOnce(async () => {
+			// dedup is a pure filesystem step — nothing to kill — so this is how
+			// a cancel requested mid-dedup actually surfaces to the phase.
+			ctx.active.cancelRequested = true
+		})
+
+		const outcome = await SidecarSubsPhase(false).run(ctx)
+
+		expect(outcome.kind).toBe('cancelled')
+		expect(muxSubtitlesIntoVideo).not.toHaveBeenCalled()
+	})
+
+	it('regression: pause during dedupeSubtitleFiles → returns paused, not completed (sidecar-only)', async () => {
+		const ctx = makeCtx(SUCCESS, {input: {...BASE_INPUT, job: {...BASE_JOB, subtitles: {...BASE_JOB.subtitles!, writeAuto: true}}}, subtitlePaths: ['/tmp/video.en.srt']})
+		vi.mocked(dedupeSubtitleFiles).mockImplementationOnce(async () => {
+			ctx.active.pauseRequested = true
+		})
+
+		const outcome = await SidecarSubsPhase(false).run(ctx)
+
+		expect(outcome.kind).toBe('paused')
+	})
+
 	it('embedAfter=false → muxSubtitlesIntoVideo not called', async () => {
 		await SidecarSubsPhase(false).run(makeCtx(SUCCESS))
 		expect(muxSubtitlesIntoVideo).not.toHaveBeenCalled()

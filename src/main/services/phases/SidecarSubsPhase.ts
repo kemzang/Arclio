@@ -88,6 +88,17 @@ export function SidecarSubsPhase(embedAfter: boolean): Phase {
 				await dedupeSubtitleFiles(active.subtitlePaths, preparedJob.extractor, job.id, () => active.cancelRequested)
 			}
 
+			// dedupeSubtitleFiles is a pure filesystem step — no process to kill,
+			// so pause()/cancelOne() cannot interrupt it. Without this recheck the
+			// sidecar (non-embed) path fell straight through to `completed` even
+			// when the user paused/cancelled while it was running: the queue item
+			// had already transitioned to paused-active/cancelled (and, for
+			// cancel, cleared lastJobId), so the eventual `done` status landed on
+			// no matching item and was silently dropped — while the file was kept
+			// and RecentJobsStore/analytics still recorded a completed job.
+			if (active.pauseRequested) return {kind: 'paused'}
+			if (active.cancelRequested) return {kind: 'cancelled'}
+
 			if (embedAfter) {
 				const muxOk = await runEmbedMux(ctx)
 				if (active.pauseRequested) return {kind: 'paused'}
