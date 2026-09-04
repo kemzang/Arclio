@@ -9,7 +9,7 @@ import {createAppError} from '@main/utils/errorFactory.js'
 import {fail, ok, type Result} from '@shared/result.js'
 import {STATUS_KEY, type QueueArtifactKind} from '@shared/schemas.js'
 import {MAX_CONCURRENT_DOWNLOADS} from '@shared/constants.js'
-import type {CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOutput, QueueArtifactEvent, QueueResumeContext, RecentJob, StartDownloadInput, StartDownloadOutput, StatusEvent, StatusKey} from '@shared/types.js'
+import type {CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOutput, QueueArtifactEvent, QueueResumeContext, QueueTempDirEvent, RecentJob, StartDownloadInput, StartDownloadOutput, StatusEvent, StatusKey} from '@shared/types.js'
 import type {RecentJobsStore} from '@main/stores/RecentJobsStore.js'
 import {YtDlp} from './YtDlp.js'
 import {AsyncStack} from './phases/index.js'
@@ -175,7 +175,8 @@ export class DownloadService extends EventEmitter {
 						logger.warn('disposable threw during drain', {jobId: active.job.id, message: err instanceof Error ? err.message : String(err)})
 					}
 				}),
-			safeConsume: text => this.safeConsume(active, text)
+			safeConsume: text => this.safeConsume(active, text),
+			reportTempDir: tempDir => this.emit('tempdir', {jobId: job.id, tempDir} satisfies QueueTempDirEvent)
 		}
 		const outcome = await new PhaseExecutor().run(ctx, phasesFor(input))
 		await this.handleOutcome(active, outcome)

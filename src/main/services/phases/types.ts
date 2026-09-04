@@ -86,4 +86,8 @@ export interface PhaseContext {
 	emitStatus(stage: StatusEvent['stage'], statusKey: StatusKey, params?: Record<string, string | number>, error?: LocalizedError, resumeContext?: QueueResumeContext): void
 	register(disposable: Disposable): void
 	safeConsume(text: string): void
+	// Reports the job's working tempDir as soon as a phase creates/resolves
+	// it, so QueueService can persist it on the QueueItem while still running
+	// (see QueueTempDirEvent for why this matters across a crash).
+	reportTempDir(tempDir: string): void
 }

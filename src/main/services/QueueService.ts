@@ -27,7 +27,7 @@ import {ProgressFormatter} from '@shared/progressFormat.js'
 import {ProgressNormalizer} from '@shared/progressNormalizer.js'
 import {moveQueueArtifactPath, queueArtifactFromPath, upsertQueueArtifact} from '@shared/queueArtifacts.js'
 import {INTER_JOB_SLEEP_MS, MAX_CONCURRENT_DOWNLOADS, NORMAL_LANE_CAP} from '@shared/constants.js'
-import type {ProgressEvent, QueueArtifactEvent, QueueItem, QueueOutputTargetChangeResult, QueueSelectionAction, QueueSelectionCommandResult, StatusEvent} from '@shared/types.js'
+import type {ProgressEvent, QueueArtifactEvent, QueueItem, QueueOutputTargetChangeResult, QueueSelectionAction, QueueSelectionCommandResult, QueueTempDirEvent, StatusEvent} from '@shared/types.js'
 import type {QueueStore} from '@main/stores/QueueStore.js'
 import type {PlaylistManifestStore} from '@main/stores/PlaylistManifestStore.js'
 import type {PlaylistManifest} from '@shared/playlistManifest.js'
@@ -98,6 +98,7 @@ export class QueueService extends EventEmitter {
 		this.downloadService.on('status', (event: StatusEvent) => this.consumeStatusEvent(event))
 		this.downloadService.on('progress', (event: ProgressEvent) => this.consumeProgressEvent(event))
 		this.downloadService.on('artifact', (event: QueueArtifactEvent) => this.consumeArtifactEvent(event))
+		this.downloadService.on('tempdir', (event: QueueTempDirEvent) => this.consumeTempDirEvent(event))
 	}
 
 	async init(): Promise<void> {
@@ -517,6 +518,19 @@ export class QueueService extends EventEmitter {
 			return {...prev, artifacts: upsertQueueArtifact(moveQueueArtifactPath(prev.artifacts, event.fromPath, event.path), artifact)}
 		}
 		this.commit({kind: 'patch', itemId: item.id, reason: `artifact:${event.kind}`, patcher})
+	}
+
+	// Persists the running job's working tempDir onto its QueueItem as soon as
+	// a phase creates it — not just at pause time. Without this, queue.json
+	// never reflects a live tempDir while downloading: a crash mid-download
+	// restarts the item from scratch next launch and orphans the already
+	// on-disk .arclio-temp/<jobId> directory. Guarded to `running` only so a
+	// stale/late event can't resurrect a tempDir on an item that has since
+	// moved to a terminal or paused state.
+	consumeTempDirEvent(event: QueueTempDirEvent): void {
+		const item = this.findByJobId(event.jobId)
+		if (!item || item.status !== QUEUE_STATUS.running) return
+		this.commit({kind: 'patch', itemId: item.id, reason: 'tempdir', patcher: prev => ({...prev, tempDir: event.tempDir})})
 	}
 
 	private findArtifactTargetByJobId(jobId: string): QueueItem | undefined {

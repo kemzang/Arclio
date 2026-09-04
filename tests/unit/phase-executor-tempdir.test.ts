@@ -33,7 +33,8 @@ function makeCtx(active: ActiveDownload): PhaseContext {
 			}),
 		ytDlp: {} as never,
 		emitStatus: vi.fn(),
-		safeConsume: vi.fn()
+		safeConsume: vi.fn(),
+		reportTempDir: vi.fn()
 	}
 }
 

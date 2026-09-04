@@ -421,6 +421,17 @@ export interface QueueArtifactEvent {
 	internal?: boolean
 }
 
+// Emitted once a running job's phase has created (or reused) its working
+// tempDir on disk, so QueueService can persist it onto the QueueItem while
+// the job is still running — not just at pause time. Without this, a crash
+// mid-download leaves queue.json with no tempDir reference: the item
+// restarts from scratch on the next launch and the already-written
+// .arclio-temp/<jobId> directory is orphaned (nothing points to it anymore).
+export interface QueueTempDirEvent {
+	jobId: string
+	tempDir: string
+}
+
 export const DEPENDENCY_IDS = ['yt-dlp', 'ffmpeg', 'ffprobe'] as const
 export type DependencyId = (typeof DEPENDENCY_IDS)[number]
 

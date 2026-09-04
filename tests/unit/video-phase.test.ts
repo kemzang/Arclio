@@ -46,7 +46,7 @@ function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload
 		})
 	})
 
-	const ctx: PhaseContext = {active: makeActive(activeOverrides), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock, ffmpegPath: '/fake/ffmpeg'} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+	const ctx: PhaseContext = {active: makeActive(activeOverrides), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock, ffmpegPath: '/fake/ffmpeg'} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 	return Object.assign(ctx, {runMock})
 }
 
@@ -121,7 +121,7 @@ describe('VideoPhase(embed=false)', () => {
 	it('pre-media info-json failure retries once without loadInfoJsonPath', async () => {
 		const runMock = vi.fn().mockResolvedValueOnce(NETWORK_ERROR).mockResolvedValueOnce(SUCCESS)
 		const active = makeActive({input: {...BASE_INPUT, probeInfoJsonPath: '/cache/stale.info.json'}})
-		const ctx: PhaseContext = {active, signal: active.signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active, signal: active.signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		const outcome = await VideoPhase(false).run(ctx)
 
@@ -137,7 +137,7 @@ describe('VideoPhase(embed=false)', () => {
 			return NETWORK_ERROR
 		})
 		const active = makeActive({input: {...BASE_INPUT, probeInfoJsonPath: '/cache/stale.info.json'}, tempDir: '/tmp/arclio-resume-info-json'})
-		const ctx: PhaseContext = {active, signal: active.signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active, signal: active.signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		const outcome = await VideoPhase(false).run(ctx)
 
@@ -335,7 +335,7 @@ describe('VideoPhase — cancel / pause', () => {
 		const runMock = vi.fn().mockImplementation((_req, _signal) => {
 			return Promise.resolve(SUCCESS)
 		})
-		const ctx: PhaseContext = {active: makeActive({cancelRequested: false}), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active: makeActive({cancelRequested: false}), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 		// Set cancelRequested during the run
 		runMock.mockImplementationOnce(async () => {
 			ctx.active.cancelRequested = true
@@ -348,7 +348,7 @@ describe('VideoPhase — cancel / pause', () => {
 
 	it('pauseRequested after run → returns paused', async () => {
 		const runMock = vi.fn().mockImplementation(async () => SUCCESS)
-		const ctx: PhaseContext = {active: makeActive({pauseRequested: false}), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active: makeActive({pauseRequested: false}), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 		runMock.mockImplementationOnce(async () => {
 			ctx.active.pauseRequested = true
 			return SUCCESS
@@ -377,7 +377,7 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 		const runMock = vi.fn().mockResolvedValue(runResult)
 		const realController = new AbortController()
 		const active: ActiveDownload = {job, input, controller: realController, signal: realController.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: new AsyncStack(), ...activeOverrides}
-		const ctx: PhaseContext = {active, signal: realController.signal, register: disposable => active.disposables.defer(disposable), ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active, signal: realController.signal, register: disposable => active.disposables.defer(disposable), ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 		return Object.assign(ctx, {runMock})
 	}
 
@@ -392,6 +392,10 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 
 		await expect(access(stalePart)).rejects.toThrow()
 		expect(ctx.active.tempDir).toBe(expectedTempDir)
+		// Regression: the queue must learn the tempDir while the job is still
+		// running (not only at pause time), so a crash mid-download can still
+		// resume from .part files next launch instead of orphaning this dir.
+		expect(ctx.reportTempDir).toHaveBeenCalledWith(expectedTempDir)
 	})
 
 	it('resume (active.tempDir already set) → preserves .part file in temp dir', async () => {
@@ -490,7 +494,7 @@ describe('VideoPhase — signal callbacks', () => {
 			signal?.onMinting?.(1)
 			return SUCCESS
 		})
-		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		await VideoPhase(false).run(ctx)
 
@@ -500,7 +504,7 @@ describe('VideoPhase — signal callbacks', () => {
 
 	it('fallback attempt → does not emit any status (onMinting never fires for fallback)', async () => {
 		const runMock = vi.fn().mockImplementation(async (_req, _signal) => SUCCESS)
-		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		await VideoPhase(false).run(ctx)
 
@@ -515,7 +519,7 @@ describe('VideoPhase — signal callbacks', () => {
 		})
 		const active = makeActive()
 		const registerSpy = vi.fn((d: () => void | Promise<void>) => active.disposables.defer(d))
-		const ctx: PhaseContext = {active, signal: active.signal, register: registerSpy, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active, signal: active.signal, register: registerSpy, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		await VideoPhase(false).run(ctx)
 
@@ -531,7 +535,7 @@ describe('VideoPhase — signal callbacks', () => {
 			signal?.onStderr?.('stderr line\n')
 			return SUCCESS
 		})
-		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		await VideoPhase(false).run(ctx)
 

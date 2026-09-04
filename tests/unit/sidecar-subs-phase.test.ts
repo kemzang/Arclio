@@ -44,7 +44,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
 function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
 	const runMock = vi.fn().mockResolvedValue(runResult)
 	const active = makeActive(activeOverrides)
-	return {active, signal: active.signal, register: d => active.disposables.defer(d), ytDlp: {run: runMock, ffmpegPath: '/fake/ffmpeg'} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+	return {active, signal: active.signal, register: d => active.disposables.defer(d), ytDlp: {run: runMock, ffmpegPath: '/fake/ffmpeg'} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 }
 
 const SUCCESS: YtDlpResult = {kind: 'success', stdout: '', stderr: '', usedExtractorFallback: false}
@@ -134,7 +134,7 @@ describe('SidecarSubsPhase(embedAfter=false)', () => {
 			active.pauseRequested = true
 			return EXIT_ERROR // SIGTERM makes yt-dlp exit non-zero
 		})
-		const ctx: PhaseContext = {active, signal: active.signal, register: d => active.disposables.defer(d), ytDlp: {run: runMock, ffmpegPath: '/fake/ffmpeg'} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active, signal: active.signal, register: d => active.disposables.defer(d), ytDlp: {run: runMock, ffmpegPath: '/fake/ffmpeg'} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 		const outcome = await SidecarSubsPhase(false).run(ctx)
 		expect(outcome.kind).toBe('paused')
 	})
@@ -197,7 +197,7 @@ describe('SidecarSubsPhase(embedAfter=true)', () => {
 			active.pauseRequested = true
 			return {ok: true, outputPath: '/tmp/video.mkv'}
 		})
-		const ctx: PhaseContext = {active, signal: active.signal, register: d => active.disposables.defer(d), ytDlp: {run: runMock, ffmpegPath: '/fake/ffmpeg'} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active, signal: active.signal, register: d => active.disposables.defer(d), ytDlp: {run: runMock, ffmpegPath: '/fake/ffmpeg'} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 		const outcome = await SidecarSubsPhase(true).run(ctx)
 		expect(outcome.kind).toBe('paused')
 	})

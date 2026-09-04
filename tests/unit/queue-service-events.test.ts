@@ -362,6 +362,43 @@ describe('QueueService — output target changes', () => {
 	})
 })
 
+describe('QueueService — tempDir persistence while running', () => {
+	it('persists the tempDir onto a running item as soon as the phase reports it', () => {
+		const {qs} = makeService()
+		qs.add([makeItem({id: 'running-a', status: 'running', lastJobId: 'job-a'})])
+
+		qs.consumeTempDirEvent({jobId: 'job-a', tempDir: '/downloads/.arclio-temp/job-a'})
+
+		expect(qs.snapshot()[0].tempDir).toBe('/downloads/.arclio-temp/job-a')
+	})
+
+	it('ignores a tempdir event for an item that already left the running state', () => {
+		const {qs} = makeService()
+		qs.add([makeItem({id: 'done-a', status: 'done', lastJobId: undefined, finishedAt: '2026-06-18T10:00:00.000Z'})])
+
+		// No item has lastJobId 'job-a' (findByJobId misses) — simulates a late
+		// event arriving after the item already transitioned away.
+		qs.consumeTempDirEvent({jobId: 'job-a', tempDir: '/downloads/.arclio-temp/job-a'})
+
+		expect(qs.snapshot()[0].tempDir).toBeUndefined()
+	})
+
+	it('regression: a crash-demoted snapshot keeps the tempDir so the next boot resumes instead of restarting fresh', () => {
+		const {qs} = makeService()
+		qs.add([makeItem({id: 'running-b', status: 'running', lastJobId: 'job-b'})])
+		qs.consumeTempDirEvent({jobId: 'job-b', tempDir: '/downloads/.arclio-temp/job-b'})
+
+		// Simulates what QueueStore.save() does on every persist(): a running
+		// item is demoted to pending for storage (no live process survives a
+		// restart). Before this fix, tempDir was never set while running, so
+		// this demoted snapshot lost the resume path entirely.
+		const [item] = qs.snapshot()
+		const persisted = QueueResumeLifecycle.prepareItemForPersistence(item)
+
+		expect(persisted).toMatchObject({status: 'pending', lastJobId: undefined, tempDir: '/downloads/.arclio-temp/job-b'})
+	})
+})
+
 describe('resume — cross-restart path', () => {
 	it('passes tempDir from QueueItem to downloadService.start() when no in-memory paused job exists', async () => {
 		const {qs, ds} = makeService()

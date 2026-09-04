@@ -32,7 +32,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
 }
 
 function makeCtx(activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
-	return {active: makeActive(activeOverrides), signal: new AbortController().signal, register: () => undefined, ytDlp: {} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+	return {active: makeActive(activeOverrides), signal: new AbortController().signal, register: () => undefined, ytDlp: {} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 }
 
 function stubPhase(outcome: PhaseOutcome): Phase {

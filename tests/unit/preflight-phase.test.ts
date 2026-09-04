@@ -22,7 +22,7 @@ function makeCtx(outputDir = '/output'): PhaseContext {
 	const job: DownloadJob = {id: 'test-job-id', url: 'https://www.youtube.com/watch?v=test', outputDir, status: 'running', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()}
 	const controller = new AbortController()
 	const active: ActiveDownload = {job, input, controller, signal: controller.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: new AsyncStack()}
-	return {active, signal: active.signal, ytDlp: {} as never, emitStatus: vi.fn(), register: () => undefined, safeConsume: vi.fn()}
+	return {active, signal: active.signal, ytDlp: {} as never, emitStatus: vi.fn(), register: () => undefined, safeConsume: vi.fn(), reportTempDir: vi.fn()}
 }
 
 describe('PreflightPhase', () => {

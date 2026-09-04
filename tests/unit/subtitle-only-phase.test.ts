@@ -40,7 +40,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
 
 function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
 	const runMock = vi.fn().mockResolvedValue(runResult)
-	return {active: makeActive(activeOverrides), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock, ffmpegPath: null} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+	return {active: makeActive(activeOverrides), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock, ffmpegPath: null} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 }
 
 const SUCCESS: YtDlpResult = {kind: 'success', stdout: '', stderr: '', usedExtractorFallback: false}
@@ -112,14 +112,14 @@ describe('SubtitleOnlyPhase', () => {
 			active.pauseRequested = true
 			return EXIT_ERROR // SIGTERM makes yt-dlp exit non-zero
 		})
-		const ctx: PhaseContext = {active, signal: active.signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active, signal: active.signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		const outcome = await SubtitleOnlyPhase.run(ctx)
 		expect(outcome.kind).toBe('paused')
 	})
 
 	it('cancelled after run → returns cancelled', async () => {
-		const ctx: PhaseContext = {active: makeActive({cancelRequested: false}), signal: new AbortController().signal, register: () => undefined, ytDlp: {} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active: makeActive({cancelRequested: false}), signal: new AbortController().signal, register: () => undefined, ytDlp: {} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 		const runMock = vi.fn().mockImplementationOnce(async () => {
 			ctx.active.cancelRequested = true
 			return SUCCESS
@@ -136,7 +136,7 @@ describe('SubtitleOnlyPhase', () => {
 			signal?.onMinting?.(1)
 			return SUCCESS
 		})
-		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		await SubtitleOnlyPhase.run(ctx)
 
@@ -146,7 +146,7 @@ describe('SubtitleOnlyPhase', () => {
 
 	it('no onMinting call → no token status emitted', async () => {
 		const runMock = vi.fn().mockImplementation(async (_req, _signal) => SUCCESS)
-		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active: makeActive(), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		await SubtitleOnlyPhase.run(ctx)
 
@@ -161,7 +161,7 @@ describe('SubtitleOnlyPhase', () => {
 		})
 		const active = makeActive()
 		const registerSpy = vi.fn((d: () => void | Promise<void>) => active.disposables.defer(d))
-		const ctx: PhaseContext = {active, signal: active.signal, register: registerSpy, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn()}
+		const ctx: PhaseContext = {active, signal: active.signal, register: registerSpy, ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 
 		await SubtitleOnlyPhase.run(ctx)
 

@@ -64,6 +64,7 @@ export function VideoPhase(embed: boolean): Phase {
 			const tempDir = await setupTempDir(job.outputDir, job.id, isResume, active.tempDir)
 			if (tempDir) {
 				active.tempDir = tempDir
+				ctx.reportTempDir(tempDir)
 				// Disposables drain on finalize for completed / soft-failed /
 				// hard-failed / cancelled outcomes; on `paused`, JobLifecycle skips
 				// the drain so resume can pick up the .part files.
