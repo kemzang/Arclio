@@ -155,3 +155,73 @@ describe('pre-spawn cancel emits status event', () => {
 		expect(cancelEvent).toBeDefined()
 	})
 })
+
+describe('pause() SIGKILL escalation', () => {
+	it('escalates to SIGKILL if the process is still alive after the grace period', async () => {
+		const stubs = makeStubs()
+		const fakeProc = new FakeProcess() // never fires close — simulates SIGTERM being ignored/slow
+		vi.mocked(spawnYtDlp).mockReturnValue(fakeProc as never)
+
+		// Tiny escalation window so the test doesn't need fake timers.
+		const svc = new DownloadService(stubs.ytDlp, stubs.recentJobsStore as never, false, 4, 20)
+		const result = await svc.start({url: URL, outputDir: '/tmp', job: DEFAULT_JOB})
+		expect(result.ok).toBe(true)
+		if (!result.ok) return
+		await vi.waitFor(() => expect((svc as any).activeJobs.get(result.data.job.id)?.ytDlpProcess).toBe(fakeProc))
+
+		await svc.pause(result.data.job.id)
+		expect(fakeProc.kill).toHaveBeenCalledWith('SIGTERM')
+		expect(fakeProc.kill).not.toHaveBeenCalledWith('SIGKILL')
+
+		await vi.waitFor(() => expect(fakeProc.kill).toHaveBeenCalledWith('SIGKILL'))
+	})
+
+	it('does not escalate once the process already exited before the grace period', async () => {
+		const stubs = makeStubs()
+		const fakeProc = new FakeProcess()
+		vi.mocked(spawnYtDlp).mockReturnValue(fakeProc as never)
+
+		const svc = new DownloadService(stubs.ytDlp, stubs.recentJobsStore as never, false, 4, 20)
+		const result = await svc.start({url: URL, outputDir: '/tmp', job: DEFAULT_JOB})
+		expect(result.ok).toBe(true)
+		if (!result.ok) return
+		await vi.waitFor(() => expect((svc as any).activeJobs.get(result.data.job.id)?.ytDlpProcess).toBe(fakeProc))
+
+		await svc.pause(result.data.job.id)
+		// Process actually honored SIGTERM — moves the job out of activeJobs.
+		fakeProc.emit('close', 0, null)
+		await vi.waitFor(() => expect(svc.activeCount).toBe(0))
+
+		fakeProc.kill.mockClear()
+		await new Promise(resolve => setTimeout(resolve, 40)) // past the 20ms grace period
+		expect(fakeProc.kill).not.toHaveBeenCalled()
+	})
+})
+
+describe('waitUntilIdle', () => {
+	it('resolves immediately when no job is active', async () => {
+		const stubs = makeStubs()
+		const svc = new DownloadService(stubs.ytDlp, stubs.recentJobsStore as never)
+
+		await expect(svc.waitUntilIdle(50)).resolves.toBeUndefined()
+	})
+
+	it('resolves once the active job settles, without waiting the full timeout', async () => {
+		const stubs = makeStubs()
+		const fakeProc = new FakeProcess()
+		vi.mocked(spawnYtDlp).mockReturnValue(fakeProc as never)
+
+		const svc = new DownloadService(stubs.ytDlp, stubs.recentJobsStore as never)
+		const result = await svc.start({url: URL, outputDir: '/tmp', job: DEFAULT_JOB})
+		expect(result.ok).toBe(true)
+		if (!result.ok) return
+		await vi.waitFor(() => expect(svc.activeCount).toBe(1))
+
+		setTimeout(() => fakeProc.emit('close', 0, null), 10)
+
+		const start = Date.now()
+		await svc.waitUntilIdle(5000)
+		expect(Date.now() - start).toBeLessThan(1000)
+		expect(svc.activeCount).toBe(0)
+	})
+})

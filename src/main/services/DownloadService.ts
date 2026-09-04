@@ -31,6 +31,14 @@ const logger = log.scope('downloads')
 // queue's priority-lane bypass isn't rejected here. Tunable for tests.
 const DEFAULT_MAX_CONCURRENT_DOWNLOADS = MAX_CONCURRENT_DOWNLOADS
 
+// Grace period between sending SIGTERM for a pause and escalating to SIGKILL
+// if the process is still resident. pause() itself never awaits process
+// death (returns as soon as the signal is sent), so without this escalation
+// a process that ignores/is slow on SIGTERM can outlive the pause entirely —
+// including surviving app quit if before-quit's wait window is bounded by
+// this same constant (see waitUntilIdle).
+const DEFAULT_PAUSE_KILL_ESCALATION_MS = 5000
+
 export class DownloadService extends EventEmitter {
 	private activeJobs = new Map<string, ActiveDownload>()
 	private pausedJobs = new Map<string, PausedDownload>()
@@ -42,7 +50,8 @@ export class DownloadService extends EventEmitter {
 		private readonly ytDlp: YtDlp,
 		private readonly recentJobsStore: RecentJobsStore,
 		private readonly mockMode = false,
-		maxConcurrent: number = DEFAULT_MAX_CONCURRENT_DOWNLOADS
+		maxConcurrent: number = DEFAULT_MAX_CONCURRENT_DOWNLOADS,
+		private readonly pauseKillEscalationMs: number = DEFAULT_PAUSE_KILL_ESCALATION_MS
 	) {
 		super()
 		this.maxConcurrent = Math.max(1, maxConcurrent)
@@ -295,7 +304,40 @@ export class DownloadService extends EventEmitter {
 		// mux completes after the user thinks they paused.
 		killActiveProcesses(active, 'SIGTERM')
 		logger.info('SIGTERM sent to active processes', {jobId: active.job.id})
+		this.armPauseKillEscalation(active)
 		return ok({paused: true, tempDir: active.tempDir, jobId: active.job.id})
+	}
+
+	// SIGTERM has no guaranteed grace period on the receiving process — yt-dlp
+	// or ffmpeg could be blocked on I/O, ignore the signal, or just be slow.
+	// pause() doesn't (and shouldn't) await process death, so without this
+	// escalation a stuck process becomes a zombie the UI believes is "paused".
+	// `active.pauseRequested` stays true, so the phase still resolves the run
+	// as a normal pause (not a failure) once SIGKILL finally lands — resume
+	// context and tempDir are unaffected.
+	private armPauseKillEscalation(active: ActiveDownload): void {
+		const jobId = active.job.id
+		setTimeout(() => {
+			if (this.activeJobs.get(jobId) !== active) return // already settled (paused/cancelled/finalized)
+			if (!active.ytDlpProcess && !active.ffmpegProcess) return
+			logger.warn('Pause did not exit within grace period — escalating to SIGKILL', {jobId})
+			killActiveProcesses(active, 'SIGKILL')
+		}, this.pauseKillEscalationMs).unref()
+	}
+
+	// Bounded wait for every in-flight job (running, pausing, or cancelling)
+	// to actually leave activeJobs. Used at app quit time so Electron doesn't
+	// exit while a SIGTERM'd process is still alive — armPauseKillEscalation
+	// guarantees this resolves within pauseKillEscalationMs even if a process
+	// never responds to signals.
+	async waitUntilIdle(timeoutMs = this.pauseKillEscalationMs + 1000): Promise<void> {
+		const start = Date.now()
+		while (this.activeJobs.size > 0 && Date.now() - start < timeoutMs) {
+			await new Promise(resolve => setTimeout(resolve, 100))
+		}
+		if (this.activeJobs.size > 0) {
+			logger.warn('waitUntilIdle timed out with jobs still active', {activeCount: this.activeJobs.size})
+		}
 	}
 
 	private async cancelOne(active: ActiveDownload): Promise<Result<CancelDownloadOutput>> {

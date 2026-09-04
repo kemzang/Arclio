@@ -427,33 +427,39 @@ if (hasSingleInstanceLock) {
 			tray?.destroy()
 			tray = null
 			clipboardWatcher.dispose()
-			if (downloadService.runningJobCount === 0 && !queueService.hasPendingFileMoves()) {
+			// activeCount (not runningJobCount) is the correct shutdown gate.
+			// runningJobCount excludes jobs mid-pause/mid-cancel (pauseRequested
+			// or cancelRequested already true) even though their OS process may
+			// not have died yet — quitting straight through that window used to
+			// leave a SIGTERM'd yt-dlp/ffmpeg process orphaned (detached: true
+			// means Electron exiting does not reap it).
+			if (downloadService.activeCount === 0 && !queueService.hasPendingFileMoves()) {
 				tokenService.dispose()
 				log.info('App shutting down')
 				return
 			}
 			event.preventDefault()
-			if (downloadService.runningJobCount === 0) {
-				void waitForQueueFileMovesBeforeExit({
+			const logInfo = (message: string, meta?: Record<string, unknown>): void => {
+				if (meta) log.info(message, meta)
+				else log.info(message)
+			}
+			if (downloadService.runningJobCount > 0) {
+				void cancelQueueBeforeExit({
 					queueService,
 					tokenService,
-					logInfo: (message, meta) => {
-						if (meta) log.info(message, meta)
-						else log.info(message)
-					},
-					exit: code => app.exit(code)
+					logInfo,
+					exit: code => app.exit(code) // must use exit(), not quit() — quit() re-emits before-quit causing infinite loop
 				})
 				return
 			}
-			void cancelQueueBeforeExit({
-				queueService,
-				tokenService,
-				logInfo: (message, meta) => {
-					if (meta) log.info(message, meta)
-					else log.info(message)
-				},
-				exit: code => app.exit(code) // must use exit(), not quit() — quit() re-emits before-quit causing infinite loop
-			})
+			// Every remaining active-job entry is already pausing/cancelling on
+			// its own (e.g. "Pause all, then quit"). Wait for the process to
+			// actually exit instead of force-cancelling here — cancelling would
+			// silently turn "pause and quit" into "cancel and quit" and wipe
+			// resumability whenever the earlier SIGTERM hasn't been honored yet.
+			// DownloadService's own pause-kill escalation bounds this wait even
+			// if a process never responds to signals.
+			void downloadService.waitUntilIdle().then(() => waitForQueueFileMovesBeforeExit({queueService, tokenService, logInfo, exit: code => app.exit(code)}))
 		})
 	})
 }
