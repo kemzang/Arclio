@@ -160,4 +160,56 @@ describe('RuntimeBinaryIndexService', () => {
 
 		await expect(svc.candidatesFor('yt-dlp')).resolves.toEqual([entry])
 	})
+
+	it('regression: retries the remote fetch on the next call after an earlier fetch failed (network recovery)', async () => {
+		const keys = keyPair()
+		const index: RuntimeBinaryIndex = {schemaVersion: 1, generatedAt: '2026-06-12T00:00:00.000Z', entries: [entry]}
+		const payload = signed(index, keys.privateKeyPem)
+		const bundled: RuntimeBinaryIndex = {schemaVersion: 1, generatedAt: '2026-06-12T00:00:00.000Z', entries: [{...entry, version: 'bundled', sha256: 'b'.repeat(64)}]}
+		let online = false
+		const fetchText = vi.fn(async (url: string) => {
+			if (!online) throw new Error('offline')
+			return url.endsWith('.sig') ? payload.signature : payload.raw
+		})
+		const svc = new RuntimeBinaryIndexService(await tempDir(), {publicKeyPem: keys.publicKeyPem, remoteIndexUrl: 'https://updates.example/runtime-index-v1.json', remoteSignatureUrl: 'https://updates.example/runtime-index-v1.sig', bundledIndex: bundled, fetchText})
+
+		// First call: offline, falls back to bundled entries.
+		await expect(svc.candidatesFor('yt-dlp')).resolves.toEqual(bundled.entries)
+		expect(fetchText).toHaveBeenCalledTimes(2) // index + signature, both attempted
+
+		// Network recovers before the next job attempt. The bundled index is
+		// still appended as a fallback candidate (existing behavior) — what
+		// this regression actually locks down is fetchText being called again
+		// at all instead of reusing the earlier failed resolution.
+		online = true
+		await expect(svc.candidatesFor('yt-dlp')).resolves.toEqual([entry, ...bundled.entries])
+		expect(fetchText).toHaveBeenCalledTimes(4) // retried, not reused from the failed cache
+	})
+
+	it('does not retry the remote fetch on the next call after a successful resolution (memoized for the session)', async () => {
+		const keys = keyPair()
+		const index: RuntimeBinaryIndex = {schemaVersion: 1, generatedAt: '2026-06-12T00:00:00.000Z', entries: [entry]}
+		const payload = signed(index, keys.privateKeyPem)
+		const fetchText = vi.fn(async (url: string) => (url.endsWith('.sig') ? payload.signature : payload.raw))
+		const svc = new RuntimeBinaryIndexService(await tempDir(), {publicKeyPem: keys.publicKeyPem, remoteIndexUrl: 'https://updates.example/runtime-index-v1.json', remoteSignatureUrl: 'https://updates.example/runtime-index-v1.sig', bundledIndex: {...index, entries: [] as RuntimeBinaryManifestEntry[]}, fetchText})
+
+		await expect(svc.candidatesFor('yt-dlp')).resolves.toEqual([entry])
+		await expect(svc.candidatesFor('yt-dlp')).resolves.toEqual([entry])
+
+		expect(fetchText).toHaveBeenCalledTimes(2)
+	})
+
+	it('invalidate() forces the next call to re-fetch even after a successful resolution', async () => {
+		const keys = keyPair()
+		const index: RuntimeBinaryIndex = {schemaVersion: 1, generatedAt: '2026-06-12T00:00:00.000Z', entries: [entry]}
+		const payload = signed(index, keys.privateKeyPem)
+		const fetchText = vi.fn(async (url: string) => (url.endsWith('.sig') ? payload.signature : payload.raw))
+		const svc = new RuntimeBinaryIndexService(await tempDir(), {publicKeyPem: keys.publicKeyPem, remoteIndexUrl: 'https://updates.example/runtime-index-v1.json', remoteSignatureUrl: 'https://updates.example/runtime-index-v1.sig', bundledIndex: {...index, entries: [] as RuntimeBinaryManifestEntry[]}, fetchText})
+
+		await svc.candidatesFor('yt-dlp')
+		svc.invalidate()
+		await svc.candidatesFor('yt-dlp')
+
+		expect(fetchText).toHaveBeenCalledTimes(4)
+	})
 })

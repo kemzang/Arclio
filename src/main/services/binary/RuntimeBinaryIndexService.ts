@@ -27,6 +27,10 @@ interface LoadedIndexes {
 
 export interface RuntimeBinaryIndexProvider {
 	candidatesFor(id: RuntimeBinaryId, signal?: AbortSignal): Promise<RuntimeBinaryManifestEntry[]>
+	// Drops any memoized resolution so the next candidatesFor() call re-fetches
+	// instead of reusing a stale in-memory result. Optional so lightweight test
+	// doubles that only implement candidatesFor keep compiling.
+	invalidate?(): void
 }
 
 export interface RuntimeBinaryIndexServiceOptions {
@@ -128,8 +132,25 @@ export class RuntimeBinaryIndexService implements RuntimeBinaryIndexProvider {
 	}
 
 	private load(signal?: AbortSignal): Promise<LoadedIndexes> {
-		this.loaded ??= this.loadFresh(signal)
+		this.loaded ??= this.loadFresh(signal).then(result => {
+			// A degraded fallback (remote unreachable at the time of this call)
+			// must not stick for the rest of the session — drop the memoized
+			// promise so the *next* candidatesFor() retries the remote fetch.
+			// Without this, going offline once during a session permanently
+			// pins yt-dlp resolution to last-known-good/bundled even after the
+			// network comes back, until the app is fully restarted.
+			if (result.source === 'last-known-good' || result.source === 'bundled') this.loaded = null
+			return result
+		})
 		return this.loaded
+	}
+
+	// Drops the memoized resolution outright — used by BinaryManager's
+	// invalidateResolved() when the user explicitly retries (force warmup),
+	// so a retry always re-fetches even if the last attempt happened to
+	// succeed from local/remote (e.g. user wants to pick up a newer index).
+	invalidate(): void {
+		this.loaded = null
 	}
 
 	private async loadFresh(signal?: AbortSignal): Promise<LoadedIndexes> {

@@ -135,6 +135,14 @@ export class BinaryManager {
 
 	private resolved: Partial<Record<DependencyId, string>> = {}
 
+	// Expected sha256/size for whichever resolved path came from a source with
+	// a cryptographic trust chain (managed download or managed cache) — the
+	// only sources this app can actually re-verify. Absent for
+	// override/envOverride/systemPath, which are trusted implicitly by design.
+	// Used by ensureYtDlp() to re-verify the on-disk file before reusing a
+	// cached resolution across job runs (see verifyManagedBinary).
+	private resolvedManifest: Partial<Record<DependencyId, {sha256: string; size: number}>> = {}
+
 	private lastDiagnostics: Partial<Record<DependencyId, DependencyDiagnostic>> = {}
 
 	constructor(userDataPath: string, options?: {retryDelays?: [number, number]; overridesProvider?: () => BinaryOverrides | undefined; runtimeBinaryIndex?: RuntimeBinaryIndexProvider; runtimeBinaryMaterializer?: RuntimeBinaryMaterializerPort}) {
@@ -159,7 +167,26 @@ export class BinaryManager {
 
 	invalidateResolved(): void {
 		this.resolved = {}
+		this.resolvedManifest = {}
 		this.lastDiagnostics = {}
+		this.runtimeBinaryIndex.invalidate?.()
+	}
+
+	// TOCTOU guard: re-hashes the on-disk file against the manifest that was
+	// trusted at resolution time. A managed binary is only ever probed for
+	// integrity once, at first resolution — without this, a file replaced on
+	// disk afterwards (tampering, corruption, a second process racing the
+	// cache) would keep being executed for the rest of the app session with
+	// no further check.
+	private async verifyManagedBinary(resolvedPath: string, manifest: {sha256: string; size: number}): Promise<boolean> {
+		try {
+			const stat = await fsPromises.lstat(resolvedPath)
+			if (!stat.isFile() || stat.size !== manifest.size) return false
+			const actualSha256 = await sha256ForFile(resolvedPath)
+			return actualSha256 === manifest.sha256
+		} catch {
+			return false
+		}
 	}
 
 	getYtDlpPath(): string {
@@ -282,7 +309,9 @@ export class BinaryManager {
 		opts.onStatus?.('downloadingBinary', {name: entry.id})
 		try {
 			const result = await this.runtimeBinaryMaterializer.materialize(entry, {cacheRoot: this.artifactCacheDir, onDownloadProgress: makeDownloadProgress(entry.id, source, onProgress), onExtracting: () => onProgress?.({binary: entry.id, phase: 'extracting', source}), signal})
-			return this.probeAndAccept(entry.id, source, result.executablePath, attempts, onProgress, signal)
+			const diag = await this.probeAndAccept(entry.id, source, result.executablePath, attempts, onProgress, signal)
+			if (diag) this.resolvedManifest[entry.id] = {sha256: entry.sha256, size: entry.size}
+			return diag
 		} catch (err) {
 			this.recordManagedFailure(entry.id, attempts, source, onProgress, err, Date.now() - startedAt)
 			return null
@@ -295,7 +324,10 @@ export class BinaryManager {
 			const source = this.sourceFromManagedCache(candidate.manifest, candidate.executablePath)
 			// react-doctor-disable-next-line react-doctor/async-await-in-loop -- managed cache candidates are probed newest-first
 			const diag = await this.probeAndAccept(id, source, candidate.executablePath, attempts, onProgress, signal)
-			if (diag) return diag
+			if (diag) {
+				this.resolvedManifest[id] = {sha256: candidate.manifest.sha256, size: candidate.manifest.size}
+				return diag
+			}
 		}
 		return null
 	}
@@ -353,7 +385,17 @@ export class BinaryManager {
 	}
 
 	async ensureYtDlp(onStatus?: StatusReporter, onDownloadProgress?: DownloadProgressCallback): Promise<string> {
-		if (this.resolved['yt-dlp']) return this.resolved['yt-dlp']
+		const cachedPath = this.resolved['yt-dlp']
+		if (cachedPath) {
+			const manifest = this.resolvedManifest['yt-dlp']
+			// No manifest to check (manualOverride/envOverride/systemPath) —
+			// those sources are trusted implicitly by design, nothing to re-hash.
+			if (!manifest) return cachedPath
+			if (await this.verifyManagedBinary(cachedPath, manifest)) return cachedPath
+			logger.warn('yt-dlp cached resolution failed re-verification — dropping it and re-resolving', {path: cachedPath})
+			delete this.resolved['yt-dlp']
+			delete this.resolvedManifest['yt-dlp']
+		}
 		const onProgress: ProgressEmitter | undefined = onDownloadProgress
 			? (event): void => {
 					if (event.phase === 'downloading' && typeof event.bytesDownloaded === 'number') {
