@@ -118,6 +118,51 @@ describe('TokenService.invalidateCache', () => {
 	})
 })
 
+describe('TokenService — concurrent access serialization', () => {
+	it('regression: two concurrent mintTokenForUrl calls do not call ensureReady/mintToken in parallel', async () => {
+		let inFlight = 0
+		let maxConcurrent = 0
+		const provider = makeProvider({
+			ensureReady: vi.fn().mockImplementation(async () => {
+				inFlight++
+				maxConcurrent = Math.max(maxConcurrent, inFlight)
+				await new Promise(resolve => setTimeout(resolve, 10))
+				inFlight--
+			})
+		})
+		const service = new TokenService(provider)
+
+		await Promise.all([service.mintTokenForUrl('https://youtube.com/watch?v=a'), service.mintTokenForUrl('https://youtube.com/watch?v=b')])
+
+		// Without serialization both calls enter ensureReady() at the same time
+		// (racing loadURL() on the one shared hidden window). Serialized, the
+		// second call also benefits from the cache the first one populated —
+		// so ensureReady only actually runs once.
+		expect(maxConcurrent).toBe(1)
+		expect(provider.ensureReady).toHaveBeenCalledOnce()
+	})
+
+	it('a call queued behind a fresh mint reuses the cache instead of minting again', async () => {
+		const provider = makeProvider()
+		const service = new TokenService(provider)
+
+		const [first, second] = await Promise.all([service.mintTokenForUrl('https://youtube.com/watch?v=a'), service.mintTokenForUrl('https://youtube.com/watch?v=b')])
+
+		expect(provider.mintToken).toHaveBeenCalledOnce()
+		expect(first.fromCache).toBe(false)
+		expect(second.fromCache).toBe(true)
+	})
+
+	it('a rejected call does not block the next queued call', async () => {
+		const provider = makeProvider()
+		vi.mocked(provider.ensureReady).mockRejectedValueOnce(new Error('boom'))
+		const service = new TokenService(provider)
+
+		await expect(service.mintTokenForUrl('https://youtube.com/watch?v=a')).rejects.toThrow('boom')
+		await expect(service.mintTokenForUrl('https://youtube.com/watch?v=b')).resolves.toMatchObject({token: 'token-xyz'})
+	})
+})
+
 describe('TokenService.dispose', () => {
 	it('clears cache and calls provider.dispose', async () => {
 		const provider = makeProvider()

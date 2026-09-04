@@ -7,10 +7,42 @@ const logger = log.scope('token')
 const CHROME_UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 ' + '(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
 const YOUTUBE_URL = 'https://www.youtube.com?themeRefresh=1'
 
+// did-finish-load/did-fail-load have no guaranteed grace period — a dead DNS
+// resolution or a firewall silently dropping packets fires neither event, so
+// without a bound this hung forever (and, transitively, so did the whole
+// warmup Promise.all and every download waiting on a token).
+const LOAD_TIMEOUT_MS = 30_000
+
 function delay(ms: number): Promise<void> {
 	return new Promise(resolve => {
 		setTimeout(resolve, ms)
 	})
+}
+
+function abortError(): Error {
+	return new Error('Aborted')
+}
+
+// Races `promise` against `signal` aborting and a hard timeout, cleaning up
+// after itself so an eventually-resolving promise doesn't leak a listener or
+// a pending timer past ensureReady() returning.
+async function withCancellation<T>(promise: Promise<T>, signal: AbortSignal | undefined, timeoutMs: number, timeoutMessage: string): Promise<T> {
+	if (signal?.aborted) throw abortError()
+	let onAbort: (() => void) | undefined
+	let timer: NodeJS.Timeout | undefined
+	const guard = new Promise<never>((_, reject) => {
+		timer = setTimeout(() => reject(new Error(timeoutMessage)), timeoutMs)
+		if (signal) {
+			onAbort = () => reject(abortError())
+			signal.addEventListener('abort', onAbort, {once: true})
+		}
+	})
+	try {
+		return await Promise.race([promise, guard])
+	} finally {
+		if (timer) clearTimeout(timer)
+		if (signal && onAbort) signal.removeEventListener('abort', onAbort)
+	}
 }
 
 export class HiddenWindowTokenProvider implements TokenProvider {
@@ -34,20 +66,21 @@ export class HiddenWindowTokenProvider implements TokenProvider {
 		return this.hiddenWindow
 	}
 
-	async ensureReady(): Promise<void> {
+	async ensureReady(signal?: AbortSignal): Promise<void> {
 		if (this.ready) return
 
 		const win = this.getWindow()
 
-		await new Promise<void>((resolve, reject) => {
+		const load = new Promise<void>((resolve, reject) => {
 			win.webContents.once('did-finish-load', () => resolve())
 			win.webContents.once('did-fail-load', (_, code, description) => {
 				reject(new Error(`YouTube failed to load: ${description} (${code})`))
 			})
 			void win.loadURL(YOUTUBE_URL, {userAgent: CHROME_UA})
 		})
+		await withCancellation(load, signal, LOAD_TIMEOUT_MS, `YouTube did not finish loading within ${LOAD_TIMEOUT_MS}ms`)
 
-		const found = await this.pollForWebPoClient(win, 20_000)
+		const found = await this.pollForWebPoClient(win, 20_000, signal)
 		if (!found) {
 			// YouTube renamed `bevasrs.wpc` (the obfuscated WebPoClient factory) —
 			// this is the canary for "the scrape just broke." Logging it here means
@@ -139,7 +172,7 @@ export class HiddenWindowTokenProvider implements TokenProvider {
 		this.releaseWindow()
 	}
 
-	private async pollForWebPoClient(win: BrowserWindow, timeoutMs: number): Promise<boolean> {
+	private async pollForWebPoClient(win: BrowserWindow, timeoutMs: number, signal?: AbortSignal): Promise<boolean> {
 		const script = `(function(){
       try {
         const keys = new Set([...Object.keys(window.top), ...Object.getOwnPropertyNames(window.top)]);
@@ -161,6 +194,7 @@ export class HiddenWindowTokenProvider implements TokenProvider {
 
 		const deadline = Date.now() + timeoutMs
 		while (Date.now() < deadline) {
+			if (signal?.aborted) throw abortError()
 			// react-doctor-disable-next-line react-doctor/async-await-in-loop -- browser readiness polling is intentionally sequential
 			const found = (await win.webContents.executeJavaScript(script)) as boolean
 			if (found) return true

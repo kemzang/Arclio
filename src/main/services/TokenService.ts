@@ -31,45 +31,75 @@ interface TokenCache {
 export class TokenService {
 	private cache: TokenCache | null = null
 
+	// TokenService is a single app-wide instance sharing one hidden
+	// BrowserWindow (HiddenWindowTokenProvider) across every concurrent
+	// download job. Without serializing access, two jobs needing a fresh
+	// token at the same time both called ensureReady()/mintToken() on the
+	// same window concurrently — racing loadURL() calls, and one job's
+	// `using`-triggered releaseWindow() destroying the window out from under
+	// the other's still-in-flight webContents calls. Every provider
+	// interaction now runs through this queue, one at a time; cache hits
+	// bypass it entirely so the common (already-warm) path pays no cost.
+	private queue: Promise<unknown> = Promise.resolve()
+
 	constructor(private readonly provider: TokenProvider) {}
+
+	private enqueue<T>(fn: () => Promise<T>): Promise<T> {
+		const result = this.queue.then(fn, fn)
+		this.queue = result.then(
+			() => undefined,
+			() => undefined
+		)
+		return result
+	}
 
 	async warmUp(signal?: AbortSignal): Promise<{ready: boolean; reason?: string}> {
 		if (signal?.aborted) return {ready: false, reason: 'cancelled'}
-		using _window = {[Symbol.dispose]: () => this.provider.releaseWindow()}
-		try {
-			await this.provider.ensureReady()
+		return this.enqueue(async () => {
 			if (signal?.aborted) return {ready: false, reason: 'cancelled'}
-			const visitorData = await this.provider.getVisitorData()
-			if (signal?.aborted) return {ready: false, reason: 'cancelled'}
-			if (!visitorData) return {ready: false, reason: 'no-visitor-data'}
-			const token = await this.provider.mintToken(visitorData)
-			if (signal?.aborted) return {ready: false, reason: 'cancelled'}
-			this.cache = {token, visitorData, mintedAt: Date.now()}
-			logger.info('PO token pre-warmed')
-			return {ready: true}
-		} catch (err) {
-			const reason = unknownToMessage(err)
-			logger.warn('Token warm-up failed (non-fatal)', {error: reason})
-			return {ready: false, reason}
-		}
+			using _window = {[Symbol.dispose]: () => this.provider.releaseWindow()}
+			try {
+				await this.provider.ensureReady(signal)
+				if (signal?.aborted) return {ready: false, reason: 'cancelled'}
+				const visitorData = await this.provider.getVisitorData()
+				if (signal?.aborted) return {ready: false, reason: 'cancelled'}
+				if (!visitorData) return {ready: false, reason: 'no-visitor-data'}
+				const token = await this.provider.mintToken(visitorData)
+				if (signal?.aborted) return {ready: false, reason: 'cancelled'}
+				this.cache = {token, visitorData, mintedAt: Date.now()}
+				logger.info('PO token pre-warmed')
+				return {ready: true}
+			} catch (err) {
+				const reason = unknownToMessage(err)
+				logger.warn('Token warm-up failed (non-fatal)', {error: reason})
+				return {ready: false, reason}
+			}
+		})
 	}
 
 	invalidateCache(): void {
 		this.cache = null
 	}
 
-	async mintTokenForUrl(url: string): Promise<{token: string; visitorData: string; fromCache: boolean}> {
+	async mintTokenForUrl(url: string, signal?: AbortSignal): Promise<{token: string; visitorData: string; fromCache: boolean}> {
 		if (this.cache && Date.now() - this.cache.mintedAt < TTL_MS) {
 			return {token: this.cache.token, visitorData: this.cache.visitorData, fromCache: true}
 		}
-		using _window = {[Symbol.dispose]: () => this.provider.releaseWindow()}
-		await this.provider.ensureReady()
-		const visitorData = await this.provider.getVisitorData()
-		const binding = nonEmpty(visitorData) ?? parseYouTubeVideoId(url) ?? url
-		logger.info('Minting PO token', {bindingLength: binding.length})
-		const token = await this.provider.mintToken(binding)
-		this.cache = {token, visitorData, mintedAt: Date.now()}
-		return {token, visitorData, fromCache: false}
+		return this.enqueue(async () => {
+			// Re-check: a call queued ahead of us may have just minted a fresh
+			// token while we were waiting our turn — no need to mint twice.
+			if (this.cache && Date.now() - this.cache.mintedAt < TTL_MS) {
+				return {token: this.cache.token, visitorData: this.cache.visitorData, fromCache: true}
+			}
+			using _window = {[Symbol.dispose]: () => this.provider.releaseWindow()}
+			await this.provider.ensureReady(signal)
+			const visitorData = await this.provider.getVisitorData()
+			const binding = nonEmpty(visitorData) ?? parseYouTubeVideoId(url) ?? url
+			logger.info('Minting PO token', {bindingLength: binding.length})
+			const token = await this.provider.mintToken(binding)
+			this.cache = {token, visitorData, mintedAt: Date.now()}
+			return {token, visitorData, fromCache: false}
+		})
 	}
 
 	dispose(): void {

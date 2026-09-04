@@ -119,7 +119,7 @@ async function invokeOnce(opts: InvokeOptions, strategy: RetryStrategy): Promise
 	const extractorArgsArr: string[] = []
 	if (strategy.kind === 'pot') {
 		if (strategy.reMint) opts.tokenService.invalidateCache()
-		const {token, visitorData, fromCache} = await opts.tokenService.mintTokenForUrl(opts.url)
+		const {token, visitorData, fromCache} = await opts.tokenService.mintTokenForUrl(opts.url, opts.signal?.abortSignal)
 		if (!fromCache) opts.signal?.onMinting?.(strategy.reMint ? 1 : 0)
 		extractorArgsArr.push('--extractor-args', buildPotExtractorArgs(token, visitorData))
 	} else if (strategy.kind === 'fallback') {
