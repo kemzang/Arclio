@@ -44,7 +44,7 @@ import {writePlaylistM3u} from '@main/services/playlistM3u.js'
 import {ClipboardWatcher, watcherWindowFromBrowserWindow} from '@main/services/ClipboardWatcher.js'
 import {LibraryImporter} from '@main/services/LibraryImporter.js'
 import {MetadataService} from '@main/services/MetadataService.js'
-import {getLibraryDb} from '@main/db/connection.js'
+import {getLibraryDb, closeLibraryDb} from '@main/db/connection.js'
 import {HiddenWindowTokenProvider} from '@main/token/providers/HiddenWindowTokenProvider.js'
 import {MockTokenProvider} from '@main/token/providers/MockTokenProvider.js'
 import {defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT} from '@shared/constants.js'
@@ -437,6 +437,7 @@ if (hasSingleInstanceLock) {
 				// Nothing to wait for or cancel — let Electron's own quit proceed
 				// (no preventDefault, no app.exit()).
 				tokenService.dispose()
+				closeLibraryDb()
 				log.info('App shutting down')
 				return
 			}
@@ -445,13 +446,17 @@ if (hasSingleInstanceLock) {
 				if (meta) log.info(message, meta)
 				else log.info(message)
 			}
+			// app.exit() skips the normal event loop drain, so the WAL connection
+			// must be closed explicitly here — otherwise better-sqlite3 never gets
+			// a chance to checkpoint, leaving -wal/-shm files to grow unbounded
+			// across a session of quits that all take this path (queue actively
+			// downloading at quit time).
+			const exitAfterClosingDb = (code: number): void => {
+				closeLibraryDb()
+				app.exit(code) // must use exit(), not quit() — quit() re-emits before-quit causing infinite loop
+			}
 			if (downloadService.runningJobCount > 0) {
-				void cancelQueueBeforeExit({
-					queueService,
-					tokenService,
-					logInfo,
-					exit: code => app.exit(code) // must use exit(), not quit() — quit() re-emits before-quit causing infinite loop
-				})
+				void cancelQueueBeforeExit({queueService, tokenService, logInfo, exit: exitAfterClosingDb})
 				return
 			}
 			// Every remaining active-job entry is already pausing/cancelling on
@@ -461,7 +466,7 @@ if (hasSingleInstanceLock) {
 			// resumability whenever the earlier SIGTERM hasn't been honored yet.
 			// DownloadService's own pause-kill escalation bounds this wait even
 			// if a process never responds to signals.
-			void downloadService.waitUntilIdle().then(() => finishShutdown({tokenService, logInfo, exit: code => app.exit(code)}))
+			void downloadService.waitUntilIdle().then(() => finishShutdown({tokenService, logInfo, exit: exitAfterClosingDb}))
 		})
 	})
 }

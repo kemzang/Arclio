@@ -59,9 +59,19 @@ export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
 	autoUpdater.removeAllListeners('update-downloaded')
 	autoUpdater.removeAllListeners('error')
 
-	// Track the install request so an `error` event can resolve the in-flight
-	// IPC call instead of leaving the renderer spinner hanging forever.
-	let pendingInstall: ((result: UpdateInstallResult) => void) | null = null
+	// Track every in-flight install request so an `error`/`update-downloaded`
+	// event resolves all of them instead of leaving a caller's renderer
+	// spinner hanging forever. A single `pendingInstall` variable meant a
+	// second concurrent updater:install call (double-click, a UI retry while
+	// the first request was still downloading) silently overwrote the first
+	// caller's resolver — that first invoke() promise then never settled.
+	let pendingInstalls: Array<(result: UpdateInstallResult) => void> = []
+
+	function settleAllPending(result: UpdateInstallResult): void {
+		const resolvers = pendingInstalls
+		pendingInstalls = []
+		for (const resolve of resolvers) resolve(result)
+	}
 
 	autoUpdater.on('update-available', info => {
 		if (mainWindow.isDestroyed()) return
@@ -71,19 +81,13 @@ export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
 	})
 
 	autoUpdater.on('update-downloaded', () => {
-		if (pendingInstall) {
-			pendingInstall({ok: true})
-			pendingInstall = null
-		}
+		settleAllPending({ok: true})
 		autoUpdater.quitAndInstall(false, true)
 	})
 
 	autoUpdater.on('error', err => {
 		log.error('[updater]', err.message)
-		if (pendingInstall) {
-			pendingInstall({ok: false, error: err.message})
-			pendingInstall = null
-		}
+		settleAllPending({ok: false, error: err.message})
 	})
 
 	ipcMain.removeHandler(IPC_CHANNELS.updaterInstall)
@@ -97,13 +101,15 @@ export function registerUpdaterHandlers(mainWindow: BrowserWindow): void {
 		}
 
 		const {promise, resolve} = Promise.withResolvers<UpdateInstallResult>()
-		pendingInstall = resolve
-		autoUpdater.downloadUpdate().catch((err: Error) => {
-			if (pendingInstall) {
-				pendingInstall({ok: false, error: err.message})
-				pendingInstall = null
-			}
-		})
+		// A download is already in flight for an earlier call — join it
+		// instead of triggering a second, redundant downloadUpdate().
+		const alreadyInFlight = pendingInstalls.length > 0
+		pendingInstalls.push(resolve)
+		if (!alreadyInFlight) {
+			autoUpdater.downloadUpdate().catch((err: Error) => {
+				settleAllPending({ok: false, error: err.message})
+			})
+		}
 		return promise
 	})
 

@@ -270,4 +270,76 @@ describe('registerUpdaterHandlers', () => {
 
 		expect(win.webContents.send).toHaveBeenCalledWith(IPC_CHANNELS.updaterAvailable, expect.objectContaining({currentVersion: '0.5.3'}))
 	})
+
+	describe('regression: concurrent updater:install calls', () => {
+		it('resolves every concurrent caller when update-downloaded fires, not just the latest', async () => {
+			let installHandler: (() => Promise<unknown>) | null = null
+			vi.mocked(ipcMain.handle).mockImplementation((name: string, fn: any) => {
+				if (name === IPC_CHANNELS.updaterInstall) installHandler = fn
+			})
+			const handlers = captureUpdaterHandlers()
+			registerUpdaterHandlers(makeWindow())
+
+			// Two calls before the download finishes — e.g. a double-click, or a
+			// UI retry while the first request was still in flight.
+			const first = installHandler!()
+			const second = installHandler!()
+			handlers['update-downloaded']!()
+
+			await expect(first).resolves.toEqual({ok: true})
+			await expect(second).resolves.toEqual({ok: true})
+		})
+
+		it('resolves every concurrent caller when error fires, not just the latest', async () => {
+			let installHandler: (() => Promise<unknown>) | null = null
+			vi.mocked(ipcMain.handle).mockImplementation((name: string, fn: any) => {
+				if (name === IPC_CHANNELS.updaterInstall) installHandler = fn
+			})
+			const handlers = captureUpdaterHandlers()
+			vi.spyOn(console, 'error').mockImplementation(() => undefined)
+			registerUpdaterHandlers(makeWindow())
+
+			const first = installHandler!()
+			const second = installHandler!()
+			handlers.error!(new Error('network dropped'))
+
+			await expect(first).resolves.toEqual({ok: false, error: 'network dropped'})
+			await expect(second).resolves.toEqual({ok: false, error: 'network dropped'})
+		})
+
+		it('a second concurrent call joins the in-flight download instead of starting another one', async () => {
+			let installHandler: (() => Promise<unknown>) | null = null
+			vi.mocked(ipcMain.handle).mockImplementation((name: string, fn: any) => {
+				if (name === IPC_CHANNELS.updaterInstall) installHandler = fn
+			})
+			const handlers = captureUpdaterHandlers()
+			registerUpdaterHandlers(makeWindow())
+
+			void installHandler!()
+			await Promise.resolve()
+			void installHandler!()
+			await Promise.resolve()
+			handlers['update-downloaded']!()
+
+			expect(autoUpdater.downloadUpdate).toHaveBeenCalledOnce()
+		})
+
+		it('a call after a previous install already settled starts a fresh download', async () => {
+			let installHandler: (() => Promise<unknown>) | null = null
+			vi.mocked(ipcMain.handle).mockImplementation((name: string, fn: any) => {
+				if (name === IPC_CHANNELS.updaterInstall) installHandler = fn
+			})
+			const handlers = captureUpdaterHandlers()
+			registerUpdaterHandlers(makeWindow())
+
+			const first = installHandler!()
+			handlers['update-downloaded']!()
+			await first
+
+			void installHandler!()
+			await Promise.resolve()
+
+			expect(autoUpdater.downloadUpdate).toHaveBeenCalledTimes(2)
+		})
+	})
 })

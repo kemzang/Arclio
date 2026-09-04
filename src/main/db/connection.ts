@@ -22,6 +22,12 @@ export function getLibraryDb(): ReturnType<typeof drizzle<typeof schema>> {
 	// WAL mode for concurrent reads during writes
 	sqlite.pragma('journal_mode = WAL')
 	sqlite.pragma('foreign_keys = ON')
+	// Without a busy_timeout, a query that lands mid-write from another
+	// connection (or another process briefly opening the file, e.g. a DB
+	// browser) fails immediately with SQLITE_BUSY instead of waiting a
+	// moment for the lock to clear. 5s comfortably covers this app's own
+	// write bursts (library import, indexing).
+	sqlite.pragma('busy_timeout = 5000')
 
 	// Create tables if they don't exist
 	sqlite.exec(`
