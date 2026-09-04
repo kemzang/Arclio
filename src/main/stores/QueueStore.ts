@@ -86,8 +86,12 @@ export class QueueStore {
 			throw new Error(`QueueStore.save: invalid queue payload — ${result.error.issues[0]?.message ?? 'schema mismatch'}`)
 		}
 
-		this.store.set('items', result.data)
-		this.store.set('schedulerPaused', schedulerPaused)
+		// Single object-form set() — one atomic write-temp-then-rename for both
+		// keys. Two separate set() calls each trigger their own disk write, so a
+		// crash between them could leave `items` on disk newer than
+		// `schedulerPaused` (or vice versa), desyncing the persisted pause flag
+		// from the queue it's supposed to describe.
+		this.store.set({items: result.data, schedulerPaused})
 		await Promise.resolve()
 	}
 

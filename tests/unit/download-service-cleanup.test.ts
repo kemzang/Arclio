@@ -1,5 +1,5 @@
 import {describe, expect, it, afterEach} from 'vitest'
-import {mkdtemp, writeFile, readdir} from 'node:fs/promises'
+import {mkdtemp, writeFile, readdir, mkdir} from 'node:fs/promises'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
 import {rmSync} from 'node:fs'
@@ -69,5 +69,21 @@ describe('cleanupPartFiles', () => {
 		const remaining = await readdir(dir)
 		expect(remaining).toHaveLength(1)
 		expect(remaining[0]).toBe('video.mp4')
+	})
+
+	it('regression: deletes .part/.ytdl files nested in subfolders (playlists, custom outputTemplate)', async () => {
+		const dir = await mkdtemp(join(tmpdir(), 'cleanup-nested-'))
+		dirs.push(dir)
+
+		await mkdir(join(dir, 'My Playlist'), {recursive: true})
+		await writeFile(join(dir, 'My Playlist', 'track01.mp4.part'), 'partial')
+		await writeFile(join(dir, 'My Playlist', 'track01.mp4'), 'completed')
+
+		const service = makeService()
+		await service.cleanupPartFiles(dir)
+
+		const remaining = await readdir(join(dir, 'My Playlist'))
+		expect(remaining).not.toContain('track01.mp4.part')
+		expect(remaining).toContain('track01.mp4')
 	})
 })

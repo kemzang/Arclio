@@ -50,7 +50,7 @@ import {MockTokenProvider} from '@main/token/providers/MockTokenProvider.js'
 import {defaultAppSettings, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT} from '@shared/constants.js'
 import {readSmokeUrl, runSmokeMode} from '@main/smoke.js'
 import {readRuntimeSmokeEnabled, runRuntimeSmokeMode, exitWithCode} from '@main/runtimeSmoke.js'
-import {cancelQueueBeforeExit, waitForQueueFileMovesBeforeExit} from '@main/shutdown.js'
+import {cancelQueueBeforeExit, finishShutdown} from '@main/shutdown.js'
 import {decideCloseAction, decideRendererCrashAction} from '@main/windowLifecycle.js'
 import {resolveMainWindowBackgroundColor} from '@main/windowPresentation.js'
 import {registerPreloadDiagnostics, resolveMainWindowPreloadPath} from '@main/preloadDiagnostics.js'
@@ -433,7 +433,9 @@ if (hasSingleInstanceLock) {
 			// not have died yet — quitting straight through that window used to
 			// leave a SIGTERM'd yt-dlp/ffmpeg process orphaned (detached: true
 			// means Electron exiting does not reap it).
-			if (downloadService.activeCount === 0 && !queueService.hasPendingFileMoves()) {
+			if (downloadService.activeCount === 0) {
+				// Nothing to wait for or cancel — let Electron's own quit proceed
+				// (no preventDefault, no app.exit()).
 				tokenService.dispose()
 				log.info('App shutting down')
 				return
@@ -459,7 +461,7 @@ if (hasSingleInstanceLock) {
 			// resumability whenever the earlier SIGTERM hasn't been honored yet.
 			// DownloadService's own pause-kill escalation bounds this wait even
 			// if a process never responds to signals.
-			void downloadService.waitUntilIdle().then(() => waitForQueueFileMovesBeforeExit({queueService, tokenService, logInfo, exit: code => app.exit(code)}))
+			void downloadService.waitUntilIdle().then(() => finishShutdown({tokenService, logInfo, exit: code => app.exit(code)}))
 		})
 	})
 }

@@ -87,7 +87,7 @@ export class DownloadService extends EventEmitter {
 		const now = nowIso()
 		const preparedJob = input.job
 		const expectedBytes = preparedJob.kind === 'single-format' ? preparedJob.expectedBytes : undefined
-		const job: DownloadJob = {id: randomUUID(), url: input.url, outputDir: input.outputDir, expectedBytes, status: 'running', createdAt: now, updatedAt: now}
+		const job: DownloadJob = {id: input.jobId ?? randomUUID(), url: input.url, outputDir: input.outputDir, expectedBytes, status: 'running', createdAt: now, updatedAt: now}
 		const controller = new AbortController()
 		const active: ActiveDownload = {job, input, controller, signal: controller.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], mediaDownloadStarted: false, mediaComponentPaths: [], tempDir: input.tempDir, disposables: new AsyncStack()}
 		this.registerInputTempDirCleanup(active)

@@ -55,6 +55,30 @@ describe('QueueService — auto-start on add', () => {
 		expect(qs.snapshot()[0].status).toBe('running')
 	})
 
+	it('regression: a status event emitted synchronously inside start() (before it returns) is not dropped', async () => {
+		const {qs, ds} = makeService()
+		// Mirrors DownloadService.runJob(), which calls emitStatus() as its very
+		// first statement — synchronously, before start()'s promise resolves and
+		// before QueueService has committed the 'started' event that sets
+		// QueueItem.lastJobId. Without pre-registering the jobId, findByJobId
+		// couldn't resolve this event and it was silently dropped.
+		ds.start.mockImplementation((input: {jobId?: string}) => {
+			// input.jobId is the pre-generated id QueueService should register
+			// before calling start(); fall back to a fixed id that deliberately
+			// does NOT match anything on the QueueItem, so a missing hint fails
+			// the same way the real bug did (undefined lastJobId never equals a
+			// real generated id).
+			const jobId = input.jobId ?? 'job-real-1'
+			ds.emit('status', {jobId, stage: 'setup', statusKey: 'preparingBinaries', at: new Date().toISOString()})
+			return Promise.resolve(jobResult(jobId))
+		})
+
+		qs.add([makeItem({id: 'a', status: 'pending'})])
+
+		await vi.waitFor(() => expect(qs.snapshot()[0].status).toBe('running'))
+		expect(qs.snapshot()[0].lastStatus).toMatchObject({key: 'preparingBinaries'})
+	})
+
 	it('does not start when cap=1 already running', async () => {
 		const {qs, ds} = makeService()
 

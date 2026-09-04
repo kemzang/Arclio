@@ -126,6 +126,25 @@ describe('QueueStore', () => {
 		expect(loaded[0].id).toBe('second')
 	})
 
+	it('round-trips schedulerPaused alongside items in a single save', async () => {
+		const [store] = await tempStore()
+		await store.save([makeItem({id: 'a', status: 'pending'})], true)
+
+		const result = await store.load()
+		if (!result.ok) throw new Error(`expected ok, got fail: ${result.error.message}`)
+		expect(result.data.schedulerPaused).toBe(true)
+		expect(result.data.items).toHaveLength(1)
+	})
+
+	it('defaults schedulerPaused to false when omitted', async () => {
+		const [store] = await tempStore()
+		await store.save([makeItem({id: 'a', status: 'pending'})])
+
+		const result = await store.load()
+		if (!result.ok) throw new Error(`expected ok, got fail: ${result.error.message}`)
+		expect(result.data.schedulerPaused).toBe(false)
+	})
+
 	it('resets to empty queue when startup file is corrupt JSON (clearInvalidConfig repairs on construction)', async () => {
 		const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'queue-store-'))
 		await fs.writeFile(path.join(dir, 'queue.json'), 'not valid json', 'utf-8')

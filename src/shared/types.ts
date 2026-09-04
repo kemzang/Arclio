@@ -521,6 +521,13 @@ export interface StartDownloadInput {
 	// Main-process-only resolved path for an opaque QueueItem.probeInfoJsonRef.
 	// The IPC start schema intentionally does not accept this from the renderer.
 	probeInfoJsonPath?: string
+	// Caller-supplied job id. QueueService pre-generates this and registers it
+	// against the QueueItem *before* calling start(), so the very first status
+	// event (emitted synchronously inside start(), before it returns) can
+	// already be matched back to the item — otherwise it arrived before
+	// QueueItem.lastJobId was set and was silently dropped. Falls back to a
+	// fresh id when omitted (e.g. the raw downloads:start IPC path).
+	jobId?: string
 }
 
 export interface StartDownloadOutput {

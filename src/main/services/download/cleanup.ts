@@ -13,7 +13,10 @@ const logger = log.scope('downloads')
 // a finalize() path.
 export async function cleanupPartFiles(outputDir: string): Promise<void> {
 	try {
-		const files = await readdir(outputDir)
+		// recursive: true — playlists and custom outputTemplates can nest media
+		// into subfolders; a top-level-only readdir left .part/.ytdl leftovers
+		// in those subfolders forever.
+		const files = await readdir(outputDir, {recursive: true})
 		const toDelete = files.filter(f => f.endsWith('.part') || f.endsWith('.ytdl'))
 		if (toDelete.length === 0) {
 			logger.info('cleanupPartFiles — no .part/.ytdl files found', {outputDir})

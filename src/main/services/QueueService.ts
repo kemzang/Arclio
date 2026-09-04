@@ -17,6 +17,7 @@
 // caller decides when to schedule; it always happens.
 
 import {EventEmitter} from 'node:events'
+import {randomUUID} from 'node:crypto'
 import log from 'electron-log/main.js'
 import {fail, ok, type Result} from '@shared/result.js'
 import {createAppError} from '@main/utils/errorFactory.js'
@@ -51,6 +52,13 @@ export class QueueService extends EventEmitter {
 	// counts these toward activeCount so a re-fire during the await window
 	// doesn't double-spawn the same item.
 	private readonly spawning = new Set<string>()
+	// jobId -> itemId for a spawn in flight. Registered *before* calling
+	// downloadService.start() so findByJobId can already resolve the very
+	// first status event (emitted synchronously inside start(), before it
+	// returns) — otherwise it raced ahead of the 'started' commit that sets
+	// QueueItem.lastJobId and was silently dropped. Cleared once that commit
+	// lands (or the spawn fails), since lastJobId then resolves it directly.
+	private readonly pendingSpawnJobIds = new Map<string, string>()
 	// Earliest time the next normal-lane spawn is allowed. Cleared on cancel-all
 	// or when no normal job remains. Priority spawns ignore this.
 	private sleepUntil = 0
@@ -223,10 +231,6 @@ export class QueueService extends EventEmitter {
 	schedulerIsPaused(): boolean {
 		return this.schedulerPaused
 	}
-
-	hasPendingFileMoves = (): boolean => false
-
-	whenFileMovesIdle = (): Promise<void> => Promise.resolve()
 
 	private async cleanupResumeContextBestEffort(item: QueueItem): Promise<void> {
 		try {
@@ -734,8 +738,12 @@ export class QueueService extends EventEmitter {
 		if (item.probeInfoJsonRef) {
 			logger.info('probe info-json resolved', {itemId, probeInfoJsonRef: item.probeInfoJsonRef, probeInfoJsonPath: probeInfoJsonPath ?? null})
 		}
+		// Pre-generate the jobId so it can be registered against this item
+		// before downloadService.start() runs — see pendingSpawnJobIds.
+		const jobId = randomUUID()
+		this.pendingSpawnJobIds.set(jobId, itemId)
 		try {
-			const result = await this.downloadService.start({url: item.url, outputDir: item.outputDir, job: item.job, tempDir: effectiveTempDir, ...(probeInfoJsonPath ? {probeInfoJsonPath} : {})})
+			const result = await this.downloadService.start({url: item.url, outputDir: item.outputDir, job: item.job, tempDir: effectiveTempDir, jobId, ...(probeInfoJsonPath ? {probeInfoJsonPath} : {})})
 			if (!result.ok) {
 				this.commit({kind: 'event', itemId, evt: {kind: 'failed', error: {kind: 'unknown', raw: result.error.message}, resumeContext: resumeContextForImmediateFailure}})
 				return fail(result.error)
@@ -749,6 +757,7 @@ export class QueueService extends EventEmitter {
 			return ok(undefined)
 		} finally {
 			this.spawning.delete(itemId)
+			this.pendingSpawnJobIds.delete(jobId)
 		}
 	}
 
@@ -773,7 +782,10 @@ export class QueueService extends EventEmitter {
 	}
 
 	private findByJobId(jobId: string): QueueItem | undefined {
-		return this.items.find(i => i.lastJobId === jobId)
+		const found = this.items.find(i => i.lastJobId === jobId)
+		if (found) return found
+		const pendingItemId = this.pendingSpawnJobIds.get(jobId)
+		return pendingItemId ? this.findItem(pendingItemId) : undefined
 	}
 
 	private maybeWritePlaylistM3u(playlistGroupId: string): Promise<void> {
