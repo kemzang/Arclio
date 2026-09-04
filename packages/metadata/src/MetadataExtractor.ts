@@ -7,6 +7,11 @@ export interface ExtractOptions {
 	ffprobePath?: string
 }
 
+// CBZ/comic archives are opened from arbitrary user-picked files. ComicInfo.xml
+// is metadata and never legitimately large; capping it bounds how much a
+// crafted entry can force this code to hold in memory before parsing.
+const MAX_COMIC_INFO_XML_BYTES = 5 * 1024 * 1024
+
 interface FFprobeStream {
 	codec_name?: string
 	codec_type?: string
@@ -241,7 +246,11 @@ export class MetadataExtractor {
 		const Yauzl = (await import('yauzl')).default
 
 		return new Promise((resolve, reject) => {
-			Yauzl.open(filePath, {lazyEntries: true}, (err, zipfile) => {
+			// validateEntrySizes catches a declared/actual size mismatch (the
+			// classic zip-bomb trick); the explicit cap below on ComicInfo.xml
+			// catches an *honestly* declared oversized entry, which
+			// validateEntrySizes alone would not.
+			Yauzl.open(filePath, {lazyEntries: true, validateEntrySizes: true}, (err, zipfile) => {
 				if (err) {
 					reject(err)
 					return
@@ -276,10 +285,28 @@ export class MetadataExtractor {
 								return
 							}
 							let xmlData = ''
+							let xmlBytes = 0
+							let settled = false
+							// destroy() does not emit 'end', so continuation past a
+							// too-large ComicInfo.xml is driven from here, not the
+							// 'end' handler — guarded so readEntry() fires exactly once.
+							const abandonOversizedEntry = (): void => {
+								if (settled) return
+								settled = true
+								readStream.destroy()
+								zipfile.readEntry()
+							}
 							readStream.on('data', (chunk: Buffer) => {
+								xmlBytes += chunk.length
+								if (xmlBytes > MAX_COMIC_INFO_XML_BYTES) {
+									abandonOversizedEntry()
+									return
+								}
 								xmlData += chunk.toString()
 							})
 							readStream.on('end', () => {
+								if (settled) return
+								settled = true
 								try {
 									const parsed = this.parseComicInfoXml(xmlData)
 									if (parsed.title) title = parsed.title

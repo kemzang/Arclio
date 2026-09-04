@@ -2,6 +2,14 @@ import {XMLParser} from 'fast-xml-parser'
 import path from 'node:path'
 import type {Entry} from 'yauzl'
 
+// EPUBs are opened from arbitrary user-picked files (library import), so a
+// malicious .epub is untrusted input, not just a malformed one. Without a
+// cap, a single crafted entry (container.xml, the OPF, or the "cover") can
+// decompress to an unbounded amount of memory before this code ever gets to
+// look at its content. 100MB comfortably covers even a very large cover
+// image; container.xml/OPF are always tiny in practice.
+const MAX_ZIP_ENTRY_BYTES = 100 * 1024 * 1024
+
 /**
  * Pulls the cover image out of an EPUB.
  *
@@ -73,7 +81,11 @@ async function readZipEntry(zipPath: string, entryName: string): Promise<Buffer>
 	const Yauzl = (await import('yauzl')).default
 
 	return new Promise((resolve, reject) => {
-		Yauzl.open(zipPath, {lazyEntries: true}, (err, zipfile) => {
+		// validateEntrySizes: yauzl aborts the read stream with an error if the
+		// decompressed byte count disagrees with the entry's declared
+		// uncompressedSize — the classic zip-bomb trick of understating size
+		// in the central directory.
+		Yauzl.open(zipPath, {lazyEntries: true, validateEntrySizes: true}, (err, zipfile) => {
 			if (err) return reject(err)
 			if (!zipfile) return reject(new Error(`Cannot open ${path.basename(zipPath)}`))
 
@@ -83,13 +95,30 @@ async function readZipEntry(zipPath: string, entryName: string): Promise<Buffer>
 				if (entry.fileName !== entryName) return zipfile.readEntry()
 
 				found = true
+				// Catches an *honestly* declared oversized entry — validateEntrySizes
+				// only catches a mismatch between declared and actual size, not a
+				// declared size that's simply too large to read into memory.
+				if (entry.uncompressedSize > MAX_ZIP_ENTRY_BYTES) {
+					zipfile.close()
+					return reject(new Error(`${entryName} in ${path.basename(zipPath)} exceeds the ${MAX_ZIP_ENTRY_BYTES} byte limit (${entry.uncompressedSize} bytes declared)`))
+				}
 				zipfile.openReadStream(entry, (streamErr, readStream) => {
 					if (streamErr || !readStream) {
 						zipfile.close()
 						return reject(streamErr ?? new Error(`Cannot read ${entryName}`))
 					}
 					const chunks: Buffer[] = []
-					readStream.on('data', (chunk: Buffer) => chunks.push(chunk))
+					let total = 0
+					readStream.on('data', (chunk: Buffer) => {
+						total += chunk.length
+						if (total > MAX_ZIP_ENTRY_BYTES) {
+							readStream.destroy()
+							zipfile.close()
+							reject(new Error(`${entryName} in ${path.basename(zipPath)} exceeded the ${MAX_ZIP_ENTRY_BYTES} byte limit while reading`))
+							return
+						}
+						chunks.push(chunk)
+					})
 					readStream.on('error', reject)
 					readStream.on('end', () => {
 						zipfile.close()

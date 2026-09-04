@@ -9,6 +9,10 @@ const logger = electronLog.scope('thumbnail')
 const THUMBNAIL_WIDTH = 320
 const THUMBNAIL_HEIGHT = 180
 const THUMBNAIL_QUALITY = 80
+// Comic archives are opened from arbitrary user-picked/imported files. A
+// single cover-candidate image should never legitimately need more than
+// this to thumbnail — caps how much a crafted entry can force into memory.
+const MAX_COMIC_IMAGE_ENTRY_BYTES = 50 * 1024 * 1024
 
 export interface ThumbnailOptions {
 	ffmpegPath?: string
@@ -155,7 +159,10 @@ async function generateComicThumbnail(comicPath: string, outputPath: string): Pr
 	const Yauzl = (await import('yauzl')).default
 
 	return new Promise((resolve, reject) => {
-		Yauzl.open(comicPath, {lazyEntries: true}, (err, zipfile) => {
+		// validateEntrySizes catches a declared/actual size mismatch; the
+		// explicit per-entry cap below (checked before *and* during the read)
+		// additionally catches an honestly-declared oversized entry.
+		Yauzl.open(comicPath, {lazyEntries: true, validateEntrySizes: true}, (err, zipfile) => {
 			if (err) {
 				reject(err)
 				return
@@ -166,13 +173,19 @@ async function generateComicThumbnail(comicPath: string, outputPath: string): Pr
 			}
 
 			zipfile.readEntry()
-			zipfile.on('entry', (entry: {fileName: string}) => {
+			zipfile.on('entry', (entry: {fileName: string; uncompressedSize?: number}) => {
 				if (entry.fileName.endsWith('/')) {
 					zipfile.readEntry()
 					return
 				}
 
 				if (/\.(jpg|jpeg|png|gif|webp)$/i.test(entry.fileName)) {
+					if ((entry.uncompressedSize ?? 0) > MAX_COMIC_IMAGE_ENTRY_BYTES) {
+						// Oversized candidate — skip it like any other unreadable
+						// entry and let the next image (or the placeholder) win.
+						zipfile.readEntry()
+						return
+					}
 					zipfile.openReadStream(entry as import('yauzl').Entry, (openErr, readStream) => {
 						if (openErr || !readStream) {
 							zipfile.readEntry()
@@ -180,10 +193,21 @@ async function generateComicThumbnail(comicPath: string, outputPath: string): Pr
 						}
 
 						const chunks: Buffer[] = []
+						let total = 0
+						let abandoned = false
 						readStream.on('data', (chunk: Buffer) => {
+							if (abandoned) return
+							total += chunk.length
+							if (total > MAX_COMIC_IMAGE_ENTRY_BYTES) {
+								abandoned = true
+								readStream.destroy()
+								zipfile.readEntry()
+								return
+							}
 							chunks.push(chunk)
 						})
 						readStream.on('end', () => {
+							if (abandoned) return
 							void (async () => {
 								try {
 									const sharp = (await import('sharp')).default
