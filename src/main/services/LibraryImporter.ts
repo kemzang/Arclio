@@ -19,7 +19,7 @@ export class LibraryImporter {
 	private mainWindow: BrowserWindow | null = null
 
 	constructor(
-		db: DrizzleDatabase,
+		private readonly db: DrizzleDatabase,
 		private readonly queueService: QueueService,
 		private readonly metadataService?: MetadataService
 	) {
@@ -50,34 +50,46 @@ export class LibraryImporter {
 		if (this.processedItems.has(item.id)) return
 		this.processedItems.add(item.id)
 
+		// Tracked outside the try so a failure after the transaction commits
+		// (e.g. the download-history write below) can still link back to the
+		// media record that *did* get created, instead of logging an
+		// unlinked failure for media the user can actually see in their library.
+		let createdMediaId: string | undefined
 		try {
 			const mediaType = this.inferMediaType(item.artifacts)
 			const sourceKey = this.extractSourceKey(item.url)
 			const sourceType = this.inferSourceType(item.url)
-
-			const mediaRecord = this.mediaRepo.create({
-				title: item.title,
-				author: null,
-				description: null,
-				url: item.url,
-				sourceKey,
-				sourceType,
-				duration: null,
-				mediaType,
-				thumbnailUrl: item.thumbnail || null,
-				thumbnailPath: null,
-				status: 'AVAILABLE',
-				isFavorite: 0,
-				createdBy: 'DOWNLOAD',
-				downloadDate: item.finishedAt ?? new Date().toISOString()
-			})
-
 			const mediaArtifacts = item.artifacts.filter(a => !a.internal && !a.missing)
 
-			for (const artifact of mediaArtifacts) {
-				const assetKind = this.mapArtifactKind(artifact.kind)
-				this.assetRepo.create({mediaId: mediaRecord.id, kind: assetKind, path: artifact.path, fileName: artifact.fileName, sizeBytes: artifact.sizeBytes ?? null, mimeType: this.inferMimeType(artifact.fileName), status: 'AVAILABLE'})
-			}
+			// Media + its assets must land atomically — an asset insert failing
+			// partway through the loop (constraint violation, disk full) used to
+			// leave the media row committed with only some of its assets,
+			// visible in the library as a broken/incomplete entry with no way
+			// to reconcile it.
+			const mediaRecord = this.db.transaction(() => {
+				const record = this.mediaRepo.create({
+					title: item.title,
+					author: null,
+					description: null,
+					url: item.url,
+					sourceKey,
+					sourceType,
+					duration: null,
+					mediaType,
+					thumbnailUrl: item.thumbnail || null,
+					thumbnailPath: null,
+					status: 'AVAILABLE',
+					isFavorite: 0,
+					createdBy: 'DOWNLOAD',
+					downloadDate: item.finishedAt ?? new Date().toISOString()
+				})
+				for (const artifact of mediaArtifacts) {
+					const assetKind = this.mapArtifactKind(artifact.kind)
+					this.assetRepo.create({mediaId: record.id, kind: assetKind, path: artifact.path, fileName: artifact.fileName, sizeBytes: artifact.sizeBytes ?? null, mimeType: this.inferMimeType(artifact.fileName), status: 'AVAILABLE'})
+				}
+				return record
+			})
+			createdMediaId = mediaRecord.id
 
 			this.downloadHistoryRepo.create({url: item.url, outputDir: item.outputDir, mediaId: mediaRecord.id, status: 'completed', formatId: item.job.kind === 'single-format' ? item.job.formatId : undefined, durationMs: null, finishedAt: item.finishedAt ?? new Date().toISOString()})
 
@@ -93,9 +105,9 @@ export class LibraryImporter {
 
 			this.notifyRenderer('library:media:created', {id: mediaRecord.id, title: mediaRecord.title, mediaType: mediaRecord.mediaType})
 		} catch (error) {
-			logger.error('Failed to create media from download', {itemId: item.id, error: error instanceof Error ? error.message : String(error)})
+			logger.error('Failed to create media from download', {itemId: item.id, mediaId: createdMediaId, error: error instanceof Error ? error.message : String(error)})
 
-			this.downloadHistoryRepo.create({url: item.url, outputDir: item.outputDir, status: 'failed', errorKind: 'import_error', errorRaw: error instanceof Error ? error.message : String(error), finishedAt: item.finishedAt ?? new Date().toISOString()})
+			this.downloadHistoryRepo.create({url: item.url, outputDir: item.outputDir, mediaId: createdMediaId, status: 'failed', errorKind: 'import_error', errorRaw: error instanceof Error ? error.message : String(error), finishedAt: item.finishedAt ?? new Date().toISOString()})
 		}
 	}
 

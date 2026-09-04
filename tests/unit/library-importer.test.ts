@@ -34,7 +34,7 @@ describe('LibraryImporter.extractSourceKey', () => {
 	let importer: InstanceType<typeof LibraryImporter>
 
 	beforeEach(() => {
-		const mockDb = {} as any
+		const mockDb = {transaction: (fn: () => unknown) => fn()} as any
 		const mockQueueService = {on: vi.fn()} as unknown as QueueService
 		importer = new LibraryImporter(mockDb, mockQueueService)
 	})
@@ -74,7 +74,7 @@ describe('LibraryImporter.extractSourceKey', () => {
 
 describe('LibraryImporter event notification', () => {
 	it('notifies renderer when media is created', () => {
-		const mockDb = {} as any
+		const mockDb = {transaction: (fn: () => unknown) => fn()} as any
 		const mockQueueService = {on: vi.fn()} as unknown as QueueService
 		const importer = new LibraryImporter(mockDb, mockQueueService)
 
@@ -91,7 +91,7 @@ describe('LibraryImporter event notification', () => {
 	})
 
 	it('does not notify when window is destroyed', () => {
-		const mockDb = {} as any
+		const mockDb = {transaction: (fn: () => unknown) => fn()} as any
 		const mockQueueService = {on: vi.fn()} as unknown as QueueService
 		const importer = new LibraryImporter(mockDb, mockQueueService)
 
@@ -108,7 +108,7 @@ describe('LibraryImporter event notification', () => {
 	})
 
 	it('does not notify when no window is set', () => {
-		const mockDb = {} as any
+		const mockDb = {transaction: (fn: () => unknown) => fn()} as any
 		const mockQueueService = {on: vi.fn()} as unknown as QueueService
 		new LibraryImporter(mockDb, mockQueueService)
 
@@ -121,7 +121,7 @@ describe('LibraryImporter event notification', () => {
 
 describe('LibraryImporter deduplication', () => {
 	it('processes item only once', () => {
-		const mockDb = {} as any
+		const mockDb = {transaction: (fn: () => unknown) => fn()} as any
 		const mockQueueService = {on: vi.fn()} as unknown as QueueService
 		const importer = new LibraryImporter(mockDb, mockQueueService)
 

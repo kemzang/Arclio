@@ -40,7 +40,10 @@ export class IndexerService extends EventEmitter {
 	private readonly metadataService?: MetadataService
 	private readonly thumbnailService?: ThumbnailService
 
-	constructor(db: DrizzleDatabase, options?: {metadataService?: MetadataService; thumbnailService?: ThumbnailService}) {
+	constructor(
+		private readonly db: DrizzleDatabase,
+		options?: {metadataService?: MetadataService; thumbnailService?: ThumbnailService}
+	) {
 		super()
 		this.mediaRepo = createMediaRepository(db)
 		this.assetRepo = createAssetRepository(db)
@@ -57,21 +60,30 @@ export class IndexerService extends EventEmitter {
 				return {success: false, error: `Unknown media type for ${filePath}`}
 			}
 
-			// Check if file already exists in library
-			const existing = this.mediaRepo.list({search: filePath})
-			if (existing.length > 0) {
+			// Check if file already exists in library. This must be an exact
+			// path lookup, not a media_fts search — media_fts indexes
+			// title/author/description, not the file path, so searching it
+			// with a raw filesystem path was both semantically wrong (it could
+			// only ever match by coincidence) and, on Windows paths containing
+			// `:` or on paths with other FTS5 operator characters, a syntax
+			// error the search would previously throw on.
+			const existingAsset = this.assetRepo.getByPath(filePath)
+			if (existingAsset) {
 				logger.info(`File already indexed: ${filePath}`)
-				return {success: true, mediaId: existing[0].id}
+				return {success: true, mediaId: existingAsset.mediaId}
 			}
 
 			const title = options?.title ?? basename(filePath)
 			const now = new Date().toISOString()
 
-			// Create media record
-			const media = this.mediaRepo.create({title, author: null, description: null, url: `file://${filePath}`, sourceKey: options?.sourceKey ?? null, sourceType: 'LOCAL', duration: null, mediaType, thumbnailUrl: null, thumbnailPath: null, status: 'AVAILABLE', isFavorite: 0, createdBy: 'IMPORT', downloadDate: now})
-
-			// Create asset record
-			this.assetRepo.create({mediaId: media.id, kind: 'media', path: filePath, fileName: basename(filePath), sizeBytes: null, mimeType: this.inferMimeType(filePath), status: 'AVAILABLE'})
+			// Media + its asset must land atomically — see LibraryImporter's
+			// handleDownloadCompleted for the same rationale: a failure between
+			// the two inserts must not leave a media row with no asset.
+			const media = this.db.transaction(() => {
+				const record = this.mediaRepo.create({title, author: null, description: null, url: `file://${filePath}`, sourceKey: options?.sourceKey ?? null, sourceType: 'LOCAL', duration: null, mediaType, thumbnailUrl: null, thumbnailPath: null, status: 'AVAILABLE', isFavorite: 0, createdBy: 'IMPORT', downloadDate: now})
+				this.assetRepo.create({mediaId: record.id, kind: 'media', path: filePath, fileName: basename(filePath), sizeBytes: null, mimeType: this.inferMimeType(filePath), status: 'AVAILABLE'})
+				return record
+			})
 
 			logger.info(`File indexed: ${filePath} -> ${media.id}`)
 			this.emit('indexed', {mediaId: media.id, title, mediaType, path: filePath})
