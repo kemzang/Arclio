@@ -1,3 +1,6 @@
+import {access, mkdtemp, writeFile} from 'node:fs/promises'
+import {tmpdir} from 'node:os'
+import {join} from 'node:path'
 import {describe, expect, it, vi} from 'vitest'
 import {SyncService} from '@main/services/SyncService.js'
 import type {MediaRepo} from '@main/db/repositories/mediaRepository.js'
@@ -44,16 +47,24 @@ function fakeRepo(initial: Row[] = []) {
 
 function fakeAccount(connected = true) {
 	let cursor: string | null = null
+	let isConnected = connected
+	const store = {
+		load: vi.fn(() => (isConnected ? {deviceToken: 'tok', deviceId: 'dev'} : null)),
+		getSyncCursor: () => cursor,
+		setSyncCursor: vi.fn((value: string) => {
+			cursor = value
+		}),
+		clear: vi.fn(() => {
+			isConnected = false
+		})
+	} as unknown as AccountStore
 	return {
 		cleared: false,
-		store: {
-			load: () => (connected ? {deviceToken: 'tok', deviceId: 'dev'} : null),
-			getSyncCursor: () => cursor,
-			setSyncCursor: vi.fn((value: string) => {
-				cursor = value
-			}),
-			clear: vi.fn()
-		} as unknown as AccountStore
+		store,
+		/** Simulates disconnect() running mid-round, e.g. from the renderer. */
+		disconnect: () => {
+			isConnected = false
+		}
 	}
 }
 
@@ -156,6 +167,77 @@ describe('SyncService', () => {
 
 		await expect(new SyncService(repo, account.store, 'https://example.test').sync()).resolves.toMatchObject({status: 'failed'})
 		expect(account.store.setSyncCursor).not.toHaveBeenCalled()
+		vi.unstubAllGlobals()
+	})
+
+	it('regression: does not resurrect syncCursor if the account was disconnected mid-round', async () => {
+		// disconnect() clears the store partway through this round's network
+		// round-trip. Writing this round's cursor afterwards would leave a lone
+		// syncCursor key in an otherwise-cleared store — and if the user later
+		// pairs a *different* account, that stray cursor would make the new
+		// pairing start from a stale point and silently skip part of its history.
+		const {repo} = fakeRepo()
+		const account = fakeAccount()
+		const fetchImpl = vi.fn(async (url: string) => {
+			if (url.includes('/pull')) {
+				account.disconnect()
+				return new Response(JSON.stringify({cursor: 'c1', records: []}), {status: 200, headers: {'content-type': 'application/json'}})
+			}
+			return new Response(JSON.stringify({cursor: 'c1'}), {status: 200, headers: {'content-type': 'application/json'}})
+		})
+		vi.stubGlobal('fetch', fetchImpl)
+
+		const result = await new SyncService(repo, account.store, 'https://example.test').sync()
+
+		expect(result).toMatchObject({status: 'skipped'})
+		expect(account.store.setSyncCursor).not.toHaveBeenCalled()
+		vi.unstubAllGlobals()
+	})
+
+	it('regression: purges its own tombstone after a successful push, instead of keeping it forever', async () => {
+		// A DELETED row is how this device tells the server the media was
+		// removed. Once the push that carries it succeeds, the server is the
+		// source of truth for that deletion — keeping the local tombstone around
+		// forever would grow the table without bound.
+		const {repo, rows} = fakeRepo([{id: 'm1', title: 'Clip', url: 'https://x.test/1', sourceKey: null, mediaType: 'video', duration: 60, isFavorite: 0, status: 'DELETED', updatedAt: '2026-01-01T00:00:00.000Z'}])
+		const account = fakeAccount()
+		vi.stubGlobal(
+			'fetch',
+			mockFetch([
+				{status: 200, body: {cursor: '1', records: []}},
+				{status: 200, body: {cursor: '2'}}
+			])
+		)
+
+		await new SyncService(repo, account.store, 'https://example.test').sync()
+
+		expect(rows.has('m1')).toBe(false)
+		expect(repo.delete).toHaveBeenCalledWith('m1')
+		vi.unstubAllGlobals()
+	})
+
+	it('regression: removes the on-disk asset files when a remote deletion arrives, not just the DB row', async () => {
+		const dir = await mkdtemp(join(tmpdir(), 'arclio-sync-'))
+		const videoPath = join(dir, 'video.mp4')
+		const thumbPath = join(dir, 'thumb.jpg')
+		await writeFile(videoPath, 'video-bytes')
+		await writeFile(thumbPath, 'thumb-bytes')
+
+		const {repo, rows} = fakeRepo([{id: 'm1', title: 'Clip', url: 'https://x.test/1', sourceKey: null, mediaType: 'video', duration: 60, isFavorite: 0, status: 'AVAILABLE', updatedAt: '2026-01-01T00:00:00.000Z', thumbnailPath: thumbPath, assets: [{path: videoPath}]} as unknown as Row])
+		const account = fakeAccount()
+		vi.stubGlobal(
+			'fetch',
+			mockFetch([
+				{status: 200, body: {cursor: '7', records: [record({deletedAt: '2026-06-01T00:00:00.000Z', updatedAt: '2026-06-01T00:00:00.000Z'})]}},
+				{status: 200, body: {cursor: '7'}}
+			])
+		)
+
+		await new SyncService(repo, account.store, 'https://example.test').sync()
+
+		expect(rows.has('m1')).toBe(false)
+		await expect(access(videoPath)).rejects.toThrow()
+		await expect(access(thumbPath)).rejects.toThrow()
 		vi.unstubAllGlobals()
 	})
 

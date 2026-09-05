@@ -54,4 +54,19 @@ describe('SyncClient', () => {
 		const [, init] = fetchImpl.mock.calls[0] as unknown as [string, {body: string}]
 		expect(JSON.parse(init.body)).toMatchObject({cursor: 'c1', records: [{id: 'm1'}]})
 	})
+
+	it('regression: gives up on a request that never resolves, instead of hanging a sync round forever', async () => {
+		// request() used to call fetch with no signal at all, so a dead server or
+		// dropped connection would leave a sync round (and the scheduler's
+		// "running" flag) stuck forever with nothing to make it give up.
+		const fetchImpl = vi.fn((_url: string, init: {signal?: AbortSignal}) => {
+			return new Promise<Response>((_resolve, reject) => {
+				init.signal?.addEventListener('abort', () => reject(new DOMException('The operation was aborted', 'AbortError')))
+			})
+		})
+		const c = new SyncClient({baseUrl: 'https://example.test/', deviceToken: 'tok-123', fetch: fetchImpl as unknown as typeof fetch, requestTimeoutMs: 20})
+
+		await expect(c.pull(null)).rejects.toThrow()
+		expect(fetchImpl.mock.calls[0]?.[1]).toMatchObject({signal: expect.any(AbortSignal)})
+	})
 })

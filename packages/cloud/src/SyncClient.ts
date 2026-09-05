@@ -14,7 +14,11 @@ export interface SyncClientOptions {
 	/** Bearer credential obtained by pairing. */
 	deviceToken: string
 	fetch?: typeof globalThis.fetch
+	/** Per-request network timeout. A stuck connection must not hang a sync round forever. */
+	requestTimeoutMs?: number
 }
+
+const DEFAULT_REQUEST_TIMEOUT_MS = 30_000
 
 /** Thrown when the server rejects our credential; the caller should re-pair. */
 export class SyncAuthError extends Error {
@@ -41,15 +45,17 @@ export class SyncClient {
 	private readonly baseUrl: string
 	private readonly deviceToken: string
 	private readonly fetchImpl: typeof globalThis.fetch
+	private readonly requestTimeoutMs: number
 
 	constructor(options: SyncClientOptions) {
 		this.baseUrl = options.baseUrl.replace(/\/+$/, '')
 		this.deviceToken = options.deviceToken
 		this.fetchImpl = options.fetch ?? globalThis.fetch
+		this.requestTimeoutMs = options.requestTimeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS
 	}
 
 	private async request(path: string, body: unknown): Promise<Response> {
-		const response = await this.fetchImpl(`${this.baseUrl}${path}`, {method: 'POST', headers: {'content-type': 'application/json', authorization: `Bearer ${this.deviceToken}`}, body: JSON.stringify(body)})
+		const response = await this.fetchImpl(`${this.baseUrl}${path}`, {method: 'POST', headers: {'content-type': 'application/json', authorization: `Bearer ${this.deviceToken}`}, body: JSON.stringify(body), signal: AbortSignal.timeout(this.requestTimeoutMs)})
 		// 401 means the device was revoked from the account page, or the token is
 		// stale. That is a distinct outcome from a transient failure: the caller
 		// must stop retrying and ask the user to connect again.

@@ -86,3 +86,37 @@ describe('PairingClient.waitForApproval', () => {
 		await expect(c.waitForApproval(started)).rejects.toThrow('HTTP 503')
 	})
 })
+
+describe('PairingClient network resilience', () => {
+	/** A fetch that hangs forever unless its request's AbortSignal fires. */
+	function hangingFetch() {
+		return vi.fn((_url: string, init: {signal?: AbortSignal}) => {
+			return new Promise<Response>((_resolve, reject) => {
+				init.signal?.addEventListener('abort', () => reject(new DOMException('The operation was aborted', 'AbortError')))
+			})
+		})
+	}
+
+	it('regression: gives up on a start() request that never resolves, instead of hanging forever', async () => {
+		// Neither start() nor poll() used to pass a signal to fetch at all, so a
+		// connection that never answers (dead server, dropped wifi) left pairing
+		// stuck with no way to time out.
+		const fetchImpl = hangingFetch()
+		const c = new PairingClient({baseUrl: 'https://example.test', fetch: fetchImpl as unknown as typeof fetch, requestTimeoutMs: 20})
+
+		await expect(c.start({deviceName: 'Laptop', devicePlatform: 'linux'})).rejects.toThrow()
+		expect(fetchImpl.mock.calls[0]?.[1]).toMatchObject({signal: expect.any(AbortSignal)})
+	})
+
+	it('regression: cancelling waitForApproval aborts the in-flight poll instead of waiting for it to finish', async () => {
+		const fetchImpl = hangingFetch()
+		const c = new PairingClient({baseUrl: 'https://example.test', fetch: fetchImpl as unknown as typeof fetch, now: () => 0})
+		const controller = new AbortController()
+
+		const wait = c.waitForApproval(started, {signal: controller.signal})
+		await vi.waitFor(() => expect(fetchImpl).toHaveBeenCalled())
+		controller.abort()
+
+		await expect(wait).rejects.toMatchObject({reason: 'cancelled'})
+	})
+})

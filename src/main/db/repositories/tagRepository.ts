@@ -37,7 +37,12 @@ export function createTagRepository(db: DrizzleDatabase): TagRepo {
 		},
 
 		getByName(name: string): Tag | null {
-			return db.select().from(tag).where(eq(tag.name, name)).get() ?? null
+			// Case-insensitive on purpose: sync resolves tag membership by name
+			// across devices (see SyncService.ensureTag), and a case-sensitive
+			// match here would let "Music" and "music" — the same tag to a user —
+			// drift into two permanently separate rows the moment two devices
+			// happen to have typed the name with different casing.
+			return db.select().from(tag).where(sql`lower(${tag.name}) = lower(${name})`).get() ?? null
 		},
 
 		list(): TagWithCount[] {

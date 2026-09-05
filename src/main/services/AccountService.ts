@@ -32,9 +32,13 @@ export class AccountService {
 	private readonly client: PairingClient
 	private readonly store: AccountStore
 	private pending: {start: PairingStart; controller: AbortController} | null = null
+	// Bumped by cancelPairing() (directly, or via a fresh beginPairing()). Lets an
+	// in-flight beginPairing() notice that it was superseded while awaiting
+	// client.start() and avoid overwriting a newer call's `pending`.
+	private pairingGeneration = 0
 
-	constructor(options: {baseUrl?: string; store?: AccountStore} = {}) {
-		this.client = new PairingClient({baseUrl: options.baseUrl ?? SITE_URL})
+	constructor(options: {baseUrl?: string; store?: AccountStore; fetch?: typeof globalThis.fetch} = {}) {
+		this.client = new PairingClient({baseUrl: options.baseUrl ?? SITE_URL, fetch: options.fetch})
 		this.store = options.store ?? new AccountStore()
 	}
 
@@ -56,8 +60,18 @@ export class AccountService {
 		}
 
 		this.cancelPairing()
+		const generation = this.pairingGeneration
 
 		const start = await this.client.start({deviceName: os.hostname(), devicePlatform: process.platform})
+
+		// A second beginPairing() (or an explicit cancelPairing()) arrived while
+		// this request was in flight. That caller's `pending` — and whatever code
+		// the user is looking at in the browser tab it opened — must win instead
+		// of being silently clobbered once this slower request finally resolves.
+		if (generation !== this.pairingGeneration) {
+			throw new PairingError('cancelled')
+		}
+
 		this.pending = {start, controller: new AbortController()}
 
 		const url = new URL(start.verificationUrl)
@@ -87,6 +101,7 @@ export class AccountService {
 	}
 
 	cancelPairing(): void {
+		this.pairingGeneration++
 		this.pending?.controller.abort()
 		this.pending = null
 	}

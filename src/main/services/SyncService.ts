@@ -1,3 +1,4 @@
+import {unlink} from 'node:fs/promises'
 import log from 'electron-log/main.js'
 import {SyncAuthError, SyncClient, SyncPlanError, reconcile, toSyncRecord, type SyncRecord} from '@arclio/cloud'
 import type {MediaRepo} from '@main/db/repositories/mediaRepository.js'
@@ -51,6 +52,25 @@ export class SyncService {
 		const created = this.collections.create({name, description: null, icon: null, color: null, sortOrder: 0})
 		names.set(created.id, created.name)
 		return created.id
+	}
+
+	/**
+	 * Removes a media row and the files its assets point at.
+	 *
+	 * Used for both a remote-originated deletion and purging this device's own
+	 * pushed tombstone: either way, the local asset files (video, thumbnail,
+	 * subtitles) would otherwise sit orphaned on disk forever with nothing left
+	 * in the database pointing at them. Missing files are not an error — the
+	 * user's own delete flow, or a MISSING/never-downloaded record, may have
+	 * already removed them.
+	 */
+	private async deleteMediaWithFiles(id: string): Promise<void> {
+		const existing = this.media.getById(id)
+		if (existing) {
+			const paths = [existing.thumbnailPath, ...(existing.assets ?? []).map(asset => asset.path)].filter((path): path is string => Boolean(path))
+			await Promise.all(paths.map(path => unlink(path).catch(() => {})))
+		}
+		this.media.delete(id)
 	}
 
 	/** Applies membership by name, adding and removing only what actually changed. */
@@ -130,13 +150,30 @@ export class SyncService {
 
 			const names = this.collectionNames()
 			for (const record of upserts) this.applyUpsert(record, names)
-			for (const id of deletions) this.media.delete(id)
+			for (const id of deletions) await this.deleteMediaWithFiles(id)
 
 			const pushed = await client.push({cursor: remote.cursor, records: toPush})
+
+			// The account may have been disconnected — or re-paired to a different
+			// device — while this round's network round-trip was in flight. Writing
+			// this round's cursor into a cleared store would resurrect a stray key
+			// right after disconnect() cleared it; writing it into a freshly-paired
+			// store would make that new pairing start from a stale cursor and
+			// silently skip part of the account's history.
+			const current = this.account.load()
+			if (!current || current.deviceToken !== stored.deviceToken) {
+				logger.info("Sync finished after the account changed; discarding this round's cursor")
+				return {status: 'skipped', reason: 'not-connected'}
+			}
 
 			// Only advance once both halves succeeded: a cursor saved after a failed
 			// push would mark remote changes as seen that were never merged.
 			this.account.setSyncCursor(pushed.cursor)
+
+			// The pushed tombstones are now recorded on the server — the source of
+			// truth every other device pulls from — so this device does not need to
+			// keep its own DELETED row around. Left alone, they accumulate forever.
+			for (const record of toPush) if (record.deletedAt) await this.deleteMediaWithFiles(record.id)
 
 			logger.info('Sync completed', {pulled: upserts.length, pushed: toPush.length, deleted: deletions.length})
 			return {status: 'ok', pulled: upserts.length, pushed: toPush.length, deleted: deletions.length}

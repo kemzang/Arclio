@@ -13,6 +13,8 @@ export interface PairingClientOptions {
 	fetch?: typeof globalThis.fetch
 	sleep?: (ms: number) => Promise<void>
 	now?: () => number
+	/** Per-request network timeout. A stuck connection must not hang pairing forever. */
+	requestTimeoutMs?: number
 }
 
 export interface WaitOptions {
@@ -23,28 +25,37 @@ export interface WaitOptions {
 }
 
 const defaultSleep = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms))
+const DEFAULT_REQUEST_TIMEOUT_MS = 15_000
 
 export class PairingClient {
 	private readonly baseUrl: string
 	private readonly fetchImpl: typeof globalThis.fetch
 	private readonly sleep: (ms: number) => Promise<void>
 	private readonly now: () => number
+	private readonly requestTimeoutMs: number
 
 	constructor(options: PairingClientOptions) {
 		this.baseUrl = options.baseUrl.replace(/\/+$/, '')
 		this.fetchImpl = options.fetch ?? globalThis.fetch
 		this.sleep = options.sleep ?? defaultSleep
 		this.now = options.now ?? Date.now
+		this.requestTimeoutMs = options.requestTimeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS
 	}
 
-	async start(device: DeviceIdentity): Promise<PairingStart> {
-		const response = await this.fetchImpl(`${this.baseUrl}/api/pair/start`, {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify(device)})
+	/** Combines the caller's cancellation signal (if any) with a request timeout. */
+	private requestSignal(external?: AbortSignal): AbortSignal {
+		const timeout = AbortSignal.timeout(this.requestTimeoutMs)
+		return external ? AbortSignal.any([external, timeout]) : timeout
+	}
+
+	async start(device: DeviceIdentity, options: {signal?: AbortSignal} = {}): Promise<PairingStart> {
+		const response = await this.fetchImpl(`${this.baseUrl}/api/pair/start`, {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify(device), signal: this.requestSignal(options.signal)})
 		if (!response.ok) throw new Error(`Pairing request failed: HTTP ${response.status}`)
 		return (await response.json()) as PairingStart
 	}
 
-	async poll(deviceCode: string): Promise<PollOutcome> {
-		const response = await this.fetchImpl(`${this.baseUrl}/api/pair/poll`, {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify({deviceCode})})
+	async poll(deviceCode: string, options: {signal?: AbortSignal} = {}): Promise<PollOutcome> {
+		const response = await this.fetchImpl(`${this.baseUrl}/api/pair/poll`, {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify({deviceCode}), signal: this.requestSignal(options.signal)})
 		// 202 pending, 200 approved, 410 expired/denied — anything else is a fault
 		// rather than a protocol answer, and must not be read as "keep waiting".
 		if (response.status !== 200 && response.status !== 202 && response.status !== 410) {
@@ -70,7 +81,16 @@ export class PairingClient {
 
 			attempt += 1
 			options.onPoll?.(attempt)
-			const outcome = await this.poll(started.deviceCode)
+			let outcome: PollOutcome
+			try {
+				outcome = await this.poll(started.deviceCode, {signal: options.signal})
+			} catch (error) {
+				// A stuck poll's own request-timeout abort surfaces as-is (a genuine
+				// network failure); an abort caused by the caller's signal is the
+				// same "cancelled" outcome as the top-of-loop check above.
+				if (options.signal?.aborted) throw new PairingError('cancelled')
+				throw error
+			}
 
 			if (outcome.status === 'approved') return {deviceToken: outcome.deviceToken, deviceId: outcome.deviceId}
 			if (outcome.status === 'expired') throw new PairingError('expired')
