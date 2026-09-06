@@ -23,7 +23,7 @@ import {fail, ok, type Result} from '@shared/result.js'
 import {createAppError} from '@main/utils/errorFactory.js'
 import {nowIso} from '@main/utils/clock.js'
 import {QUEUE_STATUS, STATUS_KEY, type QueueLane, type StatusKey} from '@shared/schemas.js'
-import {transition, illegalTransition, type QueueEvent} from '@shared/queueTransition.js'
+import {transition, illegalTransition} from '@shared/queueTransition.js'
 import {ProgressFormatter} from '@shared/progressFormat.js'
 import {ProgressNormalizer} from '@shared/progressNormalizer.js'
 import {moveQueueArtifactPath, queueArtifactFromPath, upsertQueueArtifact} from '@shared/queueArtifacts.js'
@@ -38,13 +38,12 @@ import {FinalArtifactTargets} from './finalArtifactTargets.js'
 import type {ProbeInfoJsonCache} from './ProbeInfoJsonCache.js'
 import {changeQueueOutputTarget} from './queueOutputTargetMove.js'
 import {applyQueueSelectionAction} from './queueSelectionActionApply.js'
+import {type Mutation, describeMutation} from './queue/mutation.js'
+import {computeStatusSummary} from './queue/queueDiagnostics.js'
+import {PlaylistM3uWriteChain} from './queue/PlaylistM3uWriteChain.js'
+import {QueueArtifactCleanup} from './queue/QueueArtifactCleanup.js'
 
 const logger = log.scope('queue')
-
-// Discriminated union covering every shape a mutation can take. commit()
-// is the only writer; new mutation kinds add a case here (compile-checked
-// in commit's exhaustive switch) instead of inventing a new helper.
-type Mutation = {kind: 'add'; items: QueueItem[]} | {kind: 'event'; itemId: string; evt: QueueEvent} | {kind: 'patch'; itemId: string; patcher: (item: QueueItem) => QueueItem; reason: string} | {kind: 'remove'; itemId: string}
 
 export class QueueService extends EventEmitter {
 	private items: QueueItem[] = []
@@ -90,9 +89,8 @@ export class QueueService extends EventEmitter {
 	// replacement downloads midway through a multi-item command.
 	private inBulk = false
 	private readonly finalArtifactTargets = new FinalArtifactTargets()
-
-	// Per-playlist-group serialization for M3U writes. See maybeWritePlaylistM3u.
-	private readonly m3uWriteChains = new Map<string, Promise<void>>()
+	private readonly m3uWriter: PlaylistM3uWriteChain
+	private readonly artifactCleanup: QueueArtifactCleanup
 
 	constructor(
 		private readonly queueStore: QueueStore,
@@ -103,6 +101,8 @@ export class QueueService extends EventEmitter {
 		private readonly probeInfoJsonCache?: ProbeInfoJsonCache
 	) {
 		super()
+		this.m3uWriter = new PlaylistM3uWriteChain(this.playlist)
+		this.artifactCleanup = new QueueArtifactCleanup(this.probeInfoJsonCache)
 		this.downloadService.on('status', (event: StatusEvent) => this.consumeStatusEvent(event))
 		this.downloadService.on('progress', (event: ProgressEvent) => this.consumeProgressEvent(event))
 		this.downloadService.on('artifact', (event: QueueArtifactEvent) => this.consumeArtifactEvent(event))
@@ -232,28 +232,6 @@ export class QueueService extends EventEmitter {
 		return this.schedulerPaused
 	}
 
-	private async cleanupResumeContextBestEffort(item: QueueItem): Promise<void> {
-		try {
-			await QueueResumeLifecycle.cleanupResumeContext(item)
-		} catch (err) {
-			logger.warn('resume-context cleanup failed', {itemId: item.id, error: err instanceof Error ? err.message : String(err)})
-		}
-	}
-
-	private async cleanupProbeInfoJsonBestEffort(item: QueueItem): Promise<void> {
-		if (!item.probeInfoJsonRef) return
-		try {
-			await this.probeInfoJsonCache?.delete(item.probeInfoJsonRef)
-		} catch (err) {
-			logger.warn('probe info-json cleanup failed', {itemId: item.id, error: err instanceof Error ? err.message : String(err)})
-		}
-	}
-
-	private async cleanupQueueArtifactsBestEffort(item: QueueItem): Promise<void> {
-		await this.cleanupResumeContextBestEffort(item)
-		await this.cleanupProbeInfoJsonBestEffort(item)
-	}
-
 	async resume(itemId: string): Promise<Result<void>> {
 		const item = this.findItem(itemId)
 		if (!item) return fail(createAppError('validation', `queue item ${itemId} not found`))
@@ -314,7 +292,7 @@ export class QueueService extends EventEmitter {
 			try {
 				for (const id of ids) {
 					const item = this.findItem(id)
-					if (item) await this.cleanupQueueArtifactsBestEffort(item)
+					if (item) await this.artifactCleanup.cleanupAll(item)
 					const jobId = item?.lastJobId
 					if (jobId) this.forgetProgressState(jobId)
 					this.commit({kind: 'event', itemId: id, evt: {kind: 'cancelled'}})
@@ -337,7 +315,7 @@ export class QueueService extends EventEmitter {
 		if (!item) return ok(undefined)
 
 		if (item.status === QUEUE_STATUS.pending || item.status === QUEUE_STATUS.pausedHeld) {
-			await this.cleanupQueueArtifactsBestEffort(item)
+			await this.artifactCleanup.cleanupAll(item)
 			this.commit({kind: 'event', itemId, evt: {kind: 'cancelled'}})
 			return ok(undefined)
 		}
@@ -346,7 +324,7 @@ export class QueueService extends EventEmitter {
 			await this.downloadService.cancel(item.lastJobId)
 			this.forgetProgressState(item.lastJobId)
 		}
-		await this.cleanupQueueArtifactsBestEffort(item)
+		await this.artifactCleanup.cleanupAll(item)
 		this.commit({kind: 'event', itemId, evt: {kind: 'cancelled'}})
 		return ok(undefined)
 	}
@@ -383,7 +361,7 @@ export class QueueService extends EventEmitter {
 		const idsToRemove = this.items.flatMap(i => (i.status === QUEUE_STATUS.done || i.status === QUEUE_STATUS.cancelled || i.status === QUEUE_STATUS.error ? [i.id] : []))
 		for (const id of idsToRemove) {
 			const item = this.findItem(id)
-			if (item) await this.cleanupQueueArtifactsBestEffort(item)
+			if (item) await this.artifactCleanup.cleanupAll(item)
 		}
 		this.inBulk = true
 		try {
@@ -438,7 +416,7 @@ export class QueueService extends EventEmitter {
 			if (!cancelResult.ok) return fail(cancelResult.error)
 			this.forgetProgressState(item.lastJobId)
 		}
-		await this.cleanupQueueArtifactsBestEffort(item)
+		await this.artifactCleanup.cleanupAll(item)
 		this.commit({kind: 'remove', itemId})
 		return ok(undefined)
 	}
@@ -451,7 +429,7 @@ export class QueueService extends EventEmitter {
 		if (event.stage === 'done') {
 			this.finalArtifactTargets.remember(event.jobId, item.id)
 			this.forgetProgressState(event.jobId)
-			void this.cleanupProbeInfoJsonBestEffort(item)
+			void this.artifactCleanup.cleanupProbeInfoJson(item)
 			// Inter-job cooldown applies only when a normal-lane job finishes —
 			// priority jobs are user-driven bursts, no need to throttle the queue
 			// after they wrap.
@@ -583,7 +561,7 @@ export class QueueService extends EventEmitter {
 	}
 
 	private commit(mutation: Mutation): void {
-		logger.debug('commit', {mutation: this.describeMutation(mutation)})
+		logger.debug('commit', {mutation: describeMutation(mutation)})
 		switch (mutation.kind) {
 			case 'add': {
 				const atIdx = this.items.length
@@ -612,7 +590,7 @@ export class QueueService extends EventEmitter {
 				// cancelled group never triggers one, so no header-only file.
 				if (next.status === QUEUE_STATUS.done && next.playlistGroupId && next.writeM3u !== false) {
 					const groupId = next.playlistGroupId
-					void this.maybeWritePlaylistM3u(groupId).catch(err => {
+					void this.m3uWriter.enqueue(groupId).catch(err => {
 						logger.error('Failed to write playlist M3U', {playlistGroupId: groupId, error: err instanceof Error ? err.message : String(err)})
 					})
 				}
@@ -788,29 +766,6 @@ export class QueueService extends EventEmitter {
 		return pendingItemId ? this.findItem(pendingItemId) : undefined
 	}
 
-	private maybeWritePlaylistM3u(playlistGroupId: string): Promise<void> {
-		// Serialize per group: two items in the same playlist can complete in the
-		// same tick, so overlapping writeFile() calls would race on one .m3u path.
-		// Chaining keeps them sequential (writes are idempotent — file rebuilt from disk).
-		const prev = this.m3uWriteChains.get(playlistGroupId) ?? Promise.resolve()
-		const next = prev.then(() => this.writePlaylistM3u(playlistGroupId))
-		const stored = next.catch(() => {})
-		this.m3uWriteChains.set(playlistGroupId, stored)
-		// Drop the entry once it settles, unless a newer write already replaced it
-		// — otherwise the map retains one promise per group for the app's lifetime.
-		void stored.finally(() => {
-			if (this.m3uWriteChains.get(playlistGroupId) === stored) this.m3uWriteChains.delete(playlistGroupId)
-		})
-		return next
-	}
-
-	private async writePlaylistM3u(playlistGroupId: string): Promise<void> {
-		if (!this.playlist) return
-		const manifest = this.playlist.manifestStore.get(playlistGroupId)
-		if (!manifest) return
-		await this.playlist.writeM3u(manifest)
-	}
-
 	// Persist gate: short-circuits when a bulk op (cancelAll, clearCompleted)
 	// is in flight. Each commit() call site invokes persist() unconditionally
 	// for clarity — the guard here is the single chokepoint. If a future bulk
@@ -823,30 +778,10 @@ export class QueueService extends EventEmitter {
 		})
 	}
 
-	// Diagnostic helpers — used for logging. Kept inline (not stripped under
+	// Diagnostic helper — used for logging. Kept inline (not stripped under
 	// NODE_ENV) so post-mortem of a user log file is possible without a
 	// dedicated dev build.
 	private statusSummary(): Record<string, number> {
-		const counts: Record<string, number> = {}
-		for (const item of this.items) {
-			const key = `${item.status}:${item.lane}`
-			counts[key] = (counts[key] ?? 0) + 1
-		}
-		counts.spawning = this.spawning.size
-		counts.paused = this.schedulerPaused ? 1 : 0
-		return counts
-	}
-
-	private describeMutation(m: Mutation): string {
-		switch (m.kind) {
-			case 'add':
-				return `add[${m.items.length}]`
-			case 'event':
-				return `event[${m.itemId}:${m.evt.kind}]`
-			case 'patch':
-				return `patch[${m.itemId}:${m.reason}]`
-			case 'remove':
-				return `remove[${m.itemId}]`
-		}
+		return computeStatusSummary(this.items, this.spawning.size, this.schedulerPaused)
 	}
 }
