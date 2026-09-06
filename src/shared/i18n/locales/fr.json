@@ -774,6 +774,7 @@
 		"syncFailed": "La dernière synchronisation a échoué. Elle réessaiera d’elle-même.",
 		"syncRevoked": "Cet appareil a été déconnecté de votre compte. Reconnectez-le.",
 		"syncDeviceLimit": "Les comptes gratuits synchronisent un appareil. Passez à Pro pour synchroniser celui-ci aussi.",
-		"syncPlanBlocked": "Votre offre ne couvre pas la synchronisation de cet appareil."
+		"syncPlanBlocked": "Votre offre ne couvre pas la synchronisation de cet appareil.",
+		"syncAlreadyRunning": "Une synchronisation est déjà en cours."
 	}
 }

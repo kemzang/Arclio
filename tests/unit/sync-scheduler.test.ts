@@ -42,9 +42,31 @@ describe('SyncScheduler', () => {
 		const first = scheduler.runNow()
 		const second = scheduler.runNow()
 		release?.()
-		await Promise.all([first, second])
+		const [, secondOutcome] = await Promise.all([first, second])
 
 		expect(sync).toHaveBeenCalledTimes(1)
+		// Regression: the concurrent call used to return the *previous* round's
+		// stale outcome, or a fabricated "not-connected" when there was none yet
+		// — both misleading for a device that is, in fact, connected and mid-sync.
+		expect(secondOutcome).toEqual({status: 'skipped', reason: 'already-running'})
+	})
+
+	it('regression: a concurrent call does not fabricate "not-connected" when no round has completed yet', async () => {
+		let release: (() => void) | undefined
+		const sync = vi.fn(async () => {
+			await new Promise<void>(resolve => {
+				release = resolve
+			})
+			return okOutcome
+		})
+		const scheduler = new SyncScheduler({sync} as unknown as SyncService)
+
+		const first = scheduler.runNow()
+		const second = scheduler.runNow()
+		release?.()
+		const [, secondOutcome] = await Promise.all([first, second])
+
+		expect(secondOutcome).not.toEqual({status: 'skipped', reason: 'not-connected'})
 	})
 
 	it('stops the timer when the device was revoked', async () => {

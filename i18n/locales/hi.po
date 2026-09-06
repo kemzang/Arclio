@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "कनेक्शन शुरू नहीं हो सका। अपना इंटरनेट कनेक्शन जाँचें।"
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "एक सिंक पहले से चल रहा है।"
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "मुफ़्त खाते एक डिवाइस सिंक करते हैं। इसे भी सिंक करने के लिए Pro में अपग्रेड करें।"

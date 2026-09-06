@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "সংযোগ শুরু করা যায়নি। আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন।"
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "একটি সিঙ্ক ইতিমধ্যে চলছে।"
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "বিনামূল্যের অ্যাকাউন্ট একটি ডিভাইস সিঙ্ক করে। এটিও সিঙ্ক করতে Pro-তে আপগ্রেড করুন।"

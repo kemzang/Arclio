@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "کنکشن شروع نہیں ہو سکا۔ اپنا انٹرنیٹ کنکشن چیک کریں۔"
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "ایک ہم وقت سازی پہلے سے جاری ہے۔"
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "مفت اکاؤنٹس ایک آلہ مطابقت پذیر کرتے ہیں۔ اسے بھی مطابقت پذیر کرنے کے لیے Pro میں اپ گریڈ کریں۔"

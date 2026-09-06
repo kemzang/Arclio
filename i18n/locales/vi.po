@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "Không thể bắt đầu kết nối. Hãy kiểm tra kết nối internet của bạn."
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "Đang có một lần đồng bộ diễn ra."
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "Tài khoản miễn phí đồng bộ một thiết bị. Nâng cấp lên Pro để đồng bộ cả thiết bị này."

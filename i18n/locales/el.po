@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "Δεν ήταν δυνατή η έναρξη της σύνδεσης. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο."
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "Ένας συγχρονισμός εκτελείται ήδη."
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "Οι δωρεάν λογαριασμοί συγχρονίζουν μία συσκευή. Αναβαθμίστε σε Pro για να συγχρονίσετε και αυτήν."

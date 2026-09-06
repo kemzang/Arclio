@@ -741,6 +741,7 @@
 		"syncFailed": "Lần đồng bộ trước thất bại. Nó sẽ tự thử lại.",
 		"syncRevoked": "Thiết bị này đã bị ngắt khỏi tài khoản của bạn. Hãy kết nối lại.",
 		"syncDeviceLimit": "Tài khoản miễn phí đồng bộ một thiết bị. Nâng cấp lên Pro để đồng bộ cả thiết bị này.",
-		"syncPlanBlocked": "Gói của bạn không bao gồm việc đồng bộ thiết bị này."
+		"syncPlanBlocked": "Gói của bạn không bao gồm việc đồng bộ thiết bị này.",
+		"syncAlreadyRunning": "Đang có một lần đồng bộ diễn ra."
 	}
 }

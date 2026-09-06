@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "ချိတ်ဆက်မှုမစတင်နိုင်ပါ။ သင့်အင်တာနက်ချိတ်ဆက်မှုကို စစ်ဆေးပါ။"
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "စင့်ခ်ချခြင်းတစ်ခု ရှိပြီးသားဖြစ်နေသည်။"
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "အခမဲ့အကောင့်များသည် စက်တစ်လုံးကို ထပ်တူပြုသည်။ ဤစက်ကိုပါ ထပ်တူပြုရန် Pro သို့ အဆင့်မြှင့်ပါ။"

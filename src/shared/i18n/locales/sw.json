@@ -753,6 +753,7 @@
 		"syncFailed": "Usawazishaji wa mwisho haukufaulu. Utajaribu tena wenyewe.",
 		"syncRevoked": "Kifaa hiki kimetenganishwa na akaunti yako. Kiunganishe tena.",
 		"syncDeviceLimit": "Akaunti za bure husawazisha kifaa kimoja. Pandisha hadi Pro ili kusawazisha hiki pia.",
-		"syncPlanBlocked": "Mpango wako haujumuishi usawazishaji wa kifaa hiki."
+		"syncPlanBlocked": "Mpango wako haujumuishi usawazishaji wa kifaa hiki.",
+		"syncAlreadyRunning": "Usawazishaji tayari unaendelea."
 	}
 }

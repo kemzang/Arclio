@@ -762,6 +762,7 @@
 		"syncFailed": "La última sincronización falló. Volverá a intentarlo por su cuenta.",
 		"syncRevoked": "Este dispositivo fue desconectado de tu cuenta. Vuelve a conectarlo.",
 		"syncDeviceLimit": "Las cuentas gratuitas sincronizan un dispositivo. Cambia a Pro para sincronizar también este.",
-		"syncPlanBlocked": "Tu plan no cubre la sincronización de este dispositivo."
+		"syncPlanBlocked": "Tu plan no cubre la sincronización de este dispositivo.",
+		"syncAlreadyRunning": "Ya hay una sincronización en curso."
 	}
 }

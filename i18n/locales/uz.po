@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "Ulanishni boshlab boʻlmadi. Internet aloqangizni tekshiring."
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "Sinxronlash allaqachon bajarilmoqda."
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "Bepul hisoblar bitta qurilmani sinxronlaydi. Buni ham sinxronlash uchun Pro’ga oʻting."

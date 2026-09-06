@@ -732,6 +732,7 @@
 		"syncFailed": "Last sync failed. It will try again on its own.",
 		"syncRevoked": "This device was disconnected from your account. Connect it again.",
 		"syncDeviceLimit": "Free accounts sync one device. Upgrade to Pro to sync this one too.",
-		"syncPlanBlocked": "Your plan does not cover syncing this device."
+		"syncPlanBlocked": "Your plan does not cover syncing this device.",
+		"syncAlreadyRunning": "A sync is already running."
 	}
 }

@@ -35,7 +35,10 @@ export class SyncScheduler {
 	 * by "already running" than by a backlog.
 	 */
 	async runNow(): Promise<SyncOutcome> {
-		if (this.running) return this.lastOutcome ?? {status: 'skipped', reason: 'not-connected'}
+		// Report the concurrent call honestly instead of falling back to the
+		// previous round's outcome (stale) or a fabricated "not-connected"
+		// (wrong — a device that isn't connected can't have a round in flight).
+		if (this.running) return {status: 'skipped', reason: 'already-running'}
 
 		this.running = true
 		try {

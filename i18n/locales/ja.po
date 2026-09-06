@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "接続を開始できませんでした。インターネット接続を確認してください。"
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "同期はすでに実行中です。"
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "無料アカウントは 1 台の端末を同期できます。この端末も同期するには Pro にアップグレードしてください。"

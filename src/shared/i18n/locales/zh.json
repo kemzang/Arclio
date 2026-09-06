@@ -691,6 +691,7 @@
 		"syncFailed": "上次同步失败。它会自行重试。",
 		"syncRevoked": "此设备已从你的账户断开。请重新连接。",
 		"syncDeviceLimit": "免费账户可同步一台设备。升级到 Pro 即可同步这一台。",
-		"syncPlanBlocked": "你的方案不包含同步此设备。"
+		"syncPlanBlocked": "你的方案不包含同步此设备。",
+		"syncAlreadyRunning": "同步已在进行中。"
 	}
 }

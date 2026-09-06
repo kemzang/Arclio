@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "Не вдалося розпочати підключення. Перевірте зʼєднання з інтернетом."
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "Синхронізація вже виконується."
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "Безкоштовні облікові записи синхронізують один пристрій. Перейдіть на Pro, щоб синхронізувати й цей."

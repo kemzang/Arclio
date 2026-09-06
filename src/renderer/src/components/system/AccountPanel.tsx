@@ -26,6 +26,7 @@ function describeSync(outcome: SyncOutcome | null, t: TFunction): string {
 	if (outcome.status === 'requires-plan') return outcome.reason === 'device_limit' ? t('account.syncDeviceLimit') : t('account.syncPlanBlocked')
 	if (outcome.status === 'unauthorized') return t('account.syncRevoked')
 	if (outcome.status === 'failed') return t('account.syncFailed')
+	if (outcome.status === 'skipped' && outcome.reason === 'already-running') return t('account.syncAlreadyRunning')
 	return t('account.connectDescription')
 }
 

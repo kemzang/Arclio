@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "Haikuweza kuanzisha muunganisho. Angalia muunganisho wako wa intaneti."
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "Usawazishaji tayari unaendelea."
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "Akaunti za bure husawazisha kifaa kimoja. Pandisha hadi Pro ili kusawazisha hiki pia."

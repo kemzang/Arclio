@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "اړیکه پیل نه شوه. خپله د انټرنیټ اړیکه وګورئ."
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "همغږي دمخه روانه ده."
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "وړیا حسابونه یوه وسیله همغږي کوي. دا هم همغږي کولو لپاره Pro ته لوړ کړئ."

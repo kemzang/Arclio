@@ -774,6 +774,7 @@
 		"syncFailed": "Die letzte Synchronisierung ist fehlgeschlagen. Sie versucht es von selbst erneut.",
 		"syncRevoked": "Dieses Gerät wurde von deinem Konto getrennt. Verbinde es erneut.",
 		"syncDeviceLimit": "Kostenlose Konten synchronisieren ein Gerät. Wechsle zu Pro, um auch dieses zu synchronisieren.",
-		"syncPlanBlocked": "Dein Tarif deckt die Synchronisierung dieses Geräts nicht ab."
+		"syncPlanBlocked": "Dein Tarif deckt die Synchronisierung dieses Geräts nicht ab.",
+		"syncAlreadyRunning": "Eine Synchronisierung läuft bereits."
 	}
 }

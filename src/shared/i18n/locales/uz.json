@@ -765,6 +765,7 @@
 		"syncFailed": "Oxirgi sinxronizatsiya muvaffaqiyatsiz tugadi. U oʻzi qayta urinadi.",
 		"syncRevoked": "Bu qurilma hisobingizdan uzildi. Uni qaytadan ulang.",
 		"syncDeviceLimit": "Bepul hisoblar bitta qurilmani sinxronlaydi. Buni ham sinxronlash uchun Pro’ga oʻting.",
-		"syncPlanBlocked": "Rejangiz bu qurilmani sinxronlashni qamrab olmaydi."
+		"syncPlanBlocked": "Rejangiz bu qurilmani sinxronlashni qamrab olmaydi.",
+		"syncAlreadyRunning": "Sinxronlash allaqachon bajarilmoqda."
 	}
 }

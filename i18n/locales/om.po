@@ -99,6 +99,10 @@ msgctxt "account.startFailed"
 msgid "Could not start the connection. Check your internet connection."
 msgstr "Walitti fiduu jalqabuu hin dandeenye. Interneetii kee mirkaneessi."
 
+msgctxt "account.syncAlreadyRunning"
+msgid "A sync is already running."
+msgstr "Waldorgommii tokko duraan hojjetamaa jira."
+
 msgctxt "account.syncDeviceLimit"
 msgid "Free accounts sync one device. Upgrade to Pro to sync this one too."
 msgstr "Herregni bilisaa meeshaa tokko walsimsiisa. Kanas walsimsiisuuf gara Pro guddisi."

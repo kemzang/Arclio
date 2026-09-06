@@ -769,6 +769,7 @@
 		"syncFailed": "Walsimsiisuun dhumaa hin milkoofne. Ofumaan irra deebiʼee yaala.",
 		"syncRevoked": "Meeshaan kun herrega kee irraa adda baʼeera. Irra deebiʼii walitti fidi.",
 		"syncDeviceLimit": "Herregni bilisaa meeshaa tokko walsimsiisa. Kanas walsimsiisuuf gara Pro guddisi.",
-		"syncPlanBlocked": "Karoorri kee walsimsiisuu meeshaa kanaa hin hammatu."
+		"syncPlanBlocked": "Karoorri kee walsimsiisuu meeshaa kanaa hin hammatu.",
+		"syncAlreadyRunning": "Waldorgommii tokko duraan hojjetamaa jira."
 	}
 }

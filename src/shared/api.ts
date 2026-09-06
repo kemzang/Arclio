@@ -361,7 +361,7 @@ export interface PairingHandle {
 
 export type AwaitPairingResult = {ok: true; status: AccountStatus} | {ok: false; reason: 'expired' | 'denied' | 'cancelled' | 'failed'}
 
-export type SyncOutcome = {status: 'skipped'; reason: 'not-connected'} | {status: 'ok'; pulled: number; pushed: number; deleted: number} | {status: 'unauthorized'} | {status: 'requires-plan'; reason: string} | {status: 'failed'; error: string}
+export type SyncOutcome = {status: 'skipped'; reason: 'not-connected' | 'already-running'} | {status: 'ok'; pulled: number; pushed: number; deleted: number} | {status: 'unauthorized'} | {status: 'requires-plan'; reason: string} | {status: 'failed'; error: string}
 
 export interface SyncState {
 	/** True while a round is running; a second request is refused rather than queued. */
