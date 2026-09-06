@@ -41,8 +41,7 @@
     "apps/desktop/src/renderer/main.tsx",
     "apps/desktop/src/renderer/vite.config.ts",
     "src/main/db/index.ts",
-    "src/renderer/src/layouts/AppLayout.tsx",
-    "src/main/db/connection.ts"
+    "src/renderer/src/layouts/AppLayout.tsx"
   ],
   "ignoreDependencies": [
     "@fontsource/jetbrains-mono",

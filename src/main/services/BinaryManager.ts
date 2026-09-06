@@ -22,7 +22,7 @@ type StatusReporter = (statusKey: StatusKey, params?: Record<string, string | nu
 // download_failed instead of only getting a flattened message string —
 // resolveYtDlp() already computes this per-attempt classification; throwing
 // a bare Error discarded it.
-export class DependencyResolutionError extends Error {
+class DependencyResolutionError extends Error {
 	constructor(
 		message: string,
 		readonly failure: DependencyFailure | undefined
