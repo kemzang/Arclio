@@ -1,5 +1,5 @@
 {
-	"common": {"back": "Atrás", "cancel": "Cancelar", "continue": "Continuar", "retry": "Reintentar", "startOver": "Empezar de nuevo"},
+	"common": {"back": "Atrás", "cancel": "Cancelar", "continue": "Continuar", "retry": "Reintentar", "startOver": "Empezar de nuevo", "delete": "Eliminar"},
 	"app": {"feedback": "Comentarios", "logs": "Registros", "feedbackNudge": "¿Disfrutando Arclio? ¡Me encantaría saber de ti! 💬", "zoomIn": "Acercar", "zoomOut": "Alejar"},
 	"about": {"button": "Acerca de", "openTitle": "Acerca de Arclio", "tagline": "Descargador rápido y amigable para YouTube y más de 2000 sitios.", "websiteLink": "Sitio web", "githubLink": "GitHub", "licenseLine": "Licencia MIT · por Antonio Orionus", "thirdPartyNotices": "Ver avisos de terceros"},
 	"titleBar": {"close": "Cerrar", "minimize": "Minimizar", "maximize": "Maximizar", "restore": "Restaurar"},
@@ -272,7 +272,8 @@
 					"custom": "Ajusta tú mismo los controles avanzados por descarga."
 				},
 				"fields": {"sleepRequests": "Pausa entre comprobaciones de metadatos", "sleepInterval": "Pausa antes de iniciar el medio: mín", "maxSleepInterval": "Pausa antes de iniciar el medio: máx", "sleepSubtitles": "Pausa antes de archivos de subtítulos", "concurrentFragments": "Conexiones de descarga"},
-				"units": {"seconds": "seg", "threads": "hilos"}
+				"units": {"seconds": "seg", "threads": "hilos"},
+				"invalid": "Introduce un número válido y no negativo."
 			},
 			"closeToTray": {"toggle": "Minimizar a la bandeja al cerrar", "toggleDescription": "Continuar descargas en segundo plano al cerrar la ventana."},
 			"analytics": {"toggle": "Enviar estadísticas de uso anónimas", "toggleDescription": "Solo cuenta los inicios de la app. Sin URLs, nombres de archivo ni datos personales."}
@@ -658,11 +659,41 @@
 		"emptyHint": "Descarga un video para comenzar",
 		"missing": "Faltante"
 	},
-	"collections": {"create": "Nueva colección", "namePlaceholder": "Nombre de la colección", "save": "Crear", "cancel": "Cancelar", "empty": "Sin colecciones aún", "emptyHint": "Crea una colección para organizar tus medios"},
+	"collections": {
+		"create": "Nueva colección",
+		"namePlaceholder": "Nombre de la colección",
+		"save": "Crear",
+		"cancel": "Cancelar",
+		"empty": "Sin colecciones aún",
+		"emptyHint": "Crea una colección para organizar tus medios",
+		"deleteConfirmTitle": "¿Eliminar esta colección?",
+		"deleteConfirmDescription": "Se eliminará la colección. Los medios que contiene permanecerán en tu biblioteca."
+	},
 	"collectionDetail": {"back": "Volver a colecciones", "empty": "Sin medios en esta colección", "emptyHint": "Agrega medios desde la biblioteca", "removeFromCollection": "Quitar de la colección"},
 	"favorites": {"empty": "Sin favoritos aún", "emptyHint": "Marca un medio como favorito para verlo aquí"},
-	"tags": {"create": "Nueva etiqueta", "namePlaceholder": "Nombre de la etiqueta", "save": "Crear", "cancel": "Cancelar", "empty": "Sin etiquetas aún", "emptyHint": "Crea una etiqueta para categorizar tus medios"},
-	"history": {"downloads": "Descargas", "playback": "Reproducción", "today": "Hoy", "yesterday": "Ayer", "thisWeek": "Esta semana", "thisMonth": "Este mes", "empty": "Sin historial de descargas", "emptyPlayback": "Sin historial de reproducción", "playCount": "{{count}} reproducción", "completed": "Completado"},
+	"tags": {
+		"create": "Nueva etiqueta",
+		"namePlaceholder": "Nombre de la etiqueta",
+		"save": "Crear",
+		"cancel": "Cancelar",
+		"empty": "Sin etiquetas aún",
+		"emptyHint": "Crea una etiqueta para categorizar tus medios",
+		"deleteConfirmTitle": "¿Eliminar esta etiqueta?",
+		"deleteConfirmDescription": "La etiqueta se eliminará de todos los elementos multimedia a los que esté aplicada."
+	},
+	"history": {
+		"downloads": "Descargas",
+		"playback": "Reproducción",
+		"today": "Hoy",
+		"yesterday": "Ayer",
+		"thisWeek": "Esta semana",
+		"thisMonth": "Este mes",
+		"empty": "Sin historial de descargas",
+		"emptyPlayback": "Sin historial de reproducción",
+		"playCount": "{{count}} reproducción",
+		"completed": "Completado",
+		"failed": "Fallido"
+	},
 	"player": {"back": "Volver a la biblioteca", "noMedia": "Medio no encontrado", "noAsset": "No se encontró archivo reproducible", "subtitles": "Subtítulos"},
 	"settings": {
 		"outputDir": "Directorio de salida",

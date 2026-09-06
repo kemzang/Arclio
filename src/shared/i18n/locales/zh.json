@@ -1,5 +1,5 @@
 {
-	"common": {"back": "返回", "cancel": "取消", "continue": "继续", "retry": "重试", "startOver": "重新开始"},
+	"common": {"back": "返回", "cancel": "取消", "continue": "继续", "retry": "重试", "startOver": "重新开始", "delete": "删除"},
 	"app": {"feedback": "反馈", "logs": "日志", "feedbackNudge": "喜欢 Arclio 吗?我很想听听你的想法! 💬", "zoomIn": "放大", "zoomOut": "缩小"},
 	"about": {"button": "关于", "openTitle": "关于 Arclio", "tagline": "适用于 YouTube 和其他 2000+ 网站的快速友好下载器。", "websiteLink": "官网", "githubLink": "GitHub", "licenseLine": "MIT 许可证 · 作者 Antonio Orionus", "thirdPartyNotices": "查看第三方声明"},
 	"titleBar": {"close": "关闭", "minimize": "最小化", "maximize": "最大化", "restore": "还原"},
@@ -258,7 +258,8 @@
 				"presets": {"off": "关闭", "balanced": "均衡", "careful": "谨慎", "custom": "自定义"},
 				"tooltips": {"off": "仅使用 Arclio 为媒体和字幕保留的小基准暂停。", "balanced": "默认。添加短暂停并使用一个下载连接。", "careful": "为大型播放列表或经常触达限制的网络添加更长的暂停。", "custom": "自行调整每次下载的高级控制参数。"},
 				"fields": {"sleepRequests": "元数据检查之间的等待", "sleepInterval": "媒体开始前暂停：最小值", "maxSleepInterval": "媒体开始前暂停：最大值", "sleepSubtitles": "字幕文件前等待", "concurrentFragments": "下载连接数"},
-				"units": {"seconds": "秒", "threads": "线程"}
+				"units": {"seconds": "秒", "threads": "线程"},
+				"invalid": "请输入一个有效的非负数。"
 			},
 			"closeToTray": {"toggle": "关闭时最小化到托盘", "toggleDescription": "关闭窗口后继续在后台下载。"},
 			"analytics": {"toggle": "发送匿名使用统计", "toggleDescription": "仅统计应用启动次数，不包含任何URL、文件名或个人数据。"}
@@ -617,11 +618,11 @@
 		"emptyHint": "下载视频开始使用",
 		"missing": "缺失"
 	},
-	"collections": {"create": "新建收藏集", "namePlaceholder": "收藏集名称", "save": "创建", "cancel": "取消", "empty": "暂无收藏集", "emptyHint": "创建收藏集来组织您的媒体"},
+	"collections": {"create": "新建收藏集", "namePlaceholder": "收藏集名称", "save": "创建", "cancel": "取消", "empty": "暂无收藏集", "emptyHint": "创建收藏集来组织您的媒体", "deleteConfirmTitle": "删除此合集？", "deleteConfirmDescription": "合集将被删除。其中的媒体仍会保留在您的媒体库中。"},
 	"collectionDetail": {"back": "返回收藏集", "empty": "此收藏集中没有媒体", "emptyHint": "从媒体库添加媒体", "removeFromCollection": "从收藏集中移除"},
 	"favorites": {"empty": "暂无收藏", "emptyHint": "将媒体标记为收藏以在此查看"},
-	"tags": {"create": "新建标签", "namePlaceholder": "标签名称", "save": "创建", "cancel": "取消", "empty": "暂无标签", "emptyHint": "创建标签来分类您的媒体"},
-	"history": {"downloads": "下载", "playback": "播放", "today": "今天", "yesterday": "昨天", "thisWeek": "本周", "thisMonth": "本月", "empty": "无下载历史", "emptyPlayback": "无播放历史", "playCount": "{{count}} 次播放", "completed": "已完成"},
+	"tags": {"create": "新建标签", "namePlaceholder": "标签名称", "save": "创建", "cancel": "取消", "empty": "暂无标签", "emptyHint": "创建标签来分类您的媒体", "deleteConfirmTitle": "删除此标签？", "deleteConfirmDescription": "该标签将从所有应用了它的媒体项中移除。"},
+	"history": {"downloads": "下载", "playback": "播放", "today": "今天", "yesterday": "昨天", "thisWeek": "本周", "thisMonth": "本月", "empty": "无下载历史", "emptyPlayback": "无播放历史", "playCount": "{{count}} 次播放", "completed": "已完成", "failed": "失败"},
 	"player": {"back": "返回媒体库", "noMedia": "未找到媒体", "noAsset": "未找到可播放文件", "subtitles": "字幕"},
 	"settings": {
 		"outputDir": "输出目录",

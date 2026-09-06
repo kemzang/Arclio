@@ -1,5 +1,5 @@
 {
-	"common": {"back": "ተመለስ", "cancel": "ሰርዝ", "continue": "ቀጥል", "retry": "እንደገና ሞክር", "startOver": "ከመጀመሪያ ጀምር"},
+	"common": {"back": "ተመለስ", "cancel": "ሰርዝ", "continue": "ቀጥል", "retry": "እንደገና ሞክር", "startOver": "ከመጀመሪያ ጀምር", "delete": "አጥፋ"},
 	"app": {"feedback": "አስተያየት", "logs": "ምዝግቦች", "feedbackNudge": "Arclio ደስ ይለዎታል? አስተያየትዎን ማካፈል ይፈልጋሉ! 💬", "zoomIn": "አቅርብ", "zoomOut": "አርቅ"},
 	"about": {"button": "ስለ", "openTitle": "ስለ Arclio", "tagline": "ለYouTube እና ለ2000+ ሌሎች ጣቢያዎች ፈጣን እና ምቹ አውርጅ።", "websiteLink": "ድረ-ገጽ", "githubLink": "GitHub", "licenseLine": "MIT ፈቃድ · በ Antonio Orionus", "thirdPartyNotices": "የሦስተኛ ወገን ማስታወቂያዎችን ይመልከቱ"},
 	"titleBar": {"close": "ዝጋ", "minimize": "አሳንስ", "maximize": "አሰፋ", "restore": "መልስ"},
@@ -258,7 +258,8 @@
 				"presets": {"off": "ጠፍ", "balanced": "ሚዛናዊ", "careful": "ጥንቁቅ", "custom": "ብጁ"},
 				"tooltips": {"off": "Arclio ለሚዲያ እና ንዑስ ርዕሶች የሚያቆየውን ትንሽ መሰረታዊ እረፍት ብቻ ይጠቀማል።", "balanced": "ነባሪ። አጫጭር እረፍቶችን ያክላል እና አንድ የዳውንሎድ ግንኙነት ይጠቀማል።", "careful": "ለትልልቅ playlists ወይም ቶሎ ቶሎ ገደብ ለሚያጋጥማቸው አውታሮች ረዥም እረፍቶችን ያክላል።", "custom": "የከፍተኛ ዳውንሎድ መቆጣጠሪያዎችን እራስዎ ያስተካክሉ።"},
 				"fields": {"sleepRequests": "ምርምሮች መካከል መጠበቂያ", "sleepInterval": "ሚዲያ ከመጀመሩ በፊት እረፍት: ዝቅ.", "maxSleepInterval": "ሚዲያ ከመጀመሩ በፊት እረፍት: ከፍ.", "sleepSubtitles": "ከንዑስ ጽሑፍ ፋይሎች በፊት ጠብቅ", "concurrentFragments": "የዳውንሎድ ግንኙነቶች"},
-				"units": {"seconds": "ሰከንድ", "threads": "ክሮች"}
+				"units": {"seconds": "ሰከንድ", "threads": "ክሮች"},
+				"invalid": "ትክክለኛ፣ አሉታዊ ያልሆነ ቁጥር ያስገቡ።"
 			},
 			"closeToTray": {"toggle": "ሲዘጋ ወደ ትሬ ደብቅ", "toggleDescription": "መስኮት ሲዘጋ ዳውንሎዶችን ዳራ ቀጥል።"},
 			"analytics": {"toggle": "ስም-አልባ የአጠቃቀም ስታቲስቲክስ ላክ", "toggleDescription": "የመተግበሪያ ማስጀመሪያዎችን ብቻ ይቆጥራል። ምንም URL፣ የፋይል ስሞች ወይም የግል መረጃ የለም።"}
@@ -617,11 +618,11 @@
 		"emptyHint": "ለመጀመር ቪዲዮ ያውርዱ",
 		"missing": "ጎድሏል"
 	},
-	"collections": {"create": "አዲስ ስብስብ", "namePlaceholder": "የስብስብ ስም", "save": "ፍጠር", "cancel": "ሰርዝ", "empty": "ስብስቦች የሉም", "emptyHint": "ሚዲያህን ለማደራጀት ስብስብ ፍጠር"},
+	"collections": {"create": "አዲስ ስብስብ", "namePlaceholder": "የስብስብ ስም", "save": "ፍጠር", "cancel": "ሰርዝ", "empty": "ስብስቦች የሉም", "emptyHint": "ሚዲያህን ለማደራጀት ስብስብ ፍጠር", "deleteConfirmTitle": "ይህን ስብስብ ማጥፋት ይፈልጋሉ?", "deleteConfirmDescription": "ስብስቡ ይወገዳል። በውስጡ ያለው ሚዲያ በቤተ መጻሕፍትዎ ውስጥ ይቆያል።"},
 	"collectionDetail": {"back": "ወደ ስብስቦች ተመለስ", "empty": "በዚህ ስብስብ ውስጥ ሚዲያ የለም", "emptyHint": "ከቤተ-መጽሐፍት ሚዲያ ያክሉ", "removeFromCollection": "ከስብስብ አስወግድ"},
 	"favorites": {"empty": "ተወዳጆች የሉም", "emptyHint": "ሚዲያን እዚህ ለማየት ተወዳጅ አድርገው ምልክት ያድርጉ"},
-	"tags": {"create": "አዲስ መለያ", "namePlaceholder": "የመለያ ስም", "save": "ፍጠር", "cancel": "ሰርዝ", "empty": "መለያዎች የሉም", "emptyHint": "ሚዲያህን ለመመደብ መለያ ፍጠር"},
-	"history": {"downloads": "ውርዶች", "playback": "ማጫወት", "today": "ዛሬ", "yesterday": "ትናንት", "thisWeek": "ይህ ሳምንት", "thisMonth": "ይህ ወር", "empty": "የውርድ ታሪክ የለም", "emptyPlayback": "የማጫወት ታሪክ የለም", "playCount": "{{count}} ማጫወት", "completed": "ተጠናቋል"},
+	"tags": {"create": "አዲስ መለያ", "namePlaceholder": "የመለያ ስም", "save": "ፍጠር", "cancel": "ሰርዝ", "empty": "መለያዎች የሉም", "emptyHint": "ሚዲያህን ለመመደብ መለያ ፍጠር", "deleteConfirmTitle": "ይህን መለያ ማጥፋት ይፈልጋሉ?", "deleteConfirmDescription": "መለያው በእሱ ከተተገበረባቸው ሁሉም ሚዲያዎች ይወገዳል።"},
+	"history": {"downloads": "ውርዶች", "playback": "ማጫወት", "today": "ዛሬ", "yesterday": "ትናንት", "thisWeek": "ይህ ሳምንት", "thisMonth": "ይህ ወር", "empty": "የውርድ ታሪክ የለም", "emptyPlayback": "የማጫወት ታሪክ የለም", "playCount": "{{count}} ማጫወት", "completed": "ተጠናቋል", "failed": "አልተሳካም"},
 	"player": {"back": "ወደ ቤተ-መጽሐፍት ተመለስ", "noMedia": "ሚዲያ አልተገኘም", "noAsset": "ሊጫወት የሚችል ፋይል አልተገኘም", "subtitles": "የግርጌ ጽሑፎች"},
 	"settings": {
 		"outputDir": "ውጤት ማውጫ",

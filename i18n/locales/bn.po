@@ -203,6 +203,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr "নতুন সংগ্রহ"
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr "কালেকশনটি সরানো হবে। এর ভেতরের মিডিয়া আপনার লাইব্রেরিতে থেকে যাবে।"
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr "এই কালেকশনটি মুছবেন?"
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr "এখনো কোনো সংগ্রহ নেই"
@@ -230,6 +238,10 @@ msgstr "বাতিল"
 msgctxt "common.continue"
 msgid "Continue"
 msgstr "চালিয়ে যান"
+
+msgctxt "common.delete"
+msgid "Delete"
+msgstr "মুছুন"
 
 msgctxt "common.retry"
 msgid "Retry"
@@ -398,6 +410,10 @@ msgstr "কোনো ডাউনলোড ইতিহাস নেই"
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
 msgstr "কোনো প্লেব্যাক ইতিহাস নেই"
+
+msgctxt "history.failed"
+msgid "Failed"
+msgstr "ব্যর্থ"
 
 msgctxt "history.playback"
 msgid "Playback"
@@ -1338,6 +1354,14 @@ msgstr "বাতিল"
 msgctxt "tags.create"
 msgid "New tag"
 msgstr "নতুন ট্যাগ"
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr "যেসব মিডিয়া আইটেমে এটি প্রয়োগ করা হয়েছে, সেগুলো থেকে ট্যাগটি সরানো হবে।"
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
+msgstr "এই ট্যাগটি মুছবেন?"
 
 msgctxt "tags.empty"
 msgid "No tags yet"
@@ -3200,6 +3224,10 @@ msgstr "সাবটাইটেল ফাইলের আগে বিরতি
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
 msgstr "মৃদু ডাউনলোড"
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
+msgstr "একটি বৈধ, নন-নেগেটিভ সংখ্যা লিখুন।"
 
 msgctxt "wizard.url.networkPacing.presetLabel"
 msgid "How cautious should Arclio be?"

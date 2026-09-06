@@ -1,5 +1,5 @@
 {
-	"common": {"back": "Rudi", "cancel": "Ghairi", "continue": "Endelea", "retry": "Jaribu tena", "startOver": "Anza upya"},
+	"common": {"back": "Rudi", "cancel": "Ghairi", "continue": "Endelea", "retry": "Jaribu tena", "startOver": "Anza upya", "delete": "Futa"},
 	"app": {"feedback": "Maoni", "logs": "Kumbukumbu", "feedbackNudge": "Unafurahia Arclio? Ningependa kusikia kutoka kwako! 💬", "zoomIn": "Kuza", "zoomOut": "Punguza"},
 	"about": {"button": "Kuhusu", "openTitle": "Kuhusu Arclio", "tagline": "Kipakua cha haraka na rahisi kwa YouTube na tovuti nyingine 2000+.", "websiteLink": "Tovuti", "githubLink": "GitHub", "licenseLine": "Leseni ya MIT · na Antonio Orionus", "thirdPartyNotices": "Tazama notisi za wengine"},
 	"titleBar": {"close": "Funga", "minimize": "Punguza", "maximize": "Panua", "restore": "Rejesha"},
@@ -272,7 +272,8 @@
 					"custom": "Rekebisha mwenyewe udhibiti wa hali ya juu wa kila upakuaji."
 				},
 				"fields": {"sleepRequests": "Pumzika kati ya ukaguzi wa metadata", "sleepInterval": "Pumzika kabla ya media kuanza: kiwango cha chini", "maxSleepInterval": "Pumzika kabla ya media kuanza: kiwango cha juu", "sleepSubtitles": "Pumzika kabla ya faili za manukuu", "concurrentFragments": "Miunganisho ya kupakua"},
-				"units": {"seconds": "sek", "threads": "miunganisho"}
+				"units": {"seconds": "sek", "threads": "miunganisho"},
+				"invalid": "Weka nambari sahihi, isiyo hasi."
 			},
 			"closeToTray": {"toggle": "Ficha kwenye tray ukifunga", "toggleDescription": "Endelea kupakua nyuma ya pazia baada ya kufunga dirisha."},
 			"analytics": {"toggle": "Tuma takwimu za matumizi zisizo na jina", "toggleDescription": "Huhesabu tu uzinduzi wa programu. Hakuna URL, majina ya faili, au data za kibinafsi."}
@@ -658,11 +659,32 @@
 		"emptyHint": "Pakua video kuanza",
 		"missing": "Inakosekana"
 	},
-	"collections": {"create": "Mkusanyiko mpya", "namePlaceholder": "Jina la mkusanyiko", "save": "Unda", "cancel": "Ghairi", "empty": "Hakuna mikusanyiko bado", "emptyHint": "Unda mkusanyiko kupanga midia yako"},
+	"collections": {
+		"create": "Mkusanyiko mpya",
+		"namePlaceholder": "Jina la mkusanyiko",
+		"save": "Unda",
+		"cancel": "Ghairi",
+		"empty": "Hakuna mikusanyiko bado",
+		"emptyHint": "Unda mkusanyiko kupanga midia yako",
+		"deleteConfirmTitle": "Futa mkusanyiko huu?",
+		"deleteConfirmDescription": "Mkusanyiko utaondolewa. Maudhui yaliyo ndani yake yatabaki kwenye maktaba yako."
+	},
 	"collectionDetail": {"back": "Rudi kwa mikusanyiko", "empty": "Hakuna midia katika mkusanyiko huu", "emptyHint": "Ongeza midia kutoka maktaba", "removeFromCollection": "Ondoa kutoka mkusanyiko"},
 	"favorites": {"empty": "Hakuna vipendwa bado", "emptyHint": "Weka alama ya kipendwa kwenye midia kuiona hapa"},
-	"tags": {"create": "Lebo mpya", "namePlaceholder": "Jina la lebo", "save": "Unda", "cancel": "Ghairi", "empty": "Hakuna lebo bado", "emptyHint": "Unda lebo kupanga midia yako"},
-	"history": {"downloads": "Upakuaji", "playback": "Uchezaji", "today": "Leo", "yesterday": "Jana", "thisWeek": "Wiki hii", "thisMonth": "Mwezi huu", "empty": "Hakuna historia ya upakuaji", "emptyPlayback": "Hakuna historia ya uchezaji", "playCount": "Uchezaji {{count}}", "completed": "Imekamilika"},
+	"tags": {"create": "Lebo mpya", "namePlaceholder": "Jina la lebo", "save": "Unda", "cancel": "Ghairi", "empty": "Hakuna lebo bado", "emptyHint": "Unda lebo kupanga midia yako", "deleteConfirmTitle": "Futa lebo hii?", "deleteConfirmDescription": "Lebo itaondolewa kutoka kwa kila maudhui yaliyowekewa."},
+	"history": {
+		"downloads": "Upakuaji",
+		"playback": "Uchezaji",
+		"today": "Leo",
+		"yesterday": "Jana",
+		"thisWeek": "Wiki hii",
+		"thisMonth": "Mwezi huu",
+		"empty": "Hakuna historia ya upakuaji",
+		"emptyPlayback": "Hakuna historia ya uchezaji",
+		"playCount": "Uchezaji {{count}}",
+		"completed": "Imekamilika",
+		"failed": "Imeshindwa"
+	},
 	"player": {"back": "Rudi kwenye maktaba", "noMedia": "Media haijapatikana", "noAsset": "Hakuna faili inayoweza kuchezwa imepatikana", "subtitles": "Manukuu"},
 	"settings": {
 		"outputDir": "Saraka ya pato",

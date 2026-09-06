@@ -203,6 +203,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr "نوې ټولګه"
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr "ټولګه به لرې شي. دننه شتون لرونکي رسنۍ به ستاسو په کتابتون کې پاتې شي."
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr "دا ټولګه ړنګه کړئ؟"
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr "تراوسه ټولګې نشته"
@@ -230,6 +238,10 @@ msgstr "لغوه کړئ"
 msgctxt "common.continue"
 msgid "Continue"
 msgstr "دوام ورکړه"
+
+msgctxt "common.delete"
+msgid "Delete"
+msgstr "ړنګول"
 
 msgctxt "common.retry"
 msgid "Retry"
@@ -398,6 +410,10 @@ msgstr "د ډاونلوډ تاریخ نشته"
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
 msgstr "د پلې بیک تاریخ نشته"
+
+msgctxt "history.failed"
+msgid "Failed"
+msgstr "ناکامه شوه"
 
 msgctxt "history.playback"
 msgid "Playback"
@@ -1338,6 +1354,14 @@ msgstr "لغوه"
 msgctxt "tags.create"
 msgid "New tag"
 msgstr "نوی ټګ"
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr "نښه به له هغو ټولو رسنیو څخه لرې شي چې پرې پلي شوې ده."
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
+msgstr "دا نښه ړنګه کړئ؟"
 
 msgctxt "tags.empty"
 msgid "No tags yet"
@@ -3200,6 +3224,10 @@ msgstr "د ژباړلیک فایلونو دمخه انتظار"
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
 msgstr "آرامه ډاونلوډونه"
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
+msgstr "یو سم، غیر منفي شمېر دننه کړئ."
 
 msgctxt "wizard.url.networkPacing.presetLabel"
 msgid "How cautious should Arclio be?"

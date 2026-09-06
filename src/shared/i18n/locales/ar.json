@@ -1,5 +1,5 @@
 {
-	"common": {"back": "رجوع", "cancel": "إلغاء", "continue": "متابعة", "retry": "إعادة المحاولة", "startOver": "البدء من جديد"},
+	"common": {"back": "رجوع", "cancel": "إلغاء", "continue": "متابعة", "retry": "إعادة المحاولة", "startOver": "البدء من جديد", "delete": "حذف"},
 	"app": {"feedback": "ملاحظات", "logs": "السجلات", "feedbackNudge": "هل تستمتع بـ Arclio؟ يسعدني سماع رأيك! 💬", "zoomIn": "تكبير", "zoomOut": "تصغير"},
 	"about": {"button": "حول", "openTitle": "حول Arclio", "tagline": "محمّل سريع وسهل الاستخدام لـ YouTube وأكثر من 2000 موقع آخر.", "websiteLink": "موقع الويب", "githubLink": "GitHub", "licenseLine": "ترخيص MIT · بواسطة Antonio Orionus", "thirdPartyNotices": "عرض إشعارات الطرف الثالث"},
 	"titleBar": {"close": "إغلاق", "minimize": "تصغير", "maximize": "تكبير", "restore": "استعادة"},
@@ -272,7 +272,8 @@
 					"custom": "اضبط بنفسك عناصر التحكم المتقدمة لكل تنزيل."
 				},
 				"fields": {"sleepRequests": "انتظار بين فحوصات البيانات الوصفية", "sleepInterval": "توقف قبل بدء الوسائط: الحد الأدنى", "maxSleepInterval": "توقف قبل بدء الوسائط: الحد الأقصى", "sleepSubtitles": "انتظار قبل ملفات الترجمة", "concurrentFragments": "اتصالات التنزيل"},
-				"units": {"seconds": "ث", "threads": "مسارات"}
+				"units": {"seconds": "ث", "threads": "مسارات"},
+				"invalid": "أدخل رقمًا صالحًا غير سالب."
 			},
 			"closeToTray": {"toggle": "الإخفاء في علبة النظام عند الإغلاق", "toggleDescription": "تستمر التنزيلات في الخلفية بعد إغلاق النافذة."},
 			"analytics": {"toggle": "إرسال إحصائيات الاستخدام المجهولة", "toggleDescription": "يحسب فقط مرات تشغيل التطبيق. بدون عناوين URL أو أسماء ملفات أو بيانات شخصية."}
@@ -650,11 +651,11 @@
 		"emptyHint": "حمّل فيديو للبدء",
 		"missing": "مفقود"
 	},
-	"collections": {"create": "مجموعة جديدة", "namePlaceholder": "اسم المجموعة", "save": "إنشاء", "cancel": "إلغاء", "empty": "لا توجد مجموعات", "emptyHint": "أنشئ مجموعة لتنظيم وسائطك"},
+	"collections": {"create": "مجموعة جديدة", "namePlaceholder": "اسم المجموعة", "save": "إنشاء", "cancel": "إلغاء", "empty": "لا توجد مجموعات", "emptyHint": "أنشئ مجموعة لتنظيم وسائطك", "deleteConfirmTitle": "هل تريد حذف هذه المجموعة؟", "deleteConfirmDescription": "ستتم إزالة المجموعة. تبقى الوسائط بداخلها في مكتبتك."},
 	"collectionDetail": {"back": "العودة إلى المجموعات", "empty": "لا توجد وسائط في هذه المجموعة", "emptyHint": "أضف وسائط من المكتبة", "removeFromCollection": "إزالة من المجموعة"},
 	"favorites": {"empty": "لا توجد مفضلة", "emptyHint": "ضع علامة مفضلة على وسيط لرؤيته هنا"},
-	"tags": {"create": "علامة جديدة", "namePlaceholder": "اسم العلامة", "save": "إنشاء", "cancel": "إلغاء", "empty": "لا توجد علامات", "emptyHint": "أنشئ علامة لتصنيف وسائطك"},
-	"history": {"downloads": "التنزيلات", "playback": "التشغيل", "today": "اليوم", "yesterday": "أمس", "thisWeek": "هذا الأسبوع", "thisMonth": "هذا الشهر", "empty": "لا سجل تنزيلات", "emptyPlayback": "لا سجل تشغيل", "playCount": "{{count}} تشغيل", "completed": "مكتمل"},
+	"tags": {"create": "علامة جديدة", "namePlaceholder": "اسم العلامة", "save": "إنشاء", "cancel": "إلغاء", "empty": "لا توجد علامات", "emptyHint": "أنشئ علامة لتصنيف وسائطك", "deleteConfirmTitle": "هل تريد حذف هذا الوسم؟", "deleteConfirmDescription": "ستتم إزالة الوسم من كل عنصر وسائط تم تطبيقه عليه."},
+	"history": {"downloads": "التنزيلات", "playback": "التشغيل", "today": "اليوم", "yesterday": "أمس", "thisWeek": "هذا الأسبوع", "thisMonth": "هذا الشهر", "empty": "لا سجل تنزيلات", "emptyPlayback": "لا سجل تشغيل", "playCount": "{{count}} تشغيل", "completed": "مكتمل", "failed": "فشل"},
 	"player": {"back": "العودة إلى المكتبة", "noMedia": "الوسائط غير موجودة", "noAsset": "لم يتم العثور على ملف قابل للتشغيل", "subtitles": "الترجمات"},
 	"settings": {
 		"outputDir": "دليل الإخراج",

@@ -203,6 +203,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr "مجموعة جديدة"
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr "ستتم إزالة المجموعة. تبقى الوسائط بداخلها في مكتبتك."
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr "هل تريد حذف هذه المجموعة؟"
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr "لا توجد مجموعات"
@@ -230,6 +238,10 @@ msgstr "إلغاء"
 msgctxt "common.continue"
 msgid "Continue"
 msgstr "متابعة"
+
+msgctxt "common.delete"
+msgid "Delete"
+msgstr "حذف"
 
 msgctxt "common.retry"
 msgid "Retry"
@@ -398,6 +410,10 @@ msgstr "لا سجل تنزيلات"
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
 msgstr "لا سجل تشغيل"
+
+msgctxt "history.failed"
+msgid "Failed"
+msgstr "فشل"
 
 msgctxt "history.playback"
 msgid "Playback"
@@ -1338,6 +1354,14 @@ msgstr "إلغاء"
 msgctxt "tags.create"
 msgid "New tag"
 msgstr "علامة جديدة"
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr "ستتم إزالة الوسم من كل عنصر وسائط تم تطبيقه عليه."
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
+msgstr "هل تريد حذف هذا الوسم؟"
 
 msgctxt "tags.empty"
 msgid "No tags yet"
@@ -3200,6 +3224,10 @@ msgstr "انتظار قبل ملفات الترجمة"
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
 msgstr "تنزيلات هادئة"
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
+msgstr "أدخل رقمًا صالحًا غير سالب."
 
 msgctxt "wizard.url.networkPacing.presetLabel"
 msgid "How cautious should Arclio be?"

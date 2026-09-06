@@ -1,5 +1,5 @@
 {
-	"common": {"back": "Duubatti", "cancel": "Haqi", "continue": "Itti fufi", "retry": "Irra deebi'i", "startOver": "Jalqabbii irra deebi'i"},
+	"common": {"back": "Duubatti", "cancel": "Haqi", "continue": "Itti fufi", "retry": "Irra deebi'i", "startOver": "Jalqabbii irra deebi'i", "delete": "Balleessi"},
 	"app": {"feedback": "Yaada", "logs": "Galmee", "feedbackNudge": "Arclio si gammachiisaa jiraa? Yaada kee dhaga'uu barbaada! 💬", "zoomIn": "Guddisi", "zoomOut": "Xiqqeessi"},
 	"about": {"button": "Waa'ee", "openTitle": "Waa'ee Arclio", "tagline": "YouTube fi marsariitota 2000+ biroo irraa buusuuf meeshaa ariifataa fi salphaa.", "websiteLink": "Marsariitii", "githubLink": "GitHub", "licenseLine": "Heeyyama MIT · by Antonio Orionus", "thirdPartyNotices": "Beeksisa seera-biroo ilaali"},
 	"titleBar": {"close": "Cufii", "minimize": "Xiqqeessi", "maximize": "Guddisi", "restore": "Deebi'si"},
@@ -272,7 +272,8 @@
 					"custom": "Too'annoo ammayyaa buufata tokko tokkoos ofiin sirreessi."
 				},
 				"fields": {"sleepRequests": "Qorannoo metadata gidduutti eegii", "sleepInterval": "Miidiyaan jalqabuuf dura gidduu dhabi: isa xiqqaa", "maxSleepInterval": "Miidiyaan jalqabuuf dura gidduu dhabi: isa ol'aanaa", "sleepSubtitles": "Axxiinni faayiloota dura eegii", "concurrentFragments": "Walqunnamtii buufata"},
-				"units": {"seconds": "sec", "threads": "threads"}
+				"units": {"seconds": "sec", "threads": "threads"},
+				"invalid": "Lakkoofsa sirrii, kan negative hin taane galchi."
 			},
 			"closeToTray": {"toggle": "Cufuun dura tiiree dhoksi", "toggleDescription": "Daawniloodii booda gubbaan cufamuu itti fufi."},
 			"analytics": {"toggle": "Tilastoo faayidaa maqaa-malee ergaa", "toggleDescription": "Jalqabbii app qofa lakkaawa. URL, maqaa faayilii, ykn daataa dhuunfaa hin qabatu."}
@@ -665,11 +666,41 @@
 		"emptyHint": "Viidiyoo buufadhu jalqabuuf",
 		"missing": "Dhabe"
 	},
-	"collections": {"create": "Walitti qabama haaraa", "namePlaceholder": "Maqaa walitti qabamaa", "save": "Uumi", "cancel": "Haquu", "empty": "Walitti qabamni hin jiru", "emptyHint": "Miidiyaa kee qindeessuuf walitti qabama uumi"},
+	"collections": {
+		"create": "Walitti qabama haaraa",
+		"namePlaceholder": "Maqaa walitti qabamaa",
+		"save": "Uumi",
+		"cancel": "Haquu",
+		"empty": "Walitti qabamni hin jiru",
+		"emptyHint": "Miidiyaa kee qindeessuuf walitti qabama uumi",
+		"deleteConfirmTitle": "Kuusaa kana balleessuu?",
+		"deleteConfirmDescription": "Kuusaan ni haqama. Miidiyaan isa keessa jiru kuusaa keessan keessatti ni hafa."
+	},
 	"collectionDetail": {"back": "Gara walitti qabamootatti deebi'i", "empty": "Miidiyaan walitti qabama kana keessa hin jiru", "emptyHint": "Mana kitaabaa irraa miidiyaa dabali", "removeFromCollection": "Walitti qabama keessaa baasi"},
 	"favorites": {"empty": "Jaalatamni hin jiru", "emptyHint": "Miidiyaa jaalatama akka ta'e mallatteessi asitti arguuf"},
-	"tags": {"create": "Mallattoo haaraa", "namePlaceholder": "Maqaa mallattoo", "save": "Uumi", "cancel": "Haquu", "empty": "Mallattoonni hin jiran", "emptyHint": "Miidiyaa kee ramaduuf mallattoo uumi"},
-	"history": {"downloads": "Buufannoo", "playback": "Taphannaa", "today": "Har'a", "yesterday": "Kaleessa", "thisWeek": "Torban kana", "thisMonth": "Ji'a kana", "empty": "Seenaa buufannoo hin jiru", "emptyPlayback": "Seenaa taphannaa hin jiru", "playCount": "{{count}} taphannaa", "completed": "Xumurame"},
+	"tags": {
+		"create": "Mallattoo haaraa",
+		"namePlaceholder": "Maqaa mallattoo",
+		"save": "Uumi",
+		"cancel": "Haquu",
+		"empty": "Mallattoonni hin jiran",
+		"emptyHint": "Miidiyaa kee ramaduuf mallattoo uumi",
+		"deleteConfirmTitle": "Mallattoo kana balleessuu?",
+		"deleteConfirmDescription": "Mallattoon miidiyaa isarratti hojiirra oolan hunda irraa ni haqama."
+	},
+	"history": {
+		"downloads": "Buufannoo",
+		"playback": "Taphannaa",
+		"today": "Har'a",
+		"yesterday": "Kaleessa",
+		"thisWeek": "Torban kana",
+		"thisMonth": "Ji'a kana",
+		"empty": "Seenaa buufannoo hin jiru",
+		"emptyPlayback": "Seenaa taphannaa hin jiru",
+		"playCount": "{{count}} taphannaa",
+		"completed": "Xumurame",
+		"failed": "Milkaa'uu dide"
+	},
 	"player": {"back": "Gara perpacha deebi'i", "noMedia": "Miidiyaan hin argamne", "noAsset": "Faayilii taphatamu hin argamne", "subtitles": "Barreeffama gadii"},
 	"settings": {
 		"outputDir": "Galeelaa badii",

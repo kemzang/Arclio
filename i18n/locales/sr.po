@@ -203,6 +203,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr "Нова колекција"
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr "Колекција ће бити уклоњена. Медији унутар ње остају у вашој библиотеци."
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr "Обрисати ову колекцију?"
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr "Нема колекција"
@@ -230,6 +238,10 @@ msgstr "Откажи"
 msgctxt "common.continue"
 msgid "Continue"
 msgstr "Настави"
+
+msgctxt "common.delete"
+msgid "Delete"
+msgstr "Обриши"
 
 msgctxt "common.retry"
 msgid "Retry"
@@ -398,6 +410,10 @@ msgstr "Нема историје преузимања"
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
 msgstr "Нема историје репродукције"
+
+msgctxt "history.failed"
+msgid "Failed"
+msgstr "Неуспешно"
 
 msgctxt "history.playback"
 msgid "Playback"
@@ -1338,6 +1354,14 @@ msgstr "Откажи"
 msgctxt "tags.create"
 msgid "New tag"
 msgstr "Нова ознака"
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr "Ознака ће бити уклоњена са свих медија на које је примењена."
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
+msgstr "Обрисати ову ознаку?"
 
 msgctxt "tags.empty"
 msgid "No tags yet"
@@ -3200,6 +3224,10 @@ msgstr "Чекање пре фајлова титлова"
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
 msgstr "Пажљива преузимања"
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
+msgstr "Унесите важећи, ненегативан број."
 
 msgctxt "wizard.url.networkPacing.presetLabel"
 msgid "How cautious should Arclio be?"

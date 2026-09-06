@@ -1,5 +1,5 @@
 {
-	"common": {"back": "واپس", "cancel": "منسوخ کریں", "continue": "جاری رکھیں", "retry": "دوبارہ کوشش کریں", "startOver": "دوبارہ شروع کریں"},
+	"common": {"back": "واپس", "cancel": "منسوخ کریں", "continue": "جاری رکھیں", "retry": "دوبارہ کوشش کریں", "startOver": "دوبارہ شروع کریں", "delete": "حذف کریں"},
 	"app": {"feedback": "فیڈبیک", "logs": "لاگز", "feedbackNudge": "Arclio پسند آ رہا ہے؟ آپ سے سن کر خوشی ہو گی! 💬", "zoomIn": "زوم اِن", "zoomOut": "زوم آؤٹ"},
 	"about": {"button": "کے بارے میں", "openTitle": "Arclio کے بارے میں", "tagline": "YouTube اور 2000+ دیگر سائٹس کے لیے تیز اور آسان ڈاؤنلوڈر۔", "websiteLink": "ویب سائٹ", "githubLink": "GitHub", "licenseLine": "MIT لائسنس · از Antonio Orionus", "thirdPartyNotices": "فریق ثالث کے نوٹس دیکھیں"},
 	"titleBar": {"close": "بند کریں", "minimize": "چھوٹا کریں", "maximize": "بڑا کریں", "restore": "بحال کریں"},
@@ -272,7 +272,8 @@
 					"custom": "فی ڈاؤن لوڈ ایڈوانسڈ کنٹرولز خود ترتیب دیں۔"
 				},
 				"fields": {"sleepRequests": "میٹا ڈیٹا چیکس کے درمیان انتظار", "sleepInterval": "میڈیا شروع ہونے سے پہلے وقفہ: کم از کم", "maxSleepInterval": "میڈیا شروع ہونے سے پہلے وقفہ: زیادہ سے زیادہ", "sleepSubtitles": "سب ٹائٹل فائلوں سے پہلے انتظار", "concurrentFragments": "ڈاؤن لوڈ کنکشنز"},
-				"units": {"seconds": "سیکنڈ", "threads": "تھریڈز"}
+				"units": {"seconds": "سیکنڈ", "threads": "تھریڈز"},
+				"invalid": "ایک درست، غیر منفی نمبر درج کریں۔"
 			},
 			"closeToTray": {"toggle": "بند کرنے پر ٹرے میں چھپائیں", "toggleDescription": "ونڈو بند ہونے کے بعد بیک گراؤنڈ میں ڈاؤن لوڈز جاری رکھیں۔"},
 			"analytics": {"toggle": "گمنام استعمال کے اعداد و شمار بھیجیں", "toggleDescription": "صرف ایپ لانچز گنتا ہے۔ کوئی URL، فائل نام، یا ذاتی ڈیٹا نہیں۔"}
@@ -657,11 +658,29 @@
 		"emptyHint": "شروع کرنے کے لیے ویڈیو ڈاؤن لوڈ کریں",
 		"missing": "غائب"
 	},
-	"collections": {"create": "نیا مجموعہ", "namePlaceholder": "مجموعے کا نام", "save": "بنائیں", "cancel": "منسوخ", "empty": "ابھی کوئی مجموعے نہیں", "emptyHint": "اپنے میڈیا کو منظم کرنے کے لیے مجموعہ بنائیں"},
+	"collections": {
+		"create": "نیا مجموعہ",
+		"namePlaceholder": "مجموعے کا نام",
+		"save": "بنائیں",
+		"cancel": "منسوخ",
+		"empty": "ابھی کوئی مجموعے نہیں",
+		"emptyHint": "اپنے میڈیا کو منظم کرنے کے لیے مجموعہ بنائیں",
+		"deleteConfirmTitle": "کیا اس مجموعے کو حذف کرنا ہے؟",
+		"deleteConfirmDescription": "مجموعہ ہٹا دیا جائے گا۔ اس کے اندر موجود میڈیا آپ کی لائبریری میں رہے گا۔"
+	},
 	"collectionDetail": {"back": "مجموعوں پر واپس", "empty": "اس مجموعے میں کوئی میڈیا نہیں", "emptyHint": "لائبریری سے میڈیا شامل کریں", "removeFromCollection": "مجموعے سے ہٹائیں"},
 	"favorites": {"empty": "ابھی کوئی پسندیدہ نہیں", "emptyHint": "میڈیا کو پسندیدہ کے طور پر نشان زد کریں"},
-	"tags": {"create": "نیا ٹیگ", "namePlaceholder": "ٹیگ کا نام", "save": "بنائیں", "cancel": "منسوخ", "empty": "ابھی کوئی ٹیگز نہیں", "emptyHint": "اپنے میڈیا کی درجہ بندی کے لیے ٹیگ بنائیں"},
-	"history": {"downloads": "ڈاؤن لوڈز", "playback": "پلے بیک", "today": "آج", "yesterday": "کل", "thisWeek": "اس ہفتے", "thisMonth": "اس ماہ", "empty": "کوئی ڈاؤن لوڈ تاریخ نہیں", "emptyPlayback": "کوئی پلے بیک تاریخ نہیں", "playCount": "{{count}} پلے", "completed": "مکمل"},
+	"tags": {
+		"create": "نیا ٹیگ",
+		"namePlaceholder": "ٹیگ کا نام",
+		"save": "بنائیں",
+		"cancel": "منسوخ",
+		"empty": "ابھی کوئی ٹیگز نہیں",
+		"emptyHint": "اپنے میڈیا کی درجہ بندی کے لیے ٹیگ بنائیں",
+		"deleteConfirmTitle": "کیا اس ٹیگ کو حذف کرنا ہے؟",
+		"deleteConfirmDescription": "ٹیگ ان تمام میڈیا آئٹمز سے ہٹا دیا جائے گا جن پر یہ لاگو ہے۔"
+	},
+	"history": {"downloads": "ڈاؤن لوڈز", "playback": "پلے بیک", "today": "آج", "yesterday": "کل", "thisWeek": "اس ہفتے", "thisMonth": "اس ماہ", "empty": "کوئی ڈاؤن لوڈ تاریخ نہیں", "emptyPlayback": "کوئی پلے بیک تاریخ نہیں", "playCount": "{{count}} پلے", "completed": "مکمل", "failed": "ناکام"},
 	"player": {"back": "لائبریری پر واپس", "noMedia": "میڈیا نہیں ملا", "noAsset": "کوئی چلانے کے قابل فائل نہیں ملی", "subtitles": "ذیلی عنوانات"},
 	"settings": {
 		"outputDir": "آؤٹ پٹ ڈائریکٹری",

@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import type {TFunction} from 'i18next'
 import {Check, Copy, ExternalLink, Loader2, LogOut, RefreshCw, ShieldAlert} from 'lucide-react'
@@ -45,6 +45,8 @@ export function AccountPanel(): React.JSX.Element {
 	const [syncing, setSyncing] = useState(false)
 	const [syncOutcome, setSyncOutcome] = useState<SyncOutcome | null>(null)
 
+	const mountedRef = useRef(true)
+
 	useEffect(() => {
 		let cancelled = false
 		void (async () => {
@@ -53,6 +55,7 @@ export function AccountPanel(): React.JSX.Element {
 		})()
 		return () => {
 			cancelled = true
+			mountedRef.current = false
 		}
 	}, [])
 
@@ -61,12 +64,16 @@ export function AccountPanel(): React.JSX.Element {
 		setMessage('')
 		try {
 			const handle = await window.appApi.account.beginPairing()
+			if (!mountedRef.current) return
 			setPairing(handle)
 			setPhase('waiting')
 
 			// Resolves only once the user decides in the browser, so it is awaited
 			// separately from beginPairing — the code stays on screen meanwhile.
+			// The panel can unmount long before that (navigating away from
+			// Settings); guard every state update after this await.
 			const result = await window.appApi.account.awaitPairing()
+			if (!mountedRef.current) return
 			if (result.ok) {
 				setStatus(result.status)
 				setPairing(null)
@@ -76,6 +83,7 @@ export function AccountPanel(): React.JSX.Element {
 			setMessage(t(FAILURE_KEY[result.reason] ?? 'account.pairingFailed'))
 			setPhase('failed')
 		} catch {
+			if (!mountedRef.current) return
 			setMessage(t('account.startFailed'))
 			setPhase('failed')
 		}

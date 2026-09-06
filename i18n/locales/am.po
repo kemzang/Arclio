@@ -203,6 +203,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr "አዲስ ስብስብ"
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr "ስብስቡ ይወገዳል። በውስጡ ያለው ሚዲያ በቤተ መጻሕፍትዎ ውስጥ ይቆያል።"
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr "ይህን ስብስብ ማጥፋት ይፈልጋሉ?"
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr "ስብስቦች የሉም"
@@ -230,6 +238,10 @@ msgstr "ሰርዝ"
 msgctxt "common.continue"
 msgid "Continue"
 msgstr "ቀጥል"
+
+msgctxt "common.delete"
+msgid "Delete"
+msgstr "አጥፋ"
 
 msgctxt "common.retry"
 msgid "Retry"
@@ -398,6 +410,10 @@ msgstr "የውርድ ታሪክ የለም"
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
 msgstr "የማጫወት ታሪክ የለም"
+
+msgctxt "history.failed"
+msgid "Failed"
+msgstr "አልተሳካም"
 
 msgctxt "history.playback"
 msgid "Playback"
@@ -1338,6 +1354,14 @@ msgstr "ሰርዝ"
 msgctxt "tags.create"
 msgid "New tag"
 msgstr "አዲስ መለያ"
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr "መለያው በእሱ ከተተገበረባቸው ሁሉም ሚዲያዎች ይወገዳል።"
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
+msgstr "ይህን መለያ ማጥፋት ይፈልጋሉ?"
 
 msgctxt "tags.empty"
 msgid "No tags yet"
@@ -3200,6 +3224,10 @@ msgstr "ከንዑስ ጽሑፍ ፋይሎች በፊት ጠብቅ"
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
 msgstr "ለዝቅ ያሉ ዳውንሎዶች"
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
+msgstr "ትክክለኛ፣ አሉታዊ ያልሆነ ቁጥር ያስገቡ።"
 
 msgctxt "wizard.url.networkPacing.presetLabel"
 msgid "How cautious should Arclio be?"

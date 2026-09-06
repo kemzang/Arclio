@@ -203,6 +203,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr "Yangi to'plam"
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr "To'plam olib tashlanadi. Undagi media kutubxonangizda qoladi."
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr "Ushbu to'plamni o'chirasizmi?"
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr "To'plamlar yo'q"
@@ -230,6 +238,10 @@ msgstr "Bekor qilish"
 msgctxt "common.continue"
 msgid "Continue"
 msgstr "Davom etish"
+
+msgctxt "common.delete"
+msgid "Delete"
+msgstr "O'chirish"
 
 msgctxt "common.retry"
 msgid "Retry"
@@ -398,6 +410,10 @@ msgstr "Yuklab olish tarixi yo'q"
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
 msgstr "Ijro tarixi yo'q"
+
+msgctxt "history.failed"
+msgid "Failed"
+msgstr "Muvaffaqiyatsiz"
 
 msgctxt "history.playback"
 msgid "Playback"
@@ -1338,6 +1354,14 @@ msgstr "Bekor qilish"
 msgctxt "tags.create"
 msgid "New tag"
 msgstr "Yangi teg"
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr "Teg u qo'llanilgan barcha media elementlaridan olib tashlanadi."
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
+msgstr "Ushbu tegni o'chirasizmi?"
 
 msgctxt "tags.empty"
 msgid "No tags yet"
@@ -3200,6 +3224,10 @@ msgstr "Subtitr fayllaridan oldin kutish"
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
 msgstr "Yumshoq yuklamalar"
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
+msgstr "Yaroqli, manfiy bo'lmagan raqam kiriting."
 
 msgctxt "wizard.url.networkPacing.presetLabel"
 msgid "How cautious should Arclio be?"

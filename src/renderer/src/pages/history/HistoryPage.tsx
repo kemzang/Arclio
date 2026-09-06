@@ -1,13 +1,21 @@
 import {useState, useEffect} from 'react'
 import {useTranslation} from 'react-i18next'
+import type {TFunction} from 'i18next'
 import {Clock, Download, Play} from 'lucide-react'
 import type {LibraryDownloadHistory, LibraryPlaybackHistory} from '@shared/api.js'
 import {Button} from '@renderer/components/ui/button.js'
+import {formatDuration} from '@renderer/lib/formatDuration.js'
 
 type HistoryTab = 'downloads' | 'playback'
 
+function downloadStatusLabel(status: string, t: TFunction): string {
+	if (status === 'completed') return t('history.completed')
+	if (status === 'failed') return t('history.failed')
+	return status
+}
+
 export function HistoryPage(): React.JSX.Element {
-	const {t} = useTranslation()
+	const {t, i18n} = useTranslation()
 	const [activeTab, setActiveTab] = useState<HistoryTab>('downloads')
 	const [downloads, setDownloads] = useState<LibraryDownloadHistory[]>([])
 	const [playback, setPlayback] = useState<LibraryPlaybackHistory[]>([])
@@ -35,15 +43,9 @@ export function HistoryPage(): React.JSX.Element {
 		if (days === 1) return t('history.yesterday')
 		if (days < 7) return t('history.thisWeek')
 		if (days < 30) return t('history.thisMonth')
-		return date.toLocaleDateString()
-	}
-
-	const formatDuration = (ms: number | null): string => {
-		if (!ms) return ''
-		const seconds = Math.floor(ms / 1000)
-		const m = Math.floor(seconds / 60)
-		const s = seconds % 60
-		return `${m}m ${s}s`
+		// Use the app's display language, not the OS locale — otherwise a user
+		// who switched Arclio's language still sees dates in their system locale.
+		return date.toLocaleDateString(i18n.language)
 	}
 
 	const groupedDownloads = downloads.reduce<Record<string, LibraryDownloadHistory[]>>((acc, item) => {
@@ -86,11 +88,11 @@ export function HistoryPage(): React.JSX.Element {
 											<div className="flex-1 min-w-0">
 												<p className="text-sm truncate">{item.url}</p>
 												<p className="text-xs text-[var(--text-subtle)]">
-													{item.status} {item.formatId && `· ${item.formatId}`}
-													{item.durationMs && ` · ${formatDuration(item.durationMs)}`}
+													{downloadStatusLabel(item.status, t)} {item.formatId && `· ${item.formatId}`}
+													{item.durationMs && ` · ${formatDuration(Math.floor(item.durationMs / 1000))}`}
 												</p>
 											</div>
-											<span className="text-xs text-[var(--text-subtle)] shrink-0">{new Date(item.finishedAt).toLocaleTimeString()}</span>
+											<span className="text-xs text-[var(--text-subtle)] shrink-0">{new Date(item.finishedAt).toLocaleTimeString(i18n.language)}</span>
 										</div>
 									))}
 								</div>
@@ -115,7 +117,7 @@ export function HistoryPage(): React.JSX.Element {
 									{item.completed ? ` · ${t('history.completed')}` : ''}
 								</p>
 							</div>
-							<span className="text-xs text-[var(--text-subtle)] shrink-0">{new Date(item.lastOpenedAt).toLocaleDateString()}</span>
+							<span className="text-xs text-[var(--text-subtle)] shrink-0">{new Date(item.lastOpenedAt).toLocaleDateString(i18n.language)}</span>
 						</div>
 					))}
 				</div>

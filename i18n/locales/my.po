@@ -203,6 +203,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr "ကောက်နှုတ်ချက်အသစ်"
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr "စုစည်းမှုကို ဖယ်ရှားပါမည်။ အတွင်းရှိ မီဒီယာများသည် သင့်စာကြည့်တိုက်တွင် ကျန်ရှိနေပါမည်။"
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr "ဤစုစည်းမှုကို ဖျက်မလား။"
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr "ကောက်နှုတ်ချက် မရှိသေးပါ"
@@ -230,6 +238,10 @@ msgstr "ပယ်ဖျက်မည်"
 msgctxt "common.continue"
 msgid "Continue"
 msgstr "ဆက်လက်သွားမည်"
+
+msgctxt "common.delete"
+msgid "Delete"
+msgstr "ဖျက်ရန်"
 
 msgctxt "common.retry"
 msgid "Retry"
@@ -398,6 +410,10 @@ msgstr "ဒေါင်းလုဒ် မှတ်တမ်း မရှိပ�
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
 msgstr "ဖွင့်ခြင်း မှတ်တမ်း မရှိပါ"
+
+msgctxt "history.failed"
+msgid "Failed"
+msgstr "မအောင်မြင်ပါ"
 
 msgctxt "history.playback"
 msgid "Playback"
@@ -1338,6 +1354,14 @@ msgstr "ပယ်ဖျက်"
 msgctxt "tags.create"
 msgid "New tag"
 msgstr "အမှတ်အသားအသစ်"
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr "တဂ်ကို အသုံးပြုထားသော မီဒီယာအားလုံးမှ ဖယ်ရှားပါမည်။"
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
+msgstr "ဤတဂ်ကို ဖျက်မလား။"
 
 msgctxt "tags.empty"
 msgid "No tags yet"
@@ -3200,6 +3224,10 @@ msgstr "စာတန်းထိုးဖိုင်များမတိုင
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
 msgstr "ညင်သာသော ဒေါင်းလုဒ်"
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
+msgstr "မှန်ကန်သော၊ အနှုတ်မဟုတ်သော နံပါတ်တစ်ခု ထည့်ပါ။"
 
 msgctxt "wizard.url.networkPacing.presetLabel"
 msgid "How cautious should Arclio be?"

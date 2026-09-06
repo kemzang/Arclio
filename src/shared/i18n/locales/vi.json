@@ -1,5 +1,5 @@
 {
-	"common": {"back": "Quay lại", "cancel": "Hủy", "continue": "Tiếp tục", "retry": "Thử lại", "startOver": "Bắt đầu lại"},
+	"common": {"back": "Quay lại", "cancel": "Hủy", "continue": "Tiếp tục", "retry": "Thử lại", "startOver": "Bắt đầu lại", "delete": "Xóa"},
 	"app": {"feedback": "Phản hồi", "logs": "Nhật ký", "feedbackNudge": "Bạn thích Arclio không? Tôi rất muốn nghe ý kiến của bạn! 💬", "zoomIn": "Phóng to", "zoomOut": "Thu nhỏ"},
 	"about": {"button": "Giới thiệu", "openTitle": "Giới thiệu về Arclio", "tagline": "Trình tải xuống nhanh, thân thiện cho YouTube và hơn 2000 trang web khác.", "websiteLink": "Trang web", "githubLink": "GitHub", "licenseLine": "Giấy phép MIT · bởi Antonio Orionus", "thirdPartyNotices": "Xem thông báo bên thứ ba"},
 	"titleBar": {"close": "Đóng", "minimize": "Thu nhỏ", "maximize": "Phóng to", "restore": "Khôi phục"},
@@ -272,7 +272,8 @@
 					"custom": "Tự điều chỉnh các điều khiển tải xuống nâng cao."
 				},
 				"fields": {"sleepRequests": "Chờ giữa các lần kiểm tra metadata", "sleepInterval": "Dừng trước khi media bắt đầu: tối thiểu", "maxSleepInterval": "Dừng trước khi media bắt đầu: tối đa", "sleepSubtitles": "Chờ trước tệp phụ đề", "concurrentFragments": "Kết nối tải xuống"},
-				"units": {"seconds": "giây", "threads": "luồng"}
+				"units": {"seconds": "giây", "threads": "luồng"},
+				"invalid": "Nhập một số hợp lệ, không âm."
 			},
 			"closeToTray": {"toggle": "Ẩn xuống khay khi đóng", "toggleDescription": "Tiếp tục tải xuống trong nền sau khi đóng cửa sổ."},
 			"analytics": {"toggle": "Gửi thống kê sử dụng ẩn danh", "toggleDescription": "Chỉ đếm số lần khởi động ứng dụng. Không có URL, tên tệp hay dữ liệu cá nhân."}
@@ -658,11 +659,20 @@
 		"emptyHint": "Tải video để bắt đầu",
 		"missing": "Thiếu"
 	},
-	"collections": {"create": "Bộ sưu tập mới", "namePlaceholder": "Tên bộ sưu tập", "save": "Tạo", "cancel": "Hủy", "empty": "Chưa có bộ sưu tập", "emptyHint": "Tạo bộ sưu tập để sắp xếp phương tiện"},
+	"collections": {
+		"create": "Bộ sưu tập mới",
+		"namePlaceholder": "Tên bộ sưu tập",
+		"save": "Tạo",
+		"cancel": "Hủy",
+		"empty": "Chưa có bộ sưu tập",
+		"emptyHint": "Tạo bộ sưu tập để sắp xếp phương tiện",
+		"deleteConfirmTitle": "Xóa bộ sưu tập này?",
+		"deleteConfirmDescription": "Bộ sưu tập sẽ bị xóa. Phương tiện bên trong vẫn còn trong thư viện của bạn."
+	},
 	"collectionDetail": {"back": "Quay lại bộ sưu tập", "empty": "Không có phương tiện trong bộ sưu tập này", "emptyHint": "Thêm phương tiện từ thư viện", "removeFromCollection": "Xóa khỏi bộ sưu tập"},
 	"favorites": {"empty": "Chưa có yêu thích", "emptyHint": "Đánh dấu phương tiện là yêu thích để xem ở đây"},
-	"tags": {"create": "Thẻ mới", "namePlaceholder": "Tên thẻ", "save": "Tạo", "cancel": "Hủy", "empty": "Chưa có thẻ", "emptyHint": "Tạo thẻ để phân loại phương tiện"},
-	"history": {"downloads": "Tải xuống", "playback": "Phát", "today": "Hôm nay", "yesterday": "Hôm qua", "thisWeek": "Tuần này", "thisMonth": "Tháng này", "empty": "Không có lịch sử tải xuống", "emptyPlayback": "Không có lịch sử phát", "playCount": "{{count}} lần phát", "completed": "Hoàn thành"},
+	"tags": {"create": "Thẻ mới", "namePlaceholder": "Tên thẻ", "save": "Tạo", "cancel": "Hủy", "empty": "Chưa có thẻ", "emptyHint": "Tạo thẻ để phân loại phương tiện", "deleteConfirmTitle": "Xóa thẻ này?", "deleteConfirmDescription": "Thẻ sẽ bị xóa khỏi mọi phương tiện đã áp dụng nó."},
+	"history": {"downloads": "Tải xuống", "playback": "Phát", "today": "Hôm nay", "yesterday": "Hôm qua", "thisWeek": "Tuần này", "thisMonth": "Tháng này", "empty": "Không có lịch sử tải xuống", "emptyPlayback": "Không có lịch sử phát", "playCount": "{{count}} lần phát", "completed": "Hoàn thành", "failed": "Thất bại"},
 	"player": {"back": "Quay lại thư viện", "noMedia": "Không tìm thấy phương tiện", "noAsset": "Không tìm thấy tệp có thể phát", "subtitles": "Phụ đề"},
 	"settings": {
 		"outputDir": "Thư mục đầu ra",

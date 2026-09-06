@@ -7,6 +7,7 @@ import type {LibraryMediaWithAssets, LibraryMediaListFilters} from '@shared/api.
 import {Button} from '@renderer/components/ui/button.js'
 import {Input} from '@renderer/components/ui/input.js'
 import {MEDIA_TYPE_OPTIONS, mediaTypeEmoji, mediaRouteFor} from '@renderer/lib/mediaTypeMeta.js'
+import {formatDuration} from '@renderer/lib/formatDuration.js'
 import type {MediaType} from '@shared/schemas.js'
 
 export function LibraryPage(): React.JSX.Element {
@@ -43,15 +44,6 @@ export function LibraryPage(): React.JSX.Element {
 		await window.appApi.library.media.setFavorite(id, !current)
 		const filters: LibraryMediaListFilters = {sortBy, sortOrder, mediaType: mediaTypeFilter, search: search || undefined}
 		void window.appApi.library.media.list(filters).then(setMedia)
-	}
-
-	const formatDuration = (seconds: number | null): string => {
-		if (!seconds) return ''
-		const h = Math.floor(seconds / 3600)
-		const m = Math.floor((seconds % 3600) / 60)
-		const s = Math.floor(seconds % 60)
-		if (h > 0) return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
-		return `${m}:${s.toString().padStart(2, '0')}`
 	}
 
 	const formatSize = (bytes: number | null): string => {
@@ -194,7 +186,7 @@ export function LibraryPage(): React.JSX.Element {
 								<p className="text-sm font-medium truncate">{item.title}</p>
 								<p className="text-xs text-[var(--text-subtle)]">{item.author}</p>
 							</div>
-							<span className="text-xs text-[var(--text-subtle)] shrink-0">{formatDuration(item.duration)}</span>
+							<span className="text-xs text-[var(--text-subtle)] shrink-0">{item.duration ? formatDuration(item.duration) : ''}</span>
 							<span className="text-xs text-[var(--text-subtle)] shrink-0">{formatSize(item.totalSize)}</span>
 							<button onClick={() => void toggleFavorite(item.id, item.isFavorite === 1)} className="p-1 shrink-0">
 								<Heart className={cn('size-4', item.isFavorite === 1 ? 'fill-red-500 text-red-500' : 'text-[var(--text-subtle)]')} />

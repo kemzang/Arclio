@@ -58,4 +58,40 @@ describe('GlobalSearch', () => {
 		expect(screen.getByText('Second Result')).toBeInTheDocument()
 		expect(screen.queryByText('First Result')).not.toBeInTheDocument()
 	})
+
+	it('regression: exposes combobox/listbox ARIA roles and tracks the active option', async () => {
+		// Previously the input had no role/aria-activedescendant and the result
+		// list had no role="listbox"/"option" — keyboard users navigating with
+		// arrow keys got no accessible indication of which result was focused.
+		const api = setup()
+		api.library.media.search = vi.fn().mockResolvedValue([
+			{id: 'm1', title: 'First Result', author: null},
+			{id: 'm2', title: 'Second Result', author: null}
+		]) as typeof api.library.media.search
+
+		render(
+			<MemoryRouter>
+				<GlobalSearch />
+			</MemoryRouter>
+		)
+
+		const input = screen.getByPlaceholderText(/search/i)
+		expect(input).toHaveAttribute('role', 'combobox')
+		expect(input).toHaveAttribute('aria-autocomplete', 'list')
+
+		fireEvent.change(input, {target: {value: 'result'}})
+		await screen.findByText('First Result')
+
+		const listbox = screen.getByRole('listbox')
+		expect(input).toHaveAttribute('aria-controls', listbox.id)
+		expect(input).toHaveAttribute('aria-expanded', 'true')
+
+		const options = screen.getAllByRole('option')
+		expect(options).toHaveLength(2)
+		expect(options[0]).toHaveAttribute('aria-selected', 'false')
+
+		fireEvent.keyDown(input, {key: 'ArrowDown'})
+		expect(input).toHaveAttribute('aria-activedescendant', options[0].id)
+		expect(options[0]).toHaveAttribute('aria-selected', 'true')
+	})
 })

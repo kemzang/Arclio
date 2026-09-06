@@ -1,5 +1,5 @@
 {
-	"common": {"back": "পেছনে", "cancel": "বাতিল", "continue": "চালিয়ে যান", "retry": "আবার চেষ্টা করুন", "startOver": "নতুন করে শুরু করুন"},
+	"common": {"back": "পেছনে", "cancel": "বাতিল", "continue": "চালিয়ে যান", "retry": "আবার চেষ্টা করুন", "startOver": "নতুন করে শুরু করুন", "delete": "মুছুন"},
 	"app": {"feedback": "মতামত", "logs": "লগ", "feedbackNudge": "Arclio পছন্দ হচ্ছে? আপনার মতামত জানাতে চাই! 💬", "zoomIn": "জুম ইন", "zoomOut": "জুম আউট"},
 	"about": {"button": "সম্পর্কে", "openTitle": "Arclio সম্পর্কে", "tagline": "YouTube ও 2000+ অন্যান্য সাইটের জন্য দ্রুত ও সহজ ডাউনলোডার।", "websiteLink": "ওয়েবসাইট", "githubLink": "GitHub", "licenseLine": "MIT লাইসেন্স · Antonio Orionus দ্বারা", "thirdPartyNotices": "তৃতীয়-পক্ষ নোটিশ দেখুন"},
 	"titleBar": {"close": "বন্ধ করুন", "minimize": "ছোট করুন", "maximize": "বড় করুন", "restore": "পুনরুদ্ধার করুন"},
@@ -267,7 +267,8 @@
 				"presets": {"off": "বন্ধ", "balanced": "সুষম", "careful": "সতর্ক", "custom": "কাস্টম"},
 				"tooltips": {"off": "শুধুমাত্র Arclio যে ছোট বেসলাইন বিরতি মিডিয়া ও সাবটাইটেলের জন্য রাখে তা ব্যবহার করে।", "balanced": "ডিফল্ট। ছোট বিরতি যোগ করে এবং একটি ডাউনলোড সংযোগ ব্যবহার করে।", "careful": "বড় প্লেলিস্ট বা যে নেটওয়ার্কে প্রায়ই সীমা লাগে তার জন্য দীর্ঘ বিরতি যোগ করে।", "custom": "ডাউনলোডের উন্নত নিয়ন্ত্রণগুলো নিজে সেট করুন।"},
 				"fields": {"sleepRequests": "মেটাডেটা চেকের মাঝে বিরতি", "sleepInterval": "মিডিয়া শুরুর আগে বিরতি: সর্বনিম্ন", "maxSleepInterval": "মিডিয়া শুরুর আগে বিরতি: সর্বোচ্চ", "sleepSubtitles": "সাবটাইটেল ফাইলের আগে বিরতি", "concurrentFragments": "ডাউনলোড সংযোগ"},
-				"units": {"seconds": "সে", "threads": "থ্রেড"}
+				"units": {"seconds": "সে", "threads": "থ্রেড"},
+				"invalid": "একটি বৈধ, নন-নেগেটিভ সংখ্যা লিখুন।"
 			},
 			"closeToTray": {"toggle": "বন্ধে ট্রেতে লুকান", "toggleDescription": "উইন্ডো বন্ধ করার পরেও ব্যাকগ্রাউন্ডে ডাউনলোড চলতে থাকবে।"},
 			"analytics": {"toggle": "বেনামী ব্যবহার পরিসংখ্যান পাঠান", "toggleDescription": "শুধুমাত্র অ্যাপ চালু হওয়ার সংখ্যা গণনা করে। কোনো URL, ফাইলের নাম বা ব্যক্তিগত তথ্য নেই।"}
@@ -634,11 +635,29 @@
 		"emptyHint": "শুরু করতে একটি ভিডিও ডাউনলোড করুন",
 		"missing": "অনুপস্থিত"
 	},
-	"collections": {"create": "নতুন সংগ্রহ", "namePlaceholder": "সংগ্রহের নাম", "save": "তৈরি", "cancel": "বাতিল", "empty": "এখনো কোনো সংগ্রহ নেই", "emptyHint": "আপনার মিডিয়া সংগঠিত করতে একটি সংগ্রহ তৈরি করুন"},
+	"collections": {
+		"create": "নতুন সংগ্রহ",
+		"namePlaceholder": "সংগ্রহের নাম",
+		"save": "তৈরি",
+		"cancel": "বাতিল",
+		"empty": "এখনো কোনো সংগ্রহ নেই",
+		"emptyHint": "আপনার মিডিয়া সংগঠিত করতে একটি সংগ্রহ তৈরি করুন",
+		"deleteConfirmTitle": "এই কালেকশনটি মুছবেন?",
+		"deleteConfirmDescription": "কালেকশনটি সরানো হবে। এর ভেতরের মিডিয়া আপনার লাইব্রেরিতে থেকে যাবে।"
+	},
 	"collectionDetail": {"back": "সংগ্রহে ফিরুন", "empty": "এই সংগ্রহে কোনো মিডিয়া নেই", "emptyHint": "লাইব্রেরি থেকে মিডিয়া যোগ করুন", "removeFromCollection": "সংগ্রহ থেকে সরান"},
 	"favorites": {"empty": "এখনো কোনো প্রিয় নেই", "emptyHint": "এখানে দেখতে মিডিয়াকে প্রিয় হিসেবে চিহ্নিত করুন"},
-	"tags": {"create": "নতুন ট্যাগ", "namePlaceholder": "ট্যাগের নাম", "save": "তৈরি", "cancel": "বাতিল", "empty": "এখনো কোনো ট্যাগ নেই", "emptyHint": "আপনার মিডিয়া শ্রেণীবদ্ধ করতে একটি ট্যাগ তৈরি করুন"},
-	"history": {"downloads": "ডাউনলোড", "playback": "প্লেব্যাক", "today": "আজ", "yesterday": "গতকাল", "thisWeek": "এই সপ্তাহ", "thisMonth": "এই মাস", "empty": "কোনো ডাউনলোড ইতিহাস নেই", "emptyPlayback": "কোনো প্লেব্যাক ইতিহাস নেই", "playCount": "{{count}} প্লে", "completed": "সম্পন্ন"},
+	"tags": {
+		"create": "নতুন ট্যাগ",
+		"namePlaceholder": "ট্যাগের নাম",
+		"save": "তৈরি",
+		"cancel": "বাতিল",
+		"empty": "এখনো কোনো ট্যাগ নেই",
+		"emptyHint": "আপনার মিডিয়া শ্রেণীবদ্ধ করতে একটি ট্যাগ তৈরি করুন",
+		"deleteConfirmTitle": "এই ট্যাগটি মুছবেন?",
+		"deleteConfirmDescription": "যেসব মিডিয়া আইটেমে এটি প্রয়োগ করা হয়েছে, সেগুলো থেকে ট্যাগটি সরানো হবে।"
+	},
+	"history": {"downloads": "ডাউনলোড", "playback": "প্লেব্যাক", "today": "আজ", "yesterday": "গতকাল", "thisWeek": "এই সপ্তাহ", "thisMonth": "এই মাস", "empty": "কোনো ডাউনলোড ইতিহাস নেই", "emptyPlayback": "কোনো প্লেব্যাক ইতিহাস নেই", "playCount": "{{count}} প্লে", "completed": "সম্পন্ন", "failed": "ব্যর্থ"},
 	"player": {"back": "লাইব্রেরিতে ফিরুন", "noMedia": "মিডিয়া পাওয়া যায়নি", "noAsset": "কোনো চালানোযোগ্য ফাইল পাওয়া যায়নি", "subtitles": "সাবটাইটেল"},
 	"settings": {
 		"outputDir": "আউটপুট ডিরেক্টরি",

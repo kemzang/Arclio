@@ -1,5 +1,5 @@
 {
-	"common": {"back": "Назад", "cancel": "Отменить", "continue": "Продолжить", "retry": "Повторить", "startOver": "Начать заново"},
+	"common": {"back": "Назад", "cancel": "Отменить", "continue": "Продолжить", "retry": "Повторить", "startOver": "Начать заново", "delete": "Удалить"},
 	"app": {"feedback": "Обратная связь", "logs": "Журналы", "feedbackNudge": "Нравится Arclio? Я бы хотел услышать твой отзыв! 💬", "zoomIn": "Увеличить", "zoomOut": "Уменьшить"},
 	"about": {"button": "О программе", "openTitle": "О программе Arclio", "tagline": "Быстрый и удобный загрузчик для YouTube и ещё 2000+ сайтов.", "websiteLink": "Сайт", "githubLink": "GitHub", "licenseLine": "Лицензия MIT · by Antonio Orionus", "thirdPartyNotices": "Просмотреть уведомления о сторонних компонентах"},
 	"titleBar": {"close": "Закрыть", "minimize": "Свернуть", "maximize": "Развернуть", "restore": "Восстановить"},
@@ -272,7 +272,8 @@
 					"custom": "Настройте расширенные параметры каждой загрузки самостоятельно."
 				},
 				"fields": {"sleepRequests": "Ожидание между проверками метаданных", "sleepInterval": "Пауза перед началом медиа: мин", "maxSleepInterval": "Пауза перед началом медиа: макс", "sleepSubtitles": "Ожидание перед файлами субтитров", "concurrentFragments": "Соединений для загрузки"},
-				"units": {"seconds": "сек", "threads": "потоков"}
+				"units": {"seconds": "сек", "threads": "потоков"},
+				"invalid": "Введите допустимое неотрицательное число."
 			},
 			"closeToTray": {"toggle": "Скрывать в трей при закрытии", "toggleDescription": "Продолжать загрузки в фоне после закрытия окна."},
 			"analytics": {"toggle": "Отправлять анонимную статистику", "toggleDescription": "Только подсчёт запусков приложения. Без URL, имён файлов или личных данных."}
@@ -665,11 +666,32 @@
 		"emptyHint": "Скачайте видео, чтобы начать",
 		"missing": "Отсутствует"
 	},
-	"collections": {"create": "Новая коллекция", "namePlaceholder": "Название коллекции", "save": "Создать", "cancel": "Отмена", "empty": "Нет коллекций", "emptyHint": "Создайте коллекцию для организации медиа"},
+	"collections": {
+		"create": "Новая коллекция",
+		"namePlaceholder": "Название коллекции",
+		"save": "Создать",
+		"cancel": "Отмена",
+		"empty": "Нет коллекций",
+		"emptyHint": "Создайте коллекцию для организации медиа",
+		"deleteConfirmTitle": "Удалить эту коллекцию?",
+		"deleteConfirmDescription": "Коллекция будет удалена. Медиафайлы внутри неё останутся в вашей библиотеке."
+	},
 	"collectionDetail": {"back": "Назад к коллекциям", "empty": "Нет медиа в этой коллекции", "emptyHint": "Добавьте медиа из библиотеки", "removeFromCollection": "Удалить из коллекции"},
 	"favorites": {"empty": "Нет избранного", "emptyHint": "Отметьте медиа как избранное"},
-	"tags": {"create": "Новый тег", "namePlaceholder": "Название тега", "save": "Создать", "cancel": "Отмена", "empty": "Нет тегов", "emptyHint": "Создайте тег для категоризации медиа"},
-	"history": {"downloads": "Загрузки", "playback": "Воспроизведение", "today": "Сегодня", "yesterday": "Вчера", "thisWeek": "Эта неделя", "thisMonth": "Этот месяц", "empty": "Нет истории загрузок", "emptyPlayback": "Нет истории воспроизведения", "playCount": "{{count}} воспроизведение", "completed": "Завершено"},
+	"tags": {"create": "Новый тег", "namePlaceholder": "Название тега", "save": "Создать", "cancel": "Отмена", "empty": "Нет тегов", "emptyHint": "Создайте тег для категоризации медиа", "deleteConfirmTitle": "Удалить этот тег?", "deleteConfirmDescription": "Тег будет удалён со всех медиафайлов, к которым он применён."},
+	"history": {
+		"downloads": "Загрузки",
+		"playback": "Воспроизведение",
+		"today": "Сегодня",
+		"yesterday": "Вчера",
+		"thisWeek": "Эта неделя",
+		"thisMonth": "Этот месяц",
+		"empty": "Нет истории загрузок",
+		"emptyPlayback": "Нет истории воспроизведения",
+		"playCount": "{{count}} воспроизведение",
+		"completed": "Завершено",
+		"failed": "Ошибка"
+	},
 	"player": {"back": "Назад к библиотеке", "noMedia": "Медиа не найдено", "noAsset": "Не найден воспроизводимый файл", "subtitles": "Субтитры"},
 	"settings": {
 		"outputDir": "Каталог вывода",

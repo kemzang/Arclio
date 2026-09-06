@@ -4,6 +4,7 @@ import {useTranslation} from 'react-i18next'
 import {Plus, FolderHeart, Trash2, Edit2, Check, X} from 'lucide-react'
 import type {LibraryCollectionWithCount} from '@shared/api.js'
 import {Button} from '@renderer/components/ui/button.js'
+import {ConfirmDialog} from '@renderer/components/ui/confirm-dialog.js'
 import {Input} from '@renderer/components/ui/input.js'
 
 export function CollectionsPage(): React.JSX.Element {
@@ -14,6 +15,7 @@ export function CollectionsPage(): React.JSX.Element {
 	const [newName, setNewName] = useState('')
 	const [editingId, setEditingId] = useState<string | null>(null)
 	const [editName, setEditName] = useState('')
+	const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
 
 	const loadCollections = (): void => {
 		void window.appApi.library.collection.list().then(setCollections)
@@ -173,7 +175,7 @@ export function CollectionsPage(): React.JSX.Element {
 											className="size-7 text-destructive"
 											onClick={e => {
 												e.stopPropagation()
-												void handleDelete(col.id)
+												setDeleteTargetId(col.id)
 											}}
 										>
 											<Trash2 className="size-3" />
@@ -185,6 +187,18 @@ export function CollectionsPage(): React.JSX.Element {
 					))}
 				</div>
 			)}
+
+			<ConfirmDialog
+				open={deleteTargetId !== null}
+				onOpenChange={open => {
+					if (!open) setDeleteTargetId(null)
+				}}
+				title={t('collections.deleteConfirmTitle')}
+				description={t('collections.deleteConfirmDescription')}
+				onConfirm={() => {
+					if (deleteTargetId) void handleDelete(deleteTargetId)
+				}}
+			/>
 		</div>
 	)
 }

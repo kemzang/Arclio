@@ -116,6 +116,12 @@ export function GlobalSearch(): React.JSX.Element {
 					onFocus={() => setIsOpen(true)}
 					onKeyDown={handleKeyDown}
 					className="h-8 pl-8 pr-8 text-sm"
+					tabIndex={0}
+					role="combobox"
+					aria-expanded={isOpen && results.length > 0}
+					aria-controls="global-search-listbox"
+					aria-autocomplete="list"
+					aria-activedescendant={selectedIndex >= 0 ? `global-search-option-${selectedIndex}` : undefined}
 				/>
 				{query && (
 					<button
@@ -131,9 +137,16 @@ export function GlobalSearch(): React.JSX.Element {
 			</div>
 
 			{isOpen && results.length > 0 && (
-				<div className="absolute top-full left-0 right-0 mt-1 bg-[var(--glass-panel)] border border-[var(--border)] rounded-lg shadow-lg max-h-80 overflow-y-auto z-50">
+				<div id="global-search-listbox" role="listbox" aria-label={t('search.placeholder')} className="absolute top-full left-0 right-0 mt-1 bg-[var(--glass-panel)] border border-[var(--border)] rounded-lg shadow-lg max-h-80 overflow-y-auto z-50">
 					{results.map((result, i) => (
-						<button key={`${result.type}-${result.id}`} onClick={() => handleSelect(result)} className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm hover:bg-[var(--glass-tile)] transition-colors ${i === selectedIndex ? 'bg-[var(--glass-tile)]' : ''}`}>
+						<button
+							key={`${result.type}-${result.id}`}
+							id={`global-search-option-${i}`}
+							role="option"
+							aria-selected={i === selectedIndex}
+							onClick={() => handleSelect(result)}
+							className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm hover:bg-[var(--glass-tile)] transition-colors ${i === selectedIndex ? 'bg-[var(--glass-tile)]' : ''}`}
+						>
 							{iconForType(result.type)}
 							<div className="flex-1 min-w-0">
 								<p className="truncate font-medium">{result.title}</p>

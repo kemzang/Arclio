@@ -1,5 +1,5 @@
 {
-	"common": {"back": "戻る", "cancel": "キャンセル", "continue": "続行", "retry": "再試行", "startOver": "最初からやり直す"},
+	"common": {"back": "戻る", "cancel": "キャンセル", "continue": "続行", "retry": "再試行", "startOver": "最初からやり直す", "delete": "削除"},
 	"app": {"feedback": "フィードバック", "logs": "ログ", "feedbackNudge": "Arclioを楽しんでくれてる?ぜひ感想を聞かせて! 💬", "zoomIn": "拡大", "zoomOut": "縮小"},
 	"about": {"button": "情報", "openTitle": "Arclio について", "tagline": "YouTube と 2000 以上の他サイトに対応する、高速で使いやすいダウンローダー。", "websiteLink": "公式サイト", "githubLink": "GitHub", "licenseLine": "MIT ライセンス · 作者 Antonio Orionus", "thirdPartyNotices": "サードパーティ通知を表示"},
 	"titleBar": {"close": "閉じる", "minimize": "最小化", "maximize": "最大化", "restore": "元に戻す"},
@@ -272,7 +272,8 @@
 					"custom": "ダウンロードごとの高度なコントロールを自分で調整します。"
 				},
 				"fields": {"sleepRequests": "メタデータチェック間の待機", "sleepInterval": "メディア開始前の一時停止：最小", "maxSleepInterval": "メディア開始前の一時停止：最大", "sleepSubtitles": "字幕ファイル前の待機", "concurrentFragments": "ダウンロード接続数"},
-				"units": {"seconds": "秒", "threads": "スレッド"}
+				"units": {"seconds": "秒", "threads": "スレッド"},
+				"invalid": "有効な0以上の数値を入力してください。"
 			},
 			"closeToTray": {"toggle": "閉じるときにトレイに格納", "toggleDescription": "ウィンドウを閉じた後もバックグラウンドでダウンロードを続けます。"},
 			"analytics": {"toggle": "匿名の使用統計を送信", "toggleDescription": "アプリの起動回数のみを記録します。URL、ファイル名、個人情報は含まれません。"}
@@ -665,11 +666,29 @@
 		"emptyHint": "動画をダウンロードして始めましょう",
 		"missing": "不明"
 	},
-	"collections": {"create": "新しいコレクション", "namePlaceholder": "コレクション名", "save": "作成", "cancel": "キャンセル", "empty": "コレクションがありません", "emptyHint": "メディアを整理するコレクションを作成"},
+	"collections": {
+		"create": "新しいコレクション",
+		"namePlaceholder": "コレクション名",
+		"save": "作成",
+		"cancel": "キャンセル",
+		"empty": "コレクションがありません",
+		"emptyHint": "メディアを整理するコレクションを作成",
+		"deleteConfirmTitle": "このコレクションを削除しますか？",
+		"deleteConfirmDescription": "コレクションは削除されます。中のメディアはライブラリに残ります。"
+	},
 	"collectionDetail": {"back": "コレクションに戻る", "empty": "このコレクションにメディアがありません", "emptyHint": "ライブラリからメディアを追加", "removeFromCollection": "コレクションから削除"},
 	"favorites": {"empty": "お気に入りがありません", "emptyHint": "メディアをお気に入りとしてマーク"},
-	"tags": {"create": "新しいタグ", "namePlaceholder": "タグ名", "save": "作成", "cancel": "キャンセル", "empty": "タグがありません", "emptyHint": "メディアを分類するタグを作成"},
-	"history": {"downloads": "ダウンロード", "playback": "再生", "today": "今日", "yesterday": "昨日", "thisWeek": "今週", "thisMonth": "今月", "empty": "ダウンロード履歴なし", "emptyPlayback": "再生履歴なし", "playCount": "{{count}} 回再生", "completed": "完了"},
+	"tags": {
+		"create": "新しいタグ",
+		"namePlaceholder": "タグ名",
+		"save": "作成",
+		"cancel": "キャンセル",
+		"empty": "タグがありません",
+		"emptyHint": "メディアを分類するタグを作成",
+		"deleteConfirmTitle": "このタグを削除しますか？",
+		"deleteConfirmDescription": "タグは、それが適用されているすべてのメディアから削除されます。"
+	},
+	"history": {"downloads": "ダウンロード", "playback": "再生", "today": "今日", "yesterday": "昨日", "thisWeek": "今週", "thisMonth": "今月", "empty": "ダウンロード履歴なし", "emptyPlayback": "再生履歴なし", "playCount": "{{count}} 回再生", "completed": "完了", "failed": "失敗"},
 	"player": {"back": "ライブラリに戻る", "noMedia": "メディアが見つかりません", "noAsset": "再生可能なファイルが見つかりません", "subtitles": "字幕"},
 	"settings": {
 		"outputDir": "出力ディレクトリ",

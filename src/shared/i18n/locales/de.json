@@ -1,5 +1,5 @@
 {
-	"common": {"back": "Zurück", "cancel": "Abbrechen", "continue": "Weiter", "retry": "Erneut versuchen", "startOver": "Von vorn beginnen"},
+	"common": {"back": "Zurück", "cancel": "Abbrechen", "continue": "Weiter", "retry": "Erneut versuchen", "startOver": "Von vorn beginnen", "delete": "Löschen"},
 	"app": {"feedback": "Feedback", "logs": "Protokolle", "feedbackNudge": "Gefällt dir Arclio? Ich freue mich über dein Feedback! 💬", "zoomIn": "Vergrößern", "zoomOut": "Verkleinern"},
 	"about": {"button": "Info", "openTitle": "Über Arclio", "tagline": "Schneller, freundlicher Downloader für YouTube und über 2000 weitere Seiten.", "websiteLink": "Website", "githubLink": "GitHub", "licenseLine": "MIT-Lizenz · von Antonio Orionus", "thirdPartyNotices": "Drittanbieter-Hinweise anzeigen"},
 	"titleBar": {"close": "Schließen", "minimize": "Minimieren", "maximize": "Maximieren", "restore": "Wiederherstellen"},
@@ -272,7 +272,8 @@
 					"custom": "Passe die erweiterten Download-Steuerungen selbst an."
 				},
 				"fields": {"sleepRequests": "Pause zwischen Metadaten-Abfragen", "sleepInterval": "Pause vor Medienbeginn: Min", "maxSleepInterval": "Pause vor Medienbeginn: Max", "sleepSubtitles": "Pause vor Untertiteldateien", "concurrentFragments": "Download-Verbindungen"},
-				"units": {"seconds": "Sek", "threads": "Threads"}
+				"units": {"seconds": "Sek", "threads": "Threads"},
+				"invalid": "Geben Sie eine gültige, nicht negative Zahl ein."
 			},
 			"closeToTray": {"toggle": "Beim Schließen in die Taskleiste minimieren", "toggleDescription": "Downloads im Hintergrund fortsetzen, wenn das Fenster geschlossen wird."},
 			"analytics": {"toggle": "Anonyme Nutzungsstatistiken senden", "toggleDescription": "Zählt nur App-Starts. Keine URLs, Dateinamen oder persönliche Daten."}
@@ -670,11 +671,41 @@
 		"emptyHint": "Lade ein Video herunter, um zu beginnen",
 		"missing": "Fehlend"
 	},
-	"collections": {"create": "Neue Sammlung", "namePlaceholder": "Sammlungsname", "save": "Erstellen", "cancel": "Abbrechen", "empty": "Noch keine Sammlungen", "emptyHint": "Erstelle eine Sammlung, um deine Medien zu organisieren"},
+	"collections": {
+		"create": "Neue Sammlung",
+		"namePlaceholder": "Sammlungsname",
+		"save": "Erstellen",
+		"cancel": "Abbrechen",
+		"empty": "Noch keine Sammlungen",
+		"emptyHint": "Erstelle eine Sammlung, um deine Medien zu organisieren",
+		"deleteConfirmTitle": "Diese Sammlung löschen?",
+		"deleteConfirmDescription": "Die Sammlung wird entfernt. Die darin enthaltenen Medien bleiben in Ihrer Bibliothek."
+	},
 	"collectionDetail": {"back": "Zurück zu Sammlungen", "empty": "Keine Medien in dieser Sammlung", "emptyHint": "Medien aus der Bibliothek hinzufügen", "removeFromCollection": "Aus Sammlung entfernen"},
 	"favorites": {"empty": "Noch keine Favoriten", "emptyHint": "Markiere ein Medium als Favorit, um es hier zu sehen"},
-	"tags": {"create": "Neuer Tag", "namePlaceholder": "Tag-Name", "save": "Erstellen", "cancel": "Abbrechen", "empty": "Noch keine Tags", "emptyHint": "Erstelle einen Tag, um deine Medien zu kategorisieren"},
-	"history": {"downloads": "Downloads", "playback": "Wiedergabe", "today": "Heute", "yesterday": "Gestern", "thisWeek": "Diese Woche", "thisMonth": "Dieser Monat", "empty": "Kein Download-Verlauf", "emptyPlayback": "Kein Wiedergabeverlauf", "playCount": "{{count}} Wiedergabe", "completed": "Abgeschlossen"},
+	"tags": {
+		"create": "Neuer Tag",
+		"namePlaceholder": "Tag-Name",
+		"save": "Erstellen",
+		"cancel": "Abbrechen",
+		"empty": "Noch keine Tags",
+		"emptyHint": "Erstelle einen Tag, um deine Medien zu kategorisieren",
+		"deleteConfirmTitle": "Dieses Tag löschen?",
+		"deleteConfirmDescription": "Das Tag wird von allen Medien entfernt, denen es zugewiesen ist."
+	},
+	"history": {
+		"downloads": "Downloads",
+		"playback": "Wiedergabe",
+		"today": "Heute",
+		"yesterday": "Gestern",
+		"thisWeek": "Diese Woche",
+		"thisMonth": "Dieser Monat",
+		"empty": "Kein Download-Verlauf",
+		"emptyPlayback": "Kein Wiedergabeverlauf",
+		"playCount": "{{count}} Wiedergabe",
+		"completed": "Abgeschlossen",
+		"failed": "Fehlgeschlagen"
+	},
 	"player": {"back": "Zurück zur Bibliothek", "noMedia": "Medien nicht gefunden", "noAsset": "Keine abspielbare Datei gefunden", "subtitles": "Untertitel"},
 	"settings": {
 		"outputDir": "Ausgabeverzeichnis",

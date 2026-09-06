@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next'
 import {Tag as TagIcon, Plus, X} from 'lucide-react'
 import type {LibraryTagWithCount} from '@shared/api.js'
 import {Button} from '@renderer/components/ui/button.js'
+import {ConfirmDialog} from '@renderer/components/ui/confirm-dialog.js'
 import {Input} from '@renderer/components/ui/input.js'
 
 export function TagsPage(): React.JSX.Element {
@@ -11,6 +12,7 @@ export function TagsPage(): React.JSX.Element {
 	const [isCreating, setIsCreating] = useState(false)
 	const [newName, setNewName] = useState('')
 	const [newColor, setNewColor] = useState('#6366f1')
+	const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
 
 	const loadTags = (): void => {
 		void window.appApi.library.tag.list().then(setTags)
@@ -77,13 +79,25 @@ export function TagsPage(): React.JSX.Element {
 							<span className="w-3 h-3 rounded-full shrink-0" style={{backgroundColor: tag.color ?? '#6366f1'}} />
 							<span className="text-sm font-medium">{tag.name}</span>
 							<span className="text-xs text-[var(--text-subtle)]">{tag.mediaCount}</span>
-							<button onClick={() => void handleDelete(tag.id)} className="opacity-0 group-hover:opacity-100 transition-opacity ml-1">
+							<button onClick={() => setDeleteTargetId(tag.id)} className="opacity-0 group-hover:opacity-100 transition-opacity ml-1">
 								<X className="size-3 text-[var(--text-subtle)] hover:text-destructive" />
 							</button>
 						</div>
 					))}
 				</div>
 			)}
+
+			<ConfirmDialog
+				open={deleteTargetId !== null}
+				onOpenChange={open => {
+					if (!open) setDeleteTargetId(null)
+				}}
+				title={t('tags.deleteConfirmTitle')}
+				description={t('tags.deleteConfirmDescription')}
+				onConfirm={() => {
+					if (deleteTargetId) void handleDelete(deleteTargetId)
+				}}
+			/>
 		</div>
 	)
 }

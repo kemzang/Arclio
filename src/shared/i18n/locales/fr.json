@@ -1,5 +1,5 @@
 {
-	"common": {"back": "Retour", "cancel": "Annuler", "continue": "Continuer", "retry": "Réessayer", "startOver": "Recommencer"},
+	"common": {"back": "Retour", "cancel": "Annuler", "continue": "Continuer", "retry": "Réessayer", "startOver": "Recommencer", "delete": "Supprimer"},
 	"app": {"feedback": "Commentaires", "logs": "Journaux", "feedbackNudge": "Tu apprécies Arclio ? J'adorerais avoir ton avis ! 💬", "zoomIn": "Zoom avant", "zoomOut": "Zoom arrière"},
 	"about": {"button": "À propos", "openTitle": "À propos d'Arclio", "tagline": "Téléchargeur rapide et convivial pour YouTube et plus de 2000 autres sites.", "websiteLink": "Site web", "githubLink": "GitHub", "licenseLine": "Licence MIT · par Antonio Orionus", "thirdPartyNotices": "Voir les mentions tierces"},
 	"titleBar": {"close": "Fermer", "minimize": "Réduire", "maximize": "Agrandir", "restore": "Restaurer"},
@@ -272,7 +272,8 @@
 					"custom": "Ajustez vous-même les contrôles avancés par téléchargement."
 				},
 				"fields": {"sleepRequests": "Pause entre les vérifications de métadonnées", "sleepInterval": "Pause avant le début du média : min", "maxSleepInterval": "Pause avant le début du média : max", "sleepSubtitles": "Pause avant les fichiers de sous-titres", "concurrentFragments": "Connexions de téléchargement"},
-				"units": {"seconds": "sec", "threads": "connexions"}
+				"units": {"seconds": "sec", "threads": "connexions"},
+				"invalid": "Saisissez un nombre valide et non négatif."
 			},
 			"closeToTray": {"toggle": "Masquer dans la barre des tâches à la fermeture", "toggleDescription": "Continuer les téléchargements en arrière-plan après la fermeture de la fenêtre."},
 			"analytics": {"toggle": "Envoyer des statistiques d'utilisation anonymes", "toggleDescription": "Compte uniquement les lancements de l'application. Aucune URL, nom de fichier ou donnée personnelle."}
@@ -670,10 +671,28 @@
 		"emptyHint": "Téléchargez une vidéo pour commencer",
 		"missing": "Manquant"
 	},
-	"collections": {"create": "Nouvelle collection", "namePlaceholder": "Nom de la collection", "save": "Créer", "cancel": "Annuler", "empty": "Aucune collection", "emptyHint": "Créez une collection pour organiser vos médias"},
+	"collections": {
+		"create": "Nouvelle collection",
+		"namePlaceholder": "Nom de la collection",
+		"save": "Créer",
+		"cancel": "Annuler",
+		"empty": "Aucune collection",
+		"emptyHint": "Créez une collection pour organiser vos médias",
+		"deleteConfirmTitle": "Supprimer cette collection ?",
+		"deleteConfirmDescription": "La collection sera supprimée. Les médias qu'elle contient restent dans votre bibliothèque."
+	},
 	"collectionDetail": {"back": "Retour aux collections", "empty": "Aucun média dans cette collection", "emptyHint": "Ajoutez des médias depuis la bibliothèque", "removeFromCollection": "Retirer de la collection"},
 	"favorites": {"empty": "Aucun favori", "emptyHint": "Marquez un média comme favori pour le voir ici"},
-	"tags": {"create": "Nouveau tag", "namePlaceholder": "Nom du tag", "save": "Créer", "cancel": "Annuler", "empty": "Aucun tag", "emptyHint": "Créez un tag pour catégoriser vos médias"},
+	"tags": {
+		"create": "Nouveau tag",
+		"namePlaceholder": "Nom du tag",
+		"save": "Créer",
+		"cancel": "Annuler",
+		"empty": "Aucun tag",
+		"emptyHint": "Créez un tag pour catégoriser vos médias",
+		"deleteConfirmTitle": "Supprimer ce tag ?",
+		"deleteConfirmDescription": "Le tag sera retiré de tous les médias auxquels il est appliqué."
+	},
 	"history": {
 		"downloads": "Téléchargements",
 		"playback": "Lecture",
@@ -684,7 +703,8 @@
 		"empty": "Aucun historique de téléchargement",
 		"emptyPlayback": "Aucun historique de lecture",
 		"playCount": "{{count}} lecture",
-		"completed": "Terminé"
+		"completed": "Terminé",
+		"failed": "Échec"
 	},
 	"player": {"back": "Retour à la bibliothèque", "noMedia": "Média introuvable", "noAsset": "Aucun fichier lisible trouvé", "subtitles": "Sous-titres"},
 	"settings": {

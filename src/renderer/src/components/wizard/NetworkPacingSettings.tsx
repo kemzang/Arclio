@@ -57,11 +57,13 @@ export function NetworkPacingSettings(): ReactNode {
 	const common = settings?.common
 	const pacingPreset: NetworkPacingPreset = common?.networkPacingPreset ?? 'balanced'
 	const [fieldDrafts, setFieldDrafts] = useState<Partial<Record<(typeof CUSTOM_FIELDS)[number]['key'], string>>>({})
+	const [fieldErrors, setFieldErrors] = useState<Partial<Record<(typeof CUSTOM_FIELDS)[number]['key'], boolean>>>({})
 
 	const FIELD_SETTERS = {pacingSleepRequests: setPacingSleepRequests, pacingSleepInterval: setPacingSleepInterval, pacingMaxSleepInterval: setPacingMaxSleepInterval, pacingSleepSubtitles: setPacingSleepSubtitles, pacingConcurrentFragments: setPacingConcurrentFragments} as const
 
 	function onFieldChange(key: (typeof CUSTOM_FIELDS)[number]['key'], value: string): void {
 		setFieldDrafts(prev => ({...prev, [key]: value}))
+		setFieldErrors(prev => ({...prev, [key]: false}))
 	}
 
 	function onFieldBlur(key: (typeof CUSTOM_FIELDS)[number]['key']): void {
@@ -69,7 +71,13 @@ export function NetworkPacingSettings(): ReactNode {
 		if (draft === undefined) return
 		const parsed = draft === '' ? 0 : Number(draft)
 		const schema = key === 'pacingConcurrentFragments' ? pacingConcurrentFragmentsSchema : pacingSleepSecondsSchema
-		if (!schema.safeParse(parsed).success) return
+		if (!schema.safeParse(parsed).success) {
+			// Surface the failure instead of silently discarding the edit — the
+			// draft stays in the input so the user can see and fix what they typed.
+			setFieldErrors(prev => ({...prev, [key]: true}))
+			return
+		}
+		setFieldErrors(prev => ({...prev, [key]: false}))
 		setFieldDrafts(prev => {
 			const next = {...prev}
 			delete next[key]
@@ -145,12 +153,18 @@ export function NetworkPacingSettings(): ReactNode {
 									onBlur={() => onFieldBlur(field.key)}
 									placeholder={String(NETWORK_PACING_PRESET_VALUES.balanced[field.labelKey] ?? '')}
 									className="text-[12px] font-mono"
+									aria-invalid={fieldErrors[field.key] === true}
 									data-testid={field.testId}
 								/>
 								<InputGroupAddon align="inline-end">
 									<InputGroupText className="text-[11px]">{t(`wizard.url.networkPacing.units.${field.unitKey}`)}</InputGroupText>
 								</InputGroupAddon>
 							</InputGroup>
+							{fieldErrors[field.key] === true && (
+								<p className="text-[11px] text-amber-500" data-testid={`${field.testId}-error`}>
+									{t('wizard.url.networkPacing.invalid')}
+								</p>
+							)}
 						</Field>
 					))}
 				</FieldGroup>

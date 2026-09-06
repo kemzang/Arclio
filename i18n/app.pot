@@ -202,6 +202,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr ""
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr ""
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr ""
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr ""
@@ -228,6 +236,10 @@ msgstr ""
 
 msgctxt "common.continue"
 msgid "Continue"
+msgstr ""
+
+msgctxt "common.delete"
+msgid "Delete"
 msgstr ""
 
 msgctxt "common.retry"
@@ -396,6 +408,10 @@ msgstr ""
 
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
+msgstr ""
+
+msgctxt "history.failed"
+msgid "Failed"
 msgstr ""
 
 msgctxt "history.playback"
@@ -1334,6 +1350,14 @@ msgstr ""
 
 msgctxt "tags.create"
 msgid "New tag"
+msgstr ""
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr ""
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
 msgstr ""
 
 msgctxt "tags.empty"
@@ -3193,6 +3217,10 @@ msgstr ""
 
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
+msgstr ""
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
 msgstr ""
 
 msgctxt "wizard.url.networkPacing.presetLabel"

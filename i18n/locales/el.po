@@ -203,6 +203,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr "Νέα συλλογή"
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr "Η συλλογή θα καταργηθεί. Τα πολυμέσα που περιέχει παραμένουν στη βιβλιοθήκη σας."
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr "Διαγραφή αυτής της συλλογής;"
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr "Δεν υπάρχουν συλλογές"
@@ -230,6 +238,10 @@ msgstr "Ακύρωση"
 msgctxt "common.continue"
 msgid "Continue"
 msgstr "Συνέχεια"
+
+msgctxt "common.delete"
+msgid "Delete"
+msgstr "Διαγραφή"
 
 msgctxt "common.retry"
 msgid "Retry"
@@ -398,6 +410,10 @@ msgstr "Δεν υπάρχει ιστορικό λήψεων"
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
 msgstr "Δεν υπάρχει ιστορικό αναπαραγωγής"
+
+msgctxt "history.failed"
+msgid "Failed"
+msgstr "Απέτυχε"
 
 msgctxt "history.playback"
 msgid "Playback"
@@ -1338,6 +1354,14 @@ msgstr "Ακύρωση"
 msgctxt "tags.create"
 msgid "New tag"
 msgstr "Νέα ετικέτα"
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr "Η ετικέτα θα καταργηθεί από όλα τα πολυμέσα στα οποία έχει εφαρμοστεί."
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
+msgstr "Διαγραφή αυτής της ετικέτας;"
 
 msgctxt "tags.empty"
 msgid "No tags yet"
@@ -3200,6 +3224,10 @@ msgstr "Αναμονή πριν τα αρχεία υποτίτλων"
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
 msgstr "Ήπιες λήψεις"
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
+msgstr "Εισαγάγετε έναν έγκυρο, μη αρνητικό αριθμό."
 
 msgctxt "wizard.url.networkPacing.presetLabel"
 msgid "How cautious should Arclio be?"

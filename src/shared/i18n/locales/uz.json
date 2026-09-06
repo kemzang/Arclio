@@ -1,5 +1,5 @@
 {
-	"common": {"back": "Orqaga", "cancel": "Bekor qilish", "continue": "Davom etish", "retry": "Qayta urinish", "startOver": "Qaytadan boshlash"},
+	"common": {"back": "Orqaga", "cancel": "Bekor qilish", "continue": "Davom etish", "retry": "Qayta urinish", "startOver": "Qaytadan boshlash", "delete": "O'chirish"},
 	"app": {"feedback": "Fikr-mulohaza", "logs": "Jurnallar", "feedbackNudge": "Arclio yoqdimi? Fikringizni bilmoqchiman! 💬", "zoomIn": "Kattalashtirish", "zoomOut": "Kichraytirish"},
 	"about": {
 		"button": "Dastur haqida",
@@ -280,7 +280,8 @@
 					"custom": "Yuklab olish boshqaruvlarini o'zingiz sozlang."
 				},
 				"fields": {"sleepRequests": "Metadata tekshiruvlari orasidagi kutish", "sleepInterval": "Media boshlanishidan oldingi pauza: min", "maxSleepInterval": "Media boshlanishidan oldingi pauza: maks", "sleepSubtitles": "Subtitr fayllaridan oldin kutish", "concurrentFragments": "Yuklab olish ulanishlari"},
-				"units": {"seconds": "soniya", "threads": "oqim"}
+				"units": {"seconds": "soniya", "threads": "oqim"},
+				"invalid": "Yaroqli, manfiy bo'lmagan raqam kiriting."
 			},
 			"closeToTray": {"toggle": "Yopilganda tizim soatiga yashirish", "toggleDescription": "Oyna yopilgandan keyin yuklamalar fonda davom etadi."},
 			"analytics": {"toggle": "Anonim foydalanish statistikasini yuborish", "toggleDescription": "Faqat ilovani ishga tushirish sonini hisoblaydi. URL, fayl nomlari yoki shaxsiy maʼlumotlar yoʼq."}
@@ -673,11 +674,29 @@
 		"emptyHint": "Boshlash uchun video yuklab oling",
 		"missing": "Yo'qolgan"
 	},
-	"collections": {"create": "Yangi to'plam", "namePlaceholder": "To'plam nomi", "save": "Yaratish", "cancel": "Bekor qilish", "empty": "To'plamlar yo'q", "emptyHint": "Medialaringizni tartiblash uchun to'plam yarating"},
+	"collections": {
+		"create": "Yangi to'plam",
+		"namePlaceholder": "To'plam nomi",
+		"save": "Yaratish",
+		"cancel": "Bekor qilish",
+		"empty": "To'plamlar yo'q",
+		"emptyHint": "Medialaringizni tartiblash uchun to'plam yarating",
+		"deleteConfirmTitle": "Ushbu to'plamni o'chirasizmi?",
+		"deleteConfirmDescription": "To'plam olib tashlanadi. Undagi media kutubxonangizda qoladi."
+	},
 	"collectionDetail": {"back": "To'plamlarga qaytish", "empty": "Bu to'plamda media yo'q", "emptyHint": "Kutubxonadan media qo'shing", "removeFromCollection": "To'plamdan olib tashlash"},
 	"favorites": {"empty": "Sevimlilar yo'q", "emptyHint": "Mediani sevimli sifatida belgilang"},
-	"tags": {"create": "Yangi teg", "namePlaceholder": "Teg nomi", "save": "Yaratish", "cancel": "Bekor qilish", "empty": "Teglar yo'q", "emptyHint": "Medialaringizni tasniflash uchun teg yarating"},
-	"history": {"downloads": "Yuklab olishlar", "playback": "Ijro", "today": "Bugun", "yesterday": "Kecha", "thisWeek": "Shu hafta", "thisMonth": "Shu oy", "empty": "Yuklab olish tarixi yo'q", "emptyPlayback": "Ijro tarixi yo'q", "playCount": "{{count}} ijro", "completed": "Tugallangan"},
+	"tags": {
+		"create": "Yangi teg",
+		"namePlaceholder": "Teg nomi",
+		"save": "Yaratish",
+		"cancel": "Bekor qilish",
+		"empty": "Teglar yo'q",
+		"emptyHint": "Medialaringizni tasniflash uchun teg yarating",
+		"deleteConfirmTitle": "Ushbu tegni o'chirasizmi?",
+		"deleteConfirmDescription": "Teg u qo'llanilgan barcha media elementlaridan olib tashlanadi."
+	},
+	"history": {"downloads": "Yuklab olishlar", "playback": "Ijro", "today": "Bugun", "yesterday": "Kecha", "thisWeek": "Shu hafta", "thisMonth": "Shu oy", "empty": "Yuklab olish tarixi yo'q", "emptyPlayback": "Ijro tarixi yo'q", "playCount": "{{count}} ijro", "completed": "Tugallangan", "failed": "Muvaffaqiyatsiz"},
 	"player": {"back": "Kutubxonaga qaytish", "noMedia": "Media topilmadi", "noAsset": "Oʻynatiladigan fayl topilmadi", "subtitles": "Subtitrlar"},
 	"settings": {
 		"outputDir": "Chiqish papkasi",

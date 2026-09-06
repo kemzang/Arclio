@@ -203,6 +203,14 @@ msgctxt "collections.create"
 msgid "New collection"
 msgstr "Нова колекція"
 
+msgctxt "collections.deleteConfirmDescription"
+msgid "The collection will be removed. The media inside it stays in your library."
+msgstr "Колекцію буде видалено. Медіафайли всередині неї залишаться у вашій бібліотеці."
+
+msgctxt "collections.deleteConfirmTitle"
+msgid "Delete this collection?"
+msgstr "Видалити цю колекцію?"
+
 msgctxt "collections.empty"
 msgid "No collections yet"
 msgstr "Немає колекцій"
@@ -230,6 +238,10 @@ msgstr "Скасувати"
 msgctxt "common.continue"
 msgid "Continue"
 msgstr "Продовжити"
+
+msgctxt "common.delete"
+msgid "Delete"
+msgstr "Видалити"
 
 msgctxt "common.retry"
 msgid "Retry"
@@ -398,6 +410,10 @@ msgstr "Немає історії завантажень"
 msgctxt "history.emptyPlayback"
 msgid "No playback history"
 msgstr "Немає історії відтворення"
+
+msgctxt "history.failed"
+msgid "Failed"
+msgstr "Помилка"
 
 msgctxt "history.playback"
 msgid "Playback"
@@ -1338,6 +1354,14 @@ msgstr "Скасувати"
 msgctxt "tags.create"
 msgid "New tag"
 msgstr "Новий тег"
+
+msgctxt "tags.deleteConfirmDescription"
+msgid "The tag will be removed from every media item it's applied to."
+msgstr "Тег буде видалено з усіх медіафайлів, до яких його застосовано."
+
+msgctxt "tags.deleteConfirmTitle"
+msgid "Delete this tag?"
+msgstr "Видалити цей тег?"
 
 msgctxt "tags.empty"
 msgid "No tags yet"
@@ -3200,6 +3224,10 @@ msgstr "Очікування перед файлами субтитрів"
 msgctxt "wizard.url.networkPacing.heading"
 msgid "Gentle downloads"
 msgstr "Бережні завантаження"
+
+msgctxt "wizard.url.networkPacing.invalid"
+msgid "Enter a valid, non-negative number."
+msgstr "Введіть коректне невід'ємне число."
 
 msgctxt "wizard.url.networkPacing.presetLabel"
 msgid "How cautious should Arclio be?"

@@ -1,5 +1,5 @@
 {
-	"common": {"back": "वापस", "cancel": "रद्द करें", "continue": "जारी रखें", "retry": "फिर से कोशिश करें", "startOver": "फिर से शुरू करें"},
+	"common": {"back": "वापस", "cancel": "रद्द करें", "continue": "जारी रखें", "retry": "फिर से कोशिश करें", "startOver": "फिर से शुरू करें", "delete": "हटाएं"},
 	"app": {"feedback": "प्रतिक्रिया", "logs": "लॉग", "feedbackNudge": "Arclio पसंद आ रहा है? आपकी राय सुनने को बेताब हूँ! 💬", "zoomIn": "ज़ूम इन", "zoomOut": "ज़ूम आउट"},
 	"about": {"button": "जानकारी", "openTitle": "Arclio के बारे में", "tagline": "YouTube और 2000+ अन्य साइटों के लिए तेज़ और सरल डाउनलोडर।", "websiteLink": "वेबसाइट", "githubLink": "GitHub", "licenseLine": "MIT लाइसेंस · Antonio Orionus द्वारा", "thirdPartyNotices": "तृतीय-पक्ष सूचनाएँ देखें"},
 	"titleBar": {"close": "बंद करें", "minimize": "छोटा करें", "maximize": "बड़ा करें", "restore": "पुनर्स्थापित करें"},
@@ -258,7 +258,8 @@
 				"presets": {"off": "बंद", "balanced": "संतुलित", "careful": "सावधान", "custom": "कस्टम"},
 				"tooltips": {"off": "केवल वे छोटे बेसलाइन पॉज़ उपयोग करता है जो Arclio मीडिया और सबटाइटल के लिए रखता है।", "balanced": "डिफ़ॉल्ट। छोटे पॉज़ जोड़ता है और एक डाउनलोड कनेक्शन उपयोग करता है।", "careful": "बड़ी playlist या ऐसे नेटवर्क के लिए लंबे पॉज़ जोड़ता है जो अक्सर सीमाओं तक पहुँचते हैं।", "custom": "डाउनलोड के उन्नत नियंत्रण खुद ट्यून करें।"},
 				"fields": {"sleepRequests": "मेटाडेटा जाँचों के बीच इंतज़ार", "sleepInterval": "मीडिया शुरू होने से पहले पॉज़: न्यूनतम", "maxSleepInterval": "मीडिया शुरू होने से पहले पॉज़: अधिकतम", "sleepSubtitles": "सबटाइटल फ़ाइलों से पहले इंतज़ार", "concurrentFragments": "डाउनलोड कनेक्शन"},
-				"units": {"seconds": "से.", "threads": "थ्रेड"}
+				"units": {"seconds": "से.", "threads": "थ्रेड"},
+				"invalid": "एक मान्य, गैर-नकारात्मक संख्या दर्ज करें।"
 			},
 			"closeToTray": {"toggle": "बंद करने पर ट्रे में छिपाएं", "toggleDescription": "विंडो बंद करने के बाद पृष्ठभूमि में डाउनलोड जारी रखें।"},
 			"analytics": {"toggle": "अनाम उपयोग आँकड़े भेजें", "toggleDescription": "केवल ऐप लॉन्च गिनता है। कोई URL, फ़ाइलनाम या व्यक्तिगत डेटा नहीं।"}
@@ -625,11 +626,29 @@
 		"emptyHint": "शुरू करने के लिए वीडियो डाउनलोड करें",
 		"missing": "गुम"
 	},
-	"collections": {"create": "नया संग्रह", "namePlaceholder": "संग्रह का नाम", "save": "बनाएं", "cancel": "रद्द", "empty": "अभी कोई संग्रह नहीं", "emptyHint": "अपने मीडिया को व्यवस्थित करने के लिए संग्रह बनाएं"},
+	"collections": {
+		"create": "नया संग्रह",
+		"namePlaceholder": "संग्रह का नाम",
+		"save": "बनाएं",
+		"cancel": "रद्द",
+		"empty": "अभी कोई संग्रह नहीं",
+		"emptyHint": "अपने मीडिया को व्यवस्थित करने के लिए संग्रह बनाएं",
+		"deleteConfirmTitle": "क्या इस संग्रह को हटाना है?",
+		"deleteConfirmDescription": "संग्रह हटा दिया जाएगा। इसके अंदर मौजूद मीडिया आपकी लाइब्रेरी में बना रहेगा।"
+	},
 	"collectionDetail": {"back": "संग्रह पर वापस", "empty": "इस संग्रह में कोई मीडिया नहीं", "emptyHint": "लाइब्रेरी से मीडिया जोड़ें", "removeFromCollection": "संग्रह से हटाएं"},
 	"favorites": {"empty": "अभी कोई पसंदीदा नहीं", "emptyHint": "यहां देखने के लिए मीडिया को पसंदीदा के रूप में चिह्नित करें"},
-	"tags": {"create": "नया टैग", "namePlaceholder": "टैग का नाम", "save": "बनाएं", "cancel": "रद्द", "empty": "अभी कोई टैग नहीं", "emptyHint": "अपने मीडिया को वर्गीकृत करने के लिए टैग बनाएं"},
-	"history": {"downloads": "डाउनलोड", "playback": "प्लेबैक", "today": "आज", "yesterday": "कल", "thisWeek": "इस सप्ताह", "thisMonth": "इस माह", "empty": "कोई डाउनलोड इतिहास नहीं", "emptyPlayback": "कोई प्लेबैक इतिहास नहीं", "playCount": "{{count}} प्ले", "completed": "पूर्ण"},
+	"tags": {
+		"create": "नया टैग",
+		"namePlaceholder": "टैग का नाम",
+		"save": "बनाएं",
+		"cancel": "रद्द",
+		"empty": "अभी कोई टैग नहीं",
+		"emptyHint": "अपने मीडिया को वर्गीकृत करने के लिए टैग बनाएं",
+		"deleteConfirmTitle": "क्या इस टैग को हटाना है?",
+		"deleteConfirmDescription": "यह टैग उन सभी मीडिया आइटम से हटा दिया जाएगा जिन पर इसे लागू किया गया है।"
+	},
+	"history": {"downloads": "डाउनलोड", "playback": "प्लेबैक", "today": "आज", "yesterday": "कल", "thisWeek": "इस सप्ताह", "thisMonth": "इस माह", "empty": "कोई डाउनलोड इतिहास नहीं", "emptyPlayback": "कोई प्लेबैक इतिहास नहीं", "playCount": "{{count}} प्ले", "completed": "पूर्ण", "failed": "विफल"},
 	"player": {"back": "लाइब्रेरी पर वापस", "noMedia": "मीडिया नहीं मिला", "noAsset": "कोई चलाने योग्य फ़ाइल नहीं मिली", "subtitles": "उपशीर्षक"},
 	"settings": {
 		"outputDir": "आउटपुट निर्देशिका",

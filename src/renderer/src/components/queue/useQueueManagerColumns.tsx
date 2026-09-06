@@ -5,6 +5,7 @@ import {Ban, Captions, CheckCircle2, ChevronDown, Clock, Loader2, Pause, PauseCi
 import type {QueueItem, QueueItemStatus} from '@shared/types.js'
 import {visibleQueueArtifacts} from '@shared/queueArtifacts.js'
 import {cn} from '@renderer/lib/utils.js'
+import {i18next} from '@shared/i18n/index.js'
 import {formatLocalizedError, formatStatus} from '../../store/useAppStore.js'
 import {Badge} from '../ui/badge.js'
 import {Button} from '../ui/button.js'
@@ -27,7 +28,10 @@ function formatQueueDate(value: string | null, t: TFunction): string {
 	if (!value) return t('queue.table.notAvailable')
 	const date = new Date(value)
 	if (Number.isNaN(date.getTime())) return t('queue.table.notAvailable')
-	return date.toLocaleString(undefined, {dateStyle: 'medium', timeStyle: 'short'})
+	// Use the app's display language, not the OS locale — otherwise a user who
+	// switched Arclio to a different language still sees dates formatted per
+	// their system locale, mismatching every other localized string on screen.
+	return date.toLocaleString(i18next.language, {dateStyle: 'medium', timeStyle: 'short'})
 }
 
 function sortableHeader(label: string, column: {getIsSorted: () => false | 'asc' | 'desc'; toggleSorting: (desc?: boolean) => void}, t: TFunction): ReactNode {

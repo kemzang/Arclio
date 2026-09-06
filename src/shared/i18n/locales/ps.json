@@ -1,5 +1,5 @@
 {
-	"common": {"back": "شاته", "cancel": "لغوه کړئ", "continue": "دوام ورکړه", "retry": "بیا هڅه وکړه", "startOver": "له سره پیل کړه"},
+	"common": {"back": "شاته", "cancel": "لغوه کړئ", "continue": "دوام ورکړه", "retry": "بیا هڅه وکړه", "startOver": "له سره پیل کړه", "delete": "ړنګول"},
 	"app": {"feedback": "نظر", "logs": "لاګونه", "feedbackNudge": "ایا Arclio خوند درکوي؟ ستاسو د اورولو شوق لرم! 💬", "zoomIn": "لویول", "zoomOut": "کوچنیول"},
 	"about": {"button": "د اړوند", "openTitle": "د Arclio اړوند", "tagline": "د YouTube او 2000+ نورو سایټونو لپاره چټک او اسانه ډاونلوډر.", "websiteLink": "ویب پاڼه", "githubLink": "GitHub", "licenseLine": "MIT جواز · د Antonio Orionus لخوا", "thirdPartyNotices": "د دریم ډلې خبرتیاوې وګورئ"},
 	"titleBar": {"close": "تړل", "minimize": "کوچنی کول", "maximize": "لوی کول", "restore": "بیرته راوستل"},
@@ -272,7 +272,8 @@
 					"custom": "د ډاونلوډ د پرمختللو کنټرولونو ترتیب پخپله وکړئ."
 				},
 				"fields": {"sleepRequests": "د میټاډیټا چکونو تر مینځ انتظار", "sleepInterval": "د میډیا د پیلیدو دمخه وقفه: لږه", "maxSleepInterval": "د میډیا د پیلیدو دمخه وقفه: ډیره", "sleepSubtitles": "د ژباړلیک فایلونو دمخه انتظار", "concurrentFragments": "د ډاونلوډ اتصالونه"},
-				"units": {"seconds": "ثا", "threads": "threads"}
+				"units": {"seconds": "ثا", "threads": "threads"},
+				"invalid": "یو سم، غیر منفي شمېر دننه کړئ."
 			},
 			"closeToTray": {"toggle": "د تړولو پر وخت ټرې ته پټ کړه", "toggleDescription": "د کړکۍ د تړولو وروسته شاتهپرده ډاونلوډونه دوام کړئ."},
 			"analytics": {"toggle": "د ناپیژندل شوي کارونې احصائیې واستوئ", "toggleDescription": "یوازې د اپلیکیشن پیلونه شمیري. هیڅ URL، د فایل نومونه، یا شخصي معلومات نه شته."}
@@ -657,11 +658,20 @@
 		"emptyHint": "د پیل لپاره ویډیو ډاونلوډ کړئ",
 		"missing": "ورک"
 	},
-	"collections": {"create": "نوې ټولګه", "namePlaceholder": "د ټولګې نوم", "save": "جوړ", "cancel": "لغوه", "empty": "تراوسه ټولګې نشته", "emptyHint": "د خپل میډیا تنظیم لپاره ټولګه جوړه کړئ"},
+	"collections": {
+		"create": "نوې ټولګه",
+		"namePlaceholder": "د ټولګې نوم",
+		"save": "جوړ",
+		"cancel": "لغوه",
+		"empty": "تراوسه ټولګې نشته",
+		"emptyHint": "د خپل میډیا تنظیم لپاره ټولګه جوړه کړئ",
+		"deleteConfirmTitle": "دا ټولګه ړنګه کړئ؟",
+		"deleteConfirmDescription": "ټولګه به لرې شي. دننه شتون لرونکي رسنۍ به ستاسو په کتابتون کې پاتې شي."
+	},
 	"collectionDetail": {"back": "ټولګو ته بیرته", "empty": "پدې ټولګه کې میډیا نشته", "emptyHint": "د کتابتون څخه میډیا اضافه کړئ", "removeFromCollection": "د ټولګې څخه لرې کړئ"},
 	"favorites": {"empty": "تراوسه خوښې نشته", "emptyHint": "میډیا د خوښې په توګه نښه کړئ"},
-	"tags": {"create": "نوی ټګ", "namePlaceholder": "د ټګ نوم", "save": "جوړ", "cancel": "لغوه", "empty": "تراوسه ټګونه نشته", "emptyHint": "د خپل میډیا ویش لپاره ټګ جوړ کړئ"},
-	"history": {"downloads": "ډاونلوډونه", "playback": "پلې بیک", "today": "نن", "yesterday": "پرون", "thisWeek": "دا اونۍ", "thisMonth": "دا میاشت", "empty": "د ډاونلوډ تاریخ نشته", "emptyPlayback": "د پلې بیک تاریخ نشته", "playCount": "{{count}} پلې", "completed": "بشپړ"},
+	"tags": {"create": "نوی ټګ", "namePlaceholder": "د ټګ نوم", "save": "جوړ", "cancel": "لغوه", "empty": "تراوسه ټګونه نشته", "emptyHint": "د خپل میډیا ویش لپاره ټګ جوړ کړئ", "deleteConfirmTitle": "دا نښه ړنګه کړئ؟", "deleteConfirmDescription": "نښه به له هغو ټولو رسنیو څخه لرې شي چې پرې پلي شوې ده."},
+	"history": {"downloads": "ډاونلوډونه", "playback": "پلې بیک", "today": "نن", "yesterday": "پرون", "thisWeek": "دا اونۍ", "thisMonth": "دا میاشت", "empty": "د ډاونلوډ تاریخ نشته", "emptyPlayback": "د پلې بیک تاریخ نشته", "playCount": "{{count}} پلې", "completed": "بشپړ", "failed": "ناکامه شوه"},
 	"player": {"back": "کتابتون ته بیرته", "noMedia": "میډیا ونه موندل شوه", "noAsset": "د چلولو وړ فایل ونه موندل شو", "subtitles": "فرعي لیکنې"},
 	"settings": {
 		"outputDir": "وتونکی لارښود",
