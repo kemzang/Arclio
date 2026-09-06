@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "已是最新。"
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "账户"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "重试"
@@ -526,10 +522,6 @@ msgstr "未找到可播放文件"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "未找到媒体"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "速度"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "标签"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Arclio 的当前版本"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "应用程序版本"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "已移除 {{count}} 个缩略图（{{size}} MB）"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "已移除 {{count}} 个缩略图（{{size}} MB）"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "缓存已为空"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "清除缓存"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "移除所有已生成的缩略图。它们会在需要时重新生成。"
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "清除缩略图缓存"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "查看应用程序日志以进行调试"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "打开日志目录"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "打开日志"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "重置"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "将所有设置恢复为默认值"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "重置设置"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "更改"
@@ -1038,6 +1086,14 @@ msgstr "剪贴板监控"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "自动检测剪贴板中的URL"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "打开转换器页面以转码文件、提取音频或将片段转换为 GIF。"
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "转换选项按文件单独选择，因为单一默认值无法同时适用于视频、音频和图像。"
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "应用程序显示语言"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "导入的媒体会自动建立索引：为添加到媒体库的每个文件提取元数据并生成缩略图。"
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "使用媒体库页面浏览、标记和整理已建立索引的内容。"
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "输出目录"
@@ -1062,6 +1126,46 @@ msgstr "输出目录"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "下载文件的保存位置"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "使用媒体库页面添加和管理监视文件夹。"
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "监视文件夹会自动将新媒体文件导入您的媒体库。"
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "账户"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "高级"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "转换器"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "下载"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "常规"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "媒体库"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "来源"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "查看器"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "应用程序外观"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "设置"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "漫画阅读方向在阅读器内部切换，因此可以按书籍单独更改，而不是全局更改。"
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "扫描已达上限"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "更改加载上限"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio 已使用当前上限 {{limit}} 加载了 {{count}} 个项目。现在将已加载的项目加入队列，或提高上限后重新扫描。"
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio 已使用当前上限 {{limit}} 加载了 {{count}} 个项目。现在将已加载的项目加入队列，或提高上限后重新扫描。"
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "将已加载的项目加入队列"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}："
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "应用范围"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} 项"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "每个视频独立匹配所选画质档位——混合内容的播放列表也能正常处理，无意外。"
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "除非您设置配置文件覆盖，否则配置文件将继承全局目标位置。"
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "高级选项"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "质量"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "最佳"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "最高 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "最高 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "最高 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "可用的最佳质量"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "添加"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "格式"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "关闭"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "开启"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "默认下载文件夹"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "一种可重复使用的设置，适用于快速下载、批量网址和播放列表。"
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "使用中"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "更改全局设置"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "选择目标文件夹"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "选择文件夹"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "全局目标位置"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "已继承"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "未设置覆盖"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "此配置文件会先保存到自己的根目录，然后再添加子文件夹。"
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "未设置覆盖。此配置文件使用上面的全局目标位置。"
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "配置文件覆盖"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "配置文件覆盖路径"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "为此配置文件选择文件夹"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "覆盖全局设置"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "已解析的目标位置"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "设置配置文件覆盖"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "设置覆盖"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "使用全局默认值"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "无法更改全局目标位置。"
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "无法打开文件夹选择器。请手动输入路径。"
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "无法重置配置文件设置。"
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "无法保存配置文件设置。"
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "归档"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "音频"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "字幕"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "课程"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "片段"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "控件"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "下载"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "音乐"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "播客"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "视频"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "选择配置文件图标"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "快速下载、批量网址和配置文件列表中显示的名称和图标。"
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "配置文件名称和图标"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "配置文件名称"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "配置文件身份"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "音乐或播客"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "仅音频"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "选择您想要的主要下载方式。"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "仅字幕文件"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "仅字幕"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "下载类型"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "普通视频文件"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "视频 + 音频"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "仅无声视频"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "视频，无音频"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "已启用 {{count}} 项"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "已启用 {{count}} 项"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "输出选项"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "重置配置文件"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "此配置文件已使用内置设置"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "恢复内置配置文件设置"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "最高 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "最高 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "最高 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "最高 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "最高 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "最高 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "可用的最佳质量"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "保存配置文件"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "标记"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "关闭"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "移除"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "已跳过"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "此输出类型已跳过。"
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "保存到子文件夹中"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "请使用不含 / \\ : * ? \" < > | 的有效文件夹名称。"
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "子文件夹名称"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "子文件夹名称"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "嵌入"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "独立文件"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "子文件夹"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "自动字幕将保存为 SRT 而非 ASS 格式。"
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "交付方式"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "此配置文件不会请求字幕文件或内嵌字幕轨道。"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "配置文件会请求语言代码；可用性将针对每个网址单独解析。"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "字幕下载"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "字幕语言代码"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "语言"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "未选择任何语言"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "来源"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "此配置文件仅将字幕文件加入队列。视频、音频、SponsorBlock 和媒体转换均会被跳过。"
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "仅自动生成"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "先手动，再自动"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "仅手动"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "下载配置文件"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "最佳原生格式"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "智能电视 H.264 MP4"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "兼容性"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "分辨率"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "最佳原生格式"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "没有匹配的语言"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "未选择字幕"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "移除 {{name}}"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "正在后台下载… 我可以同时处理多个任务 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "\"快速\"会使用 {{profileName}} 将已加载的项目加入队列。\"交互式\"可让您先检查或选择项目。"
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "丢个链接，让 Arclio 来拉取 ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "此链接指向合集中的一个视频。Arclio 会在探测前询问您想要哪一个。"
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} 正在读取此链接并应用 {{profileName}}。"
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "队列正在处理此下载。您可以在处理期间粘贴另一个链接。"
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "\"快速\"会使用 {{profileName}} 启动一次下载。如需一次性更改，请使用\"交互式\"。"
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "对应 yt-dlp 的 --playlist-end 参数：Arclio 在构建选择器时仅请求这么多播放列表、频道或搜索条目。"
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "使用应用上限：{{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "应用"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "无法应用该播放列表范围：{{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "更改"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "选择您希望 Arclio 要求 yt-dlp 为此播放列表加载的内容。"
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "播放列表范围"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "前几项"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "请使用 1 到 5000 之间的整数项目编号，且起始值不得大于结束值。"
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "要加载的项目数"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "播放列表范围"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "范围"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "正在重新加载…"
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "重置"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "加载前 {{count}} 项"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "加载前 {{count}} 项"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "加载第 {{from}}-{{to}} 项"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "至"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "活动配置文件"
@@ -2824,10 +3500,6 @@ msgstr "正在准备"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "探测失败"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "已加入队列"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

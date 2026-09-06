@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "Tayari ni ya kisasa."
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "Akaunti"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "Jaribu tena"
@@ -526,10 +522,6 @@ msgstr "Hakuna faili inayoweza kuchezwa imepatikana"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Media haijapatikana"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Kasi"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "Lebo"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Toleo la sasa la Arclio"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "Toleo la programu"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "Kijipicha {{count}} kimeondolewa ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "Vijipicha {{count}} vimeondolewa ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "Kache tayari ni tupu"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "Futa kache"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "Ondoa vijipicha vyote vilivyotengenezwa. Vinatengenezwa upya vinapohitajika."
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "Futa kache ya vijipicha"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "Angalia kumbukumbu za programu kwa ajili ya utatuzi"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "Fungua folda ya kumbukumbu"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "Fungua kumbukumbu"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "Weka upya"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "Rejesha mipangilio yote kwa chaguo-msingi"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "Weka upya mipangilio"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "Badilisha"
@@ -1038,6 +1086,14 @@ msgstr "Ufuatiliaji wa ubao wa kunakili"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "Gundua URL kiotomatiki kwenye ubao wa kunakili"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "Fungua ukurasa wa Kibadilishaji ili kubadilisha faili, kutoa sauti yake, au kugeuza kipande kuwa GIF."
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "Chaguo za ubadilishaji huchaguliwa kwa kila faili, kwa kuwa thamani chaguo-msingi moja haitafaa video, sauti, na picha kwa pamoja."
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "Lugha ya onyesho la programu"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "Maudhui yaliyoingizwa yanaorodheshwa kiotomatiki: metadata hutolewa na kijipicha huundwa kwa kila faili linaloongezwa kwenye maktaba yako."
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "Tumia ukurasa wa Maktaba kuvinjari, kuweka lebo, na kupanga yale yaliyoorodheshwa."
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "Saraka ya pato"
@@ -1062,6 +1126,46 @@ msgstr "Saraka ya pato"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "Ambapo faili zilizopakuliwa zinahifadhiwa"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "Tumia ukurasa wa Maktaba kuongeza na kusimamia folda zinazofuatiliwa."
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "Folda zinazofuatiliwa huingiza kiotomatiki faili mpya za maudhui kwenye maktaba yako."
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "Akaunti"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "Mipangilio ya juu"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "Kibadilishaji"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "Vipakuliwa"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "Jumla"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "Maktaba"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "Vyanzo"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "Kitazamaji"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "Muonekano wa programu"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Mipangilio"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "Mwelekeo wa kusoma vitabu vya katuni hubadilishwa ndani ya kitazamaji chenyewe, hivyo unaweza kubadilishwa kwa kila kitabu badala ya kimataifa."
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "Uchanganuzi umewekewa kikomo"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "Badilisha kikomo cha upakiaji"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio imepakia kipengele {{count}} kwa kutumia kikomo cha sasa cha {{limit}}. Weka vipengele vilivyopakiwa kwenye foleni sasa, au ongeza kikomo na uchanganue tena."
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio imepakia vipengele {{count}} kwa kutumia kikomo cha sasa cha {{limit}}. Weka vipengele vilivyopakiwa kwenye foleni sasa, au ongeza kikomo na uchanganue tena."
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "Weka vipengele vilivyopakiwa kwenye foleni"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}:"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "Tumia masafa"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} vipande"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "Kila video inatatua kiwango kilichochaguliwa kwa kujitegemea — playlists tofauti hufanya kazi bila mshangao."
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "Wasifu hurithi marudio ya kimataifa isipokuwa uweke ubadilishaji wa wasifu."
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "Chaguo za juu"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "Ubora"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "Bora zaidi"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "Hadi 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "Hadi 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "Hadi 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "Bora zaidi inayopatikana"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "Ongeza"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "Muundo"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "Imezimwa"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "Imewashwa"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "Folda chaguo-msingi ya upakuaji"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "Mpangilio mmoja unaoweza kutumika tena kwa Upakuaji wa Haraka, URL za Wingi, na orodha za nyimbo."
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "Inatumika"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "Badilisha kimataifa"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "Chagua folda ya marudio"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "Chagua folda"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "Marudio ya kimataifa"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "Imerithiwa"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "Hakuna ubadilishaji uliowekwa"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "Wasifu huu huhifadhi kwenye folda yake ya mzizi kabla ya folda ndogo kuongezwa."
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "Hakuna ubadilishaji uliowekwa. Wasifu huu hutumia marudio ya kimataifa yaliyo hapo juu."
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "Ubadilishaji wa wasifu"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "Njia ya ubadilishaji wa wasifu"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "Chagua folda kwa wasifu huu"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "Hubadilisha kimataifa"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "Marudio yaliyoamuliwa"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "Weka ubadilishaji wa wasifu"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "Weka ubadilishaji"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "Tumia chaguo-msingi la kimataifa"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "Imeshindwa kubadilisha marudio ya kimataifa."
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "Imeshindwa kufungua kichagua-folda. Weka njia kwa mkono."
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "Imeshindwa kuweka upya mipangilio ya wasifu."
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "Imeshindwa kuhifadhi mipangilio ya wasifu."
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "Kumbukumbu"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "Sauti"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "Manukuu"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "Madarasa"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "Kipande"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "Vidhibiti"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "Pakua"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "Muziki"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "Podikasti"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "Chagua aikoni ya wasifu"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "Jina na aikoni zinazoonyeshwa kwenye Upakuaji wa Haraka, URL za Wingi, na orodha za wasifu."
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "Jina na aikoni ya wasifu"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "Jina la wasifu"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "Utambulisho wa wasifu"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "Muziki au podikasti"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "Sauti pekee"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "Chagua njia kuu unayotaka kupakua."
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "Faili za manukuu pekee"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "Manukuu pekee"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "Aina ya upakuaji"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "Faili za kawaida za video"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "Video + sauti"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "Video isiyo na sauti pekee"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "Video, bila sauti"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "{{count}} imewashwa"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "{{count}} zimewashwa"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "Chaguo za matokeo"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "Weka upya wasifu"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "Wasifu huu tayari unatumia mipangilio iliyojengwa ndani"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "Rejesha mipangilio ya wasifu iliyojengwa ndani"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "Hadi 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "Hadi 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "Hadi 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "Hadi 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "Hadi 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "Hadi 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "Bora zaidi inayopatikana"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "Hifadhi wasifu"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "Weka alama"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "Imezimwa"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "Ondoa"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "Imerukwa"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "Imerukwa kwa aina hii ya matokeo."
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "Hifadhi ndani ya folda ndogo"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "Tumia jina sahihi la folda bila / \\ : * ? \" < > |."
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "Jina la folda ndogo"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "Jina la folda ndogo"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "Pachika"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "Faili tofauti"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "Folda ndogo"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "Manukuu ya kiotomatiki yatahifadhiwa kama SRT badala ya ASS."
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "Uwasilishaji"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "Hakuna faili za manukuu au njia za manukuu zilizopachikwa zitakazoombwa kwa wasifu huu."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "Wasifu huomba misimbo ya lugha; upatikanaji huamuliwa kwa kila URL."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "Upakuaji wa manukuu"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "Misimbo ya lugha ya manukuu"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "Lugha"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "Hakuna lugha zilizochaguliwa"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "Chanzo"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "Wasifu huu huweka kwenye foleni faili za manukuu pekee. Video, sauti, SponsorBlock, na ubadilishaji wa maudhui huruka."
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "Zilizotengenezwa kiotomatiki pekee"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "Kwa mkono kwanza, kisha kiotomatiki"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "Kwa mkono pekee"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "Wasifu wa upakuaji"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "Bora zaidi asilia"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "H.264 MP4 kwa Smart TV"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "Ulinganifu"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "Ubora wa picha"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "Bora zaidi asilia"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "Hakuna lugha zinazolingana"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "Hakuna manukuu yaliyochaguliwa"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "Ondoa {{name}}"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "Inapakua nyuma ya pazia… Ninaweza kufanya mambo mengi kwa wakati mmoja 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "Haraka huweka vipengele vilivyopakiwa kwenye foleni kwa kutumia {{profileName}}. Maingiliano hukuruhusu kukagua au kuchagua vipengele kwanza."
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "Weka kiungo, Arclio aipakue ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "Kiungo hiki kinaelekeza kwenye video moja ndani ya mkusanyiko. Arclio itauliza ni ipi unayotaka kabla ya kuchunguza."
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} inasoma kiungo hiki na kutumia {{profileName}}."
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "Foleni inashughulikia upakuaji huu. Unaweza kubandika kiungo kingine kikiwa kinafanya kazi."
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "Haraka huanzisha upakuaji mmoja kwa kutumia {{profileName}}. Tumia Maingiliano kwa mabadiliko ya mara moja."
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "Inalingana na yt-dlp --playlist-end: Arclio inauliza idadi hii tu ya maingizo ya playlist, kituo, au utafutaji wakati wa kujenga kichaguzi."
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "Tumia kikomo cha programu: {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "Tumia"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "Imeshindwa kutumia wigo huo wa orodha ya nyimbo: {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "Ghairi"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "Badilisha"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "Chagua kile Arclio kinachomwomba yt-dlp kupakia kwa orodha hii ya nyimbo."
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "Wigo wa orodha ya nyimbo"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "Ya kwanza"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "Tumia namba kamili za vipengele kutoka 1 hadi 5000, ambapo mwanzo usizidi mwisho."
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "Vipengele vya kupakia"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "Wigo wa orodha ya nyimbo"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "Wigo"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "Inapakia upya..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "Weka upya"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "Pakia vipengele {{count}} vya kwanza"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "Pakia vipengele {{count}} vya kwanza"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "Pakia vipengele {{from}}-{{to}}"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "hadi"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "Wasifu unaotumika"
@@ -2824,10 +3500,6 @@ msgstr "Inaandaa"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "Uchunguzi umeshindikana"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "Imeongezwa kwenye foleni"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "Duraanuu haaraa dha."
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "Herrega"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "Irra deebiʼii yaali"
@@ -526,10 +522,6 @@ msgstr "Faayilii taphatamu hin argamne"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Miidiyaan hin argamne"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Saffisa"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "Mallattoo"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Arclio Version ammaa"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "Version Appilikeeshinii"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "Suuraa xiqqaa {{count}} balleeffameera ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "Suuraawwan xiqqaa {{count}} balleeffamaniiru ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "Kuusaan duraan duwwaa dha"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "Kuusaa Qulqulleessi"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "Suuraawwan xiqqaa hunda uumaman balleessa. Yeroo barbaachisu deebi'anii uumamu."
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "Kuusaa Suuraa Xiqqaa Qulqulleessi"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "Sirreeffannaaf galmee appilikeeshinii ilaali"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "Sanduuqa Galmee Bani"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "Galmeewwan Bani"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "Deebisi"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "Qindaa'ina hunda gara durtiitti deebisi"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "Qindaa'ina Deebisi"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "Jijjiiri"
@@ -1038,6 +1086,14 @@ msgstr "Hordoffii gabatee barreeffamaa"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "URL gabatee barreeffamaa keessatti ofumaan adda baasi"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "Fuula Jijjiiraa banii faayilii jijjiiruuf, sagalee isaa baasuuf, ykn muraasa GIF godhachuuf."
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "Filannoowwan jijjiiraa faayiliidhaan filatamu, sababiin isaas gatiin durtii tokko viidiyoo, sagalee, fi suuraaf hunda hin caalu."
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "Afaan agarsiisa applicationii"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "Miidiyaan galfaman ofumaan tarreeffamu: faayila kamiyyuu kuusaa keessan keessatti dabalamuuf odeeffannoon meetaa baafamee suuraan xiqqaan uumama."
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "Wantoota tarreeffaman daawwachuuf, mallattoo kennuuf, fi tartiibessuuf fuula Kuusaa fayyadamaa."
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "Galeelaa badii"
@@ -1062,6 +1126,46 @@ msgstr "Galeelaa badii"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "Faayiloonni buufaman eessa kuusamu"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "Foolderoota hordofaman dabaluu fi bulchuuf fuula Kuusaa fayyadamaa."
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "Foolderoonni hordofaman faayilota miidiyaa haaraa ofumaan gara kuusaa keessaniitti galchu."
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "Akkaawuntii"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "Sadarkaa Ol'aanaa"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "Jijjiiraa"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "Buufamaniiru"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "Waliigalaa"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "Kuusaa"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "Maddoota"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "Ilaalaa"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "Mul'ata applicationii"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Qindaa'ina"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "Kallattiin dubbisa comic-ii ilaalaa keessatti jijjiirama, kanaafuu addunyaa hundaaf osoo hin taane kitaaba tokko tokkoon jijjiiramuu danda'a."
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "Sakatta’iinsi daangeffameera"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "Daangaa Fe'iinsaa Jijjiiri"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio daangaa ammaa {{limit}} fayyadamuun meeshaa {{count}} fe'eera. Meeshaalee fe'aman amma tarrii keessa galchi, ykn daangaa dabaltee irra deebi'ii sakatta'i."
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio daangaa ammaa {{limit}} fayyadamuun meeshaalee {{count}} fe'eera. Meeshaalee fe'aman amma tarrii keessa galchi, ykn daangaa dabaltee irra deebi'ii sakatta'i."
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "Meeshaalee fe'aman tarrii keessa galchi"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}:"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "Daangaa hojiirra oolchi"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} wantota"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "Viidiyoon hundi sadarkaa filatame ofumaan qorata — playlist garagaraa sodaa malee hojjeta."
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "Profaayilonni yoo bakka bu'iinsa profaayilii hin qindeessine, bakka addunyaa hundaa dhaalu."
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "Filannoo Sadarkaa Ol'aanaa"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "Qulqullina"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "Isa Gaarii"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "Hanga 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "Hanga 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "Hanga 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "Isa gaarii jiru"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "Dabali"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "Bifa"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "Cufaa"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "Banaa"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "Foolderii Buufamaa Durtii"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "Qindaa'ina yeroo hedduu fayyadamamu tokko Buufama Ariifataa, URL Baay'inaa, fi tarree taphaaf."
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "Hojjechaa jira"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "Waliigalaa Jijjiiri"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "Foolderii Galmaa Filadhu"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "Foolderii Filadhu"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "Galmaa Addunyaa"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "Dhaalame"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "Bakka bu'iinsi hin qindaa'amne"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "Profaayiliin kun foolderii xiqqaan osoo hin dabalamin dura foolderii ofii isaatti kuusa."
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "Bakka bu'iinsi hin qindaa'amne. Profaayiliin kun galmaa addunyaa armaan olii fayyadama."
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "Bakka Bu'iinsa Profaayilii"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "Daandii Bakka Bu'iinsa Profaayilii"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "Profaayilii kanaaf foolderii filadhu"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "Addunyaa ni bakka bu'a"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "Galmaa Furame"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "Bakka Bu'iinsa Profaayilii Qindeessi"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "Bakka Bu'iinsa Qindeessi"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "Durtii Addunyaa Fayyadami"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "Galmaa addunyaa jijjiiruu hin dandeenye."
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "Filataa foolderii banuu hin dandeenye. Daandii harkaan galchi."
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "Qindaa'ina profaayilii deebisuu hin dandeenye."
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "Qindaa'ina profaayilii kuusuu hin dandeenye."
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "Kuusaa Durii"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "Sagalee"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "Ibsa Jala"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "Kutaalee"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "Muraasa"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "To'annoo"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "Buufama"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "Muuziqaa"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "Podcast"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "Viidiyoo"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "Mallattoo Profaayilii Filadhu"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "Maqaa fi mallattoo Buufama Ariifataa, URL Baay'inaa, fi tarree profaayilii keessatti argamu."
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "Maqaa fi Mallattoo Profaayilii"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "Maqaa Profaayilii"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "Eenyummaa Profaayilii"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "Muuziqaa ykn Podcast"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "Sagalee qofa"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "Karaa buufama ittiin barbaaddu filadhu."
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "Faayiloota ibsa jalaa qofa"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "Ibsa jala qofa"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "Gosa Buufamaa"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "Faayiloota viidiyoo idilee"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "Viidiyoo + Sagalee"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "Viidiyoo sagalee hin qabne qofa"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "Viidiyoo, sagalee malee"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "{{count}} banameera"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "{{count}} banamaniiru"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "Filannoo Bahaa"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "Profaayilii Deebisi"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "Profaayiliin kun qindaa'ina dhaabbataa duraan fayyadamaa jira"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "Qindaa'ina profaayilii dhaabbataa deebisi"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "Hanga 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "Hanga 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "Hanga 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "Hanga 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "Hanga 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "Hanga 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "Isa gaarii jiru"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "Profaayilii Kuusi"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "Mallatteessi"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "Cufaa"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "Balleessi"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "Darbameera"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "Gosa bahaa kanaaf darbameera."
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "Foolderii xiqqaa keessatti kuusi"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "Maqaa foolderii sirrii kan / \\ : * ? \" < > | hin qabne fayyadami."
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "Maqaa Foolderii Xiqqaa"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "Maqaa Foolderii Xiqqaa"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "Dabali"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "Faayilii Addaa"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "Foolderii Xiqqaa"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "Ibsi jalaa ofumaan uumame ASS mannaa SRT ta'ee kuufama."
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "Dabarsa"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "Profaayilii kanaaf faayiloonni ibsa jalaa yookaan sarara ibsa jalaa keessatti hidhaman gaafataman hin jiran."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "Profaayiloonni koodii afaanii gaafatu; argamuun isaanii URL tokkoon tokkoon murtaa'a."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "Buufama Ibsa Jalaa"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "Koodii Afaanii Ibsa Jalaa"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "Afaanota"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "Afaan hin filatamne"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "Madda"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "Profaayiliin kun faayiloota ibsa jalaa qofa tarrii keessa galcha. Viidiyoo, sagalee, SponsorBlock, fi jijjiirraan miidiyaa ni darbamu."
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "Kan ofumaan uumame qofa"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "Jalqaba harkaan, ergasii ofumaan"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "Harkaan qofa"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "Profaayilii Buufamaa"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "Isa gaarii dhalootaa"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "H.264 MP4 Smart TV-f"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "Wal simannaa"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "Ulaagaa Fakkii"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "Isa gaarii dhalootaa"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "Afaan hin argatamne"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "Axxiinni hin filamine"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "{{name}} Balleessi"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "Duubaan buusaa jira… rakkoo guguddaa hojjechuuf dandeessa 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "Ariifataan meeshaalee fe'aman {{profileName}} waliin tarrii keessa galcha. Waltajjiin dursee meeshaalee ilaaluu ykn filachuu si dandeessisa."
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "Liinkii galchi; Arclio haa buusu ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "Hidhaan kun viidiyoo tokko qabeenya (collection) tokko keessa jiru agarsiisa. Arclio osoo hin qorin dura kam akka barbaadde si gaafata."
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} hidhaa kana dubbisaa jira, {{profileName}} illee hojiirra oolchaa jira."
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "Tarriin buufama kana bulchaa jira. Hojjechaa osoo jiruu hidhaa biraa maxxansuu ni dandeessa."
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "Ariifataan {{profileName}} waliin buufama tokko jalqaba. Jijjiirraawwan yeroo tokkoof Waltajjii fayyadami."
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "yt-dlp --playlist-end waliin walsimsiisa: Arclio filataa ijaarutti wantota playlist, chaanaalii, ykn barbaadaa lakkoofsa kana qofa gaafata."
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "Daangaa appilikeeshinii fayyadami: {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "Hojiirra Oolchi"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "Daangaa tarree taphaa sana hojiirra oolchuu hin dandeenye: {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "Haqi"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "Jijjiiri"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "Wanta Arclio yt-dlp akka fe'u gaafatu tarree taphaa kanaaf filadhu."
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "Daangaa Tarree Taphaa"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "Isa Duraa"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "Lakkoofsota meeshaa guutuu 1 hanga 5000 fayyadami, jalqabni dhuma hin caalu."
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "Meeshaalee Fe'aman"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "Daangaa Tarree Taphaa"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "Daangaa"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "Irra deebi'ee fe'aa jira..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "Deebisi"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "Meeshaalee {{count}} jalqabaa fe'i"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "Meeshaalee {{count}} jalqabaa fe'i"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "Meeshaalee {{from}}-{{to}} fe'i"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "hanga"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "Profaayilii hojiirra jiru"
@@ -2824,10 +3500,6 @@ msgstr "Qopheessaa jira"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "Sakatta’iinsi hin milkoofne"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "Tarreetti dabalame"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

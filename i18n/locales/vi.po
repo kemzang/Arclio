@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "Đã cập nhật."
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "Tài khoản"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "Thử lại"
@@ -526,10 +522,6 @@ msgstr "Không tìm thấy tệp có thể phát"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Không tìm thấy phương tiện"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Tốc độ"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "Thẻ"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Phiên bản hiện tại của Arclio"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "Phiên bản ứng dụng"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "Đã xóa {{count}} ảnh thu nhỏ ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "Đã xóa {{count}} ảnh thu nhỏ ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "Bộ nhớ đệm đã trống"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "Xóa bộ nhớ đệm"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "Xóa tất cả ảnh thu nhỏ đã tạo. Chúng sẽ được tạo lại khi cần."
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "Xóa bộ nhớ đệm ảnh thu nhỏ"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "Xem nhật ký ứng dụng để gỡ lỗi"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "Mở thư mục nhật ký"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "Mở nhật ký"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "Đặt lại"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "Khôi phục tất cả cài đặt về mặc định"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "Đặt lại cài đặt"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "Thay đổi"
@@ -1038,6 +1086,14 @@ msgstr "Theo dõi khay nhớ tạm"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "Tự động phát hiện URL trong khay nhớ tạm"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "Mở trang Bộ chuyển đổi để chuyển mã tệp, trích xuất âm thanh hoặc biến đoạn clip thành GIF."
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "Tùy chọn chuyển đổi được chọn theo từng tệp, vì một giá trị mặc định duy nhất không thể phù hợp với cả video, âm thanh và hình ảnh."
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "Ngôn ngữ hiển thị ứng dụng"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "Phương tiện đã nhập được lập chỉ mục tự động: siêu dữ liệu được trích xuất và ảnh thu nhỏ được tạo cho mỗi tệp thêm vào thư viện của bạn."
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "Sử dụng trang Thư viện để duyệt, gắn thẻ và sắp xếp những gì đã được lập chỉ mục."
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "Thư mục đầu ra"
@@ -1062,6 +1126,46 @@ msgstr "Thư mục đầu ra"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "Nơi lưu tệp tải xuống"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "Sử dụng trang Thư viện để thêm và quản lý các thư mục được theo dõi."
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "Các thư mục được theo dõi sẽ tự động nhập các tệp phương tiện mới vào thư viện của bạn."
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "Tài khoản"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "Nâng cao"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "Bộ chuyển đổi"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "Tải xuống"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "Chung"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "Thư viện"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "Nguồn"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "Trình xem"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "Diện mạo ứng dụng"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Cài đặt"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "Hướng đọc truyện tranh được chuyển ngay trong trình xem, vì vậy có thể thay đổi theo từng cuốn thay vì áp dụng toàn cục."
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "Quét đã bị giới hạn"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "Thay đổi giới hạn tải"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio đã tải {{count}} mục với giới hạn hiện tại là {{limit}}. Hãy xếp hàng các mục đã tải ngay, hoặc tăng giới hạn và quét lại."
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio đã tải {{count}} mục với giới hạn hiện tại là {{limit}}. Hãy xếp hàng các mục đã tải ngay, hoặc tăng giới hạn và quét lại."
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "Xếp hàng các mục đã tải"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}:"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "Áp dụng phạm vi"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} mục"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "Mỗi video tự xử lý cấp độ đã chọn một cách độc lập — danh sách phát không đồng nhất hoạt động mượt mà."
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "Hồ sơ sẽ kế thừa đích lưu toàn cục trừ khi bạn đặt ghi đè riêng cho hồ sơ."
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "Tùy chọn nâng cao"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "Chất lượng"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "Tốt nhất"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "Tối đa 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "Tối đa 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "Tối đa 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "Tốt nhất hiện có"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "Thêm"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "Định dạng"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "Tắt"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "Bật"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "Thư mục tải xuống mặc định"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "Một thiết lập dùng lại được cho Tải nhanh, URL hàng loạt và danh sách phát."
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "Đang hoạt động"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "Thay đổi toàn cục"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "Chọn thư mục đích"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "Chọn thư mục"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "Đích lưu toàn cục"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "Được kế thừa"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "Chưa đặt ghi đè"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "Hồ sơ này lưu vào thư mục gốc riêng trước khi thêm thư mục con."
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "Chưa đặt ghi đè. Hồ sơ này dùng đích lưu toàn cục ở trên."
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "Ghi đè hồ sơ"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "Đường dẫn ghi đè hồ sơ"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "Chọn thư mục cho hồ sơ này"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "Ghi đè toàn cục"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "Đích lưu đã xác định"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "Đặt ghi đè hồ sơ"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "Đặt ghi đè"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "Dùng mặc định toàn cục"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "Không thể thay đổi đích lưu toàn cục."
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "Không thể mở trình chọn thư mục. Hãy nhập đường dẫn thủ công."
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "Không thể đặt lại cài đặt hồ sơ."
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "Không thể lưu cài đặt hồ sơ."
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "Lưu trữ"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "Âm thanh"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "Phụ đề"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "Lớp học"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "Đoạn clip"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "Điều khiển"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "Tải xuống"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "Nhạc"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "Podcast"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "Chọn biểu tượng hồ sơ"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "Tên và biểu tượng hiển thị trong Tải nhanh, URL hàng loạt và danh sách hồ sơ."
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "Tên và biểu tượng hồ sơ"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "Tên hồ sơ"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "Thông tin hồ sơ"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "Nhạc hoặc podcast"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "Chỉ âm thanh"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "Chọn cách tải xuống chính bạn muốn dùng."
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "Chỉ tệp phụ đề"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "Chỉ phụ đề"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "Loại tải xuống"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "Tệp video thông thường"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "Video + âm thanh"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "Chỉ video câm"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "Video, không có âm thanh"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "Đã bật {{count}}"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "Đã bật {{count}}"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "Tùy chọn đầu ra"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "Đặt lại hồ sơ"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "Hồ sơ này đã dùng cài đặt tích hợp sẵn"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "Khôi phục cài đặt hồ sơ tích hợp sẵn"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "Tối đa 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "Tối đa 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "Tối đa 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "Tối đa 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "Tối đa 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "Tối đa 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "Tốt nhất hiện có"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "Lưu hồ sơ"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "Đánh dấu"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "Tắt"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "Xóa"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "Đã bỏ qua"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "Đã bỏ qua cho loại đầu ra này."
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "Lưu trong thư mục con"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "Hãy dùng tên thư mục hợp lệ, không chứa / \\ : * ? \" < > |."
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "Tên thư mục con"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "Tên thư mục con"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "Nhúng"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "Tệp riêng"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "Thư mục con"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "Phụ đề tự động sẽ được lưu dưới dạng SRT thay vì ASS."
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "Cách cung cấp"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "Sẽ không có tệp phụ đề hay track phụ đề nhúng nào được yêu cầu cho hồ sơ này."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "Hồ sơ yêu cầu mã ngôn ngữ; tính khả dụng được xác định cho từng URL."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "Tải phụ đề"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "Mã ngôn ngữ phụ đề"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "Ngôn ngữ"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "Chưa chọn ngôn ngữ nào"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "Nguồn"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "Hồ sơ này chỉ xếp hàng các tệp phụ đề. Video, âm thanh, SponsorBlock và chuyển đổi phương tiện sẽ bị bỏ qua."
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "Chỉ tự động tạo"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "Thủ công trước, sau đó tự động"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "Chỉ thủ công"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "Hồ sơ tải xuống"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "Gốc tốt nhất"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "MP4 H.264 cho Smart TV"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "Khả năng tương thích"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "Độ phân giải"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "Gốc tốt nhất"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "Không tìm thấy ngôn ngữ nào"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "Chưa chọn phụ đề nào"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "Xóa {{name}}"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "Đang tải xuống trong nền… Tôi có thể làm nhiều việc cùng lúc 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "Nhanh sẽ xếp hàng các mục đã tải với {{profileName}}. Tương tác cho phép bạn kiểm tra hoặc chọn mục trước."
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "Thả một liên kết và để Arclio kéo về ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "Liên kết này trỏ đến một video bên trong một bộ sưu tập. Arclio sẽ hỏi bạn muốn video nào trước khi kiểm tra."
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} đang đọc liên kết này và áp dụng {{profileName}}."
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "Hàng đợi đang xử lý lượt tải này. Bạn có thể dán liên kết khác trong khi chờ."
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "Nhanh sẽ bắt đầu một lượt tải với {{profileName}}. Dùng Tương tác cho các thay đổi riêng lẻ."
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "Tương ứng với yt-dlp --playlist-end: Arclio chỉ yêu cầu số mục này từ playlist, kênh hoặc kết quả tìm kiếm khi tạo bộ chọn."
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "Dùng giới hạn ứng dụng: {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "Áp dụng"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "Không thể áp dụng phạm vi danh sách phát đó: {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "Hủy"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "Thay đổi"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "Chọn những gì Arclio yêu cầu yt-dlp tải cho danh sách phát này."
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "Phạm vi danh sách phát"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "Đầu tiên"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "Dùng số thứ tự mục nguyên từ 1 đến 5000, với số bắt đầu không lớn hơn số kết thúc."
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "Số mục cần tải"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "Phạm vi danh sách phát"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "Khoảng"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "Đang tải lại..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "Đặt lại"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "Tải {{count}} mục đầu tiên"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "Tải {{count}} mục đầu tiên"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "Tải các mục {{from}}-{{to}}"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "đến"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "Hồ sơ đang dùng"
@@ -2824,10 +3500,6 @@ msgstr "Đang chuẩn bị"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "Thăm dò thất bại"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "Đã thêm vào hàng đợi"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

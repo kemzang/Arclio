@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "Већ је ажурно."
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "Налог"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "Покушај поново"
@@ -526,10 +522,6 @@ msgstr "Није пронађена датотека за репродукциј
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Медијум није пронађен"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Брзина"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "Ознака"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Тренутна верзија Arclio-а"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "Верзија апликације"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "Уклоњена је {{count}} сличица ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "Уклоњено је {{count}} сличица ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "Кеш је већ празан"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "Очисти кеш"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "Уклања све генерисане сличице. Поново се праве по потреби."
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "Очисти кеш сличица"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "Прикажи дневнике апликације ради отклањања грешака"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "Отвори фасциклу дневника"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "Отвори дневнике"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "Ресетуј"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "Врати сва подешавања на подразумевана"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "Ресетуј подешавања"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "Промени"
@@ -1038,6 +1086,14 @@ msgstr "Надзор клипборда"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "Аутоматски откриј URL адресе у клипборду"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "Отворите страницу Конвертор да бисте транскодирали фајл, издвојили звук или претворили исечак у GIF."
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "Опције конверзије бирају се по фајлу, пошто једна подразумевана вредност не би одговарала и видеу, и звуку, и слици."
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "Језик приказа апликације"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "Увезени медији се аутоматски индексирају: за сваки фајл додат у вашу библиотеку издвајају се метаподаци и прави се сличица."
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "Користите страницу Библиотека да прегледате, означите и организујете оно што је индексирано."
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "Излазни директоријум"
@@ -1062,6 +1126,46 @@ msgstr "Излазни директоријум"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "Где се чувају преузете датотеке"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "Користите страницу Библиотека да додате и управљате праћеним фасциклама."
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "Праћене фасцикле аутоматски увозе нове медијске фајлове у вашу библиотеку."
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "Налог"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "Напредно"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "Конвертор"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "Преузимања"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "Опште"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "Библиотека"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "Извори"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "Приказивач"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "Изглед апликације"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Подешавања"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "Смер читања стрипова мења се унутар самог приказивача, тако да се може подешавати по књизи, а не глобално."
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "Скенирање је ограничено"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "Промени ограничење учитавања"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio је учитао {{count}} ставку уз тренутно ограничење од {{limit}}. Ставите учитане ставке у ред одмах, или повећајте ограничење и поново скенирајте."
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio је учитао {{count}} ставки уз тренутно ограничење од {{limit}}. Ставите учитане ставке у ред одмах, или повећајте ограничење и поново скенирајте."
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "Стави учитане ставке у ред"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}:"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "Примени опсег"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} ставки"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "Свaki видео самостално проналази одговарајући ниво квалитета — хетерогене плејлисте раде без изненађења."
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "Профили наслеђују глобалну дестинацију осим ако не поставите прегажење за профил."
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "Напредне опције"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "Квалитет"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "Најбоље"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "До 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "До 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "До 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "Најбоље доступно"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "Додај"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "Формат"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "Искључено"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "Укључено"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "Подразумевана фасцикла за преузимања"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "Једно подешавање за поновну употребу за Брзо преузимање, масовне URL-ове и плејлисте."
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "Активно"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "Промени глобално"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "Изабери одредишну фасциклу"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "Изабери фасциклу"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "Глобална дестинација"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "Наслеђено"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "Прегажење није постављено"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "Овај профил чува у сопствену корену фасциклу пре него што се дода подфасцикла."
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "Прегажење није постављено. Овај профил користи глобалну дестинацију изнад."
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "Прегажење профила"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "Путања прегажења профила"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "Изабери фасциклу за овај профил"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "Прегажује глобално"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "Разрешена дестинација"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "Постави прегажење профила"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "Постави прегажење"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "Користи глобално подразумевано"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "Глобална дестинација није могла да се промени."
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "Бирач фасцикли није могао да се отвори. Унесите путању ручно."
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "Подешавања профила није било могуће ресетовати."
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "Подешавања профила није било могуће сачувати."
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "Архива"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "Звук"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "Титлови"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "Часови"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "Исечак"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "Контроле"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "Преузимање"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "Музика"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "Подкаст"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "Видео"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "Изабери икону профила"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "Име и икона приказани у Брзом преузимању, масовним URL-овима и листама профила."
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "Име и икона профила"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "Име профила"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "Идентитет профила"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "Музика или подкасти"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "Само звук"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "Изаберите основни начин преузимања који желите."
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "Само фајлови титлова"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "Само титлови"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "Тип преузимања"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "Обични видео фајлови"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "Видео + звук"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "Само нем видео"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "Видео без звука"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "Укључено: {{count}}"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "Укључено: {{count}}"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "Опције излаза"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "Ресетуј профил"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "Овај профил већ користи уграђена подешавања"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "Врати уграђена подешавања профила"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "До 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "До 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "До 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "До 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "До 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "До 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "Најбоље доступно"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "Сачувај профил"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "Означи"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "Искључено"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "Уклони"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "Прескочено"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "Прескочено за овај тип излаза."
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "Сачувај унутар подфасцикле"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "Користите важеће име фасцикле без / \\ : * ? \" < > |."
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "Име подфасцикле"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "Име подфасцикле"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "Угради"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "Посебан фајл"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "Подфасцикла"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "Аутоматски титлови ће бити сачувани као SRT уместо ASS."
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "Испорука"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "За овај профил неће бити захтевани ни фајлови титлова ни уграђене траке титлова."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "Профили захтевају језичке кодове; доступност се утврђује за сваки URL посебно."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "Преузимања титлова"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "Језички кодови титлова"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "Језици"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "Нису изабрани језици"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "Извор"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "Овај профил ставља у ред само фајлове титлова. Видео, звук, SponsorBlock и конверзија медија се прескачу."
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "Само аутоматски генерисани"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "Прво ручни, па аутоматски"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "Само ручни"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "Профил преузимања"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "Најбољи изворни"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "H.264 MP4 за Smart TV"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "Компатибилност"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "Резолуција"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "Најбољи изворни"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "Нема пронађених језика"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "Нема изабраних титлова"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "Уклони {{name}}"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "Преузимање у позадини… Умем да радим више ствари одједном 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "Брзо ставља учитане ставке у ред са {{profileName}}. Интерактивно вам омогућава да прво прегледате или изаберете ставке."
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "Убаци линк и пусти Arclio да га преузме ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "Овај линк указује на један видео унутар колекције. Arclio ће питати који желите пре провере."
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} чита овај линк и примењује {{profileName}}."
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "Ред обрађује ово преузимање. Можете налепити други линк док ради."
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "Брзо покреће једно преузимање са {{profileName}}. Користите Интерактивно за једнократне измене."
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "Одговара yt-dlp опцији --playlist-end: Arclio тражи само овај број уноса плејлисте, канала или претраге приликом прављења бирача."
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "Користи ограничење апликације: {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "Примени"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "Није било могуће применити тај опсег плејлисте: {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "Откажи"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "Промени"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "Изаберите шта Arclio тражи од yt-dlp-а да учита за ову плејлисту."
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "Опсег плејлисте"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "Прве"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "Користите целе бројеве ставки од 1 до 5000, при чему почетак не сме бити већи од краја."
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "Ставке за учитавање"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "Опсег плејлисте"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "Опсег"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "Поновно учитавање..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "Ресетуј"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "Учитај прве {{count}} ставке"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "Учитај прве {{count}} ставке"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "Учитај ставке {{from}}-{{to}}"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "до"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "Активни профил"
@@ -2824,10 +3500,6 @@ msgstr "Припрема"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "Провера није успела"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "Додато у ред"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "နောက်ဆုံးအခြေအနေဖြစ်နေပြီ။"
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "အကောင့်"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "ထပ်ကြိုးစားရန်"
@@ -526,10 +522,6 @@ msgstr "ဖွင့်နိုင်သော ဖိုင် ရှာမတ�
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "မီဒီယာ ရှာမတွေ့ပါ"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "အမြန်နှုန်း"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "အမှတ်အသား"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Arclio ၏ လက်ရှိဗားရှင်း"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "အက်ပလီကေးရှင်း ဗားရှင်း"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "ပုံသေးပုံ {{count}} ခု ဖယ်ရှားလိုက်ပါပြီ ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "ပုံသေးပုံ {{count}} ခု ဖယ်ရှားလိုက်ပါပြီ ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "ကက်ရှ်သည် ယခုပင် အလွတ်ဖြစ်နေသည်"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "ကက်ရှ်ကို ရှင်းလင်းရန်"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "ဖန်တီးထားသော ပုံသေးပုံအားလုံးကို ဖယ်ရှားသည်။ လိုအပ်သောအခါ ၎င်းတို့ကို ပြန်လည်ဖန်တီးပါမည်။"
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "ပုံသေးပုံ ကက်ရှ်ကို ရှင်းလင်းရန်"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "အမှားရှာဖွေရန်အတွက် အက်ပလီကေးရှင်း မှတ်တမ်းများကို ကြည့်ရှုရန်"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "မှတ်တမ်းဖိုလ်ဒါကို ဖွင့်ရန်"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "မှတ်တမ်းများကို ဖွင့်ရန်"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "ပြန်လည်သတ်မှတ်ရန်"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "ဆက်တင်အားလုံးကို မူလအတိုင်း ပြန်လည်ထားရန်"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "ဆက်တင်များကို ပြန်လည်သတ်မှတ်ရန်"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "ပြောင်းလဲ"
@@ -1038,6 +1086,14 @@ msgstr "ကလစ်ဘုတ် ကြည့်ရှု"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "ကလစ်ဘုတ်တွင် URL များ အလိုအလျောက် ရှာဖွေ"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "ဖိုင်တစ်ခုကို ကူးပြောင်းရန်၊ ၎င်း၏အသံကို ထုတ်ယူရန်၊ သို့မဟုတ် ဗီဒီယိုတစ်ခုကို GIF အဖြစ် ပြောင်းလဲရန် ကူးပြောင်းစနစ် စာမျက်နှာကို ဖွင့်ပါ။"
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "ကူးပြောင်းမှု ရွေးချယ်စရာများကို ဖိုင်တစ်ခုချင်းအလိုက် ရွေးချယ်ရသည်၊ အကြောင်းမှာ မူလတန်ဖိုးတစ်ခုတည်းသည် ဗီဒီယို၊ အသံနှင့် ပုံများ အားလုံးအတွက် မသင့်လျော်သောကြောင့် ဖြစ်သည်။"
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "အပလီကေးရှင်း ပြသ ဘာသာစကား"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "တင်သွင်းထားသော မီဒီယာများကို အလိုအလျောက် အညွှန်းပြုလုပ်ပါသည်— သင့်စာကြည့်တိုက်သို့ ထည့်သွင်းသော ဖိုင်တိုင်းအတွက် မက်တာဒေတာကို ထုတ်ယူပြီး ပုံသေးပုံတစ်ခု ဖန်တီးပါသည်။"
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "အညွှန်းပြုလုပ်ထားသောအရာများကို ရှာဖွေကြည့်ရှုရန်၊ တဂ်တပ်ရန်နှင့် စုစည်းရန် စာကြည့်တိုက် စာမျက်နှာကို သုံးပါ။"
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "အထွက် လမ်းညွှန်"
@@ -1062,6 +1126,46 @@ msgstr "အထွက် လမ်းညွှန်"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "ဒေါင်းလုဒ်လုပ်ထားသော ဖိုင်များ ဘယ်မှာ သိမ်းထားသလဲ"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "စောင့်ကြည့်နေသော ဖိုလ်ဒါများကို ထည့်ရန်နှင့် စီမံရန် စာကြည့်တိုက် စာမျက်နှာကို သုံးပါ။"
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "စောင့်ကြည့်နေသော ဖိုလ်ဒါများသည် မီဒီယာဖိုင်အသစ်များကို သင့်စာကြည့်တိုက်သို့ အလိုအလျောက် တင်သွင်းပေးပါသည်။"
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "အကောင့်"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "အဆင့်မြင့်"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "ကူးပြောင်းစနစ်"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "ဒေါင်းလုဒ်များ"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "ယေဘုယျ"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "စာကြည့်တိုက်"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "အရင်းအမြစ်များ"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "ကြည့်ရှုစနစ်"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "အပလီကေးရှင်း ပုံပန်း"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "ဆက်တင်များ"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "ကာတွန်းဖတ်ရှုသည့်ဦးတည်ရာကို ကြည့်ရှုစနစ်ထဲတွင်ပင် ပြောင်းလဲသောကြောင့်၊ ၎င်းကို ကမ္ဘာလုံးဆိုင်ရာအစား စာအုပ်တစ်အုပ်ချင်းအလိုက် ပြောင်းလဲနိုင်ပါသည်။"
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "စကင်န်ကန့်သတ်ထားသည်"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "ဖွင့်ခြင်း ကန့်သတ်ချက်ကို ပြောင်းရန်"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio သည် လက်ရှိကန့်သတ်ချက် {{limit}} ကို အသုံးပြု၍ {{count}} ခုကို ဖွင့်ထားပါသည်။ ဖွင့်ထားသော အရာများကို ယခုပင် တန်းစီထည့်ပါ၊ သို့မဟုတ် ကန့်သတ်ချက်ကို တိုးပြီး ထပ်မံစကင်ဖတ်ပါ။"
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio သည် လက်ရှိကန့်သတ်ချက် {{limit}} ကို အသုံးပြု၍ {{count}} ခုကို ဖွင့်ထားပါသည်။ ဖွင့်ထားသော အရာများကို ယခုပင် တန်းစီထည့်ပါ၊ သို့မဟုတ် ကန့်သတ်ချက်ကို တိုးပြီး ထပ်မံစကင်ဖတ်ပါ။"
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "ဖွင့်ထားသော အရာများကို တန်းစီထည့်ရန်"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}:"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "အပိုင်းအခြားသတ်မှတ်မည်"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} ခု"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "ဗီဒီယိုတစ်ခုချင်းစီသည် ရွေးချယ်ထားသော tier အတိုင်း သီးခြားဖြေရှင်းသည် — မတူညီသော playlist များ အဆင်မပြေမှုမရှိဘဲ အလုပ်လုပ်သည်။"
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "ပရိုဖိုင်များအတွက် ပရိုဖိုင်ပြင်ဆင်မှု သတ်မှတ်ထားခြင်း မရှိပါက ၎င်းတို့သည် ကမ္ဘာလုံးဆိုင်ရာ ဦးတည်ရာကို အမွေဆက်ခံသည်။"
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "အဆင့်မြင့် ရွေးချယ်စရာများ"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "အရည်အသွေး"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "အကောင်းဆုံး"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "128K အထိ"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "192K အထိ"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "320K အထိ"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "ရရှိနိုင်သော အကောင်းဆုံး"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "ထည့်ရန်"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "ဖော်မတ်"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "ပိတ်ထားသည်"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "ဖွင့်ထားသည်"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "မူလ ဒေါင်းလုဒ်ဖိုလ်ဒါ"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "အမြန်ဒေါင်းလုဒ်၊ အစုလိုက် URL များနှင့် ပလေးလစ်များအတွက် ပြန်လည်အသုံးပြုနိုင်သော တစ်ခုတည်း ဆက်တင်။"
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "အသက်ဝင်နေသည်"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "ကမ္ဘာလုံးဆိုင်ရာကို ပြောင်းရန်"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "ဦးတည်ရာဖိုလ်ဒါကို ရွေးရန်"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "ဖိုလ်ဒါကို ရွေးရန်"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "ကမ္ဘာလုံးဆိုင်ရာ ဦးတည်ရာ"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "အမွေဆက်ခံထားသည်"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "ပြင်ဆင်မှု မသတ်မှတ်ရသေးပါ"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "ဤပရိုဖိုင်သည် ဖိုလ်ဒါခွဲကို မထည့်မီ ၎င်း၏ကိုယ်ပိုင် ရင်းမြစ်ဖိုလ်ဒါတွင် သိမ်းဆည်းသည်။"
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "ပြင်ဆင်မှု မသတ်မှတ်ရသေးပါ။ ဤပရိုဖိုင်သည် အထက်ပါ ကမ္ဘာလုံးဆိုင်ရာ ဦးတည်ရာကို သုံးသည်။"
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "ပရိုဖိုင် ပြင်ဆင်မှု"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "ပရိုဖိုင် ပြင်ဆင်မှု လမ်းကြောင်း"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "ဤပရိုဖိုင်အတွက် ဖိုလ်ဒါကို ရွေးရန်"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "ကမ္ဘာလုံးဆိုင်ရာကို ကျော်လွှားသည်"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "ဆုံးဖြတ်ပြီးသော ဦးတည်ရာ"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "ပရိုဖိုင် ပြင်ဆင်မှု သတ်မှတ်ရန်"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "ပြင်ဆင်မှု သတ်မှတ်ရန်"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "ကမ္ဘာလုံးဆိုင်ရာ မူလတန်ဖိုးကို သုံးရန်"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "ကမ္ဘာလုံးဆိုင်ရာ ဦးတည်ရာကို ပြောင်းလဲ၍ မရပါ။"
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "ဖိုလ်ဒါရွေးစနစ်ကို ဖွင့်၍ မရပါ။ လမ်းကြောင်းကို ကိုယ်တိုင်ရိုက်ထည့်ပါ။"
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "ပရိုဖိုင် ဆက်တင်များကို ပြန်လည်သတ်မှတ်၍ မရပါ။"
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "ပရိုဖိုင် ဆက်တင်များကို သိမ်းဆည်း၍ မရပါ။"
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "မော်ကွန်း"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "အသံ"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "စာတန်းထိုးများ"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "အတန်းများ"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "ဗီဒီယိုတိုစ"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "ထိန်းချုပ်မှုများ"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "ဒေါင်းလုဒ်"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "တေးဂီတ"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "ပေါ့ဒ်ကာစ့်"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "ဗီဒီယို"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "ပရိုဖိုင်သင်္ကေတကို ရွေးရန်"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "အမြန်ဒေါင်းလုဒ်၊ အစုလိုက် URL များနှင့် ပရိုဖိုင်စာရင်းများတွင် ပြသည့် အမည်နှင့် သင်္ကေတ။"
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "ပရိုဖိုင် အမည်နှင့် သင်္ကေတ"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "ပရိုဖိုင် အမည်"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "ပရိုဖိုင် အထောက်အထား"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "တေးဂီတ သို့မဟုတ် ပေါ့ဒ်ကာစ့်များ"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "အသံသာ"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "သင်ဒေါင်းလုဒ်လုပ်လိုသော အဓိကနည်းလမ်းကို ရွေးပါ။"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "စာတန်းထိုးဖိုင်များသာ"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "စာတန်းထိုးများသာ"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "ဒေါင်းလုဒ် အမျိုးအစား"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "ပုံမှန်ဗီဒီယိုဖိုင်များ"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "ဗီဒီယို + အသံ"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "အသံမပါသောဗီဒီယိုသာ"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "ဗီဒီယို၊ အသံမပါ"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "{{count}} ဖွင့်ထားသည်"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "{{count}} ဖွင့်ထားသည်"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "ရလဒ် ရွေးချယ်စရာများ"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "ပရိုဖိုင်ကို ပြန်လည်သတ်မှတ်ရန်"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "ဤပရိုဖိုင်သည် တပ်ဆင်ပါ ဆက်တင်များကို သုံးနှင့်ပြီးဖြစ်သည်"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "တပ်ဆင်ပါ ပရိုဖိုင်ဆက်တင်များကို ပြန်လည်ရယူရန်"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "1080p အထိ"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "1440p အထိ"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "2160p အထိ"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "360p အထိ"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "480p အထိ"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "720p အထိ"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "ရရှိနိုင်သော အကောင်းဆုံး"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "ပရိုဖိုင်ကို သိမ်းဆည်းရန်"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "အမှတ်အသားပြုရန်"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "ပိတ်ထားသည်"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "ဖယ်ရှားရန်"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "ကျော်သွားပါပြီ"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "ဤရလဒ်အမျိုးအစားအတွက် ကျော်သွားပါပြီ။"
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "ဖိုလ်ဒါခွဲထဲတွင် သိမ်းဆည်းရန်"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "/ \\ : * ? \" < > | မပါဝင်သော မှန်ကန်သည့် ဖိုလ်ဒါအမည်ကို သုံးပါ။"
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "ဖိုလ်ဒါခွဲ အမည်"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "ဖိုလ်ဒါခွဲ အမည်"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "ထည့်သွင်းရန်"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "သီးခြားဖိုင်"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "ဖိုလ်ဒါခွဲ"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "အလိုအလျောက် စာတန်းထိုးများကို ASS အစား SRT အဖြစ် သိမ်းဆည်းပါမည်။"
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "ပေးပို့ခြင်း"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "ဤပရိုဖိုင်အတွက် စာတန်းထိုးဖိုင်များ သို့မဟုတ် ထည့်သွင်းထားသော စာတန်းထိုး ထရက်များကို တောင်းဆိုမည် မဟုတ်ပါ။"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "ပရိုဖိုင်များက ဘာသာစကားကုဒ်များကို တောင်းဆိုသည်၊ ရရှိနိုင်မှုကို URL တစ်ခုချင်းအလိုက် ဆုံးဖြတ်ပါသည်။"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "စာတန်းထိုး ဒေါင်းလုဒ်များ"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "စာတန်းထိုး ဘာသာစကားကုဒ်များ"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "ဘာသာစကားများ"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "ဘာသာစကား မရွေးချယ်ရသေးပါ"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "အရင်းအမြစ်"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "ဤပရိုဖိုင်သည် စာတန်းထိုးဖိုင်များကိုသာ တန်းစီထည့်ပါသည်။ ဗီဒီယို၊ အသံ၊ SponsorBlock နှင့် မီဒီယာကူးပြောင်းမှုများကို ကျော်သွားပါသည်။"
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "အလိုအလျောက်ဖန်တီးထားသည်များသာ"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "ကိုယ်တိုင်ပြုလုပ်ထားသည်ကို အရင်၊ ထို့နောက် အလိုအလျောက်"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "ကိုယ်တိုင်ပြုလုပ်ထားသည်များသာ"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "ဒေါင်းလုဒ် ပရိုဖိုင်"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "အကောင်းဆုံး နေးတစ်ဗ်"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "Smart TV အတွက် H.264 MP4"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "ကိုက်ညီမှု"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "ရုပ်ထွက်အရည်အသွေး"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "အကောင်းဆုံး နေးတစ်ဗ်"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "ကိုက်ညီသောဘာသာစကားမရှိပါ
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "စာတန်းထိုးမရွေးရသေးပါ"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "{{name}} ကို ဖယ်ရှားရန်"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "နောက်ခံတွင် ဒေါင်းလုဒ်လုပ်နေသည်… ကျွန်ုပ် တစ်ချိန်တည်းလုပ်နိုင်သည် 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "Quick သည် {{profileName}} ဖြင့် ဖွင့်ထားသော အရာများကို တန်းစီထည့်ပါသည်။ Interactive က အရာများကို အရင်စစ်ဆေးရန် သို့မဟုတ် ရွေးချယ်ရန် ခွင့်ပြုပါသည်။"
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "လင့်ခ်တစ်ခုထည့်ပြီး Arclio ကို ဆွဲယူခိုင်းလိုက်ပါ ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "ဤလင့်ခ်သည် စုစည်းမှုတစ်ခုအတွင်းရှိ ဗီဒီယိုတစ်ခုကို ညွှန်ပြနေပါသည်။ Arclio သည် စစ်ဆေးခြင်းမပြုမီ မည်သည့်တစ်ခုကို လိုချင်သည်ကို မေးမြန်းပါမည်။"
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} သည် ဤလင့်ခ်ကို ဖတ်နေပြီး {{profileName}} ကို အသုံးချနေပါသည်။"
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "တန်းစီစာရင်းသည် ဤဒေါင်းလုဒ်ကို ကိုင်တွယ်နေပါသည်။ ၎င်းလုပ်ဆောင်နေစဉ် အခြားလင့်ခ်တစ်ခုကို ကူးထည့်နိုင်ပါသည်။"
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "Quick သည် {{profileName}} ဖြင့် ဒေါင်းလုဒ်တစ်ခုကို စတင်ပါသည်။ တစ်ကြိမ်တည်း ပြောင်းလဲမှုများအတွက် Interactive ကို သုံးပါ။"
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "yt-dlp --playlist-end နှင့် map ချိတ်ဆက်သည်: Arclio သည် picker ဆောက်စဉ် ဤမျှ playlist၊ channel သို့မဟုတ် ရှာဖွေမှု entries များကိုသာ တောင်းဆိုသည်။"
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "အက်ပ် ကန့်သတ်ချက်ကို သုံးရန်: {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "အသုံးချရန်"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "ထိုပလေးလစ် အတိုင်းအတာကို အသုံးချ၍ မရပါ: {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "ပယ်ဖျက်ရန်"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "ပြောင်းလဲရန်"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "Arclio သည် ဤပလေးလစ်အတွက် yt-dlp ကို ဖွင့်ရန် တောင်းဆိုမည့်အရာကို ရွေးချယ်ပါ။"
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "ပလေးလစ် အတိုင်းအတာ"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "ပထမ"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "1 မှ 5000 အထိ ကုန်ကြေးနံပါတ်များကို သုံးပါ၊ အစသည် အဆုံးထက် မများသင့်ပါ။"
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "ဖွင့်ရမည့် အရာများ"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "ပလေးလစ် အတိုင်းအတာ"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "အပိုင်းအခြား"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "ပြန်လည်ဖွင့်နေသည်..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "ပြန်လည်သတ်မှတ်ရန်"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "ပထမ {{count}} ခုကို ဖွင့်ရန်"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "ပထမ {{count}} ခုကို ဖွင့်ရန်"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "{{from}}-{{to}} အရာများကို ဖွင့်ရန်"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "အထိ"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "လက်ရှိ ပရိုဖိုင်"
@@ -2824,10 +3500,6 @@ msgstr "ပြင်ဆင်နေသည်"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "စစ်ဆေးမှု မအောင်မြင်ပါ"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "တန်းစီစာရင်းထဲ ထည့်ပြီး"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

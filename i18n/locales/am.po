@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "አስቀድሞ ወቅታዊ ነው።"
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "መለያ"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "እንደገና ሞክር"
@@ -526,10 +522,6 @@ msgstr "ሊጫወት የሚችል ፋይል አልተገኘም"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "ሚዲያ አልተገኘም"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "ፍጥነት"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "መለያ"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "የArclio የአሁኑ ስሪት"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "የመተግበሪያ ስሪት"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "{{count}} አነስተኛ ምስል ተወግዷል ({{size}} ሜባ)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "{{count}} አነስተኛ ምስሎች ተወግደዋል ({{size}} ሜባ)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "መሸጎጫው አስቀድሞ ባዶ ነው"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "መሸጎጫ አጽዳ"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "የተፈጠሩ ሁሉንም አነስተኛ ምስሎች ያስወግዳል። እንደገና ሲያስፈልግ ይፈጠራሉ።"
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "የአነስተኛ ምስል መሸጎጫ አጽዳ"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "ለማረም መተግበሪያ መዝገቦችን ይመልከቱ"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "የመዝገብ አቃፊ ክፈት"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "መዝገቦችን ክፈት"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "ዳግም አስጀምር"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "ሁሉንም ቅንብሮች ወደ ነባሪ መልስ"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "ቅንብሮችን ዳግም አስጀምር"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "ቀይር"
@@ -1038,6 +1086,14 @@ msgstr "የቅንጥብ ሰሌዳ ክትትል"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "በቅንጥብ ሰሌዳ ውስጥ URL ን በራስ-ሰር ፈልግ"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "ፋይል ለመቀየር፣ ድምጹን ለማውጣት፣ ወይም ቁራጭን ወደ GIF ለመቀየር የመቀየሪያ ገጹን ይክፈቱ።"
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "የመቀየሪያ አማራጮች በእያንዳንዱ ፋይል ይመረጣሉ፣ ምክንያቱም አንድ ነባሪ ዋጋ ቪዲዮን፣ ድምጽን እና ምስልን በአንድ ላይ አይሸፍንም።"
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "የመተግበሪያ ማሳያ ቋንቋ"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "የገቡ ሚዲያዎች በራስ-ሰር ይመዘገባሉ፦ ወደ ቤተ መጻሕፍትዎ ለሚታከል እያንዳንዱ ፋይል ሜታዳታ ይወጣል እና አነስተኛ ምስል ይፈጠራል።"
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "የተመዘገበውን ለማሰስ፣ መለያ ለመስጠት እና ለማደራጀት የቤተ መጻሕፍት ገጹን ይጠቀሙ።"
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "ውጤት ማውጫ"
@@ -1062,6 +1126,46 @@ msgstr "ውጤት ማውጫ"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "የወረዱ ፋይሎች የት ይቀመጣሉ"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "የሚታዩ አቃፊዎችን ለመጨመር እና ለማስተዳደር የቤተ መጻሕፍት ገጹን ይጠቀሙ።"
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "የሚታዩ አቃፊዎች አዳዲስ የሚዲያ ፋይሎችን በራስ-ሰር ወደ ቤተ መጻሕፍትዎ ያስገባሉ።"
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "መለያ"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "የላቀ"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "መቀየሪያ"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "ውርዶች"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "አጠቃላይ"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "ቤተ መጻሕፍት"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "ምንጮች"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "መመልከቻ"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "የመተግበሪያ ገጽታ"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "ቅንብሮች"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "የኮሚክ ንባብ አቅጣጫ በመመልከቻው ውስጥ ራሱ ይቀየራል፣ ስለዚህ በአጠቃላይ ሳይሆን በእያንዳንዱ መጽሐፍ ሊቀየር ይችላል።"
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "ፍተሻው ተገድቧል"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "የመጫኛ ገደብን ቀይር"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio በአሁኑ ገደብ {{limit}} በመጠቀም {{count}} ንጥል ጭኗል። የተጫኑ ንጥሎችን አሁን ወደ ወረፋ ያስገቡ፣ ወይም ገደቡን ጨምረው እንደገና ይቃኙ።"
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio በአሁኑ ገደብ {{limit}} በመጠቀም {{count}} ንጥሎችን ጭኗል። የተጫኑ ንጥሎችን አሁን ወደ ወረፋ ያስገቡ፣ ወይም ገደቡን ጨምረው እንደገና ይቃኙ።"
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "የተጫኑ ንጥሎችን ወደ ወረፋ አስገባ"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}፦"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "ክልል ተጠቀም"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} ንጥሎች"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "እያንዳንዱ ቪዲዮ የተመረጠውን ደረጃ ራሱን ችሎ ይፈታል — የተለያዩ playlists ያለ ችግር ይሰራሉ።"
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "የመገለጫ ስረዛ ካላዘጋጁ በስተቀር መገለጫዎች ዓለም አቀፍ መድረሻን ይወርሳሉ።"
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "የላቀ አማራጮች"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "ጥራት"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "ምርጥ"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "እስከ 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "እስከ 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "እስከ 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "የሚገኝ ምርጥ"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "ጨምር"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "ቅርጸት"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "ጠፍቷል"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "በርቷል"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "ነባሪ የውርድ አቃፊ"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "ለፈጣን ውርድ፣ ለጅምላ URLs እና ለተከታታይ ዝርዝሮች ተደጋግሞ ጥቅም ላይ ሊውል የሚችል አንድ ማዋቀር።"
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "ገቢር"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "ዓለም አቀፍን ቀይር"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "መድረሻ አቃፊ ምረጥ"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "አቃፊ ምረጥ"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "ዓለም አቀፍ መድረሻ"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "የተወረሰ"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "ምንም ስረዛ አልተዘጋጀም"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "ይህ መገለጫ ንዑስ አቃፊው ከመታከሉ በፊት ወደ ራሱ ሥር አቃፊ ያስቀምጣል።"
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "ምንም ስረዛ አልተዘጋጀም። ይህ መገለጫ ከላይ ያለውን ዓለም አቀፍ መድረሻ ይጠቀማል።"
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "የመገለጫ ስረዛ"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "የመገለጫ ስረዛ መንገድ"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "ለዚህ መገለጫ አቃፊ ምረጥ"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "ዓለም አቀፍን ይሽራል"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "የተፈታ መድረሻ"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "የመገለጫ ስረዛ አዘጋጅ"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "ስረዛ አዘጋጅ"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "ዓለም አቀፍ ነባሪን ተጠቀም"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "ዓለም አቀፍ መድረሻን መቀየር አልተቻለም።"
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "የአቃፊ መራጭን መክፈት አልተቻለም። መንገድን በእጅ ያስገቡ።"
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "የመገለጫ ቅንብሮችን ዳግም ማስጀመር አልተቻለም።"
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "የመገለጫ ቅንብሮችን ማስቀመጥ አልተቻለም።"
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "ማህደር"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "ድምጽ"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "መግለጫ ጽሑፎች"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "ትምህርቶች"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "ቁራጭ"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "መቆጣጠሪያዎች"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "አውርድ"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "ሙዚቃ"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "ፖድካስት"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "ቪዲዮ"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "የመገለጫ ምልክት ምረጥ"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "በፈጣን ውርድ፣ በጅምላ URLs እና በመገለጫ ዝርዝሮች ውስጥ የሚታይ ስም እና ምልክት።"
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "የመገለጫ ስም እና ምልክት"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "የመገለጫ ስም"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "የመገለጫ ማንነት"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "ሙዚቃ ወይም ፖድካስቶች"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "ድምጽ ብቻ"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "ዋናውን የውርድ መንገድ ይምረጡ።"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "የመግለጫ ጽሑፍ ፋይሎች ብቻ"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "መግለጫ ጽሑፎች ብቻ"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "የውርድ ዓይነት"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "መደበኛ የቪዲዮ ፋይሎች"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "ቪዲዮ + ድምጽ"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "ድምጽ አልባ ቪዲዮ ብቻ"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "ቪዲዮ፣ ያለ ድምጽ"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "{{count}} ነቅቷል"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "{{count}} ነቅተዋል"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "የውጤት አማራጮች"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "መገለጫ ዳግም አስጀምር"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "ይህ መገለጫ አስቀድሞ አብሮገነብ ቅንብሮችን ይጠቀማል"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "አብሮገነብ የመገለጫ ቅንብሮችን መልስ"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "እስከ 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "እስከ 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "እስከ 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "እስከ 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "እስከ 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "እስከ 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "የሚገኝ ምርጥ"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "መገለጫ አስቀምጥ"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "ምልክት አድርግ"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "ጠፍቷል"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "አስወግድ"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "ታልፏል"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "ለዚህ የውጤት ዓይነት ታልፏል።"
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "በንዑስ አቃፊ ውስጥ አስቀምጥ"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "ያለ / \\ : * ? \" < > | ትክክለኛ የአቃፊ ስም ተጠቀም።"
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "የንዑስ አቃፊ ስም"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "የንዑስ አቃፊ ስም"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "አካትት"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "የተለየ ፋይል"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "ንዑስ አቃፊ"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "በራስ-ሰር የተፈጠሩ መግለጫ ጽሑፎች ከASS ይልቅ እንደ SRT ይቀመጣሉ።"
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "አቅርቦት"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "ለዚህ መገለጫ የመግለጫ ጽሑፍ ፋይሎችም ሆነ የተካተቱ የመግለጫ ጽሑፍ መስመሮች አይጠየቁም።"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "መገለጫዎች የቋንቋ ኮዶችን ይጠይቃሉ፤ ተገኝነት ለእያንዳንዱ URL ይወሰናል።"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "የመግለጫ ጽሑፍ ውርዶች"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "የመግለጫ ጽሑፍ ቋንቋ ኮዶች"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "ቋንቋዎች"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "ምንም ቋንቋ አልተመረጠም"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "ምንጭ"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "ይህ መገለጫ የመግለጫ ጽሑፍ ፋይሎችን ብቻ ወደ ወረፋ ያስገባል። ቪዲዮ፣ ድምጽ፣ SponsorBlock እና የሚዲያ መቀየር ይታለፋሉ።"
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "በራስ-ሰር የተፈጠሩ ብቻ"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "መጀመሪያ በእጅ፣ ከዚያ በራስ-ሰር"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "በእጅ ብቻ"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "የውርድ መገለጫ"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "ምርጥ ተወላጅ"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "ለSmart TV የሚሆን H.264 MP4"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "ተኳኋኝነት"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "ጥራት (ውሳኔ)"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "ምርጥ ተወላጅ"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "ምንም ቋንቋ አልተዛመደም"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "ምንም ንዑስ ርዕስ አልተመረጠም"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "{{name}} አስወግድ"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "በዳራ ዳውንሎድ እያደረጉ ነው… ብዙ ስራ አሰራ 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "ፈጣን የተጫኑ ንጥሎችን በ{{profileName}} ወደ ወረፋ ያስገባል። መስተጋብራዊ በመጀመሪያ ንጥሎችን እንዲመረምሩ ወይም እንዲመርጡ ያስችልዎታል።"
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "አገናኝ ጣል፣ Arclio እንዲያወርደው ተወው ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "ይህ አገናኝ በስብስብ ውስጥ ወዳለ አንድ ቪዲዮ ያመለክታል። Arclio ከመመርመሩ በፊት የትኛውን እንደሚፈልጉ ይጠይቃል።"
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} ይህን አገናኝ እያነበበ እና {{profileName}}ን እየተገበረ ነው።"
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "ወረፋው ይህን ውርድ እያስተናገደ ነው። እሱ በሚሰራበት ጊዜ ሌላ አገናኝ መለጠፍ ይችላሉ።"
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "ፈጣን በ{{profileName}} አንድ ውርድ ይጀምራል። ለአንድ ጊዜ ለውጦች መስተጋብራዊን ይጠቀሙ።"
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "yt-dlp --playlist-end ጋር ይዛመዳል: Arclio ምርጫ ሲሰራ ከ playlist፣ ቻናል፣ ወይም ፍለጋ ውጤቶች ይህን ያህል ብቻ ይጠይቃል።"
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "የመተግበሪያ ገደብን ተጠቀም፦ {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "ተግብር"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "ያንን የተከታታይ ዝርዝር ወሰን መተግበር አልተቻለም፦ {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "ሰርዝ"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "ቀይር"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "Arclio ለዚህ ተከታታይ ዝርዝር yt-dlp እንዲጭን የሚጠይቀውን ይምረጡ።"
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "የተከታታይ ዝርዝር ወሰን"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "መጀመሪያ"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "ከ1 እስከ 5000 ያሉ ሙሉ የንጥል ቁጥሮችን ተጠቀሙ፣ መጀመሪያው ከመጨረሻው ከፍ ያለ እንዳይሆን።"
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "የሚጫኑ ንጥሎች"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "የተከታታይ ዝርዝር ወሰን"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "ክልል"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "እንደገና በመጫን ላይ..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "ዳግም አስጀምር"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "የመጀመሪያዎቹን {{count}} ንጥሎች ጫን"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "የመጀመሪያዎቹን {{count}} ንጥሎች ጫን"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "ንጥሎችን {{from}}-{{to}} ጫን"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "እስከ"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "ንቁ መገለጫ"
@@ -2824,10 +3500,6 @@ msgstr "በመዘጋጀት ላይ"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "መፈተሹ አልተሳካም"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "ወደ ወረፋ ታክሏል"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

@@ -18,7 +18,7 @@ import en from '../src/shared/i18n/locales/en.json' with {type: 'json'}
 
 // Keys under these prefixes are built at runtime (e.g. `errors.ytdlp.${kind}`)
 // and cannot be detected by static string search. Treat all as used.
-const DYNAMIC_PREFIXES = ['errors.ytdlp.', 'wizard.steps.', 'wizard.sponsorblock.cat.', 'wizard.url.networkPacing.presets.', 'wizard.url.networkPacing.tooltips.', 'wizard.url.networkPacing.fields.', 'wizard.url.networkPacing.units.', 'playlistPresets.', 'presets.', 'status.']
+const DYNAMIC_PREFIXES = ['errors.ytdlp.', 'wizard.steps.', 'wizard.sponsorblock.cat.', 'wizard.url.networkPacing.presets.', 'wizard.url.networkPacing.tooltips.', 'wizard.url.networkPacing.fields.', 'wizard.url.networkPacing.units.', 'playlistPresets.', 'presets.', 'status.', 'search.']
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -56,7 +56,7 @@ function* walkTs(dir: string): Generator<string> {
 
 // Collect every quoted string that looks like a dot-path key.
 // Matches 'foo.bar.baz' and "foo.bar.baz" (non-template literals only — no ${).
-const KEY_PATTERN = /(?<![`$])['"]([a-zA-Z][a-zA-Z0-9_]*(?:\.[a-zA-Z][a-zA-Z0-9_]*){1,})['"]/g
+const KEY_PATTERN = /(?<![`$])['"]([a-zA-Z][a-zA-Z0-9_]*(?:\.[a-zA-Z0-9][a-zA-Z0-9_]*){1,})['"]/g
 
 // pluralKey('base', count) is a project helper that emits `base_one` / `base_other`
 // at runtime. Capture the first-arg base names so plural variants aren't flagged.

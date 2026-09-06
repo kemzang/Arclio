@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "Ήδη ενημερωμένο."
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "Λογαριασμός"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "Δοκιμάστε ξανά"
@@ -526,10 +522,6 @@ msgstr "Δεν βρέθηκε αρχείο για αναπαραγωγή"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Δεν βρέθηκε μέσο"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Ταχύτητα"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "Ετικέτα"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Τρέχουσα έκδοση του Arclio"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "Έκδοση εφαρμογής"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "Καταργήθηκε {{count}} μικρογραφία ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "Καταργήθηκαν {{count}} μικρογραφίες ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "Η προσωρινή μνήμη είναι ήδη άδεια"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "Εκκαθάριση προσωρινής μνήμης"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "Καταργεί όλες τις δημιουργημένες μικρογραφίες. Δημιουργούνται ξανά όταν χρειαστεί."
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "Εκκαθάριση προσωρινής μνήμης μικρογραφιών"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "Προβολή αρχείων καταγραφής εφαρμογής για αποσφαλμάτωση"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "Άνοιγμα φακέλου αρχείων καταγραφής"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "Άνοιγμα αρχείων καταγραφής"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "Επαναφορά"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "Επαναφορά όλων των ρυθμίσεων στις προεπιλογές"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "Επαναφορά ρυθμίσεων"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "Αλλαγή"
@@ -1038,6 +1086,14 @@ msgstr "Παρακολούθηση προχείρου"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "Αυτόματη ανίχνευση URL στο πρόχειρο"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "Ανοίξτε τη σελίδα Μετατροπέας για μετακωδικοποίηση αρχείου, εξαγωγή ήχου ή μετατροπή ενός αποσπάσματος σε GIF."
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "Οι επιλογές μετατροπής επιλέγονται ανά αρχείο, καθώς μία μόνο προεπιλογή δεν θα κάλυπτε βίντεο, ήχο και εικόνα ταυτόχρονα."
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "Γλώσσα εμφάνισης εφαρμογής"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "Τα εισαγόμενα πολυμέσα ευρετηριάζονται αυτόματα: εξάγονται μεταδεδομένα και δημιουργείται μικρογραφία για κάθε αρχείο που προστίθεται στη βιβλιοθήκη σας."
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "Χρησιμοποιήστε τη σελίδα Βιβλιοθήκη για περιήγηση, επισήμανση και οργάνωση όσων έχουν ευρετηριαστεί."
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "Κατάλογος εξόδου"
@@ -1062,6 +1126,46 @@ msgstr "Κατάλογος εξόδου"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "Πού αποθηκεύονται τα αρχεία"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "Χρησιμοποιήστε τη σελίδα Βιβλιοθήκη για προσθήκη και διαχείριση παρακολουθούμενων φακέλων."
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "Οι παρακολουθούμενοι φάκελοι εισάγουν αυτόματα νέα αρχεία πολυμέσων στη βιβλιοθήκη σας."
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "Λογαριασμός"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "Σύνθετες"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "Μετατροπέας"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "Λήψεις"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "Βιβλιοθήκη"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "Πηγές"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "Πρόγραμμα προβολής"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "Εμφάνιση εφαρμογής"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Ρυθμίσεις"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "Η κατεύθυνση ανάγνωσης κόμικς αλλάζει μέσα στο ίδιο το πρόγραμμα προβολής, οπότε μπορεί να ρυθμιστεί ανά βιβλίο αντί για καθολικά."
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "Η σάρωση είναι περιορισμένη"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "Αλλαγή ορίου φόρτωσης"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Το Arclio φόρτωσε {{count}} στοιχείο με το τρέχον όριο {{limit}}. Βάλτε τα φορτωμένα στοιχεία στην ουρά τώρα ή αυξήστε το όριο και σαρώστε ξανά."
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Το Arclio φόρτωσε {{count}} στοιχεία με το τρέχον όριο {{limit}}. Βάλτε τα φορτωμένα στοιχεία στην ουρά τώρα ή αυξήστε το όριο και σαρώστε ξανά."
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "Προσθήκη φορτωμένων στοιχείων στην ουρά"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}:"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "Εφαρμογή εύρους"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} στοιχεία"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "Κάθε βίντεο επιλύει το επιλεγμένο επίπεδο ανεξάρτητα — οι ανομοιογενείς playlist λειτουργούν χωρίς εκπλήξεις."
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "Τα προφίλ κληρονομούν τον καθολικό προορισμό εκτός αν ορίσετε παράκαμψη προφίλ."
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "Σύνθετες επιλογές"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "Ποιότητα"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "Καλύτερη"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "Έως 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "Έως 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "Έως 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "Καλύτερη διαθέσιμη"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "Προσθήκη"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "Μορφή"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "Ανενεργό"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "Ενεργό"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "Προεπιλεγμένος φάκελος λήψεων"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "Μία επαναχρησιμοποιήσιμη ρύθμιση για Γρήγορη λήψη, Μαζικά URL και λίστες αναπαραγωγής."
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "Ενεργό"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "Αλλαγή καθολικού"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "Επιλογή φακέλου προορισμού"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "Επιλογή φακέλου"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "Καθολικός προορισμός"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "Κληρονομημένο"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "Δεν έχει οριστεί παράκαμψη"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "Αυτό το προφίλ αποθηκεύει στον δικό του ριζικό φάκελο πριν προστεθεί ο υποφάκελος."
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "Δεν έχει οριστεί παράκαμψη. Αυτό το προφίλ χρησιμοποιεί τον καθολικό προορισμό παραπάνω."
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "Παράκαμψη προφίλ"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "Διαδρομή παράκαμψης προφίλ"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "Επιλέξτε φάκελο για αυτό το προφίλ"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "Παρακάμπτει το καθολικό"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "Επιλυμένος προορισμός"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "Ορισμός παράκαμψης προφίλ"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "Ορισμός παράκαμψης"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "Χρήση καθολικής προεπιλογής"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "Δεν ήταν δυνατή η αλλαγή του καθολικού προορισμού."
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "Δεν ήταν δυνατό το άνοιγμα του επιλογέα φακέλων. Εισαγάγετε τη διαδρομή χειροκίνητα."
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "Δεν ήταν δυνατή η επαναφορά των ρυθμίσεων προφίλ."
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "Δεν ήταν δυνατή η αποθήκευση των ρυθμίσεων προφίλ."
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "Αρχειοθέτηση"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "Ήχος"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "Υπότιτλοι"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "Μαθήματα"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "Απόσπασμα"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "Στοιχεία ελέγχου"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "Λήψη"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "Μουσική"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "Podcast"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "Βίντεο"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "Επιλογή εικονιδίου προφίλ"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "Όνομα και εικονίδιο που εμφανίζονται στη Γρήγορη λήψη, τα Μαζικά URL και τις λίστες προφίλ."
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "Όνομα και εικονίδιο προφίλ"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "Όνομα προφίλ"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "Ταυτότητα προφίλ"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "Μουσική ή podcast"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "Μόνο ήχος"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "Επιλέξτε τον κύριο τρόπο λήψης."
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "Μόνο αρχεία υποτίτλων"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "Μόνο υπότιτλοι"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "Τύπος λήψης"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "Κανονικά αρχεία βίντεο"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "Βίντεο + ήχος"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "Μόνο βουβό βίντεο"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "Βίντεο χωρίς ήχο"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "{{count}} ενεργοποιημένη"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "{{count}} ενεργοποιημένες"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "Επιλογές εξόδου"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "Επαναφορά προφίλ"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "Αυτό το προφίλ χρησιμοποιεί ήδη τις ενσωματωμένες ρυθμίσεις"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "Επαναφορά των ενσωματωμένων ρυθμίσεων προφίλ"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "Έως 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "Έως 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "Έως 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "Έως 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "Έως 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "Έως 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "Καλύτερη διαθέσιμη"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "Αποθήκευση προφίλ"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "Επισήμανση"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "Ανενεργό"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "Κατάργηση"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "Παραλείφθηκε"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "Παραλείφθηκε για αυτόν τον τύπο εξόδου."
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "Αποθήκευση μέσα σε υποφάκελο"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "Χρησιμοποιήστε έγκυρο όνομα φακέλου χωρίς / \\ : * ? \" < > |."
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "Όνομα υποφακέλου"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "Όνομα υποφακέλου"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "Ενσωμάτωση"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "Ξεχωριστό αρχείο"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "Υποφάκελος"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "Οι αυτόματοι υπότιτλοι θα αποθηκευτούν ως SRT αντί για ASS."
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "Παράδοση"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "Δεν θα ζητηθούν αρχεία υποτίτλων ή ενσωματωμένα κομμάτια υποτίτλων για αυτό το προφίλ."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "Τα προφίλ ζητούν κωδικούς γλώσσας· η διαθεσιμότητα καθορίζεται για κάθε URL."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "Λήψεις υποτίτλων"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "Κωδικοί γλώσσας υποτίτλων"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "Γλώσσες"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "Δεν έχουν επιλεγεί γλώσσες"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "Πηγή"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "Αυτό το προφίλ βάζει στην ουρά μόνο αρχεία υποτίτλων. Το βίντεο, ο ήχος, το SponsorBlock και η μετατροπή πολυμέσων παραλείπονται."
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "Μόνο αυτόματα δημιουργημένα"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "Πρώτα χειροκίνητα, μετά αυτόματα"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "Μόνο χειροκίνητα"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "Προφίλ λήψης"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "Καλύτερο εγγενές"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "MP4 H.264 για Smart TV"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "Συμβατότητα"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "Ανάλυση"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "Καλύτερο εγγενές"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "Δεν βρέθηκαν γλώσσες"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "Δεν έχουν επιλεγεί υπότιτλοι"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "Κατάργηση {{name}}"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "Λήψη στο παρασκήνιο… Ξέρω να κάνω πολλά μαζί 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "Το Γρήγορη βάζει στην ουρά τα φορτωμένα στοιχεία με {{profileName}}. Το Διαδραστική σάς επιτρέπει πρώτα να τα ελέγξετε ή να τα επιλέξετε."
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "Ρίξε έναν σύνδεσμο και άσε το Arclio να το κατεβάσει ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "Αυτός ο σύνδεσμος οδηγεί σε ένα βίντεο μέσα σε μια συλλογή. Το Arclio θα ρωτήσει ποιο θέλετε πριν από τον έλεγχο."
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "Το {{quickDownloadLabel}} διαβάζει αυτόν τον σύνδεσμο και εφαρμόζει {{profileName}}."
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "Η ουρά διαχειρίζεται αυτήν τη λήψη. Μπορείτε να επικολλήσετε άλλον σύνδεσμο ενώ εκτελείται."
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "Το Γρήγορη ξεκινά μία λήψη με {{profileName}}. Χρησιμοποιήστε το Διαδραστική για μεμονωμένες αλλαγές."
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "Αντιστοιχεί στο yt-dlp --playlist-end: το Arclio ζητά μόνο τόσες εγγραφές playlist, καναλιού ή αναζήτησης κατά τη δημιουργία του picker."
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "Χρήση ορίου εφαρμογής: {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "Εφαρμογή"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "Δεν ήταν δυνατή η εφαρμογή αυτού του εύρους λίστας αναπαραγωγής: {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "Αλλαγή"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "Επιλέξτε τι θα ζητήσει το Arclio από το yt-dlp να φορτώσει για αυτήν τη λίστα αναπαραγωγής."
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "Εύρος λίστας αναπαραγωγής"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "Πρώτα"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "Χρησιμοποιήστε ακέραιους αριθμούς στοιχείων από 1 έως 5000, με την αρχή να μην υπερβαίνει το τέλος."
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "Στοιχεία προς φόρτωση"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "Εύρος λίστας αναπαραγωγής"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "Εύρος"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "Επαναφόρτωση..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "Επαναφορά"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "Φόρτωση πρώτων {{count}} στοιχείων"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "Φόρτωση πρώτων {{count}} στοιχείων"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "Φόρτωση στοιχείων {{from}}-{{to}}"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "έως"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "Ενεργό προφίλ"
@@ -2824,10 +3500,6 @@ msgstr "Προετοιμασία"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "Ο έλεγχος απέτυχε"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "Προστέθηκε στην ουρά"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

@@ -11,14 +11,14 @@ import {ThemeToggle} from '../../components/system/ThemeToggle.js'
 import {AccountPanel} from '../../components/system/AccountPanel.js'
 
 const TABS = [
-	{id: 'general', icon: Settings, label: 'General'},
-	{id: 'downloads', icon: Download, label: 'Downloads'},
-	{id: 'library', icon: Library, label: 'Library'},
-	{id: 'sources', icon: FolderPlus, label: 'Sources'},
-	{id: 'converter', icon: Zap, label: 'Converter'},
-	{id: 'viewer', icon: Monitor, label: 'Viewer'},
-	{id: 'account', icon: UserRound, label: 'Account'},
-	{id: 'advanced', icon: Shield, label: 'Advanced'}
+	{id: 'general', icon: Settings, labelKey: 'settings.tabs.general'},
+	{id: 'downloads', icon: Download, labelKey: 'settings.tabs.downloads'},
+	{id: 'library', icon: Library, labelKey: 'settings.tabs.library'},
+	{id: 'sources', icon: FolderPlus, labelKey: 'settings.tabs.sources'},
+	{id: 'converter', icon: Zap, labelKey: 'settings.tabs.converter'},
+	{id: 'viewer', icon: Monitor, labelKey: 'settings.tabs.viewer'},
+	{id: 'account', icon: UserRound, labelKey: 'settings.tabs.account'},
+	{id: 'advanced', icon: Shield, labelKey: 'settings.tabs.advanced'}
 ] as const
 
 export function SettingsPage(): React.JSX.Element {
@@ -35,8 +35,8 @@ export function SettingsPage(): React.JSX.Element {
 		setCacheStatus(null)
 		const {removed, freedBytes} = await window.appApi.thumbnail.clearCache()
 		const megabytes = freedBytes / (1024 * 1024)
-		setCacheStatus(removed === 0 ? 'Cache already empty' : `Removed ${removed} thumbnail${removed === 1 ? '' : 's'} (${megabytes.toFixed(1)} MB)`)
-	}, [])
+		setCacheStatus(removed === 0 ? t('settings.advanced.cacheEmpty') : t('settings.advanced.cacheCleared', {count: removed, size: megabytes.toFixed(1)}))
+	}, [t])
 
 	const handleResetSettings = useCallback(async () => {
 		await resetSettings()
@@ -69,7 +69,7 @@ export function SettingsPage(): React.JSX.Element {
 					{TABS.map(tab => (
 						<TabsTrigger key={tab.id} value={tab.id} className="flex items-center gap-2">
 							<tab.icon className="size-3.5" />
-							<span className="hidden sm:inline">{tab.label}</span>
+							<span className="hidden sm:inline">{t(tab.labelKey)}</span>
 						</TabsTrigger>
 					))}
 				</TabsList>
@@ -120,28 +120,28 @@ export function SettingsPage(): React.JSX.Element {
 
 				<TabsContent value="library" className="flex-1 space-y-4 mt-4">
 					<div className="text-sm text-[var(--text-subtle)]">
-						<p>Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library.</p>
-						<p className="mt-2">Use the Library page to browse, tag, and organize what has been indexed.</p>
+						<p>{t('settings.library.autoIndexInfo')}</p>
+						<p className="mt-2">{t('settings.library.browseHint')}</p>
 					</div>
 				</TabsContent>
 
 				<TabsContent value="sources" className="flex-1 space-y-4 mt-4">
 					<div className="text-sm text-[var(--text-subtle)]">
-						<p>Watched folders automatically import new media files into your library.</p>
-						<p className="mt-2">Use the Library page to add and manage watched folders.</p>
+						<p>{t('settings.sources.watchedFoldersInfo')}</p>
+						<p className="mt-2">{t('settings.sources.manageHint')}</p>
 					</div>
 				</TabsContent>
 
 				<TabsContent value="converter" className="flex-1 space-y-4 mt-4">
 					<div className="text-sm text-[var(--text-subtle)]">
-						<p>Conversion options are chosen per file, so a single default would not cover video, audio, and image targets.</p>
-						<p className="mt-2">Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF.</p>
+						<p>{t('settings.converter.perFileInfo')}</p>
+						<p className="mt-2">{t('settings.converter.openHint')}</p>
 					</div>
 				</TabsContent>
 
 				<TabsContent value="viewer" className="flex-1 space-y-4 mt-4">
 					<div className="text-sm text-[var(--text-subtle)]">
-						<p>Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally.</p>
+						<p>{t('settings.viewer.readingDirectionInfo')}</p>
 					</div>
 				</TabsContent>
 
@@ -150,27 +150,27 @@ export function SettingsPage(): React.JSX.Element {
 				</TabsContent>
 
 				<TabsContent value="advanced" className="flex-1 space-y-4 mt-4">
-					<SettingsSection icon={Info} title="Application Version" description="Current version of Arclio">
+					<SettingsSection icon={Info} title={t('settings.advanced.appVersionTitle')} description={t('settings.advanced.appVersionDescription')}>
 						<code className="text-xs bg-muted px-2 py-1 rounded">v{window.appVersion}</code>
 					</SettingsSection>
 
-					<SettingsSection icon={FolderOpen} title="Open Log Directory" description="View application logs for debugging">
+					<SettingsSection icon={FolderOpen} title={t('settings.advanced.openLogDirTitle')} description={t('settings.advanced.openLogDirDescription')}>
 						<Button variant="outline" size="sm" onClick={() => void window.appApi.logs.openDir()}>
-							Open Logs
+							{t('settings.advanced.openLogsButton')}
 						</Button>
 					</SettingsSection>
 
-					<SettingsSection icon={Trash2} title="Clear Thumbnail Cache" description={cacheStatus ?? 'Remove all generated thumbnails. They are recreated on demand.'}>
+					<SettingsSection icon={Trash2} title={t('settings.advanced.clearCacheTitle')} description={cacheStatus ?? t('settings.advanced.clearCacheDescription')}>
 						<Button variant="outline" size="sm" onClick={() => void handleClearThumbnailCache()}>
 							<Trash2 className="size-4 mr-1" />
-							Clear Cache
+							{t('settings.advanced.clearCacheButton')}
 						</Button>
 					</SettingsSection>
 
-					<SettingsSection icon={RotateCcw} title="Reset Settings" description="Restore all settings to defaults">
+					<SettingsSection icon={RotateCcw} title={t('settings.advanced.resetTitle')} description={t('settings.advanced.resetDescription')}>
 						<Button variant="outline" size="sm" onClick={() => void handleResetSettings()}>
 							<RotateCcw className="size-4 mr-1" />
-							Reset
+							{t('settings.advanced.resetButton')}
 						</Button>
 					</SettingsSection>
 				</TabsContent>

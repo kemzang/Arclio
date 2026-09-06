@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "محدَّث بالفعل."
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "الحساب"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "إعادة المحاولة"
@@ -526,10 +522,6 @@ msgstr "لم يتم العثور على ملف قابل للتشغيل"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "الوسائط غير موجودة"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "السرعة"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "علامة"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "الإصدار الحالي من Arclio"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "إصدار التطبيق"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "تمت إزالة {{count}} صورة مصغرة ({{size}} ميغابايت)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "تمت إزالة {{count}} صور مصغرة ({{size}} ميغابايت)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "ذاكرة التخزين المؤقت فارغة بالفعل"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "مسح ذاكرة التخزين المؤقت"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "إزالة جميع الصور المصغّرة التي تم إنشاؤها. يُعاد إنشاؤها عند الحاجة."
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "مسح ذاكرة التخزين المؤقت للصور المصغّرة"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "عرض سجلات التطبيق لأغراض تصحيح الأخطاء"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "فتح مجلد السجلات"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "فتح السجلات"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "إعادة التعيين"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "استعادة جميع الإعدادات إلى الوضع الافتراضي"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "إعادة تعيين الإعدادات"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "تغيير"
@@ -1038,6 +1086,14 @@ msgstr "مراقبة الحافظة"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "اكتشاف الروابط في الحافظة تلقائياً"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "افتح صفحة المحوّل لإعادة ترميز ملف أو استخراج الصوت منه أو تحويل مقطع إلى GIF."
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "يتم اختيار خيارات التحويل لكل ملف على حدة، لأن قيمة افتراضية واحدة لا تناسب الفيديو والصوت والصور معًا."
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "لغة عرض التطبيق"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "تتم فهرسة الوسائط المستوردة تلقائيًا: يتم استخراج البيانات الوصفية وإنشاء صورة مصغّرة لكل ملف يُضاف إلى مكتبتك."
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "استخدم صفحة المكتبة لتصفح ما تمت فهرسته ووضع علامات عليه وتنظيمه."
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "دليل الإخراج"
@@ -1062,6 +1126,46 @@ msgstr "دليل الإخراج"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "أين يتم حفظ الملفات المنزلة"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "استخدم صفحة المكتبة لإضافة المجلدات المراقَبة وإدارتها."
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "تستورد المجلدات المراقَبة ملفات الوسائط الجديدة تلقائيًا إلى مكتبتك."
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "الحساب"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "خيارات متقدمة"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "المحوّل"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "التنزيلات"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "عام"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "المكتبة"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "المصادر"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "العارض"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "مظهر التطبيق"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "الإعدادات"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "يتم تبديل اتجاه قراءة القصص المصورة داخل العارض نفسه، لذا يمكن تغييره لكل كتاب بدلاً من تطبيقه عالميًا."
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "الفحص محدود"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "تغيير حد التحميل"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "حمّل Arclio {{count}} عنصر بالحد الحالي البالغ {{limit}}. أضف العناصر المحمَّلة إلى قائمة الانتظار الآن، أو ارفع الحد وأعد الفحص."
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "حمّل Arclio {{count}} عناصر بالحد الحالي البالغ {{limit}}. أضف العناصر المحمَّلة إلى قائمة الانتظار الآن، أو ارفع الحد وأعد الفحص."
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "إضافة العناصر المحمَّلة إلى قائمة الانتظار"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}:"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "تطبيق النطاق"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} عناصر"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "يحل كل فيديو المستوى المختار بشكل مستقل — قوائم التشغيل غير المتجانسة تعمل بدون مفاجآت."
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "ترث الملفات الشخصية الوجهة العامة ما لم تحدّد تجاوزًا خاصًا بالملف الشخصي."
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "خيارات متقدمة"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "الجودة"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "الأفضل"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "حتى 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "حتى 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "حتى 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "أفضل جودة متاحة"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "إضافة"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "التنسيق"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "إيقاف"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "تشغيل"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "مجلد التنزيلات الافتراضي"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "إعداد واحد قابل لإعادة الاستخدام للتنزيل السريع وعناوين URL المجمّعة وقوائم التشغيل."
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "نشط"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "تغيير الإعداد العام"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "اختيار مجلد الوجهة"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "اختيار مجلد"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "الوجهة العامة"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "موروثة"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "لم يتم تعيين تجاوز"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "يحفظ هذا الملف الشخصي في مجلده الجذري الخاص قبل إضافة المجلد الفرعي."
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "لم يتم تعيين تجاوز. يستخدم هذا الملف الشخصي الوجهة العامة أعلاه."
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "تجاوز الملف الشخصي"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "مسار تجاوز الملف الشخصي"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "اختيار مجلد لهذا الملف الشخصي"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "يتجاوز الإعداد العام"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "الوجهة النهائية"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "تعيين تجاوز الملف الشخصي"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "تعيين تجاوز"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "استخدام الإعداد العام الافتراضي"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "تعذّر تغيير الوجهة العامة."
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "تعذّر فتح منتقي المجلدات. أدخل المسار يدويًا."
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "تعذّرت إعادة تعيين إعدادات الملف الشخصي."
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "تعذّر حفظ إعدادات الملف الشخصي."
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "أرشيف"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "صوت"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "ترجمات"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "دروس"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "مقطع"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "عناصر التحكم"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "تنزيل"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "موسيقى"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "بودكاست"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "فيديو"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "اختيار أيقونة الملف الشخصي"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "الاسم والأيقونة الظاهران في التنزيل السريع وعناوين URL المجمّعة وقوائم الملفات الشخصية."
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "اسم الملف الشخصي وأيقونته"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "اسم الملف الشخصي"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "هوية الملف الشخصي"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "موسيقى أو بودكاست"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "صوت فقط"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "اختر الطريقة الأساسية التي تريد التنزيل بها."
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "ملفات الترجمة فقط"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "الترجمات فقط"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "نوع التنزيل"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "ملفات فيديو عادية"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "فيديو + صوت"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "فيديو صامت فقط"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "فيديو بدون صوت"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "تم تفعيل {{count}}"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "تم تفعيل {{count}}"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "خيارات الإخراج"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "إعادة تعيين الملف الشخصي"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "يستخدم هذا الملف الشخصي بالفعل الإعدادات المدمجة"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "استعادة إعدادات الملف الشخصي المدمجة"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "حتى 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "حتى 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "حتى 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "حتى 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "حتى 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "حتى 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "أفضل جودة متاحة"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "حفظ الملف الشخصي"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "وضع علامة"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "إيقاف"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "إزالة"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "تم التخطي"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "تم التخطي لنوع الإخراج هذا."
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "الحفظ داخل مجلد فرعي"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "استخدم اسم مجلد صالحًا بدون / \\ : * ? \" < > |."
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "اسم المجلد الفرعي"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "اسم المجلد الفرعي"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "تضمين"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "ملف منفصل"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "مجلد فرعي"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "ستُحفظ الترجمات التلقائية بصيغة SRT بدلاً من ASS."
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "طريقة التسليم"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "لن يتم طلب ملفات ترجمة أو مسارات ترجمة مضمّنة لهذا الملف الشخصي."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "تطلب الملفات الشخصية رموز اللغة؛ ويتم تحديد التوفر لكل عنوان URL على حدة."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "تنزيلات الترجمة"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "رموز لغة الترجمة"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "اللغات"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "لم يتم تحديد أي لغة"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "المصدر"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "يضيف هذا الملف الشخصي ملفات الترجمة فقط إلى قائمة الانتظار. يتم تخطي الفيديو والصوت وSponsorBlock وتحويل الوسائط."
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "الترجمات التلقائية فقط"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "اليدوية أولًا، ثم التلقائية"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "اليدوية فقط"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "ملف تنزيل شخصي"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "الأفضل أصليًا"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "MP4 H.264 لأجهزة التلفاز الذكية"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "التوافق"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "الدقة"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "الأفضل أصليًا"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "لا توجد لغات مطابقة"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "لم يتم اختيار أي ترجمة"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "إزالة {{name}}"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "جارٍ التنزيل في الخلفية… أستطيع تعدد المهام 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "يضيف السريع العناصر المحمَّلة إلى قائمة الانتظار باستخدام {{profileName}}. يتيح لك التفاعلي فحص العناصر أو تحديدها أولًا."
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "أرسل رابطًا ودع Arclio يسحبه ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "يشير هذا الرابط إلى فيديو واحد داخل مجموعة. سيسأل Arclio عن الفيديو الذي تريده قبل الفحص."
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "يقرأ {{quickDownloadLabel}} هذا الرابط ويطبّق {{profileName}}."
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "تتولى قائمة الانتظار معالجة هذا التنزيل. يمكنك لصق رابط آخر أثناء عملها."
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "يبدأ السريع تنزيلًا واحدًا باستخدام {{profileName}}. استخدم التفاعلي لإجراء تغييرات لمرة واحدة."
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "يُعيَّن إلى yt-dlp --playlist-end: يطلب Arclio هذا العدد فقط من إدخالات القائمة أو القناة أو البحث عند بناء أداة الاختيار."
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "استخدام حد التطبيق: {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "تطبيق"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "تعذّر تطبيق نطاق قائمة التشغيل هذا: {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "تغيير"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "اختر ما يطلبه Arclio من yt-dlp تحميله لقائمة التشغيل هذه."
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "نطاق قائمة التشغيل"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "الأولى"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "استخدم أرقام عناصر صحيحة من 1 إلى 5000، على ألا تتجاوز البداية النهاية."
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "العناصر المراد تحميلها"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "نطاق قائمة التشغيل"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "نطاق"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "جارٍ إعادة التحميل..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "إعادة التعيين"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "تحميل أول {{count}} عنصر"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "تحميل أول {{count}} عنصر"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "تحميل العناصر من {{from}} إلى {{to}}"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "إلى"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "ملف التعريف النشط"
@@ -2824,10 +3500,6 @@ msgstr "جارٍ التحضير"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "فشل الفحص"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "تمت الإضافة إلى قائمة الانتظار"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

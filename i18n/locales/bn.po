@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "ইতিমধ্যে হালনাগাদ।"
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "অ্যাকাউন্ট"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "আবার চেষ্টা করুন"
@@ -526,10 +522,6 @@ msgstr "কোনো চালানোযোগ্য ফাইল পাওয
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "মিডিয়া পাওয়া যায়নি"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "গতি"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "ট্যাগ"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Arclio-এর বর্তমান সংস্করণ"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "অ্যাপ্লিকেশন সংস্করণ"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "{{count}}টি থাম্বনেইল সরানো হয়েছে ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "{{count}}টি থাম্বনেইল সরানো হয়েছে ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "ক্যাশ ইতিমধ্যেই খালি"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "ক্যাশ পরিষ্কার করুন"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "তৈরি করা সব থাম্বনেইল সরিয়ে দিন। প্রয়োজনে সেগুলো আবার তৈরি হবে।"
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "থাম্বনেইল ক্যাশ পরিষ্কার করুন"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "ডিবাগিংয়ের জন্য অ্যাপ্লিকেশন লগ দেখুন"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "লগ ফোল্ডার খুলুন"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "লগ খুলুন"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "রিসেট করুন"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "সব সেটিংস ডিফল্টে পুনরুদ্ধার করুন"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "সেটিংস রিসেট করুন"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "পরিবর্তন"
@@ -1038,6 +1086,14 @@ msgstr "ক্লিপবোর্ড ওয়াচ"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "ক্লিপবোর্ডে URL স্বয়ংক্রিয়ভাবে সনাক্ত করুন"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "কোনো ফাইল ট্রান্সকোড করতে, তার অডিও বের করতে, বা কোনো ক্লিপকে GIF-এ রূপান্তর করতে কনভার্টার পেজ খুলুন।"
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "কনভার্সন অপশন প্রতিটি ফাইলের জন্য আলাদাভাবে বেছে নেওয়া হয়, কারণ একটি একক ডিফল্ট মান ভিডিও, অডিও এবং ইমেজ—সবগুলোর জন্য উপযুক্ত হবে না।"
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "অ্যাপ্লিকেশনের প্রদর্শন ভাষা"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "আমদানি করা মিডিয়া স্বয়ংক্রিয়ভাবে ইনডেক্স হয়: আপনার লাইব্রেরিতে যোগ করা প্রতিটি ফাইলের জন্য মেটাডেটা বের করা হয় এবং একটি থাম্বনেইল তৈরি করা হয়।"
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "ইনডেক্স করা জিনিস ব্রাউজ, ট্যাগ এবং সংগঠিত করতে লাইব্রেরি পেজ ব্যবহার করুন।"
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "আউটপুট ডিরেক্টরি"
@@ -1062,6 +1126,46 @@ msgstr "আউটপুট ডিরেক্টরি"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "ডাউনলোড করা ফাইল কোথায় সংরক্ষিত হয়"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "নজরদারিতে থাকা ফোল্ডার যোগ ও পরিচালনা করতে লাইব্রেরি পেজ ব্যবহার করুন।"
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "নজরদারিতে থাকা ফোল্ডারগুলো নতুন মিডিয়া ফাইল স্বয়ংক্রিয়ভাবে আপনার লাইব্রেরিতে আমদানি করে।"
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "অ্যাকাউন্ট"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "উন্নত"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "কনভার্টার"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "ডাউনলোড"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "সাধারণ"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "লাইব্রেরি"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "উৎস"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "ভিউয়ার"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "অ্যাপ্লিকেশনের চেহারা"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "সেটিংস"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "কমিক পড়ার দিক ভিউয়ারের ভেতরেই পরিবর্তন করা হয়, তাই এটি সামগ্রিকভাবে না করে প্রতিটি বইয়ের জন্য আলাদাভাবে পরিবর্তন করা যায়।"
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "স্ক্যান সীমিত করা হয়েছে"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "লোড সীমা পরিবর্তন করুন"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio বর্তমান সীমা {{limit}} ব্যবহার করে {{count}}টি আইটেম লোড করেছে। এখনই লোড করা আইটেমগুলো সারিতে যোগ করুন, অথবা সীমা বাড়িয়ে আবার স্ক্যান করুন।"
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio বর্তমান সীমা {{limit}} ব্যবহার করে {{count}}টি আইটেম লোড করেছে। এখনই লোড করা আইটেমগুলো সারিতে যোগ করুন, অথবা সীমা বাড়িয়ে আবার স্ক্যান করুন।"
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "লোড করা আইটেমগুলো সারিতে যোগ করুন"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}:"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "রেঞ্জ প্রয়োগ করুন"
@@ -2036,6 +2160,462 @@ msgstr "{{count}}টি আইটেম"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "প্রতিটি ভিডিও স্বাধীনভাবে বেছে নেওয়া স্তর অনুযায়ী রেজোলিউশন করে — বৈচিত্র্যময় playlist অবাক করা ছাড়াই কাজ করে।"
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "আপনি প্রোফাইল ওভাররাইড সেট না করলে, প্রোফাইলগুলো গ্লোবাল গন্তব্য উত্তরাধিকারসূত্রে পায়।"
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "উন্নত অপশন"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "মান"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "সেরা"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "সর্বোচ্চ 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "সর্বোচ্চ 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "সর্বোচ্চ 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "উপলব্ধ সেরা"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "যোগ করুন"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "ফরম্যাট"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "বন্ধ"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "চালু"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "ডিফল্ট ডাউনলোড ফোল্ডার"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "কুইক ডাউনলোড, বাল্ক URL এবং প্লেলিস্টের জন্য একটি পুনরায় ব্যবহারযোগ্য সেটআপ।"
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "সক্রিয়"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "গ্লোবাল পরিবর্তন করুন"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "গন্তব্য ফোল্ডার বেছে নিন"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "ফোল্ডার বেছে নিন"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "গ্লোবাল গন্তব্য"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "উত্তরাধিকারসূত্রে প্রাপ্ত"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "কোনো ওভাররাইড সেট করা নেই"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "এই প্রোফাইলটি সাবফোল্ডার যোগ করার আগে নিজস্ব রুট ফোল্ডারে সংরক্ষণ করে।"
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "কোনো ওভাররাইড সেট করা নেই। এই প্রোফাইলটি উপরের গ্লোবাল গন্তব্য ব্যবহার করে।"
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "প্রোফাইল ওভাররাইড"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "প্রোফাইল ওভাররাইড পাথ"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "এই প্রোফাইলের জন্য একটি ফোল্ডার বেছে নিন"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "গ্লোবাল ওভাররাইড করে"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "নির্ধারিত গন্তব্য"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "প্রোফাইল ওভাররাইড সেট করুন"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "ওভাররাইড সেট করুন"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "গ্লোবাল ডিফল্ট ব্যবহার করুন"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "গ্লোবাল গন্তব্য পরিবর্তন করা যায়নি।"
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "ফোল্ডার পিকার খোলা যায়নি। ম্যানুয়ালি একটি পাথ লিখুন।"
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "প্রোফাইল সেটিংস রিসেট করা যায়নি।"
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "প্রোফাইল সেটিংস সংরক্ষণ করা যায়নি।"
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "আর্কাইভ"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "অডিও"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "ক্যাপশন"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "ক্লাস"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "ক্লিপ"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "নিয়ন্ত্রণ"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "ডাউনলোড"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "সংগীত"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "পডকাস্ট"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "ভিডিও"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "প্রোফাইল আইকন বেছে নিন"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "কুইক ডাউনলোড, বাল্ক URL এবং প্রোফাইল তালিকায় দেখানো নাম ও আইকন।"
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "প্রোফাইলের নাম ও আইকন"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "প্রোফাইলের নাম"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "প্রোফাইল পরিচিতি"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "সংগীত বা পডকাস্ট"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "শুধু অডিও"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "আপনি যেভাবে ডাউনলোড করতে চান তার মূল উপায় বেছে নিন।"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "শুধু ক্যাপশন ফাইল"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "শুধু সাবটাইটেল"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "ডাউনলোডের ধরন"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "সাধারণ ভিডিও ফাইল"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "ভিডিও + অডিও"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "শুধু নীরব ভিডিও"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "ভিডিও, অডিও ছাড়া"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "{{count}}টি সক্রিয়"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "{{count}}টি সক্রিয়"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "আউটপুট অপশন"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "প্রোফাইল রিসেট করুন"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "এই প্রোফাইলটি ইতিমধ্যেই বিল্ট-ইন সেটিংস ব্যবহার করছে"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "বিল্ট-ইন প্রোফাইল সেটিংস পুনরুদ্ধার করুন"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "সর্বোচ্চ 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "সর্বোচ্চ 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "সর্বোচ্চ 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "সর্বোচ্চ 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "সর্বোচ্চ 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "সর্বোচ্চ 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "উপলব্ধ সেরা"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "প্রোফাইল সংরক্ষণ করুন"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "চিহ্নিত করুন"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "বন্ধ"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "সরান"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "বাদ দেওয়া হয়েছে"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "এই আউটপুট ধরনের জন্য বাদ দেওয়া হয়েছে।"
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "সাবফোল্ডারের ভেতরে সংরক্ষণ করুন"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "/ \\ : * ? \" < > | ছাড়া একটি বৈধ ফোল্ডার নাম ব্যবহার করুন।"
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "সাবফোল্ডারের নাম"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "সাবফোল্ডারের নাম"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "এম্বেড করুন"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "সাইডকার"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "সাবফোল্ডার"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "অটো-ক্যাপশনগুলো ASS-এর বদলে SRT হিসেবে সংরক্ষণ করা হবে।"
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "ডেলিভারি"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "এই প্রোফাইলের জন্য সাবটাইটেল ফাইল বা এম্বেড করা সাবটাইটেল ট্র্যাক—কোনোটিই অনুরোধ করা হবে না।"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "প্রোফাইলগুলো ভাষার কোড অনুরোধ করে; প্রাপ্যতা প্রতিটি URL-এর জন্য আলাদাভাবে নির্ধারিত হয়।"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "সাবটাইটেল ডাউনলোড"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "সাবটাইটেল ভাষার কোড"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "ভাষা"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "কোনো ভাষা নির্বাচিত নেই"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "উৎস"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "এই প্রোফাইলটি শুধু সাবটাইটেল ফাইল সারিতে যোগ করে। ভিডিও, অডিও, SponsorBlock এবং মিডিয়া রূপান্তর বাদ দেওয়া হয়।"
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "শুধু স্বয়ংক্রিয়ভাবে তৈরি"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "প্রথমে ম্যানুয়াল, তারপর স্বয়ংক্রিয়"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "শুধু ম্যানুয়াল"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "ডাউনলোড প্রোফাইল"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "সেরা নেটিভ"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "স্মার্ট TV-এর জন্য H.264 MP4"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "সামঞ্জস্যতা"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "রেজোলিউশন"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "সেরা নেটিভ"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "কোনো ভাষা মেলেনি"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "কোনো সাবটাইটেল নির্বাচিত হয়নি"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "{{name}} সরান"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "ব্যাকগ্রাউন্ডে ডাউনলোড হচ্ছে… আমি একসাথে অনেক কাজ করতে পারি 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "কুইক {{profileName}} দিয়ে লোড করা আইটেমগুলো সারিতে যোগ করে। ইন্টারেক্টিভ আপনাকে আগে আইটেম পরীক্ষা বা নির্বাচন করতে দেয়।"
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "একটি লিংক দিন, বাকিটা Arclio টেনে আনুক ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "এই লিংকটি একটি কালেকশনের ভেতরে থাকা একটি ভিডিওর দিকে নির্দেশ করে। যাচাইয়ের আগে Arclio জিজ্ঞাসা করবে আপনি কোনটি চান।"
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} এই লিংকটি পড়ছে এবং {{profileName}} প্রয়োগ করছে।"
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "সারি এই ডাউনলোডটি পরিচালনা করছে। এটি কাজ করার সময় আপনি আরেকটি লিংক পেস্ট করতে পারেন।"
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "কুইক {{profileName}} দিয়ে একটি ডাউনলোড শুরু করে। একবারের পরিবর্তনের জন্য ইন্টারেক্টিভ ব্যবহার করুন।"
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "yt-dlp --playlist-end-এর সাথে ম্যাপ করে: Arclio পিকার তৈরির সময় শুধুমাত্র এতটি প্লেলিস্ট, চ্যানেল বা সার্চ এন্ট্রি চায়।"
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "অ্যাপ সীমা ব্যবহার করুন: {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "প্রয়োগ করুন"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "সেই প্লেলিস্ট স্কোপ প্রয়োগ করা যায়নি: {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "বাতিল করুন"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "পরিবর্তন করুন"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "এই প্লেলিস্টের জন্য Arclio, yt-dlp-কে কী লোড করতে বলবে তা বেছে নিন।"
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "প্লেলিস্ট স্কোপ"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "প্রথম"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "1 থেকে 5000 পর্যন্ত পূর্ণ আইটেম নম্বর ব্যবহার করুন, শুরুটি শেষের চেয়ে বেশি না হয়ে।"
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "লোড করার আইটেম"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "প্লেলিস্ট স্কোপ"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "পরিসীমা"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "রিলোড হচ্ছে..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "রিসেট করুন"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "প্রথম {{count}}টি আইটেম লোড করুন"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "প্রথম {{count}}টি আইটেম লোড করুন"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "{{from}}-{{to}} আইটেম লোড করুন"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "পর্যন্ত"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "সক্রিয় প্রোফাইল"
@@ -2824,10 +3500,6 @@ msgstr "প্রস্তুত হচ্ছে"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "প্রোব ব্যর্থ হয়েছে"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "কিউতে যোগ করা হয়েছে"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

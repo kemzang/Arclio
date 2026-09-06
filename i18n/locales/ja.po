@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "すでに最新です。"
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "アカウント"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "再試行"
@@ -526,10 +522,6 @@ msgstr "再生可能なファイルが見つかりません"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "メディアが見つかりません"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "速度"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "タグ"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Arclio の現在のバージョン"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "アプリケーションのバージョン"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "サムネイルを {{count}} 件削除しました（{{size}} MB）"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "サムネイルを {{count}} 件削除しました（{{size}} MB）"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "キャッシュはすでに空です"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "キャッシュを消去"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "生成されたサムネイルをすべて削除します。必要に応じて再作成されます。"
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "サムネイルキャッシュを消去"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "デバッグ用にアプリケーションのログを表示"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "ログフォルダーを開く"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "ログを開く"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "リセット"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "すべての設定を初期状態に戻す"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "設定をリセット"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "変更"
@@ -1038,6 +1086,14 @@ msgstr "クリップボード監視"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "クリップボードのURLを自動検出"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "コンバーターページを開いて、ファイルのトランスコード、音声の抽出、クリップの GIF 変換を行います。"
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "変換オプションはファイルごとに選択されるため、単一の既定値では動画・音声・画像のすべてに対応できません。"
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "アプリの表示言語"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "インポートしたメディアは自動的にインデックス化されます。ライブラリに追加された各ファイルについてメタデータが抽出され、サムネイルが生成されます。"
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "ライブラリページを使用して、インデックス化された内容を閲覧・タグ付け・整理します。"
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "出力ディレクトリ"
@@ -1062,6 +1126,46 @@ msgstr "出力ディレクトリ"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "ダウンロードファイルの保存先"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "ライブラリページを使用して、監視フォルダーの追加と管理を行います。"
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "監視フォルダーは、新しいメディアファイルを自動的にライブラリへ取り込みます。"
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "アカウント"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "詳細"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "コンバーター"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "ダウンロード"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "一般"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "ライブラリ"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "ソース"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "ビューア"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "アプリの外観"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "設定"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "コミックの読み方向はビューア内で切り替えられるため、全体ではなく書籍ごとに変更できます。"
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "スキャン上限に達しました"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "読み込み上限を変更"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio は現在の上限 {{limit}} で {{count}} 件のアイテムを読み込みました。読み込んだアイテムを今すぐキューに追加するか、上限を上げて再スキャンしてください。"
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio は現在の上限 {{limit}} で {{count}} 件のアイテムを読み込みました。読み込んだアイテムを今すぐキューに追加するか、上限を上げて再スキャンしてください。"
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "読み込んだアイテムをキューに追加"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}："
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "範囲を適用"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} 件"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "各動画が選択した画質ティアを独立して解決します — 異なる動画が混在するPlaylistも問題なく処理できます。"
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "プロファイルの上書きを設定しない限り、プロファイルはグローバルな保存先を継承します。"
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "詳細オプション"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "品質"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "最高"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "最大 128K"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "最大 192K"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "最大 320K"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "利用可能な最高品質"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "追加"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "形式"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "オフ"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "オン"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "既定のダウンロードフォルダー"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "クイックダウンロード、一括 URL、プレイリストで使い回せる 1 つの設定です。"
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "有効"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "グローバル設定を変更"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "保存先フォルダーを選択"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "フォルダーを選択"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "グローバルな保存先"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "継承"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "上書き未設定"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "このプロファイルは、サブフォルダーが追加される前に独自のルートフォルダーへ保存します。"
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "上書き未設定です。このプロファイルは上記のグローバルな保存先を使用します。"
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "プロファイルの上書き"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "プロファイル上書きのパス"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "このプロファイル用のフォルダーを選択"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "グローバル設定を上書き"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "解決済みの保存先"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "プロファイルの上書きを設定"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "上書きを設定"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "グローバルな既定値を使用"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "グローバルな保存先を変更できませんでした。"
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "フォルダー選択を開けませんでした。パスを手動で入力してください。"
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "プロファイル設定をリセットできませんでした。"
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "プロファイル設定を保存できませんでした。"
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "アーカイブ"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "音声"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "字幕"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "講座"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "クリップ"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "コントロール"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "ダウンロード"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "音楽"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "ポッドキャスト"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "動画"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "プロファイルアイコンを選択"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "クイックダウンロード、一括 URL、プロファイル一覧に表示される名前とアイコンです。"
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "プロファイルの名前とアイコン"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "プロファイル名"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "プロファイル情報"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "音楽またはポッドキャスト"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "音声のみ"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "主なダウンロード方法を選択してください。"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "字幕ファイルのみ"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "字幕のみ"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "ダウンロードの種類"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "通常の動画ファイル"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "動画 + 音声"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "無音動画のみ"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "動画(音声なし)"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "{{count}} 件有効"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "{{count}} 件有効"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "出力オプション"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "プロファイルをリセット"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "このプロファイルはすでに組み込み設定を使用しています"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "組み込みのプロファイル設定を復元"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "最大 1080p"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "最大 1440p"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "最大 2160p"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "最大 360p"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "最大 480p"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "最大 720p"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "利用可能な最高品質"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "プロファイルを保存"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "マーク"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "オフ"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "削除"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "スキップ"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "この出力タイプではスキップされます。"
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "サブフォルダー内に保存"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "/ \\ : * ? \" < > | を含まない有効なフォルダー名を使用してください。"
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "サブフォルダー名"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "サブフォルダー名"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "埋め込み"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "サイドカー"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "サブフォルダー"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "自動字幕は ASS ではなく SRT として保存されます。"
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "提供方法"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "このプロファイルでは、字幕ファイルも埋め込み字幕トラックも要求されません。"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "プロファイルは言語コードを要求します。利用可否は URL ごとに解決されます。"
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "字幕のダウンロード"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "字幕の言語コード"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "言語"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "言語が選択されていません"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "ソース"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "このプロファイルは字幕ファイルのみをキューに追加します。動画、音声、SponsorBlock、メディア変換はスキップされます。"
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "自動生成のみ"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "手動を優先し、その後自動"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "手動のみ"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "ダウンロードプロファイル"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "最良のネイティブ形式"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "スマート TV 向け H.264 MP4"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "互換性"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "解像度"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "最良のネイティブ形式"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "言語が見つかりません"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "字幕が選択されていません"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "{{name}} を削除"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "バックグラウンドでダウンロード中… マルチタスクは得意なんだ 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "クイックは {{profileName}} を使って読み込んだアイテムをキューに追加します。インタラクティブでは先にアイテムを確認・選択できます。"
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "リンクを入れて、あとは Arclio に引っぱってもらおう ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "このリンクは、コレクション内の 1 本の動画を指しています。Arclio は、プローブ前にどれをご希望か確認します。"
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} がこのリンクを読み込み、{{profileName}} を適用しています。"
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "キューがこのダウンロードを処理しています。処理中に別のリンクを貼り付けることができます。"
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "クイックは {{profileName}} で 1 件のダウンロードを開始します。個別の変更にはインタラクティブを使用してください。"
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "yt-dlp の --playlist-end に対応します：Arclio はピッカーを構築する際、この件数のプレイリスト・チャンネル・検索エントリのみ取得します。"
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "アプリの上限を使用:{{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "適用"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "このプレイリスト範囲を適用できませんでした:{{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "変更"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "この再生リストで Arclio が yt-dlp に読み込ませる内容を選択します。"
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "プレイリスト範囲"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "先頭"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "開始が終了を超えないように、1 から 5000 までの整数のアイテム番号を使用してください。"
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "読み込むアイテム数"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "プレイリスト範囲"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "範囲"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "再読み込み中…"
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "リセット"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "先頭の {{count}} 件を読み込む"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "先頭の {{count}} 件を読み込む"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "アイテム {{from}}〜{{to}} を読み込む"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "まで"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "アクティブなプロファイル"
@@ -2824,10 +3500,6 @@ msgstr "準備中"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "解析に失敗しました"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "キューに追加しました"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

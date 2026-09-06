@@ -143,10 +143,6 @@ msgctxt "account.syncUpToDate"
 msgid "Already up to date."
 msgstr "Allaqachon dolzarb."
 
-msgctxt "account.tab"
-msgid "Account"
-msgstr "Hisob"
-
 msgctxt "account.tryAgain"
 msgid "Try again"
 msgstr "Qayta urinish"
@@ -526,10 +522,6 @@ msgstr "Oʻynatiladigan fayl topilmadi"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Media topilmadi"
-
-msgctxt "player.speed"
-msgid "Speed"
-msgstr "Tezlik"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"
@@ -1027,6 +1019,62 @@ msgctxt "search.tag"
 msgid "Tag"
 msgstr "Teg"
 
+msgctxt "settings.advanced.appVersionDescription"
+msgid "Current version of Arclio"
+msgstr "Arclio-ning joriy versiyasi"
+
+msgctxt "settings.advanced.appVersionTitle"
+msgid "Application Version"
+msgstr "Dastur versiyasi"
+
+msgctxt "settings.advanced.cacheCleared_one"
+msgid "Removed {{count}} thumbnail ({{size}} MB)"
+msgstr "{{count}} ta eskiz olib tashlandi ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheCleared_other"
+msgid "Removed {{count}} thumbnails ({{size}} MB)"
+msgstr "{{count}} ta eskiz olib tashlandi ({{size}} MB)"
+
+msgctxt "settings.advanced.cacheEmpty"
+msgid "Cache already empty"
+msgstr "Kesh allaqachon bo'sh"
+
+msgctxt "settings.advanced.clearCacheButton"
+msgid "Clear Cache"
+msgstr "Keshni tozalash"
+
+msgctxt "settings.advanced.clearCacheDescription"
+msgid "Remove all generated thumbnails. They are recreated on demand."
+msgstr "Yaratilgan barcha eskizlarni olib tashlaydi. Ular kerak bo'lganda qayta yaratiladi."
+
+msgctxt "settings.advanced.clearCacheTitle"
+msgid "Clear Thumbnail Cache"
+msgstr "Eskizlar keshini tozalash"
+
+msgctxt "settings.advanced.openLogDirDescription"
+msgid "View application logs for debugging"
+msgstr "Nosozliklarni tuzatish uchun dastur jurnallarini ko'rish"
+
+msgctxt "settings.advanced.openLogDirTitle"
+msgid "Open Log Directory"
+msgstr "Jurnal papkasini ochish"
+
+msgctxt "settings.advanced.openLogsButton"
+msgid "Open Logs"
+msgstr "Jurnallarni ochish"
+
+msgctxt "settings.advanced.resetButton"
+msgid "Reset"
+msgstr "Qayta tiklash"
+
+msgctxt "settings.advanced.resetDescription"
+msgid "Restore all settings to defaults"
+msgstr "Barcha sozlamalarni odatiy holatga qaytarish"
+
+msgctxt "settings.advanced.resetTitle"
+msgid "Reset Settings"
+msgstr "Sozlamalarni qayta tiklash"
+
 msgctxt "settings.change"
 msgid "Change"
 msgstr "O'zgartirish"
@@ -1038,6 +1086,14 @@ msgstr "Xotira kuzatuvi"
 msgctxt "settings.clipboardWatchDescription"
 msgid "Automatically detect URLs in clipboard"
 msgstr "Xotiradagi URL'larni avtomatik aniqlash"
+
+msgctxt "settings.converter.openHint"
+msgid "Open the Converter page to transcode a file, extract its audio, or turn a clip into a GIF."
+msgstr "Faylni qayta kodlash, undan audio ajratib olish yoki bo'lakni GIF-ga aylantirish uchun Konvertor sahifasini oching."
+
+msgctxt "settings.converter.perFileInfo"
+msgid "Conversion options are chosen per file, so a single default would not cover video, audio, and image targets."
+msgstr "Konvertatsiya parametrlari har bir fayl uchun alohida tanlanadi, chunki bitta odatiy qiymat video, audio va tasvir uchun bir vaqtda mos kelmaydi."
 
 msgctxt "settings.embedThumbnail"
 msgid "Embed thumbnail"
@@ -1055,6 +1111,14 @@ msgctxt "settings.languageDescription"
 msgid "Display language for the application"
 msgstr "Ilova ko'rsatish tili"
 
+msgctxt "settings.library.autoIndexInfo"
+msgid "Imported media is indexed automatically: metadata is extracted and a thumbnail is generated for every file added to your library."
+msgstr "Import qilingan media avtomatik ravishda indekslanadi: kutubxonangizga qo'shilgan har bir fayl uchun metama'lumotlar chiqariladi va eskiz yaratiladi."
+
+msgctxt "settings.library.browseHint"
+msgid "Use the Library page to browse, tag, and organize what has been indexed."
+msgstr "Indekslangan narsalarni ko'rish, teglash va tartibga solish uchun Kutubxona sahifasidan foydalaning."
+
 msgctxt "settings.outputDir"
 msgid "Output directory"
 msgstr "Chiqish papkasi"
@@ -1062,6 +1126,46 @@ msgstr "Chiqish papkasi"
 msgctxt "settings.outputDirDescription"
 msgid "Where downloaded files are saved"
 msgstr "Yuklab olingan fayllar qayerga saqlanadi"
+
+msgctxt "settings.sources.manageHint"
+msgid "Use the Library page to add and manage watched folders."
+msgstr "Kuzatiladigan papkalarni qo'shish va boshqarish uchun Kutubxona sahifasidan foydalaning."
+
+msgctxt "settings.sources.watchedFoldersInfo"
+msgid "Watched folders automatically import new media files into your library."
+msgstr "Kuzatiladigan papkalar yangi media fayllarni avtomatik ravishda kutubxonangizga import qiladi."
+
+msgctxt "settings.tabs.account"
+msgid "Account"
+msgstr "Hisob"
+
+msgctxt "settings.tabs.advanced"
+msgid "Advanced"
+msgstr "Kengaytirilgan"
+
+msgctxt "settings.tabs.converter"
+msgid "Converter"
+msgstr "Konvertor"
+
+msgctxt "settings.tabs.downloads"
+msgid "Downloads"
+msgstr "Yuklab olishlar"
+
+msgctxt "settings.tabs.general"
+msgid "General"
+msgstr "Umumiy"
+
+msgctxt "settings.tabs.library"
+msgid "Library"
+msgstr "Kutubxona"
+
+msgctxt "settings.tabs.sources"
+msgid "Sources"
+msgstr "Manbalar"
+
+msgctxt "settings.tabs.viewer"
+msgid "Viewer"
+msgstr "Ko'ruvchi"
 
 msgctxt "settings.theme"
 msgid "Theme"
@@ -1071,9 +1175,9 @@ msgctxt "settings.themeDescription"
 msgid "Appearance of the application"
 msgstr "Ilova ko'rinishi"
 
-msgctxt "settings.title"
-msgid "Settings"
-msgstr "Sozlamalar"
+msgctxt "settings.viewer.readingDirectionInfo"
+msgid "Comic reading direction is switched inside the reader itself, so it can be changed per book rather than globally."
+msgstr "Komiks o'qish yo'nalishi ko'ruvchining o'zida almashtiriladi, shuning uchun uni global emas, har bir kitob uchun alohida o'zgartirish mumkin."
 
 msgctxt "settings.writeSubtitles"
 msgid "Write subtitles"
@@ -1957,6 +2061,26 @@ msgctxt "wizard.playlist.probeLimitAlertTitleGeneric"
 msgid "Scan is capped"
 msgstr "Skanlash cheklangan"
 
+msgctxt "wizard.playlist.quickCap.changeLimitLabel"
+msgid "Change load limit"
+msgstr "Yuklash chegarasini o'zgartirish"
+
+msgctxt "wizard.playlist.quickCap.description_one"
+msgid "Arclio loaded {{count}} item using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio joriy {{limit}} chegarasi bilan {{count}} ta element yukladi. Yuklangan elementlarni hozir navbatga qo'ying yoki chegarani oshirib qayta skanerlang."
+
+msgctxt "wizard.playlist.quickCap.description_other"
+msgid "Arclio loaded {{count}} items using the current limit of {{limit}}. Queue the loaded items now, or increase the limit and scan again."
+msgstr "Arclio joriy {{limit}} chegarasi bilan {{count}} ta element yukladi. Yuklangan elementlarni hozir navbatga qo'ying yoki chegarani oshirib qayta skanerlang."
+
+msgctxt "wizard.playlist.quickCap.queueLoaded"
+msgid "Queue loaded items"
+msgstr "Yuklangan elementlarni navbatga qo'yish"
+
+msgctxt "wizard.playlist.quickCap.titlePrefix"
+msgid "{{title}}: "
+msgstr "{{title}}:"
+
 msgctxt "wizard.playlist.rangeApply"
 msgid "Apply range"
 msgstr "Diapazonni qoʻllash"
@@ -2036,6 +2160,462 @@ msgstr "{{count}} ta element"
 msgctxt "wizard.playlistPresets.subhead"
 msgid "Each video resolves the chosen tier independently — heterogeneous playlists work without surprises."
 msgstr "Har bir video tanlangan darajani mustaqil ravishda hal qiladi — turli xil playlistlar muammosiz ishlaydi."
+
+msgctxt "wizard.profileEditor.advancedOptions.description"
+msgid "Profiles inherit the global destination unless you set a profile override."
+msgstr "Profil o'zgartirishi belgilanmagan bo'lsa, profillar global manzilni meros qilib oladi."
+
+msgctxt "wizard.profileEditor.advancedOptions.title"
+msgid "Advanced options"
+msgstr "Kengaytirilgan parametrlar"
+
+msgctxt "wizard.profileEditor.audio.qualityLabel"
+msgid "Quality"
+msgstr "Sifat"
+
+msgctxt "wizard.profileEditor.audioFormat.best"
+msgid "Best"
+msgstr "Eng yaxshi"
+
+msgctxt "wizard.profileEditor.audioFormat.m4a"
+msgid "M4A"
+msgstr "M4A"
+
+msgctxt "wizard.profileEditor.audioFormat.mp3"
+msgid "MP3"
+msgstr "MP3"
+
+msgctxt "wizard.profileEditor.audioFormat.opus"
+msgid "Opus"
+msgstr "Opus"
+
+msgctxt "wizard.profileEditor.audioFormat.wav"
+msgid "WAV"
+msgstr "WAV"
+
+msgctxt "wizard.profileEditor.audioQuality.128"
+msgid "Up to 128K"
+msgstr "128K gacha"
+
+msgctxt "wizard.profileEditor.audioQuality.192"
+msgid "Up to 192K"
+msgstr "192K gacha"
+
+msgctxt "wizard.profileEditor.audioQuality.320"
+msgid "Up to 320K"
+msgstr "320K gacha"
+
+msgctxt "wizard.profileEditor.audioQuality.best"
+msgid "Best available"
+msgstr "Mavjud eng yaxshisi"
+
+msgctxt "wizard.profileEditor.common.addButton"
+msgid "Add"
+msgstr "Qo'shish"
+
+msgctxt "wizard.profileEditor.common.formatLabel"
+msgid "Format"
+msgstr "Format"
+
+msgctxt "wizard.profileEditor.common.offLabel"
+msgid "Off"
+msgstr "O'chiq"
+
+msgctxt "wizard.profileEditor.common.onLabel"
+msgid "On"
+msgstr "Yoqilgan"
+
+msgctxt "wizard.profileEditor.defaultDownloadsFolder"
+msgid "Default downloads folder"
+msgstr "Odatiy yuklab olish papkasi"
+
+msgctxt "wizard.profileEditor.description"
+msgid "One reusable setup for Quick Download, Bulk URLs, and playlists."
+msgstr "Tezkor yuklab olish, ommaviy URL'lar va pleylistlar uchun bitta qayta ishlatiladigan sozlama."
+
+msgctxt "wizard.profileEditor.destination.activeBadge"
+msgid "Active"
+msgstr "Faol"
+
+msgctxt "wizard.profileEditor.destination.changeGlobalButton"
+msgid "Change global"
+msgstr "Globalni o'zgartirish"
+
+msgctxt "wizard.profileEditor.destination.chooseDestinationFolderAria"
+msgid "Choose destination folder"
+msgstr "Manzil papkasini tanlash"
+
+msgctxt "wizard.profileEditor.destination.chooseFolderBadge"
+msgid "Choose folder"
+msgstr "Papkani tanlash"
+
+msgctxt "wizard.profileEditor.destination.globalLabel"
+msgid "Global destination"
+msgstr "Global manzil"
+
+msgctxt "wizard.profileEditor.destination.inheritedBadge"
+msgid "Inherited"
+msgstr "Meros qilingan"
+
+msgctxt "wizard.profileEditor.destination.noOverrideSetBadge"
+msgid "No override set"
+msgstr "O'zgartirish belgilanmagan"
+
+msgctxt "wizard.profileEditor.destination.overrideActiveDescription"
+msgid "This profile saves to its own root before the subfolder is added."
+msgstr "Ushbu profil quyi papka qo'shilishidan oldin o'zining bosh papkasiga saqlaydi."
+
+msgctxt "wizard.profileEditor.destination.overrideInactiveDescription"
+msgid "No override set. This profile uses the global destination above."
+msgstr "O'zgartirish belgilanmagan. Ushbu profil yuqoridagi global manzildan foydalanadi."
+
+msgctxt "wizard.profileEditor.destination.overrideLabel"
+msgid "Profile override"
+msgstr "Profil o'zgartirishi"
+
+msgctxt "wizard.profileEditor.destination.overridePathLabel"
+msgid "Profile override path"
+msgstr "Profil o'zgartirish yo'li"
+
+msgctxt "wizard.profileEditor.destination.overridePathPlaceholder"
+msgid "Choose a folder for this profile"
+msgstr "Ushbu profil uchun papka tanlang"
+
+msgctxt "wizard.profileEditor.destination.overridesGlobalBadge"
+msgid "Overrides global"
+msgstr "Globalni bekor qiladi"
+
+msgctxt "wizard.profileEditor.destination.resolvedLabel"
+msgid "Resolved destination"
+msgstr "Aniqlangan manzil"
+
+msgctxt "wizard.profileEditor.destination.setOverrideAria"
+msgid "Set profile override"
+msgstr "Profil o'zgartirishini belgilash"
+
+msgctxt "wizard.profileEditor.destination.setOverrideButton"
+msgid "Set override"
+msgstr "O'zgartirishni belgilash"
+
+msgctxt "wizard.profileEditor.destination.useGlobalDefaultButton"
+msgid "Use global default"
+msgstr "Global odatiy qiymatdan foydalanish"
+
+msgctxt "wizard.profileEditor.errors.changeGlobalFailed"
+msgid "Could not change global destination."
+msgstr "Global manzilni o'zgartirib bo'lmadi."
+
+msgctxt "wizard.profileEditor.errors.folderPickerFailed"
+msgid "Could not open folder picker. Enter a path manually."
+msgstr "Papka tanlagichini ochib bo'lmadi. Yo'lni qo'lda kiriting."
+
+msgctxt "wizard.profileEditor.errors.resetFailed"
+msgid "Could not reset profile settings."
+msgstr "Profil sozlamalarini qayta tiklab bo'lmadi."
+
+msgctxt "wizard.profileEditor.errors.saveFailed"
+msgid "Could not save profile settings."
+msgstr "Profil sozlamalarini saqlab bo'lmadi."
+
+msgctxt "wizard.profileEditor.icon.archive"
+msgid "Archive"
+msgstr "Arxiv"
+
+msgctxt "wizard.profileEditor.icon.audio"
+msgid "Audio"
+msgstr "Audio"
+
+msgctxt "wizard.profileEditor.icon.captions"
+msgid "Captions"
+msgstr "Subtitrlar"
+
+msgctxt "wizard.profileEditor.icon.classes"
+msgid "Classes"
+msgstr "Darslar"
+
+msgctxt "wizard.profileEditor.icon.clip"
+msgid "Clip"
+msgstr "Klip"
+
+msgctxt "wizard.profileEditor.icon.controls"
+msgid "Controls"
+msgstr "Boshqaruvlar"
+
+msgctxt "wizard.profileEditor.icon.download"
+msgid "Download"
+msgstr "Yuklab olish"
+
+msgctxt "wizard.profileEditor.icon.music"
+msgid "Music"
+msgstr "Musiqa"
+
+msgctxt "wizard.profileEditor.icon.podcast"
+msgid "Podcast"
+msgstr "Podkast"
+
+msgctxt "wizard.profileEditor.icon.video"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "wizard.profileEditor.identity.chooseIconAria"
+msgid "Choose profile icon"
+msgstr "Profil belgisini tanlash"
+
+msgctxt "wizard.profileEditor.identity.description"
+msgid "Name and icon shown in Quick Download, Bulk URLs, and profile lists."
+msgstr "Tezkor yuklab olish, ommaviy URL'lar va profillar ro'yxatida ko'rsatiladigan nom va belgi."
+
+msgctxt "wizard.profileEditor.identity.nameAndIconAria"
+msgid "Profile name and icon"
+msgstr "Profil nomi va belgisi"
+
+msgctxt "wizard.profileEditor.identity.nameLabel"
+msgid "Profile name"
+msgstr "Profil nomi"
+
+msgctxt "wizard.profileEditor.identity.title"
+msgid "Profile identity"
+msgstr "Profil o'ziga xosligi"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.description"
+msgid "Music or podcasts"
+msgstr "Musiqa yoki podkastlar"
+
+msgctxt "wizard.profileEditor.mediaMode.audioOnly.label"
+msgid "Audio only"
+msgstr "Faqat audio"
+
+msgctxt "wizard.profileEditor.mediaMode.description"
+msgid "Choose the primary way you want to download."
+msgstr "Yuklab olishning asosiy usulini tanlang."
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.description"
+msgid "Caption files only"
+msgstr "Faqat subtitr fayllari"
+
+msgctxt "wizard.profileEditor.mediaMode.subtitlesOnly.label"
+msgid "Subs only"
+msgstr "Faqat subtitrlar"
+
+msgctxt "wizard.profileEditor.mediaMode.title"
+msgid "Download type"
+msgstr "Yuklab olish turi"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.description"
+msgid "Normal video files"
+msgstr "Oddiy video fayllar"
+
+msgctxt "wizard.profileEditor.mediaMode.videoAudio.label"
+msgid "Video + audio"
+msgstr "Video + audio"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.description"
+msgid "Silent video only"
+msgstr "Faqat ovozsiz video"
+
+msgctxt "wizard.profileEditor.mediaMode.videoOnly.label"
+msgid "Video, no audio"
+msgstr "Video, audiosiz"
+
+msgctxt "wizard.profileEditor.output.enabledCount_one"
+msgid "{{count}} enabled"
+msgstr "{{count}} ta yoqilgan"
+
+msgctxt "wizard.profileEditor.output.enabledCount_other"
+msgid "{{count}} enabled"
+msgstr "{{count}} ta yoqilgan"
+
+msgctxt "wizard.profileEditor.output.heading"
+msgid "Output options"
+msgstr "Chiqish parametrlari"
+
+msgctxt "wizard.profileEditor.reset.button"
+msgid "Reset profile"
+msgstr "Profilni qayta tiklash"
+
+msgctxt "wizard.profileEditor.reset.disabledTitle"
+msgid "This profile already uses built-in settings"
+msgstr "Ushbu profil allaqachon o'rnatilgan sozlamalardan foydalanmoqda"
+
+msgctxt "wizard.profileEditor.reset.enabledTitle"
+msgid "Restore the built-in profile settings"
+msgstr "O'rnatilgan profil sozlamalarini tiklash"
+
+msgctxt "wizard.profileEditor.resolution.1080"
+msgid "Up to 1080p"
+msgstr "1080p gacha"
+
+msgctxt "wizard.profileEditor.resolution.1440"
+msgid "Up to 1440p"
+msgstr "1440p gacha"
+
+msgctxt "wizard.profileEditor.resolution.2160"
+msgid "Up to 2160p"
+msgstr "2160p gacha"
+
+msgctxt "wizard.profileEditor.resolution.360"
+msgid "Up to 360p"
+msgstr "360p gacha"
+
+msgctxt "wizard.profileEditor.resolution.480"
+msgid "Up to 480p"
+msgstr "480p gacha"
+
+msgctxt "wizard.profileEditor.resolution.720"
+msgid "Up to 720p"
+msgstr "720p gacha"
+
+msgctxt "wizard.profileEditor.resolution.best"
+msgid "Best available"
+msgstr "Mavjud eng yaxshisi"
+
+msgctxt "wizard.profileEditor.saveButton"
+msgid "Save profile"
+msgstr "Profilni saqlash"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.mark"
+msgid "Mark"
+msgstr "Belgilash"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.off"
+msgid "Off"
+msgstr "O'chiq"
+
+msgctxt "wizard.profileEditor.sponsorBlock.mode.remove"
+msgid "Remove"
+msgstr "Olib tashlash"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedBadge"
+msgid "Skipped"
+msgstr "O'tkazib yuborildi"
+
+msgctxt "wizard.profileEditor.sponsorBlock.skippedNotice"
+msgid "Skipped for this output type."
+msgstr "Ushbu chiqish turi uchun o'tkazib yuborildi."
+
+msgctxt "wizard.profileEditor.subfolder.enableLabel"
+msgid "Save inside subfolder"
+msgstr "Quyi papka ichiga saqlash"
+
+msgctxt "wizard.profileEditor.subfolder.invalidChars"
+msgid "Use a valid folder name without / \\ : * ? \" < > |."
+msgstr "/ \\ : * ? \" < > | belgilarisiz to'g'ri papka nomidan foydalaning."
+
+msgctxt "wizard.profileEditor.subfolder.nameAria"
+msgid "Subfolder name"
+msgstr "Quyi papka nomi"
+
+msgctxt "wizard.profileEditor.subfolder.nameLabel"
+msgid "Subfolder name"
+msgstr "Quyi papka nomi"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.embed"
+msgid "Embed"
+msgstr "Ichiga joylash"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.sidecar"
+msgid "Sidecar"
+msgstr "Alohida fayl"
+
+msgctxt "wizard.profileEditor.subtitleDelivery.subfolder"
+msgid "Subfolder"
+msgstr "Quyi papka"
+
+msgctxt "wizard.profileEditor.subtitleFormat.ass"
+msgid "ASS"
+msgstr "ASS"
+
+msgctxt "wizard.profileEditor.subtitleFormat.srt"
+msgid "SRT"
+msgstr "SRT"
+
+msgctxt "wizard.profileEditor.subtitleFormat.vtt"
+msgid "VTT"
+msgstr "VTT"
+
+msgctxt "wizard.profileEditor.subtitles.autoAssShortNote"
+msgid "Auto-captions will be saved as SRT instead of ASS."
+msgstr "Avtomatik subtitrlar ASS o'rniga SRT sifatida saqlanadi."
+
+msgctxt "wizard.profileEditor.subtitles.deliveryTitle"
+msgid "Delivery"
+msgstr "Yetkazib berish"
+
+msgctxt "wizard.profileEditor.subtitles.disabledNotice"
+msgid "No subtitle files or embedded subtitle tracks will be requested for this profile."
+msgstr "Ushbu profil uchun na subtitr fayllari, na o'rnatilgan subtitr tracklar so'ralmaydi."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsDescription"
+msgid "Profiles request language codes; availability is resolved for each URL."
+msgstr "Profillar til kodlarini so'raydi; mavjudlik har bir URL uchun alohida aniqlanadi."
+
+msgctxt "wizard.profileEditor.subtitles.downloadsTitle"
+msgid "Subtitle downloads"
+msgstr "Subtitr yuklab olishlari"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesAria"
+msgid "Subtitle language codes"
+msgstr "Subtitr til kodlari"
+
+msgctxt "wizard.profileEditor.subtitles.languageCodesPlaceholder"
+msgid "en, uk, pt-br"
+msgstr "en, uk, pt-br"
+
+msgctxt "wizard.profileEditor.subtitles.languagesLabel"
+msgid "Languages"
+msgstr "Tillar"
+
+msgctxt "wizard.profileEditor.subtitles.noLanguagesSelected"
+msgid "No languages selected"
+msgstr "Hech qanday til tanlanmagan"
+
+msgctxt "wizard.profileEditor.subtitles.sourceLabel"
+msgid "Source"
+msgstr "Manba"
+
+msgctxt "wizard.profileEditor.subtitlesOnlyNotice"
+msgid "This profile queues subtitle files only. Video, audio, SponsorBlock, and media conversion are skipped."
+msgstr "Ushbu profil faqat subtitr fayllarini navbatga qo'yadi. Video, audio, SponsorBlock va media konvertatsiya o'tkazib yuboriladi."
+
+msgctxt "wizard.profileEditor.subtitleSource.autoOnly"
+msgid "Auto-generated only"
+msgstr "Faqat avtomatik yaratilgan"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualFirst"
+msgid "Manual first, then auto"
+msgstr "Avval qo'lda, keyin avtomatik"
+
+msgctxt "wizard.profileEditor.subtitleSource.manualOnly"
+msgid "Manual only"
+msgstr "Faqat qo'lda"
+
+msgctxt "wizard.profileEditor.title"
+msgid "Download Profile"
+msgstr "Yuklab olish profili"
+
+msgctxt "wizard.profileEditor.video.compat.best"
+msgid "Best native"
+msgstr "Eng yaxshi tabiiy"
+
+msgctxt "wizard.profileEditor.video.compat.mp4"
+msgid "Smart TV H.264 MP4"
+msgstr "Smart TV uchun H.264 MP4"
+
+msgctxt "wizard.profileEditor.video.compatibilityLabel"
+msgid "Compatibility"
+msgstr "Moslik"
+
+msgctxt "wizard.profileEditor.video.resolutionLabel"
+msgid "Resolution"
+msgstr "Ruxsat"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.best"
+msgid "Best native"
+msgstr "Eng yaxshi tabiiy"
+
+msgctxt "wizard.profileEditor.videoAudioFormat.m4a"
+msgid "M4A / AAC"
+msgstr "M4A / AAC"
 
 msgctxt "wizard.quickProgress.cancel"
 msgid "Cancel preparation"
@@ -2208,6 +2788,10 @@ msgstr "Mos til topilmadi"
 msgctxt "wizard.subtitles.noSelected"
 msgid "No subtitles selected"
 msgstr "Hech qanday subtitrl tanlanmagan"
+
+msgctxt "wizard.subtitles.removeLanguage"
+msgid "Remove {{name}}"
+msgstr "{{name}} ni olib tashlash"
 
 msgctxt "wizard.subtitles.saveMode.embed"
 msgid "Embed into video"
@@ -2549,9 +3133,29 @@ msgctxt "wizard.url.mascotBusy"
 msgid "Downloading in the background… I can multitask 😎"
 msgstr "Fonda yuklanmoqda… Men bir vaqtda ko'p ish qila olaman 😎"
 
+msgctxt "wizard.url.mascotCollectionBody"
+msgid "Quick queues loaded items with {{profileName}}. Interactive lets you inspect or select items first."
+msgstr "Tezkor {{profileName}} bilan yuklangan elementlarni navbatga qo'yadi. Interaktiv esa avval elementlarni tekshirish yoki tanlash imkonini beradi."
+
 msgctxt "wizard.url.mascotIdle"
 msgid "Drop a link and let Arclio pull it ✨"
 msgstr "Havolani tashlang, Arclio uni tortib olsin ✨"
+
+msgctxt "wizard.url.mascotMixedBody"
+msgid "This link points at one video inside a collection. Arclio will ask which one you want before probing."
+msgstr "Ushbu havola to'plam ichidagi bitta videoga ishora qiladi. Arclio tekshirishdan oldin qaysi birini xohlashingizni so'raydi."
+
+msgctxt "wizard.url.mascotPreparingBody"
+msgid "{{quickDownloadLabel}} is reading this link and applying {{profileName}}."
+msgstr "{{quickDownloadLabel}} ushbu havolani o'qimoqda va {{profileName}} qo'llanmoqda."
+
+msgctxt "wizard.url.mascotQueuedBody"
+msgid "The queue is handling this download. You can paste another link while it works."
+msgstr "Navbat ushbu yuklab olishni boshqarmoqda. U ishlayotganda boshqa havolani joylashtirishingiz mumkin."
+
+msgctxt "wizard.url.mascotSingleBody"
+msgid "Quick starts one download with {{profileName}}. Use Interactive for one-off changes."
+msgstr "Tezkor {{profileName}} bilan bitta yuklab olishni boshlaydi. Bir martalik o'zgarishlar uchun Interaktivdan foydalaning."
 
 msgctxt "wizard.url.nativeAudioPreference.compatible"
 msgid "Compatible stereo"
@@ -2701,6 +3305,78 @@ msgctxt "wizard.url.playlistProbeLimit.tooltip"
 msgid "Maps to yt-dlp --playlist-end: Arclio only asks for this many playlist, channel, or search entries while building the picker."
 msgstr "yt-dlp --playlist-end ga to'g'ri keladi: Arclio tanlagichni qurishdan oldin faqat shu miqdordagi pleylist, kanal yoki qidiruv yozuvlarini so'raydi."
 
+msgctxt "wizard.url.playlistScope.appLimit"
+msgid "Use app limit: {{count}}"
+msgstr "Dastur chegarasidan foydalanish: {{count}}"
+
+msgctxt "wizard.url.playlistScope.apply"
+msgid "Apply"
+msgstr "Qo'llash"
+
+msgctxt "wizard.url.playlistScope.applyError"
+msgid "Could not apply that playlist scope: {{message}}"
+msgstr "Ushbu pleylist doirasini qo'llab bo'lmadi: {{message}}"
+
+msgctxt "wizard.url.playlistScope.cancel"
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+msgctxt "wizard.url.playlistScope.change"
+msgid "Change"
+msgstr "O'zgartirish"
+
+msgctxt "wizard.url.playlistScope.dialogDescription"
+msgid "Choose what Arclio asks yt-dlp to load for this playlist."
+msgstr "Ushbu pleylist uchun Arclio yt-dlp'dan nimani yuklashni so'rashini tanlang."
+
+msgctxt "wizard.url.playlistScope.dialogTitle"
+msgid "Playlist scope"
+msgstr "Pleylist doirasi"
+
+msgctxt "wizard.url.playlistScope.first"
+msgid "First"
+msgstr "Birinchi"
+
+msgctxt "wizard.url.playlistScope.invalid"
+msgid "Use whole item numbers from 1 to 5000, with the start no higher than the end."
+msgstr "1 dan 5000 gacha bo'lgan butun element raqamlaridan foydalaning, boshlanishi tugashidan katta bo'lmasin."
+
+msgctxt "wizard.url.playlistScope.itemsLabel"
+msgid "Items to load"
+msgstr "Yuklanadigan elementlar"
+
+msgctxt "wizard.url.playlistScope.label"
+msgid "Playlist scope"
+msgstr "Pleylist doirasi"
+
+msgctxt "wizard.url.playlistScope.range"
+msgid "Range"
+msgstr "Diapazon"
+
+msgctxt "wizard.url.playlistScope.reloading"
+msgid "Reloading..."
+msgstr "Qayta yuklanmoqda..."
+
+msgctxt "wizard.url.playlistScope.reset"
+msgid "Reset"
+msgstr "Qayta tiklash"
+
+msgctxt "wizard.url.playlistScope.summaryAppLimit"
+msgid "Load first {{count}} items"
+msgstr "Birinchi {{count}} ta elementni yuklash"
+
+msgctxt "wizard.url.playlistScope.summaryFirst"
+msgid "Load first {{count}} items"
+msgstr "Birinchi {{count}} ta elementni yuklash"
+
+msgctxt "wizard.url.playlistScope.summaryRange"
+msgid "Load items {{from}}-{{to}}"
+msgstr "{{from}}-{{to}} elementlarni yuklash"
+
+msgctxt "wizard.url.playlistScope.to"
+msgid "to"
+msgstr "gacha"
+
 msgctxt "wizard.url.profile.activeLabel"
 msgid "Active profile"
 msgstr "Faol profil"
@@ -2824,10 +3500,6 @@ msgstr "Tayyorlanmoqda"
 msgctxt "wizard.url.quickProbeFailed"
 msgid "Probe failed"
 msgstr "Tekshiruv muvaffaqiyatsiz"
-
-msgctxt "wizard.url.quickQueued"
-msgid "Added to queue"
-msgstr "Navbatga qo‘shildi"
 
 msgctxt "wizard.url.quickSingleOnly"
 msgid "Paste a video, playlist, channel, or search URL to get started."

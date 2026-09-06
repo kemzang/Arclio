@@ -32,6 +32,10 @@ function flattenLeaves(obj: unknown, prefix = ''): LeafEntry[] {
 
 const PLACEHOLDER_MIN_WORDS = 3 // skip 1-2-word values (brand names, single-word labels) — too noisy
 
+// Keys whose en value is intentionally identical in every locale — literal
+// examples (language/locale codes, etc.), not prose meant for translation.
+const LOCALE_INVARIANT_KEYS = new Set(['wizard.profileEditor.subtitles.languageCodesPlaceholder'])
+
 const enLeaves = flattenLeaves(en)
 const enByPath = new Map(enLeaves.map(l => [l.path, l.value]))
 const enKeys = new Set(enByPath.keys())
@@ -52,6 +56,7 @@ for (const lang of SUPPORTED_LANGS) {
 	const missing = [...enKeys].filter(k => !localeKeys.has(k))
 	const extras = [...localeKeys].filter(k => !enKeys.has(k))
 	const placeholders = [...enKeys].filter(k => {
+		if (LOCALE_INVARIANT_KEYS.has(k)) return false
 		const lv = localeByPath.get(k)
 		const ev = enByPath.get(k)
 		if (lv === undefined || ev === undefined || lv !== ev) return false

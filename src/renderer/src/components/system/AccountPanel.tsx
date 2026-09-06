@@ -134,7 +134,7 @@ export function AccountPanel(): React.JSX.Element {
 					</div>
 					<Button variant="outline" size="sm" className="shrink-0" onClick={() => void disconnect()}>
 						<LogOut className="size-4 mr-1" />
-						Disconnect
+						{t('account.disconnect')}
 					</Button>
 				</div>
 
@@ -148,7 +148,7 @@ export function AccountPanel(): React.JSX.Element {
 					</div>
 					<Button variant="outline" size="sm" className="shrink-0" disabled={syncing} onClick={() => void runSync()}>
 						{syncing ? <Loader2 className="size-4 mr-1 animate-spin" /> : <RefreshCw className="size-4 mr-1" />}
-						Sync now
+						{t('account.syncNow')}
 					</Button>
 				</div>
 			</div>
@@ -174,10 +174,10 @@ export function AccountPanel(): React.JSX.Element {
 					<div className="ml-auto flex gap-2">
 						<Button variant="outline" size="sm" onClick={() => void window.appApi.shell.openExternal(pairing.verificationUrl)}>
 							<ExternalLink className="size-4 mr-1" />
-							Reopen page
+							{t('account.reopenPage')}
 						</Button>
 						<Button variant="ghost" size="sm" onClick={() => void cancel()}>
-							Cancel
+							{t('account.cancel')}
 						</Button>
 					</div>
 				</div>
