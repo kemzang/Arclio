@@ -15,6 +15,7 @@ interface FragmentRowsProps {
 	columnsLength: number
 	expanded: boolean
 	item: QueueItem
+	measureElement: (node: Element | null) => void
 	onContextAction: (action: QueueSelectedAction, items: QueueItem[]) => void
 	onContextMenu: (itemId: string) => void
 	onKeyboardToggle: () => void
@@ -23,6 +24,7 @@ interface FragmentRowsProps {
 	onRowPointerEnter: (event: PointerEvent<HTMLTableRowElement>) => void
 	row: Row<QueueItem>
 	selected: boolean
+	virtualIndex: number
 }
 
 interface QueueManagerTableProps {
@@ -30,6 +32,7 @@ interface QueueManagerTableProps {
 	table: ReactTable<QueueItem>
 	rows: Row<QueueItem>[]
 	virtualRows: VirtualItem[]
+	measureElement: (node: Element | null) => void
 	scrollRef: RefObject<HTMLDivElement | null>
 	topVirtualPadding: number
 	bottomVirtualPadding: number
@@ -95,13 +98,15 @@ function QueueContextMenuItems({items, onAction}: {items: QueueItem[]; onAction:
 	)
 }
 
-function FragmentRows({contextItems, columnsLength, expanded, item, onContextAction, onContextMenu, onKeyboardToggle, onRowClick, onRowPointerDown, onRowPointerEnter, row, selected}: FragmentRowsProps): ReactNode {
+function FragmentRows({contextItems, columnsLength, expanded, item, measureElement, onContextAction, onContextMenu, onKeyboardToggle, onRowClick, onRowPointerDown, onRowPointerEnter, row, selected, virtualIndex}: FragmentRowsProps): ReactNode {
 	return (
 		<>
 			<ContextMenu>
 				<ContextMenuTrigger
 					render={
 						<TableRow
+							ref={measureElement}
+							data-index={virtualIndex}
 							aria-selected={selected}
 							data-state={selected ? 'selected' : undefined}
 							data-testid={`queue-manager-row-${item.id}`}
@@ -129,7 +134,26 @@ function FragmentRows({contextItems, columnsLength, expanded, item, onContextAct
 	)
 }
 
-export function QueueManagerTable({t, table, rows, virtualRows, scrollRef, topVirtualPadding, bottomVirtualPadding, renderedColumnCount, contextItems, expandedIds, selectedIds, onContextAction, onContextMenu, onKeyboardToggle, onRowClick, onRowPointerDown, onRowPointerEnter}: QueueManagerTableProps): ReactNode {
+export function QueueManagerTable({
+	t,
+	table,
+	rows,
+	virtualRows,
+	measureElement,
+	scrollRef,
+	topVirtualPadding,
+	bottomVirtualPadding,
+	renderedColumnCount,
+	contextItems,
+	expandedIds,
+	selectedIds,
+	onContextAction,
+	onContextMenu,
+	onKeyboardToggle,
+	onRowClick,
+	onRowPointerDown,
+	onRowPointerEnter
+}: QueueManagerTableProps): ReactNode {
 	return (
 		<div ref={scrollRef} className="h-[clamp(12rem,calc(100vh-16rem),34rem)] min-h-0 overflow-auto rounded-xl border border-[var(--border-strong)] bg-background/25" data-testid="queue-manager-scroll">
 			<Table className="w-full table-fixed">
@@ -168,6 +192,7 @@ export function QueueManagerTable({t, table, rows, virtualRows, scrollRef, topVi
 										item={item}
 										contextItems={contextItems}
 										expanded={expandedIds.has(item.id)}
+										measureElement={measureElement}
 										selected={selectedIds.has(item.id)}
 										columnsLength={renderedColumnCount}
 										onContextAction={onContextAction}
@@ -177,6 +202,7 @@ export function QueueManagerTable({t, table, rows, virtualRows, scrollRef, topVi
 										onRowPointerDown={event => onRowPointerDown(item.id, event)}
 										onRowPointerEnter={event => onRowPointerEnter(item.id, event)}
 										row={row}
+										virtualIndex={virtualRow.index}
 									/>
 								)
 							})}

@@ -10,7 +10,7 @@ import {makeItem} from '../shared/fixtures.js'
 vi.mock('@tanstack/react-virtual', () => ({
 	useVirtualizer: ({count, estimateSize}: {count: number; estimateSize: () => number}) => {
 		const size = estimateSize()
-		return {getTotalSize: () => count * size, getVirtualItems: () => Array.from({length: count}, (_, index) => ({index, key: index, size, start: index * size})), measureElement: () => undefined}
+		return {getTotalSize: () => count * size, getVirtualItems: () => Array.from({length: count}, (_, index) => ({index, key: index, size, start: index * size})), measureElement: () => undefined, measure: () => undefined}
 	}
 }))
 

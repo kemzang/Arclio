@@ -10,6 +10,7 @@ import {COLUMN_LABEL_KEYS, actionButtonDisabled, type QueueSelectedAction} from 
 import {QueueManagerToolbar} from './QueueManagerToolbar.js'
 import {QueueManagerTable} from './QueueManagerTable.js'
 import {useQueueManagerColumns} from './useQueueManagerColumns.js'
+import {measureQueueRowElement} from './measureQueueRowElement.js'
 
 const RESPONSIVE_COLUMN_HIDE_MAX_WIDTH: Partial<Record<QueueTableColumnId, number>> = {formatLabel: 820, outputDir: 1040, addedAt: 900, finishedAt: 900}
 
@@ -223,7 +224,13 @@ export function QueueManagerTab(): ReactNode {
 		state: {columnOrder: tablePreferences.columnOrder, columnVisibility: tablePreferences.columnVisibility, sorting: tablePreferences.sorting}
 	})
 	const rows = table.getRowModel().rows
-	const rowVirtualizer = useVirtualizer({count: rows.length, getScrollElement: () => scrollRef.current, estimateSize: () => 62, overscan: 8})
+	const rowVirtualizer = useVirtualizer({count: rows.length, getScrollElement: () => scrollRef.current, estimateSize: () => 62, overscan: 8, measureElement: measureQueueRowElement})
+	// Expanding/collapsing a row adds/removes a sibling <tr> rather than
+	// resizing the measured node itself, so the virtualizer's ResizeObserver
+	// never fires for it — force a re-measure whenever the expanded set changes.
+	useEffect(() => {
+		rowVirtualizer.measure()
+	}, [expandedIds, rowVirtualizer])
 	const virtualRows = rowVirtualizer.getVirtualItems()
 	const firstVirtualRow = virtualRows[0]
 	const lastVirtualRow = virtualRows.at(-1)
@@ -309,6 +316,7 @@ export function QueueManagerTab(): ReactNode {
 				table={table}
 				rows={rows}
 				virtualRows={virtualRows}
+				measureElement={rowVirtualizer.measureElement}
 				scrollRef={scrollRef}
 				topVirtualPadding={topVirtualPadding}
 				bottomVirtualPadding={bottomVirtualPadding}

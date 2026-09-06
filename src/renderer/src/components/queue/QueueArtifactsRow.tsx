@@ -36,7 +36,7 @@ export function QueueArtifactsRow({columnsLength, item}: {columnsLength: number;
 	const {t} = useTranslation()
 	const artifacts = visibleQueueArtifacts(item.artifacts)
 	return (
-		<TableRow data-testid={`queue-artifacts-${item.id}`} className="bg-muted/20 hover:bg-muted/20">
+		<TableRow data-testid={`queue-artifacts-${item.id}`} data-queue-artifacts-row="true" className="bg-muted/20 hover:bg-muted/20">
 			<TableCell colSpan={columnsLength} className="min-w-0 overflow-hidden whitespace-normal px-3 py-2">
 				<div className="ms-8 grid min-w-0 max-w-full gap-1 overflow-hidden border-s border-[var(--border-strong)] ps-3 sm:ms-11">
 					{artifacts.map(artifact => {

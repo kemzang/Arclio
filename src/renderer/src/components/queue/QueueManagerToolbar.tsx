@@ -100,8 +100,8 @@ export function QueueManagerToolbar({t, queue, selectedItems, selectedCount, fil
 					<ButtonGroup className="flex-wrap items-center gap-1 rounded-xl border border-border/60 bg-background/25 px-1 py-0.5" aria-label={t('queue.globalActionsLabel')}>
 						<span className="px-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--text-subtle)]">{t('queue.globalActionsLabel')}</span>
 						<TooltipIconButton Icon={Pause} label={t('queue.pauseAllTitle')} testId="btn-pause-all" onClick={onPauseAll} />
-						<TooltipIconButton Icon={Play} label={t('queue.resumeAllTitle')} testId="btn-resume-first" onClick={onResumeAll} />
-						<TooltipIconButton Icon={X} label={t('queue.cancelAllTitle')} onClick={onCancelAll} />
+						<TooltipIconButton Icon={Play} label={t('queue.resumeAllTitle')} testId="btn-resume-all" onClick={onResumeAll} />
+						<TooltipIconButton Icon={X} label={t('queue.cancelAllTitle')} testId="btn-cancel-all" onClick={onCancelAll} />
 						<TooltipIconButton Icon={Trash2} label={t('queue.clearTitle')} testId="btn-clear-completed" onClick={onClearCompleted} />
 					</ButtonGroup>
 				</div>

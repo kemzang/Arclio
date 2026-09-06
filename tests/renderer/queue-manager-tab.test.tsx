@@ -22,7 +22,8 @@ vi.mock('@tanstack/react-virtual', () => ({
 					const index = virtualRange.start + offset
 					return {index, key: index, size, start: index * size}
 				}),
-			measureElement: () => undefined
+			measureElement: () => undefined,
+			measure: () => undefined
 		}
 	}
 }))
@@ -518,7 +519,10 @@ describe('QueueManagerTab', () => {
 		expect(group).toHaveTextContent('All items')
 		expect(screen.getByTestId('btn-pause-all')).toHaveAccessibleName('Pause every active download and stop new ones from starting')
 		expect(screen.getByTestId('btn-pause-all').textContent).toBe('')
-		expect(screen.getByTestId('btn-resume-first')).toHaveAccessibleName('Resume paused downloads and let the queue keep going')
+		expect(screen.getByTestId('btn-resume-all')).toHaveAccessibleName('Resume paused downloads and let the queue keep going')
+		// Regression: this button previously had no testId at all, breaking the
+		// naming convention shared by every other global queue action.
+		expect(screen.getByTestId('btn-cancel-all')).toHaveAccessibleName('Cancel all active and pending downloads')
 		expect(screen.getByTestId('btn-clear-completed')).toHaveAccessibleName('Clear completed downloads')
 	})
 

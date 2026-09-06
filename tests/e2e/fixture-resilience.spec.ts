@@ -39,8 +39,8 @@ test('Electron queue controls handle hold, priority, cancel, pause queue, and re
 
 		await page.getByTestId('btn-pause-all').click()
 		await queue.expectStatus('Fixture Video 1', 'paused-active')
-		await expect(page.getByTestId('btn-resume-first')).toBeVisible()
-		await page.getByTestId('btn-resume-first').click()
+		await expect(page.getByTestId('btn-resume-all')).toBeVisible()
+		await page.getByTestId('btn-resume-all').click()
 
 		await expect(page.locator('[data-testid^="queue-manager-row-"][data-status="done"]')).toHaveCount(2, {timeout: 150_000})
 		await queue.expectStatus('Fixture Video 3', 'cancelled')
