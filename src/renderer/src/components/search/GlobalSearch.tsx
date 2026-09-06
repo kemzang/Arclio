@@ -26,9 +26,14 @@ export function GlobalSearch(): React.JSX.Element {
 			queueMicrotask(() => setResults([]))
 			return
 		}
+		let cancelled = false
 		const timer = setTimeout((): void => {
 			void (async (): Promise<void> => {
 				const [media, collections, tags] = await Promise.all([window.appApi.library.media.search(query, 5), window.appApi.library.collection.list(), window.appApi.library.tag.list()])
+				// A newer query landed while this one was in flight — a slower
+				// earlier response must not overwrite the results for what the
+				// user is looking at now.
+				if (cancelled) return
 
 				const mediaResults: SearchResult[] = media.map((m: LibraryMedia) => ({type: 'media' as const, id: m.id, title: m.title, subtitle: m.author ?? ''}))
 
@@ -46,7 +51,10 @@ export function GlobalSearch(): React.JSX.Element {
 				setSelectedIndex(-1)
 			})()
 		}, 200)
-		return () => clearTimeout(timer)
+		return () => {
+			cancelled = true
+			clearTimeout(timer)
+		}
 	}, [query, t])
 
 	const handleSelect = useCallback(

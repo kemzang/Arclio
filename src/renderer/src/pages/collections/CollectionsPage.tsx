@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useTranslation} from 'react-i18next'
-import {Plus, FolderHeart, Trash2, Edit2} from 'lucide-react'
+import {Plus, FolderHeart, Trash2, Edit2, Check, X} from 'lucide-react'
 import type {LibraryCollectionWithCount} from '@shared/api.js'
 import {Button} from '@renderer/components/ui/button.js'
 import {Input} from '@renderer/components/ui/input.js'
@@ -12,6 +12,8 @@ export function CollectionsPage(): React.JSX.Element {
 	const [collections, setCollections] = useState<LibraryCollectionWithCount[]>([])
 	const [isCreating, setIsCreating] = useState(false)
 	const [newName, setNewName] = useState('')
+	const [editingId, setEditingId] = useState<string | null>(null)
+	const [editName, setEditName] = useState('')
 
 	const loadCollections = (): void => {
 		void window.appApi.library.collection.list().then(setCollections)
@@ -31,6 +33,19 @@ export function CollectionsPage(): React.JSX.Element {
 
 	const handleDelete = async (id: string): Promise<void> => {
 		await window.appApi.library.collection.delete(id)
+		loadCollections()
+	}
+
+	const startEdit = (col: LibraryCollectionWithCount): void => {
+		setEditingId(col.id)
+		setEditName(col.name)
+	}
+
+	const handleRename = async (id: string): Promise<void> => {
+		const trimmed = editName.trim()
+		if (!trimmed) return
+		await window.appApi.library.collection.update(id, {name: trimmed})
+		setEditingId(null)
 		loadCollections()
 	}
 
@@ -92,7 +107,21 @@ export function CollectionsPage(): React.JSX.Element {
 									</div>
 								)}
 								<div className="flex-1 min-w-0">
-									<p className="font-medium truncate">{col.name}</p>
+									{editingId === col.id ? (
+										<Input
+											ref={el => el?.focus()}
+											value={editName}
+											onClick={e => e.stopPropagation()}
+											onChange={e => setEditName(e.target.value)}
+											onKeyDown={e => {
+												if (e.key === 'Enter') void handleRename(col.id)
+												if (e.key === 'Escape') setEditingId(null)
+											}}
+											className="h-7 text-sm"
+										/>
+									) : (
+										<p className="font-medium truncate">{col.name}</p>
+									)}
 									<p className="text-xs text-[var(--text-subtle)]">
 										{col.mediaCount} {t('library.items')}
 									</p>
@@ -100,20 +129,57 @@ export function CollectionsPage(): React.JSX.Element {
 							</div>
 							{col.description && <p className="text-xs text-[var(--text-subtle)] line-clamp-2">{col.description}</p>}
 							<div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-								<Button variant="ghost" size="icon" className="size-7" onClick={e => e.stopPropagation()}>
-									<Edit2 className="size-3" />
-								</Button>
-								<Button
-									variant="ghost"
-									size="icon"
-									className="size-7 text-destructive"
-									onClick={e => {
-										e.stopPropagation()
-										void handleDelete(col.id)
-									}}
-								>
-									<Trash2 className="size-3" />
-								</Button>
+								{editingId === col.id ? (
+									<>
+										<Button
+											variant="ghost"
+											size="icon"
+											className="size-7"
+											onClick={e => {
+												e.stopPropagation()
+												void handleRename(col.id)
+											}}
+										>
+											<Check className="size-3" />
+										</Button>
+										<Button
+											variant="ghost"
+											size="icon"
+											className="size-7"
+											onClick={e => {
+												e.stopPropagation()
+												setEditingId(null)
+											}}
+										>
+											<X className="size-3" />
+										</Button>
+									</>
+								) : (
+									<>
+										<Button
+											variant="ghost"
+											size="icon"
+											className="size-7"
+											onClick={e => {
+												e.stopPropagation()
+												startEdit(col)
+											}}
+										>
+											<Edit2 className="size-3" />
+										</Button>
+										<Button
+											variant="ghost"
+											size="icon"
+											className="size-7 text-destructive"
+											onClick={e => {
+												e.stopPropagation()
+												void handleDelete(col.id)
+											}}
+										>
+											<Trash2 className="size-3" />
+										</Button>
+									</>
+								)}
 							</div>
 						</div>
 					))}

@@ -6,17 +6,13 @@ import Plyr from 'plyr'
 import 'plyr/dist/plyr.css'
 import type {LibraryMediaWithAssets, LibraryPlaybackHistory} from '@shared/api.js'
 import {Button} from '@renderer/components/ui/button.js'
+import {extractLangFromFileName, syncSubtitleTracks} from './subtitleTracks.js'
 
 interface PlyrInstance {
 	destroy: () => void
 }
 
 const PlyrConstructor = Plyr as unknown as new (element: HTMLVideoElement, options?: Record<string, unknown>) => PlyrInstance
-
-function extractLangFromFileName(fileName: string): string {
-	const match = /\.([a-z]{2,3})(?:[-_][A-Z]{2})?\.vtt$|\.([a-z]{2,3})(?:[-_][A-Z]{2})?\.srt$/.exec(fileName)
-	return match?.[1] ?? match?.[2] ?? 'en'
-}
 
 export function PlayerPage(): React.JSX.Element {
 	const {id} = useParams<{id: string}>()
@@ -92,20 +88,7 @@ export function PlayerPage(): React.JSX.Element {
 		const fileUrl = `file://${assetPath}`
 
 		video.src = fileUrl
-
-		if (subtitleAssets.length > 0) {
-			while (video.firstChild) {
-				video.removeChild(video.firstChild)
-			}
-			for (const asset of subtitleAssets) {
-				const track = document.createElement('track')
-				track.kind = 'subtitles'
-				track.src = `file://${asset.path}`
-				track.label = asset.fileName
-				track.srclang = extractLangFromFileName(asset.fileName)
-				video.appendChild(track)
-			}
-		}
+		syncSubtitleTracks(video, subtitleAssets)
 
 		const player = new PlyrConstructor(video, {controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'fullscreen', 'pip'], settings: ['speed'], speed: {selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2]}})
 		playerRef.current = player
