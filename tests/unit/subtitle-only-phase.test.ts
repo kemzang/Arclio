@@ -2,7 +2,7 @@ import {describe, expect, it, vi, beforeEach} from 'vitest'
 import {SubtitleOnlyPhase} from '@main/services/phases/SubtitleOnlyPhase.js'
 import {STATUS_KEY} from '@shared/schemas.js'
 import {AsyncStack} from '@main/services/phases/types.js'
-import type {PhaseContext, ActiveDownload} from '@main/services/phases/types.js'
+import type {PhaseContext, ActiveJob} from '@main/services/phases/types.js'
 import type {DownloadJob, StartDownloadInput} from '@shared/types.js'
 import type {PreparedJob} from '@shared/preparedJob.js'
 import type {YtDlpResult} from '@main/services/YtDlp.js'
@@ -22,7 +22,7 @@ const BASE_JOB: PreparedJob = {kind: 'subtitle-only', extractor: 'youtube', extr
 
 const BASE_INPUT: StartDownloadInput = {url: 'https://www.youtube.com/watch?v=test', outputDir: '/tmp', job: BASE_JOB}
 
-function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
+function makeActive(overrides: Partial<ActiveJob> = {}): ActiveJob {
 	return {
 		job: makeJob(),
 		input: BASE_INPUT,
@@ -38,7 +38,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
 	}
 }
 
-function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload> = {}): PhaseContext {
+function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveJob> = {}): PhaseContext {
 	const runMock = vi.fn().mockResolvedValue(runResult)
 	return {active: makeActive(activeOverrides), signal: new AbortController().signal, register: () => undefined, ytDlp: {run: runMock, ffmpegPath: null} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 }

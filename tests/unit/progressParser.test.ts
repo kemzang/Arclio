@@ -2,7 +2,7 @@ import {describe, expect, it, vi} from 'vitest'
 import {ProgressParser} from '@main/services/download/progressParser.js'
 import {AsyncStack} from '@main/services/phases/types.js'
 import {STATUS_KEY} from '@shared/schemas.js'
-import type {ActiveDownload} from '@main/services/phases/types.js'
+import type {ActiveJob} from '@main/services/phases/types.js'
 import type {DownloadJob, StartDownloadInput} from '@shared/types.js'
 import type {PreparedJob} from '@shared/preparedJob.js'
 
@@ -20,7 +20,7 @@ function makeJob(): DownloadJob {
 	return {id: 'job-1', url: 'https://www.youtube.com/watch?v=test', outputDir: '/tmp', status: 'running', createdAt: '2024-01-01T00:00:00.000Z', updatedAt: '2024-01-01T00:00:00.000Z'}
 }
 
-function makeActive(input: StartDownloadInput): ActiveDownload {
+function makeActive(input: StartDownloadInput): ActiveJob {
 	return {
 		job: makeJob(),
 		input,

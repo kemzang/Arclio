@@ -55,11 +55,6 @@ export interface ActiveJob {
 	postProcEmitted?: Partial<Record<'extractingAudio' | 'convertingVideo' | 'embeddingMetadata' | 'movingFiles', true>>
 }
 
-// Back-compat name for tests / call sites that still spell it ActiveDownload.
-// The intent is to migrate every spelling — kept here only so this commit can
-// land without rewriting every test fixture in the same diff.
-export type ActiveDownload = ActiveJob
-
 export interface PausedDownload {
 	job: DownloadJob
 	input: StartDownloadInput

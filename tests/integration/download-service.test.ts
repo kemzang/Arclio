@@ -152,7 +152,7 @@ describe('DownloadService (mock mode)', () => {
 		await finishMockDownloadTimers()
 	})
 
-	it('resume() restores tempDir from PausedDownload onto the new ActiveDownload when dir still exists', async () => {
+	it('resume() restores tempDir from PausedDownload onto the new ActiveJob when dir still exists', async () => {
 		vi.useFakeTimers()
 		const {service} = makeService()
 
@@ -168,7 +168,7 @@ describe('DownloadService (mock mode)', () => {
 			input: {url: string; outputDir: string; job: PreparedJob}
 			tempDir?: string
 		}
-		interface ActiveDownload {
+		interface ActiveJob {
 			job: DownloadJob
 			tempDir?: string
 		}
@@ -178,7 +178,7 @@ describe('DownloadService (mock mode)', () => {
 			const resumeResult = await service.resume(pausedJob.id)
 			expect(resumeResult.ok).toBe(true)
 
-			const activeJobs = (service as unknown as {activeJobs: Map<string, ActiveDownload>}).activeJobs
+			const activeJobs = (service as unknown as {activeJobs: Map<string, ActiveJob>}).activeJobs
 			const active = activeJobs.get(pausedJob.id)
 			expect(active?.tempDir).toBe(tempDir)
 			await finishMockDownloadTimers()
@@ -198,7 +198,7 @@ describe('DownloadService (mock mode)', () => {
 			input: {url: string; outputDir: string; job: PreparedJob}
 			tempDir?: string
 		}
-		interface ActiveDownload {
+		interface ActiveJob {
 			job: DownloadJob
 			tempDir?: string
 		}
@@ -207,7 +207,7 @@ describe('DownloadService (mock mode)', () => {
 		const resumeResult = await service.resume(pausedJob.id)
 		expect(resumeResult.ok).toBe(true)
 
-		const activeJobs = (service as unknown as {activeJobs: Map<string, ActiveDownload>}).activeJobs
+		const activeJobs = (service as unknown as {activeJobs: Map<string, ActiveJob>}).activeJobs
 		const active = activeJobs.get(pausedJob.id)
 		expect(active?.tempDir).toBeUndefined()
 		await finishMockDownloadTimers()

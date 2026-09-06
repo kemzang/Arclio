@@ -2,10 +2,10 @@
 // regex set, percent extraction, and post-process state machine isolated from
 // DownloadService's orchestration code.
 //
-// Mutates ActiveDownload's `currentFileKind`, `subtitlePaths`, `mediaPath`,
+// Mutates ActiveJob's `currentFileKind`, `subtitlePaths`, `mediaPath`,
 // and `postProcEmitted` — those fields are shared lifecycle state (PhaseExecutor
 // + finalize() also read them), not parser state, so they live on
-// ActiveDownload rather than inside this class.
+// ActiveJob rather than inside this class.
 
 import log from 'electron-log/main.js'
 import {splitStderrLines} from '@main/utils/process.js'
@@ -13,7 +13,7 @@ import {isSubtitleFile} from '@shared/subtitlePath.js'
 import {STATUS_KEY} from '@shared/schemas.js'
 import type {LocalizedError, ProgressEvent, QueueArtifactEvent, QueueResumeContext, StatusEvent, StatusKey} from '@shared/types.js'
 import {artifactKindForPath} from '@shared/queueArtifacts.js'
-import type {ActiveDownload} from '../phases/types.js'
+import type {ActiveJob} from '../phases/types.js'
 import {nowIso} from '@main/utils/clock.js'
 import {QueueResumeLifecycle} from './QueueResumeLifecycle.js'
 import {parseYtDlpOutputLine, type YtDlpPostprocessPhase} from 'yt-dlp-bridge/parsers'
@@ -24,7 +24,7 @@ export type StatusEmit = (jobId: string, stage: StatusEvent['stage'], statusKey:
 export type ProgressEmit = (event: ProgressEvent) => void
 export type ArtifactEmit = (event: QueueArtifactEvent) => void
 
-function rememberSubtitlePath(active: ActiveDownload, path: string): void {
+function rememberSubtitlePath(active: ActiveJob, path: string): void {
 	if (!active.subtitlePaths.includes(path)) active.subtitlePaths.push(path)
 }
 
@@ -40,7 +40,7 @@ export class ProgressParser {
 		private readonly emitArtifact?: ArtifactEmit
 	) {}
 
-	consume(active: ActiveDownload, text: string): void {
+	consume(active: ActiveJob, text: string): void {
 		const jobId = active.job.id
 		for (const line of splitStderrLines(text)) {
 			if (line.startsWith('WARNING:') || line.startsWith('ERROR:')) {
@@ -121,7 +121,7 @@ export class ProgressParser {
 	// Idempotent per phase — once a postprocess phase has emitted its status
 	// for a given job, subsequent matching lines (yt-dlp emits multiple) are
 	// suppressed via active.postProcEmitted.
-	private emitPostProcStatus(active: ActiveDownload, key: YtDlpPostprocessPhase): void {
+	private emitPostProcStatus(active: ActiveJob, key: YtDlpPostprocessPhase): void {
 		const emitted = (active.postProcEmitted ??= {})
 		if (emitted[key]) return
 		QueueResumeLifecycle.markMediaPostprocessStarted(active)

@@ -13,7 +13,7 @@ import type {CancelDownloadOutput, DownloadJob, LocalizedError, PauseDownloadOut
 import type {RecentJobsStore} from '@main/stores/RecentJobsStore.js'
 import {YtDlp} from './YtDlp.js'
 import {AsyncStack} from './phases/index.js'
-import type {ActiveDownload, PausedDownload} from './phases/index.js'
+import type {ActiveJob, PausedDownload} from './phases/index.js'
 import {killActiveProcesses} from './download/processControl.js'
 import {cleanupPartFiles, cleanupTempDirByPath} from './download/cleanup.js'
 import {QueueResumeLifecycle} from './download/QueueResumeLifecycle.js'
@@ -40,7 +40,7 @@ const DEFAULT_MAX_CONCURRENT_DOWNLOADS = MAX_CONCURRENT_DOWNLOADS
 const DEFAULT_PAUSE_KILL_ESCALATION_MS = 5000
 
 export class DownloadService extends EventEmitter {
-	private activeJobs = new Map<string, ActiveDownload>()
+	private activeJobs = new Map<string, ActiveJob>()
 	private pausedJobs = new Map<string, PausedDownload>()
 	private readonly maxConcurrent: number
 	private readonly progressParser: ProgressParser
@@ -89,7 +89,7 @@ export class DownloadService extends EventEmitter {
 		const expectedBytes = preparedJob.kind === 'single-format' ? preparedJob.expectedBytes : undefined
 		const job: DownloadJob = {id: input.jobId ?? randomUUID(), url: input.url, outputDir: input.outputDir, expectedBytes, status: 'running', createdAt: now, updatedAt: now}
 		const controller = new AbortController()
-		const active: ActiveDownload = {job, input, controller, signal: controller.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], mediaDownloadStarted: false, mediaComponentPaths: [], tempDir: input.tempDir, disposables: new AsyncStack()}
+		const active: ActiveJob = {job, input, controller, signal: controller.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], mediaDownloadStarted: false, mediaComponentPaths: [], tempDir: input.tempDir, disposables: new AsyncStack()}
 		this.registerInputTempDirCleanup(active)
 		this.activeJobs.set(job.id, active)
 		logger.info('Download job created', {jobId: job.id, url: job.url, outputDir: job.outputDir, kind: preparedJob.kind})
@@ -113,7 +113,7 @@ export class DownloadService extends EventEmitter {
 		job.status = 'running'
 		job.updatedAt = nowIso()
 		const controller = new AbortController()
-		const active: ActiveDownload = {job, input, controller, signal: controller.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], mediaDownloadStarted: false, mediaComponentPaths: [], tempDir: paused.tempDir, disposables: new AsyncStack()}
+		const active: ActiveJob = {job, input, controller, signal: controller.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], mediaDownloadStarted: false, mediaComponentPaths: [], tempDir: paused.tempDir, disposables: new AsyncStack()}
 		this.activeJobs.set(job.id, active)
 		const resumedTempDir = await QueueResumeLifecycle.validateTempDir(paused.tempDir)
 		if (paused.tempDir && !resumedTempDir) logger.info('Resume: preserved tempDir missing — restarting fresh', {jobId: job.id, tempDir: paused.tempDir})
@@ -129,7 +129,7 @@ export class DownloadService extends EventEmitter {
 		return ok({resumed: true, job: result.data.job})
 	}
 
-	private async runJob(active: ActiveDownload): Promise<Result<StartDownloadOutput>> {
+	private async runJob(active: ActiveJob): Promise<Result<StartDownloadOutput>> {
 		const {job} = active
 		try {
 			this.emitStatus(job.id, 'setup', STATUS_KEY.preparingBinaries)
@@ -169,7 +169,7 @@ export class DownloadService extends EventEmitter {
 		}
 	}
 
-	private async runPhases(active: ActiveDownload): Promise<void> {
+	private async runPhases(active: ActiveJob): Promise<void> {
 		const {job, input} = active
 		const ctx: PhaseContext = {
 			active,
@@ -191,7 +191,7 @@ export class DownloadService extends EventEmitter {
 		await this.handleOutcome(active, outcome)
 	}
 
-	private async handleOutcome(active: ActiveDownload, outcome: PhaseOutcome): Promise<void> {
+	private async handleOutcome(active: ActiveJob, outcome: PhaseOutcome): Promise<void> {
 		const {job, input} = active
 		switch (outcome.kind) {
 			case 'completed':
@@ -227,7 +227,7 @@ export class DownloadService extends EventEmitter {
 		}
 	}
 
-	private safeConsume(active: ActiveDownload, text: string): void {
+	private safeConsume(active: ActiveJob, text: string): void {
 		try {
 			this.consumeProgress(active, text)
 		} catch (err) {
@@ -235,7 +235,7 @@ export class DownloadService extends EventEmitter {
 		}
 	}
 
-	private registerInputTempDirCleanup(active: ActiveDownload): void {
+	private registerInputTempDirCleanup(active: ActiveJob): void {
 		QueueResumeLifecycle.registerInputTempDirCleanup(active)
 	}
 
@@ -315,7 +315,7 @@ export class DownloadService extends EventEmitter {
 	// `active.pauseRequested` stays true, so the phase still resolves the run
 	// as a normal pause (not a failure) once SIGKILL finally lands — resume
 	// context and tempDir are unaffected.
-	private armPauseKillEscalation(active: ActiveDownload): void {
+	private armPauseKillEscalation(active: ActiveJob): void {
 		const jobId = active.job.id
 		setTimeout(() => {
 			if (this.activeJobs.get(jobId) !== active) return // already settled (paused/cancelled/finalized)
@@ -340,7 +340,7 @@ export class DownloadService extends EventEmitter {
 		}
 	}
 
-	private async cancelOne(active: ActiveDownload): Promise<Result<CancelDownloadOutput>> {
+	private async cancelOne(active: ActiveJob): Promise<Result<CancelDownloadOutput>> {
 		active.cancelRequested = true
 		// controller.abort() drops the AbortSignal; any in-flight ytDlp.run that
 		// received `signal: active.signal` will SIGKILL its child and resolve
@@ -377,7 +377,7 @@ export class DownloadService extends EventEmitter {
 		await cleanupTempDirByPath(tempDir)
 	}
 
-	private consumeProgress(active: ActiveDownload, text: string): void {
+	private consumeProgress(active: ActiveJob, text: string): void {
 		this.progressParser.consume(active, text)
 	}
 
@@ -399,7 +399,7 @@ export class DownloadService extends EventEmitter {
 		await this.lifecycle.finalize(job, status, error)
 	}
 
-	private emitFinalArtifacts(active: ActiveDownload): void {
+	private emitFinalArtifacts(active: ActiveJob): void {
 		const emitted = new Set<string>()
 		const emitArtifact = (path: string | undefined, kind: QueueArtifactKind): void => {
 			if (!path || emitted.has(path)) return

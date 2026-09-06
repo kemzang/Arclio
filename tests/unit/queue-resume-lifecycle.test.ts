@@ -2,7 +2,7 @@ import {mkdtemp, mkdir, writeFile, access, rm} from 'node:fs/promises'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
 import {describe, expect, it} from 'vitest'
-import {AsyncStack, type ActiveDownload} from '@main/services/phases/types.js'
+import {AsyncStack, type ActiveJob} from '@main/services/phases/types.js'
 import {QueueResumeLifecycle} from '@main/services/download/QueueResumeLifecycle.js'
 import type {DownloadJob, QueueItem} from '@shared/types.js'
 import type {PreparedJob} from '@shared/preparedJob.js'
@@ -13,7 +13,7 @@ function makeDownloadJob(): DownloadJob {
 	return {id: 'job-1', url: 'https://www.youtube.com/watch?v=test', outputDir: '/tmp', status: 'running', createdAt: '2026-06-10T00:00:00.000Z', updatedAt: '2026-06-10T00:00:00.000Z'}
 }
 
-function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
+function makeActive(overrides: Partial<ActiveJob> = {}): ActiveJob {
 	const controller = new AbortController()
 	return {job: makeDownloadJob(), input: {url: 'https://www.youtube.com/watch?v=test', outputDir: '/tmp', job: PREPARED_JOB}, controller, signal: controller.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: new AsyncStack(), ...overrides}
 }

@@ -6,7 +6,7 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import {VideoPhase} from '@main/services/phases/VideoPhase.js'
 import {STATUS_KEY} from '@shared/schemas.js'
 import {AsyncStack} from '@main/services/phases/types.js'
-import type {PhaseContext, ActiveDownload} from '@main/services/phases/types.js'
+import type {PhaseContext, ActiveJob} from '@main/services/phases/types.js'
 import type {DownloadJob, QueueResumeContext, StartDownloadInput} from '@shared/types.js'
 import type {PreparedJob, EmbedOptions, SponsorBlockOptions} from '@shared/preparedJob.js'
 import type {YtDlpResult} from '@main/services/YtDlp.js'
@@ -22,7 +22,7 @@ const BASE_JOB: PreparedJob = {kind: 'single-format', extractor: 'youtube', extr
 
 const BASE_INPUT: StartDownloadInput = {url: 'https://www.youtube.com/watch?v=test', outputDir: '/tmp', job: BASE_JOB}
 
-function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
+function makeActive(overrides: Partial<ActiveJob> = {}): ActiveJob {
 	return {
 		job: makeJob(),
 		input: BASE_INPUT,
@@ -38,7 +38,7 @@ function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
 	}
 }
 
-function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveDownload> = {}): PhaseContext & {runMock: ReturnType<typeof vi.fn>} {
+function makeCtx(runResult: YtDlpResult, activeOverrides: Partial<ActiveJob> = {}): PhaseContext & {runMock: ReturnType<typeof vi.fn>} {
 	const runMock = vi.fn().mockImplementation((_req, signal) => {
 		return Promise.resolve(runResult).then(r => {
 			signal?.onMinting?.(0)
@@ -370,13 +370,13 @@ describe('VideoPhase — temp dir lifecycle (real fs)', () => {
 		await rm(outputDir, {recursive: true, force: true})
 	})
 
-	function makeRealCtx(activeOverrides: Partial<ActiveDownload>, runResult: YtDlpResult = SUCCESS): PhaseContext & {runMock: ReturnType<typeof vi.fn>} {
+	function makeRealCtx(activeOverrides: Partial<ActiveJob>, runResult: YtDlpResult = SUCCESS): PhaseContext & {runMock: ReturnType<typeof vi.fn>} {
 		const job = makeJob()
 		job.outputDir = outputDir
 		const input: StartDownloadInput = {...BASE_INPUT, outputDir, job: BASE_JOB}
 		const runMock = vi.fn().mockResolvedValue(runResult)
 		const realController = new AbortController()
-		const active: ActiveDownload = {job, input, controller: realController, signal: realController.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: new AsyncStack(), ...activeOverrides}
+		const active: ActiveJob = {job, input, controller: realController, signal: realController.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: new AsyncStack(), ...activeOverrides}
 		const ctx: PhaseContext = {active, signal: realController.signal, register: disposable => active.disposables.defer(disposable), ytDlp: {run: runMock} as never, emitStatus: vi.fn(), safeConsume: vi.fn(), reportTempDir: vi.fn()}
 		return Object.assign(ctx, {runMock})
 	}

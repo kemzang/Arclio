@@ -8,7 +8,7 @@
 // On Windows we shell out to `taskkill /T /F`.
 
 import {spawn, type ChildProcessWithoutNullStreams} from 'node:child_process'
-import type {ActiveDownload} from '../phases/types.js'
+import type {ActiveJob} from '../phases/types.js'
 
 function killProcessTree(proc: ChildProcessWithoutNullStreams, signal: NodeJS.Signals): void {
 	if (proc.pid == null) {
@@ -33,7 +33,7 @@ function killProcessTree(proc: ChildProcessWithoutNullStreams, signal: NodeJS.Si
 	}
 }
 
-export function killActiveProcesses(active: ActiveDownload, signal: NodeJS.Signals): void {
+export function killActiveProcesses(active: ActiveJob, signal: NodeJS.Signals): void {
 	if (active.ytDlpProcess) killProcessTree(active.ytDlpProcess, signal)
 	if (active.ffmpegProcess) killProcessTree(active.ffmpegProcess, signal)
 }

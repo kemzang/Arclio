@@ -3,7 +3,7 @@ import {PhaseExecutor} from '@main/services/phases/PhaseExecutor.js'
 import {JobLifecycle} from '@main/services/JobLifecycle.js'
 import {STATUS_KEY} from '@shared/schemas.js'
 import {AsyncStack} from '@main/services/phases/types.js'
-import type {Phase, PhaseContext, PhaseOutcome, ActiveDownload} from '@main/services/phases/types.js'
+import type {Phase, PhaseContext, PhaseOutcome, ActiveJob} from '@main/services/phases/types.js'
 import type {DownloadJob, LocalizedError, StartDownloadInput} from '@shared/types.js'
 import type {PreparedJob, EmbedOptions, SponsorBlockOptions} from '@shared/preparedJob.js'
 
@@ -15,13 +15,13 @@ function makeJob(id = 'job-1'): DownloadJob {
 	return {id, url: 'https://www.youtube.com/watch?v=test', outputDir: '/tmp', status: 'running', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()}
 }
 
-function makeActive(overrides: Partial<ActiveDownload> = {}): ActiveDownload {
+function makeActive(overrides: Partial<ActiveJob> = {}): ActiveJob {
 	const input: StartDownloadInput = {url: 'https://www.youtube.com/watch?v=test', outputDir: '/tmp', job: DEFAULT_JOB}
 	const controller = new AbortController()
 	return {job: makeJob(), input, controller, signal: controller.signal, cancelRequested: false, pauseRequested: false, subtitlePaths: [], disposables: new AsyncStack(), ...overrides}
 }
 
-function makeCtx(active: ActiveDownload): PhaseContext {
+function makeCtx(active: ActiveJob): PhaseContext {
 	return {
 		active,
 		signal: active.signal,
