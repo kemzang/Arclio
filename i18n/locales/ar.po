@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "ربط"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "اختياري. يعمل Arclio دون اتصال بالكامل — الحساب يضيف فقط مزامنة المكتبة بين أجهزتك."
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "يلزم وجود حساب Arclio مجاني للتنزيل. الاتصال يزامن أيضًا مكتبتك عبر أجهزتك."
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "إعادة المحاولة"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "لم يتمكن Arclio من الوصول إلى مخزن مفاتيح النظام لحماية رمز الحساب، لذا تم تعطيل الربط. كل شيء آخر يعمل — الحساب يضيف فقط مزامنة المكتبة."
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "تعذّر على Arclio الوصول إلى سلسلة مفاتيح النظام لحماية رمز الحساب، لذا تم تعطيل الاتصال — وبالتالي التنزيل — على هذا الجهاز."
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "الحساب غير متاح على هذا النظام"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "في انتظار موافقتك…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "ليس الآن"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "تسجيل الدخول عبر Google"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "يلزم وجود حساب Arclio مجاني للتنزيل. الأمر يستغرق لحظة فقط — سجّل الدخول عبر Google للمتابعة."
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "سجّل الدخول للتنزيل"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "إعادة المحاولة"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— لديك {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "عرض الخطط"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "انتقل إلى Pro لتنزيلات أسرع ومزيد من الأجهزة وبلا حدود."
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "تجاهل"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "اكتملت الدفعة"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

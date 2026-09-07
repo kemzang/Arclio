@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "Ulash"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "Ixtiyoriy. Arclio toʻliq oflayn ishlaydi — hisob faqat qurilmalaringiz oʻrtasida kutubxona sinxronizatsiyasini qoʻshadi."
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "Yuklab olish uchun bepul Arclio hisobi talab qilinadi. Ulash, shuningdek, kutubxonangizni qurilmalaringiz o'rtasida sinxronlaydi."
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "Qayta urinish"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio hisob tokenini himoya qilish uchun tizim kalitlar omboriga kira olmadi, shuning uchun ulanish oʻchirilgan. Qolgan hammasi ishlaydi — hisob faqat kutubxona sinxronizatsiyasini qoʻshadi."
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio hisob tokenini himoya qilish uchun tizim kalitlar to'plamiga kira olmadi, shuning uchun bu qurilmada ulanish — demak, yuklab olish ham — o'chirilgan."
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "Bu tizimda hisob mavjud emas"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "Tasdiqlashingizni kutmoqdamiz…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "Hozir emas"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Google orqali kirish"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "Yuklab olish uchun bepul Arclio hisobi talab qilinadi. Bu faqat bir lahza vaqt oladi — davom etish uchun Google orqali kiring."
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "Yuklab olish uchun kiring"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "Qayta urinish"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— sizda {{currentVersion}} bor"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "Rejalarni ko'rish"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "Tezroq yuklab olishlar, ko'proq qurilmalar va cheklovlarsiz uchun Pro-ga o'ting."
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "Yopish"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "Partiya yakunlandi"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

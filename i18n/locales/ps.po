@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "وصل کړئ"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "اختیاري. Arclio په بشپړه توګه آفلاین کار کوي — حساب یوازې ستاسو د وسیلو ترمنځ د کتابتون همغږي زیاتوي."
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "د ډاونلوډ لپاره وړیا Arclio ګڼون ته اړتیا ده. نښلول ستاسو کتابتون ستاسو د وسیلو ترمنځ هم همغږي کوي."
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "بیا هڅه وکړئ"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio ونه توانید چې د حساب ټوکن ساتلو لپاره د سیسټم کیلي ته لاسرسی ومومي، نو وصل کول غیرفعال دي. نور هرڅه کار کوي — حساب یوازې د کتابتون همغږي زیاتوي."
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio ونشو کولی چې د حساب ټوکن ساتلو لپاره سیسټم کیرینګ ته لاسرسی ومومي، نو نښلول — او له همدې امله ډاونلوډول — په دې وسیله کې غیر فعال دي."
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "په دې سیسټم کې حساب شتون نلري"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "ستاسو د تایید په تمه…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "اوس نه"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "د Google سره ننوتل"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "د ډاونلوډ لپاره وړیا Arclio ګڼون ته اړتیا ده. یوازې یوه شیبه وخت نیسي — د دوام لپاره د Google سره ننوځئ."
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "د ډاونلوډ لپاره ننوځئ"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "بیا هڅه وکړئ"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— تاسو {{currentVersion}} لرئ"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "پلانونه وګورئ"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "د ګړندیو ډاونلوډونو، ډیرو وسیلو او پرته له کوم حد لپاره Pro ته لاړ شئ."
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "رد کول"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "ټولګه بشپړه شوه"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

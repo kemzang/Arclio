@@ -712,7 +712,7 @@
 	},
 	"account": {
 		"connectTitle": "Kết nối tài khoản",
-		"connectDescription": "Tùy chọn. Arclio hoạt động hoàn toàn ngoại tuyến — tài khoản chỉ thêm khả năng đồng bộ thư viện giữa các thiết bị của bạn.",
+		"connectDescription": "Cần có tài khoản Arclio miễn phí để tải xuống. Kết nối cũng đồng bộ thư viện của bạn trên các thiết bị.",
 		"connect": "Kết nối",
 		"tryAgain": "Thử lại",
 		"connectedTitle": "Thiết bị này đã được kết nối",
@@ -725,7 +725,7 @@
 		"reopenPage": "Mở lại trang",
 		"cancel": "Hủy",
 		"unavailableTitle": "Tài khoản không khả dụng trên hệ thống này",
-		"unavailableDescription": "Arclio không thể truy cập kho khóa hệ thống để bảo vệ mã thông báo tài khoản, nên việc kết nối bị tắt. Mọi thứ khác vẫn hoạt động — tài khoản chỉ thêm khả năng đồng bộ thư viện.",
+		"unavailableDescription": "Arclio không thể truy cập chuỗi khóa hệ thống để bảo vệ token tài khoản, vì vậy việc kết nối — và do đó tải xuống — đã bị vô hiệu hóa trên thiết bị này.",
 		"startFailed": "Không thể bắt đầu kết nối. Hãy kiểm tra kết nối internet của bạn.",
 		"pairingExpired": "Mã đã hết hạn trước khi được phê duyệt. Hãy bắt đầu lại.",
 		"pairingDenied": "Yêu cầu đó đã bị từ chối trong trình duyệt.",
@@ -743,5 +743,7 @@
 		"syncDeviceLimit": "Tài khoản miễn phí đồng bộ một thiết bị. Nâng cấp lên Pro để đồng bộ cả thiết bị này.",
 		"syncPlanBlocked": "Gói của bạn không bao gồm việc đồng bộ thiết bị này.",
 		"syncAlreadyRunning": "Đang có một lần đồng bộ diễn ra."
-	}
+	},
+	"accountGate": {"title": "Đăng nhập để tải xuống", "description": "Cần có tài khoản Arclio miễn phí để tải xuống. Chỉ mất một chút thời gian — đăng nhập bằng Google để tiếp tục.", "connect": "Đăng nhập bằng Google", "close": "Để sau"},
+	"upsellToast": {"title": "Đã hoàn tất lô tải", "description": "Nâng cấp lên Pro để tải nhanh hơn, dùng trên nhiều thiết bị hơn và không giới hạn.", "cta": "Xem các gói", "dismiss": "Bỏ qua"}
 }

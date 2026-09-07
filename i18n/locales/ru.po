@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "Подключить"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "Необязательно. Arclio полностью работает офлайн — аккаунт лишь добавляет синхронизацию библиотеки между вашими устройствами."
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "Для загрузки необходима бесплатная учётная запись Arclio. Подключение также синхронизирует вашу библиотеку между устройствами."
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "Повторить"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio не смог обратиться к системному хранилищу ключей, чтобы защитить токен аккаунта, поэтому подключение отключено. Всё остальное работает — аккаунт лишь добавляет синхронизацию."
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio не удалось получить доступ к системной связке ключей для защиты токена учётной записи, поэтому подключение — а значит и загрузка — на этом устройстве отключено."
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "Аккаунт недоступен в этой системе"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "Ожидаем вашего подтверждения…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "Не сейчас"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Войти через Google"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "Для загрузки необходима бесплатная учётная запись Arclio. Это займёт всего мгновение — войдите через Google, чтобы продолжить."
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "Войдите, чтобы скачивать"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "Повторить"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— у тебя {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "Посмотреть тарифы"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "Перейдите на Pro для более быстрой загрузки, большего числа устройств и без ограничений."
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "Скрыть"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "Пакет завершён"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

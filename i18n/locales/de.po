@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "Verbinden"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "Optional. Arclio funktioniert vollständig offline — ein Konto ergänzt nur die Bibliothekssynchronisierung zwischen deinen Geräten."
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "Zum Herunterladen ist ein kostenloses Arclio-Konto erforderlich. Die Verbindung synchronisiert außerdem deine Bibliothek über deine Geräte hinweg."
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "Erneut versuchen"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio konnte keinen Systemschlüsselbund erreichen, um ein Konto-Token zu schützen, daher ist das Verbinden deaktiviert. Alles andere funktioniert — ein Konto ergänzt nur die Synchronisierung."
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio konnte keinen Systemschlüsselbund erreichen, um ein Kontotoken zu schützen. Verbinden — und damit Herunterladen — ist auf diesem Gerät deaktiviert."
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "Konto auf diesem System nicht verfügbar"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "Warte auf deine Bestätigung…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "Nicht jetzt"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Mit Google anmelden"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "Zum Herunterladen ist ein kostenloses Arclio-Konto erforderlich. Es dauert nur einen Moment — melde dich mit Google an, um fortzufahren."
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "Zum Herunterladen anmelden"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "Erneut versuchen"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— du hast {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "Pläne ansehen"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "Wechsle zu Pro für schnellere Downloads, mehr Geräte und keine Limits."
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "Verwerfen"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "Stapel abgeschlossen"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

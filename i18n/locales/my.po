@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "ချိတ်ဆက်ရန်"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "ရွေးချယ်နိုင်သည်။ Arclio သည် အော့ဖ်လိုင်းတွင် အပြည့်အဝအလုပ်လုပ်သည် — အကောင့်သည် သင့်စက်များအကြား စာကြည့်တိုက်ထပ်တူပြုမှုကိုသာ ထပ်ဖြည့်ပေးသည်။"
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "ဒေါင်းလုတ်ရယူရန် အခမဲ့ Arclio အကောင့် လိုအပ်ပါသည်။ ချိတ်ဆက်ခြင်းသည် သင့်စက်ပစ္စည်းများအကြား သင့်စာကြည့်တိုက်ကိုပါ ထပ်တူပြုပေးပါသည်။"
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "ထပ်ကြိုးစားရန်"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio သည် အကောင့်တိုကင်ကို ကာကွယ်ရန် စနစ်သော့တွဲကို မရောက်ရှိနိုင်ခဲ့သဖြင့် ချိတ်ဆက်ခြင်းကို ပိတ်ထားသည်။ ကျန်အရာအားလုံး အလုပ်လုပ်သည် — အကောင့်သည် စာကြည့်တိုက်ထပ်တူပြုမှုကိုသာ ထပ်ဖြည့်ပေးသည်။"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "အကောင့်တိုကင်ကို ကာကွယ်ရန် စနစ် keyring ကို Arclio မရောက်ရှိနိုင်သောကြောင့် ဤစက်ပစ္စည်းပေါ်တွင် ချိတ်ဆက်ခြင်း — ထို့ကြောင့် ဒေါင်းလုတ်ချခြင်း — ကို ပိတ်ထားပါသည်။"
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "ဤစနစ်တွင် အကောင့်မရရှိနိ�
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "သင့်ခွင့်ပြုချက်ကို စောင့်ဆိုင်းနေသည်…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "ယခုမလုပ်သေးပါ"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Google ဖြင့် ဝင်ရောက်ပါ"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "ဒေါင်းလုတ်ရယူရန် အခမဲ့ Arclio အကောင့် လိုအပ်ပါသည်။ အချိန်အနည်းငယ်သာ ကြာပါမည် — ဆက်လက်ရန် Google ဖြင့် ဝင်ရောက်ပါ။"
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "ဒေါင်းလုတ်ရယူရန် ဝင်ရောက်ပါ"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "ထပ်စမ်းမည်"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— သင့်တွင် {{currentVersion}} ရှိသည်"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "အစီအစဉ်များကြည့်ရန်"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "ပိုမြန်သော ဒေါင်းလုတ်များ၊ ပိုများသောစက်ပစ္စည်းများနှင့် ကန့်သတ်ချက်မရှိရန် Pro သို့ ကူးပြောင်းပါ။"
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "ပယ်ဖျက်ရန်"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "အသုတ် ပြီးစီးပါပြီ"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

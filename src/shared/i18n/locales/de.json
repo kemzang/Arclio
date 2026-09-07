@@ -745,7 +745,7 @@
 	},
 	"account": {
 		"connectTitle": "Konto verbinden",
-		"connectDescription": "Optional. Arclio funktioniert vollständig offline — ein Konto ergänzt nur die Bibliothekssynchronisierung zwischen deinen Geräten.",
+		"connectDescription": "Zum Herunterladen ist ein kostenloses Arclio-Konto erforderlich. Die Verbindung synchronisiert außerdem deine Bibliothek über deine Geräte hinweg.",
 		"connect": "Verbinden",
 		"tryAgain": "Erneut versuchen",
 		"connectedTitle": "Dieses Gerät ist verbunden",
@@ -758,7 +758,7 @@
 		"reopenPage": "Seite erneut öffnen",
 		"cancel": "Abbrechen",
 		"unavailableTitle": "Konto auf diesem System nicht verfügbar",
-		"unavailableDescription": "Arclio konnte keinen Systemschlüsselbund erreichen, um ein Konto-Token zu schützen, daher ist das Verbinden deaktiviert. Alles andere funktioniert — ein Konto ergänzt nur die Synchronisierung.",
+		"unavailableDescription": "Arclio konnte keinen Systemschlüsselbund erreichen, um ein Kontotoken zu schützen. Verbinden — und damit Herunterladen — ist auf diesem Gerät deaktiviert.",
 		"startFailed": "Verbindung konnte nicht gestartet werden. Prüfe deine Internetverbindung.",
 		"pairingExpired": "Der Code ist abgelaufen, bevor er bestätigt wurde. Starte neu.",
 		"pairingDenied": "Diese Anfrage wurde im Browser abgelehnt.",
@@ -776,5 +776,7 @@
 		"syncDeviceLimit": "Kostenlose Konten synchronisieren ein Gerät. Wechsle zu Pro, um auch dieses zu synchronisieren.",
 		"syncPlanBlocked": "Dein Tarif deckt die Synchronisierung dieses Geräts nicht ab.",
 		"syncAlreadyRunning": "Eine Synchronisierung läuft bereits."
-	}
+	},
+	"accountGate": {"title": "Zum Herunterladen anmelden", "description": "Zum Herunterladen ist ein kostenloses Arclio-Konto erforderlich. Es dauert nur einen Moment — melde dich mit Google an, um fortzufahren.", "connect": "Mit Google anmelden", "close": "Nicht jetzt"},
+	"upsellToast": {"title": "Stapel abgeschlossen", "description": "Wechsle zu Pro für schnellere Downloads, mehr Geräte und keine Limits.", "cta": "Pläne ansehen", "dismiss": "Verwerfen"}
 }

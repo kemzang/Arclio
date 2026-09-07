@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "接続"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "任意です。Arclio は完全にオフラインで動作します — アカウントは端末間のライブラリ同期を追加するだけです。"
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "ダウンロードには無料のArclioアカウントが必要です。接続すると、デバイス間でライブラリも同期されます。"
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "再試行"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio はアカウントトークンを保護するためのシステムキーリングにアクセスできなかったため、接続は無効です。他の機能はすべて動作します — アカウントはライブラリ同期を追加するだけです。"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclioはアカウントトークンを保護するためのシステムキーチェーンにアクセスできなかったため、このデバイスでの接続——つまりダウンロード——は無効になっています。"
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "このシステムではアカウントを利用できません"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "承認をお待ちしています…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "後で"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Googleでサインイン"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "ダウンロードには無料のArclioアカウントが必要です。少しの時間で完了します——続けるにはGoogleでサインインしてください。"
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "ダウンロードするにはサインイン"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "再試行"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— 現在のバージョン: {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "プランを見る"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "より速いダウンロード、より多くのデバイス、無制限のためにProにアップグレードしましょう。"
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "閉じる"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "バッチが完了しました"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

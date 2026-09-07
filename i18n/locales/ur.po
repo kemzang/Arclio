@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "منسلک کریں"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "اختیاری۔ Arclio مکمل طور پر آف لائن کام کرتا ہے — اکاؤنٹ صرف آپ کے آلات کے درمیان لائبریری کی مطابقت پذیری شامل کرتا ہے۔"
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "ڈاؤن لوڈ کرنے کے لیے ایک مفت Arclio اکاؤنٹ درکار ہے۔ منسلک کرنے سے آپ کی لائبریری آپ کے آلات کے درمیان بھی مطابقت پذیر ہو جاتی ہے۔"
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "دوبارہ کوشش کریں"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio اکاؤنٹ ٹوکن کی حفاظت کے لیے سسٹم کی چابی تک رسائی حاصل نہ کر سکا، اس لیے منسلک کرنا غیر فعال ہے۔ باقی سب کچھ کام کرتا ہے — اکاؤنٹ صرف لائبریری مطابقت پذیری شامل کرتا ہے۔"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio اکاؤنٹ ٹوکن کی حفاظت کے لیے سسٹم کیرنگ تک رسائی حاصل نہیں کر سکا، اس لیے اس ڈیوائس پر منسلک کرنا — اور اس وجہ سے ڈاؤن لوڈ کرنا — غیر فعال ہے۔"
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "اس سسٹم پر اکاؤنٹ دستیاب نہیں"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "آپ کی منظوری کا انتظار ہے…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "ابھی نہیں"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Google سے سائن ان کریں"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "ڈاؤن لوڈ کرنے کے لیے ایک مفت Arclio اکاؤنٹ درکار ہے۔ اس میں صرف ایک لمحہ لگتا ہے — جاری رکھنے کے لیے Google سے سائن ان کریں۔"
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "ڈاؤن لوڈ کرنے کے لیے سائن ان کریں"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "دوبارہ کوشش کریں"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— آپ کے پاس {{currentVersion}} ہے"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "پلانز دیکھیں"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "تیز تر ڈاؤن لوڈز، مزید ڈیوائسز، اور کسی حد کے بغیر کے لیے Pro پر جائیں۔"
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "برخاست کریں"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "بیچ مکمل ہو گیا"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

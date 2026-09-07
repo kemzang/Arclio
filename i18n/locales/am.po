@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "አገናኝ"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "አማራጭ ነው። Arclio ሙሉ በሙሉ ከመስመር ውጭ ይሠራል — መለያ በመሣሪያዎችዎ መካከል የቤተ-መጻሕፍት ማመሳሰልን ብቻ ይጨምራል።"
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "ለማውረድ ነፃ የArclio መለያ ያስፈልጋል። መገናኘት እንዲሁም ቤተ-መጽሐፍትዎን በመሣሪያዎችዎ መካከል ያመሳስላል።"
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "እንደገና ሞክር"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio የመለያ ቶከንን ለመጠበቅ የሥርዓት ቁልፍ ማከማቻ ላይ መድረስ አልቻለም፣ ስለዚህ መገናኘት ተሰናክሏል። ሌላው ሁሉ ይሠራል — መለያ የቤተ-መጻሕፍት ማመሳሰልን ብቻ ይጨምራል።"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio የመለያ ቶከን ለመጠበቅ የስርዓት keyring ማግኘት አልቻለም፣ ስለዚህ መገናኘት — እና በዚህም ማውረድ — በዚህ መሣሪያ ላይ ተሰናክሏል።"
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "በዚህ ሥርዓት ላይ መለያ አይገኝም"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "ማጽደቅዎን በመጠባበቅ ላይ…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "አሁን አይደለም"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "በGoogle ይግቡ"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "ለማውረድ ነፃ የArclio መለያ ያስፈልጋል። ትንሽ ጊዜ ብቻ ይወስዳል — ለመቀጠል በGoogle ይግቡ።"
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "ለማውረድ ይግቡ"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "እንደገና ሞክር"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— እርስዎ ያለዎት {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "እቅዶችን ይመልከቱ"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "ለፈጣን ውርዶች፣ ተጨማሪ መሣሪያዎች እና ያለ ገደብ ወደ Pro ይሂዱ።"
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "አሰናብት"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "ስብስብ ተጠናቅቋል"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

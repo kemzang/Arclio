@@ -728,7 +728,7 @@
 	},
 	"account": {
 		"connectTitle": "アカウントを接続",
-		"connectDescription": "任意です。Arclio は完全にオフラインで動作します — アカウントは端末間のライブラリ同期を追加するだけです。",
+		"connectDescription": "ダウンロードには無料のArclioアカウントが必要です。接続すると、デバイス間でライブラリも同期されます。",
 		"connect": "接続",
 		"tryAgain": "再試行",
 		"connectedTitle": "この端末は接続されています",
@@ -741,7 +741,7 @@
 		"reopenPage": "ページを再度開く",
 		"cancel": "キャンセル",
 		"unavailableTitle": "このシステムではアカウントを利用できません",
-		"unavailableDescription": "Arclio はアカウントトークンを保護するためのシステムキーリングにアクセスできなかったため、接続は無効です。他の機能はすべて動作します — アカウントはライブラリ同期を追加するだけです。",
+		"unavailableDescription": "Arclioはアカウントトークンを保護するためのシステムキーチェーンにアクセスできなかったため、このデバイスでの接続——つまりダウンロード——は無効になっています。",
 		"startFailed": "接続を開始できませんでした。インターネット接続を確認してください。",
 		"pairingExpired": "承認される前にコードの有効期限が切れました。もう一度お試しください。",
 		"pairingDenied": "そのリクエストはブラウザで拒否されました。",
@@ -759,5 +759,7 @@
 		"syncDeviceLimit": "無料アカウントは 1 台の端末を同期できます。この端末も同期するには Pro にアップグレードしてください。",
 		"syncPlanBlocked": "ご利用のプランではこの端末の同期は対象外です。",
 		"syncAlreadyRunning": "同期はすでに実行中です。"
-	}
+	},
+	"accountGate": {"title": "ダウンロードするにはサインイン", "description": "ダウンロードには無料のArclioアカウントが必要です。少しの時間で完了します——続けるにはGoogleでサインインしてください。", "connect": "Googleでサインイン", "close": "後で"},
+	"upsellToast": {"title": "バッチが完了しました", "description": "より速いダウンロード、より多くのデバイス、無制限のためにProにアップグレードしましょう。", "cta": "プランを見る", "dismiss": "閉じる"}
 }

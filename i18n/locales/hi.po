@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "कनेक्ट करें"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "वैकल्पिक। Arclio पूरी तरह ऑफ़लाइन काम करता है — खाता केवल आपके डिवाइसों के बीच लाइब्रेरी सिंक जोड़ता है।"
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "डाउनलोड करने के लिए एक निःशुल्क Arclio खाता आवश्यक है। कनेक्ट करने से आपकी लाइब्रेरी आपके डिवाइसों में सिंक भी होती है।"
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "फिर कोशिश करें"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio खाता टोकन सुरक्षित रखने के लिए सिस्टम कीरिंग तक नहीं पहुँच सका, इसलिए कनेक्ट करना बंद है। बाकी सब काम करता है — खाता केवल लाइब्रेरी सिंक जोड़ता है।"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio खाता टोकन को सुरक्षित रखने के लिए सिस्टम कीरिंग तक नहीं पहुँच सका, इसलिए इस डिवाइस पर कनेक्ट करना — और इसलिए डाउनलोड करना — अक्षम है।"
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "इस सिस्टम पर खाता उपलब्ध नह�
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "आपकी स्वीकृति की प्रतीक्षा है…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "अभी नहीं"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Google से साइन इन करें"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "डाउनलोड करने के लिए एक निःशुल्क Arclio खाता आवश्यक है। इसमें बस एक पल लगता है — जारी रखने के लिए Google से साइन इन करें।"
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "डाउनलोड करने के लिए साइन इन करें"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "पुनः प्रयास"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— आपके पास है {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "प्लान देखें"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "तेज़ डाउनलोड, अधिक डिवाइस और बिना किसी सीमा के लिए Pro पर जाएँ।"
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "खारिज करें"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "बैच पूरा हुआ"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

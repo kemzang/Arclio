@@ -51,7 +51,7 @@ msgid "Connect"
 msgstr ""
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
 msgstr ""
 
 msgctxt "account.connectedDescription"
@@ -151,7 +151,7 @@ msgid "Try again"
 msgstr ""
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
 msgstr ""
 
 msgctxt "account.unavailableTitle"
@@ -160,6 +160,22 @@ msgstr ""
 
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
+msgstr ""
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr ""
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr ""
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr ""
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
 msgstr ""
 
 msgctxt "app.feedback"
@@ -1474,6 +1490,22 @@ msgstr ""
 
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
+msgstr ""
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr ""
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr ""
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr ""
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
 msgstr ""
 
 msgctxt "videoCard.titlePlaceholder"

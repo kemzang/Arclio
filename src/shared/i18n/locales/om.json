@@ -740,7 +740,7 @@
 	},
 	"account": {
 		"connectTitle": "Herrega walitti fidi",
-		"connectDescription": "Filannoo dha. Arclio guutummaatti offline hojjeta — herregni qofti meeshaalee kee gidduutti walsimsiisuu mana kitaabaa dabala.",
+		"connectDescription": "Buufachuuf herrega Arclio kan bilisaa ni barbaachisa. Walitti fiduun kaartaa keessan meeshaalee keessan gidduutti walsimsiisa.",
 		"connect": "Walitti fidi",
 		"tryAgain": "Irra deebiʼii yaali",
 		"connectedTitle": "Meeshaan kun walitti fidameera",
@@ -753,7 +753,7 @@
 		"reopenPage": "Fuula irra deebiʼii bani",
 		"cancel": "Haquu",
 		"unavailableTitle": "Sirna kana irratti herregni hin argamu",
-		"unavailableDescription": "Arclio tokenii herregaa eeguuf kuusaa furtuu sirnaa bira gaʼuu hin dandeenye, kanaaf walitti fiduun dhaabbateera. Kan hafe hundi ni hojjeta — herregni qofti walsimsiisuu mana kitaabaa dabala.",
+		"unavailableDescription": "Arclio dhaabbata seeraa sirna eegumsaa argachuu waan hin dandeenyeef, walqunnamtii — kanaafis buufachuu — meeshaa kana irratti dhorkameera.",
 		"startFailed": "Walitti fiduu jalqabuu hin dandeenye. Interneetii kee mirkaneessi.",
 		"pairingExpired": "Koodiin osoo hin mirkanaaʼin dura yeroon isaa darbeera. Irra deebiʼii jalqabi.",
 		"pairingDenied": "Gaaffiin sun browser keessatti diddameera.",
@@ -771,5 +771,7 @@
 		"syncDeviceLimit": "Herregni bilisaa meeshaa tokko walsimsiisa. Kanas walsimsiisuuf gara Pro guddisi.",
 		"syncPlanBlocked": "Karoorri kee walsimsiisuu meeshaa kanaa hin hammatu.",
 		"syncAlreadyRunning": "Waldorgommii tokko duraan hojjetamaa jira."
-	}
+	},
+	"accountGate": {"title": "Buufachuuf seenaa", "description": "Buufachuuf herrega Arclio kan bilisaa ni barbaachisa. Yeroo xiqqoo qofa fudhata — itti fufuuf Google waliin seenaa.", "connect": "Google waliin seenaa", "close": "Amma miti"},
+	"upsellToast": {"title": "Baatichi xumurameera", "description": "Buufannaa saffisaa, meeshaalee dabalataa fi daangaa malee argachuuf Pro-tti ceʼaa.", "cta": "Karoora ilaali", "dismiss": "Dhiisi"}
 }

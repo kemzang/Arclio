@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "Kết nối"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "Tùy chọn. Arclio hoạt động hoàn toàn ngoại tuyến — tài khoản chỉ thêm khả năng đồng bộ thư viện giữa các thiết bị của bạn."
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "Cần có tài khoản Arclio miễn phí để tải xuống. Kết nối cũng đồng bộ thư viện của bạn trên các thiết bị."
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "Thử lại"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio không thể truy cập kho khóa hệ thống để bảo vệ mã thông báo tài khoản, nên việc kết nối bị tắt. Mọi thứ khác vẫn hoạt động — tài khoản chỉ thêm khả năng đồng bộ thư viện."
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio không thể truy cập chuỗi khóa hệ thống để bảo vệ token tài khoản, vì vậy việc kết nối — và do đó tải xuống — đã bị vô hiệu hóa trên thiết bị này."
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "Tài khoản không khả dụng trên hệ thống này"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "Đang chờ bạn phê duyệt…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "Để sau"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Đăng nhập bằng Google"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "Cần có tài khoản Arclio miễn phí để tải xuống. Chỉ mất một chút thời gian — đăng nhập bằng Google để tiếp tục."
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "Đăng nhập để tải xuống"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "Thử lại"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— bạn đang dùng {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "Xem các gói"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "Nâng cấp lên Pro để tải nhanh hơn, dùng trên nhiều thiết bị hơn và không giới hạn."
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "Bỏ qua"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "Đã hoàn tất lô tải"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

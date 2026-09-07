@@ -736,7 +736,7 @@
 	},
 	"account": {
 		"connectTitle": "Hisobni ulash",
-		"connectDescription": "Ixtiyoriy. Arclio toʻliq oflayn ishlaydi — hisob faqat qurilmalaringiz oʻrtasida kutubxona sinxronizatsiyasini qoʻshadi.",
+		"connectDescription": "Yuklab olish uchun bepul Arclio hisobi talab qilinadi. Ulash, shuningdek, kutubxonangizni qurilmalaringiz o'rtasida sinxronlaydi.",
 		"connect": "Ulash",
 		"tryAgain": "Qayta urinish",
 		"connectedTitle": "Bu qurilma ulangan",
@@ -749,7 +749,7 @@
 		"reopenPage": "Sahifani qayta ochish",
 		"cancel": "Bekor qilish",
 		"unavailableTitle": "Bu tizimda hisob mavjud emas",
-		"unavailableDescription": "Arclio hisob tokenini himoya qilish uchun tizim kalitlar omboriga kira olmadi, shuning uchun ulanish oʻchirilgan. Qolgan hammasi ishlaydi — hisob faqat kutubxona sinxronizatsiyasini qoʻshadi.",
+		"unavailableDescription": "Arclio hisob tokenini himoya qilish uchun tizim kalitlar to'plamiga kira olmadi, shuning uchun bu qurilmada ulanish — demak, yuklab olish ham — o'chirilgan.",
 		"startFailed": "Ulanishni boshlab boʻlmadi. Internet aloqangizni tekshiring.",
 		"pairingExpired": "Kod tasdiqlanishidan oldin muddati tugadi. Qaytadan boshlang.",
 		"pairingDenied": "Bu soʻrov brauzerda rad etildi.",
@@ -767,5 +767,7 @@
 		"syncDeviceLimit": "Bepul hisoblar bitta qurilmani sinxronlaydi. Buni ham sinxronlash uchun Pro’ga oʻting.",
 		"syncPlanBlocked": "Rejangiz bu qurilmani sinxronlashni qamrab olmaydi.",
 		"syncAlreadyRunning": "Sinxronlash allaqachon bajarilmoqda."
-	}
+	},
+	"accountGate": {"title": "Yuklab olish uchun kiring", "description": "Yuklab olish uchun bepul Arclio hisobi talab qilinadi. Bu faqat bir lahza vaqt oladi — davom etish uchun Google orqali kiring.", "connect": "Google orqali kirish", "close": "Hozir emas"},
+	"upsellToast": {"title": "Partiya yakunlandi", "description": "Tezroq yuklab olishlar, ko'proq qurilmalar va cheklovlarsiz uchun Pro-ga o'ting.", "cta": "Rejalarni ko'rish", "dismiss": "Yopish"}
 }

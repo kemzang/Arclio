@@ -662,7 +662,7 @@
 	},
 	"account": {
 		"connectTitle": "መለያ አገናኝ",
-		"connectDescription": "አማራጭ ነው። Arclio ሙሉ በሙሉ ከመስመር ውጭ ይሠራል — መለያ በመሣሪያዎችዎ መካከል የቤተ-መጻሕፍት ማመሳሰልን ብቻ ይጨምራል።",
+		"connectDescription": "ለማውረድ ነፃ የArclio መለያ ያስፈልጋል። መገናኘት እንዲሁም ቤተ-መጽሐፍትዎን በመሣሪያዎችዎ መካከል ያመሳስላል።",
 		"connect": "አገናኝ",
 		"tryAgain": "እንደገና ሞክር",
 		"connectedTitle": "ይህ መሣሪያ ተገናኝቷል",
@@ -675,7 +675,7 @@
 		"reopenPage": "ገጹን እንደገና ክፈት",
 		"cancel": "ሰርዝ",
 		"unavailableTitle": "በዚህ ሥርዓት ላይ መለያ አይገኝም",
-		"unavailableDescription": "Arclio የመለያ ቶከንን ለመጠበቅ የሥርዓት ቁልፍ ማከማቻ ላይ መድረስ አልቻለም፣ ስለዚህ መገናኘት ተሰናክሏል። ሌላው ሁሉ ይሠራል — መለያ የቤተ-መጻሕፍት ማመሳሰልን ብቻ ይጨምራል።",
+		"unavailableDescription": "Arclio የመለያ ቶከን ለመጠበቅ የስርዓት keyring ማግኘት አልቻለም፣ ስለዚህ መገናኘት — እና በዚህም ማውረድ — በዚህ መሣሪያ ላይ ተሰናክሏል።",
 		"startFailed": "ግንኙነቱን መጀመር አልተቻለም። የበይነመረብ ግንኙነትዎን ያረጋግጡ።",
 		"pairingExpired": "ኮዱ ከመጽደቁ በፊት ጊዜው አልፎበታል። እንደገና ይጀምሩ።",
 		"pairingDenied": "ያ ጥያቄ በአሳሹ ውስጥ ተከልክሏል።",
@@ -693,5 +693,7 @@
 		"syncDeviceLimit": "ነጻ መለያዎች አንድ መሣሪያ ያመሳስላሉ። ይህንንም ለማመሳሰል ወደ Pro ያሻሽሉ።",
 		"syncPlanBlocked": "ዕቅድዎ የዚህን መሣሪያ ማመሳሰል አይሸፍንም።",
 		"syncAlreadyRunning": "ማመሳሰያ አስቀድሞ በመካሄድ ላይ ነው።"
-	}
+	},
+	"accountGate": {"title": "ለማውረድ ይግቡ", "description": "ለማውረድ ነፃ የArclio መለያ ያስፈልጋል። ትንሽ ጊዜ ብቻ ይወስዳል — ለመቀጠል በGoogle ይግቡ።", "connect": "በGoogle ይግቡ", "close": "አሁን አይደለም"},
+	"upsellToast": {"title": "ስብስብ ተጠናቅቋል", "description": "ለፈጣን ውርዶች፣ ተጨማሪ መሣሪያዎች እና ያለ ገደብ ወደ Pro ይሂዱ።", "cta": "እቅዶችን ይመልከቱ", "dismiss": "አሰናብት"}
 }

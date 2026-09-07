@@ -733,7 +733,7 @@
 	},
 	"account": {
 		"connectTitle": "Conectar una cuenta",
-		"connectDescription": "Opcional. Arclio funciona totalmente sin conexión — una cuenta solo añade la sincronización de la biblioteca entre tus dispositivos.",
+		"connectDescription": "Se requiere una cuenta gratuita de Arclio para descargar. Conectarte también sincroniza tu biblioteca entre tus dispositivos.",
 		"connect": "Conectar",
 		"tryAgain": "Reintentar",
 		"connectedTitle": "Este dispositivo está conectado",
@@ -746,7 +746,7 @@
 		"reopenPage": "Reabrir la página",
 		"cancel": "Cancelar",
 		"unavailableTitle": "Cuenta no disponible en este sistema",
-		"unavailableDescription": "Arclio no pudo acceder a un llavero del sistema para proteger un token de cuenta, así que la conexión está desactivada. Todo lo demás funciona — una cuenta solo añade la sincronización.",
+		"unavailableDescription": "Arclio no pudo acceder a un llavero del sistema para proteger un token de cuenta, así que conectar —y por tanto descargar— está deshabilitado en este dispositivo.",
 		"startFailed": "No se pudo iniciar la conexión. Comprueba tu conexión a internet.",
 		"pairingExpired": "El código caducó antes de aprobarse. Vuelve a empezar.",
 		"pairingDenied": "Esa solicitud fue rechazada en el navegador.",
@@ -764,5 +764,7 @@
 		"syncDeviceLimit": "Las cuentas gratuitas sincronizan un dispositivo. Cambia a Pro para sincronizar también este.",
 		"syncPlanBlocked": "Tu plan no cubre la sincronización de este dispositivo.",
 		"syncAlreadyRunning": "Ya hay una sincronización en curso."
-	}
+	},
+	"accountGate": {"title": "Inicia sesión para descargar", "description": "Se requiere una cuenta gratuita de Arclio para descargar. Solo toma un momento — inicia sesión con Google para continuar.", "connect": "Iniciar sesión con Google", "close": "Ahora no"},
+	"upsellToast": {"title": "Lote completado", "description": "Pásate a Pro para descargas más rápidas, más dispositivos y sin límites.", "cta": "Ver planes", "dismiss": "Descartar"}
 }

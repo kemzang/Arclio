@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "连接"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "可选。Arclio 完全离线可用 — 账户只是增加了在你的设备之间同步资料库的功能。"
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "下载需要一个免费的 Arclio 账户。连接还会在你的设备之间同步媒体库。"
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "重试"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio 无法访问系统密钥环来保护账户令牌，因此连接已停用。其他功能一切正常 — 账户只是增加了资料库同步。"
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio 无法访问系统钥匙串以保护账户令牌，因此此设备上的连接——以及下载——已被禁用。"
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "此系统上账户不可用"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "等待你的批准…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "暂不"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "使用 Google 登录"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "下载需要一个免费的 Arclio 账户。只需片刻——使用 Google 登录即可继续。"
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "登录以下载"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "重试"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— 当前版本 {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "查看方案"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "升级到 Pro，享受更快的下载速度、更多设备和无限制。"
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "关闭"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "批次已完成"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

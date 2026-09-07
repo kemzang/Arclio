@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "Unganisha"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "Si lazima. Arclio hufanya kazi kikamilifu nje ya mtandao — akaunti huongeza tu usawazishaji wa maktaba kati ya vifaa vyako."
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "Akaunti ya bure ya Arclio inahitajika ili kupakua. Kuunganisha pia husawazisha maktaba yako kwenye vifaa vyako."
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "Jaribu tena"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio haikuweza kufikia hifadhi ya funguo ya mfumo ili kulinda tokeni ya akaunti, kwa hivyo kuunganisha kumezimwa. Kila kitu kingine kinafanya kazi — akaunti huongeza tu usawazishaji wa maktaba."
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio haikuweza kufikia mfumo wa keyring ili kulinda tokeni ya akaunti, hivyo kuunganisha — na hivyo kupakua — kumezimwa kwenye kifaa hiki."
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "Akaunti haipatikani kwenye mfumo huu"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "Tunasubiri uidhinishe…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "Sio sasa"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Ingia kwa Google"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "Akaunti ya bure ya Arclio inahitajika ili kupakua. Inachukua muda mfupi tu — ingia kwa Google ili kuendelea."
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "Ingia ili kupakua"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "Jaribu tena"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— una {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "Angalia mipango"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "Nenda Pro kwa upakuaji wa haraka zaidi, vifaa zaidi, na bila vikomo."
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "Ondoa"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "Kundi limekamilika"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

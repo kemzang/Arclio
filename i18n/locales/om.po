@@ -52,8 +52,8 @@ msgid "Connect"
 msgstr "Walitti fidi"
 
 msgctxt "account.connectDescription"
-msgid "Optional. Arclio works fully offline — an account only adds library sync across your devices."
-msgstr "Filannoo dha. Arclio guutummaatti offline hojjeta — herregni qofti meeshaalee kee gidduutti walsimsiisuu mana kitaabaa dabala."
+msgid "A free Arclio account is required to download. Connecting also syncs your library across devices."
+msgstr "Buufachuuf herrega Arclio kan bilisaa ni barbaachisa. Walitti fiduun kaartaa keessan meeshaalee keessan gidduutti walsimsiisa."
 
 msgctxt "account.connectedDescription"
 msgid "Your library syncs across your devices."
@@ -152,8 +152,8 @@ msgid "Try again"
 msgstr "Irra deebiʼii yaali"
 
 msgctxt "account.unavailableDescription"
-msgid "Arclio could not reach a system keyring to protect an account token, so connecting is disabled. Everything else works — an account only adds library sync."
-msgstr "Arclio tokenii herregaa eeguuf kuusaa furtuu sirnaa bira gaʼuu hin dandeenye, kanaaf walitti fiduun dhaabbateera. Kan hafe hundi ni hojjeta — herregni qofti walsimsiisuu mana kitaabaa dabala."
+msgid "Arclio could not reach a system keyring to protect an account token, so connecting — and therefore downloading — is disabled on this device."
+msgstr "Arclio dhaabbata seeraa sirna eegumsaa argachuu waan hin dandeenyeef, walqunnamtii — kanaafis buufachuu — meeshaa kana irratti dhorkameera."
 
 msgctxt "account.unavailableTitle"
 msgid "Account unavailable on this system"
@@ -162,6 +162,22 @@ msgstr "Sirna kana irratti herregni hin argamu"
 msgctxt "account.waiting"
 msgid "Waiting for you to approve…"
 msgstr "Mirkaneessa kee eegaa jirra…"
+
+msgctxt "accountGate.close"
+msgid "Not now"
+msgstr "Amma miti"
+
+msgctxt "accountGate.connect"
+msgid "Sign in with Google"
+msgstr "Google waliin seenaa"
+
+msgctxt "accountGate.description"
+msgid "A free Arclio account is required to download. It only takes a moment — sign in with Google to continue."
+msgstr "Buufachuuf herrega Arclio kan bilisaa ni barbaachisa. Yeroo xiqqoo qofa fudhata — itti fufuuf Google waliin seenaa."
+
+msgctxt "accountGate.title"
+msgid "Sign in to download"
+msgstr "Buufachuuf seenaa"
 
 msgctxt "app.feedback"
 msgid "Feedback"
@@ -1478,6 +1494,22 @@ msgstr "Irra deebi'i yaali"
 msgctxt "update.youHave"
 msgid "— you have {{currentVersion}}"
 msgstr "— kan qabdu {{currentVersion}}"
+
+msgctxt "upsellToast.cta"
+msgid "See plans"
+msgstr "Karoora ilaali"
+
+msgctxt "upsellToast.description"
+msgid "Go Pro for faster downloads, more devices, and no limits."
+msgstr "Buufannaa saffisaa, meeshaalee dabalataa fi daangaa malee argachuuf Pro-tti ceʼaa."
+
+msgctxt "upsellToast.dismiss"
+msgid "Dismiss"
+msgstr "Dhiisi"
+
+msgctxt "upsellToast.title"
+msgid "Batch complete"
+msgstr "Baatichi xumurameera"
 
 msgctxt "videoCard.titlePlaceholder"
 msgid "Loading…"

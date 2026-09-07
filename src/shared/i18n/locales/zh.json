@@ -662,7 +662,7 @@
 	},
 	"account": {
 		"connectTitle": "连接账户",
-		"connectDescription": "可选。Arclio 完全离线可用 — 账户只是增加了在你的设备之间同步资料库的功能。",
+		"connectDescription": "下载需要一个免费的 Arclio 账户。连接还会在你的设备之间同步媒体库。",
 		"connect": "连接",
 		"tryAgain": "重试",
 		"connectedTitle": "此设备已连接",
@@ -675,7 +675,7 @@
 		"reopenPage": "重新打开页面",
 		"cancel": "取消",
 		"unavailableTitle": "此系统上账户不可用",
-		"unavailableDescription": "Arclio 无法访问系统密钥环来保护账户令牌，因此连接已停用。其他功能一切正常 — 账户只是增加了资料库同步。",
+		"unavailableDescription": "Arclio 无法访问系统钥匙串以保护账户令牌，因此此设备上的连接——以及下载——已被禁用。",
 		"startFailed": "无法开始连接。请检查你的网络连接。",
 		"pairingExpired": "代码在获得批准前已过期。请重新开始。",
 		"pairingDenied": "该请求在浏览器中被拒绝。",
@@ -693,5 +693,7 @@
 		"syncDeviceLimit": "免费账户可同步一台设备。升级到 Pro 即可同步这一台。",
 		"syncPlanBlocked": "你的方案不包含同步此设备。",
 		"syncAlreadyRunning": "同步已在进行中。"
-	}
+	},
+	"accountGate": {"title": "登录以下载", "description": "下载需要一个免费的 Arclio 账户。只需片刻——使用 Google 登录即可继续。", "connect": "使用 Google 登录", "close": "暂不"},
+	"upsellToast": {"title": "批次已完成", "description": "升级到 Pro，享受更快的下载速度、更多设备和无限制。", "cta": "查看方案", "dismiss": "关闭"}
 }
