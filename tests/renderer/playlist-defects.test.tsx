@@ -15,6 +15,7 @@ const PLAYLIST_ENTRIES: PlaylistEntry[] = [
 function buildMockApi(settingsUpdateMock?: ReturnType<typeof vi.fn>) {
 	return {
 		app: {warmUp: vi.fn().mockResolvedValue(ok({completed: true, failures: []})), getGraphicsPolicy: vi.fn().mockResolvedValue(ok({backdrop: {forceRenderMode: null, softwareWebglAllowed: false}})), setLanguage: vi.fn().mockResolvedValue(undefined)},
+		account: {status: vi.fn().mockResolvedValue({connected: true, canStoreCredentials: true})},
 		downloads: {
 			start: vi.fn().mockResolvedValue(ok({job: {id: 'job-1', url: '', outputDir: '/tmp', status: 'running', createdAt: '', updatedAt: ''}})),
 			cancel: vi.fn().mockResolvedValue(ok({cancelled: true})),

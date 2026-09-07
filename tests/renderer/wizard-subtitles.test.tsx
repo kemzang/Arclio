@@ -33,6 +33,7 @@ const PROBE_RESULT: Extract<ProbeResult, {kind: 'video'}> = {
 function buildMockApi(settingsOverrides: Record<string, unknown> = {}, probeResult: ProbeResult = PROBE_RESULT) {
 	return {
 		app: {warmUp: vi.fn().mockResolvedValue(ok({completed: true, failures: []})), getGraphicsPolicy: vi.fn().mockResolvedValue(ok({backdrop: {forceRenderMode: null, softwareWebglAllowed: false}})), setLanguage: vi.fn().mockResolvedValue(undefined)},
+		account: {status: vi.fn().mockResolvedValue({connected: true, canStoreCredentials: true})},
 		downloads: {
 			probeCancel: vi.fn().mockResolvedValue(undefined),
 			start: vi.fn().mockResolvedValue(ok({job: {id: 'job-1', url: YOUTUBE_URL, outputDir: '/tmp', status: 'running', createdAt: '', updatedAt: ''}})),

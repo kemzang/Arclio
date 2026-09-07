@@ -201,7 +201,7 @@ describe('App renderer', () => {
 		expect(screen.getByTestId('profiles-active-profile-card')).toHaveTextContent('Active profile')
 		expect(screen.getByTestId('profiles-active-profile-card')).toHaveTextContent('720p · best audio')
 		expect(screen.getByTestId('profiles-profile-destination')).toHaveTextContent('Using global destination + profile subfolder')
-		expect(screen.getByTestId('profiles-profile-destination')).toHaveTextContent('/tmp/Balanced 720p')
+		expect(screen.getByTestId('profiles-profile-destination')).toHaveTextContent('/tmp/Arclio')
 		expect(screen.getByRole('button', {name: 'Edit active profile'})).toBeInTheDocument()
 		expect(screen.getByRole('button', {name: 'Change global destination'})).toBeInTheDocument()
 		const profileMenuTrigger = screen.getByRole('button', {name: 'Switch download profile: Balanced 720p'})

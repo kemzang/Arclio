@@ -9,6 +9,7 @@
 import type {QueueLane} from '@shared/types.js'
 import {bulkLogger} from '@renderer/lib/bulkLogger.js'
 import type {GetState, SetState, QueueSlice} from './types.js'
+import {ensureAccountConnected} from './wizard/accountGate.js'
 import {persistFormatPrefs} from './wizard/persistFormatPrefs.js'
 import {prepareManualQueueSubmission} from './wizard/queueSubmission.js'
 import {submitPreparedQueueSubmission} from './wizard/queueSubmissionAdapter.js'
@@ -17,6 +18,7 @@ import {queueLoadedPlaylistWithActiveProfile} from './wizard/quickDownloadPrepar
 export {playlistOutputTemplate, singleOutputTemplate} from './wizard/outputTemplates.js'
 
 async function submitWizardToQueue(set: SetState, get: GetState, lane: QueueLane): Promise<void> {
+	if (!(await ensureAccountConnected(set, get))) return
 	// Re-entry guard: large playlists (e.g. 290 entries) take a perceptible
 	// moment to enumerate, serialize over IPC, and commit on the main process.
 	// Without this, a user who thinks the app froze will click the button again

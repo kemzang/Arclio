@@ -19,6 +19,7 @@ import {UpdateBanner} from './components/system/UpdateBanner.js'
 import {ThemeToggle} from './components/system/ThemeToggle.js'
 import {LanguagePicker} from './components/system/LanguagePicker.js'
 import {AboutDialog} from './components/system/AboutDialog.js'
+import {UpsellToast} from './components/system/UpsellToast.js'
 import {FeedbackDialog} from './components/system/FeedbackDialog.js'
 import {useUpdateChannel} from './components/system/useUpdateChannel.js'
 import {WhatsNewDialog} from './components/system/WhatsNewDialog.js'
@@ -47,6 +48,7 @@ const SHOW_SCENARIO_GALLERY = import.meta.env.MODE === 'browser-mock'
 // browser-only globals (DOMMatrix) that are absent unless a document is opened.
 const UnifiedViewer = lazy(() => import('./pages/viewer/UnifiedViewer.js').then(module => ({default: module.UnifiedViewer})))
 const ShareDialog = lazy(() => import('./components/system/ShareDialog.js').then(module => ({default: module.ShareDialog})))
+const AccountRequiredDialog = lazy(() => import('./components/system/AccountRequiredDialog.js').then(module => ({default: module.AccountRequiredDialog})))
 const ScenarioGallery = lazy(() => import('./dev/ScenarioGallery.js').then(module => ({default: module.ScenarioGallery})))
 const FOOTER_ACTION_BUTTON_CLASS = 'footer-action-button h-6 rounded-md px-1.5 text-[13px] text-muted-foreground max-sm:size-6 max-sm:px-0'
 const FOOTER_COMPACT_LABEL_CLASS = 'max-sm:sr-only'
@@ -119,8 +121,8 @@ function AppContent(): ReactNode {
 			graphicsPolicy: state.graphicsPolicy
 		}))
 	)
-	const {uiZoom, setUiZoom, uiTheme, setAboutDialogOpen, openShareDialog, shareDialogOpen} = useAppStore(
-		useShallow(state => ({uiZoom: state.uiZoom, setUiZoom: state.setUiZoom, uiTheme: state.uiTheme, setAboutDialogOpen: state.setAboutDialogOpen, openShareDialog: state.openShareDialog, shareDialogOpen: state.shareDialogOpen}))
+	const {uiZoom, setUiZoom, uiTheme, setAboutDialogOpen, openShareDialog, shareDialogOpen, accountGateOpen} = useAppStore(
+		useShallow(state => ({uiZoom: state.uiZoom, setUiZoom: state.setUiZoom, uiTheme: state.uiTheme, setAboutDialogOpen: state.setAboutDialogOpen, openShareDialog: state.openShareDialog, shareDialogOpen: state.shareDialogOpen, accountGateOpen: state.accountGateOpen}))
 	)
 	const update = useUpdateChannel()
 	const [showNudge, setShowNudge] = useState(false)
@@ -300,9 +302,15 @@ function AppContent(): ReactNode {
 
 				{showStartupSplash && <WarmupSplash initialized={initialized} warmupBlocking={warmupBlocking} warmupDiagnostics={warmupDiagnostics} warmupProgress={warmupProgress} showGreeting={shouldShowSplashGreeting(settings)} onDismissed={() => setSplashDismissed(true)} />}
 				<AboutDialog />
+				<UpsellToast />
 				{shareDialogOpen ? (
 					<Suspense fallback={null}>
 						<ShareDialog />
+					</Suspense>
+				) : null}
+				{accountGateOpen ? (
+					<Suspense fallback={null}>
+						<AccountRequiredDialog />
 					</Suspense>
 				) : null}
 				<FeedbackDialog open={feedbackDialogOpen} onOpenChange={setFeedbackDialogOpen} />

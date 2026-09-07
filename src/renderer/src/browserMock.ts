@@ -658,14 +658,17 @@ export function installBrowserMock(): void {
 		indexer: {indexFile: () => Promise.resolve({success: true, mediaId: 'mock'}), indexFiles: () => Promise.resolve([])},
 		// Archive reading needs the main process; browser-mock has no comic fixtures.
 		archive: {listPages: () => Promise.resolve({pages: [], error: 'Archive reading is unavailable in browser-mock mode'}), readPage: () => Promise.resolve({ok: false as const, error: 'Archive reading is unavailable in browser-mock mode'}), close: () => Promise.resolve()},
-		// Pairing needs a real browser round-trip and OS credential storage, so
-		// browser-mock reports a disconnected account that cannot be connected.
+		// Reports connected by default so the download flows every other
+		// scenario exists to preview aren't blocked by the account gate.
+		// Pairing itself needs a real browser round-trip and OS credential
+		// storage it can't do here — the dialog-account-gate scenario previews
+		// that dialog directly via store state instead of faking a real pairing.
 		account: {
-			status: () => Promise.resolve({connected: false, canStoreCredentials: false}),
+			status: () => Promise.resolve({connected: true, canStoreCredentials: true, plan: 'free' as const}),
 			beginPairing: () => Promise.reject(new Error('Pairing is unavailable in browser-mock mode')),
 			awaitPairing: () => Promise.resolve({ok: false as const, reason: 'failed' as const}),
 			cancelPairing: () => Promise.resolve(),
-			disconnect: () => Promise.resolve({connected: false, canStoreCredentials: false})
+			disconnect: () => Promise.resolve({connected: false, canStoreCredentials: true})
 		},
 		sync: {now: () => Promise.resolve({status: 'skipped' as const, reason: 'not-connected' as const}), state: () => Promise.resolve({running: false, lastRunAt: null, lastOutcome: null})},
 		sources: {add: () => Promise.resolve({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: () => Promise.resolve(), list: () => Promise.resolve([]), toggleWatch: () => Promise.resolve(), scan: () => Promise.resolve({indexed: 0, errors: 0})},

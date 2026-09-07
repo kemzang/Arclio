@@ -137,7 +137,11 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 		indexer: {indexFile: vi.fn().mockResolvedValue({success: true, mediaId: 'mock'}), indexFiles: vi.fn().mockResolvedValue([])},
 		archive: {listPages: vi.fn().mockResolvedValue({pages: []}), readPage: vi.fn().mockResolvedValue({ok: false, error: 'mock'}), close: vi.fn().mockResolvedValue(undefined)},
 		account: {
-			status: vi.fn().mockResolvedValue({connected: false, canStoreCredentials: true}),
+			// Connected by default — downloading requires an account, and most
+			// tests exercise download flows, not the account-gate itself. Tests
+			// that specifically cover the gate (account-gate.test.tsx,
+			// account-panel.test.tsx) override this per-case.
+			status: vi.fn().mockResolvedValue({connected: true, accountEmail: 'mock@example.test', deviceId: 'mock-device', canStoreCredentials: true}),
 			beginPairing: vi.fn().mockResolvedValue({userCode: 'WXYZ-2346', verificationUrl: 'https://example.test/pair', expiresAt: Date.now() + 600_000}),
 			awaitPairing: vi.fn().mockResolvedValue({ok: true, status: {connected: true, canStoreCredentials: true}}),
 			cancelPairing: vi.fn().mockResolvedValue(undefined),

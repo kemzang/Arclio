@@ -5,6 +5,8 @@ import {DEFAULT_DOWNLOAD_PROFILES_PREFS, normalizeDownloadProfilesPrefs, removeD
 import {i18next, pickLanguage, isRtl} from '@shared/i18n/index.js'
 import type {GetState, SetState, ShareTrigger, SystemSlice} from './types.js'
 import {bindQueueProjection, projectQueueSnapshot} from './queueProjection.js'
+import {settleAccountGate} from './wizard/accountGate.js'
+import {shouldShowQueueDrainUpsell} from './wizard/queueDrainUpsell.js'
 import {notify} from '../lib/notify.js'
 import {track} from '../lib/analytics.js'
 
@@ -103,6 +105,14 @@ function openShareDialogInternal(set: SetState, trigger: ShareTrigger): void {
 	track('share_dialog_opened', {via: trigger})
 }
 
+function maybeShowQueueDrainUpsell(get: GetState, set: SetState): void {
+	void window.appApi.account.status().then(status => {
+		if (!shouldShowQueueDrainUpsell({drained: true, plan: status.plan, alreadyShownThisSession: get().upsellShownThisSession})) return
+		set({upsellToastOpen: true, upsellShownThisSession: true})
+		track('upsell_toast_shown', {via: 'queue-drained'})
+	})
+}
+
 const OVERRIDE_KEY: Record<DependencyId, 'ytDlp' | 'ffmpeg' | 'ffprobe'> = {'yt-dlp': 'ytDlp', ffmpeg: 'ffmpeg', ffprobe: 'ffprobe'}
 
 function makeBinaryOverridePatch(id: DependencyId, path: string | undefined): {common: {binaryOverrides: Record<string, string | undefined>}} {
@@ -128,6 +138,7 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 		commonPaths: undefined,
 		shareDialogOpen: false,
 		shareDialogTrigger: null,
+		accountGateOpen: false,
 
 		initialize: async () => {
 			if (get().initialized || get().initializing) return
@@ -141,7 +152,8 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 				set,
 				schedule: callback => requestAnimationFrame(callback),
 				readSuccessfulDownloadCount: () => get().settings?.common?.successfulDownloadCount ?? 0,
-				onDoneIncrements: (doneIncrements, prevMilestoneCount) => handleCompletedDownloadMilestones(doneIncrements, prevMilestoneCount, get, set)
+				onDoneIncrements: (doneIncrements, prevMilestoneCount) => handleCompletedDownloadMilestones(doneIncrements, prevMilestoneCount, get, set),
+				onQueueDrained: () => maybeShowQueueDrainUpsell(get, set)
 			})
 
 			// The warmup-progress listener stays bound for the lifetime of the
@@ -458,6 +470,11 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 		setShareHighValueBannerDismissed: async () => {
 			track('share_prompt_dismissed', {via: 'high-value-inline'})
 			await applyCommonPatchAsync(get, set, 'shareHighValueBannerDismissed', {shareHighValueBannerDismissed: true})
+		},
+
+		resolveAccountGate: connected => {
+			set({accountGateOpen: false})
+			settleAccountGate(connected)
 		}
 	}
 }

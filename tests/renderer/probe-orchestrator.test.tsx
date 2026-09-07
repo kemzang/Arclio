@@ -207,7 +207,7 @@ describe('quickDownload', () => {
 		expect(queued).toMatchObject({
 			url: VIDEO_PROBE.webpageUrl,
 			title: 'Test Video',
-			outputDir: '/tmp/downloads/Balanced 720p',
+			outputDir: '/tmp/downloads/Arclio',
 			status: 'pending',
 			lane: 'normal',
 			job: expect.objectContaining({kind: 'ranged-format', extractor: 'youtube', extractorKey: 'Youtube', intent: {kind: 'video-audio', codec: 'best', tiers: ['720'], audio: {format: 'best'}}, outputTemplate: '%(title).200B [%(id)s].%(ext)s'})
@@ -246,7 +246,7 @@ describe('quickDownload', () => {
 		await useAppStore.getState().quickDownload()
 
 		const queued = vi.mocked(api.queue.cmd.add).mock.calls[0]?.[0]?.[0]
-		expect(queued).toMatchObject({outputDir: '/tmp/first-launch-downloads/Balanced 720p', formatLabel: 'Up to 720p · Native formats · Native audio', job: expect.objectContaining({kind: 'ranged-format', intent: {kind: 'video-audio', codec: 'best', tiers: ['720'], audio: {format: 'best'}}})})
+		expect(queued).toMatchObject({outputDir: '/tmp/first-launch-downloads/Arclio', formatLabel: 'Up to 720p · Native formats · Native audio', job: expect.objectContaining({kind: 'ranged-format', intent: {kind: 'video-audio', codec: 'best', tiers: ['720'], audio: {format: 'best'}}})})
 		expect(useAppStore.getState().quickDownloadStatus).toBe('queued')
 		expect(useAppStore.getState().wizardUrl).toBe('')
 		expect(useAppStore.getState().wizardStep).toBe('url')
@@ -273,6 +273,9 @@ describe('quickDownload', () => {
 
 		useAppStore.setState({wizardUrl: YOUTUBE_URL, wizardOutputDir: '/tmp'})
 		const promise = useAppStore.getState().quickDownload()
+		// quickDownload() now awaits the account gate before doing anything
+		// else — flush that microtask hop before checking the "preparing" milestone.
+		await new Promise(resolve => setTimeout(resolve, 0))
 
 		expect(useAppStore.getState().quickDownloadStatus).toBe('preparing')
 
@@ -592,6 +595,7 @@ describe('quickDownload', () => {
 
 		useAppStore.setState({wizardUrl: YOUTUBE_URL, wizardOutputDir: '/tmp'})
 		const promise = useAppStore.getState().quickDownload()
+		await new Promise(resolve => setTimeout(resolve, 0))
 		expect(useAppStore.getState().quickDownloadStatus).toBe('preparing')
 
 		useAppStore.getState().cancelQuickDownload()

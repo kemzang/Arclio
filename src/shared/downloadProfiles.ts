@@ -3,10 +3,14 @@ import {DEFAULT_AUDIO_BITRATE} from './schemas.js'
 import type {DownloadProfile, DownloadProfileRef, DownloadProfilesPrefs, MediaIntent, NativeAudioPreference, PlaylistVideoTier} from './schemas.js'
 import {mediaIntentFromProfileMedia, mediaIntentSpec, type MediaIntentSpec} from './mediaIntent.js'
 import type {EmbedOptions, SponsorBlockOptions, SubtitleOptions} from './preparedJob.js'
-import {effectiveOutputDir, safeFolderName} from './subfolder.js'
+import {effectiveOutputDir} from './subfolder.js'
 
 const BUILTIN_TIMESTAMP = '2026-06-07T00:00:00.000Z'
 const BUILTIN_PROFILE_EMBED = {chapters: true, metadata: true, thumbnail: false, description: false, thumbnailSidecar: false} as const
+// Built-in profiles all land in the same branded folder rather than one named
+// after the active profile (e.g. "Balanced 720p") — a user picking a
+// different profile later shouldn't fragment their downloads across folders.
+const DEFAULT_SEED_SUBFOLDER_NAME = 'Arclio'
 
 type VideoAudioProfileMedia = Extract<DownloadProfile['media'], {kind: 'video-audio'}>
 
@@ -26,7 +30,7 @@ function baseProfile(id: string, name: string, media: DownloadProfile['media'], 
 		createdAt: BUILTIN_TIMESTAMP,
 		updatedAt: BUILTIN_TIMESTAMP,
 		output: {kind: 'default'},
-		subfolder: {enabled: true, name: safeFolderName(name)}
+		subfolder: {enabled: true, name: DEFAULT_SEED_SUBFOLDER_NAME}
 	}
 }
 

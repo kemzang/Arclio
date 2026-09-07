@@ -39,6 +39,8 @@ export const BROWSER_MOCK_SCENARIO_IDS = [
 	'probe-live-stream',
 	'dialog-mixed-url',
 	'dialog-cookies-issue',
+	'dialog-account-gate',
+	'dialog-upsell-toast',
 	'update-direct',
 	'update-homebrew',
 	'update-scoop',
@@ -158,6 +160,8 @@ export const BROWSER_MOCK_SCENARIOS: readonly BrowserMockScenario[] = [
 	{id: 'probe-live-stream', group: 'Probe Results', title: 'Live stream', description: 'isLive:true - live-stream indicator and format restrictions should show.', kind: 'probe'},
 	{id: 'dialog-mixed-url', group: 'Dialogs', title: 'Mixed URL prompt', description: 'Opens the "You pasted multiple URLs" confirmation dialog at startup.', kind: 'dialog'},
 	{id: 'dialog-cookies-issue', group: 'Dialogs', title: 'Cookies config issue', description: 'Triggers the cookies config issue dialog (file mode, missing path).', kind: 'dialog'},
+	{id: 'dialog-account-gate', group: 'Dialogs', title: 'Account required', description: 'Opens the "sign in to download" gate shown when a download is attempted without a connected account.', kind: 'dialog'},
+	{id: 'dialog-upsell-toast', group: 'Dialogs', title: 'Upgrade toast', description: 'Shows the "go Pro" toast that appears once a queue finishes draining, for a free-tier account.', kind: 'dialog'},
 	{id: 'update-direct', group: 'Updates', title: 'Direct update', description: 'Install & Restart action (Win/Linux direct install).', kind: 'update'},
 	{id: 'update-darwin-dmg', group: 'Updates', title: 'Darwin DMG', description: 'Direct channel on macOS - shows Download link. Use platform=mac knob to activate darwin path.', kind: 'update'},
 	{id: 'update-winget', group: 'Updates', title: 'Winget', description: 'Winget channel - Install & Restart action.', kind: 'update'},
@@ -323,6 +327,10 @@ export async function applyScenarioWorkbenchState(input: {scenario: BrowserMockS
 			store.setState({mixedUrlPromptOpen: true, mixedUrlPending: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ\nhttps://www.youtube.com/watch?v=jNQXAC9IVRw'})
 		} else if (scenario.id === 'dialog-cookies-issue') {
 			store.setState({cookiesConfigDialogIssue: 'file-missing-path'})
+		} else if (scenario.id === 'dialog-account-gate') {
+			store.setState({accountGateOpen: true})
+		} else if (scenario.id === 'dialog-upsell-toast') {
+			store.setState({upsellToastOpen: true})
 		}
 	}
 }

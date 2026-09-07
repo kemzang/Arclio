@@ -18,10 +18,10 @@ beforeEach(() => {
 })
 
 describe('AccountPanel', () => {
-	it('presents connecting as optional, since the app works without an account', async () => {
+	it('explains that an account is required to download', async () => {
 		render(<AccountPanel />)
 
-		expect(await screen.findByText(/works fully offline/i)).toBeInTheDocument()
+		expect(await screen.findByText(/required to download/i)).toBeInTheDocument()
 		expect(screen.getByRole('button', {name: /connect/i})).toBeEnabled()
 	})
 

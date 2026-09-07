@@ -119,7 +119,7 @@ describe('DownloadProfileEditor', () => {
 		render(<DownloadProfileEditor initialProfile={profile} open onOpenChange={() => undefined} onSave={onSave} />)
 
 		const input = await screen.findByTestId('profiles-editor-subfolder-name')
-		expect(input).toHaveValue('Smart TV MP4 Full HD 1080p')
+		expect(input).toHaveValue('Arclio')
 
 		fireEvent.change(input, {target: {value: 'MP4 videos'}})
 		fireEvent.click(screen.getByRole('button', {name: 'Save profile'}))
@@ -141,7 +141,7 @@ describe('DownloadProfileEditor', () => {
 		expect(screen.getByTestId('profiles-editor-global-destination')).toHaveTextContent('~/Downloads')
 		expect(screen.getByTestId('profiles-editor-global-destination')).toHaveTextContent('Active')
 		expect(screen.getByTestId('profiles-editor-profile-override')).toHaveTextContent('No override set')
-		expect(screen.getByTestId('profiles-editor-final-destination')).toHaveTextContent('~/Downloads/Balanced 720p')
+		expect(screen.getByTestId('profiles-editor-final-destination')).toHaveTextContent('~/Downloads/Arclio')
 
 		fireEvent.click(screen.getByRole('button', {name: 'Change global destination'}))
 		expect(onChangeGlobalDestination).toHaveBeenCalled()
@@ -209,7 +209,7 @@ describe('DownloadProfileEditor', () => {
 		})
 		expect(api.dialog.chooseFolder).toHaveBeenCalledWith(undefined)
 		expect(screen.getByTestId('profiles-editor-profile-override')).toHaveTextContent('Overrides global')
-		expect(screen.getByTestId('profiles-editor-final-destination')).toHaveTextContent('/mnt/archive/Balanced 720p')
+		expect(screen.getByTestId('profiles-editor-final-destination')).toHaveTextContent('/mnt/archive/Arclio')
 
 		fireEvent.click(screen.getByRole('button', {name: 'Save profile'}))
 

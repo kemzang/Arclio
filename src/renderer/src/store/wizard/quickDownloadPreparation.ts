@@ -3,6 +3,7 @@ import {getIncompleteCookiesConfigIssue} from '@shared/cookiesConfig.js'
 import {cleanUrl} from '@shared/cleanUrl.js'
 import {classifyUrlIntent, type UrlIntent} from '@shared/urlIntent.js'
 import type {GetState, SetState} from '../types.js'
+import {ensureAccountConnected} from './accountGate.js'
 import {WizardCommands} from './commands.js'
 import {configuredCookiesRetryMode, selectProbeErrorForGuidance} from './probeErrorExperience.js'
 import {rewriteYouTubeChannelRoot} from './urlIntake.js'
@@ -102,6 +103,7 @@ function ensureOutputFallback(set: SetState, get: GetState): void {
 }
 
 export async function quickDownload(set: SetState, get: GetState, mixedUrlMode?: QuickDownloadRetryPlaylistMode): Promise<void> {
+	if (!(await ensureAccountConnected(set, get))) return
 	if (get().quickDownloadStatus === 'preparing') return
 	const cleaned = rewriteYouTubeChannelRoot(cleanUrl(get().wizardUrl.trim()))
 	if (!cleaned) return

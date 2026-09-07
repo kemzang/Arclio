@@ -263,10 +263,13 @@ export interface UiSlice {
 	uiZoom: number
 	uiTheme: UiTheme
 	aboutDialogOpen: boolean
+	upsellToastOpen: boolean
+	upsellShownThisSession: boolean
 
 	setUiZoom: (zoom: number) => void
 	setUiTheme: (theme: UiTheme) => void
 	setAboutDialogOpen: (open: boolean) => void
+	dismissUpsellToast: () => void
 }
 
 export type ShareTrigger = 'footer' | 'titlebar' | 'about' | 'wizard-card' | 'milestone' | 'high-value-inline'
@@ -286,6 +289,7 @@ export interface SystemSlice {
 	commonPaths: AppSettings['common']['commonPaths']
 	shareDialogOpen: boolean
 	shareDialogTrigger: ShareTrigger | null
+	accountGateOpen: boolean
 	initialize: () => Promise<void>
 	setSplashDismissed: (dismissed: boolean) => void
 	repairWarmup: () => Promise<void>
@@ -325,6 +329,7 @@ export interface SystemSlice {
 	closeShareDialog: () => void
 	setShareInlineCardDismissed: () => Promise<void>
 	setShareHighValueBannerDismissed: () => Promise<void>
+	resolveAccountGate: (connected: boolean) => void
 }
 
 export type AppState = ProbeOrchestratorSlice & FormatPickerSlice & OutputConfigSlice & WizardDialogsSlice & QueueSlice & UiSlice & SystemSlice
