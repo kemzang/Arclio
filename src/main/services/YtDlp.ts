@@ -279,7 +279,14 @@ async function invokeWithRetry(opts: InvokeOptions): Promise<YtDlpResult> {
 	// probe pipeline runs before extractor identity is known, so URL-based
 	// routing stays the conservative pre-probe signal.
 	if (!shouldUsePotLadder(opts)) {
-		return invokeOnce(opts, {kind: 'noExtractorArgs'})
+		const bare = await invokeOnce(opts, {kind: 'noExtractorArgs'})
+		if (bare.kind !== 'exit-error' || bare.errorKind !== 'botBlock') return bare
+		// The bare attempt hit yt-dlp's default client, which can demand a PoT
+		// on its own. The no-PoT player_client override carries no visitor_data,
+		// so it is safe here too — without it, a plain single-URL paste (the
+		// common case, since it defaults to this non-ladder path) would surface
+		// the cookies prompt on the very first try instead of quietly recovering.
+		return invokeOnce(opts, finalFallbackStrategy(opts))
 	}
 
 	let result: YtDlpResult

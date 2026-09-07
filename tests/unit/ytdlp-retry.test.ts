@@ -43,6 +43,10 @@ function probeRequestWithPlayerClient(playerClient: string[]): YtDlpRequest {
 	return {kind: 'probe', url: URL, selection: {playlistMode: 'video'}, extractor: {youtube: {playerClient}}}
 }
 
+function autoProbeRequest(): YtDlpRequest {
+	return {kind: 'probe', url: URL}
+}
+
 beforeEach(() => {
 	vi.clearAllMocks()
 })
@@ -183,6 +187,33 @@ describe('YtDlp — retry ladder', () => {
 		expect(result.kind).toBe('success')
 		if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(true)
 		expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(2)
+	})
+
+	it('auto-mode probe (default playlistMode, no explicit player_client) bot-blocks on the bare attempt → retries with the player_client fallback instead of surfacing the cookie prompt', async () => {
+		// Auto-mode probes skip the PoT ladder entirely (visitor_data caps playlist
+		// pagination at 100 entries), so the first attempt runs with no
+		// --extractor-args — the exact yt-dlp default-client path that triggers
+		// YouTube's bot-block on a plain single-URL paste. They must still get
+		// the same no-PoT player_client safety net media/explicit-video probes
+		// already have, instead of giving up and asking the user for cookies.
+		vi.mocked(spawnYtDlp)
+			.mockImplementationOnce(() => makeFakeProcess(1, BOT_STDERR) as never)
+			.mockImplementationOnce(() => makeFakeProcess(0) as never)
+
+		const {ytDlp, tokenService} = makeYtDlp()
+
+		const result = await ytDlp.run(autoProbeRequest())
+
+		expect(result.kind).toBe('success')
+		if (result.kind === 'success') expect(result.usedExtractorFallback).toBe(true)
+		expect(tokenService.mintTokenForUrl).not.toHaveBeenCalled()
+		expect(vi.mocked(spawnYtDlp)).toHaveBeenCalledTimes(2)
+
+		const firstArgs: string[] = vi.mocked(spawnYtDlp).mock.calls[0][1]
+		expect(firstArgs).not.toContain('--extractor-args')
+
+		const fallbackArgs: string[] = vi.mocked(spawnYtDlp).mock.calls[1][1]
+		expect(fallbackArgs[fallbackArgs.indexOf('--extractor-args') + 1]).toBe('youtube:player_client=default,-web,-web_safari')
 	})
 
 	it('non-botBlock exit-error returns immediately without retry', async () => {
