@@ -21,7 +21,6 @@ Key decisions (all learned the hard way over several wrong attempts — hand-rol
 Tune the right layer:
 
 - WebGL dark aurora: `src/renderer/src/components/layout/background/darkAurora/shader.ts`.
-- Canvas2D dark aurora fallback: `src/renderer/src/components/layout/background/darkAurora/fallback.ts`.
-- CSS `--backdrop` / `--backdrop-accent` + `body::before/::after`: last-resort no-WebGL/no-Canvas2D fallback only.
+- No-WebGL fallback: there is no separate Canvas2D drawing file — `CanvasSceneHost.tsx`'s `activateCssFallback()` just toggles the `backdrop-static-fallback` body class, which switches rendering to the CSS `--backdrop` / `--backdrop-accent` gradients (`body::before`/`::after` in `styles.css`). Recolors must be applied in **both** the shader and these CSS vars to stay consistent — confirmed 2026-09-07 when the shader's blue/violet accents were retinted to Arclio Teal but the CSS vars needed the same treatment separately.
 
 Verify changes via the **`?backdrop=1`** isolation stage (browser-mock; also reachable from the Scenario Gallery "Backdrop only" button), using the `http://127.0.0.1:<doctor-port>/` URL reported by `bun run doctor`, e.g. `?theme=dark&platform=linux&backdrop=1` or `?theme=light&platform=linux&backdrop=1`. Also check at least one wide desktop viewport when adjusting bloom placement: broad full-width blooms can wash out the top of the scene and reduce glass-panel contrast. Browser-mock verifies renderer visuals; Electron GPU/fallback behavior still needs the probes documented in `AGENTS.md`. See [[glow-intensity-policy]].
