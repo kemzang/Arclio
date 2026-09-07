@@ -9,7 +9,12 @@ import {app, BrowserWindow, dialog, nativeTheme} from 'electron'
 // before any window is created.
 if (process.platform === 'linux' && process.env.XDG_SESSION_TYPE === 'wayland' && (app.isPackaged || process.env.ARCLIO_FORCE_WAYLAND_RELAUNCH === '1') && !process.argv.includes('--ozone-platform=x11')) {
 	app.relaunch({args: ['--ozone-platform=x11', ...process.argv.slice(1)]})
-	app.quit()
+	// quit() is graceful and async — it does not stop the rest of this module
+	// from executing, so the `app.whenReady().then(...)` below still runs and
+	// creates a BrowserWindow under native Wayland before this process
+	// actually exits, hitting the very SIGSEGV this relaunch exists to avoid.
+	// exit() tears the process down immediately instead.
+	app.exit(0)
 }
 
 // VMware / broken GPU drivers: GPU process segfaults (exit_code=139) on both
