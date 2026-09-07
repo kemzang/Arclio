@@ -1,4 +1,4 @@
-import type {SyncPullResponse, SyncPushRequest, SyncRecord} from './types.js'
+import type {PlanResponse, SyncPullResponse, SyncPushRequest, SyncRecord} from './types.js'
 
 /**
  * HTTP client for library sync.
@@ -82,6 +82,14 @@ export class SyncClient {
 		if (request.records.length === 0) return {cursor: request.cursor ?? ''}
 		const response = await this.request('/api/sync/push', request)
 		return (await response.json()) as {cursor: string}
+	}
+
+	/** GET, unlike pull/push — `request()` is POST-only so this doesn't reuse it. */
+	async getPlan(): Promise<PlanResponse> {
+		const response = await this.fetchImpl(`${this.baseUrl}/api/account/plan`, {method: 'GET', headers: {authorization: `Bearer ${this.deviceToken}`}, signal: AbortSignal.timeout(this.requestTimeoutMs)})
+		if (response.status === 401) throw new SyncAuthError()
+		if (!response.ok) throw new Error(`Plan fetch failed: HTTP ${response.status}`)
+		return (await response.json()) as PlanResponse
 	}
 }
 

@@ -351,6 +351,8 @@ export interface AccountStatus {
 	deviceId?: string
 	/** False when the OS cannot protect a token at rest; connecting is refused. */
 	canStoreCredentials: boolean
+	/** Undefined until refreshed at least once this session — never assume 'free'. */
+	plan?: 'free' | 'pro'
 }
 
 export interface PairingHandle {

@@ -1,6 +1,7 @@
 import type {QueueItem} from '@shared/types.js'
 import {QUEUE_STATUS} from '@shared/schemas.js'
 import {reconcileQuickDownloadFeedback, type QuickDownloadFeedbackState} from './wizard/quickDownloadFeedback.js'
+import {isQueueDrainEvent} from './wizard/queueDrainUpsell.js'
 
 type QueueProjectionState = Pick<
 	QuickDownloadFeedbackState,
@@ -16,6 +17,7 @@ interface QueueProjectionBatch {
 export interface QueueProjectionResult {
 	queue: QueueItem[]
 	doneIncrements: number
+	drained: boolean
 	patch: Partial<QueueProjectionState>
 }
 
@@ -54,7 +56,7 @@ export function applyQueueProjectionBatch(state: QueueProjectionState, batch: Qu
 
 	const quickPatch = reconcileQuickDownloadFeedback(state, next)
 	const patch = next === state.queue ? quickPatch : {queue: next, ...quickPatch}
-	return {queue: next, doneIncrements, patch}
+	return {queue: next, doneIncrements, drained: isQueueDrainEvent(state.queue, next), patch}
 }
 
 export interface QueueProjectionBindings {
@@ -71,9 +73,11 @@ export interface BindQueueProjectionInput<State extends QueueProjectionState> {
 	schedule: (callback: () => void) => void
 	readSuccessfulDownloadCount: () => number
 	onDoneIncrements: (doneIncrements: number, previousSuccessfulDownloadCount: number) => void
+	/** Fires once the moment the queue empties out of active items — not on every flush while it stays empty. */
+	onQueueDrained?: () => void
 }
 
-export function bindQueueProjection<State extends QueueProjectionState>({events, get, set, schedule, readSuccessfulDownloadCount, onDoneIncrements}: BindQueueProjectionInput<State>): () => void {
+export function bindQueueProjection<State extends QueueProjectionState>({events, get, set, schedule, readSuccessfulDownloadCount, onDoneIncrements, onQueueDrained}: BindQueueProjectionInput<State>): () => void {
 	let active = true
 	let pendingQueueUpdates = new Map<string, QueueItem>()
 	let pendingQueueAdded: {items: QueueItem[]; atIdx: number}[] = []
@@ -102,6 +106,7 @@ export function bindQueueProjection<State extends QueueProjectionState>({events,
 		if (result.doneIncrements > 0) {
 			onDoneIncrements(result.doneIncrements, previousSuccessfulDownloadCount)
 		}
+		if (result.drained) onQueueDrained?.()
 	}
 
 	const unbindSnapshot = events.onSnapshot(items => {

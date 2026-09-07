@@ -43,3 +43,11 @@ export interface SyncPullResponse {
 
 /** Outcome of merging one remote record against the local one. */
 export type MergeDecision = {action: 'keep-local'} | {action: 'take-remote'; record: SyncRecord} | {action: 'delete-local'}
+
+export type AccountPlan = 'free' | 'pro'
+
+export interface PlanResponse {
+	plan: AccountPlan
+	syncAllowed: boolean
+	reason: string | null
+}

@@ -100,7 +100,7 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	registerConverterHandlers(converterService)
 	registerArchiveHandlers(archiveService)
 	registerAccountHandlers(accountService, syncScheduler)
-	registerSyncHandlers(syncScheduler)
+	registerSyncHandlers(syncScheduler, accountService)
 
 	activeDownloadBridge?.detach()
 	activeDownloadBridge = new DownloadEventBridge(downloadService, mainWindow)

@@ -72,4 +72,45 @@ describe('QueueProjection', () => {
 		expect(current.queue[0].status).toBe('done')
 		expect(onDoneIncrements).toHaveBeenCalledWith(1, 2)
 	})
+
+	it('fires onQueueDrained exactly once when the last active item finishes, not on later empty flushes', () => {
+		const listeners: Partial<{updated: (event: {item: QueueItem}) => void; removed: (event: {itemId: string}) => void}> = {}
+		const events: QueueProjectionBindings = {
+			onSnapshot: () => vi.fn(),
+			onAdded: () => vi.fn(),
+			onUpdated: listener => {
+				listeners.updated = listener
+				return vi.fn()
+			},
+			onRemoved: listener => {
+				listeners.removed = listener
+				return vi.fn()
+			}
+		}
+		let current = {...state([makeItem({id: 'q1', status: 'running'})]), settings: {common: {successfulDownloadCount: 0}}}
+		const scheduled: (() => void)[] = []
+		const onQueueDrained = vi.fn()
+
+		bindQueueProjection({
+			events,
+			get: () => current,
+			set: patcher => {
+				current = {...current, ...patcher(current)}
+			},
+			schedule: callback => scheduled.push(callback),
+			readSuccessfulDownloadCount: () => current.settings.common.successfulDownloadCount,
+			onDoneIncrements: vi.fn(),
+			onQueueDrained
+		})
+
+		listeners.updated?.({item: {...current.queue[0], status: 'done', progressPercent: 100}})
+		scheduled.shift()?.()
+		expect(onQueueDrained).toHaveBeenCalledTimes(1)
+
+		// A later, unrelated flush (e.g. the item gets removed from history)
+		// must not re-fire the drain — the queue was already empty of active work.
+		listeners.removed?.({itemId: 'q1'})
+		scheduled.shift()?.()
+		expect(onQueueDrained).toHaveBeenCalledTimes(1)
+	})
 })

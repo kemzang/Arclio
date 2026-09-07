@@ -116,4 +116,52 @@ describe('AccountService', () => {
 		const status = await service.awaitPairing()
 		expect(status.connected).toBe(true)
 	})
+
+	it('leaves plan undefined until refreshPlan() has run, and undefined when never connected', async () => {
+		const service = new AccountService({baseUrl: 'https://example.test', store: stubStore()})
+
+		expect(service.status().plan).toBeUndefined()
+		await service.refreshPlan()
+		expect(service.status().plan).toBeUndefined()
+	})
+
+	it('caches the fetched plan and exposes it via status()', async () => {
+		const store = stubStore({load: vi.fn().mockReturnValue({deviceToken: 'tok', deviceId: 'dev-1'})})
+		const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({plan: 'pro', syncAllowed: true, reason: null}))
+		const service = new AccountService({baseUrl: 'https://example.test', store, fetch: fetchImpl as unknown as typeof fetch})
+
+		await service.refreshPlan()
+
+		expect(service.status().plan).toBe('pro')
+		const [url, init] = fetchImpl.mock.calls[0] as [string, RequestInit]
+		expect(url).toBe('https://example.test/api/account/plan')
+		expect((init.headers as Record<string, string>).authorization).toBe('Bearer tok')
+	})
+
+	it('keeps the previous cached plan when a refresh fails, rather than throwing', async () => {
+		const store = stubStore({load: vi.fn().mockReturnValue({deviceToken: 'tok', deviceId: 'dev-1'})})
+		const fetchImpl = vi
+			.fn()
+			.mockResolvedValueOnce(jsonResponse({plan: 'pro', syncAllowed: true, reason: null}))
+			.mockRejectedValueOnce(new Error('network down'))
+		const service = new AccountService({baseUrl: 'https://example.test', store, fetch: fetchImpl as unknown as typeof fetch})
+
+		await service.refreshPlan()
+		expect(service.status().plan).toBe('pro')
+
+		await expect(service.refreshPlan()).resolves.toBeUndefined()
+		expect(service.status().plan).toBe('pro')
+	})
+
+	it('clears the cached plan on disconnect', async () => {
+		const store = stubStore({load: vi.fn().mockReturnValue({deviceToken: 'tok', deviceId: 'dev-1'})})
+		const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({plan: 'pro', syncAllowed: true, reason: null}))
+		const service = new AccountService({baseUrl: 'https://example.test', store, fetch: fetchImpl as unknown as typeof fetch})
+		await service.refreshPlan()
+		expect(service.status().plan).toBe('pro')
+
+		service.disconnect()
+
+		expect(service.status().plan).toBeUndefined()
+	})
 })

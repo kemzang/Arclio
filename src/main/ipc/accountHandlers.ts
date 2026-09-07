@@ -20,11 +20,12 @@ export function registerAccountHandlers(accountService: AccountService, syncSche
 	ipcMain.removeHandler(IPC_CHANNELS.accountAwaitPairing)
 	ipcMain.handle(IPC_CHANNELS.accountAwaitPairing, async () => {
 		try {
-			const status = await accountService.awaitPairing()
+			await accountService.awaitPairing()
 			// Now that credentials exist, start syncing without waiting for a restart.
 			syncScheduler.start()
 			void syncScheduler.runNow()
-			return {ok: true as const, status}
+			await accountService.refreshPlan()
+			return {ok: true as const, status: accountService.status()}
 		} catch (error) {
 			// A pairing that expires, is denied, or is cancelled is an ordinary
 			// outcome the UI must explain — not an exception to surface raw.

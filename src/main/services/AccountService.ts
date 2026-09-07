@@ -2,6 +2,7 @@ import {shell} from 'electron'
 import os from 'node:os'
 import log from 'electron-log/main.js'
 import {PairingClient, PairingError, type PairingStart} from '@arclio/auth'
+import {SyncClient, type AccountPlan} from '@arclio/cloud'
 import {AccountStore, type StoredAccount} from '@main/stores/AccountStore.js'
 import {SITE_URL} from '@shared/constants.js'
 
@@ -13,6 +14,8 @@ export interface AccountStatus {
 	deviceId?: string
 	/** False when the OS cannot protect a token at rest; connecting is refused. */
 	canStoreCredentials: boolean
+	/** Undefined until refreshPlan() has fetched it at least once this session. */
+	plan?: AccountPlan
 }
 
 export interface PairingHandle {
@@ -31,20 +34,49 @@ export interface PairingHandle {
 export class AccountService {
 	private readonly client: PairingClient
 	private readonly store: AccountStore
+	private readonly baseUrl: string
+	private readonly fetchImpl?: typeof globalThis.fetch
 	private pending: {start: PairingStart; controller: AbortController} | null = null
 	// Bumped by cancelPairing() (directly, or via a fresh beginPairing()). Lets an
 	// in-flight beginPairing() notice that it was superseded while awaiting
 	// client.start() and avoid overwriting a newer call's `pending`.
 	private pairingGeneration = 0
+	// Cached rather than fetched per status() call: status() is synchronous and
+	// polled by the renderer, while the plan only changes on upgrade/downgrade —
+	// not worth a network round trip per read. null until refreshPlan() runs once.
+	private cachedPlan: AccountPlan | null = null
 
 	constructor(options: {baseUrl?: string; store?: AccountStore; fetch?: typeof globalThis.fetch} = {}) {
-		this.client = new PairingClient({baseUrl: options.baseUrl ?? SITE_URL, fetch: options.fetch})
+		this.baseUrl = options.baseUrl ?? SITE_URL
+		this.fetchImpl = options.fetch
+		this.client = new PairingClient({baseUrl: this.baseUrl, fetch: options.fetch})
 		this.store = options.store ?? new AccountStore()
 	}
 
 	status(): AccountStatus {
 		const stored = this.store.load()
-		return {connected: stored !== null, accountEmail: stored?.accountEmail, deviceId: stored?.deviceId, canStoreCredentials: AccountStore.encryptionAvailable()}
+		return {connected: stored !== null, accountEmail: stored?.accountEmail, deviceId: stored?.deviceId, canStoreCredentials: AccountStore.encryptionAvailable(), plan: this.cachedPlan ?? undefined}
+	}
+
+	/**
+	 * Refreshes the cached plan from the site. Best-effort: a network blip
+	 * leaves the previous cached value (or null if there never was one) rather
+	 * than throwing, since callers use this opportunistically alongside other
+	 * work (after pairing, after a sync round) rather than awaiting it directly.
+	 */
+	async refreshPlan(): Promise<void> {
+		const stored = this.store.load()
+		if (!stored) {
+			this.cachedPlan = null
+			return
+		}
+		try {
+			const client = new SyncClient({baseUrl: this.baseUrl, deviceToken: stored.deviceToken, fetch: this.fetchImpl})
+			const result = await client.getPlan()
+			this.cachedPlan = result.plan
+		} catch (error) {
+			logger.info('Plan refresh failed, keeping previous value', {error})
+		}
 	}
 
 	/**
@@ -114,6 +146,7 @@ export class AccountService {
 	disconnect(): AccountStatus {
 		this.cancelPairing()
 		this.store.clear()
+		this.cachedPlan = null
 		logger.info('Device disconnected locally')
 		return this.status()
 	}
