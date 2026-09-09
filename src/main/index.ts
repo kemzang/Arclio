@@ -1,20 +1,44 @@
 import path from 'node:path'
 import fs from 'node:fs'
 import os from 'node:os'
+import {spawn} from 'node:child_process'
 import {app, BrowserWindow, dialog, nativeTheme} from 'electron'
 
 // Electron 42+ defaults to native Wayland on Linux. Several Wayland sessions
 // (VMware guests, snap-confined shells, older Mesa stacks) crash with SIGSEGV
 // during the first BrowserWindow construction. Relaunch under X11/XWayland
 // before any window is created.
+//
+// True on this process for the rest of its lifetime once a relaunch has been
+// triggered. `hasSingleInstanceLock` gating further down checks this so the
+// `whenReady().then(...)` chain never runs here — that is what actually makes
+// window creation impossible during a relaunch, not the timing of app.exit().
+let relaunchInFlight = false
+
 if (process.platform === 'linux' && process.env.XDG_SESSION_TYPE === 'wayland' && (app.isPackaged || process.env.ARCLIO_FORCE_WAYLAND_RELAUNCH === '1') && !process.argv.includes('--ozone-platform=x11')) {
-	app.relaunch({args: ['--ozone-platform=x11', ...process.argv.slice(1)]})
-	// quit() is graceful and async — it does not stop the rest of this module
-	// from executing, so the `app.whenReady().then(...)` below still runs and
-	// creates a BrowserWindow under native Wayland before this process
-	// actually exits, hitting the very SIGSEGV this relaunch exists to avoid.
-	// exit() tears the process down immediately instead.
-	app.exit(0)
+	relaunchInFlight = true
+	// Deliberately not app.relaunch(): on Linux it hands off to Electron's own
+	// `--type=relauncher` helper process, which execs stdio:'ignore' with no
+	// way for us to observe failures. On a system where AppImage execution is
+	// intercepted (e.g. AppImageLauncher's binfmt handler — common on desktop
+	// Linux), that hop silently drops the relaunch: the helper's exec of the
+	// AppImage never surfaces a window and leaves nothing to debug, which
+	// reads as "the app opens then instantly closes". Spawning the real
+	// executable ourselves is the same thing that works when this exact
+	// command is run directly from a shell, with a stdio we can still see if
+	// something goes wrong. process.env.APPIMAGE is the real .AppImage file
+	// path (always set by the AppImage runtime) — process.execPath instead
+	// points inside this process's own FUSE mount, which disappears once this
+	// process exits.
+	const target = process.env.APPIMAGE ?? process.execPath
+	spawn(target, ['--ozone-platform=x11', ...process.argv.slice(1)], {detached: true, stdio: 'ignore'}).unref()
+	// Window creation is already blocked by `relaunchInFlight` above, so
+	// nothing downstream depends on exiting *before* whenReady fires anymore.
+	// That frees this from needing an immediate exit: a short delay gives the
+	// spawned child (and, on systems that intercept AppImage execution, that
+	// layer too) time to actually start from the file on disk before this
+	// process's own FUSE mount disappears out from under it.
+	setTimeout(() => app.exit(0), 500)
 }
 
 // VMware / broken GPU drivers: GPU process segfaults (exit_code=139) on both
@@ -148,9 +172,9 @@ try {
 // app.enableSandbox() does not subsume.
 app.enableSandbox()
 
-const hasSingleInstanceLock = app.requestSingleInstanceLock()
+const hasSingleInstanceLock = !relaunchInFlight && app.requestSingleInstanceLock()
 
-if (!hasSingleInstanceLock) {
+if (!hasSingleInstanceLock && !relaunchInFlight) {
 	app.quit()
 }
 
