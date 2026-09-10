@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "Ulanishda xatolik yuz berdi. Iltimos, qayta urinib koʻring."
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "Bepul"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "Bu oy {{minutes}} daqiqa AI transkripsiya qoldi"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "Sahifani qayta ochish"

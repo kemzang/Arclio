@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "接続中に問題が発生しました。もう一度お試しください。"
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "無料"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "今月残りのAI文字起こし時間: {{minutes}}分"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "ページを再度開く"

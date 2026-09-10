@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "በመገናኘት ላይ ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።"
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "ነፃ"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "በዚህ ወር {{minutes}} ደቂቃ የ AI ትርጉም ጊዜ ቀርቷል"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "ገጹን እንደገና ክፈት"

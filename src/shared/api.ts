@@ -353,6 +353,10 @@ export interface AccountStatus {
 	canStoreCredentials: boolean
 	/** Undefined until refreshed at least once this session — never assume 'free'. */
 	plan?: 'free' | 'pro'
+	/** Which Paddle price the account is on. Both tiers grant plan 'pro' — this is the only thing that tells them apart. */
+	tier?: 'sync' | 'sync_ai' | null
+	/** Only populated when tier === 'sync_ai'. */
+	transcriptionQuota?: {secondsUsed: number; secondsRemaining: number} | null
 }
 
 export interface PairingHandle {

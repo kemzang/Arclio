@@ -90,6 +90,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr ""
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr ""
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr ""
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr ""
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr ""
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr ""
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr ""

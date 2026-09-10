@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "Đã xảy ra sự cố khi kết nối. Vui lòng thử lại."
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "Miễn phí"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "Còn lại {{minutes}} phút phiên âm AI trong tháng này"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "Mở lại trang"

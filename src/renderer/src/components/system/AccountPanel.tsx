@@ -4,6 +4,7 @@ import type {TFunction} from 'i18next'
 import {Check, Copy, ExternalLink, Loader2, LogOut, RefreshCw, ShieldAlert} from 'lucide-react'
 import type {AccountStatus, PairingHandle, SyncOutcome} from '@shared/api.js'
 import {Button} from '../ui/button.js'
+import {Badge} from '../ui/badge.js'
 
 type Phase = 'idle' | 'starting' | 'waiting' | 'failed'
 
@@ -14,6 +15,15 @@ type Phase = 'idle' | 'starting' | 'waiting' | 'failed'
  * fails the build instead of rendering a raw key at runtime.
  */
 const FAILURE_KEY = {expired: 'account.pairingExpired', denied: 'account.pairingDenied', cancelled: 'account.pairingCancelled', failed: 'account.pairingFailed'} as const
+
+/** Which badge to show for a plan/tier combination — undefined plan means refreshPlan() hasn't resolved yet, so no badge is shown rather than guessing. */
+function planBadgeLabel(status: AccountStatus, t: TFunction): string | null {
+	if (status.plan === undefined) return null
+	if (status.plan === 'free') return t('account.planFree')
+	if (status.tier === 'sync_ai') return t('account.planSyncAi')
+	if (status.tier === 'sync') return t('account.planSync')
+	return t('account.planPro')
+}
 
 /** Turns a sync result into something worth reading, rather than a status code. */
 function describeSync(outcome: SyncOutcome | null, t: TFunction): string {
@@ -137,8 +147,12 @@ export function AccountPanel(): React.JSX.Element {
 					<div className="flex items-start gap-3 min-w-0">
 						<Check className="size-5 mt-0.5 text-[var(--status-done)] shrink-0" />
 						<div className="min-w-0">
-							<p className="text-sm font-medium">{t('account.connectedTitle')}</p>
+							<div className="flex items-center gap-2">
+								<p className="text-sm font-medium">{t('account.connectedTitle')}</p>
+								{planBadgeLabel(status, t) && <Badge variant={status.plan === 'free' ? 'outline' : 'default'}>{planBadgeLabel(status, t)}</Badge>}
+							</div>
 							<p className="text-xs text-[var(--text-subtle)] truncate">{status.accountEmail ?? t('account.connectedDescription')}</p>
+							{status.tier === 'sync_ai' && status.transcriptionQuota && <p className="text-xs text-[var(--text-subtle)]">{t('account.quotaRemaining', {minutes: Math.floor(status.transcriptionQuota.secondsRemaining / 60)})}</p>}
 						</div>
 					</div>
 					<Button variant="outline" size="sm" className="shrink-0" onClick={() => void disconnect()}>

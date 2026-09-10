@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "Yeroo walitti fidnu rakkoon uumameera. Maaloo irra deebiʼii yaali."
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "Bilisaa"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "Ji'a kana keessatti daqiiqaa {{minutes}} AI hiikuu hafeera"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "Fuula irra deebiʼii bani"

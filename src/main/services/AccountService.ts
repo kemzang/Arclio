@@ -2,7 +2,7 @@ import {shell} from 'electron'
 import os from 'node:os'
 import log from 'electron-log/main.js'
 import {PairingClient, PairingError, type PairingStart} from '@arclio/auth'
-import {SyncClient, type AccountPlan} from '@arclio/cloud'
+import {SyncClient, type AccountPlan, type PaddleTier} from '@arclio/cloud'
 import {AccountStore, type StoredAccount} from '@main/stores/AccountStore.js'
 import {SITE_URL} from '@shared/constants.js'
 
@@ -16,6 +16,9 @@ export interface AccountStatus {
 	canStoreCredentials: boolean
 	/** Undefined until refreshPlan() has fetched it at least once this session. */
 	plan?: AccountPlan
+	/** Which Paddle price the account is on — both tiers grant plan 'pro', this is the only thing that tells them apart. */
+	tier?: PaddleTier | null
+	transcriptionQuota?: {secondsUsed: number; secondsRemaining: number} | null
 }
 
 export interface PairingHandle {
@@ -45,6 +48,8 @@ export class AccountService {
 	// polled by the renderer, while the plan only changes on upgrade/downgrade —
 	// not worth a network round trip per read. null until refreshPlan() runs once.
 	private cachedPlan: AccountPlan | null = null
+	private cachedTier: PaddleTier | null = null
+	private cachedTranscriptionQuota: {secondsUsed: number; secondsRemaining: number} | null = null
 
 	constructor(options: {baseUrl?: string; store?: AccountStore; fetch?: typeof globalThis.fetch} = {}) {
 		this.baseUrl = options.baseUrl ?? SITE_URL
@@ -55,7 +60,7 @@ export class AccountService {
 
 	status(): AccountStatus {
 		const stored = this.store.load()
-		return {connected: stored !== null, accountEmail: stored?.accountEmail, deviceId: stored?.deviceId, canStoreCredentials: AccountStore.encryptionAvailable(), plan: this.cachedPlan ?? undefined}
+		return {connected: stored !== null, accountEmail: stored?.accountEmail, deviceId: stored?.deviceId, canStoreCredentials: AccountStore.encryptionAvailable(), plan: this.cachedPlan ?? undefined, tier: this.cachedTier, transcriptionQuota: this.cachedTranscriptionQuota}
 	}
 
 	/**
@@ -68,12 +73,16 @@ export class AccountService {
 		const stored = this.store.load()
 		if (!stored) {
 			this.cachedPlan = null
+			this.cachedTier = null
+			this.cachedTranscriptionQuota = null
 			return
 		}
 		try {
 			const client = new SyncClient({baseUrl: this.baseUrl, deviceToken: stored.deviceToken, fetch: this.fetchImpl})
 			const result = await client.getPlan()
 			this.cachedPlan = result.plan
+			this.cachedTier = result.tier
+			this.cachedTranscriptionQuota = result.transcriptionQuota
 		} catch (error) {
 			logger.info('Plan refresh failed, keeping previous value', {error})
 		}
@@ -147,6 +156,8 @@ export class AccountService {
 		this.cancelPairing()
 		this.store.clear()
 		this.cachedPlan = null
+		this.cachedTier = null
+		this.cachedTranscriptionQuota = null
 		logger.info('Device disconnected locally')
 		return this.status()
 	}

@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "ချိတ်ဆက်စဉ် တစ်ခုခုမှားယွင်းသွားသည်။ ထပ်ကြိုးစားပါ။"
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "အခမဲ့"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "ဒီလအတွက် AI စာသားပြောင်းချိန် {{minutes}} မိနစ် ကျန်ရှိသည်"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "စာမျက်နှာပြန်ဖွင့်ရန်"

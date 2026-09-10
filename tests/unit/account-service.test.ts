@@ -164,4 +164,36 @@ describe('AccountService', () => {
 
 		expect(service.status().plan).toBeUndefined()
 	})
+
+	it('caches the tier and transcription quota alongside the plan', async () => {
+		const store = stubStore({load: vi.fn().mockReturnValue({deviceToken: 'tok', deviceId: 'dev-1'})})
+		const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({plan: 'pro', syncAllowed: true, reason: null, tier: 'sync_ai', transcriptionQuota: {secondsUsed: 120, secondsRemaining: 7080}}))
+		const service = new AccountService({baseUrl: 'https://example.test', store, fetch: fetchImpl as unknown as typeof fetch})
+
+		await service.refreshPlan()
+
+		expect(service.status()).toMatchObject({tier: 'sync_ai', transcriptionQuota: {secondsUsed: 120, secondsRemaining: 7080}})
+	})
+
+	it('reports a null tier for a plain Sync (non-AI) account, not undefined', async () => {
+		const store = stubStore({load: vi.fn().mockReturnValue({deviceToken: 'tok', deviceId: 'dev-1'})})
+		const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({plan: 'pro', syncAllowed: true, reason: null, tier: 'sync', transcriptionQuota: null}))
+		const service = new AccountService({baseUrl: 'https://example.test', store, fetch: fetchImpl as unknown as typeof fetch})
+
+		await service.refreshPlan()
+
+		expect(service.status()).toMatchObject({tier: 'sync', transcriptionQuota: null})
+	})
+
+	it('clears the cached tier and quota on disconnect', async () => {
+		const store = stubStore({load: vi.fn().mockReturnValue({deviceToken: 'tok', deviceId: 'dev-1'})})
+		const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({plan: 'pro', syncAllowed: true, reason: null, tier: 'sync_ai', transcriptionQuota: {secondsUsed: 60, secondsRemaining: 7140}}))
+		const service = new AccountService({baseUrl: 'https://example.test', store, fetch: fetchImpl as unknown as typeof fetch})
+		await service.refreshPlan()
+		expect(service.status().tier).toBe('sync_ai')
+
+		service.disconnect()
+
+		expect(service.status()).toMatchObject({tier: null, transcriptionQuota: null})
+	})
 })

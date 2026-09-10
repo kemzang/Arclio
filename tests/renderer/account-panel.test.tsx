@@ -62,6 +62,37 @@ describe('AccountPanel', () => {
 		await waitFor(() => expect(account.disconnect).toHaveBeenCalled())
 	})
 
+	it('shows no plan badge until refreshPlan() has resolved at least once', async () => {
+		account.status.mockResolvedValue({connected: true, accountEmail: 'a@b.test', deviceId: 'dev-1', canStoreCredentials: true})
+		render(<AccountPanel />)
+
+		await screen.findByText(/this device is connected/i)
+		expect(screen.queryByText('Free')).not.toBeInTheDocument()
+		expect(screen.queryByText('Sync')).not.toBeInTheDocument()
+	})
+
+	it('shows a Free badge for a free account', async () => {
+		account.status.mockResolvedValue({connected: true, accountEmail: 'a@b.test', deviceId: 'dev-1', canStoreCredentials: true, plan: 'free'})
+		render(<AccountPanel />)
+
+		expect(await screen.findByText('Free')).toBeInTheDocument()
+	})
+
+	it('shows a Sync badge for a pro account on the Sync tier', async () => {
+		account.status.mockResolvedValue({connected: true, accountEmail: 'a@b.test', deviceId: 'dev-1', canStoreCredentials: true, plan: 'pro', tier: 'sync'})
+		render(<AccountPanel />)
+
+		expect(await screen.findByText('Sync')).toBeInTheDocument()
+	})
+
+	it('shows a Sync + AI badge and remaining quota for a pro account on the Sync+IA tier', async () => {
+		account.status.mockResolvedValue({connected: true, accountEmail: 'a@b.test', deviceId: 'dev-1', canStoreCredentials: true, plan: 'pro', tier: 'sync_ai', transcriptionQuota: {secondsUsed: 600, secondsRemaining: 6600}})
+		render(<AccountPanel />)
+
+		expect(await screen.findByText('Sync + AI')).toBeInTheDocument()
+		expect(screen.getByText(/110 min of AI transcription left/i)).toBeInTheDocument()
+	})
+
 	it('disables connecting when the OS cannot protect a token', async () => {
 		// Better to say so than to walk the user through a Google login whose
 		// result we could not keep safely.

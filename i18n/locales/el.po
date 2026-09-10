@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "Κάτι πήγε στραβά κατά τη σύνδεση. Δοκιμάστε ξανά."
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "Δωρεάν"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "{{minutes}} λεπτά μεταγραφής AI απομένουν αυτόν τον μήνα"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "Άνοιγμα σελίδας ξανά"

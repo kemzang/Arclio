@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "Під час підключення сталася помилка. Спробуйте ще раз."
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "Безкоштовно"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "Залишилось {{minutes}} хв ШІ-транскрипції цього місяця"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "Відкрити сторінку знову"

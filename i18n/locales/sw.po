@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "Hitilafu imetokea wakati wa kuunganisha. Tafadhali jaribu tena."
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "Bure"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "Dakika {{minutes}} za unukuzi wa AI zimesalia mwezi huu"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "Fungua ukurasa tena"

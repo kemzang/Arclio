@@ -91,6 +91,26 @@ msgctxt "account.pairingFailed"
 msgid "Something went wrong while connecting. Please try again."
 msgstr "সংযোগ করার সময় সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
 
+msgctxt "account.planFree"
+msgid "Free"
+msgstr "ফ্রি"
+
+msgctxt "account.planPro"
+msgid "Pro"
+msgstr "Pro"
+
+msgctxt "account.planSync"
+msgid "Sync"
+msgstr "Sync"
+
+msgctxt "account.planSyncAi"
+msgid "Sync + AI"
+msgstr "Sync + AI"
+
+msgctxt "account.quotaRemaining"
+msgid "{{minutes}} min of AI transcription left this month"
+msgstr "এই মাসে {{minutes}} মিনিট AI ট্রান্সক্রিপশন বাকি আছে"
+
 msgctxt "account.reopenPage"
 msgid "Reopen page"
 msgstr "পৃষ্ঠা আবার খুলুন"
