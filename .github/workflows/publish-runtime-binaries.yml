@@ -1,0 +1,65 @@
+name: Publish Runtime Binary Manifest
+
+# Publishes the signed runtime-binary manifest that the app fetches at
+# startup from kemzang-Bryan/arclio-runtime-binaries (see
+# dev-docs/runtime-binaries.md). Scheduled so a new yt-dlp release is picked
+# up within a day without needing an Arclio app release.
+
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+  BUN_VERSION: '1.2.23'
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        with:
+          node-version-file: .node-version
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Generate manifest
+        run: bun scripts/build/runtimeBinaryManifest.ts generate --out dist/runtime-binaries/runtime-index-v1.json --cache-root "$RUNNER_TEMP/arclio-runtime-binary-manifest" --validate
+
+      - name: Sign manifest
+        env:
+          ARCLIO_RUNTIME_INDEX_SIGNING_KEY: ${{ secrets.ARCLIO_RUNTIME_INDEX_SIGNING_KEY }}
+        run: bun scripts/build/runtimeBinaryManifest.ts sign --manifest dist/runtime-binaries/runtime-index-v1.json
+
+      # A single persistent release (not one per run) so GitHub's
+      # `/releases/latest` pointer — what the app actually fetches — always
+      # resolves to the newest manifest instead of accumulating dozens of
+      # dated releases over time.
+      - name: Publish to kemzang-Bryan/arclio-runtime-binaries
+        env:
+          GH_TOKEN: ${{ secrets.RUNTIME_BINARIES_PUBLISH_TOKEN }}
+        run: |
+          cd dist/runtime-binaries
+          if gh release view runtime-index --repo kemzang-Bryan/arclio-runtime-binaries >/dev/null 2>&1; then
+            gh release upload runtime-index runtime-index-v1.json runtime-index-v1.sig --repo kemzang-Bryan/arclio-runtime-binaries --clobber
+          else
+            gh release create runtime-index runtime-index-v1.json runtime-index-v1.sig --repo kemzang-Bryan/arclio-runtime-binaries --title "Runtime binary index" --notes "Signed manifest of yt-dlp runtime binaries, published automatically. See kemzang/Arclio .github/workflows/publish-runtime-binaries.yml."
+          fi
