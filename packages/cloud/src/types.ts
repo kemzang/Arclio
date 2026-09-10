@@ -46,8 +46,34 @@ export type MergeDecision = {action: 'keep-local'} | {action: 'take-remote'; rec
 
 export type AccountPlan = 'free' | 'pro'
 
+/** Which Paddle price the account is on. Both tiers grant `plan: 'pro'` — this is the only thing that distinguishes them. */
+export type PaddleTier = 'sync' | 'sync_ai'
+
 export interface PlanResponse {
 	plan: AccountPlan
 	syncAllowed: boolean
 	reason: string | null
+	tier: PaddleTier | null
+	/** Only populated when `tier === 'sync_ai'` — showing a number for a tier that doesn't have this entitlement would be misleading. */
+	transcriptionQuota: {secondsUsed: number; secondsRemaining: number} | null
+}
+
+export interface CreateTranscriptionSessionInput {
+	estimatedDurationSeconds: number
+	language?: string
+}
+
+export interface CreateTranscriptionSessionResponse {
+	sessionId: string
+	quota: {secondsUsed: number; secondsRemaining: number}
+}
+
+export interface TranscriptionChunkMeta {
+	sequence: number
+	startOffsetSeconds: number
+	durationSeconds: number
+}
+
+export interface CommitTranscriptionResponse {
+	srt: string
 }

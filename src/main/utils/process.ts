@@ -34,6 +34,11 @@ export function spawnFFmpeg(binaryPath: string, args: string[]): ChildProcessWit
 	})
 }
 
+/** Same BtbN-bundle sibling-library env fix as spawnFFmpeg — ffprobe ships from the same build. */
+export function spawnFFprobe(binaryPath: string, args: string[]): ChildProcessWithoutNullStreams {
+	return spawn(binaryPath, args, {env: envWithFfmpegPaths(binaryPath), windowsHide: true})
+}
+
 export function splitStderrLines(text: string): string[] {
 	return text.split(/\r?\n/).flatMap(line => {
 		const trimmed = line.trim()
