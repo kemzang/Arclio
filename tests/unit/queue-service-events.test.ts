@@ -359,6 +359,28 @@ describe('QueueService — output target changes', () => {
 		const [item] = qs.snapshot()
 		expect(item.artifacts).toEqual([{id: 'artifact:/downloads/video.mkv', kind: 'media', path: '/downloads/video.mkv', fileName: 'video.mkv', discoveredAt: '2026-06-18T10:00:00.000Z'}])
 	})
+
+	it('addArtifact attaches a file to an already-completed item found by itemId, not jobId', () => {
+		const {qs} = makeService()
+		qs.add([makeItem({id: 'done-1', status: 'done', outputDir: '/downloads', artifacts: []})])
+
+		const added = qs.addArtifact('done-1', '/downloads/video.srt', 'subtitle')
+
+		expect(added).toBe(true)
+		const [item] = qs.snapshot()
+		expect(item.artifacts).toEqual([expect.objectContaining({kind: 'subtitle', path: '/downloads/video.srt', fileName: 'video.srt'})])
+	})
+
+	it('addArtifact returns false for an unknown itemId and adds nothing', () => {
+		const {qs} = makeService()
+		qs.add([makeItem({id: 'done-1', status: 'done', outputDir: '/downloads', artifacts: []})])
+
+		const added = qs.addArtifact('missing-item', '/downloads/video.srt', 'subtitle')
+
+		expect(added).toBe(false)
+		const [item] = qs.snapshot()
+		expect(item.artifacts).toEqual([])
+	})
 })
 
 describe('QueueService — tempDir persistence while running', () => {

@@ -22,7 +22,7 @@ import log from 'electron-log/main.js'
 import {fail, ok, type Result} from '@shared/result.js'
 import {createAppError} from '@main/utils/errorFactory.js'
 import {nowIso} from '@main/utils/clock.js'
-import {QUEUE_STATUS, STATUS_KEY, type QueueLane, type StatusKey} from '@shared/schemas.js'
+import {QUEUE_STATUS, STATUS_KEY, type QueueArtifactKind, type QueueLane, type StatusKey} from '@shared/schemas.js'
 import {transition, illegalTransition} from '@shared/queueTransition.js'
 import {ProgressFormatter} from '@shared/progressFormat.js'
 import {ProgressNormalizer} from '@shared/progressNormalizer.js'
@@ -500,6 +500,17 @@ export class QueueService extends EventEmitter {
 			return {...prev, artifacts: upsertQueueArtifact(moveQueueArtifactPath(prev.artifacts, event.fromPath, event.path), artifact)}
 		}
 		this.commit({kind: 'patch', itemId: item.id, reason: `artifact:${event.kind}`, patcher})
+	}
+
+	// For post-hoc attachments (AI transcription) rather than live download
+	// events: the item is already `done` by the time this runs, so there is no
+	// `lastJobId` to route through — the caller already knows the itemId.
+	addArtifact(itemId: string, path: string, kind: QueueArtifactKind): boolean {
+		const item = this.findItem(itemId)
+		if (!item) return false
+		const artifact = queueArtifactFromPath(path, {kind, discoveredAt: nowIso()})
+		this.commit({kind: 'patch', itemId, reason: `artifact:${kind}`, patcher: prev => ({...prev, artifacts: upsertQueueArtifact(prev.artifacts, artifact)})})
+		return true
 	}
 
 	// Persists the running job's working tempDir onto its QueueItem as soon as
