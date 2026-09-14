@@ -7,7 +7,7 @@ import type {E2eHarnessMode} from '@main/e2eHarness.js'
 // no rpath set, so we inject LD_LIBRARY_PATH at spawn time. Harmless on
 // non-Linux (DYLD_LIBRARY_PATH is SIP-blocked on macOS, and Win uses
 // native exe-dir DLL search).
-function envWithFfmpegPaths(ffmpegPath: string | null, opts: {e2eMode?: E2eHarnessMode} = {}): NodeJS.ProcessEnv {
+export function envWithFfmpegPaths(ffmpegPath: string | null, opts: {e2eMode?: E2eHarnessMode} = {}): NodeJS.ProcessEnv {
 	const env = opts.e2eMode?.applySpawnEnv(process.env) ?? {...process.env}
 	if (!ffmpegPath) return env
 	const ffmpegDir = path.dirname(ffmpegPath)

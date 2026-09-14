@@ -5,6 +5,8 @@ import type {MediaType} from '@arclio/media'
 
 export interface ExtractOptions {
 	ffprobePath?: string
+	/** Passed through verbatim to the spawned ffprobe process. Lets a caller inject platform-specific env (e.g. LD_LIBRARY_PATH for a bundled Linux ffprobe build) without this package needing to know why. */
+	env?: NodeJS.ProcessEnv
 }
 
 // CBZ/comic archives are opened from arbitrary user-picked files. ComicInfo.xml
@@ -67,10 +69,10 @@ function parseSampleRate(val: string | undefined): number {
 	return isNaN(num) ? 0 : num
 }
 
-function runFFprobe(ffprobePath: string, filePath: string, signal?: AbortSignal): Promise<FFprobeOutput> {
+function runFFprobe(ffprobePath: string, filePath: string, signal?: AbortSignal, env?: NodeJS.ProcessEnv): Promise<FFprobeOutput> {
 	return new Promise((resolve, reject) => {
 		const args = ['-v', 'quiet', '-print_format', 'json', '-show_format', '-show_streams', filePath]
-		const proc = spawn(ffprobePath, args, {signal})
+		const proc = spawn(ffprobePath, args, {signal, env})
 		let stdout = ''
 		let stderr = ''
 		proc.stdout.on('data', (chunk: Buffer) => {
@@ -104,9 +106,11 @@ function getAudioStream(streams: FFprobeStream[]): FFprobeStream | undefined {
 
 export class MetadataExtractor {
 	private readonly ffprobePath: string
+	private readonly env?: NodeJS.ProcessEnv
 
 	constructor(options?: ExtractOptions) {
 		this.ffprobePath = options?.ffprobePath ?? 'ffprobe'
+		this.env = options?.env
 	}
 
 	async extract(filePath: string, mediaType: MediaType, signal?: AbortSignal): Promise<MediaMetadata> {
@@ -129,7 +133,7 @@ export class MetadataExtractor {
 	}
 
 	private async extractVideo(filePath: string, fileStat: import('node:fs').Stats, signal?: AbortSignal): Promise<MediaMetadata> {
-		const probe = await runFFprobe(this.ffprobePath, filePath, signal)
+		const probe = await runFFprobe(this.ffprobePath, filePath, signal, this.env)
 		const streams = probe.streams ?? []
 		const videoStream = getVideoStream(streams)
 		const audioStream = getAudioStream(streams)
@@ -158,7 +162,7 @@ export class MetadataExtractor {
 	}
 
 	private async extractAudio(filePath: string, fileStat: import('node:fs').Stats, signal?: AbortSignal): Promise<MediaMetadata> {
-		const probe = await runFFprobe(this.ffprobePath, filePath, signal)
+		const probe = await runFFprobe(this.ffprobePath, filePath, signal, this.env)
 		const streams = probe.streams ?? []
 		const audioStream = getAudioStream(streams)
 		const format = probe.format

@@ -7,6 +7,7 @@ import {MetadataExtractor} from '@arclio/metadata'
 import type {DrizzleDatabase} from '@main/db/connection.js'
 import {createMediaRepository} from '@main/db/repositories/mediaRepository.js'
 import type {BinaryManager} from '@main/services/BinaryManager.js'
+import {envWithFfmpegPaths} from '@main/utils/process.js'
 
 const logger = electronLog.scope('metadata')
 
@@ -43,7 +44,11 @@ export class MetadataService extends EventEmitter {
 	constructor(db: DrizzleDatabase, binaryManager: BinaryManager) {
 		super()
 		const ffprobePath = binaryManager.getFfprobePath()
-		this.extractor = new MetadataExtractor({ffprobePath})
+		// Same BtbN-bundle sibling-library fix spawnFFprobe applies for every
+		// other ffprobe caller — MetadataExtractor's own spawn() was inheriting
+		// plain process.env, so it failed on Linux with a missing
+		// libavdevice.so.* the moment the app ran from its packaged location.
+		this.extractor = new MetadataExtractor({ffprobePath, env: envWithFfmpegPaths(ffprobePath)})
 		this.mediaRepo = createMediaRepository(db)
 	}
 
