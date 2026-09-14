@@ -544,7 +544,23 @@
 			"statusPaused": "На паузі",
 			"statusDone": "Готово",
 			"statusError": "Помилка",
-			"statusCancelled": "Скасовано"
+			"statusCancelled": "Скасовано",
+			"transcription": {
+				"generate": "Створити субтитри з ШІ",
+				"phaseExtracting": "Видобування аудіо…",
+				"phaseUploading": "Підготовка…",
+				"phaseTranscribing": "Розпізнавання ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Цей елемент не знайдено.",
+					"noMediaFile": "Немає завантаженого файлу для розпізнавання.",
+					"notConnected": "Перепідключіть акаунт, щоб створити субтитри.",
+					"tierRequired": "Субтитри з ШІ потребують плану Sync + AI.",
+					"quotaExceeded": "Досягнуто місячну квоту розпізнавання з ШІ.",
+					"unauthorized": "Перепідключіть акаунт, щоб створити субтитри.",
+					"cancelled": "Скасовано.",
+					"failed": "Не вдалося створити субтитри."
+				}
+			}
 		}
 	},
 	"update": {

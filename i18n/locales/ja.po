@@ -871,6 +871,54 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "ダウンロード中"
 
+msgctxt "queue.item.transcription.errors.cancelled"
+msgid "Cancelled."
+msgstr "キャンセルされました。"
+
+msgctxt "queue.item.transcription.errors.failed"
+msgid "Subtitle generation failed."
+msgstr "字幕の生成に失敗しました。"
+
+msgctxt "queue.item.transcription.errors.itemNotFound"
+msgid "This item could not be found."
+msgstr "このアイテムが見つかりませんでした。"
+
+msgctxt "queue.item.transcription.errors.noMediaFile"
+msgid "No downloaded file to transcribe."
+msgstr "文字起こしするダウンロード済みファイルがありません。"
+
+msgctxt "queue.item.transcription.errors.notConnected"
+msgid "Reconnect your account to generate subtitles."
+msgstr "字幕を生成するにはアカウントを再接続してください。"
+
+msgctxt "queue.item.transcription.errors.quotaExceeded"
+msgid "Monthly AI transcription quota reached."
+msgstr "月間AI文字起こしクォータに達しました。"
+
+msgctxt "queue.item.transcription.errors.tierRequired"
+msgid "AI subtitles require the Sync + AI plan."
+msgstr "AI字幕にはSync + AIプランが必要です。"
+
+msgctxt "queue.item.transcription.errors.unauthorized"
+msgid "Reconnect your account to generate subtitles."
+msgstr "字幕を生成するにはアカウントを再接続してください。"
+
+msgctxt "queue.item.transcription.generate"
+msgid "Generate AI subtitles"
+msgstr "AI字幕を生成"
+
+msgctxt "queue.item.transcription.phaseExtracting"
+msgid "Extracting audio…"
+msgstr "音声を抽出しています…"
+
+msgctxt "queue.item.transcription.phaseTranscribing"
+msgid "Transcribing ({{chunkIndex}}/{{chunkCount}})…"
+msgstr "文字起こし中 ({{chunkIndex}}/{{chunkCount}})…"
+
+msgctxt "queue.item.transcription.phaseUploading"
+msgid "Preparing…"
+msgstr "準備中…"
+
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "すべてのアクティブなダウンロードを一時停止"

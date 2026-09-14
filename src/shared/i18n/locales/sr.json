@@ -544,7 +544,23 @@
 			"statusPaused": "Пауза",
 			"statusDone": "Готово",
 			"statusError": "Ошибка",
-			"statusCancelled": "Отменено"
+			"statusCancelled": "Отменено",
+			"transcription": {
+				"generate": "Направи AI титлове",
+				"phaseExtracting": "Издвајање звука…",
+				"phaseUploading": "Припрема…",
+				"phaseTranscribing": "Транскрибовање ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Ова ставка није пронађена.",
+					"noMediaFile": "Нема преузете датотеке за транскрибовање.",
+					"notConnected": "Поново повежите налог да бисте направили титлове.",
+					"tierRequired": "AI титлови захтевају план Sync + AI.",
+					"quotaExceeded": "Достигнута је месечна квота AI транскрипције.",
+					"unauthorized": "Поново повежите налог да бисте направили титлове.",
+					"cancelled": "Отказано.",
+					"failed": "Прављење титлова није успело."
+				}
+			}
 		}
 	},
 	"update": {

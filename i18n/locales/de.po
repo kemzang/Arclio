@@ -871,6 +871,54 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "Lädt herunter"
 
+msgctxt "queue.item.transcription.errors.cancelled"
+msgid "Cancelled."
+msgstr "Abgebrochen."
+
+msgctxt "queue.item.transcription.errors.failed"
+msgid "Subtitle generation failed."
+msgstr "Untertitelerstellung fehlgeschlagen."
+
+msgctxt "queue.item.transcription.errors.itemNotFound"
+msgid "This item could not be found."
+msgstr "Dieses Element wurde nicht gefunden."
+
+msgctxt "queue.item.transcription.errors.noMediaFile"
+msgid "No downloaded file to transcribe."
+msgstr "Keine heruntergeladene Datei zum Transkribieren."
+
+msgctxt "queue.item.transcription.errors.notConnected"
+msgid "Reconnect your account to generate subtitles."
+msgstr "Verbinde dein Konto erneut, um Untertitel zu generieren."
+
+msgctxt "queue.item.transcription.errors.quotaExceeded"
+msgid "Monthly AI transcription quota reached."
+msgstr "Monatliches KI-Transkriptionskontingent erreicht."
+
+msgctxt "queue.item.transcription.errors.tierRequired"
+msgid "AI subtitles require the Sync + AI plan."
+msgstr "KI-Untertitel erfordern den Sync + AI-Plan."
+
+msgctxt "queue.item.transcription.errors.unauthorized"
+msgid "Reconnect your account to generate subtitles."
+msgstr "Verbinde dein Konto erneut, um Untertitel zu generieren."
+
+msgctxt "queue.item.transcription.generate"
+msgid "Generate AI subtitles"
+msgstr "KI-Untertitel generieren"
+
+msgctxt "queue.item.transcription.phaseExtracting"
+msgid "Extracting audio…"
+msgstr "Audio wird extrahiert…"
+
+msgctxt "queue.item.transcription.phaseTranscribing"
+msgid "Transcribing ({{chunkIndex}}/{{chunkCount}})…"
+msgstr "Transkription ({{chunkIndex}}/{{chunkCount}})…"
+
+msgctxt "queue.item.transcription.phaseUploading"
+msgid "Preparing…"
+msgstr "Wird vorbereitet…"
+
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "Alle aktiven Downloads pausieren"

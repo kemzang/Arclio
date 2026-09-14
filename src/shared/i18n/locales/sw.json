@@ -536,7 +536,23 @@
 			"statusPaused": "Imesitishwa",
 			"statusDone": "Imekamilika",
 			"statusError": "Hitilafu",
-			"statusCancelled": "Imeghairiwa"
+			"statusCancelled": "Imeghairiwa",
+			"transcription": {
+				"generate": "Tengeneza manukuu ya AI",
+				"phaseExtracting": "Inatoa sauti…",
+				"phaseUploading": "Inaandaa…",
+				"phaseTranscribing": "Inaandika maandishi ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Kipengele hiki hakikupatikana.",
+					"noMediaFile": "Hakuna faili lililopakuliwa la kuandika maandishi.",
+					"notConnected": "Unganisha upya akaunti yako ili kutengeneza manukuu.",
+					"tierRequired": "Manukuu ya AI yanahitaji mpango wa Sync + AI.",
+					"quotaExceeded": "Kiwango cha mwezi cha uandishi wa AI kimefikiwa.",
+					"unauthorized": "Unganisha upya akaunti yako ili kutengeneza manukuu.",
+					"cancelled": "Imeghairiwa.",
+					"failed": "Utengenezaji wa manukuu umeshindwa."
+				}
+			}
 		}
 	},
 	"update": {

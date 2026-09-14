@@ -544,7 +544,23 @@
 			"statusPaused": "Pauzada",
 			"statusDone": "Tayyor",
 			"statusError": "Xato",
-			"statusCancelled": "Bekor qilingan"
+			"statusCancelled": "Bekor qilingan",
+			"transcription": {
+				"generate": "AI subtitrlarini yaratish",
+				"phaseExtracting": "Audio ajratib olinmoqda…",
+				"phaseUploading": "Tayyorlanmoqda…",
+				"phaseTranscribing": "Matnga o'girilmoqda ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Bu element topilmadi.",
+					"noMediaFile": "Matnga o'girish uchun yuklab olingan fayl yo'q.",
+					"notConnected": "Subtitr yaratish uchun hisobingizni qayta ulang.",
+					"tierRequired": "AI subtitrlar Sync + AI rejasini talab qiladi.",
+					"quotaExceeded": "Oylik AI transkripsiya kvotasi tugadi.",
+					"unauthorized": "Subtitr yaratish uchun hisobingizni qayta ulang.",
+					"cancelled": "Bekor qilindi.",
+					"failed": "Subtitr yaratish muvaffaqiyatsiz tugadi."
+				}
+			}
 		}
 	},
 	"update": {

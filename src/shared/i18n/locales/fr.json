@@ -541,7 +541,23 @@
 			"statusPaused": "En pause",
 			"statusDone": "Terminé",
 			"statusError": "Erreur",
-			"statusCancelled": "Annulé"
+			"statusCancelled": "Annulé",
+			"transcription": {
+				"generate": "Générer des sous-titres IA",
+				"phaseExtracting": "Extraction de l'audio…",
+				"phaseUploading": "Préparation…",
+				"phaseTranscribing": "Transcription ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Cet élément est introuvable.",
+					"noMediaFile": "Aucun fichier téléchargé à transcrire.",
+					"notConnected": "Reconnectez votre compte pour générer des sous-titres.",
+					"tierRequired": "Les sous-titres IA nécessitent le forfait Sync + AI.",
+					"quotaExceeded": "Quota mensuel de transcription IA atteint.",
+					"unauthorized": "Reconnectez votre compte pour générer des sous-titres.",
+					"cancelled": "Annulé.",
+					"failed": "Échec de la génération des sous-titres."
+				}
+			}
 		}
 	},
 	"update": {

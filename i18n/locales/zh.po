@@ -871,6 +871,54 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "下载中"
 
+msgctxt "queue.item.transcription.errors.cancelled"
+msgid "Cancelled."
+msgstr "已取消。"
+
+msgctxt "queue.item.transcription.errors.failed"
+msgid "Subtitle generation failed."
+msgstr "字幕生成失败。"
+
+msgctxt "queue.item.transcription.errors.itemNotFound"
+msgid "This item could not be found."
+msgstr "未找到此项目。"
+
+msgctxt "queue.item.transcription.errors.noMediaFile"
+msgid "No downloaded file to transcribe."
+msgstr "没有已下载的文件可供转录。"
+
+msgctxt "queue.item.transcription.errors.notConnected"
+msgid "Reconnect your account to generate subtitles."
+msgstr "请重新连接账户以生成字幕。"
+
+msgctxt "queue.item.transcription.errors.quotaExceeded"
+msgid "Monthly AI transcription quota reached."
+msgstr "已达到每月 AI 转录配额。"
+
+msgctxt "queue.item.transcription.errors.tierRequired"
+msgid "AI subtitles require the Sync + AI plan."
+msgstr "AI 字幕需要 Sync + AI 套餐。"
+
+msgctxt "queue.item.transcription.errors.unauthorized"
+msgid "Reconnect your account to generate subtitles."
+msgstr "请重新连接账户以生成字幕。"
+
+msgctxt "queue.item.transcription.generate"
+msgid "Generate AI subtitles"
+msgstr "生成 AI 字幕"
+
+msgctxt "queue.item.transcription.phaseExtracting"
+msgid "Extracting audio…"
+msgstr "正在提取音频…"
+
+msgctxt "queue.item.transcription.phaseTranscribing"
+msgid "Transcribing ({{chunkIndex}}/{{chunkCount}})…"
+msgstr "正在转录 ({{chunkIndex}}/{{chunkCount}})…"
+
+msgctxt "queue.item.transcription.phaseUploading"
+msgid "Preparing…"
+msgstr "正在准备…"
+
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "暂停所有正在进行的下载"

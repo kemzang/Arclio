@@ -536,7 +536,23 @@
 			"statusPaused": "一時停止",
 			"statusDone": "完了",
 			"statusError": "エラー",
-			"statusCancelled": "キャンセル済み"
+			"statusCancelled": "キャンセル済み",
+			"transcription": {
+				"generate": "AI字幕を生成",
+				"phaseExtracting": "音声を抽出しています…",
+				"phaseUploading": "準備中…",
+				"phaseTranscribing": "文字起こし中 ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "このアイテムが見つかりませんでした。",
+					"noMediaFile": "文字起こしするダウンロード済みファイルがありません。",
+					"notConnected": "字幕を生成するにはアカウントを再接続してください。",
+					"tierRequired": "AI字幕にはSync + AIプランが必要です。",
+					"quotaExceeded": "月間AI文字起こしクォータに達しました。",
+					"unauthorized": "字幕を生成するにはアカウントを再接続してください。",
+					"cancelled": "キャンセルされました。",
+					"failed": "字幕の生成に失敗しました。"
+				}
+			}
 		}
 	},
 	"update": {

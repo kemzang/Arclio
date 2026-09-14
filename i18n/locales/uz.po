@@ -871,6 +871,54 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "Yuklanmoqda"
 
+msgctxt "queue.item.transcription.errors.cancelled"
+msgid "Cancelled."
+msgstr "Bekor qilindi."
+
+msgctxt "queue.item.transcription.errors.failed"
+msgid "Subtitle generation failed."
+msgstr "Subtitr yaratish muvaffaqiyatsiz tugadi."
+
+msgctxt "queue.item.transcription.errors.itemNotFound"
+msgid "This item could not be found."
+msgstr "Bu element topilmadi."
+
+msgctxt "queue.item.transcription.errors.noMediaFile"
+msgid "No downloaded file to transcribe."
+msgstr "Matnga o'girish uchun yuklab olingan fayl yo'q."
+
+msgctxt "queue.item.transcription.errors.notConnected"
+msgid "Reconnect your account to generate subtitles."
+msgstr "Subtitr yaratish uchun hisobingizni qayta ulang."
+
+msgctxt "queue.item.transcription.errors.quotaExceeded"
+msgid "Monthly AI transcription quota reached."
+msgstr "Oylik AI transkripsiya kvotasi tugadi."
+
+msgctxt "queue.item.transcription.errors.tierRequired"
+msgid "AI subtitles require the Sync + AI plan."
+msgstr "AI subtitrlar Sync + AI rejasini talab qiladi."
+
+msgctxt "queue.item.transcription.errors.unauthorized"
+msgid "Reconnect your account to generate subtitles."
+msgstr "Subtitr yaratish uchun hisobingizni qayta ulang."
+
+msgctxt "queue.item.transcription.generate"
+msgid "Generate AI subtitles"
+msgstr "AI subtitrlarini yaratish"
+
+msgctxt "queue.item.transcription.phaseExtracting"
+msgid "Extracting audio…"
+msgstr "Audio ajratib olinmoqda…"
+
+msgctxt "queue.item.transcription.phaseTranscribing"
+msgid "Transcribing ({{chunkIndex}}/{{chunkCount}})…"
+msgstr "Matnga o'girilmoqda ({{chunkIndex}}/{{chunkCount}})…"
+
+msgctxt "queue.item.transcription.phaseUploading"
+msgid "Preparing…"
+msgstr "Tayyorlanmoqda…"
+
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "Barcha faol yuklamalarni to'xtatib turish"

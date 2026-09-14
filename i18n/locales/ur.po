@@ -871,6 +871,54 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "ڈاؤن لوڈ ہو رہا ہے"
 
+msgctxt "queue.item.transcription.errors.cancelled"
+msgid "Cancelled."
+msgstr "منسوخ کر دیا گیا۔"
+
+msgctxt "queue.item.transcription.errors.failed"
+msgid "Subtitle generation failed."
+msgstr "ذیلی عنوانات بنانے میں ناکامی۔"
+
+msgctxt "queue.item.transcription.errors.itemNotFound"
+msgid "This item could not be found."
+msgstr "یہ آئٹم نہیں مل سکا۔"
+
+msgctxt "queue.item.transcription.errors.noMediaFile"
+msgid "No downloaded file to transcribe."
+msgstr "تحریر کرنے کے لیے کوئی ڈاؤن لوڈ شدہ فائل موجود نہیں۔"
+
+msgctxt "queue.item.transcription.errors.notConnected"
+msgid "Reconnect your account to generate subtitles."
+msgstr "ذیلی عنوانات بنانے کے لیے اپنا اکاؤنٹ دوبارہ منسلک کریں۔"
+
+msgctxt "queue.item.transcription.errors.quotaExceeded"
+msgid "Monthly AI transcription quota reached."
+msgstr "ماہانہ AI ٹرانسکرپشن کوٹا مکمل ہو گیا۔"
+
+msgctxt "queue.item.transcription.errors.tierRequired"
+msgid "AI subtitles require the Sync + AI plan."
+msgstr "AI ذیلی عنوانات کے لیے Sync + AI پلان درکار ہے۔"
+
+msgctxt "queue.item.transcription.errors.unauthorized"
+msgid "Reconnect your account to generate subtitles."
+msgstr "ذیلی عنوانات بنانے کے لیے اپنا اکاؤنٹ دوبارہ منسلک کریں۔"
+
+msgctxt "queue.item.transcription.generate"
+msgid "Generate AI subtitles"
+msgstr "AI ذیلی عنوانات بنائیں"
+
+msgctxt "queue.item.transcription.phaseExtracting"
+msgid "Extracting audio…"
+msgstr "آڈیو نکالا جا رہا ہے…"
+
+msgctxt "queue.item.transcription.phaseTranscribing"
+msgid "Transcribing ({{chunkIndex}}/{{chunkCount}})…"
+msgstr "تحریر کیا جا رہا ہے ({{chunkIndex}}/{{chunkCount}})…"
+
+msgctxt "queue.item.transcription.phaseUploading"
+msgid "Preparing…"
+msgstr "تیار کیا جا رہا ہے…"
+
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "تمام فعال ڈاؤن لوڈز کو عارضی طور پر روکیں"

@@ -536,7 +536,23 @@
 			"statusPaused": "Tạm dừng",
 			"statusDone": "Xong",
 			"statusError": "Lỗi",
-			"statusCancelled": "Đã hủy"
+			"statusCancelled": "Đã hủy",
+			"transcription": {
+				"generate": "Tạo phụ đề AI",
+				"phaseExtracting": "Đang trích xuất âm thanh…",
+				"phaseUploading": "Đang chuẩn bị…",
+				"phaseTranscribing": "Đang phiên âm ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Không tìm thấy mục này.",
+					"noMediaFile": "Không có tệp đã tải xuống để phiên âm.",
+					"notConnected": "Kết nối lại tài khoản của bạn để tạo phụ đề.",
+					"tierRequired": "Phụ đề AI yêu cầu gói Sync + AI.",
+					"quotaExceeded": "Đã đạt hạn mức phiên âm AI hàng tháng.",
+					"unauthorized": "Kết nối lại tài khoản của bạn để tạo phụ đề.",
+					"cancelled": "Đã hủy.",
+					"failed": "Tạo phụ đề không thành công."
+				}
+			}
 		}
 	},
 	"update": {

@@ -871,6 +871,54 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "በማውረድ ላይ"
 
+msgctxt "queue.item.transcription.errors.cancelled"
+msgid "Cancelled."
+msgstr "ተሰርዟል።"
+
+msgctxt "queue.item.transcription.errors.failed"
+msgid "Subtitle generation failed."
+msgstr "ንዑስ ጽሑፍ መፍጠር አልተሳካም።"
+
+msgctxt "queue.item.transcription.errors.itemNotFound"
+msgid "This item could not be found."
+msgstr "ይህ ንጥል ሊገኝ አልቻለም።"
+
+msgctxt "queue.item.transcription.errors.noMediaFile"
+msgid "No downloaded file to transcribe."
+msgstr "ለመገልበጥ የወረደ ፋይል የለም።"
+
+msgctxt "queue.item.transcription.errors.notConnected"
+msgid "Reconnect your account to generate subtitles."
+msgstr "ንዑስ ጽሑፎችን ለመፍጠር መለያዎን እንደገና ያገናኙ።"
+
+msgctxt "queue.item.transcription.errors.quotaExceeded"
+msgid "Monthly AI transcription quota reached."
+msgstr "ወርሃዊ የAI ግልባጭ ኮታ ደርሷል።"
+
+msgctxt "queue.item.transcription.errors.tierRequired"
+msgid "AI subtitles require the Sync + AI plan."
+msgstr "የAI ንዑስ ጽሑፎች የSync + AI ዕቅድ ይፈልጋሉ።"
+
+msgctxt "queue.item.transcription.errors.unauthorized"
+msgid "Reconnect your account to generate subtitles."
+msgstr "ንዑስ ጽሑፎችን ለመፍጠር መለያዎን እንደገና ያገናኙ።"
+
+msgctxt "queue.item.transcription.generate"
+msgid "Generate AI subtitles"
+msgstr "የAI ንዑስ ጽሑፎችን ፍጠር"
+
+msgctxt "queue.item.transcription.phaseExtracting"
+msgid "Extracting audio…"
+msgstr "ድምጽ በማውጣት ላይ…"
+
+msgctxt "queue.item.transcription.phaseTranscribing"
+msgid "Transcribing ({{chunkIndex}}/{{chunkCount}})…"
+msgstr "በመገልበጥ ላይ ({{chunkIndex}}/{{chunkCount}})…"
+
+msgctxt "queue.item.transcription.phaseUploading"
+msgid "Preparing…"
+msgstr "በማዘጋጀት ላይ…"
+
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "ሁሉንም ንቁ ዳውንሎዶችን አቁም"

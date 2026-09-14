@@ -536,7 +536,23 @@
 			"statusPaused": "Пауза",
 			"statusDone": "Готово",
 			"statusError": "Ошибка",
-			"statusCancelled": "Отменено"
+			"statusCancelled": "Отменено",
+			"transcription": {
+				"generate": "Создать субтитры с ИИ",
+				"phaseExtracting": "Извлечение звука…",
+				"phaseUploading": "Подготовка…",
+				"phaseTranscribing": "Распознавание ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Этот элемент не найден.",
+					"noMediaFile": "Нет загруженного файла для распознавания.",
+					"notConnected": "Переподключите аккаунт, чтобы создать субтитры.",
+					"tierRequired": "Субтитры с ИИ требуют тарифа Sync + AI.",
+					"quotaExceeded": "Достигнута месячная квота распознавания с ИИ.",
+					"unauthorized": "Переподключите аккаунт, чтобы создать субтитры.",
+					"cancelled": "Отменено.",
+					"failed": "Не удалось создать субтитры."
+				}
+			}
 		}
 	},
 	"update": {

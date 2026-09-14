@@ -536,7 +536,23 @@
 			"statusPaused": "توقف شدہ",
 			"statusDone": "مکمل",
 			"statusError": "خرابی",
-			"statusCancelled": "منسوخ"
+			"statusCancelled": "منسوخ",
+			"transcription": {
+				"generate": "AI ذیلی عنوانات بنائیں",
+				"phaseExtracting": "آڈیو نکالا جا رہا ہے…",
+				"phaseUploading": "تیار کیا جا رہا ہے…",
+				"phaseTranscribing": "تحریر کیا جا رہا ہے ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "یہ آئٹم نہیں مل سکا۔",
+					"noMediaFile": "تحریر کرنے کے لیے کوئی ڈاؤن لوڈ شدہ فائل موجود نہیں۔",
+					"notConnected": "ذیلی عنوانات بنانے کے لیے اپنا اکاؤنٹ دوبارہ منسلک کریں۔",
+					"tierRequired": "AI ذیلی عنوانات کے لیے Sync + AI پلان درکار ہے۔",
+					"quotaExceeded": "ماہانہ AI ٹرانسکرپشن کوٹا مکمل ہو گیا۔",
+					"unauthorized": "ذیلی عنوانات بنانے کے لیے اپنا اکاؤنٹ دوبارہ منسلک کریں۔",
+					"cancelled": "منسوخ کر دیا گیا۔",
+					"failed": "ذیلی عنوانات بنانے میں ناکامی۔"
+				}
+			}
 		}
 	},
 	"update": {

@@ -536,7 +536,23 @@
 			"statusPaused": "متوقف مؤقتًا",
 			"statusDone": "تم",
 			"statusError": "خطأ",
-			"statusCancelled": "أُلغي"
+			"statusCancelled": "أُلغي",
+			"transcription": {
+				"generate": "إنشاء ترجمة بالذكاء الاصطناعي",
+				"phaseExtracting": "جارٍ استخراج الصوت…",
+				"phaseUploading": "جارٍ التحضير…",
+				"phaseTranscribing": "جارٍ تفريغ الصوت ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "تعذر العثور على هذا العنصر.",
+					"noMediaFile": "لا يوجد ملف تم تنزيله لتفريغه.",
+					"notConnected": "أعد ربط حسابك لإنشاء الترجمة.",
+					"tierRequired": "تتطلب الترجمة بالذكاء الاصطناعي خطة Sync + AI.",
+					"quotaExceeded": "تم بلوغ الحصة الشهرية لتفريغ الصوت بالذكاء الاصطناعي.",
+					"unauthorized": "أعد ربط حسابك لإنشاء الترجمة.",
+					"cancelled": "تم الإلغاء.",
+					"failed": "فشل إنشاء الترجمة."
+				}
+			}
 		}
 	},
 	"update": {

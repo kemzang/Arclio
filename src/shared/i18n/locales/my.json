@@ -527,7 +527,23 @@
 			"statusPaused": "ရပ်နားထားသည်",
 			"statusDone": "ပြီးပြီ",
 			"statusError": "အမှား",
-			"statusCancelled": "ပယ်ဖျက်ပြီး"
+			"statusCancelled": "ပယ်ဖျက်ပြီး",
+			"transcription": {
+				"generate": "AI စာတန်းထိုး ဖန်တီးရန်",
+				"phaseExtracting": "အသံကို ထုတ်ယူနေသည်…",
+				"phaseUploading": "ပြင်ဆင်နေသည်…",
+				"phaseTranscribing": "စာသားပြောင်းနေသည် ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "ဤအရာကို ရှာမတွေ့ပါ။",
+					"noMediaFile": "စာသားပြောင်းရန် ဒေါင်းလုဒ်ဆွဲထားသော ဖိုင်မရှိပါ။",
+					"notConnected": "စာတန်းထိုးများ ဖန်တီးရန် သင့်အကောင့်ကို ပြန်လည်ချိတ်ဆက်ပါ။",
+					"tierRequired": "AI စာတန်းထိုးအတွက် Sync + AI အစီအစဉ် လိုအပ်ပါသည်။",
+					"quotaExceeded": "လစဉ် AI စာသားပြောင်းခွင့် ကွိုတာ ပြည့်သွားပါပြီ။",
+					"unauthorized": "စာတန်းထိုးများ ဖန်တီးရန် သင့်အကောင့်ကို ပြန်လည်ချိတ်ဆက်ပါ။",
+					"cancelled": "ပယ်ဖျက်လိုက်သည်။",
+					"failed": "စာတန်းထိုး ဖန်တီးခြင်း မအောင်မြင်ပါ။"
+				}
+			}
 		}
 	},
 	"update": {

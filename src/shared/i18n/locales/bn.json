@@ -520,7 +520,23 @@
 			"statusPaused": "বিরত",
 			"statusDone": "সম্পন্ন",
 			"statusError": "ত্রুটি",
-			"statusCancelled": "বাতিল"
+			"statusCancelled": "বাতিল",
+			"transcription": {
+				"generate": "AI সাবটাইটেল তৈরি করুন",
+				"phaseExtracting": "অডিও এক্সট্র্যাক্ট করা হচ্ছে…",
+				"phaseUploading": "প্রস্তুত করা হচ্ছে…",
+				"phaseTranscribing": "ট্রান্সক্রাইব করা হচ্ছে ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "এই আইটেমটি পাওয়া যায়নি।",
+					"noMediaFile": "ট্রান্সক্রাইব করার জন্য কোনো ডাউনলোড করা ফাইল নেই।",
+					"notConnected": "সাবটাইটেল তৈরি করতে আপনার অ্যাকাউন্ট পুনরায় সংযুক্ত করুন।",
+					"tierRequired": "AI সাবটাইটেলের জন্য Sync + AI প্ল্যান প্রয়োজন।",
+					"quotaExceeded": "মাসিক AI ট্রান্সক্রিপশন কোটা পূর্ণ হয়েছে।",
+					"unauthorized": "সাবটাইটেল তৈরি করতে আপনার অ্যাকাউন্ট পুনরায় সংযুক্ত করুন।",
+					"cancelled": "বাতিল করা হয়েছে।",
+					"failed": "সাবটাইটেল তৈরি ব্যর্থ হয়েছে।"
+				}
+			}
 		}
 	},
 	"update": {

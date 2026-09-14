@@ -536,7 +536,23 @@
 			"statusPaused": "Pausado",
 			"statusDone": "Listo",
 			"statusError": "Error",
-			"statusCancelled": "Cancelado"
+			"statusCancelled": "Cancelado",
+			"transcription": {
+				"generate": "Generar subtítulos con IA",
+				"phaseExtracting": "Extrayendo audio…",
+				"phaseUploading": "Preparando…",
+				"phaseTranscribing": "Transcribiendo ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "No se pudo encontrar este elemento.",
+					"noMediaFile": "No hay ningún archivo descargado para transcribir.",
+					"notConnected": "Vuelve a conectar tu cuenta para generar subtítulos.",
+					"tierRequired": "Los subtítulos con IA requieren el plan Sync + AI.",
+					"quotaExceeded": "Se alcanzó la cuota mensual de transcripción con IA.",
+					"unauthorized": "Vuelve a conectar tu cuenta para generar subtítulos.",
+					"cancelled": "Cancelado.",
+					"failed": "Error al generar los subtítulos."
+				}
+			}
 		}
 	},
 	"update": {

@@ -511,7 +511,23 @@
 			"statusPaused": "रुका हुआ",
 			"statusDone": "पूरा",
 			"statusError": "त्रुटि",
-			"statusCancelled": "रद्द"
+			"statusCancelled": "रद्द",
+			"transcription": {
+				"generate": "AI सबटाइटल जनरेट करें",
+				"phaseExtracting": "ऑडियो निकाला जा रहा है…",
+				"phaseUploading": "तैयार किया जा रहा है…",
+				"phaseTranscribing": "ट्रांसक्राइब किया जा रहा है ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "यह आइटम नहीं मिला।",
+					"noMediaFile": "ट्रांसक्राइब करने के लिए कोई डाउनलोड की गई फ़ाइल नहीं है।",
+					"notConnected": "सबटाइटल जनरेट करने के लिए अपना खाता फिर से कनेक्ट करें।",
+					"tierRequired": "AI सबटाइटल के लिए Sync + AI प्लान आवश्यक है।",
+					"quotaExceeded": "मासिक AI ट्रांसक्रिप्शन कोटा पूरा हो गया।",
+					"unauthorized": "सबटाइटल जनरेट करने के लिए अपना खाता फिर से कनेक्ट करें।",
+					"cancelled": "रद्द किया गया।",
+					"failed": "सबटाइटल जनरेट करना विफल रहा।"
+				}
+			}
 		}
 	},
 	"update": {

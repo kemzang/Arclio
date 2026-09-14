@@ -503,7 +503,23 @@
 			"statusPaused": "ቆሟል",
 			"statusDone": "ተጠናቋል",
 			"statusError": "ስህተት",
-			"statusCancelled": "ተሰርዟል"
+			"statusCancelled": "ተሰርዟል",
+			"transcription": {
+				"generate": "የAI ንዑስ ጽሑፎችን ፍጠር",
+				"phaseExtracting": "ድምጽ በማውጣት ላይ…",
+				"phaseUploading": "በማዘጋጀት ላይ…",
+				"phaseTranscribing": "በመገልበጥ ላይ ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "ይህ ንጥል ሊገኝ አልቻለም።",
+					"noMediaFile": "ለመገልበጥ የወረደ ፋይል የለም።",
+					"notConnected": "ንዑስ ጽሑፎችን ለመፍጠር መለያዎን እንደገና ያገናኙ።",
+					"tierRequired": "የAI ንዑስ ጽሑፎች የSync + AI ዕቅድ ይፈልጋሉ።",
+					"quotaExceeded": "ወርሃዊ የAI ግልባጭ ኮታ ደርሷል።",
+					"unauthorized": "ንዑስ ጽሑፎችን ለመፍጠር መለያዎን እንደገና ያገናኙ።",
+					"cancelled": "ተሰርዟል።",
+					"failed": "ንዑስ ጽሑፍ መፍጠር አልተሳካም።"
+				}
+			}
 		}
 	},
 	"update": {

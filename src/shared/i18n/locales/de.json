@@ -541,7 +541,23 @@
 			"statusPaused": "Pausiert",
 			"statusDone": "Fertig",
 			"statusError": "Fehler",
-			"statusCancelled": "Abgebrochen"
+			"statusCancelled": "Abgebrochen",
+			"transcription": {
+				"generate": "KI-Untertitel generieren",
+				"phaseExtracting": "Audio wird extrahiert…",
+				"phaseUploading": "Wird vorbereitet…",
+				"phaseTranscribing": "Transkription ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Dieses Element wurde nicht gefunden.",
+					"noMediaFile": "Keine heruntergeladene Datei zum Transkribieren.",
+					"notConnected": "Verbinde dein Konto erneut, um Untertitel zu generieren.",
+					"tierRequired": "KI-Untertitel erfordern den Sync + AI-Plan.",
+					"quotaExceeded": "Monatliches KI-Transkriptionskontingent erreicht.",
+					"unauthorized": "Verbinde dein Konto erneut, um Untertitel zu generieren.",
+					"cancelled": "Abgebrochen.",
+					"failed": "Untertitelerstellung fehlgeschlagen."
+				}
+			}
 		}
 	},
 	"update": {

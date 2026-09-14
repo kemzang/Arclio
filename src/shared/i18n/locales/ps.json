@@ -536,7 +536,23 @@
 			"statusPaused": "درول شوی",
 			"statusDone": "بشپړ",
 			"statusError": "تېروتنه",
-			"statusCancelled": "لغوه شوی"
+			"statusCancelled": "لغوه شوی",
+			"transcription": {
+				"generate": "د AI ژېرمو جوړول",
+				"phaseExtracting": "غږ ايستل کيږي…",
+				"phaseUploading": "چمتو کول…",
+				"phaseTranscribing": "لیکل کیږي ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "دا توکی و نه موندل شو.",
+					"noMediaFile": "د لیکلو لپاره هیڅ ښکته شوی فایل نشته.",
+					"notConnected": "د ژېرمو جوړولو لپاره خپل حساب بیا وصل کړئ.",
+					"tierRequired": "د AI ژېرمو لپاره د Sync + AI پلان اړین دی.",
+					"quotaExceeded": "میاشتنی د AI لیکنې کوټا بشپړه شوه.",
+					"unauthorized": "د ژېرمو جوړولو لپاره خپل حساب بیا وصل کړئ.",
+					"cancelled": "لغوه شو.",
+					"failed": "د ژېرمو جوړول ناکام شول."
+				}
+			}
 		}
 	},
 	"update": {

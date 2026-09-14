@@ -536,7 +536,23 @@
 			"statusPaused": "Dhaabbate",
 			"statusDone": "Xumurame",
 			"statusError": "Dogoggora",
-			"statusCancelled": "Haqame"
+			"statusCancelled": "Haqame",
+			"transcription": {
+				"generate": "Barreeffama jalaa AI uumi",
+				"phaseExtracting": "Sagalee baasaa jira…",
+				"phaseUploading": "Qopheessaa jira…",
+				"phaseTranscribing": "Barreessaa jira ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Wanti kun argamuu hin dandeenye.",
+					"noMediaFile": "Faayilii buufame kan barreeffamu hin jiru.",
+					"notConnected": "Barreeffama jalaa uumuudhaaf akkaawuntii kee irra deebi'ii walqunnamsiisi.",
+					"tierRequired": "Barreeffamni jalaa AI karoora Sync + AI barbaada.",
+					"quotaExceeded": "Kootaan AI ji'a ji'aan barreessuu ga'eera.",
+					"unauthorized": "Barreeffama jalaa uumuudhaaf akkaawuntii kee irra deebi'ii walqunnamsiisi.",
+					"cancelled": "Haqameera.",
+					"failed": "Barreeffama jalaa uumuun hin milkoofne."
+				}
+			}
 		}
 	},
 	"update": {

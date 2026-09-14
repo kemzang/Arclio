@@ -503,7 +503,23 @@
 			"statusPaused": "已暂停",
 			"statusDone": "完成",
 			"statusError": "错误",
-			"statusCancelled": "已取消"
+			"statusCancelled": "已取消",
+			"transcription": {
+				"generate": "生成 AI 字幕",
+				"phaseExtracting": "正在提取音频…",
+				"phaseUploading": "正在准备…",
+				"phaseTranscribing": "正在转录 ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "未找到此项目。",
+					"noMediaFile": "没有已下载的文件可供转录。",
+					"notConnected": "请重新连接账户以生成字幕。",
+					"tierRequired": "AI 字幕需要 Sync + AI 套餐。",
+					"quotaExceeded": "已达到每月 AI 转录配额。",
+					"unauthorized": "请重新连接账户以生成字幕。",
+					"cancelled": "已取消。",
+					"failed": "字幕生成失败。"
+				}
+			}
 		}
 	},
 	"update": {

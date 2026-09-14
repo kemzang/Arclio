@@ -871,6 +871,54 @@ msgctxt "queue.item.statusRunning"
 msgid "Downloading"
 msgstr "ဒေါင်းလုဒ်လုပ်နေသည်"
 
+msgctxt "queue.item.transcription.errors.cancelled"
+msgid "Cancelled."
+msgstr "ပယ်ဖျက်လိုက်သည်။"
+
+msgctxt "queue.item.transcription.errors.failed"
+msgid "Subtitle generation failed."
+msgstr "စာတန်းထိုး ဖန်တီးခြင်း မအောင်မြင်ပါ။"
+
+msgctxt "queue.item.transcription.errors.itemNotFound"
+msgid "This item could not be found."
+msgstr "ဤအရာကို ရှာမတွေ့ပါ။"
+
+msgctxt "queue.item.transcription.errors.noMediaFile"
+msgid "No downloaded file to transcribe."
+msgstr "စာသားပြောင်းရန် ဒေါင်းလုဒ်ဆွဲထားသော ဖိုင်မရှိပါ။"
+
+msgctxt "queue.item.transcription.errors.notConnected"
+msgid "Reconnect your account to generate subtitles."
+msgstr "စာတန်းထိုးများ ဖန်တီးရန် သင့်အကောင့်ကို ပြန်လည်ချိတ်ဆက်ပါ။"
+
+msgctxt "queue.item.transcription.errors.quotaExceeded"
+msgid "Monthly AI transcription quota reached."
+msgstr "လစဉ် AI စာသားပြောင်းခွင့် ကွိုတာ ပြည့်သွားပါပြီ။"
+
+msgctxt "queue.item.transcription.errors.tierRequired"
+msgid "AI subtitles require the Sync + AI plan."
+msgstr "AI စာတန်းထိုးအတွက် Sync + AI အစီအစဉ် လိုအပ်ပါသည်။"
+
+msgctxt "queue.item.transcription.errors.unauthorized"
+msgid "Reconnect your account to generate subtitles."
+msgstr "စာတန်းထိုးများ ဖန်တီးရန် သင့်အကောင့်ကို ပြန်လည်ချိတ်ဆက်ပါ။"
+
+msgctxt "queue.item.transcription.generate"
+msgid "Generate AI subtitles"
+msgstr "AI စာတန်းထိုး ဖန်တီးရန်"
+
+msgctxt "queue.item.transcription.phaseExtracting"
+msgid "Extracting audio…"
+msgstr "အသံကို ထုတ်ယူနေသည်…"
+
+msgctxt "queue.item.transcription.phaseTranscribing"
+msgid "Transcribing ({{chunkIndex}}/{{chunkCount}})…"
+msgstr "စာသားပြောင်းနေသည် ({{chunkIndex}}/{{chunkCount}})…"
+
+msgctxt "queue.item.transcription.phaseUploading"
+msgid "Preparing…"
+msgstr "ပြင်ဆင်နေသည်…"
+
 msgctxt "queue.pauseAllTitle"
 msgid "Pause every active download and stop new ones from starting"
 msgstr "လုပ်ဆောင်နေသောဒေါင်းလုဒ်အားလုံး ခေတ္တရပ်မည်"

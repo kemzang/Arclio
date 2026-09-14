@@ -541,7 +541,23 @@
 			"statusPaused": "Σε παύση",
 			"statusDone": "Ολοκληρώθηκε",
 			"statusError": "Σφάλμα",
-			"statusCancelled": "Ακυρώθηκε"
+			"statusCancelled": "Ακυρώθηκε",
+			"transcription": {
+				"generate": "Δημιουργία υπότιτλων AI",
+				"phaseExtracting": "Εξαγωγή ήχου…",
+				"phaseUploading": "Προετοιμασία…",
+				"phaseTranscribing": "Μεταγραφή ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "Δεν ήταν δυνατή η εύρεση αυτού του στοιχείου.",
+					"noMediaFile": "Δεν υπάρχει ληφθέν αρχείο για μεταγραφή.",
+					"notConnected": "Επανασυνδέστε τον λογαριασμό σας για να δημιουργήσετε υπότιτλους.",
+					"tierRequired": "Οι υπότιτλοι AI απαιτούν το πλάνο Sync + AI.",
+					"quotaExceeded": "Η μηνιαία ποσόστωση μεταγραφής AI έχει εξαντληθεί.",
+					"unauthorized": "Επανασυνδέστε τον λογαριασμό σας για να δημιουργήσετε υπότιτλους.",
+					"cancelled": "Ακυρώθηκε.",
+					"failed": "Η δημιουργία υπότιτλων απέτυχε."
+				}
+			}
 		}
 	},
 	"update": {

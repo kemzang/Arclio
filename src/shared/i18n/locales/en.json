@@ -527,7 +527,23 @@
 			"statusPaused": "Paused",
 			"statusDone": "Done",
 			"statusError": "Error",
-			"statusCancelled": "Cancelled"
+			"statusCancelled": "Cancelled",
+			"transcription": {
+				"generate": "Generate AI subtitles",
+				"phaseExtracting": "Extracting audio…",
+				"phaseUploading": "Preparing…",
+				"phaseTranscribing": "Transcribing ({{chunkIndex}}/{{chunkCount}})…",
+				"errors": {
+					"itemNotFound": "This item could not be found.",
+					"noMediaFile": "No downloaded file to transcribe.",
+					"notConnected": "Reconnect your account to generate subtitles.",
+					"tierRequired": "AI subtitles require the Sync + AI plan.",
+					"quotaExceeded": "Monthly AI transcription quota reached.",
+					"unauthorized": "Reconnect your account to generate subtitles.",
+					"cancelled": "Cancelled.",
+					"failed": "Subtitle generation failed."
+				}
+			}
 		}
 	},
 	"update": {
