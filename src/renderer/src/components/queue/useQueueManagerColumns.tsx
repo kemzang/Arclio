@@ -10,6 +10,7 @@ import {formatLocalizedError, formatStatus} from '../../store/useAppStore.js'
 import {Badge} from '../ui/badge.js'
 import {Button} from '../ui/button.js'
 import {Progress} from '../ui/progress.js'
+import {TranscriptionAction} from './TranscriptionAction.js'
 
 const STATUS_META: Record<QueueItemStatus, {className: string; icon: ReactNode; labelKey: 'queue.item.statusPending' | 'queue.item.statusRunning' | 'queue.item.statusHeld' | 'queue.item.statusPaused' | 'queue.item.statusDone' | 'queue.item.statusError' | 'queue.item.statusCancelled'}> = {
 	pending: {className: 'text-muted-foreground', icon: <Clock size={12} aria-hidden />, labelKey: 'queue.item.statusPending'},
@@ -99,6 +100,7 @@ export function useQueueManagerColumns({expandedIds, onToggleExpanded, t}: {expa
 										{detail}
 									</span>
 								) : null}
+								<TranscriptionAction item={item} t={t} />
 							</div>
 						)
 					}

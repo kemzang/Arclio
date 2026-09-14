@@ -4,6 +4,7 @@ import {useVirtualizer} from '@tanstack/react-virtual'
 import {useTranslation} from 'react-i18next'
 import type {QueueItem, QueueSelectionAction} from '@shared/types.js'
 import {useAppStore} from '../../store/useAppStore.js'
+import {useTranscriptionStore} from '../../store/useTranscription.js'
 import {saveQueueTablePreferences, sanitizeQueueTablePreferences, type QueueTableColumnId, type QueueTablePreferences} from './queueTablePreferences.js'
 import {createQueueManagerState, currentViewportWidth, queueManagerReducer} from './queueManagerState.js'
 import {COLUMN_LABEL_KEYS, actionButtonDisabled, type QueueSelectedAction} from './queueManagerActions.js'
@@ -65,6 +66,13 @@ export function QueueManagerTab(): ReactNode {
 		dispatch({type: 'prune-ids', liveIds})
 		if (selectionAnchorIdRef.current && !liveIds.has(selectionAnchorIdRef.current)) selectionAnchorIdRef.current = null
 	}, [queue])
+
+	// Read-only client gate for the AI subtitle button — the server is the
+	// real enforcement point (see the transcription routes), this only avoids
+	// showing an action every non-Sync+IA account would just get a 402 from.
+	useEffect(() => {
+		void useTranscriptionStore.getState().refreshTier()
+	}, [])
 
 	useEffect(() => {
 		const updateViewportWidth = (): void => {
