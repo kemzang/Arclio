@@ -148,6 +148,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 			disconnect: vi.fn().mockResolvedValue({connected: false, canStoreCredentials: true})
 		},
 		sync: {now: vi.fn().mockResolvedValue({status: 'skipped', reason: 'not-connected'}), state: vi.fn().mockResolvedValue({running: false, lastRunAt: null, lastOutcome: null})},
+		transcription: {start: vi.fn().mockResolvedValue({ok: true, data: undefined}), cancel: vi.fn().mockResolvedValue({ok: true, data: undefined}), onProgress: vi.fn().mockReturnValue(() => {})},
 		sources: {add: vi.fn().mockResolvedValue({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: vi.fn().mockResolvedValue(undefined), list: vi.fn().mockResolvedValue([]), toggleWatch: vi.fn().mockResolvedValue(undefined), scan: vi.fn().mockResolvedValue({indexed: 0, errors: 0})},
 		converter: {
 			convert: vi.fn().mockResolvedValue({success: true, outputPath: '/mock/converted.mp4'}),

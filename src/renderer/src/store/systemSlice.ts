@@ -7,12 +7,14 @@ import type {GetState, SetState, ShareTrigger, SystemSlice} from './types.js'
 import {bindQueueProjection, projectQueueSnapshot} from './queueProjection.js'
 import {settleAccountGate} from './wizard/accountGate.js'
 import {shouldShowQueueDrainUpsell} from './wizard/queueDrainUpsell.js'
+import {useTranscriptionStore} from './useTranscription.js'
 import {notify} from '../lib/notify.js'
 import {track} from '../lib/analytics.js'
 
 let unbindWarmupProgress: (() => void) | null = null
 let unbindQueueProjection: (() => void) | null = null
 let unbindProbeProgress: (() => void) | null = null
+let unbindTranscriptionProgress: (() => void) | null = null
 
 const SHARE_MILESTONES: readonly number[] = [3, 25, 100]
 const SHARE_MILESTONE_SET = new Set(SHARE_MILESTONES)
@@ -172,6 +174,11 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 				const matchesActiveUrl = state.wizardUrl === event.url || state.quickDownloadProgressCurrent === event.url
 				if ((!playlistProbeActive && !quickDownloadProbeActive) || !matchesActiveUrl) return
 				set({playlistProbeProgress: event})
+			})
+
+			unbindTranscriptionProgress?.()
+			unbindTranscriptionProgress = window.appApi.transcription.onProgress(event => {
+				useTranscriptionStore.getState().applyProgress(event)
 			})
 
 			set({warmupRunning: true, warmupCancellable: true})

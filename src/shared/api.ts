@@ -27,6 +27,7 @@ import type {
 	StartDownloadInput,
 	StartDownloadOutput,
 	StatusEvent,
+	TranscriptionProgress,
 	UpdateAvailablePayload,
 	UpdateInstallResult,
 	WarmUpOutput,
@@ -154,6 +155,7 @@ export interface AppApi {
 	// this surface: the renderer shows the code and reacts to the status.
 	account: {status(): Promise<AccountStatus>; beginPairing(): Promise<PairingHandle>; awaitPairing(): Promise<AwaitPairingResult>; cancelPairing(): Promise<void>; disconnect(): Promise<AccountStatus>}
 	sync: {now(): Promise<SyncOutcome>; state(): Promise<SyncState>}
+	transcription: {start(itemId: string): Promise<Result<void>>; cancel(itemId: string): Promise<Result<void>>; onProgress(listener: (event: TranscriptionProgress) => void): () => void}
 	sources: {add(path: string, watchEnabled?: boolean): Promise<WatchedSource>; remove(id: string): Promise<void>; list(): Promise<WatchedSource[]>; toggleWatch(id: string, enabled: boolean): Promise<void>; scan(id: string): Promise<{indexed: number; errors: number}>}
 	converter: {
 		convert(inputPath: string, format: ConversionFormat, options?: Record<string, unknown>, outputDir?: string): Promise<ConversionResult>

@@ -50,7 +50,8 @@ function buildMockApi(settingsOverrides: Record<string, unknown> = {}) {
 			events: {onSnapshot: vi.fn().mockReturnValue(() => undefined), onAdded: vi.fn().mockReturnValue(() => undefined), onUpdated: vi.fn().mockReturnValue(() => undefined), onRemoved: vi.fn().mockReturnValue(() => undefined)}
 		},
 		diagnostics: {logWizardStep: vi.fn()},
-		playlist: {scanFolder: vi.fn().mockResolvedValue(ok({matchedIds: [] as string[]})), registerManifest: vi.fn().mockResolvedValue(ok(undefined))}
+		playlist: {scanFolder: vi.fn().mockResolvedValue(ok({matchedIds: [] as string[]})), registerManifest: vi.fn().mockResolvedValue(ok(undefined))},
+		transcription: {start: vi.fn().mockResolvedValue({ok: true, data: undefined}), cancel: vi.fn().mockResolvedValue({ok: true, data: undefined}), onProgress: vi.fn().mockReturnValue(() => undefined)}
 	}
 }
 

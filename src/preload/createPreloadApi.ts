@@ -1,6 +1,6 @@
 import {IPC_CHANNELS} from '@shared/ipc.js'
 import type {AppApi} from '@shared/api.js'
-import type {ProbeProgressEvent, ProgressEvent, QueueItem, QueueLane, QueueSelectionAction, StatusEvent, UpdateAvailablePayload, WarmupProgressEvent} from '@shared/types.js'
+import type {ProbeProgressEvent, ProgressEvent, QueueItem, QueueLane, QueueSelectionAction, StatusEvent, TranscriptionProgress, UpdateAvailablePayload, WarmupProgressEvent} from '@shared/types.js'
 
 // Minimal IpcRenderer shape — only what the api factory uses, no electron dep.
 export interface PreloadIpcRenderer {
@@ -212,6 +212,17 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 			scan: id => ipcRenderer.invoke('sources:scan', id)
 		},
 		sync: {now: () => ipcRenderer.invoke('sync:now'), state: () => ipcRenderer.invoke('sync:state')},
+		transcription: {
+			start: itemId => ipcRenderer.invoke(IPC_CHANNELS.transcriptionStart, {itemId}),
+			cancel: itemId => ipcRenderer.invoke(IPC_CHANNELS.transcriptionCancel, {itemId}),
+			onProgress: listener => {
+				const wrapped = (_: unknown, event: TranscriptionProgress): void => listener(event)
+				ipcRenderer.on(IPC_CHANNELS.transcriptionProgress, wrapped)
+				return () => {
+					ipcRenderer.removeListener(IPC_CHANNELS.transcriptionProgress, wrapped)
+				}
+			}
+		},
 		converter: {
 			convert: (inputPath, format, options, outputDir) => ipcRenderer.invoke('converter:convert', inputPath, format, options, outputDir),
 			convertVideo: (inputPath, options) => ipcRenderer.invoke('converter:convertVideo', inputPath, options),

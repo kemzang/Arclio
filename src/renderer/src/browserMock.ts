@@ -1,5 +1,5 @@
 import type {AppApi} from '@shared/api.js'
-import type {AppSettings, DependencyDiagnostic, DependencyId, ProbeProgressEvent, ProgressEvent, QueueActionSkippedItem, QueueItem, QueueOutputTargetChangeItemResult, StatusEvent, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent} from '@shared/types.js'
+import type {AppSettings, DependencyDiagnostic, DependencyId, ProbeProgressEvent, ProgressEvent, QueueActionSkippedItem, QueueItem, QueueOutputTargetChangeItemResult, StatusEvent, TranscriptionProgress, UpdateAvailablePayload, WarmUpOutput, WarmupProgressEvent} from '@shared/types.js'
 import {QUEUE_STATUS, STATUS_KEY, YT_DLP_ERROR_KINDS, type YtDlpErrorKind} from '@shared/schemas.js'
 import {canApplyQueueAction, canApplyQueueActionToItem} from '@shared/queueActions.js'
 import {BROWSER_MOCK_LAUNCH_MODES, buildScenarioAppApiState, getScenario, normalVideoProbe, playlistProbe, readScenarioIdFromUrl, readUrlParams, shouldMockEmptyPlaylistScopeReload, shouldShowBrowserMockStartupSplash, type BrowserMockLaunchMode, type BrowserMockScenario} from './dev/browserMockScenarios.js'
@@ -110,6 +110,8 @@ export function installBrowserMock(): void {
 	const queueAddedListeners = new Set<(event: {items: QueueItem[]; atIdx: number}) => void>()
 	const queueUpdatedListeners = new Set<(event: {item: QueueItem}) => void>()
 	const queueRemovedListeners = new Set<(event: {itemId: string}) => void>()
+	const transcriptionListeners = new Set<(e: TranscriptionProgress) => void>()
+	const cancelledTranscriptions = new Set<string>()
 	const queueItems: QueueItem[] = [...scenarioState.queueItems]
 	const queueItemById = new Map(queueItems.map(item => [item.id, item]))
 	let queueRunning = false
@@ -171,6 +173,35 @@ export function installBrowserMock(): void {
 		}
 
 		statusListeners.forEach(l => l({jobId: id, stage: 'done', statusKey: 'complete', at: new Date().toISOString()}))
+	}
+
+	async function simulateTranscription(itemId: string): Promise<void> {
+		cancelledTranscriptions.delete(itemId)
+		const emit = (progress: Omit<TranscriptionProgress, 'itemId' | 'at'>): void => {
+			transcriptionListeners.forEach(l => l({itemId, at: new Date().toISOString(), ...progress}))
+		}
+
+		emit({phase: 'extracting'})
+		await delay(500)
+		if (cancelledTranscriptions.has(itemId)) return emit({phase: 'failed', errorReason: 'cancelled'})
+
+		emit({phase: 'uploading'})
+		await delay(400)
+		if (cancelledTranscriptions.has(itemId)) return emit({phase: 'failed', errorReason: 'cancelled'})
+
+		const chunkCount = 3
+		for (let chunkIndex = 1; chunkIndex <= chunkCount; chunkIndex++) {
+			emit({phase: 'transcribing', chunkIndex, chunkCount})
+			await delay(500)
+			if (cancelledTranscriptions.has(itemId)) return emit({phase: 'failed', errorReason: 'cancelled'})
+		}
+
+		const item = queueItemById.get(itemId)
+		if (item) {
+			const srtPath = `${item.outputDir}/${item.title}.srt`
+			setQueueItem({...item, artifacts: [...item.artifacts, {id: `artifact:${srtPath}`, kind: 'subtitle', path: srtPath, fileName: `${item.title}.srt`, discoveredAt: new Date().toISOString()}]})
+		}
+		emit({phase: 'done'})
 	}
 
 	function emitQueueUpdated(item: QueueItem): void {
@@ -671,6 +702,20 @@ export function installBrowserMock(): void {
 			disconnect: () => Promise.resolve({connected: false, canStoreCredentials: true})
 		},
 		sync: {now: () => Promise.resolve({status: 'skipped' as const, reason: 'not-connected' as const}), state: () => Promise.resolve({running: false, lastRunAt: null, lastOutcome: null})},
+		transcription: {
+			start: itemId => {
+				void simulateTranscription(itemId)
+				return Promise.resolve({ok: true, data: undefined})
+			},
+			cancel: itemId => {
+				cancelledTranscriptions.add(itemId)
+				return Promise.resolve({ok: true, data: undefined})
+			},
+			onProgress: listener => {
+				transcriptionListeners.add(listener)
+				return () => transcriptionListeners.delete(listener)
+			}
+		},
 		sources: {add: () => Promise.resolve({id: 'mock', path: '/mock/path', watchEnabled: true, createdAt: ''}), remove: () => Promise.resolve(), list: () => Promise.resolve([]), toggleWatch: () => Promise.resolve(), scan: () => Promise.resolve({indexed: 0, errors: 0})},
 		converter: {
 			convert: () => Promise.resolve({success: true, outputPath: '/mock/converted.mp4'}),

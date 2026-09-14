@@ -493,6 +493,19 @@ export interface WarmupProgressEvent {
 	failureKind?: DependencyFailureKind
 }
 
+export type TranscriptionPhase = 'extracting' | 'uploading' | 'transcribing' | 'done' | 'failed'
+
+export type TranscriptionErrorReason = 'item_not_found' | 'no_media_file' | 'not_connected' | 'tier_required' | 'quota_exceeded' | 'unauthorized' | 'cancelled' | 'failed'
+
+export interface TranscriptionProgress {
+	itemId: string
+	phase: TranscriptionPhase
+	chunkIndex?: number
+	chunkCount?: number
+	errorReason?: TranscriptionErrorReason
+	at: string
+}
+
 export interface CommonPaths {
 	downloads: string | null
 	videos: string | null

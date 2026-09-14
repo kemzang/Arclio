@@ -107,5 +107,10 @@ export const IPC_CHANNELS = {
 	accountDisconnect: 'account:disconnect',
 	// Library sync
 	syncNow: 'sync:now',
-	syncState: 'sync:state'
+	syncState: 'sync:state',
+	// AI transcription (Sync + IA tier). start/cancel — renderer → main.
+	// progress — main → renderer, one stream shared across all items.
+	transcriptionStart: 'transcription:start',
+	transcriptionCancel: 'transcription:cancel',
+	transcriptionProgress: 'transcription:progress'
 } as const

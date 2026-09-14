@@ -45,7 +45,8 @@ function buildMockApi(settingsUpdateMock?: ReturnType<typeof vi.fn>) {
 		updater: {onUpdateAvailable: vi.fn().mockReturnValue(() => undefined), install: vi.fn()},
 		analytics: {track: vi.fn()},
 		diagnostics: {logWizardStep: vi.fn()},
-		playlist: {scanFolder: vi.fn().mockResolvedValue({ok: true, data: {matchedIds: []}}), registerManifest: vi.fn().mockResolvedValue({ok: true, data: undefined})}
+		playlist: {scanFolder: vi.fn().mockResolvedValue({ok: true, data: {matchedIds: []}}), registerManifest: vi.fn().mockResolvedValue({ok: true, data: undefined})},
+		transcription: {start: vi.fn().mockResolvedValue({ok: true, data: undefined}), cancel: vi.fn().mockResolvedValue({ok: true, data: undefined}), onProgress: vi.fn().mockReturnValue(() => undefined)}
 	}
 }
 

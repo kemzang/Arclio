@@ -13,6 +13,7 @@ import type {DrizzleDatabase} from '@main/db/connection.js'
 import {DownloadEventBridge} from '@main/services/DownloadEventBridge.js'
 import {QueueEventBridge} from '@main/services/QueueEventBridge.js'
 import {ProbeEventBridge} from '@main/services/ProbeEventBridge.js'
+import {TranscriptionEventBridge} from '@main/services/TranscriptionEventBridge.js'
 import {WarmupService} from '@main/services/WarmupService.js'
 import {MetadataService} from '@main/services/MetadataService.js'
 import {ThumbnailService} from '@main/services/ThumbnailService.js'
@@ -38,8 +39,10 @@ import {registerConverterHandlers} from './converterHandlers.js'
 import {registerArchiveHandlers} from './archiveHandlers.js'
 import {registerAccountHandlers} from './accountHandlers.js'
 import {registerSyncHandlers} from './syncHandlers.js'
+import {registerTranscriptionHandlers} from './transcriptionHandlers.js'
 import {SyncService} from '@main/services/SyncService.js'
 import {SyncScheduler} from '@main/services/SyncScheduler.js'
+import {TranscriptionService} from '@main/services/TranscriptionService.js'
 import {createMediaRepository} from '@main/db/repositories/mediaRepository.js'
 import {createTagRepository} from '@main/db/repositories/tagRepository.js'
 import {createCollectionRepository} from '@main/db/repositories/collectionRepository.js'
@@ -64,6 +67,7 @@ export interface IpcDependencies {
 let activeDownloadBridge: DownloadEventBridge | null = null
 let activeQueueBridge: QueueEventBridge | null = null
 let activeProbeBridge: ProbeEventBridge | null = null
+let activeTranscriptionBridge: TranscriptionEventBridge | null = null
 
 export function registerIpcHandlers(deps: IpcDependencies): void {
 	const {mainWindow, downloadService, probeService, settingsStore, queueService, binaryManager, tokenService, languageRef, clipboardWatcher, playlistManifestStore, graphicsPolicyProvider, libraryDb} = deps
@@ -82,7 +86,16 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	const syncScheduler = new SyncScheduler(new SyncService(createMediaRepository(libraryDb), accountStore, undefined, createTagRepository(libraryDb), createCollectionRepository(libraryDb)))
 	// Started only once an account exists: an unpaired app must not wake up every
 	// 15 minutes to discover it has nothing to do.
-	if (accountService.status().connected) syncScheduler.start()
+	if (accountService.status().connected) {
+		syncScheduler.start()
+		// Otherwise plan/tier/quota stay whatever they were the instant this
+		// process started (undefined, on every cold launch) until the next
+		// pairing or manual sync — silently hiding the plan badge and the AI
+		// subtitles button for an already-paired account until something else
+		// happens to trigger a refresh.
+		void accountService.refreshPlan()
+	}
+	const transcriptionService = new TranscriptionService(queueService, accountStore, binaryManager)
 	registerAppHandlers({warmupService, binaryManager, languageRef, graphicsPolicyProvider})
 	registerWindowHandlers(mainWindow)
 	registerDownloadHandlers({downloadService, probeService, settingsStore})
@@ -101,6 +114,7 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	registerArchiveHandlers(archiveService)
 	registerAccountHandlers(accountService, syncScheduler)
 	registerSyncHandlers(syncScheduler, accountService)
+	registerTranscriptionHandlers(transcriptionService)
 
 	activeDownloadBridge?.detach()
 	activeDownloadBridge = new DownloadEventBridge(downloadService, mainWindow)
@@ -113,4 +127,8 @@ export function registerIpcHandlers(deps: IpcDependencies): void {
 	activeQueueBridge?.detach()
 	activeQueueBridge = new QueueEventBridge(queueService, mainWindow)
 	activeQueueBridge.attach()
+
+	activeTranscriptionBridge?.detach()
+	activeTranscriptionBridge = new TranscriptionEventBridge(transcriptionService, mainWindow)
+	activeTranscriptionBridge.attach()
 }

@@ -39,7 +39,8 @@ function makeApi(overrides: {onUpdateAvailable?: (listener: UpdateListener) => (
 			events: {onSnapshot: vi.fn().mockReturnValue(() => undefined), onAdded: vi.fn().mockReturnValue(() => undefined), onUpdated: vi.fn().mockReturnValue(() => undefined), onRemoved: vi.fn().mockReturnValue(() => undefined)}
 		},
 		updater: {onUpdateAvailable: overrides.onUpdateAvailable ?? (() => () => undefined), install: overrides.install ?? (vi.fn().mockResolvedValue({ok: true}) as () => Promise<{ok: true}>)},
-		analytics: {track: vi.fn()}
+		analytics: {track: vi.fn()},
+		transcription: {start: vi.fn().mockResolvedValue({ok: true, data: undefined}), cancel: vi.fn().mockResolvedValue({ok: true, data: undefined}), onProgress: vi.fn().mockReturnValue(() => undefined)}
 	} as unknown as AppApi
 }
 
