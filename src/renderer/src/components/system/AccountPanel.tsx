@@ -59,6 +59,12 @@ export function AccountPanel(): React.JSX.Element {
 	const mountedRef = useRef(true)
 
 	useEffect(() => {
+		// Re-arm on every effect run, not just the initial `useRef(true)`: React
+		// StrictMode double-invokes this effect in dev (mount -> cleanup -> mount
+		// again) on the same ref object, so without this line the cleanup's
+		// `false` would stick permanently and every async continuation below
+		// would silently no-op for the component's entire real lifetime.
+		mountedRef.current = true
 		let cancelled = false
 		void (async () => {
 			const current = await window.appApi.account.status()
