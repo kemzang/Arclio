@@ -135,7 +135,14 @@ export function DownloadProfilesSettingsTab(): ReactNode {
 							variant="outline"
 							value={[cookiesMode]}
 							onValueChange={value => {
-								if (value[0]) void setCookiesMode(value[0] as CookiesMode)
+								const mode = value[0] as CookiesMode | undefined
+								if (!mode) return
+								void setCookiesMode(mode)
+								// Without this, selecting "Browser" alone leaves cookiesBrowser
+								// unset until the user separately opens the dropdown below —
+								// a half-configured state that then blocks every download with
+								// the "pick a browser" dialog until it's fixed by hand.
+								if (mode === 'browser' && !cookiesBrowser) void setCookiesBrowser('chrome')
 							}}
 							spacing={1}
 							className="flex w-full flex-wrap gap-1"

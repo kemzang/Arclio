@@ -299,6 +299,33 @@ describe('incomplete cookies config guard', () => {
 		expect(useAppStore.getState().settings?.common.cookiesMode).toBe('file')
 	})
 
+	it('defaults a browser the moment Browser cookies mode is selected, so the config is never left half-set', async () => {
+		render(<StepUrlInput />)
+		openSettingsTab()
+
+		fireEvent.click(within(screen.getByTestId('cookies-source')).getByRole('button', {name: 'Browser'}))
+
+		await waitFor(() => {
+			expect(mockApi.settings.update).toHaveBeenCalledWith({common: {cookiesMode: 'browser'}})
+			expect(mockApi.settings.update).toHaveBeenCalledWith({common: {cookiesBrowser: 'chrome'}})
+		})
+		expect(useAppStore.getState().settings?.common.cookiesBrowser).toBe('chrome')
+		expect(screen.queryByText('Pick a browser to use cookies')).not.toBeInTheDocument()
+	})
+
+	it('does not override an already-chosen browser when Browser mode is re-selected', async () => {
+		resetStore(buildSettings({cookiesMode: 'off', cookiesBrowser: 'firefox'}))
+		render(<StepUrlInput />)
+		openSettingsTab()
+
+		fireEvent.click(within(screen.getByTestId('cookies-source')).getByRole('button', {name: 'Browser'}))
+
+		await waitFor(() => {
+			expect(mockApi.settings.update).toHaveBeenCalledWith({common: {cookiesMode: 'browser'}})
+		})
+		expect(useAppStore.getState().settings?.common.cookiesBrowser).toBe('firefox')
+	})
+
 	it('shows compact configured-cookies guidance for quick download probe failures while cookies are enabled', async () => {
 		resetStore(buildSettings({cookiesMode: 'file', cookiesPath: '/tmp/cookies.txt'}))
 		useAppStore.setState({wizardUrl: SINGLE_URL, quickDownloadStatus: 'error', quickDownloadFailure: {kind: 'probe', error: {kind: 'ytdlp', error: {kind: 'network', raw: 'network failed'}}}})
