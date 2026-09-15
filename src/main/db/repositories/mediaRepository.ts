@@ -76,6 +76,12 @@ export function createMediaRepository(db: DrizzleDatabase): MediaRepo {
 		list(filters: MediaListFilters = {}): MediaWithAssets[] {
 			const conditions = []
 
+			// DELETED is a tombstone (SyncService keeps the row around locally
+			// just long enough to push the deletion to other devices, then hard-
+			// deletes it) — it must never surface as a normal library item unless
+			// something explicitly asks for that status.
+			if (!filters.status) conditions.push(sql`media.status != 'DELETED'`)
+
 			if (filters.search) {
 				// Use FTS5 for full-text search. The query is free-text typed by the
 				// user (global search box) — FTS5's MATCH syntax treats characters
@@ -188,7 +194,7 @@ export function createMediaRepository(db: DrizzleDatabase): MediaRepo {
 
 		search(query: string, limit = 20): Media[] {
 			try {
-				const results = db.all(sql`SELECT media.* FROM media_fts JOIN media ON media.rowid = media_fts.rowid WHERE media_fts MATCH ${toFts5PhraseQuery(query)} ORDER BY rank LIMIT ${limit}`)
+				const results = db.all(sql`SELECT media.* FROM media_fts JOIN media ON media.rowid = media_fts.rowid WHERE media_fts MATCH ${toFts5PhraseQuery(query)} AND media.status != 'DELETED' ORDER BY rank LIMIT ${limit}`)
 				return results as Media[]
 			} catch {
 				// Same rationale as list()'s search filter — free-text user input,

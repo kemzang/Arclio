@@ -96,3 +96,36 @@ describe('mediaRepository — FTS5 search with real-world titles', () => {
 		expect(repo.list({search: 'completely unrelated phrase'})).toHaveLength(0)
 	})
 })
+
+describe('mediaRepository — DELETED status is a tombstone, not a visible item', () => {
+	let repo: ReturnType<typeof createMediaRepository>
+
+	beforeEach(() => {
+		repo = createMediaRepository(createTestDb())
+		repo.create({title: 'Still here', url: 'https://youtube.com/watch?v=1', mediaType: 'video', status: 'AVAILABLE', createdBy: 'DOWNLOAD', downloadDate: '2026-09-15T00:00:00.000Z', sourceType: 'YOUTUBE', description: null, author: null, thumbnailUrl: null, thumbnailPath: null, metadata: null})
+		const deleted = repo.create({title: 'Soft deleted', url: 'https://youtube.com/watch?v=2', mediaType: 'video', status: 'AVAILABLE', createdBy: 'SYNC', downloadDate: '2026-09-15T00:00:00.000Z', sourceType: 'UNKNOWN', description: null, author: null, thumbnailUrl: null, thumbnailPath: null, metadata: null})
+		repo.setStatus(deleted.id, 'DELETED')
+	})
+
+	// A synced deletion (or a future user-facing delete action) marks a row
+	// DELETED rather than removing it outright — SyncService needs the row to
+	// still exist locally so it can push the tombstone on the next round. The
+	// library UI has no status filter of its own, so if list()/search() don't
+	// hide DELETED by default, a "deleted" item stays fully visible until sync
+	// happens to run — exactly what let the stray SYNC-originated rows found
+	// live in this session sit in the library indefinitely.
+	it('list() omits a DELETED row by default', () => {
+		const titles = repo.list().map(item => item.title)
+		expect(titles).toContain('Still here')
+		expect(titles).not.toContain('Soft deleted')
+	})
+
+	it('list() still returns a DELETED row when explicitly asked for it', () => {
+		const titles = repo.list({status: 'DELETED'}).map(item => item.title)
+		expect(titles).toEqual(['Soft deleted'])
+	})
+
+	it('search() omits a DELETED row by default', () => {
+		expect(repo.search('Soft deleted')).toHaveLength(0)
+	})
+})
