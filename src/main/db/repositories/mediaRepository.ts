@@ -3,6 +3,22 @@ import type {DrizzleDatabase} from '../connection.js'
 import {media, asset, type Media, type NewMedia} from '../schema.js'
 import {randomUUID} from 'node:crypto'
 
+/**
+ * Turns free-typed user input into a safe FTS5 phrase query.
+ *
+ * Unquoted MATCH treats `(`, `)`, `-`, `"` and bare boolean keywords as query
+ * syntax, not literal characters — so searching titles a real library is full
+ * of ("ANS - Mal Aimé (Clip Officiel)", "... | Amy Chan | TED") throws an
+ * FTS5 syntax error on nearly every keystroke of a live search box (worse,
+ * an unbalanced paren mid-type is guaranteed). list()/search() below already
+ * catch that error and return no results, which reads as "search is broken"
+ * rather than a real zero-match. Quoting the whole input as one phrase — the
+ * documented FTS5 escaping mechanism — makes every character literal.
+ */
+function toFts5PhraseQuery(query: string): string {
+	return `"${query.replace(/"/g, '""')}"`
+}
+
 export interface MediaWithAssets extends Media {
 	assets: (typeof asset.$inferSelect)[]
 	totalSize: number | null
@@ -69,7 +85,7 @@ export function createMediaRepository(db: DrizzleDatabase): MediaRepo {
 				// exception reach the renderer.
 				let ftsResults: {rowid: number}[]
 				try {
-					ftsResults = db.all(sql`SELECT rowid FROM media_fts WHERE media_fts MATCH ${filters.search}`) as {rowid: number}[]
+					ftsResults = db.all(sql`SELECT rowid FROM media_fts WHERE media_fts MATCH ${toFts5PhraseQuery(filters.search)}`) as {rowid: number}[]
 				} catch {
 					return []
 				}
@@ -172,7 +188,7 @@ export function createMediaRepository(db: DrizzleDatabase): MediaRepo {
 
 		search(query: string, limit = 20): Media[] {
 			try {
-				const results = db.all(sql`SELECT media.* FROM media_fts JOIN media ON media.rowid = media_fts.rowid WHERE media_fts MATCH ${query} ORDER BY rank LIMIT ${limit}`)
+				const results = db.all(sql`SELECT media.* FROM media_fts JOIN media ON media.rowid = media_fts.rowid WHERE media_fts MATCH ${toFts5PhraseQuery(query)} ORDER BY rank LIMIT ${limit}`)
 				return results as Media[]
 			} catch {
 				// Same rationale as list()'s search filter — free-text user input,
