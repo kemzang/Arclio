@@ -1,5 +1,7 @@
 import {useState, useCallback} from 'react'
+import {useTranslation} from 'react-i18next'
 import {FileUp, Zap, CheckCircle2, AlertCircle, Loader2, FolderOpen} from 'lucide-react'
+import type {TFunction} from 'i18next'
 import type {ConversionResult} from '@shared/api.js'
 import type {ConversionFormat} from '@shared/schemas.js'
 import {Button} from '@renderer/components/ui/button.js'
@@ -18,28 +20,30 @@ const IMAGE_FORMATS: ConversionFormat[] = ['jpg', 'png', 'webp', 'avif']
 const KEEP_ORIGINAL = 'original'
 
 const VIDEO_RESOLUTIONS = [
-	{value: KEEP_ORIGINAL, label: 'Keep original'},
-	{value: '3840:-2', label: '4K (2160p)'},
-	{value: '1920:-2', label: 'Full HD (1080p)'},
-	{value: '1280:-2', label: 'HD (720p)'},
-	{value: '854:-2', label: 'SD (480p)'}
-]
+	{value: KEEP_ORIGINAL, labelKey: 'converter.resolutions.original'},
+	{value: '3840:-2', labelKey: 'converter.resolutions.2160'},
+	{value: '1920:-2', labelKey: 'converter.resolutions.1080'},
+	{value: '1280:-2', labelKey: 'converter.resolutions.720'},
+	{value: '854:-2', labelKey: 'converter.resolutions.480'}
+] as const
 
-function resolutionLabel(value: string): string {
-	return VIDEO_RESOLUTIONS.find(option => option.value === value)?.label ?? value
+function resolutionLabel(value: string, t: TFunction): string {
+	const option = VIDEO_RESOLUTIONS.find(candidate => candidate.value === value)
+	return option ? t(option.labelKey) : value
 }
 
 const AUDIO_BITRATES = ['320k', '256k', '192k', '128k', '96k']
 
-const MODE_TABS: {id: ConverterMode; label: string}[] = [
-	{id: 'video', label: 'Video'},
-	{id: 'audio', label: 'Audio'},
-	{id: 'image', label: 'Image'},
-	{id: 'extract', label: 'Extract audio'},
-	{id: 'gif', label: 'GIF'}
-]
+const MODE_TABS = [
+	{id: 'video', labelKey: 'converter.modes.video'},
+	{id: 'audio', labelKey: 'converter.modes.audio'},
+	{id: 'image', labelKey: 'converter.modes.image'},
+	{id: 'extract', labelKey: 'converter.modes.extract'},
+	{id: 'gif', labelKey: 'converter.modes.gif'}
+] as const satisfies {id: ConverterMode; labelKey: string}[]
 
 export function ConverterPage(): React.JSX.Element {
+	const {t} = useTranslation()
 	const [mode, setMode] = useState<ConverterMode>('video')
 	const [inputPath, setInputPath] = useState<string | null>(null)
 	const [running, setRunning] = useState(false)
@@ -109,10 +113,10 @@ export function ConverterPage(): React.JSX.Element {
 	return (
 		<div className="p-6 space-y-4">
 			<div className="flex items-center justify-between">
-				<h1 className="text-2xl font-bold">Converter</h1>
+				<h1 className="text-2xl font-bold">{t('converter.title')}</h1>
 			</div>
 
-			<p className="text-sm text-[var(--text-subtle)]">Convert media already on your disk. The original file is never modified — output is written alongside it.</p>
+			<p className="text-sm text-[var(--text-subtle)]">{t('converter.description')}</p>
 
 			{/* Source file */}
 			<div className="rounded-xl border border-[var(--border)] bg-[var(--glass-tile)] p-4 flex items-center gap-3">
@@ -124,12 +128,12 @@ export function ConverterPage(): React.JSX.Element {
 							<p className="text-xs text-[var(--text-subtle)] truncate">{inputPath}</p>
 						</>
 					) : (
-						<p className="text-sm text-[var(--text-subtle)]">No file selected</p>
+						<p className="text-sm text-[var(--text-subtle)]">{t('converter.noFileSelected')}</p>
 					)}
 				</div>
 				<Button variant="outline" size="sm" onClick={() => void pickFile()}>
 					<FolderOpen className="size-4 mr-1" />
-					Choose file
+					{t('converter.chooseFile')}
 				</Button>
 			</div>
 
@@ -137,39 +141,39 @@ export function ConverterPage(): React.JSX.Element {
 				<TabsList className="w-full justify-start overflow-x-auto">
 					{MODE_TABS.map(tab => (
 						<TabsTrigger key={tab.id} value={tab.id}>
-							{tab.label}
+							{t(tab.labelKey)}
 						</TabsTrigger>
 					))}
 				</TabsList>
 
 				<TabsContent value="video" className="space-y-3 mt-4">
-					<OptionRow label="Output format">
+					<OptionRow label={t('converter.outputFormat')}>
 						<FormatSelect value={videoFormat} onChange={setVideoFormat} options={VIDEO_FORMATS} />
 					</OptionRow>
-					<OptionRow label="Resolution">
+					<OptionRow label={t('converter.resolution')}>
 						<Select value={resolution} onValueChange={value => setResolution(value ?? KEEP_ORIGINAL)}>
 							<SelectTrigger className="w-[180px]">
-								<SelectValue>{resolutionLabel(resolution)}</SelectValue>
+								<SelectValue>{resolutionLabel(resolution, t)}</SelectValue>
 							</SelectTrigger>
 							<SelectContent>
 								{VIDEO_RESOLUTIONS.map(option => (
 									<SelectItem key={option.value} value={option.value}>
-										{option.label}
+										{t(option.labelKey)}
 									</SelectItem>
 								))}
 							</SelectContent>
 						</Select>
 					</OptionRow>
-					<OptionRow label="Quality (CRF)" hint="Lower is better quality and a larger file. 23 is a good default.">
+					<OptionRow label={t('converter.qualityCrf')} hint={t('converter.qualityCrfHint')}>
 						<Input type="number" min={0} max={51} value={crf} onChange={e => setCrf(e.target.value)} className="w-24" />
 					</OptionRow>
 				</TabsContent>
 
 				<TabsContent value="audio" className="space-y-3 mt-4">
-					<OptionRow label="Output format">
+					<OptionRow label={t('converter.outputFormat')}>
 						<FormatSelect value={audioFormat} onChange={setAudioFormat} options={AUDIO_FORMATS} />
 					</OptionRow>
-					<OptionRow label="Bitrate">
+					<OptionRow label={t('converter.bitrate')}>
 						<Select value={bitrate} onValueChange={value => setBitrate(value ?? '192k')}>
 							<SelectTrigger className="w-[120px]">
 								<SelectValue>{bitrate}</SelectValue>
@@ -186,28 +190,28 @@ export function ConverterPage(): React.JSX.Element {
 				</TabsContent>
 
 				<TabsContent value="image" className="space-y-3 mt-4">
-					<OptionRow label="Output format">
+					<OptionRow label={t('converter.outputFormat')}>
 						<FormatSelect value={imageFormat} onChange={setImageFormat} options={IMAGE_FORMATS} />
 					</OptionRow>
-					<OptionRow label="Width" hint="Leave empty to keep the original size. Height scales proportionally.">
+					<OptionRow label={t('converter.width')} hint={t('converter.widthHint')}>
 						<Input type="number" min={1} placeholder="auto" value={imageWidth} onChange={e => setImageWidth(e.target.value)} className="w-28" />
 					</OptionRow>
-					<OptionRow label="Quality">
+					<OptionRow label={t('converter.quality')}>
 						<Input type="number" min={1} max={100} value={quality} onChange={e => setQuality(e.target.value)} className="w-24" />
 					</OptionRow>
 				</TabsContent>
 
 				<TabsContent value="extract" className="space-y-3 mt-4">
-					<OptionRow label="Audio format" hint="Pulls the audio track out of a video file.">
+					<OptionRow label={t('converter.audioFormat')} hint={t('converter.audioFormatHint')}>
 						<FormatSelect value={audioFormat} onChange={setAudioFormat} options={AUDIO_FORMATS} />
 					</OptionRow>
 				</TabsContent>
 
 				<TabsContent value="gif" className="space-y-3 mt-4">
-					<OptionRow label="Frames per second">
+					<OptionRow label={t('converter.fps')}>
 						<Input type="number" min={1} max={50} value={gifFps} onChange={e => setGifFps(e.target.value)} className="w-24" />
 					</OptionRow>
-					<OptionRow label="Width">
+					<OptionRow label={t('converter.width')}>
 						<Input type="number" min={1} value={gifWidth} onChange={e => setGifWidth(e.target.value)} className="w-28" />
 					</OptionRow>
 				</TabsContent>
@@ -216,9 +220,9 @@ export function ConverterPage(): React.JSX.Element {
 			<div className="flex items-center gap-3 pt-2">
 				<Button disabled={!inputPath || running} onClick={() => void runConversion()} className="shadow-[0_4px_14px_var(--brand-glow)]">
 					{running ? <Loader2 className="size-4 mr-1 animate-spin" /> : <Zap className="size-4 mr-1" />}
-					{running ? 'Converting…' : 'Convert'}
+					{running ? t('converter.converting') : t('converter.convert')}
 				</Button>
-				{!inputPath && <span className="text-xs text-[var(--text-subtle)]">Choose a file to start.</span>}
+				{!inputPath && <span className="text-xs text-[var(--text-subtle)]">{t('converter.chooseFileHint')}</span>}
 			</div>
 
 			{result && (
@@ -227,13 +231,13 @@ export function ConverterPage(): React.JSX.Element {
 					<div className="min-w-0">
 						{result.success ? (
 							<>
-								<p className="font-medium">Conversion complete</p>
+								<p className="font-medium">{t('converter.conversionComplete')}</p>
 								<p className="text-xs opacity-80 break-all">{result.outputPath}</p>
 								<ShowInFolderButton outputPath={result.outputPath} />
 							</>
 						) : (
 							<>
-								<p className="font-medium">Conversion failed</p>
+								<p className="font-medium">{t('converter.conversionFailed')}</p>
 								<p className="text-xs opacity-80 break-all">{result.error}</p>
 							</>
 						)}
@@ -245,11 +249,12 @@ export function ConverterPage(): React.JSX.Element {
 }
 
 function ShowInFolderButton({outputPath}: {outputPath: string | undefined}): React.JSX.Element | null {
+	const {t} = useTranslation()
 	if (!outputPath) return null
 	return (
 		<Button variant="outline" size="sm" className="mt-2" onClick={() => void window.appApi.shell.openFolder(outputPath)}>
 			<FolderOpen className="size-4 mr-1" />
-			Show in folder
+			{t('converter.showInFolder')}
 		</Button>
 	)
 }

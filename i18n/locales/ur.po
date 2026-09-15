@@ -291,6 +291,130 @@ msgctxt "common.startOver"
 msgid "Start over"
 msgstr "دوبارہ شروع کریں"
 
+msgctxt "converter.audioFormat"
+msgid "Audio format"
+msgstr "آڈیو فارمیٹ"
+
+msgctxt "converter.audioFormatHint"
+msgid "Pulls the audio track out of a video file."
+msgstr "ویڈیو فائل سے آڈیو ٹریک نکالتا ہے۔"
+
+msgctxt "converter.bitrate"
+msgid "Bitrate"
+msgstr "بٹ ریٹ"
+
+msgctxt "converter.chooseFile"
+msgid "Choose file"
+msgstr "فائل منتخب کریں"
+
+msgctxt "converter.chooseFileHint"
+msgid "Choose a file to start."
+msgstr "شروع کرنے کے لیے ایک فائل منتخب کریں۔"
+
+msgctxt "converter.conversionComplete"
+msgid "Conversion complete"
+msgstr "کنورژن مکمل"
+
+msgctxt "converter.conversionFailed"
+msgid "Conversion failed"
+msgstr "کنورژن ناکام"
+
+msgctxt "converter.convert"
+msgid "Convert"
+msgstr "کنورٹ کریں"
+
+msgctxt "converter.converting"
+msgid "Converting…"
+msgstr "کنورٹ ہو رہا ہے…"
+
+msgctxt "converter.description"
+msgid "Convert media already on your disk. The original file is never modified — output is written alongside it."
+msgstr "اپنی ڈسک پر پہلے سے موجود میڈیا کو کنورٹ کریں۔ اصل فائل کبھی تبدیل نہیں ہوتی — آؤٹ پٹ اس کے ساتھ ہی لکھا جاتا ہے۔"
+
+msgctxt "converter.fps"
+msgid "Frames per second"
+msgstr "فریمز فی سیکنڈ"
+
+msgctxt "converter.modes.audio"
+msgid "Audio"
+msgstr "آڈیو"
+
+msgctxt "converter.modes.extract"
+msgid "Extract audio"
+msgstr "آڈیو نکالیں"
+
+msgctxt "converter.modes.gif"
+msgid "GIF"
+msgstr "GIF"
+
+msgctxt "converter.modes.image"
+msgid "Image"
+msgstr "تصویر"
+
+msgctxt "converter.modes.video"
+msgid "Video"
+msgstr "ویڈیو"
+
+msgctxt "converter.noFileSelected"
+msgid "No file selected"
+msgstr "کوئی فائل منتخب نہیں"
+
+msgctxt "converter.outputFormat"
+msgid "Output format"
+msgstr "آؤٹ پٹ فارمیٹ"
+
+msgctxt "converter.quality"
+msgid "Quality"
+msgstr "کوالٹی"
+
+msgctxt "converter.qualityCrf"
+msgid "Quality (CRF)"
+msgstr "کوالٹی (CRF)"
+
+msgctxt "converter.qualityCrfHint"
+msgid "Lower is better quality and a larger file. 23 is a good default."
+msgstr "جتنی کم ویلیو، اتنی بہتر کوالٹی اور اتنی بڑی فائل۔ 23 ایک اچھی ڈیفالٹ ویلیو ہے۔"
+
+msgctxt "converter.resolution"
+msgid "Resolution"
+msgstr "ریزولوشن"
+
+msgctxt "converter.resolutions.1080"
+msgid "Full HD (1080p)"
+msgstr "مکمل HD (1080p)"
+
+msgctxt "converter.resolutions.2160"
+msgid "4K (2160p)"
+msgstr "4K (2160p)"
+
+msgctxt "converter.resolutions.480"
+msgid "SD (480p)"
+msgstr "SD (480p)"
+
+msgctxt "converter.resolutions.720"
+msgid "HD (720p)"
+msgstr "HD (720p)"
+
+msgctxt "converter.resolutions.original"
+msgid "Keep original"
+msgstr "اصل برقرار رکھیں"
+
+msgctxt "converter.showInFolder"
+msgid "Show in folder"
+msgstr "فولڈر میں دکھائیں"
+
+msgctxt "converter.title"
+msgid "Converter"
+msgstr "کنورٹر"
+
+msgctxt "converter.width"
+msgid "Width"
+msgstr "چوڑائی"
+
+msgctxt "converter.widthHint"
+msgid "Leave empty to keep the original size. Height scales proportionally."
+msgstr "اصل سائز برقرار رکھنے کے لیے خالی چھوڑ دیں۔ اونچائی تناسب کے مطابق خود بخود ایڈجسٹ ہو جائے گی۔"
+
 msgctxt "dialogs.closeToTray.detail"
 msgid "Arclio keeps running and finishes active downloads. Change this later in Advanced settings."
 msgstr "Arclio چلتا رہتا ہے اور ایکٹو ڈاؤن لوڈز مکمل کرتا ہے۔ یہ بعد میں ایڈوانسڈ سیٹنگز سے بدلیں۔"
@@ -543,6 +667,10 @@ msgctxt "nav.collections"
 msgid "Collections"
 msgstr "مجموعے"
 
+msgctxt "nav.converter"
+msgid "Converter"
+msgstr "کنورٹر"
+
 msgctxt "nav.favorites"
 msgid "Favorites"
 msgstr "پسندیدہ"
@@ -558,6 +686,10 @@ msgstr "ہوم"
 msgctxt "nav.library"
 msgid "Library"
 msgstr "لائبریری"
+
+msgctxt "nav.search"
+msgid "Search"
+msgstr "تلاش"
 
 msgctxt "nav.settings"
 msgid "Settings"

@@ -291,6 +291,130 @@ msgctxt "common.startOver"
 msgid "Start over"
 msgstr "ከመጀመሪያ ጀምር"
 
+msgctxt "converter.audioFormat"
+msgid "Audio format"
+msgstr "የድምጽ ፎርማት"
+
+msgctxt "converter.audioFormatHint"
+msgid "Pulls the audio track out of a video file."
+msgstr "ከቪዲዮ ፋይል የድምጽ ትራኩን ያወጣል።"
+
+msgctxt "converter.bitrate"
+msgid "Bitrate"
+msgstr "ቢትሬት"
+
+msgctxt "converter.chooseFile"
+msgid "Choose file"
+msgstr "ፋይል ምረጥ"
+
+msgctxt "converter.chooseFileHint"
+msgid "Choose a file to start."
+msgstr "ለመጀመር ፋይል ይምረጡ።"
+
+msgctxt "converter.conversionComplete"
+msgid "Conversion complete"
+msgstr "መቀየር ተጠናቅቋል"
+
+msgctxt "converter.conversionFailed"
+msgid "Conversion failed"
+msgstr "መቀየር አልተሳካም"
+
+msgctxt "converter.convert"
+msgid "Convert"
+msgstr "ቀይር"
+
+msgctxt "converter.converting"
+msgid "Converting…"
+msgstr "በመቀየር ላይ…"
+
+msgctxt "converter.description"
+msgid "Convert media already on your disk. The original file is never modified — output is written alongside it."
+msgstr "በዲስክዎ ላይ ያለ ማህደረ መረጃ ይቀይሩ። ዋናው ፋይል ፈጽሞ አይቀየርም — ውጤቱ በአጠገቡ ይጻፋል።"
+
+msgctxt "converter.fps"
+msgid "Frames per second"
+msgstr "ፍሬሞች በሰከንድ"
+
+msgctxt "converter.modes.audio"
+msgid "Audio"
+msgstr "ድምጽ"
+
+msgctxt "converter.modes.extract"
+msgid "Extract audio"
+msgstr "ድምጽ ማውጣት"
+
+msgctxt "converter.modes.gif"
+msgid "GIF"
+msgstr "GIF"
+
+msgctxt "converter.modes.image"
+msgid "Image"
+msgstr "ምስል"
+
+msgctxt "converter.modes.video"
+msgid "Video"
+msgstr "ቪዲዮ"
+
+msgctxt "converter.noFileSelected"
+msgid "No file selected"
+msgstr "ምንም ፋይል አልተመረጠም"
+
+msgctxt "converter.outputFormat"
+msgid "Output format"
+msgstr "የውጤት ፎርማት"
+
+msgctxt "converter.quality"
+msgid "Quality"
+msgstr "ጥራት"
+
+msgctxt "converter.qualityCrf"
+msgid "Quality (CRF)"
+msgstr "ጥራት (CRF)"
+
+msgctxt "converter.qualityCrfHint"
+msgid "Lower is better quality and a larger file. 23 is a good default."
+msgstr "ዝቅ ባለ መጠን የተሻለ ጥራት እና ትልቅ ፋይል ያስገኛል። 23 ጥሩ ነባሪ ዋጋ ነው።"
+
+msgctxt "converter.resolution"
+msgid "Resolution"
+msgstr "ጥራት (ውሳኔ)"
+
+msgctxt "converter.resolutions.1080"
+msgid "Full HD (1080p)"
+msgstr "ሙሉ HD (1080p)"
+
+msgctxt "converter.resolutions.2160"
+msgid "4K (2160p)"
+msgstr "4K (2160p)"
+
+msgctxt "converter.resolutions.480"
+msgid "SD (480p)"
+msgstr "SD (480p)"
+
+msgctxt "converter.resolutions.720"
+msgid "HD (720p)"
+msgstr "HD (720p)"
+
+msgctxt "converter.resolutions.original"
+msgid "Keep original"
+msgstr "የመጀመሪያውን ጠብቅ"
+
+msgctxt "converter.showInFolder"
+msgid "Show in folder"
+msgstr "በአቃፊ ውስጥ አሳይ"
+
+msgctxt "converter.title"
+msgid "Converter"
+msgstr "መቀየሪያ"
+
+msgctxt "converter.width"
+msgid "Width"
+msgstr "ስፋት"
+
+msgctxt "converter.widthHint"
+msgid "Leave empty to keep the original size. Height scales proportionally."
+msgstr "ኦሪጅናሉን መጠን ለመጠበቅ ባዶ ይተዉት። ቁመቱ በተመጣጣኝ ሁኔታ ይስተካከላል።"
+
 msgctxt "dialogs.closeToTray.detail"
 msgid "Arclio keeps running and finishes active downloads. Change this later in Advanced settings."
 msgstr "Arclio ይሰራ ይቆያል ዳውንሎዶቹንም ያጠናቅቃል። ይህን ወደ ኋላ በከፍተኛ ቅንብሮች ይቀይሩ።"
@@ -543,6 +667,10 @@ msgctxt "nav.collections"
 msgid "Collections"
 msgstr "ስብስቦች"
 
+msgctxt "nav.converter"
+msgid "Converter"
+msgstr "መቀየሪያ"
+
 msgctxt "nav.favorites"
 msgid "Favorites"
 msgstr "ተወዳጆች"
@@ -558,6 +686,10 @@ msgstr "መነሻ"
 msgctxt "nav.library"
 msgid "Library"
 msgstr "ቤተ-መጽሐፍት"
+
+msgctxt "nav.search"
+msgid "Search"
+msgstr "ፈልግ"
 
 msgctxt "nav.settings"
 msgid "Settings"

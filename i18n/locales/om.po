@@ -291,6 +291,130 @@ msgctxt "common.startOver"
 msgid "Start over"
 msgstr "Jalqabbii irra deebi'i"
 
+msgctxt "converter.audioFormat"
+msgid "Audio format"
+msgstr "Foormaatii sagalee"
+
+msgctxt "converter.audioFormatHint"
+msgid "Pulls the audio track out of a video file."
+msgstr "Sararaa sagalee faayilii viidiyoo keessaa baasa."
+
+msgctxt "converter.bitrate"
+msgid "Bitrate"
+msgstr "Saaffata bitii"
+
+msgctxt "converter.chooseFile"
+msgid "Choose file"
+msgstr "Faayilii Filadhu"
+
+msgctxt "converter.chooseFileHint"
+msgid "Choose a file to start."
+msgstr "Jalqabuuf faayilii filadhu."
+
+msgctxt "converter.conversionComplete"
+msgid "Conversion complete"
+msgstr "Jijjiirri xumurameera"
+
+msgctxt "converter.conversionFailed"
+msgid "Conversion failed"
+msgstr "Jijjiirri hin milkoofne"
+
+msgctxt "converter.convert"
+msgid "Convert"
+msgstr "Jijjiiri"
+
+msgctxt "converter.converting"
+msgid "Converting…"
+msgstr "Jijjiiramaa jira…"
+
+msgctxt "converter.description"
+msgid "Convert media already on your disk. The original file is never modified — output is written alongside it."
+msgstr "Miidiyaa disk kee irra duraan jiru jijjiiri. Faayiliin jalqabaa gonkumaa hin jijjiiramu — bu'aan cinaa isaatti barreeffama."
+
+msgctxt "converter.fps"
+msgid "Frames per second"
+msgstr "Firaamiiwwan sekondii tokkotti"
+
+msgctxt "converter.modes.audio"
+msgid "Audio"
+msgstr "Sagalee"
+
+msgctxt "converter.modes.extract"
+msgid "Extract audio"
+msgstr "Sagalee Baasuu"
+
+msgctxt "converter.modes.gif"
+msgid "GIF"
+msgstr "GIF"
+
+msgctxt "converter.modes.image"
+msgid "Image"
+msgstr "Suuraa"
+
+msgctxt "converter.modes.video"
+msgid "Video"
+msgstr "Viidiyoo"
+
+msgctxt "converter.noFileSelected"
+msgid "No file selected"
+msgstr "Faayilii hin filanne"
+
+msgctxt "converter.outputFormat"
+msgid "Output format"
+msgstr "Foormaatii bu'aa"
+
+msgctxt "converter.quality"
+msgid "Quality"
+msgstr "Qulqullina"
+
+msgctxt "converter.qualityCrf"
+msgid "Quality (CRF)"
+msgstr "Qulqullina (CRF)"
+
+msgctxt "converter.qualityCrfHint"
+msgid "Lower is better quality and a larger file. 23 is a good default."
+msgstr "Gadi aanaan yoo ta'e, qulqullinni ni fooyya'a, faayilichis ni guddata. 23 gatii durtii gaarii dha."
+
+msgctxt "converter.resolution"
+msgid "Resolution"
+msgstr "Ulaagaa Fakkii"
+
+msgctxt "converter.resolutions.1080"
+msgid "Full HD (1080p)"
+msgstr "Guutuu HD (1080p)"
+
+msgctxt "converter.resolutions.2160"
+msgid "4K (2160p)"
+msgstr "4K (2160p)"
+
+msgctxt "converter.resolutions.480"
+msgid "SD (480p)"
+msgstr "SD (480p)"
+
+msgctxt "converter.resolutions.720"
+msgid "HD (720p)"
+msgstr "HD (720p)"
+
+msgctxt "converter.resolutions.original"
+msgid "Keep original"
+msgstr "Kan jalqabaa eegi"
+
+msgctxt "converter.showInFolder"
+msgid "Show in folder"
+msgstr "Foolderii keessatti argisiisi"
+
+msgctxt "converter.title"
+msgid "Converter"
+msgstr "Jijjiiraa"
+
+msgctxt "converter.width"
+msgid "Width"
+msgstr "Bal'ina"
+
+msgctxt "converter.widthHint"
+msgid "Leave empty to keep the original size. Height scales proportionally."
+msgstr "Guddina jalqabaa eeguuf duwwaa dhiisi. Dheerinni akkaataa hariiroo isaatiin ni sirreeffama."
+
 msgctxt "dialogs.closeToTray.detail"
 msgid "Arclio keeps running and finishes active downloads. Change this later in Advanced settings."
 msgstr "Arclio hojjechuuf itti fufa daawniloodoonnis xumurama. Booda Qindaa'inoota Ammayyaa keessatti jijjiiri."
@@ -543,6 +667,10 @@ msgctxt "nav.collections"
 msgid "Collections"
 msgstr "Walitti qabamoota"
 
+msgctxt "nav.converter"
+msgid "Converter"
+msgstr "Jijjiiraa"
+
 msgctxt "nav.favorites"
 msgid "Favorites"
 msgstr "Jaalatamoota"
@@ -558,6 +686,10 @@ msgstr "Fuula jalqabaa"
 msgctxt "nav.library"
 msgid "Library"
 msgstr "Mana kitaabaa"
+
+msgctxt "nav.search"
+msgid "Search"
+msgstr "Barbaadi"
 
 msgctxt "nav.settings"
 msgid "Settings"
