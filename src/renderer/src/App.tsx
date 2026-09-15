@@ -4,9 +4,7 @@ import log from 'electron-log/renderer.js'
 import {Cpu, Info, MessageCircle, Paintbrush, Share2} from 'lucide-react'
 import {useTranslation} from 'react-i18next'
 import {useShallow} from 'zustand/react/shallow'
-import {DEFAULTS} from '@shared/constants.js'
 import {ZOOM_MIN, ZOOM_MAX, ZOOM_STEP, type UiTheme} from '@shared/schemas.js'
-import type {BackdropRenderMode, GraphicsPolicy} from '@shared/types.js'
 import {useAppStore} from './store/useAppStore.js'
 import {AppBackdrop} from './components/layout/background/AppBackdrop.js'
 import type {BackdropColorScheme} from './components/layout/background/types.js'
@@ -93,11 +91,6 @@ function shouldRenderStartupSplash(): boolean {
 	return window.__arclioBrowserMockShowStartupSplash === true
 }
 
-function effectiveBackdropRenderMode(preferredMode: BackdropRenderMode | null, graphicsPolicy: GraphicsPolicy | null): BackdropRenderMode {
-	if (!preferredMode || !graphicsPolicy) return 'css-only'
-	return graphicsPolicy.backdrop.forceRenderMode ?? preferredMode
-}
-
 function HomePage(): ReactNode {
 	return (
 		<div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden" data-testid="wizard-scrollport">
@@ -108,7 +101,7 @@ function HomePage(): ReactNode {
 
 function AppContent(): ReactNode {
 	const {t} = useTranslation()
-	const {initialized, initialize, setSplashDismissed, splashDismissed, warmupBlocking, warmupDiagnostics, warmupProgress, settings, graphicsPolicy} = useAppStore(
+	const {initialized, initialize, setSplashDismissed, splashDismissed, warmupBlocking, warmupDiagnostics, warmupProgress, settings} = useAppStore(
 		useShallow(state => ({
 			initialized: state.initialized,
 			initialize: state.initialize,
@@ -117,8 +110,7 @@ function AppContent(): ReactNode {
 			warmupBlocking: state.warmupBlocking,
 			warmupDiagnostics: state.warmupDiagnostics,
 			warmupProgress: state.warmupProgress,
-			settings: state.settings,
-			graphicsPolicy: state.graphicsPolicy
+			settings: state.settings
 		}))
 	)
 	const {uiZoom, setUiZoom, uiTheme, setAboutDialogOpen, openShareDialog, shareDialogOpen, accountGateOpen} = useAppStore(
@@ -131,9 +123,6 @@ function AppContent(): ReactNode {
 	const [backdropPreviewMode, setBackdropPreviewMode] = useState<BackdropPreviewMode>(() => backdropPreviewModeFromUrl())
 	const showStartupSplash = shouldRenderStartupSplash()
 	const whatsNew = useWhatsNewDialog(changelogText, {startupReady: !showStartupSplash || splashDismissed})
-	const preferredBackdropRenderMode = settings ? (settings.common?.backdropRenderMode ?? DEFAULTS.backdropRenderMode) : null
-	const backdropRenderMode = effectiveBackdropRenderMode(preferredBackdropRenderMode, graphicsPolicy)
-	const softwareWebglAllowed = graphicsPolicy?.backdrop.softwareWebglAllowed ?? false
 
 	useEffect(() => {
 		void initialize()
@@ -218,7 +207,6 @@ function AppContent(): ReactNode {
 	return (
 		<>
 			<div className="relative flex flex-col h-screen w-screen overflow-hidden" data-testid="app-root">
-				<AppBackdrop key={`${colorScheme}-${backdropRenderMode}-${softwareWebglAllowed ? 'software' : 'hardware'}`} colorScheme={colorScheme} renderMode={backdropRenderMode} softwareWebglAllowed={softwareWebglAllowed} />
 				<TitleBar />
 
 				{update.info && <UpdateBanner info={update.info} installing={update.installing} installError={update.error} onInstall={update.install} onDownload={update.download} onDismiss={update.dismiss} />}

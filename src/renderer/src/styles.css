@@ -32,13 +32,22 @@
 	--text-label--font-weight: 700;
 	--text-caption: 0.6875rem;
 	--text-caption--line-height: 1.3;
-	/* Primary brand color: Arclio Navy — matches the actual logo mark, not the teal a prior pass drifted to. Identical in both skies. */
+	/* Primary brand color: Arclio Navy — matches the actual logo mark. Identical in both skies. */
 	--brand: hsl(235, 65%, 58%);
 	--brand-dim: hsl(235 65% 58% / 0.12);
 	--brand-hover: hsl(235, 65%, 66%);
+	/* Soft navy shadow used by the shadow-[...var(--brand-glow)] pattern on primary
+	   controls — low-alpha so it reads as a shadow, not a neon halo. */
+	--brand-glow: hsl(235 65% 45% / 0.32);
 	--icon-tile-ink: hsl(235 65% 92%);
 	--text-glass-muted: hsl(229 36% 78%);
-	/* --brand-glow and --glow-border are mode-aware; defined per sky in :root / .dark */
+	/* Warm accent — reserved for the single most important action per view
+	   (the primary "Convert"/"Download" button, active progress) so it stays a
+	   signal instead of wallpaper. Everything else stays navy/neutral. */
+	--accent-warm: hsl(36, 92%, 54%);
+	--accent-warm-hover: hsl(36, 92%, 61%);
+	--accent-warm-dim: hsl(36 92% 54% / 0.14);
+	--accent-warm-ink: hsl(28, 64%, 14%);
 	/* Status colors from Arclio brand palette */
 	--color-status-done: hsl(153, 74%, 45%);
 	--color-status-done-glow: hsl(153 74% 45% / 0.05);
@@ -320,111 +329,53 @@ body {
 	}
 }
 
-/* ── Glass surface: frosted panel material that floats above the canvas.
-   Dark sky = translucent navy; light sky = frosted white. Two layers max. */
+/* ── Glass surface: flat panel material, no blur/tint — just the card color. */
 @utility glass {
 	background: var(--glass-panel) !important;
-	backdrop-filter: blur(28px) saturate(160%);
-	-webkit-backdrop-filter: blur(28px) saturate(160%);
 }
 @utility glass-raised {
 	background: var(--card);
-	backdrop-filter: blur(18px) saturate(135%);
-	-webkit-backdrop-filter: blur(18px) saturate(135%);
 }
 
-/* ── Glow panel: lit-from-within glass for OUTERMOST / standalone surfaces.
-   The edge is a true GRADIENT border (cyan→blue→violet) painted via border-box,
-   not a uniform ring — that is what reads as neon edge-lighting. Plus a diagonal
-   inner sheen (padding-box), a top highlight, an inset floor bloom, and a soft
-   outer bloom. Owns the backdrop blur. The Aurora Console surface. */
+/* ── Glow panel: flat outermost surface — solid fill, a single hairline border,
+   a barely-there shadow. No blur, no gradient edge. */
 @utility glow-panel {
 	position: relative;
-	border: 1px solid transparent;
-	background:
-		linear-gradient(180deg, var(--glass-surface-veil), var(--glass-surface-veil)) padding-box,
-		radial-gradient(90% 120% at 4% 10%, var(--glass-cyan), transparent 48%) padding-box,
-		radial-gradient(100% 120% at 104% 112%, var(--glass-violet), transparent 52%) padding-box,
-		linear-gradient(145deg, hsl(212 100% 56% / 0.18), transparent 58%) padding-box,
-		linear-gradient(var(--glass-panel), var(--glass-panel)) padding-box,
-		var(--glow-gradient) border-box !important;
-	backdrop-filter: blur(32px) saturate(165%);
-	-webkit-backdrop-filter: blur(32px) saturate(165%);
-	box-shadow:
-		inset 0 1px 0 0 var(--glass-sheen),
-		inset 0 -34px 74px -36px var(--inner-bloom),
-		var(--panel-glow);
+	border: 1px solid var(--border);
+	background: var(--glass-panel) !important;
+	box-shadow: var(--panel-glow);
 }
-/* ── Glow tile: same lit gradient edge, but NO backdrop blur. For tiles that
-   live INSIDE a glow-panel — the parent already blurred the canvas; re-blurring
-   blurred content only muddies it. Keeps the stack at one blur layer. */
+/* ── Glow tile: same flat treatment, for tiles nested inside a glow-panel. */
 @utility glow-tile {
 	position: relative;
-	border: 1px solid transparent;
-	background:
-		linear-gradient(180deg, var(--glass-control-veil), var(--glass-control-veil)) padding-box,
-		radial-gradient(120% 150% at 0% 0%, var(--glass-cyan), transparent 44%) padding-box,
-		radial-gradient(120% 150% at 100% 110%, var(--glass-violet), transparent 48%) padding-box,
-		linear-gradient(145deg, hsl(212 100% 56% / 0.17), transparent 58%) padding-box,
-		linear-gradient(var(--glass-tile), var(--glass-tile)) padding-box,
-		var(--glow-gradient) border-box !important;
-	box-shadow:
-		inset 0 1px 0 0 var(--glass-sheen),
-		inset 0 -28px 60px -34px var(--inner-bloom),
-		var(--panel-glow);
+	border: 1px solid var(--border);
+	background: var(--glass-tile) !important;
+	box-shadow: var(--panel-glow);
 }
 .glow-tile[data-slot="input-group"] {
-	background:
-		linear-gradient(180deg, var(--field-glow-veil), var(--field-glow-veil)) padding-box,
-		radial-gradient(120% 150% at 0% 0%, var(--glass-cyan), transparent 44%) padding-box,
-		radial-gradient(120% 150% at 100% 110%, var(--glass-violet), transparent 48%) padding-box,
-		linear-gradient(var(--field-glow-bg), var(--field-glow-bg)) padding-box,
-		var(--glow-gradient) border-box !important;
+	background: var(--field-glow-bg) !important;
 	box-shadow: var(--field-glow-shadow);
 }
-/* Primary inner tile: hotter gradient edge + real outer bloom (the one signal). */
+/* Primary inner tile: the single warm-accent signal (main download action). */
 @utility glow-tile-primary {
 	position: relative;
-	border: 1.5px solid transparent;
-	background:
-		radial-gradient(105% 130% at 8% 12%, var(--quick-card-cyan), transparent 48%) padding-box,
-		radial-gradient(105% 130% at 96% 108%, var(--quick-card-violet), transparent 54%) padding-box,
-		var(--quick-card-fill) padding-box,
-		var(--glow-gradient-hot) border-box;
+	border: 0;
+	background: var(--quick-card-fill) padding-box;
 	box-shadow: var(--quick-card-shadow);
 	color: var(--quick-card-ink);
 }
 
-/* ── Icon tile: small dimensional gradient chip. A diagonal blue fill, a cyan
-   top-left radial sheen, a violet floor, a top highlight, and a soft glow ring.
-   Reads as a lit object, not a flat box. */
+/* ── Icon tile: flat brand-navy chip. */
 @utility icon-tile {
 	position: relative;
 	overflow: hidden;
 	border: 1px solid var(--glow-border);
-	background:
-		radial-gradient(105% 105% at 28% 18%, hsl(194 100% 78% / 0.46), transparent 44%) padding-box,
-		radial-gradient(110% 125% at 72% 108%, hsl(276 94% 64% / 0.42), transparent 48%) padding-box,
-		linear-gradient(145deg, hsl(214 100% 58% / 0.42), hsl(238 82% 42% / 0.18) 52%, var(--brand-dim)) padding-box !important;
-	box-shadow:
-		inset 0 1px 0 0 hsl(0 0% 100% / 0.42),
-		inset 0 -13px 28px -14px hsl(272 96% 64% / 0.62),
-		0 0 0 1px hsl(208 100% 74% / 0.18),
-		0 0 28px -5px var(--brand-glow);
+	background: var(--brand) !important;
 	color: var(--icon-tile-ink);
-}
-.icon-tile::before {
-	content: "";
-	position: absolute;
-	inset: 1px;
-	border-radius: inherit;
-	pointer-events: none;
-	background: linear-gradient(160deg, hsl(0 0% 100% / 0.28), transparent 38%);
 }
 .icon-tile > svg {
 	position: relative;
 	z-index: 1;
-	filter: drop-shadow(0 0 8px hsl(213 100% 76% / 0.72));
 	stroke-width: 2.2;
 }
 
@@ -563,10 +514,7 @@ body {
 }
 
 .chrome-glass {
-	background: linear-gradient(180deg, hsl(214 100% 56% / 0.08), transparent 64%), color-mix(in srgb, var(--background) 82%, transparent);
-	backdrop-filter: blur(20px) saturate(150%);
-	-webkit-backdrop-filter: blur(20px) saturate(150%);
-	box-shadow: inset 0 1px 0 var(--glass-sheen);
+	background: var(--card);
 }
 
 .download-home-tabs {
@@ -580,8 +528,6 @@ body {
 	background:
 		var(--tabs-rail-bg) padding-box,
 		var(--tabs-rail-border) border-box !important;
-	backdrop-filter: blur(22px) saturate(145%);
-	-webkit-backdrop-filter: blur(22px) saturate(145%);
 	box-shadow: var(--tabs-rail-shadow);
 }
 .download-home-tabs::before {
@@ -679,11 +625,8 @@ body {
 }
 
 .glow-chip {
-	border-color: hsl(206 100% 76% / 0.4);
-	background: linear-gradient(180deg, hsl(210 100% 70% / 0.2), hsl(259 92% 64% / 0.12)), color-mix(in srgb, var(--background) 38%, transparent);
-	box-shadow:
-		inset 0 1px 0 hsl(0 0% 100% / 0.18),
-		0 0 18px -7px var(--brand-glow);
+	border-color: var(--border-strong);
+	background: var(--secondary);
 	color: var(--foreground);
 }
 
@@ -695,8 +638,6 @@ body {
 	background:
 		var(--wizard-footer-fill) padding-box,
 		var(--wizard-footer-edge) border-box !important;
-	backdrop-filter: blur(22px) saturate(145%);
-	-webkit-backdrop-filter: blur(22px) saturate(145%);
 	box-shadow: var(--wizard-footer-shadow);
 }
 
@@ -951,10 +892,10 @@ body {
 	animation: pulse-danger 2s ease infinite;
 }
 
-/* ── Progress bar glow ─────────────────────────────────── */
+/* ── Progress bar ──────────────────────────────────────── */
 .progress-glow [data-slot="progress-indicator"] {
-	background: linear-gradient(90deg, var(--brand), var(--brand-hover));
-	box-shadow: 0 0 8px var(--brand-glow);
+	background: var(--accent-warm);
+	box-shadow: none;
 }
 
 /* ── Spinner ───────────────────────────────────────────── */
@@ -1202,126 +1143,126 @@ body {
 
 :root {
 	color-scheme: light;
-	--background: hsl(169 78% 98%);
-	--foreground: hsl(179 48% 11%);
-	--card: hsl(180 100% 98%);
-	--card-foreground: hsl(179 48% 11%);
+	/* Flat navy-neutral palette (A+ direction) — no teal hue anywhere, one
+	   warm accent reserved for primary actions. Every "veil"/"cyan"/"violet"
+	   spot color below is transparent on purpose: the utility classes that
+	   layer them stay structurally the same, they just no longer paint a
+	   color, which is what turns a glow surface into a flat one without
+	   rewriting every component that references these tokens. */
+	--background: hsl(230, 22%, 97%);
+	--foreground: hsl(230, 28%, 12%);
+	--card: hsl(0, 0%, 100%);
+	--card-foreground: hsl(230, 28%, 12%);
 	--popover: hsl(0, 0%, 100%);
-	--popover-foreground: hsl(179 48% 11%);
-	--primary: var(--brand);
-	--primary-foreground: hsl(240, 40%, 96%);
-	--secondary: hsl(220, 30%, 97%);
-	--secondary-foreground: hsl(179 48% 11%);
-	--muted: hsl(220, 30%, 97%);
-	--muted-foreground: hsl(225, 22%, 38%);
-	--accent: hsl(220, 20%, 92%);
-	--accent-foreground: hsl(179 48% 11%);
+	--popover-foreground: hsl(230, 28%, 12%);
+	--primary: var(--accent-warm);
+	--primary-foreground: var(--accent-warm-ink);
+	--secondary: hsl(230, 18%, 95%);
+	--secondary-foreground: hsl(230, 28%, 12%);
+	--muted: hsl(230, 18%, 95%);
+	--muted-foreground: hsl(230, 12%, 42%);
+	--accent: hsl(230, 16%, 91%);
+	--accent-foreground: hsl(230, 28%, 12%);
 	--destructive: hsl(349, 100%, 55%);
-	--border: hsl(220, 18%, 88%);
-	--border-strong: hsl(220, 18%, 80%);
-	--input: hsl(220, 18%, 88%);
+	--border: hsl(230, 14%, 88%);
+	--border-strong: hsl(230, 14%, 78%);
+	--input: hsl(230, 14%, 88%);
 	--ring: var(--brand);
-	--text-subtle: hsl(225, 18%, 46%);
-	--text-glass-muted: hsl(225 30% 34%);
-	--icon-tile-ink: hsl(178, 100%, 30%);
-	--field-bg: hsl(177 100% 99% / 0.78);
-	--field-border: hsl(178 82% 62% / 0.52);
-	--field-disabled-bg: hsl(177 58% 92% / 0.62);
-	--field-disabled-border: hsl(206 42% 72% / 0.5);
-	--field-placeholder: hsl(224 18% 42%);
-	--field-addon: hsl(224 26% 34%);
+	--text-subtle: hsl(230, 10%, 46%);
+	--text-glass-muted: hsl(230, 12%, 38%);
+	--icon-tile-ink: hsl(0, 0%, 100%);
+	--field-bg: hsl(0 0% 100% / 0.9);
+	--field-border: var(--border-strong);
+	--field-disabled-bg: hsl(230 16% 94% / 0.7);
+	--field-disabled-border: var(--border);
+	--field-placeholder: hsl(230, 10%, 52%);
+	--field-addon: hsl(230, 12%, 40%);
 	--field-highlight: hsl(0 0% 100% / 0.9);
-	--field-glow-bg: hsl(177 100% 98% / 0.9);
-	--field-glow-veil: hsl(174 100% 91% / 0.36);
-	--field-glow-shadow: inset 0 1px 0 0 var(--field-highlight), inset 0 -18px 40px -30px hsl(151 88% 66% / 0.26), 0 0 0 1px hsl(178 100% 72% / 0.18), 0 0 28px -18px var(--brand-glow);
-	/* Light sky — cool ocean field: frosted-white glass, lit blue edges, cloud + water wash */
-	--glass: hsl(177 100% 98% / 0.72);
-	--glass-panel: hsl(177 100% 98% / 0.5);
-	--glass-tile: hsl(177 100% 97% / 0.64);
-	--glass-surface-veil: hsl(174 100% 93% / 0.18);
-	--glass-control-veil: hsl(174 100% 92% / 0.16);
-	--glass-cyan: hsl(170 100% 62% / 0.26);
-	--glass-violet: hsl(151 88% 66% / 0.18);
-	--glass-sheen: hsl(0 0% 100% / 0.9);
-	--glow-border: hsl(178 70% 45% / 0.44);
-	/* Lighter edge gradient over the field — same hue arc, lower alpha */
-	--glow-gradient: linear-gradient(135deg, hsl(170 100% 58% / 0.68), hsl(150 89% 60% / 0.26) 48%, hsl(151 85% 62% / 0.54));
-	--glow-gradient-hot: linear-gradient(120deg, hsl(170 100% 56% / 0.86), hsl(150 89% 60% / 0.52) 50%, hsl(153 88% 60% / 0.72));
-	--inner-bloom: hsl(150 89% 60% / 0.24);
-	--brand-glow: hsl(178, 70%, 45%);
-	--splash-progress-track: hsl(220 18% 58% / 0.24);
-	--panel-glow: 0 0 34px -13px hsl(182 100% 56% / 0.34), 0 10px 30px -18px hsl(178 60% 26% / 0.28);
-	--backdrop-accent:
-		radial-gradient(30% 18% at 20% 23%, hsl(0 0% 100% / 0.72), transparent 72%), radial-gradient(42% 20% at 78% 21%, hsl(178 100% 96% / 0.78), transparent 74%), radial-gradient(38% 22% at 55% 35%, hsl(170 100% 92% / 0.44), transparent 70%),
-		linear-gradient(180deg, transparent 0 47%, hsl(162 100% 82% / 0.44) 51%, hsl(171 100% 70% / 0.24) 68%, transparent 100%);
-	--backdrop-accent-opacity: 0.94;
-	--quick-card-ink: hsl(240 40% 96%);
-	--quick-card-muted: hsl(179 52% 88%);
-	--quick-card-focus: hsl(186 100% 45% / 0.42);
-	--quick-card-cyan: hsl(162 100% 70% / 0.34);
-	--quick-card-violet: hsl(172 98% 66% / 0.48);
-	--quick-card-fill: linear-gradient(135deg, hsl(174 100% 49%), hsl(179 100% 41%) 55%, hsl(167 92% 47%));
-	--quick-card-overlay: radial-gradient(130% 90% at 0% 0%, hsl(162 100% 76% / 0.16), transparent 52%), radial-gradient(110% 120% at 100% 120%, hsl(173 96% 62% / 0.2), transparent 50%);
-	--quick-card-shadow: inset 0 1px 0 0 hsl(177 100% 88% / 0.34), inset 0 0 0 1px hsl(0 0% 100% / 0.08), inset 0 -34px 76px -34px hsl(159 96% 46% / 0.48), 0 0 0 1px hsl(177 100% 80% / 0.18), 0 0 48px -18px hsl(184 100% 48% / 0.48), 0 18px 54px -18px hsl(177 100% 3% / 0.35);
-	--quick-cluster-fill: hsl(180 100% 97% / 0.72);
-	--quick-cluster-veil: hsl(0 0% 100% / 0.38);
-	--quick-cluster-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.72), inset 0 0 0 1px hsl(177 100% 64% / 0.12), 0 0 40px -20px hsl(184 100% 52% / 0.34), 0 16px 38px -28px hsl(178 62% 34% / 0.28);
-	--quick-action-shadow: inset 0 1px 0 0 hsl(177 100% 88% / 0.36), inset 0 -34px 76px -34px hsl(159 96% 46% / 0.54), 0 0 44px -17px hsl(182 100% 54% / 0.5);
-	--quick-selector-fill: hsl(184 100% 98% / 0.78);
-	--quick-selector-veil: hsl(169 100% 94% / 0.36);
-	--quick-selector-sheen: linear-gradient(145deg, hsl(170 100% 78% / 0.24), transparent 38%), radial-gradient(120% 90% at 88% 100%, hsl(167 96% 62% / 0.14), transparent 62%);
-	--quick-selector-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.86), inset 0 0 0 1px hsl(179 100% 58% / 0.22), inset 0 -28px 58px -42px hsl(159 96% 58% / 0.26);
-	--quick-selector-ink: hsl(179 48% 13%);
-	--quick-selector-kicker: hsl(173 92% 36%);
-	--quick-selector-muted: hsl(226 24% 38%);
-	--quick-focus-glow: 0 0 30px -10px hsl(184 100% 54% / 0.48);
-	--quick-chevron-border: hsl(182 100% 56% / 0.24);
-	--quick-chevron-fill: linear-gradient(180deg, hsl(186 100% 98% / 0.9), hsl(175 100% 95% / 0.72));
-	--quick-chevron-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.82), 0 0 18px -12px hsl(171 100% 56% / 0.42);
-	--quick-chevron-ink: hsl(226 40% 26%);
-	--quick-icon-ink: hsl(240 40% 96%);
-	--quick-icon-cyan: hsl(171 100% 82% / 0.34);
-	--quick-icon-violet: hsl(302 94% 68% / 0.44);
-	--quick-icon-fill: linear-gradient(145deg, hsl(183 100% 58% / 0.62), hsl(192 90% 44% / 0.36) 52%, hsl(163 100% 52% / 0.34));
-	--quick-icon-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.4), inset 0 -14px 28px -13px hsl(185 96% 58% / 0.5), 0 0 0 1px hsl(177 100% 82% / 0.22), 0 0 28px -8px hsl(179 100% 66% / 0.5);
-	--glow-button-ink: hsl(178 54% 14%);
-	--wizard-divider: linear-gradient(90deg, transparent, hsl(174 100% 58% / 0.32) 18%, hsl(173 100% 56% / 0.24) 52%, hsl(153 96% 64% / 0.28) 82%, transparent);
-	--wizard-footer-fill: linear-gradient(180deg, hsl(177 100% 98% / 0.86), hsl(186 100% 96% / 0.72));
-	--wizard-footer-edge: linear-gradient(90deg, hsl(170 100% 58% / 0.48), hsl(173 100% 56% / 0.2) 52%, hsl(153 96% 64% / 0.44));
-	--wizard-footer-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.72), inset 0 18px 42px -34px hsl(169 100% 60% / 0.28), 0 -18px 38px -34px hsl(171 100% 48% / 0.32);
-	--wizard-summary-fill: linear-gradient(180deg, hsl(178 100% 98% / 0.84), hsl(169 100% 96% / 0.68));
-	--wizard-summary-edge: linear-gradient(135deg, hsl(170 100% 58% / 0.48), hsl(173 100% 56% / 0.2) 48%, hsl(153 92% 64% / 0.4));
-	--wizard-summary-sheen: linear-gradient(110deg, hsl(0 0% 100% / 0.46), transparent 34%), radial-gradient(90% 130% at 100% 120%, hsl(153 96% 66% / 0.12), transparent 58%);
-	--wizard-summary-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.72), inset 0 -18px 42px -30px hsl(151 88% 66% / 0.2), 0 0 28px -20px var(--brand-glow);
-	--wizard-choice-fill: linear-gradient(180deg, hsl(177 100% 99% / 0.72), hsl(187 100% 96% / 0.54));
-	--wizard-choice-tile-fill: linear-gradient(180deg, hsl(177 100% 98% / 0.72), hsl(169 100% 95% / 0.58));
-	--wizard-choice-edge: linear-gradient(135deg, hsl(177 100% 58% / 0.46), hsl(173 100% 56% / 0.16) 48%, hsl(153 88% 64% / 0.32));
-	--wizard-choice-hover-fill: linear-gradient(180deg, hsl(176 100% 98% / 0.9), hsl(169 100% 94% / 0.68));
-	--wizard-choice-hover-edge: linear-gradient(135deg, hsl(170 100% 56% / 0.62), hsl(173 100% 56% / 0.3) 48%, hsl(153 88% 60% / 0.52));
-	--wizard-choice-selected-fill: linear-gradient(180deg, hsl(185 100% 94% / 0.92), hsl(173 100% 92% / 0.72)), var(--brand-dim);
-	--wizard-choice-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.72), inset 0 -14px 34px -30px hsl(153 96% 66% / 0.2);
-	--wizard-choice-hover-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.8), inset 0 -16px 36px -30px hsl(153 96% 64% / 0.24), 0 0 24px -18px var(--brand-glow);
-	--wizard-choice-selected-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.82), inset 0 0 0 1px hsl(182 100% 58% / 0.16), 0 0 28px -18px var(--brand-glow);
-	--wizard-filter-fill: linear-gradient(180deg, hsl(177 100% 98% / 0.44), hsl(169 100% 95% / 0.32));
-	--wizard-filter-edge: linear-gradient(135deg, hsl(177 100% 58% / 0.28), hsl(173 100% 56% / 0.1), hsl(153 88% 64% / 0.24));
-	--wizard-filter-hover-fill: linear-gradient(180deg, hsl(177 100% 98% / 0.74), hsl(169 100% 94% / 0.5));
-	--wizard-filter-selected-fill: linear-gradient(180deg, hsl(185 100% 94% / 0.72), hsl(173 100% 92% / 0.54)), var(--brand-dim);
-	--wizard-filter-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.58);
-	--wizard-filter-selected-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.74), 0 0 20px -15px var(--brand-glow);
-	--queue-row-selected-fill: linear-gradient(90deg, hsl(185 100% 94% / 0.78), hsl(173 100% 92% / 0.56)), var(--brand-dim);
-	--queue-row-selected-shadow: inset 0 0 0 1px hsl(182 100% 58% / 0.3), inset 0 1px 0 hsl(0 0% 100% / 0.62), 0 0 24px -18px var(--brand-glow);
-	--tabs-rail-bg: linear-gradient(180deg, hsl(177 100% 96% / 0.8), hsl(169 100% 94% / 0.58));
-	--tabs-rail-border: linear-gradient(135deg, hsl(168 100% 58% / 0.34), hsl(175 100% 62% / 0.14) 44%, hsl(153 96% 64% / 0.32));
-	--tabs-rail-sheen: linear-gradient(90deg, hsl(168 100% 70% / 0.18), transparent 36% 62%, hsl(153 96% 72% / 0.14));
-	--tabs-rail-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.52), inset 0 -18px 38px -34px hsl(153 96% 66% / 0.28), 0 14px 34px -28px hsl(179 100% 52% / 0.38), 0 0 34px -26px var(--brand-glow);
-	--tabs-active-bg: linear-gradient(180deg, hsl(177 100% 91% / 0.9), hsl(173 100% 92% / 0.72)), color-mix(in srgb, var(--background) 60%, transparent);
-	--tabs-active-shadow: inset 0 0 0 1px hsl(174 100% 58% / 0.32), inset 0 1px 0 hsl(0 0% 100% / 0.54), 0 0 26px -16px var(--brand-glow);
-	--tabs-hover-ink: hsl(179 56% 16%);
-	--tabs-active-ink: hsl(179 58% 12%);
-	--tabs-active-text-shadow: 0 0 14px hsl(185 100% 72% / 0.18);
-	--backdrop:
-		radial-gradient(42% 30% at 64% 44%, hsl(166 100% 72% / 0.3), transparent 62%), radial-gradient(34% 24% at 92% 8%, hsl(151 86% 74% / 0.2), transparent 66%), radial-gradient(54% 26% at 18% 23%, hsl(0 0% 100% / 0.5), transparent 72%),
-		linear-gradient(180deg, hsl(181 94% 75%) 0%, hsl(173 100% 88%) 31%, hsl(167 100% 95%) 47%, hsl(162 100% 97%) 53%, hsl(160 92% 86%) 54%, hsl(163 73% 66%) 72%, hsl(170 70% 41%) 100%);
+	--field-glow-bg: hsl(0 0% 100% / 0.95);
+	--field-glow-veil: transparent;
+	--field-glow-shadow: inset 0 0 0 1px var(--border);
+	/* Flat surfaces: solid card color, thin border, no blur/tint. */
+	--glass: var(--card);
+	--glass-panel: var(--card);
+	--glass-tile: var(--card);
+	--glass-surface-veil: transparent;
+	--glass-control-veil: transparent;
+	--glass-cyan: transparent;
+	--glass-violet: transparent;
+	--glass-sheen: transparent;
+	--glow-border: var(--border-strong);
+	--glow-gradient: linear-gradient(var(--border-strong), var(--border-strong));
+	--glow-gradient-hot: linear-gradient(var(--accent-warm), var(--accent-warm));
+	--inner-bloom: transparent;
+	--splash-progress-track: hsl(230, 14%, 88%);
+	--panel-glow: 0 1px 2px hsl(230 30% 10% / 0.06);
+	--backdrop-accent: transparent;
+	--backdrop-accent-opacity: 0;
+	--quick-card-ink: var(--accent-warm-ink);
+	--quick-card-muted: hsl(28 40% 26% / 0.7);
+	--quick-card-focus: var(--accent-warm);
+	--quick-card-cyan: transparent;
+	--quick-card-violet: transparent;
+	--quick-card-fill: var(--accent-warm);
+	--quick-card-overlay: transparent;
+	--quick-card-shadow: 0 1px 2px hsl(230 30% 10% / 0.08);
+	--quick-cluster-fill: var(--card);
+	--quick-cluster-veil: transparent;
+	--quick-cluster-shadow: inset 0 0 0 1px var(--border);
+	--quick-action-shadow: none;
+	--quick-selector-fill: var(--card);
+	--quick-selector-veil: transparent;
+	--quick-selector-sheen: transparent;
+	--quick-selector-shadow: inset 0 0 0 1px var(--border);
+	--quick-selector-ink: var(--foreground);
+	--quick-selector-kicker: var(--text-subtle);
+	--quick-selector-muted: var(--text-subtle);
+	--quick-focus-glow: 0 0 0 2px var(--accent-warm-dim);
+	--quick-chevron-border: var(--border);
+	--quick-chevron-fill: var(--secondary);
+	--quick-chevron-shadow: none;
+	--quick-chevron-ink: var(--text-subtle);
+	--quick-icon-ink: hsl(0, 0%, 100%);
+	--quick-icon-cyan: transparent;
+	--quick-icon-violet: transparent;
+	--quick-icon-fill: var(--brand);
+	--quick-icon-shadow: none;
+	--glow-button-ink: var(--foreground);
+	--wizard-divider: var(--border);
+	--wizard-footer-fill: var(--card);
+	--wizard-footer-edge: linear-gradient(var(--border), var(--border));
+	--wizard-footer-shadow: 0 -1px 0 var(--border);
+	--wizard-summary-fill: var(--secondary);
+	--wizard-summary-edge: linear-gradient(var(--border), var(--border));
+	--wizard-summary-sheen: transparent;
+	--wizard-summary-shadow: none;
+	--wizard-choice-fill: var(--card);
+	--wizard-choice-tile-fill: var(--card);
+	--wizard-choice-edge: linear-gradient(var(--border), var(--border));
+	--wizard-choice-hover-fill: var(--secondary);
+	--wizard-choice-hover-edge: linear-gradient(var(--border-strong), var(--border-strong));
+	--wizard-choice-selected-fill: var(--brand-dim);
+	--wizard-choice-shadow: none;
+	--wizard-choice-hover-shadow: none;
+	--wizard-choice-selected-shadow: inset 0 0 0 1px var(--brand);
+	--wizard-filter-fill: var(--secondary);
+	--wizard-filter-edge: linear-gradient(transparent, transparent);
+	--wizard-filter-hover-fill: var(--accent);
+	--wizard-filter-selected-fill: var(--brand-dim);
+	--wizard-filter-shadow: none;
+	--wizard-filter-selected-shadow: inset 0 0 0 1px var(--brand);
+	--queue-row-selected-fill: var(--brand-dim);
+	--queue-row-selected-shadow: inset 0 0 0 1px var(--brand);
+	--tabs-rail-bg: var(--secondary);
+	--tabs-rail-border: linear-gradient(var(--border), var(--border));
+	--tabs-rail-sheen: transparent;
+	--tabs-rail-shadow: none;
+	--tabs-active-bg: var(--card);
+	--tabs-active-shadow: 0 1px 2px hsl(230 30% 10% / 0.08);
+	--tabs-hover-ink: var(--foreground);
+	--tabs-active-ink: var(--foreground);
+	--tabs-active-text-shadow: none;
+	--backdrop: var(--background);
 	--chart-1: oklch(0.87 0 0);
 	--chart-2: oklch(0.556 0 0);
 	--chart-3: oklch(0.439 0 0);
@@ -1329,149 +1270,142 @@ body {
 	--chart-5: oklch(0.269 0 0);
 	--radius: 1rem;
 	--sidebar: hsl(0, 0%, 100%);
-	--sidebar-foreground: hsl(240, 35%, 12%);
-	--sidebar-primary: hsl(173 100% 56%);
-	--sidebar-primary-foreground: hsl(240, 40%, 96%);
-	--sidebar-accent: hsl(220, 20%, 92%);
-	--sidebar-accent-foreground: hsl(240, 35%, 12%);
-	--sidebar-border: hsl(220, 18%, 88%);
-	--sidebar-ring: hsl(173 100% 56%);
+	--sidebar-foreground: hsl(230, 28%, 12%);
+	--sidebar-primary: var(--brand);
+	--sidebar-primary-foreground: hsl(0, 0%, 100%);
+	--sidebar-accent: hsl(230, 16%, 91%);
+	--sidebar-accent-foreground: hsl(230, 28%, 12%);
+	--sidebar-border: hsl(230, 14%, 88%);
+	--sidebar-ring: var(--brand);
 }
 
 .dark {
 	color-scheme: dark;
-	/* Dark sky — the void: near-black navy (225 hue) so the aurora has something to tint */
-	--background: hsl(181 56% 3%);
-	--foreground: hsl(240, 40%, 96%);
-	--card: hsl(226, 44%, 7%);
-	--card-foreground: hsl(240, 40%, 96%);
-	--popover: hsl(226, 38%, 9%);
-	--popover-foreground: hsl(240, 40%, 96%);
-	--primary: var(--brand);
-	--primary-foreground: hsl(240, 40%, 96%);
-	--secondary: hsl(226, 30%, 9%);
-	--secondary-foreground: hsl(240, 40%, 96%);
-	--muted: hsl(226, 30%, 9%);
-	--muted-foreground: hsl(228, 24%, 69%);
-	--accent: hsl(226, 28%, 11%);
-	--accent-foreground: hsl(240, 40%, 96%);
+	/* Dark sky — flat neutral navy-black, no teal cast, no aurora to tint. */
+	--background: hsl(230, 24%, 8%);
+	--foreground: hsl(230, 20%, 96%);
+	--card: hsl(230, 20%, 11%);
+	--card-foreground: hsl(230, 20%, 96%);
+	--popover: hsl(230, 20%, 12%);
+	--popover-foreground: hsl(230, 20%, 96%);
+	--primary: var(--accent-warm);
+	--primary-foreground: var(--accent-warm-ink);
+	--secondary: hsl(230, 18%, 14%);
+	--secondary-foreground: hsl(230, 20%, 96%);
+	--muted: hsl(230, 18%, 14%);
+	--muted-foreground: hsl(230, 10%, 68%);
+	--accent: hsl(230, 16%, 16%);
+	--accent-foreground: hsl(230, 20%, 96%);
 	--destructive: hsl(349, 100%, 61%);
 	--border: hsla(0, 0%, 100%, 0.08);
-	--border-strong: hsla(0, 0%, 100%, 0.13);
+	--border-strong: hsla(0, 0%, 100%, 0.14);
 	--input: hsla(0, 0%, 100%, 0.08);
 	--ring: var(--brand);
-	--text-subtle: hsl(228, 15%, 60%);
-	--text-glass-muted: hsl(228 34% 78%);
-	--icon-tile-ink: hsl(178, 70%, 88%);
-	--field-bg: hsl(179 54% 8% / 0.72);
-	--field-border: hsl(177 100% 78% / 0.28);
-	--field-disabled-bg: hsl(226 44% 8% / 0.48);
-	--field-disabled-border: hsl(0 0% 100% / 0.08);
-	--field-placeholder: hsl(228 24% 70%);
-	--field-addon: hsl(228 28% 76%);
-	--field-highlight: hsl(177 100% 84% / 0.18);
-	--field-glow-bg: hsl(179 62% 6% / 0.88);
-	--field-glow-veil: hsl(181 82% 2% / 0.64);
-	--field-glow-shadow: inset 0 1px 0 0 var(--field-highlight), inset 0 -18px 44px -28px hsl(159 96% 46% / 0.24), 0 0 0 1px hsl(177 100% 80% / 0.12), 0 0 30px -18px var(--brand-glow);
-	/* Dark sky surfaces + signal — lit-from-within glass over a bright nebula */
-	--glass: hsl(179 58% 8% / 0.78);
-	--glass-panel: hsl(181 68% 4% / 0.8);
-	--glass-tile: hsl(179 62% 6% / 0.84);
-	--glass-surface-veil: hsl(181 82% 2% / 0.5);
-	--glass-control-veil: hsl(181 82% 2% / 0.58);
-	--glass-cyan: hsl(168 100% 62% / 0.18);
-	--glass-violet: hsl(155 96% 62% / 0.15);
-	--glass-sheen: hsl(177 100% 84% / 0.2);
-	--glow-border: hsl(178 70% 45% / 0.72);
-	/* Neon edge gradient: cyan → blue → violet, painted on border-box */
-	--glow-gradient: linear-gradient(135deg, hsl(164 100% 82% / 0.76), hsl(150 89% 60% / 0.34) 46%, hsl(153 96% 76% / 0.62));
-	--glow-gradient-hot: linear-gradient(120deg, hsl(160 100% 82% / 0.86), hsl(150 89% 60% / 0.62) 48%, hsl(163 98% 76% / 0.78));
-	--inner-bloom: hsl(150 89% 60% / 0.26);
-	--brand-glow: hsl(178, 70%, 45%);
+	--text-subtle: hsl(230, 10%, 62%);
+	--text-glass-muted: hsl(230, 12%, 74%);
+	--icon-tile-ink: hsl(0, 0%, 100%);
+	--field-bg: hsl(230 18% 13% / 0.8);
+	--field-border: var(--border-strong);
+	--field-disabled-bg: hsl(230 18% 10% / 0.6);
+	--field-disabled-border: var(--border);
+	--field-placeholder: hsl(230, 10%, 58%);
+	--field-addon: hsl(230, 12%, 68%);
+	--field-highlight: hsl(0 0% 100% / 0.06);
+	--field-glow-bg: hsl(230 18% 12% / 0.92);
+	--field-glow-veil: transparent;
+	--field-glow-shadow: inset 0 0 0 1px var(--border-strong);
+	--glass: var(--card);
+	--glass-panel: var(--card);
+	--glass-tile: var(--card);
+	--glass-surface-veil: transparent;
+	--glass-control-veil: transparent;
+	--glass-cyan: transparent;
+	--glass-violet: transparent;
+	--glass-sheen: transparent;
+	--glow-border: var(--border-strong);
+	--glow-gradient: linear-gradient(var(--border-strong), var(--border-strong));
+	--glow-gradient-hot: linear-gradient(var(--accent-warm), var(--accent-warm));
+	--inner-bloom: transparent;
 	--splash-progress-track: hsl(0 0% 100% / 0.09);
-	--panel-glow: 0 0 42px -16px hsl(184 100% 54% / 0.36), 0 18px 54px -20px hsl(181 92% 2% / 0.96);
-	--quick-card-ink: hsl(240 40% 96%);
-	--quick-card-muted: hsl(179 52% 88%);
-	--quick-card-focus: hsl(178 100% 86% / 0.58);
-	--quick-card-cyan: hsl(162 100% 70% / 0.28);
-	--quick-card-violet: hsl(172 98% 66% / 0.36);
-	--quick-card-fill: linear-gradient(135deg, hsl(175 100% 43%), hsl(177 100% 34%) 52%, hsl(165 90% 38%));
-	--quick-card-overlay: radial-gradient(130% 90% at 0% 0%, hsl(162 100% 76% / 0.24), transparent 52%), radial-gradient(110% 120% at 100% 120%, hsl(173 96% 62% / 0.28), transparent 50%);
-	--quick-card-shadow: inset 0 1px 0 0 hsl(177 100% 88% / 0.34), inset 0 0 0 1px hsl(0 0% 100% / 0.08), inset 0 -34px 76px -34px hsl(159 96% 46% / 0.48), 0 0 0 1px hsl(177 100% 80% / 0.18), 0 0 48px -18px hsl(184 100% 48% / 0.48), 0 18px 54px -18px hsl(177 100% 3% / 0.78);
-	--quick-cluster-fill: hsl(179 62% 6% / 0.78);
-	--quick-cluster-veil: hsl(181 82% 2% / 0.52);
-	--quick-cluster-shadow: inset 0 1px 0 0 hsl(177 100% 88% / 0.26), inset 0 0 0 1px hsl(0 0% 100% / 0.06), 0 0 50px -18px hsl(184 100% 48% / 0.48), 0 18px 54px -18px hsl(177 100% 3% / 0.78);
-	--quick-action-shadow: inset 0 1px 0 0 hsl(177 100% 88% / 0.34), inset 0 -34px 76px -34px hsl(159 96% 46% / 0.52), 0 0 46px -17px hsl(182 100% 54% / 0.52);
-	--quick-selector-fill: hsl(179 58% 6% / 0.78);
-	--quick-selector-veil: hsl(181 76% 2% / 0.38);
-	--quick-selector-sheen: linear-gradient(145deg, hsl(170 100% 78% / 0.1), transparent 38%), radial-gradient(120% 90% at 88% 100%, hsl(167 96% 52% / 0.18), transparent 62%);
-	--quick-selector-shadow: inset 0 1px 0 0 hsl(177 100% 84% / 0.12), inset 0 -30px 64px -38px hsl(159 96% 46% / 0.32);
-	--quick-selector-ink: hsl(240 40% 96%);
-	--quick-selector-kicker: hsl(182 100% 76%);
-	--quick-selector-muted: hsl(226 38% 76%);
-	--quick-focus-glow: 0 0 34px -10px hsl(182 100% 66% / 0.5);
-	--quick-chevron-border: hsl(177 100% 82% / 0.18);
-	--quick-chevron-fill: linear-gradient(180deg, hsl(173 80% 18% / 0.58), hsl(185 82% 10% / 0.46));
-	--quick-chevron-shadow: inset 0 1px 0 hsl(177 100% 84% / 0.18), 0 0 24px -14px hsl(171 100% 56% / 0.52);
-	--quick-chevron-ink: hsl(179 52% 88%);
-	--quick-icon-ink: hsl(240 40% 96%);
-	--quick-icon-cyan: hsl(171 100% 82% / 0.3);
-	--quick-icon-violet: hsl(302 94% 68% / 0.42);
-	--quick-icon-fill: linear-gradient(145deg, hsl(183 100% 58% / 0.38), hsl(192 90% 38% / 0.2) 52%, hsl(163 100% 50% / 0.24));
-	--quick-icon-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.38), inset 0 -14px 28px -13px hsl(185 96% 58% / 0.56), 0 0 0 1px hsl(177 100% 82% / 0.18), 0 0 28px -8px hsl(179 100% 66% / 0.58);
-	--glow-button-ink: hsl(178 100% 95%);
-	--wizard-divider: linear-gradient(90deg, transparent, hsl(168 100% 76% / 0.24) 18%, hsl(173 100% 64% / 0.18) 52%, hsl(153 96% 72% / 0.22) 82%, transparent);
-	--wizard-footer-fill: linear-gradient(180deg, hsl(181 68% 4% / 0.88), hsl(179 68% 3% / 0.78));
-	--wizard-footer-edge: linear-gradient(90deg, hsl(164 100% 82% / 0.44), hsl(186 100% 68% / 0.18) 52%, hsl(153 96% 76% / 0.38));
-	--wizard-footer-shadow: inset 0 1px 0 hsl(177 100% 84% / 0.16), inset 0 18px 42px -34px hsl(168 100% 58% / 0.18), 0 -18px 42px -32px hsl(179 92% 2% / 0.92);
-	--wizard-summary-fill: linear-gradient(180deg, hsl(181 66% 5% / 0.84), hsl(179 62% 4% / 0.74));
-	--wizard-summary-edge: linear-gradient(135deg, hsl(164 100% 82% / 0.52), hsl(186 100% 68% / 0.22) 48%, hsl(153 96% 76% / 0.42));
-	--wizard-summary-sheen: linear-gradient(110deg, hsl(177 100% 84% / 0.12), transparent 34%), radial-gradient(90% 130% at 100% 120%, hsl(153 96% 64% / 0.14), transparent 58%);
-	--wizard-summary-shadow: inset 0 1px 0 hsl(177 100% 84% / 0.16), inset 0 -22px 46px -34px hsl(159 96% 46% / 0.22), 0 0 34px -22px var(--brand-glow);
-	--wizard-choice-fill: linear-gradient(180deg, hsl(179 58% 7% / 0.74), hsl(181 64% 5% / 0.62));
-	--wizard-choice-tile-fill: linear-gradient(180deg, hsl(179 58% 8% / 0.72), hsl(181 64% 5% / 0.6));
-	--wizard-choice-edge: linear-gradient(135deg, hsl(177 100% 82% / 0.26), hsl(173 100% 62% / 0.1) 48%, hsl(153 96% 76% / 0.24));
-	--wizard-choice-hover-fill: linear-gradient(180deg, hsl(179 56% 9% / 0.86), hsl(181 62% 6% / 0.72));
-	--wizard-choice-hover-edge: linear-gradient(135deg, hsl(170 100% 78% / 0.48), hsl(173 100% 64% / 0.2) 48%, hsl(153 96% 72% / 0.42));
-	--wizard-choice-selected-fill: linear-gradient(180deg, hsl(186 100% 52% / 0.18), hsl(153 96% 52% / 0.1)), var(--brand-dim);
-	--wizard-choice-shadow: inset 0 1px 0 hsl(177 100% 84% / 0.12), inset 0 -16px 36px -32px hsl(159 96% 46% / 0.16);
-	--wizard-choice-hover-shadow: inset 0 1px 0 hsl(177 100% 84% / 0.16), inset 0 -18px 40px -32px hsl(159 96% 46% / 0.22), 0 0 24px -18px var(--brand-glow);
-	--wizard-choice-selected-shadow: inset 0 1px 0 hsl(177 100% 84% / 0.18), inset 0 0 0 1px hsl(177 100% 78% / 0.12), 0 0 30px -18px var(--brand-glow);
-	--wizard-filter-fill: linear-gradient(180deg, hsl(179 54% 8% / 0.42), hsl(181 60% 5% / 0.32));
-	--wizard-filter-edge: linear-gradient(135deg, hsl(177 100% 82% / 0.18), hsl(173 100% 62% / 0.08), hsl(153 96% 76% / 0.16));
-	--wizard-filter-hover-fill: linear-gradient(180deg, hsl(179 54% 9% / 0.68), hsl(181 60% 6% / 0.52));
-	--wizard-filter-selected-fill: linear-gradient(180deg, hsl(186 100% 52% / 0.14), hsl(153 96% 52% / 0.08)), var(--brand-dim);
-	--wizard-filter-shadow: inset 0 1px 0 hsl(177 100% 84% / 0.1);
-	--wizard-filter-selected-shadow: inset 0 1px 0 hsl(177 100% 84% / 0.14), 0 0 22px -16px var(--brand-glow);
-	--queue-row-selected-fill: linear-gradient(90deg, hsl(186 100% 52% / 0.24), hsl(153 96% 52% / 0.14)), hsl(179 62% 8% / 0.94);
-	--queue-row-selected-shadow: inset 0 0 0 1px hsl(177 100% 78% / 0.34), inset 0 1px 0 hsl(177 100% 84% / 0.14), 0 0 28px -18px var(--brand-glow);
-	--tabs-rail-bg: linear-gradient(180deg, hsl(177 64% 6% / 0.86), hsl(181 70% 4% / 0.72));
-	--tabs-rail-border: linear-gradient(135deg, hsl(168 100% 76% / 0.22), hsl(175 100% 62% / 0.08) 44%, hsl(153 96% 72% / 0.22));
-	--tabs-rail-sheen: linear-gradient(90deg, hsl(168 100% 78% / 0.08), transparent 36% 62%, hsl(153 96% 74% / 0.08));
-	--tabs-rail-shadow: inset 0 1px 0 hsl(177 100% 84% / 0.2), inset 0 -22px 42px -34px hsl(153 96% 66% / 0.55), 0 18px 44px -34px hsl(178 90% 2% / 0.88), 0 0 36px -27px var(--brand-glow);
-	--tabs-active-bg: linear-gradient(180deg, hsl(186 100% 52% / 0.16), hsl(153 96% 52% / 0.1)), color-mix(in srgb, var(--background) 72%, transparent);
-	--tabs-active-shadow: inset 0 0 0 1px hsl(174 100% 78% / 0.2), inset 0 1px 0 hsl(0 0% 100% / 0.08), 0 0 24px -18px var(--brand-glow);
-	--tabs-hover-ink: hsl(177 48% 88%);
-	--tabs-active-ink: hsl(173 100% 96%);
-	--tabs-active-text-shadow: 0 0 12px hsl(185 100% 72% / 0.22), 0 0 18px hsl(153 95% 70% / 0.14);
-	--backdrop-accent: linear-gradient(100deg, transparent 0 6%, hsl(166 100% 72% / 0.34) 20%, hsl(150 100% 80% / 0.2) 31%, hsl(161 100% 86% / 0.68) 42%, hsl(179 100% 76% / 0.6) 52%, hsl(179 100% 66% / 0.5) 62%, hsl(157 96% 70% / 0.6) 74%, transparent 92%);
-	--backdrop-accent-opacity: 0.74;
-	/* Defined bright bloom across the top-center-right; left + bottom stay near-black
-	   for contrast so the glass panels and the cyan ribbon pop. */
-	--backdrop:
-		radial-gradient(54% 48% at 52% -14%, hsl(162 100% 58% / 0.38), transparent 54%), radial-gradient(48% 46% at 82% -6%, hsl(173 98% 58% / 0.34), transparent 56%), radial-gradient(40% 40% at 68% 4%, hsl(186 100% 54% / 0.24), transparent 58%),
-		radial-gradient(34% 34% at 28% -6%, hsl(154 100% 70% / 0.12), transparent 60%), radial-gradient(46% 42% at 100% 22%, hsl(185 96% 56% / 0.2), transparent 60%), radial-gradient(120% 90% at 102% 104%, hsl(175 92% 20% / 0.38), transparent 60%), var(--background);
+	--panel-glow: 0 1px 2px hsl(0 0% 0% / 0.4);
+	--quick-card-ink: var(--accent-warm-ink);
+	--quick-card-muted: hsl(28 40% 20% / 0.7);
+	--quick-card-focus: var(--accent-warm);
+	--quick-card-cyan: transparent;
+	--quick-card-violet: transparent;
+	--quick-card-fill: var(--accent-warm);
+	--quick-card-overlay: transparent;
+	--quick-card-shadow: 0 1px 2px hsl(0 0% 0% / 0.5);
+	--quick-cluster-fill: var(--card);
+	--quick-cluster-veil: transparent;
+	--quick-cluster-shadow: inset 0 0 0 1px var(--border);
+	--quick-action-shadow: none;
+	--quick-selector-fill: var(--card);
+	--quick-selector-veil: transparent;
+	--quick-selector-sheen: transparent;
+	--quick-selector-shadow: inset 0 0 0 1px var(--border);
+	--quick-selector-ink: var(--foreground);
+	--quick-selector-kicker: var(--text-subtle);
+	--quick-selector-muted: var(--text-subtle);
+	--quick-focus-glow: 0 0 0 2px var(--accent-warm-dim);
+	--quick-chevron-border: var(--border);
+	--quick-chevron-fill: var(--secondary);
+	--quick-chevron-shadow: none;
+	--quick-chevron-ink: var(--text-subtle);
+	--quick-icon-ink: hsl(0, 0%, 100%);
+	--quick-icon-cyan: transparent;
+	--quick-icon-violet: transparent;
+	--quick-icon-fill: var(--brand);
+	--quick-icon-shadow: none;
+	--glow-button-ink: var(--foreground);
+	--wizard-divider: var(--border);
+	--wizard-footer-fill: var(--card);
+	--wizard-footer-edge: linear-gradient(var(--border), var(--border));
+	--wizard-footer-shadow: 0 -1px 0 var(--border);
+	--wizard-summary-fill: var(--secondary);
+	--wizard-summary-edge: linear-gradient(var(--border), var(--border));
+	--wizard-summary-sheen: transparent;
+	--wizard-summary-shadow: none;
+	--wizard-choice-fill: var(--card);
+	--wizard-choice-tile-fill: var(--card);
+	--wizard-choice-edge: linear-gradient(var(--border), var(--border));
+	--wizard-choice-hover-fill: var(--secondary);
+	--wizard-choice-hover-edge: linear-gradient(var(--border-strong), var(--border-strong));
+	--wizard-choice-selected-fill: var(--brand-dim);
+	--wizard-choice-shadow: none;
+	--wizard-choice-hover-shadow: none;
+	--wizard-choice-selected-shadow: inset 0 0 0 1px var(--brand);
+	--wizard-filter-fill: var(--secondary);
+	--wizard-filter-edge: linear-gradient(transparent, transparent);
+	--wizard-filter-hover-fill: var(--accent);
+	--wizard-filter-selected-fill: var(--brand-dim);
+	--wizard-filter-shadow: none;
+	--wizard-filter-selected-shadow: inset 0 0 0 1px var(--brand);
+	--queue-row-selected-fill: var(--brand-dim);
+	--queue-row-selected-shadow: inset 0 0 0 1px var(--brand);
+	--tabs-rail-bg: var(--secondary);
+	--tabs-rail-border: linear-gradient(var(--border), var(--border));
+	--tabs-rail-sheen: transparent;
+	--tabs-rail-shadow: none;
+	--tabs-active-bg: var(--card);
+	--tabs-active-shadow: 0 1px 2px hsl(0 0% 0% / 0.4);
+	--tabs-hover-ink: var(--foreground);
+	--tabs-active-ink: var(--foreground);
+	--tabs-active-text-shadow: none;
+	--backdrop-accent: transparent;
+	--backdrop-accent-opacity: 0;
+	--backdrop: var(--background);
 	--chart-1: oklch(0.87 0 0);
 	--chart-2: oklch(0.556 0 0);
 	--chart-3: oklch(0.439 0 0);
 	--chart-4: oklch(0.371 0 0);
 	--chart-5: oklch(0.269 0 0);
-	--sidebar: hsl(225, 28%, 13%);
-	--sidebar-foreground: hsl(240, 40%, 96%);
-	--sidebar-primary: hsl(173 100% 56%);
-	--sidebar-primary-foreground: hsl(240, 40%, 96%);
-	--sidebar-accent: hsl(225, 16%, 16%);
-	--sidebar-accent-foreground: hsl(240, 40%, 96%);
+	--sidebar: hsl(230, 24%, 10%);
+	--sidebar-foreground: hsl(230, 20%, 96%);
+	--sidebar-primary: var(--brand);
+	--sidebar-primary-foreground: hsl(0, 0%, 100%);
+	--sidebar-accent: hsl(230, 16%, 16%);
+	--sidebar-accent-foreground: hsl(230, 20%, 96%);
 	--sidebar-border: hsla(0, 0%, 100%, 0.08);
-	--sidebar-ring: hsl(173 100% 56%);
+	--sidebar-ring: var(--brand);
 }

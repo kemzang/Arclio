@@ -68,45 +68,21 @@ describe('App renderer', () => {
 		expect(await screen.findByTestId('profiles-main-input')).toBeInTheDocument()
 	})
 
-	it('does not mount a WebGL canvas before settings and graphics policy resolve', async () => {
-		let resolveSettings!: (value: Awaited<ReturnType<typeof mockAppApi.settings.get>>) => void
-		let resolveGraphicsPolicy!: (value: Awaited<ReturnType<typeof mockAppApi.app.getGraphicsPolicy>>) => void
-		const api = buildMockAppApi()
-		vi.mocked(api.settings.get).mockReturnValue(
-			new Promise(resolve => {
-				resolveSettings = resolve
-			})
-		)
-		vi.mocked(api.app.getGraphicsPolicy).mockReturnValue(
-			new Promise(resolve => {
-				resolveGraphicsPolicy = resolve
-			})
-		)
-		window.appApi = api
-
-		render(<App />)
-
-		expect(document.querySelector('canvas[data-backdrop-layer="webgl"]')).toBeNull()
-
-		await act(async () => {
-			resolveSettings(ok(defaultAppSettings('/tmp')))
-		})
-		expect(document.querySelector('canvas[data-backdrop-layer="webgl"]')).toBeNull()
-
-		await act(async () => {
-			resolveGraphicsPolicy(ok(CSS_FORCED_GRAPHICS_POLICY))
-		})
-	})
-
-	it('uses the CSS fallback when runtime graphics policy forces it', async () => {
+	// The flat-palette redesign dropped the animated WebGL/CSS-gradient backdrop
+	// from the real app entirely — it never mounts a canvas or adds a backdrop
+	// body class, regardless of graphics policy. The render path stays reachable
+	// only through the `?backdrop=1` debug stage tested further below.
+	it('never mounts a backdrop canvas or backdrop body class in the real app', async () => {
 		const api = buildMockAppApi()
 		vi.mocked(api.app.getGraphicsPolicy).mockResolvedValue(ok(CSS_FORCED_GRAPHICS_POLICY))
 		window.appApi = api
 
 		render(<App />)
 
-		await waitFor(() => expect(document.body).toHaveClass('backdrop-static-fallback'))
+		await screen.findByTestId('app-root')
 		expect(document.querySelector('canvas[data-backdrop-layer="webgl"]')).toBeNull()
+		expect(document.body).not.toHaveClass('backdrop-static-fallback')
+		expect(document.body).not.toHaveClass('backdrop-webgl-active')
 	})
 
 	it('renders the backdrop isolation stage from the browser-mock query param', async () => {
