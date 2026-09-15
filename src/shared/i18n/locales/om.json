@@ -222,17 +222,6 @@
 				"extensionChrome": "cookies.txt LOCALLY argadhu (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Geejjiba proxy darbii ergi — qabiyyee mootummaan dhorge argachuuf gargaara.", "placeholder": "http://host:port", "clear": "Haquu"},
-			"backdrop": {
-				"panelTitle": "Mul’ata fi raawwii",
-				"panelDescription": "Arclio duubbee socho’uuf sochii hammam akka fayyadamu filadhu.",
-				"modeLabel": "Qulqullina duubbee",
-				"modeDescription": "Mul’ata sochii baay’ee qabu irraa gara raawwii gaariitti deemaa.",
-				"cssOnlyLabel": "Raawwii gaarii",
-				"cssOnlyDescription": "CSS qofa, canvas hin agarsiisu.",
-				"gpuLabel": "Bareedina olaanaa",
-				"gpuDescription": "Duubbee WebGL socho’u yoo deeggarame.",
-				"runtimeFallbackNotice": "WebGL meeshaa kana irratti haardweerii hin argamu, kanaaf Arclio duubbee raawwii fayyadamaa jira."
-			},
 			"limitRate": {
 				"label": "Daangaa saffisa buusuu",
 				"description": "Baandwiidtii buusuu miidiyaa daangeessi. Pacing gaaffii armaan gadii yeroo baay’ee caalaa jabaa dha.",

@@ -230,17 +230,6 @@
 				"extensionChrome": "cookies.txt ni LOKAL olish (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Trafikni proksi orqali yo'naltirish — geo-cheklangan kontent uchun foydali.", "placeholder": "http://host:port", "clear": "Tozalash"},
-			"backdrop": {
-				"panelTitle": "Ko‘rinish va unumdorlik",
-				"panelDescription": "Arclio animatsiyali fon uchun qancha harakat ishlatishini tanlang.",
-				"modeLabel": "Fon sifati",
-				"modeDescription": "Eng animatsiyali ko‘rinishdan eng yaxshi unumdorlikka o‘ting.",
-				"cssOnlyLabel": "Eng yaxshi unumdorlik",
-				"cssOnlyDescription": "Faqat CSS, canvas render qilinmaydi.",
-				"gpuLabel": "Eng chiroyli",
-				"gpuDescription": "Qo‘llab-quvvatlansa, animatsiyali WebGL fon.",
-				"runtimeFallbackNotice": "Bu qurilmada apparat WebGL mavjud emas, shuning uchun Arclio unumdorlik fonidan foydalanmoqda."
-			},
 			"limitRate": {
 				"label": "Yuklab olish tezligi chegarasi",
 				"description": "Media yuklab olishlar uchun tarmoq sarfini cheklang. Quyidagi so‘rov oralig‘i odatda kuchliroq vosita.",

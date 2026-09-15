@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "仅统计应用启动次数，不包含任何URL、文件名或个人数据。"
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "仅使用 CSS，不进行 canvas 渲染。"
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "最佳性能"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "支持时使用动画 WebGL 背景。"
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "最美观"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "从最丰富的动画效果切换到最佳性能。"
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "背景质量"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "选择 Arclio 在动画背景中使用多少动态效果。"
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "外观与性能"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "此设备不支持硬件 WebGL，因此 Arclio 正在使用性能背景。"
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "批量 URL"

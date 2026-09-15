@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "Μετράει μόνο εκκινήσεις εφαρμογής. Χωρίς URL, ονόματα αρχείων ή προσωπικά δεδομένα."
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "Μόνο CSS, χωρίς απόδοση canvas."
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "Καλύτερη απόδοση"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "Κινούμενο φόντο WebGL όταν υποστηρίζεται."
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "Πιο όμορφο"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "Μετακινηθείτε από την πιο κινούμενη εμφάνιση στην καλύτερη απόδοση."
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "Ποιότητα φόντου"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "Επίλεξε πόση κίνηση χρησιμοποιεί το Arclio για το κινούμενο φόντο."
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "Εμφάνιση και απόδοση"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "Το WebGL μέσω υλικού δεν είναι διαθέσιμο σε αυτήν τη συσκευή, οπότε το Arclio χρησιμοποιεί το φόντο επιδόσεων."
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "Μαζικά URL"

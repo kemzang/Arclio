@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "صرف ایپ لانچز گنتا ہے۔ کوئی URL، فائل نام، یا ذاتی ڈیٹا نہیں۔"
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "صرف CSS، کوئی canvas رینڈرنگ نہیں۔"
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "بہترین کارکردگی"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "سپورٹ ہونے پر متحرک WebGL پس منظر۔"
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "سب سے خوبصورت"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "سب سے زیادہ متحرک انداز سے بہترین کارکردگی تک جائیں۔"
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "پس منظر کا معیار"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "منتخب کریں کہ Arclio متحرک پس منظر کے لیے کتنی حرکت استعمال کرے۔"
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "ظاہری شکل اور کارکردگی"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "اس ڈیوائس پر ہارڈویئر WebGL دستیاب نہیں ہے، اس لیے Arclio کارکردگی والا پس منظر استعمال کر رہا ہے۔"
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "متعدد URLs"

@@ -213,17 +213,6 @@
 				"extensionChrome": "cookies.txt ကို ဒေသတွင်း ရယူရန် (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Proxy မှတဆင့် traffic လမ်းကြောင်းလွှဲပါ — ဂျီဩဂရပ်ကန့်သတ်ချက်ရှိသော အကြောင်းအရာများအတွက် အသုံးဝင်သည်။", "placeholder": "http://host:port", "clear": "ရှင်းလင်း"},
-			"backdrop": {
-				"panelTitle": "အသွင်အပြင်နှင့် စွမ်းဆောင်ရည်",
-				"panelDescription": "Arclio သည် လှုပ်ရှားနောက်ခံအတွက် လှုပ်ရှားမှုမည်မျှ အသုံးပြုမည်ကို ရွေးပါ။",
-				"modeLabel": "နောက်ခံ အရည်အသွေး",
-				"modeDescription": "အလှုပ်ရှားဆုံး အသွင်အပြင်မှ အကောင်းဆုံး စွမ်းဆောင်ရည်သို့ ရွှေ့ပါ။",
-				"cssOnlyLabel": "အကောင်းဆုံး စွမ်းဆောင်ရည်",
-				"cssOnlyDescription": "CSS သာအသုံးပြုမည်၊ canvas rendering မရှိပါ။",
-				"gpuLabel": "အလှဆုံး",
-				"gpuDescription": "ထောက်ပံ့ပါက လှုပ်ရှားနေသော WebGL နောက်ခံ။",
-				"runtimeFallbackNotice": "ဤစက်တွင် hardware WebGL မရရှိနိုင်သောကြောင့် Arclio သည် စွမ်းဆောင်ရည် နောက်ခံကို အသုံးပြုနေသည်။"
-			},
 			"limitRate": {
 				"label": "ဒေါင်းလုဒ် အမြန်နှုန်း ကန့်သတ်ချက်",
 				"description": "မီဒီယာ ဒေါင်းလုဒ်များအတွက် bandwidth ကို ကန့်သတ်ပါ။ အောက်ပါ request pacing သည် အများအားဖြင့် ပိုအားကောင်းသော ကန့်သတ်ကိရိယာ ဖြစ်သည်။",

@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "Jalqabbii app qofa lakkaawa. URL, maqaa faayilii, ykn daataa dhuunfaa hin qabatu."
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "CSS qofa, canvas hin agarsiisu."
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "Raawwii gaarii"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "Duubbee WebGL socho’u yoo deeggarame."
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "Bareedina olaanaa"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "Mul’ata sochii baay’ee qabu irraa gara raawwii gaariitti deemaa."
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "Qulqullina duubbee"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "Arclio duubbee socho’uuf sochii hammam akka fayyadamu filadhu."
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "Mul’ata fi raawwii"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "WebGL meeshaa kana irratti haardweerii hin argamu, kanaaf Arclio duubbee raawwii fayyadamaa jira."
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "URL hedduu"

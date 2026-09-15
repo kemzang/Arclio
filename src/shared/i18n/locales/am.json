@@ -213,17 +213,6 @@
 				"extensionChrome": "cookies.txt በቦታህ ላይ ሰበሰብ (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "ትራፊክን በፕሮክሲ ለማስተላለፍ — በጂኦ-ተከልካይ ይዘት ለሚጠቀሙ ጠቃሚ።", "placeholder": "http://host:port", "clear": "አጽዳ"},
-			"backdrop": {
-				"panelTitle": "መልክ እና አፈጻጸም",
-				"panelDescription": "Arclio ለሚንቀሳቀሰው ዳራ ምን ያህል እንቅስቃሴ እንደሚጠቀም ይምረጡ።",
-				"modeLabel": "የዳራ ጥራት",
-				"modeDescription": "ከበጣም እንቅስቃሴ ያለው መልክ ወደ ምርጥ አፈጻጸም ይሂዱ።",
-				"cssOnlyLabel": "ምርጥ አፈጻጸም",
-				"cssOnlyDescription": "CSS ብቻ፣ የcanvas ማቅረብ የለም።",
-				"gpuLabel": "በጣም ቆንጆ",
-				"gpuDescription": "ሲደገፍ የሚንቀሳቀስ WebGL ዳራ።",
-				"runtimeFallbackNotice": "የሃርድዌር WebGL በዚህ መሣሪያ ላይ አይገኝም፣ ስለዚህ Arclio የአፈጻጸም ዳራን እየተጠቀመ ነው።"
-			},
 			"limitRate": {
 				"label": "የማውረድ ፍጥነት ገደብ",
 				"description": "ለሚዲያ ማውረዶች ባንድዊድዝ ይገድቡ። ከታች ያለው የጥያቄ እረፍት ብዙ ጊዜ የበለጠ ጠንካራ መቆጣጠሪያ ነው።",

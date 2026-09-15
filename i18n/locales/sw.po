@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "Huhesabu tu uzinduzi wa programu. Hakuna URL, majina ya faili, au data za kibinafsi."
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "CSS pekee, hakuna uchoraji wa canvas."
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "Utendaji bora"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "Mandhari ya WebGL yenye mwendo ikisaidiwa."
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "Nzuri zaidi"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "Badili kutoka mwonekano wenye mwendo mwingi hadi utendaji bora."
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "Ubora wa mandhari"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "Chagua kiasi cha mwendo ambacho Arclio hutumia kwa mandhari yenye mwendo."
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "Mwonekano na utendaji"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "WebGL ya maunzi haipatikani kwenye kifaa hiki, kwa hivyo Arclio inatumia mandharinyuma ya utendaji."
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "URL nyingi"

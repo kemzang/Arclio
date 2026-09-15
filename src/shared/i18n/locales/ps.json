@@ -222,17 +222,6 @@
 				"extensionChrome": "cookies.txt ځایی ترلاسه کړئ (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "د پراکسي له لارې ترافیک لیږدول — د جغرافیایي محدودیتونو لرونکي مینځپانګې لپاره ګټور.", "placeholder": "http://host:port", "clear": "پاکول"},
-			"backdrop": {
-				"panelTitle": "بڼه او کړنه",
-				"panelDescription": "وټاکئ چې Arclio د خوځنده شالید لپاره څومره حرکت وکاروي.",
-				"modeLabel": "د شالید کیفیت",
-				"modeDescription": "له تر ټولو خوځنده بڼې څخه غوره کړنې ته ولاړ شئ.",
-				"cssOnlyLabel": "غوره کړنه",
-				"cssOnlyDescription": "یوازې CSS، د canvas وړاندې کول نشته.",
-				"gpuLabel": "تر ټولو ښکلی",
-				"gpuDescription": "که ملاتړ ولري، خوځنده WebGL شالید.",
-				"runtimeFallbackNotice": "په دې وسیله کې د هارډویر WebGL شتون نه لري، نو Arclio د غوره کړنې شالید کاروي."
-			},
 			"limitRate": {
 				"label": "د ډاونلوډ سرعت حد",
 				"description": "د رسنیو د ډاونلوډونو بینډوېډت محدودوي. لاندې د غوښتنو تمپو عموماً پیاوړی محدودوونکی دی.",

@@ -222,17 +222,6 @@
 				"extensionChrome": "cookies.txt LOKAL holen (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Datenverkehr über einen Proxy leiten — nützlich für geo-gesperrte Inhalte.", "placeholder": "http://host:port", "clear": "Löschen"},
-			"backdrop": {
-				"panelTitle": "Darstellung und Leistung",
-				"panelDescription": "Wähle, wie viel Bewegung Arclio für den animierten Hintergrund verwendet.",
-				"modeLabel": "Hintergrundqualität",
-				"modeDescription": "Von der stärksten Animation zur besten Leistung.",
-				"cssOnlyLabel": "Beste Leistung",
-				"cssOnlyDescription": "Nur CSS, kein canvas-Rendering.",
-				"gpuLabel": "Am schönsten",
-				"gpuDescription": "Animierter WebGL-Hintergrund, wenn unterstützt.",
-				"runtimeFallbackNotice": "Hardware-WebGL ist auf diesem Gerät nicht verfügbar, daher verwendet Arclio den Performance-Hintergrund."
-			},
 			"limitRate": {
 				"label": "Download-Geschwindigkeitslimit",
 				"description": "Begrenzt die Bandbreite für Mediendownloads. Die Anfrage-Pausen darunter sind meist der stärkere Hebel gegen Limits.",

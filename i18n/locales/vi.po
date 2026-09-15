@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "Chỉ đếm số lần khởi động ứng dụng. Không có URL, tên tệp hay dữ liệu cá nhân."
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "Chỉ dùng CSS, không kết xuất canvas."
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "Hiệu năng tốt nhất"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "Nền WebGL động khi được hỗ trợ."
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "Đẹp nhất"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "Chuyển từ giao diện nhiều chuyển động nhất sang hiệu năng tốt nhất."
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "Chất lượng nền"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "Chọn mức chuyển động Arclio dùng cho nền động."
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "Giao diện và hiệu năng"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "WebGL phần cứng không khả dụng trên thiết bị này, nên Arclio đang dùng phông nền hiệu năng."
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "URL hàng loạt"

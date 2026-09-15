@@ -222,17 +222,6 @@
 				"extensionChrome": "احصل على cookies.txt محلياً (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "توجيه حركة البيانات عبر وكيل — مفيد للمحتوى المقيّد جغرافياً.", "placeholder": "http://host:port", "clear": "مسح"},
-			"backdrop": {
-				"panelTitle": "المظهر والأداء",
-				"panelDescription": "اختر مقدار الحركة التي يستخدمها Arclio للخلفية المتحركة.",
-				"modeLabel": "جودة الخلفية",
-				"modeDescription": "انتقل من المظهر الأكثر حركة إلى أفضل أداء.",
-				"cssOnlyLabel": "أفضل أداء",
-				"cssOnlyDescription": "CSS فقط، بلا عرض canvas.",
-				"gpuLabel": "الأجمل",
-				"gpuDescription": "خلفية WebGL متحركة عند توفر الدعم.",
-				"runtimeFallbackNotice": "لا يتوفر WebGL عبر العتاد على هذا الجهاز، لذلك يستخدم Arclio خلفية الأداء."
-			},
 			"limitRate": {
 				"label": "حد سرعة التنزيل",
 				"description": "يحد من النطاق الترددي لتنزيلات الوسائط. إيقاع الطلبات أدناه غالبًا هو أداة الحد الأقوى.",

@@ -222,17 +222,6 @@
 				"extensionChrome": "Lấy cookies.txt TRÊN MÁY (Chrome)"
 			},
 			"proxy": {"label": "URL Proxy", "description": "Chuyển lưu lượng qua proxy — hữu ích cho nội dung bị chặn theo khu vực.", "placeholder": "http://host:port", "clear": "Xóa"},
-			"backdrop": {
-				"panelTitle": "Giao diện và hiệu năng",
-				"panelDescription": "Chọn mức chuyển động Arclio dùng cho nền động.",
-				"modeLabel": "Chất lượng nền",
-				"modeDescription": "Chuyển từ giao diện nhiều chuyển động nhất sang hiệu năng tốt nhất.",
-				"cssOnlyLabel": "Hiệu năng tốt nhất",
-				"cssOnlyDescription": "Chỉ dùng CSS, không kết xuất canvas.",
-				"gpuLabel": "Đẹp nhất",
-				"gpuDescription": "Nền WebGL động khi được hỗ trợ.",
-				"runtimeFallbackNotice": "WebGL phần cứng không khả dụng trên thiết bị này, nên Arclio đang dùng phông nền hiệu năng."
-			},
 			"limitRate": {
 				"label": "Giới hạn tốc độ tải",
 				"description": "Giới hạn băng thông cho tải media. Nhịp yêu cầu bên dưới thường là đòn bẩy giới hạn mạnh hơn.",

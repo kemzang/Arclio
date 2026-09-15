@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "အက်ပ် ဖွင့်သည့်အကြိမ်ရေကိုသာ ရေတွက်သည်။ URL၊ ဖိုင်အမည် သို့မဟုတ် ကိုယ်ရေးကိုယ်တာ ဒေတာ မပါဝင်ပါ။"
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "CSS သာအသုံးပြုမည်၊ canvas rendering မရှိပါ။"
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "အကောင်းဆုံး စွမ်းဆောင်ရည်"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "ထောက်ပံ့ပါက လှုပ်ရှားနေသော WebGL နောက်ခံ။"
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "အလှဆုံး"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "အလှုပ်ရှားဆုံး အသွင်အပြင်မှ အကောင်းဆုံး စွမ်းဆောင်ရည်သို့ ရွှေ့ပါ။"
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "နောက်ခံ အရည်အသွေး"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "Arclio သည် လှုပ်ရှားနောက်ခံအတွက် လှုပ်ရှားမှုမည်မျှ အသုံးပြုမည်ကို ရွေးပါ။"
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "အသွင်အပြင်နှင့် စွမ်းဆောင်ရည်"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "ဤစက်တွင် hardware WebGL မရရှိနိုင်သောကြောင့် Arclio သည် စွမ်းဆောင်ရည် နောက်ခံကို အသုံးပြုနေသည်။"
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "URL အများအပြား"

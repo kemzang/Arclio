@@ -222,17 +222,6 @@
 				"extensionChrome": "Λήψη cookies.txt ΤΟΠΙΚΑ (Chrome)"
 			},
 			"proxy": {"label": "Proxy URL", "description": "Δρομολόγηση κίνησης μέσω proxy — χρήσιμο για περιεχόμενο με γεωγραφικούς περιορισμούς.", "placeholder": "http://host:port", "clear": "Εκκαθάριση"},
-			"backdrop": {
-				"panelTitle": "Εμφάνιση και απόδοση",
-				"panelDescription": "Επίλεξε πόση κίνηση χρησιμοποιεί το Arclio για το κινούμενο φόντο.",
-				"modeLabel": "Ποιότητα φόντου",
-				"modeDescription": "Μετακινηθείτε από την πιο κινούμενη εμφάνιση στην καλύτερη απόδοση.",
-				"cssOnlyLabel": "Καλύτερη απόδοση",
-				"cssOnlyDescription": "Μόνο CSS, χωρίς απόδοση canvas.",
-				"gpuLabel": "Πιο όμορφο",
-				"gpuDescription": "Κινούμενο φόντο WebGL όταν υποστηρίζεται.",
-				"runtimeFallbackNotice": "Το WebGL μέσω υλικού δεν είναι διαθέσιμο σε αυτήν τη συσκευή, οπότε το Arclio χρησιμοποιεί το φόντο επιδόσεων."
-			},
 			"limitRate": {
 				"label": "Όριο ταχύτητας λήψης",
 				"description": "Περιόρισε το bandwidth για λήψεις πολυμέσων. Ο ρυθμός αιτημάτων παρακάτω είναι συνήθως ισχυρότερος μοχλός ορίων.",

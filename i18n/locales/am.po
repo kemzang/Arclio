@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "የመተግበሪያ ማስጀመሪያዎችን ብቻ ይቆጥራል። ምንም URL፣ የፋይል ስሞች ወይም የግል መረጃ የለም።"
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "CSS ብቻ፣ የcanvas ማቅረብ የለም።"
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "ምርጥ አፈጻጸም"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "ሲደገፍ የሚንቀሳቀስ WebGL ዳራ።"
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "በጣም ቆንጆ"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "ከበጣም እንቅስቃሴ ያለው መልክ ወደ ምርጥ አፈጻጸም ይሂዱ።"
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "የዳራ ጥራት"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "Arclio ለሚንቀሳቀሰው ዳራ ምን ያህል እንቅስቃሴ እንደሚጠቀም ይምረጡ።"
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "መልክ እና አፈጻጸም"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "የሃርድዌር WebGL በዚህ መሣሪያ ላይ አይገኝም፣ ስለዚህ Arclio የአፈጻጸም ዳራን እየተጠቀመ ነው።"
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "ብዙ URLዎች"

@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next'
 import {AlertTriangle, FileText, Gauge} from 'lucide-react'
 import {DEFAULTS} from '@shared/constants.js'
 import {NATIVE_AUDIO_PREFERENCES} from '@shared/schemas.js'
-import type {BackdropRenderMode, CookiesBrowser, CookiesMode, NativeAudioPreference} from '@shared/types.js'
+import type {CookiesBrowser, CookiesMode, NativeAudioPreference} from '@shared/types.js'
 import {formatHomeRelativePath} from '@renderer/lib/utils.js'
 import {useAppStore} from '../../store/useAppStore.js'
 import {Alert, AlertDescription} from '../ui/alert.js'
@@ -33,11 +33,6 @@ const COOKIES_BROWSERS: readonly {value: CookiesBrowser; label: string; macOnly?
 const COOKIES_HELP_URL = 'https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp'
 const COOKIES_FIREFOX_URL = 'https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/'
 const COOKIES_CHROME_URL = 'https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc'
-
-const BACKDROP_RENDER_OPTIONS = [
-	{value: 'gpu', labelKey: 'wizard.url.backdrop.gpuLabel', descriptionKey: 'wizard.url.backdrop.gpuDescription'},
-	{value: 'css-only', labelKey: 'wizard.url.backdrop.cssOnlyLabel', descriptionKey: 'wizard.url.backdrop.cssOnlyDescription'}
-] as const satisfies readonly {value: BackdropRenderMode; labelKey: string; descriptionKey: string}[]
 
 const NATIVE_AUDIO_LABEL_KEYS = {compatible: 'wizard.url.nativeAudioPreference.compatible', surround: 'wizard.url.nativeAudioPreference.surround'} as const satisfies Record<NativeAudioPreference, string>
 
@@ -69,25 +64,7 @@ function SettingSwitch({id, label, description, checked, onCheckedChange, testId
 
 export function DownloadProfilesSettingsTab(): ReactNode {
 	const {t} = useTranslation()
-	const {
-		advancedAutoOpen,
-		advancedAutoTarget,
-		settings,
-		graphicsPolicy,
-		openLogs,
-		setAdvancedAutoOpen,
-		setClipboardWatchEnabled,
-		setCookiesPath,
-		setCookiesMode,
-		setCookiesBrowser,
-		setProxyUrl,
-		setLimitRate,
-		setBackdropRenderMode,
-		setNativeAudioPreference,
-		setIncludeIdInSingleFilenames,
-		setCloseBehavior,
-		setAnalyticsEnabled
-	} = useAppStore()
+	const {advancedAutoOpen, advancedAutoTarget, settings, openLogs, setAdvancedAutoOpen, setClipboardWatchEnabled, setCookiesPath, setCookiesMode, setCookiesBrowser, setProxyUrl, setLimitRate, setNativeAudioPreference, setIncludeIdInSingleFilenames, setCloseBehavior, setAnalyticsEnabled} = useAppStore()
 	const common = settings?.common
 	const cookiesPath = common?.cookiesPath ?? ''
 	const cookiesMode: CookiesMode = common?.cookiesMode ?? 'off'
@@ -99,9 +76,7 @@ export function DownloadProfilesSettingsTab(): ReactNode {
 	const showMissingFileWarning = cookiesMode === 'file' && !cookiesPath.trim()
 	const showMissingBrowserWarning = cookiesMode === 'browser' && !cookiesBrowser
 	const limitRate = common?.limitRate?.trim() ? common.limitRate : undefined
-	const backdropRenderMode = common?.backdropRenderMode ?? DEFAULTS.backdropRenderMode
 	const nativeAudioPreference = common?.nativeAudioPreference ?? DEFAULTS.nativeAudioPreference
-	const showBackdropRuntimeFallback = backdropRenderMode === 'gpu' && graphicsPolicy?.backdrop.forceRenderMode === 'css-only'
 
 	useEffect(() => {
 		if (!advancedAutoOpen) return
@@ -326,47 +301,6 @@ export function DownloadProfilesSettingsTab(): ReactNode {
 						</Button>
 					</Field>
 				</FieldGroup>
-			</SettingsPanel>
-
-			<SettingsPanel title={t('wizard.url.backdrop.panelTitle')} description={t('wizard.url.backdrop.panelDescription')}>
-				<Field className="gap-2">
-					<FieldContent className="gap-0.5">
-						<FieldTitle id="profiles-settings-backdrop-mode-label" className="text-[13px] font-medium text-foreground">
-							{t('wizard.url.backdrop.modeLabel')}
-						</FieldTitle>
-						<FieldDescription className="text-[11px] text-[var(--text-subtle)]">{t('wizard.url.backdrop.modeDescription')}</FieldDescription>
-					</FieldContent>
-					<div className="rounded-lg border border-border bg-muted/20 p-1" data-testid="profiles-settings-backdrop-mode">
-						<ToggleGroup
-							variant="outline"
-							value={[backdropRenderMode]}
-							onValueChange={value => {
-								if (value[0]) void setBackdropRenderMode(value[0] as BackdropRenderMode)
-							}}
-							spacing={1}
-							className="grid w-full grid-cols-[repeat(auto-fit,minmax(10.5rem,1fr))] gap-1"
-							aria-labelledby="profiles-settings-backdrop-mode-label"
-						>
-							{BACKDROP_RENDER_OPTIONS.map(option => (
-								<ToggleGroupItem
-									key={option.value}
-									value={option.value}
-									className="h-auto min-h-[4.5rem] w-full min-w-0 flex-1 flex-col items-start justify-start gap-1 whitespace-normal px-3 py-2 text-left aria-pressed:border-[var(--brand)] aria-pressed:bg-[var(--brand-dim)] aria-pressed:text-[var(--brand)]"
-									data-testid={`profiles-settings-backdrop-mode-${option.value}`}
-								>
-									<span className="block w-full min-w-0 whitespace-normal break-words text-[12px] font-semibold leading-tight">{t(option.labelKey)}</span>
-									<span className="block w-full min-w-0 whitespace-normal break-words text-[10px] font-normal leading-snug text-[var(--text-subtle)]">{t(option.descriptionKey)}</span>
-								</ToggleGroupItem>
-							))}
-						</ToggleGroup>
-					</div>
-					{showBackdropRuntimeFallback ? (
-						<Alert data-testid="profiles-settings-backdrop-mode-fallback" className="py-2">
-							<AlertTriangle className="size-4" aria-hidden />
-							<AlertDescription className="text-[11px] leading-snug">{t('wizard.url.backdrop.runtimeFallbackNotice')}</AlertDescription>
-						</Alert>
-					) : null}
-				</Field>
 			</SettingsPanel>
 		</div>
 	)

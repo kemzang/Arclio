@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "يحسب فقط مرات تشغيل التطبيق. بدون عناوين URL أو أسماء ملفات أو بيانات شخصية."
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "CSS فقط، بلا عرض canvas."
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "أفضل أداء"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "خلفية WebGL متحركة عند توفر الدعم."
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "الأجمل"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "انتقل من المظهر الأكثر حركة إلى أفضل أداء."
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "جودة الخلفية"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "اختر مقدار الحركة التي يستخدمها Arclio للخلفية المتحركة."
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "المظهر والأداء"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "لا يتوفر WebGL عبر العتاد على هذا الجهاز، لذلك يستخدم Arclio خلفية الأداء."
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "روابط متعددة"

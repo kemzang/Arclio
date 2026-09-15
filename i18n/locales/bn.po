@@ -3109,42 +3109,6 @@ msgctxt "wizard.url.analytics.toggleDescription"
 msgid "Counts app launches only. No URLs, filenames, or personal data."
 msgstr "শুধুমাত্র অ্যাপ চালু হওয়ার সংখ্যা গণনা করে। কোনো URL, ফাইলের নাম বা ব্যক্তিগত তথ্য নেই।"
 
-msgctxt "wizard.url.backdrop.cssOnlyDescription"
-msgid "CSS only, no canvas rendering."
-msgstr "শুধু CSS, কোনো canvas রেন্ডারিং নয়।"
-
-msgctxt "wizard.url.backdrop.cssOnlyLabel"
-msgid "Best performance"
-msgstr "সেরা পারফরম্যান্স"
-
-msgctxt "wizard.url.backdrop.gpuDescription"
-msgid "Animated WebGL backdrop when supported."
-msgstr "সমর্থিত হলে অ্যানিমেটেড WebGL ব্যাকড্রপ।"
-
-msgctxt "wizard.url.backdrop.gpuLabel"
-msgid "Most beautiful"
-msgstr "সবচেয়ে সুন্দর"
-
-msgctxt "wizard.url.backdrop.modeDescription"
-msgid "Move from the most animated look to best performance."
-msgstr "সবচেয়ে অ্যানিমেটেড চেহারা থেকে সেরা পারফরম্যান্সে যান।"
-
-msgctxt "wizard.url.backdrop.modeLabel"
-msgid "Backdrop quality"
-msgstr "ব্যাকড্রপের মান"
-
-msgctxt "wizard.url.backdrop.panelDescription"
-msgid "Choose how much motion Arclio uses for the animated backdrop."
-msgstr "অ্যানিমেটেড ব্যাকড্রপে Arclio কতটা মুভমেন্ট ব্যবহার করবে তা বেছে নিন।"
-
-msgctxt "wizard.url.backdrop.panelTitle"
-msgid "Appearance and performance"
-msgstr "চেহারা ও পারফরম্যান্স"
-
-msgctxt "wizard.url.backdrop.runtimeFallbackNotice"
-msgid "Hardware WebGL is unavailable on this device, so Arclio is using the performance backdrop."
-msgstr "এই ডিভাইসে হার্ডওয়্যার WebGL উপলব্ধ নয়, তাই Arclio পারফরম্যান্স ব্যাকড্রপ ব্যবহার করছে।"
-
 msgctxt "wizard.url.bulkButton"
 msgid "Bulk URLs"
 msgstr "বাল্ক URL"
