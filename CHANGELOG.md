@@ -14,6 +14,44 @@ _Nothing yet._
 
 ---
 
+## 0.5.0-beta.1
+
+Arclio now syncs your library across your own devices, and the Sync + AI tier can generate subtitles for anything that doesn't ship with any. Plus a full visual refresh and a long list of reliability fixes.
+
+## Highlights
+
+### Sync, Across Your Devices
+
+- Pair a device from Settings → Account, and your library's tags, collections, favorites, and titles stay in sync everywhere you've paired.
+- A "Sync" tier keeps your downloaded library in step across devices; "Sync + AI" adds hosted subtitle generation on top.
+
+### Sync + AI: Subtitles For Anything
+
+- When a download finishes without subtitles, a "Generate AI subtitles" button appears right in the queue — no separate tool, no re-download.
+- Transcription runs on Cloudflare Workers AI and writes a real `.srt` next to your video, with live progress and a monthly quota shown in the Account panel.
+
+### A Calmer Look
+
+- Replaced the animated teal aurora backdrop and glass-panel glow with a flat navy palette and a single warm accent reserved for the one action that matters on each screen (the download button, active progress).
+- Dropped every `backdrop-filter` blur across the app — panels are now solid, fast to render, and consistent in light and dark.
+
+### Account-Gated Downloads And Upsell
+
+- Downloading now asks you to connect an account first, with a clear explanation of what Sync and Sync + AI unlock.
+- A one-time, Spotify-style nudge appears after a batch finishes, pointing free users at what a paid tier would have done differently — dismissible, never repeats mid-session.
+
+### Reliability
+
+- Fixed a real pairing bug where the desktop app would silently stop completing device pairing after React's development double-mount cycle — did not affect release builds, but was hiding a genuine lifecycle bug.
+- Fixed library search throwing away results for any title containing parentheses, hyphens, or quotes — common in real video titles — by escaping free-text queries as a literal FTS5 phrase instead of passing them through as query syntax.
+- Fixed metadata extraction crashing on Linux when the bundled ffprobe couldn't find its sibling `libav*.so` files.
+- Fixed the desktop app dying silently on launch under Wayland.
+- Cookies mode now defaults to a real browser the moment "Browser" is picked, instead of leaving downloads blocked until one is chosen by hand.
+- Retiring a media item now marks it deleted instead of hard-removing it, so a device that's mid-sync doesn't resurrect it on the next pull.
+- Fixed the bundled yt-dlp fallback pointing at a stale build.
+
+---
+
 ## 0.4.2-beta.1
 
 First release published from the project's new home. This beta brings a real desktop viewer for comics and archives, a working Converter page, library filtering by media type, and a startup crash fix — plus the housekeeping needed to publish safely from here on.
