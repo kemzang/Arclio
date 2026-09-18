@@ -4,7 +4,7 @@ import type {AppSettings} from './types.js'
 // Public site. Single source of truth — the update banner, the About dialog,
 // the share dialog and the diagnostics endpoint all derive from this, so
 // moving to a new domain is one edit here instead of five across the codebase.
-export const SITE_URL = 'https://arclio-web.kemzang.workers.dev'
+export const SITE_URL = 'https://arclio.net'
 
 // Not served yet: the feedback worker under workers/ is bound to a zone this
 // project no longer controls, and the route has not been ported to the site.

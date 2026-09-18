@@ -7,11 +7,11 @@
 
 **አንብብ በ:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · **አማርኛ** · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![ስሪት](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![ግንባታ](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![ድር ጣቢያ](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![ፈቃድ](https://img.shields.io/badge/license-MIT-green) ![ሥርዓቶች](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![ቋንቋዎች](https://img.shields.io/badge/i18n-21_languages-blue)
+[![ስሪት](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![ግንባታ](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![ድር ጣቢያ](https://img.shields.io/badge/website-arclio.net-blueviolet)](https://arclio.net/) ![ፈቃድ](https://img.shields.io/badge/license-MIT-green) ![ሥርዓቶች](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![ቋንቋዎች](https://img.shields.io/badge/i18n-21_languages-blue)
 
 ቪዲዮዎች፣ Shorts፣ ሙዚቃ፣ ቻናሎች፣ ፖድካስቶች ወይም የድምፅ ትራኮች ከ**YouTube እና ከ2000+ ተደገፉ ጣቢያዎች** ያውርዱ — እስከ 4K HDR በ60 fps፣ ወይም MP3 / AAC / Opus። በ Windows፣ macOS፣ እና Linux ላይ አካባቢያዊ ሆኖ ይሠራል። **ምንም ማስታወቂያ፣ ምንም ብዝሃ ሸቀጥ፣ ምንም ተጨማሪ ሽያጭ።**
 
-[**↓ የቅርብ ጊዜ ስሪት አውርድ**](#install) &nbsp;·&nbsp; [**ድር ጣቢያ**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ የቅርብ ጊዜ ስሪት አውርድ**](#install) &nbsp;·&nbsp; [**ድር ጣቢያ**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 <img src="build/demo.gif" alt="የ Arclio ማሳያ" width="720" />
 
@@ -141,7 +141,7 @@ sudo pacman -S fuse2
 
 ```bash
 flatpak install --user Arclio-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arclio
+flatpak run io.github.kemzang.Arclio
 ```
 
 <details>

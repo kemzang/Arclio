@@ -9,8 +9,8 @@
 	},
 	"routes": [
 		{
-			"pattern": "arclio.orionus.dev/api/feedback-diagnostics",
-			"zone_name": "orionus.dev"
+			"pattern": "arclio.net/api/feedback-diagnostics",
+			"zone_name": "arclio.net"
 		}
 	],
 	"r2_buckets": [

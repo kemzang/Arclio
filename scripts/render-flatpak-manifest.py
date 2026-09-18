@@ -78,12 +78,12 @@ def main() -> int:
     )
     parser.add_argument(
         "--template",
-        default="flatpak/io.github.antonio_orionus.Arclio.yml.in",
+        default="flatpak/io.github.kemzang.Arclio.yml.in",
         help="Manifest template path",
     )
     parser.add_argument(
         "--output",
-        default="flatpak/io.github.antonio_orionus.Arclio.yml",
+        default="flatpak/io.github.kemzang.Arclio.yml",
         help="Rendered manifest path",
     )
     parser.add_argument(

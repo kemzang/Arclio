@@ -7,11 +7,11 @@
 
 **阅读语言：** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · **中文** · [日本語](README.ja.md)
 
-[![发布](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![构建](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![官网](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![许可证](https://img.shields.io/badge/license-MIT-green) ![平台](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![语言](https://img.shields.io/badge/i18n-21_languages-blue)
+[![发布](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![构建](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![官网](https://img.shields.io/badge/website-arclio.net-blueviolet)](https://arclio.net/) ![许可证](https://img.shields.io/badge/license-MIT-green) ![平台](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![语言](https://img.shields.io/badge/i18n-21_languages-blue)
 
 从 **YouTube 和 2000+ 个支持的网站**下载视频、Shorts、音乐、频道、播客或音轨 — 最高 4K HDR 60 fps，或导出为 MP3 / AAC / Opus。在 Windows、macOS 和 Linux 本地运行。**无广告、无冗余、无追加销售。**
 
-[**↓ 下载最新版本**](#install) &nbsp;·&nbsp; [**官网**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ 下载最新版本**](#install) &nbsp;·&nbsp; [**官网**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 <img src="build/demo.gif" alt="Arclio 演示" width="720" />
 
@@ -143,7 +143,7 @@ sudo pacman -S fuse2
 
 ```bash
 flatpak install --user Arclio-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arclio
+flatpak run io.github.kemzang.Arclio
 ```
 
 <details>

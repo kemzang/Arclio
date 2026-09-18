@@ -7,11 +7,11 @@
 
 **Soma kwa:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · **Kiswahili** · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![Toleo](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![Ujenzi](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![Tovuti](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![Leseni](https://img.shields.io/badge/license-MIT-green) ![Majukwaa](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Lugha](https://img.shields.io/badge/i18n-21_languages-blue)
+[![Toleo](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![Ujenzi](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![Tovuti](https://img.shields.io/badge/website-arclio.net-blueviolet)](https://arclio.net/) ![Leseni](https://img.shields.io/badge/license-MIT-green) ![Majukwaa](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Lugha](https://img.shields.io/badge/i18n-21_languages-blue)
 
 Pakua video, Shorts, muziki, vituo, podikasti, au nyimbo za sauti kutoka **YouTube na tovuti 2000+ zinazotumika** — hadi 4K HDR kwa fps 60, au kama MP3 / AAC / Opus. Inafanya kazi mahali hapo kwenye Windows, macOS, na Linux. **Hakuna matangazo, hakuna mzigo wa ziada, hakuna mauzo ya ziada.**
 
-[**↓ Pakua Toleo la Hivi Karibuni**](#install) &nbsp;·&nbsp; [**Tovuti**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ Pakua Toleo la Hivi Karibuni**](#install) &nbsp;·&nbsp; [**Tovuti**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 <img src="build/demo.gif" alt="Demo ya Arclio" width="720" />
 
@@ -141,7 +141,7 @@ sudo pacman -S fuse2
 
 ```bash
 flatpak install --user Arclio-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arclio
+flatpak run io.github.kemzang.Arclio
 ```
 
 <details>

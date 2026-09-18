@@ -7,11 +7,11 @@
 
 **Язык:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · **Русский** · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![Релиз](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![Сборка](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![Сайт](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![Лицензия](https://img.shields.io/badge/license-MIT-green) ![Платформы](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Языки](https://img.shields.io/badge/i18n-21_languages-blue)
+[![Релиз](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![Сборка](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![Сайт](https://img.shields.io/badge/website-arclio.net-blueviolet)](https://arclio.net/) ![Лицензия](https://img.shields.io/badge/license-MIT-green) ![Платформы](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![Языки](https://img.shields.io/badge/i18n-21_languages-blue)
 
 Скачивайте видео, Shorts, музыку, каналы, подкасты или аудиодорожки с **YouTube и 2000+ поддерживаемых сайтов** — до 4K HDR при 60 fps или в виде MP3 / AAC / Opus. Работает локально на Windows, macOS и Linux. **Без рекламы, без лишнего, без допродаж.**
 
-[**↓ Скачать последний релиз**](#install) &nbsp;·&nbsp; [**Сайт**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ Скачать последний релиз**](#install) &nbsp;·&nbsp; [**Сайт**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 <img src="build/demo.gif" alt="Демо Arclio" width="720" />
 
@@ -143,7 +143,7 @@ sudo pacman -S fuse2
 
 ```bash
 flatpak install --user Arclio-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arclio
+flatpak run io.github.kemzang.Arclio
 ```
 
 <details>

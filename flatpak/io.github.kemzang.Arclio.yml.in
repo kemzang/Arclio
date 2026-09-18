@@ -1,4 +1,4 @@
-app-id: io.github.antonio_orionus.Arclio
+app-id: io.github.kemzang.Arclio
 base: org.electronjs.Electron2.BaseApp
 base-version: '25.08'
 runtime: org.freedesktop.Platform
@@ -35,9 +35,9 @@ modules:
         only-arches:
           - x86_64
       - type: file
-        path: io.github.antonio_orionus.Arclio.desktop
+        path: io.github.kemzang.Arclio.desktop
       - type: file
-        path: io.github.antonio_orionus.Arclio.metainfo.xml
+        path: io.github.kemzang.Arclio.metainfo.xml
       - type: file
         path: arclio.sh
       - type: dir

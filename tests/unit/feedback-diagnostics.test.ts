@@ -50,12 +50,12 @@ describe('FeedbackDiagnostics', () => {
 		const fetchImpl = vi.fn().mockResolvedValue(new Response(JSON.stringify({report_id: reportId, diagnostic_url: null}), {status: 201, headers: {'content-type': 'application/json'}}))
 
 		try {
-			const result = await uploadFeedbackDiagnostic({endpoint: 'https://arclio.orionus.dev/api/feedback-diagnostics', fetchImpl, logPath, reportId})
+			const result = await uploadFeedbackDiagnostic({endpoint: 'https://arclio.net/api/feedback-diagnostics', fetchImpl, logPath, reportId})
 
 			expect(result).toMatchObject({reportId, diagnosticUrl: null, rawBytes: 15, truncated: false})
 			expect(result.compressedBytes).toBeGreaterThan(0)
 			expect(fetchImpl).toHaveBeenCalledWith(
-				'https://arclio.orionus.dev/api/feedback-diagnostics',
+				'https://arclio.net/api/feedback-diagnostics',
 				expect.objectContaining({method: 'POST', body: expect.any(ArrayBuffer), headers: expect.objectContaining({'x-arclio-upload': 'feedback-diagnostic-v1', 'x-arclio-report-id': reportId, 'content-type': 'application/gzip', 'content-encoding': 'gzip'})})
 			)
 		} finally {
@@ -85,7 +85,7 @@ describe('FeedbackDiagnostics', () => {
 
 		try {
 			vi.useFakeTimers()
-			const upload = uploadFeedbackDiagnostic({endpoint: 'https://arclio.orionus.dev/api/feedback-diagnostics', fetchImpl, logPath, reportId, timeoutMs: 1})
+			const upload = uploadFeedbackDiagnostic({endpoint: 'https://arclio.net/api/feedback-diagnostics', fetchImpl, logPath, reportId, timeoutMs: 1})
 			const rejectedUpload = expectRejectsToThrow(upload, 'Diagnostic upload timed out')
 			await fetchStarted
 			await vi.advanceTimersByTimeAsync(1)
@@ -101,7 +101,7 @@ describe('FeedbackDiagnostics', () => {
 	it('rejects invalid report ids before reading or uploading logs', async () => {
 		const fetchImpl = vi.fn()
 
-		await expectRejectsToThrow(uploadFeedbackDiagnostic({endpoint: 'https://arclio.orionus.dev/api/feedback-diagnostics', fetchImpl, logPath: '/tmp/does-not-matter.log', reportId: 'report-123'}), 'Invalid feedback report id')
+		await expectRejectsToThrow(uploadFeedbackDiagnostic({endpoint: 'https://arclio.net/api/feedback-diagnostics', fetchImpl, logPath: '/tmp/does-not-matter.log', reportId: 'report-123'}), 'Invalid feedback report id')
 		expect(fetchImpl).not.toHaveBeenCalled()
 	})
 
@@ -113,7 +113,7 @@ describe('FeedbackDiagnostics', () => {
 		const fetchImpl = vi.fn().mockResolvedValue(new Response(JSON.stringify({report_id: '22222222-2222-4222-8222-222222222222', diagnostic_url: null}), {status: 201, headers: {'content-type': 'application/json'}}))
 
 		try {
-			await expectRejectsToThrow(uploadFeedbackDiagnostic({endpoint: 'https://arclio.orionus.dev/api/feedback-diagnostics', fetchImpl, logPath, reportId}), 'Diagnostic upload response report_id did not match request')
+			await expectRejectsToThrow(uploadFeedbackDiagnostic({endpoint: 'https://arclio.net/api/feedback-diagnostics', fetchImpl, logPath, reportId}), 'Diagnostic upload response report_id did not match request')
 		} finally {
 			await fs.rm(tempDir, {force: true, recursive: true})
 		}

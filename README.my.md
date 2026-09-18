@@ -7,11 +7,11 @@
 
 **ဘာသာဖြင့် ဖတ်ရှုရန်:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · **မြန်မာဘာသာ** · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![Release](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![Build](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![ဝဘ်ဆိုက်](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![လိုင်စင်](https://img.shields.io/badge/license-MIT-green) ![Platforms](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![ဘာသာစကားများ](https://img.shields.io/badge/i18n-21_languages-blue)
+[![Release](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![Build](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![ဝဘ်ဆိုက်](https://img.shields.io/badge/website-arclio.net-blueviolet)](https://arclio.net/) ![လိုင်စင်](https://img.shields.io/badge/license-MIT-green) ![Platforms](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![ဘာသာစကားများ](https://img.shields.io/badge/i18n-21_languages-blue)
 
 **YouTube နှင့် ၂၀၀၀+ ထောက်ပံ့သောဆိုဒ်များ** မှ ဗီဒီယိုများ၊ Shorts၊ သီချင်းများ၊ channel များ၊ podcast များ သို့မဟုတ် audio track များကို ဒေါင်းလုဒ်ဆွဲပါ — 60 fps တွင် 4K HDR အထိ၊ သို့မဟုတ် MP3 / AAC / Opus အဖြစ်။ Windows, macOS နှင့် Linux တွင် သင့်ကွန်ပျူတာပေါ်တွင်သာ run ပါသည်။ **ကြော်ငြာမပါ၊ bloat မပါ၊ upsell မပါ။**
 
-[**↓ နောက်ဆုံး Release ကို ဒေါင်းလုဒ်ဆွဲပါ**](#install) &nbsp;·&nbsp; [**ဝဘ်ဆိုက်**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ နောက်ဆုံး Release ကို ဒေါင်းလုဒ်ဆွဲပါ**](#install) &nbsp;·&nbsp; [**ဝဘ်ဆိုက်**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 <img src="build/demo.gif" alt="Arclio ပြသချက်" width="720" />
 
@@ -141,7 +141,7 @@ sudo pacman -S fuse2
 
 ```bash
 flatpak install --user Arclio-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arclio
+flatpak run io.github.kemzang.Arclio
 ```
 
 <details>

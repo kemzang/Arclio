@@ -433,14 +433,14 @@ jobs:
           python3 scripts/render-flatpak-manifest.py \
             --sha256 "$HASH" \
             --archive-path "$TARBALL" \
-            --template flatpak/io.github.antonio_orionus.Arclio.yml.in \
-            --output flatpak/io.github.antonio_orionus.Arclio.yml \
-            --metainfo-template flatpak/io.github.antonio_orionus.Arclio.metainfo.xml.in \
-            --metainfo-output flatpak/io.github.antonio_orionus.Arclio.metainfo.xml
+            --template flatpak/io.github.kemzang.Arclio.yml.in \
+            --output flatpak/io.github.kemzang.Arclio.yml \
+            --metainfo-template flatpak/io.github.kemzang.Arclio.metainfo.xml.in \
+            --metainfo-output flatpak/io.github.kemzang.Arclio.metainfo.xml
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           bundle: arclio.flatpak
-          manifest-path: flatpak/io.github.antonio_orionus.Arclio.yml
+          manifest-path: flatpak/io.github.kemzang.Arclio.yml
           # Stable across release tags. Previously keyed on github.sha which
           # never hit, adding ~7 min per release. Invalidates only when flatpak
           # manifest or electron build inputs change.

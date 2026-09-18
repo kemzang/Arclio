@@ -7,11 +7,11 @@
 
 **پدې ژبه ولولئ:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · **پښتو** · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![خپرونه](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![جوړونه](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![ویب پاڼه](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![جواز](https://img.shields.io/badge/license-MIT-green) ![پلیټفارمونه](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![ژبې](https://img.shields.io/badge/i18n-21_languages-blue)
+[![خپرونه](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![جوړونه](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![ویب پاڼه](https://img.shields.io/badge/website-arclio.net-blueviolet)](https://arclio.net/) ![جواز](https://img.shields.io/badge/license-MIT-green) ![پلیټفارمونه](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![ژبې](https://img.shields.io/badge/i18n-21_languages-blue)
 
 له **YouTube او ۲۰۰۰+ ملاتړ شویو سایټونو** نه ویډیوګانې، Shorts، موسیقي، چینلونه، پوډکاسټونه، یا اوډیو ټریکونه ډاونلوډ کړئ — تر 4K HDR پورې د 60 fps سره، یا د MP3 / AAC / Opus په توګه. د Windows، macOS، او Linux پر سیستم ځایي چلیږي. **هیڅ اعلانات، هیڅ بلوټ، هیڅ اضافي پلورنه نه ده.**
 
-[**↓ وروستۍ خپرونه ډاونلوډ کړئ**](#install) &nbsp;·&nbsp; [**ویب پاڼه**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ وروستۍ خپرونه ډاونلوډ کړئ**](#install) &nbsp;·&nbsp; [**ویب پاڼه**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 <img src="build/demo.gif" alt="د Arclio ډیمو" width="720" />
 
@@ -141,7 +141,7 @@ sudo pacman -S fuse2
 
 ```bash
 flatpak install --user Arclio-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arclio
+flatpak run io.github.kemzang.Arclio
 ```
 
 <details>

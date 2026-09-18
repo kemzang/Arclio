@@ -304,7 +304,7 @@ async (page) => {
       extraHTTPHeaders: { 'Accept-Language': 'hi-IN,hi;q=0.9,en;q=0.5' }
     });
   const p = await context.newPage();
-  await p.goto('https://arclio.orionus.dev/');
+  await p.goto('https://arclio.net/');
   await p.waitForTimeout(1500); // let inline redirect script fire
   const result = { url: p.url(), title: await p.title() };
   await context.close();
@@ -396,8 +396,8 @@ Renderer shows `<UpdateBanner>` between title bar and content area; `resolveActi
 
 - `scoop` → copy-command for `scoop update arclio`
 - `homebrew` → copy-command for `brew upgrade --cask arclio`
-- `portable` → "Download ↗" link to https://arclio.orionus.dev/ (NSIS auto-update can't run from a %TEMP% extract)
-- `direct` on darwin → "Download ↗" link to https://arclio.orionus.dev/ (DMG is unsigned, can't self-update)
+- `portable` → "Download ↗" link to https://arclio.net/ (NSIS auto-update can't run from a %TEMP% extract)
+- `direct` on darwin → "Download ↗" link to https://arclio.net/ (DMG is unsigned, can't self-update)
 - `direct` on win/linux (and `winget`) → "Install & Restart" button → invokes `updater:install` → main calls `downloadUpdate()` → on `update-downloaded` calls `quitAndInstall(false, true)`
 
 ### Known gap: Linux tar.gz never sees the banner
@@ -555,7 +555,7 @@ README files (English + 20 locales) are **generated** — never edit them direct
 
 The build script validates **key parity** — if any locale is missing a key that `en` has (or has an extra key), the build fails loudly. Every new string must be translated into every supported language.
 
-The landing site (`arclio.orionus.dev`) lives in a separate repo: [kemzang-Bryan/arclio_web](https://github.com/kemzang-Bryan/arclio_web). Don't update landing copy from here — open a PR there instead.
+The landing site (`arclio.net`) lives in a separate repo: [kemzang-Bryan/arclio_web](https://github.com/kemzang-Bryan/arclio_web). Don't update landing copy from here — open a PR there instead.
 
 ### Adding a new feature
 

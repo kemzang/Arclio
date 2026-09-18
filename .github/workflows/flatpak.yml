@@ -101,14 +101,14 @@ jobs:
           python3 scripts/render-flatpak-manifest.py \
             --sha256 "${{ steps.resolve.outputs.sha256 }}" \
             --archive-path "Arclio-linux-x64.tar.gz" \
-            --template flatpak/io.github.antonio_orionus.Arclio.yml.in \
-            --output flatpak/io.github.antonio_orionus.Arclio.yml \
-            --metainfo-template flatpak/io.github.antonio_orionus.Arclio.metainfo.xml.in \
-            --metainfo-output flatpak/io.github.antonio_orionus.Arclio.metainfo.xml
+            --template flatpak/io.github.kemzang.Arclio.yml.in \
+            --output flatpak/io.github.kemzang.Arclio.yml \
+            --metainfo-template flatpak/io.github.kemzang.Arclio.metainfo.xml.in \
+            --metainfo-output flatpak/io.github.kemzang.Arclio.metainfo.xml
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         id: build
         with:
           bundle: arclio.flatpak
-          manifest-path: flatpak/io.github.antonio_orionus.Arclio.yml
+          manifest-path: flatpak/io.github.kemzang.Arclio.yml
           cache-key: flatpak-builder-${{ hashFiles('flatpak/**') }}
           verbose: true

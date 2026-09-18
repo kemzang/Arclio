@@ -7,11 +7,11 @@
 
 **{{read_in_label}}** {{LANG_NAV}}
 
-[![{{badge_release_alt}}](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![{{badge_build_alt}}](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![{{badge_website_alt}}](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![{{badge_license_alt}}](https://img.shields.io/badge/license-MIT-green) ![{{badge_platforms_alt}}](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![{{badge_i18n_alt}}](https://img.shields.io/badge/i18n-21_languages-blue)
+[![{{badge_release_alt}}](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![{{badge_build_alt}}](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![{{badge_website_alt}}](https://img.shields.io/badge/website-arclio.net-blueviolet)](https://arclio.net/) ![{{badge_license_alt}}](https://img.shields.io/badge/license-MIT-green) ![{{badge_platforms_alt}}](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![{{badge_i18n_alt}}](https://img.shields.io/badge/i18n-21_languages-blue)
 
 {{hero_desc}}
 
-[**{{cta_latest}}**](#install) &nbsp;·&nbsp; [**{{cta_website}}**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**{{cta_latest}}**](#install) &nbsp;·&nbsp; [**{{cta_website}}**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 
 <img src="build/demo.gif" alt="{{demo_alt}}" width="720" />
@@ -140,7 +140,7 @@ sudo pacman -S fuse2
 
 ```bash
 flatpak install --user Arclio-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arclio
+flatpak run io.github.kemzang.Arclio
 ```
 
 <details>

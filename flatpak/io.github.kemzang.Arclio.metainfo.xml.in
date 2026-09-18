@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.antonio_orionus.Arclio</id>
+  <id>io.github.kemzang.Arclio</id>
 
   <name>Arclio</name>
   <summary>YouTube downloader for video, audio, and subtitles</summary>
@@ -35,7 +35,7 @@
     </ul>
   </description>
 
-  <launchable type="desktop-id">io.github.antonio_orionus.Arclio.desktop</launchable>
+  <launchable type="desktop-id">io.github.kemzang.Arclio.desktop</launchable>
 
   <url type="homepage">https://github.com/kemzang/Arclio</url>
   <url type="bugtracker">https://github.com/kemzang/Arclio/issues</url>
@@ -58,24 +58,28 @@
 
   <screenshots>
     <screenshot type="default">
-      <caption>Paste a URL to get started</caption>
+      <caption>Quick Download home — paste a URL and pull it instantly</caption>
       <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Main-screenshot.png</image>
     </screenshot>
     <screenshot>
-      <caption>Pick your quality and format</caption>
-      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Choosing-format-screenshot.png</image>
+      <caption>Reusable download profiles — save format, quality, and output presets</caption>
+      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Download-profiles-screenshot.png</image>
     </screenshot>
     <screenshot>
-      <caption>Choose where to save</caption>
-      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Choosing-destination-screenshot.png</image>
+      <caption>Multi-language audio tracks — pick the exact audio language a video ships</caption>
+      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Multi-lang-audio-support-screenshot.png</image>
     </screenshot>
     <screenshot>
-      <caption>Download queue with parallel progress</caption>
+      <caption>Surround / Dolby audio detected and preserved</caption>
+      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Dolby-audio-support-screenshot.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Bulk URL mode — paste a list, auto-dedupe, queue them all at once</caption>
+      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Bulk-urls-mode-screenshot.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Parallel download queue with live progress</caption>
       <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Downloading-in-parallel-screenshot.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>Subtitle language and format selection</caption>
-      <image>https://raw.githubusercontent.com/kemzang/Arclio/main/build/Subtitles-screenshot.png</image>
     </screenshot>
   </screenshots>
 
@@ -85,7 +89,7 @@ __RELEASES__
 
   <content_rating type="oars-1.1"/>
 
-  <developer id="io.github.antonio_orionus">
-    <name>Antonio Orionus</name>
+  <developer id="io.github.kemzang">
+    <name>Bryan Kemzang</name>
   </developer>
 </component>

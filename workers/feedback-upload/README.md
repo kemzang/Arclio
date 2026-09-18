@@ -5,7 +5,7 @@ Stores automatic feedback diagnostic log uploads in a private Cloudflare R2 buck
 Endpoint:
 
 ```text
-POST https://arroxy.orionus.dev/api/feedback-diagnostics
+POST https://arclio.net/api/feedback-diagnostics
 ```
 
 The desktop app opens Tally immediately. If the user submits the form, Arclio uploads a gzip-compressed, redacted tail of `main.log` with the same renderer-generated `report_id` that was sent to Tally as a hidden field. The Worker stores the object in R2 under that report id and returns the same id to the app.
@@ -22,14 +22,14 @@ From this directory:
 
 ```bash
 bunx wrangler login
-bunx wrangler r2 bucket create arroxy-feedback-diagnostics
-bunx wrangler r2 bucket lifecycle add arroxy-feedback-diagnostics delete-old-feedback "feedback/" --expire-days 30 --force
+bunx wrangler r2 bucket create arclio-feedback-diagnostics
+bunx wrangler r2 bucket lifecycle add arclio-feedback-diagnostics delete-old-feedback "feedback/" --expire-days 30 --force
 bunx wrangler types src/worker-configuration.d.ts
 bunx wrangler deploy --dry-run
 bunx wrangler deploy
 ```
 
-The route in `wrangler.jsonc` assumes `orionus.dev` is already on Cloudflare and that `arroxy.orionus.dev` has a proxied DNS record.
+The route in `wrangler.jsonc` assumes `arclio.net` is already on Cloudflare and that `arclio.net` has a proxied DNS record.
 
 ## Required Cloudflare Hardening
 
@@ -44,8 +44,8 @@ Built-in Worker checks:
 
 - accepts only `POST /api/feedback-diagnostics`
 - rate-limits upload attempts to 10 requests per minute per client IP using the Worker Rate Limiting binding
-- rejects missing `x-arroxy-upload: feedback-diagnostic-v1`
-- rejects missing or invalid `x-arroxy-report-id` UUIDs
+- rejects missing `x-arclio-upload: feedback-diagnostic-v1`
+- rejects missing or invalid `x-arclio-report-id` UUIDs
 - rejects non-`application/gzip` or non-`gzip` uploads
 - caps compressed payloads at 1,500,000 bytes
 - stores R2 keys under `feedback/YYYY-MM-DD/<report_id>.log.gz`

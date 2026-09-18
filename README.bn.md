@@ -7,11 +7,11 @@
 
 **পড়ুন:** [Afaan Oromoo](README.om.md) · [Deutsch](README.de.md) · [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Tiếng Việt](README.vi.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · **বাংলা** · [हिन्दी](README.hi.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
-[![রিলিজ](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![বিল্ড](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![ওয়েবসাইট](https://img.shields.io/badge/website-arclio.orionus.dev-blueviolet)](https://arclio.orionus.dev/) ![লাইসেন্স](https://img.shields.io/badge/license-MIT-green) ![প্ল্যাটফর্ম](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![ভাষাসমূহ](https://img.shields.io/badge/i18n-21_languages-blue)
+[![রিলিজ](https://img.shields.io/github/v/release/kemzang/Arclio?label=Release&color=blueviolet)](https://github.com/kemzang/Arclio/releases/latest) [![বিল্ড](https://img.shields.io/github/actions/workflow/status/kemzang/Arclio/release.yml?label=Build)](https://github.com/kemzang/Arclio/actions/workflows/release.yml) [![ওয়েবসাইট](https://img.shields.io/badge/website-arclio.net-blueviolet)](https://arclio.net/) ![লাইসেন্স](https://img.shields.io/badge/license-MIT-green) ![প্ল্যাটফর্ম](https://img.shields.io/badge/platform-cross--platform-1f2937?logo=github&logoColor=white) ![ভাষাসমূহ](https://img.shields.io/badge/i18n-21_languages-blue)
 
 **YouTube ও ২০০০+ সমর্থিত সাইট** থেকে ভিডিও, Shorts, সংগীত, চ্যানেল, পডকাস্ট বা অডিও ট্র্যাক ডাউনলোড করুন — 60 fps-এ 4K HDR পর্যন্ত, অথবা MP3 / AAC / Opus হিসেবে। Windows, macOS ও Linux-এ লোকালি চলে। **কোনো বিজ্ঞাপন নেই, কোনো ব্লোট নেই, কোনো আপসেল নেই।**
 
-[**↓ সর্বশেষ রিলিজ ডাউনলোড করুন**](#install) &nbsp;·&nbsp; [**ওয়েবসাইট**](https://arclio.orionus.dev/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
+[**↓ সর্বশেষ রিলিজ ডাউনলোড করুন**](#install) &nbsp;·&nbsp; [**ওয়েবসাইট**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 <img src="build/demo.gif" alt="Arclio ডেমো" width="720" />
 
@@ -141,7 +141,7 @@ sudo pacman -S fuse2
 
 ```bash
 flatpak install --user Arclio-linux-x64.flatpak
-flatpak run io.github.antonio_orionus.Arclio
+flatpak run io.github.kemzang.Arclio
 ```
 
 <details>
