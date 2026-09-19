@@ -221,7 +221,14 @@ describe('waitUntilIdle', () => {
 
 		const start = Date.now()
 		await svc.waitUntilIdle(5000)
-		expect(Date.now() - start).toBeLessThan(1000)
+		// Real assertion is "didn't wait out the full 5s timeout" — the early-exit
+		// poll interval is 100ms, so this normally resolves in ~100-200ms. 1000ms
+		// was tight enough that a loaded CI runner (shared vCPU, real fs I/O from
+		// VideoPhase's tempDir setup) could blow past it despite no logic bug —
+		// confirmed by rerunning this test in isolation with no other load, where
+		// it consistently resolves in well under 200ms. Half the timeout still
+		// fails loudly on a genuine "waited the full timeout" regression.
+		expect(Date.now() - start).toBeLessThan(2500)
 		expect(svc.activeCount).toBe(0)
 	})
 })
