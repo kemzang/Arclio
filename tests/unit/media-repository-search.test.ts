@@ -129,3 +129,43 @@ describe('mediaRepository — DELETED status is a tombstone, not a visible item'
 		expect(repo.search('Soft deleted')).toHaveLength(0)
 	})
 })
+
+describe('mediaRepository — collectionId/tagId narrow the result set', () => {
+	let db: ReturnType<typeof createTestDb>
+	let repo: ReturnType<typeof createMediaRepository>
+
+	beforeEach(() => {
+		db = createTestDb()
+		repo = createMediaRepository(db)
+	})
+
+	// Both filters are declared on MediaListFilters and accepted end-to-end
+	// through the collection/tag detail pages' IPC calls, but list() silently
+	// dropped them — every collection detail view rendered the entire
+	// library regardless of membership. Membership lives in the N-N junction
+	// tables (collection_media/media_tag), not on the media row itself, so
+	// seed those directly rather than through a repo that doesn't own them.
+	it('list({collectionId}) returns only media actually linked to that collection', () => {
+		const inside = repo.create({title: 'In the collection', url: 'https://youtube.com/watch?v=1', mediaType: 'video', status: 'AVAILABLE', createdBy: 'DOWNLOAD', downloadDate: '2026-09-15T00:00:00.000Z', sourceType: 'YOUTUBE', description: null, author: null, thumbnailUrl: null, thumbnailPath: null, metadata: null})
+		repo.create({title: 'Not in the collection', url: 'https://youtube.com/watch?v=2', mediaType: 'video', status: 'AVAILABLE', createdBy: 'DOWNLOAD', downloadDate: '2026-09-15T00:00:00.000Z', sourceType: 'YOUTUBE', description: null, author: null, thumbnailUrl: null, thumbnailPath: null, metadata: null})
+		db.insert(schema.collectionMedia).values({collectionId: 'col-1', mediaId: inside.id, sortOrder: 0, addedAt: '2026-09-15T00:00:00.000Z'}).run()
+
+		const titles = repo.list({collectionId: 'col-1'}).map(item => item.title)
+		expect(titles).toEqual(['In the collection'])
+	})
+
+	it('list({collectionId}) returns nothing for a collection with no members, not the whole library', () => {
+		repo.create({title: 'Unrelated video', url: 'https://youtube.com/watch?v=1', mediaType: 'video', status: 'AVAILABLE', createdBy: 'DOWNLOAD', downloadDate: '2026-09-15T00:00:00.000Z', sourceType: 'YOUTUBE', description: null, author: null, thumbnailUrl: null, thumbnailPath: null, metadata: null})
+
+		expect(repo.list({collectionId: 'empty-collection'})).toHaveLength(0)
+	})
+
+	it('list({tagId}) returns only media actually linked to that tag', () => {
+		const tagged = repo.create({title: 'Tagged video', url: 'https://youtube.com/watch?v=1', mediaType: 'video', status: 'AVAILABLE', createdBy: 'DOWNLOAD', downloadDate: '2026-09-15T00:00:00.000Z', sourceType: 'YOUTUBE', description: null, author: null, thumbnailUrl: null, thumbnailPath: null, metadata: null})
+		repo.create({title: 'Untagged video', url: 'https://youtube.com/watch?v=2', mediaType: 'video', status: 'AVAILABLE', createdBy: 'DOWNLOAD', downloadDate: '2026-09-15T00:00:00.000Z', sourceType: 'YOUTUBE', description: null, author: null, thumbnailUrl: null, thumbnailPath: null, metadata: null})
+		db.insert(schema.mediaTag).values({mediaId: tagged.id, tagId: 'tag-1'}).run()
+
+		const titles = repo.list({tagId: 'tag-1'}).map(item => item.title)
+		expect(titles).toEqual(['Tagged video'])
+	})
+})

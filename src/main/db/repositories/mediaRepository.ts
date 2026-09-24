@@ -1,6 +1,6 @@
 import {eq, desc, asc, sql, and, inArray} from 'drizzle-orm'
 import type {DrizzleDatabase} from '../connection.js'
-import {media, asset, type Media, type NewMedia} from '../schema.js'
+import {media, asset, collectionMedia, mediaTag, type Media, type NewMedia} from '../schema.js'
 import {randomUUID} from 'node:crypto'
 
 /**
@@ -116,6 +116,32 @@ export function createMediaRepository(db: DrizzleDatabase): MediaRepo {
 			}
 			if (filters.sourceType) {
 				conditions.push(eq(media.sourceType, filters.sourceType))
+			}
+			// collectionId/tagId narrow through the N-N junction tables rather than
+			// a join, since list() already fans out to a second assets query keyed
+			// by media.id — an inArray on the pre-resolved id set composes with the
+			// other conditions without restructuring the base select.
+			if (filters.collectionId) {
+				const ids = db.select({mediaId: collectionMedia.mediaId}).from(collectionMedia).where(eq(collectionMedia.collectionId, filters.collectionId)).all()
+				conditions.push(
+					ids.length > 0
+						? inArray(
+								media.id,
+								ids.map(r => r.mediaId)
+							)
+						: sql`0`
+				)
+			}
+			if (filters.tagId) {
+				const ids = db.select({mediaId: mediaTag.mediaId}).from(mediaTag).where(eq(mediaTag.tagId, filters.tagId)).all()
+				conditions.push(
+					ids.length > 0
+						? inArray(
+								media.id,
+								ids.map(r => r.mediaId)
+							)
+						: sql`0`
+				)
 			}
 
 			const where = conditions.length > 0 ? and(...conditions) : undefined
