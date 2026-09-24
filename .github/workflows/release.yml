@@ -383,7 +383,7 @@ jobs:
         # internal testing. Stable tags (e.g. v0.4.0) un-draft as full release
         # and trigger normal user auto-update.
         env:
-          GH_TOKEN: ${{ secrets.WINGET_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REF_NAME: ${{ github.ref_name }}
         run: |
           EXTRA=""
