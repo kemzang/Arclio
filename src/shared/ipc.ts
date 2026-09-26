@@ -66,6 +66,7 @@ export const IPC_CHANNELS = {
 	libraryMediaSearch: 'library:media:search',
 	libraryMediaSetFavorite: 'library:media:setFavorite',
 	libraryMediaSetStatus: 'library:media:setStatus',
+	libraryMediaCheckAvailability: 'library:media:checkAvailability',
 	libraryMediaDelete: 'library:media:delete',
 	libraryMediaCount: 'library:media:count',
 	libraryMediaCountByStatus: 'library:media:countByStatus',

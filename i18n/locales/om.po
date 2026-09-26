@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "Gara perpacha deebi'i"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "Faayilin kun Arclio ala jijjiirame ykn haqame fakkaata."
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "Faayilii taphatamu hin argamne"
@@ -710,6 +714,10 @@ msgstr "Faayilii taphatamu hin argamne"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Miidiyaan hin argamne"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "Kuusaa keessaa balleessi"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

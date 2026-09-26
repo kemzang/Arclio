@@ -679,7 +679,7 @@
 		"deleteConfirmDescription": "यह टैग उन सभी मीडिया आइटम से हटा दिया जाएगा जिन पर इसे लागू किया गया है।"
 	},
 	"history": {"downloads": "डाउनलोड", "playback": "प्लेबैक", "today": "आज", "yesterday": "कल", "thisWeek": "इस सप्ताह", "thisMonth": "इस माह", "empty": "कोई डाउनलोड इतिहास नहीं", "emptyPlayback": "कोई प्लेबैक इतिहास नहीं", "playCount": "{{count}} प्ले", "completed": "पूर्ण", "failed": "विफल"},
-	"player": {"back": "लाइब्रेरी पर वापस", "noMedia": "मीडिया नहीं मिला", "noAsset": "कोई चलाने योग्य फ़ाइल नहीं मिली", "subtitles": "उपशीर्षक"},
+	"player": {"back": "लाइब्रेरी पर वापस", "noMedia": "मीडिया नहीं मिला", "noAsset": "कोई चलाने योग्य फ़ाइल नहीं मिली", "subtitles": "उपशीर्षक", "fileMissing": "यह फ़ाइल Arclio के बाहर स्थानांतरित या हटाई गई प्रतीत होती है।", "removeFromLibrary": "लाइब्रेरी से हटाएं"},
 	"settings": {
 		"outputDir": "आउटपुट निर्देशिका",
 		"outputDirDescription": "डाउनलोड की गई फ़ाइलें कहाँ सहेजी जाती हैं",

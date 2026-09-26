@@ -711,7 +711,7 @@
 		"deleteConfirmDescription": "ٹیگ ان تمام میڈیا آئٹمز سے ہٹا دیا جائے گا جن پر یہ لاگو ہے۔"
 	},
 	"history": {"downloads": "ڈاؤن لوڈز", "playback": "پلے بیک", "today": "آج", "yesterday": "کل", "thisWeek": "اس ہفتے", "thisMonth": "اس ماہ", "empty": "کوئی ڈاؤن لوڈ تاریخ نہیں", "emptyPlayback": "کوئی پلے بیک تاریخ نہیں", "playCount": "{{count}} پلے", "completed": "مکمل", "failed": "ناکام"},
-	"player": {"back": "لائبریری پر واپس", "noMedia": "میڈیا نہیں ملا", "noAsset": "کوئی چلانے کے قابل فائل نہیں ملی", "subtitles": "ذیلی عنوانات"},
+	"player": {"back": "لائبریری پر واپس", "noMedia": "میڈیا نہیں ملا", "noAsset": "کوئی چلانے کے قابل فائل نہیں ملی", "subtitles": "ذیلی عنوانات", "fileMissing": "یہ فائل Arclio کے باہر منتقل یا حذف ہو چکی معلوم ہوتی ہے۔", "removeFromLibrary": "لائبریری سے ہٹائیں"},
 	"settings": {
 		"outputDir": "آؤٹ پٹ ڈائریکٹری",
 		"outputDirDescription": "ڈاؤن لوڈ فائلیں کہاں محفوظ ہوتی ہیں",

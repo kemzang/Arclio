@@ -14,6 +14,9 @@ vi.mock('electron', () => ({
 	}
 }))
 
+const fsAccess = vi.fn()
+vi.mock('node:fs/promises', () => ({access: (...args: unknown[]) => fsAccess(...args)}))
+
 const mediaRepo = {list: vi.fn(), getById: vi.fn(), search: vi.fn(), setFavorite: vi.fn(), setStatus: vi.fn(), delete: vi.fn(), count: vi.fn(), countByStatus: vi.fn()}
 const collectionRepo = {list: vi.fn(), getById: vi.fn(), create: vi.fn(), update: vi.fn(), delete: vi.fn(), addMedia: vi.fn(), removeMedia: vi.fn(), getMediaIds: vi.fn(), getCollectionIdsForMedia: vi.fn()}
 const tagRepo = {list: vi.fn(), create: vi.fn(), update: vi.fn(), delete: vi.fn(), addToMedia: vi.fn(), removeFromMedia: vi.fn(), getTagsForMedia: vi.fn(), getMediaIdsForTag: vi.fn()}
@@ -47,6 +50,7 @@ beforeEach(() => {
 	handleCalls.length = 0
 	removeHandlerCalls.length = 0
 	vi.clearAllMocks()
+	fsAccess.mockReset()
 	registerLibraryHandlers({} as never)
 })
 
@@ -112,5 +116,78 @@ describe('registerLibraryHandlers — constraint error messages', () => {
 		})
 
 		await expect(invoke(IPC_CHANNELS.libraryTagCreate, {name: 'Music'})).rejects.toThrow('disk full')
+	})
+})
+
+describe('resolveAvailabilityStatus — pure decision rule', () => {
+	it('reports MISSING when the file is gone and the row was AVAILABLE', async () => {
+		const {resolveAvailabilityStatus} = await import('@main/ipc/libraryHandlers.js')
+		expect(resolveAvailabilityStatus('AVAILABLE', false)).toBe('MISSING')
+	})
+
+	it('reports AVAILABLE when the file is back and the row was MISSING', async () => {
+		const {resolveAvailabilityStatus} = await import('@main/ipc/libraryHandlers.js')
+		expect(resolveAvailabilityStatus('MISSING', true)).toBe('AVAILABLE')
+	})
+
+	it('never overrides a deliberately-set CORRUPTED or DELETED status', async () => {
+		const {resolveAvailabilityStatus} = await import('@main/ipc/libraryHandlers.js')
+		expect(resolveAvailabilityStatus('CORRUPTED', false)).toBeNull()
+		expect(resolveAvailabilityStatus('DELETED', true)).toBeNull()
+	})
+})
+
+describe('registerLibraryHandlers — library:media:checkAvailability', () => {
+	// This is the only place in the app that ever re-checks a media row
+	// against the real file on disk. Before this handler existed, deleting a
+	// file outside Arclio left the row AVAILABLE forever — the library kept
+	// listing it as playable, and opening it produced a silently broken
+	// player instead of a clear "file missing" state.
+	it('regression: a file deleted outside Arclio flips an AVAILABLE row to MISSING', async () => {
+		mediaRepo.getById.mockReturnValue({id: 'media-1', status: 'AVAILABLE', assets: [{kind: 'video', path: '/library/gone.mp4'}]})
+		fsAccess.mockRejectedValue(new Error('ENOENT'))
+
+		const result = await invoke(IPC_CHANNELS.libraryMediaCheckAvailability, 'media-1')
+
+		expect(result).toBe('MISSING')
+		expect(mediaRepo.setStatus).toHaveBeenCalledWith('media-1', 'MISSING')
+	})
+
+	it('flips a MISSING row back to AVAILABLE once the file reappears', async () => {
+		mediaRepo.getById.mockReturnValue({id: 'media-1', status: 'MISSING', assets: [{kind: 'video', path: '/library/back.mp4'}]})
+		fsAccess.mockResolvedValue(undefined)
+
+		const result = await invoke(IPC_CHANNELS.libraryMediaCheckAvailability, 'media-1')
+
+		expect(result).toBe('AVAILABLE')
+		expect(mediaRepo.setStatus).toHaveBeenCalledWith('media-1', 'AVAILABLE')
+	})
+
+	it('does not write to the DB when the status has not actually changed', async () => {
+		mediaRepo.getById.mockReturnValue({id: 'media-1', status: 'AVAILABLE', assets: [{kind: 'video', path: '/library/still-here.mp4'}]})
+		fsAccess.mockResolvedValue(undefined)
+
+		await invoke(IPC_CHANNELS.libraryMediaCheckAvailability, 'media-1')
+
+		expect(mediaRepo.setStatus).not.toHaveBeenCalled()
+	})
+
+	it('leaves a DELETED tombstone alone even if the file is gone', async () => {
+		mediaRepo.getById.mockReturnValue({id: 'media-1', status: 'DELETED', assets: [{kind: 'video', path: '/library/gone.mp4'}]})
+		fsAccess.mockRejectedValue(new Error('ENOENT'))
+
+		const result = await invoke(IPC_CHANNELS.libraryMediaCheckAvailability, 'media-1')
+
+		expect(result).toBe('DELETED')
+		expect(mediaRepo.setStatus).not.toHaveBeenCalled()
+	})
+
+	it('returns null for a media id that no longer exists', async () => {
+		mediaRepo.getById.mockReturnValue(null)
+
+		const result = await invoke(IPC_CHANNELS.libraryMediaCheckAvailability, 'media-1')
+
+		expect(result).toBeNull()
+		expect(fsAccess).not.toHaveBeenCalled()
 	})
 })

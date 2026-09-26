@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "Quay lại thư viện"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "Tệp này dường như đã bị di chuyển hoặc xóa bên ngoài Arclio."
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "Không tìm thấy tệp có thể phát"
@@ -710,6 +714,10 @@ msgstr "Không tìm thấy tệp có thể phát"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Không tìm thấy phương tiện"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "Xóa khỏi thư viện"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

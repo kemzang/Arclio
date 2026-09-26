@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "စာကြည့်တိုက်သို့ ပြန်သွားရန်"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "ဤဖိုင်သည် Arclio ပြင်ပတွင် ရွှေ့ထား သို့မဟုတ် ဖျက်ထားပုံရသည်။"
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "ဖွင့်နိုင်သော ဖိုင် ရှာမတွေ့ပါ"
@@ -710,6 +714,10 @@ msgstr "ဖွင့်နိုင်သော ဖိုင် ရှာမတ�
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "မီဒီယာ ရှာမတွေ့ပါ"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "စာကြည့်တိုက်မှ ဖယ်ရှားရန်"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

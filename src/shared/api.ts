@@ -111,6 +111,7 @@ export interface AppApi {
 			search(query: string, limit?: number): Promise<LibraryMedia[]>
 			setFavorite(id: string, isFavorite: boolean): Promise<void>
 			setStatus(id: string, status: LibraryMediaStatus): Promise<void>
+			checkAvailability(id: string): Promise<LibraryMediaStatus | null>
 			delete(id: string): Promise<boolean>
 			count(): Promise<number>
 			countByStatus(): Promise<Record<string, number>>

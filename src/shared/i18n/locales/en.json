@@ -694,7 +694,7 @@
 	"favorites": {"empty": "No favorites yet", "emptyHint": "Mark a media as favorite to see it here"},
 	"tags": {"create": "New tag", "namePlaceholder": "Tag name", "save": "Create", "cancel": "Cancel", "empty": "No tags yet", "emptyHint": "Create a tag to categorize your media", "deleteConfirmTitle": "Delete this tag?", "deleteConfirmDescription": "The tag will be removed from every media item it's applied to."},
 	"history": {"downloads": "Downloads", "playback": "Playback", "today": "Today", "yesterday": "Yesterday", "thisWeek": "This week", "thisMonth": "This month", "empty": "No download history", "emptyPlayback": "No playback history", "playCount": "{{count}} play", "completed": "Completed", "failed": "Failed"},
-	"player": {"back": "Back to library", "noMedia": "Media not found", "noAsset": "No playable file found", "subtitles": "Subtitles"},
+	"player": {"back": "Back to library", "noMedia": "Media not found", "noAsset": "No playable file found", "subtitles": "Subtitles", "fileMissing": "This file seems to have been moved or deleted outside Arclio.", "removeFromLibrary": "Remove from library"},
 	"settings": {
 		"outputDir": "Output directory",
 		"outputDirDescription": "Where downloaded files are saved",

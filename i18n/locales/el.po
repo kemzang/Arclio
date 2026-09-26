@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "Πίσω στη βιβλιοθήκη"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "Αυτό το αρχείο φαίνεται ότι μετακινήθηκε ή διαγράφηκε εκτός του Arclio."
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "Δεν βρέθηκε αρχείο για αναπαραγωγή"
@@ -710,6 +714,10 @@ msgstr "Δεν βρέθηκε αρχείο για αναπαραγωγή"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Δεν βρέθηκε μέσο"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "Αφαίρεση από τη βιβλιοθήκη"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

@@ -23,6 +23,12 @@ export function PlayerPage(): React.JSX.Element {
 	const [playback, setPlayback] = useState<LibraryPlaybackHistory | null>(null)
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
+	// Distinct from `error`: the media record exists, but its file does not —
+	// on disk right now, or reported by the <video>/<audio> element itself.
+	// Previously nothing checked this at all: the player silently rendered a
+	// blank/broken element with no indication of what went wrong.
+	const [fileMissing, setFileMissing] = useState(false)
+	const [removing, setRemoving] = useState(false)
 
 	const videoRef = useRef<HTMLVideoElement>(null)
 	const playerRef = useRef<PlyrInstance | null>(null)
@@ -44,10 +50,16 @@ export function PlayerPage(): React.JSX.Element {
 				if (cancelled) return
 				if (!mediaResult) {
 					setError(t('player.noMedia'))
-				} else {
-					setMedia(mediaResult)
-					setPlayback(playbackResult)
+					return
 				}
+				setMedia(mediaResult)
+				setPlayback(playbackResult)
+				// Fire-and-forget: the file-existence check shouldn't block first
+				// paint, and a stale/optimistic AVAILABLE render for one extra
+				// frame is harmless — the check corrects it moments later.
+				void window.appApi.library.media.checkAvailability(id).then(status => {
+					if (!cancelled && status === 'MISSING') setFileMissing(true)
+				})
 			})
 			.catch(() => {
 				if (!cancelled) setError(t('player.noMedia'))
@@ -82,7 +94,10 @@ export function PlayerPage(): React.JSX.Element {
 	}, [id])
 
 	useEffect(() => {
-		if (!videoRef.current || !assetPath) return
+		// The upfront checkAvailability() call already caught most missing
+		// files before this effect ever runs — skip wiring up Plyr against a
+		// path we already know is dead rather than let it try and fail silently.
+		if (!videoRef.current || !assetPath || fileMissing) return
 
 		const video = videoRef.current
 		const fileUrl = `file://${assetPath}`
@@ -107,23 +122,44 @@ export function PlayerPage(): React.JSX.Element {
 		const handlePause = (): void => savePosition()
 		video.addEventListener('pause', handlePause)
 
+		// Defense in depth for the check-then-use gap: the file can vanish (or
+		// fail to decode) between checkAvailability() resolving and the
+		// browser actually trying to load it. Without this, that case was a
+		// silently blank/frozen player — same bug, just a narrower window.
+		const handleError = (): void => setFileMissing(true)
+		video.addEventListener('error', handleError)
+
 		saveIntervalRef.current = setInterval(savePosition, 5000)
 
 		return () => {
 			video.removeEventListener('pause', handlePause)
+			video.removeEventListener('error', handleError)
 			if (saveIntervalRef.current) {
 				clearInterval(saveIntervalRef.current)
 			}
 			player.destroy()
 			playerRef.current = null
 		}
-	}, [assetPath, playback?.lastPosition, savePosition, subtitleAssets])
+	}, [assetPath, fileMissing, playback?.lastPosition, savePosition, subtitleAssets])
 
 	useEffect(() => {
 		return () => {
 			savePosition()
 		}
 	}, [savePosition])
+
+	// Marks the row DELETED rather than hard-deleting it — the same tombstone
+	// SyncService uses for a user-initiated removal elsewhere, so a device
+	// paired to this one learns the item is gone instead of re-syncing it
+	// back on the next pull.
+	const removeFromLibrary = useCallback((): void => {
+		if (!id || removing) return
+		setRemoving(true)
+		window.appApi.library.media
+			.setStatus(id, 'DELETED')
+			.then(() => navigate('/library'))
+			.catch(() => setRemoving(false))
+	}, [id, navigate, removing])
 
 	if (loading) {
 		return (
@@ -147,6 +183,30 @@ export function PlayerPage(): React.JSX.Element {
 					<ArrowLeft className="size-4 mr-2" />
 					{t('player.back')}
 				</Button>
+			</div>
+		)
+	}
+
+	if (fileMissing) {
+		return (
+			<div className="flex flex-col items-center justify-center h-full gap-4 text-[var(--text-subtle)]">
+				<AlertCircle className="size-12 opacity-50" />
+				<p className="text-lg font-medium">{media.title}</p>
+				<p className="text-sm max-w-md text-center">{t('player.fileMissing')}</p>
+				<div className="flex gap-3">
+					<Button
+						variant="outline"
+						onClick={(): void => {
+							void navigate('/library')
+						}}
+					>
+						<ArrowLeft className="size-4 mr-2" />
+						{t('player.back')}
+					</Button>
+					<Button variant="destructive" disabled={removing} onClick={removeFromLibrary}>
+						{t('player.removeFromLibrary')}
+					</Button>
+				</div>
 			</div>
 		)
 	}

@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "Назад на библиотеку"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "Изгледа да је ова датотека премештена или обрисана изван Arclio-а."
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "Није пронађена датотека за репродукцију"
@@ -710,6 +714,10 @@ msgstr "Није пронађена датотека за репродукциј
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Медијум није пронађен"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "Уклони из библиотеке"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

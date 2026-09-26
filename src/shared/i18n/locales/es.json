@@ -724,7 +724,7 @@
 		"completed": "Completado",
 		"failed": "Fallido"
 	},
-	"player": {"back": "Volver a la biblioteca", "noMedia": "Medio no encontrado", "noAsset": "No se encontró archivo reproducible", "subtitles": "Subtítulos"},
+	"player": {"back": "Volver a la biblioteca", "noMedia": "Medio no encontrado", "noAsset": "No se encontró archivo reproducible", "subtitles": "Subtítulos", "fileMissing": "Este archivo parece haber sido movido o eliminado fuera de Arclio.", "removeFromLibrary": "Quitar de la biblioteca"},
 	"settings": {
 		"outputDir": "Directorio de salida",
 		"outputDirDescription": "Dónde se guardan los archivos descargados",

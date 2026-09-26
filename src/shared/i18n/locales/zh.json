@@ -653,7 +653,7 @@
 	"favorites": {"empty": "暂无收藏", "emptyHint": "将媒体标记为收藏以在此查看"},
 	"tags": {"create": "新建标签", "namePlaceholder": "标签名称", "save": "创建", "cancel": "取消", "empty": "暂无标签", "emptyHint": "创建标签来分类您的媒体", "deleteConfirmTitle": "删除此标签？", "deleteConfirmDescription": "该标签将从所有应用了它的媒体项中移除。"},
 	"history": {"downloads": "下载", "playback": "播放", "today": "今天", "yesterday": "昨天", "thisWeek": "本周", "thisMonth": "本月", "empty": "无下载历史", "emptyPlayback": "无播放历史", "playCount": "{{count}} 次播放", "completed": "已完成", "failed": "失败"},
-	"player": {"back": "返回媒体库", "noMedia": "未找到媒体", "noAsset": "未找到可播放文件", "subtitles": "字幕"},
+	"player": {"back": "返回媒体库", "noMedia": "未找到媒体", "noAsset": "未找到可播放文件", "subtitles": "字幕", "fileMissing": "该文件似乎已在 Arclio 之外被移动或删除。", "removeFromLibrary": "从资料库中移除"},
 	"settings": {
 		"outputDir": "输出目录",
 		"outputDirDescription": "下载文件的保存位置",

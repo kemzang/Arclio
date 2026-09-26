@@ -736,7 +736,7 @@
 		"completed": "Terminé",
 		"failed": "Échec"
 	},
-	"player": {"back": "Retour à la bibliothèque", "noMedia": "Média introuvable", "noAsset": "Aucun fichier lisible trouvé", "subtitles": "Sous-titres"},
+	"player": {"back": "Retour à la bibliothèque", "noMedia": "Média introuvable", "noAsset": "Aucun fichier lisible trouvé", "subtitles": "Sous-titres", "fileMissing": "Ce fichier semble avoir été déplacé ou supprimé en dehors d'Arclio.", "removeFromLibrary": "Retirer de la bibliothèque"},
 	"settings": {
 		"outputDir": "Répertoire de sortie",
 		"outputDirDescription": "Où les fichiers téléchargés sont enregistrés",

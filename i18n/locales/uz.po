@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "Kutubxonaga qaytish"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "Bu fayl Arclio tashqarisida ko'chirilgan yoki o'chirilgan ko'rinadi."
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "Oʻynatiladigan fayl topilmadi"
@@ -710,6 +714,10 @@ msgstr "Oʻynatiladigan fayl topilmadi"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Media topilmadi"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "Kutubxonadan olib tashlash"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

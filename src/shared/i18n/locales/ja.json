@@ -719,7 +719,7 @@
 		"deleteConfirmDescription": "タグは、それが適用されているすべてのメディアから削除されます。"
 	},
 	"history": {"downloads": "ダウンロード", "playback": "再生", "today": "今日", "yesterday": "昨日", "thisWeek": "今週", "thisMonth": "今月", "empty": "ダウンロード履歴なし", "emptyPlayback": "再生履歴なし", "playCount": "{{count}} 回再生", "completed": "完了", "failed": "失敗"},
-	"player": {"back": "ライブラリに戻る", "noMedia": "メディアが見つかりません", "noAsset": "再生可能なファイルが見つかりません", "subtitles": "字幕"},
+	"player": {"back": "ライブラリに戻る", "noMedia": "メディアが見つかりません", "noAsset": "再生可能なファイルが見つかりません", "subtitles": "字幕", "fileMissing": "このファイルはArclioの外部で移動または削除されたようです。", "removeFromLibrary": "ライブラリから削除"},
 	"settings": {
 		"outputDir": "出力ディレクトリ",
 		"outputDirDescription": "ダウンロードファイルの保存先",

@@ -179,8 +179,13 @@ export function LibraryPage(): React.JSX.Element {
 							}}
 							className="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--glass-tile)] cursor-pointer transition-colors"
 						>
-							<div className="w-24 aspect-video rounded-lg overflow-hidden bg-muted shrink-0">
+							<div className="w-24 aspect-video rounded-lg overflow-hidden bg-muted shrink-0 relative">
 								{item.thumbnailPath ? <img src={`file://${item.thumbnailPath}`} alt={item.title} className="w-full h-full object-cover" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-[var(--text-subtle)]">{mediaTypeEmoji(item.mediaType)}</div>}
+								{item.status === 'MISSING' && (
+									<div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+										<span className="text-white text-[10px] font-medium px-1 text-center leading-tight">{t('library.missing')}</span>
+									</div>
+								)}
 							</div>
 							<div className="flex-1 min-w-0">
 								<p className="text-sm font-medium truncate">{item.title}</p>

@@ -703,7 +703,7 @@
 	"favorites": {"empty": "Chưa có yêu thích", "emptyHint": "Đánh dấu phương tiện là yêu thích để xem ở đây"},
 	"tags": {"create": "Thẻ mới", "namePlaceholder": "Tên thẻ", "save": "Tạo", "cancel": "Hủy", "empty": "Chưa có thẻ", "emptyHint": "Tạo thẻ để phân loại phương tiện", "deleteConfirmTitle": "Xóa thẻ này?", "deleteConfirmDescription": "Thẻ sẽ bị xóa khỏi mọi phương tiện đã áp dụng nó."},
 	"history": {"downloads": "Tải xuống", "playback": "Phát", "today": "Hôm nay", "yesterday": "Hôm qua", "thisWeek": "Tuần này", "thisMonth": "Tháng này", "empty": "Không có lịch sử tải xuống", "emptyPlayback": "Không có lịch sử phát", "playCount": "{{count}} lần phát", "completed": "Hoàn thành", "failed": "Thất bại"},
-	"player": {"back": "Quay lại thư viện", "noMedia": "Không tìm thấy phương tiện", "noAsset": "Không tìm thấy tệp có thể phát", "subtitles": "Phụ đề"},
+	"player": {"back": "Quay lại thư viện", "noMedia": "Không tìm thấy phương tiện", "noAsset": "Không tìm thấy tệp có thể phát", "subtitles": "Phụ đề", "fileMissing": "Tệp này dường như đã bị di chuyển hoặc xóa bên ngoài Arclio.", "removeFromLibrary": "Xóa khỏi thư viện"},
 	"settings": {
 		"outputDir": "Thư mục đầu ra",
 		"outputDirDescription": "Nơi lưu tệp tải xuống",

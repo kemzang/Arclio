@@ -715,7 +715,7 @@
 		"completed": "Imekamilika",
 		"failed": "Imeshindwa"
 	},
-	"player": {"back": "Rudi kwenye maktaba", "noMedia": "Media haijapatikana", "noAsset": "Hakuna faili inayoweza kuchezwa imepatikana", "subtitles": "Manukuu"},
+	"player": {"back": "Rudi kwenye maktaba", "noMedia": "Media haijapatikana", "noAsset": "Hakuna faili inayoweza kuchezwa imepatikana", "subtitles": "Manukuu", "fileMissing": "Faili hii inaonekana kuhamishwa au kufutwa nje ya Arclio.", "removeFromLibrary": "Ondoa kwenye maktaba"},
 	"settings": {
 		"outputDir": "Saraka ya pato",
 		"outputDirDescription": "Ambapo faili zilizopakuliwa zinahifadhiwa",

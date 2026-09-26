@@ -702,12 +702,20 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr ""
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr ""
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr ""
 
 msgctxt "player.noMedia"
 msgid "Media not found"
+msgstr ""
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
 msgstr ""
 
 msgctxt "player.subtitles"

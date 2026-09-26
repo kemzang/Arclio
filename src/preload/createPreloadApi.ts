@@ -151,6 +151,7 @@ export function createPreloadApi(ipcRenderer: PreloadIpcRenderer): AppApi {
 				search: (query, limit) => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaSearch, query, limit),
 				setFavorite: (id, isFavorite) => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaSetFavorite, id, isFavorite),
 				setStatus: (id, status) => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaSetStatus, id, status),
+				checkAvailability: id => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaCheckAvailability, id),
 				delete: id => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaDelete, id),
 				count: () => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaCount),
 				countByStatus: () => ipcRenderer.invoke(IPC_CHANNELS.libraryMediaCountByStatus)

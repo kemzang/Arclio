@@ -702,7 +702,7 @@
 	"favorites": {"empty": "تراوسه خوښې نشته", "emptyHint": "میډیا د خوښې په توګه نښه کړئ"},
 	"tags": {"create": "نوی ټګ", "namePlaceholder": "د ټګ نوم", "save": "جوړ", "cancel": "لغوه", "empty": "تراوسه ټګونه نشته", "emptyHint": "د خپل میډیا ویش لپاره ټګ جوړ کړئ", "deleteConfirmTitle": "دا نښه ړنګه کړئ؟", "deleteConfirmDescription": "نښه به له هغو ټولو رسنیو څخه لرې شي چې پرې پلي شوې ده."},
 	"history": {"downloads": "ډاونلوډونه", "playback": "پلې بیک", "today": "نن", "yesterday": "پرون", "thisWeek": "دا اونۍ", "thisMonth": "دا میاشت", "empty": "د ډاونلوډ تاریخ نشته", "emptyPlayback": "د پلې بیک تاریخ نشته", "playCount": "{{count}} پلې", "completed": "بشپړ", "failed": "ناکامه شوه"},
-	"player": {"back": "کتابتون ته بیرته", "noMedia": "میډیا ونه موندل شوه", "noAsset": "د چلولو وړ فایل ونه موندل شو", "subtitles": "فرعي لیکنې"},
+	"player": {"back": "کتابتون ته بیرته", "noMedia": "میډیا ونه موندل شوه", "noAsset": "د چلولو وړ فایل ونه موندل شو", "subtitles": "فرعي لیکنې", "fileMissing": "داسې ښکاري چې دا فایل د Arclio نه بهر لیږدول شوی یا ړنګ شوی دی.", "removeFromLibrary": "له کتابتون څخه لرې کول"},
 	"settings": {
 		"outputDir": "وتونکی لارښود",
 		"outputDirDescription": "ډاونلوډ شوي فایلونه چیرته خوندي کیږي",

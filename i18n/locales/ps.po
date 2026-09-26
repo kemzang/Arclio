@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "کتابتون ته بیرته"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "داسې ښکاري چې دا فایل د Arclio نه بهر لیږدول شوی یا ړنګ شوی دی."
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "د چلولو وړ فایل ونه موندل شو"
@@ -710,6 +714,10 @@ msgstr "د چلولو وړ فایل ونه موندل شو"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "میډیا ونه موندل شوه"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "له کتابتون څخه لرې کول"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

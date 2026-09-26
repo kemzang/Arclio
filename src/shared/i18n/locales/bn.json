@@ -688,7 +688,7 @@
 		"deleteConfirmDescription": "যেসব মিডিয়া আইটেমে এটি প্রয়োগ করা হয়েছে, সেগুলো থেকে ট্যাগটি সরানো হবে।"
 	},
 	"history": {"downloads": "ডাউনলোড", "playback": "প্লেব্যাক", "today": "আজ", "yesterday": "গতকাল", "thisWeek": "এই সপ্তাহ", "thisMonth": "এই মাস", "empty": "কোনো ডাউনলোড ইতিহাস নেই", "emptyPlayback": "কোনো প্লেব্যাক ইতিহাস নেই", "playCount": "{{count}} প্লে", "completed": "সম্পন্ন", "failed": "ব্যর্থ"},
-	"player": {"back": "লাইব্রেরিতে ফিরুন", "noMedia": "মিডিয়া পাওয়া যায়নি", "noAsset": "কোনো চালানোযোগ্য ফাইল পাওয়া যায়নি", "subtitles": "সাবটাইটেল"},
+	"player": {"back": "লাইব্রেরিতে ফিরুন", "noMedia": "মিডিয়া পাওয়া যায়নি", "noAsset": "কোনো চালানোযোগ্য ফাইল পাওয়া যায়নি", "subtitles": "সাবটাইটেল", "fileMissing": "এই ফাইলটি Arclio-এর বাইরে সরানো বা মুছে ফেলা হয়েছে বলে মনে হচ্ছে।", "removeFromLibrary": "লাইব্রেরি থেকে সরান"},
 	"settings": {
 		"outputDir": "আউটপুট ডিরেক্টরি",
 		"outputDirDescription": "ডাউনলোড করা ফাইল কোথায় সংরক্ষিত হয়",

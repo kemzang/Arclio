@@ -731,7 +731,7 @@
 		"completed": "Xumurame",
 		"failed": "Milkaa'uu dide"
 	},
-	"player": {"back": "Gara perpacha deebi'i", "noMedia": "Miidiyaan hin argamne", "noAsset": "Faayilii taphatamu hin argamne", "subtitles": "Barreeffama gadii"},
+	"player": {"back": "Gara perpacha deebi'i", "noMedia": "Miidiyaan hin argamne", "noAsset": "Faayilii taphatamu hin argamne", "subtitles": "Barreeffama gadii", "fileMissing": "Faayilin kun Arclio ala jijjiirame ykn haqame fakkaata.", "removeFromLibrary": "Kuusaa keessaa balleessi"},
 	"settings": {
 		"outputDir": "Galeelaa badii",
 		"outputDirDescription": "Faayiloonni buufaman eessa kuusamu",

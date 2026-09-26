@@ -651,7 +651,17 @@ export function installBrowserMock(): void {
 		},
 
 		library: {
-			media: {list: () => Promise.resolve([]), get: () => Promise.resolve(null), search: () => Promise.resolve([]), setFavorite: () => Promise.resolve(), setStatus: () => Promise.resolve(), delete: () => Promise.resolve(false), count: () => Promise.resolve(0), countByStatus: () => Promise.resolve({})},
+			media: {
+				list: () => Promise.resolve([]),
+				get: () => Promise.resolve(null),
+				search: () => Promise.resolve([]),
+				setFavorite: () => Promise.resolve(),
+				setStatus: () => Promise.resolve(),
+				checkAvailability: () => Promise.resolve(null),
+				delete: () => Promise.resolve(false),
+				count: () => Promise.resolve(0),
+				countByStatus: () => Promise.resolve({})
+			},
 			collection: {
 				list: () => Promise.resolve([]),
 				get: () => Promise.resolve(null),

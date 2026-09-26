@@ -653,7 +653,7 @@
 	"favorites": {"empty": "ተወዳጆች የሉም", "emptyHint": "ሚዲያን እዚህ ለማየት ተወዳጅ አድርገው ምልክት ያድርጉ"},
 	"tags": {"create": "አዲስ መለያ", "namePlaceholder": "የመለያ ስም", "save": "ፍጠር", "cancel": "ሰርዝ", "empty": "መለያዎች የሉም", "emptyHint": "ሚዲያህን ለመመደብ መለያ ፍጠር", "deleteConfirmTitle": "ይህን መለያ ማጥፋት ይፈልጋሉ?", "deleteConfirmDescription": "መለያው በእሱ ከተተገበረባቸው ሁሉም ሚዲያዎች ይወገዳል።"},
 	"history": {"downloads": "ውርዶች", "playback": "ማጫወት", "today": "ዛሬ", "yesterday": "ትናንት", "thisWeek": "ይህ ሳምንት", "thisMonth": "ይህ ወር", "empty": "የውርድ ታሪክ የለም", "emptyPlayback": "የማጫወት ታሪክ የለም", "playCount": "{{count}} ማጫወት", "completed": "ተጠናቋል", "failed": "አልተሳካም"},
-	"player": {"back": "ወደ ቤተ-መጽሐፍት ተመለስ", "noMedia": "ሚዲያ አልተገኘም", "noAsset": "ሊጫወት የሚችል ፋይል አልተገኘም", "subtitles": "የግርጌ ጽሑፎች"},
+	"player": {"back": "ወደ ቤተ-መጽሐፍት ተመለስ", "noMedia": "ሚዲያ አልተገኘም", "noAsset": "ሊጫወት የሚችል ፋይል አልተገኘም", "subtitles": "የግርጌ ጽሑፎች", "fileMissing": "ይህ ፋይል ከArclio ውጪ የተንቀሳቀሰ ወይም የተሰረዘ ይመስላል።", "removeFromLibrary": "ከቤተ-መጻሕፍት ያስወግዱ"},
 	"settings": {
 		"outputDir": "ውጤት ማውጫ",
 		"outputDirDescription": "የወረዱ ፋይሎች የት ይቀመጣሉ",

@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "ライブラリに戻る"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "このファイルはArclioの外部で移動または削除されたようです。"
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "再生可能なファイルが見つかりません"
@@ -710,6 +714,10 @@ msgstr "再生可能なファイルが見つかりません"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "メディアが見つかりません"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "ライブラリから削除"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

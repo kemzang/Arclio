@@ -92,6 +92,7 @@ export function buildMockAppApi(options: BuildMockOptions = {}): AppApi {
 				search: vi.fn().mockResolvedValue([]),
 				setFavorite: vi.fn().mockResolvedValue(undefined),
 				setStatus: vi.fn().mockResolvedValue(undefined),
+				checkAvailability: vi.fn().mockResolvedValue(null),
 				delete: vi.fn().mockResolvedValue(false),
 				count: vi.fn().mockResolvedValue(0),
 				countByStatus: vi.fn().mockResolvedValue({})

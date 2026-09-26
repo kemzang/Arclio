@@ -727,7 +727,7 @@
 		"deleteConfirmDescription": "Teg u qo'llanilgan barcha media elementlaridan olib tashlanadi."
 	},
 	"history": {"downloads": "Yuklab olishlar", "playback": "Ijro", "today": "Bugun", "yesterday": "Kecha", "thisWeek": "Shu hafta", "thisMonth": "Shu oy", "empty": "Yuklab olish tarixi yo'q", "emptyPlayback": "Ijro tarixi yo'q", "playCount": "{{count}} ijro", "completed": "Tugallangan", "failed": "Muvaffaqiyatsiz"},
-	"player": {"back": "Kutubxonaga qaytish", "noMedia": "Media topilmadi", "noAsset": "Oʻynatiladigan fayl topilmadi", "subtitles": "Subtitrlar"},
+	"player": {"back": "Kutubxonaga qaytish", "noMedia": "Media topilmadi", "noAsset": "Oʻynatiladigan fayl topilmadi", "subtitles": "Subtitrlar", "fileMissing": "Bu fayl Arclio tashqarisida ko'chirilgan yoki o'chirilgan ko'rinadi.", "removeFromLibrary": "Kutubxonadan olib tashlash"},
 	"settings": {
 		"outputDir": "Chiqish papkasi",
 		"outputDirDescription": "Yuklab olingan fayllar qayerga saqlanadi",

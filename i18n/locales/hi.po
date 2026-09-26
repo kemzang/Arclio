@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "लाइब्रेरी पर वापस"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "यह फ़ाइल Arclio के बाहर स्थानांतरित या हटाई गई प्रतीत होती है।"
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "कोई चलाने योग्य फ़ाइल नहीं मिली"
@@ -710,6 +714,10 @@ msgstr "कोई चलाने योग्य फ़ाइल नहीं �
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "मीडिया नहीं मिला"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "लाइब्रेरी से हटाएं"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

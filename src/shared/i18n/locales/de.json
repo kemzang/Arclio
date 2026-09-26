@@ -736,7 +736,7 @@
 		"completed": "Abgeschlossen",
 		"failed": "Fehlgeschlagen"
 	},
-	"player": {"back": "Zurück zur Bibliothek", "noMedia": "Medien nicht gefunden", "noAsset": "Keine abspielbare Datei gefunden", "subtitles": "Untertitel"},
+	"player": {"back": "Zurück zur Bibliothek", "noMedia": "Medien nicht gefunden", "noAsset": "Keine abspielbare Datei gefunden", "subtitles": "Untertitel", "fileMissing": "Diese Datei wurde anscheinend außerhalb von Arclio verschoben oder gelöscht.", "removeFromLibrary": "Aus der Bibliothek entfernen"},
 	"settings": {
 		"outputDir": "Ausgabeverzeichnis",
 		"outputDirDescription": "Wo heruntergeladene Dateien gespeichert werden",

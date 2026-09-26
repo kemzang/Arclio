@@ -703,6 +703,10 @@ msgctxt "player.back"
 msgid "Back to library"
 msgstr "Rudi kwenye maktaba"
 
+msgctxt "player.fileMissing"
+msgid "This file seems to have been moved or deleted outside Arclio."
+msgstr "Faili hii inaonekana kuhamishwa au kufutwa nje ya Arclio."
+
 msgctxt "player.noAsset"
 msgid "No playable file found"
 msgstr "Hakuna faili inayoweza kuchezwa imepatikana"
@@ -710,6 +714,10 @@ msgstr "Hakuna faili inayoweza kuchezwa imepatikana"
 msgctxt "player.noMedia"
 msgid "Media not found"
 msgstr "Media haijapatikana"
+
+msgctxt "player.removeFromLibrary"
+msgid "Remove from library"
+msgstr "Ondoa kwenye maktaba"
 
 msgctxt "player.subtitles"
 msgid "Subtitles"

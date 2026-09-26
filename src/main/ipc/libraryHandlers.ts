@@ -1,4 +1,5 @@
 import {ipcMain} from 'electron'
+import {access} from 'node:fs/promises'
 import {z} from 'zod'
 import {IPC_CHANNELS} from '@shared/ipc.js'
 import {mediaStatusSchema, mediaSortBySchema} from '@shared/schemas.js'
@@ -48,6 +49,26 @@ function friendlyConstraintMessage(context: string, err: unknown): Error {
 	return err instanceof Error ? err : new Error(String(err))
 }
 
+// Nothing in the app ever re-checks a media row against the actual file on
+// disk — a record created AVAILABLE stays AVAILABLE forever, even after the
+// user deletes the file outside Arclio, until something calls this. Only
+// AVAILABLE/MISSING are ever revised this way: CORRUPTED and DELETED are
+// deliberate states set elsewhere (corruption detection, sync tombstones)
+// that a plain file-existence check has no business overwriting.
+export function resolveAvailabilityStatus(currentStatus: string, fileExists: boolean): 'AVAILABLE' | 'MISSING' | null {
+	if (currentStatus !== 'AVAILABLE' && currentStatus !== 'MISSING') return null
+	return fileExists ? 'AVAILABLE' : 'MISSING'
+}
+
+async function pathExists(path: string): Promise<boolean> {
+	try {
+		await access(path)
+		return true
+	} catch {
+		return false
+	}
+}
+
 // Every handler is (re)registered idempotently (removeHandler first) and
 // validates its payload before it reaches a repository — these repos call
 // straight into better-sqlite3 with no validation of their own, so an
@@ -77,6 +98,22 @@ export function registerLibraryHandlers(db: DrizzleDatabase): void {
 
 	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaSetStatus)
 	ipcMain.handle(IPC_CHANNELS.libraryMediaSetStatus, (_event, id: unknown, status: unknown) => mediaRepo.setStatus(idSchema.parse(id), mediaStatusSchema.parse(status)))
+
+	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaCheckAvailability)
+	ipcMain.handle(IPC_CHANNELS.libraryMediaCheckAvailability, async (_event, id: unknown) => {
+		const mediaId = idSchema.parse(id)
+		const record = mediaRepo.getById(mediaId)
+		if (!record) return null
+
+		const primaryAsset = record.assets.find(a => a.kind === 'video' || a.kind === 'audio')
+		if (!primaryAsset) return record.status
+
+		const exists = await pathExists(primaryAsset.path)
+		const resolved = resolveAvailabilityStatus(record.status, exists)
+		if (resolved && resolved !== record.status) mediaRepo.setStatus(mediaId, resolved)
+
+		return resolved ?? record.status
+	})
 
 	ipcMain.removeHandler(IPC_CHANNELS.libraryMediaDelete)
 	ipcMain.handle(IPC_CHANNELS.libraryMediaDelete, (_event, id: unknown) => mediaRepo.delete(idSchema.parse(id)))
