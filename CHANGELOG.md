@@ -14,6 +14,12 @@ _Nothing yet._
 
 ---
 
+## 0.5.1
+
+A small follow-up to 0.5.0: the manual "Sync now" button and the post-download-batch upsell notification are temporarily hidden while payment processing is being finalized. Account connection, pairing, and everything else from 0.5.0 are unchanged.
+
+---
+
 ## 0.5.0
 
 The 0.5.0 stable release brings together everything from the 0.5.0 beta line: cross-device library sync, hosted AI subtitle generation, a full visual refresh, and a long list of reliability fixes.
