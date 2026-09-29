@@ -500,7 +500,9 @@ Despite the name, this single token authenticates Scoop, Homebrew, **and** Winge
 
 ### Initial Winget submission (one-time, done)
 
-The `vedantmgoyal9/winget-releaser` action can only **update** an existing winget package, not create one. For Arclio this was done once via [komac](https://github.com/russellbanks/Komac) (`komac new Kemzang.Arclio …`) → submitted PR [microsoft/winget-pkgs#365414](https://github.com/microsoft/winget-pkgs/pull/365414). Future tag pushes auto-bump the existing manifest with no manual work.
+The `vedantmgoyal9/winget-releaser` action can only **update** an existing winget package, not create one. An earlier submission under the pre-rebrand identifier (`AntonioOrionus.Arroxy`, PR #365414) was closed unmerged and never corresponds to the current `Kemzang.Arclio` identifier. The real one-time submission was done via [komac](https://github.com/russellbanks/Komac) (`komac new Kemzang.Arclio …`) → submitted PR [microsoft/winget-pkgs#443303](https://github.com/microsoft/winget-pkgs/pull/443303). Future tag pushes auto-bump the existing manifest with no manual work, **once #443303 merges**.
+
+Also note: `publish-release`'s "Publish release" step must use a PAT (`secrets.WINGET_TOKEN`) for the `gh release edit --draft=false` un-draft call, not `secrets.GITHUB_TOKEN`. GitHub does not fire the `release: released` webhook for actions taken with the default `GITHUB_TOKEN` (anti-recursion protection) — using it there silently prevents `release_to_winget.yml` from ever triggering.
 
 If we ever change the PackageIdentifier, repeat that one-time submission for the new identifier and update `release_to_winget.yml`.
 
