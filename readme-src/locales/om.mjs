@@ -91,7 +91,6 @@ export const om = {
     "Viidiyoo, Shorts, muuziqaa, chaanaalota, podkaastota, ykn sagalee **YouTube fi saayitiiwwan 2000+** irraa buufi — hanga 4K HDR 60 fps, ykn MP3 / AAC / Opus. Windows, macOS, fi Linux irratti naannoo kee keessatti hojeta. **Beeksisni hin jiru, wanti dabalataa hin jiru, gurguurtaan dabalaataa hin jiru.**",
   cta_latest: "↓ Baasii Haaraa Buusi",
   cta_website: "Marsariitii",
-  demo_alt: "Arclio demo",
   star_cta:
     "Arclio yeroo si oolfate, ⭐ tokko kan biroo argachuu isaaniif gargaara.",
   ai_notice: "",

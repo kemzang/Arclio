@@ -13,8 +13,6 @@
 
 [**↓ تازہ ترین ریلیز ڈاؤن لوڈ کریں**](#install) &nbsp;·&nbsp; [**ویب سائٹ**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-<img src="build/demo.gif" alt="Arclio ڈیمو" width="720" />
-
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
 اگر Arclio آپ کا وقت بچاتا ہے، تو ایک ⭐ دوسروں کو اسے ڈھونڈنے میں مدد کرتا ہے۔

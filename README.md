@@ -13,8 +13,6 @@ Download videos, Shorts, music, channels, podcasts, or audio tracks from **YouTu
 
 [**↓ Install Latest Release**](#install) &nbsp;·&nbsp; [**Website**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-<img src="build/demo.gif" alt="Arclio demo" width="720" />
-
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
 If Arclio saves you time, a ⭐ helps others find it.

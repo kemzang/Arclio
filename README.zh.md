@@ -13,8 +13,6 @@
 
 [**↓ 下载最新版本**](#install) &nbsp;·&nbsp; [**官网**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-<img src="build/demo.gif" alt="Arclio 演示" width="720" />
-
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
 如果 Arclio 帮你节省了时间，点个 ⭐ 让更多人发现它。

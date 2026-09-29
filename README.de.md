@@ -13,8 +13,6 @@ Lade Videos, Shorts, Musik, Kanäle, Podcasts oder Audiotracks von **YouTube und
 
 [**↓ Neueste Version herunterladen**](#install) &nbsp;·&nbsp; [**Webseite**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-<img src="build/demo.gif" alt="Arclio Demo" width="720" />
-
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
 Wenn Arclio dir Zeit spart, hilft ein ⭐ anderen, es zu finden.

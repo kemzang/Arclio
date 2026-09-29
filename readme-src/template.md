@@ -14,8 +14,6 @@
 [**{{cta_latest}}**](#install) &nbsp;·&nbsp; [**{{cta_website}}**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
 
-<img src="build/demo.gif" alt="{{demo_alt}}" width="720" />
-
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
 {{star_cta}}

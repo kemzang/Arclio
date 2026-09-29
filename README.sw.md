@@ -13,8 +13,6 @@ Pakua video, Shorts, muziki, vituo, podikasti, au nyimbo za sauti kutoka **YouTu
 
 [**↓ Pakua Toleo la Hivi Karibuni**](#install) &nbsp;·&nbsp; [**Tovuti**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-<img src="build/demo.gif" alt="Demo ya Arclio" width="720" />
-
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
 Ikiwa Arclio inakuokoa muda, ⭐ inasaidia wengine kuipata.

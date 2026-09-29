@@ -13,8 +13,6 @@ Télécharge des vidéos, Shorts, musiques, chaînes, podcasts ou pistes audio d
 
 [**↓ Télécharger la dernière version**](#install) &nbsp;·&nbsp; [**Site web**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-<img src="build/demo.gif" alt="Démo Arclio" width="720" />
-
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
 Si Arclio te fait gagner du temps, une ⭐ aide les autres à le trouver.

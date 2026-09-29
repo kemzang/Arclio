@@ -91,7 +91,6 @@ export const en = {
     "Download videos, Shorts, music, channels, podcasts, or audio tracks from **YouTube and 2000+ supported sites** — up to 4K HDR at 60 fps, or as MP3 / AAC / Opus. Runs locally on Windows, macOS, and Linux. **No ads, no bloat, no upsells.**",
   cta_latest: "↓ Install Latest Release",
   cta_website: "Website",
-  demo_alt: "Arclio demo",
   star_cta: "If Arclio saves you time, a ⭐ helps others find it.",
   ai_notice: "",
   toc_heading: "Contents",

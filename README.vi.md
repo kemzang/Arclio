@@ -13,8 +13,6 @@ Tải xuống video, Shorts, nhạc, kênh, podcast hoặc bản nhạc từ **Y
 
 [**↓ Tải phiên bản mới nhất**](#install) &nbsp;·&nbsp; [**Trang web**](https://arclio.net/) &nbsp;·&nbsp; [Windows](#install) · [macOS](#install) · [Linux](#install)
 
-<img src="build/demo.gif" alt="Demo Arclio" width="720" />
-
 <img src="build/Main-screenshot.png" alt="Arclio — Quick Download home" width="720" />
 
 Nếu Arclio giúp bạn tiết kiệm thời gian, một ⭐ sẽ giúp người khác tìm thấy nó.
