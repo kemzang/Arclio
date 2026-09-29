@@ -1,8 +1,8 @@
 import {useCallback, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import type {TFunction} from 'i18next'
-import {Check, Copy, ExternalLink, Loader2, LogOut, RefreshCw, ShieldAlert} from 'lucide-react'
-import type {AccountStatus, PairingHandle, SyncOutcome} from '@shared/api.js'
+import {Check, Copy, ExternalLink, Loader2, LogOut, ShieldAlert} from 'lucide-react'
+import type {AccountStatus, PairingHandle} from '@shared/api.js'
 import {Button} from '../ui/button.js'
 import {Badge} from '../ui/badge.js'
 
@@ -25,21 +25,6 @@ function planBadgeLabel(status: AccountStatus, t: TFunction): string | null {
 	return t('account.planPro')
 }
 
-/** Turns a sync result into something worth reading, rather than a status code. */
-function describeSync(outcome: SyncOutcome | null, t: TFunction): string {
-	if (!outcome) return t('account.syncIdle')
-	if (outcome.status === 'ok') {
-		if (outcome.pulled === 0 && outcome.pushed === 0 && outcome.deleted === 0) return t('account.syncUpToDate')
-		const parts = [outcome.pulled > 0 ? t('account.syncReceived', {count: outcome.pulled}) : '', outcome.pushed > 0 ? t('account.syncSent', {count: outcome.pushed}) : '', outcome.deleted > 0 ? t('account.syncRemoved', {count: outcome.deleted}) : ''].filter(Boolean)
-		return parts.join(' · ')
-	}
-	if (outcome.status === 'requires-plan') return outcome.reason === 'device_limit' ? t('account.syncDeviceLimit') : t('account.syncPlanBlocked')
-	if (outcome.status === 'unauthorized') return t('account.syncRevoked')
-	if (outcome.status === 'failed') return t('account.syncFailed')
-	if (outcome.status === 'skipped' && outcome.reason === 'already-running') return t('account.syncAlreadyRunning')
-	return t('account.connectDescription')
-}
-
 /**
  * Connects this machine to an Arclio account.
  *
@@ -53,8 +38,6 @@ export function AccountPanel(): React.JSX.Element {
 	const [pairing, setPairing] = useState<PairingHandle | null>(null)
 	const [message, setMessage] = useState('')
 	const [copied, setCopied] = useState(false)
-	const [syncing, setSyncing] = useState(false)
-	const [syncOutcome, setSyncOutcome] = useState<SyncOutcome | null>(null)
 
 	const mountedRef = useRef(true)
 
@@ -123,15 +106,6 @@ export function AccountPanel(): React.JSX.Element {
 		setTimeout(() => setCopied(false), 2000)
 	}, [pairing])
 
-	const runSync = useCallback(async () => {
-		setSyncing(true)
-		try {
-			setSyncOutcome(await window.appApi.sync.now())
-		} finally {
-			setSyncing(false)
-		}
-	}, [])
-
 	if (!status) return <div className="p-4" />
 
 	if (!status.canStoreCredentials) {
@@ -167,19 +141,14 @@ export function AccountPanel(): React.JSX.Element {
 					</Button>
 				</div>
 
-				<div className="flex items-start justify-between gap-4 p-4 rounded-lg border border-[var(--border)] bg-card">
-					<div className="flex items-start gap-3 min-w-0">
-						<RefreshCw className="size-5 mt-0.5 text-[var(--text-subtle)] shrink-0" />
-						<div className="min-w-0">
-							<p className="text-sm font-medium">{t('account.syncTitle')}</p>
-							<p className="text-xs text-[var(--text-subtle)]">{describeSync(syncOutcome, t)}</p>
-						</div>
-					</div>
-					<Button variant="outline" size="sm" className="shrink-0" disabled={syncing} onClick={() => void runSync()}>
-						{syncing ? <Loader2 className="size-4 mr-1 animate-spin" /> : <RefreshCw className="size-4 mr-1" />}
-						{t('account.syncNow')}
-					</Button>
-				</div>
+				{/*
+				 * Sync card hidden for now: the Sync/Sync+AI plans it applies to
+				 * aren't actually purchasable while no payment provider is live
+				 * (Paddle rejected the domain application) — a "Sync now" action
+				 * for a paid feature nobody can currently buy just invites
+				 * confusion. Account connection above stays available on its own.
+				 * Restore this block once a provider works.
+				 */}
 			</div>
 		)
 	}

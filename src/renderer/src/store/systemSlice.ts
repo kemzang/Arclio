@@ -6,7 +6,6 @@ import {i18next, pickLanguage, isRtl} from '@shared/i18n/index.js'
 import type {GetState, SetState, ShareTrigger, SystemSlice} from './types.js'
 import {bindQueueProjection, projectQueueSnapshot} from './queueProjection.js'
 import {settleAccountGate} from './wizard/accountGate.js'
-import {shouldShowQueueDrainUpsell} from './wizard/queueDrainUpsell.js'
 import {useTranscriptionStore} from './useTranscription.js'
 import {notify} from '../lib/notify.js'
 import {track} from '../lib/analytics.js'
@@ -107,14 +106,6 @@ function openShareDialogInternal(set: SetState, trigger: ShareTrigger): void {
 	track('share_dialog_opened', {via: trigger})
 }
 
-function maybeShowQueueDrainUpsell(get: GetState, set: SetState): void {
-	void window.appApi.account.status().then(status => {
-		if (!shouldShowQueueDrainUpsell({drained: true, plan: status.plan, alreadyShownThisSession: get().upsellShownThisSession})) return
-		set({upsellToastOpen: true, upsellShownThisSession: true})
-		track('upsell_toast_shown', {via: 'queue-drained'})
-	})
-}
-
 const OVERRIDE_KEY: Record<DependencyId, 'ytDlp' | 'ffmpeg' | 'ffprobe'> = {'yt-dlp': 'ytDlp', ffmpeg: 'ffmpeg', ffprobe: 'ffprobe'}
 
 function makeBinaryOverridePatch(id: DependencyId, path: string | undefined): {common: {binaryOverrides: Record<string, string | undefined>}} {
@@ -155,7 +146,12 @@ export function createSystemSlice(set: SetState, get: GetState): SystemSlice {
 				schedule: callback => requestAnimationFrame(callback),
 				readSuccessfulDownloadCount: () => get().settings?.common?.successfulDownloadCount ?? 0,
 				onDoneIncrements: (doneIncrements, prevMilestoneCount) => handleCompletedDownloadMilestones(doneIncrements, prevMilestoneCount, get, set),
-				onQueueDrained: () => maybeShowQueueDrainUpsell(get, set)
+				// Upsell disabled for now: it nudges free users toward Sync/Sync+AI,
+				// which aren't actually purchasable while no payment provider is
+				// live (Paddle rejected the domain application). Restore this call
+				// once a provider works instead of showing an upsell for something
+				// nobody can buy.
+				onQueueDrained: () => undefined
 			})
 
 			// The warmup-progress listener stays bound for the lifetime of the
