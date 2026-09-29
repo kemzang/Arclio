@@ -529,8 +529,12 @@ jobs:
           git config user.name "arclio-release-bot"
           git config user.email "release@arclio.local"
           git add bucket/arclio.json
-          git commit -m "arclio: bump to ${GITHUB_REF_NAME#v}"
-          git push
+          if git diff --cached --quiet; then
+            echo "No manifest changes to commit."
+          else
+            git commit -m "arclio: bump to ${GITHUB_REF_NAME#v}"
+            git push
+          fi
 
   publish-homebrew:
     needs: publish-release
@@ -594,5 +598,9 @@ jobs:
           git config user.name "arclio-release-bot"
           git config user.email "release@arclio.local"
           git add Casks/arclio.rb
-          git commit -m "arclio: bump to ${GITHUB_REF_NAME#v}"
-          git push
+          if git diff --cached --quiet; then
+            echo "No cask changes to commit."
+          else
+            git commit -m "arclio: bump to ${GITHUB_REF_NAME#v}"
+            git push
+          fi
